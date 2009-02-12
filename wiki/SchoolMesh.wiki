@@ -1,0 +1,27 @@
+#summary Introduction to SchoolMesh
+
+= Introduction =
+
+*SchoolMesh* is an application aimed to integrate different other applications in a school, and to offer some services to teachers and students.
+
+= Details =
+
+*SchoolMesh* tries to integrate:
+
+- _Samba_ and _OpenLDAP_ (file serving and authentication)
+
+- _Squid_ (proxy server)
+
+- _GNU/Linux Netfilter (firewalling)
+
+- _Google Apps_ (webmail, calendar, and file co-management)
+
+- _Moodle_ (e-learning activities)
+
+= Development =
+
+SchoolMesh will be developed using the Symfony framework.
+
+= Current status =
+
+Planning / Prototyping.
