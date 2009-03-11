@@ -1,0 +1,170 @@
+propel:
+  track:
+    id:           ~
+    shortcut:     { type: varchar(3), index: true, unique: true }
+    description:  { type: varchar(255), required: true }
+
+  schoolclass:
+    id:           { type: varchar(5), primaryKey: true }
+    grade:        { type: integer, required: true }
+    section:      { type: varchar(3), required: true }
+    track_id:   
+    description:  { type: varchar(255), required: false }
+
+  year:
+    id:           { type: integer, required: true, primaryKey: true, autoIncrement: false }
+    description:  { type: varchar(7), unique: true }
+
+  subject:
+    id:           ~
+    shortcut:     { type: varchar(3), index: true, required: true, unique: true }
+    description:  { type: varchar(255), required: true }
+
+  sf_guard_user_profile:
+    _attributes:  { phpName: sfGuardUserProfile }
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade, primaryKey: true }
+    first_name:   varchar(20)
+    middle_name:  varchar(20)
+    last_name:    varchar(20)
+    role_id:      ~
+    sex:          varchar(1)
+    email:        varchar(50)
+    birthdate:    date
+    birthplace:   varchar(50)
+    import_code:  varchar(20)
+    disk_set_soft_blocks_quota: { type: integer, default: 0 }
+    disk_set_hard_blocks_quota: { type: integer, default: 0 }
+    disk_set_soft_files_quota: { type: integer, default: 0 }
+    disk_set_hard_files_quota: { type: integer, default: 0 }
+    disk_used_blocks: { type: integer, default: 0 }
+    disk_used_files: { type: integer, default: 0 }
+    disk_updated_at: timestamp
+    
+
+#  sf_guard_group_profile:
+#    _attributes:  { phpName: sfGuardGroupProfile }
+#    id:
+#    group_id:     { type: integer, foreignTable: sf_guard_group, foreignReference: id, required: true, onDelete: cascade }
+#    priority:     integer # used to determine Primary Group for users, which will be set to the lowest
+#    quality_code: varchar(10)
+
+  appointment:
+    id: ~
+    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, required: true }
+    subject_id:       { type: integer, foreignTable: subject, foreignReference: id, onDelete: restrict, required: true }
+    schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, required: true }
+    year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, required: true }
+    created_at:   
+    updated_at:
+    import_code:  varchar(20)
+    _uniques:
+      ussy: [user_id, subject_id, schoolclass_id, year_id]
+
+  enrolment:
+    id: ~
+    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, required: true }
+    schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, required: true }
+    year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, required: true }
+    created_at:   
+    updated_at:
+    import_code:  varchar(20)
+    _uniques:
+      usy: [user_id, schoolclass_id, year_id]
+    
+
+  team:
+    id:           ~
+    description:  varchar(100)
+    posix_name:   varchar(20)
+#    priority:     integer # used to determine Primary Group for users, which will be set to the lowest
+    quality_code: varchar(10)
+    
+  role:
+    id:           ~
+    description:  varchar(100)
+    quality_code: varchar(10)        
+    posix_name: varchar(20):
+
+  user_team:
+    id: ~
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, required: true }
+    team_id:     { type: integer, foreignTable: team, foreignReference: id, onDelete: restrict, required: true  }
+    role_id:       { type: integer, foreignTable: role, foreignReference: id, onDelete: restrict, required: true }
+    _uniques:
+      utr: [user_id, team_id, role_id]
+
+  wpmodule:
+    id:
+    shortcut:     { type: varchar(20); required: false }
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict }
+    title:        varchar(100)
+    period:       varchar(100)
+    is_public:    boolean
+    is_locked:       boolean
+    created_at:   ~
+    updated_at:   ~
+    _uniques:
+      id_s:       [user_id, shortcut]
+      
+  wpitem_type:
+    id:
+    title:        varchar(50)
+    description:  varchar(200)
+    
+  wpmodule_item:
+    id:           ~
+    wpitem_type_id: 
+    wpmodule_id:
+    position:     integer
+    content:      longvarchar
+    _uniques:
+      id_pos:     [wpmodule_id, wpitem_type_id, position]
+
+
+  subnet:
+    id:
+    name:   { type: varchar(40), index: true, unique: true }
+    ip_cidr:     { type: varchar(20), required: false }
+
+  workstation:
+    id:          
+    name:    { type: varchar(40), index: true, unique: true }
+    ip_cidr:   { type: varchar(20), required: true, unique: true }
+    mac_address: { type: varchar(17), required: false, unique: true }
+    is_enabled: { type: boolean, default: false }
+    subnet_id: ~
+
+  lanlog:
+    id: ~
+    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, required: true }
+    workstation_id:  { type: integer, foreignTable: workstation, foreignReference: id, onDelete: restrict, required: true}
+    created_at: 
+    updated_at:
+    is_online: { type: boolean, required: true, default: 0 }
+
+
+  service:
+    id:
+    name: { type: varchar(40), index: true, unique: true }
+    is_enabled_by_default: { type: boolean, default: 0 }
+    port:   { type: integer, required: true }
+    is_udp:  { type: boolean, default: 0 }
+    _uniques:
+      port_is_udp:  [port, is_udp]
+
+
+  workstation_service:
+    workstation_id: { type: integer, primaryKey: true, required: true, foreignTable: workstation, foreignReference: id, onDelete: cascade }
+    service_id: { type: integer, primaryKey: true, required: true, foreignTable: service, foreignReference: id, onDelete: cascade }
+    
+  subnet_service:
+    subnet_id: { type: integer, primaryKey: true, required: true, foreignTable: subnet, foreignReference: id, onDelete: cascade }
+    service_id: { type: integer, primaryKey: true, required: true, foreignTable: service, foreignReference: id, onDelete: cascade }
+    
+  song:
+    id:
+    title: { type: varchar(40), index: true, unique: true }
+    author: { type: varchar(40), index: true, unique: true }
+
+
+# a comment

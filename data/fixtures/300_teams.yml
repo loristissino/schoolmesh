@@ -1,0 +1,58 @@
+
+ 
+Team:
+  cdc3ap:
+    description:  Consiglio di classe 3AP
+    posix_name:   cdc3ap
+
+  cdc4ap:
+    description:  Consiglio di classe 4AP
+    posix_name:   cdc4ap
+    
+  quality:
+    description:  Progetto Qualità
+    posix_name:   quality
+    
+
+UserTeam:
+  loris_3ap_doc:
+    user_id:      loris
+    team_id: cdc3ap
+    role_id:      doc
+  loris_3ap_scc:
+    user_id:      loris
+    team_id: cdc3ap
+    role_id:      scc
+  loris_quality_dev:
+    user_id:      loris
+    team_id: quality
+    role_id:      doc
+
+  flavia_3ap_doc:
+    user_id:      flavia
+    team_id: cdc3ap
+    role_id:      doc
+  bianca_3ap_doc:
+    user_id:      bianca
+    team_id: cdc3ap
+    role_id:      doc
+  bianca_3ap_ccc:
+    user_id:      bianca
+    team_id: cdc3ap
+    role_id:      ccc
+  juri:
+    user_id:      juri
+    team_id: quality
+    role_id:      risq
+  francesco:
+    user_id:      francesco
+    team_id: quality
+    role_id:      rsq
+  antonio_q:
+    user_id:      antonio
+    team_id: quality
+    role_id:      ds
+  gabriella_q:
+    user_id:      gabriella
+    team_id: quality
+    role_id:      dsga

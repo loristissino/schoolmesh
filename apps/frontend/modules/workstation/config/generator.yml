@@ -1,0 +1,39 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           Workstation
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          workstation
+    with_propel_route:     1
+
+    config:
+      actions:
+        _toggle_internet_access: { label: "Toggle Internet access", credentials: internet }
+      fields:
+        ip_cidr: { label: IP, help: IP Address }
+        mac_address: { label: MAC Address }
+        is_enabled: { label: Internet-enabled? }
+      list:
+        title: Workstation Management
+        display: [=name, ip_cidr, is_enabled]
+        max_per_page: 10
+        batch_actions:
+          enable_Internet_access: ~
+          disable_Internet_access: ~
+        object_actions:
+          toggle_Internet_access: ~
+      filter:
+        display: [name, ip_cidr, is_enabled, subnet_id]
+      form:
+        display:
+          Basic: [name, ip_cidr, subnet_id]
+          Advanced: [mac_address]
+          Internet access: [workstation_service_list]
+      edit:
+        title: Editing settings for workstation %%name%%
+      new:
+        title: Creating a new workstation record

@@ -1,0 +1,92 @@
+Appointment:
+  loris_lig_3ap_a:
+    user_id: loris
+    subject_id:      lig
+    schoolclass_id:  3ap
+    year_id:         200809
+
+  loris_lig_3ap_b:
+    user_id: loris
+    subject_id:      lig
+    schoolclass_id:  3ap
+    year_id:         200910
+
+
+  loris_lig_4ap:
+    user_id:         loris
+    subject_id:      lig
+    schoolclass_id:  4ap
+    year_id:         200809
+
+  loris_lig_5ap:
+    user_id:         loris
+    subject_id:      lig
+    schoolclass_id:  5ap
+    year_id:         200809
+
+  flavia_mat_3ap:
+    user_id:         flavia
+    subject_id:      mat
+    schoolclass_id:  3ap
+    year_id:         200809
+
+  flavia_mat_4ap:
+    user_id:         flavia
+    subject_id:      mat
+    schoolclass_id:  4ap
+    year_id:         200809
+
+  flavia_mat_5ap:
+    user_id:         flavia
+    subject_id:      mat
+    schoolclass_id:  5ap
+    year_id:         200809
+
+  francesco_inf_3bp_a:
+    user_id:         francesco
+    subject_id:      inf
+    schoolclass_id:  3bp
+    year_id:         200809
+
+  francesco_inf_4bp_a:
+    user_id:         francesco
+    subject_id:      inf
+    schoolclass_id:  4bp
+    year_id:         200809
+
+  francesco_inf_5bp_a:
+    user_id:         francesco
+    subject_id:      inf
+    schoolclass_id:  5bp
+    year_id:         200809
+    
+  francesco_inf_3bp_b:
+    user_id:         francesco
+    subject_id:      inf
+    schoolclass_id:  3bp
+    year_id:         200910
+
+  francesco_inf_4bp_b:
+    user_id:         francesco
+    subject_id:      inf
+    schoolclass_id:  4bp
+    year_id:         200910
+
+  francesco_inf_5bp_b:
+    user_id:         francesco
+    subject_id:      inf
+    schoolclass_id:  5bp
+    year_id:         200910
+
+  bianca_ing_3ap_a:
+    user_id:         bianca
+    subject_id:      inf
+    schoolclass_id:  3ap
+    year_id:         200910
+    
+  bianca_ing_3ap_b:
+    user_id:         bianca
+    subject_id:      inf
+    schoolclass_id:  3ap
+    year_id:         200809
+

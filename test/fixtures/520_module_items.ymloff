@@ -1,0 +1,82 @@
+WpoduleItem:
+  module_item1:
+    id:           ~
+    item_type_id: contents
+    module_id:      module1_3_flavia
+    position:     1
+    content:      |
+        Il piano cartesiano: ripasso di retta e parabola.
+
+  module_item2:
+    id:           ~
+    item_type_id: contents
+    module_id:      module1_3_flavia
+    position:     2
+    content:      |
+        Circonferenza, iperbole equila­tera riferita agli asintoti.
+
+  module_item3:
+    id:           ~
+    item_type_id: contents
+    module_id:      module1_3_flavia
+    position:     3
+    content:      |
+        Posizioni reciproche di due figure nel piano.
+
+  module_item4:
+    id:           ~
+    item_type_id: contents
+    module_id:      module1_3_flavia
+    position:     4
+    content:      |
+        Traslazione degli assi e traslazione di fi­gure nel piano. 
+
+  module_item5:
+    id:           ~
+    item_type_id: knowledge
+    module_id:      module1_3_flavia
+    position:     1
+    content:      |
+        elementi necessari per stabilire un sistema di rife­rimento cartesiano
+        nel piano
+
+  module_item6:
+    id:           ~
+    item_type_id: knowledge
+    module_id:      module1_3_flavia
+    position:     2
+    content:      |
+        le principali figure geometriche
+
+  module_item7:
+    id:           ~
+    item_type_id: skills
+    module_id:      module1_3_flavia
+    position:     1
+    content:      |
+        ricavare equazioni di rette, parabole e circonfe­renze in base ai dati
+
+  module_item8:
+    id:           ~
+    item_type_id: skills
+    module_id:      module1_3_flavia
+    position:     2
+    content:      |
+        classificare le figure in base all’equazione e rappresentarle nel
+        piano cartesiano
+
+  module_item9:
+    id:           ~
+    item_type_id: competencies
+    module_id:      module1_3_flavia
+    position:     1
+    content:      |
+        interpretare rappresentazioni grafiche
+
+  module_item10:
+    id:           ~
+    item_type_id: competencies
+    module_id:      module1_3_flavia
+    position:     2
+    content:      |
+        applicare metodologie risolutive e di calcolo

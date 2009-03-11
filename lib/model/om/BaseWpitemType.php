@@ -1,0 +1,597 @@
+<?php
+
+
+abstract class BaseWpitemType extends BaseObject  implements Persistent {
+
+
+  const PEER = 'WpitemTypePeer';
+
+	
+	protected static $peer;
+
+	
+	protected $id;
+
+	
+	protected $title;
+
+	
+	protected $description;
+
+	
+	protected $collWpmoduleItems;
+
+	
+	private $lastWpmoduleItemCriteria = null;
+
+	
+	protected $alreadyInSave = false;
+
+	
+	protected $alreadyInValidation = false;
+
+	
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
+
+	
+	public function applyDefaultValues()
+	{
+	}
+
+	
+	public function getId()
+	{
+		return $this->id;
+	}
+
+	
+	public function getTitle()
+	{
+		return $this->title;
+	}
+
+	
+	public function getDescription()
+	{
+		return $this->description;
+	}
+
+	
+	public function setId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->id !== $v) {
+			$this->id = $v;
+			$this->modifiedColumns[] = WpitemTypePeer::ID;
+		}
+
+		return $this;
+	} 
+	
+	public function setTitle($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->title !== $v) {
+			$this->title = $v;
+			$this->modifiedColumns[] = WpitemTypePeer::TITLE;
+		}
+
+		return $this;
+	} 
+	
+	public function setDescription($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->description !== $v) {
+			$this->description = $v;
+			$this->modifiedColumns[] = WpitemTypePeer::DESCRIPTION;
+		}
+
+		return $this;
+	} 
+	
+	public function hasOnlyDefaultValues()
+	{
+						if (array_diff($this->modifiedColumns, array())) {
+				return false;
+			}
+
+				return true;
+	} 
+	
+	public function hydrate($row, $startcol = 0, $rehydrate = false)
+	{
+		try {
+
+			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
+			$this->title = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
+			$this->description = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->resetModified();
+
+			$this->setNew(false);
+
+			if ($rehydrate) {
+				$this->ensureConsistency();
+			}
+
+						return $startcol + 3; 
+		} catch (Exception $e) {
+			throw new PropelException("Error populating WpitemType object", $e);
+		}
+	}
+
+	
+	public function ensureConsistency()
+	{
+
+	} 
+	
+	public function reload($deep = false, PropelPDO $con = null)
+	{
+		if ($this->isDeleted()) {
+			throw new PropelException("Cannot reload a deleted object.");
+		}
+
+		if ($this->isNew()) {
+			throw new PropelException("Cannot reload an unsaved object.");
+		}
+
+		if ($con === null) {
+			$con = Propel::getConnection(WpitemTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+				
+		$stmt = WpitemTypePeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+		$row = $stmt->fetch(PDO::FETCH_NUM);
+		$stmt->closeCursor();
+		if (!$row) {
+			throw new PropelException('Cannot find matching row in the database to reload object values.');
+		}
+		$this->hydrate($row, 0, true); 
+		if ($deep) {  
+			$this->collWpmoduleItems = null;
+			$this->lastWpmoduleItemCriteria = null;
+
+		} 	}
+
+	
+	public function delete(PropelPDO $con = null)
+	{
+		if ($this->isDeleted()) {
+			throw new PropelException("This object has already been deleted.");
+		}
+
+		if ($con === null) {
+			$con = Propel::getConnection(WpitemTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+		}
+		
+		$con->beginTransaction();
+		try {
+			WpitemTypePeer::doDelete($this, $con);
+			$this->setDeleted(true);
+			$con->commit();
+		} catch (PropelException $e) {
+			$con->rollBack();
+			throw $e;
+		}
+	}
+
+	
+	public function save(PropelPDO $con = null)
+	{
+		if ($this->isDeleted()) {
+			throw new PropelException("You cannot save an object that has been deleted.");
+		}
+
+		if ($con === null) {
+			$con = Propel::getConnection(WpitemTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+		}
+		
+		$con->beginTransaction();
+		try {
+			$affectedRows = $this->doSave($con);
+			$con->commit();
+			WpitemTypePeer::addInstanceToPool($this);
+			return $affectedRows;
+		} catch (PropelException $e) {
+			$con->rollBack();
+			throw $e;
+		}
+	}
+
+	
+	protected function doSave(PropelPDO $con)
+	{
+		$affectedRows = 0; 		if (!$this->alreadyInSave) {
+			$this->alreadyInSave = true;
+
+			if ($this->isNew() ) {
+				$this->modifiedColumns[] = WpitemTypePeer::ID;
+			}
+
+						if ($this->isModified()) {
+				if ($this->isNew()) {
+					$pk = WpitemTypePeer::doInsert($this, $con);
+					$affectedRows += 1; 										 										 
+					$this->setId($pk);  
+					$this->setNew(false);
+				} else {
+					$affectedRows += WpitemTypePeer::doUpdate($this, $con);
+				}
+
+				$this->resetModified(); 			}
+
+			if ($this->collWpmoduleItems !== null) {
+				foreach ($this->collWpmoduleItems as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			$this->alreadyInSave = false;
+
+		}
+		return $affectedRows;
+	} 
+	
+	protected $validationFailures = array();
+
+	
+	public function getValidationFailures()
+	{
+		return $this->validationFailures;
+	}
+
+	
+	public function validate($columns = null)
+	{
+		$res = $this->doValidate($columns);
+		if ($res === true) {
+			$this->validationFailures = array();
+			return true;
+		} else {
+			$this->validationFailures = $res;
+			return false;
+		}
+	}
+
+	
+	protected function doValidate($columns = null)
+	{
+		if (!$this->alreadyInValidation) {
+			$this->alreadyInValidation = true;
+			$retval = null;
+
+			$failureMap = array();
+
+
+			if (($retval = WpitemTypePeer::doValidate($this, $columns)) !== true) {
+				$failureMap = array_merge($failureMap, $retval);
+			}
+
+
+				if ($this->collWpmoduleItems !== null) {
+					foreach ($this->collWpmoduleItems as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+
+			$this->alreadyInValidation = false;
+		}
+
+		return (!empty($failureMap) ? $failureMap : true);
+	}
+
+	
+	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
+	{
+		$pos = WpitemTypePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$field = $this->getByPosition($pos);
+		return $field;
+	}
+
+	
+	public function getByPosition($pos)
+	{
+		switch($pos) {
+			case 0:
+				return $this->getId();
+				break;
+			case 1:
+				return $this->getTitle();
+				break;
+			case 2:
+				return $this->getDescription();
+				break;
+			default:
+				return null;
+				break;
+		} 	}
+
+	
+	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
+	{
+		$keys = WpitemTypePeer::getFieldNames($keyType);
+		$result = array(
+			$keys[0] => $this->getId(),
+			$keys[1] => $this->getTitle(),
+			$keys[2] => $this->getDescription(),
+		);
+		return $result;
+	}
+
+	
+	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
+	{
+		$pos = WpitemTypePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		return $this->setByPosition($pos, $value);
+	}
+
+	
+	public function setByPosition($pos, $value)
+	{
+		switch($pos) {
+			case 0:
+				$this->setId($value);
+				break;
+			case 1:
+				$this->setTitle($value);
+				break;
+			case 2:
+				$this->setDescription($value);
+				break;
+		} 	}
+
+	
+	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
+	{
+		$keys = WpitemTypePeer::getFieldNames($keyType);
+
+		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
+		if (array_key_exists($keys[1], $arr)) $this->setTitle($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setDescription($arr[$keys[2]]);
+	}
+
+	
+	public function buildCriteria()
+	{
+		$criteria = new Criteria(WpitemTypePeer::DATABASE_NAME);
+
+		if ($this->isColumnModified(WpitemTypePeer::ID)) $criteria->add(WpitemTypePeer::ID, $this->id);
+		if ($this->isColumnModified(WpitemTypePeer::TITLE)) $criteria->add(WpitemTypePeer::TITLE, $this->title);
+		if ($this->isColumnModified(WpitemTypePeer::DESCRIPTION)) $criteria->add(WpitemTypePeer::DESCRIPTION, $this->description);
+
+		return $criteria;
+	}
+
+	
+	public function buildPkeyCriteria()
+	{
+		$criteria = new Criteria(WpitemTypePeer::DATABASE_NAME);
+
+		$criteria->add(WpitemTypePeer::ID, $this->id);
+
+		return $criteria;
+	}
+
+	
+	public function getPrimaryKey()
+	{
+		return $this->getId();
+	}
+
+	
+	public function setPrimaryKey($key)
+	{
+		$this->setId($key);
+	}
+
+	
+	public function copyInto($copyObj, $deepCopy = false)
+	{
+
+		$copyObj->setTitle($this->title);
+
+		$copyObj->setDescription($this->description);
+
+
+		if ($deepCopy) {
+									$copyObj->setNew(false);
+
+			foreach ($this->getWpmoduleItems() as $relObj) {
+				if ($relObj !== $this) {  					$copyObj->addWpmoduleItem($relObj->copy($deepCopy));
+				}
+			}
+
+		} 
+
+		$copyObj->setNew(true);
+
+		$copyObj->setId(NULL); 
+	}
+
+	
+	public function copy($deepCopy = false)
+	{
+				$clazz = get_class($this);
+		$copyObj = new $clazz();
+		$this->copyInto($copyObj, $deepCopy);
+		return $copyObj;
+	}
+
+	
+	public function getPeer()
+	{
+		if (self::$peer === null) {
+			self::$peer = new WpitemTypePeer();
+		}
+		return self::$peer;
+	}
+
+	
+	public function clearWpmoduleItems()
+	{
+		$this->collWpmoduleItems = null; 	}
+
+	
+	public function initWpmoduleItems()
+	{
+		$this->collWpmoduleItems = array();
+	}
+
+	
+	public function getWpmoduleItems($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WpitemTypePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWpmoduleItems === null) {
+			if ($this->isNew()) {
+			   $this->collWpmoduleItems = array();
+			} else {
+
+				$criteria->add(WpmoduleItemPeer::WPITEM_TYPE_ID, $this->id);
+
+				WpmoduleItemPeer::addSelectColumns($criteria);
+				$this->collWpmoduleItems = WpmoduleItemPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WpmoduleItemPeer::WPITEM_TYPE_ID, $this->id);
+
+				WpmoduleItemPeer::addSelectColumns($criteria);
+				if (!isset($this->lastWpmoduleItemCriteria) || !$this->lastWpmoduleItemCriteria->equals($criteria)) {
+					$this->collWpmoduleItems = WpmoduleItemPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastWpmoduleItemCriteria = $criteria;
+		return $this->collWpmoduleItems;
+	}
+
+	
+	public function countWpmoduleItems(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WpitemTypePeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collWpmoduleItems === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(WpmoduleItemPeer::WPITEM_TYPE_ID, $this->id);
+
+				$count = WpmoduleItemPeer::doCount($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WpmoduleItemPeer::WPITEM_TYPE_ID, $this->id);
+
+				if (!isset($this->lastWpmoduleItemCriteria) || !$this->lastWpmoduleItemCriteria->equals($criteria)) {
+					$count = WpmoduleItemPeer::doCount($criteria, $con);
+				} else {
+					$count = count($this->collWpmoduleItems);
+				}
+			} else {
+				$count = count($this->collWpmoduleItems);
+			}
+		}
+		$this->lastWpmoduleItemCriteria = $criteria;
+		return $count;
+	}
+
+	
+	public function addWpmoduleItem(WpmoduleItem $l)
+	{
+		if ($this->collWpmoduleItems === null) {
+			$this->initWpmoduleItems();
+		}
+		if (!in_array($l, $this->collWpmoduleItems, true)) { 			array_push($this->collWpmoduleItems, $l);
+			$l->setWpitemType($this);
+		}
+	}
+
+
+	
+	public function getWpmoduleItemsJoinWpmodule($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WpitemTypePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWpmoduleItems === null) {
+			if ($this->isNew()) {
+				$this->collWpmoduleItems = array();
+			} else {
+
+				$criteria->add(WpmoduleItemPeer::WPITEM_TYPE_ID, $this->id);
+
+				$this->collWpmoduleItems = WpmoduleItemPeer::doSelectJoinWpmodule($criteria, $con, $join_behavior);
+			}
+		} else {
+									
+			$criteria->add(WpmoduleItemPeer::WPITEM_TYPE_ID, $this->id);
+
+			if (!isset($this->lastWpmoduleItemCriteria) || !$this->lastWpmoduleItemCriteria->equals($criteria)) {
+				$this->collWpmoduleItems = WpmoduleItemPeer::doSelectJoinWpmodule($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastWpmoduleItemCriteria = $criteria;
+
+		return $this->collWpmoduleItems;
+	}
+
+	
+	public function clearAllReferences($deep = false)
+	{
+		if ($deep) {
+			if ($this->collWpmoduleItems) {
+				foreach ((array) $this->collWpmoduleItems as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
+		} 
+		$this->collWpmoduleItems = null;
+	}
+
+} 

@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<xliff version="1.0">
+  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-02-08T21:05:20Z" product-name="messages">
+    <body>
+      <trans-unit id="1">
+        <source>This school's name is: </source>
+        <target>Il nome di questa scuola &#xE8;: </target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source>New message...</source>
+        <target>Nuovo messaggio...</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>Forgot your password?</source>
+        <target>Dimenticata la password?</target>
+      </trans-unit>
+      <trans-unit id="4">
+        <source>An integrated environment for school applications</source>
+        <target>Un ambiente integrato per applicazioni scolastiche</target>
+      </trans-unit>
+      <trans-unit id="5">
+        <source>Current profile (year %year%)</source>
+        <target>Profilo corrente (anno %year%)</target>
+      </trans-unit>
+      <trans-unit id="6">
+        <source>What I teach</source>
+        <target>I miei insegnamenti</target>
+      </trans-unit>
+      <trans-unit id="7">
+        <source>Which groups I belong to</source>
+        <target>I gruppi a cui appartengo</target>
+      </trans-unit>
+      <trans-unit id="8">
+        <source>Who am I? </source>
+        <target>Chi sono? </target>
+      </trans-unit>
+      <trans-unit id="9">
+        <source>Is Admin? </source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="10">
+        <source>Appointment List</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="11">
+        <source>%fullname% logged out</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="12">
+        <source>Login status of %fullname% (&lt;strong&gt;%username%&lt;/strong&gt;) from workstation %workstation% (%ip%): </source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="13">
+        <source>Login time: %timestamp%</source>
+        <target>Logon: %timestamp%</target>
+      </trans-unit>
+      <trans-unit id="14">
+        <source>Logout time: %timestamp%</source>
+        <target>Logooff: %timestamp%</target>
+      </trans-unit>
+      <trans-unit id="15">
+        <source>%fullname% logged in</source>
+        <target>%fullname% ha effettuato il login</target>
+      </trans-unit>
+      <trans-unit id="16">
+        <source>Last time seen: %timestamp%</source>
+        <target>Ultimo accesso: %timestamp%</target>
+      </trans-unit>
+      <trans-unit id="17">
+        <source>Permissions list</source>
+        <target>Elenco permessi</target>
+      </trans-unit>
+      <trans-unit id="18">
+        <source>Workstation Management</source>
+        <target>Gestione calcolatori</target>
+      </trans-unit>
+      <trans-unit id="19">
+        <source>Editing settings for workstation %%name%%</source>
+        <target>Impostazioni per il calcolatore %%name%%</target>
+      </trans-unit>
+      <trans-unit id="20">
+        <source>Name</source>
+        <target>Nome</target>
+      </trans-unit>
+      <trans-unit id="21">
+        <source>IP Address</source>
+        <target>Indirizzo IP</target>
+      </trans-unit>
+      <trans-unit id="22">
+        <source>Toggle Internet access</source>
+        <target>Abilita/disabilita accesso a Internet</target>
+      </trans-unit>
+      <trans-unit id="23">
+        <source>Basic</source>
+        <target>Impostazioni di base</target>
+      </trans-unit>
+      <trans-unit id="24">
+        <source>Advanced</source>
+        <target>Impostazioni avanzate</target>
+      </trans-unit>
+      <trans-unit id="25">
+        <source>Internet access</source>
+        <target>Accesso ad Internet</target>
+      </trans-unit>
+      <trans-unit id="26">
+        <source>Internet-enabled?</source>
+        <target>Accesso ad Internet abilitato?</target>
+      </trans-unit>
+      <trans-unit id="27">
+        <source>You don't have the required permission to access this page.</source>
+        <target>Non disponi dei permessi necessari per accedere a questa pagina.</target>
+      </trans-unit>
+      <trans-unit id="28">
+        <source>Workstation Internet-enabled</source>
+        <target>Calcolatore abilitato all'accesso a Internet</target>
+      </trans-unit>
+      <trans-unit id="29">
+        <source>Workstation Internet-disabled</source>
+        <target>Calcolatore non abilitato all'accesso a Internet</target>
+      </trans-unit>
+      <trans-unit id="30">
+        <source>Soft authentication: </source>
+        <target>Autenticazione leggera: </target>
+      </trans-unit>
+      <trans-unit id="31">
+        <source>you were recognized as user &lt;b&gt;%username%&lt;/b&gt;  (%fullname%) by using network logs.</source>
+        <target>in base ai registri di sistema, sei stato riconosciuto come  &lt;b&gt;%username%&lt;/b&gt; (%fullname%).</target>
+      </trans-unit>
+      <trans-unit id="32">
+        <source>you were not recognized.</source>
+        <target>non sei stato riconosciuto.</target>
+      </trans-unit>
+      <trans-unit id="33">
+        <source>Normal authentication: </source>
+        <target>Autenticazione ordinaria: </target>
+      </trans-unit>
+      <trans-unit id="34">
+        <source>you logged in as user &lt;b&gt;%username%&lt;/b&gt;  (%fullname%).</source>
+        <target>hai fatto il login come &lt;b&gt;%username%&lt;/b&gt;  (%fullname%).</target>
+      </trans-unit>
+      <trans-unit id="35">
+        <source>It seems you are a guest of %fullname%.</source>
+        <target>Sembra che tu sia un ospite di %fullname%.</target>
+      </trans-unit>
+      <trans-unit id="36">
+        <source>Checked</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="37">
+        <source>You may login</source>
+        <target>Puoi&amp;nbsp;fare&amp;nbsp;il&amp;nbsp;login</target>
+      </trans-unit>
+      <trans-unit id="39">
+        <source>You may logout</source>
+        <target>Puoi&amp;nbsp;fare&amp;nbsp;il&amp;nbsp;logout</target>
+      </trans-unit>
+      <trans-unit id="42">
+        <source>Who, when, where, what, why...</source>
+        <target>Chi, quando, dove, cosa, perch&#xE9;...</target>
+      </trans-unit>
+      <trans-unit id="43">
+        <source>you were recognized as user &lt;b&gt;%username%&lt;/b&gt;  (%fullname%) by means of network logs. &lt;!--male--&gt;</source>
+        <target>in base ai registri di sistema, sei stato riconosciuto come  &lt;b&gt;%username%&lt;/b&gt; (%fullname%).</target>
+      </trans-unit>
+      <trans-unit id="44">
+        <source>you were recognized as user &lt;b&gt;%username%&lt;/b&gt;  (%fullname%) by means of network logs. &lt;!--female--&gt;</source>
+        <target>in base ai registri di sistema, sei stata riconosciuta come  &lt;b&gt;%username%&lt;/b&gt; (%fullname%).</target>
+      </trans-unit>
+      <trans-unit id="45">
+        <source>It seems you are a guest of %fullname%. &lt;!--male--&gt;</source>
+        <target>Sembra che tu sia un ospite di %fullname%.</target>
+      </trans-unit>
+      <trans-unit id="46">
+        <source>It seems you are a guest of %fullname%. &lt;!--female--&gt;</source>
+        <target>Sembra che tu sia un'ospite di %fullname%.</target>
+      </trans-unit>
+      <trans-unit id="47">
+        <source>%fullname%'s profile</source>
+        <target>Profilo di %fullname%</target>
+      </trans-unit>
+      <trans-unit id="48">
+        <source>%fullname%: my profile</source>
+        <target>%fullname%: il mio profilo</target>
+      </trans-unit>
+      <trans-unit id="49">
+        <source>You are using %percentage%% of your assigned disk space.</source>
+        <target>Quota disco usata: %percentage%%.</target>
+      </trans-unit>
+      <trans-unit id="50">
+        <source>Last check was on %date%.</source>
+        <target>L'ultimo controllo &#xE8; stato fatto il %date%.</target>
+      </trans-unit>
+      <trans-unit id="51">
+        <source>Home</source>
+        <target>Pagina iniziale</target>
+      </trans-unit>
+      <trans-unit id="52">
+        <source>Who's on line</source>
+        <target>Chi &#xE8; on line</target>
+      </trans-unit>
+      <trans-unit id="53">
+        <source>My profile</source>
+        <target>Il mio profilo</target>
+      </trans-unit>
+      <trans-unit id="54">
+        <source>Workstation list</source>
+        <target>Gestione calcolatori</target>
+      </trans-unit>
+      <trans-unit id="55">
+        <source>You need to login to access the page you requested.</source>
+        <target>Devi fare il login per accedere alla pagina richiesta.</target>
+      </trans-unit>
+      <trans-unit id="56">
+        <source>The selected workstation has been Internet-enabled successfully</source>
+        <target>Il calcolatore selezionato è stato abilitato per l'accesso a Internet.</target>
+      </trans-unit>
+      <trans-unit id="57">
+        <source>The selected workstations have been enabled successfully.</source>
+        <target>I calcolatori selezionati sono stati abilitati per l'accesso a Internet.</target>
+      </trans-unit>
+      <trans-unit id="58">
+        <source>The selected workstations have been disabled successfully.</source>
+        <target>I calcolatori selezionati sono stati disabilitati per l'accesso a Internet.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
