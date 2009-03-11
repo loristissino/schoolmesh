@@ -1,0 +1,19 @@
+Module:
+  module1_3_flavia:
+    id:
+    shortcut:     3-piano-cartesiano
+    user_id:      flavia
+    title:        La geometria nel piano cartesiano
+    period:       settembre - novembre
+    is_public:    true
+    locked:       false
+      
+  module2_3_flavia:
+    id:
+    shortcut:     3-disequazioni-e-funzioni
+    user_id:      flavia
+    title:        Disequazioni e funzioni
+    period:       dicembre - marzo
+    is_public:    true
+    locked:       false
+

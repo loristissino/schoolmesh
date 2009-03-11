@@ -1,0 +1,133 @@
+sfGuardUser:
+  admin:
+    username:       admin
+    password:       adminp
+    is_super_admin: true
+    
+  loris:
+    username:       loris.tissino
+    password:       lorisp
+    is_superadmin:  false
+  
+  juri:
+    username:       juri.daldan
+    password:       jurip
+    is_superadmin:  false
+    
+  flavia:
+    username:       flavia.garlato
+    password:       flaviap
+    is_superadmin:  false
+    
+  francesco:
+    username:       francesco.gri
+    password:       francescop
+    is_superadmin:  false
+
+  bianca:
+    username:       bianca.bagala
+    password:       biancax
+    is_superadmin:  false
+
+  antonio:
+    username:       antonio.dulio
+    password:       antoniox
+    is_superadmin:  false
+
+  gabriella:
+    username:       gabriella.valvasori
+    password:       gx
+    is_superadmin:  false
+    
+
+sfGuardPermission:
+  admin:
+    name:           admin
+    description:    Amministrazione generale
+  planning:
+    name:           planning
+    description:    Pianificazione didattica
+  internet:
+    name:           internet
+    description:    Gestione accesso a Internet
+  quality_pub:
+    name:           quality_pub
+    description:    Gestione documentazione qualità
+  quality_rev:
+    name:           quality_rev
+    description:    Revisione documentazione qualità
+  project:
+    name:           project
+    description:    Progettazione attività scolastiche
+    
+  
+
+sfGuardGroup:
+  admin:
+    name:           admin
+    description:    Gruppo Amministratori
+  teacher:
+    name:           teacher
+    description:    Gruppo Docenti
+  technician:
+    name:           technician
+    description:    Gruppo Personale Tecnico e Amministrativo
+  student:
+    name:           student
+    description:    Gruppo Studenti
+  quality_rev:
+    name:           quality_rev
+    description:    Gruppo Revisori Documentazione Qualità
+  quality_pub:
+    name:           quality_pub
+    description:    Gruppo Gestori Documentazione Qualità
+
+
+
+sfGuardGroupPermission:
+  admin:
+    group_id:       admin
+    permission_id:  admin
+  teacher_planning:
+    group_id:       teacher
+    permission_id:  planning
+  teacher_internet:
+    group_id:       teacher
+    permission_id:  internet
+  technician_internet:
+    group_id:       technician
+    permission_id:  internet
+  technician_project:
+    group_id:       technician
+    permission_id:  project
+
+sfGuardUserGroup:
+  admin:
+    group_id:       admin
+    user_id:        admin
+  loris1:
+    group_id:       teacher
+    user_id:        loris
+  loris2:
+    group_id:       admin
+    user_id:        loris
+  francesco1:
+    group_id:       teacher
+    user_id:        francesco
+  francesco2:
+    group_id:       quality_rev
+    user_id:        francesco
+  flavia:
+    group_id:       teacher
+    user_id:        flavia
+  juri1:
+    group_id:       technician
+    user_id:        juri
+  juri2:
+    group_id:       admin
+    user_id:        juri
+  juri3:
+    group_id:       quality_pub
+    user_id:        juri
+  
+  

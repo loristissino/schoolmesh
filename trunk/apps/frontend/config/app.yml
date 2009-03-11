@@ -1,0 +1,22 @@
+all:
+  school:
+    name:           ITC Mattiussi
+    town:           Pordenone
+    website:        'http://www.itcmattiussi.it'
+
+  mail:
+    webmaster:      loris.tissino@mattiussilab.net
+    
+  config:
+    current_year:   2008  # only the first of the two years of a scholastic/academic year
+
+  ldap:
+    host: localhost
+    domain: dc=tissino,dc=it
+
+
+  sf_guard_plugin:
+    check_password_callable: [ldap, checkLdapPassword]
+
+  prelogin:
+    token: sekretToken  

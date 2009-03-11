@@ -1,0 +1,22 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           Appointment
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:            ~
+    plural:                ~
+    route_prefix:          appointment
+    with_propel_route:     1
+
+    config:
+      actions: ~
+      fields:
+        full_name: { label: Full Name}
+      list:
+        display: [ user_id, first_name, last_name, schoolclass, subject]
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:     ~
