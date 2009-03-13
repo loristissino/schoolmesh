@@ -19,6 +19,9 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 	protected $description;
 
 	
+	protected $rank;
+
+	
 	protected $collWpmoduleItems;
 
 	
@@ -58,6 +61,12 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 	public function getDescription()
 	{
 		return $this->description;
+	}
+
+	
+	public function getRank()
+	{
+		return $this->rank;
 	}
 
 	
@@ -103,6 +112,20 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setRank($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->rank !== $v) {
+			$this->rank = $v;
+			$this->modifiedColumns[] = WpitemTypePeer::RANK;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array())) {
@@ -119,6 +142,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->title = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->description = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->rank = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -127,7 +151,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 3; 
+						return $startcol + 4; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WpitemType object", $e);
 		}
@@ -320,6 +344,9 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			case 2:
 				return $this->getDescription();
 				break;
+			case 3:
+				return $this->getRank();
+				break;
 			default:
 				return null;
 				break;
@@ -333,6 +360,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getTitle(),
 			$keys[2] => $this->getDescription(),
+			$keys[3] => $this->getRank(),
 		);
 		return $result;
 	}
@@ -357,6 +385,9 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			case 2:
 				$this->setDescription($value);
 				break;
+			case 3:
+				$this->setRank($value);
+				break;
 		} 	}
 
 	
@@ -367,6 +398,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setTitle($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setDescription($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setRank($arr[$keys[3]]);
 	}
 
 	
@@ -377,6 +409,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpitemTypePeer::ID)) $criteria->add(WpitemTypePeer::ID, $this->id);
 		if ($this->isColumnModified(WpitemTypePeer::TITLE)) $criteria->add(WpitemTypePeer::TITLE, $this->title);
 		if ($this->isColumnModified(WpitemTypePeer::DESCRIPTION)) $criteria->add(WpitemTypePeer::DESCRIPTION, $this->description);
+		if ($this->isColumnModified(WpitemTypePeer::RANK)) $criteria->add(WpitemTypePeer::RANK, $this->rank);
 
 		return $criteria;
 	}
@@ -410,6 +443,8 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		$copyObj->setTitle($this->title);
 
 		$copyObj->setDescription($this->description);
+
+		$copyObj->setRank($this->rank);
 
 
 		if ($deepCopy) {

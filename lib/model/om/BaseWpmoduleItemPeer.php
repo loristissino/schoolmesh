@@ -28,7 +28,7 @@ abstract class BaseWpmoduleItemPeer {
 	const WPMODULE_ID = 'wpmodule_item.WPMODULE_ID';
 
 	
-	const POSITION = 'wpmodule_item.POSITION';
+	const RANK = 'wpmodule_item.RANK';
 
 	
 	const CONTENT = 'wpmodule_item.CONTENT';
@@ -41,19 +41,19 @@ abstract class BaseWpmoduleItemPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'WpitemTypeId', 'WpmoduleId', 'Position', 'Content', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'wpitemTypeId', 'wpmoduleId', 'position', 'content', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::WPITEM_TYPE_ID, self::WPMODULE_ID, self::POSITION, self::CONTENT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'wpitem_type_id', 'wpmodule_id', 'position', 'content', ),
+		BasePeer::TYPE_PHPNAME => array ('Id', 'WpitemTypeId', 'WpmoduleId', 'Rank', 'Content', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'wpitemTypeId', 'wpmoduleId', 'rank', 'content', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::WPITEM_TYPE_ID, self::WPMODULE_ID, self::RANK, self::CONTENT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'wpitem_type_id', 'wpmodule_id', 'rank', 'content', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'WpitemTypeId' => 1, 'WpmoduleId' => 2, 'Position' => 3, 'Content' => 4, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'wpitemTypeId' => 1, 'wpmoduleId' => 2, 'position' => 3, 'content' => 4, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::WPITEM_TYPE_ID => 1, self::WPMODULE_ID => 2, self::POSITION => 3, self::CONTENT => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'wpitem_type_id' => 1, 'wpmodule_id' => 2, 'position' => 3, 'content' => 4, ),
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'WpitemTypeId' => 1, 'WpmoduleId' => 2, 'Rank' => 3, 'Content' => 4, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'wpitemTypeId' => 1, 'wpmoduleId' => 2, 'rank' => 3, 'content' => 4, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::WPITEM_TYPE_ID => 1, self::WPMODULE_ID => 2, self::RANK => 3, self::CONTENT => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'wpitem_type_id' => 1, 'wpmodule_id' => 2, 'rank' => 3, 'content' => 4, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
@@ -102,7 +102,7 @@ abstract class BaseWpmoduleItemPeer {
 
 		$criteria->addSelectColumn(WpmoduleItemPeer::WPMODULE_ID);
 
-		$criteria->addSelectColumn(WpmoduleItemPeer::POSITION);
+		$criteria->addSelectColumn(WpmoduleItemPeer::RANK);
 
 		$criteria->addSelectColumn(WpmoduleItemPeer::CONTENT);
 
@@ -697,7 +697,7 @@ abstract class BaseWpmoduleItemPeer {
 
   static public function getUniqueColumnNames()
   {
-    return array(array('wpmodule_id', 'wpitem_type_id', 'position'));
+    return array(array('wpmodule_id', 'wpitem_type_id', 'rank'));
   }
 	
 	public static function getTableMap()

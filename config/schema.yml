@@ -110,15 +110,16 @@ propel:
     id:
     title:        varchar(50)
     description:  varchar(200)
+    rank:    { type: integer, required: true }
     
   wpmodule_item:
     id:           ~
     wpitem_type_id: 
     wpmodule_id:
-    position:     integer
+    rank:    { type: integer, required: true }
     content:      longvarchar
     _uniques:
-      id_pos:     [wpmodule_id, wpitem_type_id, position]
+      id_pos:     [wpmodule_id, wpitem_type_id, rank]
 
 
   subnet:
@@ -161,10 +162,5 @@ propel:
     subnet_id: { type: integer, primaryKey: true, required: true, foreignTable: subnet, foreignReference: id, onDelete: cascade }
     service_id: { type: integer, primaryKey: true, required: true, foreignTable: service, foreignReference: id, onDelete: cascade }
     
-  song:
-    id:
-    title: { type: varchar(40), index: true, unique: true }
-    author: { type: varchar(40), index: true, unique: true }
-
 
 # a comment

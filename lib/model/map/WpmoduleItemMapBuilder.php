@@ -39,7 +39,7 @@ class WpmoduleItemMapBuilder implements MapBuilder {
 
 		$tMap->addForeignKey('WPMODULE_ID', 'WpmoduleId', 'INTEGER', 'wpmodule', 'ID', false, null);
 
-		$tMap->addColumn('POSITION', 'Position', 'INTEGER', false, null);
+		$tMap->addColumn('RANK', 'Rank', 'INTEGER', true, null);
 
 		$tMap->addColumn('CONTENT', 'Content', 'LONGVARCHAR', false, null);
 

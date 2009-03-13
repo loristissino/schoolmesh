@@ -19,7 +19,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	protected $wpmodule_id;
 
 	
-	protected $position;
+	protected $rank;
 
 	
 	protected $content;
@@ -67,9 +67,9 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getPosition()
+	public function getRank()
 	{
-		return $this->position;
+		return $this->rank;
 	}
 
 	
@@ -129,15 +129,15 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
-	public function setPosition($v)
+	public function setRank($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
 		}
 
-		if ($this->position !== $v) {
-			$this->position = $v;
-			$this->modifiedColumns[] = WpmoduleItemPeer::POSITION;
+		if ($this->rank !== $v) {
+			$this->rank = $v;
+			$this->modifiedColumns[] = WpmoduleItemPeer::RANK;
 		}
 
 		return $this;
@@ -173,7 +173,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->wpitem_type_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->wpmodule_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->position = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->rank = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->content = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->resetModified();
 
@@ -395,7 +395,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 				return $this->getWpmoduleId();
 				break;
 			case 3:
-				return $this->getPosition();
+				return $this->getRank();
 				break;
 			case 4:
 				return $this->getContent();
@@ -413,7 +413,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getWpitemTypeId(),
 			$keys[2] => $this->getWpmoduleId(),
-			$keys[3] => $this->getPosition(),
+			$keys[3] => $this->getRank(),
 			$keys[4] => $this->getContent(),
 		);
 		return $result;
@@ -440,7 +440,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 				$this->setWpmoduleId($value);
 				break;
 			case 3:
-				$this->setPosition($value);
+				$this->setRank($value);
 				break;
 			case 4:
 				$this->setContent($value);
@@ -455,7 +455,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setWpitemTypeId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setWpmoduleId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setPosition($arr[$keys[3]]);
+		if (array_key_exists($keys[3], $arr)) $this->setRank($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setContent($arr[$keys[4]]);
 	}
 
@@ -467,7 +467,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpmoduleItemPeer::ID)) $criteria->add(WpmoduleItemPeer::ID, $this->id);
 		if ($this->isColumnModified(WpmoduleItemPeer::WPITEM_TYPE_ID)) $criteria->add(WpmoduleItemPeer::WPITEM_TYPE_ID, $this->wpitem_type_id);
 		if ($this->isColumnModified(WpmoduleItemPeer::WPMODULE_ID)) $criteria->add(WpmoduleItemPeer::WPMODULE_ID, $this->wpmodule_id);
-		if ($this->isColumnModified(WpmoduleItemPeer::POSITION)) $criteria->add(WpmoduleItemPeer::POSITION, $this->position);
+		if ($this->isColumnModified(WpmoduleItemPeer::RANK)) $criteria->add(WpmoduleItemPeer::RANK, $this->rank);
 		if ($this->isColumnModified(WpmoduleItemPeer::CONTENT)) $criteria->add(WpmoduleItemPeer::CONTENT, $this->content);
 
 		return $criteria;
@@ -503,7 +503,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 
 		$copyObj->setWpmoduleId($this->wpmodule_id);
 
-		$copyObj->setPosition($this->position);
+		$copyObj->setRank($this->rank);
 
 		$copyObj->setContent($this->content);
 

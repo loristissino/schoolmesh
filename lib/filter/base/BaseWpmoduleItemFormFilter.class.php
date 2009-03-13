@@ -17,14 +17,14 @@ class BaseWpmoduleItemFormFilter extends BaseFormFilterPropel
     $this->setWidgets(array(
       'wpitem_type_id' => new sfWidgetFormPropelChoice(array('model' => 'WpitemType', 'add_empty' => true)),
       'wpmodule_id'    => new sfWidgetFormPropelChoice(array('model' => 'Wpmodule', 'add_empty' => true)),
-      'position'       => new sfWidgetFormFilterInput(),
+      'rank'           => new sfWidgetFormFilterInput(),
       'content'        => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
       'wpitem_type_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'WpitemType', 'column' => 'id')),
       'wpmodule_id'    => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Wpmodule', 'column' => 'id')),
-      'position'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'rank'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'content'        => new sfValidatorPass(array('required' => false)),
     ));
 
@@ -46,7 +46,7 @@ class BaseWpmoduleItemFormFilter extends BaseFormFilterPropel
       'id'             => 'Number',
       'wpitem_type_id' => 'ForeignKey',
       'wpmodule_id'    => 'ForeignKey',
-      'position'       => 'Number',
+      'rank'           => 'Number',
       'content'        => 'Text',
     );
   }
