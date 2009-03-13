@@ -17,7 +17,7 @@
 - _Google Apps_ (webmail, calendar, and file co-management)
 
 - _Moodle_ (e-learning activities)
-  
+
 There will also be some place for activities like Teachers' workplans and final reports.
 
 = Development =
