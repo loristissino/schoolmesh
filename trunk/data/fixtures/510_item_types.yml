@@ -1,0 +1,22 @@
+WpitemType:
+  contents:
+    title:        Contenuti
+    description:  Argomenti disciplinari trattati
+    rank:      0
+  knowledge:
+    title:        Conoscenze
+    description:  Nuclei fondanti della disciplina, saperi essenziali
+    rank:      1
+  skills:
+    title:        Abilità
+    description:  |
+         Capacità nell'utilizzare e padroneggiare conoscenze anche 
+         per portare a termine compiti e risolvere problemi 
+    rank:     2
+  competencies:
+    title:        Competenze
+    description:  |
+         Capacità di usare conoscenze, abilità e capacità personali 
+         in situazioni di lavoro/studio
+    rank:     3
+

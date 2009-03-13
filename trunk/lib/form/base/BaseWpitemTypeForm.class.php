@@ -16,12 +16,14 @@ class BaseWpitemTypeForm extends BaseFormPropel
       'id'          => new sfWidgetFormInputHidden(),
       'title'       => new sfWidgetFormInput(),
       'description' => new sfWidgetFormInput(),
+      'rank'        => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
       'id'          => new sfValidatorPropelChoice(array('model' => 'WpitemType', 'column' => 'id', 'required' => false)),
       'title'       => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'description' => new sfValidatorString(array('max_length' => 200, 'required' => false)),
+      'rank'        => new sfValidatorInteger(),
     ));
 
     $this->widgetSchema->setNameFormat('wpitem_type[%s]');

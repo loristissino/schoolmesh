@@ -13,7 +13,7 @@ abstract class BaseWpitemTypePeer {
 	const CLASS_DEFAULT = 'lib.model.WpitemType';
 
 	
-	const NUM_COLUMNS = 3;
+	const NUM_COLUMNS = 4;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -28,6 +28,9 @@ abstract class BaseWpitemTypePeer {
 	const DESCRIPTION = 'wpitem_type.DESCRIPTION';
 
 	
+	const RANK = 'wpitem_type.RANK';
+
+	
 	public static $instances = array();
 
 	
@@ -35,20 +38,20 @@ abstract class BaseWpitemTypePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Description', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'description', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::DESCRIPTION, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'description', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Description', 'Rank', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'description', 'rank', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::DESCRIPTION, self::RANK, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'description', 'rank', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Description' => 2, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'description' => 2, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::DESCRIPTION => 2, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'description' => 2, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Description' => 2, 'Rank' => 3, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::DESCRIPTION => 2, self::RANK => 3, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
 	
@@ -95,6 +98,8 @@ abstract class BaseWpitemTypePeer {
 		$criteria->addSelectColumn(WpitemTypePeer::TITLE);
 
 		$criteria->addSelectColumn(WpitemTypePeer::DESCRIPTION);
+
+		$criteria->addSelectColumn(WpitemTypePeer::RANK);
 
 	}
 

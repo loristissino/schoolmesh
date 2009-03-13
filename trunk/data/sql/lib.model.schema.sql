@@ -282,6 +282,7 @@ CREATE TABLE `wpitem_type`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`title` VARCHAR(50),
 	`description` VARCHAR(200),
+	`rank` INTEGER  NOT NULL,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
@@ -297,10 +298,10 @@ CREATE TABLE `wpmodule_item`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`wpitem_type_id` INTEGER,
 	`wpmodule_id` INTEGER,
-	`position` INTEGER,
+	`rank` INTEGER  NOT NULL,
 	`content` TEXT,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `id_pos` (`wpmodule_id`, `wpitem_type_id`, `position`),
+	UNIQUE KEY `id_pos` (`wpmodule_id`, `wpitem_type_id`, `rank`),
 	INDEX `wpmodule_item_FI_1` (`wpitem_type_id`),
 	CONSTRAINT `wpmodule_item_FK_1`
 		FOREIGN KEY (`wpitem_type_id`)
@@ -440,23 +441,6 @@ CREATE TABLE `subnet_service`
 		FOREIGN KEY (`service_id`)
 		REFERENCES `service` (`id`)
 		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- song
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `song`;
-
-
-CREATE TABLE `song`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(40),
-	`author` VARCHAR(40),
-	PRIMARY KEY (`id`),
-	KEY `song_I_1`(`title`),
-	KEY `song_I_2`(`author`)
 )Type=InnoDB;
 
 # This restores the fkey checks, after having unset them earlier

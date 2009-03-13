@@ -16,7 +16,7 @@ class BaseWpmoduleItemForm extends BaseFormPropel
       'id'             => new sfWidgetFormInputHidden(),
       'wpitem_type_id' => new sfWidgetFormPropelChoice(array('model' => 'WpitemType', 'add_empty' => true)),
       'wpmodule_id'    => new sfWidgetFormPropelChoice(array('model' => 'Wpmodule', 'add_empty' => true)),
-      'position'       => new sfWidgetFormInput(),
+      'rank'           => new sfWidgetFormInput(),
       'content'        => new sfWidgetFormTextarea(),
     ));
 
@@ -24,12 +24,12 @@ class BaseWpmoduleItemForm extends BaseFormPropel
       'id'             => new sfValidatorPropelChoice(array('model' => 'WpmoduleItem', 'column' => 'id', 'required' => false)),
       'wpitem_type_id' => new sfValidatorPropelChoice(array('model' => 'WpitemType', 'column' => 'id', 'required' => false)),
       'wpmodule_id'    => new sfValidatorPropelChoice(array('model' => 'Wpmodule', 'column' => 'id', 'required' => false)),
-      'position'       => new sfValidatorInteger(array('required' => false)),
+      'rank'           => new sfValidatorInteger(),
       'content'        => new sfValidatorString(array('required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorPropelUnique(array('model' => 'WpmoduleItem', 'column' => array('wpmodule_id', 'wpitem_type_id', 'position')))
+      new sfValidatorPropelUnique(array('model' => 'WpmoduleItem', 'column' => array('wpmodule_id', 'wpitem_type_id', 'rank')))
     );
 
     $this->widgetSchema->setNameFormat('wpmodule_item[%s]');

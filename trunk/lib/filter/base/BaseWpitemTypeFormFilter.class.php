@@ -17,11 +17,13 @@ class BaseWpitemTypeFormFilter extends BaseFormFilterPropel
     $this->setWidgets(array(
       'title'       => new sfWidgetFormFilterInput(),
       'description' => new sfWidgetFormFilterInput(),
+      'rank'        => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
       'title'       => new sfValidatorPass(array('required' => false)),
       'description' => new sfValidatorPass(array('required' => false)),
+      'rank'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('wpitem_type_filters[%s]');
@@ -42,6 +44,7 @@ class BaseWpitemTypeFormFilter extends BaseFormFilterPropel
       'id'          => 'Number',
       'title'       => 'Text',
       'description' => 'Text',
+      'rank'        => 'Number',
     );
   }
 }
