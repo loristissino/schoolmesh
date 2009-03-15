@@ -93,6 +93,18 @@ propel:
     _uniques:
       utr: [user_id, team_id, role_id]
 
+  workplan:
+    id:  ~
+    user_id:  	{ type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict }
+    year_id:  { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, required: true }
+    schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, required: true }
+    subject_id:   { type: integer, foreignTable: subject, foreignReference: id, onDelete: restrict, required: true }
+    created_at:   ~
+    updated_at:   ~
+    is_locked:       boolean
+    _uniques:
+      uyss: [user_id, year_id, schoolclass_id, subject_id]
+
   wpmodule:
     id:
     shortcut:     { type: varchar(20); required: false }
@@ -107,7 +119,7 @@ propel:
       id_s:       [user_id, shortcut]
       
   wpitem_type:
-    id:
+    id:          ~
     title:        varchar(50)
     description:  varchar(200)
     rank:    { type: integer, required: true }

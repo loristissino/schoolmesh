@@ -3,9 +3,9 @@
 /**
  * unit actions.
  *
- * @package    mattiussi
+ * @package   schoolmesh
  * @subpackage unit
- * @author     Your name here
+ * @author     Loris Tissino
  * @version    SVN: $Id: actions.class.php 8507 2008-04-17 17:32:20Z fabien $
  */
 class unitActions extends sfActions

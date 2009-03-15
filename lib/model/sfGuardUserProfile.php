@@ -28,6 +28,16 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		return $t;
         }
 
+        public function getWorkplans()
+        {
+	    $c = new Criteria();
+		$c->add(WorkplanPeer::USER_ID, $this->getUserId());
+		$c->addDescendingOrderByColumn(WorkplanPeer::YEAR_ID);
+		$c->addAscendingOrderByColumn(WorkplanPeer::SCHOOLCLASS_ID);
+		$t = WorkplanPeer::doSelectJoinAllExceptsfGuardUser($c);
+		return $t;
+        }
+
         public function getTeams()
         {
 	        $c = new Criteria();

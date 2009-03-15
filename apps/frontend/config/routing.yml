@@ -51,6 +51,14 @@ workstation:
     column:              id
     with_wildcard_routes: true
 
+workplan:
+  class: sfPropelRouteCollection
+  options:
+    model:               Workplan
+    module:              workplan
+    prefix_path:         workplan
+    column:              id
+    with_wildcard_routes: true
 
 
 

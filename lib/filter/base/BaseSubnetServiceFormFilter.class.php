@@ -5,9 +5,9 @@ require_once(sfConfig::get('sf_lib_dir').'/filter/base/BaseFormFilterPropel.clas
 /**
  * SubnetService filter form base class.
  *
- * @package    mattiussi
+ * @package   schoolmesh
  * @subpackage filter
- * @author     Your name here
+ * @author     Loris Tissino
  * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 13459 2008-11-28 14:48:12Z fabien $
  */
 class BaseSubnetServiceFormFilter extends BaseFormFilterPropel

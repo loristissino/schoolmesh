@@ -1,0 +1,33 @@
+Workplan:
+  loris3:
+    user_id: loris
+    year_id: 200809
+    schoolclass_id: 3ap
+    subject_id:  lig
+    is_locked:  false
+  loris4:
+    user_id: loris
+    year_id: 200809
+    schoolclass_id: 4ap
+    subject_id:  lig
+    is_locked:  false
+  loris5:
+    user_id: loris
+    year_id: 200809
+    schoolclass_id: 5ap
+    subject_id:  lig
+    is_locked:  false
+  loris3old:
+    user_id: loris
+    year_id: 200708
+    schoolclass_id: 5ap
+    subject_id:  lig
+    is_locked:  true
+
+
+  flavia3:
+    user_id: flavia
+    year_id: 200809
+    schoolclass_id: 3ap
+    subject_id: mat
+    is_locked: false

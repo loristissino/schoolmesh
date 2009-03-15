@@ -245,6 +245,46 @@ CREATE TABLE `user_team`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- workplan
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `workplan`;
+
+
+CREATE TABLE `workplan`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER,
+	`year_id` INTEGER  NOT NULL,
+	`schoolclass_id` VARCHAR(5)  NOT NULL,
+	`subject_id` INTEGER  NOT NULL,
+	`created_at` DATETIME,
+	`updated_at` DATETIME,
+	`is_locked` TINYINT,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `uyss` (`user_id`, `year_id`, `schoolclass_id`, `subject_id`),
+	CONSTRAINT `workplan_FK_1`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON DELETE RESTRICT,
+	INDEX `workplan_FI_2` (`year_id`),
+	CONSTRAINT `workplan_FK_2`
+		FOREIGN KEY (`year_id`)
+		REFERENCES `year` (`id`)
+		ON DELETE RESTRICT,
+	INDEX `workplan_FI_3` (`schoolclass_id`),
+	CONSTRAINT `workplan_FK_3`
+		FOREIGN KEY (`schoolclass_id`)
+		REFERENCES `schoolclass` (`id`)
+		ON DELETE RESTRICT,
+	INDEX `workplan_FI_4` (`subject_id`),
+	CONSTRAINT `workplan_FK_4`
+		FOREIGN KEY (`subject_id`)
+		REFERENCES `subject` (`id`)
+		ON DELETE RESTRICT
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- wpmodule
 #-----------------------------------------------------------------------------
 
