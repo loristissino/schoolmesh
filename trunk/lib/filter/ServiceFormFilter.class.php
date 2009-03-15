@@ -3,9 +3,9 @@
 /**
  * Service filter form.
  *
- * @package    mattiussi
+ * @package   schoolmesh
  * @subpackage filter
- * @author     Your name here
+ * @author     Loris Tissino
  * @version    SVN: $Id: sfPropelFormFilterTemplate.php 11675 2008-09-19 15:21:38Z fabien $
  */
 class ServiceFormFilter extends BaseServiceFormFilter

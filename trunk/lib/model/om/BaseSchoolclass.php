@@ -40,6 +40,12 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 	private $lastEnrolmentCriteria = null;
 
 	
+	protected $collWorkplans;
+
+	
+	private $lastWorkplanCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -233,6 +239,9 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 			$this->collEnrolments = null;
 			$this->lastEnrolmentCriteria = null;
 
+			$this->collWorkplans = null;
+			$this->lastWorkplanCriteria = null;
+
 		} 	}
 
 	
@@ -322,6 +331,14 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collWorkplans !== null) {
+				foreach ($this->collWorkplans as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -382,6 +399,14 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 
 				if ($this->collEnrolments !== null) {
 					foreach ($this->collEnrolments as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collWorkplans !== null) {
+					foreach ($this->collWorkplans as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -542,6 +567,11 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 
 			foreach ($this->getEnrolments() as $relObj) {
 				if ($relObj !== $this) {  					$copyObj->addEnrolment($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getWorkplans() as $relObj) {
+				if ($relObj !== $this) {  					$copyObj->addWorkplan($relObj->copy($deepCopy));
 				}
 			}
 
@@ -975,6 +1005,210 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 	}
 
 	
+	public function clearWorkplans()
+	{
+		$this->collWorkplans = null; 	}
+
+	
+	public function initWorkplans()
+	{
+		$this->collWorkplans = array();
+	}
+
+	
+	public function getWorkplans($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SchoolclassPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWorkplans === null) {
+			if ($this->isNew()) {
+			   $this->collWorkplans = array();
+			} else {
+
+				$criteria->add(WorkplanPeer::SCHOOLCLASS_ID, $this->id);
+
+				WorkplanPeer::addSelectColumns($criteria);
+				$this->collWorkplans = WorkplanPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WorkplanPeer::SCHOOLCLASS_ID, $this->id);
+
+				WorkplanPeer::addSelectColumns($criteria);
+				if (!isset($this->lastWorkplanCriteria) || !$this->lastWorkplanCriteria->equals($criteria)) {
+					$this->collWorkplans = WorkplanPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastWorkplanCriteria = $criteria;
+		return $this->collWorkplans;
+	}
+
+	
+	public function countWorkplans(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SchoolclassPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collWorkplans === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(WorkplanPeer::SCHOOLCLASS_ID, $this->id);
+
+				$count = WorkplanPeer::doCount($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WorkplanPeer::SCHOOLCLASS_ID, $this->id);
+
+				if (!isset($this->lastWorkplanCriteria) || !$this->lastWorkplanCriteria->equals($criteria)) {
+					$count = WorkplanPeer::doCount($criteria, $con);
+				} else {
+					$count = count($this->collWorkplans);
+				}
+			} else {
+				$count = count($this->collWorkplans);
+			}
+		}
+		$this->lastWorkplanCriteria = $criteria;
+		return $count;
+	}
+
+	
+	public function addWorkplan(Workplan $l)
+	{
+		if ($this->collWorkplans === null) {
+			$this->initWorkplans();
+		}
+		if (!in_array($l, $this->collWorkplans, true)) { 			array_push($this->collWorkplans, $l);
+			$l->setSchoolclass($this);
+		}
+	}
+
+
+	
+	public function getWorkplansJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SchoolclassPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWorkplans === null) {
+			if ($this->isNew()) {
+				$this->collWorkplans = array();
+			} else {
+
+				$criteria->add(WorkplanPeer::SCHOOLCLASS_ID, $this->id);
+
+				$this->collWorkplans = WorkplanPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		} else {
+									
+			$criteria->add(WorkplanPeer::SCHOOLCLASS_ID, $this->id);
+
+			if (!isset($this->lastWorkplanCriteria) || !$this->lastWorkplanCriteria->equals($criteria)) {
+				$this->collWorkplans = WorkplanPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastWorkplanCriteria = $criteria;
+
+		return $this->collWorkplans;
+	}
+
+
+	
+	public function getWorkplansJoinYear($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SchoolclassPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWorkplans === null) {
+			if ($this->isNew()) {
+				$this->collWorkplans = array();
+			} else {
+
+				$criteria->add(WorkplanPeer::SCHOOLCLASS_ID, $this->id);
+
+				$this->collWorkplans = WorkplanPeer::doSelectJoinYear($criteria, $con, $join_behavior);
+			}
+		} else {
+									
+			$criteria->add(WorkplanPeer::SCHOOLCLASS_ID, $this->id);
+
+			if (!isset($this->lastWorkplanCriteria) || !$this->lastWorkplanCriteria->equals($criteria)) {
+				$this->collWorkplans = WorkplanPeer::doSelectJoinYear($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastWorkplanCriteria = $criteria;
+
+		return $this->collWorkplans;
+	}
+
+
+	
+	public function getWorkplansJoinSubject($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SchoolclassPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWorkplans === null) {
+			if ($this->isNew()) {
+				$this->collWorkplans = array();
+			} else {
+
+				$criteria->add(WorkplanPeer::SCHOOLCLASS_ID, $this->id);
+
+				$this->collWorkplans = WorkplanPeer::doSelectJoinSubject($criteria, $con, $join_behavior);
+			}
+		} else {
+									
+			$criteria->add(WorkplanPeer::SCHOOLCLASS_ID, $this->id);
+
+			if (!isset($this->lastWorkplanCriteria) || !$this->lastWorkplanCriteria->equals($criteria)) {
+				$this->collWorkplans = WorkplanPeer::doSelectJoinSubject($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastWorkplanCriteria = $criteria;
+
+		return $this->collWorkplans;
+	}
+
+	
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
@@ -988,9 +1222,15 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collWorkplans) {
+				foreach ((array) $this->collWorkplans as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} 
 		$this->collAppointments = null;
 		$this->collEnrolments = null;
+		$this->collWorkplans = null;
 			$this->aTrack = null;
 	}
 
