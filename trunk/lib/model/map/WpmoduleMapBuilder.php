@@ -43,9 +43,9 @@ class WpmoduleMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('PERIOD', 'Period', 'VARCHAR', false, 100);
 
-		$tMap->addColumn('IS_PUBLIC', 'IsPublic', 'BOOLEAN', false, null);
+		$tMap->addForeignKey('WORKPLAN_ID', 'WorkplanId', 'INTEGER', 'workplan', 'ID', false, null);
 
-		$tMap->addColumn('IS_LOCKED', 'IsLocked', 'BOOLEAN', false, null);
+		$tMap->addColumn('IS_PUBLIC', 'IsPublic', 'BOOLEAN', false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null);
 

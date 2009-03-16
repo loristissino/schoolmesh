@@ -111,8 +111,8 @@ propel:
     user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict }
     title:        varchar(100)
     period:       varchar(100)
+    workplan_id:   
     is_public:    boolean
-    is_locked:       boolean
     created_at:   ~
     updated_at:   ~
     _uniques:

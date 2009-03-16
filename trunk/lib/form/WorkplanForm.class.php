@@ -14,6 +14,7 @@ class WorkplanForm extends BaseWorkplanForm
   {
 	
 	unset(
+		$this['sf_guard_user_id'],
 		$this['created_at'],
 		$this['updated_at'],
 		$this['is_locked']

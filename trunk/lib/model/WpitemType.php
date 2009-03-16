@@ -3,13 +3,18 @@
 class WpitemType extends BaseWpitemType
 {
 	
+	public function __toString()
+	{
+	return $this->getTitle();
+	}
+	
 	public function swapWith($item)
 {
   $con = Propel::getConnection(WpitemTypePeer::DATABASE_NAME);
   try
   {
     $con->beginTransaction();
- 
+
     $rank = $this->getRank();  
     $this->setRank($item->getRank());
     $this->save();

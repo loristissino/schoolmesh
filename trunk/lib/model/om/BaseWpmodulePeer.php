@@ -34,10 +34,10 @@ abstract class BaseWpmodulePeer {
 	const PERIOD = 'wpmodule.PERIOD';
 
 	
-	const IS_PUBLIC = 'wpmodule.IS_PUBLIC';
+	const WORKPLAN_ID = 'wpmodule.WORKPLAN_ID';
 
 	
-	const IS_LOCKED = 'wpmodule.IS_LOCKED';
+	const IS_PUBLIC = 'wpmodule.IS_PUBLIC';
 
 	
 	const CREATED_AT = 'wpmodule.CREATED_AT';
@@ -53,19 +53,19 @@ abstract class BaseWpmodulePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Shortcut', 'UserId', 'Title', 'Period', 'IsPublic', 'IsLocked', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'shortcut', 'userId', 'title', 'period', 'isPublic', 'isLocked', 'createdAt', 'updatedAt', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::SHORTCUT, self::USER_ID, self::TITLE, self::PERIOD, self::IS_PUBLIC, self::IS_LOCKED, self::CREATED_AT, self::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'shortcut', 'user_id', 'title', 'period', 'is_public', 'is_locked', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Shortcut', 'UserId', 'Title', 'Period', 'WorkplanId', 'IsPublic', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'shortcut', 'userId', 'title', 'period', 'workplanId', 'isPublic', 'createdAt', 'updatedAt', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::SHORTCUT, self::USER_ID, self::TITLE, self::PERIOD, self::WORKPLAN_ID, self::IS_PUBLIC, self::CREATED_AT, self::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'shortcut', 'user_id', 'title', 'period', 'workplan_id', 'is_public', 'created_at', 'updated_at', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Shortcut' => 1, 'UserId' => 2, 'Title' => 3, 'Period' => 4, 'IsPublic' => 5, 'IsLocked' => 6, 'CreatedAt' => 7, 'UpdatedAt' => 8, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'shortcut' => 1, 'userId' => 2, 'title' => 3, 'period' => 4, 'isPublic' => 5, 'isLocked' => 6, 'createdAt' => 7, 'updatedAt' => 8, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SHORTCUT => 1, self::USER_ID => 2, self::TITLE => 3, self::PERIOD => 4, self::IS_PUBLIC => 5, self::IS_LOCKED => 6, self::CREATED_AT => 7, self::UPDATED_AT => 8, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'shortcut' => 1, 'user_id' => 2, 'title' => 3, 'period' => 4, 'is_public' => 5, 'is_locked' => 6, 'created_at' => 7, 'updated_at' => 8, ),
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Shortcut' => 1, 'UserId' => 2, 'Title' => 3, 'Period' => 4, 'WorkplanId' => 5, 'IsPublic' => 6, 'CreatedAt' => 7, 'UpdatedAt' => 8, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'shortcut' => 1, 'userId' => 2, 'title' => 3, 'period' => 4, 'workplanId' => 5, 'isPublic' => 6, 'createdAt' => 7, 'updatedAt' => 8, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SHORTCUT => 1, self::USER_ID => 2, self::TITLE => 3, self::PERIOD => 4, self::WORKPLAN_ID => 5, self::IS_PUBLIC => 6, self::CREATED_AT => 7, self::UPDATED_AT => 8, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'shortcut' => 1, 'user_id' => 2, 'title' => 3, 'period' => 4, 'workplan_id' => 5, 'is_public' => 6, 'created_at' => 7, 'updated_at' => 8, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
@@ -118,9 +118,9 @@ abstract class BaseWpmodulePeer {
 
 		$criteria->addSelectColumn(WpmodulePeer::PERIOD);
 
-		$criteria->addSelectColumn(WpmodulePeer::IS_PUBLIC);
+		$criteria->addSelectColumn(WpmodulePeer::WORKPLAN_ID);
 
-		$criteria->addSelectColumn(WpmodulePeer::IS_LOCKED);
+		$criteria->addSelectColumn(WpmodulePeer::IS_PUBLIC);
 
 		$criteria->addSelectColumn(WpmodulePeer::CREATED_AT);
 
@@ -298,6 +298,41 @@ abstract class BaseWpmodulePeer {
 
 
 	
+	public static function doCountJoinWorkplan(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+				$criteria = clone $criteria;
+
+								$criteria->setPrimaryTableName(WpmodulePeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			WpmodulePeer::addSelectColumns($criteria);
+		}
+
+		$criteria->clearOrderByColumns(); 
+				$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(array(WpmodulePeer::WORKPLAN_ID,), array(WorkplanPeer::ID,), $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; 		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	
 	public static function doSelectJoinsfGuardUser(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$c = clone $c;
@@ -349,6 +384,57 @@ abstract class BaseWpmodulePeer {
 
 
 	
+	public static function doSelectJoinWorkplan(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$c = clone $c;
+
+				if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		WpmodulePeer::addSelectColumns($c);
+		$startcol = (WpmodulePeer::NUM_COLUMNS - WpmodulePeer::NUM_LAZY_LOAD_COLUMNS);
+		WorkplanPeer::addSelectColumns($c);
+
+		$c->addJoin(array(WpmodulePeer::WORKPLAN_ID,), array(WorkplanPeer::ID,), $join_behavior);
+		$stmt = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = WpmodulePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WpmodulePeer::getInstanceFromPool($key1))) {
+															} else {
+
+				$omClass = WpmodulePeer::getOMClass();
+
+				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				WpmodulePeer::addInstanceToPool($obj1, $key1);
+			} 
+			$key2 = WorkplanPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			if ($key2 !== null) {
+				$obj2 = WorkplanPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$omClass = WorkplanPeer::getOMClass();
+
+					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol);
+					WorkplanPeer::addInstanceToPool($obj2, $key2);
+				} 
+								$obj2->addWpmodule($obj1);
+
+			} 
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	
 	public static function doCountJoinAll(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 				$criteria = clone $criteria;
@@ -371,6 +457,7 @@ abstract class BaseWpmodulePeer {
 		}
 
 		$criteria->addJoin(array(WpmodulePeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
+		$criteria->addJoin(array(WpmodulePeer::WORKPLAN_ID,), array(WorkplanPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doCount($criteria, $con);
 
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -396,7 +483,11 @@ abstract class BaseWpmodulePeer {
 		sfGuardUserPeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
 
+		WorkplanPeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + (WorkplanPeer::NUM_COLUMNS - WorkplanPeer::NUM_LAZY_LOAD_COLUMNS);
+
 		$c->addJoin(array(WpmodulePeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
+		$c->addJoin(array(WpmodulePeer::WORKPLAN_ID,), array(WorkplanPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
@@ -426,6 +517,196 @@ abstract class BaseWpmodulePeer {
 					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
 				} 
 								$obj2->addWpmodule($obj1);
+			} 
+			
+			$key3 = WorkplanPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+			if ($key3 !== null) {
+				$obj3 = WorkplanPeer::getInstanceFromPool($key3);
+				if (!$obj3) {
+
+					$omClass = WorkplanPeer::getOMClass();
+
+
+					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+					$obj3 = new $cls();
+					$obj3->hydrate($row, $startcol3);
+					WorkplanPeer::addInstanceToPool($obj3, $key3);
+				} 
+								$obj3->addWpmodule($obj1);
+			} 
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	
+	public static function doCountJoinAllExceptsfGuardUser(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+				$criteria = clone $criteria;
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			WpmodulePeer::addSelectColumns($criteria);
+		}
+
+		$criteria->clearOrderByColumns(); 
+				$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+	
+				$criteria->addJoin(array(WpmodulePeer::WORKPLAN_ID,), array(WorkplanPeer::ID,), $join_behavior);
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; 		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	
+	public static function doCountJoinAllExceptWorkplan(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+				$criteria = clone $criteria;
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			WpmodulePeer::addSelectColumns($criteria);
+		}
+
+		$criteria->clearOrderByColumns(); 
+				$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+	
+				$criteria->addJoin(array(WpmodulePeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; 		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	
+	public static function doSelectJoinAllExceptsfGuardUser(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$c = clone $c;
+
+								if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		WpmodulePeer::addSelectColumns($c);
+		$startcol2 = (WpmodulePeer::NUM_COLUMNS - WpmodulePeer::NUM_LAZY_LOAD_COLUMNS);
+
+		WorkplanPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + (WorkplanPeer::NUM_COLUMNS - WorkplanPeer::NUM_LAZY_LOAD_COLUMNS);
+
+				$c->addJoin(array(WpmodulePeer::WORKPLAN_ID,), array(WorkplanPeer::ID,), $join_behavior);
+
+		$stmt = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = WpmodulePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WpmodulePeer::getInstanceFromPool($key1))) {
+															} else {
+				$omClass = WpmodulePeer::getOMClass();
+
+				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				WpmodulePeer::addInstanceToPool($obj1, $key1);
+			} 
+				
+				$key2 = WorkplanPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				if ($key2 !== null) {
+					$obj2 = WorkplanPeer::getInstanceFromPool($key2);
+					if (!$obj2) {
+	
+						$omClass = WorkplanPeer::getOMClass();
+
+
+					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					WorkplanPeer::addInstanceToPool($obj2, $key2);
+				} 
+								$obj2->addWpmodule($obj1);
+
+			} 
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	
+	public static function doSelectJoinAllExceptWorkplan(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$c = clone $c;
+
+								if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		WpmodulePeer::addSelectColumns($c);
+		$startcol2 = (WpmodulePeer::NUM_COLUMNS - WpmodulePeer::NUM_LAZY_LOAD_COLUMNS);
+
+		sfGuardUserPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
+				$c->addJoin(array(WpmodulePeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
+
+		$stmt = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = WpmodulePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WpmodulePeer::getInstanceFromPool($key1))) {
+															} else {
+				$omClass = WpmodulePeer::getOMClass();
+
+				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				WpmodulePeer::addInstanceToPool($obj1, $key1);
+			} 
+				
+				$key2 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				if ($key2 !== null) {
+					$obj2 = sfGuardUserPeer::getInstanceFromPool($key2);
+					if (!$obj2) {
+	
+						$omClass = sfGuardUserPeer::getOMClass();
+
+
+					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
+				} 
+								$obj2->addWpmodule($obj1);
+
 			} 
 			$results[] = $obj1;
 		}

@@ -46,6 +46,12 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 	protected $aSubject;
 
 	
+	protected $collWpmodules;
+
+	
+	private $lastWpmoduleCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -398,6 +404,9 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 			$this->aYear = null;
 			$this->aSchoolclass = null;
 			$this->aSubject = null;
+			$this->collWpmodules = null;
+			$this->lastWpmoduleCriteria = null;
+
 		} 	}
 
 	
@@ -506,6 +515,14 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 
 				$this->resetModified(); 			}
 
+			if ($this->collWpmodules !== null) {
+				foreach ($this->collWpmodules as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -573,6 +590,14 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collWpmodules !== null) {
+					foreach ($this->collWpmodules as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -749,6 +774,16 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 		$copyObj->setIsLocked($this->is_locked);
 
 
+		if ($deepCopy) {
+									$copyObj->setNew(false);
+
+			foreach ($this->getWpmodules() as $relObj) {
+				if ($relObj !== $this) {  					$copyObj->addWpmodule($relObj->copy($deepCopy));
+				}
+			}
+
+		} 
+
 		$copyObj->setNew(true);
 
 		$copyObj->setId(NULL); 
@@ -897,10 +932,152 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 	}
 
 	
+	public function clearWpmodules()
+	{
+		$this->collWpmodules = null; 	}
+
+	
+	public function initWpmodules()
+	{
+		$this->collWpmodules = array();
+	}
+
+	
+	public function getWpmodules($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WorkplanPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWpmodules === null) {
+			if ($this->isNew()) {
+			   $this->collWpmodules = array();
+			} else {
+
+				$criteria->add(WpmodulePeer::WORKPLAN_ID, $this->id);
+
+				WpmodulePeer::addSelectColumns($criteria);
+				$this->collWpmodules = WpmodulePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WpmodulePeer::WORKPLAN_ID, $this->id);
+
+				WpmodulePeer::addSelectColumns($criteria);
+				if (!isset($this->lastWpmoduleCriteria) || !$this->lastWpmoduleCriteria->equals($criteria)) {
+					$this->collWpmodules = WpmodulePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastWpmoduleCriteria = $criteria;
+		return $this->collWpmodules;
+	}
+
+	
+	public function countWpmodules(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WorkplanPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collWpmodules === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(WpmodulePeer::WORKPLAN_ID, $this->id);
+
+				$count = WpmodulePeer::doCount($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WpmodulePeer::WORKPLAN_ID, $this->id);
+
+				if (!isset($this->lastWpmoduleCriteria) || !$this->lastWpmoduleCriteria->equals($criteria)) {
+					$count = WpmodulePeer::doCount($criteria, $con);
+				} else {
+					$count = count($this->collWpmodules);
+				}
+			} else {
+				$count = count($this->collWpmodules);
+			}
+		}
+		$this->lastWpmoduleCriteria = $criteria;
+		return $count;
+	}
+
+	
+	public function addWpmodule(Wpmodule $l)
+	{
+		if ($this->collWpmodules === null) {
+			$this->initWpmodules();
+		}
+		if (!in_array($l, $this->collWpmodules, true)) { 			array_push($this->collWpmodules, $l);
+			$l->setWorkplan($this);
+		}
+	}
+
+
+	
+	public function getWpmodulesJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WorkplanPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWpmodules === null) {
+			if ($this->isNew()) {
+				$this->collWpmodules = array();
+			} else {
+
+				$criteria->add(WpmodulePeer::WORKPLAN_ID, $this->id);
+
+				$this->collWpmodules = WpmodulePeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		} else {
+									
+			$criteria->add(WpmodulePeer::WORKPLAN_ID, $this->id);
+
+			if (!isset($this->lastWpmoduleCriteria) || !$this->lastWpmoduleCriteria->equals($criteria)) {
+				$this->collWpmodules = WpmodulePeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastWpmoduleCriteria = $criteria;
+
+		return $this->collWpmodules;
+	}
+
+	
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
+			if ($this->collWpmodules) {
+				foreach ((array) $this->collWpmodules as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} 
+		$this->collWpmodules = null;
 			$this->asfGuardUser = null;
 			$this->aYear = null;
 			$this->aSchoolclass = null;
