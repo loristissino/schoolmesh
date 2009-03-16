@@ -3,9 +3,9 @@
 /**
  * Song form base class.
  *
- * @package   schoolmesh
+ * @package    schoolmesh
  * @subpackage form
- * @author     Loris Tissino
+ * @author     Your name here
  * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
  */
 class BaseSongForm extends BaseFormPropel

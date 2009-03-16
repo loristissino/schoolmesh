@@ -25,10 +25,10 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	protected $period;
 
 	
-	protected $is_public;
+	protected $workplan_id;
 
 	
-	protected $is_locked;
+	protected $is_public;
 
 	
 	protected $created_at;
@@ -38,6 +38,9 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 
 	
 	protected $asfGuardUser;
+
+	
+	protected $aWorkplan;
 
 	
 	protected $collWpmoduleItems;
@@ -94,15 +97,15 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getIsPublic()
+	public function getWorkplanId()
 	{
-		return $this->is_public;
+		return $this->workplan_id;
 	}
 
 	
-	public function getIsLocked()
+	public function getIsPublic()
 	{
-		return $this->is_locked;
+		return $this->is_public;
 	}
 
 	
@@ -234,6 +237,24 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setWorkplanId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->workplan_id !== $v) {
+			$this->workplan_id = $v;
+			$this->modifiedColumns[] = WpmodulePeer::WORKPLAN_ID;
+		}
+
+		if ($this->aWorkplan !== null && $this->aWorkplan->getId() !== $v) {
+			$this->aWorkplan = null;
+		}
+
+		return $this;
+	} 
+	
 	public function setIsPublic($v)
 	{
 		if ($v !== null) {
@@ -243,20 +264,6 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		if ($this->is_public !== $v) {
 			$this->is_public = $v;
 			$this->modifiedColumns[] = WpmodulePeer::IS_PUBLIC;
-		}
-
-		return $this;
-	} 
-	
-	public function setIsLocked($v)
-	{
-		if ($v !== null) {
-			$v = (boolean) $v;
-		}
-
-		if ($this->is_locked !== $v) {
-			$this->is_locked = $v;
-			$this->modifiedColumns[] = WpmodulePeer::IS_LOCKED;
 		}
 
 		return $this;
@@ -344,8 +351,8 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 			$this->user_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->title = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->period = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->is_public = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
-			$this->is_locked = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
+			$this->workplan_id = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->is_public = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
 			$this->created_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
 			$this->updated_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
 			$this->resetModified();
@@ -368,6 +375,9 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 
 		if ($this->asfGuardUser !== null && $this->user_id !== $this->asfGuardUser->getId()) {
 			$this->asfGuardUser = null;
+		}
+		if ($this->aWorkplan !== null && $this->workplan_id !== $this->aWorkplan->getId()) {
+			$this->aWorkplan = null;
 		}
 	} 
 	
@@ -395,6 +405,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		$this->hydrate($row, 0, true); 
 		if ($deep) {  
 			$this->asfGuardUser = null;
+			$this->aWorkplan = null;
 			$this->collWpmoduleItems = null;
 			$this->lastWpmoduleItemCriteria = null;
 
@@ -469,6 +480,13 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				$this->setsfGuardUser($this->asfGuardUser);
 			}
 
+			if ($this->aWorkplan !== null) {
+				if ($this->aWorkplan->isModified() || $this->aWorkplan->isNew()) {
+					$affectedRows += $this->aWorkplan->save($con);
+				}
+				$this->setWorkplan($this->aWorkplan);
+			}
+
 			if ($this->isNew() ) {
 				$this->modifiedColumns[] = WpmodulePeer::ID;
 			}
@@ -537,6 +555,12 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->aWorkplan !== null) {
+				if (!$this->aWorkplan->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aWorkplan->getValidationFailures());
+				}
+			}
+
 
 			if (($retval = WpmodulePeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
@@ -586,10 +610,10 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				return $this->getPeriod();
 				break;
 			case 5:
-				return $this->getIsPublic();
+				return $this->getWorkplanId();
 				break;
 			case 6:
-				return $this->getIsLocked();
+				return $this->getIsPublic();
 				break;
 			case 7:
 				return $this->getCreatedAt();
@@ -612,8 +636,8 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 			$keys[2] => $this->getUserId(),
 			$keys[3] => $this->getTitle(),
 			$keys[4] => $this->getPeriod(),
-			$keys[5] => $this->getIsPublic(),
-			$keys[6] => $this->getIsLocked(),
+			$keys[5] => $this->getWorkplanId(),
+			$keys[6] => $this->getIsPublic(),
 			$keys[7] => $this->getCreatedAt(),
 			$keys[8] => $this->getUpdatedAt(),
 		);
@@ -647,10 +671,10 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				$this->setPeriod($value);
 				break;
 			case 5:
-				$this->setIsPublic($value);
+				$this->setWorkplanId($value);
 				break;
 			case 6:
-				$this->setIsLocked($value);
+				$this->setIsPublic($value);
 				break;
 			case 7:
 				$this->setCreatedAt($value);
@@ -670,8 +694,8 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setUserId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setTitle($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setPeriod($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setIsPublic($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setIsLocked($arr[$keys[6]]);
+		if (array_key_exists($keys[5], $arr)) $this->setWorkplanId($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setIsPublic($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setUpdatedAt($arr[$keys[8]]);
 	}
@@ -686,8 +710,8 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpmodulePeer::USER_ID)) $criteria->add(WpmodulePeer::USER_ID, $this->user_id);
 		if ($this->isColumnModified(WpmodulePeer::TITLE)) $criteria->add(WpmodulePeer::TITLE, $this->title);
 		if ($this->isColumnModified(WpmodulePeer::PERIOD)) $criteria->add(WpmodulePeer::PERIOD, $this->period);
+		if ($this->isColumnModified(WpmodulePeer::WORKPLAN_ID)) $criteria->add(WpmodulePeer::WORKPLAN_ID, $this->workplan_id);
 		if ($this->isColumnModified(WpmodulePeer::IS_PUBLIC)) $criteria->add(WpmodulePeer::IS_PUBLIC, $this->is_public);
-		if ($this->isColumnModified(WpmodulePeer::IS_LOCKED)) $criteria->add(WpmodulePeer::IS_LOCKED, $this->is_locked);
 		if ($this->isColumnModified(WpmodulePeer::CREATED_AT)) $criteria->add(WpmodulePeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(WpmodulePeer::UPDATED_AT)) $criteria->add(WpmodulePeer::UPDATED_AT, $this->updated_at);
 
@@ -728,9 +752,9 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 
 		$copyObj->setPeriod($this->period);
 
-		$copyObj->setIsPublic($this->is_public);
+		$copyObj->setWorkplanId($this->workplan_id);
 
-		$copyObj->setIsLocked($this->is_locked);
+		$copyObj->setIsPublic($this->is_public);
 
 		$copyObj->setCreatedAt($this->created_at);
 
@@ -799,6 +823,37 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 			
 		}
 		return $this->asfGuardUser;
+	}
+
+	
+	public function setWorkplan(Workplan $v = null)
+	{
+		if ($v === null) {
+			$this->setWorkplanId(NULL);
+		} else {
+			$this->setWorkplanId($v->getId());
+		}
+
+		$this->aWorkplan = $v;
+
+						if ($v !== null) {
+			$v->addWpmodule($this);
+		}
+
+		return $this;
+	}
+
+
+	
+	public function getWorkplan(PropelPDO $con = null)
+	{
+		if ($this->aWorkplan === null && ($this->workplan_id !== null)) {
+			$c = new Criteria(WorkplanPeer::DATABASE_NAME);
+			$c->add(WorkplanPeer::ID, $this->workplan_id);
+			$this->aWorkplan = WorkplanPeer::doSelectOne($c, $con);
+			
+		}
+		return $this->aWorkplan;
 	}
 
 	
@@ -949,6 +1004,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		} 
 		$this->collWpmoduleItems = null;
 			$this->asfGuardUser = null;
+			$this->aWorkplan = null;
 	}
 
 } 

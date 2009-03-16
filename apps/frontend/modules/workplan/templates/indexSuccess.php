@@ -7,21 +7,23 @@
 <table cellspacing="0">
   <thead>
     <tr>
-      <th>Id</th>
-      <th>Year</th>
-      <th>Schoolclass</th>
-      <th>Subject</th>
-      <th>Is locked</th>
+      <th class="sf_admin_text">Year</th>
+      <th class="sf_admin_text">Class</th>
+      <th class="sf_admin_text">Subject</th>
+      <th class="sf_admin_text">Actions</th>
     </tr>
   </thead>
   <tbody>
     <?php foreach ($workplan_list as $workplan): ?>
-    <tr>
-      <td><a href="<?php echo url_for('workplan/edit?id='.$workplan->getId()) ?>"><?php echo $workplan->getId() ?></a></td>
+    <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <td><?php echo $workplan->getYear() ?></td>
-      <td><?php echo $workplan->getSchoolclassId() ?></td>
+      <td><?php echo $workplan->getSchoolclass() ?></td>
       <td><?php echo $workplan->getSubject() ?></td>
-      <td><?php echo $workplan->getIsLocked() ?></td>
+      <td><a href="<?php echo url_for('workplan/show?id='.$workplan->getId()) ?>"><?php echo __("show") ?></a>
+	  <?php if (!$workplan->getIsLocked()): ?>
+			<a href="<?php echo url_for('workplan/edit?id='.$workplan->getId()) ?>"><?php echo __("edit") ?></a>
+	  <?php endif; ?>
+	</td>
     </tr>
     <?php endforeach; ?>
   </tbody>

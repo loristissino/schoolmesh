@@ -2262,6 +2262,40 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		}
 	}
 
+
+	
+	public function getWpmodulesJoinWorkplan($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWpmodules === null) {
+			if ($this->isNew()) {
+				$this->collWpmodules = array();
+			} else {
+
+				$criteria->add(WpmodulePeer::USER_ID, $this->id);
+
+				$this->collWpmodules = WpmodulePeer::doSelectJoinWorkplan($criteria, $con, $join_behavior);
+			}
+		} else {
+									
+			$criteria->add(WpmodulePeer::USER_ID, $this->id);
+
+			if (!isset($this->lastWpmoduleCriteria) || !$this->lastWpmoduleCriteria->equals($criteria)) {
+				$this->collWpmodules = WpmodulePeer::doSelectJoinWorkplan($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastWpmoduleCriteria = $criteria;
+
+		return $this->collWpmodules;
+	}
+
 	
 	public function clearLanlogs()
 	{

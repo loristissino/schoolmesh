@@ -34,7 +34,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		$c->add(WorkplanPeer::USER_ID, $this->getUserId());
 		$c->addDescendingOrderByColumn(WorkplanPeer::YEAR_ID);
 		$c->addAscendingOrderByColumn(WorkplanPeer::SCHOOLCLASS_ID);
-		$t = WorkplanPeer::doSelectJoinAllExceptsfGuardUser($c);
+		$t = WorkplanPeer::doSelectJoinAll($c);
 		return $t;
         }
 

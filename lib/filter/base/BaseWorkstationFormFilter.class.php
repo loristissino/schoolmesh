@@ -5,9 +5,9 @@ require_once(sfConfig::get('sf_lib_dir').'/filter/base/BaseFormFilterPropel.clas
 /**
  * Workstation filter form base class.
  *
- * @package   schoolmesh
+ * @package    schoolmesh
  * @subpackage filter
- * @author     Loris Tissino
+ * @author     Your name here
  * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 13459 2008-11-28 14:48:12Z fabien $
  */
 class BaseWorkstationFormFilter extends BaseFormFilterPropel

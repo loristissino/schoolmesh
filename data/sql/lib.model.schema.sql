@@ -298,8 +298,8 @@ CREATE TABLE `wpmodule`
 	`user_id` INTEGER,
 	`title` VARCHAR(100),
 	`period` VARCHAR(100),
+	`workplan_id` INTEGER,
 	`is_public` TINYINT,
-	`is_locked` TINYINT,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	PRIMARY KEY (`id`),
@@ -307,7 +307,11 @@ CREATE TABLE `wpmodule`
 	CONSTRAINT `wpmodule_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
-		ON DELETE RESTRICT
+		ON DELETE RESTRICT,
+	INDEX `wpmodule_FI_2` (`workplan_id`),
+	CONSTRAINT `wpmodule_FK_2`
+		FOREIGN KEY (`workplan_id`)
+		REFERENCES `workplan` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
