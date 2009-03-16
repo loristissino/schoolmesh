@@ -1,0 +1,36 @@
+Wpmodule:
+  module1_3_flavia:
+    id:
+    shortcut:     3-piano-cartesiano
+    user_id:      flavia
+    title:        La geometria nel piano cartesiano
+    period:       settembre - novembre
+    workplan_id: flavia3
+    is_public:    true
+      
+  module2_3_flavia:
+    id:
+    shortcut:     3-disequazioni-e-funzioni
+    user_id:      flavia
+    title:        Disequazioni e funzioni
+    period:       dicembre - marzo
+    workplan_id: flavia3
+    is_public:    true
+
+  module1_3_loris:
+    id:
+    shortcut:    3-foglio-elettronico
+    user_id:    loris
+    title:       Il foglio elettronico
+    period:      settembre - dicembre
+    workplan_id: loris3
+    is_public:    true
+
+  module2_3_loris:
+    id:
+    shortcut:    3-programmazione-pascal
+    user_id:    loris
+    title:       Introduzione alla programmazione in Pascal
+    period:      gennaio - marzo
+    workplan_id: loris3
+    is_public:    true
