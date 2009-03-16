@@ -48,27 +48,6 @@
           <?php echo $form['subject_id'] ?>
         </td>
       </tr>
-      <tr>
-        <th><?php echo $form['created_at']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['created_at']->renderError() ?>
-          <?php echo $form['created_at'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['updated_at']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['updated_at']->renderError() ?>
-          <?php echo $form['updated_at'] ?>
-        </td>
-      </tr>
-      <tr>
-        <th><?php echo $form['is_locked']->renderLabel() ?></th>
-        <td>
-          <?php echo $form['is_locked']->renderError() ?>
-          <?php echo $form['is_locked'] ?>
-        </td>
-      </tr>
     </tbody>
   </table>
 </form>
