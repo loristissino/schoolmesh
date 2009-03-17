@@ -13,7 +13,7 @@ abstract class BaseWpitemTypePeer {
 	const CLASS_DEFAULT = 'lib.model.WpitemType';
 
 	
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 8;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -31,6 +31,18 @@ abstract class BaseWpitemTypePeer {
 	const RANK = 'wpitem_type.RANK';
 
 	
+	const EVALUATION_MIN = 'wpitem_type.EVALUATION_MIN';
+
+	
+	const EVALUATION_MAX = 'wpitem_type.EVALUATION_MAX';
+
+	
+	const EVALUATION_MIN_DESCRIPTION = 'wpitem_type.EVALUATION_MIN_DESCRIPTION';
+
+	
+	const EVALUATION_MAX_DESCRIPTION = 'wpitem_type.EVALUATION_MAX_DESCRIPTION';
+
+	
 	public static $instances = array();
 
 	
@@ -38,20 +50,20 @@ abstract class BaseWpitemTypePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Description', 'Rank', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'description', 'rank', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::DESCRIPTION, self::RANK, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'description', 'rank', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Description', 'Rank', 'EvaluationMin', 'EvaluationMax', 'EvaluationMinDescription', 'EvaluationMaxDescription', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'description', 'rank', 'evaluationMin', 'evaluationMax', 'evaluationMinDescription', 'evaluationMaxDescription', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::DESCRIPTION, self::RANK, self::EVALUATION_MIN, self::EVALUATION_MAX, self::EVALUATION_MIN_DESCRIPTION, self::EVALUATION_MAX_DESCRIPTION, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'description', 'rank', 'evaluation_min', 'evaluation_max', 'evaluation_min_description', 'evaluation_max_description', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Description' => 2, 'Rank' => 3, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::DESCRIPTION => 2, self::RANK => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Description' => 2, 'Rank' => 3, 'EvaluationMin' => 4, 'EvaluationMax' => 5, 'EvaluationMinDescription' => 6, 'EvaluationMaxDescription' => 7, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'evaluationMin' => 4, 'evaluationMax' => 5, 'evaluationMinDescription' => 6, 'evaluationMaxDescription' => 7, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::DESCRIPTION => 2, self::RANK => 3, self::EVALUATION_MIN => 4, self::EVALUATION_MAX => 5, self::EVALUATION_MIN_DESCRIPTION => 6, self::EVALUATION_MAX_DESCRIPTION => 7, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'evaluation_min' => 4, 'evaluation_max' => 5, 'evaluation_min_description' => 6, 'evaluation_max_description' => 7, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
@@ -100,6 +112,14 @@ abstract class BaseWpitemTypePeer {
 		$criteria->addSelectColumn(WpitemTypePeer::DESCRIPTION);
 
 		$criteria->addSelectColumn(WpitemTypePeer::RANK);
+
+		$criteria->addSelectColumn(WpitemTypePeer::EVALUATION_MIN);
+
+		$criteria->addSelectColumn(WpitemTypePeer::EVALUATION_MAX);
+
+		$criteria->addSelectColumn(WpitemTypePeer::EVALUATION_MIN_DESCRIPTION);
+
+		$criteria->addSelectColumn(WpitemTypePeer::EVALUATION_MAX_DESCRIPTION);
 
 	}
 

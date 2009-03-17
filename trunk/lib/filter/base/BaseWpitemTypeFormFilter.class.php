@@ -15,15 +15,23 @@ class BaseWpitemTypeFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'title'       => new sfWidgetFormFilterInput(),
-      'description' => new sfWidgetFormFilterInput(),
-      'rank'        => new sfWidgetFormFilterInput(),
+      'title'                      => new sfWidgetFormFilterInput(),
+      'description'                => new sfWidgetFormFilterInput(),
+      'rank'                       => new sfWidgetFormFilterInput(),
+      'evaluation_min'             => new sfWidgetFormFilterInput(),
+      'evaluation_max'             => new sfWidgetFormFilterInput(),
+      'evaluation_min_description' => new sfWidgetFormFilterInput(),
+      'evaluation_max_description' => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'title'       => new sfValidatorPass(array('required' => false)),
-      'description' => new sfValidatorPass(array('required' => false)),
-      'rank'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'title'                      => new sfValidatorPass(array('required' => false)),
+      'description'                => new sfValidatorPass(array('required' => false)),
+      'rank'                       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'evaluation_min'             => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'evaluation_max'             => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'evaluation_min_description' => new sfValidatorPass(array('required' => false)),
+      'evaluation_max_description' => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('wpitem_type_filters[%s]');
@@ -41,10 +49,14 @@ class BaseWpitemTypeFormFilter extends BaseFormFilterPropel
   public function getFields()
   {
     return array(
-      'id'          => 'Number',
-      'title'       => 'Text',
-      'description' => 'Text',
-      'rank'        => 'Number',
+      'id'                         => 'Number',
+      'title'                      => 'Text',
+      'description'                => 'Text',
+      'rank'                       => 'Number',
+      'evaluation_min'             => 'Number',
+      'evaluation_max'             => 'Number',
+      'evaluation_min_description' => 'Text',
+      'evaluation_max_description' => 'Text',
     );
   }
 }

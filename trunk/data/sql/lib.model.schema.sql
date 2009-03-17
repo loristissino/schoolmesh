@@ -327,6 +327,10 @@ CREATE TABLE `wpitem_type`
 	`title` VARCHAR(50),
 	`description` VARCHAR(200),
 	`rank` INTEGER  NOT NULL,
+	`evaluation_min` INTEGER,
+	`evaluation_max` INTEGER,
+	`evaluation_min_description` VARCHAR(50),
+	`evaluation_max_description` VARCHAR(50),
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 

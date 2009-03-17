@@ -22,6 +22,18 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 	protected $rank;
 
 	
+	protected $evaluation_min;
+
+	
+	protected $evaluation_max;
+
+	
+	protected $evaluation_min_description;
+
+	
+	protected $evaluation_max_description;
+
+	
 	protected $collWpmoduleItems;
 
 	
@@ -67,6 +79,30 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 	public function getRank()
 	{
 		return $this->rank;
+	}
+
+	
+	public function getEvaluationMin()
+	{
+		return $this->evaluation_min;
+	}
+
+	
+	public function getEvaluationMax()
+	{
+		return $this->evaluation_max;
+	}
+
+	
+	public function getEvaluationMinDescription()
+	{
+		return $this->evaluation_min_description;
+	}
+
+	
+	public function getEvaluationMaxDescription()
+	{
+		return $this->evaluation_max_description;
 	}
 
 	
@@ -126,6 +162,62 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setEvaluationMin($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->evaluation_min !== $v) {
+			$this->evaluation_min = $v;
+			$this->modifiedColumns[] = WpitemTypePeer::EVALUATION_MIN;
+		}
+
+		return $this;
+	} 
+	
+	public function setEvaluationMax($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->evaluation_max !== $v) {
+			$this->evaluation_max = $v;
+			$this->modifiedColumns[] = WpitemTypePeer::EVALUATION_MAX;
+		}
+
+		return $this;
+	} 
+	
+	public function setEvaluationMinDescription($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->evaluation_min_description !== $v) {
+			$this->evaluation_min_description = $v;
+			$this->modifiedColumns[] = WpitemTypePeer::EVALUATION_MIN_DESCRIPTION;
+		}
+
+		return $this;
+	} 
+	
+	public function setEvaluationMaxDescription($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->evaluation_max_description !== $v) {
+			$this->evaluation_max_description = $v;
+			$this->modifiedColumns[] = WpitemTypePeer::EVALUATION_MAX_DESCRIPTION;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array())) {
@@ -143,6 +235,10 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			$this->title = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->description = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->rank = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->evaluation_min = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+			$this->evaluation_max = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->evaluation_min_description = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->evaluation_max_description = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -151,7 +247,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 4; 
+						return $startcol + 8; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WpitemType object", $e);
 		}
@@ -347,6 +443,18 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			case 3:
 				return $this->getRank();
 				break;
+			case 4:
+				return $this->getEvaluationMin();
+				break;
+			case 5:
+				return $this->getEvaluationMax();
+				break;
+			case 6:
+				return $this->getEvaluationMinDescription();
+				break;
+			case 7:
+				return $this->getEvaluationMaxDescription();
+				break;
 			default:
 				return null;
 				break;
@@ -361,6 +469,10 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			$keys[1] => $this->getTitle(),
 			$keys[2] => $this->getDescription(),
 			$keys[3] => $this->getRank(),
+			$keys[4] => $this->getEvaluationMin(),
+			$keys[5] => $this->getEvaluationMax(),
+			$keys[6] => $this->getEvaluationMinDescription(),
+			$keys[7] => $this->getEvaluationMaxDescription(),
 		);
 		return $result;
 	}
@@ -388,6 +500,18 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			case 3:
 				$this->setRank($value);
 				break;
+			case 4:
+				$this->setEvaluationMin($value);
+				break;
+			case 5:
+				$this->setEvaluationMax($value);
+				break;
+			case 6:
+				$this->setEvaluationMinDescription($value);
+				break;
+			case 7:
+				$this->setEvaluationMaxDescription($value);
+				break;
 		} 	}
 
 	
@@ -399,6 +523,10 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setTitle($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setDescription($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setRank($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setEvaluationMin($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setEvaluationMax($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setEvaluationMinDescription($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setEvaluationMaxDescription($arr[$keys[7]]);
 	}
 
 	
@@ -410,6 +538,10 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpitemTypePeer::TITLE)) $criteria->add(WpitemTypePeer::TITLE, $this->title);
 		if ($this->isColumnModified(WpitemTypePeer::DESCRIPTION)) $criteria->add(WpitemTypePeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(WpitemTypePeer::RANK)) $criteria->add(WpitemTypePeer::RANK, $this->rank);
+		if ($this->isColumnModified(WpitemTypePeer::EVALUATION_MIN)) $criteria->add(WpitemTypePeer::EVALUATION_MIN, $this->evaluation_min);
+		if ($this->isColumnModified(WpitemTypePeer::EVALUATION_MAX)) $criteria->add(WpitemTypePeer::EVALUATION_MAX, $this->evaluation_max);
+		if ($this->isColumnModified(WpitemTypePeer::EVALUATION_MIN_DESCRIPTION)) $criteria->add(WpitemTypePeer::EVALUATION_MIN_DESCRIPTION, $this->evaluation_min_description);
+		if ($this->isColumnModified(WpitemTypePeer::EVALUATION_MAX_DESCRIPTION)) $criteria->add(WpitemTypePeer::EVALUATION_MAX_DESCRIPTION, $this->evaluation_max_description);
 
 		return $criteria;
 	}
@@ -445,6 +577,14 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		$copyObj->setDescription($this->description);
 
 		$copyObj->setRank($this->rank);
+
+		$copyObj->setEvaluationMin($this->evaluation_min);
+
+		$copyObj->setEvaluationMax($this->evaluation_max);
+
+		$copyObj->setEvaluationMinDescription($this->evaluation_min_description);
+
+		$copyObj->setEvaluationMaxDescription($this->evaluation_max_description);
 
 
 		if ($deepCopy) {

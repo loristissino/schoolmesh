@@ -10,16 +10,6 @@ class Wpmodule extends BaseWpmodule
 	
     public function getWpmoduleItems($criteria = null, PropelPDO $con = null)
 	{
-		/*
-		if (is_null($criteria))
-		{
-			$criteria = new Criteria();
-		}
-		else
-		{
-				$criteria = clone $criteria;
-		}
-*/
 
 	    $c = new Criteria();
 		$c->add(WpmoduleItemPeer::WPMODULE_ID, $this->getId());
