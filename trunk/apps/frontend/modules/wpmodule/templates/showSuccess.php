@@ -41,15 +41,7 @@
   </tbody>
 </table>
 
-<?php if ($wpmodule->getWpmoduleItems()): ?>
-<h2><?php echo __("Module Items"); ?></h2>
-<ol>
-<?php foreach($wpmodule->getWpmoduleItems() as $wpmoduleitem): ?>
-<li><?php echo $wpmoduleitem; ?> (<?php echo $wpmoduleitem->getWpItemType() ?>) <a href="<?php echo url_for('wpmoduleitem/show?id='.$wpmoduleitem->getId()) ?>">View</a></li>
-<?php endforeach; ?>
-</ol>
-<?php endif; ?>
-
+<?php include_partial('wpmoduleitems', array('wpmodule' => $wpmodule)) ?>
 
 <hr />
 
