@@ -3,20 +3,45 @@ WpitemType:
     title:        Contenuti
     description:  Argomenti disciplinari trattati
     rank:      0
+    evaluation_min: 1
+    evaluation_max:  5
+    evaluation_min_description: Non trattato
+    evaluation_max_description: Trattato completamente
   knowledge:
     title:        Conoscenze
     description:  Nuclei fondanti della disciplina, saperi essenziali
     rank:      1
+    evaluation_min: 1
+    evaluation_max:  5
+    evaluation_min_description: Conoscenza generalmente non acquisita
+    evaluation_max_description: Conoscenza generalmente pienamente acquisita
   skills:
     title:        Abilità
     description:  |
          Capacità nell'utilizzare e padroneggiare conoscenze anche 
          per portare a termine compiti e risolvere problemi 
     rank:     2
+    evaluation_min: 1
+    evaluation_max:  5
+    evaluation_min_description: Abilità generalmente non acquisita
+    evaluation_max_description: Abilità generalmente pienamente acquisita
   competencies:
     title:        Competenze
     description:  |
-         Capacità di usare conoscenze, abilità e capacità personali 
+         Capacità di usare conoscenze e abilità personali 
          in situazioni di lavoro/studio
     rank:     3
+    evaluation_min: 1
+    evaluation_max:  5
+    evaluation_min_description: Competenza generalmente non acquisita
+    evaluation_max_description: Competenza generalmente pienamente acquisita
+  comments:
+    title:        Note e commenti
+    description:  |
+         Osservazioni generali sul modulo (compilazione facoltativa)
+    rank:     4
+    evaluation_min: 0
+    evaluation_max:  0
+    evaluation_min_description:
+    evaluation_max_description:
 
