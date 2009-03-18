@@ -20,7 +20,10 @@ class BaseWorkplanForm extends BaseFormPropel
       'subject_id'     => new sfWidgetFormPropelChoice(array('model' => 'Subject', 'add_empty' => false)),
       'created_at'     => new sfWidgetFormDateTime(),
       'updated_at'     => new sfWidgetFormDateTime(),
-      'is_locked'      => new sfWidgetFormInputCheckbox(),
+      'wpsubmitted_at' => new sfWidgetFormDateTime(),
+      'wpapproved_at'  => new sfWidgetFormDateTime(),
+      'frsubmitted_at' => new sfWidgetFormDateTime(),
+      'frapproved_at'  => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -31,7 +34,10 @@ class BaseWorkplanForm extends BaseFormPropel
       'subject_id'     => new sfValidatorPropelChoice(array('model' => 'Subject', 'column' => 'id')),
       'created_at'     => new sfValidatorDateTime(array('required' => false)),
       'updated_at'     => new sfValidatorDateTime(array('required' => false)),
-      'is_locked'      => new sfValidatorBoolean(array('required' => false)),
+      'wpsubmitted_at' => new sfValidatorDateTime(array('required' => false)),
+      'wpapproved_at'  => new sfValidatorDateTime(array('required' => false)),
+      'frsubmitted_at' => new sfValidatorDateTime(array('required' => false)),
+      'frapproved_at'  => new sfValidatorDateTime(array('required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(

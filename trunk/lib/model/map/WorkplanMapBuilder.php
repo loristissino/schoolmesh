@@ -47,7 +47,13 @@ class WorkplanMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'TIMESTAMP', false, null);
 
-		$tMap->addColumn('IS_LOCKED', 'IsLocked', 'BOOLEAN', false, null);
+		$tMap->addColumn('WPSUBMITTED_AT', 'WpsubmittedAt', 'TIMESTAMP', false, null);
+
+		$tMap->addColumn('WPAPPROVED_AT', 'WpapprovedAt', 'TIMESTAMP', false, null);
+
+		$tMap->addColumn('FRSUBMITTED_AT', 'FrsubmittedAt', 'TIMESTAMP', false, null);
+
+		$tMap->addColumn('FRAPPROVED_AT', 'FrapprovedAt', 'TIMESTAMP', false, null);
 
 	} 
 } 

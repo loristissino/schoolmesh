@@ -15,7 +15,6 @@ class BaseWpmoduleFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'shortcut'    => new sfWidgetFormFilterInput(),
       'user_id'     => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
       'title'       => new sfWidgetFormFilterInput(),
       'period'      => new sfWidgetFormFilterInput(),
@@ -26,7 +25,6 @@ class BaseWpmoduleFormFilter extends BaseFormFilterPropel
     ));
 
     $this->setValidators(array(
-      'shortcut'    => new sfValidatorPass(array('required' => false)),
       'user_id'     => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
       'title'       => new sfValidatorPass(array('required' => false)),
       'period'      => new sfValidatorPass(array('required' => false)),
@@ -52,7 +50,6 @@ class BaseWpmoduleFormFilter extends BaseFormFilterPropel
   {
     return array(
       'id'          => 'Number',
-      'shortcut'    => 'Text',
       'user_id'     => 'ForeignKey',
       'title'       => 'Text',
       'period'      => 'Text',

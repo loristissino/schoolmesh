@@ -13,7 +13,7 @@ abstract class BaseWpmoduleItemPeer {
 	const CLASS_DEFAULT = 'lib.model.WpmoduleItem';
 
 	
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 4;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -22,10 +22,7 @@ abstract class BaseWpmoduleItemPeer {
 	const ID = 'wpmodule_item.ID';
 
 	
-	const WPITEM_TYPE_ID = 'wpmodule_item.WPITEM_TYPE_ID';
-
-	
-	const WPMODULE_ID = 'wpmodule_item.WPMODULE_ID';
+	const WPITEM_GROUP_ID = 'wpmodule_item.WPITEM_GROUP_ID';
 
 	
 	const RANK = 'wpmodule_item.RANK';
@@ -41,20 +38,20 @@ abstract class BaseWpmoduleItemPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'WpitemTypeId', 'WpmoduleId', 'Rank', 'Content', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'wpitemTypeId', 'wpmoduleId', 'rank', 'content', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::WPITEM_TYPE_ID, self::WPMODULE_ID, self::RANK, self::CONTENT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'wpitem_type_id', 'wpmodule_id', 'rank', 'content', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'WpitemGroupId', 'Rank', 'Content', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'wpitemGroupId', 'rank', 'content', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::WPITEM_GROUP_ID, self::RANK, self::CONTENT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'wpitem_group_id', 'rank', 'content', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'WpitemTypeId' => 1, 'WpmoduleId' => 2, 'Rank' => 3, 'Content' => 4, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'wpitemTypeId' => 1, 'wpmoduleId' => 2, 'rank' => 3, 'content' => 4, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::WPITEM_TYPE_ID => 1, self::WPMODULE_ID => 2, self::RANK => 3, self::CONTENT => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'wpitem_type_id' => 1, 'wpmodule_id' => 2, 'rank' => 3, 'content' => 4, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'WpitemGroupId' => 1, 'Rank' => 2, 'Content' => 3, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'wpitemGroupId' => 1, 'rank' => 2, 'content' => 3, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::WPITEM_GROUP_ID => 1, self::RANK => 2, self::CONTENT => 3, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'wpitem_group_id' => 1, 'rank' => 2, 'content' => 3, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
 	
@@ -98,9 +95,7 @@ abstract class BaseWpmoduleItemPeer {
 
 		$criteria->addSelectColumn(WpmoduleItemPeer::ID);
 
-		$criteria->addSelectColumn(WpmoduleItemPeer::WPITEM_TYPE_ID);
-
-		$criteria->addSelectColumn(WpmoduleItemPeer::WPMODULE_ID);
+		$criteria->addSelectColumn(WpmoduleItemPeer::WPITEM_GROUP_ID);
 
 		$criteria->addSelectColumn(WpmoduleItemPeer::RANK);
 
@@ -243,7 +238,7 @@ abstract class BaseWpmoduleItemPeer {
 	}
 
 	
-	public static function doCountJoinWpitemType(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinWpitemGroup(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 				$criteria = clone $criteria;
 
@@ -264,7 +259,7 @@ abstract class BaseWpmoduleItemPeer {
 			$con = Propel::getConnection(WpmoduleItemPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(array(WpmoduleItemPeer::WPITEM_TYPE_ID,), array(WpitemTypePeer::ID,), $join_behavior);
+		$criteria->addJoin(array(WpmoduleItemPeer::WPITEM_GROUP_ID,), array(WpitemGroupPeer::ID,), $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -278,42 +273,7 @@ abstract class BaseWpmoduleItemPeer {
 
 
 	
-	public static function doCountJoinWpmodule(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-				$criteria = clone $criteria;
-
-								$criteria->setPrimaryTableName(WpmoduleItemPeer::TABLE_NAME);
-
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			WpmoduleItemPeer::addSelectColumns($criteria);
-		}
-
-		$criteria->clearOrderByColumns(); 
-				$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(WpmoduleItemPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-
-		$criteria->addJoin(array(WpmoduleItemPeer::WPMODULE_ID,), array(WpmodulePeer::ID,), $join_behavior);
-
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; 		}
-		$stmt->closeCursor();
-		return $count;
-	}
-
-
-	
-	public static function doSelectJoinWpitemType(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinWpitemGroup(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$c = clone $c;
 
@@ -323,9 +283,9 @@ abstract class BaseWpmoduleItemPeer {
 
 		WpmoduleItemPeer::addSelectColumns($c);
 		$startcol = (WpmoduleItemPeer::NUM_COLUMNS - WpmoduleItemPeer::NUM_LAZY_LOAD_COLUMNS);
-		WpitemTypePeer::addSelectColumns($c);
+		WpitemGroupPeer::addSelectColumns($c);
 
-		$c->addJoin(array(WpmoduleItemPeer::WPITEM_TYPE_ID,), array(WpitemTypePeer::ID,), $join_behavior);
+		$c->addJoin(array(WpmoduleItemPeer::WPITEM_GROUP_ID,), array(WpitemGroupPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
@@ -341,68 +301,17 @@ abstract class BaseWpmoduleItemPeer {
 				$obj1->hydrate($row);
 				WpmoduleItemPeer::addInstanceToPool($obj1, $key1);
 			} 
-			$key2 = WpitemTypePeer::getPrimaryKeyHashFromRow($row, $startcol);
+			$key2 = WpitemGroupPeer::getPrimaryKeyHashFromRow($row, $startcol);
 			if ($key2 !== null) {
-				$obj2 = WpitemTypePeer::getInstanceFromPool($key2);
+				$obj2 = WpitemGroupPeer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$omClass = WpitemTypePeer::getOMClass();
+					$omClass = WpitemGroupPeer::getOMClass();
 
 					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol);
-					WpitemTypePeer::addInstanceToPool($obj2, $key2);
-				} 
-								$obj2->addWpmoduleItem($obj1);
-
-			} 
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
-	}
-
-
-	
-	public static function doSelectJoinWpmodule(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$c = clone $c;
-
-				if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		WpmoduleItemPeer::addSelectColumns($c);
-		$startcol = (WpmoduleItemPeer::NUM_COLUMNS - WpmoduleItemPeer::NUM_LAZY_LOAD_COLUMNS);
-		WpmodulePeer::addSelectColumns($c);
-
-		$c->addJoin(array(WpmoduleItemPeer::WPMODULE_ID,), array(WpmodulePeer::ID,), $join_behavior);
-		$stmt = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = WpmoduleItemPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = WpmoduleItemPeer::getInstanceFromPool($key1))) {
-															} else {
-
-				$omClass = WpmoduleItemPeer::getOMClass();
-
-				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				WpmoduleItemPeer::addInstanceToPool($obj1, $key1);
-			} 
-			$key2 = WpmodulePeer::getPrimaryKeyHashFromRow($row, $startcol);
-			if ($key2 !== null) {
-				$obj2 = WpmodulePeer::getInstanceFromPool($key2);
-				if (!$obj2) {
-
-					$omClass = WpmodulePeer::getOMClass();
-
-					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol);
-					WpmodulePeer::addInstanceToPool($obj2, $key2);
+					WpitemGroupPeer::addInstanceToPool($obj2, $key2);
 				} 
 								$obj2->addWpmoduleItem($obj1);
 
@@ -436,8 +345,7 @@ abstract class BaseWpmoduleItemPeer {
 			$con = Propel::getConnection(WpmoduleItemPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(array(WpmoduleItemPeer::WPITEM_TYPE_ID,), array(WpitemTypePeer::ID,), $join_behavior);
-		$criteria->addJoin(array(WpmoduleItemPeer::WPMODULE_ID,), array(WpmodulePeer::ID,), $join_behavior);
+		$criteria->addJoin(array(WpmoduleItemPeer::WPITEM_GROUP_ID,), array(WpitemGroupPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doCount($criteria, $con);
 
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -460,14 +368,10 @@ abstract class BaseWpmoduleItemPeer {
 		WpmoduleItemPeer::addSelectColumns($c);
 		$startcol2 = (WpmoduleItemPeer::NUM_COLUMNS - WpmoduleItemPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		WpitemTypePeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + (WpitemTypePeer::NUM_COLUMNS - WpitemTypePeer::NUM_LAZY_LOAD_COLUMNS);
+		WpitemGroupPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + (WpitemGroupPeer::NUM_COLUMNS - WpitemGroupPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		WpmodulePeer::addSelectColumns($c);
-		$startcol4 = $startcol3 + (WpmodulePeer::NUM_COLUMNS - WpmodulePeer::NUM_LAZY_LOAD_COLUMNS);
-
-		$c->addJoin(array(WpmoduleItemPeer::WPITEM_TYPE_ID,), array(WpitemTypePeer::ID,), $join_behavior);
-		$c->addJoin(array(WpmoduleItemPeer::WPMODULE_ID,), array(WpmodulePeer::ID,), $join_behavior);
+		$c->addJoin(array(WpmoduleItemPeer::WPITEM_GROUP_ID,), array(WpitemGroupPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
@@ -483,210 +387,20 @@ abstract class BaseWpmoduleItemPeer {
 				WpmoduleItemPeer::addInstanceToPool($obj1, $key1);
 			} 
 			
-			$key2 = WpitemTypePeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			$key2 = WpitemGroupPeer::getPrimaryKeyHashFromRow($row, $startcol2);
 			if ($key2 !== null) {
-				$obj2 = WpitemTypePeer::getInstanceFromPool($key2);
+				$obj2 = WpitemGroupPeer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$omClass = WpitemTypePeer::getOMClass();
+					$omClass = WpitemGroupPeer::getOMClass();
 
 
 					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					WpitemTypePeer::addInstanceToPool($obj2, $key2);
+					WpitemGroupPeer::addInstanceToPool($obj2, $key2);
 				} 
 								$obj2->addWpmoduleItem($obj1);
-			} 
-			
-			$key3 = WpmodulePeer::getPrimaryKeyHashFromRow($row, $startcol3);
-			if ($key3 !== null) {
-				$obj3 = WpmodulePeer::getInstanceFromPool($key3);
-				if (!$obj3) {
-
-					$omClass = WpmodulePeer::getOMClass();
-
-
-					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-					$obj3 = new $cls();
-					$obj3->hydrate($row, $startcol3);
-					WpmodulePeer::addInstanceToPool($obj3, $key3);
-				} 
-								$obj3->addWpmoduleItem($obj1);
-			} 
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
-	}
-
-
-	
-	public static function doCountJoinAllExceptWpitemType(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-				$criteria = clone $criteria;
-
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			WpmoduleItemPeer::addSelectColumns($criteria);
-		}
-
-		$criteria->clearOrderByColumns(); 
-				$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(WpmoduleItemPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-	
-				$criteria->addJoin(array(WpmoduleItemPeer::WPMODULE_ID,), array(WpmodulePeer::ID,), $join_behavior);
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; 		}
-		$stmt->closeCursor();
-		return $count;
-	}
-
-
-	
-	public static function doCountJoinAllExceptWpmodule(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-				$criteria = clone $criteria;
-
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			WpmoduleItemPeer::addSelectColumns($criteria);
-		}
-
-		$criteria->clearOrderByColumns(); 
-				$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(WpmoduleItemPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-	
-				$criteria->addJoin(array(WpmoduleItemPeer::WPITEM_TYPE_ID,), array(WpitemTypePeer::ID,), $join_behavior);
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; 		}
-		$stmt->closeCursor();
-		return $count;
-	}
-
-
-	
-	public static function doSelectJoinAllExceptWpitemType(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$c = clone $c;
-
-								if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		WpmoduleItemPeer::addSelectColumns($c);
-		$startcol2 = (WpmoduleItemPeer::NUM_COLUMNS - WpmoduleItemPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		WpmodulePeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + (WpmodulePeer::NUM_COLUMNS - WpmodulePeer::NUM_LAZY_LOAD_COLUMNS);
-
-				$c->addJoin(array(WpmoduleItemPeer::WPMODULE_ID,), array(WpmodulePeer::ID,), $join_behavior);
-
-		$stmt = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = WpmoduleItemPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = WpmoduleItemPeer::getInstanceFromPool($key1))) {
-															} else {
-				$omClass = WpmoduleItemPeer::getOMClass();
-
-				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				WpmoduleItemPeer::addInstanceToPool($obj1, $key1);
-			} 
-				
-				$key2 = WpmodulePeer::getPrimaryKeyHashFromRow($row, $startcol2);
-				if ($key2 !== null) {
-					$obj2 = WpmodulePeer::getInstanceFromPool($key2);
-					if (!$obj2) {
-	
-						$omClass = WpmodulePeer::getOMClass();
-
-
-					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol2);
-					WpmodulePeer::addInstanceToPool($obj2, $key2);
-				} 
-								$obj2->addWpmoduleItem($obj1);
-
-			} 
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
-	}
-
-
-	
-	public static function doSelectJoinAllExceptWpmodule(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$c = clone $c;
-
-								if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		WpmoduleItemPeer::addSelectColumns($c);
-		$startcol2 = (WpmoduleItemPeer::NUM_COLUMNS - WpmoduleItemPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		WpitemTypePeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + (WpitemTypePeer::NUM_COLUMNS - WpitemTypePeer::NUM_LAZY_LOAD_COLUMNS);
-
-				$c->addJoin(array(WpmoduleItemPeer::WPITEM_TYPE_ID,), array(WpitemTypePeer::ID,), $join_behavior);
-
-		$stmt = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = WpmoduleItemPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = WpmoduleItemPeer::getInstanceFromPool($key1))) {
-															} else {
-				$omClass = WpmoduleItemPeer::getOMClass();
-
-				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				WpmoduleItemPeer::addInstanceToPool($obj1, $key1);
-			} 
-				
-				$key2 = WpitemTypePeer::getPrimaryKeyHashFromRow($row, $startcol2);
-				if ($key2 !== null) {
-					$obj2 = WpitemTypePeer::getInstanceFromPool($key2);
-					if (!$obj2) {
-	
-						$omClass = WpitemTypePeer::getOMClass();
-
-
-					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol2);
-					WpitemTypePeer::addInstanceToPool($obj2, $key2);
-				} 
-								$obj2->addWpmoduleItem($obj1);
-
 			} 
 			$results[] = $obj1;
 		}
@@ -697,7 +411,7 @@ abstract class BaseWpmoduleItemPeer {
 
   static public function getUniqueColumnNames()
   {
-    return array(array('wpmodule_id', 'wpitem_type_id', 'rank'));
+    return array(array('id', 'rank'));
   }
 	
 	public static function getTableMap()

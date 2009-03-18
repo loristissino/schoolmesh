@@ -13,10 +13,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	protected $id;
 
 	
-	protected $wpitem_type_id;
-
-	
-	protected $wpmodule_id;
+	protected $wpitem_group_id;
 
 	
 	protected $rank;
@@ -25,10 +22,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	protected $content;
 
 	
-	protected $aWpitemType;
-
-	
-	protected $aWpmodule;
+	protected $aWpitemGroup;
 
 	
 	protected $alreadyInSave = false;
@@ -55,15 +49,9 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getWpitemTypeId()
+	public function getWpitemGroupId()
 	{
-		return $this->wpitem_type_id;
-	}
-
-	
-	public function getWpmoduleId()
-	{
-		return $this->wpmodule_id;
+		return $this->wpitem_group_id;
 	}
 
 	
@@ -93,37 +81,19 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
-	public function setWpitemTypeId($v)
+	public function setWpitemGroupId($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
 		}
 
-		if ($this->wpitem_type_id !== $v) {
-			$this->wpitem_type_id = $v;
-			$this->modifiedColumns[] = WpmoduleItemPeer::WPITEM_TYPE_ID;
+		if ($this->wpitem_group_id !== $v) {
+			$this->wpitem_group_id = $v;
+			$this->modifiedColumns[] = WpmoduleItemPeer::WPITEM_GROUP_ID;
 		}
 
-		if ($this->aWpitemType !== null && $this->aWpitemType->getId() !== $v) {
-			$this->aWpitemType = null;
-		}
-
-		return $this;
-	} 
-	
-	public function setWpmoduleId($v)
-	{
-		if ($v !== null) {
-			$v = (int) $v;
-		}
-
-		if ($this->wpmodule_id !== $v) {
-			$this->wpmodule_id = $v;
-			$this->modifiedColumns[] = WpmoduleItemPeer::WPMODULE_ID;
-		}
-
-		if ($this->aWpmodule !== null && $this->aWpmodule->getId() !== $v) {
-			$this->aWpmodule = null;
+		if ($this->aWpitemGroup !== null && $this->aWpitemGroup->getId() !== $v) {
+			$this->aWpitemGroup = null;
 		}
 
 		return $this;
@@ -171,10 +141,9 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		try {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->wpitem_type_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->wpmodule_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->rank = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
-			$this->content = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->wpitem_group_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+			$this->rank = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->content = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -183,7 +152,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 5; 
+						return $startcol + 4; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WpmoduleItem object", $e);
 		}
@@ -193,11 +162,8 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
-		if ($this->aWpitemType !== null && $this->wpitem_type_id !== $this->aWpitemType->getId()) {
-			$this->aWpitemType = null;
-		}
-		if ($this->aWpmodule !== null && $this->wpmodule_id !== $this->aWpmodule->getId()) {
-			$this->aWpmodule = null;
+		if ($this->aWpitemGroup !== null && $this->wpitem_group_id !== $this->aWpitemGroup->getId()) {
+			$this->aWpitemGroup = null;
 		}
 	} 
 	
@@ -224,8 +190,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		}
 		$this->hydrate($row, 0, true); 
 		if ($deep) {  
-			$this->aWpitemType = null;
-			$this->aWpmodule = null;
+			$this->aWpitemGroup = null;
 		} 	}
 
 	
@@ -280,18 +245,11 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 			$this->alreadyInSave = true;
 
 												
-			if ($this->aWpitemType !== null) {
-				if ($this->aWpitemType->isModified() || $this->aWpitemType->isNew()) {
-					$affectedRows += $this->aWpitemType->save($con);
+			if ($this->aWpitemGroup !== null) {
+				if ($this->aWpitemGroup->isModified() || $this->aWpitemGroup->isNew()) {
+					$affectedRows += $this->aWpitemGroup->save($con);
 				}
-				$this->setWpitemType($this->aWpitemType);
-			}
-
-			if ($this->aWpmodule !== null) {
-				if ($this->aWpmodule->isModified() || $this->aWpmodule->isNew()) {
-					$affectedRows += $this->aWpmodule->save($con);
-				}
-				$this->setWpmodule($this->aWpmodule);
+				$this->setWpitemGroup($this->aWpitemGroup);
 			}
 
 			if ($this->isNew() ) {
@@ -348,15 +306,9 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 
 
 												
-			if ($this->aWpitemType !== null) {
-				if (!$this->aWpitemType->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aWpitemType->getValidationFailures());
-				}
-			}
-
-			if ($this->aWpmodule !== null) {
-				if (!$this->aWpmodule->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aWpmodule->getValidationFailures());
+			if ($this->aWpitemGroup !== null) {
+				if (!$this->aWpitemGroup->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aWpitemGroup->getValidationFailures());
 				}
 			}
 
@@ -389,15 +341,12 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getWpitemTypeId();
+				return $this->getWpitemGroupId();
 				break;
 			case 2:
-				return $this->getWpmoduleId();
-				break;
-			case 3:
 				return $this->getRank();
 				break;
-			case 4:
+			case 3:
 				return $this->getContent();
 				break;
 			default:
@@ -411,10 +360,9 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		$keys = WpmoduleItemPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getWpitemTypeId(),
-			$keys[2] => $this->getWpmoduleId(),
-			$keys[3] => $this->getRank(),
-			$keys[4] => $this->getContent(),
+			$keys[1] => $this->getWpitemGroupId(),
+			$keys[2] => $this->getRank(),
+			$keys[3] => $this->getContent(),
 		);
 		return $result;
 	}
@@ -434,15 +382,12 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setWpitemTypeId($value);
+				$this->setWpitemGroupId($value);
 				break;
 			case 2:
-				$this->setWpmoduleId($value);
-				break;
-			case 3:
 				$this->setRank($value);
 				break;
-			case 4:
+			case 3:
 				$this->setContent($value);
 				break;
 		} 	}
@@ -453,10 +398,9 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		$keys = WpmoduleItemPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setWpitemTypeId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setWpmoduleId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setRank($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setContent($arr[$keys[4]]);
+		if (array_key_exists($keys[1], $arr)) $this->setWpitemGroupId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setRank($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setContent($arr[$keys[3]]);
 	}
 
 	
@@ -465,8 +409,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		$criteria = new Criteria(WpmoduleItemPeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(WpmoduleItemPeer::ID)) $criteria->add(WpmoduleItemPeer::ID, $this->id);
-		if ($this->isColumnModified(WpmoduleItemPeer::WPITEM_TYPE_ID)) $criteria->add(WpmoduleItemPeer::WPITEM_TYPE_ID, $this->wpitem_type_id);
-		if ($this->isColumnModified(WpmoduleItemPeer::WPMODULE_ID)) $criteria->add(WpmoduleItemPeer::WPMODULE_ID, $this->wpmodule_id);
+		if ($this->isColumnModified(WpmoduleItemPeer::WPITEM_GROUP_ID)) $criteria->add(WpmoduleItemPeer::WPITEM_GROUP_ID, $this->wpitem_group_id);
 		if ($this->isColumnModified(WpmoduleItemPeer::RANK)) $criteria->add(WpmoduleItemPeer::RANK, $this->rank);
 		if ($this->isColumnModified(WpmoduleItemPeer::CONTENT)) $criteria->add(WpmoduleItemPeer::CONTENT, $this->content);
 
@@ -499,9 +442,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setWpitemTypeId($this->wpitem_type_id);
-
-		$copyObj->setWpmoduleId($this->wpmodule_id);
+		$copyObj->setWpitemGroupId($this->wpitem_group_id);
 
 		$copyObj->setRank($this->rank);
 
@@ -532,15 +473,15 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	}
 
 	
-	public function setWpitemType(WpitemType $v = null)
+	public function setWpitemGroup(WpitemGroup $v = null)
 	{
 		if ($v === null) {
-			$this->setWpitemTypeId(NULL);
+			$this->setWpitemGroupId(NULL);
 		} else {
-			$this->setWpitemTypeId($v->getId());
+			$this->setWpitemGroupId($v->getId());
 		}
 
-		$this->aWpitemType = $v;
+		$this->aWpitemGroup = $v;
 
 						if ($v !== null) {
 			$v->addWpmoduleItem($this);
@@ -551,46 +492,15 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 
 
 	
-	public function getWpitemType(PropelPDO $con = null)
+	public function getWpitemGroup(PropelPDO $con = null)
 	{
-		if ($this->aWpitemType === null && ($this->wpitem_type_id !== null)) {
-			$c = new Criteria(WpitemTypePeer::DATABASE_NAME);
-			$c->add(WpitemTypePeer::ID, $this->wpitem_type_id);
-			$this->aWpitemType = WpitemTypePeer::doSelectOne($c, $con);
+		if ($this->aWpitemGroup === null && ($this->wpitem_group_id !== null)) {
+			$c = new Criteria(WpitemGroupPeer::DATABASE_NAME);
+			$c->add(WpitemGroupPeer::ID, $this->wpitem_group_id);
+			$this->aWpitemGroup = WpitemGroupPeer::doSelectOne($c, $con);
 			
 		}
-		return $this->aWpitemType;
-	}
-
-	
-	public function setWpmodule(Wpmodule $v = null)
-	{
-		if ($v === null) {
-			$this->setWpmoduleId(NULL);
-		} else {
-			$this->setWpmoduleId($v->getId());
-		}
-
-		$this->aWpmodule = $v;
-
-						if ($v !== null) {
-			$v->addWpmoduleItem($this);
-		}
-
-		return $this;
-	}
-
-
-	
-	public function getWpmodule(PropelPDO $con = null)
-	{
-		if ($this->aWpmodule === null && ($this->wpmodule_id !== null)) {
-			$c = new Criteria(WpmodulePeer::DATABASE_NAME);
-			$c->add(WpmodulePeer::ID, $this->wpmodule_id);
-			$this->aWpmodule = WpmodulePeer::doSelectOne($c, $con);
-			
-		}
-		return $this->aWpmodule;
+		return $this->aWpitemGroup;
 	}
 
 	
@@ -598,8 +508,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	{
 		if ($deep) {
 		} 
-			$this->aWpitemType = null;
-			$this->aWpmodule = null;
+			$this->aWpitemGroup = null;
 	}
 
 } 
