@@ -15,17 +15,15 @@ class BaseWpmoduleItemFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'wpitem_type_id' => new sfWidgetFormPropelChoice(array('model' => 'WpitemType', 'add_empty' => true)),
-      'wpmodule_id'    => new sfWidgetFormPropelChoice(array('model' => 'Wpmodule', 'add_empty' => true)),
-      'rank'           => new sfWidgetFormFilterInput(),
-      'content'        => new sfWidgetFormFilterInput(),
+      'wpitem_group_id' => new sfWidgetFormPropelChoice(array('model' => 'WpitemGroup', 'add_empty' => true)),
+      'rank'            => new sfWidgetFormFilterInput(),
+      'content'         => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'wpitem_type_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'WpitemType', 'column' => 'id')),
-      'wpmodule_id'    => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Wpmodule', 'column' => 'id')),
-      'rank'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'content'        => new sfValidatorPass(array('required' => false)),
+      'wpitem_group_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'WpitemGroup', 'column' => 'id')),
+      'rank'            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'content'         => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('wpmodule_item_filters[%s]');
@@ -43,11 +41,10 @@ class BaseWpmoduleItemFormFilter extends BaseFormFilterPropel
   public function getFields()
   {
     return array(
-      'id'             => 'Number',
-      'wpitem_type_id' => 'ForeignKey',
-      'wpmodule_id'    => 'ForeignKey',
-      'rank'           => 'Number',
-      'content'        => 'Text',
+      'id'              => 'Number',
+      'wpitem_group_id' => 'ForeignKey',
+      'rank'            => 'Number',
+      'content'         => 'Text',
     );
   }
 }

@@ -14,7 +14,6 @@ class BaseWpmoduleForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'          => new sfWidgetFormInputHidden(),
-      'shortcut'    => new sfWidgetFormInput(),
       'user_id'     => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
       'title'       => new sfWidgetFormInput(),
       'period'      => new sfWidgetFormInput(),
@@ -26,7 +25,6 @@ class BaseWpmoduleForm extends BaseFormPropel
 
     $this->setValidators(array(
       'id'          => new sfValidatorPropelChoice(array('model' => 'Wpmodule', 'column' => 'id', 'required' => false)),
-      'shortcut'    => new sfValidatorString(array('max_length' => 20, 'required' => false)),
       'user_id'     => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id', 'required' => false)),
       'title'       => new sfValidatorString(array('max_length' => 100, 'required' => false)),
       'period'      => new sfValidatorString(array('max_length' => 100, 'required' => false)),
@@ -35,10 +33,6 @@ class BaseWpmoduleForm extends BaseFormPropel
       'created_at'  => new sfValidatorDateTime(array('required' => false)),
       'updated_at'  => new sfValidatorDateTime(array('required' => false)),
     ));
-
-    $this->validatorSchema->setPostValidator(
-      new sfValidatorPropelUnique(array('model' => 'Wpmodule', 'column' => array('user_id', 'shortcut')))
-    );
 
     $this->widgetSchema->setNameFormat('wpmodule[%s]');
 

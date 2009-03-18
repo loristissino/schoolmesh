@@ -1,33 +1,41 @@
 Workplan:
-  loris3:
+  status0:
     user_id: loris
     year_id: 200809
     schoolclass_id: 3ap
     subject_id:  lig
-    is_locked:  false
-  loris4:
+  status1:
     user_id: loris
     year_id: 200809
     schoolclass_id: 4ap
     subject_id:  lig
-    is_locked:  false
-  loris5:
+    wpsubmitted_at: <?php echo date('U', time()+1)."\n" ?>
+  status2:
     user_id: loris
     year_id: 200809
     schoolclass_id: 5ap
     subject_id:  lig
-    is_locked:  false
-  loris3old:
+    wpsubmitted_at: <?php echo date('U', time()+1)."\n" ?>
+    wpapproved_at: <?php echo date('U', time()+2)."\n" ?>
+  status3:
     user_id: loris
     year_id: 200708
-    schoolclass_id: 5ap
+    schoolclass_id: 3ap
     subject_id:  lig
-    is_locked:  true
-
-
+    wpsubmitted_at: <?php echo date('U', time()+1)."\n" ?>
+    wpapproved_at: <?php echo date('U', time()+2)."\n" ?>
+    frsubmitted_at: <?php echo date('U', time()+3)."\n" ?>
+  status4:
+    user_id: loris
+    year_id: 200708
+    schoolclass_id: 4ap
+    subject_id:  lig
+    wpsubmitted_at: <?php echo date('U', time()+1)."\n" ?>
+    wpapproved_at: <?php echo date('U', time()+2)."\n" ?>
+    frsubmitted_at: <?php echo date('U', time()+3)."\n" ?>
+    frapproved_at: <?php echo date('U', time()+4)."\n" ?>
   flavia3:
     user_id: flavia
     year_id: 200809
     schoolclass_id: 3ap
     subject_id: mat
-    is_locked: false

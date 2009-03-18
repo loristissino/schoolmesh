@@ -13,9 +13,6 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	protected $id;
 
 	
-	protected $shortcut;
-
-	
 	protected $user_id;
 
 	
@@ -43,10 +40,10 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	protected $aWorkplan;
 
 	
-	protected $collWpmoduleItems;
+	protected $collWpitemGroups;
 
 	
-	private $lastWpmoduleItemCriteria = null;
+	private $lastWpitemGroupCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -70,12 +67,6 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	public function getId()
 	{
 		return $this->id;
-	}
-
-	
-	public function getShortcut()
-	{
-		return $this->shortcut;
 	}
 
 	
@@ -172,20 +163,6 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		if ($this->id !== $v) {
 			$this->id = $v;
 			$this->modifiedColumns[] = WpmodulePeer::ID;
-		}
-
-		return $this;
-	} 
-	
-	public function setShortcut($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->shortcut !== $v) {
-			$this->shortcut = $v;
-			$this->modifiedColumns[] = WpmodulePeer::SHORTCUT;
 		}
 
 		return $this;
@@ -347,14 +324,13 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		try {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->shortcut = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-			$this->user_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->title = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->period = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->workplan_id = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
-			$this->is_public = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
-			$this->created_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->updated_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->user_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+			$this->title = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->period = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->workplan_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+			$this->is_public = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
+			$this->created_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->updated_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -363,7 +339,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 9; 
+						return $startcol + 8; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Wpmodule object", $e);
 		}
@@ -406,8 +382,8 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		if ($deep) {  
 			$this->asfGuardUser = null;
 			$this->aWorkplan = null;
-			$this->collWpmoduleItems = null;
-			$this->lastWpmoduleItemCriteria = null;
+			$this->collWpitemGroups = null;
+			$this->lastWpitemGroupCriteria = null;
 
 		} 	}
 
@@ -503,8 +479,8 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 
 				$this->resetModified(); 			}
 
-			if ($this->collWpmoduleItems !== null) {
-				foreach ($this->collWpmoduleItems as $referrerFK) {
+			if ($this->collWpitemGroups !== null) {
+				foreach ($this->collWpitemGroups as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -567,8 +543,8 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 			}
 
 
-				if ($this->collWpmoduleItems !== null) {
-					foreach ($this->collWpmoduleItems as $referrerFK) {
+				if ($this->collWpitemGroups !== null) {
+					foreach ($this->collWpitemGroups as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -598,27 +574,24 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getShortcut();
-				break;
-			case 2:
 				return $this->getUserId();
 				break;
-			case 3:
+			case 2:
 				return $this->getTitle();
 				break;
-			case 4:
+			case 3:
 				return $this->getPeriod();
 				break;
-			case 5:
+			case 4:
 				return $this->getWorkplanId();
 				break;
-			case 6:
+			case 5:
 				return $this->getIsPublic();
 				break;
-			case 7:
+			case 6:
 				return $this->getCreatedAt();
 				break;
-			case 8:
+			case 7:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -632,14 +605,13 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		$keys = WpmodulePeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getShortcut(),
-			$keys[2] => $this->getUserId(),
-			$keys[3] => $this->getTitle(),
-			$keys[4] => $this->getPeriod(),
-			$keys[5] => $this->getWorkplanId(),
-			$keys[6] => $this->getIsPublic(),
-			$keys[7] => $this->getCreatedAt(),
-			$keys[8] => $this->getUpdatedAt(),
+			$keys[1] => $this->getUserId(),
+			$keys[2] => $this->getTitle(),
+			$keys[3] => $this->getPeriod(),
+			$keys[4] => $this->getWorkplanId(),
+			$keys[5] => $this->getIsPublic(),
+			$keys[6] => $this->getCreatedAt(),
+			$keys[7] => $this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -659,27 +631,24 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setShortcut($value);
-				break;
-			case 2:
 				$this->setUserId($value);
 				break;
-			case 3:
+			case 2:
 				$this->setTitle($value);
 				break;
-			case 4:
+			case 3:
 				$this->setPeriod($value);
 				break;
-			case 5:
+			case 4:
 				$this->setWorkplanId($value);
 				break;
-			case 6:
+			case 5:
 				$this->setIsPublic($value);
 				break;
-			case 7:
+			case 6:
 				$this->setCreatedAt($value);
 				break;
-			case 8:
+			case 7:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -690,14 +659,13 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		$keys = WpmodulePeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setShortcut($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setUserId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setTitle($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setPeriod($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setWorkplanId($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setIsPublic($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setUpdatedAt($arr[$keys[8]]);
+		if (array_key_exists($keys[1], $arr)) $this->setUserId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setTitle($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setPeriod($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setWorkplanId($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setIsPublic($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setUpdatedAt($arr[$keys[7]]);
 	}
 
 	
@@ -706,7 +674,6 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		$criteria = new Criteria(WpmodulePeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(WpmodulePeer::ID)) $criteria->add(WpmodulePeer::ID, $this->id);
-		if ($this->isColumnModified(WpmodulePeer::SHORTCUT)) $criteria->add(WpmodulePeer::SHORTCUT, $this->shortcut);
 		if ($this->isColumnModified(WpmodulePeer::USER_ID)) $criteria->add(WpmodulePeer::USER_ID, $this->user_id);
 		if ($this->isColumnModified(WpmodulePeer::TITLE)) $criteria->add(WpmodulePeer::TITLE, $this->title);
 		if ($this->isColumnModified(WpmodulePeer::PERIOD)) $criteria->add(WpmodulePeer::PERIOD, $this->period);
@@ -744,8 +711,6 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setShortcut($this->shortcut);
-
 		$copyObj->setUserId($this->user_id);
 
 		$copyObj->setTitle($this->title);
@@ -764,8 +729,8 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
-			foreach ($this->getWpmoduleItems() as $relObj) {
-				if ($relObj !== $this) {  					$copyObj->addWpmoduleItem($relObj->copy($deepCopy));
+			foreach ($this->getWpitemGroups() as $relObj) {
+				if ($relObj !== $this) {  					$copyObj->addWpitemGroup($relObj->copy($deepCopy));
 				}
 			}
 
@@ -857,18 +822,18 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	}
 
 	
-	public function clearWpmoduleItems()
+	public function clearWpitemGroups()
 	{
-		$this->collWpmoduleItems = null; 	}
+		$this->collWpitemGroups = null; 	}
 
 	
-	public function initWpmoduleItems()
+	public function initWpitemGroups()
 	{
-		$this->collWpmoduleItems = array();
+		$this->collWpitemGroups = array();
 	}
 
 	
-	public function getWpmoduleItems($criteria = null, PropelPDO $con = null)
+	public function getWpitemGroups($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(WpmodulePeer::DATABASE_NAME);
@@ -878,34 +843,34 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collWpmoduleItems === null) {
+		if ($this->collWpitemGroups === null) {
 			if ($this->isNew()) {
-			   $this->collWpmoduleItems = array();
+			   $this->collWpitemGroups = array();
 			} else {
 
-				$criteria->add(WpmoduleItemPeer::WPMODULE_ID, $this->id);
+				$criteria->add(WpitemGroupPeer::WPMODULE_ID, $this->id);
 
-				WpmoduleItemPeer::addSelectColumns($criteria);
-				$this->collWpmoduleItems = WpmoduleItemPeer::doSelect($criteria, $con);
+				WpitemGroupPeer::addSelectColumns($criteria);
+				$this->collWpitemGroups = WpitemGroupPeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(WpmoduleItemPeer::WPMODULE_ID, $this->id);
+				$criteria->add(WpitemGroupPeer::WPMODULE_ID, $this->id);
 
-				WpmoduleItemPeer::addSelectColumns($criteria);
-				if (!isset($this->lastWpmoduleItemCriteria) || !$this->lastWpmoduleItemCriteria->equals($criteria)) {
-					$this->collWpmoduleItems = WpmoduleItemPeer::doSelect($criteria, $con);
+				WpitemGroupPeer::addSelectColumns($criteria);
+				if (!isset($this->lastWpitemGroupCriteria) || !$this->lastWpitemGroupCriteria->equals($criteria)) {
+					$this->collWpitemGroups = WpitemGroupPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastWpmoduleItemCriteria = $criteria;
-		return $this->collWpmoduleItems;
+		$this->lastWpitemGroupCriteria = $criteria;
+		return $this->collWpitemGroups;
 	}
 
 	
-	public function countWpmoduleItems(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	public function countWpitemGroups(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(WpmodulePeer::DATABASE_NAME);
@@ -919,48 +884,48 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 
 		$count = null;
 
-		if ($this->collWpmoduleItems === null) {
+		if ($this->collWpitemGroups === null) {
 			if ($this->isNew()) {
 				$count = 0;
 			} else {
 
-				$criteria->add(WpmoduleItemPeer::WPMODULE_ID, $this->id);
+				$criteria->add(WpitemGroupPeer::WPMODULE_ID, $this->id);
 
-				$count = WpmoduleItemPeer::doCount($criteria, $con);
+				$count = WpitemGroupPeer::doCount($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(WpmoduleItemPeer::WPMODULE_ID, $this->id);
+				$criteria->add(WpitemGroupPeer::WPMODULE_ID, $this->id);
 
-				if (!isset($this->lastWpmoduleItemCriteria) || !$this->lastWpmoduleItemCriteria->equals($criteria)) {
-					$count = WpmoduleItemPeer::doCount($criteria, $con);
+				if (!isset($this->lastWpitemGroupCriteria) || !$this->lastWpitemGroupCriteria->equals($criteria)) {
+					$count = WpitemGroupPeer::doCount($criteria, $con);
 				} else {
-					$count = count($this->collWpmoduleItems);
+					$count = count($this->collWpitemGroups);
 				}
 			} else {
-				$count = count($this->collWpmoduleItems);
+				$count = count($this->collWpitemGroups);
 			}
 		}
-		$this->lastWpmoduleItemCriteria = $criteria;
+		$this->lastWpitemGroupCriteria = $criteria;
 		return $count;
 	}
 
 	
-	public function addWpmoduleItem(WpmoduleItem $l)
+	public function addWpitemGroup(WpitemGroup $l)
 	{
-		if ($this->collWpmoduleItems === null) {
-			$this->initWpmoduleItems();
+		if ($this->collWpitemGroups === null) {
+			$this->initWpitemGroups();
 		}
-		if (!in_array($l, $this->collWpmoduleItems, true)) { 			array_push($this->collWpmoduleItems, $l);
+		if (!in_array($l, $this->collWpitemGroups, true)) { 			array_push($this->collWpitemGroups, $l);
 			$l->setWpmodule($this);
 		}
 	}
 
 
 	
-	public function getWpmoduleItemsJoinWpitemType($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getWpitemGroupsJoinWpitemType($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(WpmodulePeer::DATABASE_NAME);
@@ -970,39 +935,39 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collWpmoduleItems === null) {
+		if ($this->collWpitemGroups === null) {
 			if ($this->isNew()) {
-				$this->collWpmoduleItems = array();
+				$this->collWpitemGroups = array();
 			} else {
 
-				$criteria->add(WpmoduleItemPeer::WPMODULE_ID, $this->id);
+				$criteria->add(WpitemGroupPeer::WPMODULE_ID, $this->id);
 
-				$this->collWpmoduleItems = WpmoduleItemPeer::doSelectJoinWpitemType($criteria, $con, $join_behavior);
+				$this->collWpitemGroups = WpitemGroupPeer::doSelectJoinWpitemType($criteria, $con, $join_behavior);
 			}
 		} else {
 									
-			$criteria->add(WpmoduleItemPeer::WPMODULE_ID, $this->id);
+			$criteria->add(WpitemGroupPeer::WPMODULE_ID, $this->id);
 
-			if (!isset($this->lastWpmoduleItemCriteria) || !$this->lastWpmoduleItemCriteria->equals($criteria)) {
-				$this->collWpmoduleItems = WpmoduleItemPeer::doSelectJoinWpitemType($criteria, $con, $join_behavior);
+			if (!isset($this->lastWpitemGroupCriteria) || !$this->lastWpitemGroupCriteria->equals($criteria)) {
+				$this->collWpitemGroups = WpitemGroupPeer::doSelectJoinWpitemType($criteria, $con, $join_behavior);
 			}
 		}
-		$this->lastWpmoduleItemCriteria = $criteria;
+		$this->lastWpitemGroupCriteria = $criteria;
 
-		return $this->collWpmoduleItems;
+		return $this->collWpitemGroups;
 	}
 
 	
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
-			if ($this->collWpmoduleItems) {
-				foreach ((array) $this->collWpmoduleItems as $o) {
+			if ($this->collWpitemGroups) {
+				foreach ((array) $this->collWpitemGroups as $o) {
 					$o->clearAllReferences($deep);
 				}
 			}
 		} 
-		$this->collWpmoduleItems = null;
+		$this->collWpitemGroups = null;
 			$this->asfGuardUser = null;
 			$this->aWorkplan = null;
 	}

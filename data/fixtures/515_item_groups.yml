@@ -1,0 +1,16 @@
+WpitemGroup:
+  wg_f_contents:
+    wpitem_type_id:  contents
+    wpmodule_id:  module1_3_flavia
+  wg_f_knowledge:
+    wpitem_type_id:  knowledge
+    wpmodule_id:  module1_3_flavia
+  wg_f_skills:
+    wpitem_type_id:  skills
+    wpmodule_id:  module1_3_flavia
+  wg_f_competencies:
+    wpitem_type_id:  competencies
+    wpmodule_id:  module1_3_flavia
+  wg_f_comments:
+    wpitem_type_id:  comments
+    wpmodule_id:  module1_3_flavia

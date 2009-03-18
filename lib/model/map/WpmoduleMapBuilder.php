@@ -35,8 +35,6 @@ class WpmoduleMapBuilder implements MapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'INTEGER', true, null);
 
-		$tMap->addColumn('SHORTCUT', 'Shortcut', 'VARCHAR', false, 20);
-
 		$tMap->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', false, null);
 
 		$tMap->addColumn('TITLE', 'Title', 'VARCHAR', false, 100);

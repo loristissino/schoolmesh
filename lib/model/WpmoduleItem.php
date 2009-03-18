@@ -19,6 +19,7 @@ class WpmoduleItem extends BaseWpmoduleItem
 	public function save(PropelPDO $con = null)
 	{
 	  // New records need to be initialized with rank = maxRank +1
+	/*  
 	  if(!$this->getId())
 	  {
 		$con = Propel::getConnection(WpmoduleItemPeer::DATABASE_NAME);
@@ -40,11 +41,11 @@ class WpmoduleItem extends BaseWpmoduleItem
 	  else
 	  {
 		parent::save(); 
-	  }
+	  }*/
 	} 
 
 	public function delete(PropelPDO $con = null)
-	{  
+	{  /*
 	  $con = Propel::getConnection(PagePeer::DATABASE_NAME);
 	  try
 	  {
@@ -62,7 +63,7 @@ class WpmoduleItem extends BaseWpmoduleItem
 	  {
 		$con->rollback();
 		throw $e;
-	  }
+	  }*/
 	}
 	
 }

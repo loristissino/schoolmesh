@@ -260,7 +260,10 @@ CREATE TABLE `workplan`
 	`subject_id` INTEGER  NOT NULL,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
-	`is_locked` TINYINT,
+	`wpsubmitted_at` DATETIME,
+	`wpapproved_at` DATETIME,
+	`frsubmitted_at` DATETIME,
+	`frapproved_at` DATETIME,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `uyss` (`user_id`, `year_id`, `schoolclass_id`, `subject_id`),
 	CONSTRAINT `workplan_FK_1`
@@ -294,7 +297,6 @@ DROP TABLE IF EXISTS `wpmodule`;
 CREATE TABLE `wpmodule`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`shortcut` VARCHAR(20),
 	`user_id` INTEGER,
 	`title` VARCHAR(100),
 	`period` VARCHAR(100),
@@ -303,7 +305,7 @@ CREATE TABLE `wpmodule`
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `id_s` (`user_id`, `shortcut`),
+	INDEX `wpmodule_FI_1` (`user_id`),
 	CONSTRAINT `wpmodule_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
@@ -335,6 +337,30 @@ CREATE TABLE `wpitem_type`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- wpitem_group
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `wpitem_group`;
+
+
+CREATE TABLE `wpitem_group`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`wpitem_type_id` INTEGER,
+	`wpmodule_id` INTEGER,
+	`max_rank` INTEGER,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `iti_mi` (`wpitem_type_id`, `wpmodule_id`),
+	CONSTRAINT `wpitem_group_FK_1`
+		FOREIGN KEY (`wpitem_type_id`)
+		REFERENCES `wpitem_type` (`id`),
+	INDEX `wpitem_group_FI_2` (`wpmodule_id`),
+	CONSTRAINT `wpitem_group_FK_2`
+		FOREIGN KEY (`wpmodule_id`)
+		REFERENCES `wpmodule` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- wpmodule_item
 #-----------------------------------------------------------------------------
 
@@ -344,19 +370,15 @@ DROP TABLE IF EXISTS `wpmodule_item`;
 CREATE TABLE `wpmodule_item`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`wpitem_type_id` INTEGER,
-	`wpmodule_id` INTEGER,
+	`wpitem_group_id` INTEGER,
 	`rank` INTEGER  NOT NULL,
 	`content` TEXT,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `id_pos` (`wpmodule_id`, `wpitem_type_id`, `rank`),
-	INDEX `wpmodule_item_FI_1` (`wpitem_type_id`),
+	UNIQUE KEY `id_pos` (`id`, `rank`),
+	INDEX `wpmodule_item_FI_1` (`wpitem_group_id`),
 	CONSTRAINT `wpmodule_item_FK_1`
-		FOREIGN KEY (`wpitem_type_id`)
-		REFERENCES `wpitem_type` (`id`),
-	CONSTRAINT `wpmodule_item_FK_2`
-		FOREIGN KEY (`wpmodule_id`)
-		REFERENCES `wpmodule` (`id`)
+		FOREIGN KEY (`wpitem_group_id`)
+		REFERENCES `wpitem_group` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

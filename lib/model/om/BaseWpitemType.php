@@ -34,10 +34,10 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 	protected $evaluation_max_description;
 
 	
-	protected $collWpmoduleItems;
+	protected $collWpitemGroups;
 
 	
-	private $lastWpmoduleItemCriteria = null;
+	private $lastWpitemGroupCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -282,8 +282,8 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		}
 		$this->hydrate($row, 0, true); 
 		if ($deep) {  
-			$this->collWpmoduleItems = null;
-			$this->lastWpmoduleItemCriteria = null;
+			$this->collWpitemGroups = null;
+			$this->lastWpitemGroupCriteria = null;
 
 		} 	}
 
@@ -354,8 +354,8 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 
 				$this->resetModified(); 			}
 
-			if ($this->collWpmoduleItems !== null) {
-				foreach ($this->collWpmoduleItems as $referrerFK) {
+			if ($this->collWpitemGroups !== null) {
+				foreach ($this->collWpitemGroups as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -404,8 +404,8 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			}
 
 
-				if ($this->collWpmoduleItems !== null) {
-					foreach ($this->collWpmoduleItems as $referrerFK) {
+				if ($this->collWpitemGroups !== null) {
+					foreach ($this->collWpitemGroups as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -590,8 +590,8 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
-			foreach ($this->getWpmoduleItems() as $relObj) {
-				if ($relObj !== $this) {  					$copyObj->addWpmoduleItem($relObj->copy($deepCopy));
+			foreach ($this->getWpitemGroups() as $relObj) {
+				if ($relObj !== $this) {  					$copyObj->addWpitemGroup($relObj->copy($deepCopy));
 				}
 			}
 
@@ -621,18 +621,18 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 	}
 
 	
-	public function clearWpmoduleItems()
+	public function clearWpitemGroups()
 	{
-		$this->collWpmoduleItems = null; 	}
+		$this->collWpitemGroups = null; 	}
 
 	
-	public function initWpmoduleItems()
+	public function initWpitemGroups()
 	{
-		$this->collWpmoduleItems = array();
+		$this->collWpitemGroups = array();
 	}
 
 	
-	public function getWpmoduleItems($criteria = null, PropelPDO $con = null)
+	public function getWpitemGroups($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(WpitemTypePeer::DATABASE_NAME);
@@ -642,34 +642,34 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collWpmoduleItems === null) {
+		if ($this->collWpitemGroups === null) {
 			if ($this->isNew()) {
-			   $this->collWpmoduleItems = array();
+			   $this->collWpitemGroups = array();
 			} else {
 
-				$criteria->add(WpmoduleItemPeer::WPITEM_TYPE_ID, $this->id);
+				$criteria->add(WpitemGroupPeer::WPITEM_TYPE_ID, $this->id);
 
-				WpmoduleItemPeer::addSelectColumns($criteria);
-				$this->collWpmoduleItems = WpmoduleItemPeer::doSelect($criteria, $con);
+				WpitemGroupPeer::addSelectColumns($criteria);
+				$this->collWpitemGroups = WpitemGroupPeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(WpmoduleItemPeer::WPITEM_TYPE_ID, $this->id);
+				$criteria->add(WpitemGroupPeer::WPITEM_TYPE_ID, $this->id);
 
-				WpmoduleItemPeer::addSelectColumns($criteria);
-				if (!isset($this->lastWpmoduleItemCriteria) || !$this->lastWpmoduleItemCriteria->equals($criteria)) {
-					$this->collWpmoduleItems = WpmoduleItemPeer::doSelect($criteria, $con);
+				WpitemGroupPeer::addSelectColumns($criteria);
+				if (!isset($this->lastWpitemGroupCriteria) || !$this->lastWpitemGroupCriteria->equals($criteria)) {
+					$this->collWpitemGroups = WpitemGroupPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastWpmoduleItemCriteria = $criteria;
-		return $this->collWpmoduleItems;
+		$this->lastWpitemGroupCriteria = $criteria;
+		return $this->collWpitemGroups;
 	}
 
 	
-	public function countWpmoduleItems(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	public function countWpitemGroups(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(WpitemTypePeer::DATABASE_NAME);
@@ -683,48 +683,48 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 
 		$count = null;
 
-		if ($this->collWpmoduleItems === null) {
+		if ($this->collWpitemGroups === null) {
 			if ($this->isNew()) {
 				$count = 0;
 			} else {
 
-				$criteria->add(WpmoduleItemPeer::WPITEM_TYPE_ID, $this->id);
+				$criteria->add(WpitemGroupPeer::WPITEM_TYPE_ID, $this->id);
 
-				$count = WpmoduleItemPeer::doCount($criteria, $con);
+				$count = WpitemGroupPeer::doCount($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(WpmoduleItemPeer::WPITEM_TYPE_ID, $this->id);
+				$criteria->add(WpitemGroupPeer::WPITEM_TYPE_ID, $this->id);
 
-				if (!isset($this->lastWpmoduleItemCriteria) || !$this->lastWpmoduleItemCriteria->equals($criteria)) {
-					$count = WpmoduleItemPeer::doCount($criteria, $con);
+				if (!isset($this->lastWpitemGroupCriteria) || !$this->lastWpitemGroupCriteria->equals($criteria)) {
+					$count = WpitemGroupPeer::doCount($criteria, $con);
 				} else {
-					$count = count($this->collWpmoduleItems);
+					$count = count($this->collWpitemGroups);
 				}
 			} else {
-				$count = count($this->collWpmoduleItems);
+				$count = count($this->collWpitemGroups);
 			}
 		}
-		$this->lastWpmoduleItemCriteria = $criteria;
+		$this->lastWpitemGroupCriteria = $criteria;
 		return $count;
 	}
 
 	
-	public function addWpmoduleItem(WpmoduleItem $l)
+	public function addWpitemGroup(WpitemGroup $l)
 	{
-		if ($this->collWpmoduleItems === null) {
-			$this->initWpmoduleItems();
+		if ($this->collWpitemGroups === null) {
+			$this->initWpitemGroups();
 		}
-		if (!in_array($l, $this->collWpmoduleItems, true)) { 			array_push($this->collWpmoduleItems, $l);
+		if (!in_array($l, $this->collWpitemGroups, true)) { 			array_push($this->collWpitemGroups, $l);
 			$l->setWpitemType($this);
 		}
 	}
 
 
 	
-	public function getWpmoduleItemsJoinWpmodule($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getWpitemGroupsJoinWpmodule($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(WpitemTypePeer::DATABASE_NAME);
@@ -734,39 +734,39 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collWpmoduleItems === null) {
+		if ($this->collWpitemGroups === null) {
 			if ($this->isNew()) {
-				$this->collWpmoduleItems = array();
+				$this->collWpitemGroups = array();
 			} else {
 
-				$criteria->add(WpmoduleItemPeer::WPITEM_TYPE_ID, $this->id);
+				$criteria->add(WpitemGroupPeer::WPITEM_TYPE_ID, $this->id);
 
-				$this->collWpmoduleItems = WpmoduleItemPeer::doSelectJoinWpmodule($criteria, $con, $join_behavior);
+				$this->collWpitemGroups = WpitemGroupPeer::doSelectJoinWpmodule($criteria, $con, $join_behavior);
 			}
 		} else {
 									
-			$criteria->add(WpmoduleItemPeer::WPITEM_TYPE_ID, $this->id);
+			$criteria->add(WpitemGroupPeer::WPITEM_TYPE_ID, $this->id);
 
-			if (!isset($this->lastWpmoduleItemCriteria) || !$this->lastWpmoduleItemCriteria->equals($criteria)) {
-				$this->collWpmoduleItems = WpmoduleItemPeer::doSelectJoinWpmodule($criteria, $con, $join_behavior);
+			if (!isset($this->lastWpitemGroupCriteria) || !$this->lastWpitemGroupCriteria->equals($criteria)) {
+				$this->collWpitemGroups = WpitemGroupPeer::doSelectJoinWpmodule($criteria, $con, $join_behavior);
 			}
 		}
-		$this->lastWpmoduleItemCriteria = $criteria;
+		$this->lastWpitemGroupCriteria = $criteria;
 
-		return $this->collWpmoduleItems;
+		return $this->collWpitemGroups;
 	}
 
 	
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
-			if ($this->collWpmoduleItems) {
-				foreach ((array) $this->collWpmoduleItems as $o) {
+			if ($this->collWpitemGroups) {
+				foreach ((array) $this->collWpitemGroups as $o) {
 					$o->clearAllReferences($deep);
 				}
 			}
 		} 
-		$this->collWpmoduleItems = null;
+		$this->collWpitemGroups = null;
 	}
 
 } 

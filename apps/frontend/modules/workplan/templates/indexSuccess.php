@@ -10,7 +10,9 @@
       <th class="sf_admin_text">Year</th>
       <th class="sf_admin_text">Class</th>
       <th class="sf_admin_text">Subject</th>
-      <th class="sf_admin_text">Actions</th>
+      <th class="sf_admin_text">Modules</th>
+	  <th class="sf_admin_text">Status</th>  
+      <th class="sf_admin_text">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -19,10 +21,9 @@
       <td><?php echo $workplan->getYear() ?></td>
       <td><?php echo $workplan->getSchoolclass() ?></td>
       <td><?php echo $workplan->getSubject() ?></td>
-      <td><a href="<?php echo url_for('workplan/show?id='.$workplan->getId()) ?>"><?php echo __("show") ?></a>
-	  <?php if (!$workplan->getIsLocked()): ?>
-			<a href="<?php echo url_for('workplan/edit?id='.$workplan->getId()) ?>"><?php echo __("edit") ?></a>
-	  <?php endif; ?>
+	  <td><?php echo $workplan->countWpmodules() ?></td>
+	  <td><?php echo $status_descriptions[$workplan->getStatus()] ?></td>
+      <td><a href="<?php echo url_for('workplan/show?id='.$workplan->getId()) ?>"><?php echo $view_actions[$workplan->getStatus()] ?></a>
 	</td>
     </tr>
     <?php endforeach; ?>

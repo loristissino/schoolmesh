@@ -13,7 +13,7 @@ abstract class BaseWorkplanPeer {
 	const CLASS_DEFAULT = 'lib.model.Workplan';
 
 	
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 11;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -40,7 +40,16 @@ abstract class BaseWorkplanPeer {
 	const UPDATED_AT = 'workplan.UPDATED_AT';
 
 	
-	const IS_LOCKED = 'workplan.IS_LOCKED';
+	const WPSUBMITTED_AT = 'workplan.WPSUBMITTED_AT';
+
+	
+	const WPAPPROVED_AT = 'workplan.WPAPPROVED_AT';
+
+	
+	const FRSUBMITTED_AT = 'workplan.FRSUBMITTED_AT';
+
+	
+	const FRAPPROVED_AT = 'workplan.FRAPPROVED_AT';
 
 	
 	public static $instances = array();
@@ -50,20 +59,20 @@ abstract class BaseWorkplanPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'YearId', 'SchoolclassId', 'SubjectId', 'CreatedAt', 'UpdatedAt', 'IsLocked', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'yearId', 'schoolclassId', 'subjectId', 'createdAt', 'updatedAt', 'isLocked', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::YEAR_ID, self::SCHOOLCLASS_ID, self::SUBJECT_ID, self::CREATED_AT, self::UPDATED_AT, self::IS_LOCKED, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'year_id', 'schoolclass_id', 'subject_id', 'created_at', 'updated_at', 'is_locked', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'YearId', 'SchoolclassId', 'SubjectId', 'CreatedAt', 'UpdatedAt', 'WpsubmittedAt', 'WpapprovedAt', 'FrsubmittedAt', 'FrapprovedAt', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'yearId', 'schoolclassId', 'subjectId', 'createdAt', 'updatedAt', 'wpsubmittedAt', 'wpapprovedAt', 'frsubmittedAt', 'frapprovedAt', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::YEAR_ID, self::SCHOOLCLASS_ID, self::SUBJECT_ID, self::CREATED_AT, self::UPDATED_AT, self::WPSUBMITTED_AT, self::WPAPPROVED_AT, self::FRSUBMITTED_AT, self::FRAPPROVED_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'year_id', 'schoolclass_id', 'subject_id', 'created_at', 'updated_at', 'wpsubmitted_at', 'wpapproved_at', 'frsubmitted_at', 'frapproved_at', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'YearId' => 2, 'SchoolclassId' => 3, 'SubjectId' => 4, 'CreatedAt' => 5, 'UpdatedAt' => 6, 'IsLocked' => 7, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'yearId' => 2, 'schoolclassId' => 3, 'subjectId' => 4, 'createdAt' => 5, 'updatedAt' => 6, 'isLocked' => 7, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::YEAR_ID => 2, self::SCHOOLCLASS_ID => 3, self::SUBJECT_ID => 4, self::CREATED_AT => 5, self::UPDATED_AT => 6, self::IS_LOCKED => 7, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'year_id' => 2, 'schoolclass_id' => 3, 'subject_id' => 4, 'created_at' => 5, 'updated_at' => 6, 'is_locked' => 7, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'YearId' => 2, 'SchoolclassId' => 3, 'SubjectId' => 4, 'CreatedAt' => 5, 'UpdatedAt' => 6, 'WpsubmittedAt' => 7, 'WpapprovedAt' => 8, 'FrsubmittedAt' => 9, 'FrapprovedAt' => 10, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'yearId' => 2, 'schoolclassId' => 3, 'subjectId' => 4, 'createdAt' => 5, 'updatedAt' => 6, 'wpsubmittedAt' => 7, 'wpapprovedAt' => 8, 'frsubmittedAt' => 9, 'frapprovedAt' => 10, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::YEAR_ID => 2, self::SCHOOLCLASS_ID => 3, self::SUBJECT_ID => 4, self::CREATED_AT => 5, self::UPDATED_AT => 6, self::WPSUBMITTED_AT => 7, self::WPAPPROVED_AT => 8, self::FRSUBMITTED_AT => 9, self::FRAPPROVED_AT => 10, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'year_id' => 2, 'schoolclass_id' => 3, 'subject_id' => 4, 'created_at' => 5, 'updated_at' => 6, 'wpsubmitted_at' => 7, 'wpapproved_at' => 8, 'frsubmitted_at' => 9, 'frapproved_at' => 10, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	
@@ -119,7 +128,13 @@ abstract class BaseWorkplanPeer {
 
 		$criteria->addSelectColumn(WorkplanPeer::UPDATED_AT);
 
-		$criteria->addSelectColumn(WorkplanPeer::IS_LOCKED);
+		$criteria->addSelectColumn(WorkplanPeer::WPSUBMITTED_AT);
+
+		$criteria->addSelectColumn(WorkplanPeer::WPAPPROVED_AT);
+
+		$criteria->addSelectColumn(WorkplanPeer::FRSUBMITTED_AT);
+
+		$criteria->addSelectColumn(WorkplanPeer::FRAPPROVED_AT);
 
 	}
 
