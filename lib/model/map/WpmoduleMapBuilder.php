@@ -43,6 +43,8 @@ class WpmoduleMapBuilder implements MapBuilder {
 
 		$tMap->addForeignKey('WORKPLAN_ID', 'WorkplanId', 'INTEGER', 'workplan', 'ID', false, null);
 
+		$tMap->addColumn('RANK', 'Rank', 'INTEGER', false, null);
+
 		$tMap->addColumn('IS_PUBLIC', 'IsPublic', 'BOOLEAN', false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null);

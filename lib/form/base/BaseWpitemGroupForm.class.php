@@ -16,14 +16,12 @@ class BaseWpitemGroupForm extends BaseFormPropel
       'id'             => new sfWidgetFormInputHidden(),
       'wpitem_type_id' => new sfWidgetFormPropelChoice(array('model' => 'WpitemType', 'add_empty' => true)),
       'wpmodule_id'    => new sfWidgetFormPropelChoice(array('model' => 'Wpmodule', 'add_empty' => true)),
-      'max_rank'       => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
       'id'             => new sfValidatorPropelChoice(array('model' => 'WpitemGroup', 'column' => 'id', 'required' => false)),
       'wpitem_type_id' => new sfValidatorPropelChoice(array('model' => 'WpitemType', 'column' => 'id', 'required' => false)),
       'wpmodule_id'    => new sfValidatorPropelChoice(array('model' => 'Wpmodule', 'column' => 'id', 'required' => false)),
-      'max_rank'       => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(

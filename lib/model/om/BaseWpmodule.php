@@ -25,6 +25,9 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	protected $workplan_id;
 
 	
+	protected $rank;
+
+	
 	protected $is_public;
 
 	
@@ -91,6 +94,12 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	public function getWorkplanId()
 	{
 		return $this->workplan_id;
+	}
+
+	
+	public function getRank()
+	{
+		return $this->rank;
 	}
 
 	
@@ -232,6 +241,20 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setRank($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->rank !== $v) {
+			$this->rank = $v;
+			$this->modifiedColumns[] = WpmodulePeer::RANK;
+		}
+
+		return $this;
+	} 
+	
 	public function setIsPublic($v)
 	{
 		if ($v !== null) {
@@ -328,9 +351,10 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 			$this->title = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->period = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->workplan_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
-			$this->is_public = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
-			$this->created_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->updated_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->rank = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->is_public = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
+			$this->created_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->updated_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -339,7 +363,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 8; 
+						return $startcol + 9; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Wpmodule object", $e);
 		}
@@ -586,12 +610,15 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				return $this->getWorkplanId();
 				break;
 			case 5:
-				return $this->getIsPublic();
+				return $this->getRank();
 				break;
 			case 6:
-				return $this->getCreatedAt();
+				return $this->getIsPublic();
 				break;
 			case 7:
+				return $this->getCreatedAt();
+				break;
+			case 8:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -609,9 +636,10 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 			$keys[2] => $this->getTitle(),
 			$keys[3] => $this->getPeriod(),
 			$keys[4] => $this->getWorkplanId(),
-			$keys[5] => $this->getIsPublic(),
-			$keys[6] => $this->getCreatedAt(),
-			$keys[7] => $this->getUpdatedAt(),
+			$keys[5] => $this->getRank(),
+			$keys[6] => $this->getIsPublic(),
+			$keys[7] => $this->getCreatedAt(),
+			$keys[8] => $this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -643,12 +671,15 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				$this->setWorkplanId($value);
 				break;
 			case 5:
-				$this->setIsPublic($value);
+				$this->setRank($value);
 				break;
 			case 6:
-				$this->setCreatedAt($value);
+				$this->setIsPublic($value);
 				break;
 			case 7:
+				$this->setCreatedAt($value);
+				break;
+			case 8:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -663,9 +694,10 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setTitle($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setPeriod($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setWorkplanId($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setIsPublic($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setUpdatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[5], $arr)) $this->setRank($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setIsPublic($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setUpdatedAt($arr[$keys[8]]);
 	}
 
 	
@@ -678,6 +710,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpmodulePeer::TITLE)) $criteria->add(WpmodulePeer::TITLE, $this->title);
 		if ($this->isColumnModified(WpmodulePeer::PERIOD)) $criteria->add(WpmodulePeer::PERIOD, $this->period);
 		if ($this->isColumnModified(WpmodulePeer::WORKPLAN_ID)) $criteria->add(WpmodulePeer::WORKPLAN_ID, $this->workplan_id);
+		if ($this->isColumnModified(WpmodulePeer::RANK)) $criteria->add(WpmodulePeer::RANK, $this->rank);
 		if ($this->isColumnModified(WpmodulePeer::IS_PUBLIC)) $criteria->add(WpmodulePeer::IS_PUBLIC, $this->is_public);
 		if ($this->isColumnModified(WpmodulePeer::CREATED_AT)) $criteria->add(WpmodulePeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(WpmodulePeer::UPDATED_AT)) $criteria->add(WpmodulePeer::UPDATED_AT, $this->updated_at);
@@ -718,6 +751,8 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		$copyObj->setPeriod($this->period);
 
 		$copyObj->setWorkplanId($this->workplan_id);
+
+		$copyObj->setRank($this->rank);
 
 		$copyObj->setIsPublic($this->is_public);
 

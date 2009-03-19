@@ -13,7 +13,7 @@ abstract class BaseWpmodulePeer {
 	const CLASS_DEFAULT = 'lib.model.Wpmodule';
 
 	
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 9;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -34,6 +34,9 @@ abstract class BaseWpmodulePeer {
 	const WORKPLAN_ID = 'wpmodule.WORKPLAN_ID';
 
 	
+	const RANK = 'wpmodule.RANK';
+
+	
 	const IS_PUBLIC = 'wpmodule.IS_PUBLIC';
 
 	
@@ -50,20 +53,20 @@ abstract class BaseWpmodulePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'Title', 'Period', 'WorkplanId', 'IsPublic', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'title', 'period', 'workplanId', 'isPublic', 'createdAt', 'updatedAt', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::TITLE, self::PERIOD, self::WORKPLAN_ID, self::IS_PUBLIC, self::CREATED_AT, self::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'title', 'period', 'workplan_id', 'is_public', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'Title', 'Period', 'WorkplanId', 'Rank', 'IsPublic', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'title', 'period', 'workplanId', 'rank', 'isPublic', 'createdAt', 'updatedAt', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::TITLE, self::PERIOD, self::WORKPLAN_ID, self::RANK, self::IS_PUBLIC, self::CREATED_AT, self::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'title', 'period', 'workplan_id', 'rank', 'is_public', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'Title' => 2, 'Period' => 3, 'WorkplanId' => 4, 'IsPublic' => 5, 'CreatedAt' => 6, 'UpdatedAt' => 7, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'title' => 2, 'period' => 3, 'workplanId' => 4, 'isPublic' => 5, 'createdAt' => 6, 'updatedAt' => 7, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::TITLE => 2, self::PERIOD => 3, self::WORKPLAN_ID => 4, self::IS_PUBLIC => 5, self::CREATED_AT => 6, self::UPDATED_AT => 7, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'title' => 2, 'period' => 3, 'workplan_id' => 4, 'is_public' => 5, 'created_at' => 6, 'updated_at' => 7, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'Title' => 2, 'Period' => 3, 'WorkplanId' => 4, 'Rank' => 5, 'IsPublic' => 6, 'CreatedAt' => 7, 'UpdatedAt' => 8, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'title' => 2, 'period' => 3, 'workplanId' => 4, 'rank' => 5, 'isPublic' => 6, 'createdAt' => 7, 'updatedAt' => 8, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::TITLE => 2, self::PERIOD => 3, self::WORKPLAN_ID => 4, self::RANK => 5, self::IS_PUBLIC => 6, self::CREATED_AT => 7, self::UPDATED_AT => 8, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'title' => 2, 'period' => 3, 'workplan_id' => 4, 'rank' => 5, 'is_public' => 6, 'created_at' => 7, 'updated_at' => 8, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	
@@ -114,6 +117,8 @@ abstract class BaseWpmodulePeer {
 		$criteria->addSelectColumn(WpmodulePeer::PERIOD);
 
 		$criteria->addSelectColumn(WpmodulePeer::WORKPLAN_ID);
+
+		$criteria->addSelectColumn(WpmodulePeer::RANK);
 
 		$criteria->addSelectColumn(WpmodulePeer::IS_PUBLIC);
 

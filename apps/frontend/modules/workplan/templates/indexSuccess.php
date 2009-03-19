@@ -30,4 +30,8 @@
   </tbody>
 </table>
 
-  <a href="<?php echo url_for('workplan/new') ?>">New</a>
+<div id="sf_admin_container">
+	<ul class="sf_admin_actions">
+	<li class="sf_admin_action_new"><a href="<?php echo url_for('workplan/new') ?>">New</a></li>
+	</ul>
+</div>
