@@ -19,19 +19,32 @@
 	  
 	<td>
 	<?php if($wpmodule->getRank()<$workplan->countWpmodules()): ?>
-		<?php include_partial('movedown', array('workplan' => $workplan)) ?>
+		<?php include_partial('movedown', array('wpmodule' => $wpmodule)) ?>
 	<?php endif ?>
 	</td>
 	<td><?php if($wpmodule->getRank()>1): ?>
-		<?php include_partial('moveup', array('workplan' => $workplan)) ?>
+		<?php include_partial('moveup', array('wpmodule' => $wpmodule)) ?>
 	<?php endif ?>
 	</td>
+	
       <td><?php echo $wpmodule->getPeriod() ?></td>
       <td><?php echo $wpmodule ?></td>
       <td>
 		<ul class="sf_admin_td_actions">
-			<li class="sf_admin_action_edit">  <a href="<?php echo url_for('wpmodule/show?id='.$wpmodule->getId()) ?>">Edit</a></li>
-			<li class="sf_admin_action_delete">  <a href="<?php echo url_for('wpmodule/show?id='.$wpmodule->getId()) ?>">Delete</a></li>
+			<li class="sf_admin_action_edit">
+				<?php echo link_to(
+				__('Edit'),
+				'wpmodule/edit?id='.$wpmodule->getId(),
+				array('method' => 'get') 
+				)?>
+			</li>
+			<li class="sf_admin_action_delete">
+				<?php echo link_to(
+				__('Delete'),
+				'wpmodule/delete?id='.$wpmodule->getId(),
+				array('method' => 'delete', 'confirm' => __('Are you sure?')) 
+				)?>
+			</li>
 		</ul>
 	  </td>
     </tr>

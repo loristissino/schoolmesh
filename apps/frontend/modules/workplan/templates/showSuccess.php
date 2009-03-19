@@ -46,8 +46,13 @@
 </ul>
 <?php if ($submit_actions[$workplan->getStatus()]!=''): ?>
 	<ul class="sf_admin_actions">
-	<li><a href="<?php echo url_for('workplan/submit?id='.$workplan->getId()) ?>">
-	<?php echo $submit_actions[$workplan->getStatus()] ?></a></li>
+	<li>
+				<?php echo link_to(
+				$submit_actions[$workplan->getStatus()],
+				'workplan/wpsubmit?id='.$workplan->getId(),
+				array('method' => 'put') 
+				)?>
+	</li>
 	</ul>
 <?php endif ?>
 <hr />

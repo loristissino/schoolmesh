@@ -330,6 +330,7 @@ CREATE TABLE `wpitem_type`
 	`title` VARCHAR(50),
 	`description` VARCHAR(200),
 	`rank` INTEGER  NOT NULL,
+	`status` INTEGER,
 	`evaluation_min` INTEGER,
 	`evaluation_max` INTEGER,
 	`evaluation_min_description` VARCHAR(50),

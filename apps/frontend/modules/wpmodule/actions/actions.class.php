@@ -10,6 +10,28 @@
  */
 class wpmoduleActions extends sfActions
 {
+
+	public function executeUp()
+	{
+	  $item = WpmodulePeer::retrieveByPk($this->getRequestParameter('id'));
+	  $this->forward404Unless($item);
+	  $previous_item = WpmodulePeer::retrieveByRank($item->getRank() - 1, $item->getWorkplanId());
+	  $this->forward404Unless($previous_item);
+	  $item->swapWith($previous_item);
+	 
+	  $this->redirect('workplan/show?id='.$item->getWorkplanId()); 	}  
+
+	public function executeDown()
+	{
+	  $item = WpmodulePeer::retrieveByPk($this->getRequestParameter('id'));
+	  $this->forward404Unless($item);
+	  $next_item = WpmodulePeer::retrieveByRank($item->getRank() + 1, $item->getWorkplanId());
+	  $this->forward404Unless($next_item);
+	  $item->swapWith($next_item);
+	 
+	  $this->redirect('workplan/show?id='.$item->getWorkplanId()); 
+	}  
+
   public function executeIndex(sfWebRequest $request)
   {
     $this->wpmodule_list = WpmodulePeer::doSelect(new Criteria());

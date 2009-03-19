@@ -41,6 +41,8 @@ class WpitemTypeMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('RANK', 'Rank', 'INTEGER', true, null);
 
+		$tMap->addColumn('STATUS', 'Status', 'INTEGER', false, null);
+
 		$tMap->addColumn('EVALUATION_MIN', 'EvaluationMin', 'INTEGER', false, null);
 
 		$tMap->addColumn('EVALUATION_MAX', 'EvaluationMax', 'INTEGER', false, null);
