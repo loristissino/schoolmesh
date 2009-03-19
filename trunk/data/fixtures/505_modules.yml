@@ -4,6 +4,7 @@ Wpmodule:
     user_id:      flavia
     title:        La geometria nel piano cartesiano
     period:       settembre - novembre
+    rank:   1
     workplan_id: flavia3
     is_public:    true
       
@@ -12,6 +13,7 @@ Wpmodule:
     user_id:      flavia
     title:        Disequazioni e funzioni
     period:       dicembre - marzo
+    rank:   2
     workplan_id: flavia3
     is_public:    true
 
@@ -20,6 +22,7 @@ Wpmodule:
     user_id:    loris
     title:       Il foglio elettronico
     period:      settembre - dicembre
+    rank:   1
     workplan_id: status0
     is_public:    true
 
@@ -28,5 +31,15 @@ Wpmodule:
     user_id:    loris
     title:       Introduzione alla programmazione in Pascal
     period:      gennaio - marzo
+    rank:     2
+    workplan_id: status0
+    is_public:    true
+
+  module3_3_loris:
+    id:
+    user_id:    loris
+    title:       Introduzione alla shell di Linux
+    period:      aprile - maggio
+    rank:     3
     workplan_id: status0
     is_public:    true

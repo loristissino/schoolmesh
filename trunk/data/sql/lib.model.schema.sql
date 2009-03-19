@@ -301,6 +301,7 @@ CREATE TABLE `wpmodule`
 	`title` VARCHAR(100),
 	`period` VARCHAR(100),
 	`workplan_id` INTEGER,
+	`rank` INTEGER,
 	`is_public` TINYINT,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
@@ -348,7 +349,6 @@ CREATE TABLE `wpitem_group`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`wpitem_type_id` INTEGER,
 	`wpmodule_id` INTEGER,
-	`max_rank` INTEGER,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `iti_mi` (`wpitem_type_id`, `wpmodule_id`),
 	CONSTRAINT `wpitem_group_FK_1`

@@ -17,13 +17,11 @@ class BaseWpitemGroupFormFilter extends BaseFormFilterPropel
     $this->setWidgets(array(
       'wpitem_type_id' => new sfWidgetFormPropelChoice(array('model' => 'WpitemType', 'add_empty' => true)),
       'wpmodule_id'    => new sfWidgetFormPropelChoice(array('model' => 'Wpmodule', 'add_empty' => true)),
-      'max_rank'       => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
       'wpitem_type_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'WpitemType', 'column' => 'id')),
       'wpmodule_id'    => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Wpmodule', 'column' => 'id')),
-      'max_rank'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('wpitem_group_filters[%s]');
@@ -44,7 +42,6 @@ class BaseWpitemGroupFormFilter extends BaseFormFilterPropel
       'id'             => 'Number',
       'wpitem_type_id' => 'ForeignKey',
       'wpmodule_id'    => 'ForeignKey',
-      'max_rank'       => 'Number',
     );
   }
 }

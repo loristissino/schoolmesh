@@ -126,6 +126,7 @@ propel:
     title:        varchar(100)
     period:       varchar(100)
     workplan_id:   
+    rank:       integer
     is_public:    boolean
     created_at:   ~
     updated_at:   ~
@@ -144,7 +145,6 @@ propel:
     id:           ~
     wpitem_type_id:  ~
     wpmodule_id:  ~
-    max_rank: integer
     _uniques:
       iti_mi: [wpitem_type_id, wpmodule_id]
 

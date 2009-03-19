@@ -13,7 +13,7 @@ abstract class BaseWpitemGroupPeer {
 	const CLASS_DEFAULT = 'lib.model.WpitemGroup';
 
 	
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 3;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -28,9 +28,6 @@ abstract class BaseWpitemGroupPeer {
 	const WPMODULE_ID = 'wpitem_group.WPMODULE_ID';
 
 	
-	const MAX_RANK = 'wpitem_group.MAX_RANK';
-
-	
 	public static $instances = array();
 
 	
@@ -38,20 +35,20 @@ abstract class BaseWpitemGroupPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'WpitemTypeId', 'WpmoduleId', 'MaxRank', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'wpitemTypeId', 'wpmoduleId', 'maxRank', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::WPITEM_TYPE_ID, self::WPMODULE_ID, self::MAX_RANK, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'wpitem_type_id', 'wpmodule_id', 'max_rank', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'WpitemTypeId', 'WpmoduleId', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'wpitemTypeId', 'wpmoduleId', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::WPITEM_TYPE_ID, self::WPMODULE_ID, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'wpitem_type_id', 'wpmodule_id', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'WpitemTypeId' => 1, 'WpmoduleId' => 2, 'MaxRank' => 3, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'wpitemTypeId' => 1, 'wpmoduleId' => 2, 'maxRank' => 3, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::WPITEM_TYPE_ID => 1, self::WPMODULE_ID => 2, self::MAX_RANK => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'wpitem_type_id' => 1, 'wpmodule_id' => 2, 'max_rank' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'WpitemTypeId' => 1, 'WpmoduleId' => 2, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'wpitemTypeId' => 1, 'wpmoduleId' => 2, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::WPITEM_TYPE_ID => 1, self::WPMODULE_ID => 2, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'wpitem_type_id' => 1, 'wpmodule_id' => 2, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	
@@ -98,8 +95,6 @@ abstract class BaseWpitemGroupPeer {
 		$criteria->addSelectColumn(WpitemGroupPeer::WPITEM_TYPE_ID);
 
 		$criteria->addSelectColumn(WpitemGroupPeer::WPMODULE_ID);
-
-		$criteria->addSelectColumn(WpitemGroupPeer::MAX_RANK);
 
 	}
 

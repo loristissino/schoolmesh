@@ -37,9 +37,9 @@ class Workflow
 	
 	$descriptions=Array
 		(
-			0=>sfContext::getInstance()->getI18N()->__("submit workplan for approval"),
+			0=>sfContext::getInstance()->getI18N()->__("Submit this workplan for approval"),
 			1=>"",
-			2=>sfContext::getInstance()->getI18N()->__("submit final report for approval"),
+			2=>sfContext::getInstance()->getI18N()->__("Submit this final report for approval"),
 			3=>"",
 			4=>""
 		);

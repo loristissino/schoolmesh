@@ -19,9 +19,6 @@ abstract class BaseWpitemGroup extends BaseObject  implements Persistent {
 	protected $wpmodule_id;
 
 	
-	protected $max_rank;
-
-	
 	protected $aWpitemType;
 
 	
@@ -67,12 +64,6 @@ abstract class BaseWpitemGroup extends BaseObject  implements Persistent {
 	public function getWpmoduleId()
 	{
 		return $this->wpmodule_id;
-	}
-
-	
-	public function getMaxRank()
-	{
-		return $this->max_rank;
 	}
 
 	
@@ -126,20 +117,6 @@ abstract class BaseWpitemGroup extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
-	public function setMaxRank($v)
-	{
-		if ($v !== null) {
-			$v = (int) $v;
-		}
-
-		if ($this->max_rank !== $v) {
-			$this->max_rank = $v;
-			$this->modifiedColumns[] = WpitemGroupPeer::MAX_RANK;
-		}
-
-		return $this;
-	} 
-	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array())) {
@@ -156,7 +133,6 @@ abstract class BaseWpitemGroup extends BaseObject  implements Persistent {
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->wpitem_type_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->wpmodule_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->max_rank = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -165,7 +141,7 @@ abstract class BaseWpitemGroup extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 4; 
+						return $startcol + 3; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WpitemGroup object", $e);
 		}
@@ -395,9 +371,6 @@ abstract class BaseWpitemGroup extends BaseObject  implements Persistent {
 			case 2:
 				return $this->getWpmoduleId();
 				break;
-			case 3:
-				return $this->getMaxRank();
-				break;
 			default:
 				return null;
 				break;
@@ -411,7 +384,6 @@ abstract class BaseWpitemGroup extends BaseObject  implements Persistent {
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getWpitemTypeId(),
 			$keys[2] => $this->getWpmoduleId(),
-			$keys[3] => $this->getMaxRank(),
 		);
 		return $result;
 	}
@@ -436,9 +408,6 @@ abstract class BaseWpitemGroup extends BaseObject  implements Persistent {
 			case 2:
 				$this->setWpmoduleId($value);
 				break;
-			case 3:
-				$this->setMaxRank($value);
-				break;
 		} 	}
 
 	
@@ -449,7 +418,6 @@ abstract class BaseWpitemGroup extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setWpitemTypeId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setWpmoduleId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setMaxRank($arr[$keys[3]]);
 	}
 
 	
@@ -460,7 +428,6 @@ abstract class BaseWpitemGroup extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpitemGroupPeer::ID)) $criteria->add(WpitemGroupPeer::ID, $this->id);
 		if ($this->isColumnModified(WpitemGroupPeer::WPITEM_TYPE_ID)) $criteria->add(WpitemGroupPeer::WPITEM_TYPE_ID, $this->wpitem_type_id);
 		if ($this->isColumnModified(WpitemGroupPeer::WPMODULE_ID)) $criteria->add(WpitemGroupPeer::WPMODULE_ID, $this->wpmodule_id);
-		if ($this->isColumnModified(WpitemGroupPeer::MAX_RANK)) $criteria->add(WpitemGroupPeer::MAX_RANK, $this->max_rank);
 
 		return $criteria;
 	}
@@ -494,8 +461,6 @@ abstract class BaseWpitemGroup extends BaseObject  implements Persistent {
 		$copyObj->setWpitemTypeId($this->wpitem_type_id);
 
 		$copyObj->setWpmoduleId($this->wpmodule_id);
-
-		$copyObj->setMaxRank($this->max_rank);
 
 
 		if ($deepCopy) {

@@ -39,7 +39,5 @@ class WpitemGroupMapBuilder implements MapBuilder {
 
 		$tMap->addForeignKey('WPMODULE_ID', 'WpmoduleId', 'INTEGER', 'wpmodule', 'ID', false, null);
 
-		$tMap->addColumn('MAX_RANK', 'MaxRank', 'INTEGER', false, null);
-
 	} 
 } 
