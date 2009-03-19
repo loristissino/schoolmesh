@@ -12,5 +12,5 @@ WpitemGroup:
     wpitem_type_id:  competencies
     wpmodule_id:  module1_3_flavia
   wg_f_comments:
-    wpitem_type_id:  comments
+    wpitem_type_id:  wpcomments
     wpmodule_id:  module1_3_flavia

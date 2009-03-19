@@ -136,6 +136,7 @@ propel:
     title:        varchar(50)
     description:  varchar(200)
     rank:    { type: integer, required: true }
+    status:  integer
     evaluation_min:  integer
     evaluation_max:  integer
     evaluation_min_description: varchar(50)

@@ -8,6 +8,24 @@ public function __toString()
 			return $this->getSubject() . ' (' . $this->getSchoolclass() . ', ' . $this->getYear() . ')';
 	}
 
+public function getWpmodules($criteria = null, PropelPDO $con = null)
+	{
+
+	if (is_null($criteria))
+		{
+				$criteria=new Criteria();
+		}
+	else
+		{
+				$criteria = clone $criteria;
+		}
+
+		$criteria->addAscendingOrderByColumn(WpmodulePeer::RANK);
+		
+		return parent::getWpmodules($criteria, $con);
+	}
+
+
 
 public function getStatus()
 	{
