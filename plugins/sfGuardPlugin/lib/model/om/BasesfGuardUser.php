@@ -76,10 +76,10 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	private $lastUserTeamCriteria = null;
 
 	
-	protected $collWorkplans;
+	protected $collWpevents;
 
 	
-	private $lastWorkplanCriteria = null;
+	private $lastWpeventCriteria = null;
 
 	
 	protected $collWpmodules;
@@ -470,8 +470,8 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$this->collUserTeams = null;
 			$this->lastUserTeamCriteria = null;
 
-			$this->collWorkplans = null;
-			$this->lastWorkplanCriteria = null;
+			$this->collWpevents = null;
+			$this->lastWpeventCriteria = null;
 
 			$this->collWpmodules = null;
 			$this->lastWpmoduleCriteria = null;
@@ -607,8 +607,8 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collWorkplans !== null) {
-				foreach ($this->collWorkplans as $referrerFK) {
+			if ($this->collWpevents !== null) {
+				foreach ($this->collWpevents as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -727,8 +727,8 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collWorkplans !== null) {
-					foreach ($this->collWorkplans as $referrerFK) {
+				if ($this->collWpevents !== null) {
+					foreach ($this->collWpevents as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -975,8 +975,8 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			foreach ($this->getWorkplans() as $relObj) {
-				if ($relObj !== $this) {  					$copyObj->addWorkplan($relObj->copy($deepCopy));
+			foreach ($this->getWpevents() as $relObj) {
+				if ($relObj !== $this) {  					$copyObj->addWpevent($relObj->copy($deepCopy));
 				}
 			}
 
@@ -1957,18 +1957,18 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	}
 
 	
-	public function clearWorkplans()
+	public function clearWpevents()
 	{
-		$this->collWorkplans = null; 	}
+		$this->collWpevents = null; 	}
 
 	
-	public function initWorkplans()
+	public function initWpevents()
 	{
-		$this->collWorkplans = array();
+		$this->collWpevents = array();
 	}
 
 	
-	public function getWorkplans($criteria = null, PropelPDO $con = null)
+	public function getWpevents($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
@@ -1978,34 +1978,34 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collWorkplans === null) {
+		if ($this->collWpevents === null) {
 			if ($this->isNew()) {
-			   $this->collWorkplans = array();
+			   $this->collWpevents = array();
 			} else {
 
-				$criteria->add(WorkplanPeer::USER_ID, $this->id);
+				$criteria->add(WpeventPeer::USER_ID, $this->id);
 
-				WorkplanPeer::addSelectColumns($criteria);
-				$this->collWorkplans = WorkplanPeer::doSelect($criteria, $con);
+				WpeventPeer::addSelectColumns($criteria);
+				$this->collWpevents = WpeventPeer::doSelect($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(WorkplanPeer::USER_ID, $this->id);
+				$criteria->add(WpeventPeer::USER_ID, $this->id);
 
-				WorkplanPeer::addSelectColumns($criteria);
-				if (!isset($this->lastWorkplanCriteria) || !$this->lastWorkplanCriteria->equals($criteria)) {
-					$this->collWorkplans = WorkplanPeer::doSelect($criteria, $con);
+				WpeventPeer::addSelectColumns($criteria);
+				if (!isset($this->lastWpeventCriteria) || !$this->lastWpeventCriteria->equals($criteria)) {
+					$this->collWpevents = WpeventPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastWorkplanCriteria = $criteria;
-		return $this->collWorkplans;
+		$this->lastWpeventCriteria = $criteria;
+		return $this->collWpevents;
 	}
 
 	
-	public function countWorkplans(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	public function countWpevents(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
@@ -2019,48 +2019,48 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 		$count = null;
 
-		if ($this->collWorkplans === null) {
+		if ($this->collWpevents === null) {
 			if ($this->isNew()) {
 				$count = 0;
 			} else {
 
-				$criteria->add(WorkplanPeer::USER_ID, $this->id);
+				$criteria->add(WpeventPeer::USER_ID, $this->id);
 
-				$count = WorkplanPeer::doCount($criteria, $con);
+				$count = WpeventPeer::doCount($criteria, $con);
 			}
 		} else {
 						if (!$this->isNew()) {
 												
 
-				$criteria->add(WorkplanPeer::USER_ID, $this->id);
+				$criteria->add(WpeventPeer::USER_ID, $this->id);
 
-				if (!isset($this->lastWorkplanCriteria) || !$this->lastWorkplanCriteria->equals($criteria)) {
-					$count = WorkplanPeer::doCount($criteria, $con);
+				if (!isset($this->lastWpeventCriteria) || !$this->lastWpeventCriteria->equals($criteria)) {
+					$count = WpeventPeer::doCount($criteria, $con);
 				} else {
-					$count = count($this->collWorkplans);
+					$count = count($this->collWpevents);
 				}
 			} else {
-				$count = count($this->collWorkplans);
+				$count = count($this->collWpevents);
 			}
 		}
-		$this->lastWorkplanCriteria = $criteria;
+		$this->lastWpeventCriteria = $criteria;
 		return $count;
 	}
 
 	
-	public function addWorkplan(Workplan $l)
+	public function addWpevent(Wpevent $l)
 	{
-		if ($this->collWorkplans === null) {
-			$this->initWorkplans();
+		if ($this->collWpevents === null) {
+			$this->initWpevents();
 		}
-		if (!in_array($l, $this->collWorkplans, true)) { 			array_push($this->collWorkplans, $l);
+		if (!in_array($l, $this->collWpevents, true)) { 			array_push($this->collWpevents, $l);
 			$l->setsfGuardUser($this);
 		}
 	}
 
 
 	
-	public function getWorkplansJoinYear($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getWpeventsJoinAppointment($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
@@ -2070,94 +2070,26 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collWorkplans === null) {
+		if ($this->collWpevents === null) {
 			if ($this->isNew()) {
-				$this->collWorkplans = array();
+				$this->collWpevents = array();
 			} else {
 
-				$criteria->add(WorkplanPeer::USER_ID, $this->id);
+				$criteria->add(WpeventPeer::USER_ID, $this->id);
 
-				$this->collWorkplans = WorkplanPeer::doSelectJoinYear($criteria, $con, $join_behavior);
+				$this->collWpevents = WpeventPeer::doSelectJoinAppointment($criteria, $con, $join_behavior);
 			}
 		} else {
 									
-			$criteria->add(WorkplanPeer::USER_ID, $this->id);
+			$criteria->add(WpeventPeer::USER_ID, $this->id);
 
-			if (!isset($this->lastWorkplanCriteria) || !$this->lastWorkplanCriteria->equals($criteria)) {
-				$this->collWorkplans = WorkplanPeer::doSelectJoinYear($criteria, $con, $join_behavior);
+			if (!isset($this->lastWpeventCriteria) || !$this->lastWpeventCriteria->equals($criteria)) {
+				$this->collWpevents = WpeventPeer::doSelectJoinAppointment($criteria, $con, $join_behavior);
 			}
 		}
-		$this->lastWorkplanCriteria = $criteria;
+		$this->lastWpeventCriteria = $criteria;
 
-		return $this->collWorkplans;
-	}
-
-
-	
-	public function getWorkplansJoinSchoolclass($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collWorkplans === null) {
-			if ($this->isNew()) {
-				$this->collWorkplans = array();
-			} else {
-
-				$criteria->add(WorkplanPeer::USER_ID, $this->id);
-
-				$this->collWorkplans = WorkplanPeer::doSelectJoinSchoolclass($criteria, $con, $join_behavior);
-			}
-		} else {
-									
-			$criteria->add(WorkplanPeer::USER_ID, $this->id);
-
-			if (!isset($this->lastWorkplanCriteria) || !$this->lastWorkplanCriteria->equals($criteria)) {
-				$this->collWorkplans = WorkplanPeer::doSelectJoinSchoolclass($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastWorkplanCriteria = $criteria;
-
-		return $this->collWorkplans;
-	}
-
-
-	
-	public function getWorkplansJoinSubject($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collWorkplans === null) {
-			if ($this->isNew()) {
-				$this->collWorkplans = array();
-			} else {
-
-				$criteria->add(WorkplanPeer::USER_ID, $this->id);
-
-				$this->collWorkplans = WorkplanPeer::doSelectJoinSubject($criteria, $con, $join_behavior);
-			}
-		} else {
-									
-			$criteria->add(WorkplanPeer::USER_ID, $this->id);
-
-			if (!isset($this->lastWorkplanCriteria) || !$this->lastWorkplanCriteria->equals($criteria)) {
-				$this->collWorkplans = WorkplanPeer::doSelectJoinSubject($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastWorkplanCriteria = $criteria;
-
-		return $this->collWorkplans;
+		return $this->collWpevents;
 	}
 
 	
@@ -2264,7 +2196,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 
 	
-	public function getWpmodulesJoinWorkplan($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getWpmodulesJoinAppointment($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
@@ -2281,14 +2213,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 				$criteria->add(WpmodulePeer::USER_ID, $this->id);
 
-				$this->collWpmodules = WpmodulePeer::doSelectJoinWorkplan($criteria, $con, $join_behavior);
+				$this->collWpmodules = WpmodulePeer::doSelectJoinAppointment($criteria, $con, $join_behavior);
 			}
 		} else {
 									
 			$criteria->add(WpmodulePeer::USER_ID, $this->id);
 
 			if (!isset($this->lastWpmoduleCriteria) || !$this->lastWpmoduleCriteria->equals($criteria)) {
-				$this->collWpmodules = WpmodulePeer::doSelectJoinWorkplan($criteria, $con, $join_behavior);
+				$this->collWpmodules = WpmodulePeer::doSelectJoinAppointment($criteria, $con, $join_behavior);
 			}
 		}
 		$this->lastWpmoduleCriteria = $criteria;
@@ -2469,8 +2401,8 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collWorkplans) {
-				foreach ((array) $this->collWorkplans as $o) {
+			if ($this->collWpevents) {
+				foreach ((array) $this->collWpevents as $o) {
 					$o->clearAllReferences($deep);
 				}
 			}
@@ -2492,7 +2424,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->collAppointments = null;
 		$this->collEnrolments = null;
 		$this->collUserTeams = null;
-		$this->collWorkplans = null;
+		$this->collWpevents = null;
 		$this->collWpmodules = null;
 		$this->collLanlogs = null;
 	}

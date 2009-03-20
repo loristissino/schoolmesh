@@ -22,7 +22,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	protected $period;
 
 	
-	protected $workplan_id;
+	protected $appointment_id;
 
 	
 	protected $rank;
@@ -40,7 +40,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	protected $asfGuardUser;
 
 	
-	protected $aWorkplan;
+	protected $aAppointment;
 
 	
 	protected $collWpitemGroups;
@@ -91,9 +91,9 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getWorkplanId()
+	public function getAppointmentId()
 	{
-		return $this->workplan_id;
+		return $this->appointment_id;
 	}
 
 	
@@ -223,19 +223,19 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
-	public function setWorkplanId($v)
+	public function setAppointmentId($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
 		}
 
-		if ($this->workplan_id !== $v) {
-			$this->workplan_id = $v;
-			$this->modifiedColumns[] = WpmodulePeer::WORKPLAN_ID;
+		if ($this->appointment_id !== $v) {
+			$this->appointment_id = $v;
+			$this->modifiedColumns[] = WpmodulePeer::APPOINTMENT_ID;
 		}
 
-		if ($this->aWorkplan !== null && $this->aWorkplan->getId() !== $v) {
-			$this->aWorkplan = null;
+		if ($this->aAppointment !== null && $this->aAppointment->getId() !== $v) {
+			$this->aAppointment = null;
 		}
 
 		return $this;
@@ -350,7 +350,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 			$this->user_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->title = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->period = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->workplan_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+			$this->appointment_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
 			$this->rank = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
 			$this->is_public = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
 			$this->created_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
@@ -376,8 +376,8 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		if ($this->asfGuardUser !== null && $this->user_id !== $this->asfGuardUser->getId()) {
 			$this->asfGuardUser = null;
 		}
-		if ($this->aWorkplan !== null && $this->workplan_id !== $this->aWorkplan->getId()) {
-			$this->aWorkplan = null;
+		if ($this->aAppointment !== null && $this->appointment_id !== $this->aAppointment->getId()) {
+			$this->aAppointment = null;
 		}
 	} 
 	
@@ -405,7 +405,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		$this->hydrate($row, 0, true); 
 		if ($deep) {  
 			$this->asfGuardUser = null;
-			$this->aWorkplan = null;
+			$this->aAppointment = null;
 			$this->collWpitemGroups = null;
 			$this->lastWpitemGroupCriteria = null;
 
@@ -480,11 +480,11 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				$this->setsfGuardUser($this->asfGuardUser);
 			}
 
-			if ($this->aWorkplan !== null) {
-				if ($this->aWorkplan->isModified() || $this->aWorkplan->isNew()) {
-					$affectedRows += $this->aWorkplan->save($con);
+			if ($this->aAppointment !== null) {
+				if ($this->aAppointment->isModified() || $this->aAppointment->isNew()) {
+					$affectedRows += $this->aAppointment->save($con);
 				}
-				$this->setWorkplan($this->aWorkplan);
+				$this->setAppointment($this->aAppointment);
 			}
 
 			if ($this->isNew() ) {
@@ -555,9 +555,9 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->aWorkplan !== null) {
-				if (!$this->aWorkplan->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aWorkplan->getValidationFailures());
+			if ($this->aAppointment !== null) {
+				if (!$this->aAppointment->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aAppointment->getValidationFailures());
 				}
 			}
 
@@ -607,7 +607,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				return $this->getPeriod();
 				break;
 			case 4:
-				return $this->getWorkplanId();
+				return $this->getAppointmentId();
 				break;
 			case 5:
 				return $this->getRank();
@@ -635,7 +635,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 			$keys[1] => $this->getUserId(),
 			$keys[2] => $this->getTitle(),
 			$keys[3] => $this->getPeriod(),
-			$keys[4] => $this->getWorkplanId(),
+			$keys[4] => $this->getAppointmentId(),
 			$keys[5] => $this->getRank(),
 			$keys[6] => $this->getIsPublic(),
 			$keys[7] => $this->getCreatedAt(),
@@ -668,7 +668,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				$this->setPeriod($value);
 				break;
 			case 4:
-				$this->setWorkplanId($value);
+				$this->setAppointmentId($value);
 				break;
 			case 5:
 				$this->setRank($value);
@@ -693,7 +693,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setUserId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setTitle($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setPeriod($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setWorkplanId($arr[$keys[4]]);
+		if (array_key_exists($keys[4], $arr)) $this->setAppointmentId($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setRank($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setIsPublic($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
@@ -709,7 +709,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpmodulePeer::USER_ID)) $criteria->add(WpmodulePeer::USER_ID, $this->user_id);
 		if ($this->isColumnModified(WpmodulePeer::TITLE)) $criteria->add(WpmodulePeer::TITLE, $this->title);
 		if ($this->isColumnModified(WpmodulePeer::PERIOD)) $criteria->add(WpmodulePeer::PERIOD, $this->period);
-		if ($this->isColumnModified(WpmodulePeer::WORKPLAN_ID)) $criteria->add(WpmodulePeer::WORKPLAN_ID, $this->workplan_id);
+		if ($this->isColumnModified(WpmodulePeer::APPOINTMENT_ID)) $criteria->add(WpmodulePeer::APPOINTMENT_ID, $this->appointment_id);
 		if ($this->isColumnModified(WpmodulePeer::RANK)) $criteria->add(WpmodulePeer::RANK, $this->rank);
 		if ($this->isColumnModified(WpmodulePeer::IS_PUBLIC)) $criteria->add(WpmodulePeer::IS_PUBLIC, $this->is_public);
 		if ($this->isColumnModified(WpmodulePeer::CREATED_AT)) $criteria->add(WpmodulePeer::CREATED_AT, $this->created_at);
@@ -750,7 +750,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 
 		$copyObj->setPeriod($this->period);
 
-		$copyObj->setWorkplanId($this->workplan_id);
+		$copyObj->setAppointmentId($this->appointment_id);
 
 		$copyObj->setRank($this->rank);
 
@@ -826,15 +826,15 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	}
 
 	
-	public function setWorkplan(Workplan $v = null)
+	public function setAppointment(Appointment $v = null)
 	{
 		if ($v === null) {
-			$this->setWorkplanId(NULL);
+			$this->setAppointmentId(NULL);
 		} else {
-			$this->setWorkplanId($v->getId());
+			$this->setAppointmentId($v->getId());
 		}
 
-		$this->aWorkplan = $v;
+		$this->aAppointment = $v;
 
 						if ($v !== null) {
 			$v->addWpmodule($this);
@@ -845,15 +845,15 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 
 
 	
-	public function getWorkplan(PropelPDO $con = null)
+	public function getAppointment(PropelPDO $con = null)
 	{
-		if ($this->aWorkplan === null && ($this->workplan_id !== null)) {
-			$c = new Criteria(WorkplanPeer::DATABASE_NAME);
-			$c->add(WorkplanPeer::ID, $this->workplan_id);
-			$this->aWorkplan = WorkplanPeer::doSelectOne($c, $con);
+		if ($this->aAppointment === null && ($this->appointment_id !== null)) {
+			$c = new Criteria(AppointmentPeer::DATABASE_NAME);
+			$c->add(AppointmentPeer::ID, $this->appointment_id);
+			$this->aAppointment = AppointmentPeer::doSelectOne($c, $con);
 			
 		}
-		return $this->aWorkplan;
+		return $this->aAppointment;
 	}
 
 	
@@ -1004,7 +1004,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		} 
 		$this->collWpitemGroups = null;
 			$this->asfGuardUser = null;
-			$this->aWorkplan = null;
+			$this->aAppointment = null;
 	}
 
 } 

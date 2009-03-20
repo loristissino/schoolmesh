@@ -19,16 +19,13 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 	protected $description;
 
 	
+	protected $rank;
+
+	
 	protected $collAppointments;
 
 	
 	private $lastAppointmentCriteria = null;
-
-	
-	protected $collWorkplans;
-
-	
-	private $lastWorkplanCriteria = null;
 
 	
 	protected $alreadyInSave = false;
@@ -64,6 +61,12 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 	public function getDescription()
 	{
 		return $this->description;
+	}
+
+	
+	public function getRank()
+	{
+		return $this->rank;
 	}
 
 	
@@ -109,6 +112,20 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setRank($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->rank !== $v) {
+			$this->rank = $v;
+			$this->modifiedColumns[] = SubjectPeer::RANK;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array())) {
@@ -125,6 +142,7 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->shortcut = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->description = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->rank = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -133,7 +151,7 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 3; 
+						return $startcol + 4; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Subject object", $e);
 		}
@@ -170,9 +188,6 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 		if ($deep) {  
 			$this->collAppointments = null;
 			$this->lastAppointmentCriteria = null;
-
-			$this->collWorkplans = null;
-			$this->lastWorkplanCriteria = null;
 
 		} 	}
 
@@ -251,14 +266,6 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collWorkplans !== null) {
-				foreach ($this->collWorkplans as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			$this->alreadyInSave = false;
 
 		}
@@ -309,14 +316,6 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collWorkplans !== null) {
-					foreach ($this->collWorkplans as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
 
 			$this->alreadyInValidation = false;
 		}
@@ -345,6 +344,9 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 			case 2:
 				return $this->getDescription();
 				break;
+			case 3:
+				return $this->getRank();
+				break;
 			default:
 				return null;
 				break;
@@ -358,6 +360,7 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getShortcut(),
 			$keys[2] => $this->getDescription(),
+			$keys[3] => $this->getRank(),
 		);
 		return $result;
 	}
@@ -382,6 +385,9 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 			case 2:
 				$this->setDescription($value);
 				break;
+			case 3:
+				$this->setRank($value);
+				break;
 		} 	}
 
 	
@@ -392,6 +398,7 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setShortcut($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setDescription($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setRank($arr[$keys[3]]);
 	}
 
 	
@@ -402,6 +409,7 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SubjectPeer::ID)) $criteria->add(SubjectPeer::ID, $this->id);
 		if ($this->isColumnModified(SubjectPeer::SHORTCUT)) $criteria->add(SubjectPeer::SHORTCUT, $this->shortcut);
 		if ($this->isColumnModified(SubjectPeer::DESCRIPTION)) $criteria->add(SubjectPeer::DESCRIPTION, $this->description);
+		if ($this->isColumnModified(SubjectPeer::RANK)) $criteria->add(SubjectPeer::RANK, $this->rank);
 
 		return $criteria;
 	}
@@ -436,17 +444,14 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 
 		$copyObj->setDescription($this->description);
 
+		$copyObj->setRank($this->rank);
+
 
 		if ($deepCopy) {
 									$copyObj->setNew(false);
 
 			foreach ($this->getAppointments() as $relObj) {
 				if ($relObj !== $this) {  					$copyObj->addAppointment($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getWorkplans() as $relObj) {
-				if ($relObj !== $this) {  					$copyObj->addWorkplan($relObj->copy($deepCopy));
 				}
 			}
 
@@ -680,210 +685,6 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 	}
 
 	
-	public function clearWorkplans()
-	{
-		$this->collWorkplans = null; 	}
-
-	
-	public function initWorkplans()
-	{
-		$this->collWorkplans = array();
-	}
-
-	
-	public function getWorkplans($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collWorkplans === null) {
-			if ($this->isNew()) {
-			   $this->collWorkplans = array();
-			} else {
-
-				$criteria->add(WorkplanPeer::SUBJECT_ID, $this->id);
-
-				WorkplanPeer::addSelectColumns($criteria);
-				$this->collWorkplans = WorkplanPeer::doSelect($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(WorkplanPeer::SUBJECT_ID, $this->id);
-
-				WorkplanPeer::addSelectColumns($criteria);
-				if (!isset($this->lastWorkplanCriteria) || !$this->lastWorkplanCriteria->equals($criteria)) {
-					$this->collWorkplans = WorkplanPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastWorkplanCriteria = $criteria;
-		return $this->collWorkplans;
-	}
-
-	
-	public function countWorkplans(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collWorkplans === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(WorkplanPeer::SUBJECT_ID, $this->id);
-
-				$count = WorkplanPeer::doCount($criteria, $con);
-			}
-		} else {
-						if (!$this->isNew()) {
-												
-
-				$criteria->add(WorkplanPeer::SUBJECT_ID, $this->id);
-
-				if (!isset($this->lastWorkplanCriteria) || !$this->lastWorkplanCriteria->equals($criteria)) {
-					$count = WorkplanPeer::doCount($criteria, $con);
-				} else {
-					$count = count($this->collWorkplans);
-				}
-			} else {
-				$count = count($this->collWorkplans);
-			}
-		}
-		$this->lastWorkplanCriteria = $criteria;
-		return $count;
-	}
-
-	
-	public function addWorkplan(Workplan $l)
-	{
-		if ($this->collWorkplans === null) {
-			$this->initWorkplans();
-		}
-		if (!in_array($l, $this->collWorkplans, true)) { 			array_push($this->collWorkplans, $l);
-			$l->setSubject($this);
-		}
-	}
-
-
-	
-	public function getWorkplansJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collWorkplans === null) {
-			if ($this->isNew()) {
-				$this->collWorkplans = array();
-			} else {
-
-				$criteria->add(WorkplanPeer::SUBJECT_ID, $this->id);
-
-				$this->collWorkplans = WorkplanPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
-			}
-		} else {
-									
-			$criteria->add(WorkplanPeer::SUBJECT_ID, $this->id);
-
-			if (!isset($this->lastWorkplanCriteria) || !$this->lastWorkplanCriteria->equals($criteria)) {
-				$this->collWorkplans = WorkplanPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastWorkplanCriteria = $criteria;
-
-		return $this->collWorkplans;
-	}
-
-
-	
-	public function getWorkplansJoinYear($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collWorkplans === null) {
-			if ($this->isNew()) {
-				$this->collWorkplans = array();
-			} else {
-
-				$criteria->add(WorkplanPeer::SUBJECT_ID, $this->id);
-
-				$this->collWorkplans = WorkplanPeer::doSelectJoinYear($criteria, $con, $join_behavior);
-			}
-		} else {
-									
-			$criteria->add(WorkplanPeer::SUBJECT_ID, $this->id);
-
-			if (!isset($this->lastWorkplanCriteria) || !$this->lastWorkplanCriteria->equals($criteria)) {
-				$this->collWorkplans = WorkplanPeer::doSelectJoinYear($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastWorkplanCriteria = $criteria;
-
-		return $this->collWorkplans;
-	}
-
-
-	
-	public function getWorkplansJoinSchoolclass($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collWorkplans === null) {
-			if ($this->isNew()) {
-				$this->collWorkplans = array();
-			} else {
-
-				$criteria->add(WorkplanPeer::SUBJECT_ID, $this->id);
-
-				$this->collWorkplans = WorkplanPeer::doSelectJoinSchoolclass($criteria, $con, $join_behavior);
-			}
-		} else {
-									
-			$criteria->add(WorkplanPeer::SUBJECT_ID, $this->id);
-
-			if (!isset($this->lastWorkplanCriteria) || !$this->lastWorkplanCriteria->equals($criteria)) {
-				$this->collWorkplans = WorkplanPeer::doSelectJoinSchoolclass($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastWorkplanCriteria = $criteria;
-
-		return $this->collWorkplans;
-	}
-
-	
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
@@ -892,14 +693,8 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collWorkplans) {
-				foreach ((array) $this->collWorkplans as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 		} 
 		$this->collAppointments = null;
-		$this->collWorkplans = null;
 	}
 
 } 

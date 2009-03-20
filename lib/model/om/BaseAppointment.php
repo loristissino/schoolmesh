@@ -46,6 +46,18 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	protected $aYear;
 
 	
+	protected $collWpevents;
+
+	
+	private $lastWpeventCriteria = null;
+
+	
+	protected $collWpmodules;
+
+	
+	private $lastWpmoduleCriteria = null;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -398,6 +410,12 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			$this->aSubject = null;
 			$this->aSchoolclass = null;
 			$this->aYear = null;
+			$this->collWpevents = null;
+			$this->lastWpeventCriteria = null;
+
+			$this->collWpmodules = null;
+			$this->lastWpmoduleCriteria = null;
+
 		} 	}
 
 	
@@ -506,6 +524,22 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 
 				$this->resetModified(); 			}
 
+			if ($this->collWpevents !== null) {
+				foreach ($this->collWpevents as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collWpmodules !== null) {
+				foreach ($this->collWpmodules as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -573,6 +607,22 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collWpevents !== null) {
+					foreach ($this->collWpevents as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collWpmodules !== null) {
+					foreach ($this->collWpmodules as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -749,6 +799,21 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 		$copyObj->setImportCode($this->import_code);
 
 
+		if ($deepCopy) {
+									$copyObj->setNew(false);
+
+			foreach ($this->getWpevents() as $relObj) {
+				if ($relObj !== $this) {  					$copyObj->addWpevent($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getWpmodules() as $relObj) {
+				if ($relObj !== $this) {  					$copyObj->addWpmodule($relObj->copy($deepCopy));
+				}
+			}
+
+		} 
+
 		$copyObj->setNew(true);
 
 		$copyObj->setId(NULL); 
@@ -897,10 +962,294 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	}
 
 	
+	public function clearWpevents()
+	{
+		$this->collWpevents = null; 	}
+
+	
+	public function initWpevents()
+	{
+		$this->collWpevents = array();
+	}
+
+	
+	public function getWpevents($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWpevents === null) {
+			if ($this->isNew()) {
+			   $this->collWpevents = array();
+			} else {
+
+				$criteria->add(WpeventPeer::APPOINTMENT_ID, $this->id);
+
+				WpeventPeer::addSelectColumns($criteria);
+				$this->collWpevents = WpeventPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WpeventPeer::APPOINTMENT_ID, $this->id);
+
+				WpeventPeer::addSelectColumns($criteria);
+				if (!isset($this->lastWpeventCriteria) || !$this->lastWpeventCriteria->equals($criteria)) {
+					$this->collWpevents = WpeventPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastWpeventCriteria = $criteria;
+		return $this->collWpevents;
+	}
+
+	
+	public function countWpevents(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collWpevents === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(WpeventPeer::APPOINTMENT_ID, $this->id);
+
+				$count = WpeventPeer::doCount($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WpeventPeer::APPOINTMENT_ID, $this->id);
+
+				if (!isset($this->lastWpeventCriteria) || !$this->lastWpeventCriteria->equals($criteria)) {
+					$count = WpeventPeer::doCount($criteria, $con);
+				} else {
+					$count = count($this->collWpevents);
+				}
+			} else {
+				$count = count($this->collWpevents);
+			}
+		}
+		$this->lastWpeventCriteria = $criteria;
+		return $count;
+	}
+
+	
+	public function addWpevent(Wpevent $l)
+	{
+		if ($this->collWpevents === null) {
+			$this->initWpevents();
+		}
+		if (!in_array($l, $this->collWpevents, true)) { 			array_push($this->collWpevents, $l);
+			$l->setAppointment($this);
+		}
+	}
+
+
+	
+	public function getWpeventsJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWpevents === null) {
+			if ($this->isNew()) {
+				$this->collWpevents = array();
+			} else {
+
+				$criteria->add(WpeventPeer::APPOINTMENT_ID, $this->id);
+
+				$this->collWpevents = WpeventPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		} else {
+									
+			$criteria->add(WpeventPeer::APPOINTMENT_ID, $this->id);
+
+			if (!isset($this->lastWpeventCriteria) || !$this->lastWpeventCriteria->equals($criteria)) {
+				$this->collWpevents = WpeventPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastWpeventCriteria = $criteria;
+
+		return $this->collWpevents;
+	}
+
+	
+	public function clearWpmodules()
+	{
+		$this->collWpmodules = null; 	}
+
+	
+	public function initWpmodules()
+	{
+		$this->collWpmodules = array();
+	}
+
+	
+	public function getWpmodules($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWpmodules === null) {
+			if ($this->isNew()) {
+			   $this->collWpmodules = array();
+			} else {
+
+				$criteria->add(WpmodulePeer::APPOINTMENT_ID, $this->id);
+
+				WpmodulePeer::addSelectColumns($criteria);
+				$this->collWpmodules = WpmodulePeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WpmodulePeer::APPOINTMENT_ID, $this->id);
+
+				WpmodulePeer::addSelectColumns($criteria);
+				if (!isset($this->lastWpmoduleCriteria) || !$this->lastWpmoduleCriteria->equals($criteria)) {
+					$this->collWpmodules = WpmodulePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastWpmoduleCriteria = $criteria;
+		return $this->collWpmodules;
+	}
+
+	
+	public function countWpmodules(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collWpmodules === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(WpmodulePeer::APPOINTMENT_ID, $this->id);
+
+				$count = WpmodulePeer::doCount($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WpmodulePeer::APPOINTMENT_ID, $this->id);
+
+				if (!isset($this->lastWpmoduleCriteria) || !$this->lastWpmoduleCriteria->equals($criteria)) {
+					$count = WpmodulePeer::doCount($criteria, $con);
+				} else {
+					$count = count($this->collWpmodules);
+				}
+			} else {
+				$count = count($this->collWpmodules);
+			}
+		}
+		$this->lastWpmoduleCriteria = $criteria;
+		return $count;
+	}
+
+	
+	public function addWpmodule(Wpmodule $l)
+	{
+		if ($this->collWpmodules === null) {
+			$this->initWpmodules();
+		}
+		if (!in_array($l, $this->collWpmodules, true)) { 			array_push($this->collWpmodules, $l);
+			$l->setAppointment($this);
+		}
+	}
+
+
+	
+	public function getWpmodulesJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWpmodules === null) {
+			if ($this->isNew()) {
+				$this->collWpmodules = array();
+			} else {
+
+				$criteria->add(WpmodulePeer::APPOINTMENT_ID, $this->id);
+
+				$this->collWpmodules = WpmodulePeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		} else {
+									
+			$criteria->add(WpmodulePeer::APPOINTMENT_ID, $this->id);
+
+			if (!isset($this->lastWpmoduleCriteria) || !$this->lastWpmoduleCriteria->equals($criteria)) {
+				$this->collWpmodules = WpmodulePeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastWpmoduleCriteria = $criteria;
+
+		return $this->collWpmodules;
+	}
+
+	
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
+			if ($this->collWpevents) {
+				foreach ((array) $this->collWpevents as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
+			if ($this->collWpmodules) {
+				foreach ((array) $this->collWpmodules as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} 
+		$this->collWpevents = null;
+		$this->collWpmodules = null;
 			$this->asfGuardUser = null;
 			$this->aSubject = null;
 			$this->aSchoolclass = null;

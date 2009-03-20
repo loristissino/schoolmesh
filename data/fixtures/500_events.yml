@@ -1,0 +1,8 @@
+Wpevent:
+  wpevent:
+    id:  ~
+    created_at: <?php echo date("U", mktime(0,0,0, 9, 1, 2007)) . "\n" ?>
+    appointment_id: test_ast_5ap_70
+    user_id:  	testteacher
+    comment:   
+    status:  0

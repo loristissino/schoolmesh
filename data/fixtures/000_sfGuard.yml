@@ -8,7 +8,12 @@ sfGuardUser:
     username:       loris.tissino
     password:       lorisp
     is_superadmin:  false
-  
+
+  testteacher:
+    username:      test.teacher
+    password:      testp
+    is_superadmin: false
+
   juri:
     username:       juri.daldan
     password:       jurip

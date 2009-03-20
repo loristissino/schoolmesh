@@ -1,3 +1,4 @@
+#  svn stat | grep ^? | grep -v cache | sed 's/^?      //' | xargs svn add 
 propel:
   track:
     id:           ~
@@ -19,6 +20,7 @@ propel:
     id:           ~
     shortcut:     { type: varchar(3), index: true, required: true, unique: true }
     description:  { type: varchar(255), required: true }
+    rank:     integer
 
   sf_guard_user_profile:
     _attributes:  { phpName: sfGuardUserProfile }
@@ -93,39 +95,65 @@ propel:
     _uniques:
       utr: [user_id, team_id, role_id]
 
-  workplan:
-    id:  ~
-    user_id:  	{ type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict }
-    year_id:  { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, required: true }
-    schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, required: true }
-    subject_id:   { type: integer, foreignTable: subject, foreignReference: id, onDelete: restrict, required: true }
-    created_at:   ~
-    updated_at:   ~
-    wpsubmitted_at: { type: timestamp }
-    wpapproved_at: { type: timestamp }
-    frsubmitted_at: { type: timestamp }
-    frapproved_at: { type: timestamp }
-    _uniques:
-      uyss: [user_id, year_id, schoolclass_id, subject_id]
+#  workplan:
+#    id:  ~
+#    user_id:  	{ type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict }
+#    year_id:  { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, required: true }
+#    schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, required: true }
+#    subject_id:   { type: integer, foreignTable: subject, foreignReference: id, onDelete: restrict, required: true }
+#    _uniques:
+#      uyss: [user_id, year_id, schoolclass_id, subject_id]
 
-# status can be one of the following:
-#    0: draft (can be completely edited)
-#           wpsubmitted_at == NULL
-#    1: workplan submitted (cannot be edited, schoolmaster can put it back to 0 or approve it)
-#           wpsubmitted_at != NULL and wpapproved_at == NULL
-#    2: workplan approved (cannot be edited anymore, but a teacher can add evaluation for the final report)
-#           wpapproved_at != NULL and frsubmitted_at == NULL
-#    3: final report submitted (cannt be edited, schoolmaster can put it back to 2 or approve it)
-#           frsubmitted_at != NULL and frapproved_at == NULL
-#    4: final report approved (cannot be edited anymore)
-#           frapproved_at != NULL
+  wpevent:
+    id:  ~
+    created_at: ~
+    appointment_id: ~
+    user_id:  	{ type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict }
+    comment:   { type: varchar(255) }
+    status:  integer
+
+# wpevent is a log for events concerning a workplan
+#   The events are logged with the id of the user who acted, and the new status that the workplan goes into.
+#   The status can be one of the following:
+#
+#    0: DRAFT
+#        teacher can
+#         -- edit
+#         -- import modules
+#         -- submit     ** goes to 10
+#  10: WORKPLAN WAITING FOR ADMINISTRATIVE CHECK
+#        authorized personnel can
+#         -- ask for improvements    **  goes to 0
+#         -- approve    ** goes to 20
+#  20: WORKPLAN WAITING FOR SCHOOLMASTER'S APPROVAL
+#        schoolmaster can
+#         -- ask for improvements    ** goes to 0
+#         -- approve    ** goes to 30
+#  30: INTERMEDIATE REPORT / FINAL REPORT
+#        teacher can
+#         -- add new modules / new items
+#         -- fill evaluation fields
+#         -- submit as intermediate report    ** goes to 40
+#         -- submit as final report (not active until the date set on years' table) ** goes to 50
+#  40: INTERMEDIATE REPORT WAITING FOR SCHOOLMASTER'S EVALUATION
+#        schoolmaster can
+#         -- unlock    ** goes to 30
+#  50: FINAL REPORT WAITING FOR ADMINISTRATIVE CHECK
+#        authorized personnel can
+#         -- ask for improvements    **  goes to 30
+#         -- approve    ** goes to 60
+#  60: FINAL REPORT WAITING FOR SCHOOLMASTER'S APPROVAL
+#        schoolmaster can
+#        -- ask for improvements      ** goes to 30
+#        -- approve    ** goes to 70
+#  70: FINAL REPORT APPROVED AND ARCHIVED
 
   wpmodule:
     id:
     user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict }
     title:        varchar(100)
     period:       varchar(100)
-    workplan_id:   
+    appointment_id:   
     rank:       integer
     is_public:    boolean
     created_at:   ~
@@ -141,6 +169,7 @@ propel:
     evaluation_max:  integer
     evaluation_min_description: varchar(50)
     evaluation_max_description: varchar(50)
+# status indicates in which of workplan's status this item type should be shown
 
   wpitem_group:
     id:           ~
