@@ -13,7 +13,7 @@ abstract class BaseSubjectPeer {
 	const CLASS_DEFAULT = 'lib.model.Subject';
 
 	
-	const NUM_COLUMNS = 3;
+	const NUM_COLUMNS = 4;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -28,6 +28,9 @@ abstract class BaseSubjectPeer {
 	const DESCRIPTION = 'subject.DESCRIPTION';
 
 	
+	const RANK = 'subject.RANK';
+
+	
 	public static $instances = array();
 
 	
@@ -35,20 +38,20 @@ abstract class BaseSubjectPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Shortcut', 'Description', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'shortcut', 'description', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::SHORTCUT, self::DESCRIPTION, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'shortcut', 'description', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Shortcut', 'Description', 'Rank', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'shortcut', 'description', 'rank', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::SHORTCUT, self::DESCRIPTION, self::RANK, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'shortcut', 'description', 'rank', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Shortcut' => 1, 'Description' => 2, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'shortcut' => 1, 'description' => 2, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SHORTCUT => 1, self::DESCRIPTION => 2, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'shortcut' => 1, 'description' => 2, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Shortcut' => 1, 'Description' => 2, 'Rank' => 3, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'shortcut' => 1, 'description' => 2, 'rank' => 3, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SHORTCUT => 1, self::DESCRIPTION => 2, self::RANK => 3, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'shortcut' => 1, 'description' => 2, 'rank' => 3, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
 	
@@ -95,6 +98,8 @@ abstract class BaseSubjectPeer {
 		$criteria->addSelectColumn(SubjectPeer::SHORTCUT);
 
 		$criteria->addSelectColumn(SubjectPeer::DESCRIPTION);
+
+		$criteria->addSelectColumn(SubjectPeer::RANK);
 
 	}
 

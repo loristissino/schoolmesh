@@ -1,49 +1,40 @@
 <?php
 
 
-abstract class BaseWpmodulePeer {
+abstract class BaseWpeventPeer {
 
 	
 	const DATABASE_NAME = 'propel';
 
 	
-	const TABLE_NAME = 'wpmodule';
+	const TABLE_NAME = 'wpevent';
 
 	
-	const CLASS_DEFAULT = 'lib.model.Wpmodule';
+	const CLASS_DEFAULT = 'lib.model.Wpevent';
 
 	
-	const NUM_COLUMNS = 9;
+	const NUM_COLUMNS = 6;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	
-	const ID = 'wpmodule.ID';
+	const ID = 'wpevent.ID';
 
 	
-	const USER_ID = 'wpmodule.USER_ID';
+	const CREATED_AT = 'wpevent.CREATED_AT';
 
 	
-	const TITLE = 'wpmodule.TITLE';
+	const APPOINTMENT_ID = 'wpevent.APPOINTMENT_ID';
 
 	
-	const PERIOD = 'wpmodule.PERIOD';
+	const USER_ID = 'wpevent.USER_ID';
 
 	
-	const APPOINTMENT_ID = 'wpmodule.APPOINTMENT_ID';
+	const COMMENT = 'wpevent.COMMENT';
 
 	
-	const RANK = 'wpmodule.RANK';
-
-	
-	const IS_PUBLIC = 'wpmodule.IS_PUBLIC';
-
-	
-	const CREATED_AT = 'wpmodule.CREATED_AT';
-
-	
-	const UPDATED_AT = 'wpmodule.UPDATED_AT';
+	const STATUS = 'wpevent.STATUS';
 
 	
 	public static $instances = array();
@@ -53,27 +44,27 @@ abstract class BaseWpmodulePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'Title', 'Period', 'AppointmentId', 'Rank', 'IsPublic', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'title', 'period', 'appointmentId', 'rank', 'isPublic', 'createdAt', 'updatedAt', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::TITLE, self::PERIOD, self::APPOINTMENT_ID, self::RANK, self::IS_PUBLIC, self::CREATED_AT, self::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'title', 'period', 'appointment_id', 'rank', 'is_public', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'CreatedAt', 'AppointmentId', 'UserId', 'Comment', 'Status', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'createdAt', 'appointmentId', 'userId', 'comment', 'status', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::CREATED_AT, self::APPOINTMENT_ID, self::USER_ID, self::COMMENT, self::STATUS, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'created_at', 'appointment_id', 'user_id', 'comment', 'status', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'Title' => 2, 'Period' => 3, 'AppointmentId' => 4, 'Rank' => 5, 'IsPublic' => 6, 'CreatedAt' => 7, 'UpdatedAt' => 8, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'title' => 2, 'period' => 3, 'appointmentId' => 4, 'rank' => 5, 'isPublic' => 6, 'createdAt' => 7, 'updatedAt' => 8, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::TITLE => 2, self::PERIOD => 3, self::APPOINTMENT_ID => 4, self::RANK => 5, self::IS_PUBLIC => 6, self::CREATED_AT => 7, self::UPDATED_AT => 8, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'title' => 2, 'period' => 3, 'appointment_id' => 4, 'rank' => 5, 'is_public' => 6, 'created_at' => 7, 'updated_at' => 8, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreatedAt' => 1, 'AppointmentId' => 2, 'UserId' => 3, 'Comment' => 4, 'Status' => 5, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'createdAt' => 1, 'appointmentId' => 2, 'userId' => 3, 'comment' => 4, 'status' => 5, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREATED_AT => 1, self::APPOINTMENT_ID => 2, self::USER_ID => 3, self::COMMENT => 4, self::STATUS => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'created_at' => 1, 'appointment_id' => 2, 'user_id' => 3, 'comment' => 4, 'status' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	
 	public static function getMapBuilder()
 	{
 		if (self::$mapBuilder === null) {
-			self::$mapBuilder = new WpmoduleMapBuilder();
+			self::$mapBuilder = new WpeventMapBuilder();
 		}
 		return self::$mapBuilder;
 	}
@@ -101,30 +92,24 @@ abstract class BaseWpmodulePeer {
 	
 	public static function alias($alias, $column)
 	{
-		return str_replace(WpmodulePeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(WpeventPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
-		$criteria->addSelectColumn(WpmodulePeer::ID);
+		$criteria->addSelectColumn(WpeventPeer::ID);
 
-		$criteria->addSelectColumn(WpmodulePeer::USER_ID);
+		$criteria->addSelectColumn(WpeventPeer::CREATED_AT);
 
-		$criteria->addSelectColumn(WpmodulePeer::TITLE);
+		$criteria->addSelectColumn(WpeventPeer::APPOINTMENT_ID);
 
-		$criteria->addSelectColumn(WpmodulePeer::PERIOD);
+		$criteria->addSelectColumn(WpeventPeer::USER_ID);
 
-		$criteria->addSelectColumn(WpmodulePeer::APPOINTMENT_ID);
+		$criteria->addSelectColumn(WpeventPeer::COMMENT);
 
-		$criteria->addSelectColumn(WpmodulePeer::RANK);
-
-		$criteria->addSelectColumn(WpmodulePeer::IS_PUBLIC);
-
-		$criteria->addSelectColumn(WpmodulePeer::CREATED_AT);
-
-		$criteria->addSelectColumn(WpmodulePeer::UPDATED_AT);
+		$criteria->addSelectColumn(WpeventPeer::STATUS);
 
 	}
 
@@ -133,19 +118,19 @@ abstract class BaseWpmodulePeer {
 	{
 				$criteria = clone $criteria;
 
-								$criteria->setPrimaryTableName(WpmodulePeer::TABLE_NAME);
+								$criteria->setPrimaryTableName(WpeventPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			WpmodulePeer::addSelectColumns($criteria);
+			WpeventPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); 		$criteria->setDbName(self::DATABASE_NAME); 
 		if ($con === null) {
-			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WpeventPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 				$stmt = BasePeer::doCount($criteria, $con);
@@ -162,7 +147,7 @@ abstract class BaseWpmodulePeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = WpmodulePeer::doSelect($critcopy, $con);
+		$objects = WpeventPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -171,18 +156,18 @@ abstract class BaseWpmodulePeer {
 	
 	public static function doSelect(Criteria $criteria, PropelPDO $con = null)
 	{
-		return WpmodulePeer::populateObjects(WpmodulePeer::doSelectStmt($criteria, $con));
+		return WpeventPeer::populateObjects(WpeventPeer::doSelectStmt($criteria, $con));
 	}
 	
 	public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WpeventPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		if (!$criteria->hasSelectClause()) {
 			$criteria = clone $criteria;
-			WpmodulePeer::addSelectColumns($criteria);
+			WpeventPeer::addSelectColumns($criteria);
 		}
 
 				$criteria->setDbName(self::DATABASE_NAME);
@@ -190,7 +175,7 @@ abstract class BaseWpmodulePeer {
 				return BasePeer::doSelect($criteria, $con);
 	}
 	
-	public static function addInstanceToPool(Wpmodule $obj, $key = null)
+	public static function addInstanceToPool(Wpevent $obj, $key = null)
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
@@ -203,12 +188,12 @@ abstract class BaseWpmodulePeer {
 	public static function removeInstanceFromPool($value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
-			if (is_object($value) && $value instanceof Wpmodule) {
+			if (is_object($value) && $value instanceof Wpevent) {
 				$key = (string) $value->getId();
 			} elseif (is_scalar($value)) {
 								$key = (string) $value;
 			} else {
-				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Wpmodule object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Wpevent object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
 				throw $e;
 			}
 
@@ -245,81 +230,46 @@ abstract class BaseWpmodulePeer {
 	{
 		$results = array();
 	
-				$cls = WpmodulePeer::getOMClass();
+				$cls = WpeventPeer::getOMClass();
 		$cls = substr('.'.$cls, strrpos('.'.$cls, '.') + 1);
 				while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = WpmodulePeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj = WpmodulePeer::getInstanceFromPool($key))) {
+			$key = WpeventPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj = WpeventPeer::getInstanceFromPool($key))) {
 																$results[] = $obj;
 			} else {
 		
 				$obj = new $cls();
 				$obj->hydrate($row);
 				$results[] = $obj;
-				WpmodulePeer::addInstanceToPool($obj, $key);
+				WpeventPeer::addInstanceToPool($obj, $key);
 			} 		}
 		$stmt->closeCursor();
 		return $results;
 	}
 
 	
-	public static function doCountJoinsfGuardUser(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-				$criteria = clone $criteria;
-
-								$criteria->setPrimaryTableName(WpmodulePeer::TABLE_NAME);
-
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			WpmodulePeer::addSelectColumns($criteria);
-		}
-
-		$criteria->clearOrderByColumns(); 
-				$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-
-		$criteria->addJoin(array(WpmodulePeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
-
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; 		}
-		$stmt->closeCursor();
-		return $count;
-	}
-
-
-	
 	public static function doCountJoinAppointment(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 				$criteria = clone $criteria;
 
-								$criteria->setPrimaryTableName(WpmodulePeer::TABLE_NAME);
+								$criteria->setPrimaryTableName(WpeventPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			WpmodulePeer::addSelectColumns($criteria);
+			WpeventPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); 
 				$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WpeventPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(array(WpmodulePeer::APPOINTMENT_ID,), array(AppointmentPeer::ID,), $join_behavior);
+		$criteria->addJoin(array(WpeventPeer::APPOINTMENT_ID,), array(AppointmentPeer::ID,), $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -333,53 +283,37 @@ abstract class BaseWpmodulePeer {
 
 
 	
-	public static function doSelectJoinsfGuardUser(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinsfGuardUser(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
-		$c = clone $c;
+				$criteria = clone $criteria;
 
-				if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
+								$criteria->setPrimaryTableName(WpeventPeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
 		}
 
-		WpmodulePeer::addSelectColumns($c);
-		$startcol = (WpmodulePeer::NUM_COLUMNS - WpmodulePeer::NUM_LAZY_LOAD_COLUMNS);
-		sfGuardUserPeer::addSelectColumns($c);
-
-		$c->addJoin(array(WpmodulePeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
-		$stmt = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = WpmodulePeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = WpmodulePeer::getInstanceFromPool($key1))) {
-															} else {
-
-				$omClass = WpmodulePeer::getOMClass();
-
-				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				WpmodulePeer::addInstanceToPool($obj1, $key1);
-			} 
-			$key2 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol);
-			if ($key2 !== null) {
-				$obj2 = sfGuardUserPeer::getInstanceFromPool($key2);
-				if (!$obj2) {
-
-					$omClass = sfGuardUserPeer::getOMClass();
-
-					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol);
-					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
-				} 
-								$obj2->addWpmodule($obj1);
-
-			} 
-			$results[] = $obj1;
+		if (!$criteria->hasSelectClause()) {
+			WpeventPeer::addSelectColumns($criteria);
 		}
+
+		$criteria->clearOrderByColumns(); 
+				$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(WpeventPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(array(WpeventPeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; 		}
 		$stmt->closeCursor();
-		return $results;
+		return $count;
 	}
 
 
@@ -392,25 +326,25 @@ abstract class BaseWpmodulePeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		WpmodulePeer::addSelectColumns($c);
-		$startcol = (WpmodulePeer::NUM_COLUMNS - WpmodulePeer::NUM_LAZY_LOAD_COLUMNS);
+		WpeventPeer::addSelectColumns($c);
+		$startcol = (WpeventPeer::NUM_COLUMNS - WpeventPeer::NUM_LAZY_LOAD_COLUMNS);
 		AppointmentPeer::addSelectColumns($c);
 
-		$c->addJoin(array(WpmodulePeer::APPOINTMENT_ID,), array(AppointmentPeer::ID,), $join_behavior);
+		$c->addJoin(array(WpeventPeer::APPOINTMENT_ID,), array(AppointmentPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = WpmodulePeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = WpmodulePeer::getInstanceFromPool($key1))) {
+			$key1 = WpeventPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WpeventPeer::getInstanceFromPool($key1))) {
 															} else {
 
-				$omClass = WpmodulePeer::getOMClass();
+				$omClass = WpeventPeer::getOMClass();
 
 				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				WpmodulePeer::addInstanceToPool($obj1, $key1);
+				WpeventPeer::addInstanceToPool($obj1, $key1);
 			} 
 			$key2 = AppointmentPeer::getPrimaryKeyHashFromRow($row, $startcol);
 			if ($key2 !== null) {
@@ -424,7 +358,58 @@ abstract class BaseWpmodulePeer {
 					$obj2->hydrate($row, $startcol);
 					AppointmentPeer::addInstanceToPool($obj2, $key2);
 				} 
-								$obj2->addWpmodule($obj1);
+								$obj2->addWpevent($obj1);
+
+			} 
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	
+	public static function doSelectJoinsfGuardUser(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$c = clone $c;
+
+				if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		WpeventPeer::addSelectColumns($c);
+		$startcol = (WpeventPeer::NUM_COLUMNS - WpeventPeer::NUM_LAZY_LOAD_COLUMNS);
+		sfGuardUserPeer::addSelectColumns($c);
+
+		$c->addJoin(array(WpeventPeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
+		$stmt = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = WpeventPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WpeventPeer::getInstanceFromPool($key1))) {
+															} else {
+
+				$omClass = WpeventPeer::getOMClass();
+
+				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				WpeventPeer::addInstanceToPool($obj1, $key1);
+			} 
+			$key2 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			if ($key2 !== null) {
+				$obj2 = sfGuardUserPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$omClass = sfGuardUserPeer::getOMClass();
+
+					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol);
+					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
+				} 
+								$obj2->addWpevent($obj1);
 
 			} 
 			$results[] = $obj1;
@@ -439,25 +424,25 @@ abstract class BaseWpmodulePeer {
 	{
 				$criteria = clone $criteria;
 
-								$criteria->setPrimaryTableName(WpmodulePeer::TABLE_NAME);
+								$criteria->setPrimaryTableName(WpeventPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			WpmodulePeer::addSelectColumns($criteria);
+			WpeventPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); 
 				$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WpeventPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(array(WpmodulePeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
-		$criteria->addJoin(array(WpmodulePeer::APPOINTMENT_ID,), array(AppointmentPeer::ID,), $join_behavior);
+		$criteria->addJoin(array(WpeventPeer::APPOINTMENT_ID,), array(AppointmentPeer::ID,), $join_behavior);
+		$criteria->addJoin(array(WpeventPeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doCount($criteria, $con);
 
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -477,99 +462,67 @@ abstract class BaseWpmodulePeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		WpmodulePeer::addSelectColumns($c);
-		$startcol2 = (WpmodulePeer::NUM_COLUMNS - WpmodulePeer::NUM_LAZY_LOAD_COLUMNS);
-
-		sfGuardUserPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+		WpeventPeer::addSelectColumns($c);
+		$startcol2 = (WpeventPeer::NUM_COLUMNS - WpeventPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		AppointmentPeer::addSelectColumns($c);
-		$startcol4 = $startcol3 + (AppointmentPeer::NUM_COLUMNS - AppointmentPeer::NUM_LAZY_LOAD_COLUMNS);
+		$startcol3 = $startcol2 + (AppointmentPeer::NUM_COLUMNS - AppointmentPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$c->addJoin(array(WpmodulePeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
-		$c->addJoin(array(WpmodulePeer::APPOINTMENT_ID,), array(AppointmentPeer::ID,), $join_behavior);
+		sfGuardUserPeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$c->addJoin(array(WpeventPeer::APPOINTMENT_ID,), array(AppointmentPeer::ID,), $join_behavior);
+		$c->addJoin(array(WpeventPeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = WpmodulePeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = WpmodulePeer::getInstanceFromPool($key1))) {
+			$key1 = WpeventPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WpeventPeer::getInstanceFromPool($key1))) {
 															} else {
-				$omClass = WpmodulePeer::getOMClass();
+				$omClass = WpeventPeer::getOMClass();
 
 				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				WpmodulePeer::addInstanceToPool($obj1, $key1);
+				WpeventPeer::addInstanceToPool($obj1, $key1);
 			} 
 			
-			$key2 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			$key2 = AppointmentPeer::getPrimaryKeyHashFromRow($row, $startcol2);
 			if ($key2 !== null) {
-				$obj2 = sfGuardUserPeer::getInstanceFromPool($key2);
+				$obj2 = AppointmentPeer::getInstanceFromPool($key2);
 				if (!$obj2) {
-
-					$omClass = sfGuardUserPeer::getOMClass();
-
-
-					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol2);
-					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
-				} 
-								$obj2->addWpmodule($obj1);
-			} 
-			
-			$key3 = AppointmentPeer::getPrimaryKeyHashFromRow($row, $startcol3);
-			if ($key3 !== null) {
-				$obj3 = AppointmentPeer::getInstanceFromPool($key3);
-				if (!$obj3) {
 
 					$omClass = AppointmentPeer::getOMClass();
 
 
 					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					AppointmentPeer::addInstanceToPool($obj2, $key2);
+				} 
+								$obj2->addWpevent($obj1);
+			} 
+			
+			$key3 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+			if ($key3 !== null) {
+				$obj3 = sfGuardUserPeer::getInstanceFromPool($key3);
+				if (!$obj3) {
+
+					$omClass = sfGuardUserPeer::getOMClass();
+
+
+					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 					$obj3 = new $cls();
 					$obj3->hydrate($row, $startcol3);
-					AppointmentPeer::addInstanceToPool($obj3, $key3);
+					sfGuardUserPeer::addInstanceToPool($obj3, $key3);
 				} 
-								$obj3->addWpmodule($obj1);
+								$obj3->addWpevent($obj1);
 			} 
 			$results[] = $obj1;
 		}
 		$stmt->closeCursor();
 		return $results;
-	}
-
-
-	
-	public static function doCountJoinAllExceptsfGuardUser(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-				$criteria = clone $criteria;
-
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			WpmodulePeer::addSelectColumns($criteria);
-		}
-
-		$criteria->clearOrderByColumns(); 
-				$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-	
-				$criteria->addJoin(array(WpmodulePeer::APPOINTMENT_ID,), array(AppointmentPeer::ID,), $join_behavior);
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; 		}
-		$stmt->closeCursor();
-		return $count;
 	}
 
 
@@ -583,17 +536,17 @@ abstract class BaseWpmodulePeer {
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			WpmodulePeer::addSelectColumns($criteria);
+			WpeventPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); 
 				$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WpeventPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-				$criteria->addJoin(array(WpmodulePeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
+				$criteria->addJoin(array(WpeventPeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
 		$stmt = BasePeer::doCount($criteria, $con);
 
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -606,57 +559,34 @@ abstract class BaseWpmodulePeer {
 
 
 	
-	public static function doSelectJoinAllExceptsfGuardUser(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinAllExceptsfGuardUser(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
-		$c = clone $c;
+				$criteria = clone $criteria;
 
-								if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
 		}
 
-		WpmodulePeer::addSelectColumns($c);
-		$startcol2 = (WpmodulePeer::NUM_COLUMNS - WpmodulePeer::NUM_LAZY_LOAD_COLUMNS);
+		if (!$criteria->hasSelectClause()) {
+			WpeventPeer::addSelectColumns($criteria);
+		}
 
-		AppointmentPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + (AppointmentPeer::NUM_COLUMNS - AppointmentPeer::NUM_LAZY_LOAD_COLUMNS);
+		$criteria->clearOrderByColumns(); 
+				$criteria->setDbName(self::DATABASE_NAME);
 
-				$c->addJoin(array(WpmodulePeer::APPOINTMENT_ID,), array(AppointmentPeer::ID,), $join_behavior);
-
-		$stmt = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = WpmodulePeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = WpmodulePeer::getInstanceFromPool($key1))) {
-															} else {
-				$omClass = WpmodulePeer::getOMClass();
-
-				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				WpmodulePeer::addInstanceToPool($obj1, $key1);
-			} 
-				
-				$key2 = AppointmentPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-				if ($key2 !== null) {
-					$obj2 = AppointmentPeer::getInstanceFromPool($key2);
-					if (!$obj2) {
+		if ($con === null) {
+			$con = Propel::getConnection(WpeventPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
 	
-						$omClass = AppointmentPeer::getOMClass();
+				$criteria->addJoin(array(WpeventPeer::APPOINTMENT_ID,), array(AppointmentPeer::ID,), $join_behavior);
+		$stmt = BasePeer::doCount($criteria, $con);
 
-
-					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol2);
-					AppointmentPeer::addInstanceToPool($obj2, $key2);
-				} 
-								$obj2->addWpmodule($obj1);
-
-			} 
-			$results[] = $obj1;
-		}
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; 		}
 		$stmt->closeCursor();
-		return $results;
+		return $count;
 	}
 
 
@@ -669,27 +599,27 @@ abstract class BaseWpmodulePeer {
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		WpmodulePeer::addSelectColumns($c);
-		$startcol2 = (WpmodulePeer::NUM_COLUMNS - WpmodulePeer::NUM_LAZY_LOAD_COLUMNS);
+		WpeventPeer::addSelectColumns($c);
+		$startcol2 = (WpeventPeer::NUM_COLUMNS - WpeventPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		sfGuardUserPeer::addSelectColumns($c);
 		$startcol3 = $startcol2 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
 
-				$c->addJoin(array(WpmodulePeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
+				$c->addJoin(array(WpeventPeer::USER_ID,), array(sfGuardUserPeer::ID,), $join_behavior);
 
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = WpmodulePeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = WpmodulePeer::getInstanceFromPool($key1))) {
+			$key1 = WpeventPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WpeventPeer::getInstanceFromPool($key1))) {
 															} else {
-				$omClass = WpmodulePeer::getOMClass();
+				$omClass = WpeventPeer::getOMClass();
 
 				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				WpmodulePeer::addInstanceToPool($obj1, $key1);
+				WpeventPeer::addInstanceToPool($obj1, $key1);
 			} 
 				
 				$key2 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol2);
@@ -705,7 +635,62 @@ abstract class BaseWpmodulePeer {
 					$obj2->hydrate($row, $startcol2);
 					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
 				} 
-								$obj2->addWpmodule($obj1);
+								$obj2->addWpevent($obj1);
+
+			} 
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	
+	public static function doSelectJoinAllExceptsfGuardUser(Criteria $c, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$c = clone $c;
+
+								if ($c->getDbName() == Propel::getDefaultDB()) {
+			$c->setDbName(self::DATABASE_NAME);
+		}
+
+		WpeventPeer::addSelectColumns($c);
+		$startcol2 = (WpeventPeer::NUM_COLUMNS - WpeventPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		AppointmentPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + (AppointmentPeer::NUM_COLUMNS - AppointmentPeer::NUM_LAZY_LOAD_COLUMNS);
+
+				$c->addJoin(array(WpeventPeer::APPOINTMENT_ID,), array(AppointmentPeer::ID,), $join_behavior);
+
+		$stmt = BasePeer::doSelect($c, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = WpeventPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WpeventPeer::getInstanceFromPool($key1))) {
+															} else {
+				$omClass = WpeventPeer::getOMClass();
+
+				$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				WpeventPeer::addInstanceToPool($obj1, $key1);
+			} 
+				
+				$key2 = AppointmentPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				if ($key2 !== null) {
+					$obj2 = AppointmentPeer::getInstanceFromPool($key2);
+					if (!$obj2) {
+	
+						$omClass = AppointmentPeer::getOMClass();
+
+
+					$cls = substr('.'.$omClass, strrpos('.'.$omClass, '.') + 1);
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					AppointmentPeer::addInstanceToPool($obj2, $key2);
+				} 
+								$obj2->addWpevent($obj1);
 
 			} 
 			$results[] = $obj1;
@@ -728,22 +713,22 @@ abstract class BaseWpmodulePeer {
 	
 	public static function getOMClass()
 	{
-		return WpmodulePeer::CLASS_DEFAULT;
+		return WpeventPeer::CLASS_DEFAULT;
 	}
 
 	
 	public static function doInsert($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(WpeventPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; 		} else {
 			$criteria = $values->buildCriteria(); 		}
 
-		if ($criteria->containsKey(WpmodulePeer::ID) && $criteria->keyContainsValue(WpmodulePeer::ID) ) {
-			throw new PropelException('Cannot insert a value for auto-increment primary key ('.WpmodulePeer::ID.')');
+		if ($criteria->containsKey(WpeventPeer::ID) && $criteria->keyContainsValue(WpeventPeer::ID) ) {
+			throw new PropelException('Cannot insert a value for auto-increment primary key ('.WpeventPeer::ID.')');
 		}
 
 
@@ -765,15 +750,15 @@ abstract class BaseWpmodulePeer {
 	public static function doUpdate($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(WpeventPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		$selectCriteria = new Criteria(self::DATABASE_NAME);
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; 
-			$comparison = $criteria->getComparison(WpmodulePeer::ID);
-			$selectCriteria->add(WpmodulePeer::ID, $criteria->remove(WpmodulePeer::ID), $comparison);
+			$comparison = $criteria->getComparison(WpeventPeer::ID);
+			$selectCriteria->add(WpeventPeer::ID, $criteria->remove(WpeventPeer::ID), $comparison);
 
 		} else { 			$criteria = $values->buildCriteria(); 			$selectCriteria = $values->buildPkeyCriteria(); 		}
 
@@ -786,11 +771,11 @@ abstract class BaseWpmodulePeer {
 	public static function doDeleteAll($con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(WpeventPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		$affectedRows = 0; 		try {
 									$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(WpmodulePeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(WpeventPeer::TABLE_NAME, $con);
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -803,25 +788,25 @@ abstract class BaseWpmodulePeer {
 	 public static function doDelete($values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(WpeventPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
-												WpmodulePeer::clearInstancePool();
+												WpeventPeer::clearInstancePool();
 
 						$criteria = clone $values;
-		} elseif ($values instanceof Wpmodule) {
-						WpmodulePeer::removeInstanceFromPool($values);
+		} elseif ($values instanceof Wpevent) {
+						WpeventPeer::removeInstanceFromPool($values);
 						$criteria = $values->buildPkeyCriteria();
 		} else {
 			
 
 
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(WpmodulePeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(WpeventPeer::ID, (array) $values, Criteria::IN);
 
 			foreach ((array) $values as $singleval) {
-								WpmodulePeer::removeInstanceFromPool($singleval);
+								WpeventPeer::removeInstanceFromPool($singleval);
 			}
 		}
 
@@ -842,13 +827,13 @@ abstract class BaseWpmodulePeer {
 	}
 
 	
-	public static function doValidate(Wpmodule $obj, $cols = null)
+	public static function doValidate(Wpevent $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(WpmodulePeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(WpmodulePeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(WpeventPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(WpeventPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -864,11 +849,11 @@ abstract class BaseWpmodulePeer {
 
 		}
 
-		$res =  BasePeer::doValidate(WpmodulePeer::DATABASE_NAME, WpmodulePeer::TABLE_NAME, $columns);
+		$res =  BasePeer::doValidate(WpeventPeer::DATABASE_NAME, WpeventPeer::TABLE_NAME, $columns);
     if ($res !== true) {
         $request = sfContext::getInstance()->getRequest();
         foreach ($res as $failed) {
-            $col = WpmodulePeer::translateFieldname($failed->getColumn(), BasePeer::TYPE_COLNAME, BasePeer::TYPE_PHPNAME);
+            $col = WpeventPeer::translateFieldname($failed->getColumn(), BasePeer::TYPE_COLNAME, BasePeer::TYPE_PHPNAME);
         }
     }
 
@@ -879,18 +864,18 @@ abstract class BaseWpmodulePeer {
 	public static function retrieveByPK($pk, PropelPDO $con = null)
 	{
 
-		if (null !== ($obj = WpmodulePeer::getInstanceFromPool((string) $pk))) {
+		if (null !== ($obj = WpeventPeer::getInstanceFromPool((string) $pk))) {
 			return $obj;
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WpeventPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria = new Criteria(WpmodulePeer::DATABASE_NAME);
-		$criteria->add(WpmodulePeer::ID, $pk);
+		$criteria = new Criteria(WpeventPeer::DATABASE_NAME);
+		$criteria->add(WpeventPeer::ID, $pk);
 
-		$v = WpmodulePeer::doSelect($criteria, $con);
+		$v = WpeventPeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -899,21 +884,21 @@ abstract class BaseWpmodulePeer {
 	public static function retrieveByPKs($pks, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(WpmodulePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(WpeventPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		$objs = null;
 		if (empty($pks)) {
 			$objs = array();
 		} else {
-			$criteria = new Criteria(WpmodulePeer::DATABASE_NAME);
-			$criteria->add(WpmodulePeer::ID, $pks, Criteria::IN);
-			$objs = WpmodulePeer::doSelect($criteria, $con);
+			$criteria = new Criteria(WpeventPeer::DATABASE_NAME);
+			$criteria->add(WpeventPeer::ID, $pks, Criteria::IN);
+			$objs = WpeventPeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
 
 } 
 
-Propel::getDatabaseMap(BaseWpmodulePeer::DATABASE_NAME)->addTableBuilder(BaseWpmodulePeer::TABLE_NAME, BaseWpmodulePeer::getMapBuilder());
+Propel::getDatabaseMap(BaseWpeventPeer::DATABASE_NAME)->addTableBuilder(BaseWpeventPeer::TABLE_NAME, BaseWpeventPeer::getMapBuilder());
 

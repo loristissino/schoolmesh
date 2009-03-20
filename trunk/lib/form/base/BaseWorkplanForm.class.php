@@ -18,12 +18,6 @@ class BaseWorkplanForm extends BaseFormPropel
       'year_id'        => new sfWidgetFormPropelChoice(array('model' => 'Year', 'add_empty' => false)),
       'schoolclass_id' => new sfWidgetFormPropelChoice(array('model' => 'Schoolclass', 'add_empty' => false)),
       'subject_id'     => new sfWidgetFormPropelChoice(array('model' => 'Subject', 'add_empty' => false)),
-      'created_at'     => new sfWidgetFormDateTime(),
-      'updated_at'     => new sfWidgetFormDateTime(),
-      'wpsubmitted_at' => new sfWidgetFormDateTime(),
-      'wpapproved_at'  => new sfWidgetFormDateTime(),
-      'frsubmitted_at' => new sfWidgetFormDateTime(),
-      'frapproved_at'  => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -32,12 +26,6 @@ class BaseWorkplanForm extends BaseFormPropel
       'year_id'        => new sfValidatorPropelChoice(array('model' => 'Year', 'column' => 'id')),
       'schoolclass_id' => new sfValidatorPropelChoice(array('model' => 'Schoolclass', 'column' => 'id')),
       'subject_id'     => new sfValidatorPropelChoice(array('model' => 'Subject', 'column' => 'id')),
-      'created_at'     => new sfValidatorDateTime(array('required' => false)),
-      'updated_at'     => new sfValidatorDateTime(array('required' => false)),
-      'wpsubmitted_at' => new sfValidatorDateTime(array('required' => false)),
-      'wpapproved_at'  => new sfValidatorDateTime(array('required' => false)),
-      'frsubmitted_at' => new sfValidatorDateTime(array('required' => false)),
-      'frapproved_at'  => new sfValidatorDateTime(array('required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(

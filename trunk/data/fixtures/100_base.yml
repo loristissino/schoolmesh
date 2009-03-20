@@ -82,32 +82,57 @@ Subject:
   inf:
     shortcut:       INF
     description:    Informatica gestionale
+    rank:              8
   lig:
     shortcut:       LIG
     description:    Laboratorio di informatica gestionale
+    rank:              9
+  ast:
+    shortcut:       AST
+    description:   Astronomia
+    rank:             7
+  fis:
+    shortcut:       FIS
+    description:   Fisica
+    rank:              6
   mat:
     shortcut:       MAT
     description:    Matematica applicata
+    rank:              5
   ita:
     shortcut:       ITA
     description:    Italiano
+    rank:              2
   ecz:
     shortcut:       ECZ
     description:    Economia aziendale
+    rank:             10
   dir:
     shortcut:       DIR
     description:    Diritto
+    rank:              11
   ecp:
     shortcut:       ECP
     description:    Economia politica
+    rank:               12
   sfz:
     shortcut:       SFZ
     description:    Scienza delle finanze
+    rank:               13
   ing:
     shortcut:       ING
     description:    Lingua inglese
+    rank:              4
   sto:
     shortcut:       STO
     description:    Storia
-    
+    rank:             3
+  irc:
+    shortcut:       IRC
+    description:    Insegnamento della Religione Cattolica
+    rank:              1
+  edf:
+    shortcut:       EDF
+    description:    Educazione fisica
+    rank:              14
     

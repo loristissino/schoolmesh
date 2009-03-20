@@ -66,6 +66,7 @@ CREATE TABLE `subject`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`shortcut` VARCHAR(3)  NOT NULL,
 	`description` VARCHAR(255)  NOT NULL,
+	`rank` INTEGER,
 	PRIMARY KEY (`id`),
 	KEY `subject_I_1`(`shortcut`)
 )Type=InnoDB;
@@ -245,45 +246,29 @@ CREATE TABLE `user_team`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- workplan
+#-- wpevent
 #-----------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `workplan`;
+DROP TABLE IF EXISTS `wpevent`;
 
 
-CREATE TABLE `workplan`
+CREATE TABLE `wpevent`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER,
-	`year_id` INTEGER  NOT NULL,
-	`schoolclass_id` VARCHAR(5)  NOT NULL,
-	`subject_id` INTEGER  NOT NULL,
 	`created_at` DATETIME,
-	`updated_at` DATETIME,
-	`wpsubmitted_at` DATETIME,
-	`wpapproved_at` DATETIME,
-	`frsubmitted_at` DATETIME,
-	`frapproved_at` DATETIME,
+	`appointment_id` INTEGER,
+	`user_id` INTEGER,
+	`comment` VARCHAR(255),
+	`status` INTEGER,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `uyss` (`user_id`, `year_id`, `schoolclass_id`, `subject_id`),
-	CONSTRAINT `workplan_FK_1`
+	INDEX `wpevent_FI_1` (`appointment_id`),
+	CONSTRAINT `wpevent_FK_1`
+		FOREIGN KEY (`appointment_id`)
+		REFERENCES `appointment` (`id`),
+	INDEX `wpevent_FI_2` (`user_id`),
+	CONSTRAINT `wpevent_FK_2`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
-		ON DELETE RESTRICT,
-	INDEX `workplan_FI_2` (`year_id`),
-	CONSTRAINT `workplan_FK_2`
-		FOREIGN KEY (`year_id`)
-		REFERENCES `year` (`id`)
-		ON DELETE RESTRICT,
-	INDEX `workplan_FI_3` (`schoolclass_id`),
-	CONSTRAINT `workplan_FK_3`
-		FOREIGN KEY (`schoolclass_id`)
-		REFERENCES `schoolclass` (`id`)
-		ON DELETE RESTRICT,
-	INDEX `workplan_FI_4` (`subject_id`),
-	CONSTRAINT `workplan_FK_4`
-		FOREIGN KEY (`subject_id`)
-		REFERENCES `subject` (`id`)
 		ON DELETE RESTRICT
 )Type=InnoDB;
 
@@ -300,7 +285,7 @@ CREATE TABLE `wpmodule`
 	`user_id` INTEGER,
 	`title` VARCHAR(100),
 	`period` VARCHAR(100),
-	`workplan_id` INTEGER,
+	`appointment_id` INTEGER,
 	`rank` INTEGER,
 	`is_public` TINYINT,
 	`created_at` DATETIME,
@@ -311,10 +296,10 @@ CREATE TABLE `wpmodule`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON DELETE RESTRICT,
-	INDEX `wpmodule_FI_2` (`workplan_id`),
+	INDEX `wpmodule_FI_2` (`appointment_id`),
 	CONSTRAINT `wpmodule_FK_2`
-		FOREIGN KEY (`workplan_id`)
-		REFERENCES `workplan` (`id`)
+		FOREIGN KEY (`appointment_id`)
+		REFERENCES `appointment` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

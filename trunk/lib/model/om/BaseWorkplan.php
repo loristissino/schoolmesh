@@ -25,24 +25,6 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 	protected $subject_id;
 
 	
-	protected $created_at;
-
-	
-	protected $updated_at;
-
-	
-	protected $wpsubmitted_at;
-
-	
-	protected $wpapproved_at;
-
-	
-	protected $frsubmitted_at;
-
-	
-	protected $frapproved_at;
-
-	
 	protected $asfGuardUser;
 
 	
@@ -53,6 +35,12 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 
 	
 	protected $aSubject;
+
+	
+	protected $collWpevents;
+
+	
+	private $lastWpeventCriteria = null;
 
 	
 	protected $collWpmodules;
@@ -106,168 +94,6 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 	public function getSubjectId()
 	{
 		return $this->subject_id;
-	}
-
-	
-	public function getCreatedAt($format = 'Y-m-d H:i:s')
-	{
-		if ($this->created_at === null) {
-			return null;
-		}
-
-
-		if ($this->created_at === '0000-00-00 00:00:00') {
-									return null;
-		} else {
-			try {
-				$dt = new DateTime($this->created_at);
-			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->created_at, true), $x);
-			}
-		}
-
-		if ($format === null) {
-						return $dt;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $dt->format('U'));
-		} else {
-			return $dt->format($format);
-		}
-	}
-
-	
-	public function getUpdatedAt($format = 'Y-m-d H:i:s')
-	{
-		if ($this->updated_at === null) {
-			return null;
-		}
-
-
-		if ($this->updated_at === '0000-00-00 00:00:00') {
-									return null;
-		} else {
-			try {
-				$dt = new DateTime($this->updated_at);
-			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->updated_at, true), $x);
-			}
-		}
-
-		if ($format === null) {
-						return $dt;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $dt->format('U'));
-		} else {
-			return $dt->format($format);
-		}
-	}
-
-	
-	public function getWpsubmittedAt($format = 'Y-m-d H:i:s')
-	{
-		if ($this->wpsubmitted_at === null) {
-			return null;
-		}
-
-
-		if ($this->wpsubmitted_at === '0000-00-00 00:00:00') {
-									return null;
-		} else {
-			try {
-				$dt = new DateTime($this->wpsubmitted_at);
-			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->wpsubmitted_at, true), $x);
-			}
-		}
-
-		if ($format === null) {
-						return $dt;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $dt->format('U'));
-		} else {
-			return $dt->format($format);
-		}
-	}
-
-	
-	public function getWpapprovedAt($format = 'Y-m-d H:i:s')
-	{
-		if ($this->wpapproved_at === null) {
-			return null;
-		}
-
-
-		if ($this->wpapproved_at === '0000-00-00 00:00:00') {
-									return null;
-		} else {
-			try {
-				$dt = new DateTime($this->wpapproved_at);
-			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->wpapproved_at, true), $x);
-			}
-		}
-
-		if ($format === null) {
-						return $dt;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $dt->format('U'));
-		} else {
-			return $dt->format($format);
-		}
-	}
-
-	
-	public function getFrsubmittedAt($format = 'Y-m-d H:i:s')
-	{
-		if ($this->frsubmitted_at === null) {
-			return null;
-		}
-
-
-		if ($this->frsubmitted_at === '0000-00-00 00:00:00') {
-									return null;
-		} else {
-			try {
-				$dt = new DateTime($this->frsubmitted_at);
-			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->frsubmitted_at, true), $x);
-			}
-		}
-
-		if ($format === null) {
-						return $dt;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $dt->format('U'));
-		} else {
-			return $dt->format($format);
-		}
-	}
-
-	
-	public function getFrapprovedAt($format = 'Y-m-d H:i:s')
-	{
-		if ($this->frapproved_at === null) {
-			return null;
-		}
-
-
-		if ($this->frapproved_at === '0000-00-00 00:00:00') {
-									return null;
-		} else {
-			try {
-				$dt = new DateTime($this->frapproved_at);
-			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->frapproved_at, true), $x);
-			}
-		}
-
-		if ($format === null) {
-						return $dt;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $dt->format('U'));
-		} else {
-			return $dt->format($format);
-		}
 	}
 
 	
@@ -357,198 +183,6 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
-	public function setCreatedAt($v)
-	{
-						if ($v === null || $v === '') {
-			$dt = null;
-		} elseif ($v instanceof DateTime) {
-			$dt = $v;
-		} else {
-									try {
-				if (is_numeric($v)) { 					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
-															$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
-				} else {
-					$dt = new DateTime($v);
-				}
-			} catch (Exception $x) {
-				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
-			}
-		}
-
-		if ( $this->created_at !== null || $dt !== null ) {
-			
-			$currNorm = ($this->created_at !== null && $tmpDt = new DateTime($this->created_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
-			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
-
-			if ( ($currNorm !== $newNorm) 					)
-			{
-				$this->created_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
-				$this->modifiedColumns[] = WorkplanPeer::CREATED_AT;
-			}
-		} 
-		return $this;
-	} 
-	
-	public function setUpdatedAt($v)
-	{
-						if ($v === null || $v === '') {
-			$dt = null;
-		} elseif ($v instanceof DateTime) {
-			$dt = $v;
-		} else {
-									try {
-				if (is_numeric($v)) { 					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
-															$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
-				} else {
-					$dt = new DateTime($v);
-				}
-			} catch (Exception $x) {
-				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
-			}
-		}
-
-		if ( $this->updated_at !== null || $dt !== null ) {
-			
-			$currNorm = ($this->updated_at !== null && $tmpDt = new DateTime($this->updated_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
-			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
-
-			if ( ($currNorm !== $newNorm) 					)
-			{
-				$this->updated_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
-				$this->modifiedColumns[] = WorkplanPeer::UPDATED_AT;
-			}
-		} 
-		return $this;
-	} 
-	
-	public function setWpsubmittedAt($v)
-	{
-						if ($v === null || $v === '') {
-			$dt = null;
-		} elseif ($v instanceof DateTime) {
-			$dt = $v;
-		} else {
-									try {
-				if (is_numeric($v)) { 					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
-															$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
-				} else {
-					$dt = new DateTime($v);
-				}
-			} catch (Exception $x) {
-				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
-			}
-		}
-
-		if ( $this->wpsubmitted_at !== null || $dt !== null ) {
-			
-			$currNorm = ($this->wpsubmitted_at !== null && $tmpDt = new DateTime($this->wpsubmitted_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
-			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
-
-			if ( ($currNorm !== $newNorm) 					)
-			{
-				$this->wpsubmitted_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
-				$this->modifiedColumns[] = WorkplanPeer::WPSUBMITTED_AT;
-			}
-		} 
-		return $this;
-	} 
-	
-	public function setWpapprovedAt($v)
-	{
-						if ($v === null || $v === '') {
-			$dt = null;
-		} elseif ($v instanceof DateTime) {
-			$dt = $v;
-		} else {
-									try {
-				if (is_numeric($v)) { 					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
-															$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
-				} else {
-					$dt = new DateTime($v);
-				}
-			} catch (Exception $x) {
-				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
-			}
-		}
-
-		if ( $this->wpapproved_at !== null || $dt !== null ) {
-			
-			$currNorm = ($this->wpapproved_at !== null && $tmpDt = new DateTime($this->wpapproved_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
-			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
-
-			if ( ($currNorm !== $newNorm) 					)
-			{
-				$this->wpapproved_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
-				$this->modifiedColumns[] = WorkplanPeer::WPAPPROVED_AT;
-			}
-		} 
-		return $this;
-	} 
-	
-	public function setFrsubmittedAt($v)
-	{
-						if ($v === null || $v === '') {
-			$dt = null;
-		} elseif ($v instanceof DateTime) {
-			$dt = $v;
-		} else {
-									try {
-				if (is_numeric($v)) { 					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
-															$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
-				} else {
-					$dt = new DateTime($v);
-				}
-			} catch (Exception $x) {
-				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
-			}
-		}
-
-		if ( $this->frsubmitted_at !== null || $dt !== null ) {
-			
-			$currNorm = ($this->frsubmitted_at !== null && $tmpDt = new DateTime($this->frsubmitted_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
-			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
-
-			if ( ($currNorm !== $newNorm) 					)
-			{
-				$this->frsubmitted_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
-				$this->modifiedColumns[] = WorkplanPeer::FRSUBMITTED_AT;
-			}
-		} 
-		return $this;
-	} 
-	
-	public function setFrapprovedAt($v)
-	{
-						if ($v === null || $v === '') {
-			$dt = null;
-		} elseif ($v instanceof DateTime) {
-			$dt = $v;
-		} else {
-									try {
-				if (is_numeric($v)) { 					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
-															$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
-				} else {
-					$dt = new DateTime($v);
-				}
-			} catch (Exception $x) {
-				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
-			}
-		}
-
-		if ( $this->frapproved_at !== null || $dt !== null ) {
-			
-			$currNorm = ($this->frapproved_at !== null && $tmpDt = new DateTime($this->frapproved_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
-			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
-
-			if ( ($currNorm !== $newNorm) 					)
-			{
-				$this->frapproved_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
-				$this->modifiedColumns[] = WorkplanPeer::FRAPPROVED_AT;
-			}
-		} 
-		return $this;
-	} 
-	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array())) {
@@ -567,12 +201,6 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 			$this->year_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->schoolclass_id = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->subject_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
-			$this->created_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->updated_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->wpsubmitted_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->wpapproved_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-			$this->frsubmitted_at = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
-			$this->frapproved_at = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -581,7 +209,7 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 11; 
+						return $startcol + 5; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Workplan object", $e);
 		}
@@ -632,6 +260,9 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 			$this->aYear = null;
 			$this->aSchoolclass = null;
 			$this->aSubject = null;
+			$this->collWpevents = null;
+			$this->lastWpeventCriteria = null;
+
 			$this->collWpmodules = null;
 			$this->lastWpmoduleCriteria = null;
 
@@ -662,16 +293,6 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 	
 	public function save(PropelPDO $con = null)
 	{
-    if ($this->isNew() && !$this->isColumnModified(WorkplanPeer::CREATED_AT))
-    {
-      $this->setCreatedAt(time());
-    }
-
-    if ($this->isModified() && !$this->isColumnModified(WorkplanPeer::UPDATED_AT))
-    {
-      $this->setUpdatedAt(time());
-    }
-
 		if ($this->isDeleted()) {
 			throw new PropelException("You cannot save an object that has been deleted.");
 		}
@@ -742,6 +363,14 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 				}
 
 				$this->resetModified(); 			}
+
+			if ($this->collWpevents !== null) {
+				foreach ($this->collWpevents as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
 
 			if ($this->collWpmodules !== null) {
 				foreach ($this->collWpmodules as $referrerFK) {
@@ -819,6 +448,14 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 			}
 
 
+				if ($this->collWpevents !== null) {
+					foreach ($this->collWpevents as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
 				if ($this->collWpmodules !== null) {
 					foreach ($this->collWpmodules as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
@@ -861,24 +498,6 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 			case 4:
 				return $this->getSubjectId();
 				break;
-			case 5:
-				return $this->getCreatedAt();
-				break;
-			case 6:
-				return $this->getUpdatedAt();
-				break;
-			case 7:
-				return $this->getWpsubmittedAt();
-				break;
-			case 8:
-				return $this->getWpapprovedAt();
-				break;
-			case 9:
-				return $this->getFrsubmittedAt();
-				break;
-			case 10:
-				return $this->getFrapprovedAt();
-				break;
 			default:
 				return null;
 				break;
@@ -894,12 +513,6 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 			$keys[2] => $this->getYearId(),
 			$keys[3] => $this->getSchoolclassId(),
 			$keys[4] => $this->getSubjectId(),
-			$keys[5] => $this->getCreatedAt(),
-			$keys[6] => $this->getUpdatedAt(),
-			$keys[7] => $this->getWpsubmittedAt(),
-			$keys[8] => $this->getWpapprovedAt(),
-			$keys[9] => $this->getFrsubmittedAt(),
-			$keys[10] => $this->getFrapprovedAt(),
 		);
 		return $result;
 	}
@@ -930,24 +543,6 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 			case 4:
 				$this->setSubjectId($value);
 				break;
-			case 5:
-				$this->setCreatedAt($value);
-				break;
-			case 6:
-				$this->setUpdatedAt($value);
-				break;
-			case 7:
-				$this->setWpsubmittedAt($value);
-				break;
-			case 8:
-				$this->setWpapprovedAt($value);
-				break;
-			case 9:
-				$this->setFrsubmittedAt($value);
-				break;
-			case 10:
-				$this->setFrapprovedAt($value);
-				break;
 		} 	}
 
 	
@@ -960,12 +555,6 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setYearId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setSchoolclassId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setSubjectId($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setUpdatedAt($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setWpsubmittedAt($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setWpapprovedAt($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setFrsubmittedAt($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setFrapprovedAt($arr[$keys[10]]);
 	}
 
 	
@@ -978,12 +567,6 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WorkplanPeer::YEAR_ID)) $criteria->add(WorkplanPeer::YEAR_ID, $this->year_id);
 		if ($this->isColumnModified(WorkplanPeer::SCHOOLCLASS_ID)) $criteria->add(WorkplanPeer::SCHOOLCLASS_ID, $this->schoolclass_id);
 		if ($this->isColumnModified(WorkplanPeer::SUBJECT_ID)) $criteria->add(WorkplanPeer::SUBJECT_ID, $this->subject_id);
-		if ($this->isColumnModified(WorkplanPeer::CREATED_AT)) $criteria->add(WorkplanPeer::CREATED_AT, $this->created_at);
-		if ($this->isColumnModified(WorkplanPeer::UPDATED_AT)) $criteria->add(WorkplanPeer::UPDATED_AT, $this->updated_at);
-		if ($this->isColumnModified(WorkplanPeer::WPSUBMITTED_AT)) $criteria->add(WorkplanPeer::WPSUBMITTED_AT, $this->wpsubmitted_at);
-		if ($this->isColumnModified(WorkplanPeer::WPAPPROVED_AT)) $criteria->add(WorkplanPeer::WPAPPROVED_AT, $this->wpapproved_at);
-		if ($this->isColumnModified(WorkplanPeer::FRSUBMITTED_AT)) $criteria->add(WorkplanPeer::FRSUBMITTED_AT, $this->frsubmitted_at);
-		if ($this->isColumnModified(WorkplanPeer::FRAPPROVED_AT)) $criteria->add(WorkplanPeer::FRAPPROVED_AT, $this->frapproved_at);
 
 		return $criteria;
 	}
@@ -1022,21 +605,14 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 
 		$copyObj->setSubjectId($this->subject_id);
 
-		$copyObj->setCreatedAt($this->created_at);
-
-		$copyObj->setUpdatedAt($this->updated_at);
-
-		$copyObj->setWpsubmittedAt($this->wpsubmitted_at);
-
-		$copyObj->setWpapprovedAt($this->wpapproved_at);
-
-		$copyObj->setFrsubmittedAt($this->frsubmitted_at);
-
-		$copyObj->setFrapprovedAt($this->frapproved_at);
-
 
 		if ($deepCopy) {
 									$copyObj->setNew(false);
+
+			foreach ($this->getWpevents() as $relObj) {
+				if ($relObj !== $this) {  					$copyObj->addWpevent($relObj->copy($deepCopy));
+				}
+			}
 
 			foreach ($this->getWpmodules() as $relObj) {
 				if ($relObj !== $this) {  					$copyObj->addWpmodule($relObj->copy($deepCopy));
@@ -1193,6 +769,142 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 	}
 
 	
+	public function clearWpevents()
+	{
+		$this->collWpevents = null; 	}
+
+	
+	public function initWpevents()
+	{
+		$this->collWpevents = array();
+	}
+
+	
+	public function getWpevents($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WorkplanPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWpevents === null) {
+			if ($this->isNew()) {
+			   $this->collWpevents = array();
+			} else {
+
+				$criteria->add(WpeventPeer::WORKPLAN_ID, $this->id);
+
+				WpeventPeer::addSelectColumns($criteria);
+				$this->collWpevents = WpeventPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WpeventPeer::WORKPLAN_ID, $this->id);
+
+				WpeventPeer::addSelectColumns($criteria);
+				if (!isset($this->lastWpeventCriteria) || !$this->lastWpeventCriteria->equals($criteria)) {
+					$this->collWpevents = WpeventPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastWpeventCriteria = $criteria;
+		return $this->collWpevents;
+	}
+
+	
+	public function countWpevents(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WorkplanPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collWpevents === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(WpeventPeer::WORKPLAN_ID, $this->id);
+
+				$count = WpeventPeer::doCount($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WpeventPeer::WORKPLAN_ID, $this->id);
+
+				if (!isset($this->lastWpeventCriteria) || !$this->lastWpeventCriteria->equals($criteria)) {
+					$count = WpeventPeer::doCount($criteria, $con);
+				} else {
+					$count = count($this->collWpevents);
+				}
+			} else {
+				$count = count($this->collWpevents);
+			}
+		}
+		$this->lastWpeventCriteria = $criteria;
+		return $count;
+	}
+
+	
+	public function addWpevent(Wpevent $l)
+	{
+		if ($this->collWpevents === null) {
+			$this->initWpevents();
+		}
+		if (!in_array($l, $this->collWpevents, true)) { 			array_push($this->collWpevents, $l);
+			$l->setWorkplan($this);
+		}
+	}
+
+
+	
+	public function getWpeventsJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WorkplanPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWpevents === null) {
+			if ($this->isNew()) {
+				$this->collWpevents = array();
+			} else {
+
+				$criteria->add(WpeventPeer::WORKPLAN_ID, $this->id);
+
+				$this->collWpevents = WpeventPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		} else {
+									
+			$criteria->add(WpeventPeer::WORKPLAN_ID, $this->id);
+
+			if (!isset($this->lastWpeventCriteria) || !$this->lastWpeventCriteria->equals($criteria)) {
+				$this->collWpevents = WpeventPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastWpeventCriteria = $criteria;
+
+		return $this->collWpevents;
+	}
+
+	
 	public function clearWpmodules()
 	{
 		$this->collWpmodules = null; 	}
@@ -1332,12 +1044,18 @@ abstract class BaseWorkplan extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
+			if ($this->collWpevents) {
+				foreach ((array) $this->collWpevents as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->collWpmodules) {
 				foreach ((array) $this->collWpmodules as $o) {
 					$o->clearAllReferences($deep);
 				}
 			}
 		} 
+		$this->collWpevents = null;
 		$this->collWpmodules = null;
 			$this->asfGuardUser = null;
 			$this->aYear = null;

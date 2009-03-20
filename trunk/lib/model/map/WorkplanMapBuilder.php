@@ -43,17 +43,5 @@ class WorkplanMapBuilder implements MapBuilder {
 
 		$tMap->addForeignKey('SUBJECT_ID', 'SubjectId', 'INTEGER', 'subject', 'ID', true, null);
 
-		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null);
-
-		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'TIMESTAMP', false, null);
-
-		$tMap->addColumn('WPSUBMITTED_AT', 'WpsubmittedAt', 'TIMESTAMP', false, null);
-
-		$tMap->addColumn('WPAPPROVED_AT', 'WpapprovedAt', 'TIMESTAMP', false, null);
-
-		$tMap->addColumn('FRSUBMITTED_AT', 'FrsubmittedAt', 'TIMESTAMP', false, null);
-
-		$tMap->addColumn('FRAPPROVED_AT', 'FrapprovedAt', 'TIMESTAMP', false, null);
-
 	} 
 } 

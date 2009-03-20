@@ -17,11 +17,13 @@ class BaseSubjectFormFilter extends BaseFormFilterPropel
     $this->setWidgets(array(
       'shortcut'    => new sfWidgetFormFilterInput(),
       'description' => new sfWidgetFormFilterInput(),
+      'rank'        => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
       'shortcut'    => new sfValidatorPass(array('required' => false)),
       'description' => new sfValidatorPass(array('required' => false)),
+      'rank'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('subject_filters[%s]');
@@ -42,6 +44,7 @@ class BaseSubjectFormFilter extends BaseFormFilterPropel
       'id'          => 'Number',
       'shortcut'    => 'Text',
       'description' => 'Text',
+      'rank'        => 'Number',
     );
   }
 }

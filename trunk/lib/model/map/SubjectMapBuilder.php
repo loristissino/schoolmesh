@@ -39,5 +39,7 @@ class SubjectMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('DESCRIPTION', 'Description', 'VARCHAR', true, 255);
 
+		$tMap->addColumn('RANK', 'Rank', 'INTEGER', false, null);
+
 	} 
 } 

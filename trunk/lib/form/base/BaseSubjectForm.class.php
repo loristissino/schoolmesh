@@ -16,12 +16,14 @@ class BaseSubjectForm extends BaseFormPropel
       'id'          => new sfWidgetFormInputHidden(),
       'shortcut'    => new sfWidgetFormInput(),
       'description' => new sfWidgetFormInput(),
+      'rank'        => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
       'id'          => new sfValidatorPropelChoice(array('model' => 'Subject', 'column' => 'id', 'required' => false)),
       'shortcut'    => new sfValidatorString(array('max_length' => 3)),
       'description' => new sfValidatorString(array('max_length' => 255)),
+      'rank'        => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('subject[%s]');
