@@ -43,7 +43,7 @@ class WpeventMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('COMMENT', 'Comment', 'VARCHAR', false, 255);
 
-		$tMap->addColumn('STATUS', 'Status', 'INTEGER', false, null);
+		$tMap->addColumn('STATE', 'State', 'INTEGER', false, null);
 
 	} 
 } 

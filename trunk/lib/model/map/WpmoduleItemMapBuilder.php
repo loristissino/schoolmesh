@@ -41,5 +41,7 @@ class WpmoduleItemMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('CONTENT', 'Content', 'LONGVARCHAR', false, null);
 
+		$tMap->addColumn('EVALUATION', 'Evaluation', 'INTEGER', false, null);
+
 	} 
 } 

@@ -110,7 +110,7 @@ propel:
     appointment_id: ~
     user_id:  	{ type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict }
     comment:   { type: varchar(255) }
-    status:  integer
+    state:  integer
 
 # wpevent is a log for events concerning a workplan
 #   The events are logged with the id of the user who acted, and the new status that the workplan goes into.
@@ -183,6 +183,7 @@ propel:
     wpitem_group_id: ~
     rank:    { type: integer, required: true }
     content:      longvarchar
+    evaluation:  { type: integer, required: false } 
     _uniques:
       id_pos:     [id, rank]
 

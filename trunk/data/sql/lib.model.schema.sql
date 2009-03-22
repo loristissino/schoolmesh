@@ -259,7 +259,7 @@ CREATE TABLE `wpevent`
 	`appointment_id` INTEGER,
 	`user_id` INTEGER,
 	`comment` VARCHAR(255),
-	`status` INTEGER,
+	`state` INTEGER,
 	PRIMARY KEY (`id`),
 	INDEX `wpevent_FI_1` (`appointment_id`),
 	CONSTRAINT `wpevent_FK_1`
@@ -359,6 +359,7 @@ CREATE TABLE `wpmodule_item`
 	`wpitem_group_id` INTEGER,
 	`rank` INTEGER  NOT NULL,
 	`content` TEXT,
+	`evaluation` INTEGER,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `id_pos` (`id`, `rank`),
 	INDEX `wpmodule_item_FI_1` (`wpitem_group_id`),

@@ -18,7 +18,7 @@ class BaseWpeventForm extends BaseFormPropel
       'appointment_id' => new sfWidgetFormPropelChoice(array('model' => 'Appointment', 'add_empty' => true)),
       'user_id'        => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
       'comment'        => new sfWidgetFormInput(),
-      'status'         => new sfWidgetFormInput(),
+      'state'          => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
@@ -27,7 +27,7 @@ class BaseWpeventForm extends BaseFormPropel
       'appointment_id' => new sfValidatorPropelChoice(array('model' => 'Appointment', 'column' => 'id', 'required' => false)),
       'user_id'        => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id', 'required' => false)),
       'comment'        => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'status'         => new sfValidatorInteger(array('required' => false)),
+      'state'          => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('wpevent[%s]');

@@ -18,12 +18,14 @@ class BaseWpmoduleItemFormFilter extends BaseFormFilterPropel
       'wpitem_group_id' => new sfWidgetFormPropelChoice(array('model' => 'WpitemGroup', 'add_empty' => true)),
       'rank'            => new sfWidgetFormFilterInput(),
       'content'         => new sfWidgetFormFilterInput(),
+      'evaluation'      => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
       'wpitem_group_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'WpitemGroup', 'column' => 'id')),
       'rank'            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'content'         => new sfValidatorPass(array('required' => false)),
+      'evaluation'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('wpmodule_item_filters[%s]');
@@ -45,6 +47,7 @@ class BaseWpmoduleItemFormFilter extends BaseFormFilterPropel
       'wpitem_group_id' => 'ForeignKey',
       'rank'            => 'Number',
       'content'         => 'Text',
+      'evaluation'      => 'Number',
     );
   }
 }
