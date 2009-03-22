@@ -13,16 +13,14 @@ class workplanActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->workplan_list = $this->getUser()->getProfile()->getWorkplans();
-	$this->status_descriptions = Workflow::getWpStatusDescriptions();
-	$this->view_actions = Workflow::getWpViewActions();
+	$this->steps = Workflow::getWpfrSteps();
 	
   }
 
   public function executeShow(sfWebRequest $request)
   {
     $this->workplan = WorkplanPeer::retrieveByPk($request->getParameter('id'));
-	$this->status_descriptions = Workflow::getWpStatusDescriptions();
-	$this->submit_actions = Workflow::getWpSubmitActions();
+	$this->steps = Workflow::getWpfrSteps();
     $this->forward404Unless($this->workplan);
   }
 

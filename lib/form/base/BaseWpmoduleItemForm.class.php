@@ -17,6 +17,7 @@ class BaseWpmoduleItemForm extends BaseFormPropel
       'wpitem_group_id' => new sfWidgetFormPropelChoice(array('model' => 'WpitemGroup', 'add_empty' => true)),
       'rank'            => new sfWidgetFormInput(),
       'content'         => new sfWidgetFormTextarea(),
+      'evaluation'      => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
@@ -24,6 +25,7 @@ class BaseWpmoduleItemForm extends BaseFormPropel
       'wpitem_group_id' => new sfValidatorPropelChoice(array('model' => 'WpitemGroup', 'column' => 'id', 'required' => false)),
       'rank'            => new sfValidatorInteger(),
       'content'         => new sfValidatorString(array('required' => false)),
+      'evaluation'      => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(

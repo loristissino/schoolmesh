@@ -1,0 +1,54 @@
+<?php
+// source images come from
+// http://commons.wikimedia.org/wiki/Crystal_Clear
+// and are licensed under LGPL
+
+$workflow=$_SERVER["argv"][1];
+
+$width=32;
+$height=32;
+
+$sources=Array("0", "10", "20", "30", "40", "50", "60", "70");
+
+$ne=0;
+
+foreach($sources as $sourceex)
+{
+	
+echo "Generating image $sourceex\n";
+$canvas = imagecreatetruecolor($width*sizeof($sources), $height);
+$white = imagecolorallocate($canvas, 255, 255, 255);
+imagefill($canvas, 0, 0, $white);
+
+imagecolortransparent($canvas, $white);
+
+	$ni=0;
+	foreach($sources as $source)
+	{
+		$sourceimage="$workflow/source/$source.png";
+		echo "... reading image $ni: $sourceimage\n";
+		$im = imagecreatefrompng($sourceimage);
+		imagecopy($canvas, $im, $ni*$width, 0, 0, 0, $width, $height);
+		imagedestroy($im);
+		if ($source!=$sourceex)
+			{
+				for ($x=$ni*$width;$x<$width*($ni+1); $x++)
+				{
+						for($y=0; $y<$height; $y++)
+						{
+							$color_index = imagecolorat($canvas, $x, $y);
+							$ct = imagecolorsforindex($canvas, $color_index);
+							if($ct['red']!=255||$ct['green']!=255||$ct['blue']!=255) 
+								{
+								$newcolor=imagecolorallocate($canvas, 240,250,240);
+								imagesetpixel($canvas, $x, $y, $newcolor); 
+								}
+						}
+				}
+			}
+			$ni++;
+	}
+imagepng($canvas, "$workflow/target/{$workflow}_$sourceex.png");
+imagedestroy($canvas);
+$ne++;
+}

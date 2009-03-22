@@ -31,10 +31,11 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
         public function getWorkplans()
         {
 	    $c = new Criteria();
-		$c->add(WorkplanPeer::USER_ID, $this->getUserId());
-		$c->addDescendingOrderByColumn(WorkplanPeer::YEAR_ID);
-		$c->addAscendingOrderByColumn(WorkplanPeer::SCHOOLCLASS_ID);
-		$t = WorkplanPeer::doSelectJoinAll($c);
+		$c->add(AppointmentPeer::USER_ID, $this->getUserId());
+		$c->addDescendingOrderByColumn(AppointmentPeer::YEAR_ID);
+		$c->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID);
+		$c->addAscendingOrderByColumn(AppointmentPeer::SUBJECT_ID);
+		$t = AppointmentPeer::doSelectJoinAll($c);
 		return $t;
         }
 

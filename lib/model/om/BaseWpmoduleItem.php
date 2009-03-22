@@ -22,6 +22,9 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	protected $content;
 
 	
+	protected $evaluation;
+
+	
 	protected $aWpitemGroup;
 
 	
@@ -64,6 +67,12 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	public function getContent()
 	{
 		return $this->content;
+	}
+
+	
+	public function getEvaluation()
+	{
+		return $this->evaluation;
 	}
 
 	
@@ -127,6 +136,20 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setEvaluation($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->evaluation !== $v) {
+			$this->evaluation = $v;
+			$this->modifiedColumns[] = WpmoduleItemPeer::EVALUATION;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array())) {
@@ -144,6 +167,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 			$this->wpitem_group_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->rank = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->content = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->evaluation = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -152,7 +176,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 4; 
+						return $startcol + 5; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WpmoduleItem object", $e);
 		}
@@ -349,6 +373,9 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 			case 3:
 				return $this->getContent();
 				break;
+			case 4:
+				return $this->getEvaluation();
+				break;
 			default:
 				return null;
 				break;
@@ -363,6 +390,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 			$keys[1] => $this->getWpitemGroupId(),
 			$keys[2] => $this->getRank(),
 			$keys[3] => $this->getContent(),
+			$keys[4] => $this->getEvaluation(),
 		);
 		return $result;
 	}
@@ -390,6 +418,9 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 			case 3:
 				$this->setContent($value);
 				break;
+			case 4:
+				$this->setEvaluation($value);
+				break;
 		} 	}
 
 	
@@ -401,6 +432,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setWpitemGroupId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setRank($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setContent($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setEvaluation($arr[$keys[4]]);
 	}
 
 	
@@ -412,6 +444,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpmoduleItemPeer::WPITEM_GROUP_ID)) $criteria->add(WpmoduleItemPeer::WPITEM_GROUP_ID, $this->wpitem_group_id);
 		if ($this->isColumnModified(WpmoduleItemPeer::RANK)) $criteria->add(WpmoduleItemPeer::RANK, $this->rank);
 		if ($this->isColumnModified(WpmoduleItemPeer::CONTENT)) $criteria->add(WpmoduleItemPeer::CONTENT, $this->content);
+		if ($this->isColumnModified(WpmoduleItemPeer::EVALUATION)) $criteria->add(WpmoduleItemPeer::EVALUATION, $this->evaluation);
 
 		return $criteria;
 	}
@@ -447,6 +480,8 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		$copyObj->setRank($this->rank);
 
 		$copyObj->setContent($this->content);
+
+		$copyObj->setEvaluation($this->evaluation);
 
 
 		$copyObj->setNew(true);

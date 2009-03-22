@@ -1,0 +1,2 @@
+#!/bin/bash
+svn stat | grep ^? | grep -v cache | sed 's/^?      //' | xargs svn add 

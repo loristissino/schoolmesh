@@ -11,7 +11,8 @@
       <th class="sf_admin_text">Class</th>
       <th class="sf_admin_text">Subject</th>
       <th class="sf_admin_text">Modules</th>
-	  <th class="sf_admin_text">Status</th>  
+	  <th class="sf_admin_text">Last action</th>
+	  <th class="sf_admin_text">State</th>
       <th class="sf_admin_text">Action</th>
     </tr>
   </thead>
@@ -22,8 +23,11 @@
       <td><?php echo $workplan->getSchoolclass() ?></td>
       <td><?php echo $workplan->getSubject() ?></td>
 	  <td><?php echo $workplan->countWpmodules() ?></td>
-	  <td><?php echo $status_descriptions[$workplan->getStatus()] ?></td>
-      <td><a href="<?php echo url_for('workplan/show?id='.$workplan->getId()) ?>"><?php echo $view_actions[$workplan->getStatus()] ?></a>
+	  <?php $lastlog=$workplan->getLastLog() ?>  
+	  <td><?php echo $lastlog->getCreatedAt() ?></td>
+	  <td><?php include_partial('state', array('lastlog' => $lastlog, 'workplan' => $workplan, 'steps' => $steps)) ?></td>
+	  <td><?php include_partial('action', array('lastlog' => $lastlog, 'workplan' => $workplan, 'steps' => $steps)) ?></td>
+ 	
 	</td>
     </tr>
     <?php endforeach; ?>
@@ -35,3 +39,4 @@
 	<li class="sf_admin_action_new"><a href="<?php echo url_for('workplan/new') ?>">New</a></li>
 	</ul>
 </div>
+

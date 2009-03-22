@@ -19,7 +19,7 @@ class BaseWpeventFormFilter extends BaseFormFilterPropel
       'appointment_id' => new sfWidgetFormPropelChoice(array('model' => 'Appointment', 'add_empty' => true)),
       'user_id'        => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
       'comment'        => new sfWidgetFormFilterInput(),
-      'status'         => new sfWidgetFormFilterInput(),
+      'state'          => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -27,7 +27,7 @@ class BaseWpeventFormFilter extends BaseFormFilterPropel
       'appointment_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Appointment', 'column' => 'id')),
       'user_id'        => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
       'comment'        => new sfValidatorPass(array('required' => false)),
-      'status'         => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'state'          => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('wpevent_filters[%s]');
@@ -50,7 +50,7 @@ class BaseWpeventFormFilter extends BaseFormFilterPropel
       'appointment_id' => 'ForeignKey',
       'user_id'        => 'ForeignKey',
       'comment'        => 'Text',
-      'status'         => 'Number',
+      'state'          => 'Number',
     );
   }
 }

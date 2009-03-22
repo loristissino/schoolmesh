@@ -222,6 +222,10 @@
         <source>The selected workstations have been disabled successfully.</source>
         <target>I calcolatori selezionati sono stati disabilitati per l'accesso a Internet.</target>
       </trans-unit>
+      <trans-unit id="59">
+        <source>draft</source>
+        <target>bozza</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

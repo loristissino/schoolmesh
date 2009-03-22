@@ -25,7 +25,7 @@ abstract class BaseWpevent extends BaseObject  implements Persistent {
 	protected $comment;
 
 	
-	protected $status;
+	protected $state;
 
 	
 	protected $aAppointment;
@@ -103,9 +103,9 @@ abstract class BaseWpevent extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getStatus()
+	public function getState()
 	{
-		return $this->status;
+		return $this->state;
 	}
 
 	
@@ -205,15 +205,15 @@ abstract class BaseWpevent extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
-	public function setStatus($v)
+	public function setState($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
 		}
 
-		if ($this->status !== $v) {
-			$this->status = $v;
-			$this->modifiedColumns[] = WpeventPeer::STATUS;
+		if ($this->state !== $v) {
+			$this->state = $v;
+			$this->modifiedColumns[] = WpeventPeer::STATE;
 		}
 
 		return $this;
@@ -237,7 +237,7 @@ abstract class BaseWpevent extends BaseObject  implements Persistent {
 			$this->appointment_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->user_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->comment = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->status = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->state = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -469,7 +469,7 @@ abstract class BaseWpevent extends BaseObject  implements Persistent {
 				return $this->getComment();
 				break;
 			case 5:
-				return $this->getStatus();
+				return $this->getState();
 				break;
 			default:
 				return null;
@@ -486,7 +486,7 @@ abstract class BaseWpevent extends BaseObject  implements Persistent {
 			$keys[2] => $this->getAppointmentId(),
 			$keys[3] => $this->getUserId(),
 			$keys[4] => $this->getComment(),
-			$keys[5] => $this->getStatus(),
+			$keys[5] => $this->getState(),
 		);
 		return $result;
 	}
@@ -518,7 +518,7 @@ abstract class BaseWpevent extends BaseObject  implements Persistent {
 				$this->setComment($value);
 				break;
 			case 5:
-				$this->setStatus($value);
+				$this->setState($value);
 				break;
 		} 	}
 
@@ -532,7 +532,7 @@ abstract class BaseWpevent extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setAppointmentId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setUserId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setComment($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setStatus($arr[$keys[5]]);
+		if (array_key_exists($keys[5], $arr)) $this->setState($arr[$keys[5]]);
 	}
 
 	
@@ -545,7 +545,7 @@ abstract class BaseWpevent extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpeventPeer::APPOINTMENT_ID)) $criteria->add(WpeventPeer::APPOINTMENT_ID, $this->appointment_id);
 		if ($this->isColumnModified(WpeventPeer::USER_ID)) $criteria->add(WpeventPeer::USER_ID, $this->user_id);
 		if ($this->isColumnModified(WpeventPeer::COMMENT)) $criteria->add(WpeventPeer::COMMENT, $this->comment);
-		if ($this->isColumnModified(WpeventPeer::STATUS)) $criteria->add(WpeventPeer::STATUS, $this->status);
+		if ($this->isColumnModified(WpeventPeer::STATE)) $criteria->add(WpeventPeer::STATE, $this->state);
 
 		return $criteria;
 	}
@@ -584,7 +584,7 @@ abstract class BaseWpevent extends BaseObject  implements Persistent {
 
 		$copyObj->setComment($this->comment);
 
-		$copyObj->setStatus($this->status);
+		$copyObj->setState($this->state);
 
 
 		$copyObj->setNew(true);

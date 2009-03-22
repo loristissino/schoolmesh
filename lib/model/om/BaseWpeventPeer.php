@@ -34,7 +34,7 @@ abstract class BaseWpeventPeer {
 	const COMMENT = 'wpevent.COMMENT';
 
 	
-	const STATUS = 'wpevent.STATUS';
+	const STATE = 'wpevent.STATE';
 
 	
 	public static $instances = array();
@@ -44,19 +44,19 @@ abstract class BaseWpeventPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'CreatedAt', 'AppointmentId', 'UserId', 'Comment', 'Status', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'createdAt', 'appointmentId', 'userId', 'comment', 'status', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::CREATED_AT, self::APPOINTMENT_ID, self::USER_ID, self::COMMENT, self::STATUS, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'created_at', 'appointment_id', 'user_id', 'comment', 'status', ),
+		BasePeer::TYPE_PHPNAME => array ('Id', 'CreatedAt', 'AppointmentId', 'UserId', 'Comment', 'State', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'createdAt', 'appointmentId', 'userId', 'comment', 'state', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::CREATED_AT, self::APPOINTMENT_ID, self::USER_ID, self::COMMENT, self::STATE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'created_at', 'appointment_id', 'user_id', 'comment', 'state', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreatedAt' => 1, 'AppointmentId' => 2, 'UserId' => 3, 'Comment' => 4, 'Status' => 5, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'createdAt' => 1, 'appointmentId' => 2, 'userId' => 3, 'comment' => 4, 'status' => 5, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREATED_AT => 1, self::APPOINTMENT_ID => 2, self::USER_ID => 3, self::COMMENT => 4, self::STATUS => 5, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'created_at' => 1, 'appointment_id' => 2, 'user_id' => 3, 'comment' => 4, 'status' => 5, ),
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'CreatedAt' => 1, 'AppointmentId' => 2, 'UserId' => 3, 'Comment' => 4, 'State' => 5, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'createdAt' => 1, 'appointmentId' => 2, 'userId' => 3, 'comment' => 4, 'state' => 5, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CREATED_AT => 1, self::APPOINTMENT_ID => 2, self::USER_ID => 3, self::COMMENT => 4, self::STATE => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'created_at' => 1, 'appointment_id' => 2, 'user_id' => 3, 'comment' => 4, 'state' => 5, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
@@ -109,7 +109,7 @@ abstract class BaseWpeventPeer {
 
 		$criteria->addSelectColumn(WpeventPeer::COMMENT);
 
-		$criteria->addSelectColumn(WpeventPeer::STATUS);
+		$criteria->addSelectColumn(WpeventPeer::STATE);
 
 	}
 
