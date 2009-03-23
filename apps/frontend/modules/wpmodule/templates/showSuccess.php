@@ -7,10 +7,6 @@
       <td><?php echo $wpmodule->getId() ?></td>
     </tr>
     <tr>
-      <th>Shortcut:</th>
-      <td><?php echo $wpmodule->getShortcut() ?></td>
-    </tr>
-    <tr>
       <th>User:</th>
       <td><?php echo $wpmodule->getUserId() ?></td>
     </tr>
