@@ -10,7 +10,7 @@
 </ul>
 
 	<ul class="sf_admin_actions">
-	<li class="sf_admin_action_list"><a href="<?php echo url_for('workplan/index') ?>">List all my workplans</a></li>
+	<li class="sf_admin_action_list"><a href="<?php echo url_for('teaching/index') ?>">List all my workplans</a></li>
 	</ul>
 
 <hr />

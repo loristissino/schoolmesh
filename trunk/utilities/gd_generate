@@ -8,11 +8,11 @@ $workflow=$_SERVER["argv"][1];
 $width=32;
 $height=32;
 
-$sources=Array("0", "10", "20", "30", "40", "50", "60", "70");
+$sources=Array("0"=>true, "10"=>false, "20"=>false, "30"=>true, "40"=>false, "50"=>false, "60"=>false, "70"=>false);
 
 $ne=0;
 
-foreach($sources as $sourceex)
+foreach($sources as $sourceex=>$state)
 {
 	
 echo "Generating image $sourceex\n";
@@ -23,7 +23,7 @@ imagefill($canvas, 0, 0, $white);
 imagecolortransparent($canvas, $white);
 
 	$ni=0;
-	foreach($sources as $source)
+	foreach($sources as $source=>$value)
 	{
 		$sourceimage="$workflow/source/$source.png";
 		echo "... reading image $ni: $sourceimage\n";
@@ -46,6 +46,23 @@ imagecolortransparent($canvas, $white);
 						}
 				}
 			}
+		else
+			{
+				for ($x=$ni*$width;$x<$width*($ni+1); $x++)
+				{
+						for($y=$height-4; $y<$height; $y++)
+						{
+								if($state)
+									$newcolor=imagecolorallocate($canvas, 0,200,0);
+								else
+									$newcolor=imagecolorallocate($canvas, 200,0,0);
+								imagesetpixel($canvas, $x, $y, $newcolor); 
+								
+						}
+				}
+	
+			}
+			
 			$ni++;
 	}
 imagepng($canvas, "$workflow/target/{$workflow}_$sourceex.png");

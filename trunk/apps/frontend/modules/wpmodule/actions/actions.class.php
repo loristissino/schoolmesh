@@ -15,21 +15,21 @@ class wpmoduleActions extends sfActions
 	{
 	  $item = WpmodulePeer::retrieveByPk($this->getRequestParameter('id'));
 	  $this->forward404Unless($item);
-	  $previous_item = WpmodulePeer::retrieveByRank($item->getRank() - 1, $item->getWorkplanId());
+	  $previous_item = WpmodulePeer::retrieveByRank($item->getRank() - 1, $item->getAppointmentId());
 	  $this->forward404Unless($previous_item);
 	  $item->swapWith($previous_item);
 	 
-	  $this->redirect('workplan/show?id='.$item->getWorkplanId()); 	}  
+	  $this->redirect('teaching/show?id='.$item->getAppointmentId()); 	}  
 
 	public function executeDown()
 	{
 	  $item = WpmodulePeer::retrieveByPk($this->getRequestParameter('id'));
 	  $this->forward404Unless($item);
-	  $next_item = WpmodulePeer::retrieveByRank($item->getRank() + 1, $item->getWorkplanId());
+	  $next_item = WpmodulePeer::retrieveByRank($item->getRank() + 1, $item->getAppointmentId());
 	  $this->forward404Unless($next_item);
 	  $item->swapWith($next_item);
 	 
-	  $this->redirect('workplan/show?id='.$item->getWorkplanId()); 
+	  $this->redirect('teaching/show?id='.$item->getAppointmentId()); 
 	}  
 
   public function executeIndex(sfWebRequest $request)
@@ -81,9 +81,11 @@ class wpmoduleActions extends sfActions
     $request->checkCSRFProtection();
 
     $this->forward404Unless($wpmodule = WpmodulePeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpmodule does not exist (%s).', $request->getParameter('id')));
-    $wpmodule->delete();
+    
+	$appointmentId=$wpmodule->getAppointmentId();
+	$wpmodule->delete();
 
-    $this->redirect('wpmodule/index');
+    $this->redirect('teaching/show?id='. $appointmentId);
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)

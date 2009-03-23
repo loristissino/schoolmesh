@@ -1,6 +1,6 @@
 <div id="sf_admin_container">
 
-<h1>Workplan List</h1>
+<h1><?php echo __("Workplans and Reports")?></h1>
 
 <div class="sf_admin_list">
 
@@ -25,7 +25,7 @@
 	  <td><?php echo $workplan->countWpmodules() ?></td>
 	  <?php $lastlog=$workplan->getLastLog() ?>  
 	  <td><?php echo $lastlog->getCreatedAt() ?></td>
-	  <td><?php include_partial('state', array('lastlog' => $lastlog, 'workplan' => $workplan, 'steps' => $steps)) ?></td>
+	  <td><?php include_partial('state', array('state' => $lastlog->getState(), 'steps' => $steps, 'size'=>'r')) ?></td>
 	  <td><?php include_partial('action', array('lastlog' => $lastlog, 'workplan' => $workplan, 'steps' => $steps)) ?></td>
  	
 	</td>
@@ -40,23 +40,16 @@
 	</ul>
 </div>
 
-
-<script type="text/javascript">
-setVarsForm("pageID=profileEdit&userID=20");
-</script>
-
-
-<?php use_javascript('instantedit') ?>
-
-
+<?php use_helper('Javascript') ?>
 <label>Obiettivi:</label>
 <br />
 <ul>
-	<li><span id="field1" class="editText">obiettivo 1</span></li>
-	<li><span id="field2" class="editText">obiettivo 2</span></li>
-	<li><span id="field3" class="editText">obiettivo 3</span></li>
-	<li><span id="field4" class="editText">obiettivo 4</span></li>
+	<li><span id="field1" class="editText"><?php echo $value1 ?></span>
+	<?php echo input_in_place_editor_tag('field1', 'teaching/editInLine?attribute=prova&id='.$value1, array('cols'=>'60', 'rows'=>1)) ?>
+	
+	</li>
 </ul>
+
 
 
 
