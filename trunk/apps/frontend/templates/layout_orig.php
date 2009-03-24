@@ -25,7 +25,7 @@
        <li><?php echo link_to(__("Who's on line"), "@whosonline") ?></li>
        <li><?php echo link_to(__("My profile"), "@profile")  ?></li>
        <li><?php echo link_to(__("Workstation list"), "@workstation")  ?></li>
-       <li><?php echo link_to(__("Workplans"), "@workplan")  ?></li>
+       <li><?php echo link_to(__("Plans and Reports"), "@plansandreports")  ?></li>
     </ul>
 </div>
 

@@ -19,7 +19,7 @@ class wpmoduleActions extends sfActions
 	  $this->forward404Unless($previous_item);
 	  $item->swapWith($previous_item);
 	 
-	  $this->redirect('teaching/show?id='.$item->getAppointmentId()); 	}  
+	  $this->redirect('plansandreports/show?id='.$item->getAppointmentId()); 	}  
 
 	public function executeDown()
 	{
@@ -29,19 +29,27 @@ class wpmoduleActions extends sfActions
 	  $this->forward404Unless($next_item);
 	  $item->swapWith($next_item);
 	 
-	  $this->redirect('teaching/show?id='.$item->getAppointmentId()); 
+	  $this->redirect('plansandreports/show?id='.$item->getAppointmentId()); 
 	}  
-
+/*
   public function executeIndex(sfWebRequest $request)
   {
     $this->wpmodule_list = WpmodulePeer::doSelect(new Criteria());
   }
-
+*/
   public function executeShow(sfWebRequest $request)
   {
     $this->wpmodule = WpmodulePeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->wpmodule);
-  }
+	$this->workplan = $this->wpmodule->getAppointmentId();
+	$this->mine = $this->getUser()->getProfile()->getUserId() == $this->wpmodule->getUserId();
+	if(!$this->mine)
+		{
+		$this->response->setStatusCode(403);
+    	return $this->renderText('Forbidden');
+		}
+	}
+
 
   public function executeNew(sfWebRequest $request)
   {
@@ -59,11 +67,26 @@ class wpmoduleActions extends sfActions
     $this->setTemplate('new');
   }
 
+/*
   public function executeEdit(sfWebRequest $request)
   {
-    $this->forward404Unless($wpmodule = WpmodulePeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpmodule does not exist (%s).', $request->getParameter('id')));
-    $this->form = new WpmoduleForm($wpmodule);
+//    $this->forward404Unless($wpmodule = WpmodulePeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpmodule does not exist (%s).', $request->getParameter('id')));
+//    $this->form = new WpmoduleForm($wpmodule);
+
+//	return $this->executeShow($request);
+
+    $this->wpmodule = WpmodulePeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($this->wpmodule);
+	$this->workplan = $this->wpmodule->getAppointmentId();
+/*	if($this->workplan->getSfGuardUser()!=12)
+		{
+		$response->setStatusCode(403);
+		return $this->renderText('Non abilitato');
+		}
+
   }
+*/
+
 
   public function executeUpdate(sfWebRequest $request)
   {

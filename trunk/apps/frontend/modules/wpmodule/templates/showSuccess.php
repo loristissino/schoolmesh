@@ -1,5 +1,22 @@
 <h1>Module View</h1>
 
+Ok, I should show the module...
+
+<h2>The module</h2>
+<pre>
+	<?php print_r($wpmodule) ?>
+</pre>
+<h2>The workplan</h2>
+<pre>
+	<?php print_r($workplan) ?>
+</pre>
+<h2>Mine</h2>
+<pre>
+	<?php print_r($mine) ?>
+</pre>
+
+<?php /*
+
 <table>
   <tbody>
     <tr>
@@ -46,3 +63,6 @@
 <a href="<?php echo url_for('wpmodule/edit?id='.$wpmodule->getId()) ?>">Edit</a>
 &nbsp;
 <a href="<?php echo url_for('wpmodule/index') ?>">List</a>
+
+
+*/ ?>

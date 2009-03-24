@@ -51,12 +51,12 @@ workstation:
     column:              id
     with_wildcard_routes: true
 
-workplan:
+plansandreports:
   class: sfPropelRouteCollection
   options:
-    model:               Workplan
-    module:              workplan
-    prefix_path:         workplan
+    model:               Appointment
+    module:              plansandreports
+#    prefix_path:         workplan
     column:              id
     with_wildcard_routes: true
 
