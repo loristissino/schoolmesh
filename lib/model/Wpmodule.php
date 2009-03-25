@@ -43,4 +43,13 @@ class Wpmodule extends BaseWpmodule
 		return $t;
 
 	}
+	
+	
+	public function getOwner()
+	{
+	    $c = new Criteria();
+		$c->add(sfGuardUserProfilePeer::USER_ID, $this->getUserId());
+		$t = sfGuardUserProfilePeer::doSelectOne($c);
+		return $t;
+	}
 }
