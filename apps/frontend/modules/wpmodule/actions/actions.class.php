@@ -24,7 +24,9 @@ class wpmoduleActions extends sfActions
 		$set_func= 'set'.$property;
 		$get_func= 'get'.$property;
 
-		$module->$set_func($request->getParameter('value'));
+		$newvalue=$request->getParameter('value');
+		if ($newvalue=='') $newvalue='---';
+		$module->$set_func($newvalue);
 		$module->save();
 		return $this->renderText($module->$get_func());
 		

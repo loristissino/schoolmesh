@@ -9,7 +9,6 @@ class WpmoduleItem extends BaseWpmoduleItem
 		
 	}
 	
-	
 	public function getMaxRank()
 	{
 	// return the max rank of a record with the same module id and the same type
