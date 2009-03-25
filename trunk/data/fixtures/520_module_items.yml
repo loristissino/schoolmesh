@@ -60,3 +60,51 @@ WpmoduleItem:
     rank:     2
     content:      |
         applicare metodologie risolutive e di calcolo
+
+  module_item_c1:
+    wpitem_group_id: wg_tt31_contents
+    rank:     1
+    content:  primo contenuto
+  module_item_c2:
+    wpitem_group_id: wg_tt31_contents
+    rank:     2
+    content:  secondo contenuto
+
+  module_item_k1:
+    wpitem_group_id: wg_tt31_knowledge
+    rank:     1
+    content:  prima conoscenza
+  module_item_k2:
+    wpitem_group_id: wg_tt31_knowledge
+    rank:     2
+    content:  seconda conoscenza
+  module_item_k3:
+    wpitem_group_id: wg_tt31_knowledge
+    rank:    3
+    content:  terza conoscenza
+
+  module_item_s1:
+    wpitem_group_id: wg_tt31_skills
+    rank:     1
+    content:  prima abilità
+  module_item_s2:
+    wpitem_group_id: wg_tt31_skills
+    rank:     2
+    content:  seconda abilità
+  module_item_s3:
+    wpitem_group_id: wg_tt31_skills
+    rank:    3
+    content:  terza abilità
+  module_item_s4:
+    wpitem_group_id: wg_tt31_skills
+    rank:    4
+    content:  quarta abilità
+
+  module_item_comp1:
+    wpitem_group_id: wg_tt31_competencies
+    rank:     1
+    content:  prima competenza
+  module_item_comp2:
+    wpitem_group_id: wg_tt31_competencies
+    rank:     2
+    content:  seconda competenza

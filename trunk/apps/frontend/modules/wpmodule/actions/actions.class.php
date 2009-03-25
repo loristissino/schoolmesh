@@ -11,8 +11,28 @@
 class wpmoduleActions extends sfActions
 {
 
-	public function executeUp()
+	public function executeEditInLine(sfWebRequest $request)
 	{
+
+		$this->forward404Unless($request->getMethod()=="POST");
+		
+		$module=WpmodulePeer::retrieveByPk($request->getParameter('id'));
+
+// qui va aggiunto il controllo sulla fattibilità o meno della richiesta...
+
+		$property=$request->getParameter('property');
+		$set_func= 'set'.$property;
+		$get_func= 'get'.$property;
+
+		$module->$set_func($request->getParameter('value'));
+		$module->save();
+		return $this->renderText($module->$get_func());
+		
+	}
+
+	public function executeUp(sfWebRequest $request)
+	{
+	  $this->forward404Unless($request->getMethod()=="PUT");
 	  $item = WpmodulePeer::retrieveByPk($this->getRequestParameter('id'));
 	  $this->forward404Unless($item);
 	  $previous_item = WpmodulePeer::retrieveByRank($item->getRank() - 1, $item->getAppointmentId());
@@ -21,8 +41,9 @@ class wpmoduleActions extends sfActions
 	 
 	  $this->redirect('plansandreports/show?id='.$item->getAppointmentId()); 	}  
 
-	public function executeDown()
+	public function executeDown(sfWebRequest $request)
 	{
+	  $this->forward404Unless($request->getMethod()=="PUT");
 	  $item = WpmodulePeer::retrieveByPk($this->getRequestParameter('id'));
 	  $this->forward404Unless($item);
 	  $next_item = WpmodulePeer::retrieveByRank($item->getRank() + 1, $item->getAppointmentId());
@@ -37,18 +58,45 @@ class wpmoduleActions extends sfActions
     $this->wpmodule_list = WpmodulePeer::doSelect(new Criteria());
   }
 */
+
   public function executeShow(sfWebRequest $request)
+  {
+	$this->redirect('wpmodule/view?id='.$request->getParameter('id'));
+	}
+
+  public function executeView(sfWebRequest $request)
   {
     $this->wpmodule = WpmodulePeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->wpmodule);
-	$this->workplan = $this->wpmodule->getAppointmentId();
-	$this->mine = $this->getUser()->getProfile()->getUserId() == $this->wpmodule->getUserId();
-	if(!$this->mine)
+	
+	$this->workplan = $this->wpmodule->getAppointment();
+	
+	$this->ownerId=$this->wpmodule->getUserId();
+	
+	$this->owner=$this->wpmodule->getOwner();
+
+
+	$this->item_groups=$this->wpmodule->getWpitemGroups();
+	/*
+	foreach($this->item_groups as $item_group)
+		{
+				$item_group->
+			
+		}
+	*/
+
+/*	$this->owned = $this->getUser()->getProfile()->getUserId() == $this->ownerId;
+
+	if(!$this->owned)
 		{
 		$this->response->setStatusCode(403);
     	return $this->renderText('Forbidden');
 		}
+		
+	*/	
+		
 	}
+
 
 
   public function executeNew(sfWebRequest $request)
