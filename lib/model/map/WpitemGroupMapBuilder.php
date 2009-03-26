@@ -37,7 +37,7 @@ class WpitemGroupMapBuilder implements MapBuilder {
 
 		$tMap->addForeignKey('WPITEM_TYPE_ID', 'WpitemTypeId', 'INTEGER', 'wpitem_type', 'ID', false, null);
 
-		$tMap->addForeignKey('WPMODULE_ID', 'WpmoduleId', 'INTEGER', 'wpmodule', 'ID', false, null);
+		$tMap->addForeignKey('WPMODULE_ID', 'WpmoduleId', 'INTEGER', 'wpmodule', 'ID', true, null);
 
 	} 
 } 

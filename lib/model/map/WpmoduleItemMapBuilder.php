@@ -35,7 +35,7 @@ class WpmoduleItemMapBuilder implements MapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'INTEGER', true, null);
 
-		$tMap->addForeignKey('WPITEM_GROUP_ID', 'WpitemGroupId', 'INTEGER', 'wpitem_group', 'ID', false, null);
+		$tMap->addForeignKey('WPITEM_GROUP_ID', 'WpitemGroupId', 'INTEGER', 'wpitem_group', 'ID', true, null);
 
 		$tMap->addColumn('RANK', 'Rank', 'INTEGER', true, null);
 

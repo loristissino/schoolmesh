@@ -2,3 +2,8 @@
 {
   background: url(../images/preview.png) no-repeat 0 0;
 }
+
+#sf_admin_container ul li.sf_admin_action_rich a
+{
+  background: url(../images/rich.png) no-repeat 0 0;
+}

@@ -9,7 +9,7 @@ default:
     language:     it
     robots:        index, follow
 
-  stylesheets:    [fluid]
+  stylesheets:    [fluid, schoolmesh]
 
 #  javascripts:    [%SF_PROTOTYPE_WEB_DIR%/web/js/scriptaculous, %SF_PROTOTYPE_WEB_DIR%/web/js/prototype]
 

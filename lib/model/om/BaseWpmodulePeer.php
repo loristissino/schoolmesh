@@ -833,6 +833,8 @@ abstract class BaseWpmodulePeer {
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
 
+						WpitemGroupPeer::clearInstancePool();
+
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {

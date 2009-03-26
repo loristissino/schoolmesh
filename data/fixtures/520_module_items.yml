@@ -86,15 +86,15 @@ WpmoduleItem:
   module_item_s1:
     wpitem_group_id: wg_tt31_skills
     rank:     1
-    content:  prima abilità
+    content:  prima abilità (con valori di x<sup>2</sup>)
   module_item_s2:
     wpitem_group_id: wg_tt31_skills
     rank:     2
-    content:  seconda abilità
+    content:  seconda abilità (con valori di x log <sub>10</sub> <em>n</em>)
   module_item_s3:
     wpitem_group_id: wg_tt31_skills
     rank:    3
-    content:  terza abilità
+    content:  terza abilità (con valori <em>enfatizzati</em>)
   module_item_s4:
     wpitem_group_id: wg_tt31_skills
     rank:    4

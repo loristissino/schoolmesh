@@ -3,12 +3,11 @@
 class WpmoduleItemPeer extends BaseWpmoduleItemPeer
 {
 	
-	public function retrieveByRank($rank=1, $workplan=1, $type=1)
+	static function retrieveByRank($rank=1, $wpitemGroupId=1)
 	{
 	$c = new Criteria;
     $c->add(self::RANK, $rank);
-    $c->add(self::WPMODULE_ID, $workplan);
-    $c->add(self::WPITEM_TYPE_ID, $type);
+    $c->add(self::WPITEM_GROUP_ID, $wpitemGroupId);
 	return self::doSelectOne($c); 	
 	
 	}
@@ -21,7 +20,7 @@ class WpmoduleItemPeer extends BaseWpmoduleItemPeer
 	  return self::doSelectJoinAll($c); 
 	}
  */
-   static function getMaxRank($workplan=1, $type=1)
+/*   static function getMaxRank($workplan=1, $wpitem_group=1)
 	{
 	  $con = Propel::getConnection(self::DATABASE_NAME);
 	  $sql = 'SELECT MAX('.self::RANK.') AS max FROM '.self::TABLE_NAME . ' WHERE '.self::WPMODULE_ID.'='.$workplan .' AND '.self::WPITEM_TYPE_ID.'='.$type;
@@ -31,5 +30,5 @@ class WpmoduleItemPeer extends BaseWpmoduleItemPeer
 	  $row = $stmt->fetch();
 	  return $row['max'];
 	}
-	
+	*/
 }

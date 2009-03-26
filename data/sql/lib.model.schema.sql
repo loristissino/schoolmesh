@@ -334,7 +334,7 @@ CREATE TABLE `wpitem_group`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`wpitem_type_id` INTEGER,
-	`wpmodule_id` INTEGER,
+	`wpmodule_id` INTEGER  NOT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `iti_mi` (`wpitem_type_id`, `wpmodule_id`),
 	CONSTRAINT `wpitem_group_FK_1`
@@ -344,6 +344,8 @@ CREATE TABLE `wpitem_group`
 	CONSTRAINT `wpitem_group_FK_2`
 		FOREIGN KEY (`wpmodule_id`)
 		REFERENCES `wpmodule` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -356,7 +358,7 @@ DROP TABLE IF EXISTS `wpmodule_item`;
 CREATE TABLE `wpmodule_item`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`wpitem_group_id` INTEGER,
+	`wpitem_group_id` INTEGER  NOT NULL,
 	`rank` INTEGER  NOT NULL,
 	`content` TEXT,
 	`evaluation` INTEGER,
@@ -366,6 +368,8 @@ CREATE TABLE `wpmodule_item`
 	CONSTRAINT `wpmodule_item_FK_1`
 		FOREIGN KEY (`wpitem_group_id`)
 		REFERENCES `wpitem_group` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
