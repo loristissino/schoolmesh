@@ -15,6 +15,11 @@ class WpmoduleItem extends BaseWpmoduleItem
 			return chop(strip_tags(parent::getContent(), '<br><em><sup><sub>'));
 	}
 	
+/*	public function getHTMLContent()
+	{
+			return html_entity_decode($this->getContent());
+	}
+	*/
 	public function swapWith($item)
 	{
 	  $con = Propel::getConnection(WpmoduleItemPeer::DATABASE_NAME);

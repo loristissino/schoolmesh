@@ -28,7 +28,7 @@
 		<?php include_partial('moveup', array('wpmoduleitem' => $wpmodule_item)) ?>
 	<?php endif ?>
 	</td>
-      <td><span id="moduleitem_<?php echo $wpmodule_item->getId()?>" class="editText"><?php echo html_entity_decode($wpmodule_item->getContent()) ?></span>
+      <td><span id="moduleitem_<?php echo $wpmodule_item->getId()?>" class="editText"><?php echo html_entity_decode($wpmodule_item->getContent())?></span>
 	<?php echo input_in_place_editor_tag('moduleitem_'.$wpmodule_item->getId(), 'wpmoduleitem/editInLine?property=Content&id='.$wpmodule_item->getId(), array('cols'=>'50', 'rows'=>1)) ?>
 	</td>
 	<td>
