@@ -803,6 +803,8 @@ abstract class BaseWpitemGroupPeer {
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
 
+						WpmoduleItemPeer::clearInstancePool();
+
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {

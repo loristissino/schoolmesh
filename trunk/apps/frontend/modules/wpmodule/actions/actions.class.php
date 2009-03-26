@@ -11,6 +11,7 @@
 class wpmoduleActions extends sfActions
 {
 
+
 	public function executeEditInLine(sfWebRequest $request)
 	{
 
@@ -158,7 +159,7 @@ class wpmoduleActions extends sfActions
 	$appointmentId=$wpmodule->getAppointmentId();
 	$wpmodule->delete();
 
-    $this->redirect('teaching/show?id='. $appointmentId);
+    $this->redirect('plansandreports/show?id='. $appointmentId);
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)

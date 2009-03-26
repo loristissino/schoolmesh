@@ -10,6 +10,10 @@ tinyMCE.init({
 
 mode : \"textareas\",
 
+language: \"it\",
+
+entity_encoding : \"raw\",
+
 theme : \"advanced\",
 
 editor_selector : \"mceAdvanced\"
@@ -17,7 +21,7 @@ editor_selector : \"mceAdvanced\"
 });
 ") ?>
 </script>
-<textarea name="itemcontent" class="mceAdvanced" style="width:100%">
+<textarea name="value" class="mceAdvanced" style="width:100%">
 <?php echo $wpmodule_item->getContent() ?>
 </textarea>
 <br />

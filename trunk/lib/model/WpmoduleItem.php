@@ -9,16 +9,39 @@ class WpmoduleItem extends BaseWpmoduleItem
 		
 	}
 	
-	public function getMaxRank()
+	public function getContent()
 	{
-	// return the max rank of a record with the same module id and the same type
-    return WpmoduleItemPeer::getMaxRank($this->getWpmoduleId(), $this->getWpitemTypeId());	
+//			return chop(html_entity_decode(strip_tags(parent::getContent(), '<br><em><sup><sub>')));
+			return chop(strip_tags(parent::getContent(), '<br><em><sup><sub>'));
 	}
 	
-/*	public function save(PropelPDO $con = null)
+	public function swapWith($item)
+	{
+	  $con = Propel::getConnection(WpmoduleItemPeer::DATABASE_NAME);
+	  try
+	  {
+		$con->beginTransaction();
+	 
+		$rank = $this->getRank();  
+		$this->setRank($item->getRank());
+		$this->save();
+		$item->setRank($rank);
+		$item->save();
+	 
+		$con->commit();
+	  }
+	  catch (Exception $e)
+	  {
+		$con->rollback();
+		throw $e;
+	  }
+	} 
+
+
+	public function save(PropelPDO $con = null)
 	{
 	  // New records need to be initialized with rank = maxRank +1
-	/*  
+	  
 	  if(!$this->getId())
 	  {
 		$con = Propel::getConnection(WpmoduleItemPeer::DATABASE_NAME);
@@ -26,7 +49,7 @@ class WpmoduleItem extends BaseWpmoduleItem
 		{
 		  $con->beginTransaction();
 	 
-		  $this->setRank(WpmoduleItemPeer::getMaxRank($this->getWpmoduleId(), $this->getWpitemTypeId())+1);
+		  $this->setRank($this->getWpitemGroup()->countWpmoduleItems()+1);
 		  parent::save();
 	 
 		  $con->commit();
@@ -40,20 +63,20 @@ class WpmoduleItem extends BaseWpmoduleItem
 	  else
 	  {
 		parent::save(); 
-	  }*/
-	
+	  }
+	}  
 
-/*
+
 	public function delete(PropelPDO $con = null)
-	{  /*
-	  $con = Propel::getConnection(PagePeer::DATABASE_NAME);
+	{  
+	  $con = Propel::getConnection(WpmoduleItemPeer::DATABASE_NAME);
 	  try
 	  {
 		$con->beginTransaction();
 	 
 		// decrease all the ranks of the page records of the same category with higher rank 
-		$sql = 'UPDATE '.WpmoduleItemPeer::TABLE_NAME.' SET '.WpmoduleItemPeer::RANK.' = '.WpmoduleItemPeer::RANK.' - 1 WHERE '.WpmoduleItemPeer::RANK.' > '.$this->getRank() . ' AND ' . WpmoduleItemPeer::WPMODULE_ID .'='. $this->getWorkplanId() .' AND '. WpmoduleItemPeer::WPITEM_TYPE_ID.'='.$this->getWpitemTypeId();
-		$con->executeQuery($sql);
+		$sql = 'UPDATE '.WpmoduleItemPeer::TABLE_NAME.' SET '.WpmoduleItemPeer::RANK.' = '.WpmoduleItemPeer::RANK.' - 1 WHERE '.WpmoduleItemPeer::RANK.' > '.$this->getRank() . ' AND ' . WpmoduleItemPeer::WPITEM_GROUP_ID .'='. $this->getWpitemGroupId();
+		$con->query($sql);
 		// delete the item
 		parent::delete();
 	 
@@ -63,7 +86,7 @@ class WpmoduleItem extends BaseWpmoduleItem
 	  {
 		$con->rollback();
 		throw $e;
-	  }*/
+	  }
 	
-	
+	}
 }

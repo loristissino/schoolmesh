@@ -1,6 +1,8 @@
 <?php use_helper('Javascript') ?>
 <h1>Module View: <?php echo $wpmodule ?></h1>
 
+<div id="sf_admin_container">
+
 <h2>The module</h2>
 <ul>
 <li>Owner: <strong><?php echo $owner->getFullName() ?></strong></li>
@@ -16,10 +18,8 @@ Period:
 </ul>
 
 
-
-<h2>The groups</h2>
-
 <?php foreach($item_groups as $item_group): ?>
 	<?php include_partial('group', array('item_group' => $item_group)) ?>
 <?php endforeach ?>
 
+</div>

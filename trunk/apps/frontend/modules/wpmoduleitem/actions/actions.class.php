@@ -12,24 +12,16 @@ class wpmoduleitemActions extends sfActions
 {
 	
 		public function executeEditInLine(sfWebRequest $request)
-	{
-
+	{		
 		$this->forward404Unless($request->getMethod()=="POST");
-		
-		$module=WpmoduleItemPeer::retrieveByPk($request->getParameter('id'));
+		$this->forward404Unless($moduleitem=WpmoduleItemPeer::retrieveByPk($request->getParameter('id')));
 
-// qui va aggiunto il controllo sulla fattibilità o meno della richiesta...
+		$this->forward404Unless($this->isUpdateble($request, $moduleitem));
 
-		$property=$request->getParameter('property');
-		$set_func= 'set'.$property;
-		$get_func= 'get'.$property;
+		$moduleitem->setContent($this->checkedValue($request->getParameter('value')));
+		$moduleitem->save();
 
-		$newvalue=$request->getParameter('value');
-		if ($newvalue=='') $newvalue='---';
-		$module->$set_func($newvalue);
-
-		$module->save();
-		return $this->renderText($module->$get_func());
+		return $this->renderText($moduleitem->getContent());
 		}
 
 /*  public function executeIndex(sfWebRequest $request)
@@ -71,24 +63,33 @@ class wpmoduleitemActions extends sfActions
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
     $this->forward404Unless($wpmodule_item = WpmoduleItemPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpmodule_item does not exist (%s).', $request->getParameter('id')));
   //  $this->form = new WpmoduleItemForm($wpmodule_item);
-
-	$wpmodule_item->setContent($request->getParameter('itemcontent'));
+    $this->forward404Unless($this->isUpdateble($request, $wpmodule_item));
+	
+	$wpmodule_item->setContent($this->checkedValue($request->getParameter('value')));
 	$wpmodule_item->save();
 //    $this->processForm($request, $this->form);
-	$this->wpmodule_item=$wpmodule_item;
+	//$this->wpmodule_item=$wpmodule_item;
 		//return $this->renderText($wpmodule_item->getWpmoduleGroup());
-
     //$this->setTemplate('edit');
-  }
+    
+	
+   $this->redirect('wpmodule/view?id='.$wpmodule_item->getWpitemGroup()->getWpmoduleId());
+
+}
 
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();
+    $this->forward404Unless($request->isMethod('post') || $request->isMethod('delete'));
 
     $this->forward404Unless($wpmodule_item = WpmoduleItemPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpmodule_item does not exist (%s).', $request->getParameter('id')));
-    $wpmodule_item->delete();
 
-    $this->redirect('wpmoduleitem/index');
+	$id=$wpmodule_item->getWpitemGroup()->getWpmoduleId();
+	
+	$wpmodule_item->delete();
+
+	$this->redirect('wpmodule/view?id='.$id);
+
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
@@ -100,4 +101,43 @@ class wpmoduleitemActions extends sfActions
 //      $this->redirect('wpmodule/view?id='.$wpmodule_item->getWpitemGroup()->getWpmoduleId());
     }
   }
+
+  protected function checkedValue($givenValue='')
+	{
+		$newvalue=chop(html_entity_decode(strip_tags($givenValue, '<br><em><sup><sub>')));
+		if ($newvalue=='') $newvalue='---';
+		return $newvalue;
+	}
+
+	protected function isUpdateble(sfWebRequest $request, $item)
+	{
+		return true;  // va sistemato
+	}
+
+
+	public function executeUp(sfWebRequest $request)
+	{
+	  $this->forward404Unless($request->getMethod()=="PUT");
+	  $item = WpmoduleItemPeer::retrieveByPk($this->getRequestParameter('id'));
+	  $this->forward404Unless($item);
+	  $previous_item = WpmoduleItemPeer::retrieveByRank($item->getRank() - 1, $item->getWpitemGroupId());
+	  $this->forward404Unless($previous_item);
+	  $item->swapWith($previous_item);
+	 
+	  $this->redirect('wpmodule/view?id='.$item->getWpitemGroup()->getWpmoduleId()); 	
+	  }  
+
+	public function executeDown(sfWebRequest $request)
+	{
+	  $this->forward404Unless($request->getMethod()=="PUT");
+	  $item = WpmoduleItemPeer::retrieveByPk($this->getRequestParameter('id'));
+	  $this->forward404Unless($item);
+	  $next_item = WpmoduleItemPeer::retrieveByRank($item->getRank() + 1, $item->getWpitemGroupId());
+	  $this->forward404Unless($next_item);
+	  $item->swapWith($next_item);
+	 
+	  $this->redirect('wpmodule/view?id='.$item->getWpitemGroup()->getWpmoduleId()); 
+	}  
+
+
 }

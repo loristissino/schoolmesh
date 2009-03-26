@@ -149,7 +149,7 @@ propel:
 #  70: FINAL REPORT APPROVED AND ARCHIVED
 
   wpmodule:
-    id:
+    id:         ~
     user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict }
     title:        varchar(100)
     period:       varchar(100)
@@ -174,13 +174,13 @@ propel:
   wpitem_group:
     id:           ~
     wpitem_type_id:  ~
-    wpmodule_id:  ~
+    wpmodule_id:  { type: integer, foreignTable: wpmodule, foreignReference: id, onDelete: cascade, onUpdate: cascade, required: true  }
     _uniques:
       iti_mi: [wpitem_type_id, wpmodule_id]
 
   wpmodule_item:
     id:           ~
-    wpitem_group_id: ~
+    wpitem_group_id: { type: integer, foreignTable: wpitem_group, foreignReference: id, onDelete: cascade, onUpdate: cascade, required: true  }
     rank:    { type: integer, required: true }
     content:      longvarchar
     evaluation:  { type: integer, required: false } 
