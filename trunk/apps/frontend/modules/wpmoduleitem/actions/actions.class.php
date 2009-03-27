@@ -24,6 +24,26 @@ class wpmoduleitemActions extends sfActions
 		return $this->renderText($moduleitem->getContent());
 		}
 
+
+  public function executeEvaluate(sfWebRequest $request)
+  {
+	
+    $this->wpmoduleitem = WpmoduleItemPeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($this->wpmoduleitem);
+	
+	// controllare proprietario e valore
+
+	$evaluation=$request->getParameter('evaluation');
+	$dbvalue=$evaluation==''? NULL: $evaluation;
+	$this->wpmoduleitem->setEvaluation($dbvalue);
+	$this->wpmoduleitem->save();
+//	$this->redirect('wpmodule/view?id='.$this->wpmoduleitem->getWpitemGroup()->getWpmoduleId());
+	$text=$dbvalue?$dbvalue : 'not set';
+	return $this->renderText($text);
+
+	}
+
+
 /*  public function executeIndex(sfWebRequest $request)
   {
     $this->wpmodule_item_list = WpmoduleItemPeer::doSelect(new Criteria());

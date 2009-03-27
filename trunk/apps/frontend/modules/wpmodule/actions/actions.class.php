@@ -73,30 +73,10 @@ class wpmoduleActions extends sfActions
     $this->forward404Unless($this->wpmodule);
 	
 	$this->workplan = $this->wpmodule->getAppointment();
-	
+	$this->wpstate = $this->workplan->getLastLog()->getState();
 	$this->ownerId=$this->wpmodule->getUserId();
-	
 	$this->owner=$this->wpmodule->getOwner();
-
-
 	$this->item_groups=$this->wpmodule->getWpitemGroups();
-	/*
-	foreach($this->item_groups as $item_group)
-		{
-				$item_group->
-			
-		}
-	*/
-
-/*	$this->owned = $this->getUser()->getProfile()->getUserId() == $this->ownerId;
-
-	if(!$this->owned)
-		{
-		$this->response->setStatusCode(403);
-    	return $this->renderText('Forbidden');
-		}
-		
-	*/	
 		
 	}
 

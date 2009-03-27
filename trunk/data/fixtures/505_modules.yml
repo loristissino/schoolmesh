@@ -124,3 +124,30 @@ Wpmodule:
     rank:     3
     appointment_id:   test_ast_5ap_20
     is_public:    true
+
+  module3_1_test_fis:
+    id:
+    user_id:    testteacher
+    title:       Primo modulo
+    period:      settembre - dicembre
+    rank:     1
+    appointment_id:   test_ast_3ap_30
+    is_public:    true
+
+  module3_2_test_fis:
+    id:
+    user_id:    testteacher
+    title:       Secondo modulo
+    period:      gennaio - marzo
+    rank:     2
+    appointment_id:   test_ast_3ap_30
+    is_public:    true
+
+  module3_3_test_fis:
+    id:
+    user_id:    testteacher
+    title:       Terzo modulo
+    period:      marzo - giugno
+    rank:     3
+    appointment_id:   test_ast_3ap_30
+    is_public:    true

@@ -7,3 +7,18 @@
 {
   background: url(../images/rich.png) no-repeat 0 0;
 }
+
+#sf_admin_container ul li.sf_admin_action_evaluate a
+{
+  background: url(../images/evaluate.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_reset a
+{
+  background: url(../images/reset.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_markdown a
+{
+  background: url(../images/markdown.png) no-repeat 0 0;
+}

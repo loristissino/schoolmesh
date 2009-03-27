@@ -108,3 +108,12 @@ WpmoduleItem:
     wpitem_group_id: wg_tt31_competencies
     rank:     2
     content:  seconda competenza
+
+  module_item_v1:
+    wpitem_group_id: wg_tt33fis_contents
+    rank:     1
+    content:  primo contenuto
+  module_item_v2:
+    wpitem_group_id: wg_tt33fis_contents
+    rank:     2
+    content:  secondo contenuto

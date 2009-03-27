@@ -1,6 +1,8 @@
+<?php use_helper('Form'); ?>
+<?php use_helper('Object'); ?>
+
 <h3><?php echo $item_group->getWpitemType()->getTitle() ?></h3>
 <p><em><?php echo $item_group->getWpitemType()->getDescription() ?></em></p>
-
 
 <?php $i=0 ?>
 <div class="sf_admin_list">
@@ -10,6 +12,16 @@
     <tr>
       <th class="sf_admin_text" colspan="3">Rank</th>
       <th class="sf_admin_text">Text</th>
+	<?php if(($wpstate==30) && ($item_group->getWpitemType()->getEvaluationMax()>=0)): ?>
+      <th class="sf_admin_text">Evaluation<br />
+	
+	<span class="sf_admin_description">
+		<?php echo __('min') .': '. $item_group->getWpitemType()->getEvaluationMin() ?> = <em><?php echo $item_group->getWpitemType()->getEvaluationMinDescription() ?></em> <br />
+		<?php echo __('max') .': '. $item_group->getWpitemType()->getEvaluationMax() ?> = <em><?php echo $item_group->getWpitemType()->getEvaluationMaxDescription() ?></em> <br />
+	</span>
+	
+	</th>
+	<?php endif ?>
       <th class="sf_admin_text">Actions</th>
     </tr>
   </thead>
@@ -31,6 +43,12 @@
       <td><span id="moduleitem_<?php echo $wpmodule_item->getId()?>" class="editText"><?php echo html_entity_decode($wpmodule_item->getContent())?></span>
 	<?php echo input_in_place_editor_tag('moduleitem_'.$wpmodule_item->getId(), 'wpmoduleitem/editInLine?property=Content&id='.$wpmodule_item->getId(), array('cols'=>'50', 'rows'=>1)) ?>
 	</td>
+	<?php if(($wpstate==30) && ($item_group->getWpitemType()->getEvaluationMax()>=0)): ?>
+	<td>
+		<?php include_partial('evaluation', array('wpmodule_item' => $wpmodule_item, 'item_group'=>$item_group)) ?>
+	</td>
+	<?php endif ?>
+
 	<td>
 			<ul class="sf_admin_td_actions">
 				<li class="sf_admin_action_rich">

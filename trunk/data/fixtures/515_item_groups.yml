@@ -62,3 +62,19 @@ WpitemGroup:
   wg_tt33_comments:
     wpitem_type_id:  wpcomments
     wpmodule_id:  module3_3_test
+
+  wg_tt33fis_contents:
+    wpitem_type_id:  contents
+    wpmodule_id:  module3_1_test_fis
+  wg_tt33fis_knowledge:
+    wpitem_type_id:  knowledge
+    wpmodule_id:  module3_1_test_fis
+  wg_tt33fis_skills:
+    wpitem_type_id:  skills
+    wpmodule_id:  module3_1_test_fis
+  wg_tt33fis_competencies:
+    wpitem_type_id:  competencies
+    wpmodule_id:  module3_1_test_fis
+  wg_tt33fis_comments:
+    wpitem_type_id:  wpcomments
+    wpmodule_id:  module3_1_test_fis
