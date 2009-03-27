@@ -19,7 +19,7 @@ Period:
 
 
 <?php foreach($item_groups as $item_group): ?>
-	<?php include_partial('group', array('item_group' => $item_group)) ?>
+	<?php include_partial('group', array('item_group' => $item_group, 'wpstate' => $wpstate)) ?>
 <?php endforeach ?>
 
 </div>
