@@ -1,0 +1,9 @@
+#summary One-sentence summary of this page.
+
+= Come installare SchoolMesh =
+
+
+Procedura provvisoria.
+
+1. ...
+2. ...
