@@ -18,6 +18,7 @@ class BaseWpmoduleItemForm extends BaseFormPropel
       'rank'            => new sfWidgetFormInput(),
       'content'         => new sfWidgetFormTextarea(),
       'evaluation'      => new sfWidgetFormInput(),
+      'is_editable'     => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -26,6 +27,7 @@ class BaseWpmoduleItemForm extends BaseFormPropel
       'rank'            => new sfValidatorInteger(),
       'content'         => new sfValidatorString(array('required' => false)),
       'evaluation'      => new sfValidatorInteger(array('required' => false)),
+      'is_editable'     => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(

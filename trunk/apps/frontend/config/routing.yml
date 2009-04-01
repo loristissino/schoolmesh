@@ -1,3 +1,19 @@
+submitplan:
+  url: plansandreports/submit/:id
+  param: { module: plansandreports, action: wpsubmit } 
+  options:
+    module:              plansandreports
+    prefix_path:        plansandreports
+
+appointment:
+  class: sfPropelRouteCollection
+  options:
+    model:               Appointment
+    module:              schoolmaster_plansandreports
+    prefix_path:         schoolmaster_plansandreports
+    column:              id
+    with_wildcard_routes: true
+
 lanlogin:
   url:   /lanlogin/:username/:workstation/:ip
   param: { module: lanlog, action: create } 
@@ -56,7 +72,7 @@ plansandreports:
   options:
     model:               Appointment
     module:              plansandreports
-#    prefix_path:         workplan
+    prefix_path:        plansandreports
     column:              id
     with_wildcard_routes: true
 
@@ -70,16 +86,6 @@ service:
     prefix_path:         service
     column:              id
     with_wildcard_routes: true
-
-appointment:
-  class: sfPropelRouteCollection
-  options:
-    model:               Appointment
-    module:              appointment
-    prefix_path:         appointment
-    column:              id
-    with_wildcard_routes: true
-
 
 
 whosonline:

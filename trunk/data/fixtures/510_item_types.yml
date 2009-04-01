@@ -3,7 +3,7 @@ WpitemType:
     title:        Contenuti
     description:  Argomenti disciplinari trattati
     rank:      1
-    status:    0
+    state:    0
     evaluation_min: 1
     evaluation_max:  4
     evaluation_min_description: Non trattato
@@ -12,7 +12,7 @@ WpitemType:
     title:        Conoscenze
     description:  Nuclei fondanti della disciplina, saperi essenziali
     rank:      2
-    status:    0
+    state:    0
     evaluation_min: 1
     evaluation_max:  4
     evaluation_min_description: Conoscenza generalmente non acquisita
@@ -23,7 +23,7 @@ WpitemType:
          Capacità nell'utilizzare e padroneggiare conoscenze anche 
          per portare a termine compiti e risolvere problemi 
     rank:     3
-    status:    0
+    state:    0
     evaluation_min: 1
     evaluation_max:  4
     evaluation_min_description: Abilità generalmente non acquisita
@@ -34,7 +34,7 @@ WpitemType:
          Capacità di usare conoscenze e abilità personali 
          in situazioni di lavoro/studio
     rank:     4
-    status:    0
+    state:    0
     evaluation_min: 1
     evaluation_max:  4
     evaluation_min_description: Competenza generalmente non acquisita
@@ -44,7 +44,7 @@ WpitemType:
     description:  |
          Osservazioni generali sul modulo (compilazione facoltativa)
     rank:     5
-    status:    0
+    state:    0
     evaluation_min: 0
     evaluation_max:  -1
     evaluation_min_description:
@@ -54,7 +54,7 @@ WpitemType:
     description:  |
          Osservazioni generali sul modulo (compilazione facoltativa)
     rank:     6
-    status:    2
+    state:    2
     evaluation_min: 0
     evaluation_max:  -1
     evaluation_min_description:

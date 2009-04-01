@@ -1,0 +1,32 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           Appointment
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          appointment
+    with_propel_route:     1
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        title: Workplans and reports managament 
+        display: [fullName, subject, schoolclass, state]
+        batch_actions:
+          approve: ~
+          reject: ~  
+        object_actions:
+          view: ~
+          approve: ~
+          reject: ~ 
+        actions:
+         approveAllWorkplans: { label: Approve all workplans }
+      filter:
+        display: [user_id, subject_id, schoolclass_id]
+      form:    ~
+      edit:    ~
+      new:     ~

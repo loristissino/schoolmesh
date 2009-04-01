@@ -9,6 +9,15 @@ class WpmoduleItem extends BaseWpmoduleItem
 		
 	}
 	
+	public function getEvaluationText()
+	{
+			if($this->getEvaluation())
+				return $this->getEvaluation();
+			else
+				return sfContext::getInstance()->getI18N()->__('not set');
+		
+	}
+	
 	public function getContent()
 	{
 //			return chop(html_entity_decode(strip_tags(parent::getContent(), '<br><em><sup><sub>')));
@@ -55,6 +64,9 @@ class WpmoduleItem extends BaseWpmoduleItem
 		  $con->beginTransaction();
 	 
 		  $this->setRank($this->getWpitemGroup()->countWpmoduleItems()+1);
+		  if (($this->getContent()===NULL) || ($this->getContent()==''))
+			$this->setContent('---');
+		  $this->setIsEditable(true);  
 		  parent::save();
 	 
 		  $con->commit();

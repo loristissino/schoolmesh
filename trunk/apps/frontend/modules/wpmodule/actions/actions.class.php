@@ -41,8 +41,9 @@ class wpmoduleActions extends sfActions
 	  $previous_item = WpmodulePeer::retrieveByRank($item->getRank() - 1, $item->getAppointmentId());
 	  $this->forward404Unless($previous_item);
 	  $item->swapWith($previous_item);
+	  $this->getUser()->setFlash('notice', sprintf('The items were switched'));
 	 
-	  $this->redirect('plansandreports/show?id='.$item->getAppointmentId()); 	}  
+	  $this->redirect('plansandreports/fill?id='.$item->getAppointmentId()); 	}  
 
 	public function executeDown(sfWebRequest $request)
 	{
@@ -52,8 +53,9 @@ class wpmoduleActions extends sfActions
 	  $next_item = WpmodulePeer::retrieveByRank($item->getRank() + 1, $item->getAppointmentId());
 	  $this->forward404Unless($next_item);
 	  $item->swapWith($next_item);
+	  $this->getUser()->setFlash('notice', sprintf('The items were switched'));
 	 
-	  $this->redirect('plansandreports/show?id='.$item->getAppointmentId()); 
+	  $this->redirect('plansandreports/fill?id='.$item->getAppointmentId()); 
 	}  
 /*
   public function executeIndex(sfWebRequest $request)
@@ -84,7 +86,20 @@ class wpmoduleActions extends sfActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new WpmoduleForm();
+
+	$workplan= AppointmentPeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($workplan);
+
+	$newwpmodule= new Wpmodule();
+	$newwpmodule->setAppointmentId($workplan->getId());
+	$newwpmodule->setUserId($workplan->getSfGuardUser()->getId());
+	
+	$newwpmodule->save();
+	$newwpmodule->createWpitemGroups();
+	
+	$this->getUser()->setFlash('notice', sprintf('A new item was inserted'));
+	return $this->redirect('plansandreports/fill?id='.$workplan->getId());
+
   }
 
   public function executeCreate(sfWebRequest $request)
@@ -138,8 +153,9 @@ class wpmoduleActions extends sfActions
     
 	$appointmentId=$wpmodule->getAppointmentId();
 	$wpmodule->delete();
+	$this->getUser()->setFlash('notice', sprintf('The item was deleted'));
 
-    $this->redirect('plansandreports/show?id='. $appointmentId);
+    $this->redirect('plansandreports/fill?id='. $appointmentId);
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)

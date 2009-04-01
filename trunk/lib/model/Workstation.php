@@ -10,6 +10,7 @@ class Workstation extends BaseWorkstation
     public function InternetEnable($status=true)
     {
         $this->setIsEnabled($status);
+		
         $this->save();
     }
     

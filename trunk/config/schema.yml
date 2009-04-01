@@ -184,6 +184,7 @@ propel:
     rank:    { type: integer, required: true }
     content:      longvarchar
     evaluation:  { type: integer, required: false } 
+    is_editable: boolean
     _uniques:
       id_pos:     [id, rank]
 

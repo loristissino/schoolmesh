@@ -43,5 +43,7 @@ class WpmoduleItemMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('EVALUATION', 'Evaluation', 'INTEGER', false, null);
 
+		$tMap->addColumn('IS_EDITABLE', 'IsEditable', 'BOOLEAN', false, null);
+
 	} 
 } 

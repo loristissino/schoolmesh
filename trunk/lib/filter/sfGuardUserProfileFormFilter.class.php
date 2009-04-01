@@ -12,5 +12,9 @@ class sfGuardUserProfileFormFilter extends BasesfGuardUserProfileFormFilter
 {
   public function configure()
   {
+	
+	parent::configure();
+	
+	
   }
 }
