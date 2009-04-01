@@ -1,0 +1,7 @@
+#summary How to install SchoolMesh.
+
+= Introduction =
+
+I'll translate this page in English soon.
+
+For now, instructions are in Italian only: see [IstruzioniInstallazione Installazione].
