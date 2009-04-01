@@ -8,7 +8,8 @@ class Workflow
 		'stateDescription'=>"draft",
 		'viewAction'=>"fill",
 		'displayedAction'=>'Fill',
-		'submitAction'=>"Submit this workplan for approval",
+		'submitAction'=>"submitplan",
+		'submitDisplayedAction'=>'Submit this workplan for approval'
 		),
 	
 	10=>Array(
@@ -16,6 +17,7 @@ class Workflow
 		'viewAction'=>"view",
 		'displayedAction'=>'View',
 		'submitAction'=>"",
+		'submitDisplayedAction'=>''
 		),
 	
 	20=>Array(
@@ -23,13 +25,15 @@ class Workflow
 		'viewAction'=>"view",
 		'displayedAction'=>'View',
 		'submitAction'=>"",
+		'submitDisplayedAction'=>''
 		),
 	
 	30=>Array(
 		'stateDescription'=>"intermediate / final report",
 		'viewAction'=>"fill",
 		'displayedAction'=>'Fill',
-		'submitAction'=>"Submit this report",
+		'submitAction'=>"submitreport",
+		'submitDisplayedAction'=>'Submit this report'
 		),
 	
 	40=>Array(
@@ -37,6 +41,7 @@ class Workflow
 		'viewAction'=>"view",
 		'displayedAction'=>'View',
 		'submitAction'=>"",
+		'submitDisplayedAction'=>''
 		),
 	
 	50=>Array(
@@ -44,6 +49,7 @@ class Workflow
 		'viewAction'=>"view",
 		'displayedAction'=>'View',
 		'submitAction'=>"",
+		'submitDisplayedAction'=>''
 		),
 
 	60=>Array(
@@ -51,6 +57,7 @@ class Workflow
 		'viewAction'=>"view",
 		'displayedAction'=>'View',
 		'submitAction'=>"",
+		'submitDisplayedAction'=>''
 		),
 
 	70=>Array(
@@ -58,6 +65,7 @@ class Workflow
 		'viewAction'=>"view",
 		'displayedAction'=>'View',
 		'submitAction'=>"",
+		'submitDisplayedAction'=>''
 		)
 
 	);

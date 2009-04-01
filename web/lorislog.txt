@@ -1,17 +1,1 @@
-Array
-(
-    [name] => Array
-        (
-            [text] => 
-        )
-
-    [ip_cidr] => Array
-        (
-            [text] => 
-        )
-
-    [is_enabled] => 
-    [subnet_id] => 2
-    [mac_address] => 
-    [workstation_service_list] => 
-)
+no exception thrown...2019

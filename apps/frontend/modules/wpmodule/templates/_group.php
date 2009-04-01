@@ -15,7 +15,7 @@
 </li>
 </ul>
 </div>
-<div id="group<?php echo $item_group->getId() ?>" style="display:none">
+<div id="group<?php echo $item_group->getId() ?>" style="display:<?php echo ($sf_user->hasFlash('notice'.$item_group->getId()))? 'visible': 'none' ?>">
 
 <?php $i=0 ?>
 <?php if ($sf_user->hasFlash('notice'.$item_group->getId())): ?>

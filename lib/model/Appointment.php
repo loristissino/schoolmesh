@@ -63,12 +63,6 @@ class Appointment extends BaseAppointment
 	  {
 		$con->beginTransaction();
 	 
-		$wpevent = new Wpevent();
-		$wpevent->setUserId($user_id);
-		$wpevent->setAppointmentId($this->getId());
-		$wpevent->setComment('approved (***)');
-		$wpevent->setState(30);
-		$wpevent->save();
 	 
 //		$sql = 'UPDATE '.WpmoduleItemPeer::TABLE_NAME.' SET '.WpmoduleItemPeer::IS_EDITABLE.' = FALSE WHERE '.WpmoduleItemPeer::RANK.' > '.$this->getRank() . ' AND ' . WpmoduleItemPeer::WPITEM_GROUP_ID .'='. $this->getWpitemGroupId();
 
@@ -90,6 +84,9 @@ $con->query($sql);
 
 	
 		$con->commit();
+		
+		$this->addEvent($user_id, 'approved (***)', 30);
+		
 		return true;
 	  }
 	  catch (Exception $e)
@@ -100,20 +97,51 @@ $con->query($sql);
 
 	}
 
-	public function teacherSubmit($user_id)
+	public function teacherSubmitPlan($user_id)
 	{
+
+	if ($this->getUserId()!=$user_id)
+		return 'This workplan can be submitted only by the owner';
+
+	if ($this->getState()!=0)
+		return 'This workplan cannot be submitted because its current state is not 0';
+	
+	$this->addEvent($user_id, 'submitted as workplan', 10);
 		
+	return '';
+	
+	// TODO è meglio se restituisce un array con true/false e messaggio...
+				
+	}
+
+
+	public function teacherSubmitReport($user_id)
+	{
+
+	if ($this->getUserId()!=$user_id)
+		return 'This report can be submitted only by the owner';
+
+	if ($this->getState()!=30)
+		return 'This workplan cannot be submitted because its current state is not 30';
+	
+	$this->addEvent($user_id, 'submitted as workplan', 40);
+		
+	return '';
+				
+	}
+
+
+protected function addEvent($user_id, $comment='', $state=0)
+{
 		$wpevent = new Wpevent();
 		$wpevent->setUserId($user_id);
 		$wpevent->setAppointmentId($this->getId());
-		$wpevent->setComment('submitted (***)');
-		$wpevent->setState(10);
+		$wpevent->setComment($comment);
+		$wpevent->setState($state);
 		$wpevent->save();
-		
-		
-		}
+}
 
-    public function getWorkflowLogs()
+public function getWorkflowLogs()
 	{
 		$c = new Criteria();
 		$c->add(WpeventPeer::APPOINTMENT_ID, $this->getId());

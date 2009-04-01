@@ -18,17 +18,39 @@ class plansandreportsActions extends sfActions
 
   }
 
-	public function executeWpsubmit(sfWebRequest $request)
+	public function executeWpsubmitreport(sfWebRequest $request)
 	{
+    $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
 		
     $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
-	$workplan->teacherSubmit($this->getUser()->getProfile()->getSfGuardUser()->getId());
-
-	  $this->getUser()->setFlash('notice', sprintf('Workplan submitted'));
+	
+	$submission_error=$workplan->teacherSubmitReport($this->getUser()->getProfile()->getSfGuardUser()->getId());
+	if ($submission_error)
+	  $this->getUser()->setFlash('error', $submission_error);
+	else
+		$this->getUser()->setFlash('notice', sprintf('Workplan submitted'));
 	
 	return $this->redirect('@plansandreports');
 
 	}
+
+	public function executeWpsubmitplan(sfWebRequest $request)
+	{
+    $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
+		
+    $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+	
+	$submission_error=$workplan->teacherSubmitPlan($this->getUser()->getProfile()->getSfGuardUser()->getId());
+	if ($submission_error)
+	  $this->getUser()->setFlash('error', $submission_error);
+	else
+		$this->getUser()->setFlash('notice', sprintf('Report submitted'));
+	
+	return $this->redirect('@plansandreports');
+
+	}
+
+
 
   public function executeEditInLine(sfWebRequest $request)
 {

@@ -55,8 +55,8 @@
 	<ul class="sf_admin_actions">
 	<li>
 				<?php echo link_to(
-				$steps[$state]['submitAction'],
-				'plansandreports/wpsubmit?id='.$workplan->getId(),
+				$steps[$state]['submitDisplayedAction'],
+				'plansandreports/'. $steps[$state]['submitAction']. '?id='.$workplan->getId(),
 				array('method' => 'put') 
 				)?>
 	</li>
