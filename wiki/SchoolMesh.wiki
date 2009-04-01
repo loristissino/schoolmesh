@@ -22,8 +22,13 @@ There will also be some place for activities like Teachers' workplans and final 
 
 = Development =
 
-SchoolMesh will be developed using the Symfony framework.
+!SchoolMesh will be developed using the Symfony framework.
 
 = Current status =
 
 Planning / Prototyping. Some source code is here, but it is far from being full working.
+
+= Installation =
+
+See [Instructions].
+
