@@ -1,0 +1,13 @@
+#summary One-sentence summary of this page.
+
+= Configurazione di Apache con mod SSL =
+
+Abilitazione del modulo ssl di Apache:
+
+$ sudo a2enmod ssl
+Module ssl installed; run /etc/init.d/apache2 force-reload to enable.
+
+$ sudo /etc/init.d/apache2 force-reload
+ * Reloading web server config apache2                                   [ OK ] 
+
+
