@@ -19,6 +19,7 @@ class BaseWpmoduleItemFormFilter extends BaseFormFilterPropel
       'rank'            => new sfWidgetFormFilterInput(),
       'content'         => new sfWidgetFormFilterInput(),
       'evaluation'      => new sfWidgetFormFilterInput(),
+      'is_editable'     => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
@@ -26,6 +27,7 @@ class BaseWpmoduleItemFormFilter extends BaseFormFilterPropel
       'rank'            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'content'         => new sfValidatorPass(array('required' => false)),
       'evaluation'      => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'is_editable'     => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
     $this->widgetSchema->setNameFormat('wpmodule_item_filters[%s]');
@@ -48,6 +50,7 @@ class BaseWpmoduleItemFormFilter extends BaseFormFilterPropel
       'rank'            => 'Number',
       'content'         => 'Text',
       'evaluation'      => 'Number',
+      'is_editable'     => 'Boolean',
     );
   }
 }

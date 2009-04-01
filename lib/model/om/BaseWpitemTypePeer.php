@@ -31,7 +31,7 @@ abstract class BaseWpitemTypePeer {
 	const RANK = 'wpitem_type.RANK';
 
 	
-	const STATUS = 'wpitem_type.STATUS';
+	const STATE = 'wpitem_type.STATE';
 
 	
 	const EVALUATION_MIN = 'wpitem_type.EVALUATION_MIN';
@@ -53,19 +53,19 @@ abstract class BaseWpitemTypePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Description', 'Rank', 'Status', 'EvaluationMin', 'EvaluationMax', 'EvaluationMinDescription', 'EvaluationMaxDescription', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'description', 'rank', 'status', 'evaluationMin', 'evaluationMax', 'evaluationMinDescription', 'evaluationMaxDescription', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::DESCRIPTION, self::RANK, self::STATUS, self::EVALUATION_MIN, self::EVALUATION_MAX, self::EVALUATION_MIN_DESCRIPTION, self::EVALUATION_MAX_DESCRIPTION, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'description', 'rank', 'status', 'evaluation_min', 'evaluation_max', 'evaluation_min_description', 'evaluation_max_description', ),
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Description', 'Rank', 'State', 'EvaluationMin', 'EvaluationMax', 'EvaluationMinDescription', 'EvaluationMaxDescription', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'description', 'rank', 'state', 'evaluationMin', 'evaluationMax', 'evaluationMinDescription', 'evaluationMaxDescription', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::DESCRIPTION, self::RANK, self::STATE, self::EVALUATION_MIN, self::EVALUATION_MAX, self::EVALUATION_MIN_DESCRIPTION, self::EVALUATION_MAX_DESCRIPTION, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'description', 'rank', 'state', 'evaluation_min', 'evaluation_max', 'evaluation_min_description', 'evaluation_max_description', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Description' => 2, 'Rank' => 3, 'Status' => 4, 'EvaluationMin' => 5, 'EvaluationMax' => 6, 'EvaluationMinDescription' => 7, 'EvaluationMaxDescription' => 8, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'status' => 4, 'evaluationMin' => 5, 'evaluationMax' => 6, 'evaluationMinDescription' => 7, 'evaluationMaxDescription' => 8, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::DESCRIPTION => 2, self::RANK => 3, self::STATUS => 4, self::EVALUATION_MIN => 5, self::EVALUATION_MAX => 6, self::EVALUATION_MIN_DESCRIPTION => 7, self::EVALUATION_MAX_DESCRIPTION => 8, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'status' => 4, 'evaluation_min' => 5, 'evaluation_max' => 6, 'evaluation_min_description' => 7, 'evaluation_max_description' => 8, ),
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Description' => 2, 'Rank' => 3, 'State' => 4, 'EvaluationMin' => 5, 'EvaluationMax' => 6, 'EvaluationMinDescription' => 7, 'EvaluationMaxDescription' => 8, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'state' => 4, 'evaluationMin' => 5, 'evaluationMax' => 6, 'evaluationMinDescription' => 7, 'evaluationMaxDescription' => 8, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::DESCRIPTION => 2, self::RANK => 3, self::STATE => 4, self::EVALUATION_MIN => 5, self::EVALUATION_MAX => 6, self::EVALUATION_MIN_DESCRIPTION => 7, self::EVALUATION_MAX_DESCRIPTION => 8, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'state' => 4, 'evaluation_min' => 5, 'evaluation_max' => 6, 'evaluation_min_description' => 7, 'evaluation_max_description' => 8, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
@@ -116,7 +116,7 @@ abstract class BaseWpitemTypePeer {
 
 		$criteria->addSelectColumn(WpitemTypePeer::RANK);
 
-		$criteria->addSelectColumn(WpitemTypePeer::STATUS);
+		$criteria->addSelectColumn(WpitemTypePeer::STATE);
 
 		$criteria->addSelectColumn(WpitemTypePeer::EVALUATION_MIN);
 

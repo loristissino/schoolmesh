@@ -32,15 +32,19 @@ class wpmoduleitemActions extends sfActions
     $this->forward404Unless($this->wpmoduleitem);
 	
 	// controllare proprietario e valore
+	
+	$type=$this->wpmoduleitem->getWpitemGroup()->getWpitemType();
 
+	$min=$type->getEvaluationMin();
+	$max=$type->getEvaluationMax();
+	
 	$evaluation=$request->getParameter('evaluation');
 	$dbvalue=$evaluation==''? NULL: $evaluation;
 	$this->wpmoduleitem->setEvaluation($dbvalue);
 	$this->wpmoduleitem->save();
 //	$this->redirect('wpmodule/view?id='.$this->wpmoduleitem->getWpitemGroup()->getWpmoduleId());
-	$text=$dbvalue?$dbvalue : 'not set';
-	return $this->renderText($text);
-
+//	return $this->renderText('<span class="notice">'.$text.'</span>');
+    return $this->renderPartial('wpmodule/evaluation2', array('id'=>$this->wpmoduleitem->getId(), 'dbvalue'=>$dbvalue, 'textvalue'=>$this->wpmoduleitem->getEvaluationText(), 'min'=>$min, 'max'=>$max));
 	}
 
 
@@ -54,12 +58,21 @@ class wpmoduleitemActions extends sfActions
     $this->wpmodule_item = WpmoduleItemPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->wpmodule_item);
   }
-
+*/
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new WpmoduleItemForm();
-  }
 
+	$group= WpitemGroupPeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($group);
+
+	$newitem= new WpmoduleItem();
+	$newitem->setWpitemGroupId($group->getId());
+	$newitem->save();
+	$this->getUser()->setFlash('notice'.$group->getId(), sprintf('A new item was inserted'));
+	$this->redirect('wpmodule/view?id='.$group->getWpmoduleId().'#'.$group->getId());
+
+   }
+/*
   public function executeCreate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post'));
@@ -93,7 +106,8 @@ class wpmoduleitemActions extends sfActions
     //$this->setTemplate('edit');
     
 	
-   $this->redirect('wpmodule/view?id='.$wpmodule_item->getWpitemGroup()->getWpmoduleId());
+   return $this->redirect('wpmodule/view?id='.$wpmodule_item->getWpitemGroup()->getWpmoduleId().'#'.$wpmodule_item->getWpitemGroupId());
+//	$this->redirect('wpmodule/view?id='.$item->getWpitemGroup()->getWpmoduleId().'#'.$item->getWpitemGroupId()); 	
 
 }
 
@@ -105,10 +119,14 @@ class wpmoduleitemActions extends sfActions
     $this->forward404Unless($wpmodule_item = WpmoduleItemPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpmodule_item does not exist (%s).', $request->getParameter('id')));
 
 	$id=$wpmodule_item->getWpitemGroup()->getWpmoduleId();
+	$gr=$wpmodule_item->getWpitemGroupId();
 	
 	$wpmodule_item->delete();
 
-	$this->redirect('wpmodule/view?id='.$id);
+	$this->getUser()->setFlash('notice'.$gr, sprintf('The item was deleted'));
+
+
+	$this->redirect('wpmodule/view?id='.$id.'#'.$gr);
 
   }
 
@@ -143,8 +161,9 @@ class wpmoduleitemActions extends sfActions
 	  $previous_item = WpmoduleItemPeer::retrieveByRank($item->getRank() - 1, $item->getWpitemGroupId());
 	  $this->forward404Unless($previous_item);
 	  $item->swapWith($previous_item);
+	  $this->getUser()->setFlash('notice'.$item->getWpitemGroupId(), sprintf('The items were switched'));
 	 
-	  $this->redirect('wpmodule/view?id='.$item->getWpitemGroup()->getWpmoduleId()); 	
+	  $this->redirect('wpmodule/view?id='.$item->getWpitemGroup()->getWpmoduleId().'#'.$item->getWpitemGroupId()); 	
 	  }  
 
 	public function executeDown(sfWebRequest $request)
@@ -155,8 +174,9 @@ class wpmoduleitemActions extends sfActions
 	  $next_item = WpmoduleItemPeer::retrieveByRank($item->getRank() + 1, $item->getWpitemGroupId());
 	  $this->forward404Unless($next_item);
 	  $item->swapWith($next_item);
+	  $this->getUser()->setFlash('notice'.$item->getWpitemGroupId(), sprintf('The items were switched'));
 	 
-	  $this->redirect('wpmodule/view?id='.$item->getWpitemGroup()->getWpmoduleId()); 
+	  $this->redirect('wpmodule/view?id='.$item->getWpitemGroup()->getWpmoduleId().'#'.$item->getWpitemGroupId()); 
 	}  
 
 

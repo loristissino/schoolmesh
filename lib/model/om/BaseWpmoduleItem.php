@@ -25,6 +25,9 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	protected $evaluation;
 
 	
+	protected $is_editable;
+
+	
 	protected $aWpitemGroup;
 
 	
@@ -73,6 +76,12 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	public function getEvaluation()
 	{
 		return $this->evaluation;
+	}
+
+	
+	public function getIsEditable()
+	{
+		return $this->is_editable;
 	}
 
 	
@@ -150,6 +159,20 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setIsEditable($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_editable !== $v) {
+			$this->is_editable = $v;
+			$this->modifiedColumns[] = WpmoduleItemPeer::IS_EDITABLE;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array())) {
@@ -168,6 +191,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 			$this->rank = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->content = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->evaluation = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+			$this->is_editable = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -176,7 +200,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 5; 
+						return $startcol + 6; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WpmoduleItem object", $e);
 		}
@@ -376,6 +400,9 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 			case 4:
 				return $this->getEvaluation();
 				break;
+			case 5:
+				return $this->getIsEditable();
+				break;
 			default:
 				return null;
 				break;
@@ -391,6 +418,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 			$keys[2] => $this->getRank(),
 			$keys[3] => $this->getContent(),
 			$keys[4] => $this->getEvaluation(),
+			$keys[5] => $this->getIsEditable(),
 		);
 		return $result;
 	}
@@ -421,6 +449,9 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 			case 4:
 				$this->setEvaluation($value);
 				break;
+			case 5:
+				$this->setIsEditable($value);
+				break;
 		} 	}
 
 	
@@ -433,6 +464,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setRank($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setContent($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setEvaluation($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setIsEditable($arr[$keys[5]]);
 	}
 
 	
@@ -445,6 +477,7 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpmoduleItemPeer::RANK)) $criteria->add(WpmoduleItemPeer::RANK, $this->rank);
 		if ($this->isColumnModified(WpmoduleItemPeer::CONTENT)) $criteria->add(WpmoduleItemPeer::CONTENT, $this->content);
 		if ($this->isColumnModified(WpmoduleItemPeer::EVALUATION)) $criteria->add(WpmoduleItemPeer::EVALUATION, $this->evaluation);
+		if ($this->isColumnModified(WpmoduleItemPeer::IS_EDITABLE)) $criteria->add(WpmoduleItemPeer::IS_EDITABLE, $this->is_editable);
 
 		return $criteria;
 	}
@@ -482,6 +515,8 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		$copyObj->setContent($this->content);
 
 		$copyObj->setEvaluation($this->evaluation);
+
+		$copyObj->setIsEditable($this->is_editable);
 
 
 		$copyObj->setNew(true);

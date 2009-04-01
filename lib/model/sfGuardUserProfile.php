@@ -9,6 +9,11 @@
  */ 
 class sfGuardUserProfile extends BasesfGuardUserProfile
 {
+	
+		public function __toString()
+		{
+				return $this->getFullName();
+		}
         public function getFullName()
         {
                 return $this->getFirstName() . ' ' . $this->getLastName();

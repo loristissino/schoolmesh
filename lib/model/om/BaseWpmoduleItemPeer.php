@@ -13,7 +13,7 @@ abstract class BaseWpmoduleItemPeer {
 	const CLASS_DEFAULT = 'lib.model.WpmoduleItem';
 
 	
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 6;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -34,6 +34,9 @@ abstract class BaseWpmoduleItemPeer {
 	const EVALUATION = 'wpmodule_item.EVALUATION';
 
 	
+	const IS_EDITABLE = 'wpmodule_item.IS_EDITABLE';
+
+	
 	public static $instances = array();
 
 	
@@ -41,20 +44,20 @@ abstract class BaseWpmoduleItemPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'WpitemGroupId', 'Rank', 'Content', 'Evaluation', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'wpitemGroupId', 'rank', 'content', 'evaluation', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::WPITEM_GROUP_ID, self::RANK, self::CONTENT, self::EVALUATION, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'wpitem_group_id', 'rank', 'content', 'evaluation', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'WpitemGroupId', 'Rank', 'Content', 'Evaluation', 'IsEditable', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'wpitemGroupId', 'rank', 'content', 'evaluation', 'isEditable', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::WPITEM_GROUP_ID, self::RANK, self::CONTENT, self::EVALUATION, self::IS_EDITABLE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'wpitem_group_id', 'rank', 'content', 'evaluation', 'is_editable', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'WpitemGroupId' => 1, 'Rank' => 2, 'Content' => 3, 'Evaluation' => 4, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'wpitemGroupId' => 1, 'rank' => 2, 'content' => 3, 'evaluation' => 4, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::WPITEM_GROUP_ID => 1, self::RANK => 2, self::CONTENT => 3, self::EVALUATION => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'wpitem_group_id' => 1, 'rank' => 2, 'content' => 3, 'evaluation' => 4, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'WpitemGroupId' => 1, 'Rank' => 2, 'Content' => 3, 'Evaluation' => 4, 'IsEditable' => 5, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'wpitemGroupId' => 1, 'rank' => 2, 'content' => 3, 'evaluation' => 4, 'isEditable' => 5, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::WPITEM_GROUP_ID => 1, self::RANK => 2, self::CONTENT => 3, self::EVALUATION => 4, self::IS_EDITABLE => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'wpitem_group_id' => 1, 'rank' => 2, 'content' => 3, 'evaluation' => 4, 'is_editable' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	
@@ -105,6 +108,8 @@ abstract class BaseWpmoduleItemPeer {
 		$criteria->addSelectColumn(WpmoduleItemPeer::CONTENT);
 
 		$criteria->addSelectColumn(WpmoduleItemPeer::EVALUATION);
+
+		$criteria->addSelectColumn(WpmoduleItemPeer::IS_EDITABLE);
 
 	}
 
