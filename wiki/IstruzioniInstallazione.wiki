@@ -6,7 +6,7 @@
 Procedura provvisoria.
 
 1. ...
-2. ...
+2. [MySQL Configurazione di MySql]
 
 3. [ApacheSSL Configurazione di Apache]
 
