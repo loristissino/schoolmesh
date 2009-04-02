@@ -97,6 +97,49 @@ $con->query($sql);
 
 	}
 
+	public function schoolmasterReject($user_id)
+	{
+		
+	$con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
+	  try
+	  {
+		$con->beginTransaction();
+	 
+	 
+//		$sql = 'UPDATE '.WpmoduleItemPeer::TABLE_NAME.' SET '.WpmoduleItemPeer::IS_EDITABLE.' = FALSE WHERE '.WpmoduleItemPeer::RANK.' > '.$this->getRank() . ' AND ' . WpmoduleItemPeer::WPITEM_GROUP_ID .'='. $this->getWpitemGroupId();
+
+// this should be made portable using Peer constants...
+
+$sql = 'UPDATE  `wpmodule_item`
+
+ JOIN `wpitem_group` ON `wpmodule_item`.`wpitem_group_id` = `wpitem_group`.`id`
+
+JOIN `wpmodule` ON `wpitem_group`.`wpmodule_id`
+
+JOIN `appointment` ON `wpmodule`.`appointment_id` = `appointment`.`id`
+
+SET `is_editable` = TRUE
+
+WHERE `appointment`.`id` = ' . $this->getId();
+
+$con->query($sql);
+
+	
+		$con->commit();
+		
+		$this->addEvent($user_id, 'rejected (***)', 0);
+		
+		return true;
+	  }
+	  catch (Exception $e)
+	  {
+		$con->rollback();
+		throw $e;
+	  }
+
+	}
+
+
 	public function teacherSubmitPlan($user_id)
 	{
 

@@ -32,3 +32,20 @@
 {
   background: url(../images/toggle.png) no-repeat 0 0;
 }
+
+#sf_admin_container ul li.sf_admin_action_back a
+{
+  background: url(../images/back.png) no-repeat 0 0;
+}
+
+
+#sf_admin_container ul li.sf_admin_action_approve a
+{
+  background: url(../images/approve.png) no-repeat 0 0;
+}
+
+
+#sf_admin_container ul li.sf_admin_action_reject a
+{
+  background: url(../images/enhancements.png) no-repeat 0 0;
+}
