@@ -36,6 +36,19 @@ class schoolmaster_plansandreportsActions extends autoSchoolmaster_plansandrepor
 		
 	}
 
+	public function executeListReject(sfWebRequest $request)
+	{
+	$workplan = $this->getRoute()->getObject();
+
+	if ($workplan->schoolmasterReject($this->getUser()->getProfile()->getSfGuardUser()->getId()))
+		$this->getUser()->setFlash('notice', 'The workplan has been rejected.');
+	else
+		$this->getUser()->setFlash('error', 'The workplan could not be rejected.');
+		
+
+	$this->redirect('@appointment');
+		
+	}
 
 
 }

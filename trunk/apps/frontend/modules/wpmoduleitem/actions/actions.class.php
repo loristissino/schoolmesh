@@ -99,6 +99,11 @@ class wpmoduleitemActions extends sfActions
     $this->forward404Unless($this->isUpdateble($request, $wpmodule_item));
 	
 	$wpmodule_item->setContent($this->checkedValue($request->getParameter('value')));
+
+	$gr=$wpmodule_item->getWpitemGroupId();
+
+	$this->getUser()->setFlash('notice'.$gr, sprintf('The item was updated'));
+
 	$wpmodule_item->save();
 //    $this->processForm($request, $this->form);
 	//$this->wpmodule_item=$wpmodule_item;

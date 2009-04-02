@@ -28,7 +28,7 @@ class plansandreportsActions extends sfActions
 	if ($submission_error)
 	  $this->getUser()->setFlash('error', $submission_error);
 	else
-		$this->getUser()->setFlash('notice', sprintf('Workplan submitted'));
+		$this->getUser()->setFlash('notice', sprintf('Report submitted'));
 	
 	return $this->redirect('@plansandreports');
 
@@ -44,7 +44,7 @@ class plansandreportsActions extends sfActions
 	if ($submission_error)
 	  $this->getUser()->setFlash('error', $submission_error);
 	else
-		$this->getUser()->setFlash('notice', sprintf('Report submitted'));
+		$this->getUser()->setFlash('notice', sprintf('Workplan submitted'));
 	
 	return $this->redirect('@plansandreports');
 

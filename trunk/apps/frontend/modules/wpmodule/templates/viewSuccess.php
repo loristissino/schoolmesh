@@ -25,4 +25,14 @@ Period:
 	<?php endif ?>
 <?php endforeach ?>
 
+<hr />
+<h3>Actions</h3>
+			<ul class="sf_admin_td_actions">
+
+				<li class="sf_admin_action_back">
+				<?php echo link_to(sprintf(__('Back to workplan/report %s'), $workplan), 'plansandreports/fill?id='.$workplan->getId()) ?>
+				</li>
+			</ul>
+
+
 </div>
