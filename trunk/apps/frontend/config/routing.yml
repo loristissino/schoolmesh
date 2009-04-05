@@ -1,13 +1,6 @@
-submitplan:
-  url: plansandreports/:id/submitplan.html
-  param: { module: plansandreports, action: wpsubmitplan } 
-  options:
-    module:              plansandreports
-    prefix_path:        plansandreports
-
-submitreport:
-  url: plansandreports/:id/submitreport.html
-  param: { module: plansandreports, action: wpsubmitreport } 
+submit:
+  url: plansandreports/:id/submit.html
+  param: { module: plansandreports, action: wpsubmit } 
   options:
     module:              plansandreports
     prefix_path:        plansandreports

@@ -8,8 +8,10 @@ class Workflow
 		'stateDescription'=>"draft",
 		'viewAction'=>"fill",
 		'displayedAction'=>'Fill',
-		'submitAction'=>"submitplan",
-		'submitDisplayedAction'=>'Submit this workplan for approval'
+		'submitAction'=>"submit",
+		'submitDisplayedAction'=>'Submit this workplan for approval',
+		'submitDoneAction'=>'Workplan submitted for approval',
+		'submitNextState'=>10,
 		),
 	
 	10=>Array(
@@ -17,7 +19,9 @@ class Workflow
 		'viewAction'=>"view",
 		'displayedAction'=>'View',
 		'submitAction'=>"",
-		'submitDisplayedAction'=>''
+		'submitDisplayedAction'=>'',
+		'submitDoneAction'=>'',
+		'submitNextState'=>10,
 		),
 	
 	20=>Array(
@@ -25,15 +29,19 @@ class Workflow
 		'viewAction'=>"view",
 		'displayedAction'=>'View',
 		'submitAction'=>"",
-		'submitDisplayedAction'=>''
+		'submitDisplayedAction'=>'',
+		'submitDoneAction'=>'',
+		'submitNextState'=>20,
 		),
 	
 	30=>Array(
 		'stateDescription'=>"intermediate / final report",
 		'viewAction'=>"fill",
 		'displayedAction'=>'Fill',
-		'submitAction'=>"submitreport",
-		'submitDisplayedAction'=>'Submit this report'
+		'submitAction'=>"submit",
+		'submitDisplayedAction'=>'Submit this report',
+		'submitDoneAction'=>'Report submitted for approval',
+		'submitNextState'=>40,
 		),
 	
 	40=>Array(
@@ -41,7 +49,9 @@ class Workflow
 		'viewAction'=>"view",
 		'displayedAction'=>'View',
 		'submitAction'=>"",
-		'submitDisplayedAction'=>''
+		'submitDisplayedAction'=>'',
+		'submitDoneAction'=>'',
+		'submitNextState'=>40,
 		),
 	
 	50=>Array(
@@ -49,7 +59,9 @@ class Workflow
 		'viewAction'=>"view",
 		'displayedAction'=>'View',
 		'submitAction'=>"",
-		'submitDisplayedAction'=>''
+		'submitDisplayedAction'=>'',
+		'submitDoneAction'=>'',
+		'submitNextState'=>50,
 		),
 
 	60=>Array(
@@ -57,7 +69,9 @@ class Workflow
 		'viewAction'=>"view",
 		'displayedAction'=>'View',
 		'submitAction'=>"",
-		'submitDisplayedAction'=>''
+		'submitDisplayedAction'=>'',
+		'submitDoneAction'=>'',
+		'submitNextState'=>60,
 		),
 
 	70=>Array(
@@ -65,7 +79,9 @@ class Workflow
 		'viewAction'=>"view",
 		'displayedAction'=>'View',
 		'submitAction'=>"",
-		'submitDisplayedAction'=>''
+		'submitDisplayedAction'=>'',
+		'submitDoneAction'=>'',
+		'submitNextState'=>70,
 		)
 
 	);

@@ -27,18 +27,7 @@ class Appointment extends BaseAppointment
 
     public function getLastLog()
 	{
-		// meglio usare la funzione sotto e prendere il primo record...rn 
-		/*
-		$c = new Criteria();
-		$c->add(WpeventPeer::APPOINTMENT_ID, $this->getId());
-		$c->addDescendingOrderByColumn(WpeventPeer::CREATED_AT);
-		$t = WpeventPeer::doSelectOne($c);
-		if ($t)
-			return $t;
-		else
-			return NULL;
 
-*/
 
 	if ($t=$this->getWorkflowLogs())
 		return $t[0];
@@ -140,38 +129,37 @@ $con->query($sql);
 	}
 
 
-	public function teacherSubmitPlan($user_id)
+	public function teacherSubmit($user_id)
 	{
 
-	if ($this->getUserId()!=$user_id)
-		return 'This workplan can be submitted only by the owner';
-
-	if ($this->getState()!=0)
-		return 'This workplan cannot be submitted because its current state is not 0';
-	
-	$this->addEvent($user_id, 'submitted as workplan', 10);
-		
-	return '';
-	
-	// TODO è meglio se restituisce un array con true/false e messaggio...
-				
-	}
-
-
-	public function teacherSubmitReport($user_id)
-	{
+	$result=Array();
 
 	if ($this->getUserId()!=$user_id)
-		return 'This report can be submitted only by the owner';
+		{
+			$result['result']='error';
+			$result['message']='This workplan can be submitted only by the owner';
+			return $result;
+		}
 
-	if ($this->getState()!=30)
-		return 'This workplan cannot be submitted because its current state is not 30';
-	
-	$this->addEvent($user_id, 'submitted as workplan', 40);
+	$steps=Workflow::getWpfrSteps();
+	$possibleAction=$steps[$this->getState()]['submitAction'];
+
+	if ($possibleAction=='')
+		{
+			$result['result']='error';
+			$result['message']='This action is not allowed for a workplan/report in this state';
+			return $result;
+		}
+
+	$result['result']='notice';
+	$result['message']=$steps[$this->getState()]['submitDoneAction'];
+
+	$this->addEvent($user_id, $steps[$this->getState()]['submitDoneAction'], $steps[$this->getState()]['submitNextState']);
 		
-	return '';
-				
+	return $result;
+	
 	}
+
 
 
 protected function addEvent($user_id, $comment='', $state=0)
