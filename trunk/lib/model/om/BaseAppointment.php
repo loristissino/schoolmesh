@@ -25,6 +25,12 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	protected $year_id;
 
 	
+	protected $state;
+
+	
+	protected $evaluation_criteria;
+
+	
 	protected $created_at;
 
 	
@@ -103,6 +109,18 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	public function getYearId()
 	{
 		return $this->year_id;
+	}
+
+	
+	public function getState()
+	{
+		return $this->state;
+	}
+
+	
+	public function getEvaluationCriteria()
+	{
+		return $this->evaluation_criteria;
 	}
 
 	
@@ -252,6 +270,34 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setState($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->state !== $v) {
+			$this->state = $v;
+			$this->modifiedColumns[] = AppointmentPeer::STATE;
+		}
+
+		return $this;
+	} 
+	
+	public function setEvaluationCriteria($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->evaluation_criteria !== $v) {
+			$this->evaluation_criteria = $v;
+			$this->modifiedColumns[] = AppointmentPeer::EVALUATION_CRITERIA;
+		}
+
+		return $this;
+	} 
+	
 	public function setCreatedAt($v)
 	{
 						if ($v === null || $v === '') {
@@ -348,9 +394,11 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			$this->subject_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->schoolclass_id = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->year_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
-			$this->created_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->updated_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->import_code = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->state = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->evaluation_criteria = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->created_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->updated_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->import_code = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -359,7 +407,7 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 8; 
+						return $startcol + 10; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Appointment object", $e);
 		}
@@ -659,12 +707,18 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 				return $this->getYearId();
 				break;
 			case 5:
-				return $this->getCreatedAt();
+				return $this->getState();
 				break;
 			case 6:
-				return $this->getUpdatedAt();
+				return $this->getEvaluationCriteria();
 				break;
 			case 7:
+				return $this->getCreatedAt();
+				break;
+			case 8:
+				return $this->getUpdatedAt();
+				break;
+			case 9:
 				return $this->getImportCode();
 				break;
 			default:
@@ -682,9 +736,11 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			$keys[2] => $this->getSubjectId(),
 			$keys[3] => $this->getSchoolclassId(),
 			$keys[4] => $this->getYearId(),
-			$keys[5] => $this->getCreatedAt(),
-			$keys[6] => $this->getUpdatedAt(),
-			$keys[7] => $this->getImportCode(),
+			$keys[5] => $this->getState(),
+			$keys[6] => $this->getEvaluationCriteria(),
+			$keys[7] => $this->getCreatedAt(),
+			$keys[8] => $this->getUpdatedAt(),
+			$keys[9] => $this->getImportCode(),
 		);
 		return $result;
 	}
@@ -716,12 +772,18 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 				$this->setYearId($value);
 				break;
 			case 5:
-				$this->setCreatedAt($value);
+				$this->setState($value);
 				break;
 			case 6:
-				$this->setUpdatedAt($value);
+				$this->setEvaluationCriteria($value);
 				break;
 			case 7:
+				$this->setCreatedAt($value);
+				break;
+			case 8:
+				$this->setUpdatedAt($value);
+				break;
+			case 9:
 				$this->setImportCode($value);
 				break;
 		} 	}
@@ -736,9 +798,11 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setSubjectId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setSchoolclassId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setYearId($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setUpdatedAt($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setImportCode($arr[$keys[7]]);
+		if (array_key_exists($keys[5], $arr)) $this->setState($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setEvaluationCriteria($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setUpdatedAt($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setImportCode($arr[$keys[9]]);
 	}
 
 	
@@ -751,6 +815,8 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(AppointmentPeer::SUBJECT_ID)) $criteria->add(AppointmentPeer::SUBJECT_ID, $this->subject_id);
 		if ($this->isColumnModified(AppointmentPeer::SCHOOLCLASS_ID)) $criteria->add(AppointmentPeer::SCHOOLCLASS_ID, $this->schoolclass_id);
 		if ($this->isColumnModified(AppointmentPeer::YEAR_ID)) $criteria->add(AppointmentPeer::YEAR_ID, $this->year_id);
+		if ($this->isColumnModified(AppointmentPeer::STATE)) $criteria->add(AppointmentPeer::STATE, $this->state);
+		if ($this->isColumnModified(AppointmentPeer::EVALUATION_CRITERIA)) $criteria->add(AppointmentPeer::EVALUATION_CRITERIA, $this->evaluation_criteria);
 		if ($this->isColumnModified(AppointmentPeer::CREATED_AT)) $criteria->add(AppointmentPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(AppointmentPeer::UPDATED_AT)) $criteria->add(AppointmentPeer::UPDATED_AT, $this->updated_at);
 		if ($this->isColumnModified(AppointmentPeer::IMPORT_CODE)) $criteria->add(AppointmentPeer::IMPORT_CODE, $this->import_code);
@@ -791,6 +857,10 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 		$copyObj->setSchoolclassId($this->schoolclass_id);
 
 		$copyObj->setYearId($this->year_id);
+
+		$copyObj->setState($this->state);
+
+		$copyObj->setEvaluationCriteria($this->evaluation_criteria);
 
 		$copyObj->setCreatedAt($this->created_at);
 

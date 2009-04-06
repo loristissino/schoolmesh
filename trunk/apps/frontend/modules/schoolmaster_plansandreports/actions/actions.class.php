@@ -26,11 +26,9 @@ class schoolmaster_plansandreportsActions extends autoSchoolmaster_plansandrepor
 	{
 	$workplan = $this->getRoute()->getObject();
 
-	if ($workplan->schoolmasterApprove($this->getUser()->getProfile()->getSfGuardUser()->getId()))
-		$this->getUser()->setFlash('notice', 'The workplan has been approved.');
-	else
-		$this->getUser()->setFlash('error', 'The workplan could not be approved.');
-		
+	$result = $workplan->Approve($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions());
+
+	$this->getUser()->setFlash($result['result'], $result['message']);
 
 	$this->redirect('@appointment');
 		
@@ -40,15 +38,36 @@ class schoolmaster_plansandreportsActions extends autoSchoolmaster_plansandrepor
 	{
 	$workplan = $this->getRoute()->getObject();
 
-	if ($workplan->schoolmasterReject($this->getUser()->getProfile()->getSfGuardUser()->getId()))
-		$this->getUser()->setFlash('notice', 'The workplan has been rejected.');
-	else
-		$this->getUser()->setFlash('error', 'The workplan could not be rejected.');
-		
+	$result = $workplan->Reject($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions());
+
+	$this->getUser()->setFlash($result['result'], $result['message']);
+
 
 	$this->redirect('@appointment');
 		
 	}
+
+
+  protected function setFilters(array $filters)
+  {
+
+$filters['state']['text']=30;
+ob_start();
+$f=fopen('lorislog.txt', 'w');
+
+print_r($filters);
+$my_string = ob_get_contents();
+fwrite($f, $my_string);
+
+fclose($f);
+
+ob_end_clean();
+
+    return $this->getUser()->setAttribute('schoolmaster_plansandreports.filters', $filters, 'admin_module');
+  }
+
+
+
 
 
 }

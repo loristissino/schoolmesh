@@ -15,23 +15,27 @@ class BaseAppointmentFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'user_id'        => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
-      'subject_id'     => new sfWidgetFormPropelChoice(array('model' => 'Subject', 'add_empty' => true)),
-      'schoolclass_id' => new sfWidgetFormPropelChoice(array('model' => 'Schoolclass', 'add_empty' => true)),
-      'year_id'        => new sfWidgetFormPropelChoice(array('model' => 'Year', 'add_empty' => true)),
-      'created_at'     => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
-      'updated_at'     => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
-      'import_code'    => new sfWidgetFormFilterInput(),
+      'user_id'             => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
+      'subject_id'          => new sfWidgetFormPropelChoice(array('model' => 'Subject', 'add_empty' => true)),
+      'schoolclass_id'      => new sfWidgetFormPropelChoice(array('model' => 'Schoolclass', 'add_empty' => true)),
+      'year_id'             => new sfWidgetFormPropelChoice(array('model' => 'Year', 'add_empty' => true)),
+      'state'               => new sfWidgetFormFilterInput(),
+      'evaluation_criteria' => new sfWidgetFormFilterInput(),
+      'created_at'          => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
+      'updated_at'          => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
+      'import_code'         => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'user_id'        => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
-      'subject_id'     => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Subject', 'column' => 'id')),
-      'schoolclass_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Schoolclass', 'column' => 'id')),
-      'year_id'        => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Year', 'column' => 'id')),
-      'created_at'     => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
-      'updated_at'     => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
-      'import_code'    => new sfValidatorPass(array('required' => false)),
+      'user_id'             => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
+      'subject_id'          => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Subject', 'column' => 'id')),
+      'schoolclass_id'      => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Schoolclass', 'column' => 'id')),
+      'year_id'             => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Year', 'column' => 'id')),
+      'state'               => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'evaluation_criteria' => new sfValidatorPass(array('required' => false)),
+      'created_at'          => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'updated_at'          => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'import_code'         => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('appointment_filters[%s]');
@@ -49,14 +53,16 @@ class BaseAppointmentFormFilter extends BaseFormFilterPropel
   public function getFields()
   {
     return array(
-      'id'             => 'Number',
-      'user_id'        => 'ForeignKey',
-      'subject_id'     => 'ForeignKey',
-      'schoolclass_id' => 'ForeignKey',
-      'year_id'        => 'ForeignKey',
-      'created_at'     => 'Date',
-      'updated_at'     => 'Date',
-      'import_code'    => 'Text',
+      'id'                  => 'Number',
+      'user_id'             => 'ForeignKey',
+      'subject_id'          => 'ForeignKey',
+      'schoolclass_id'      => 'ForeignKey',
+      'year_id'             => 'ForeignKey',
+      'state'               => 'Number',
+      'evaluation_criteria' => 'Text',
+      'created_at'          => 'Date',
+      'updated_at'          => 'Date',
+      'import_code'         => 'Text',
     );
   }
 }

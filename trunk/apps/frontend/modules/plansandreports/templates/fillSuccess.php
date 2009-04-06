@@ -51,12 +51,12 @@
 
 <?php include_partial('workflow', array('workflow_logs' => $workflow_logs)) ?>
 
-<?php if ($steps[$state]['submitAction']!=''): ?>
+<?php if ($steps[$state]['owner']['submitAction']!=''): ?>
 	<ul class="sf_admin_actions">
 	<li>
 				<?php echo link_to(
-				$steps[$state]['submitDisplayedAction'],
-				'plansandreports/'. $steps[$state]['submitAction']. '?id='.$workplan->getId(),
+				$steps[$state]['owner']['submitDisplayedAction'],
+				'plansandreports/'. $steps[$state]['owner']['submitAction']. '?id='.$workplan->getId(),
 				array('method' => 'put') 
 				)?>
 	</li>
