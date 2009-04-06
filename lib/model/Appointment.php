@@ -35,7 +35,7 @@ class Appointment extends BaseAppointment
 		return FALSE;
 
 	}
-
+/*
 	public function getState()
 	{
 		if ($this->getLastLog())
@@ -43,15 +43,10 @@ class Appointment extends BaseAppointment
 		else
 			return FALSE;
 	}
-
-	public function schoolmasterApprove($user_id)
+*/
+	protected function markSubItems($newstate, $con)
 	{
 		
-	$con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
-	  try
-	  {
-		$con->beginTransaction();
-	 
 	 
 //		$sql = 'UPDATE '.WpmoduleItemPeer::TABLE_NAME.' SET '.WpmoduleItemPeer::IS_EDITABLE.' = FALSE WHERE '.WpmoduleItemPeer::RANK.' > '.$this->getRank() . ' AND ' . WpmoduleItemPeer::WPITEM_GROUP_ID .'='. $this->getWpitemGroupId();
 
@@ -65,60 +60,55 @@ JOIN `wpmodule` ON `wpitem_group`.`wpmodule_id`
 
 JOIN `appointment` ON `wpmodule`.`appointment_id` = `appointment`.`id`
 
-SET `is_editable` = FALSE
+SET `is_editable` = ' . $newstate . '
 
 WHERE `appointment`.`id` = ' . $this->getId();
 
 $con->query($sql);
-
-	
-		$con->commit();
 		
-		$this->addEvent($user_id, 'approved (***)', 30);
 		
-		return true;
-	  }
-	  catch (Exception $e)
-	  {
-		$con->rollback();
-		throw $e;
-	  }
-
 	}
 
-	public function schoolmasterReject($user_id)
+	public function Approve($user_id, $permissions)
 	{
 		
+	$result=Array();
+	
+	$steps=Workflow::getWpfrSteps();
+	
+	if (!array_key_exists('approve', $steps[$this->getState()]['actions']))
+		{
+			$result['result']='error';
+			$result['message']='This workplan/report has not been submitted yet.';
+			return $result;
+		}
+
+	if (!in_array($steps[$this->getState()]['actions']['approve']['permission'], $permissions))
+		{
+			$result['result']='error';
+			$result['message']='The user has not the credentials to approve this workplan/report.';
+			return $result;
+		}
+
 	$con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
 	  try
 	  {
 		$con->beginTransaction();
-	 
-	 
-//		$sql = 'UPDATE '.WpmoduleItemPeer::TABLE_NAME.' SET '.WpmoduleItemPeer::IS_EDITABLE.' = FALSE WHERE '.WpmoduleItemPeer::RANK.' > '.$this->getRank() . ' AND ' . WpmoduleItemPeer::WPITEM_GROUP_ID .'='. $this->getWpitemGroupId();
 
-// this should be made portable using Peer constants...
-
-$sql = 'UPDATE  `wpmodule_item`
-
- JOIN `wpitem_group` ON `wpmodule_item`.`wpitem_group_id` = `wpitem_group`.`id`
-
-JOIN `wpmodule` ON `wpitem_group`.`wpmodule_id`
-
-JOIN `appointment` ON `wpmodule`.`appointment_id` = `appointment`.`id`
-
-SET `is_editable` = TRUE
-
-WHERE `appointment`.`id` = ' . $this->getId();
-
-$con->query($sql);
-
-	
+		if($steps[$this->getState()]['actions']['approve']['submitExtraAction']!='')
+			$this->$steps[$this->getState()]['actions']['approve']['submitExtraAction']($steps[$this->getState()]['actions']['approve']['submitExtraParameters'], $con);
+		
+		$message=$steps[$this->getState()]['actions']['approve']['submitDoneAction'];
+		// we need to save the message before adding a line in the log...
+		
+		$this->addEvent($user_id, $steps[$this->getState()]['actions']['approve']['submitDoneAction'], $steps[$this->getState()]['actions']['approve']['submitNextState']);
+		
 		$con->commit();
 		
-		$this->addEvent($user_id, 'rejected (***)', 0);
-		
-		return true;
+		$result['result']='notice';
+		$result['message']=$message;
+
+		return $result;
 	  }
 	  catch (Exception $e)
 	  {
@@ -128,6 +118,53 @@ $con->query($sql);
 
 	}
 
+	public function Reject($user_id, $permissions)
+	{
+		
+	$result=Array();
+	
+	$steps=Workflow::getWpfrSteps();
+	
+	if (!array_key_exists('reject', $steps[$this->getState()]['actions']))
+		{
+			$result['result']='error';
+			$result['message']='This workplan/report has not been submitted yet.';
+			return $result;
+		}
+
+	if (!in_array($steps[$this->getState()]['actions']['reject']['permission'], $permissions))
+		{
+			$result['result']='error';
+			$result['message']='The user has not the credentials to reject this workplan/report.';
+		}
+
+	$con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
+	  try
+	  {
+		$con->beginTransaction();
+
+		if($steps[$this->getState()]['actions']['reject']['submitExtraAction']!='')
+			$this->$steps[$this->getState()]['actions']['reject']['submitExtraAction']($steps[$this->getState()]['actions']['reject']['submitExtraParameters'], $con);
+		
+		$message=$steps[$this->getState()]['actions']['reject']['submitDoneAction'];
+		// we need to save the message before adding a line in the log...
+		
+		$this->addEvent($user_id, $steps[$this->getState()]['actions']['reject']['submitDoneAction'], $steps[$this->getState()]['actions']['reject']['submitNextState']);
+
+		$con->commit();
+		
+		$result['result']='notice';
+		$result['message']=$message;
+
+		return $result;
+	  }
+	  catch (Exception $e)
+	  {
+		$con->rollback();
+		throw $e;
+	  }
+
+	}
 
 	public function teacherSubmit($user_id)
 	{
@@ -142,7 +179,7 @@ $con->query($sql);
 		}
 
 	$steps=Workflow::getWpfrSteps();
-	$possibleAction=$steps[$this->getState()]['submitAction'];
+	$possibleAction=$steps[$this->getState()]['owner']['submitAction'];
 
 	if ($possibleAction=='')
 		{
@@ -152,9 +189,9 @@ $con->query($sql);
 		}
 
 	$result['result']='notice';
-	$result['message']=$steps[$this->getState()]['submitDoneAction'];
+	$result['message']=$steps[$this->getState()]['owner']['submitDoneAction'];
 
-	$this->addEvent($user_id, $steps[$this->getState()]['submitDoneAction'], $steps[$this->getState()]['submitNextState']);
+	$this->addEvent($user_id, $steps[$this->getState()]['owner']['submitDoneAction'], $steps[$this->getState()]['owner']['submitNextState']);
 		
 	return $result;
 	
@@ -170,6 +207,7 @@ protected function addEvent($user_id, $comment='', $state=0)
 		$wpevent->setComment($comment);
 		$wpevent->setState($state);
 		$wpevent->save();
+		$this->setState($state);
 }
 
 public function getWorkflowLogs()

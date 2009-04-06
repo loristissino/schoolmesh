@@ -26,7 +26,7 @@ generator:
         actions:
          approveAllWorkplans: { label: Approve all workplans }
       filter:
-        display: [user_id, subject_id, schoolclass_id]
+        display: [state, user_id, subject_id, schoolclass_id]
       form:    ~
       edit:    ~
       new:     ~

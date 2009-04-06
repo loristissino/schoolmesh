@@ -13,7 +13,7 @@ abstract class BaseAppointmentPeer {
 	const CLASS_DEFAULT = 'lib.model.Appointment';
 
 	
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 10;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -34,6 +34,12 @@ abstract class BaseAppointmentPeer {
 	const YEAR_ID = 'appointment.YEAR_ID';
 
 	
+	const STATE = 'appointment.STATE';
+
+	
+	const EVALUATION_CRITERIA = 'appointment.EVALUATION_CRITERIA';
+
+	
 	const CREATED_AT = 'appointment.CREATED_AT';
 
 	
@@ -50,20 +56,20 @@ abstract class BaseAppointmentPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'SubjectId', 'SchoolclassId', 'YearId', 'CreatedAt', 'UpdatedAt', 'ImportCode', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'subjectId', 'schoolclassId', 'yearId', 'createdAt', 'updatedAt', 'importCode', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::SUBJECT_ID, self::SCHOOLCLASS_ID, self::YEAR_ID, self::CREATED_AT, self::UPDATED_AT, self::IMPORT_CODE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'subject_id', 'schoolclass_id', 'year_id', 'created_at', 'updated_at', 'import_code', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'SubjectId', 'SchoolclassId', 'YearId', 'State', 'EvaluationCriteria', 'CreatedAt', 'UpdatedAt', 'ImportCode', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'subjectId', 'schoolclassId', 'yearId', 'state', 'evaluationCriteria', 'createdAt', 'updatedAt', 'importCode', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::SUBJECT_ID, self::SCHOOLCLASS_ID, self::YEAR_ID, self::STATE, self::EVALUATION_CRITERIA, self::CREATED_AT, self::UPDATED_AT, self::IMPORT_CODE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'subject_id', 'schoolclass_id', 'year_id', 'state', 'evaluation_criteria', 'created_at', 'updated_at', 'import_code', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'SubjectId' => 2, 'SchoolclassId' => 3, 'YearId' => 4, 'CreatedAt' => 5, 'UpdatedAt' => 6, 'ImportCode' => 7, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'subjectId' => 2, 'schoolclassId' => 3, 'yearId' => 4, 'createdAt' => 5, 'updatedAt' => 6, 'importCode' => 7, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::SUBJECT_ID => 2, self::SCHOOLCLASS_ID => 3, self::YEAR_ID => 4, self::CREATED_AT => 5, self::UPDATED_AT => 6, self::IMPORT_CODE => 7, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'subject_id' => 2, 'schoolclass_id' => 3, 'year_id' => 4, 'created_at' => 5, 'updated_at' => 6, 'import_code' => 7, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'SubjectId' => 2, 'SchoolclassId' => 3, 'YearId' => 4, 'State' => 5, 'EvaluationCriteria' => 6, 'CreatedAt' => 7, 'UpdatedAt' => 8, 'ImportCode' => 9, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'subjectId' => 2, 'schoolclassId' => 3, 'yearId' => 4, 'state' => 5, 'evaluationCriteria' => 6, 'createdAt' => 7, 'updatedAt' => 8, 'importCode' => 9, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::SUBJECT_ID => 2, self::SCHOOLCLASS_ID => 3, self::YEAR_ID => 4, self::STATE => 5, self::EVALUATION_CRITERIA => 6, self::CREATED_AT => 7, self::UPDATED_AT => 8, self::IMPORT_CODE => 9, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'subject_id' => 2, 'schoolclass_id' => 3, 'year_id' => 4, 'state' => 5, 'evaluation_criteria' => 6, 'created_at' => 7, 'updated_at' => 8, 'import_code' => 9, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	
@@ -114,6 +120,10 @@ abstract class BaseAppointmentPeer {
 		$criteria->addSelectColumn(AppointmentPeer::SCHOOLCLASS_ID);
 
 		$criteria->addSelectColumn(AppointmentPeer::YEAR_ID);
+
+		$criteria->addSelectColumn(AppointmentPeer::STATE);
+
+		$criteria->addSelectColumn(AppointmentPeer::EVALUATION_CRITERIA);
 
 		$criteria->addSelectColumn(AppointmentPeer::CREATED_AT);
 

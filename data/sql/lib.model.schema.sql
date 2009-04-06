@@ -122,6 +122,8 @@ CREATE TABLE `appointment`
 	`subject_id` INTEGER  NOT NULL,
 	`schoolclass_id` VARCHAR(5)  NOT NULL,
 	`year_id` INTEGER  NOT NULL,
+	`state` INTEGER,
+	`evaluation_criteria` TEXT,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	`import_code` VARCHAR(20),

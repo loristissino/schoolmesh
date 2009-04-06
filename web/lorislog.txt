@@ -1,1 +1,16 @@
-no exception thrown...2019
+Array
+(
+    [user_id] => 
+    [subject_id] => 
+    [schoolclass_id] => 
+    [year_id] => 
+    [state] => Array
+        (
+            [text] => 30
+        )
+
+    [evaluation_criteria] => 
+    [created_at] => 
+    [updated_at] => 
+    [import_code] => 
+)
