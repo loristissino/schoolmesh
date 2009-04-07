@@ -10,13 +10,13 @@ Appointment:
     subject_id: ast
     schoolclass_id: 3ap
     year_id:         200809
-    state: 1
+    state: 0
   test_ast_4ap_10:
     user_id: testteacher
     subject_id: ast
     schoolclass_id: 4ap
     year_id:         200809
-    state: 10
+    state: 00
   test_ast_5ap_20:
     user_id: testteacher
     subject_id: ast
@@ -52,14 +52,14 @@ Appointment:
     user_id: loris
     subject_id:      lig
     schoolclass_id:  3ap
-    state: 1
+    state: 0
     year_id:         200809
 
   loris_lig_3ap_b:
     user_id: loris
     subject_id:      lig
     schoolclass_id:  3ap
-    state: 1
+    state: 0
     year_id:         200910
 
 
@@ -67,28 +67,28 @@ Appointment:
     user_id:         loris
     subject_id:      lig
     schoolclass_id:  4ap
-    state: 1
+    state: 0
     year_id:         200809
 
   loris_lig_5ap:
     user_id:         loris
     subject_id:      lig
     schoolclass_id:  5ap
-    state: 1
+    state: 0
     year_id:         200809
 
   flavia_mat_3ap:
     user_id:         flavia
     subject_id:      mat
     schoolclass_id:  3ap
-    state: 1
+    state: 0
     year_id:         200809
 
   flavia_mat_4ap:
     user_id:         flavia
     subject_id:      mat
     schoolclass_id:  4ap
-    state: 1
+    state: 0
     year_id:         200809
 
   flavia_mat_5ap:
@@ -101,14 +101,14 @@ Appointment:
     user_id:         francesco
     subject_id:      inf
     schoolclass_id:  3bp
-    state: 1
+    state: 0
     year_id:         200809
 
   francesco_inf_4bp_a:
     user_id:         francesco
     subject_id:      inf
     schoolclass_id:  4bp
-    state: 1
+    state: 0
     year_id:         200809
 
   francesco_inf_5bp_a:
@@ -121,7 +121,7 @@ Appointment:
     user_id:         francesco
     subject_id:      inf
     schoolclass_id:  3bp
-    state: 1
+    state: 0
     year_id:         200910
 
   francesco_inf_4bp_b:

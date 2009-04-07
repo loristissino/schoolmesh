@@ -52,36 +52,12 @@ sfGuardPermission:
   planning:
     name:           planning
     description:    Pianificazione didattica
-  wp_view:
-    name:           wp_view
-    description:    Visualizzazione dei piani di lavoro consegnati
-  wp_adm_ok:
-    name:           wp_adm_ok
-    description:    Approvazione amministrativa dei piani di lavoro
-  wp_adm_no:
-    name:           wp_adm_no
-    description:    Rifiuto amministrativo dei piani di lavoro
-  wp_sm_ok:
-    name:           wp_sm_ok
-    description:    Approvazione dei piani di lavoro
-  wp_sm_no:
-    name:           wp_sm_no
-    description:    Rifiuto dei piani di lavoro
-  fr_view:
-    name:           fr_view
-    description:    Visualizzazione delle relazioni finali consegnate
-  fr_adm_ok:
-    name:           fr_adm_ok
-    description:    Approvazione amministrativa delle relazioni finali
-  fr_adm_no:
-    name:           fr_adm_no
-    description:    Rifiuto amministrativo delle relazioni finali
-  fr_sm_ok:
-    name:           fr_sm_ok
-    description:   Approvazione delle relazioni finali
-  fr_sm_no:
-    name:           fr_sm_no
-    description:   Rifiuto delle relazioni finali
+  schoolmaster:
+    name:           schoolmaster
+    description:    Permessi del Dirigente Scolastico
+  office:
+    name:           office
+    description:    Permessi della Segreteria didattica
   internet:
     name:           internet
     description:    Gestione accesso a Internet
@@ -119,7 +95,9 @@ sfGuardGroup:
   schoolmasterteam:
     name:           schoolmasterteam
     description:   Gruppo Collaboratori del Dirigente Scolastico
-
+  officeteam:
+    name:           officeteam
+    description:   Segreteria didattica
 
 
 sfGuardGroupPermission:
@@ -138,30 +116,12 @@ sfGuardGroupPermission:
   technician_project:
     group_id:       technician
     permission_id:  project
-  smt_wp_adm_ok:
+  smt_schoolmaster:
     group_id:       schoolmasterteam
-    permission_id:  wp_adm_ok
-  smt_wp_adm_no:
-    group_id:       schoolmasterteam
-    permission_id:  wp_adm_no
-  smt_wp_sm_ok:
-    group_id:       schoolmasterteam
-    permission_id:  wp_sm_ok
-  smt_wp_sm_no:
-    group_id:       schoolmasterteam
-    permission_id:  wp_sm_no
-  smt_fr_adm_ok:
-    group_id:       schoolmasterteam
-    permission_id:  fr_adm_ok
-  smt_fr_adm_no:
-    group_id:       schoolmasterteam
-    permission_id:  fr_adm_no
-  smt_fr_sm_ok:
-    group_id:       schoolmasterteam
-    permission_id:  fr_sm_ok
-  smt_fr_sm_no:
-    group_id:       schoolmasterteam
-    permission_id:  fr_sm_no
+    permission_id:  schoolmaster
+  office_office:
+    group_id:      officeteam
+    permission_id:  office
 
 
 sfGuardUserGroup:
@@ -195,6 +155,18 @@ sfGuardUserGroup:
   antonio:
     group_id:      schoolmasterteam
     user_id:        antonio
+  gabriella:
+    group_id:      officeteam
+    user_id:         gabriella
+  tt_smt:
+    group_id:      schoolmasterteam
+    user_id:        testteacher
+  tt_ot:
+    group_id:      officeteam
+    user_id:         testteacher
+  tt_teacher:
+    group_id:       teacher
+    user_id:        testteacher
 
   
   
