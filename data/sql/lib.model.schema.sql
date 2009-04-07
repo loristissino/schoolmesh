@@ -123,7 +123,6 @@ CREATE TABLE `appointment`
 	`schoolclass_id` VARCHAR(5)  NOT NULL,
 	`year_id` INTEGER  NOT NULL,
 	`state` INTEGER,
-	`evaluation_criteria` TEXT,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	`import_code` VARCHAR(20),
@@ -272,6 +271,47 @@ CREATE TABLE `wpevent`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON DELETE RESTRICT
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- wpinfo_type
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `wpinfo_type`;
+
+
+CREATE TABLE `wpinfo_type`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`title` VARCHAR(50),
+	`description` VARCHAR(200),
+	`rank` INTEGER  NOT NULL,
+	`state` INTEGER,
+	PRIMARY KEY (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- wpinfo
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `wpinfo`;
+
+
+CREATE TABLE `wpinfo`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`appointment_id` INTEGER,
+	`wpinfo_type_id` INTEGER,
+	`content` TEXT,
+	PRIMARY KEY (`id`),
+	INDEX `wpinfo_FI_1` (`appointment_id`),
+	CONSTRAINT `wpinfo_FK_1`
+		FOREIGN KEY (`appointment_id`)
+		REFERENCES `appointment` (`id`),
+	INDEX `wpinfo_FI_2` (`wpinfo_type_id`),
+	CONSTRAINT `wpinfo_FK_2`
+		FOREIGN KEY (`wpinfo_type_id`)
+		REFERENCES `wpinfo_type` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

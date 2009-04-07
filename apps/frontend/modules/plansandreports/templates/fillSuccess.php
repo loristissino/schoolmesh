@@ -4,7 +4,7 @@
 
 
 
-<h2><?php echo __("General information") ?></h2>
+<h2><?php echo __("Basic information") ?></h2>
 <?php $state = $workflow_logs[0]->getState() ?>
 <p><?php include_partial('state', array('state' => $state, 'steps' => $steps, 'size'=>'')) ?></p>
 <ul>
@@ -28,6 +28,11 @@
 				)?>
 	</li>
 	</ul>
+<hr />
+
+<h2><?php echo __('Details, comments, general information') ?></h2>
+
+<?php include_partial('infos', array('wpinfos' => $wpinfos, 'state' => $state)) ?>
 
 <hr />
 
@@ -46,6 +51,11 @@
 	</ul>
 
 <hr />
+
+
+
+
+
 
 <h2><?php echo __("Workflow") ?></h2>
 

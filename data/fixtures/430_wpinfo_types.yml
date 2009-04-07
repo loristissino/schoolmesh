@@ -1,0 +1,16 @@
+WpinfoType:
+  wpsituation:
+    title:        Situazione generale della classe
+    description:  Commenti ed osservazioni in fase di progettazione generale
+    rank:   1
+    state:  0
+  wpcomment:
+    title:        Commenti ed osservazioni
+    description:  Commenti ed osservazioni in fase di progettazione generale
+    rank:   2
+    state:  0
+  wpconsiderations:
+    title:        Considerazioni finali
+    description:  Commenti ed osservazioni in fase di relazione finale
+    rank:   3
+    state:  40
