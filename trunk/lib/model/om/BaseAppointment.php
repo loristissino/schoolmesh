@@ -28,9 +28,6 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	protected $state;
 
 	
-	protected $evaluation_criteria;
-
-	
 	protected $created_at;
 
 	
@@ -56,6 +53,12 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 
 	
 	private $lastWpeventCriteria = null;
+
+	
+	protected $collWpinfos;
+
+	
+	private $lastWpinfoCriteria = null;
 
 	
 	protected $collWpmodules;
@@ -115,12 +118,6 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	public function getState()
 	{
 		return $this->state;
-	}
-
-	
-	public function getEvaluationCriteria()
-	{
-		return $this->evaluation_criteria;
 	}
 
 	
@@ -284,20 +281,6 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
-	public function setEvaluationCriteria($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->evaluation_criteria !== $v) {
-			$this->evaluation_criteria = $v;
-			$this->modifiedColumns[] = AppointmentPeer::EVALUATION_CRITERIA;
-		}
-
-		return $this;
-	} 
-	
 	public function setCreatedAt($v)
 	{
 						if ($v === null || $v === '') {
@@ -395,10 +378,9 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			$this->schoolclass_id = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->year_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
 			$this->state = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
-			$this->evaluation_criteria = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->created_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->updated_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-			$this->import_code = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->created_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->updated_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->import_code = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -407,7 +389,7 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 10; 
+						return $startcol + 9; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Appointment object", $e);
 		}
@@ -460,6 +442,9 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			$this->aYear = null;
 			$this->collWpevents = null;
 			$this->lastWpeventCriteria = null;
+
+			$this->collWpinfos = null;
+			$this->lastWpinfoCriteria = null;
 
 			$this->collWpmodules = null;
 			$this->lastWpmoduleCriteria = null;
@@ -580,6 +565,14 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collWpinfos !== null) {
+				foreach ($this->collWpinfos as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collWpmodules !== null) {
 				foreach ($this->collWpmodules as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -664,6 +657,14 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 					}
 				}
 
+				if ($this->collWpinfos !== null) {
+					foreach ($this->collWpinfos as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
 				if ($this->collWpmodules !== null) {
 					foreach ($this->collWpmodules as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
@@ -710,15 +711,12 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 				return $this->getState();
 				break;
 			case 6:
-				return $this->getEvaluationCriteria();
-				break;
-			case 7:
 				return $this->getCreatedAt();
 				break;
-			case 8:
+			case 7:
 				return $this->getUpdatedAt();
 				break;
-			case 9:
+			case 8:
 				return $this->getImportCode();
 				break;
 			default:
@@ -737,10 +735,9 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			$keys[3] => $this->getSchoolclassId(),
 			$keys[4] => $this->getYearId(),
 			$keys[5] => $this->getState(),
-			$keys[6] => $this->getEvaluationCriteria(),
-			$keys[7] => $this->getCreatedAt(),
-			$keys[8] => $this->getUpdatedAt(),
-			$keys[9] => $this->getImportCode(),
+			$keys[6] => $this->getCreatedAt(),
+			$keys[7] => $this->getUpdatedAt(),
+			$keys[8] => $this->getImportCode(),
 		);
 		return $result;
 	}
@@ -775,15 +772,12 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 				$this->setState($value);
 				break;
 			case 6:
-				$this->setEvaluationCriteria($value);
-				break;
-			case 7:
 				$this->setCreatedAt($value);
 				break;
-			case 8:
+			case 7:
 				$this->setUpdatedAt($value);
 				break;
-			case 9:
+			case 8:
 				$this->setImportCode($value);
 				break;
 		} 	}
@@ -799,10 +793,9 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setSchoolclassId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setYearId($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setState($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setEvaluationCriteria($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setUpdatedAt($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setImportCode($arr[$keys[9]]);
+		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setUpdatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setImportCode($arr[$keys[8]]);
 	}
 
 	
@@ -816,7 +809,6 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(AppointmentPeer::SCHOOLCLASS_ID)) $criteria->add(AppointmentPeer::SCHOOLCLASS_ID, $this->schoolclass_id);
 		if ($this->isColumnModified(AppointmentPeer::YEAR_ID)) $criteria->add(AppointmentPeer::YEAR_ID, $this->year_id);
 		if ($this->isColumnModified(AppointmentPeer::STATE)) $criteria->add(AppointmentPeer::STATE, $this->state);
-		if ($this->isColumnModified(AppointmentPeer::EVALUATION_CRITERIA)) $criteria->add(AppointmentPeer::EVALUATION_CRITERIA, $this->evaluation_criteria);
 		if ($this->isColumnModified(AppointmentPeer::CREATED_AT)) $criteria->add(AppointmentPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(AppointmentPeer::UPDATED_AT)) $criteria->add(AppointmentPeer::UPDATED_AT, $this->updated_at);
 		if ($this->isColumnModified(AppointmentPeer::IMPORT_CODE)) $criteria->add(AppointmentPeer::IMPORT_CODE, $this->import_code);
@@ -860,8 +852,6 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 
 		$copyObj->setState($this->state);
 
-		$copyObj->setEvaluationCriteria($this->evaluation_criteria);
-
 		$copyObj->setCreatedAt($this->created_at);
 
 		$copyObj->setUpdatedAt($this->updated_at);
@@ -874,6 +864,11 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 
 			foreach ($this->getWpevents() as $relObj) {
 				if ($relObj !== $this) {  					$copyObj->addWpevent($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getWpinfos() as $relObj) {
+				if ($relObj !== $this) {  					$copyObj->addWpinfo($relObj->copy($deepCopy));
 				}
 			}
 
@@ -1168,6 +1163,142 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	}
 
 	
+	public function clearWpinfos()
+	{
+		$this->collWpinfos = null; 	}
+
+	
+	public function initWpinfos()
+	{
+		$this->collWpinfos = array();
+	}
+
+	
+	public function getWpinfos($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWpinfos === null) {
+			if ($this->isNew()) {
+			   $this->collWpinfos = array();
+			} else {
+
+				$criteria->add(WpinfoPeer::APPOINTMENT_ID, $this->id);
+
+				WpinfoPeer::addSelectColumns($criteria);
+				$this->collWpinfos = WpinfoPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WpinfoPeer::APPOINTMENT_ID, $this->id);
+
+				WpinfoPeer::addSelectColumns($criteria);
+				if (!isset($this->lastWpinfoCriteria) || !$this->lastWpinfoCriteria->equals($criteria)) {
+					$this->collWpinfos = WpinfoPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastWpinfoCriteria = $criteria;
+		return $this->collWpinfos;
+	}
+
+	
+	public function countWpinfos(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collWpinfos === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(WpinfoPeer::APPOINTMENT_ID, $this->id);
+
+				$count = WpinfoPeer::doCount($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WpinfoPeer::APPOINTMENT_ID, $this->id);
+
+				if (!isset($this->lastWpinfoCriteria) || !$this->lastWpinfoCriteria->equals($criteria)) {
+					$count = WpinfoPeer::doCount($criteria, $con);
+				} else {
+					$count = count($this->collWpinfos);
+				}
+			} else {
+				$count = count($this->collWpinfos);
+			}
+		}
+		$this->lastWpinfoCriteria = $criteria;
+		return $count;
+	}
+
+	
+	public function addWpinfo(Wpinfo $l)
+	{
+		if ($this->collWpinfos === null) {
+			$this->initWpinfos();
+		}
+		if (!in_array($l, $this->collWpinfos, true)) { 			array_push($this->collWpinfos, $l);
+			$l->setAppointment($this);
+		}
+	}
+
+
+	
+	public function getWpinfosJoinWpinfoType($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWpinfos === null) {
+			if ($this->isNew()) {
+				$this->collWpinfos = array();
+			} else {
+
+				$criteria->add(WpinfoPeer::APPOINTMENT_ID, $this->id);
+
+				$this->collWpinfos = WpinfoPeer::doSelectJoinWpinfoType($criteria, $con, $join_behavior);
+			}
+		} else {
+									
+			$criteria->add(WpinfoPeer::APPOINTMENT_ID, $this->id);
+
+			if (!isset($this->lastWpinfoCriteria) || !$this->lastWpinfoCriteria->equals($criteria)) {
+				$this->collWpinfos = WpinfoPeer::doSelectJoinWpinfoType($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastWpinfoCriteria = $criteria;
+
+		return $this->collWpinfos;
+	}
+
+	
 	public function clearWpmodules()
 	{
 		$this->collWpmodules = null; 	}
@@ -1312,6 +1443,11 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collWpinfos) {
+				foreach ((array) $this->collWpinfos as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->collWpmodules) {
 				foreach ((array) $this->collWpmodules as $o) {
 					$o->clearAllReferences($deep);
@@ -1319,6 +1455,7 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			}
 		} 
 		$this->collWpevents = null;
+		$this->collWpinfos = null;
 		$this->collWpmodules = null;
 			$this->asfGuardUser = null;
 			$this->aSubject = null;

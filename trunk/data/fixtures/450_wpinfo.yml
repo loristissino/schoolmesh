@@ -1,0 +1,13 @@
+Wpinfo:
+  test_ast_3ap_0_a:
+    appointment_id: test_ast_3ap_0
+    wpinfo_type_id:  wpsituation
+    content:  La classe è meravigliosa!
+  test_ast_3ap_0_b:
+    appointment_id: test_ast_3ap_0
+    wpinfo_type_id:  wpcomment
+    content: Aderisco al progetto CLIL.
+  test_ast_3ap_0_c:
+    appointment_id: test_ast_3ap_0
+    wpinfo_type_id:  wpconsiderations
+    content: 

@@ -57,7 +57,6 @@ propel:
     schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, required: true }
     year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, required: true }
     state:             { type: integer }
-    evaluation_criteria:      longvarchar
     created_at:   
     updated_at:
     import_code:  varchar(20)
@@ -150,6 +149,21 @@ propel:
 #        -- approve    ** goes to 70
 #  70: FINAL REPORT APPROVED AND ARCHIVED
 
+  wpinfo_type:
+    id:          ~
+    title:        varchar(50)
+    description:  varchar(200)
+    rank:    { type: integer, required: true }
+    state:  integer
+# state indicates in which of workplan's state this item type should be shown
+
+
+  wpinfo:
+    id: ~
+    appointment_id:   ~
+    wpinfo_type_id:  ~
+    content:   longvarchar
+
   wpmodule:
     id:         ~
     user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict }
@@ -160,7 +174,9 @@ propel:
     is_public:    boolean
     created_at:   ~
     updated_at:   ~
-      
+
+
+
   wpitem_type:
     id:          ~
     title:        varchar(50)
@@ -171,7 +187,7 @@ propel:
     evaluation_max:  integer
     evaluation_min_description: varchar(50)
     evaluation_max_description: varchar(50)
-# status indicates in which of workplan's status this item type should be shown
+# state indicates in which of workplan's state this item type should be shown
 
   wpitem_group:
     id:           ~

@@ -45,6 +45,8 @@ class plansandreportsActions extends sfActions
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->workplan);
 	
+	$this->wpinfos = $this->workplan->getWpinfos();
+	
 	$this->workflow_logs = $this->workplan->getWorkflowLogs();
 	$this->steps = Workflow::getWpfrSteps();
 

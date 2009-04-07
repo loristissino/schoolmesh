@@ -20,7 +20,7 @@ Period:
 
 <?php foreach($item_groups as $item_group): ?>
 
-	<?php if($wpstate>=$item_group->getWpitemType()->getState()): ?>
+	<?php if($wpstate>=$item_group->getWpitemType()->getState()==Workflow::WP_DRAFT): ?>
 		<?php include_partial('group', array('item_group' => $item_group, 'wpstate' => $wpstate)) ?>
 	<?php endif ?>
 <?php endforeach ?>
