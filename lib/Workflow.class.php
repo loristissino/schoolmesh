@@ -1,10 +1,18 @@
 <?php 
 class Workflow
 {
+	const 	WP_DRAFT = 0;
+	const 	WP_WADMC = 10;
+	const 	WP_WSMC = 20;
+	const 	IR_DRAFT = 30;
+	const 	IR_WSMC = 40;
+	const 	FR_WADMC = 50;
+	const 	FR_WSMC = 60;
+	const 	FR_ARCHIVED = 70;
 	
 	static private $wpfrSteps=Array(
 
-	1 => Array(
+	self::WP_DRAFT => Array(
 		'stateDescription'=>"draft",
 		'owner' => Array(
 			'viewAction'=>"fill",
@@ -12,12 +20,12 @@ class Workflow
 			'submitAction'=>"submit",
 			'submitDisplayedAction'=>'Submit this workplan for approval',
 			'submitDoneAction'=>'Workplan submitted for approval.',
-			'submitNextState'=>10,
+			'submitNextState'=>self::WP_WADMC,
 			),
 		'actions' => Array()
 		),
 	
-	10=>Array(
+	self::WP_WADMC=>Array(
 		'stateDescription'=>"workplan waiting for administrative check",
 		'owner' => Array(
 			'viewAction'=>"view",
@@ -25,16 +33,16 @@ class Workflow
 			'submitAction'=>"",
 			'submitDisplayedAction'=>'',
 			'submitDoneAction'=>'',
-			'submitNextState'=>10,
+			'submitNextState'=>self::WP_WADMC,
 			),
 		'actions' => Array(
 			'approve' => Array(
-				'permission'=>'wp_adm_ok',
+				'permission'=>'schoolmaster',
 				'submitDisplayedAction'=>'Approve&nbsp;workplan',
 				'submitDoneAction'=>'Workplan administratively checked.',
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
-				'submitNextState'=>20,
+				'submitNextState'=>self::WP_WSMC,
 				),
 			'reject' => Array(
 				'permission'=>'wp_adm_no',
@@ -42,12 +50,12 @@ class Workflow
 				'submitDoneAction'=>'Workplan administratively rejected.',
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
-				'submitNextState'=>1,
+				'submitNextState'=>self::WP_DRAFT,
 				),
 			)
 		),
 	
-	20=>Array(
+	self::WP_WSMC=>Array(
 		'stateDescription'=>"workplan waiting for schoolmaster's approval",
 		'owner' => Array(
 			'viewAction'=>"view",
@@ -55,7 +63,7 @@ class Workflow
 			'submitAction'=>"",
 			'submitDisplayedAction'=>'',
 			'submitDoneAction'=>'',
-			'submitNextState'=>20,
+			'submitNextState'=>self::WP_WSMC,
 			),
 		'actions' => Array(
 			'approve' => Array(
@@ -64,7 +72,7 @@ class Workflow
 				'submitDoneAction'=>'Workplan approved.',
 				'submitExtraAction'=>'markSubItems',
 				'submitExtraParameters'=>'false',
-				'submitNextState'=>30,
+				'submitNextState'=>self::IR_DRAFT,
 				),
 			'reject' => Array(
 				'permission'=>"wp_sm_no",
@@ -72,12 +80,12 @@ class Workflow
 				'submitDoneAction'=>'Workplan rejected.',
 				'submitExtraAction'=>'markSubItems',
 				'submitExtraParameters'=>'true',
-				'submitNextState'=>0,
+				'submitNextState'=>self::WP_DRAFT,
 				),
 		),
 	),
 	
-	30=>Array(
+	self::IR_DRAFT=>Array(
 		'stateDescription'=>"intermediate / final report",
 		'owner' => Array(
 			'viewAction'=>"fill",
@@ -85,12 +93,12 @@ class Workflow
 			'submitAction'=>"submit",
 			'submitDisplayedAction'=>'Submit this report',
 			'submitDoneAction'=>'Report submitted for approval',
-			'submitNextState'=>50,
+			'submitNextState'=>self::FR_WADMC,
 			),
 		'actions' => Array(),
 	),
 	
-	40=>Array(
+	self::IR_WSMC=>Array(
 		'stateDescription'=>"intermediate report waiting for schoolmaster's evaluation",
 		'owner' => Array(
 			'viewAction'=>"view",
@@ -98,12 +106,12 @@ class Workflow
 			'submitAction'=>"",
 			'submitDisplayedAction'=>'',
 			'submitDoneAction'=>'',
-			'submitNextState'=>40,
+			'submitNextState'=>self::IR_WSMC,
 			),
 		'actions' => Array()
 		),
 		
-	50=>Array(
+	self::FR_WADMC=>Array(
 		'stateDescription'=>"final report waiting for administrative check",
 		'owner' => Array(
 			'viewAction'=>"view",
@@ -111,7 +119,7 @@ class Workflow
 			'submitAction'=>"",
 			'submitDisplayedAction'=>'',
 			'submitDoneAction'=>'',
-			'submitNextState'=>50,
+			'submitNextState'=>self::FR_WADMC,
 			),
 		'actions' => Array(
 			'approve' => Array(
@@ -120,7 +128,7 @@ class Workflow
 				'submitDoneAction'=>'Report administratively checked.',
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
-				'submitNextState'=>60,
+				'submitNextState'=>self::FR_WSMC,
 				),
 			'reject' => Array(
 				'permission'=>'fr_adm_no',
@@ -128,12 +136,12 @@ class Workflow
 				'submitDoneAction'=>'Report adminisratively rejected.',
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
-				'submitNextState'=>30,
+				'submitNextState'=>self::IR_DRAFT,
 				),
 		)
 	),
 
-	60=>Array(
+	self::FR_WSMC=>Array(
 		'stateDescription'=>"final report waiting for schoolmaster's evaluation",
 		'owner' => Array(
 			'viewAction'=>"view",
@@ -141,7 +149,7 @@ class Workflow
 			'submitAction'=>"",
 			'submitDisplayedAction'=>'',
 			'submitDoneAction'=>'',
-			'submitNextState'=>60,
+			'submitNextState'=>self::FR_WSMC,
 			),
 		'actions' => Array(
 			'approve' => Array(
@@ -150,7 +158,7 @@ class Workflow
 				'submitDoneAction'=>'Report approved.',
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
-				'submitNextState'=>70,
+				'submitNextState'=>self::FR_ARCHIVED,
 				),
 			'reject' => Array(
 				'permission'=>'fr_sm_no',
@@ -158,12 +166,12 @@ class Workflow
 				'submitDoneAction'=>'Report rejected.',
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
-				'submitNextState'=>30,
+				'submitNextState'=>self::IR_DRAFT,
 				),
 		)
 	),
 
-	70=>Array(
+	self::FR_ARCHIVED=>Array(
 		'stateDescription'=>"final report approved and archived",
 		'owner' => Array(
 			'viewAction'=>"view",
@@ -171,7 +179,7 @@ class Workflow
 			'submitAction'=>"",
 			'submitDisplayedAction'=>'',
 			'submitDoneAction'=>'',
-			'submitNextState'=>70,
+			'submitNextState'=>self::FR_ARCHIVED,
 			),
 		'actions' => Array()
 	)

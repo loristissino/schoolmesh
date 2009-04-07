@@ -1,3 +1,11 @@
+schoolmaster:
+  url: schoolmaster
+  param: { module: schoolmaster, action: index } 
+
+office:
+  url: office
+  param: { module: office, action: index } 
+
 submit:
   url: plansandreports/:id/submit.html
   param: { module: plansandreports, action: wpsubmit } 
