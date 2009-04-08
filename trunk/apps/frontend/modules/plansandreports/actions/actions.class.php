@@ -32,6 +32,41 @@ class plansandreportsActions extends sfActions
 
 	}
 
+	public function executeRemovetool(sfWebRequest $request)
+	{
+    $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
+		
+    $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+	
+	$result=$workplan->removeTool($this->getUser()->getProfile()->getSfGuardUser()->getId(), $request->getParameter('tool'));
+	
+	$this->getUser()->setFlash($result['result'], $result['message']);
+	
+	$tools=$workplan->getTools();
+
+
+	return $this->renderPartial('aux', array('tools'=>$tools, 'workplan'=>$workplan));
+
+	}
+
+	public function executeAddtool(sfWebRequest $request)
+	{
+    $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
+		
+    $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+	
+	$result=$workplan->addTool($this->getUser()->getProfile()->getSfGuardUser()->getId(), $request->getParameter('tool'));
+	
+	$this->getUser()->setFlash($result['result'], $result['message']);
+	
+	$tools=$workplan->getTools();
+
+
+	return $this->renderPartial('aux', array('tools'=>$tools, 'workplan'=>$workplan));
+
+	}
+
+
 
   public function executeEditInLine(sfWebRequest $request)
 {
@@ -46,6 +81,8 @@ class plansandreportsActions extends sfActions
     $this->forward404Unless($this->workplan);
 	
 	$this->wpinfos = $this->workplan->getWpinfos();
+	
+	$this->tools = $this->workplan->getTools();
 	
 	$this->workflow_logs = $this->workplan->getWorkflowLogs();
 	$this->steps = Workflow::getWpfrSteps();

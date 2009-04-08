@@ -31,8 +31,8 @@
 	  <td><?php echo $workplan->countWpmodules() ?></td>
 	  <?php $lastlog=$workplan->getLastLog() ?>  
 	  <td><?php echo $lastlog->getCreatedAt() ?></td>
-	  <td><?php include_partial('state', array('state' => $lastlog->getState(), 'steps' => $steps, 'size'=>'r')) ?></td>
-	  <td><?php include_partial('action', array('lastlog' => $lastlog, 'workplan' => $workplan, 'steps' => $steps)) ?></td>
+	  <td><?php include_partial('state', array('state' => $workplan->getState(), 'steps' => $steps, 'size'=>'r')) ?></td>
+	  <td><?php include_partial('action', array('workplan' => $workplan, 'steps' => $steps)) ?></td>
  	
 	</td>
     </tr>

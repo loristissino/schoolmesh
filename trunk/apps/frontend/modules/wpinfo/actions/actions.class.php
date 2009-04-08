@@ -36,22 +36,15 @@ class wpinfoActions extends sfActions
     $this->forward404Unless($wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
     //$this->form = new WpinfoForm($wpinfo);
 	$this->wpinfo=$wpinfo;
+	$this->type=$wpinfo->getWpinfoType();
   }
 
   public function executeUpdate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
     $this->forward404Unless($wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
-//    $this->form = new WpinfoForm($wpinfo);
 
-//    $this->processForm($request, $this->form);
-
-//    $this->setTemplate('edit');
-
-//    AGGIUNGERE IL CONTROLLO COME QUI:
-//  $wpinfo->setContent($this->checkedValue($request->getParameter('value')));
-
-  $wpinfo->setContent($request->getParameter('value'));
+    $wpinfo->setContent($request->getParameter('value'));
 
 	$this->getUser()->setFlash('notice_info', sprintf('The item was updated'));
 

@@ -315,6 +315,63 @@ CREATE TABLE `wpinfo`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- wptool_item_type
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `wptool_item_type`;
+
+
+CREATE TABLE `wptool_item_type`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`description` VARCHAR(50),
+	`rank` INTEGER,
+	PRIMARY KEY (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- wptool_item
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `wptool_item`;
+
+
+CREATE TABLE `wptool_item`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`description` VARCHAR(50),
+	`wptool_item_type_id` INTEGER,
+	PRIMARY KEY (`id`),
+	INDEX `wptool_item_FI_1` (`wptool_item_type_id`),
+	CONSTRAINT `wptool_item_FK_1`
+		FOREIGN KEY (`wptool_item_type_id`)
+		REFERENCES `wptool_item_type` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- wptool_appointment
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `wptool_appointment`;
+
+
+CREATE TABLE `wptool_appointment`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`appointment_id` INTEGER,
+	`wptool_item_id` INTEGER,
+	PRIMARY KEY (`id`),
+	INDEX `wptool_appointment_FI_1` (`appointment_id`),
+	CONSTRAINT `wptool_appointment_FK_1`
+		FOREIGN KEY (`appointment_id`)
+		REFERENCES `appointment` (`id`),
+	INDEX `wptool_appointment_FI_2` (`wptool_item_id`),
+	CONSTRAINT `wptool_appointment_FK_2`
+		FOREIGN KEY (`wptool_item_id`)
+		REFERENCES `wptool_item` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- wpmodule
 #-----------------------------------------------------------------------------
 

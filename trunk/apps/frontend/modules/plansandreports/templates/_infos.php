@@ -18,7 +18,7 @@
 	<?php if($state >= $wpinfo->getWpinfoType()->getState()): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <th><?php echo $wpinfo->getWpinfoType()->getTitle() ?></th>
-      <td><?php echo $wpinfo->getContent() ?></td>
+      <td><?php echo  html_entity_decode($wpinfo->getContent()) ?></td>
       <td>
 		<ul class="sf_admin_td_actions">
 			<li class="sf_admin_action_fill">
@@ -36,3 +36,4 @@
    <?php endforeach; ?>
   </tbody>
 </table>
+</div>
