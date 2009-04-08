@@ -1,7 +1,8 @@
-<h1>Edit Wpmoduleitem</h1>
+<h1>Edit Wpinfo</h1>
 <?php use_helper('Javascript') ?>
 <?php use_javascript('tiny_mce/tiny_mce.js') ?>
-<?php //include_partial('form', array('form' => $form)) ?>
+<h2><?php echo $type->getTitle() ?></h2>
+<p><?php echo $type->getDescription() ?></p>
 
 <form action="<?php echo url_for('wpinfo/update?id='.$wpinfo->getId()) ?>" method="POST">
 

@@ -1,0 +1,93 @@
+WptoolItemType:
+  methodology:
+    description:  Metodologia di lavoro
+    rank: 1
+  exams:
+    description:  Tipologia delle verifiche
+    rank:  2
+  tools:
+    description:  Strumenti
+    rank: 3
+
+WptoolItem:
+  a1:
+    description: Lezione frontale
+    wptool_item_type_id: methodology
+  a2:
+    description: Lezione dialogate
+    wptool_item_type_id: methodology
+  a3:
+    description: Lavori di gruppo
+    wptool_item_type_id: methodology
+  a4:
+    description: Compiti a casa
+    wptool_item_type_id: methodology
+  a5:
+    description: Risoluzione di problemi
+    wptool_item_type_id: methodology
+  a6:
+    description: Problem posing
+    wptool_item_type_id: methodology
+  a7:
+    description: Ricerche
+    wptool_item_type_id: methodology
+
+  b1:
+    description: Test
+    wptool_item_type_id: exams
+  b2:
+    description: Domande alla classe
+    wptool_item_type_id: exams
+  b3:
+    description: Interrogazione
+    wptool_item_type_id: exams
+  b4:
+    description: Domande aperte
+    wptool_item_type_id: exams
+  b5:
+    description: Prove di laboratorio
+    wptool_item_type_id: exams
+  b6:
+    description: Relazioni scritte e orali
+    wptool_item_type_id: exams
+
+  c1:
+    description: Libri di testo
+    wptool_item_type_id: tools
+  c2:
+    description: Laboratorio informatico
+    wptool_item_type_id: tools
+  c3:
+    description: Lavagna luminosa
+    wptool_item_type_id: tools
+  c4:
+    description: Proiettore
+    wptool_item_type_id: tools
+  c5:
+    description: Help in linea
+    wptool_item_type_id: tools
+  c6:
+    description: Appunti delle lezioni
+    wptool_item_type_id: tools
+  c7:
+    description: Fotocopie
+    wptool_item_type_id: tools
+  c8:
+    description: Ricerche su Internet
+    wptool_item_type_id: tools
+  c10:
+    description: Calcolatrice
+    wptool_item_type_id: tools
+
+WptoolAppointment:
+  wptool_appointment_a2:
+    appointment_id:  test_ast_3ap_0
+    wptool_item_id:  a2
+
+  wptool_appointment_a3:
+    appointment_id:  test_ast_3ap_0
+    wptool_item_id:  a3
+
+  wptool_appointment_b4:
+    appointment_id:  test_ast_3ap_0
+    wptool_item_id:  b4

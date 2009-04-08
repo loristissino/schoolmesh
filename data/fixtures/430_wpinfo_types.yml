@@ -1,16 +1,31 @@
 WpinfoType:
   wpsituation:
-    title:        Situazione generale della classe
-    description:  Commenti ed osservazioni in fase di progettazione generale
+    title:        Livelli di partenza rilevati
+    description:  Situazione generale della classe
     rank:   1
     state:  0
-  wpcomment:
-    title:        Commenti ed osservazioni
-    description:  Commenti ed osservazioni in fase di progettazione generale
+  wppa:
+    title:        Area di progetto
+    description:  Eventuali proposte e contributi per l'Area di Progetto (solo Triennio)
     rank:   2
+    state:  0
+  wpextra:
+    title:        Attività extracurricolari
+    description:  Attività integrative ed extracurricolari previste
+    rank:   3
+    state:  0
+  wpcriteria:
+    title:        Valutazione
+    description:  Criteri e strumenti adottati per la valutazione
+    rank:   4
+    state:  0
+  wpadditionalclasses:
+    title:       Recupero
+    description:  Tempi e modalità per il recupero
+    rank:   5
     state:  0
   wpconsiderations:
     title:        Considerazioni finali
     description:  Commenti ed osservazioni in fase di relazione finale
-    rank:   3
+    rank:   6
     state:  40

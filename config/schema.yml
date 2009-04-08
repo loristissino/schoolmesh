@@ -164,6 +164,21 @@ propel:
     wpinfo_type_id:  ~
     content:   longvarchar
 
+  wptool_item_type:
+    id:         ~
+    description:  varchar(50);
+    rank:   integer
+
+  wptool_item:
+    id:   ~
+    description: varchar(50);
+    wptool_item_type_id: ~
+
+  wptool_appointment:
+    id:  ~
+    appointment_id:  ~
+    wptool_item_id:  ~
+
   wpmodule:
     id:         ~
     user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict }

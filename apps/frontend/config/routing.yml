@@ -13,6 +13,20 @@ submit:
     module:              plansandreports
     prefix_path:        plansandreports
 
+addtool:
+  url: plansandreports/addtool/:id/tool/:tool
+  param: { module: plansandreports, action: addtool } 
+  options:
+    module:              plansandreports
+    prefix_path:        plansandreports
+
+removetool:
+  url: plansandreports/removetool/:id/tool/:tool
+  param: { module: plansandreports, action: removetool } 
+  options:
+    module:              plansandreports
+    prefix_path:        plansandreports
+
 appointment:
   class: sfPropelRouteCollection
   options:

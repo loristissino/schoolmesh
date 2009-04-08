@@ -61,6 +61,12 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	private $lastWpinfoCriteria = null;
 
 	
+	protected $collWptoolAppointments;
+
+	
+	private $lastWptoolAppointmentCriteria = null;
+
+	
 	protected $collWpmodules;
 
 	
@@ -446,6 +452,9 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			$this->collWpinfos = null;
 			$this->lastWpinfoCriteria = null;
 
+			$this->collWptoolAppointments = null;
+			$this->lastWptoolAppointmentCriteria = null;
+
 			$this->collWpmodules = null;
 			$this->lastWpmoduleCriteria = null;
 
@@ -573,6 +582,14 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collWptoolAppointments !== null) {
+				foreach ($this->collWptoolAppointments as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collWpmodules !== null) {
 				foreach ($this->collWpmodules as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -659,6 +676,14 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 
 				if ($this->collWpinfos !== null) {
 					foreach ($this->collWpinfos as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collWptoolAppointments !== null) {
+					foreach ($this->collWptoolAppointments as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -869,6 +894,11 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 
 			foreach ($this->getWpinfos() as $relObj) {
 				if ($relObj !== $this) {  					$copyObj->addWpinfo($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getWptoolAppointments() as $relObj) {
+				if ($relObj !== $this) {  					$copyObj->addWptoolAppointment($relObj->copy($deepCopy));
 				}
 			}
 
@@ -1299,6 +1329,142 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	}
 
 	
+	public function clearWptoolAppointments()
+	{
+		$this->collWptoolAppointments = null; 	}
+
+	
+	public function initWptoolAppointments()
+	{
+		$this->collWptoolAppointments = array();
+	}
+
+	
+	public function getWptoolAppointments($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWptoolAppointments === null) {
+			if ($this->isNew()) {
+			   $this->collWptoolAppointments = array();
+			} else {
+
+				$criteria->add(WptoolAppointmentPeer::APPOINTMENT_ID, $this->id);
+
+				WptoolAppointmentPeer::addSelectColumns($criteria);
+				$this->collWptoolAppointments = WptoolAppointmentPeer::doSelect($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WptoolAppointmentPeer::APPOINTMENT_ID, $this->id);
+
+				WptoolAppointmentPeer::addSelectColumns($criteria);
+				if (!isset($this->lastWptoolAppointmentCriteria) || !$this->lastWptoolAppointmentCriteria->equals($criteria)) {
+					$this->collWptoolAppointments = WptoolAppointmentPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastWptoolAppointmentCriteria = $criteria;
+		return $this->collWptoolAppointments;
+	}
+
+	
+	public function countWptoolAppointments(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collWptoolAppointments === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(WptoolAppointmentPeer::APPOINTMENT_ID, $this->id);
+
+				$count = WptoolAppointmentPeer::doCount($criteria, $con);
+			}
+		} else {
+						if (!$this->isNew()) {
+												
+
+				$criteria->add(WptoolAppointmentPeer::APPOINTMENT_ID, $this->id);
+
+				if (!isset($this->lastWptoolAppointmentCriteria) || !$this->lastWptoolAppointmentCriteria->equals($criteria)) {
+					$count = WptoolAppointmentPeer::doCount($criteria, $con);
+				} else {
+					$count = count($this->collWptoolAppointments);
+				}
+			} else {
+				$count = count($this->collWptoolAppointments);
+			}
+		}
+		$this->lastWptoolAppointmentCriteria = $criteria;
+		return $count;
+	}
+
+	
+	public function addWptoolAppointment(WptoolAppointment $l)
+	{
+		if ($this->collWptoolAppointments === null) {
+			$this->initWptoolAppointments();
+		}
+		if (!in_array($l, $this->collWptoolAppointments, true)) { 			array_push($this->collWptoolAppointments, $l);
+			$l->setAppointment($this);
+		}
+	}
+
+
+	
+	public function getWptoolAppointmentsJoinWptoolItem($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWptoolAppointments === null) {
+			if ($this->isNew()) {
+				$this->collWptoolAppointments = array();
+			} else {
+
+				$criteria->add(WptoolAppointmentPeer::APPOINTMENT_ID, $this->id);
+
+				$this->collWptoolAppointments = WptoolAppointmentPeer::doSelectJoinWptoolItem($criteria, $con, $join_behavior);
+			}
+		} else {
+									
+			$criteria->add(WptoolAppointmentPeer::APPOINTMENT_ID, $this->id);
+
+			if (!isset($this->lastWptoolAppointmentCriteria) || !$this->lastWptoolAppointmentCriteria->equals($criteria)) {
+				$this->collWptoolAppointments = WptoolAppointmentPeer::doSelectJoinWptoolItem($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastWptoolAppointmentCriteria = $criteria;
+
+		return $this->collWptoolAppointments;
+	}
+
+	
 	public function clearWpmodules()
 	{
 		$this->collWpmodules = null; 	}
@@ -1448,6 +1614,11 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collWptoolAppointments) {
+				foreach ((array) $this->collWptoolAppointments as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->collWpmodules) {
 				foreach ((array) $this->collWpmodules as $o) {
 					$o->clearAllReferences($deep);
@@ -1456,6 +1627,7 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 		} 
 		$this->collWpevents = null;
 		$this->collWpinfos = null;
+		$this->collWptoolAppointments = null;
 		$this->collWpmodules = null;
 			$this->asfGuardUser = null;
 			$this->aSubject = null;

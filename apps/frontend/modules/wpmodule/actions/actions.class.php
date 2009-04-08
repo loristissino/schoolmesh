@@ -75,7 +75,7 @@ class wpmoduleActions extends sfActions
     $this->forward404Unless($this->wpmodule);
 	
 	$this->workplan = $this->wpmodule->getAppointment();
-	$this->wpstate = $this->workplan->getLastLog()->getState();
+	$this->wpstate = $this->workplan->getState();
 	$this->ownerId=$this->wpmodule->getUserId();
 	$this->owner=$this->wpmodule->getOwner();
 	$this->item_groups=$this->wpmodule->getWpitemGroups();

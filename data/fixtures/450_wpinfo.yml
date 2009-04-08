@@ -5,9 +5,21 @@ Wpinfo:
     content:  La classe è meravigliosa!
   test_ast_3ap_0_b:
     appointment_id: test_ast_3ap_0
-    wpinfo_type_id:  wpcomment
-    content: Aderisco al progetto CLIL.
+    wpinfo_type_id:  wppa
+    content: La classe non svolge l'area di progetto.
   test_ast_3ap_0_c:
+    appointment_id: test_ast_3ap_0
+    wpinfo_type_id:  wpextra
+    content: Progetto CLIL.
+  test_ast_3ap_0_d:
+    appointment_id: test_ast_3ap_0
+    wpinfo_type_id:  wpcriteria
+    content: Test scritti autovalutati, più compiti scritti e esercitazioni varie.
+  test_ast_3ap_0_e:
+    appointment_id: test_ast_3ap_0
+    wpinfo_type_id:  wpadditionalclasses
+    content: Se necessario.
+  test_ast_3ap_0_f:
     appointment_id: test_ast_3ap_0
     wpinfo_type_id:  wpconsiderations
     content: 
