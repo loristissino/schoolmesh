@@ -31,13 +31,11 @@ class WptoolAppointmentMapBuilder implements MapBuilder {
 		$tMap->setPhpName('WptoolAppointment');
 		$tMap->setClassname('WptoolAppointment');
 
-		$tMap->setUseIdGenerator(true);
+		$tMap->setUseIdGenerator(false);
 
-		$tMap->addPrimaryKey('ID', 'Id', 'INTEGER', true, null);
+		$tMap->addForeignPrimaryKey('APPOINTMENT_ID', 'AppointmentId', 'INTEGER' , 'appointment', 'ID', true, null);
 
-		$tMap->addForeignKey('APPOINTMENT_ID', 'AppointmentId', 'INTEGER', 'appointment', 'ID', false, null);
-
-		$tMap->addForeignKey('WPTOOL_ITEM_ID', 'WptoolItemId', 'INTEGER', 'wptool_item', 'ID', false, null);
+		$tMap->addForeignPrimaryKey('WPTOOL_ITEM_ID', 'WptoolItemId', 'INTEGER' , 'wptool_item', 'ID', true, null);
 
 	} 
 } 

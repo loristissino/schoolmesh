@@ -3,8 +3,6 @@
 
 <div id="sf_admin_container">
 
-
-
 <h2><?php echo __("Basic information") ?></h2>
 <?php $state = $workplan->getState() ?>
 <p><?php include_partial('state', array('state' => $state, 'steps' => $steps, 'size'=>'')) ?></p>
@@ -32,7 +30,7 @@
 <hr />
 
 <h2><?php echo __('Details, comments, general information') ?></h2>
-<div id="sf_admin_container">
+<!--<div id="sf_admin_container">-->
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
 <?php echo link_to_function(
@@ -41,14 +39,14 @@
 ) ?>
 </li>
 </ul>
-</div>
-<div id="infos" style="display:<?php echo $sf_user->hasFlash('notice_info')? 'visible': 'none' ?>">
+<!--</div>-->
+<div id="infos" style="display:<?php echo $sf_user->hasFlash('notice_info') || $sf_user->hasFlash('error_info')? 'visible': 'none' ?>">
 <?php include_partial('infos', array('wpinfos' => $wpinfos, 'state' => $state)) ?>
 </div>
 <hr />
 
 <h2><?php echo __("Modules") ?></h2>
-<div id="sf_admin_container">
+<!--<div id="sf_admin_container">-->
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
 <?php echo link_to_function(
@@ -57,7 +55,7 @@
 ) ?>
 </li>
 </ul>
-</div>
+<!--</div>-->
 <div id="modules" style="display:<?php echo $sf_user->hasFlash('notice')? 'visible': 'none' ?>">
 <?php include_partial('modules', array('workplan' => $workplan)) ?>
 
@@ -76,7 +74,7 @@
 
 
 <h2><?php echo __("Aux") ?></h2>
-<div id="sf_admin_container">
+<!--<div id="sf_admin_container">-->
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
 <?php echo link_to_function(
@@ -85,7 +83,7 @@
 ) ?>
 </li>
 </ul>
-</div>
+<!--</div>-->
 <div id="aux" style="display:<?php echo $sf_user->hasFlash('notice_aux')? 'visible': 'none' ?>">
 <?php include_partial('aux', array('workplan' => $workplan, 'tools' => $tools)) ?>
 </div>
@@ -104,7 +102,7 @@
 
 <?php if ($steps[$state]['owner']['submitAction']!=''): ?>
 	<ul class="sf_admin_actions">
-	<li>
+	<li class="sf_admin_action_submit">
 				<?php echo link_to(
 				$steps[$state]['owner']['submitDisplayedAction'],
 				'plansandreports/'. $steps[$state]['owner']['submitAction']. '?id='.$workplan->getId(),

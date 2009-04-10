@@ -19,6 +19,7 @@ class BaseWpinfoTypeFormFilter extends BaseFormFilterPropel
       'description' => new sfWidgetFormFilterInput(),
       'rank'        => new sfWidgetFormFilterInput(),
       'state'       => new sfWidgetFormFilterInput(),
+      'template'    => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -26,6 +27,7 @@ class BaseWpinfoTypeFormFilter extends BaseFormFilterPropel
       'description' => new sfValidatorPass(array('required' => false)),
       'rank'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'state'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'template'    => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('wpinfo_type_filters[%s]');
@@ -48,6 +50,7 @@ class BaseWpinfoTypeFormFilter extends BaseFormFilterPropel
       'description' => 'Text',
       'rank'        => 'Number',
       'state'       => 'Number',
+      'template'    => 'Text',
     );
   }
 }

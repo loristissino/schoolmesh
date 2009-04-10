@@ -43,5 +43,7 @@ class WpinfoTypeMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('STATE', 'State', 'INTEGER', false, null);
 
+		$tMap->addColumn('TEMPLATE', 'Template', 'LONGVARCHAR', false, null);
+
 	} 
 } 

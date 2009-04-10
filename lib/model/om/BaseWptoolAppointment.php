@@ -10,9 +10,6 @@ abstract class BaseWptoolAppointment extends BaseObject  implements Persistent {
 	protected static $peer;
 
 	
-	protected $id;
-
-	
 	protected $appointment_id;
 
 	
@@ -43,12 +40,6 @@ abstract class BaseWptoolAppointment extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getId()
-	{
-		return $this->id;
-	}
-
-	
 	public function getAppointmentId()
 	{
 		return $this->appointment_id;
@@ -60,20 +51,6 @@ abstract class BaseWptoolAppointment extends BaseObject  implements Persistent {
 		return $this->wptool_item_id;
 	}
 
-	
-	public function setId($v)
-	{
-		if ($v !== null) {
-			$v = (int) $v;
-		}
-
-		if ($this->id !== $v) {
-			$this->id = $v;
-			$this->modifiedColumns[] = WptoolAppointmentPeer::ID;
-		}
-
-		return $this;
-	} 
 	
 	public function setAppointmentId($v)
 	{
@@ -124,9 +101,8 @@ abstract class BaseWptoolAppointment extends BaseObject  implements Persistent {
 	{
 		try {
 
-			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->appointment_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->wptool_item_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->appointment_id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
+			$this->wptool_item_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -135,7 +111,7 @@ abstract class BaseWptoolAppointment extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 3; 
+						return $startcol + 2; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WptoolAppointment object", $e);
 		}
@@ -246,15 +222,11 @@ abstract class BaseWptoolAppointment extends BaseObject  implements Persistent {
 				$this->setWptoolItem($this->aWptoolItem);
 			}
 
-			if ($this->isNew() ) {
-				$this->modifiedColumns[] = WptoolAppointmentPeer::ID;
-			}
 
 						if ($this->isModified()) {
 				if ($this->isNew()) {
 					$pk = WptoolAppointmentPeer::doInsert($this, $con);
 					$affectedRows += 1; 										 										 
-					$this->setId($pk);  
 					$this->setNew(false);
 				} else {
 					$affectedRows += WptoolAppointmentPeer::doUpdate($this, $con);
@@ -338,12 +310,9 @@ abstract class BaseWptoolAppointment extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				return $this->getId();
-				break;
-			case 1:
 				return $this->getAppointmentId();
 				break;
-			case 2:
+			case 1:
 				return $this->getWptoolItemId();
 				break;
 			default:
@@ -356,9 +325,8 @@ abstract class BaseWptoolAppointment extends BaseObject  implements Persistent {
 	{
 		$keys = WptoolAppointmentPeer::getFieldNames($keyType);
 		$result = array(
-			$keys[0] => $this->getId(),
-			$keys[1] => $this->getAppointmentId(),
-			$keys[2] => $this->getWptoolItemId(),
+			$keys[0] => $this->getAppointmentId(),
+			$keys[1] => $this->getWptoolItemId(),
 		);
 		return $result;
 	}
@@ -375,12 +343,9 @@ abstract class BaseWptoolAppointment extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				$this->setId($value);
-				break;
-			case 1:
 				$this->setAppointmentId($value);
 				break;
-			case 2:
+			case 1:
 				$this->setWptoolItemId($value);
 				break;
 		} 	}
@@ -390,9 +355,8 @@ abstract class BaseWptoolAppointment extends BaseObject  implements Persistent {
 	{
 		$keys = WptoolAppointmentPeer::getFieldNames($keyType);
 
-		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setAppointmentId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setWptoolItemId($arr[$keys[2]]);
+		if (array_key_exists($keys[0], $arr)) $this->setAppointmentId($arr[$keys[0]]);
+		if (array_key_exists($keys[1], $arr)) $this->setWptoolItemId($arr[$keys[1]]);
 	}
 
 	
@@ -400,7 +364,6 @@ abstract class BaseWptoolAppointment extends BaseObject  implements Persistent {
 	{
 		$criteria = new Criteria(WptoolAppointmentPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(WptoolAppointmentPeer::ID)) $criteria->add(WptoolAppointmentPeer::ID, $this->id);
 		if ($this->isColumnModified(WptoolAppointmentPeer::APPOINTMENT_ID)) $criteria->add(WptoolAppointmentPeer::APPOINTMENT_ID, $this->appointment_id);
 		if ($this->isColumnModified(WptoolAppointmentPeer::WPTOOL_ITEM_ID)) $criteria->add(WptoolAppointmentPeer::WPTOOL_ITEM_ID, $this->wptool_item_id);
 
@@ -412,7 +375,8 @@ abstract class BaseWptoolAppointment extends BaseObject  implements Persistent {
 	{
 		$criteria = new Criteria(WptoolAppointmentPeer::DATABASE_NAME);
 
-		$criteria->add(WptoolAppointmentPeer::ID, $this->id);
+		$criteria->add(WptoolAppointmentPeer::APPOINTMENT_ID, $this->appointment_id);
+		$criteria->add(WptoolAppointmentPeer::WPTOOL_ITEM_ID, $this->wptool_item_id);
 
 		return $criteria;
 	}
@@ -420,13 +384,23 @@ abstract class BaseWptoolAppointment extends BaseObject  implements Persistent {
 	
 	public function getPrimaryKey()
 	{
-		return $this->getId();
+		$pks = array();
+
+		$pks[0] = $this->getAppointmentId();
+
+		$pks[1] = $this->getWptoolItemId();
+
+		return $pks;
 	}
 
 	
-	public function setPrimaryKey($key)
+	public function setPrimaryKey($keys)
 	{
-		$this->setId($key);
+
+		$this->setAppointmentId($keys[0]);
+
+		$this->setWptoolItemId($keys[1]);
+
 	}
 
 	
@@ -440,7 +414,6 @@ abstract class BaseWptoolAppointment extends BaseObject  implements Persistent {
 
 		$copyObj->setNew(true);
 
-		$copyObj->setId(NULL); 
 	}
 
 	

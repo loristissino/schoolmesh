@@ -13,13 +13,10 @@ abstract class BaseWptoolAppointmentPeer {
 	const CLASS_DEFAULT = 'lib.model.WptoolAppointment';
 
 	
-	const NUM_COLUMNS = 3;
+	const NUM_COLUMNS = 2;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
-
-	
-	const ID = 'wptool_appointment.ID';
 
 	
 	const APPOINTMENT_ID = 'wptool_appointment.APPOINTMENT_ID';
@@ -35,20 +32,20 @@ abstract class BaseWptoolAppointmentPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'AppointmentId', 'WptoolItemId', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'appointmentId', 'wptoolItemId', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::APPOINTMENT_ID, self::WPTOOL_ITEM_ID, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'appointment_id', 'wptool_item_id', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('AppointmentId', 'WptoolItemId', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('appointmentId', 'wptoolItemId', ),
+		BasePeer::TYPE_COLNAME => array (self::APPOINTMENT_ID, self::WPTOOL_ITEM_ID, ),
+		BasePeer::TYPE_FIELDNAME => array ('appointment_id', 'wptool_item_id', ),
+		BasePeer::TYPE_NUM => array (0, 1, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'AppointmentId' => 1, 'WptoolItemId' => 2, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'appointmentId' => 1, 'wptoolItemId' => 2, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::APPOINTMENT_ID => 1, self::WPTOOL_ITEM_ID => 2, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'appointment_id' => 1, 'wptool_item_id' => 2, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('AppointmentId' => 0, 'WptoolItemId' => 1, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('appointmentId' => 0, 'wptoolItemId' => 1, ),
+		BasePeer::TYPE_COLNAME => array (self::APPOINTMENT_ID => 0, self::WPTOOL_ITEM_ID => 1, ),
+		BasePeer::TYPE_FIELDNAME => array ('appointment_id' => 0, 'wptool_item_id' => 1, ),
+		BasePeer::TYPE_NUM => array (0, 1, )
 	);
 
 	
@@ -89,8 +86,6 @@ abstract class BaseWptoolAppointmentPeer {
 	
 	public static function addSelectColumns(Criteria $criteria)
 	{
-
-		$criteria->addSelectColumn(WptoolAppointmentPeer::ID);
 
 		$criteria->addSelectColumn(WptoolAppointmentPeer::APPOINTMENT_ID);
 
@@ -164,7 +159,7 @@ abstract class BaseWptoolAppointmentPeer {
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
-				$key = (string) $obj->getId();
+				$key = serialize(array((string) $obj->getAppointmentId(), (string) $obj->getWptoolItemId()));
 			} 			self::$instances[$key] = $obj;
 		}
 	}
@@ -174,9 +169,9 @@ abstract class BaseWptoolAppointmentPeer {
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
 			if (is_object($value) && $value instanceof WptoolAppointment) {
-				$key = (string) $value->getId();
-			} elseif (is_scalar($value)) {
-								$key = (string) $value;
+				$key = serialize(array((string) $value->getAppointmentId(), (string) $value->getWptoolItemId()));
+			} elseif (is_array($value) && count($value) === 2) {
+								$key = serialize(array((string) $value[0], (string) $value[1]));
 			} else {
 				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or WptoolAppointment object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
 				throw $e;
@@ -204,10 +199,10 @@ abstract class BaseWptoolAppointmentPeer {
 	
 	public static function getPrimaryKeyHashFromRow($row, $startcol = 0)
 	{
-				if ($row[$startcol + 0] === null) {
+				if ($row[$startcol + 0] === null && $row[$startcol + 1] === null) {
 			return null;
 		}
-		return (string) $row[$startcol + 0];
+		return serialize(array((string) $row[$startcol + 0], (string) $row[$startcol + 1]));
 	}
 
 	
@@ -712,10 +707,6 @@ abstract class BaseWptoolAppointmentPeer {
 			$criteria = clone $values; 		} else {
 			$criteria = $values->buildCriteria(); 		}
 
-		if ($criteria->containsKey(WptoolAppointmentPeer::ID) && $criteria->keyContainsValue(WptoolAppointmentPeer::ID) ) {
-			throw new PropelException('Cannot insert a value for auto-increment primary key ('.WptoolAppointmentPeer::ID.')');
-		}
-
 
 				$criteria->setDbName(self::DATABASE_NAME);
 
@@ -742,8 +733,11 @@ abstract class BaseWptoolAppointmentPeer {
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; 
-			$comparison = $criteria->getComparison(WptoolAppointmentPeer::ID);
-			$selectCriteria->add(WptoolAppointmentPeer::ID, $criteria->remove(WptoolAppointmentPeer::ID), $comparison);
+			$comparison = $criteria->getComparison(WptoolAppointmentPeer::APPOINTMENT_ID);
+			$selectCriteria->add(WptoolAppointmentPeer::APPOINTMENT_ID, $criteria->remove(WptoolAppointmentPeer::APPOINTMENT_ID), $comparison);
+
+			$comparison = $criteria->getComparison(WptoolAppointmentPeer::WPTOOL_ITEM_ID);
+			$selectCriteria->add(WptoolAppointmentPeer::WPTOOL_ITEM_ID, $criteria->remove(WptoolAppointmentPeer::WPTOOL_ITEM_ID), $comparison);
 
 		} else { 			$criteria = $values->buildCriteria(); 			$selectCriteria = $values->buildPkeyCriteria(); 		}
 
@@ -788,10 +782,17 @@ abstract class BaseWptoolAppointmentPeer {
 
 
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(WptoolAppointmentPeer::ID, (array) $values, Criteria::IN);
+												if (count($values) == count($values, COUNT_RECURSIVE)) {
+								$values = array($values);
+			}
 
-			foreach ((array) $values as $singleval) {
-								WptoolAppointmentPeer::removeInstanceFromPool($singleval);
+			foreach ($values as $value) {
+
+				$criterion = $criteria->getNewCriterion(WptoolAppointmentPeer::APPOINTMENT_ID, $value[0]);
+				$criterion->addAnd($criteria->getNewCriterion(WptoolAppointmentPeer::WPTOOL_ITEM_ID, $value[1]));
+				$criteria->addOr($criterion);
+
+								WptoolAppointmentPeer::removeInstanceFromPool($value);
 			}
 		}
 
@@ -846,43 +847,22 @@ abstract class BaseWptoolAppointmentPeer {
 	}
 
 	
-	public static function retrieveByPK($pk, PropelPDO $con = null)
-	{
-
-		if (null !== ($obj = WptoolAppointmentPeer::getInstanceFromPool((string) $pk))) {
-			return $obj;
+	public static function retrieveByPK($appointment_id, $wptool_item_id, PropelPDO $con = null) {
+		$key = serialize(array((string) $appointment_id, (string) $wptool_item_id));
+ 		if (null !== ($obj = WptoolAppointmentPeer::getInstanceFromPool($key))) {
+ 			return $obj;
 		}
 
 		if ($con === null) {
 			$con = Propel::getConnection(WptoolAppointmentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
-
 		$criteria = new Criteria(WptoolAppointmentPeer::DATABASE_NAME);
-		$criteria->add(WptoolAppointmentPeer::ID, $pk);
-
+		$criteria->add(WptoolAppointmentPeer::APPOINTMENT_ID, $appointment_id);
+		$criteria->add(WptoolAppointmentPeer::WPTOOL_ITEM_ID, $wptool_item_id);
 		$v = WptoolAppointmentPeer::doSelect($criteria, $con);
 
-		return !empty($v) > 0 ? $v[0] : null;
+		return !empty($v) ? $v[0] : null;
 	}
-
-	
-	public static function retrieveByPKs($pks, PropelPDO $con = null)
-	{
-		if ($con === null) {
-			$con = Propel::getConnection(WptoolAppointmentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-
-		$objs = null;
-		if (empty($pks)) {
-			$objs = array();
-		} else {
-			$criteria = new Criteria(WptoolAppointmentPeer::DATABASE_NAME);
-			$criteria->add(WptoolAppointmentPeer::ID, $pks, Criteria::IN);
-			$objs = WptoolAppointmentPeer::doSelect($criteria, $con);
-		}
-		return $objs;
-	}
-
 } 
 
 Propel::getDatabaseMap(BaseWptoolAppointmentPeer::DATABASE_NAME)->addTableBuilder(BaseWptoolAppointmentPeer::TABLE_NAME, BaseWptoolAppointmentPeer::getMapBuilder());

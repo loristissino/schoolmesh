@@ -1,4 +1,3 @@
-#  svn stat | grep ^? | grep -v cache | sed 's/^?      //' | xargs svn add 
 propel:
   track:
     id:           ~
@@ -24,7 +23,7 @@ propel:
 
   sf_guard_user_profile:
     _attributes:  { phpName: sfGuardUserProfile }
-    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade, primaryKey: true }
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade, onUpdate: cascade, primaryKey: true }
     first_name:   varchar(20)
     middle_name:  varchar(20)
     last_name:    varchar(20)
@@ -52,10 +51,10 @@ propel:
 
   appointment:
     id: ~
-    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, required: true }
-    subject_id:       { type: integer, foreignTable: subject, foreignReference: id, onDelete: restrict, required: true }
-    schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, required: true }
-    year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, required: true }
+    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    subject_id:       { type: integer, foreignTable: subject, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     state:             { type: integer }
     created_at:   
     updated_at:
@@ -65,9 +64,9 @@ propel:
 
   enrolment:
     id: ~
-    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, required: true }
-    schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, required: true }
-    year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, required: true }
+    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     created_at:   
     updated_at:
     import_code:  varchar(20)
@@ -90,9 +89,9 @@ propel:
 
   user_team:
     id: ~
-    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, required: true }
-    team_id:     { type: integer, foreignTable: team, foreignReference: id, onDelete: restrict, required: true  }
-    role_id:       { type: integer, foreignTable: role, foreignReference: id, onDelete: restrict, required: true }
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    team_id:     { type: integer, foreignTable: team, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true  }
+    role_id:       { type: integer, foreignTable: role, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     _uniques:
       utr: [user_id, team_id, role_id]
 
@@ -109,7 +108,7 @@ propel:
     id:  ~
     created_at: ~
     appointment_id: ~
-    user_id:  	{ type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict }
+    user_id:  	{ type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade }
     comment:   { type: varchar(255) }
     state:  integer
 
@@ -155,6 +154,7 @@ propel:
     description:  varchar(200)
     rank:    { type: integer, required: true }
     state:  integer
+    template:     longvarchar
 # state indicates in which of workplan's state this item type should be shown
 
 
@@ -175,13 +175,12 @@ propel:
     wptool_item_type_id: ~
 
   wptool_appointment:
-    id:  ~
-    appointment_id:  ~
-    wptool_item_id:  ~
+    appointment_id:  { type: integer, foreignTable: appointment, foreignReference: id, required: true, onDelete: cascade, onUpdate: cascade, primaryKey: true }
+    wptool_item_id:  { type: integer, foreignTable: wptool_item, foreignReference: id, required: true, onDelete: restrict, onUpdate: cascade, primaryKey: true }
 
   wpmodule:
     id:         ~
-    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict }
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade }
     title:        varchar(100)
     period:       varchar(100)
     appointment_id:   
@@ -236,8 +235,8 @@ propel:
 
   lanlog:
     id: ~
-    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, required: true }
-    workstation_id:  { type: integer, foreignTable: workstation, foreignReference: id, onDelete: restrict, required: true}
+    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    workstation_id:  { type: integer, foreignTable: workstation, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true}
     created_at: 
     updated_at:
     is_online: { type: boolean, required: true, default: 0 }
@@ -254,12 +253,12 @@ propel:
 
 
   workstation_service:
-    workstation_id: { type: integer, primaryKey: true, required: true, foreignTable: workstation, foreignReference: id, onDelete: cascade }
-    service_id: { type: integer, primaryKey: true, required: true, foreignTable: service, foreignReference: id, onDelete: cascade }
+    workstation_id: { type: integer, primaryKey: true, required: true, foreignTable: workstation, foreignReference: id, onDelete: cascade, onUpdate: cascade }
+    service_id: { type: integer, primaryKey: true, required: true, foreignTable: service, foreignReference: id, onDelete: cascade, onUpdate: cascade }
     
   subnet_service:
-    subnet_id: { type: integer, primaryKey: true, required: true, foreignTable: subnet, foreignReference: id, onDelete: cascade }
-    service_id: { type: integer, primaryKey: true, required: true, foreignTable: service, foreignReference: id, onDelete: cascade }
+    subnet_id: { type: integer, primaryKey: true, required: true, foreignTable: subnet, foreignReference: id, onDelete: cascade, onUpdate: cascade }
+    service_id: { type: integer, primaryKey: true, required: true, foreignTable: service, foreignReference: id, onDelete: cascade, onUpdate: cascade }
     
 
 # a comment

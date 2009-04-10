@@ -15,13 +15,9 @@ class BaseWptoolAppointmentFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'appointment_id' => new sfWidgetFormPropelChoice(array('model' => 'Appointment', 'add_empty' => true)),
-      'wptool_item_id' => new sfWidgetFormPropelChoice(array('model' => 'WptoolItem', 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
-      'appointment_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Appointment', 'column' => 'id')),
-      'wptool_item_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'WptoolItem', 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('wptool_appointment_filters[%s]');
@@ -39,7 +35,6 @@ class BaseWptoolAppointmentFormFilter extends BaseFormFilterPropel
   public function getFields()
   {
     return array(
-      'id'             => 'Number',
       'appointment_id' => 'ForeignKey',
       'wptool_item_id' => 'ForeignKey',
     );

@@ -350,7 +350,27 @@ ob_end_clean();
 */
 	}
 	
+   public function isViewableBy($userId)
+	{
+		
+	if ($this->isOwnedBy($userId))
+		return true;
+		
+	if ($this->getState()>Workflow::WP_DRAFT)
+		return true;
+	
 
-
+	return false;
+	}
+	
+	
+   public function isOwnedBy($userId)
+	{
+		
+	if ($this->getUserId()==$userId)
+		return true;
+		
+	return false;
+	}
 
 }

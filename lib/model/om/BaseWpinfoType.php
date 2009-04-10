@@ -25,6 +25,9 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	protected $state;
 
 	
+	protected $template;
+
+	
 	protected $collWpinfos;
 
 	
@@ -76,6 +79,12 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	public function getState()
 	{
 		return $this->state;
+	}
+
+	
+	public function getTemplate()
+	{
+		return $this->template;
 	}
 
 	
@@ -149,6 +158,20 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setTemplate($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->template !== $v) {
+			$this->template = $v;
+			$this->modifiedColumns[] = WpinfoTypePeer::TEMPLATE;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array())) {
@@ -167,6 +190,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$this->description = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->rank = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->state = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+			$this->template = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -175,7 +199,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 5; 
+						return $startcol + 6; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WpinfoType object", $e);
 		}
@@ -374,6 +398,9 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			case 4:
 				return $this->getState();
 				break;
+			case 5:
+				return $this->getTemplate();
+				break;
 			default:
 				return null;
 				break;
@@ -389,6 +416,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$keys[2] => $this->getDescription(),
 			$keys[3] => $this->getRank(),
 			$keys[4] => $this->getState(),
+			$keys[5] => $this->getTemplate(),
 		);
 		return $result;
 	}
@@ -419,6 +447,9 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			case 4:
 				$this->setState($value);
 				break;
+			case 5:
+				$this->setTemplate($value);
+				break;
 		} 	}
 
 	
@@ -431,6 +462,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setDescription($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setRank($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setState($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setTemplate($arr[$keys[5]]);
 	}
 
 	
@@ -443,6 +475,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpinfoTypePeer::DESCRIPTION)) $criteria->add(WpinfoTypePeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(WpinfoTypePeer::RANK)) $criteria->add(WpinfoTypePeer::RANK, $this->rank);
 		if ($this->isColumnModified(WpinfoTypePeer::STATE)) $criteria->add(WpinfoTypePeer::STATE, $this->state);
+		if ($this->isColumnModified(WpinfoTypePeer::TEMPLATE)) $criteria->add(WpinfoTypePeer::TEMPLATE, $this->template);
 
 		return $criteria;
 	}
@@ -480,6 +513,8 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		$copyObj->setRank($this->rank);
 
 		$copyObj->setState($this->state);
+
+		$copyObj->setTemplate($this->template);
 
 
 		if ($deepCopy) {

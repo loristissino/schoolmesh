@@ -1397,6 +1397,8 @@ abstract class BaseAppointmentPeer {
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
 
+						WptoolAppointmentPeer::clearInstancePool();
+
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {

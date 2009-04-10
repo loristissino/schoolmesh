@@ -33,10 +33,13 @@ class wpinfoActions extends sfActions
 
   public function executeEdit(sfWebRequest $request)
   {
-    $this->forward404Unless($wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
-    //$this->form = new WpinfoForm($wpinfo);
-	$this->wpinfo=$wpinfo;
-	$this->type=$wpinfo->getWpinfoType();
+    $this->forward404Unless($this->wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
+
+	$this->forward404Unless($this->wpinfo->getAppointment()->getUserId()==$this->getUser()->getProfile()->getSfGuardUser()->getId());
+
+	if ($this->wpinfo->getContent()=='')
+		$this->wpinfo->setContent($this->wpinfo->getWpinfoType()->getRenderedTemplate());
+	$this->type=$this->wpinfo->getWpinfoType();
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -44,14 +47,27 @@ class wpinfoActions extends sfActions
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
     $this->forward404Unless($wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
 
-    $wpinfo->setContent($request->getParameter('value'));
+    $result=$wpinfo->setCheckedContent($this->getUser()->getProfile()->getSfGuardUser()->getId(), $request->getParameter('value'));
 
-	$this->getUser()->setFlash('notice_info', sprintf('The item was updated'));
+	$this->getUser()->setFlash($result['result'], $result['message']);
 
-	$wpinfo->save();
-	
-   $this->redirect('plansandreports/fill?id=' . $wpinfo->getAppointmentId());
-  }
+
+	if($result['result']=='notice_info')
+		{
+			$wpinfo->save();
+			$this->redirect('plansandreports/fill?id=' . $wpinfo->getAppointmentId());
+		}
+	else
+		{
+		$this->forward('wpinfo', 'edit');
+//			$this->redirect('plansandreports/fill?id=' . $wpinfo->getAppointmentId());
+			
+		}
+/*
+Primo periodo: scritte 2; orali 2; pratiche 2
+Secondo periodo: scritte 2; orali 2; pratiche 2.
+*/
+}
 
   public function executeDelete(sfWebRequest $request)
   {

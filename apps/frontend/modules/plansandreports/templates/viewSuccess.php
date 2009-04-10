@@ -7,7 +7,17 @@
 	<li><?php echo __("Year: ") . $workplan->getYear() ?></li>
 </ul>
 
+<h2><?php echo __('Details, comments, general information') ?></h2>
+
+<?php include_partial('infos_shown', array('wpinfos' => $wpinfos, 'state'=>$workplan->getState())) ?>
+
+<h2><?php echo __("Modules") ?></h2>
+
 <?php include_partial('modules_shown', array('workplan' => $workplan)) ?>
+
+<h2><?php echo __("Aux") ?></h2>
+
+<?php include_partial('aux_shown', array('workplan' => $workplan, 'tools' => $tools)) ?>
 
 <h2><?php echo __("Workflow") ?></h2>
 

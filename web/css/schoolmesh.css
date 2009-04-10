@@ -49,3 +49,18 @@
 {
   background: url(../images/enhancements.png) no-repeat 0 0;
 }
+
+
+#sf_admin_container ul li.sf_admin_action_submit a
+{
+  background: url(../images/submit.png) no-repeat 0 0;
+}
+
+
+div.module_content
+{
+  padding-left: 40px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  border: medium double #888888;
+}
