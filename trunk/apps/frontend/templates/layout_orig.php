@@ -27,7 +27,7 @@
        <li><?php echo link_to(__("Workstation list"), "@workstation")  ?></li>
        <li><?php echo link_to(__("Plans and Reports"), "@plansandreports")  ?></li>
        <li><?php echo link_to(__("Office"), "@office")  ?></li>
-       <li><?php echo link_to(__("Schoolmaster's job"), "@schoolmaster")  ?></li>
+       <li><?php echo link_to(__("Schoolmaster"), "@schoolmaster")  ?></li>
 	   
     </ul>
 </div>
@@ -46,7 +46,7 @@
       <div id="footer">
         <div class="content">
           <span class="schoolmesh">
-            <img src="/schoolmesh/images/schoolmesh-mini.png" />
+            <a href="http://schoolmesh.mattiussilab.net"><img src="/schoolmesh/images/schoolmesh-mini.png" /></a>
             powered by <a href="http://www.symfony-project.org/">
             <img src="/schoolmesh/images/symfony.gif" alt="symfony framework" /></a>
           </span>

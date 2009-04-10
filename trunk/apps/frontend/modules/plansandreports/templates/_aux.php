@@ -45,11 +45,11 @@
 </td>
 </tr>
 </table>
- ?>
+*/ ?>
 		<?php foreach($group['elements'] as $tool_id=>$tool): ?>
 				&nbsp;&nbsp;&nbsp;&nbsp;
 				<?php if ($tool['chosen']): ?>
-					<strong>
+					&nbsp;&nbsp;&nbsp;&nbsp;<strong>
 					<?php echo link_to_remote(
 						sprintf(__('Yes: %s'), $tool['description']), array(
 							'update'=>'aux_update',
@@ -58,7 +58,7 @@
 						) ?>
 					</strong>
 				<?php else: ?>
-					<?php echo link_to_remote(
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo link_to_remote(
 						sprintf(__('No: %s'), $tool['description']), array(
 							'update'=>'aux_update',
 							'url' => 'plansandreports/addtool?id='. $workplan->getId() . '&tool='.$tool_id
@@ -67,7 +67,7 @@
 				<?php endif ?>
 				<br />
 		<?php endforeach ?>
-*/?>
+<?php /*
 		<?php foreach($group['elements'] as $tool_id=>$tool): ?>
 				<?php if ($tool['chosen']): ?>
 					&nbsp;&nbsp;&nbsp;&nbsp;<strong>
@@ -91,6 +91,6 @@
 						) ?><br />
 				<?php endif ?>
 		<?php endforeach ?>
-
+*/ ?>
 <?php endforeach ?>
 </div>

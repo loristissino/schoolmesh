@@ -13,7 +13,7 @@ abstract class BaseWpinfoTypePeer {
 	const CLASS_DEFAULT = 'lib.model.WpinfoType';
 
 	
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 6;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -34,6 +34,9 @@ abstract class BaseWpinfoTypePeer {
 	const STATE = 'wpinfo_type.STATE';
 
 	
+	const TEMPLATE = 'wpinfo_type.TEMPLATE';
+
+	
 	public static $instances = array();
 
 	
@@ -41,20 +44,20 @@ abstract class BaseWpinfoTypePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Description', 'Rank', 'State', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'description', 'rank', 'state', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::DESCRIPTION, self::RANK, self::STATE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'description', 'rank', 'state', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Description', 'Rank', 'State', 'Template', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'description', 'rank', 'state', 'template', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::DESCRIPTION, self::RANK, self::STATE, self::TEMPLATE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'description', 'rank', 'state', 'template', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Description' => 2, 'Rank' => 3, 'State' => 4, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'state' => 4, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::DESCRIPTION => 2, self::RANK => 3, self::STATE => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'state' => 4, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Description' => 2, 'Rank' => 3, 'State' => 4, 'Template' => 5, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'state' => 4, 'template' => 5, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::DESCRIPTION => 2, self::RANK => 3, self::STATE => 4, self::TEMPLATE => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'state' => 4, 'template' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	
@@ -105,6 +108,8 @@ abstract class BaseWpinfoTypePeer {
 		$criteria->addSelectColumn(WpinfoTypePeer::RANK);
 
 		$criteria->addSelectColumn(WpinfoTypePeer::STATE);
+
+		$criteria->addSelectColumn(WpinfoTypePeer::TEMPLATE);
 
 	}
 

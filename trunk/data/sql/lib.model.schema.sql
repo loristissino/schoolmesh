@@ -101,6 +101,7 @@ CREATE TABLE `sf_guard_user_profile`
 	CONSTRAINT `sf_guard_user_profile_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE CASCADE,
 	INDEX `sf_guard_user_profile_FI_2` (`role_id`),
 	CONSTRAINT `sf_guard_user_profile_FK_2`
@@ -131,21 +132,25 @@ CREATE TABLE `appointment`
 	CONSTRAINT `appointment_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
 	INDEX `appointment_FI_2` (`subject_id`),
 	CONSTRAINT `appointment_FK_2`
 		FOREIGN KEY (`subject_id`)
 		REFERENCES `subject` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
 	INDEX `appointment_FI_3` (`schoolclass_id`),
 	CONSTRAINT `appointment_FK_3`
 		FOREIGN KEY (`schoolclass_id`)
 		REFERENCES `schoolclass` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
 	INDEX `appointment_FI_4` (`year_id`),
 	CONSTRAINT `appointment_FK_4`
 		FOREIGN KEY (`year_id`)
 		REFERENCES `year` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE RESTRICT
 )Type=InnoDB;
 
@@ -170,16 +175,19 @@ CREATE TABLE `enrolment`
 	CONSTRAINT `enrolment_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
 	INDEX `enrolment_FI_2` (`schoolclass_id`),
 	CONSTRAINT `enrolment_FK_2`
 		FOREIGN KEY (`schoolclass_id`)
 		REFERENCES `schoolclass` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
 	INDEX `enrolment_FI_3` (`year_id`),
 	CONSTRAINT `enrolment_FK_3`
 		FOREIGN KEY (`year_id`)
 		REFERENCES `year` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE RESTRICT
 )Type=InnoDB;
 
@@ -233,16 +241,19 @@ CREATE TABLE `user_team`
 	CONSTRAINT `user_team_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
 	INDEX `user_team_FI_2` (`team_id`),
 	CONSTRAINT `user_team_FK_2`
 		FOREIGN KEY (`team_id`)
 		REFERENCES `team` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
 	INDEX `user_team_FI_3` (`role_id`),
 	CONSTRAINT `user_team_FK_3`
 		FOREIGN KEY (`role_id`)
 		REFERENCES `role` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE RESTRICT
 )Type=InnoDB;
 
@@ -270,6 +281,7 @@ CREATE TABLE `wpevent`
 	CONSTRAINT `wpevent_FK_2`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE RESTRICT
 )Type=InnoDB;
 
@@ -287,6 +299,7 @@ CREATE TABLE `wpinfo_type`
 	`description` VARCHAR(200),
 	`rank` INTEGER  NOT NULL,
 	`state` INTEGER,
+	`template` TEXT,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
@@ -357,18 +370,20 @@ DROP TABLE IF EXISTS `wptool_appointment`;
 
 CREATE TABLE `wptool_appointment`
 (
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`appointment_id` INTEGER,
-	`wptool_item_id` INTEGER,
-	PRIMARY KEY (`id`),
-	INDEX `wptool_appointment_FI_1` (`appointment_id`),
+	`appointment_id` INTEGER  NOT NULL,
+	`wptool_item_id` INTEGER  NOT NULL,
+	PRIMARY KEY (`appointment_id`,`wptool_item_id`),
 	CONSTRAINT `wptool_appointment_FK_1`
 		FOREIGN KEY (`appointment_id`)
-		REFERENCES `appointment` (`id`),
+		REFERENCES `appointment` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
 	INDEX `wptool_appointment_FI_2` (`wptool_item_id`),
 	CONSTRAINT `wptool_appointment_FK_2`
 		FOREIGN KEY (`wptool_item_id`)
 		REFERENCES `wptool_item` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -394,6 +409,7 @@ CREATE TABLE `wpmodule`
 	CONSTRAINT `wpmodule_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
 	INDEX `wpmodule_FI_2` (`appointment_id`),
 	CONSTRAINT `wpmodule_FK_2`
@@ -531,11 +547,13 @@ CREATE TABLE `lanlog`
 	CONSTRAINT `lanlog_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
 	INDEX `lanlog_FI_2` (`workstation_id`),
 	CONSTRAINT `lanlog_FK_2`
 		FOREIGN KEY (`workstation_id`)
 		REFERENCES `workstation` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE RESTRICT
 )Type=InnoDB;
 
@@ -573,11 +591,13 @@ CREATE TABLE `workstation_service`
 	CONSTRAINT `workstation_service_FK_1`
 		FOREIGN KEY (`workstation_id`)
 		REFERENCES `workstation` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE CASCADE,
 	INDEX `workstation_service_FI_2` (`service_id`),
 	CONSTRAINT `workstation_service_FK_2`
 		FOREIGN KEY (`service_id`)
 		REFERENCES `service` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE CASCADE
 )Type=InnoDB;
 
@@ -596,11 +616,13 @@ CREATE TABLE `subnet_service`
 	CONSTRAINT `subnet_service_FK_1`
 		FOREIGN KEY (`subnet_id`)
 		REFERENCES `subnet` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE CASCADE,
 	INDEX `subnet_service_FI_2` (`service_id`),
 	CONSTRAINT `subnet_service_FK_2`
 		FOREIGN KEY (`service_id`)
 		REFERENCES `service` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE CASCADE
 )Type=InnoDB;
 

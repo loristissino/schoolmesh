@@ -1,7 +1,9 @@
 <?php if ($sf_user->hasFlash('notice_info')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice_info')?></div>
 <?php endif; ?>
-
+<?php if ($sf_user->hasFlash('error_info')): ?>
+  <div class="error"><?php echo $sf_user->getFlash('error_info')?></div>
+<?php endif; ?>
 <?php $i=0 ?>
 <div class="sf_admin_list">
 
@@ -21,6 +23,7 @@
       <td><?php echo  html_entity_decode($wpinfo->getContent()) ?></td>
       <td>
 		<ul class="sf_admin_td_actions">
+			<?php if ($state==Workflow::WP_DRAFT): ?>
 			<li class="sf_admin_action_fill">
 			<?php /* here I should show edit or show depending on the state */ ?>
 				<?php echo link_to(
@@ -29,6 +32,7 @@
 				array('method' => 'get') 
 				)?>
 			</li>
+			<?php endif ?>
 		</ul>
 	  </td>
     </tr>

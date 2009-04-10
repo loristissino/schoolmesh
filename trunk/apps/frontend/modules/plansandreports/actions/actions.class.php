@@ -79,6 +79,7 @@ class plansandreportsActions extends sfActions
   {
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->workplan);
+    $this->forward404Unless($this->workplan->isOwnedBy($this->getUser()->getProfile()->getSfGuardUser()->getId()));
 	
 	$this->wpinfos = $this->workplan->getWpinfos();
 	
@@ -93,13 +94,11 @@ class plansandreportsActions extends sfActions
   {
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->workplan);
-
+    $this->forward404Unless($this->workplan->isViewableBy($this->getUser()->getProfile()->getSfGuardUser()->getId()));
+	
 	$this->workflow_logs = $this->workplan->getWorkflowLogs();
-
-/*	$this->workflow_logs = $this->workplan->getWorkflowLogs();
-	$this->steps = Workflow::getWpfrSteps();
-*/
-
+	$this->wpinfos = $this->workplan->getWpinfos();
+	$this->tools = $this->workplan->getTools();
 
   }
 

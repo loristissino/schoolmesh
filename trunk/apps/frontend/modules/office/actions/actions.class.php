@@ -18,5 +18,38 @@ class officeActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
    // $this->forward('default', 'module');
+
+		$this->workplans=AppointmentPeer::getSubmitted(Workflow::WP_WADMC);
+		$this->steps = Workflow::getWpfrSteps();
+
   }
+
+  public function executeReject(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
+    $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+
+	$result = $workplan->Reject($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions());
+
+	$this->getUser()->setFlash($result['result'], $result['message']);
+
+	$this->redirect('@office');
+
+  }
+
+
+  public function executeApprove(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
+    $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+
+	$result = $workplan->Approve($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions());
+
+	$this->getUser()->setFlash($result['result'], $result['message']);
+
+	$this->redirect('@office');
+
+  }
+
+
 }

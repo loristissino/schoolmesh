@@ -37,16 +37,16 @@ class Workflow
 			),
 		'actions' => Array(
 			'approve' => Array(
-				'permission'=>'schoolmaster',
-				'submitDisplayedAction'=>'Approve&nbsp;workplan',
+				'permission'=>'office',
+				'submitDisplayedAction'=>'Approve workplan',
 				'submitDoneAction'=>'Workplan administratively checked.',
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
 				'submitNextState'=>self::WP_WSMC,
 				),
 			'reject' => Array(
-				'permission'=>'wp_adm_no',
-				'submitDisplayedAction'=>'Reject&nbsp;workplan',
+				'permission'=>'office',
+				'submitDisplayedAction'=>'Reject workplan',
 				'submitDoneAction'=>'Workplan administratively rejected.',
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
@@ -67,16 +67,16 @@ class Workflow
 			),
 		'actions' => Array(
 			'approve' => Array(
-				'permission'=>"wp_sm_ok",
-				'submitDisplayedAction'=>'Approve&nbsp;workplan',
+				'permission'=>"schoolmaster",
+				'submitDisplayedAction'=>'Approve workplan',
 				'submitDoneAction'=>'Workplan approved.',
 				'submitExtraAction'=>'markSubItems',
 				'submitExtraParameters'=>'false',
 				'submitNextState'=>self::IR_DRAFT,
 				),
 			'reject' => Array(
-				'permission'=>"wp_sm_no",
-				'submitDisplayedAction'=>'Reject&nbsp;workplan',
+				'permission'=>"schoolmaster",
+				'submitDisplayedAction'=>'Reject workplan',
 				'submitDoneAction'=>'Workplan rejected.',
 				'submitExtraAction'=>'markSubItems',
 				'submitExtraParameters'=>'true',

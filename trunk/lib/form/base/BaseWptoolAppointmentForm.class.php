@@ -13,13 +13,11 @@ class BaseWptoolAppointmentForm extends BaseFormPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'id'             => new sfWidgetFormInputHidden(),
-      'appointment_id' => new sfWidgetFormPropelChoice(array('model' => 'Appointment', 'add_empty' => true)),
-      'wptool_item_id' => new sfWidgetFormPropelChoice(array('model' => 'WptoolItem', 'add_empty' => true)),
+      'appointment_id' => new sfWidgetFormInputHidden(),
+      'wptool_item_id' => new sfWidgetFormInputHidden(),
     ));
 
     $this->setValidators(array(
-      'id'             => new sfValidatorPropelChoice(array('model' => 'WptoolAppointment', 'column' => 'id', 'required' => false)),
       'appointment_id' => new sfValidatorPropelChoice(array('model' => 'Appointment', 'column' => 'id', 'required' => false)),
       'wptool_item_id' => new sfValidatorPropelChoice(array('model' => 'WptoolItem', 'column' => 'id', 'required' => false)),
     ));
