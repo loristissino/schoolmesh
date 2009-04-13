@@ -70,7 +70,7 @@ class AppointmentPeer extends BaseAppointmentPeer
 			else
 			{
 				$import['fails']++;
-				$import['errors'].='Error importing: '. $key. "\n";
+				$import['errors'].='Error importing infos: '. $key. "\n";
 	
 			}
 		}
@@ -97,7 +97,7 @@ class AppointmentPeer extends BaseAppointmentPeer
 					else
 						{
 							$import['fails']++;
-							$import['errors'].='Error importing: '. $item. "\n";
+							$import['errors'].='Error importing tools: '. $item. "\n";
 						}
 					}
 					
@@ -106,7 +106,7 @@ class AppointmentPeer extends BaseAppointmentPeer
 			else
 				{
 				$import['fails']++;
-				$import['errors'].='Error importing: '. $key. "\n";
+				$import['errors'].='Error importing toolgroups: '. $key. "\n";
 					
 				}
 
@@ -129,11 +129,12 @@ class AppointmentPeer extends BaseAppointmentPeer
 		
 		foreach($value['details'] as $ig)
 			{
-//			print_r($detail);
+//			print_r($ig);
 			foreach ($ig as $dkey=>$dvalue)
 				{
 					
 //				echo "I should build an object for " . $dkey . "\n";
+//				print_r($dvalue);
 				$myItemType=WpitemTypePeer::retrieveByTitle($dkey);
 				
 				if ($myItemType)
@@ -162,7 +163,7 @@ class AppointmentPeer extends BaseAppointmentPeer
 				else
 					{
 						$import['fails']++;
-						$import['errors'].='Error importing: '. $dkey. "\n";
+						$import['errors'].='Error importing workplan module items: '. $dkey. "\n";
 						
 						
 					}

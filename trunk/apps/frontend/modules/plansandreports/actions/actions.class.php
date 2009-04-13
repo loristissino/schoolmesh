@@ -113,7 +113,7 @@ class plansandreportsActions extends sfActions
 				case 'yaml': 
 					$this->setLayout(false);
 					$this->getResponse()->setContentType('text/plain');
-					return $this->renderText(sfYaml::dump($this->workplan->getCompleteContentAsArray(), 6));
+					return $this->renderText(sfYaml::dump($this->workplan->getCompleteContentAsArray(), 10));
 		}
 
 
