@@ -40,3 +40,5 @@
   </tbody>
 </table>
 
+<hr />
+<p><?php echo link_to("Import", 'plansandreports/import') ?></p>

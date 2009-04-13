@@ -12,7 +12,14 @@
 					
 					<ul>
 						<?php foreach($wpitem_group->getWpmoduleItems() as $wpmodule_item): ?>
-							<li><?php echo html_entity_decode($wpmodule_item->getContent()) ?></li>
+							<?php if ($is_owner || !$wpmodule_item->getIsEditable()): ?>
+							<li>
+							<?php echo html_entity_decode($wpmodule_item->getContent()) ?>
+							<?php if ($state>=Workflow::IR_DRAFT): ?>
+								<em><?php echo sprintf(__('(Evaluation: %d)'), $wpmodule_item->getEvaluation()) ?></em>
+							<?php endif ?>
+							</li>
+							<?php endif ?>
 						<?php endforeach ?>
 					
 					</ul>

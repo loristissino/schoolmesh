@@ -388,6 +388,8 @@ abstract class BasesfGuardUserPeer {
 
 						sfGuardUserProfilePeer::clearInstancePool();
 
+						WpmodulePeer::clearInstancePool();
+
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {

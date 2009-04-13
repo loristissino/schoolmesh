@@ -20,7 +20,6 @@ editor_selector : \"mceAdvanced\"
 
 });
 ") ?>
-</script>
 <textarea name="value" class="mceAdvanced" style="width:100%">
 <?php echo $wpmodule_item->getContent() ?>
 </textarea>

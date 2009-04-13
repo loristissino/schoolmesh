@@ -1,1 +1,90 @@
-/Primo periodo: scritte \d+; orali \d+; pratiche \d+\<br /\>Secondo periodo: scritte \d+; orali \d+; pratiche \d+./
+Array
+(
+    [0] => Wpmodule Object
+        (
+            [id:protected] => 160
+            [user_id:protected] => 843
+            [title:protected] => Sistema solare
+            [period:protected] => settembre - dicembre
+            [appointment_id:protected] => 232
+            [rank:protected] => 1
+            [is_public:protected] => 1
+            [created_at:protected] => 2009-04-10 18:33:48
+            [updated_at:protected] => 2009-04-10 18:33:48
+            [asfGuardUser:protected] => 
+            [aAppointment:protected] => 
+            [collWpitemGroups:protected] => 
+            [lastWpitemGroupCriteria:private] => 
+            [alreadyInSave:protected] => 
+            [alreadyInValidation:protected] => 
+            [validationFailures:protected] => Array
+                (
+                )
+
+            [_new:private] => 
+            [_deleted:private] => 
+            [modifiedColumns:protected] => Array
+                (
+                )
+
+        )
+
+    [1] => Wpmodule Object
+        (
+            [id:protected] => 161
+            [user_id:protected] => 843
+            [title:protected] => Corpi celesti
+            [period:protected] => gennaio - marzo
+            [appointment_id:protected] => 232
+            [rank:protected] => 2
+            [is_public:protected] => 1
+            [created_at:protected] => 2009-04-10 18:33:48
+            [updated_at:protected] => 2009-04-10 18:33:48
+            [asfGuardUser:protected] => 
+            [aAppointment:protected] => 
+            [collWpitemGroups:protected] => 
+            [lastWpitemGroupCriteria:private] => 
+            [alreadyInSave:protected] => 
+            [alreadyInValidation:protected] => 
+            [validationFailures:protected] => Array
+                (
+                )
+
+            [_new:private] => 
+            [_deleted:private] => 
+            [modifiedColumns:protected] => Array
+                (
+                )
+
+        )
+
+    [2] => Wpmodule Object
+        (
+            [id:protected] => 162
+            [user_id:protected] => 843
+            [title:protected] => Stelle e galassie
+            [period:protected] => marzo - giugno
+            [appointment_id:protected] => 232
+            [rank:protected] => 3
+            [is_public:protected] => 1
+            [created_at:protected] => 2009-04-10 18:33:48
+            [updated_at:protected] => 2009-04-10 18:33:48
+            [asfGuardUser:protected] => 
+            [aAppointment:protected] => 
+            [collWpitemGroups:protected] => 
+            [lastWpitemGroupCriteria:private] => 
+            [alreadyInSave:protected] => 
+            [alreadyInValidation:protected] => 
+            [validationFailures:protected] => Array
+                (
+                )
+
+            [_new:private] => 
+            [_deleted:private] => 
+            [modifiedColumns:protected] => Array
+                (
+                )
+
+        )
+
+)

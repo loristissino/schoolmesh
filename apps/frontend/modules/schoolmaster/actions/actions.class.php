@@ -15,10 +15,18 @@ class schoolmasterActions extends sfActions
   {
    // $this->forward('default', 'module');
 
-		$this->workplans=AppointmentPeer::getSubmitted(Workflow::WP_WSMC);
-		$this->steps = Workflow::getWpfrSteps();
 
   }
+
+	public function executeWpsubmitted(sfWebRequest $request)
+	{
+		
+		$this->workplans=AppointmentPeer::getSubmitted(Workflow::WP_WSMC);
+		$this->steps = Workflow::getWpfrSteps();
+		
+	}
+	
+	
 
   public function executeReject(sfWebRequest $request)
   {
@@ -29,7 +37,7 @@ class schoolmasterActions extends sfActions
 
 	$this->getUser()->setFlash($result['result'], $result['message']);
 
-	$this->redirect('@office');
+	$this->redirect('@schoolmaster');
 
   }
 
@@ -43,7 +51,7 @@ class schoolmasterActions extends sfActions
 
 	$this->getUser()->setFlash($result['result'], $result['message']);
 
-	$this->redirect('@office');
+	$this->redirect('@schoolmaster');
 
   }
 

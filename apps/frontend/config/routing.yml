@@ -6,6 +6,13 @@ office:
   url: office
   param: { module: office, action: index } 
 
+wpfrview:
+  url: plansandreports/:id/view.:sf_format
+  param: { module: plansandreports, action: view }
+  requirements:
+    sf_format: (?:html|yaml)  
+
+
 submit:
   url: plansandreports/:id/submit.html
   param: { module: plansandreports, action: wpsubmit } 

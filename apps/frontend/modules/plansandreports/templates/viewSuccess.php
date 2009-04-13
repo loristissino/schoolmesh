@@ -13,12 +13,16 @@
 
 <h2><?php echo __("Modules") ?></h2>
 
-<?php include_partial('modules_shown', array('workplan' => $workplan)) ?>
+<?php include_partial('modules_shown', array('workplan' => $workplan, 'is_owner' => $is_owner, 'state'=>$workplan->getState())) ?>
 
 <h2><?php echo __("Aux") ?></h2>
 
 <?php include_partial('aux_shown', array('workplan' => $workplan, 'tools' => $tools)) ?>
 
+<?php if ($is_owner): ?>
+
 <h2><?php echo __("Workflow") ?></h2>
 
 <?php include_partial('workflow', array('workflow_logs' => $workflow_logs)) ?>
+
+<?php endif ?>

@@ -22,8 +22,8 @@
 	</li>
 	<li class="sf_admin_action_markdown">
 				<?php echo link_to(
-				__('Export as plain text (markdown)'),
-				'plansandreports/view?id='.$workplan->getId()
+				__('Export as plain text (yaml)'),
+				'plansandreports/view?id='.$workplan->getId().'&sf_format=yaml'
 				)?>
 	</li>
 	</ul>
