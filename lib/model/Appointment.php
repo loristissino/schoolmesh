@@ -406,44 +406,32 @@ public function getWorkflowLogs()
 			foreach($modules as $wpmodule)
 				{
 					$data['workplan_report']['modules'][$wpmodule->getTitle()]['period']=$wpmodule->getPeriod();
+					$data['workplan_report']['modules'][$wpmodule->getTitle()]['details']=Array();
 					$wpItemGroups=$wpmodule->getWpItemGroups();
 					if (@sizeof($wpItemGroups)>0)
 						{
 							foreach($wpItemGroups as $wpItemGroup)
 								{
-									$items=$wpItemGroup->getWpmoduleItems();
-									if (@sizeof($items)>0)
-										{
-											foreach($items as $item)
-												{
-													$info['content']=$item->getContent();
-													$info['evaluation']=$item->getEvaluation();
-													$info['rank']=$item->getRank();
-//													$contents['content'][]=$item->getContent();
-//													$contents['evaluation'][]=$item->getEvaluation();
-													$contents[]=$info;
-												}
-											$data['workplan_report']['modules'][$wpmodule->getTitle()]['details'][$wpItemGroup->getWpitemType()->getTitle()]=$contents;
-											unset($contents);
-
-										}
+										$built=Array();
+										foreach($wpItemGroup->getWpmoduleItems() as $wpmoduleItem)
+											{
+												$built[]=Array(
+													'content'=>$wpmoduleItem->getContent(),
+													'evaluation'=>$wpmoduleItem->getEvaluation(),
+													'rank'=>$wpmoduleItem->getRank()
+													);
+											}
+										
+									
+									$data['workplan_report']['modules'][$wpmodule->getTitle()]['details'][]=Array($wpItemGroup->getWpitemType()->getTitle()=>$built);
+									unset($built);
 								}
 						}
+						
 				}
 		}
-/*
-ob_start();
-$f=fopen('lorislog.txt', 'w');
 
-print_r($modules);
-$my_string = ob_get_contents();
-fwrite($f, $my_string);
 
-fclose($f);
-
-ob_end_clean();
-
-*/
 	return $data;
 
 		

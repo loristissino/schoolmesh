@@ -73,6 +73,11 @@ EOF;
 				}
 			
 		}
+	else
+		{
+			$this->log($this->formatter->format('   Skipped'), 'COMMENT');
+			
+		}
 	
 	
 	
