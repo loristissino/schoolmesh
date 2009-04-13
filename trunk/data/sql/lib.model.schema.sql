@@ -410,7 +410,7 @@ CREATE TABLE `wpmodule`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
-		ON DELETE RESTRICT,
+		ON DELETE CASCADE,
 	INDEX `wpmodule_FI_2` (`appointment_id`),
 	CONSTRAINT `wpmodule_FK_2`
 		FOREIGN KEY (`appointment_id`)

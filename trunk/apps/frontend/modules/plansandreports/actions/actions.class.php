@@ -18,6 +18,15 @@ class plansandreportsActions extends sfActions
 
   }
 
+	public function executeImport(sfWebRequest $request)
+	{
+	
+	$this->content=sfYaml::load('uploads/test.yaml');
+
+	
+		
+	}
+
 	public function executeWpsubmit(sfWebRequest $request)
 	{
     $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
@@ -94,11 +103,26 @@ class plansandreportsActions extends sfActions
   {
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->workplan);
-    $this->forward404Unless($this->workplan->isViewableBy($this->getUser()->getProfile()->getSfGuardUser()->getId()));
 	
+	$whoIsViewing = $this->getUser()->getProfile()->getSfGuardUser()->getId();
+	
+    $this->forward404Unless($this->workplan->isViewableBy($whoIsViewing));
+
+	switch($request->getRequestFormat())
+		{
+				case 'yaml': 
+					$this->setLayout(false);
+					$this->getResponse()->setContentType('text/plain');
+					return $this->renderText(sfYaml::dump($this->workplan->getCompleteContentAsArray(), 6));
+		}
+
+
 	$this->workflow_logs = $this->workplan->getWorkflowLogs();
 	$this->wpinfos = $this->workplan->getWpinfos();
-	$this->tools = $this->workplan->getTools();
+	$this->tools = $this->workplan->getTools(true);
+	$this->is_owner = $this->workplan->getUserId() == $whoIsViewing;
+
+
 
   }
 

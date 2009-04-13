@@ -31,7 +31,7 @@ class Wpmodule extends BaseWpmodule
 			return $this->getTitle(); 
 	}
 	
-	
+/*	
     public function getWpmoduleItems($criteria = null, PropelPDO $con = null)
 	{
 
@@ -44,7 +44,7 @@ class Wpmodule extends BaseWpmodule
 
 	}
 	
-	
+*/
 	public function getOwner()
 	{
 	    $c = new Criteria();
@@ -65,7 +65,10 @@ class Wpmodule extends BaseWpmodule
 		  $con->beginTransaction();
 
 		  if($this->getAppointmentId()!=NULL)
+			{
+//			echo "How many: ". $this->getAppointment()->countWpmodules() . "\n";
 			$this->setRank($this->getAppointment()->countWpmodules()+1);
+			}
 		  else
 			$this->setRank(NULL);
 		  parent::save();
@@ -129,6 +132,7 @@ class Wpmodule extends BaseWpmodule
 		$con->query($sql);
 		// delete the item
 		parent::delete();
+		echo "DELETED!\n";
 	 
 		$con->commit();
 	  }
@@ -139,6 +143,7 @@ class Wpmodule extends BaseWpmodule
 	  }
 	
 	 }
+		
 	}
 	
 

@@ -180,7 +180,7 @@ propel:
 
   wpmodule:
     id:         ~
-    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade }
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: cascade, onUpdate: cascade }
     title:        varchar(100)
     period:       varchar(100)
     appointment_id:   

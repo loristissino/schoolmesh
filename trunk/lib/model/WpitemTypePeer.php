@@ -3,7 +3,14 @@
 class WpitemTypePeer extends BaseWpitemTypePeer
 {
 	
-	
+static function retrieveByTitle($title)
+{
+  $c = new Criteria;
+  $c->add(self::TITLE, $title);
+  return self::doSelectOne($c); 
+}
+
+
 static function retrieveByRank($rank = 1)
 {
   $c = new Criteria;

@@ -14,7 +14,7 @@ WptoolItem:
     description: Lezione frontale
     wptool_item_type_id: methodology
   a2:
-    description: Lezione dialogate
+    description: Lezione dialogata
     wptool_item_type_id: methodology
   a3:
     description: Lavori di gruppo

@@ -300,7 +300,7 @@ public function getWorkflowLogs()
 	}
 
 
-	public function getTools()
+	public function getTools($onlyChosen=false)
 	{
 
 	$c=new Criteria();
@@ -315,28 +315,23 @@ public function getWorkflowLogs()
 		}
 	
 
-//	$previous= null;
-
 	foreach($t as $item)
 		{
 		$group[$item->getWptoolItemTypeId()]['description']=$item->getWptoolItemType()->getDescription();
-//		$myitem[$item->getId()]=$item->getDescription();
-		$group[$item->getWptoolItemTypeId()]['elements'][$item->getId()]['description']=$item->getDescription();
-		$group[$item->getWptoolItemTypeId()]['elements'][$item->getId()]['chosen']=
-				@in_array($item->getId(), $chosen);
+		$isChosen=@in_array($item->getId(), $chosen);
+		if (!$onlyChosen)
+			{
+			$group[$item->getWptoolItemTypeId()]['elements'][$item->getId()]['description']=$item->getDescription();
+			$group[$item->getWptoolItemTypeId()]['elements'][$item->getId()]['chosen']=$isChosen;
+			}
+		else
+			if ($isChosen)
+				{
+				$group[$item->getWptoolItemTypeId()]['elements'][$item->getId()]['description']=$item->getDescription();
+				$group[$item->getWptoolItemTypeId()]['elements'][$item->getId()]['chosen']=$isChosen;
+				}
 		}
 		
-/*			ob_start();
-$f=fopen('lorislog.txt', 'w');
-
-print_r($group);
-$my_string = ob_get_contents();
-fwrite($f, $my_string);
-
-fclose($f);
-
-ob_end_clean();
-*/
 	return $group;
 /*	
 	foreach($availableTools as $group)
@@ -371,6 +366,148 @@ ob_end_clean();
 		return true;
 		
 	return false;
+	}
+
+
+	public function getCompleteContentAsArray()
+	{
+	$data['workplan_report']['id']=$this->getId();
+	$data['workplan_report']['year']=$this->getYear()->getDescription();
+	$data['workplan_report']['teacher']['firstname']=$this->getFirstName();
+	$data['workplan_report']['teacher']['lastname']=$this->getLastName();
+	$data['workplan_report']['teacher']['id']=$this->getUserId();
+	$data['workplan_report']['subject']['description']=$this->getSubject()->getDescription();
+	$data['workplan_report']['subject']['id']=$this->getSubjectId();
+	$data['workplan_report']['class']['id']=$this->getSchoolclass()->getId();
+	$data['workplan_report']['exported_at']=date('r');
+
+
+	$wpinfos=$this->getWpinfos();
+	if (sizeof($wpinfos)>0)
+		foreach($this->getWpinfos() as $wpinfo)
+			$data['workplan_report']['info'][$wpinfo->getWpinfoType()->getTitle()]=$wpinfo->getContent();
+	
+	$tools=$this->getTools(true);
+		
+	if(sizeof($tools)>0)
+		foreach($tools as $toolGroup)
+			if (@sizeof($toolGroup['elements'])>0)
+				{
+				foreach($toolGroup['elements'] as $element)
+					$chosen[]=$element['description'];
+				$data['workplan_report']['tools'][$toolGroup['description']]=$chosen;
+				unset($chosen);
+				}
+				
+	$modules=$this->getWpmodules();
+
+	if (@sizeof($modules)>0)
+		{
+			foreach($modules as $wpmodule)
+				{
+					$data['workplan_report']['modules'][$wpmodule->getTitle()]['period']=$wpmodule->getPeriod();
+					$wpItemGroups=$wpmodule->getWpItemGroups();
+					if (@sizeof($wpItemGroups)>0)
+						{
+							foreach($wpItemGroups as $wpItemGroup)
+								{
+									$items=$wpItemGroup->getWpmoduleItems();
+									if (@sizeof($items)>0)
+										{
+											foreach($items as $item)
+												{
+													$info['content']=$item->getContent();
+													$info['evaluation']=$item->getEvaluation();
+													$info['rank']=$item->getRank();
+//													$contents['content'][]=$item->getContent();
+//													$contents['evaluation'][]=$item->getEvaluation();
+													$contents[]=$info;
+												}
+											$data['workplan_report']['modules'][$wpmodule->getTitle()]['details'][$wpItemGroup->getWpitemType()->getTitle()]=$contents;
+											unset($contents);
+
+										}
+								}
+						}
+				}
+		}
+/*
+ob_start();
+$f=fopen('lorislog.txt', 'w');
+
+print_r($modules);
+$my_string = ob_get_contents();
+fwrite($f, $my_string);
+
+fclose($f);
+
+ob_end_clean();
+
+*/
+	return $data;
+
+		
+	}
+
+
+	public function removeEverything()
+	{
+		foreach ($this->getWpevents() as $item)
+			$item->delete();
+		
+		foreach ($this->getWpinfos() as $item)
+			$item->delete();
+		
+		foreach ($this->getWptoolAppointments() as $item)
+			$item->delete();
+
+
+		$this->removeAllModules();
+
+/* for some obscure reasons, this does not seem to work:
+
+		foreach ($this->getWpmodules() as $item)
+			{
+			foreach($item->getWpitemGroups() as $subitem)
+				{
+					echo "  removing submodule ". $subitem->getId() . "\n";
+					foreach ($subitem->getWpmoduleItems() as $subsubitem)
+						{
+							echo "    removing subsubitem " . $subsubitem->getId() . "\n";
+							$subsubitem->delete();
+							echo "DELETED -- ". $subsubitem->getId() . "\n";
+						}
+					$subitem->delete();
+				}
+			echo "removing module ". $item->getId() . "\n";
+
+			$item->delete();
+			}
+
+*/
+
+	}
+
+	public function removeAllModules(PropelPDO $con = null)
+	{  
+	  $con = Propel::getConnection(WpmodulePeer::DATABASE_NAME);
+	  try
+	  {
+		$con->beginTransaction();
+	 
+		// decrease all the ranks of the page records of the same category with higher rank 
+		$sql = 'DELETE FROM '.WpmodulePeer::TABLE_NAME.' WHERE '.WpmodulePeer::APPOINTMENT_ID.' = '.$this->getId();
+
+		$con->query($sql);
+	 
+		$con->commit();
+	  }
+	  catch (Exception $e)
+	  {
+		$con->rollback();
+		throw $e;
+	  }
+	
 	}
 
 }
