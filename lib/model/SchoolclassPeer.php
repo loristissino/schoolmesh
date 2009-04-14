@@ -9,4 +9,6 @@
  */ 
 class SchoolclassPeer extends BaseSchoolclassPeer
 {
+		
+	
 }

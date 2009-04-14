@@ -421,8 +421,6 @@ public function getWorkflowLogs()
 													'rank'=>$wpmoduleItem->getRank()
 													);
 											}
-										
-									
 									$data['workplan_report']['modules'][$wpmodule->getTitle()]['details'][]=Array($wpItemGroup->getWpitemType()->getTitle()=>$built);
 									unset($built);
 								}

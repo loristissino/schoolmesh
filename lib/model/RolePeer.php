@@ -9,4 +9,15 @@
  */ 
 class RolePeer extends BaseRolePeer
 {
+	
+	public static function retrieveByDescription($description)
+	{
+	$c=new Criteria();
+	$c->add(self::DESCRIPTION, $description);
+	$t = self::doSelectOne($c);
+	return $t;
+	
+		
+	}
+	
 }

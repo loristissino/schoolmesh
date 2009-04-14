@@ -75,6 +75,9 @@ class AppointmentPeer extends BaseAppointmentPeer
 			}
 		}
 
+
+if (isset($content['workplan_report']['tools']))
+{
 	foreach($content['workplan_report']['tools'] as $key=>$value)
 		{
 			$wptoolItemType=WptoolItemTypePeer::getByDescription($key);
@@ -111,7 +114,7 @@ class AppointmentPeer extends BaseAppointmentPeer
 				}
 
 		}
-
+}
 	
 	$wpmodules=$workplan->getWpmodules();
 /*	foreach($wpmodules as $wpmodule)
@@ -186,7 +189,7 @@ class AppointmentPeer extends BaseAppointmentPeer
 	public static function retrieveByTeacherSchoolclassSubjectYear($teacherFirstName, $teacherLastName, $schoolclass, $subject, $year)
 	{
 	
-	echo "Looking for: $teacherFirstName, $teacherLastName, $schoolclass, $subject, $year \n";
+//	echo "Looking for: $teacherFirstName, $teacherLastName, $schoolclass, $subject, $year \n";
 	
 	$c=new Criteria();
 	$c->add(sfGuardUserProfilePeer::FIRST_NAME, $teacherFirstName);
@@ -199,6 +202,25 @@ class AppointmentPeer extends BaseAppointmentPeer
 	return $app[0];
 
 	}
+
+	public static function retrieveByUsernameSchoolclassSubjectYear($username, $schoolclass, $subject_shortcut, $year)
+	{
+	
+	$c=new Criteria();
+	$c->add(sfGuardUserPeer::USERNAME, $username);
+	$c->add(AppointmentPeer::SCHOOLCLASS_ID, $schoolclass);
+	$c->add(AppointmentPeer::YEAR_ID, $year);
+	$c->add(SubjectPeer::SHORTCUT, $subject_shortcut);
+
+	$app =  parent::doSelectJoinAll($c);
+	
+	if(sizeof($app)>0)
+		return $app[0];
+	else
+		return NULL;
+
+	}
+
 
 
 }
