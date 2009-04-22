@@ -35,15 +35,16 @@ class Appointment extends BaseAppointment
 		return FALSE;
 
 	}
-/*
+
 	public function getState()
 	{
-		if ($this->getLastLog())
-			return $this->getLastLog()->getState();
-		else
-			return FALSE;
+	$state=parent::getState();
+	if ($state==NULL)
+		$state=0;
+	return $state;
+
 	}
-*/
+
 	protected function markSubItems($newstate, $con)
 	{
 		
@@ -258,7 +259,7 @@ $con->query($sql);
 	
 	}
 
-protected function addEvent($user_id, $comment='', $state=0)
+public function addEvent($user_id, $comment='', $state=0)
 {
 		$wpevent = new Wpevent();
 		$wpevent->setUserId($user_id);

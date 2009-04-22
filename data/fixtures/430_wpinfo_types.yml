@@ -28,10 +28,15 @@ WpinfoType:
   wpadditionalclasses:
     title:       Recupero
     description:  Tempi e modalità per il recupero
-    rank:   5
+    rank:   6
+    state:  0
+  wpcomments:
+    title:        Commenti
+    description:  Commenti ed osservazioni in fase di progettazione
+    rank:   7
     state:  0
   wpconsiderations:
     title:        Considerazioni finali
     description:  Commenti ed osservazioni in fase di relazione finale
-    rank:   6
+    rank:   8
     state:  40
