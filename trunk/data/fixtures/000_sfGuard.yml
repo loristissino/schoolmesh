@@ -128,6 +128,9 @@ sfGuardUserGroup:
   admin:
     group_id:       admin
     user_id:        admin
+  bianca:
+    group_id:       teacher
+    user_id:        bianca
   loris1:
     group_id:       teacher
     user_id:        loris

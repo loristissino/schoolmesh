@@ -138,13 +138,13 @@ Appointment:
 
   bianca_ing_3ap_a:
     user_id:         bianca
-    subject_id:      inf
+    subject_id:      ing
     schoolclass_id:  3ap
     year_id:         200910
     
   bianca_ing_3ap_b:
     user_id:         bianca
-    subject_id:      inf
+    subject_id:      ing
     schoolclass_id:  3ap
     year_id:         200809
 

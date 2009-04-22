@@ -7,6 +7,14 @@
  *
  * @package lib.model
  */ 
-class sfGuardGroupProfilePeer extends BasesfGuardGroupProfilePeer
+class sfGuardGroupProfilePeer extends sfGuardGroupPeer
 {
+	
+	static public function retrieveGuardGroupByName($name)
+	{
+	  $c = new Criteria;
+	  $c->add(sfGuardGroupPeer::NAME, $name);
+	  return sfGuardGroupPeer::doSelectOne($c); 
+	}
+	
 }

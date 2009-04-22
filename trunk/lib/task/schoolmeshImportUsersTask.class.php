@@ -66,7 +66,7 @@ EOF;
 			continue;  // we skip the first line
 			}
 
-		list($first_name, $middle_name, $last_name, $username, $sex, $role, $birthdate, $birthplace, $email, $import_code)=$data; 
+		list($first_name, $middle_name, $last_name, $username, $sex, $role, $guardgroup, $birthdate, $birthplace, $email, $import_code)=$data; 
 
 		$this->log($this->formatter->format(sprintf('Importing %s (%s %s)', $username, $first_name, $last_name), 'COMMENT'));
 		
@@ -110,6 +110,18 @@ EOF;
 		$userprofile->setSex($sex);
 		$userprofile->setRole($myrole);
 		$userprofile->save();
+		
+
+		$basicGroup=sfGuardGroupProfilePeer::retrieveGuardGroupByName($guardgroup);
+		
+		if ($basicGroup)
+			{
+			$sfGuardUserGroup = new sfGuardUserGroup();
+			$sfGuardUserGroup->setGroupId($basicGroup->getId());
+			$sfGuardUserGroup->setUserId($user->getId());
+			$sfGuardUserGroup->save();
+			}
+		
 		
 		$imported++;
 		$this->log($this->formatter->format(sprintf('   Username %s imported', $username), 'INFO'));

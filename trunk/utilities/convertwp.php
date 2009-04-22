@@ -74,7 +74,7 @@ $text='';
 foreach($contents as $line)
 	{
 //		echo $line;
-//		echo "--> CURRENT STATE: $state\n";
+		echo "--> CURRENT STATE: $state\n";
 		if (preg_match('/LIVELLI DI PARTENZA RILEVATI/', $line))
 			$state='Livelli di partenza rilevati';
 
@@ -122,8 +122,8 @@ $previous='';
 foreach($programmazione as $line)
 	{
 		$line=chop($line);
-//		echo $line;
-//		echo "\n--> CURRENT STATE: $state\n";
+		echo "\n--> CURRENT STATE: $state\n";
+		echo $line;
 		
 /*
 		if (in_array(chop($line), Array('Obiettivi disciplinari', 'Conoscenze', 'Abilità/Capacità', 'Competenze')))
@@ -137,18 +137,18 @@ foreach($programmazione as $line)
 		if (preg_match("/Periodo di svolgimento/", $line))
 			$state='_periodo';
 			
-		if (preg_match("/Contenuti/", $line))
+		if (preg_match("/^Contenuti/", $line))
 			$state='Contenuti';
 			
-		if (preg_match("/(nuclei fondanti delle discipline-saperi essenziali)/", $line) or preg_match('/Conoscenze/', $line))
+		if (preg_match("/(nuclei fondanti delle discipline-saperi essenziali)/", $line) or preg_match('/^Conoscenze/', $line))
 			$state='Conoscenze';
 			
 		if (preg_match("/(nell’utilizzare e padroneggiare conoscenze anche per portare a termine compiti e risolvere problemi)/", $line) or
-			preg_match('/Abilità.Capacità/', $line))
+			preg_match('/^Abilità/', $line))
 			$state='Abilità';
 			
 		if (preg_match("/(capacità di usare conoscenze, abilità e capacità personali in situazioni di lavoro.studio)/", $line) or
-		   preg_match('/Competenze/', $line))
+		   preg_match('/^Competenze/', $line))
 			$state='Competenze';
 	
 		if ($state==$previous)
@@ -160,7 +160,7 @@ foreach($programmazione as $line)
 				'Competenze',
 				'(nuclei fondanti delle discipline-saperi essenziali)',
 				"(nell’utilizzare e padroneggiare conoscenze anche per portare a termine compiti e risolvere problemi)",
-				"(capacità di usare conoscenze, abilità e capacità personali in situazioni di lavoro.studio)",
+				"(capacità di usare conoscenze, abilità e capacità personali in situazioni di lavoro/studio)",
 				))
 				
 				and
@@ -175,7 +175,10 @@ foreach($programmazione as $line)
 		else
 			{
 			$mymodules['modulo '. $num_modulo][$previous]=$text;
+			
 			$text='';
+			
+			echo "\n------> aggiunta riga per $previous\n";
 
 			if ($previous=='Competenze')
 				$num_modulo++;
@@ -186,11 +189,14 @@ foreach($programmazione as $line)
 
 
 foreach(
-	Array('Livelli di partenza rilevati', 'Area di progetto', 'Attività extracurricolari', 'Valutazione', 'Prove di verifica sommative', 'Recupero')
+	Array('Livelli di partenza rilevati', 'Area di progetto', 'Attività extracurricolari', 'Valutazione', 'Prove di verifica sommative', 'Recupero', 'Commenti', 'Considerazioni finali')
 	as $group)
 	{
 		if (isset($mycontents[$group]))
 			$data['workplan_report']['info'][$group]=$mycontents[$group];
+		else
+			$data['workplan_report']['info'][$group]="";
+			
 	}
 
 foreach($mymodules as $mymodule)
@@ -198,11 +204,15 @@ foreach($mymodules as $mymodule)
 
 if($mymodule['_periodo']!='')
 {
+
+	if ($mymodule['_periodo']=='')
+		$mymodule['_periodo']=='---';
+
 	$data['workplan_report']['modules'][$mymodule['_titolo_modulo']]['period']=$mymodule['_periodo'];
 }
 	$mymodule_array=Array();
 	foreach(
-		Array('Contenti', 'Conoscenze', 'Abilità', 'Competenze')
+		Array('Contenuti', 'Conoscenze', 'Abilità', 'Competenze')
 		as $group)
 		{
 			if (isset($mymodule[$group]))
@@ -212,6 +222,10 @@ if($mymodule['_periodo']!='')
 				foreach(explode("\t", $mymodule[$group]) as $myitem)
 					{
 						$myitem=chop($myitem);
+						if (in_array(substr($myitem, -1), array(';', '.')))
+							$myitem=substr($myitem, 0, -1);
+						$myitem=str_replace("’", "'", $myitem);
+
 						if ($myitem!='')
 							$built[]=Array('content'=>$myitem, 'rank'=>++$rank, 'evaluation'=>null);
 					}

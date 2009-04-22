@@ -13,7 +13,7 @@ class AppointmentPeer extends BaseAppointmentPeer
 	}
 	
 	
-	public static function doImport($content, $replace)
+	public static function doImport($content, $replace, $user_id)
 	{
 	
 	$workplan=self::retrieveByTeacherSchoolclassSubjectYear(
@@ -33,7 +33,12 @@ class AppointmentPeer extends BaseAppointmentPeer
 					return;
 				}
 			else
+			{
 				$workplan->removeEverything();
+				$workplan->setState(0);
+				$workplan->save();
+				$workplan->addEvent($user_id, 'Imported', 0);
+			}
 		}
 	else
 		{
@@ -43,6 +48,7 @@ class AppointmentPeer extends BaseAppointmentPeer
 //		$workplan = new Appointment();
 		
 		echo "I don't create new appointments here\n";
+		return;
 		}
 	
 	
@@ -147,20 +153,23 @@ if (isset($content['workplan_report']['tools']))
 					$wpitemGroup = new WpitemGroup();
 					$wpitemGroup->setWpitemTypeId($myItemType->getId());
 					$wpitemGroup->setWpmoduleId($wpmodule->getId());
+//					echo "Inserting something here...";
 					$wpitemGroup->save();
 
-					foreach($dvalue as $sdkey=>$sdvalue)
+					if (@sizeof($dvalue)>0)
 						{
-//							echo "$dkey .. $sdkey - " . $sdvalue['content'] . "\n";
-							$wpmoduleItem = new WpmoduleItem();
-							$wpmoduleItem->setWpitemGroupId($wpitemGroup->getId());
-							$wpmoduleItem->setContent($sdvalue['content']);
-							$wpmoduleItem->setIsEditable(true);
-							$wpmoduleItem->save();
-							$import['oks']++;
+						foreach($dvalue as $sdkey=>$sdvalue)
+							{
+	//							echo "$dkey .. $sdkey - " . $sdvalue['content'] . "\n";
+								$wpmoduleItem = new WpmoduleItem();
+								$wpmoduleItem->setWpitemGroupId($wpitemGroup->getId());
+								$wpmoduleItem->setContent($sdvalue['content']);
+								$wpmoduleItem->setIsEditable(true);
+								$wpmoduleItem->save();
+								$import['oks']++;
 
-						}
-
+							}
+					}
 
 					}
 				else
@@ -173,11 +182,42 @@ if (isset($content['workplan_report']['tools']))
 				
 				
 				}
+				
+				
 			}
+		
+				   $itemtypes=WpitemTypePeer::getAllByRank();
+				  // we look for itemgroups not set in the yaml file...   
+				   foreach($itemtypes as $itemtype)
+						{
+						$localWpitemGroup=WpitemGroupPeer::retrieveByModuleAndType($wpmodule->getId(), $itemtype->getid());
+						
+						if (is_object($localWpitemGroup))
+							{
+//							echo "Retrieved: ". $localWpitemGroup->getWpitemTypeId() . '   ' .$localWpitemGroup->getWpmoduleId() . "\n";
+	
+							}
+
+							else
+							{
+									//echo " I need to insert ". $itemtype->getId() . '  ' . $wpmodule->getId() . "\n";
+									$localWpitemGroup = new WpitemGroup();
+									$localWpitemGroup->setWpitemType($itemtype);
+									$localWpitemGroup->setWpmoduleId($wpmodule->getId());
+									$localWpitemGroup->save();
+									//echo " Saved: ". $localWpitemGroup->getId() . "\n";
+							}
+							
+						}
+
+
 		
 		
 		unset($wpmodule);
 		}
+
+
+
 
 
 	
