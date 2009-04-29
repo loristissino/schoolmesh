@@ -38,6 +38,7 @@ class AppointmentPeer extends BaseAppointmentPeer
 				$workplan->setState(0);
 				$workplan->save();
 				$workplan->addEvent($user_id, 'Imported', 0);
+				echo "starting the import\n";
 			}
 		}
 	else
@@ -129,7 +130,7 @@ if (isset($content['workplan_report']['tools']))
 	foreach($content['workplan_report']['modules'] as $key=>$value)
 		{
 		$wpmodule = new Wpmodule();
-		$wpmodule->setPeriod($value['period']);
+		$wpmodule->setPeriod(isset($value['period'])? $value['period']: '---');
 		$wpmodule->setAppointmentId($workplan->getId());
 		$wpmodule->setUserId($workplan->getUserId());
 		$wpmodule->setTitle($key);
@@ -230,7 +231,7 @@ if (isset($content['workplan_report']['tools']))
 	{
 	
 //	echo "Looking for: $teacherFirstName, $teacherLastName, $schoolclass, $subject, $year \n";
-	
+	// here there is a bug: FirstName and lastName are not really taken in consideration 
 	$c=new Criteria();
 	$c->add(sfGuardUserProfilePeer::FIRST_NAME, $teacherFirstName);
 	$c->add(sfGuardUserProfilePeer::LAST_NAME, $teacherLastName);
