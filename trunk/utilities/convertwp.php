@@ -81,7 +81,8 @@ foreach($contents as $line)
 		if (preg_match("/EVENTUALI PROPOSTE E CONTRIBUTI PER L'AREA DI PROGETTO/", $line))
 			$state='Area di progetto';
 			
-		if (preg_match("/ATTIVITÀ INTEGRATIVE EXTRACURRICOLARI PREVISTE/", $line))
+		if (preg_match("/ATTIVITÀ INTEGRATIVE EXTRACURRICOLARI PREVISTE/", $line)
+			or preg_match("/ATTIVITA' INTEGRATIVE EXTRACURRICOLARI PREVISTE/", $line))
 			$state='Attività extracurricolari';
 			
 		if (preg_match("/TAVOLA DI PROGRAMMAZIONE DELLA DISCIPLINA/", $line))
@@ -93,10 +94,11 @@ foreach($contents as $line)
 		if (preg_match("/CRITERI E STRUMENTI ADOTTATI PER LA VALUTAZIONE/", $line))
 			$state='Valutazione';
 
-		if (preg_match("/TEMPI E MODALITÀ PER IL RECUPERO/", $line))
+		if (preg_match("/TEMPI E MODALITÀ PER IL RECUPERO/", $line)
+			or preg_match("/TEMPI E MODALITA' PER IL RECUPERO/", $line))
 			$state='Recupero';
 	
-		if (preg_match("/Pordenone,  /", $line))
+		if (preg_match("/Pordenone,  /", $line) or preg_match("/^Data/", $line))
 			$state='fine';
 	
 		if ($state==$previous)
@@ -139,6 +141,9 @@ foreach($programmazione as $line)
 			
 		if (preg_match("/^Contenuti/", $line))
 			$state='Contenuti';
+
+		if (preg_match("/^Note e commenti/", $line))
+			$state='Note e commenti in fase di progettazione';
 			
 		if (preg_match("/(nuclei fondanti delle discipline-saperi essenziali)/", $line) or preg_match('/^Conoscenze/', $line))
 			$state='Conoscenze';
@@ -158,6 +163,8 @@ foreach($programmazione as $line)
 				'Conoscenze', 
 				'Abilità/Capacità', 
 				'Competenze',
+				'Contenuti',
+				'Note e commenti in fase di progettazione',
 				'(nuclei fondanti delle discipline-saperi essenziali)',
 				"(nell’utilizzare e padroneggiare conoscenze anche per portare a termine compiti e risolvere problemi)",
 				"(capacità di usare conoscenze, abilità e capacità personali in situazioni di lavoro/studio)",
@@ -212,7 +219,7 @@ if($mymodule['_periodo']!='')
 }
 	$mymodule_array=Array();
 	foreach(
-		Array('Contenuti', 'Conoscenze', 'Abilità', 'Competenze')
+		Array('Contenuti', 'Conoscenze', 'Abilità', 'Competenze', 'Note e commenti in fase di progettazione')
 		as $group)
 		{
 			if (isset($mymodule[$group]))
