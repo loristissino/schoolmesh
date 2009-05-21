@@ -1,15 +1,7 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
-  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-02-08T21:05:20Z" product-name="messages">
+  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-05-20T12:07:16Z" product-name="messages">
     <body>
-      <trans-unit id="1">
-        <source>This school's name is: </source>
-        <target>Il nome di questa scuola &#xE8;: </target>
-      </trans-unit>
-      <trans-unit id="2">
-        <source>New message...</source>
-        <target>Nuovo messaggio...</target>
-      </trans-unit>
       <trans-unit id="3">
         <source>Forgot your password?</source>
         <target>Dimenticata la password?</target>
@@ -29,18 +21,6 @@
       <trans-unit id="7">
         <source>Which groups I belong to</source>
         <target>I gruppi a cui appartengo</target>
-      </trans-unit>
-      <trans-unit id="8">
-        <source>Who am I? </source>
-        <target>Chi sono? </target>
-      </trans-unit>
-      <trans-unit id="9">
-        <source>Is Admin? </source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="10">
-        <source>Appointment List</source>
-        <target/>
       </trans-unit>
       <trans-unit id="11">
         <source>%fullname% logged out</source>
@@ -70,42 +50,6 @@
         <source>Permissions list</source>
         <target>Elenco permessi</target>
       </trans-unit>
-      <trans-unit id="18">
-        <source>Workstation Management</source>
-        <target>Gestione calcolatori</target>
-      </trans-unit>
-      <trans-unit id="19">
-        <source>Editing settings for workstation %%name%%</source>
-        <target>Impostazioni per il calcolatore %%name%%</target>
-      </trans-unit>
-      <trans-unit id="20">
-        <source>Name</source>
-        <target>Nome</target>
-      </trans-unit>
-      <trans-unit id="21">
-        <source>IP Address</source>
-        <target>Indirizzo IP</target>
-      </trans-unit>
-      <trans-unit id="22">
-        <source>Toggle Internet access</source>
-        <target>Abilita/disabilita accesso a Internet</target>
-      </trans-unit>
-      <trans-unit id="23">
-        <source>Basic</source>
-        <target>Impostazioni di base</target>
-      </trans-unit>
-      <trans-unit id="24">
-        <source>Advanced</source>
-        <target>Impostazioni avanzate</target>
-      </trans-unit>
-      <trans-unit id="25">
-        <source>Internet access</source>
-        <target>Accesso ad Internet</target>
-      </trans-unit>
-      <trans-unit id="26">
-        <source>Internet-enabled?</source>
-        <target>Accesso ad Internet abilitato?</target>
-      </trans-unit>
       <trans-unit id="27">
         <source>You don't have the required permission to access this page.</source>
         <target>Non disponi dei permessi necessari per accedere a questa pagina.</target>
@@ -122,10 +66,6 @@
         <source>Soft authentication: </source>
         <target>Autenticazione leggera: </target>
       </trans-unit>
-      <trans-unit id="31">
-        <source>you were recognized as user &lt;b&gt;%username%&lt;/b&gt;  (%fullname%) by using network logs.</source>
-        <target>in base ai registri di sistema, sei stato riconosciuto come  &lt;b&gt;%username%&lt;/b&gt; (%fullname%).</target>
-      </trans-unit>
       <trans-unit id="32">
         <source>you were not recognized.</source>
         <target>non sei stato riconosciuto.</target>
@@ -137,10 +77,6 @@
       <trans-unit id="34">
         <source>you logged in as user &lt;b&gt;%username%&lt;/b&gt;  (%fullname%).</source>
         <target>hai fatto il login come &lt;b&gt;%username%&lt;/b&gt;  (%fullname%).</target>
-      </trans-unit>
-      <trans-unit id="35">
-        <source>It seems you are a guest of %fullname%.</source>
-        <target>Sembra che tu sia un ospite di %fullname%.</target>
       </trans-unit>
       <trans-unit id="36">
         <source>Checked</source>
@@ -210,21 +146,241 @@
         <source>You need to login to access the page you requested.</source>
         <target>Devi fare il login per accedere alla pagina richiesta.</target>
       </trans-unit>
-      <trans-unit id="56">
-        <source>The selected workstation has been Internet-enabled successfully</source>
-        <target>Il calcolatore selezionato è stato abilitato per l'accesso a Internet.</target>
+      <trans-unit id="60">
+        <source>Plans and Reports</source>
+        <target>Piani di lavoro e Relazioni</target>
       </trans-unit>
-      <trans-unit id="57">
-        <source>The selected workstations have been enabled successfully.</source>
-        <target>I calcolatori selezionati sono stati abilitati per l'accesso a Internet.</target>
+      <trans-unit id="61">
+        <source>Office</source>
+        <target>Segreteria</target>
       </trans-unit>
-      <trans-unit id="58">
-        <source>The selected workstations have been disabled successfully.</source>
-        <target>I calcolatori selezionati sono stati disabilitati per l'accesso a Internet.</target>
+      <trans-unit id="62">
+        <source>Schoolmaster</source>
+        <target>Dirigente scolastico</target>
       </trans-unit>
-      <trans-unit id="59">
-        <source>draft</source>
-        <target>bozza</target>
+      <trans-unit id="63">
+        <source>View</source>
+        <target>Vedi</target>
+      </trans-unit>
+      <trans-unit id="64">
+        <source>Approve&amp;nbsp;Workplan</source>
+        <target>Approva&amp;nbsp;Piano&amp;nbsp;di&amp;nbsp;lavoro</target>
+      </trans-unit>
+      <trans-unit id="65">
+        <source>Reject&amp;nbsp;Workplan</source>
+        <target>Rifiuta&amp;nbsp;Piano&amp;nbsp;di&amp;nbsp;lavoro</target>
+      </trans-unit>
+      <trans-unit id="66">
+        <source>Approve&amp;nbsp;Report</source>
+        <target>Approva&amp;nbsp;Relazione</target>
+      </trans-unit>
+      <trans-unit id="67">
+        <source>Reject&amp;nbsp;Report</source>
+        <target>Rfiuta&amp;nbsp;Relazione</target>
+      </trans-unit>
+      <trans-unit id="68">
+        <source>Move up</source>
+        <target>Sposta in alto</target>
+      </trans-unit>
+      <trans-unit id="69">
+        <source>Move down</source>
+        <target>Sposta in basso</target>
+      </trans-unit>
+      <trans-unit id="70">
+        <source>Workplan: </source>
+        <target>Piano di lavoro: </target>
+      </trans-unit>
+      <trans-unit id="71">
+        <source>General information</source>
+        <target>Informazioni generali</target>
+      </trans-unit>
+      <trans-unit id="72">
+        <source>Teacher: </source>
+        <target>Docente: </target>
+      </trans-unit>
+      <trans-unit id="73">
+        <source>Class: </source>
+        <target>Classe: </target>
+      </trans-unit>
+      <trans-unit id="74">
+        <source>Year: </source>
+        <target>Anno scolastico: </target>
+      </trans-unit>
+      <trans-unit id="75">
+        <source>Modules</source>
+        <target>Moduli</target>
+      </trans-unit>
+      <trans-unit id="76">
+        <source>Workflow</source>
+        <target>Flusso di lavoro</target>
+      </trans-unit>
+      <trans-unit id="77">
+        <source>Current status</source>
+        <target>Stato corrente</target>
+      </trans-unit>
+      <trans-unit id="78">
+        <source>Last update</source>
+        <target>Ultimo aggiornamento</target>
+      </trans-unit>
+      <trans-unit id="79">
+        <source>History</source>
+        <target>Storia</target>
+      </trans-unit>
+      <trans-unit id="80">
+        <source>Edit</source>
+        <target>Modifica</target>
+      </trans-unit>
+      <trans-unit id="81">
+        <source>Delete</source>
+        <target>Elimina</target>
+      </trans-unit>
+      <trans-unit id="82">
+        <source>Are you sure?</source>
+        <target>Sei sicuro?</target>
+      </trans-unit>
+      <trans-unit id="83">
+        <source>No info available</source>
+        <target>Nessuna informazione</target>
+      </trans-unit>
+      <trans-unit id="84">
+        <source>Toggle</source>
+        <target>Mostra/nascondi</target>
+      </trans-unit>
+      <trans-unit id="85">
+        <source>min</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="86">
+        <source>max</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="87">
+        <source>rich text edit</source>
+        <target>Modifica</target>
+      </trans-unit>
+      <trans-unit id="88">
+        <source>New</source>
+        <target>Nuovo</target>
+      </trans-unit>
+      <trans-unit id="89">
+        <source>Back to workplan/report %s</source>
+        <target>Torna al piano di lavoro / relazione %s</target>
+      </trans-unit>
+      <trans-unit id="90">
+        <source>unset</source>
+        <target>elimina indicazione</target>
+      </trans-unit>
+      <trans-unit id="91">
+        <source>Module Items</source>
+        <target>Elementi del modulo</target>
+      </trans-unit>
+      <trans-unit id="92">
+        <source>not set</source>
+        <target>non impostato</target>
+      </trans-unit>
+      <trans-unit id="93">
+        <source>No choice done.</source>
+        <target>Nessuna scelta</target>
+      </trans-unit>
+      <trans-unit id="94">
+        <source>Module #%d:&amp;nbsp;</source>
+        <target>Modulo n. %d:&amp;nbsp;</target>
+      </trans-unit>
+      <trans-unit id="95">
+        <source>Period: %s</source>
+        <target>Periodo: %s</target>
+      </trans-unit>
+      <trans-unit id="96">
+        <source>(Evaluation: %d)</source>
+        <target>(Valutazione: %d)</target>
+      </trans-unit>
+      <trans-unit id="97">
+        <source>Details, comments, general information</source>
+        <target>Dettagli, commenti, informazioni generali</target>
+      </trans-unit>
+      <trans-unit id="98">
+        <source>Aux</source>
+        <target>Informazioni aggiuntive</target>
+      </trans-unit>
+      <trans-unit id="99">
+        <source>Fill</source>
+        <target>Compila</target>
+      </trans-unit>
+      <trans-unit id="100">
+        <source>Workplans and Reports</source>
+        <target>Piani di lavoro e Relazioni</target>
+      </trans-unit>
+      <trans-unit id="101">
+        <source>Yes: %s</source>
+        <target>S&#xEC;: %s</target>
+      </trans-unit>
+      <trans-unit id="102">
+        <source>No: %s</source>
+        <target>No: %s</target>
+      </trans-unit>
+      <trans-unit id="103">
+        <source>Basic information</source>
+        <target>Informazioni di base</target>
+      </trans-unit>
+      <trans-unit id="104">
+        <source>Current state</source>
+        <target>Stato corrente</target>
+      </trans-unit>
+      <trans-unit id="105">
+        <source>Complete view of this plan/report</source>
+        <target>Vista completa di questo piano di lavoro / relazione</target>
+      </trans-unit>
+      <trans-unit id="106">
+        <source>Export as plain text (yaml)</source>
+        <target>Esporta come file di testo (yaml)</target>
+      </trans-unit>
+      <trans-unit id="107">
+        <source>Are you sure? Workplans and reports submitted cannot be modified anymore...</source>
+        <target>Sei sicuro? I piano di lavoro e le relazioni inviate non possono essere pi&#xF9; modificate.</target>
+      </trans-unit>
+      <trans-unit id="108">
+        <source>Save</source>
+        <target>Salva</target>
+      </trans-unit>
+      <trans-unit id="109">
+        <source>Workplans submitted</source>
+        <target>Piano di lavoro inviati</target>
+      </trans-unit>
+      <trans-unit id="111">
+        <source>For each item type, evaluation is expressed with a minimum and a maximum as follows:</source>
+        <target>Per ogni elemento, la valutazione &#xE8; espressa sulla base delle seguenti scale:</target>
+      </trans-unit>
+      <trans-unit id="112">
+        <source>Edit Wpinfo</source>
+        <target>Modifica informazioni nel piano di lavoro</target>
+      </trans-unit>
+      <trans-unit id="113">
+        <source>Workplans approved</source>
+        <target>Piani di lavoro approvati</target>
+      </trans-unit>
+      <trans-unit id="114">
+        <source>Submit this workplan for approval</source>
+        <target>Consegna questo piano di lavoro</target>
+      </trans-unit>
+      <trans-unit id="115">
+        <source>Rank</source>
+        <target>Posizione</target>
+      </trans-unit>
+      <trans-unit id="116">
+        <source>Period</source>
+        <target>Periodo</target>
+      </trans-unit>
+      <trans-unit id="117">
+        <source>Title</source>
+        <target>Titolo</target>
+      </trans-unit>
+      <trans-unit id="118">
+        <source>Evaluations</source>
+        <target>Valutazione</target>
+      </trans-unit>
+      <trans-unit id="119">
+        <source>Actions</source>
+        <target>Azioni</target>
       </trans-unit>
     </body>
   </file>

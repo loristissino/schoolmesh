@@ -56,7 +56,7 @@
 </li>
 </ul>
 <!--</div>-->
-<div id="modules" style="display:<?php echo $sf_user->hasFlash('notice')? 'visible': 'none' ?>">
+<div id="modules" style="display:<?php echo ($sf_user->hasFlash('notice')||$sf_user->hasFlash('error'))? 'visible': 'none' ?>">
 <?php include_partial('modules', array('workplan' => $workplan)) ?>
 
 	<ul class="sf_admin_actions">
@@ -104,7 +104,7 @@
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_submit">
 				<?php echo link_to(
-				$steps[$state]['owner']['submitDisplayedAction'],
+				__($steps[$state]['owner']['submitDisplayedAction']),
 				'plansandreports/'. $steps[$state]['owner']['submitAction']. '?id='.$workplan->getId(),
 				array('method' => 'put', 'confirm' => __('Are you sure? Workplans and reports submitted cannot be modified anymore...')) 
 				)?>

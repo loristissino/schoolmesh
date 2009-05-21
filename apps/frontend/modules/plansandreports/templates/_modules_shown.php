@@ -12,10 +12,10 @@
 					
 					<ul>
 						<?php foreach($wpitem_group->getWpmoduleItems() as $wpmodule_item): ?>
-							<?php if ($is_owner || !$wpmodule_item->getIsEditable()): ?>
+							<?php if (!$wpmodule_item->getIsEditable()): ?>
 							<li>
 							<?php echo html_entity_decode($wpmodule_item->getContent()) ?>
-							<?php if ($state>=Workflow::IR_DRAFT): ?>
+							<?php if (($state>=Workflow::IR_DRAFT) && $wpmodule_item->getEvaluation()>0): ?>
 								<em><?php echo sprintf(__('(Evaluation: %d)'), $wpmodule_item->getEvaluation()) ?></em>
 							<?php endif ?>
 							</li>

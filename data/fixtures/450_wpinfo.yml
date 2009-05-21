@@ -21,7 +21,7 @@ Wpinfo:
     content: Se necessario.
   test_ast_3ap_0_f:
     appointment_id: test_ast_3ap_0
-    wpinfo_type_id:  wpconsiderations
+    wpinfo_type_id:  frconsiderations
     content: 
   test_ast_3ap_0_g:
     appointment_id: test_ast_3ap_0

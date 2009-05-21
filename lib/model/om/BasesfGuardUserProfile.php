@@ -22,6 +22,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $last_name;
 
 	
+	protected $pronunciation;
+
+	
 	protected $role_id;
 
 	
@@ -112,6 +115,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	public function getLastName()
 	{
 		return $this->last_name;
+	}
+
+	
+	public function getPronunciation()
+	{
+		return $this->pronunciation;
 	}
 
 	
@@ -290,6 +299,20 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->last_name !== $v) {
 			$this->last_name = $v;
 			$this->modifiedColumns[] = sfGuardUserProfilePeer::LAST_NAME;
+		}
+
+		return $this;
+	} 
+	
+	public function setPronunciation($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->pronunciation !== $v) {
+			$this->pronunciation = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::PRONUNCIATION;
 		}
 
 		return $this;
@@ -558,19 +581,20 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->first_name = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->middle_name = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->last_name = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->role_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
-			$this->sex = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->email = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->birthdate = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->birthplace = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-			$this->import_code = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
-			$this->disk_set_soft_blocks_quota = ($row[$startcol + 10] !== null) ? (int) $row[$startcol + 10] : null;
-			$this->disk_set_hard_blocks_quota = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
-			$this->disk_set_soft_files_quota = ($row[$startcol + 12] !== null) ? (int) $row[$startcol + 12] : null;
-			$this->disk_set_hard_files_quota = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
-			$this->disk_used_blocks = ($row[$startcol + 14] !== null) ? (int) $row[$startcol + 14] : null;
-			$this->disk_used_files = ($row[$startcol + 15] !== null) ? (int) $row[$startcol + 15] : null;
-			$this->disk_updated_at = ($row[$startcol + 16] !== null) ? (string) $row[$startcol + 16] : null;
+			$this->pronunciation = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->role_id = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->sex = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->email = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->birthdate = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->birthplace = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->import_code = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
+			$this->disk_set_soft_blocks_quota = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
+			$this->disk_set_hard_blocks_quota = ($row[$startcol + 12] !== null) ? (int) $row[$startcol + 12] : null;
+			$this->disk_set_soft_files_quota = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
+			$this->disk_set_hard_files_quota = ($row[$startcol + 14] !== null) ? (int) $row[$startcol + 14] : null;
+			$this->disk_used_blocks = ($row[$startcol + 15] !== null) ? (int) $row[$startcol + 15] : null;
+			$this->disk_used_files = ($row[$startcol + 16] !== null) ? (int) $row[$startcol + 16] : null;
+			$this->disk_updated_at = ($row[$startcol + 17] !== null) ? (string) $row[$startcol + 17] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -579,7 +603,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 17; 
+						return $startcol + 18; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating sfGuardUserProfile object", $e);
 		}
@@ -790,42 +814,45 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				return $this->getLastName();
 				break;
 			case 4:
-				return $this->getRoleId();
+				return $this->getPronunciation();
 				break;
 			case 5:
-				return $this->getSex();
+				return $this->getRoleId();
 				break;
 			case 6:
-				return $this->getEmail();
+				return $this->getSex();
 				break;
 			case 7:
-				return $this->getBirthdate();
+				return $this->getEmail();
 				break;
 			case 8:
-				return $this->getBirthplace();
+				return $this->getBirthdate();
 				break;
 			case 9:
-				return $this->getImportCode();
+				return $this->getBirthplace();
 				break;
 			case 10:
-				return $this->getDiskSetSoftBlocksQuota();
+				return $this->getImportCode();
 				break;
 			case 11:
-				return $this->getDiskSetHardBlocksQuota();
+				return $this->getDiskSetSoftBlocksQuota();
 				break;
 			case 12:
-				return $this->getDiskSetSoftFilesQuota();
+				return $this->getDiskSetHardBlocksQuota();
 				break;
 			case 13:
-				return $this->getDiskSetHardFilesQuota();
+				return $this->getDiskSetSoftFilesQuota();
 				break;
 			case 14:
-				return $this->getDiskUsedBlocks();
+				return $this->getDiskSetHardFilesQuota();
 				break;
 			case 15:
-				return $this->getDiskUsedFiles();
+				return $this->getDiskUsedBlocks();
 				break;
 			case 16:
+				return $this->getDiskUsedFiles();
+				break;
+			case 17:
 				return $this->getDiskUpdatedAt();
 				break;
 			default:
@@ -842,19 +869,20 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$keys[1] => $this->getFirstName(),
 			$keys[2] => $this->getMiddleName(),
 			$keys[3] => $this->getLastName(),
-			$keys[4] => $this->getRoleId(),
-			$keys[5] => $this->getSex(),
-			$keys[6] => $this->getEmail(),
-			$keys[7] => $this->getBirthdate(),
-			$keys[8] => $this->getBirthplace(),
-			$keys[9] => $this->getImportCode(),
-			$keys[10] => $this->getDiskSetSoftBlocksQuota(),
-			$keys[11] => $this->getDiskSetHardBlocksQuota(),
-			$keys[12] => $this->getDiskSetSoftFilesQuota(),
-			$keys[13] => $this->getDiskSetHardFilesQuota(),
-			$keys[14] => $this->getDiskUsedBlocks(),
-			$keys[15] => $this->getDiskUsedFiles(),
-			$keys[16] => $this->getDiskUpdatedAt(),
+			$keys[4] => $this->getPronunciation(),
+			$keys[5] => $this->getRoleId(),
+			$keys[6] => $this->getSex(),
+			$keys[7] => $this->getEmail(),
+			$keys[8] => $this->getBirthdate(),
+			$keys[9] => $this->getBirthplace(),
+			$keys[10] => $this->getImportCode(),
+			$keys[11] => $this->getDiskSetSoftBlocksQuota(),
+			$keys[12] => $this->getDiskSetHardBlocksQuota(),
+			$keys[13] => $this->getDiskSetSoftFilesQuota(),
+			$keys[14] => $this->getDiskSetHardFilesQuota(),
+			$keys[15] => $this->getDiskUsedBlocks(),
+			$keys[16] => $this->getDiskUsedFiles(),
+			$keys[17] => $this->getDiskUpdatedAt(),
 		);
 		return $result;
 	}
@@ -883,42 +911,45 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->setLastName($value);
 				break;
 			case 4:
-				$this->setRoleId($value);
+				$this->setPronunciation($value);
 				break;
 			case 5:
-				$this->setSex($value);
+				$this->setRoleId($value);
 				break;
 			case 6:
-				$this->setEmail($value);
+				$this->setSex($value);
 				break;
 			case 7:
-				$this->setBirthdate($value);
+				$this->setEmail($value);
 				break;
 			case 8:
-				$this->setBirthplace($value);
+				$this->setBirthdate($value);
 				break;
 			case 9:
-				$this->setImportCode($value);
+				$this->setBirthplace($value);
 				break;
 			case 10:
-				$this->setDiskSetSoftBlocksQuota($value);
+				$this->setImportCode($value);
 				break;
 			case 11:
-				$this->setDiskSetHardBlocksQuota($value);
+				$this->setDiskSetSoftBlocksQuota($value);
 				break;
 			case 12:
-				$this->setDiskSetSoftFilesQuota($value);
+				$this->setDiskSetHardBlocksQuota($value);
 				break;
 			case 13:
-				$this->setDiskSetHardFilesQuota($value);
+				$this->setDiskSetSoftFilesQuota($value);
 				break;
 			case 14:
-				$this->setDiskUsedBlocks($value);
+				$this->setDiskSetHardFilesQuota($value);
 				break;
 			case 15:
-				$this->setDiskUsedFiles($value);
+				$this->setDiskUsedBlocks($value);
 				break;
 			case 16:
+				$this->setDiskUsedFiles($value);
+				break;
+			case 17:
 				$this->setDiskUpdatedAt($value);
 				break;
 		} 	}
@@ -932,19 +963,20 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[1], $arr)) $this->setFirstName($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setMiddleName($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setLastName($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setRoleId($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setSex($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setEmail($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setBirthdate($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setBirthplace($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setImportCode($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setDiskSetSoftBlocksQuota($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setDiskSetHardBlocksQuota($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setDiskSetSoftFilesQuota($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setDiskSetHardFilesQuota($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setDiskUsedBlocks($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setDiskUsedFiles($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setDiskUpdatedAt($arr[$keys[16]]);
+		if (array_key_exists($keys[4], $arr)) $this->setPronunciation($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setRoleId($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setSex($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setEmail($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setBirthdate($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setBirthplace($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setImportCode($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setDiskSetSoftBlocksQuota($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setDiskSetHardBlocksQuota($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setDiskSetSoftFilesQuota($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setDiskSetHardFilesQuota($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setDiskUsedBlocks($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setDiskUsedFiles($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setDiskUpdatedAt($arr[$keys[17]]);
 	}
 
 	
@@ -956,6 +988,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::FIRST_NAME)) $criteria->add(sfGuardUserProfilePeer::FIRST_NAME, $this->first_name);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::MIDDLE_NAME)) $criteria->add(sfGuardUserProfilePeer::MIDDLE_NAME, $this->middle_name);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::LAST_NAME)) $criteria->add(sfGuardUserProfilePeer::LAST_NAME, $this->last_name);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::PRONUNCIATION)) $criteria->add(sfGuardUserProfilePeer::PRONUNCIATION, $this->pronunciation);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::ROLE_ID)) $criteria->add(sfGuardUserProfilePeer::ROLE_ID, $this->role_id);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::SEX)) $criteria->add(sfGuardUserProfilePeer::SEX, $this->sex);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::EMAIL)) $criteria->add(sfGuardUserProfilePeer::EMAIL, $this->email);
@@ -1006,6 +1039,8 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$copyObj->setMiddleName($this->middle_name);
 
 		$copyObj->setLastName($this->last_name);
+
+		$copyObj->setPronunciation($this->pronunciation);
 
 		$copyObj->setRoleId($this->role_id);
 

@@ -2,6 +2,10 @@ schoolmaster:
   url: schoolmaster
   param: { module: schoolmaster, action: index } 
 
+schoolmaster_wpsubmitted:
+  url: schoolmaster/wpsubmitted
+  param: { module: schoolmaster, action: wpsubmitted } 
+
 office:
   url: office
   param: { module: office, action: index } 

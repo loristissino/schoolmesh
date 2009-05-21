@@ -26,6 +26,13 @@ class schoolmasterActions extends sfActions
 		
 	}
 	
+	public function executeWpapproved(sfWebRequest $request)
+	{
+		
+		$this->workplans=AppointmentPeer::getSubmitted(Workflow::IR_DRAFT);
+		$this->steps = Workflow::getWpfrSteps();
+		
+	}
 	
 
   public function executeReject(sfWebRequest $request)
@@ -37,7 +44,7 @@ class schoolmasterActions extends sfActions
 
 	$this->getUser()->setFlash($result['result'], $result['message']);
 
-	$this->redirect('@schoolmaster');
+	$this->redirect('@schoolmaster_wpsubmitted');
 
   }
 
@@ -51,7 +58,7 @@ class schoolmasterActions extends sfActions
 
 	$this->getUser()->setFlash($result['result'], $result['message']);
 
-	$this->redirect('@schoolmaster');
+	$this->redirect('@schoolmaster_wpsubmitted');
 
   }
 

@@ -1,8 +1,9 @@
 <?php if ($workplan->countWpmodules()): ?>
-
-
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
+<?php endif; ?>
+<?php if ($sf_user->hasFlash('error')): ?>
+  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
 
 <?php $i=0 ?>
@@ -11,10 +12,13 @@
 <table cellspacing="0">
   <thead>
     <tr>
-      <th class="sf_admin_text" colspan="3">Rank</th>
-      <th class="sf_admin_text">Period</th>
-      <th class="sf_admin_text">Title</th>
-      <th class="sf_admin_text">Actions</th>
+      <th class="sf_admin_text" colspan="3"><?php echo __('Rank') ?></th>
+      <th class="sf_admin_text"><?php echo __('Period') ?></th>
+      <th class="sf_admin_text"><?php echo __('Title') ?></th>
+	  <?php if ($workplan->getState()>Workflow::WP_DRAFT): ?>
+		<th class="sf_admin_text"><?php echo __('Evaluations') ?></th>
+	  <?php endif ?>  
+      <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
   <tbody>
@@ -34,6 +38,9 @@
 	
       <td><?php echo $wpmodule->getPeriod() ?></td>
       <td><?php echo $wpmodule ?></td>
+	  <?php if ($workplan->getState()>Workflow::WP_DRAFT): ?>
+		<td><?php echo $wpmodule->getEvaluated() ?></td>
+	  <?php endif ?>  
       <td>
 		<ul class="sf_admin_td_actions">
 			<li class="sf_admin_action_fill">
@@ -44,6 +51,7 @@
 				array('method' => 'get') 
 				)?>
 			</li>
+			<?php if($workplan->getState()==Workflow::WP_DRAFT): ?>
 			<li class="sf_admin_action_delete">
 				<?php echo link_to(
 				__('Delete'),
@@ -51,6 +59,7 @@
 				array('method' => 'delete', 'confirm' => __('Are you sure?')) 
 				)?>
 			</li>
+			<?php endif ?>
 		</ul>
 	  </td>
     </tr>

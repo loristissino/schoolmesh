@@ -119,6 +119,7 @@ class plansandreportsActions extends sfActions
 
 	$this->workflow_logs = $this->workplan->getWorkflowLogs();
 	$this->wpinfos = $this->workplan->getWpinfos();
+	$this->wpitemTypes=WpitemTypePeer::getAllByRank();
 	$this->tools = $this->workplan->getTools(true);
 	$this->is_owner = $this->workplan->getUserId() == $whoIsViewing;
 

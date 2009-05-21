@@ -44,10 +44,15 @@ EOF;
 	$this->logSection('import-workplans', 'Importing workplans from '. $arguments['dir'] . '... (replacing: '.$options['replace'] . ')');
 	$files= scandir($arguments['dir']);
 	
+	if ($options['importer']==null)
+		{
+		$this->log($this->formatter->format('No importer specified', 'ERROR'));
+		return false;
+		}
 	$importer=sfGuardUserProfilePeer::retrieveByUsername($options['importer']);
 	if ($importer==null)
 		{
-		$this->log($this->formatter->format('No importer specified', 'ERROR'));
+		$this->log($this->formatter->format('Importer not found', 'ERROR'));
 		return false;
 		}
 	
@@ -84,7 +89,7 @@ EOF;
 		}
 	else
 		{
-			$this->log($this->formatter->format('   Skipped'), 'COMMENT');
+			$this->log($this->formatter->format('   Skipped'), 'ERROR');
 			
 		}
 	
