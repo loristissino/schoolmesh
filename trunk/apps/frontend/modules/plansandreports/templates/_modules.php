@@ -39,7 +39,15 @@
       <td><?php echo $wpmodule->getPeriod() ?></td>
       <td><?php echo $wpmodule ?></td>
 	  <?php if ($workplan->getState()>Workflow::WP_DRAFT): ?>
-		<td><?php echo $wpmodule->getEvaluated() ?></td>
+		<td><?php $missing=$wpmodule->getUnevaluated() ?>
+		<?php if ($missing>0): ?>
+			<?php echo image_tag('notdone') ?>
+		<?php else: ?>
+			<?php echo image_tag('done') ?>
+		<?php endif; ?>
+		<?php echo
+			format_number_choice('[0]Evaluation completed|[1]Missing one evaluation out of %2%|[1,+Inf]Missing %1% evaluations out of %2%',
+		    array('%1%'=>$missing, '%2%'=>$wpmodule->getToBeEvaluated()), $missing) ?></td>
 	  <?php endif ?>  
       <td>
 		<ul class="sf_admin_td_actions">

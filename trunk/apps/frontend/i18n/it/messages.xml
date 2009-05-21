@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
-  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-05-20T12:07:16Z" product-name="messages">
+  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-05-21T09:50:14Z" product-name="messages">
     <body>
       <trans-unit id="3">
         <source>Forgot your password?</source>
@@ -268,7 +268,7 @@
       </trans-unit>
       <trans-unit id="90">
         <source>unset</source>
-        <target>elimina indicazione</target>
+        <target><![CDATA[elimina&nbsp;indicazione]]></target>
       </trans-unit>
       <trans-unit id="91">
         <source>Module Items</source>
@@ -381,6 +381,10 @@
       <trans-unit id="119">
         <source>Actions</source>
         <target>Azioni</target>
+      </trans-unit>
+      <trans-unit id="120">
+        <source>[0]Evaluation completed|[1]Missing one evaluation out of %2%|[1,+Inf]Missing %1% evaluations out of %2%</source>
+        <target>[0]Valutazione completata|[1]Manca una valutazione su %2%|[1,+Inf]Mancano %1% valutazioni su %2%</target>
       </trans-unit>
     </body>
   </file>
