@@ -24,9 +24,10 @@ propel:
   sf_guard_user_profile:
     _attributes:  { phpName: sfGuardUserProfile }
     user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade, onUpdate: cascade, primaryKey: true }
-    first_name:   varchar(20)
-    middle_name:  varchar(20)
-    last_name:    varchar(20)
+    first_name:   varchar(255)
+    middle_name:  varchar(255)
+    last_name:    varchar(255)
+    pronunciation: varchar(255)
     role_id:      ~
     sex:          varchar(1)
     email:        varchar(50)

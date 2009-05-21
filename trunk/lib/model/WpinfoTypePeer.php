@@ -10,5 +10,12 @@ class WpinfoTypePeer extends BaseWpinfoTypePeer
 		return parent::doSelectOne($c);
 
 	}
-	
+
+	static public function getAll()
+	{
+		$c=new Criteria();
+		return parent::doSelect($c);
+	}
+
+
 }

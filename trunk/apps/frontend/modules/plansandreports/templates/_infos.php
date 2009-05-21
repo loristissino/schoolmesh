@@ -23,7 +23,7 @@
       <td><?php echo  html_entity_decode($wpinfo->getContent()) ?></td>
       <td>
 		<ul class="sf_admin_td_actions">
-			<?php if ($state==Workflow::WP_DRAFT): ?>
+			<?php if ($state==$wpinfo->getWpinfoType()->getState()): ?>
 			<li class="sf_admin_action_fill">
 			<?php /* here I should show edit or show depending on the state */ ?>
 				<?php echo link_to(

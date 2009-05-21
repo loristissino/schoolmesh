@@ -152,8 +152,15 @@ class wpmoduleActions extends sfActions
     $this->forward404Unless($wpmodule = WpmodulePeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpmodule does not exist (%s).', $request->getParameter('id')));
     
 	$appointmentId=$wpmodule->getAppointmentId();
-	$wpmodule->delete();
-	$this->getUser()->setFlash('notice', sprintf('The item was deleted'));
+	if ($wpmodule->delete())
+		{
+		$this->getUser()->setFlash('notice', sprintf('The item was deleted'));
+		}
+	else
+		{
+		$this->getUser()->setFlash('error', sprintf('The item could not be deleted'));
+		}
+		
 
     $this->redirect('plansandreports/fill?id='. $appointmentId);
   }

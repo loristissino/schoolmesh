@@ -13,6 +13,10 @@
 
 <h2><?php echo __("Modules") ?></h2>
 
+<?php if ($workplan->getState()>Workflow::WP_DRAFT): ?>
+	<?php include_partial('wpmodule/legenda', array('wpitemTypes' => $wpitemTypes)) ?>
+<?php endif ?>
+
 <?php include_partial('modules_shown', array('workplan' => $workplan, 'is_owner' => $is_owner, 'state'=>$workplan->getState())) ?>
 
 <h2><?php echo __("Aux") ?></h2>

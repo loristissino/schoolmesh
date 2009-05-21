@@ -1,4 +1,4 @@
-<h1>Edit Wpinfo</h1>
+<h1><?php echo __('Edit Wpinfo') ?></h1>
 <?php use_helper('Javascript') ?>
 <?php use_javascript('tiny_mce/tiny_mce.js') ?>
 <h2><?php echo $type->getTitle() ?></h2>

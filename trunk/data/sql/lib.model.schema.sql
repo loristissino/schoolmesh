@@ -81,9 +81,10 @@ DROP TABLE IF EXISTS `sf_guard_user_profile`;
 CREATE TABLE `sf_guard_user_profile`
 (
 	`user_id` INTEGER  NOT NULL,
-	`first_name` VARCHAR(20),
-	`middle_name` VARCHAR(20),
-	`last_name` VARCHAR(20),
+	`first_name` VARCHAR(255),
+	`middle_name` VARCHAR(255),
+	`last_name` VARCHAR(255),
+	`pronunciation` VARCHAR(255),
 	`role_id` INTEGER,
 	`sex` VARCHAR(1),
 	`email` VARCHAR(50),

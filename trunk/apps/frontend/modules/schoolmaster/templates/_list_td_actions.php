@@ -7,7 +7,7 @@
 	<?php endif ?>
 	<?php foreach($steps[$appointment->getState()]['actions'] as $actionkey=>$actionvalue): ?>
 	<li class="sf_admin_action_<?php echo $actionkey ?>">
-      <?php echo link_to(__($steps[$appointment->getState()]['actions'][$actionkey]['submitDisplayedAction']), 'office/'. $actionkey .'?id='.$appointment->getId(), array('method'=>'put')) ?>
+      <?php echo link_to(__($steps[$appointment->getState()]['actions'][$actionkey]['submitDisplayedAction']), 'schoolmaster/'. $actionkey .'?id='.$appointment->getId(), array('method'=>'put')) ?>
     </li>
 	<?php endforeach ?>
 </ul>

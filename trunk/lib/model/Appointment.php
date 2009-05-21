@@ -44,10 +44,23 @@ class Appointment extends BaseAppointment
 	return $state;
 
 	}
-
-	protected function markSubItems($newstate, $con)
+	
+	
+	public function getWpinfo($id)
 	{
+	
+		$c=new Criteria();
+//		echo "Cerco con WPINFO con ID=$id e APPOINTMENTID=" . $this->getId() . "\n";
+	    $c->add(WpinfoPeer::APPOINTMENT_ID, $this->getId());
+	    $c->add(WpinfoPeer::WPINFO_TYPE_ID, $id);
+		return WpinfoPeer::doSelectOne($c);
+
 		
+	}
+
+	protected function markSubItems($newstate, $con=null)
+	{
+		$con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
 	 
 //		$sql = 'UPDATE '.WpmoduleItemPeer::TABLE_NAME.' SET '.WpmoduleItemPeer::IS_EDITABLE.' = FALSE WHERE '.WpmoduleItemPeer::RANK.' > '.$this->getRank() . ' AND ' . WpmoduleItemPeer::WPITEM_GROUP_ID .'='. $this->getWpitemGroupId();
 
@@ -189,6 +202,7 @@ $con->query($sql);
 			return $result;
 		}
 
+	$this->markSubItems('false');
 	$result['result']='notice';
 	$result['message']=$steps[$this->getState()]['owner']['submitDoneAction'];
 
@@ -353,8 +367,7 @@ public function getWorkflowLogs()
 		return true;
 		
 	if ($this->getState()>Workflow::WP_DRAFT)
-		return true;
-	
+		return true;	
 
 	return false;
 	}

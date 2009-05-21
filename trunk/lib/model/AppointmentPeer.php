@@ -29,7 +29,7 @@ class AppointmentPeer extends BaseAppointmentPeer
 			echo "Workplan: " . $workplan->getId() . "\n";
 			if ($replace!='true')
 				{
-					echo "... not replacing\n";
+					echo "... not replacing (set option replace=true to change this behaviour)\n";
 					return;
 				}
 			else
@@ -81,6 +81,23 @@ class AppointmentPeer extends BaseAppointmentPeer
 	
 			}
 		}
+	
+	// we need to check if some info is missing...
+	$allWpinfoTypes=WpinfoTypePeer::getAll();
+    foreach($allWpinfoTypes as $wpinfoType)
+		{
+//		echo "Cerco " .$wpinfoType->getTitle() . "\n";
+		$wpinfo=$workplan->getWpinfo($wpinfoType->getId());
+		if (!$wpinfo)
+			{
+				$wpinfo=new Wpinfo();	
+				$wpinfo->setAppointmentId($workplan->getId());
+				$wpinfo->setWpinfoTypeId($wpinfoType->getId());
+				$wpinfo->setContent($wpinfoType->getTemplate());
+				$wpinfo->save();
+			}
+		}
+	
 
 
 if (isset($content['workplan_report']['tools']))
@@ -165,6 +182,7 @@ if (isset($content['workplan_report']['tools']))
 								$wpmoduleItem = new WpmoduleItem();
 								$wpmoduleItem->setWpitemGroupId($wpitemGroup->getId());
 								$wpmoduleItem->setContent($sdvalue['content']);
+								$wpmoduleItem->setEvaluation($sdvalue['evaluation']);
 								$wpmoduleItem->setIsEditable(true);
 								$wpmoduleItem->save();
 								$import['oks']++;

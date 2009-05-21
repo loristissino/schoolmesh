@@ -35,11 +35,13 @@ class sfGuardUserProfileMapBuilder implements MapBuilder {
 
 		$tMap->addForeignPrimaryKey('USER_ID', 'UserId', 'INTEGER' , 'sf_guard_user', 'ID', true, null);
 
-		$tMap->addColumn('FIRST_NAME', 'FirstName', 'VARCHAR', false, 20);
+		$tMap->addColumn('FIRST_NAME', 'FirstName', 'VARCHAR', false, 255);
 
-		$tMap->addColumn('MIDDLE_NAME', 'MiddleName', 'VARCHAR', false, 20);
+		$tMap->addColumn('MIDDLE_NAME', 'MiddleName', 'VARCHAR', false, 255);
 
-		$tMap->addColumn('LAST_NAME', 'LastName', 'VARCHAR', false, 20);
+		$tMap->addColumn('LAST_NAME', 'LastName', 'VARCHAR', false, 255);
+
+		$tMap->addColumn('PRONUNCIATION', 'Pronunciation', 'VARCHAR', false, 255);
 
 		$tMap->addForeignKey('ROLE_ID', 'RoleId', 'INTEGER', 'role', 'ID', false, null);
 

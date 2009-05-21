@@ -27,16 +27,32 @@ WpinfoType:
     template:  Primo periodo: scritte \d+; orali \d+; pratiche \d+.<br />Secondo periodo: scritte \d+; orali \d+; pratiche \d+.
   wpadditionalclasses:
     title:       Recupero
-    description:  Tempi e modalità per il recupero
+    description:  Tempi e modalità previste per il recupero
     rank:   6
     state:  0
+  wpbooks:
+    title:       Libri di testo
+    description:  Libri di testo adottati e/o consigliati
+    rank:   7
+    state:  0
+    template:  Vedi programmazione iniziale.
   wpcomments:
     title:        Commenti
     description:  Commenti ed osservazioni in fase di progettazione
-    rank:   7
+    rank:   8
     state:  0
-  wpconsiderations:
+  frsituation:
+    title:        Situazione finale della classe
+    description:  Commenti ed osservazioni in fase di relazione finale
+    rank:   9
+    state:  30
+  fradditionalclasses:
+    title:        Recupero
+    description:  Tempi e modalità adottate per il recupero
+    rank:   10
+    state:  30
+  frconsiderations:
     title:        Considerazioni finali
     description:  Commenti ed osservazioni in fase di relazione finale
-    rank:   8
-    state:  40
+    rank:   11
+    state:  30

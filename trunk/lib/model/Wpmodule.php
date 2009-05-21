@@ -3,6 +3,31 @@
 class Wpmodule extends BaseWpmodule
 {
 	
+	public function getEvaluated()
+	{
+     $con = Propel::getConnection(WpmodulePeer::DATABASE_NAME);
+	 
+$sql = 'SELECT count( * ) AS number
+FROM wpmodule
+JOIN wpitem_group ON wpmodule.id = wpitem_group.wpmodule_id
+JOIN wpmodule_item ON wpitem_group.id = wpmodule_item.wpitem_group_id
+JOIN wpitem_type ON wpitem_group.wpitem_type_id = wpitem_type.id
+WHERE wpmodule.id = %d
+AND wpmodule_item.evaluation IS NULL
+AND wpitem_type.evaluation_max >0';
+
+$sql = sprintf($sql, $this->getId());
+
+$statement = $con->prepare($sql);
+$statement->execute();
+
+$resultset= $statement->fetch(PDO::FETCH_OBJ);
+
+$number=$resultset->number;
+
+	return sprintf("%d evaluations missing", $number);
+	}
+	
 	public function swapWith($item)
 	{
 	  $con = Propel::getConnection(WpmodulePeer::DATABASE_NAME);
@@ -119,6 +144,10 @@ class Wpmodule extends BaseWpmodule
 
 	public function delete(PropelPDO $con = null)
 	{  
+	
+	  if ($this->getAppointment()->getState()!=Workflow::WP_DRAFT)
+		return false;
+		
 	  $con = Propel::getConnection(WpmodulePeer::DATABASE_NAME);
 	
 	  if ($this->getRank()!==NULL)
@@ -132,7 +161,7 @@ class Wpmodule extends BaseWpmodule
 		$con->query($sql);
 		// delete the item
 		parent::delete();
-		echo "DELETED!\n";
+//		echo "DELETED!\n";
 	 
 		$con->commit();
 	  }

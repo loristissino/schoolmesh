@@ -6,10 +6,10 @@ class Wpinfo extends BaseWpinfo
 	public function setCheckedContent($user_id, $v)
 	{
 		
-		if ($this->getAppointment()->getState()!=Workflow::WP_DRAFT)
+		if ($this->getAppointment()->getState()!=$this->getWpinfoType()->getState())
 		{
 					$result['result']='error_info';
-					$result['message']='This content is not editable for a workplan not in draft state.';
+					$result['message']='This content is not editable in this state.';
 					return $result;
 		}
 		

@@ -1,0 +1,473 @@
+workplan_report:
+#  id: 16
+  year: 2008/09
+  teacher:
+    firstname: Francesco
+    lastname: Gri
+    id: 6
+  subject:
+    description: 'Informatica gestionale'
+    id: 14
+  class:
+    id: 3BP
+  exported_at: 'Mon, 18 May 2009 14:40:55 +0200'
+  info:
+    'Livelli di partenza rilevati': 'La materia viene presentata in terza per la prima volta, non c''è stata quindi una rilevazione delle conoscenze pregresse sulla materia specifica. Invece sono state analizzate le capacità deduttive, logiche, analitiche essenziali per affrontare la materia. Questa analisi è basata sui risultati di verifiche formative nelle fasi iniziali dell''anno scolastico.<br />Riguardo alle capacità logiche ed analitiche il livello medio di partenza è disomogeneo: per un gruppo numeroso è sufficiente o discreto; un gruppo meno numeroso presenta evidenti lacune. <br />Mediamente l''interesse verso la materia è discreto. Alcuni alunni non sembrano impegnarsi a sufficenza. <br />I due alunni ripetenti dimostrano un buon approccio al nuovo anno scolastico.'
+    'Area di progetto': 'La classe terza non svolge l''Area di  progetto.'
+    'Attività extracurricolari': 'Quelle previste dal Consiglio di Classe.'
+    Valutazione: 'Il raggiungimento completo o parziale degli obiettivi definisce la valutazione dell''alunno. Tale valutazione segue la griglia definita nel POF.<br />Per la verifica formativa si opererà nel seguente modo: test scritti (utilizzando anche quelli presenti nel libro) autovalutati dagli alunni con la correzione immediata in classe; frequenti domande alla classe o al singolo alunno; richiesta agli alunni di riassumere i concetti appresi in una lezione; richiesta agli alunni di riassumere un argomento.<br />Per la verifica sommativa si utilizzerà: l''interrogazione orale; le prove scritte; la documentazione prodotta; i listati dei programmi. Il peso delle prime due nella valutazione finale sarà di quattro quinti del totale.<br />Nelle prove scritte si utilizzeranno prove strutturate e semistrutturate valutate su una griglia allegata alla prova.<br />Al fine della valutazione globale si tiene conto oltre ai risultati delle prove, anche dell''''impegno, della partecipazione al dialogo educativo, della progressione nell''''apprendimento.'
+    'Prove di verifica sommative': ''
+    Recupero: 'La materia può essere facilmente affrontata a diversi livelli di difficoltà. Qualora fosse necessario un intervento di recupero si cercherà di attuarlo nelle ore curricolari in itinere diversificando gli obiettivi per i diversi alunni. Ove necessario si attiveranno dei corsi di recupero. Su richiesta degli alunni si attiverà anche lo sportello aperto.<br />Gli argomenti teorici saranno affrontati con numerosi esempi da risolvere in laboratorio al fine di consolidare le conoscenze apprese.<br />Si avrà cura di seguire individualmente nelle attività di laboratorio gli studenti con eventuali difficoltà. <br />Si utilizzeranno i colloqui orali come spunto di ripasso per tutti gli allievi cercando di evidenziare i punti significativi degli argomenti trattati ed i ragionamenti.<br />Si fa inoltre riferimento alla Scheda di programmazione attività educative e didattiche del consiglio di classe'
+    Commenti: ''
+    'Considerazioni finali': ''
+  modules:
+    'Rappresentazione delle informazioni':
+      period: Ottobre
+      details:
+        -
+          Contenuti:
+            -
+              content: 'Sistemi di numerazione: binario, ottale, decimale, esadecimale'
+              evaluation: 4
+              rank: 1
+            -
+              content: 'Conversioni tra sistemi di numerazione'
+              evaluation: 4
+              rank: 2
+            -
+              content: 'Rappresentazione delle informazioni alfanumeriche: il codice ASCII'
+              evaluation: 4
+              rank: 3
+            -
+              content: 'Rappresentazione dei numeri interi: senza segno, con segno e in complemento a due'
+              evaluation: 3
+              rank: 4
+            -
+              content: 'Rappresentazione dei numeri reali: fixed-point, reali floating-point'
+              evaluation: 3
+              rank: 5
+        -
+          Conoscenze:
+            -
+              content: 'Sistemi di numerazione'
+              evaluation: 4
+              rank: 1
+            -
+              content: 'Rappresentazione posizionale'
+              evaluation: 3
+              rank: 2
+            -
+              content: 'Rappresentazione di numeri e caratteri'
+              evaluation: 3
+              rank: 3
+        -
+          Abilità:
+            -
+              content: 'Effettuare conversioni tra basi diverse'
+              evaluation: 4
+              rank: 1
+        -
+          Competenze:
+            -
+              content: 'Calcolare l''occupazione di memoria richiesta per la rappresentazione di un''informazione'
+              evaluation: 2
+              rank: 1
+        -
+          'Note e commenti in fase di progettazione': {  }
+        -
+          'Note e commenti in fase di relazione finale': {  }
+    'Concetti di Logica':
+      period: Ottobre
+      details:
+        -
+          Contenuti:
+            -
+              content: 'Proposizioni semplici e composte'
+              evaluation: 3
+              rank: 1
+            -
+              content: 'Tabelle di verità: AND, OR, NOT, AUT e VEL'
+              evaluation: 3
+              rank: 2
+        -
+          Conoscenze:
+            -
+              content: 'Tabelle di verità di AND, OR, NOT'
+              evaluation: 4
+              rank: 1
+            -
+              content: 'Leggi di De Morgan'
+              evaluation: 3
+              rank: 2
+        -
+          Abilità:
+            -
+              content: 'Calcolare le tabelle di verità di proposizioni Logiche'
+              evaluation: 2
+              rank: 1
+        -
+          Competenze:
+            -
+              content: 'Utilizzare la Logica nella Programmazione'
+              evaluation: 3
+              rank: 1
+        -
+          'Note e commenti in fase di progettazione': {  }
+        -
+          'Note e commenti in fase di relazione finale': {  }
+    'Introduzione all''informatica':
+      period: 'Novembre Dicembre'
+      details:
+        -
+          Contenuti:
+            -
+              content: 'Concetti generali: informazione, informatica, sistema di elaborazione'
+              evaluation: 4
+              rank: 1
+            -
+              content: 'Elementi costitutivi dell''informazione'
+              evaluation: 4
+              rank: 2
+            -
+              content: 'Informazione analogica e digitale'
+              evaluation: 2
+              rank: 3
+            -
+              content: 'Hardware e Software'
+              evaluation: 2
+              rank: 4
+            -
+              content: 'Tipi di elaboratori'
+              evaluation: 1
+              rank: 5
+            -
+              content: 'Aree di applicazione dell''informatica'
+              evaluation: 1
+              rank: 6
+        -
+          Conoscenze:
+            -
+              content: 'Definizione di informazione'
+              evaluation: 4
+              rank: 1
+            -
+              content: 'Terminologie di base'
+              evaluation: 3
+              rank: 2
+            -
+              content: 'Elementi costitutivi dell''informazione'
+              evaluation: 3
+              rank: 3
+            -
+              content: 'Concetto di elaborazione'
+              evaluation: 3
+              rank: 4
+            -
+              content: 'Informazione analogica e digitale'
+              evaluation: 1
+              rank: 5
+            -
+              content: 'Aree di applicazione dell''informatica'
+              evaluation: 1
+              rank: 6
+        -
+          Abilità:
+            -
+              content: 'Definire e classificare semplici sistemi'
+              evaluation: 1
+              rank: 1
+        -
+          Competenze:
+            -
+              content: 'Utilizzare in modo autonomo documenti di varia natura'
+              evaluation: 2
+              rank: 1
+        -
+          'Note e commenti in fase di progettazione': {  }
+        -
+          'Note e commenti in fase di relazione finale': {  }
+    'Linguaggi  di programmazione':
+      period: 'Novembre Dicembre'
+      details:
+        -
+          Contenuti:
+            -
+              content: 'Compilatore, Linker, Loader'
+              evaluation: 2
+              rank: 1
+            -
+              content: 'Linguaggi ad Alto e a Basso livello'
+              evaluation: 1
+              rank: 2
+            -
+              content: 'Linguaggi Procedurali, Dichiarativi, Funzionali'
+              evaluation: 2
+              rank: 3
+        -
+          Conoscenze:
+            -
+              content: 'Modulo sorgente, oggetto, eseguibile'
+              evaluation: 2
+              rank: 1
+            -
+              content: 'Linguaggi tradotti o interpretati'
+              evaluation: 1
+              rank: 2
+            -
+              content: 'Ling. Procedurali, Dichiarativi, Funzionali'
+              evaluation: 2
+              rank: 3
+        -
+          Abilità:
+            -
+              content: 'Confrontare Compilatori ed Interpreti in base a velocità ed occupazione di memoria'
+              evaluation: 1
+              rank: 1
+        -
+          Competenze:
+            -
+              content: 'Riconoscere i passaggi tra linguaggio sorgente, linguaggio oggetto, linguaggio macchina'
+              evaluation: 2
+              rank: 1
+        -
+          'Note e commenti in fase di progettazione': {  }
+        -
+          'Note e commenti in fase di relazione finale': {  }
+    'Introduzione agli Algoritmi':
+      period: Novembre-Febbraio
+      details:
+        -
+          Contenuti:
+            -
+              content: 'Definizione e caratteristiche di un algoritmo'
+              evaluation: 2
+              rank: 1
+            -
+              content: 'Componenti: i dati e le istruzioni'
+              evaluation: 4
+              rank: 2
+            -
+              content: 'Dati di input, output e intermedi'
+              evaluation: 4
+              rank: 3
+            -
+              content: 'Variabili e Costanti'
+              evaluation: 4
+              rank: 4
+            -
+              content: 'Rappresentazioni degli algoritmi: i diagrammi di flusso, la pseudocodifica'
+              evaluation: 2
+              rank: 5
+            -
+              content: 'La progettazione Top-Down: introduzione'
+              evaluation: 4
+              rank: 6
+            -
+              content: 'La programmazione strutturata: sequenza, selezione, iterazione, teorema di Bohn-Jacopini'
+              evaluation: 3
+              rank: 7
+            -
+              content: 'La simulazione di un algoritmo'
+              evaluation: 4
+              rank: 8
+            -
+              content: 'Le fasi della realizzazione di un programma: capire il problema, individuare una soluzione, progettare il programma, eseguire prove del programma, documentazione'
+              evaluation: 3
+              rank: 9
+        -
+          Conoscenze:
+            -
+              content: 'Definizione di processo'
+              evaluation: 2
+              rank: 1
+            -
+              content: 'Definizione di dati di Input, Output e Intermedi'
+              evaluation: 4
+              rank: 2
+            -
+              content: 'Concetto di Variabile e Costante'
+              evaluation: 4
+              rank: 3
+            -
+              content: 'Definizione di Algoritmo e sue Proprietà'
+              evaluation: 1
+              rank: 4
+            -
+              content: 'Tecniche di rappresentazione degli algoritmi'
+              evaluation: 2
+              rank: 5
+            -
+              content: 'Strutture fondamentali e loro rappresentazione'
+              evaluation: 3
+              rank: 6
+            -
+              content: 'Metodologia Top-Down'
+              evaluation: 3
+              rank: 7
+        -
+          Abilità:
+            -
+              content: 'Esprimere procedimenti risolutivi sotto forma di algoritmi'
+              evaluation: 2
+              rank: 1
+            -
+              content: 'Descrivere un algoritmo secondo i formalismi presentati'
+              evaluation: 2
+              rank: 2
+        -
+          Competenze:
+            -
+              content: 'Definire problemi attraverso la specificazione dei risultati attesi e dei dati disponibili'
+              evaluation: 2
+              rank: 1
+            -
+              content: 'Formalizzare un problema individuando la struttura dei dati e l''algoritmo adeguati a risolverlo'
+              evaluation: 3
+              rank: 2
+            -
+              content: 'Affrontare un problema scomponendolo in parti'
+              evaluation: 3
+              rank: 3
+        -
+          'Note e commenti in fase di progettazione': {  }
+        -
+          'Note e commenti in fase di relazione finale': {  }
+    'Apprendimento di un Linguaggio Strutturato':
+      period: 'Settembre - Giugno'
+      details:
+        -
+          Contenuti:
+            -
+              content: 'Struttura di un programma Pascal'
+              evaluation: 4
+              rank: 1
+            -
+              content: 'Regole di scrittura'
+              evaluation: 4
+              rank: 2
+            -
+              content: 'Le costanti: dichiarazione, CONST'
+              evaluation: 4
+              rank: 3
+            -
+              content: 'I dati: dichiarazione, VAR, i dati semplici (Integer, Char, Real, Boolean), le stringhe, tipi astratti, ARRAY[…, …] OF…., RECORD, POINTER, definire un tipo, TYPE'
+              evaluation: 3
+              rank: 4
+            -
+              content: 'La selezione: annidamento, cascata, IF…THEN, IF…THEN…ELSE, CASE…OF, uso del BEGIN'
+              evaluation: 4
+              rank: 5
+            -
+              content: 'I cicli: WHILE…DO, REPEAT…UNTIL, FOR…DO, condizioni di uscita, differenze tra i vari tipi di cicli, cicli nidificati'
+              evaluation: 4
+              rank: 6
+            -
+              content: 'Le procedure e le funzioni predefinite: Read, Write, Trunc, Round, Sqrt, Abs'
+              evaluation: 3
+              rank: 7
+            -
+              content: 'Gli operatori MOD, DIV'
+              evaluation: 4
+              rank: 8
+            -
+              content: 'Le sottoprocedure: PROCEDURE, FUNCTION, variabili locali e globali, regole di visibilità, parametri formali ed attuali, passaggio di parametri per valore e per indirizzo, vantaggi delle procedure, funzioni ricorsive'
+              evaluation: 3
+              rank: 9
+        -
+          Conoscenze:
+            -
+              content: 'Struttura di un programma'
+              evaluation: 4
+              rank: 1
+            -
+              content: 'Traduzione delle strutture algoritmiche fondamentali'
+              evaluation: 3
+              rank: 2
+            -
+              content: 'Le variabili semplici e  quelle strutturate'
+              evaluation: 4
+              rank: 3
+            -
+              content: 'L''ambiente di sviluppo'
+              evaluation: 3
+              rank: 4
+            -
+              content: 'Tracing e Debug'
+              evaluation: 1
+              rank: 5
+            -
+              content: 'Tipi di dati standard'
+              evaluation: 4
+              rank: 6
+            -
+              content: 'Variabili Locali e Globali'
+              evaluation: 3
+              rank: 7
+            -
+              content: 'Tipi Set, enumerativi e subrange'
+              evaluation: 1
+              rank: 8
+            -
+              content: 'Regole di sintassi'
+              evaluation: 3
+              rank: 9
+            -
+              content: 'Sintassi delle Procedure'
+              evaluation: 3
+              rank: 10
+            -
+              content: 'Parametri Formali ed Attuali'
+              evaluation: 3
+              rank: 11
+            -
+              content: 'Scope delle variabili'
+              evaluation: 3
+              rank: 12
+            -
+              content: 'Funzioni ricorsive'
+              evaluation: 1
+              rank: 13
+        -
+          Abilità:
+            -
+              content: 'Editare, compilare ed eseguire un programma'
+              evaluation: 4
+              rank: 1
+            -
+              content: 'Dichiarare correttamente Costanti, Tipi, Variabili, Procedure e Funzioni'
+              evaluation: 3
+              rank: 2
+            -
+              content: 'Utilizzare il Debugger'
+              evaluation: 1
+              rank: 3
+            -
+              content: 'Utilizzare l''Help in linea'
+              evaluation: 1
+              rank: 4
+            -
+              content: 'Tradurre ed interpretare i messaggi di errore'
+              evaluation: 2
+              rank: 5
+            -
+              content: 'Scegliere correttamente la Tipologia di passaggio di parametri'
+              evaluation: 3
+              rank: 6
+            -
+              content: 'Implementare correttamente gli algoritmi fondamentali'
+              evaluation: 3
+              rank: 7
+            -
+              content: 'Tradurre un algoritmo in programma'
+              evaluation: 2
+              rank: 8
+            -
+              content: 'Utilizzare correttamente le procedure'
+              evaluation: 2
+              rank: 9
+        -
+          Competenze: {  }
+        -
+          'Note e commenti in fase di progettazione': {  }
+        -
+          'Note e commenti in fase di relazione finale': {  }
