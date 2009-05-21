@@ -62,13 +62,16 @@ class wpmoduleitemActions extends sfActions
   public function executeNew(sfWebRequest $request)
   {
 
+    $this->forward404Unless($request->isMethod('put')||$request->isMethod('post'));
+
 	$group= WpitemGroupPeer::retrieveByPk($request->getParameter('id'));
+	
     $this->forward404Unless($group);
 
 	$newitem= new WpmoduleItem();
 	$newitem->setWpitemGroupId($group->getId());
 	$newitem->save();
-	$this->getUser()->setFlash('notice'.$group->getId(), sprintf('A new item was inserted'));
+	$this->getUser()->setFlash('notice'.$group->getId(), $this->getContext()->getI18N()->__('A new item was inserted'));
 	$this->redirect('wpmodule/view?id='.$group->getWpmoduleId().'#'.$group->getId());
 
    }
@@ -102,7 +105,7 @@ class wpmoduleitemActions extends sfActions
 
 	$gr=$wpmodule_item->getWpitemGroupId();
 
-	$this->getUser()->setFlash('notice'.$gr, sprintf('The item was updated'));
+	$this->getUser()->setFlash('notice'.$gr, $this->getContext()->getI18N()->__('The item was updated'));
 
 	$wpmodule_item->save();
 //    $this->processForm($request, $this->form);
@@ -128,8 +131,7 @@ class wpmoduleitemActions extends sfActions
 	
 	$wpmodule_item->delete();
 
-	$this->getUser()->setFlash('notice'.$gr, sprintf('The item was deleted'));
-
+	$this->getUser()->setFlash('notice'.$gr, $this->getContext()->getI18N()->__('The item was deleted'));
 
 	$this->redirect('wpmodule/view?id='.$id.'#'.$gr);
 

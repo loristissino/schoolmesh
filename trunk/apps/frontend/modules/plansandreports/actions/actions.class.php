@@ -35,7 +35,7 @@ class plansandreportsActions extends sfActions
 	
 	$result=$workplan->teacherSubmit($this->getUser()->getProfile()->getSfGuardUser()->getId());
 	
-	$this->getUser()->setFlash($result['result'], $result['message']);
+	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 	
 	return $this->redirect('@plansandreports');
 
@@ -89,7 +89,13 @@ class plansandreportsActions extends sfActions
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->workplan);
     $this->forward404Unless($this->workplan->isOwnedBy($this->getUser()->getProfile()->getSfGuardUser()->getId()));
-	
+
+	$this->getResponse()->addCacheControlHttpHeader('max_age=1');
+    $this->getResponse()->setHttpHeader('Expires',  $this->getResponse()->getDate(time()));
+
+
+//$this->getResponse()->setHttpHeader('Last-Modified', $this->getResponse()->getDate(time()));
+
 	$this->wpinfos = $this->workplan->getWpinfos();
 	
 	$this->tools = $this->workplan->getTools();

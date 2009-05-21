@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
-  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-05-21T09:50:14Z" product-name="messages">
+  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-05-21T17:27:09Z" product-name="messages">
     <body>
       <trans-unit id="3">
         <source>Forgot your password?</source>
@@ -336,7 +336,7 @@
       </trans-unit>
       <trans-unit id="107">
         <source>Are you sure? Workplans and reports submitted cannot be modified anymore...</source>
-        <target>Sei sicuro? I piano di lavoro e le relazioni inviate non possono essere pi&#xF9; modificate.</target>
+        <target>Sei sicuro? I piani di lavoro e le relazioni inviate non possono essere pi&#xF9; modificate.</target>
       </trans-unit>
       <trans-unit id="108">
         <source>Save</source>
@@ -385,6 +385,58 @@
       <trans-unit id="120">
         <source>[0]Evaluation completed|[1]Missing one evaluation out of %2%|[1,+Inf]Missing %1% evaluations out of %2%</source>
         <target>[0]Valutazione completata|[1]Manca una valutazione su %2%|[1,+Inf]Mancano %1% valutazioni su %2%</target>
+      </trans-unit>
+      <trans-unit id="121">
+        <source>[0]Evaluation completed|[1]Missing one evaluation|[1,+Inf]Missing %1% evaluations</source>
+        <target>[0]Valutazione completata|[1]Manca una valutazione|[1,+Inf]Mancano %1% valutazioni</target>
+      </trans-unit>
+      <trans-unit id="122">
+        <source>A new item was inserted</source>
+        <target>Un nuovo elemento &#xE8; stato inserito</target>
+      </trans-unit>
+      <trans-unit id="123">
+        <source>The item was deleted</source>
+        <target>L'elemento &#xE8; stato eliminato</target>
+      </trans-unit>
+      <trans-unit id="124">
+        <source>Submit this report</source>
+        <target>Consegna questa relazione</target>
+      </trans-unit>
+      <trans-unit id="125">
+        <source>The items were switched</source>
+        <target>Gli elementi sono stati scambiati di posizione</target>
+      </trans-unit>
+      <trans-unit id="126">
+        <source>The item could not be deleted</source>
+        <target>Impossibile rimuovere l'elemento</target>
+      </trans-unit>
+      <trans-unit id="127">
+        <source>The item was updated</source>
+        <target>L'elemento &#xE8; stato aggiornato</target>
+      </trans-unit>
+      <trans-unit id="128">
+        <source>The module</source>
+        <target>Modulo</target>
+      </trans-unit>
+      <trans-unit id="129">
+        <source>Workplan / Report: </source>
+        <target>Piano di lavoro / Relazione</target>
+      </trans-unit>
+      <trans-unit id="130">
+        <source>Title: </source>
+        <target>Titolo: </target>
+      </trans-unit>
+      <trans-unit id="131">
+        <source>Period: </source>
+        <target>Periodo: </target>
+      </trans-unit>
+      <trans-unit id="132">
+        <source>Module view: %s</source>
+        <target>Modulo: %s</target>
+      </trans-unit>
+      <trans-unit id="133">
+        <source>Workplan submitted for approval.</source>
+        <target>Piano di lavoro consegnato.</target>
       </trans-unit>
     </body>
   </file>

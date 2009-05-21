@@ -1,18 +1,16 @@
 <?php use_helper('Javascript') ?>
-<h1>Module View: <?php echo $wpmodule ?></h1>
+<h1><?php echo sprintf(__('Module view: %s'), $wpmodule)?></h1>
 
 <div id="sf_admin_container">
 
-<h2>The module</h2>
 <ul>
-<li>Owner: <strong><?php echo $owner->getFullName() ?></strong></li>
-<li>Workplan / Report: <strong><?php echo link_to($workplan, 'plansandreports/fill?id='.$workplan->getId()) ?></strong></li>
-<li>Title: 
+<li><?php echo __('Teacher: ') ?><strong><?php echo $owner->getFullName() ?></strong></li>
+<li><?php echo __('Workplan / Report: ') ?><strong><?php echo link_to($workplan, 'plansandreports/fill?id='.$workplan->getId()) ?></strong></li>
+<li><?php echo __('Title: ') ?>
 <strong><span id="moduletitle" class="editText"><?php echo $wpmodule->getTitle() ?></span></strong>
 <?php echo input_in_place_editor_tag('moduletitle', 'wpmodule/editInLine?property=Title&id='.$wpmodule->getId(), array('cols'=>'50', 'rows'=>1)) ?>
 </li>
-<li>
-Period: 
+<li><?php echo __('Period: ') ?>
 <strong><span id="moduleperiod" class="editText"><?php echo $wpmodule->getPeriod() ?></span></strong></li>
 <?php echo input_in_place_editor_tag('moduleperiod', 'wpmodule/editInLine?property=Period&id='.$wpmodule->getId(), array('cols'=>'50', 'rows'=>1)) ?>
 </ul>
@@ -26,7 +24,7 @@ Period:
 <?php endforeach ?>
 
 <hr />
-<h3>Actions</h3>
+<h2><?php echo __('Actions') ?></h2>
 			<ul class="sf_admin_td_actions">
 
 				<li class="sf_admin_action_back">

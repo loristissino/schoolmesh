@@ -41,7 +41,7 @@ class wpmoduleActions extends sfActions
 	  $previous_item = WpmodulePeer::retrieveByRank($item->getRank() - 1, $item->getAppointmentId());
 	  $this->forward404Unless($previous_item);
 	  $item->swapWith($previous_item);
-	  $this->getUser()->setFlash('notice', sprintf('The items were switched'));
+	  $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('The items were switched'));
 	 
 	  $this->redirect('plansandreports/fill?id='.$item->getAppointmentId()); 	}  
 
@@ -53,7 +53,7 @@ class wpmoduleActions extends sfActions
 	  $next_item = WpmodulePeer::retrieveByRank($item->getRank() + 1, $item->getAppointmentId());
 	  $this->forward404Unless($next_item);
 	  $item->swapWith($next_item);
-	  $this->getUser()->setFlash('notice', sprintf('The items were switched'));
+	  $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('The items were switched'));
 	 
 	  $this->redirect('plansandreports/fill?id='.$item->getAppointmentId()); 
 	}  
@@ -73,13 +73,26 @@ class wpmoduleActions extends sfActions
   {
     $this->wpmodule = WpmodulePeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->wpmodule);
-	
+
+	$this->owner=$this->wpmodule->getOwner();;
+		
+    $this->forward404Unless($this->owner->getUserId()==$this->getUser()->getProfile()->getSfGuardUser()->getId());
+
 	$this->workplan = $this->wpmodule->getAppointment();
 	$this->wpstate = $this->workplan->getState();
 	$this->ownerId=$this->wpmodule->getUserId();
 	$this->owner=$this->wpmodule->getOwner();
 	$this->item_groups=$this->wpmodule->getWpitemGroups();
-		
+	
+	if ($this->workplan->getState() > Workflow::WP_DRAFT)
+		{
+			foreach($this->item_groups as $item_group)
+			{
+				$missing=$item_group->getUnevaluated();
+				if ($missing>0)
+					$this->getUser()->setFlash('evaluation'.$item_group->getId(), $missing);
+			}
+		}
 	}
 
 
@@ -97,7 +110,7 @@ class wpmoduleActions extends sfActions
 	$newwpmodule->save();
 	$newwpmodule->createWpitemGroups();
 	
-	$this->getUser()->setFlash('notice', sprintf('A new item was inserted'));
+	$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('A new item was inserted'));
 	return $this->redirect('plansandreports/fill?id='.$workplan->getId());
 
   }
@@ -154,11 +167,11 @@ class wpmoduleActions extends sfActions
 	$appointmentId=$wpmodule->getAppointmentId();
 	if ($wpmodule->delete())
 		{
-		$this->getUser()->setFlash('notice', sprintf('The item was deleted'));
+		$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('The item was deleted'));
 		}
 	else
 		{
-		$this->getUser()->setFlash('error', sprintf('The item could not be deleted'));
+		$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('The item could not be deleted'));
 		}
 		
 

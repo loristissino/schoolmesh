@@ -15,11 +15,20 @@
 </li>
 </ul>
 </div>
-<div id="group<?php echo $item_group->getId() ?>" style="display:<?php echo ($sf_user->hasFlash('notice'.$item_group->getId()))? 'visible': 'none' ?>">
+
+<div id="group<?php echo $item_group->getId() ?>" style="display:<?php echo ($sf_user->hasFlash('notice'.$item_group->getId())||$sf_user->hasFlash('evaluation'.$item_group->getId()))? 'visible': 'none' ?>">
 
 <?php $i=0 ?>
 <?php if ($sf_user->hasFlash('notice'.$item_group->getId())): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice'.$item_group->getId())?></div>
+<?php endif; ?>
+<?php if ($sf_user->hasFlash('evaluation'.$item_group->getId())): ?>
+  <div class="notice"><?php echo
+	format_number_choice(
+		'[0]Evaluation completed|[1]Missing one evaluation|[1,+Inf]Missing %1% evaluations',
+		array("%1%"=>$sf_user->getFlash('evaluation'.$item_group->getId())),
+		$sf_user->getFlash('evaluation'.$item_group->getId())) ?>
+	</div>
 <?php endif; ?>
 <div class="sf_admin_list">
 
@@ -112,7 +121,7 @@
 
 <div id="sf_admin_container">
 	<ul class="sf_admin_actions">
-	<li class="sf_admin_action_new"><?php echo link_to(__('New'), 'wpmoduleitem/new?id=' .$item_group->getId()) ?></li>
+	<li class="sf_admin_action_new"><?php echo link_to(__('New'), 'wpmoduleitem/new?id=' .$item_group->getId(), array('method'=>'put')) ?></li>
 	</ul>
 </div>
 

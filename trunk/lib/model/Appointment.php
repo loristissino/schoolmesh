@@ -206,7 +206,7 @@ $con->query($sql);
 	$result['result']='notice';
 	$result['message']=$steps[$this->getState()]['owner']['submitDoneAction'];
 
-	$this->addEvent($user_id, $steps[$this->getState()]['owner']['submitDoneAction'], $steps[$this->getState()]['owner']['submitNextState']);
+	$this->addEvent($user_id, sfContext::getInstance()->getI18N()->__($steps[$this->getState()]['owner']['submitDoneAction']), $steps[$this->getState()]['owner']['submitNextState']);
 		
 	return $result;
 	
