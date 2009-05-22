@@ -49,7 +49,7 @@ class wpinfoActions extends sfActions
 
     $result=$wpinfo->setCheckedContent($this->getUser()->getProfile()->getSfGuardUser()->getId(), $request->getParameter('value'));
 
-	$this->getUser()->setFlash($result['result'], $result['message']);
+	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 
 
 	if($result['result']=='notice_info')

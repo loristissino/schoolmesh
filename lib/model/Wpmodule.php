@@ -190,6 +190,7 @@ $number=$resultset->number;
 //		echo "DELETED!\n";
 	 
 		$con->commit();
+		return true;
 	  }
 	  catch (Exception $e)
 	  {

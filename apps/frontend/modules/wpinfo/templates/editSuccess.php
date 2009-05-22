@@ -1,6 +1,14 @@
-<h1><?php echo __('Edit Wpinfo') ?></h1>
 <?php use_helper('Javascript') ?>
 <?php use_javascript('tiny_mce/tiny_mce.js') ?>
+<?php slot('breadcrumbs',
+	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
+	link_to($wpinfo->getAppointment()->__toString(), 'plansandreports/fill?id='.$wpinfo->getAppointment()->getId()) . ' » ' . 
+	link_to($type->getTitle(), 'wpinfo/edit?id='.$wpinfo->getId())
+	)
+	
+	?>
+
+<h1><?php echo __('Edit Wpinfo') ?></h1>
 <h2><?php echo $type->getTitle() ?></h2>
 <p><?php echo $type->getDescription() ?></p>
 <div id="sf_admin_container">

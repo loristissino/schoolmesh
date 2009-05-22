@@ -1,5 +1,11 @@
 <?php use_helper('Javascript') ?>
-<h1><?php echo __("Workplan: ") . $workplan ?></h1>
+<?php slot('title', sprintf('%s --  %s', $workplan->__toString(),$workplan->getsfGuardUser()->getProfile()->getFullName() )) ?>
+<?php slot('breadcrumbs',
+	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
+	link_to($workplan, 'plansandreports/fill?id='.$workplan->getId())
+	)
+	
+	?><h1><?php echo __("Workplan: ") . $workplan ?></h1>
 
 <div id="sf_admin_container">
 
@@ -26,6 +32,14 @@
 				'plansandreports/view?id='.$workplan->getId().'&sf_format=yaml'
 				)?>
 	</li>
+	<li class="sf_admin_action_help">
+				<?php echo link_to(
+				__('Help'),
+				'@help'
+				)?>
+	</li>
+	
+	
 	</ul>
 <hr />
 
