@@ -17,6 +17,11 @@
 </head>
 <body>
 <div id="container">
+<?php if (has_slot('breadcrumbs')): ?>
+<div id="breadcrumbs">
+<p><?php echo __('Where am I? ') . link_to(__("Home"), "@homepage") ?> » <?php include_slot('breadcrumbs') ?></p>
+</div>
+<?php endif ?>
 <?php echo $sf_content ?>
 
   <div id="navigation">

@@ -56,7 +56,7 @@ class Workflow
 		),
 	
 	self::WP_WSMC=>Array(
-		'stateDescription'=>"workplan waiting for schoolmaster's approval",
+		'stateDescription'=>"workplan waiting for schoolmaster`s approval",
 		'owner' => Array(
 			'viewAction'=>"view",
 			'displayedAction'=>'View',
@@ -99,7 +99,7 @@ class Workflow
 	),
 	
 	self::IR_WSMC=>Array(
-		'stateDescription'=>"intermediate report waiting for schoolmaster's evaluation",
+		'stateDescription'=>"intermediate report waiting for schoolmaster`s evaluation",
 		'owner' => Array(
 			'viewAction'=>"view",
 			'displayedAction'=>'View',
@@ -142,7 +142,7 @@ class Workflow
 	),
 
 	self::FR_WSMC=>Array(
-		'stateDescription'=>"final report waiting for schoolmaster's evaluation",
+		'stateDescription'=>"final report waiting for schoolmaster`s evaluation",
 		'owner' => Array(
 			'viewAction'=>"view",
 			'displayedAction'=>'View',

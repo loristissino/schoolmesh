@@ -23,6 +23,11 @@
   background: url(../images/markdown.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_help a
+{
+  background: url(../images/help.png) no-repeat 0 0;
+}
+
 #sf_admin_container ul li.sf_admin_action_fill a
 {
   background: url(../images/fill.png) no-repeat 0 0;
@@ -64,3 +69,12 @@ div.module_content
   margin-top: 20px;
   border: medium double #888888;
 }
+
+#breadcrumbs {
+text-align:left;
+vertical-align:middle;
+font-size:12px;
+white-space:nowrap;
+background:#ccf;
+}
+

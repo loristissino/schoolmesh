@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
-  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-05-21T17:27:09Z" product-name="messages">
+  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-05-22T16:50:47Z" product-name="messages">
     <body>
       <trans-unit id="3">
         <source>Forgot your password?</source>
@@ -437,6 +437,58 @@
       <trans-unit id="133">
         <source>Workplan submitted for approval.</source>
         <target>Piano di lavoro consegnato.</target>
+      </trans-unit>
+      <trans-unit id="134">
+        <source>Where am I? </source>
+        <target>Dove mi trovo? </target>
+      </trans-unit>
+      <trans-unit id="135">
+        <source>Content did not match the template.</source>
+        <target>Il contenuto non corrisponde al modello.</target>
+      </trans-unit>
+      <trans-unit id="136">
+        <source>Content saved.</source>
+        <target>Contenuto salvato.</target>
+      </trans-unit>
+      <trans-unit id="137">
+        <source>draft</source>
+        <target>bozza</target>
+      </trans-unit>
+      <trans-unit id="138">
+        <source>intermediate / final report</source>
+        <target>relazione finale o intermedia</target>
+      </trans-unit>
+      <trans-unit id="139">
+        <source>Help</source>
+        <target>Guida</target>
+      </trans-unit>
+      <trans-unit id="140">
+        <source>The possible states of workplans/reports are as follows:</source>
+        <target>Gli stati possibili dei piani di lavoro / relazioni finali sono i seguenti:</target>
+      </trans-unit>
+      <trans-unit id="141">
+        <source>workplan waiting for administrative check</source>
+        <target>piano di lavoro in attesa di controlli amministrativi</target>
+      </trans-unit>
+      <trans-unit id="142">
+        <source>workplan waiting for schoolmaster`s approval</source>
+        <target>piano di lavoro in attesa di approvazione dal parte del DS</target>
+      </trans-unit>
+      <trans-unit id="143">
+        <source>intermediate report waiting for schoolmaster`s evaluation</source>
+        <target>relazione intermedia in attesa di valutazione da parte del DS</target>
+      </trans-unit>
+      <trans-unit id="144">
+        <source>final report waiting for administrative check</source>
+        <target>relazione finale in attesa di controlli amministrativi</target>
+      </trans-unit>
+      <trans-unit id="145">
+        <source>final report waiting for schoolmaster`s evaluation</source>
+        <target>relazione finale di approvazione dal parte del DS</target>
+      </trans-unit>
+      <trans-unit id="146">
+        <source>final report approved and archived</source>
+        <target>relazione finale approvata e archiviata</target>
       </trans-unit>
     </body>
   </file>
