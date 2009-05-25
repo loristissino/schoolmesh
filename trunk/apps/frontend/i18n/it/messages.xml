@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
-  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-05-22T16:50:47Z" product-name="messages">
+  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-05-25T17:39:23Z" product-name="messages">
     <body>
       <trans-unit id="3">
         <source>Forgot your password?</source>
@@ -24,11 +24,11 @@
       </trans-unit>
       <trans-unit id="11">
         <source>%fullname% logged out</source>
-        <target/>
+        <target></target>
       </trans-unit>
       <trans-unit id="12">
         <source>Login status of %fullname% (&lt;strong&gt;%username%&lt;/strong&gt;) from workstation %workstation% (%ip%): </source>
-        <target/>
+        <target></target>
       </trans-unit>
       <trans-unit id="13">
         <source>Login time: %timestamp%</source>
@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="36">
         <source>Checked</source>
-        <target/>
+        <target></target>
       </trans-unit>
       <trans-unit id="37">
         <source>You may login</source>
@@ -248,11 +248,11 @@
       </trans-unit>
       <trans-unit id="85">
         <source>min</source>
-        <target/>
+        <target></target>
       </trans-unit>
       <trans-unit id="86">
         <source>max</source>
-        <target/>
+        <target></target>
       </trans-unit>
       <trans-unit id="87">
         <source>rich text edit</source>
@@ -489,6 +489,30 @@
       <trans-unit id="146">
         <source>final report approved and archived</source>
         <target>relazione finale approvata e archiviata</target>
+      </trans-unit>
+      <trans-unit id="147">
+        <source>Year</source>
+        <target>Anno</target>
+      </trans-unit>
+      <trans-unit id="148">
+        <source>Class</source>
+        <target>Classe</target>
+      </trans-unit>
+      <trans-unit id="149">
+        <source>Subject</source>
+        <target>Materia</target>
+      </trans-unit>
+      <trans-unit id="150">
+        <source>Last action</source>
+        <target>Ultima azione</target>
+      </trans-unit>
+      <trans-unit id="151">
+        <source>State</source>
+        <target>Stato</target>
+      </trans-unit>
+      <trans-unit id="152">
+        <source>Action</source>
+        <target>Azione</target>
       </trans-unit>
     </body>
   </file>
