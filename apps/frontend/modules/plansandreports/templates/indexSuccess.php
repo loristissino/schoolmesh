@@ -13,13 +13,13 @@
 <table cellspacing="0">
   <thead>
     <tr>
-      <th class="sf_admin_text">Year</th>
-      <th class="sf_admin_text">Class</th>
-      <th class="sf_admin_text">Subject</th>
-      <th class="sf_admin_text">Modules</th>
-	  <th class="sf_admin_text">Last action</th>
-	  <th class="sf_admin_text">State</th>
-      <th class="sf_admin_text">Action</th>
+      <th class="sf_admin_text"><?php echo __('Year') ?></th>
+      <th class="sf_admin_text"><?php echo __('Class') ?></th>
+      <th class="sf_admin_text"><?php echo __('Subject') ?></th>
+      <th class="sf_admin_text"><?php echo __('Modules') ?></th>
+	  <th class="sf_admin_text"><?php echo __('Last action') ?></th>
+	  <th class="sf_admin_text"><?php echo __('State') ?></th>
+      <th class="sf_admin_text"><?php echo __('Action') ?></th>
     </tr>
   </thead>
   <tbody>
