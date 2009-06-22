@@ -24,7 +24,7 @@ editor_selector : \"mceAdvanced\"
 <?php echo $wpmodule_item->getContent() ?>
 </textarea>
 <br />
-<input type="submit" name="submit" value="<?php echo __("Save") ?>" />
+<input type="submit" name="submit" value="<?php echo __("Save") ?>" /> 
 </form>
 
 <?php /*

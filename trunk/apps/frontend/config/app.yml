@@ -20,3 +20,6 @@ all:
 
   prelogin:
     token: sekretToken  
+
+  opendocument:
+    template_directory: /var/schoolmesh/web/oo  

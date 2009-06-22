@@ -37,20 +37,35 @@ editor_selector : \"mceAdvanced\"
 <?php echo $wpinfo->getContent() ?>
 </textarea>
 <br />
-<input type="submit" name="submit" value="<?php echo __("Save") ?>" />
+<input type="submit" name="save" value="<?php echo __("Save and go back to workplan") ?>" />
+<?php if($wpinfo->getNext()): ?>
+	<input type="submit" name="continue" value="<?php echo sprintf(__('Save and go to next item (%s)'), $wpinfo->getNext()->getWpinfoType()->getTitle()); ?>" />
+<?php endif; ?>
 </form>
 
 </div>
-<?php /*
-<form action="<?php echo url_for('wpmoduleitem/update?id='.$form->getObject()->getId()) ?>" method="POST">
-          <table>
-            <?php echo $form ?>
-            <tr>
-              <td colspan="2">
-                 <input type="submit" />
-              </td>
-            </tr>
-          </table>
-</form>
-*/ ?>
 
+
+<h2><?php echo __('Hints') ?></h2>
+<div id="sf_admin_container">
+	<ul class="sf_admin_actions">
+	<li class="sf_admin_action_toggle">
+<?php echo link_to_function(
+  __('Toggle'),
+  visual_effect('toggle_blind', 'hints')
+) ?>
+</li>
+</ul>
+</div>
+<div id="hints" style="display:none">
+<p><strong><?php echo __('The following sentences were used in other workplans:'); ?></strong></p>
+<?php $previous=''; ?>
+<?php foreach($hints as $hint): ?>
+	<?php if($hint->getContent()!=$previous): ?>
+	<blockquote><?php echo html_entity_decode($hint->getContent()); ?></blockquote>
+	<?php $previous=$hint->getContent(); ?>
+	<?php endif; ?>
+	<p>	<?php echo image_tag('source') ?><em>&nbsp;<?php echo sprintf(__('Used in «%s»'), $hint->getAppointment()); ?></em></p>
+<?php endforeach; ?>
+
+</div>

@@ -26,10 +26,11 @@
 				'plansandreports/view?id='.$workplan->getId()
 				)?>
 	</li>
-	<li class="sf_admin_action_markdown">
+	<li class="sf_admin_action_export">
 				<?php echo link_to(
-				__('Export as plain text (yaml)'),
-				'plansandreports/view?id='.$workplan->getId().'&sf_format=yaml'
+				__('Export'),
+				'plansandreports/export?id='.$workplan->getId()
+//				'plansandreports/view?id='.$workplan->getId().'&sf_format=yaml'
 				)?>
 	</li>
 	<li class="sf_admin_action_help">

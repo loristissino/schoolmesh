@@ -1,6 +1,10 @@
 <div id="sf_admin_container">
-
-<h1><?php echo __("Workplans and Reports")?></h1>
+<?php slot('title', sprintf('%s --  %s', __("Plans and Reports"),$user->getProfile()->getFullName() )) ?>
+<?php slot('breadcrumbs',
+	link_to(__("Plans and Reports"), "@plansandreports") 
+	)
+	
+	?><h1><?php echo __("Workplans and Reports")?></h1>
 
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
@@ -19,7 +23,7 @@
       <th class="sf_admin_text"><?php echo __('Modules') ?></th>
 	  <th class="sf_admin_text"><?php echo __('Last action') ?></th>
 	  <th class="sf_admin_text"><?php echo __('State') ?></th>
-      <th class="sf_admin_text"><?php echo __('Action') ?></th>
+      <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
   <tbody>

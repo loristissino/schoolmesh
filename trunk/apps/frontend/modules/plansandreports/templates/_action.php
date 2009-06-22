@@ -5,4 +5,10 @@
 				'plansandreports/'.$steps[$workplan->getState()]['owner']['viewAction'].'?id='.$workplan->getId()
 				)?>
 				</li>
+				<li class="sf_admin_action_export">
+					<?php echo link_to(
+				__('Export'), 
+				'plansandreports/export?id='.$workplan->getId()
+				)?>
+				</li>
 			</ul>

@@ -19,6 +19,23 @@ class Appointment extends BaseAppointment
     }
 
 
+	public function getWpinfos($criteria = null, PropelPDO $con = null)
+	{
+          if (is_null($criteria))
+          {
+            $criteria = new Criteria();
+          }
+          else
+          {
+            $criteria = clone $criteria;
+          }
+
+			$criteria->addAscendingOrderByColumn(WpinfoTypePeer::RANK);
+			return parent::getWpinfos();
+		
+	}
+
+
 	public function __toString()
 	{
 			return $this->getSubject() . ' (' . $this->getSchoolclass() . ', ' . $this->getYear() . ')';
@@ -449,6 +466,63 @@ public function getWorkflowLogs()
 		
 	}
 
+
+public function getContentAsMarkdown()
+	{
+		
+	// this should be a kind of template, but I don't know how to use the output of the template from the inside of the action...
+	
+	$data=$this->getCompleteContentAsArray();
+	
+	$text='#' . sfContext::getInstance()->getI18N()->__('Workplan'). "\n";
+	
+	$text.='##' . sfContext::getInstance()->getI18N()->__("General information"). "\n";
+
+	$text.='* ' . sfContext::getInstance()->getI18N()->__("Teacher: "). 
+		$data['workplan_report']['teacher']['firstname'] .
+		$data['workplan_report']['teacher']['lastname'] .
+		"\n";
+	$text.='* ' . sfContext::getInstance()->getI18N()->__("Subject: "). 
+		$data['workplan_report']['subject']['description'] .
+		"\n";
+	$text.='* ' . sfContext::getInstance()->getI18N()->__("Class: "). 
+		$data['workplan_report']['class']['id'] . 
+		"\n\n";
+
+	$text.='##' .sfContext::getInstance()->getI18N()->__('Details, comments, general information') . "\n\n";
+
+	foreach($data['workplan_report']['info'] as $infokey=>$infovalue)
+		{
+		$text.='### ' . $infokey . "\n\n";
+		$text.= $infovalue . "\n\n";
+		}
+
+	$text .= '##' .sfContext::getInstance()->getI18N()->__('Modules') . "\n\n";
+
+	foreach($data['workplan_report']['modules'] as $infokey=>$infovalue)
+		{
+		$text.="\n### " . $infokey . "\n";
+		$text.=sfContext::getInstance()->getI18N()->__('Period: ') . $infovalue['period'] . "\n";
+		foreach($infovalue['details'] as $key=>$value)
+			{
+				foreach($value as $k=>$v)
+					{
+					$text.="\n####$k\n";
+					foreach ($v as $ik=>$iv)
+						{
+						$text .='1. '. $iv['content'] . '_(' . $iv['evaluation'] . ')_' ."\n";
+//						$text.="\n$ik -- $iv\n";
+						}
+					}
+			}
+		}
+
+
+	return $text;
+	
+	}
+	
+	
 
 	public function removeEverything()
 	{
