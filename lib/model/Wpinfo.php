@@ -51,4 +51,35 @@ class Wpinfo extends BaseWpinfo
 		return $result;
 	}
 	
+	public function getHints()
+	{
+		
+	    $c = new Criteria();
+		$c->add(WpinfoPeer::WPINFO_TYPE_ID, $this->getWpinfoTypeId());
+		$c->add(WpinfoPeer::ID, $this->getId(), Criteria::NOT_EQUAL);
+		$c->add(WpinfoPeer::CONTENT, '', Criteria::NOT_EQUAL);
+		$c->addJoin(WpinfoPeer::APPOINTMENT_ID, AppointmentPeer::ID); 
+		$c->add(AppointmentPeer::USER_ID, $this->getAppointment()->getUserId());
+		$c->addAscendingOrderByColumn(WpinfoPeer::CONTENT);
+		$t=WpinfoPeer::doSelect($c);
+
+		return $t;
+
+
+	}
+	
+	public function getNext()
+	{
+		
+	    $c = new Criteria();
+		$c->add(WpinfoPeer::APPOINTMENT_ID, $this->getAppointmentId());
+		$c->addJoin(WpinfoTypePeer::ID, WpinfoPeer::WPINFO_TYPE_ID); 
+		$c->add(WpinfoTypePeer::STATE, $this->getAppointment()->getState());
+		$c->addAscendingOrderByColumn(WpinfoTypePeer::RANK);
+		$c->add(WpinfoTypePeer::RANK, $this->getWpinfoType()->getRank(), Criteria::GREATER_THAN);
+		$t=WpinfoPeer::doSelectOne($c);
+		return $t;
+	}
+
+	
 }

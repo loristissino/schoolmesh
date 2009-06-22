@@ -98,7 +98,7 @@ foreach($contents as $line)
 			or preg_match("/TEMPI E MODALITA' PER IL RECUPERO/", $line))
 			$state='Recupero';
 	
-		if (preg_match("/Pordenone,  /", $line) or preg_match("/^Data/", $line))
+		if (preg_match("/^Pordenone,/", $line) or preg_match("/^Data/", $line))
 			$state='fine';
 	
 		if ($state==$previous)

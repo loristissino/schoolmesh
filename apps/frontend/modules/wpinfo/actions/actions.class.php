@@ -12,7 +12,7 @@ class wpinfoActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->wpinfo_list = WpinfoPeer::doSelect(new Criteria());
+    $this->forward404();
   }
 
   public function executeNew(sfWebRequest $request)
@@ -40,6 +40,8 @@ class wpinfoActions extends sfActions
 	if ($this->wpinfo->getContent()=='')
 		$this->wpinfo->setContent($this->wpinfo->getWpinfoType()->getRenderedTemplate());
 	$this->type=$this->wpinfo->getWpinfoType();
+	
+	$this->hints = $this->wpinfo->getHints();
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -51,11 +53,17 @@ class wpinfoActions extends sfActions
 
 	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 
-
 	if($result['result']=='notice_info')
 		{
 			$wpinfo->save();
-			$this->redirect('plansandreports/fill?id=' . $wpinfo->getAppointmentId());
+			if ($request->getParameter('save'))
+				{
+					$this->redirect('plansandreports/fill?id=' . $wpinfo->getAppointmentId());
+				}
+			if ($request->getParameter('continue'))
+				{
+					$this->redirect('wpinfo/edit?id=' . $wpinfo->getNext()->getId());
+				}
 		}
 	else
 		{
