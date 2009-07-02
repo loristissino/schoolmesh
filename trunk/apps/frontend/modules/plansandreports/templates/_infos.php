@@ -10,9 +10,9 @@
 <table cellspacing="0">
   <thead>
     <tr>
-      <th class="sf_admin_text">Title</th>
-      <th class="sf_admin_text">Content</th>
-      <th class="sf_admin_text">Actions</th>
+      <th class="sf_admin_text"><?php echo __('Title') ?></th>
+      <th class="sf_admin_text"><?php echo __('Content') ?></th>
+      <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
   <tbody>

@@ -54,7 +54,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
         public function getIsMale()
         {
-            return $this->getSex()=='M';
+            return $this->getGender()=='M' ? 1: 0;
         }
 
 }

@@ -4,7 +4,7 @@ sfGuardUserProfile:
     user_id:        loris
     first_name:     Loris
     last_name:      Tissino
-    sex:            M
+    gender:            M
     role_id:       doc
     disk_set_soft_blocks_quota: 4000
     disk_set_hard_blocks_quota: 5000
@@ -17,7 +17,7 @@ sfGuardUserProfile:
     user_id:        testteacher
     first_name:     John
     last_name:      Test Teacher
-    sex:            M
+    gender:            M
     role_id:       doc
     disk_set_soft_blocks_quota: 4000
     disk_set_hard_blocks_quota: 5000
@@ -30,7 +30,7 @@ sfGuardUserProfile:
     user_id:        francesco
     first_name:     Francesco
     last_name:      Gri
-    sex:            M
+    gender:            M
     role_id:       doc
     disk_set_soft_blocks_quota: 4000
     disk_set_hard_blocks_quota: 5000
@@ -43,7 +43,7 @@ sfGuardUserProfile:
     user_id:        flavia
     first_name:     Flavia
     last_name:      Garlato
-    sex:            F
+    gender:            F
     role_id:       doc
     disk_set_soft_blocks_quota: 4000
     disk_set_hard_blocks_quota: 5000
@@ -57,26 +57,26 @@ sfGuardUserProfile:
     user_id:        bianca
     first_name:     Bianca
     last_name:      Bagalà
-    sex:            F
+    gender:            F
     role_id:       doc
   juri:
     user_id:        juri
     first_name:     Juri
     last_name:      Dal Dan
-    sex:            M
+    gender:            M
     role_id:       at
   antonio:
     user_id:        antonio
     first_name:     Antonio
     last_name:      Dulio
-    sex:            M
+    gender:            M
     role_id:       ds
     
   gabriella:
     user_id:        gabriella
     first_name:     Gabriella
     last_name:      Valvasori
-    sex:            F
+    gender:            F
     role_id:       dsga
   
 

@@ -28,7 +28,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $role_id;
 
 	
-	protected $sex;
+	protected $gender;
 
 	
 	protected $email;
@@ -130,9 +130,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	}
 
 	
-	public function getSex()
+	public function getGender()
 	{
-		return $this->sex;
+		return $this->gender;
 	}
 
 	
@@ -336,15 +336,15 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		return $this;
 	} 
 	
-	public function setSex($v)
+	public function setGender($v)
 	{
 		if ($v !== null) {
 			$v = (string) $v;
 		}
 
-		if ($this->sex !== $v) {
-			$this->sex = $v;
-			$this->modifiedColumns[] = sfGuardUserProfilePeer::SEX;
+		if ($this->gender !== $v) {
+			$this->gender = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::GENDER;
 		}
 
 		return $this;
@@ -583,7 +583,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->last_name = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->pronunciation = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->role_id = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
-			$this->sex = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->gender = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->email = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
 			$this->birthdate = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
 			$this->birthplace = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
@@ -820,7 +820,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				return $this->getRoleId();
 				break;
 			case 6:
-				return $this->getSex();
+				return $this->getGender();
 				break;
 			case 7:
 				return $this->getEmail();
@@ -871,7 +871,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$keys[3] => $this->getLastName(),
 			$keys[4] => $this->getPronunciation(),
 			$keys[5] => $this->getRoleId(),
-			$keys[6] => $this->getSex(),
+			$keys[6] => $this->getGender(),
 			$keys[7] => $this->getEmail(),
 			$keys[8] => $this->getBirthdate(),
 			$keys[9] => $this->getBirthplace(),
@@ -917,7 +917,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->setRoleId($value);
 				break;
 			case 6:
-				$this->setSex($value);
+				$this->setGender($value);
 				break;
 			case 7:
 				$this->setEmail($value);
@@ -965,7 +965,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[3], $arr)) $this->setLastName($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setPronunciation($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setRoleId($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setSex($arr[$keys[6]]);
+		if (array_key_exists($keys[6], $arr)) $this->setGender($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setEmail($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setBirthdate($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setBirthplace($arr[$keys[9]]);
@@ -990,7 +990,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::LAST_NAME)) $criteria->add(sfGuardUserProfilePeer::LAST_NAME, $this->last_name);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::PRONUNCIATION)) $criteria->add(sfGuardUserProfilePeer::PRONUNCIATION, $this->pronunciation);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::ROLE_ID)) $criteria->add(sfGuardUserProfilePeer::ROLE_ID, $this->role_id);
-		if ($this->isColumnModified(sfGuardUserProfilePeer::SEX)) $criteria->add(sfGuardUserProfilePeer::SEX, $this->sex);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::GENDER)) $criteria->add(sfGuardUserProfilePeer::GENDER, $this->gender);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::EMAIL)) $criteria->add(sfGuardUserProfilePeer::EMAIL, $this->email);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::BIRTHDATE)) $criteria->add(sfGuardUserProfilePeer::BIRTHDATE, $this->birthdate);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::BIRTHPLACE)) $criteria->add(sfGuardUserProfilePeer::BIRTHPLACE, $this->birthplace);
@@ -1044,7 +1044,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 
 		$copyObj->setRoleId($this->role_id);
 
-		$copyObj->setSex($this->sex);
+		$copyObj->setGender($this->gender);
 
 		$copyObj->setEmail($this->email);
 

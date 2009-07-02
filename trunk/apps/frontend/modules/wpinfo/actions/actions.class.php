@@ -41,7 +41,9 @@ class wpinfoActions extends sfActions
 		$this->wpinfo->setContent($this->wpinfo->getWpinfoType()->getRenderedTemplate());
 	$this->type=$this->wpinfo->getWpinfoType();
 	
+	$this->next_item = $this->wpinfo->getNext();
 	$this->hints = $this->wpinfo->getHints();
+	$this->example = $this->wpinfo->getExample();
   }
 
   public function executeUpdate(sfWebRequest $request)

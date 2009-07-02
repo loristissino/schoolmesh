@@ -28,6 +28,12 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	protected $template;
 
 	
+	protected $example;
+
+	
+	protected $is_required;
+
+	
 	protected $collWpinfos;
 
 	
@@ -85,6 +91,18 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	public function getTemplate()
 	{
 		return $this->template;
+	}
+
+	
+	public function getExample()
+	{
+		return $this->example;
+	}
+
+	
+	public function getIsRequired()
+	{
+		return $this->is_required;
 	}
 
 	
@@ -172,6 +190,34 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setExample($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->example !== $v) {
+			$this->example = $v;
+			$this->modifiedColumns[] = WpinfoTypePeer::EXAMPLE;
+		}
+
+		return $this;
+	} 
+	
+	public function setIsRequired($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_required !== $v) {
+			$this->is_required = $v;
+			$this->modifiedColumns[] = WpinfoTypePeer::IS_REQUIRED;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array())) {
@@ -191,6 +237,8 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$this->rank = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->state = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
 			$this->template = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->example = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->is_required = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -199,7 +247,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 6; 
+						return $startcol + 8; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WpinfoType object", $e);
 		}
@@ -401,6 +449,12 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			case 5:
 				return $this->getTemplate();
 				break;
+			case 6:
+				return $this->getExample();
+				break;
+			case 7:
+				return $this->getIsRequired();
+				break;
 			default:
 				return null;
 				break;
@@ -417,6 +471,8 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$keys[3] => $this->getRank(),
 			$keys[4] => $this->getState(),
 			$keys[5] => $this->getTemplate(),
+			$keys[6] => $this->getExample(),
+			$keys[7] => $this->getIsRequired(),
 		);
 		return $result;
 	}
@@ -450,6 +506,12 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			case 5:
 				$this->setTemplate($value);
 				break;
+			case 6:
+				$this->setExample($value);
+				break;
+			case 7:
+				$this->setIsRequired($value);
+				break;
 		} 	}
 
 	
@@ -463,6 +525,8 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setRank($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setState($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setTemplate($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setExample($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setIsRequired($arr[$keys[7]]);
 	}
 
 	
@@ -476,6 +540,8 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpinfoTypePeer::RANK)) $criteria->add(WpinfoTypePeer::RANK, $this->rank);
 		if ($this->isColumnModified(WpinfoTypePeer::STATE)) $criteria->add(WpinfoTypePeer::STATE, $this->state);
 		if ($this->isColumnModified(WpinfoTypePeer::TEMPLATE)) $criteria->add(WpinfoTypePeer::TEMPLATE, $this->template);
+		if ($this->isColumnModified(WpinfoTypePeer::EXAMPLE)) $criteria->add(WpinfoTypePeer::EXAMPLE, $this->example);
+		if ($this->isColumnModified(WpinfoTypePeer::IS_REQUIRED)) $criteria->add(WpinfoTypePeer::IS_REQUIRED, $this->is_required);
 
 		return $criteria;
 	}
@@ -515,6 +581,10 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		$copyObj->setState($this->state);
 
 		$copyObj->setTemplate($this->template);
+
+		$copyObj->setExample($this->example);
+
+		$copyObj->setIsRequired($this->is_required);
 
 
 		if ($deepCopy) {

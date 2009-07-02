@@ -121,7 +121,7 @@
 				<?php echo link_to(
 				__($steps[$state]['owner']['submitDisplayedAction']),
 				'plansandreports/'. $steps[$state]['owner']['submitAction']. '?id='.$workplan->getId(),
-				array('method' => 'put', 'confirm' => __('Are you sure? Workplans and reports submitted cannot be modified anymore...')) 
+				array('method' => 'put', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $user->getProfile()->getIsMale()) . ' ' . __('Workplans and reports submitted cannot be modified anymore...')) 
 				)?>
 	</li>
 	</ul>

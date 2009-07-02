@@ -45,7 +45,7 @@ class sfGuardUserProfileMapBuilder implements MapBuilder {
 
 		$tMap->addForeignKey('ROLE_ID', 'RoleId', 'INTEGER', 'role', 'ID', false, null);
 
-		$tMap->addColumn('SEX', 'Sex', 'VARCHAR', false, 1);
+		$tMap->addColumn('GENDER', 'Gender', 'VARCHAR', false, 1);
 
 		$tMap->addColumn('EMAIL', 'Email', 'VARCHAR', false, 50);
 

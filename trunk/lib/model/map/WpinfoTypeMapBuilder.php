@@ -45,5 +45,9 @@ class WpinfoTypeMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('TEMPLATE', 'Template', 'LONGVARCHAR', false, null);
 
+		$tMap->addColumn('EXAMPLE', 'Example', 'LONGVARCHAR', false, null);
+
+		$tMap->addColumn('IS_REQUIRED', 'IsRequired', 'BOOLEAN', false, null);
+
 	} 
 } 

@@ -2,6 +2,36 @@
 
 class Wpinfo extends BaseWpinfo
 {
+	public function __toString()
+	{
+		if ($this->getContent())
+			return $this->getContent();
+		else
+			return 'No value';
+	
+	}
+	
+	
+	public function checkContentAgainstTemplate($content, $template='')
+		{
+			if ($template=='')
+				{
+					$template=$this->getWpinfoType()->getTemplate();
+				}
+				
+			if ($template=='')
+				{
+					return true;
+				};
+				
+			$template=str_replace('<', '\<', $template);
+			$template=str_replace('>', '\>', $template);
+			$template=str_replace('.', '\.', $template);
+			
+			$template='|'.$template.'|';
+
+			return preg_match($template, $content);
+		}
 	
 	public function setCheckedContent($user_id, $v)
 	{
@@ -24,8 +54,8 @@ class Wpinfo extends BaseWpinfo
 
 		$v=chop(html_entity_decode(strip_tags(str_replace('</p>', '<br />',$v), '<br><em>')));
 		
-		$template=$this->getWpinfoType()->getTemplate();
-		
+//		$template=$this->getWpinfoType()->getTemplate();
+/*		
 		if ($template!='')
 			{
 				
@@ -42,7 +72,15 @@ class Wpinfo extends BaseWpinfo
 					return $result;
 				}
 			}
-	
+*/	
+
+		if (!$this->checkContentAgainstTemplate($v))
+			{
+				$result['result']='error_info';
+				$result['message']='Content did not match the template.';
+				return $result;
+			}
+			
 		$this->setContent($v);
 		
 		$result['result']='notice_info';
@@ -64,10 +102,14 @@ class Wpinfo extends BaseWpinfo
 		$t=WpinfoPeer::doSelect($c);
 
 		return $t;
-
-
 	}
-	
+
+	public function getExample()
+	{
+		return $this->getWpinfoType()->getExample();
+		
+	}
+
 	public function getNext()
 	{
 		
