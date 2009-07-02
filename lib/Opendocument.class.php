@@ -16,6 +16,7 @@ class Opendocument{
 			$this->template=$template;
 			$filename.= '.' . $type;
 			$this->filename=$filename;
+			$this->type = $type;
 		}
 	
 	function setContent($content)
@@ -51,13 +52,13 @@ class Opendocument{
 			$response->setHttpHeader('Content-Type', $mimetype);
 			$response->setHttpHeader('Content-Disposition', 'attachment; filename="' . $this->filename . '"');
 			$response->setContent(fread(fopen($this->file2serve, 'r'), $filesize));
-			//unlink($this->file2serve);
+			unlink($this->file2serve);
 		}
 
 	private function generateContent()
 		{
 			$tempname=tempnam('/tmp', 'oo_');
-			//unlink($tempname);
+			unlink($tempname);
 			$this->file2serve=$tempname . '.odt';
 			$cmd='cd ' . $this->template . '; zip - -r * > ' . $this->file2serve;
 			exec($cmd);
@@ -69,6 +70,7 @@ class Opendocument{
 			$docfile = str_replace('.odt', '.doc', $this->file2serve);
 			$cmd='unoconv --server localhost --port 2090 --stdout -f doc ' . $this->file2serve . ' > ' . $docfile;
 			exec($cmd);
+			unlink($this->file2serve);
 			$this->file2serve = $docfile;
 		}
 

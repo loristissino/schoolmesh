@@ -86,7 +86,7 @@ CREATE TABLE `sf_guard_user_profile`
 	`last_name` VARCHAR(255),
 	`pronunciation` VARCHAR(255),
 	`role_id` INTEGER,
-	`sex` VARCHAR(1),
+	`gender` VARCHAR(1),
 	`email` VARCHAR(50),
 	`birthdate` DATE,
 	`birthplace` VARCHAR(50),
@@ -301,6 +301,8 @@ CREATE TABLE `wpinfo_type`
 	`rank` INTEGER  NOT NULL,
 	`state` INTEGER,
 	`template` TEXT,
+	`example` TEXT,
+	`is_required` TINYINT,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 

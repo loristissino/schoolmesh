@@ -19,6 +19,8 @@ class BaseWpinfoTypeForm extends BaseFormPropel
       'rank'        => new sfWidgetFormInput(),
       'state'       => new sfWidgetFormInput(),
       'template'    => new sfWidgetFormTextarea(),
+      'example'     => new sfWidgetFormTextarea(),
+      'is_required' => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -28,6 +30,8 @@ class BaseWpinfoTypeForm extends BaseFormPropel
       'rank'        => new sfValidatorInteger(),
       'state'       => new sfValidatorInteger(array('required' => false)),
       'template'    => new sfValidatorString(array('required' => false)),
+      'example'     => new sfValidatorString(array('required' => false)),
+      'is_required' => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('wpinfo_type[%s]');

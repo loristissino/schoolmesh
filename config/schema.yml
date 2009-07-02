@@ -29,7 +29,7 @@ propel:
     last_name:    varchar(255)
     pronunciation: varchar(255)
     role_id:      ~
-    sex:          varchar(1)
+    gender:      varchar(1)
     email:        varchar(50)
     birthdate:    date
     birthplace:   varchar(50)
@@ -156,6 +156,8 @@ propel:
     rank:    { type: integer, required: true }
     state:  integer
     template:     longvarchar
+    example:     longvarchar
+    is_required:  boolean
 # state indicates in which of workplan's state this item type should be shown
 
 

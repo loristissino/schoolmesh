@@ -32,13 +32,15 @@ class plansandreportsActions extends sfActions
 	{
     $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
 		
-    $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+    $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
 	
-	$result=$workplan->teacherSubmit($this->getUser()->getProfile()->getSfGuardUser()->getId());
+	$result=$this->workplan->teacherSubmit($this->getUser()->getProfile()->getSfGuardUser()->getId());
 	
 	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 	
-	return $this->redirect('@plansandreports');
+	$this->checks = $result['checks'];
+	
+//	return $this->redirect('@plansandreports');
 
 	}
 
@@ -88,8 +90,17 @@ class plansandreportsActions extends sfActions
   public function executeFill(sfWebRequest $request)
   {
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+	$this->user=$this->getUser();
     $this->forward404Unless($this->workplan);
-    $this->forward404Unless($this->workplan->isOwnedBy($this->getUser()->getProfile()->getSfGuardUser()->getId()));
+    $this->forward404Unless($this->workplan->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId()));
+
+
+	$this->steps = Workflow::getWpfrSteps();
+	
+	if ($this->steps[$this->workplan->getState()]['owner']['viewAction']!='fill')
+		{
+		$this->redirect('plansandreports/view?id='.$this->workplan->getId());
+		}
 
 	$this->getResponse()->addCacheControlHttpHeader('max_age=1');
     $this->getResponse()->setHttpHeader('Expires',  $this->getResponse()->getDate(time()));
@@ -102,7 +113,6 @@ class plansandreportsActions extends sfActions
 	$this->tools = $this->workplan->getTools();
 	
 	$this->workflow_logs = $this->workplan->getWorkflowLogs();
-	$this->steps = Workflow::getWpfrSteps();
 
   }
 
@@ -134,7 +144,7 @@ class plansandreportsActions extends sfActions
   public function executeDoc(sfWebRequest $request)
 	{
 	
-		$document = new Opendocument('workplan', sprintf($this->getContext()->getI18N()->__('workplan di %s'), "Loris Tissino"), 'doc');
+		$document = new Opendocument('mattiussirq', sprintf($this->getContext()->getI18N()->__('workplan di %s'), "Loris Tissino"), 'doc');
 		$document->setHeader($this->getController()->getPresentationFor('headers', 'workplan'));
 		$document->setContent($this->getController()->getPresentationFor('plansandreports', 'xml'));
 		$document->setResponse($this->getContext()->getResponse());

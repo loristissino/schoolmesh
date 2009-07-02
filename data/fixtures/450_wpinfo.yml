@@ -27,3 +27,31 @@ Wpinfo:
     appointment_id: test_ast_3ap_0
     wpinfo_type_id:  wpassessements
     content: 
+  test_ast_4ap_10_a:
+    appointment_id: test_ast_4ap_10
+    wpinfo_type_id:  wpsituation
+    content:  La classe è così così.
+  test_ast_4ap_10_b:
+    appointment_id: test_ast_4ap_10
+    wpinfo_type_id:  wppa
+    content: La classe sarà impegnata in un'area di progetto con un lavoro commissionato dall'Agenzia Spaziale Europea.
+  test_ast_4ap_10_c:
+    appointment_id: test_ast_4ap_10
+    wpinfo_type_id:  wpextra
+    content: Progetto CLIL.
+  test_ast_4ap_10_d:
+    appointment_id: test_ast_4ap_10
+    wpinfo_type_id:  wpcriteria
+    content: Test scritti autovalutati, più compiti scritti e esercitazioni varie.
+  test_ast_4ap_10_e:
+    appointment_id: test_ast_4ap_10
+    wpinfo_type_id:  wpadditionalclasses
+    content: Se necessario.
+  test_ast_4ap_10_f:
+    appointment_id: test_ast_4ap_10
+    wpinfo_type_id:  frconsiderations
+    content: 
+  test_ast_4ap_10_g:
+    appointment_id: test_ast_4ap_10
+    wpinfo_type_id:  wpassessements
+    content: 

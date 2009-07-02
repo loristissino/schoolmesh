@@ -30,12 +30,21 @@ class Appointment extends BaseAppointment
             $criteria = clone $criteria;
           }
 
-			$criteria->addAscendingOrderByColumn(WpinfoTypePeer::RANK);
-			return parent::getWpinfos();
+		$criteria->addJoin(WpinfoTypePeer::ID, WpinfoPeer::WPINFO_TYPE_ID);
+		$criteria->addAscendingOrderByColumn(WpinfoTypePeer::RANK);
+		return parent::getWpinfos($criteria);
 		
-	}
-
-
+	}	
+/*
+	public function getNeededWpinfos()
+	{
+        $criteria = new Criteria();
+		$criteria->addJoin(WpinfoTypePeer::ID, WpinfoPeer::WPINFO_TYPE_ID);
+		$criteria->addAscendingOrderByColumn(WpinfoTypePeer::RANK);
+		return parent::getWpinfos($criteria);
+		
+	}	
+*/
 	public function __toString()
 	{
 			return $this->getSubject() . ' (' . $this->getSchoolclass() . ', ' . $this->getYear() . ')';
@@ -196,6 +205,61 @@ $con->query($sql);
 	  }
 
 	}
+	
+	
+	protected function getChecks()
+	{
+		$result=Array();
+		$result['checks']=Array();
+		
+		$wpinfotypes=WpinfoTypePeer::getAllNeededForState($this->getState());
+				
+		foreach($wpinfotypes as $wpinfotype)
+			{
+
+				$wpinfo=WpinfoPeer::retrieveByAppointmentIdAndType($this->getId(), $wpinfotype->getId());
+				if (!$wpinfo)
+					{
+						$wpinfo= new Wpinfo();
+						$wpinfo->setAppointmentId($this->getId());
+						$wpinfo->setWpinfoTypeId($wpinfotype->getId());
+						$wpinfo->save();
+					}
+
+				if ($wpinfotype->getIsRequired())
+						{
+							if ($wpinfo->getContent()=='')
+								{
+								array_push($result['checks'],
+									new Check(false,
+										sprintf(sfContext::getInstance()->getI18N()->__('Content cannot be empty: %s'), $wpinfotype->getTitle()),
+										'wpinfo/edit?id=' . $wpinfo->getId()));
+								}
+							elseif (!$wpinfo->checkContentAgainstTemplate($wpinfo->getContent(), $wpinfotype->getTemplate()))
+								{
+								array_push($result['checks'],
+									new Check(false,
+										sprintf(sfContext::getInstance()->getI18N()->__('Content doesn\t match template: %s'), $wpinfotype->getTitle()),
+										'wpinfo/edit?id=' . $wpinfo->getId()));
+								}
+							else
+								{
+								array_push($result['checks'],
+									new Check(true, $wpinfotype->getTitle()));
+								}
+							}
+			}
+		
+	
+		array_push($result['checks'], new Check(false, 'info 1: empty', '@plansandreports'));
+		array_push($result['checks'], new Check(true, 'info 2: filled'));
+		array_push($result['checks'], new Check(true, 'info 3: filled'));
+		
+		$result['failed']=1;
+		
+		return $result;
+		
+	}
 
 	public function teacherSubmit($user_id)
 	{
@@ -219,14 +283,29 @@ $con->query($sql);
 			return $result;
 		}
 
-	$this->markSubItems('false');
+//	$this->markSubItems('false');
 	$result['result']='notice';
-	$result['message']=$steps[$this->getState()]['owner']['submitDoneAction'];
+	$result['message']='Comunicazione provvisoria - piano di lavoro consegnato';
 
-	$this->addEvent($user_id, sfContext::getInstance()->getI18N()->__($steps[$this->getState()]['owner']['submitDoneAction']), $steps[$this->getState()]['owner']['submitNextState']);
-		
-	return $result;
+	$checks=$this->getChecks();
+
+	$result['checks']=$checks['checks'];
 	
+	if ($checks['failed']==0)
+		{
+			$this->markSubItems('false');
+			$result['result']='notice';
+			$result['message']=$steps[$this->getState()]['owner']['submitDoneAction'];
+			$this->addEvent($user_id, sfContext::getInstance()->getI18N()->__($steps[$this->getState()]['owner']['submitDoneAction']), $steps[$this->getState()]['owner']['submitNextState']);
+		}
+	else
+		{
+			$result['result']='error';
+			$result['message']='Some errors prevented the submission of the workplan';
+		}
+
+	return $result;
+
 	}
 
 	public function removeTool($user_id, $tool_id)

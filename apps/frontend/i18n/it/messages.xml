@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
-  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-05-25T17:39:23Z" product-name="messages">
+  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-06-30T16:05:11Z" product-name="messages">
     <body>
       <trans-unit id="3">
         <source>Forgot your password?</source>
@@ -24,11 +24,11 @@
       </trans-unit>
       <trans-unit id="11">
         <source>%fullname% logged out</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="12">
         <source>Login status of %fullname% (&lt;strong&gt;%username%&lt;/strong&gt;) from workstation %workstation% (%ip%): </source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="13">
         <source>Login time: %timestamp%</source>
@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="36">
         <source>Checked</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="37">
         <source>You may login</source>
@@ -248,11 +248,11 @@
       </trans-unit>
       <trans-unit id="85">
         <source>min</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="86">
         <source>max</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="87">
         <source>rich text edit</source>
@@ -513,6 +513,90 @@
       <trans-unit id="152">
         <source>Action</source>
         <target>Azione</target>
+      </trans-unit>
+      <trans-unit id="153">
+        <source>Manage items</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="154">
+        <source>workplan di %s</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="155">
+        <source>Export</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="156">
+        <source>Available formats for export</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="157">
+        <source>YAML</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="158">
+        <source>ODT</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="159">
+        <source>DOC</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="160">
+        <source>RTF</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="161">
+        <source>PDF</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="162">
+        <source>Content</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="163">
+        <source>[0]Are you sure?|[1]Are you sure?</source>
+        <target>[0]Sei sicura?|[1]Sei sicuro?</target>
+      </trans-unit>
+      <trans-unit id="164">
+        <source>Workplans and reports submitted cannot be modified anymore...</source>
+        <target>I piani di lavoro e le relazioni inviate non possono essere pi&#xF9; modificate.</target>
+      </trans-unit>
+      <trans-unit id="165">
+        <source>Save and go back to workplan</source>
+        <target>Salva e torna al piano di lavoro</target>
+      </trans-unit>
+      <trans-unit id="166">
+        <source>Save and go to next item (%s)</source>
+        <target>Salva e vai all'elemento successivo (%s)</target>
+      </trans-unit>
+      <trans-unit id="167">
+        <source>Hints</source>
+        <target>Suggerimenti</target>
+      </trans-unit>
+      <trans-unit id="168">
+        <source>The following sentences were used in other workplans:</source>
+        <target>Queste frasi sono state usate in altri piani di lavoro:</target>
+      </trans-unit>
+      <trans-unit id="169">
+        <source>Used in &#xAB;%s&#xBB;</source>
+        <target>Usata in &#xAB;%s&#xBB;</target>
+      </trans-unit>
+      <trans-unit id="170">
+        <source>No hints avaliable for this item.</source>
+        <target>Nessun suggerimento disponibile</target>
+      </trans-unit>
+      <trans-unit id="171">
+        <source>Example</source>
+        <target>Esempio</target>
+      </trans-unit>
+      <trans-unit id="172">
+        <source>You can base your text on the following example:</source>
+        <target>Puoi basare il tuo testo sul seguente esempio:</target>
+      </trans-unit>
+      <trans-unit id="173">
+        <source>No example avaliable for this item.</source>
+        <target>Nessun esempio disponibile.</target>
       </trans-unit>
     </body>
   </file>
