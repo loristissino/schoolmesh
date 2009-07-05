@@ -61,6 +61,16 @@
 }
 
 
+#sf_admin_container ul li.sf_admin_action_append a
+{
+  background: url(../images/append.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_replace a
+{
+  background: url(../images/replace.png) no-repeat 0 0;
+}
+
 #sf_admin_container ul li.sf_admin_action_submit a
 {
   background: url(../images/submit.png) no-repeat 0 0;

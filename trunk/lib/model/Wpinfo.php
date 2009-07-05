@@ -100,8 +100,28 @@ class Wpinfo extends BaseWpinfo
 		$c->add(AppointmentPeer::USER_ID, $this->getAppointment()->getUserId());
 		$c->addAscendingOrderByColumn(WpinfoPeer::CONTENT);
 		$t=WpinfoPeer::doSelect($c);
-
-		return $t;
+		
+		$r=Array();
+		
+		$previous='';
+		foreach($t as $item)
+			{
+				if ($item->getContent()!=$previous)
+					{
+						if ($previous!='')
+							{
+								array_push($r, $w);
+							}
+						$w=new Hint($item->getContent(), $item->getId());
+						$previous=$w->getContent();
+					}
+				$w->addUsedIn($item->getAppointment());
+			}
+		if (isset($w))
+			{
+				array_push($r, $w);
+			}
+		return $r;
 	}
 
 	public function getExample()

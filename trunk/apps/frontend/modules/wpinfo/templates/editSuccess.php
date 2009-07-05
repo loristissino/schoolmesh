@@ -10,10 +10,18 @@
 
 <h1><?php echo __('Edit Wpinfo') ?></h1>
 <h2><?php echo $type->getTitle() ?></h2>
-<p><?php echo $type->getDescription() ?></p>
+<p>
+	<?php if ($type->getIsRequired()): ?>
+		<?php echo image_tag('required', 'title=' . __('Filling required')) ?>
+	<?php endif ?>
+	<?php echo $type->getDescription() ?>
+</p>
 <div id="sf_admin_container">
 <?php if ($sf_user->hasFlash('error_info')): ?>
   <div class="error"><?php echo $sf_user->getFlash('error_info')?></div>
+<?php endif; ?>
+<?php if ($sf_user->hasFlash('notice_info')): ?>
+  <div class="notice"><?php echo $sf_user->getFlash('notice_info')?></div>
 <?php endif; ?>
 <form action="<?php echo url_for('wpinfo/update?id='.$wpinfo->getId()) ?>" method="POST">
 
@@ -37,7 +45,8 @@ editor_selector : \"mceAdvanced\"
 <?php echo $wpinfo->getContent() ?>
 </textarea>
 <br />
-<input type="submit" name="save" value="<?php echo __("Save and go back to workplan") ?>" />
+<input type="submit" name="save" value="<?php echo __("Save") ?>" />
+<input type="submit" name="back" value="<?php echo __("Save and go back to workplan") ?>" />
 <?php if($next_item): ?>
 	<input type="submit" name="continue" value="<?php echo sprintf(__('Save and go to next item (%s)'), $next_item->getWpinfoType()->getTitle()); ?>" />
 <?php endif; ?>
@@ -55,14 +64,46 @@ editor_selector : \"mceAdvanced\"
 <div id="hints" style="display:visible">
 <?php if(sizeof($hints)>0): ?>
 <p><strong><?php echo __('The following sentences were used in other workplans:'); ?></strong></p>
-<?php $previous=''; ?>
-<?php foreach($hints as $hint): ?>
-	<?php if($hint->getContent()!=$previous): ?>
-	<blockquote><?php echo html_entity_decode($hint->getContent()); ?></blockquote>
-	<?php $previous=$hint->getContent(); ?>
-	<?php endif; ?>
-	<p>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo image_tag('source') ?><em>&nbsp;<?php echo sprintf(__('Used in «%s»'), $hint->getAppointment()); ?></em></p>
+<table cellspacing="0">
+  <thead>
+    <tr>
+      <th class="sf_admin_text"><?php echo __('Content') ?></th>
+      <th class="sf_admin_text"><?php echo __('Information') ?></th>
+      <th class="sf_admin_text"><?php echo __('Actions') ?></th>
+    </tr>
+  </thead>
+
+	<?php foreach($hints as $hint): ?>
+	<?php $i=0 ?>
+			<tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
+				<td><?php echo html_entity_decode($hint->getContent()); ?></td>
+				<td>
+					<?php foreach($hint->getUsedIn() as $used_in): ?>
+						<em>&nbsp;<?php echo sprintf(__('Used in «%s»'), $used_in); ?></em><br />
+					<?php endforeach; ?>
+					</ul>
+				</td>
+				<td>
+						<ul class="sf_admin_td_actions">
+						<li class="sf_admin_action_append">
+							<?php echo link_to(
+							__('Append it'),
+							'wpinfo/append?id='.$wpinfo->getId() . '&app='.$hint->getId(),
+							array('method' => 'put') 
+							)?>
+						</li>
+						<li class="sf_admin_action_replace">
+							<?php echo link_to(
+							__('Use it'),
+							'wpinfo/replace?id='.$wpinfo->getId() . '&app='.$hint->getId(),
+							array('method' => 'put') 
+							)?>
+						</li>
+					</ul>
+				</td>
+			</tr>
 <?php endforeach; ?>
+</table>
 
 <?php else: ?>
 <p><?php echo __('No hints avaliable for this item.') ?></p>

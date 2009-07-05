@@ -43,6 +43,8 @@ class WpitemTypeMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('STATE', 'State', 'INTEGER', false, null);
 
+		$tMap->addColumn('IS_REQUIRED', 'IsRequired', 'BOOLEAN', false, null);
+
 		$tMap->addColumn('EVALUATION_MIN', 'EvaluationMin', 'INTEGER', false, null);
 
 		$tMap->addColumn('EVALUATION_MAX', 'EvaluationMax', 'INTEGER', false, null);

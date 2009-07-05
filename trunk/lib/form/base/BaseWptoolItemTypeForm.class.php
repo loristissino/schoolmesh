@@ -16,12 +16,14 @@ class BaseWptoolItemTypeForm extends BaseFormPropel
       'id'          => new sfWidgetFormInputHidden(),
       'description' => new sfWidgetFormInput(),
       'rank'        => new sfWidgetFormInput(),
+      'state'       => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
       'id'          => new sfValidatorPropelChoice(array('model' => 'WptoolItemType', 'column' => 'id', 'required' => false)),
       'description' => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'rank'        => new sfValidatorInteger(array('required' => false)),
+      'state'       => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('wptool_item_type[%s]');

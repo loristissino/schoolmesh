@@ -39,5 +39,7 @@ class WptoolItemTypeMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('RANK', 'Rank', 'INTEGER', false, null);
 
+		$tMap->addColumn('STATE', 'State', 'INTEGER', false, null);
+
 	} 
 } 

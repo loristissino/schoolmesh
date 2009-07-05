@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
-  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-06-30T16:05:11Z" product-name="messages">
+  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-07-04T12:52:20Z" product-name="messages">
     <body>
       <trans-unit id="3">
         <source>Forgot your password?</source>
@@ -597,6 +597,38 @@
       <trans-unit id="173">
         <source>No example avaliable for this item.</source>
         <target>Nessun esempio disponibile.</target>
+      </trans-unit>
+      <trans-unit id="174">
+        <source>Required?</source>
+        <target>Richiesto?</target>
+      </trans-unit>
+      <trans-unit id="175">
+        <source>Submitted</source>
+        <target>Consegnato</target>
+      </trans-unit>
+      <trans-unit id="176">
+        <source>passed</source>
+        <target>esito positivo</target>
+      </trans-unit>
+      <trans-unit id="177">
+        <source>failed</source>
+        <target>esito negativo</target>
+      </trans-unit>
+      <trans-unit id="178">
+        <source>Filling required</source>
+        <target>Compilazione obbligatoria</target>
+      </trans-unit>
+      <trans-unit id="179">
+        <source>Content cannot be empty</source>
+        <target>Contenuto assente</target>
+      </trans-unit>
+      <trans-unit id="180">
+        <source>Content doesn\'t match template</source>
+        <target>Il contenuto non corrisponde al modello</target>
+      </trans-unit>
+      <trans-unit id="181">
+        <source>Filled</source>
+        <target>Compilato</target>
       </trans-unit>
     </body>
   </file>

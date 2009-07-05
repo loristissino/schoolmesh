@@ -169,8 +169,9 @@ propel:
 
   wptool_item_type:
     id:         ~
-    description:  varchar(50);
+    description:  varchar(50)
     rank:   integer
+    state: integer
 
   wptool_item:
     id:   ~
@@ -200,6 +201,7 @@ propel:
     description:  varchar(200)
     rank:    { type: integer, required: true }
     state:  integer
+    is_required: boolean
     evaluation_min:  integer
     evaluation_max:  integer
     evaluation_min_description: varchar(50)

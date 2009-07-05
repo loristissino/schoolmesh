@@ -1,2 +1,4 @@
 #!/bin/bash
 convert $1 -scale '16!x16!' $2
+chown loris:www-data $2
+
