@@ -342,6 +342,7 @@ CREATE TABLE `wptool_item_type`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`description` VARCHAR(50),
 	`rank` INTEGER,
+	`state` INTEGER,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
@@ -434,6 +435,7 @@ CREATE TABLE `wpitem_type`
 	`description` VARCHAR(200),
 	`rank` INTEGER  NOT NULL,
 	`state` INTEGER,
+	`is_required` TINYINT,
 	`evaluation_min` INTEGER,
 	`evaluation_max` INTEGER,
 	`evaluation_min_description` VARCHAR(50),

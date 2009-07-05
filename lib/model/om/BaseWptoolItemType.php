@@ -19,6 +19,9 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 	protected $rank;
 
 	
+	protected $state;
+
+	
 	protected $collWptoolItems;
 
 	
@@ -58,6 +61,12 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 	public function getRank()
 	{
 		return $this->rank;
+	}
+
+	
+	public function getState()
+	{
+		return $this->state;
 	}
 
 	
@@ -103,6 +112,20 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setState($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->state !== $v) {
+			$this->state = $v;
+			$this->modifiedColumns[] = WptoolItemTypePeer::STATE;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array())) {
@@ -119,6 +142,7 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->description = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->rank = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->state = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -127,7 +151,7 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 3; 
+						return $startcol + 4; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WptoolItemType object", $e);
 		}
@@ -320,6 +344,9 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 			case 2:
 				return $this->getRank();
 				break;
+			case 3:
+				return $this->getState();
+				break;
 			default:
 				return null;
 				break;
@@ -333,6 +360,7 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getDescription(),
 			$keys[2] => $this->getRank(),
+			$keys[3] => $this->getState(),
 		);
 		return $result;
 	}
@@ -357,6 +385,9 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 			case 2:
 				$this->setRank($value);
 				break;
+			case 3:
+				$this->setState($value);
+				break;
 		} 	}
 
 	
@@ -367,6 +398,7 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setDescription($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setRank($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setState($arr[$keys[3]]);
 	}
 
 	
@@ -377,6 +409,7 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WptoolItemTypePeer::ID)) $criteria->add(WptoolItemTypePeer::ID, $this->id);
 		if ($this->isColumnModified(WptoolItemTypePeer::DESCRIPTION)) $criteria->add(WptoolItemTypePeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(WptoolItemTypePeer::RANK)) $criteria->add(WptoolItemTypePeer::RANK, $this->rank);
+		if ($this->isColumnModified(WptoolItemTypePeer::STATE)) $criteria->add(WptoolItemTypePeer::STATE, $this->state);
 
 		return $criteria;
 	}
@@ -410,6 +443,8 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 		$copyObj->setDescription($this->description);
 
 		$copyObj->setRank($this->rank);
+
+		$copyObj->setState($this->state);
 
 
 		if ($deepCopy) {

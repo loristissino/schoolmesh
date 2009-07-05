@@ -17,11 +17,13 @@ class BaseWptoolItemTypeFormFilter extends BaseFormFilterPropel
     $this->setWidgets(array(
       'description' => new sfWidgetFormFilterInput(),
       'rank'        => new sfWidgetFormFilterInput(),
+      'state'       => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
       'description' => new sfValidatorPass(array('required' => false)),
       'rank'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'state'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('wptool_item_type_filters[%s]');
@@ -42,6 +44,7 @@ class BaseWptoolItemTypeFormFilter extends BaseFormFilterPropel
       'id'          => 'Number',
       'description' => 'Text',
       'rank'        => 'Number',
+      'state'       => 'Number',
     );
   }
 }

@@ -60,6 +60,10 @@ class wpinfoActions extends sfActions
 			$wpinfo->save();
 			if ($request->getParameter('save'))
 				{
+					$this->redirect('wpinfo/edit?id=' . $wpinfo->getId());
+				}
+			if ($request->getParameter('back'))
+				{
 					$this->redirect('plansandreports/fill?id=' . $wpinfo->getAppointmentId());
 				}
 			if ($request->getParameter('continue'))
@@ -70,15 +74,33 @@ class wpinfoActions extends sfActions
 	else
 		{
 		$this->forward('wpinfo', 'edit');
-//			$this->redirect('plansandreports/fill?id=' . $wpinfo->getAppointmentId());
-			
 		}
-/*
-Primo periodo: scritte 2; orali 2; pratiche 2
-Secondo periodo: scritte 2; orali 2; pratiche 2.
-*/
 }
-
+  public function executeReplace(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
+    $this->forward404Unless($wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
+    $this->forward404Unless($wpinfo2 = WpinfoPeer::retrieveByPk($request->getParameter('app')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('app')));
+	$wpinfo->setContent($wpinfo2->getContent());
+	$wpinfo->save();
+	$this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content saved.'));
+	$this->forward('wpinfo', 'edit');
+	
+	}
+	
+  public function executeAppend(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
+    $this->forward404Unless($wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
+    $this->forward404Unless($wpinfo2 = WpinfoPeer::retrieveByPk($request->getParameter('app')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('app')));
+	$wpinfo->setContent($wpinfo->getContent() .  $wpinfo2->getContent());
+	$wpinfo->save();
+	$this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content saved.'));
+	$this->forward('wpinfo', 'edit');
+	
+	}
+	
+	
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();

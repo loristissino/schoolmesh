@@ -231,31 +231,162 @@ $con->query($sql);
 							if ($wpinfo->getContent()=='')
 								{
 								array_push($result['checks'],
-									new Check(false,
-										sprintf(sfContext::getInstance()->getI18N()->__('Content cannot be empty: %s'), $wpinfotype->getTitle()),
+									new Check(
+										false,
+										sfContext::getInstance()->getI18N()->__('Content cannot be empty'),
+										$wpinfotype->getTitle(),
 										'wpinfo/edit?id=' . $wpinfo->getId()));
 								}
 							elseif (!$wpinfo->checkContentAgainstTemplate($wpinfo->getContent(), $wpinfotype->getTemplate()))
 								{
 								array_push($result['checks'],
-									new Check(false,
-										sprintf(sfContext::getInstance()->getI18N()->__('Content doesn\t match template: %s'), $wpinfotype->getTitle()),
+									new Check(
+										false,
+										sfContext::getInstance()->getI18N()->__('Content doesn\'t match template'),
+										$wpinfotype->getTitle(),
 										'wpinfo/edit?id=' . $wpinfo->getId()));
 								}
 							else
 								{
 								array_push($result['checks'],
-									new Check(true, $wpinfotype->getTitle()));
+									new Check(
+										true,
+										sfContext::getInstance()->getI18N()->__('Filled'),
+										$wpinfotype->getTitle()));
 								}
 							}
 			}
-		
 	
-		array_push($result['checks'], new Check(false, 'info 1: empty', '@plansandreports'));
-		array_push($result['checks'], new Check(true, 'info 2: filled'));
-		array_push($result['checks'], new Check(true, 'info 3: filled'));
+		$modules=$this->getWpmodules();
 		
-		$result['failed']=1;
+		if (sizeof($modules)==0)
+			{
+				array_push($result['checks'],
+					new Check(
+						false,
+						sfContext::getInstance()->getI18N()->__('There must be at least one module'),
+						'',
+						'plansandreports/fill?id=' . $this->getId()));
+					
+			}
+			
+		else
+		{
+			
+			$neededItemTypes=WpitemTypePeer::getAllByRank();
+			
+			$titles=Array('---', '');
+			foreach($modules as $wpmodule)
+				{
+					$moduleIsOk=true;
+					if(in_array($wpmodule->getTitle(), $titles))
+						{
+							array_push($result['checks'],
+								new Check(
+									false,
+									sfContext::getInstance()->getI18N()->__('Invalid or duplicate title for module'),
+									$wpmodule->getTitle(),
+									'wpmodule/view?id=' . $wpmodule->getId()));
+							$moduleIsOk=false;
+						}
+					else
+						{
+							array_push($titles, $wpmodule->getTitle());
+							// There can't be two modules with the same title.
+							// If we make the check here instead of on the database level we let the user have an
+							// inconsistent situation until they submit the workplan...
+						}
+					if($wpmodule->getPeriod()=='---'||$wpmodule->getPeriod()=='')
+						{
+							array_push($result['checks'],
+								new Check(
+									false,
+									sfContext::getInstance()->getI18N()->__('Invalid period specification for module'),
+									$wpmodule->getTitle(),
+									'wpmodule/view?id=' . $wpmodule->getId()));
+								$moduleIsOk=false;
+
+						}
+						
+					foreach ($neededItemTypes as $it)
+						{
+							if ($it->getState()!=$this->getState())
+								{
+									continue;
+								}
+							if (!$it->getisRequired())
+								{
+									continue;
+								}
+							
+							$group=WpitemGroupPeer::retrieveByModuleAndType($wpmodule->getId(), $it->getId());
+							if (!$group)
+								{
+									$group=new WpitemGroup();
+									$group->setWpitemTypeId($it->getId());
+									$group->setWpmoduleId($wpmodule->getId());
+									$group->save();
+									array_push($result['checks'],
+										new Check(
+											false,
+											sprintf(sfContext::getInstance()->getI18N()->__('Missing group %s'), $it->getTitle()),
+											$wpmodule->getTitle(),
+											'wpmodule/view?id=' . $wpmodule->getId()));
+											$moduleIsOk=false;
+
+								}
+							else
+								{
+									$items=$group->getWpmoduleItems();	
+									if (sizeof($items)==0)
+										{
+											array_push($result['checks'],
+												new Check(
+													false,
+													sprintf(sfContext::getInstance()->getI18N()->__('There must be at least an item in group «%s»'), $it->getTitle()),
+													$wpmodule->getTitle(),
+													'wpmodule/view?id=' . $wpmodule->getId()));
+													$moduleIsOk=false;
+
+										}
+									else
+										{
+											foreach($items as $item)
+												if($item->getContent()=='---'||$item->getContent()=='')
+													{
+														array_push($result['checks'],
+															new Check(
+																false,
+																sprintf(sfContext::getInstance()->getI18N()->__('Invalid content for item «%s» in group «%s»'), $item->getContent(), $it->getTitle()),
+																$wpmodule->getTitle(),
+																'wpmodule/view?id=' . $wpmodule->getId()));
+																$moduleIsOk=false;
+
+													}
+										
+										
+										}
+								}
+						}
+						
+					if ($moduleIsOk)
+						{
+							array_push($result['checks'],
+								new Check(
+									true,
+									sfContext::getInstance()->getI18N()->__('Module accepted'),
+									$wpmodule->getTitle()));
+						}
+						
+				} // end foreach (modules)
+		}
+				
+		$result['failed']=0;
+		foreach($result['checks'] as $c)
+			{
+				if(!$c->getIsPassed())
+					$result['failed']++;
+			}
 		
 		return $result;
 		

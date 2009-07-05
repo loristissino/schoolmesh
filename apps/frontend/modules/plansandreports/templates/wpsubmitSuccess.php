@@ -19,7 +19,8 @@
 <?php foreach($checks as $check): ?>
 	<p>
 		<?php echo image_tag($check->getIsPassed()? 'done':'notdone', 'title=' . ($check->getIsPassed()?__('passed'):__('failed'))); ?>
-		<?php echo $check->getDescription() ?>
+		<?php echo $check->getMessage() ?>: 
+		<strong><?php echo $check->getContent() ?></strong>
 		<?php if (!$check->getIsPassed()): ?>
 			<?php echo image_tag('fill', 'title='. __('Fill')) ?>
 			<?php echo link_to(__('Fill'), $check->getLinkTo()) ?>

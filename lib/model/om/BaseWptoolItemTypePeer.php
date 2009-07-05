@@ -13,7 +13,7 @@ abstract class BaseWptoolItemTypePeer {
 	const CLASS_DEFAULT = 'lib.model.WptoolItemType';
 
 	
-	const NUM_COLUMNS = 3;
+	const NUM_COLUMNS = 4;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -28,6 +28,9 @@ abstract class BaseWptoolItemTypePeer {
 	const RANK = 'wptool_item_type.RANK';
 
 	
+	const STATE = 'wptool_item_type.STATE';
+
+	
 	public static $instances = array();
 
 	
@@ -35,20 +38,20 @@ abstract class BaseWptoolItemTypePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'Rank', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'rank', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::RANK, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'rank', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'Rank', 'State', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'rank', 'state', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::RANK, self::STATE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'rank', 'state', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'Rank' => 2, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::RANK => 2, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'Rank' => 2, 'State' => 3, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'state' => 3, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::RANK => 2, self::STATE => 3, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'state' => 3, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
 	
@@ -95,6 +98,8 @@ abstract class BaseWptoolItemTypePeer {
 		$criteria->addSelectColumn(WptoolItemTypePeer::DESCRIPTION);
 
 		$criteria->addSelectColumn(WptoolItemTypePeer::RANK);
+
+		$criteria->addSelectColumn(WptoolItemTypePeer::STATE);
 
 	}
 
