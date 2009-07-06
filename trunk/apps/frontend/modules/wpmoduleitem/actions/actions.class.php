@@ -90,8 +90,11 @@ class wpmoduleitemActions extends sfActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($wpmodule_item = WpmoduleItemPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpmodule_item does not exist (%s).', $request->getParameter('id')));
-    //$this->form = new WpmoduleItemForm($wpmodule_item);
 	$this->wpmodule_item=$wpmodule_item;
+	$this->wpitemGroup=$this->wpmodule_item->getWpitemGroup();
+	$this->wpitemType = $this->wpitemGroup->getWpitemType();
+	$this->wpmodule=$this->wpitemGroup->getWpmodule();
+	$this->wp=$this->wpmodule->getAppointment();
   }
 
   public function executeUpdate(sfWebRequest $request)

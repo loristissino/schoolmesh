@@ -1,7 +1,6 @@
-<div id="sf_admin_container">
 <?php slot('title', sprintf('%s --  %s', __("Plans and Reports"),$user->getProfile()->getFullName() )) ?>
 <?php slot('breadcrumbs',
-	link_to(__("Plans and Reports"), "@plansandreports") 
+	__("Plans and Reports")
 	)
 	
 	?><h1><?php echo __("Workplans and Reports")?></h1>

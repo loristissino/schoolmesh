@@ -1,2 +1,2 @@
 default:
-  javascript:    [tiny_mce/tiny_mce]
+  stylesheets:    [global, default, fluid, schoolmesh]

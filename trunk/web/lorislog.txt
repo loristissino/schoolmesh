@@ -1,90 +1,964 @@
-Array
-(
-    [0] => Wpmodule Object
-        (
-            [id:protected] => 160
-            [user_id:protected] => 843
-            [title:protected] => Sistema solare
-            [period:protected] => settembre - dicembre
-            [appointment_id:protected] => 232
-            [rank:protected] => 1
-            [is_public:protected] => 1
-            [created_at:protected] => 2009-04-10 18:33:48
-            [updated_at:protected] => 2009-04-10 18:33:48
-            [asfGuardUser:protected] => 
-            [aAppointment:protected] => 
-            [collWpitemGroups:protected] => 
-            [lastWpitemGroupCriteria:private] => 
-            [alreadyInSave:protected] => 
-            [alreadyInValidation:protected] => 
-            [validationFailures:protected] => Array
-                (
-                )
+invio
+carattere: 105---
+carattere: 110---
+carattere: 118---
+carattere: 105---
+carattere: 111---
+ 
+carattere: 194---
+carattere: 160---
+uno
+carattere: 117---
+carattere: 110---
+carattere: 111---
 
-            [_new:private] => 
-            [_deleted:private] => 
-            [modifiedColumns:protected] => Array
-                (
-                )
+due
+carattere: 100---
+carattere: 117---
+carattere: 101---
 
-        )
+invio
+carattere: 105---
+carattere: 110---
+carattere: 118---
+carattere: 105---
+carattere: 111---
+uno
+carattere: 117---
+carattere: 110---
+carattere: 111---
+due
+carattere: 100---
+carattere: 117---
+carattere: 101---
+ 
+carattere: 194---
+carattere: 160---
+ 
+carattere: 194---
+carattere: 160---
+ 
+carattere: 194---
+carattere: 160---
 
-    [1] => Wpmodule Object
-        (
-            [id:protected] => 161
-            [user_id:protected] => 843
-            [title:protected] => Corpi celesti
-            [period:protected] => gennaio - marzo
-            [appointment_id:protected] => 232
-            [rank:protected] => 2
-            [is_public:protected] => 1
-            [created_at:protected] => 2009-04-10 18:33:48
-            [updated_at:protected] => 2009-04-10 18:33:48
-            [asfGuardUser:protected] => 
-            [aAppointment:protected] => 
-            [collWpitemGroups:protected] => 
-            [lastWpitemGroupCriteria:private] => 
-            [alreadyInSave:protected] => 
-            [alreadyInValidation:protected] => 
-            [validationFailures:protected] => Array
-                (
-                )
 
-            [_new:private] => 
-            [_deleted:private] => 
-            [modifiedColumns:protected] => Array
-                (
-                )
 
-        )
 
-    [2] => Wpmodule Object
-        (
-            [id:protected] => 162
-            [user_id:protected] => 843
-            [title:protected] => Stelle e galassie
-            [period:protected] => marzo - giugno
-            [appointment_id:protected] => 232
-            [rank:protected] => 3
-            [is_public:protected] => 1
-            [created_at:protected] => 2009-04-10 18:33:48
-            [updated_at:protected] => 2009-04-10 18:33:48
-            [asfGuardUser:protected] => 
-            [aAppointment:protected] => 
-            [collWpitemGroups:protected] => 
-            [lastWpitemGroupCriteria:private] => 
-            [alreadyInSave:protected] => 
-            [alreadyInValidation:protected] => 
-            [validationFailures:protected] => Array
-                (
-                )
+ultimo
+carattere: 117---
+carattere: 108---
+carattere: 116---
+carattere: 105---
+carattere: 109---
+carattere: 111---
+ 
+carattere: 194---
+carattere: 160---
 
-            [_new:private] => 
-            [_deleted:private] => 
-            [modifiedColumns:protected] => Array
-                (
-                )
+<!-- 		@page { size: 21cm 29.7cm; margin: 2cm } 		P { margin-bottom: 0.21cm } 	--> 	  
 
-        )
 
-)
+asdf
+carattere: 60---
+carattere: 33---
+carattere: 45---
+carattere: 45---
+carattere: 32---
+carattere: 9---
+carattere: 9---
+carattere: 64---
+carattere: 112---
+carattere: 97---
+carattere: 103---
+carattere: 101---
+carattere: 32---
+carattere: 123---
+carattere: 32---
+carattere: 115---
+carattere: 105---
+carattere: 122---
+carattere: 101---
+carattere: 58---
+carattere: 32---
+carattere: 50---
+carattere: 49---
+carattere: 99---
+carattere: 109---
+carattere: 32---
+carattere: 50---
+carattere: 57---
+carattere: 46---
+carattere: 55---
+carattere: 99---
+carattere: 109---
+carattere: 59---
+carattere: 32---
+carattere: 109---
+carattere: 97---
+carattere: 114---
+carattere: 103---
+carattere: 105---
+carattere: 110---
+carattere: 58---
+carattere: 32---
+carattere: 50---
+carattere: 99---
+carattere: 109---
+carattere: 32---
+carattere: 125---
+carattere: 32---
+carattere: 9---
+carattere: 9---
+carattere: 80---
+carattere: 32---
+carattere: 123---
+carattere: 32---
+carattere: 109---
+carattere: 97---
+carattere: 114---
+carattere: 103---
+carattere: 105---
+carattere: 110---
+carattere: 45---
+carattere: 98---
+carattere: 111---
+carattere: 116---
+carattere: 116---
+carattere: 111---
+carattere: 109---
+carattere: 58---
+carattere: 32---
+carattere: 48---
+carattere: 46---
+carattere: 50---
+carattere: 49---
+carattere: 99---
+carattere: 109---
+carattere: 32---
+carattere: 125---
+carattere: 32---
+carattere: 9---
+carattere: 45---
+carattere: 45---
+carattere: 62---
+carattere: 32---
+carattere: 9---
+carattere: 32---
+carattere: 32---
+carattere: 13---
+carattere: 10---
+carattere: 13---
+carattere: 10---
+carattere: 13---
+carattere: 10---
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 102---
+a
+carattere: 97---
+sdf
+carattere: 115---
+carattere: 100---
+carattere: 102---
+asd
+carattere: 97---
+carattere: 115---
+carattere: 100---
+fa
+carattere: 102---
+carattere: 97---
+sf
+carattere: 115---
+carattere: 102---
+asdf
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 102---
+ 
+carattere: 194---
+carattere: 160---
+
+
+<!-- 		@page { size: 21cm 29.7cm; margin: 2cm } 		P { margin-bottom: 0.21cm } 	--> 	  
+
+
+asdf in grassetto
+carattere: 60---
+carattere: 33---
+carattere: 45---
+carattere: 45---
+carattere: 32---
+carattere: 9---
+carattere: 9---
+carattere: 64---
+carattere: 112---
+carattere: 97---
+carattere: 103---
+carattere: 101---
+carattere: 32---
+carattere: 123---
+carattere: 32---
+carattere: 115---
+carattere: 105---
+carattere: 122---
+carattere: 101---
+carattere: 58---
+carattere: 32---
+carattere: 50---
+carattere: 49---
+carattere: 99---
+carattere: 109---
+carattere: 32---
+carattere: 50---
+carattere: 57---
+carattere: 46---
+carattere: 55---
+carattere: 99---
+carattere: 109---
+carattere: 59---
+carattere: 32---
+carattere: 109---
+carattere: 97---
+carattere: 114---
+carattere: 103---
+carattere: 105---
+carattere: 110---
+carattere: 58---
+carattere: 32---
+carattere: 50---
+carattere: 99---
+carattere: 109---
+carattere: 32---
+carattere: 125---
+carattere: 32---
+carattere: 9---
+carattere: 9---
+carattere: 80---
+carattere: 32---
+carattere: 123---
+carattere: 32---
+carattere: 109---
+carattere: 97---
+carattere: 114---
+carattere: 103---
+carattere: 105---
+carattere: 110---
+carattere: 45---
+carattere: 98---
+carattere: 111---
+carattere: 116---
+carattere: 116---
+carattere: 111---
+carattere: 109---
+carattere: 58---
+carattere: 32---
+carattere: 48---
+carattere: 46---
+carattere: 50---
+carattere: 49---
+carattere: 99---
+carattere: 109---
+carattere: 32---
+carattere: 125---
+carattere: 32---
+carattere: 9---
+carattere: 45---
+carattere: 45---
+carattere: 62---
+carattere: 32---
+carattere: 9---
+carattere: 32---
+carattere: 32---
+carattere: 13---
+carattere: 10---
+carattere: 13---
+carattere: 10---
+carattere: 13---
+carattere: 10---
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 102---
+carattere: 32---
+carattere: 105---
+carattere: 110---
+carattere: 32---
+carattere: 103---
+carattere: 114---
+carattere: 97---
+carattere: 115---
+carattere: 115---
+carattere: 101---
+carattere: 116---
+carattere: 116---
+carattere: 111---
+a
+carattere: 97---
+sdf
+carattere: 115---
+carattere: 100---
+carattere: 102---
+asd in corsivo
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 32---
+carattere: 105---
+carattere: 110---
+carattere: 32---
+carattere: 99---
+carattere: 111---
+carattere: 114---
+carattere: 115---
+carattere: 105---
+carattere: 118---
+carattere: 111---
+ 
+carattere: 194---
+carattere: 160---
+fa
+carattere: 102---
+carattere: 97---
+sf
+carattere: 115---
+carattere: 102---
+asdf
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 102---
+ 
+carattere: 194---
+carattere: 160---
+
+
+<!-- 		@page { size: 21cm 29.7cm; margin: 2cm } 		P { margin-bottom: 0.21cm } 	--> 	  
+
+
+asdf in grassetto
+carattere: 60---
+carattere: 33---
+carattere: 45---
+carattere: 45---
+carattere: 32---
+carattere: 9---
+carattere: 9---
+carattere: 64---
+carattere: 112---
+carattere: 97---
+carattere: 103---
+carattere: 101---
+carattere: 32---
+carattere: 123---
+carattere: 32---
+carattere: 115---
+carattere: 105---
+carattere: 122---
+carattere: 101---
+carattere: 58---
+carattere: 32---
+carattere: 50---
+carattere: 49---
+carattere: 99---
+carattere: 109---
+carattere: 32---
+carattere: 50---
+carattere: 57---
+carattere: 46---
+carattere: 55---
+carattere: 99---
+carattere: 109---
+carattere: 59---
+carattere: 32---
+carattere: 109---
+carattere: 97---
+carattere: 114---
+carattere: 103---
+carattere: 105---
+carattere: 110---
+carattere: 58---
+carattere: 32---
+carattere: 50---
+carattere: 99---
+carattere: 109---
+carattere: 32---
+carattere: 125---
+carattere: 32---
+carattere: 9---
+carattere: 9---
+carattere: 80---
+carattere: 32---
+carattere: 123---
+carattere: 32---
+carattere: 109---
+carattere: 97---
+carattere: 114---
+carattere: 103---
+carattere: 105---
+carattere: 110---
+carattere: 45---
+carattere: 98---
+carattere: 111---
+carattere: 116---
+carattere: 116---
+carattere: 111---
+carattere: 109---
+carattere: 58---
+carattere: 32---
+carattere: 48---
+carattere: 46---
+carattere: 50---
+carattere: 49---
+carattere: 99---
+carattere: 109---
+carattere: 32---
+carattere: 125---
+carattere: 32---
+carattere: 9---
+carattere: 45---
+carattere: 45---
+carattere: 62---
+carattere: 32---
+carattere: 9---
+carattere: 32---
+carattere: 32---
+carattere: 13---
+carattere: 10---
+carattere: 13---
+carattere: 10---
+carattere: 13---
+carattere: 10---
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 102---
+carattere: 32---
+carattere: 105---
+carattere: 110---
+carattere: 32---
+carattere: 103---
+carattere: 114---
+carattere: 97---
+carattere: 115---
+carattere: 115---
+carattere: 101---
+carattere: 116---
+carattere: 116---
+carattere: 111---
+a
+carattere: 97---
+sdf
+carattere: 115---
+carattere: 100---
+carattere: 102---
+asd in <em>corsivo</em>
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 32---
+carattere: 105---
+carattere: 110---
+carattere: 32---
+carattere: 60---
+carattere: 101---
+carattere: 109---
+carattere: 62---
+carattere: 99---
+carattere: 111---
+carattere: 114---
+carattere: 115---
+carattere: 105---
+carattere: 118---
+carattere: 111---
+carattere: 60---
+carattere: 47---
+carattere: 101---
+carattere: 109---
+carattere: 62---
+ 
+carattere: 194---
+carattere: 160---
+fa
+carattere: 102---
+carattere: 97---
+sf
+carattere: 115---
+carattere: 102---
+asdf
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 102---
+
+
+asdf in grassetto
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 102---
+carattere: 32---
+carattere: 105---
+carattere: 110---
+carattere: 32---
+carattere: 103---
+carattere: 114---
+carattere: 97---
+carattere: 115---
+carattere: 115---
+carattere: 101---
+carattere: 116---
+carattere: 116---
+carattere: 111---
+a
+carattere: 97---
+sdf
+carattere: 115---
+carattere: 100---
+carattere: 102---
+asd in <em>corsivo</em>
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 32---
+carattere: 105---
+carattere: 110---
+carattere: 32---
+carattere: 60---
+carattere: 101---
+carattere: 109---
+carattere: 62---
+carattere: 99---
+carattere: 111---
+carattere: 114---
+carattere: 115---
+carattere: 105---
+carattere: 118---
+carattere: 111---
+carattere: 60---
+carattere: 47---
+carattere: 101---
+carattere: 109---
+carattere: 62---
+fa
+carattere: 102---
+carattere: 97---
+sf
+carattere: 115---
+carattere: 102---
+asdf
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 102---
+
+<!-- 		@page { size: 21cm 29.7cm; margin: 2cm } 		P { margin-bottom: 0.21cm } 	-->
+A
+carattere: 60---
+carattere: 33---
+carattere: 45---
+carattere: 45---
+carattere: 32---
+carattere: 9---
+carattere: 9---
+carattere: 64---
+carattere: 112---
+carattere: 97---
+carattere: 103---
+carattere: 101---
+carattere: 32---
+carattere: 123---
+carattere: 32---
+carattere: 115---
+carattere: 105---
+carattere: 122---
+carattere: 101---
+carattere: 58---
+carattere: 32---
+carattere: 50---
+carattere: 49---
+carattere: 99---
+carattere: 109---
+carattere: 32---
+carattere: 50---
+carattere: 57---
+carattere: 46---
+carattere: 55---
+carattere: 99---
+carattere: 109---
+carattere: 59---
+carattere: 32---
+carattere: 109---
+carattere: 97---
+carattere: 114---
+carattere: 103---
+carattere: 105---
+carattere: 110---
+carattere: 58---
+carattere: 32---
+carattere: 50---
+carattere: 99---
+carattere: 109---
+carattere: 32---
+carattere: 125---
+carattere: 32---
+carattere: 9---
+carattere: 9---
+carattere: 80---
+carattere: 32---
+carattere: 123---
+carattere: 32---
+carattere: 109---
+carattere: 97---
+carattere: 114---
+carattere: 103---
+carattere: 105---
+carattere: 110---
+carattere: 45---
+carattere: 98---
+carattere: 111---
+carattere: 116---
+carattere: 116---
+carattere: 111---
+carattere: 109---
+carattere: 58---
+carattere: 32---
+carattere: 48---
+carattere: 46---
+carattere: 50---
+carattere: 49---
+carattere: 99---
+carattere: 109---
+carattere: 32---
+carattere: 125---
+carattere: 32---
+carattere: 9---
+carattere: 45---
+carattere: 45---
+carattere: 62---
+carattere: 13---
+carattere: 10---
+carattere: 65---
+sdf
+carattere: 115---
+carattere: 100---
+carattere: 102---
+asdf in grassetto
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 102---
+carattere: 32---
+carattere: 105---
+carattere: 110---
+carattere: 32---
+carattere: 103---
+carattere: 114---
+carattere: 97---
+carattere: 115---
+carattere: 115---
+carattere: 101---
+carattere: 116---
+carattere: 116---
+carattere: 111---
+a
+carattere: 97---
+sdf
+carattere: 115---
+carattere: 100---
+carattere: 102---
+asd in <em>corsivo</em>
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 32---
+carattere: 105---
+carattere: 110---
+carattere: 32---
+carattere: 60---
+carattere: 101---
+carattere: 109---
+carattere: 62---
+carattere: 99---
+carattere: 111---
+carattere: 114---
+carattere: 115---
+carattere: 105---
+carattere: 118---
+carattere: 111---
+carattere: 60---
+carattere: 47---
+carattere: 101---
+carattere: 109---
+carattere: 62---
+ 
+carattere: 194---
+carattere: 160---
+fa
+carattere: 102---
+carattere: 97---
+sf  dsfa sdf asf asdfasdf asd a
+carattere: 115---
+carattere: 102---
+carattere: 32---
+carattere: 32---
+carattere: 100---
+carattere: 115---
+carattere: 102---
+carattere: 97---
+carattere: 32---
+carattere: 115---
+carattere: 100---
+carattere: 102---
+carattere: 32---
+carattere: 97---
+carattere: 115---
+carattere: 102---
+carattere: 32---
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 102---
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 102---
+carattere: 32---
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 32---
+carattere: 97---
+sdf ads fa dsf  esponente e deponenten
+carattere: 115---
+carattere: 100---
+carattere: 102---
+carattere: 32---
+carattere: 97---
+carattere: 100---
+carattere: 115---
+carattere: 32---
+carattere: 102---
+carattere: 97---
+carattere: 32---
+carattere: 100---
+carattere: 115---
+carattere: 102---
+carattere: 32---
+carattere: 32---
+carattere: 101---
+carattere: 115---
+carattere: 112---
+carattere: 111---
+carattere: 110---
+carattere: 101---
+carattere: 110---
+carattere: 116---
+carattere: 101---
+carattere: 32---
+carattere: 101---
+carattere: 32---
+carattere: 100---
+carattere: 101---
+carattere: 112---
+carattere: 111---
+carattere: 110---
+carattere: 101---
+carattere: 110---
+carattere: 116---
+carattere: 101---
+carattere: 110---
+asdf
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 102---
+ 
+carattere: 194---
+carattere: 160---
+
+
+uno
+carattere: 117---
+carattere: 110---
+carattere: 111---
+due
+carattere: 100---
+carattere: 117---
+carattere: 101---
+tre
+carattere: 116---
+carattere: 114---
+carattere: 101---
+
+
+dfaf
+carattere: 100---
+carattere: 102---
+carattere: 97---
+carattere: 102---
+ 
+carattere: 194---
+carattere: 160---
+d
+carattere: 100---
+f
+carattere: 102---
+sd
+carattere: 115---
+carattere: 100---
+f
+carattere: 102---
+ 
+carattere: 194---
+carattere: 160---
+ 
+carattere: 194---
+carattere: 160---
+ 
+carattere: 194---
+carattere: 160---
+asdf
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 102---
+ 
+carattere: 194---
+carattere: 160---
+ 
+carattere: 194---
+carattere: 160---
+asdf
+carattere: 97---
+carattere: 115---
+carattere: 100---
+carattere: 102---
+
+
+ 
+carattere: 194---
+carattere: 160---
+xcvb
+carattere: 120---
+carattere: 99---
+carattere: 118---
+carattere: 98---
+ 
+carattere: 194---
+carattere: 160---
+ 
+carattere: 194---
+carattere: 160---
+ 
+carattere: 194---
+carattere: 160---
+cvb
+carattere: 99---
+carattere: 118---
+carattere: 98---
+ 
+carattere: 194---
+carattere: 160---
+cvb
+carattere: 99---
+carattere: 118---
+carattere: 98---
+ 
+carattere: 194---
+carattere: 160---
+ 
+carattere: 194---
+carattere: 160---
+rerr
+carattere: 114---
+carattere: 101---
+carattere: 114---
+carattere: 114---
+we
+carattere: 119---
+carattere: 101---
+wer
+carattere: 119---
+carattere: 101---
+carattere: 114---
+
+
+
+wer
+carattere: 119---
+carattere: 101---
+carattere: 114---
+ 
+carattere: 194---
+carattere: 160---
+
+
+
+Wer
+carattere: 87---
+carattere: 101---
+carattere: 114---
+WER
+carattere: 87---
+carattere: 69---
+carattere: 82---
+WER
+carattere: 87---
+carattere: 69---
+carattere: 82---
+WERWR
+carattere: 87---
+carattere: 69---
+carattere: 82---
+carattere: 87---
+carattere: 82---
+
+
+primo contenuto
+carattere: 112---
+carattere: 114---
+carattere: 105---
+carattere: 109---
+carattere: 111---
+carattere: 32---
+carattere: 99---
+carattere: 111---
+carattere: 110---
+carattere: 116---
+carattere: 101---
+carattere: 110---
+carattere: 117---
+carattere: 116---
+carattere: 111---
+secondo contenuto
+carattere: 115---
+carattere: 101---
+carattere: 99---
+carattere: 111---
+carattere: 110---
+carattere: 100---
+carattere: 111---
+carattere: 32---
+carattere: 99---
+carattere: 111---
+carattere: 110---
+carattere: 116---
+carattere: 101---
+carattere: 110---
+carattere: 117---
+carattere: 116---
+carattere: 111---
+zxc
+carattere: 122---
+carattere: 120---
+carattere: 99---
+zxc
+carattere: 122---
+carattere: 120---
+carattere: 99---
+ 
+carattere: 194---
+carattere: 160---
+

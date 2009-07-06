@@ -89,15 +89,20 @@ class WpmoduleItem extends BaseWpmoduleItem
 	  $con = Propel::getConnection(WpmoduleItemPeer::DATABASE_NAME);
 	  try
 	  {
+
 		$con->beginTransaction();
+
 	 
 		// decrease all the ranks of the page records of the same category with higher rank 
 		$sql = 'UPDATE '.WpmoduleItemPeer::TABLE_NAME.' SET '.WpmoduleItemPeer::RANK.' = '.WpmoduleItemPeer::RANK.' - 1 WHERE '.WpmoduleItemPeer::RANK.' > '.$this->getRank() . ' AND ' . WpmoduleItemPeer::WPITEM_GROUP_ID .'='. $this->getWpitemGroupId();
+
 		$con->query($sql);
 		// delete the item
 		parent::delete();
 	 
 		$con->commit();
+		
+		
 	  }
 	  catch (Exception $e)
 	  {
