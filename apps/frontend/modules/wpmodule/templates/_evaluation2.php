@@ -12,11 +12,13 @@
         )) ?>
 </li>
 <?php endfor ?>
+<?php if ($dbvalue!=null): ?>
 <li class="sf_admin_action_reset">
 	<?php echo link_to_remote(__('unset'), array(
             'update'   => 'item_evaluation_'.$id,
             'url'      => 'wpmoduleitem/evaluate?id='.$id.'&evaluation=',
         )) ?>
 </li>
+<?php endif ?>
 </ul>
 </div>

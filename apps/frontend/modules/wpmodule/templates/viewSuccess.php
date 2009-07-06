@@ -3,7 +3,7 @@
 <?php slot('breadcrumbs',
 	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
 	link_to($workplan, 'plansandreports/fill?id='.$workplan->getId()) . ' » ' . 
-	link_to($wpmodule->getTitle(), 'wpmodule/view?id='.$wpmodule->getId())
+	$wpmodule->getTitle()
 	)
 	
 	?>

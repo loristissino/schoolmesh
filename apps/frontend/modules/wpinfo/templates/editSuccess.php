@@ -3,9 +3,7 @@
 <?php slot('breadcrumbs',
 	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
 	link_to($wpinfo->getAppointment()->__toString(), 'plansandreports/fill?id='.$wpinfo->getAppointment()->getId()) . ' » ' . 
-	link_to($type->getTitle(), 'wpinfo/edit?id='.$wpinfo->getId())
-	)
-	
+	$type->getTitle())
 	?>
 
 <h1><?php echo __('Edit Wpinfo') ?></h1>
@@ -16,7 +14,7 @@
 	<?php endif ?>
 	<?php echo $type->getDescription() ?>
 </p>
-<div id="sf_admin_container">
+
 <?php if ($sf_user->hasFlash('error_info')): ?>
   <div class="error"><?php echo $sf_user->getFlash('error_info')?></div>
 <?php endif; ?>

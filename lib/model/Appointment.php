@@ -310,7 +310,7 @@ $con->query($sql);
 						
 					foreach ($neededItemTypes as $it)
 						{
-							if ($it->getState()!=$this->getState())
+							if ($it->getState()>$this->getState())
 								{
 									continue;
 								}
@@ -340,6 +340,12 @@ $con->query($sql);
 									$items=$group->getWpmoduleItems();	
 									if (sizeof($items)==0)
 										{
+											$wpmoduleItem = new WpmoduleItem();
+											$wpmoduleItem->setContent('---');
+											$wpmoduleItem->setWpitemGroupId($group->getId());
+											$wpmoduleItem->setEvaluation(null);
+											$wpmoduleItem->save();
+											
 											array_push($result['checks'],
 												new Check(
 													false,
@@ -362,9 +368,18 @@ $con->query($sql);
 																'wpmodule/view?id=' . $wpmodule->getId()));
 																$moduleIsOk=false;
 
-													}
-										
-										
+													};
+												
+												if(($item->getEvaluation()==null)&&$this->getState()==Workflow::IR_DRAFT)
+													{
+														array_push($result['checks'],
+															new Check(
+																false,
+																sprintf(sfContext::getInstance()->getI18N()->__('Missing evaluation for item «%s» in group «%s»'), $item->getContent(), $it->getTitle()),
+																$wpmodule->getTitle(),
+																'wpmodule/view?id=' . $wpmodule->getId(). '#' . $group->getId()));
+																$moduleIsOk=false;
+												}
 										}
 								}
 						}

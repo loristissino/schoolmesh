@@ -2,12 +2,10 @@
 <?php slot('title', sprintf('%s --  %s', $workplan->__toString(),$workplan->getsfGuardUser()->getProfile()->getFullName() )) ?>
 <?php slot('breadcrumbs',
 	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
-	link_to($workplan, 'plansandreports/fill?id='.$workplan->getId())
+	$workplan
 	)
 	
 	?><h1><?php echo __("Workplan: ") . $workplan ?></h1>
-
-<div id="sf_admin_container">
 
 <h2><?php echo __("Basic information") ?></h2>
 <?php $state = $workplan->getState() ?>
@@ -83,6 +81,13 @@
 				)?>
 	
 	</li>
+	<li class="sf_admin_action_import">
+	<?php echo link_to(
+				__('Import'),
+				'plansandreports/import?id='.$workplan->getId()
+				)?>
+	
+	</li>
 	</ul>
 </div>
 <hr />
@@ -127,5 +132,3 @@
 	</ul>
 <?php endif ?>
 <hr />
-
-</div>

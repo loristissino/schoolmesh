@@ -22,8 +22,9 @@
 <p><?php echo __('Where am I? ') . link_to(__("Home"), "@homepage") ?> » <?php include_slot('breadcrumbs') ?></p>
 </div>
 <?php endif ?>
+<div id="sf_admin_container">
 <?php echo $sf_content ?>
-
+</div>
   <div id="navigation">
     <ul>
        <li><?php echo link_to(__("Home"), "@homepage") ?></li>
