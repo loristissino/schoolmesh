@@ -165,6 +165,13 @@ $number=$resultset->number;
 				$newgroup->setWpmoduleId($this->getId());
 				$newgroup->setWpitemTypeId($group->getId());
 				$newgroup->save();
+				if ($group->getIsRequired())
+					{
+						$newWpmoduleItem=new WpmoduleItem();
+						$newWpmoduleItem->setWpitemGroupId($newgroup->getId());
+						$newWpmoduleItem->setContent('---');
+						$newWpmoduleItem->save();
+					}
 			}
 	}
 

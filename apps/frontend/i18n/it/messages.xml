@@ -451,12 +451,12 @@
         <target>Contenuto salvato.</target>
       </trans-unit>
       <trans-unit id="137">
-        <source>draft</source>
-        <target>bozza</target>
+        <source>Workplan draft</source>
+        <target>Bozza di piano di lavoro</target>
       </trans-unit>
       <trans-unit id="138">
-        <source>intermediate / final report</source>
-        <target>relazione finale o intermedia</target>
+        <source>Intermediate / final report</source>
+        <target>Relazione finale o intermedia</target>
       </trans-unit>
       <trans-unit id="139">
         <source>Help</source>
@@ -467,28 +467,28 @@
         <target>Gli stati possibili dei piani di lavoro / relazioni finali sono i seguenti:</target>
       </trans-unit>
       <trans-unit id="141">
-        <source>workplan waiting for administrative check</source>
-        <target>piano di lavoro in attesa di controlli amministrativi</target>
+        <source>Workplan waiting for administrative check</source>
+        <target>Piano di lavoro in attesa di controlli amministrativi</target>
       </trans-unit>
       <trans-unit id="142">
-        <source>workplan waiting for schoolmaster`s approval</source>
-        <target>piano di lavoro in attesa di approvazione dal parte del DS</target>
+        <source>Workplan waiting for schoolmaster`s approval</source>
+        <target>Piano di lavoro in attesa di approvazione dal parte del DS</target>
       </trans-unit>
       <trans-unit id="143">
-        <source>intermediate report waiting for schoolmaster`s evaluation</source>
-        <target>relazione intermedia in attesa di valutazione da parte del DS</target>
+        <source>Intermediate report waiting for schoolmaster`s evaluation</source>
+        <target>Relazione intermedia in attesa di valutazione da parte del DS</target>
       </trans-unit>
       <trans-unit id="144">
-        <source>final report waiting for administrative check</source>
-        <target>relazione finale in attesa di controlli amministrativi</target>
+        <source>Final report waiting for administrative check</source>
+        <target>Relazione finale in attesa di controlli amministrativi</target>
       </trans-unit>
       <trans-unit id="145">
-        <source>final report waiting for schoolmaster`s evaluation</source>
-        <target>relazione finale di approvazione dal parte del DS</target>
+        <source>Final report waiting for schoolmaster`s evaluation</source>
+        <target>Relazione finale di approvazione dal parte del DS</target>
       </trans-unit>
       <trans-unit id="146">
-        <source>final report approved and archived</source>
-        <target>relazione finale approvata e archiviata</target>
+        <source>Final report approved and archived</source>
+        <target>Relazione finale approvata e archiviata</target>
       </trans-unit>
       <trans-unit id="147">
         <source>Year</source>

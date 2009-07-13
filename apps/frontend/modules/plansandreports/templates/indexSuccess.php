@@ -26,6 +26,7 @@
     </tr>
   </thead>
   <tbody>
+	<?php $i=0 ?>
     <?php foreach ($workplans as $workplan): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <td><?php echo $workplan->getYear() ?></td>

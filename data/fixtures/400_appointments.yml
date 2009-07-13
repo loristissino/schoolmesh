@@ -16,7 +16,7 @@ Appointment:
     subject_id: ast
     schoolclass_id: 4ap
     year_id:         200809
-    state: 00
+    state: 10
   test_ast_5ap_20:
     user_id: testteacher
     subject_id: ast
@@ -148,3 +148,8 @@ Appointment:
     schoolclass_id:  3ap
     year_id:         200809
 
+  ika_ing_3bp:
+    user_id:         ika
+    subject_id:      ing
+    schoolclass_id:  3bp
+    year_id:         200809

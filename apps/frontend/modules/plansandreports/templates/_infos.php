@@ -11,7 +11,6 @@
   <thead>
     <tr>
       <th class="sf_admin_text"><?php echo __('Title') ?></th>
-      <th class="sf_admin_text"><?php echo __('Required?') ?></th>
       <th class="sf_admin_text"><?php echo __('Content') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
@@ -21,12 +20,10 @@
 	<?php if($state >= $wpinfo->getWpinfoType()->getState()): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <th><?php echo $wpinfo->getWpinfoType()->getTitle() ?></th>
-      <td><?php if ($wpinfo->getWpinfoType()->getIsRequired()): ?><?php echo image_tag('required', 'title=required') ?><?php endif ?></td>
       <td><?php echo  html_entity_decode($wpinfo->getContent()) ?></td>
       <td>
 		<ul class="sf_admin_td_actions">
-			<?php if ($state==$wpinfo->getWpinfoType()->getState()): ?>
-			<li class="sf_admin_action_fill">
+			<li class="sf_admin_action_<?php echo $wpinfo->getWpinfoType()->getIsRequired()? 'fill':'optional'; ?>">
 			<?php /* here I should show edit or show depending on the state */ ?>
 				<?php echo link_to(
 				__('Fill'),
@@ -34,7 +31,6 @@
 				array('method' => 'get') 
 				)?>
 			</li>
-			<?php endif ?>
 		</ul>
 	  </td>
     </tr>

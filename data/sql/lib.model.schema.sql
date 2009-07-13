@@ -433,6 +433,7 @@ CREATE TABLE `wpitem_type`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`title` VARCHAR(50),
 	`description` VARCHAR(200),
+	`style` VARCHAR(50),
 	`rank` INTEGER  NOT NULL,
 	`state` INTEGER,
 	`is_required` TINYINT,

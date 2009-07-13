@@ -43,7 +43,7 @@ class wpmoduleActions extends sfActions
 	  $item->swapWith($previous_item);
 	  $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('The items were switched'));
 	 
-	  $this->redirect('plansandreports/fill?id='.$item->getAppointmentId()); 	}  
+	  $this->redirect('plansandreports/fill?id='.$item->getAppointmentId(). '#wpmodules'); 	}  
 
 	public function executeDown(sfWebRequest $request)
 	{
@@ -55,7 +55,7 @@ class wpmoduleActions extends sfActions
 	  $item->swapWith($next_item);
 	  $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('The items were switched'));
 	 
-	  $this->redirect('plansandreports/fill?id='.$item->getAppointmentId()); 
+	  $this->redirect('plansandreports/fill?id='.$item->getAppointmentId(). '#wpmodules'); 
 	}  
 /*
   public function executeIndex(sfWebRequest $request)
@@ -111,7 +111,7 @@ class wpmoduleActions extends sfActions
 	$newwpmodule->createWpitemGroups();
 	
 	$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('A new item was inserted'));
-	return $this->redirect('plansandreports/fill?id='.$workplan->getId());
+	return $this->redirect('plansandreports/fill?id='.$workplan->getId(). '#wpmodules');
 
   }
 
@@ -175,7 +175,7 @@ class wpmoduleActions extends sfActions
 		}
 		
 
-    $this->redirect('plansandreports/fill?id='. $appointmentId);
+    $this->redirect('plansandreports/fill?id='. $appointmentId . '#wpmodules');
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)

@@ -1,4 +1,12 @@
-<h1><?php echo __("Workplan: ") . $workplan ?></h1>
+<?php use_helper('Javascript') ?>
+<?php slot('title', sprintf('%s --  %s', $workplan->__toString(),$workplan->getsfGuardUser()->getProfile()->getFullName() )) ?>
+<?php slot('breadcrumbs',
+	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
+	link_to($workplan, 'plansandreports/fill?id=' . $workplan->getId()) . ' » ' .
+	__('Complete view')
+	)
+	
+	?><h1><?php echo __("Workplan: ") . $workplan ?></h1><h1>
 
 <h2><?php echo __("General information") ?></h2>
 <ul>

@@ -64,7 +64,7 @@
 				<?php echo link_to(
 				__('Delete'),
 				'wpmodule/delete?id='.$wpmodule->getId(),
-				array('method' => 'delete', 'confirm' => __('Are you sure?')) 
+				array('method' => 'delete', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $user->getProfile()->getIsMale())) 
 				)?>
 			</li>
 			<?php endif ?>
