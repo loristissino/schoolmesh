@@ -42,6 +42,7 @@
 	</ul>
 <hr />
 
+<a name="info"></a>
 <h2><?php echo __('Details, comments, general information') ?></h2>
 <!--<div id="sf_admin_container">-->
 	<ul class="sf_admin_actions">
@@ -58,6 +59,7 @@
 </div>
 <hr />
 
+<a name="wpmodules"></a>
 <h2><?php echo __("Modules") ?></h2>
 <!--<div id="sf_admin_container">-->
 	<ul class="sf_admin_actions">
@@ -70,7 +72,7 @@
 </ul>
 <!--</div>-->
 <div id="modules" style="display:<?php echo ($sf_user->hasFlash('notice')||$sf_user->hasFlash('error'))? 'visible': 'none' ?>">
-<?php include_partial('modules', array('workplan' => $workplan)) ?>
+<?php include_partial('modules', array('workplan' => $workplan, 'user' => $sf_user)) ?>
 
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_new">
@@ -92,7 +94,7 @@
 </div>
 <hr />
 
-
+<a name="aux"></a>
 <h2><?php echo __("Aux") ?></h2>
 <!--<div id="sf_admin_container">-->
 	<ul class="sf_admin_actions">

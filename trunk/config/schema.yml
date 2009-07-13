@@ -113,41 +113,6 @@ propel:
     comment:   { type: varchar(255) }
     state:  integer
 
-# wpevent is a log for events concerning a workplan
-#   The events are logged with the id of the user who acted, and the new status that the workplan goes into.
-#   The status can be one of the following:
-#
-#    0: DRAFT
-#        teacher can
-#         -- edit
-#         -- import modules
-#         -- submit     ** goes to 10
-#  10: WORKPLAN WAITING FOR ADMINISTRATIVE CHECK
-#        authorized personnel can
-#         -- ask for improvements    **  goes to 0
-#         -- approve    ** goes to 20
-#  20: WORKPLAN WAITING FOR SCHOOLMASTER'S APPROVAL
-#        schoolmaster can
-#         -- ask for improvements    ** goes to 0
-#         -- approve    ** goes to 30
-#  30: INTERMEDIATE REPORT / FINAL REPORT
-#        teacher can
-#         -- add new modules / new items
-#         -- fill evaluation fields
-#         -- submit as intermediate report    ** goes to 40
-#         -- submit as final report (not active until the date set on years' table) ** goes to 50
-#  40: INTERMEDIATE REPORT WAITING FOR SCHOOLMASTER'S EVALUATION
-#        schoolmaster can
-#         -- unlock    ** goes to 30
-#  50: FINAL REPORT WAITING FOR ADMINISTRATIVE CHECK
-#        authorized personnel can
-#         -- ask for improvements    **  goes to 30
-#         -- approve    ** goes to 60
-#  60: FINAL REPORT WAITING FOR SCHOOLMASTER'S APPROVAL
-#        schoolmaster can
-#        -- ask for improvements      ** goes to 30
-#        -- approve    ** goes to 70
-#  70: FINAL REPORT APPROVED AND ARCHIVED
 
   wpinfo_type:
     id:          ~
@@ -193,12 +158,11 @@ propel:
     created_at:   ~
     updated_at:   ~
 
-
-
   wpitem_type:
     id:          ~
     title:        varchar(50)
     description:  varchar(200)
+    style:       varchar(50)
     rank:    { type: integer, required: true }
     state:  integer
     is_required: boolean

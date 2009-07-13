@@ -14,6 +14,11 @@ sfGuardUser:
     password:      testp
     is_superadmin: false
 
+  ika:
+    username:     ika.puszczykowska
+    password:     ikap
+    is_superadmin: false
+
   juri:
     username:       juri.daldan
     password:       jurip
@@ -170,6 +175,9 @@ sfGuardUserGroup:
   tt_teacher:
     group_id:       teacher
     user_id:        testteacher
+  ika_teacher:
+    group_id:       teacher
+    user_id:       ika
 
   
   

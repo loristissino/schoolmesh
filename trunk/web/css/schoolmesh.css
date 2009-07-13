@@ -81,6 +81,11 @@
   background: url(../images/submit.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_optional a
+{
+  background: url(../images/optional.png) no-repeat 0 0;
+}
+
 
 div.module_content
 {

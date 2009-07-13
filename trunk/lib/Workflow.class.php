@@ -13,7 +13,7 @@ class Workflow
 	static private $wpfrSteps=Array(
 
 	self::WP_DRAFT => Array(
-		'stateDescription'=>"draft",
+		'stateDescription'=>"Workplan draft",
 		'owner' => Array(
 			'viewAction'=>"fill",
 			'displayedAction'=>'Fill',
@@ -26,7 +26,7 @@ class Workflow
 		),
 	
 	self::WP_WADMC=>Array(
-		'stateDescription'=>"workplan waiting for administrative check",
+		'stateDescription'=>"Workplan waiting for administrative check",
 		'owner' => Array(
 			'viewAction'=>"view",
 			'displayedAction'=>'View',
@@ -56,7 +56,7 @@ class Workflow
 		),
 	
 	self::WP_WSMC=>Array(
-		'stateDescription'=>"workplan waiting for schoolmaster`s approval",
+		'stateDescription'=>"Workplan waiting for schoolmaster`s approval",
 		'owner' => Array(
 			'viewAction'=>"view",
 			'displayedAction'=>'View',
@@ -86,7 +86,7 @@ class Workflow
 	),
 	
 	self::IR_DRAFT=>Array(
-		'stateDescription'=>"intermediate / final report",
+		'stateDescription'=>"Intermediate / final report",
 		'owner' => Array(
 			'viewAction'=>"fill",
 			'displayedAction'=>'Fill',
@@ -99,7 +99,7 @@ class Workflow
 	),
 	
 	self::IR_WSMC=>Array(
-		'stateDescription'=>"intermediate report waiting for schoolmaster`s evaluation",
+		'stateDescription'=>"Intermediate report waiting for schoolmaster`s evaluation",
 		'owner' => Array(
 			'viewAction'=>"view",
 			'displayedAction'=>'View',
@@ -112,7 +112,7 @@ class Workflow
 		),
 		
 	self::FR_WADMC=>Array(
-		'stateDescription'=>"final report waiting for administrative check",
+		'stateDescription'=>"Final report waiting for administrative check",
 		'owner' => Array(
 			'viewAction'=>"view",
 			'displayedAction'=>'View',
@@ -142,7 +142,7 @@ class Workflow
 	),
 
 	self::FR_WSMC=>Array(
-		'stateDescription'=>"final report waiting for schoolmaster`s evaluation",
+		'stateDescription'=>"Final report waiting for schoolmaster`s evaluation",
 		'owner' => Array(
 			'viewAction'=>"view",
 			'displayedAction'=>'View',
@@ -172,7 +172,7 @@ class Workflow
 	),
 
 	self::FR_ARCHIVED=>Array(
-		'stateDescription'=>"final report approved and archived",
+		'stateDescription'=>"Final report approved and archived",
 		'owner' => Array(
 			'viewAction'=>"view",
 			'displayedAction'=>'View',

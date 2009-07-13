@@ -39,6 +39,8 @@ class WpitemTypeMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 200);
 
+		$tMap->addColumn('STYLE', 'Style', 'VARCHAR', false, 50);
+
 		$tMap->addColumn('RANK', 'Rank', 'INTEGER', true, null);
 
 		$tMap->addColumn('STATE', 'State', 'INTEGER', false, null);

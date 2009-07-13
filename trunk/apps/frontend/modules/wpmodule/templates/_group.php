@@ -3,7 +3,9 @@
 
 <hr />
 <a name="<?php echo $item_group->getId() ?>"></a>
-<h3><?php echo $item_group->getWpitemType()->getTitle() ?></h3>
+<?php // for the icon associated to the style I should use the CSS, I know... ?>
+<?php echo image_tag($item_group->getWpitemType()->getStyle()) ?>
+<h3 class="itemgroup_<?php echo $item_group->getWpitemType()->getStyle() ?>"><?php echo $item_group->getWpitemType()->getTitle() ?></h3>
 <p><em><?php echo $item_group->getWpitemType()->getDescription() ?></em></p>
 <div id="sf_admin_container">
 	<ul class="sf_admin_actions">
@@ -95,7 +97,7 @@
 					<?php echo link_to(
 						__('Delete'),
 						'wpmoduleitem/delete?id='.$wpmodule_item->getId(),
-						array('method' => 'delete', 'confirm' => __('Are you sure?')) 
+						array('method' => 'delete', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale())) 
 					)?>
 				</li>
 	<?php endif ?>

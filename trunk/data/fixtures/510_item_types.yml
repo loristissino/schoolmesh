@@ -2,6 +2,7 @@ WpitemType:
   contents:
     title:        Contenuti
     description:  Argomenti disciplinari trattati
+    style: contents
     rank:      1
     state:    0
     is_required: true
@@ -12,6 +13,7 @@ WpitemType:
   knowledge:
     title:        Conoscenze
     description:  Nuclei fondanti della disciplina, saperi essenziali
+    style: knowledge
     rank:      2
     state:    0
     is_required: true
@@ -24,6 +26,7 @@ WpitemType:
     description:  |
          Capacità nell'utilizzare e padroneggiare conoscenze anche 
          per portare a termine compiti e risolvere problemi 
+    style: skills
     rank:     3
     state:    0
     is_required: true
@@ -36,6 +39,7 @@ WpitemType:
     description:  |
          Capacità di usare conoscenze e abilità personali 
          in situazioni di lavoro/studio
+    style: competencies
     rank:     4
     state:    0
     is_required: true
@@ -47,6 +51,7 @@ WpitemType:
     title:        Note e commenti in fase di progettazione
     description:  |
          Osservazioni generali sul modulo (compilazione facoltativa)
+    style: notes
     rank:     5
     state:    0
     is_required: false
@@ -58,6 +63,7 @@ WpitemType:
     title:        Note e commenti in fase di relazione finale
     description:  |
          Osservazioni generali sul modulo (compilazione facoltativa)
+    style: notes
     rank:     6
     state:    2
     is_required: false

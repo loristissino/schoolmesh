@@ -6,8 +6,7 @@
 	__('Submitted')
 	)
 	
-	?><h1><?php echo __('Submitted') ?></h1>
-<div id="sf_admin_container">
+	?><h1><?php echo __('Workplan Submission') ?></h1>
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
 <?php endif; ?>
