@@ -117,6 +117,7 @@ EOF;
 		$appointment->setSchoolclass($myclass);
 		$appointment->setYear($myyear);
 		$appointment->save();
+		$appointment->getChecks();
 
 		
 		$imported++;

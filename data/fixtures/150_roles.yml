@@ -39,3 +39,7 @@ Role:
     description: Studente
     quality_code: STU
     posix_name:   allievi
+  member:
+    description: Member
+    quality_code: MEMBER
+    posix_name:  member

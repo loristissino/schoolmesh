@@ -66,7 +66,7 @@ EOF;
 			continue;  // we skip the first line
 			}
 
-		list($first_name, $middle_name, $last_name, $username, $sex, $role, $guardgroup, $birthdate, $birthplace, $email, $import_code)=$data; 
+		list($first_name, $middle_name, $last_name, $username, $gender, $role, $guardgroup, $birthdate, $birthplace, $email, $import_code, $teams)=$data; 
 
 		$this->log($this->formatter->format(sprintf('Importing %s (%s %s)', $username, $first_name, $last_name), 'COMMENT'));
 		
@@ -87,9 +87,9 @@ EOF;
 				continue;
 			}
 
-		if ($sex!='M' and $sex!='F')
+		if ($gender!='M' and $gender!='F')
 			{
-				$this->log($this->formatter->format(sprintf('   Sex %s is not valid', $sex), 'ERROR'));
+				$this->log($this->formatter->format(sprintf('   Gender %s is not valid', $gender), 'ERROR'));
 				$skipped++;
 				continue;
 			}
@@ -107,7 +107,7 @@ EOF;
 		$userprofile->setBirthdate($birthdate);
 		$userprofile->setBirthplace($birthplace);
 		$userprofile->setEmail($email);
-		$userprofile->setSex($sex);
+		$userprofile->setGender($gender);
 		$userprofile->setRole($myrole);
 		$userprofile->save();
 		
@@ -120,6 +120,25 @@ EOF;
 			$sfGuardUserGroup->setGroupId($basicGroup->getId());
 			$sfGuardUserGroup->setUserId($user->getId());
 			$sfGuardUserGroup->save();
+			}
+		
+		$teamlist=explode(',', $teams);
+		foreach($teamlist as $team)
+			{
+				
+				$team=ltrim(rtrim($team));
+				$foundteam=TeamPeer::retrieveByPosixName($team);
+				if ($foundteam)
+					{
+					$userTeam = new UserTeam();
+					$userTeam->setUserId($user->getId());
+					$userTeam->setTeamId($foundteam->getId());
+					$userTeam->setRole($myrole);
+					$userTeam->save();
+					}
+				
+				
+				
 			}
 		
 		

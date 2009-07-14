@@ -10,17 +10,21 @@
  */
 class AppointmentFormFilter extends BaseAppointmentFormFilter
 {
-  public function configure()
+/*  public function configure()
   {
 
-	$this->setWidgets(array('state'=> new sfWidgetFormChoice(array(
-  'choices' => array('1'=>'DRAFT', 2=>'BLABLA'),
-))
-)
-);
-
+	$this->setWidgets(
+		array(
+			'state'=> new sfWidgetFormChoice(
+				array('choices' => array('1'=>'DRAFT', 2=>'BLABLA'))),
+			'year'=> new sfWidgetFormChoice(
+				array('choices' => array('1'=>'NUOVO', 2=>'VECCHIO'))
+				)
+			)
+	);
+*/
 	
-  }
+//  }
 /*
     public function setup()
   {

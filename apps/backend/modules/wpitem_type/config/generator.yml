@@ -1,20 +1,21 @@
 generator:
   class: sfPropelGenerator
   param:
-    model_class:           Subject
+    model_class:           WpitemType
     theme:                 admin
     non_verbose_templates: true
     with_show:             false
     singular:              ~
     plural:                ~
-    route_prefix:          subject
+    route_prefix:          wpitem_type
     with_propel_route:     1
 
     config:
       actions: ~
       fields:  ~
       list:
-        max_per_page: 50  
+        display: [ title, description, state ]
+        title: Workplan Item Types management
       filter:  ~
       form:    ~
       edit:    ~
