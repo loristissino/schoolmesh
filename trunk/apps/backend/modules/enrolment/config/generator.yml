@@ -13,8 +13,11 @@ generator:
     config:
       actions: ~
       fields:  ~
-      list:    ~
-      filter:  ~
+      list:
+        display: [ first_name, last_name, schoolclass, year ]
+        title: Enrolments\' management
+      filter:
+        display: [ user_id, schoolclass_id, year_id]
       form:    ~
       edit:    ~
       new:     ~

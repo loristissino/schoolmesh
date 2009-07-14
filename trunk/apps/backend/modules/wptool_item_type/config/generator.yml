@@ -1,20 +1,19 @@
 generator:
   class: sfPropelGenerator
   param:
-    model_class:           Subject
+    model_class:           WptoolItemType
     theme:                 admin
     non_verbose_templates: true
     with_show:             false
     singular:              ~
     plural:                ~
-    route_prefix:          subject
+    route_prefix:          wptool_item_type
     with_propel_route:     1
 
     config:
       actions: ~
       fields:  ~
-      list:
-        max_per_page: 50  
+      list:    ~
       filter:  ~
       form:    ~
       edit:    ~

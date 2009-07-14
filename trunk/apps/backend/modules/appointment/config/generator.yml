@@ -15,8 +15,10 @@ generator:
       fields:
         full_name: { label: Full Name}
       list:
-        display: [ user_id, first_name, last_name, schoolclass, subject]
-      filter:  ~
+        display: [ description, state ]
+        title: Appointments\' management
+      filter:
+        display: [ user_id, schoolclass_id, subject_id, year_id, state ]
       form:    ~
       edit:    ~
       new:     ~

@@ -1,6 +1,6 @@
 all:
   .settings:
-    enabled_modules: [ sfGuardGroup, sfGuardUser, sfGuardPermission, sfGuardAuth]
+    enabled_modules: [ sfGuardGroup, sfGuardUser, sfGuardPermission, sfGuardAuth, content, default ]
 
 # Form security secret (CSRF protection)
     csrf_secret:       MyGreatSecret     # Unique secret to enable CSRF protection or false to disable
@@ -104,7 +104,7 @@ prod:
   .settings:
     no_script_name:         off
     logging_enabled:        off
-    enabled_modules: [ sfGuardGroup, sfGuardUser, sfGuardPermission, sfGuardAuth]
+#    enabled_modules: [ sfGuardGroup, sfGuardUser, sfGuardPermission, sfGuardAuth]
 
 dev:
   .settings:
@@ -113,7 +113,7 @@ dev:
     cache:                  off
     no_script_name:         off
     etag:                   off
-    enabled_modules: [ sfGuardGroup, sfGuardUser, sfGuardPermission, sfGuardAuth]
+#    enabled_modules: [ sfGuardGroup, sfGuardUser, sfGuardPermission, sfGuardAuth]
 
 test:
   .settings:

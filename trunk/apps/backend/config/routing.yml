@@ -1,3 +1,30 @@
+wpitem_type:
+  class: sfPropelRouteCollection
+  options:
+    model:               WpitemType
+    module:              wpitem_type
+    prefix_path:         wpitem_type
+    column:              id
+    with_wildcard_routes: true
+
+wptool_item_type:
+  class: sfPropelRouteCollection
+  options:
+    model:               WptoolItemType
+    module:              wptool_item_type
+    prefix_path:         wptool_item_type
+    column:              id
+    with_wildcard_routes: true
+
+wpinfo_type:
+  class: sfPropelRouteCollection
+  options:
+    model:               WpinfoType
+    module:              wpinfo_type
+    prefix_path:         wpinfo_type
+    column:              id
+    with_wildcard_routes: true
+
 workstation:
   class: sfPropelRouteCollection
   options:
@@ -134,7 +161,7 @@ sf_guard_password:
 
 homepage:
   url:   /
-  param: { module: default, action: index }
+  param: { module: content, action: index }
 
 default_symfony:
   url:   /symfony/:action/*

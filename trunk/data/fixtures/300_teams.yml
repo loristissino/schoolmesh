@@ -1,5 +1,3 @@
-
- 
 Team:
   cdc3ap:
     description:  Consiglio di classe 3AP
@@ -13,6 +11,45 @@ Team:
     description:  Progetto Qualità
     posix_name:   quality
     
+  deplit:
+    description: Dipartimento di Lettere
+    posix_name:  diplettere
+
+  depmath:
+    description: Dipartimento di Matematica e Fisica
+    posix_name:  dipmatfis
+
+  depsci:
+    description: Dipartimento di Scienze
+    posix_name:  dipscienze
+
+  deplaw:
+    description: Dipartimento di Diritto, Economia politica e Scienza delle finanze
+    posix_name:  dipdirfin
+
+  deplang:
+    description: Dipartimento di Lingue
+    posix_name:  diplingue
+
+  depcs:
+    description: Dipartimento di Informatica
+    posix_name:  dipinfo
+
+  depbiz:
+    description: Dipartimento di Economia aziendale
+    posix_name:  dipecononaz
+
+  deppe:
+    description: Dipartimento di Scienze motorie
+    posix_name:  dipscmotorie
+
+  depecdl:
+    description: Dipartimento di Trattamento testi e dati
+    posix_name:  dipttd
+
+  deprel:
+    description: Dipartimento di Insegnamento della Religione cattolica
+    posix_name:  dipirc
 
 UserTeam:
   loris_3ap_doc:

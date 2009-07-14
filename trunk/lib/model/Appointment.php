@@ -50,6 +50,12 @@ class Appointment extends BaseAppointment
 			return $this->getSubject() . ' (' . $this->getSchoolclass() . ', ' . $this->getYear() . ')';
 	}
 
+    public function getDescription()
+	{
+			return $this->getFullName() . ' » ' . $this->getSubject() . ' (' . $this->getSchoolclass() . ', ' . $this->getYear() . ')';
+
+	}
+
 
     public function getLastLog()
 	{
@@ -207,7 +213,7 @@ $con->query($sql);
 	}
 	
 	
-	protected function getChecks()
+	public function getChecks($context=null)
 	{
 		$result=Array();
 		$result['checks']=Array();
@@ -226,14 +232,14 @@ $con->query($sql);
 						$wpinfo->save();
 					}
 
-				if ($wpinfotype->getIsRequired())
+				if ($wpinfotype->getIsRequired() and $context)
 						{
 							if ($wpinfo->getContent()=='')
 								{
 								array_push($result['checks'],
 									new Check(
 										false,
-										sfContext::getInstance()->getI18N()->__('Content cannot be empty'),
+										$context->getI18N()->__('Content cannot be empty'),
 										$wpinfotype->getTitle(),
 										'wpinfo/edit?id=' . $wpinfo->getId()));
 								}
@@ -242,7 +248,7 @@ $con->query($sql);
 								array_push($result['checks'],
 									new Check(
 										false,
-										sfContext::getInstance()->getI18N()->__('Content doesn\'t match template'),
+										$context->getI18N()->__('Content doesn\'t match template'),
 										$wpinfotype->getTitle(),
 										'wpinfo/edit?id=' . $wpinfo->getId()));
 								}
@@ -251,7 +257,7 @@ $con->query($sql);
 								array_push($result['checks'],
 									new Check(
 										true,
-										sfContext::getInstance()->getI18N()->__('Filled'),
+										$context->getI18N()->__('Filled'),
 										$wpinfotype->getTitle()));
 								}
 							}
@@ -259,12 +265,12 @@ $con->query($sql);
 	
 		$modules=$this->getWpmodules();
 		
-		if (sizeof($modules)==0)
+		if (sizeof($modules)==0 and $context)
 			{
 				array_push($result['checks'],
 					new Check(
 						false,
-						sfContext::getInstance()->getI18N()->__('There must be at least one module'),
+						$context->getI18N()->__('There must be at least one module'),
 						'',
 						'plansandreports/fill?id=' . $this->getId()));
 					
@@ -279,12 +285,12 @@ $con->query($sql);
 			foreach($modules as $wpmodule)
 				{
 					$moduleIsOk=true;
-					if(in_array($wpmodule->getTitle(), $titles))
+					if(in_array($wpmodule->getTitle(), $titles) and $context)
 						{
 							array_push($result['checks'],
 								new Check(
 									false,
-									sfContext::getInstance()->getI18N()->__('Invalid or duplicate title for module'),
+									$context->getI18N()->__('Invalid or duplicate title for module'),
 									$wpmodule->getTitle(),
 									'wpmodule/view?id=' . $wpmodule->getId()));
 							$moduleIsOk=false;
@@ -296,12 +302,12 @@ $con->query($sql);
 							// If we make the check here instead of on the database level we let the user have an
 							// inconsistent situation until they submit the workplan...
 						}
-					if($wpmodule->getPeriod()=='---'||$wpmodule->getPeriod()=='')
+					if(($wpmodule->getPeriod()=='---'||$wpmodule->getPeriod()=='') and $context)
 						{
 							array_push($result['checks'],
 								new Check(
 									false,
-									sfContext::getInstance()->getI18N()->__('Invalid period specification for module'),
+									$context->getI18N()->__('Invalid period specification for module'),
 									$wpmodule->getTitle(),
 									'wpmodule/view?id=' . $wpmodule->getId()));
 								$moduleIsOk=false;
@@ -326,14 +332,16 @@ $con->query($sql);
 									$group->setWpitemTypeId($it->getId());
 									$group->setWpmoduleId($wpmodule->getId());
 									$group->save();
-									array_push($result['checks'],
-										new Check(
-											false,
-											sprintf(sfContext::getInstance()->getI18N()->__('Missing group %s'), $it->getTitle()),
-											$wpmodule->getTitle(),
-											'wpmodule/view?id=' . $wpmodule->getId()));
-											$moduleIsOk=false;
-
+									if ($context)
+										{
+											array_push($result['checks'],
+												new Check(
+													false,
+													sprintf($context->getI18N()->__('Missing group %s'), $it->getTitle()),
+													$wpmodule->getTitle(),
+													'wpmodule/view?id=' . $wpmodule->getId()));
+													$moduleIsOk=false;
+										}
 								}
 							else
 								{
@@ -346,36 +354,39 @@ $con->query($sql);
 											$wpmoduleItem->setEvaluation(null);
 											$wpmoduleItem->save();
 											
-											array_push($result['checks'],
-												new Check(
-													false,
-													sprintf(sfContext::getInstance()->getI18N()->__('There must be at least an item in group «%s»'), $it->getTitle()),
-													$wpmodule->getTitle(),
-													'wpmodule/view?id=' . $wpmodule->getId()));
-													$moduleIsOk=false;
-
+											
+											if ($context)
+												{
+													array_push($result['checks'],
+														new Check(
+															false,
+															sprintf($context->getI18N()->__('There must be at least an item in group «%s»'), $it->getTitle()),
+															$wpmodule->getTitle(),
+															'wpmodule/view?id=' . $wpmodule->getId()));
+															$moduleIsOk=false;
+												}
 										}
 									else
 										{
 											foreach($items as $item)
-												if($item->getContent()=='---'||$item->getContent()=='')
+												if(($item->getContent()=='---'||$item->getContent()=='') and $context)
 													{
 														array_push($result['checks'],
 															new Check(
 																false,
-																sprintf(sfContext::getInstance()->getI18N()->__('Invalid content for item «%s» in group «%s»'), $item->getContent(), $it->getTitle()),
+																sprintf($context->getI18N()->__('Invalid content for item «%s» in group «%s»'), $item->getContent(), $it->getTitle()),
 																$wpmodule->getTitle(),
 																'wpmodule/view?id=' . $wpmodule->getId()));
 																$moduleIsOk=false;
 
 													};
 												
-												if(($item->getEvaluation()==null)&&$this->getState()==Workflow::IR_DRAFT)
+												if((($item->getEvaluation()==null)&&$this->getState()==Workflow::IR_DRAFT) and $context)
 													{
 														array_push($result['checks'],
 															new Check(
 																false,
-																sprintf(sfContext::getInstance()->getI18N()->__('Missing evaluation for item «%s» in group «%s»'), $item->getContent(), $it->getTitle()),
+																sprintf($context->getI18N()->__('Missing evaluation for item «%s» in group «%s»'), $item->getContent(), $it->getTitle()),
 																$wpmodule->getTitle(),
 																'wpmodule/view?id=' . $wpmodule->getId(). '#' . $group->getId()));
 																$moduleIsOk=false;
@@ -384,12 +395,12 @@ $con->query($sql);
 								}
 						}
 						
-					if ($moduleIsOk)
+					if ($moduleIsOk and $context)
 						{
 							array_push($result['checks'],
 								new Check(
 									true,
-									sfContext::getInstance()->getI18N()->__('Module accepted'),
+									$context->getI18N()->__('Module accepted'),
 									$wpmodule->getTitle()));
 						}
 						
@@ -433,7 +444,7 @@ $con->query($sql);
 	$result['result']='notice';
 	$result['message']='Comunicazione provvisoria - piano di lavoro consegnato';
 
-	$checks=$this->getChecks();
+	$checks=$this->getChecks(sfContext::getInstance());
 
 	$result['checks']=$checks['checks'];
 	
