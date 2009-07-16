@@ -3,7 +3,7 @@
 <?php slot('breadcrumbs',
 	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
 	link_to($workplan, 'plansandreports/fill?id='.$workplan->getId()) . ' » ' .
-	__('Submitted')
+	__('Workplan Submission')
 	)
 	
 	?><h1><?php echo __('Workplan Submission') ?></h1>

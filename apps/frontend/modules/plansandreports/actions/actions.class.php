@@ -34,8 +34,7 @@ class plansandreportsActions extends sfActions
 		
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
 	
-	$result=$this->workplan->teacherSubmit($this->getUser()->getProfile()->getSfGuardUser()->getId());
-	
+	$result=$this->workplan->teacherSubmit(/*$this->getUser()->getProfile()->getSfGuardUser()->getId(), */$this->getContext());
 	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 	
 	$this->checks = $result['checks'];
