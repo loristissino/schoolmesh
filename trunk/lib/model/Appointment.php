@@ -418,8 +418,14 @@ $con->query($sql);
 		
 	}
 
-	public function teacherSubmit($user_id)
+	public function teacherSubmit($context)
 	{
+
+	$user_id=$context->getUser()->getProfile()->getSfGuardUser()->getId();
+	
+	// FIXME
+	/* From the context I can get the user, so I don't really need the user_id as a parameter...
+   But what happens in tests and in tasks? I have to find out, because there are no contexts there... */
 
 	$result=Array();
 
@@ -444,7 +450,7 @@ $con->query($sql);
 	$result['result']='notice';
 	$result['message']='Comunicazione provvisoria - piano di lavoro consegnato';
 
-	$checks=$this->getChecks(sfContext::getInstance());
+	$checks=$this->getChecks($context); //sfContext::getInstance());
 
 	$result['checks']=$checks['checks'];
 	
@@ -453,7 +459,7 @@ $con->query($sql);
 			$this->markSubItems('false');
 			$result['result']='notice';
 			$result['message']=$steps[$this->getState()]['owner']['submitDoneAction'];
-			$this->addEvent($user_id, sfContext::getInstance()->getI18N()->__($steps[$this->getState()]['owner']['submitDoneAction']), $steps[$this->getState()]['owner']['submitNextState']);
+			$this->addEvent($context, $steps[$this->getState()]['owner']['submitDoneAction'], $steps[$this->getState()]['owner']['submitNextState']);
 		}
 	else
 		{
@@ -526,11 +532,15 @@ $con->query($sql);
 	
 	}
 
-public function addEvent($user_id, $comment='', $state=0)
+public function addEvent($userId, $comment='', $state=0)
 {
 		$wpevent = new Wpevent();
-		$wpevent->setUserId($user_id);
+		$wpevent->setUserId($userId);
 		$wpevent->setAppointmentId($this->getId());
+		if (sfContext::hasInstance())
+			{
+				$comment=sfContext::getInstance()->getI18N()->__($comment);
+			}
 		$wpevent->setComment($comment);
 		$wpevent->setState($state);
 		$wpevent->save();

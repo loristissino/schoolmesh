@@ -10,7 +10,7 @@ class schoolmeshImportUsersTask extends sfBaseTask
     // ));
 
     $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name', 'frontend'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       // add your own options here
@@ -28,6 +28,8 @@ Call it with:
 
   [php symfony schoolmesh:import-users|INFO]
 EOF;
+
+  
   }
 
   protected function execute($arguments = array(), $options = array())
@@ -39,7 +41,7 @@ EOF;
     // add your code here
 	
 	$file=$arguments['file'];
-	
+
 	$this->logSection('import-users', 'Importing users from '. $file . '.');
 	
 	if (!is_readable($file))
