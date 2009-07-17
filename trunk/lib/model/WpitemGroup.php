@@ -52,7 +52,7 @@ class WpitemGroup extends BaseWpitemGroup
 		
 		foreach($items as $item)
 			{
-				$item=ltrim(chop($item));
+				$item=ltrim(rtrim($item));
 				if (!(($item=='')||($item==' ')||($item==chr(194).chr(160))))  // don't know why, but these chars are added up...
 					{
 						$wpmoduleItem = new WpmoduleItem();

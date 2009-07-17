@@ -149,6 +149,8 @@ $con->query($sql);
 		
 		$this->addEvent($user_id, $steps[$this->getState()]['actions']['approve']['submitDoneAction'], $steps[$this->getState()]['actions']['approve']['submitNextState']);
 		
+		
+		$this->getChecks(); // needed to create children objects for the new state...
 		$con->commit();
 		
 		$result['result']='notice';
@@ -219,6 +221,7 @@ $con->query($sql);
 		$result['checks']=Array();
 		
 		$wpinfotypes=WpinfoTypePeer::getAllNeededForState($this->getState());
+	
 				
 		foreach($wpinfotypes as $wpinfotype)
 			{
@@ -405,7 +408,35 @@ $con->query($sql);
 						}
 						
 				} // end foreach (modules)
-		}
+		} //end if (modules are present)
+		
+		$wptoolItemTypes=WptoolItemTypePeer::getAllNeededForState($this->getState());
+		
+		foreach ($wptoolItemTypes as $type)
+			{
+				if ($context)
+					{
+				
+						if ($this->countToolsOfType($type->getId())>=$type->getMinSelected())
+							{
+									array_push($result['checks'],
+										new Check(
+											true,
+											$context->getI18N()->__('Tools selected'),
+											$type->getDescription()));
+							}
+						else
+							{
+									array_push($result['checks'],
+										new Check(
+											false,
+											$context->getI18N()->__('Missing selection of tools'),
+											$type->getDescription(),
+											'plansandreports/fill?id=' . $this->getId(). '#wpaux'));
+							}
+						}
+				
+			}
 				
 		$result['failed']=0;
 		foreach($result['checks'] as $c)
@@ -417,6 +448,13 @@ $con->query($sql);
 		return $result;
 		
 	}
+
+
+	public function countToolsOfType($typeId)
+		{
+			
+		return WptoolAppointmentPeer::countToolsOfTypeForAppointment($typeId, $this->getId());
+		}
 
 	public function teacherSubmit($context)
 	{
@@ -459,7 +497,7 @@ $con->query($sql);
 			$this->markSubItems('false');
 			$result['result']='notice';
 			$result['message']=$steps[$this->getState()]['owner']['submitDoneAction'];
-			$this->addEvent($context, $steps[$this->getState()]['owner']['submitDoneAction'], $steps[$this->getState()]['owner']['submitNextState']);
+			$this->addEvent($user_id, $steps[$this->getState()]['owner']['submitDoneAction'], $steps[$this->getState()]['owner']['submitNextState']);
 		}
 	else
 		{
@@ -483,14 +521,16 @@ $con->query($sql);
 			return $result;
 		}
 
-	if ($this->getState()!=Workflow::WP_DRAFT)
+
+	$at=WptoolAppointmentPeer::retrieveByAppointmentIdAndToolId($this->getId(), $tool_id);
+
+	if ($this->getState()!=$at->getWptoolItem()->getWptoolItemType()->getState())
 		{
 			$result['result']='error_aux';
 			$result['message']='This action is not allowed for a workplan/report in this state';
 			return $result;
 		}
 
-	$at=WptoolAppointmentPeer::retrieveByAppointmentIdAndToolId($this->getId(), $tool_id);
 	if ($at)
 		$at->delete();
 
@@ -513,7 +553,9 @@ $con->query($sql);
 			return $result;
 		}
 
-	if ($this->getState()!=Workflow::WP_DRAFT)
+	$tool=WptoolItemPeer::retrieveByPK($tool_id);
+
+	if ($this->getState()!=$tool->getWptoolItemType()->getState())
 		{
 			$result['result']='error_aux';
 			$result['message']='This action is not allowed for a workplan/report in this state';
@@ -541,6 +583,7 @@ public function addEvent($userId, $comment='', $state=0)
 			{
 				$comment=sfContext::getInstance()->getI18N()->__($comment);
 			}
+
 		$wpevent->setComment($comment);
 		$wpevent->setState($state);
 		$wpevent->save();
@@ -583,7 +626,7 @@ public function getWorkflowLogs()
 
 	$c=new Criteria();
 	$c->addAscendingOrderByColumn(WptoolItemTypePeer::RANK);
-	$t =  WptoolItemPeer::doSelectJoinWptoolItemType($c);
+	$t = WptoolItemPeer::doSelectJoinWptoolItemType($c);
 	
 	$chosenTools=$this->getWptoolAppointments();
 
@@ -595,7 +638,16 @@ public function getWorkflowLogs()
 
 	foreach($t as $item)
 		{
+			
+		if ($item->getWptoolItemType()->getState()>$this->getState())
+			{
+				continue;
+			}
+			
 		$group[$item->getWptoolItemTypeId()]['description']=$item->getWptoolItemType()->getDescription();
+		$group[$item->getWptoolItemTypeId()]['min_selected']=$item->getWptoolItemType()->getMinSelected();
+		$group[$item->getWptoolItemTypeId()]['state']=$item->getWptoolItemType()->getState();
+		
 		$isChosen=@in_array($item->getId(), $chosen);
 		if (!$onlyChosen)
 			{
@@ -611,16 +663,7 @@ public function getWorkflowLogs()
 		}
 		
 	return $group;
-/*	
-	foreach($availableTools as $group)
-	{
-			foreach($group as $tool_id=>$tool)
-				{
-						$tool['chosen']=in_array($tool_id, $chosenTools);
-				}
-	}
-	return $availableTools;
-*/
+
 	}
 	
    public function isViewableBy($userId)

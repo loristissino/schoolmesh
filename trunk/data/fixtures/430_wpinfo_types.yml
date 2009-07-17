@@ -45,7 +45,7 @@ WpinfoType:
     state:  0
     is_required: false
   wpcomments:
-    title:        Commenti
+    title:        Commenti (progettazione)
     description:  Commenti ed osservazioni in fase di progettazione
     rank:   8
     state:  0
@@ -63,7 +63,7 @@ WpinfoType:
     state:  30
     is_required: true
   frconsiderations:
-    title:        Considerazioni finali
+    title:        Commenti (relazione finale)
     description:  Commenti ed osservazioni in fase di relazione finale
     rank:   11
     state:  30

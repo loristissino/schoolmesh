@@ -35,9 +35,9 @@ class AppointmentPeer extends BaseAppointmentPeer
 			else
 			{
 				$workplan->removeEverything();
-				$workplan->setState(0);
+				$workplan->setState(70);
 				$workplan->save();
-				$workplan->addEvent($user_id, 'Imported', 0);
+				$workplan->addEvent($user_id, 'Imported', 70);
 				echo "starting the import\n";
 			}
 		}

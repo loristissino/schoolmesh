@@ -137,6 +137,8 @@ propel:
     description:  varchar(50)
     rank:   integer
     state: integer
+    min_selected: integer
+    max_selected: integer
 
   wptool_item:
     id:   ~

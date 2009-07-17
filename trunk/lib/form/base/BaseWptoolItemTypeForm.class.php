@@ -13,17 +13,21 @@ class BaseWptoolItemTypeForm extends BaseFormPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'id'          => new sfWidgetFormInputHidden(),
-      'description' => new sfWidgetFormInput(),
-      'rank'        => new sfWidgetFormInput(),
-      'state'       => new sfWidgetFormInput(),
+      'id'           => new sfWidgetFormInputHidden(),
+      'description'  => new sfWidgetFormInput(),
+      'rank'         => new sfWidgetFormInput(),
+      'state'        => new sfWidgetFormInput(),
+      'min_selected' => new sfWidgetFormInput(),
+      'max_selected' => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
-      'id'          => new sfValidatorPropelChoice(array('model' => 'WptoolItemType', 'column' => 'id', 'required' => false)),
-      'description' => new sfValidatorString(array('max_length' => 50, 'required' => false)),
-      'rank'        => new sfValidatorInteger(array('required' => false)),
-      'state'       => new sfValidatorInteger(array('required' => false)),
+      'id'           => new sfValidatorPropelChoice(array('model' => 'WptoolItemType', 'column' => 'id', 'required' => false)),
+      'description'  => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'rank'         => new sfValidatorInteger(array('required' => false)),
+      'state'        => new sfValidatorInteger(array('required' => false)),
+      'min_selected' => new sfValidatorInteger(array('required' => false)),
+      'max_selected' => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('wptool_item_type[%s]');

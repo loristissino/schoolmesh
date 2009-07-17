@@ -14,7 +14,7 @@ workplan_report:
     'Attività extracurricolari': "Partecipazione al Linux Day."
     Valutazione: "Strumenti: monitoraggio dei lavori durante le esercitazioni di laboratorio; prove pratiche di verifica specifica delle competenze acquisite nei diversi moduli.<br />Criteri: il parametro di riferimento principale per graduare la valutazione alla conclusione di ogni modulo è il raggiungimento delle conoscenze e abilità minime prefissate al livello corrispondente alla valutazione sufficiente secondo la griglia riportata nel Pof. Nella valutazione finale si terranno in considerazione, oltre al livello raggiunto, i progressi fatti, l'impegno, il possesso di un metodo di lavoro efficace e la partecipazione alle attività didattiche."
     'Prove di verifica sommative': ''
-    Recupero: ''
+    'Recupero programmato': ''
     Commenti: ''
     'Considerazioni finali': ''
   modules:

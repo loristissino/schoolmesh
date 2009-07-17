@@ -23,14 +23,15 @@
       <td><?php echo  html_entity_decode($wpinfo->getContent()) ?></td>
       <td>
 		<ul class="sf_admin_td_actions">
+			<?php if ($wpinfo->getWpinfoType()->getState()==$state): ?>
 			<li class="sf_admin_action_<?php echo $wpinfo->getWpinfoType()->getIsRequired()? 'fill':'optional'; ?>">
-			<?php /* here I should show edit or show depending on the state */ ?>
 				<?php echo link_to(
 				__('Fill'),
 				'wpinfo/edit?id='.$wpinfo->getId(),
 				array('method' => 'get') 
 				)?>
 			</li>
+			<?php endif ?>
 		</ul>
 	  </td>
     </tr>

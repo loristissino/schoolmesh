@@ -94,7 +94,7 @@
 </div>
 <hr />
 
-<a name="aux"></a>
+<a name="wpaux"></a>
 <h2><?php echo __("Aux") ?></h2>
 <!--<div id="sf_admin_container">-->
 	<ul class="sf_admin_actions">

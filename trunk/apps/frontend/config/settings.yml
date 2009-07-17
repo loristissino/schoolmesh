@@ -41,7 +41,7 @@ all:
     rich_text_js_dir:       js/tiny_mce
 
     i18n:                   on
-    default_culture:        it
+    default_culture:        en
     standard_helpers:       [Partial, Cache, Form, I18N, Debug, Date, Number]
 #    prototype_web_dir:      /sf/web/prototype
 

@@ -22,6 +22,12 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 	protected $state;
 
 	
+	protected $min_selected;
+
+	
+	protected $max_selected;
+
+	
 	protected $collWptoolItems;
 
 	
@@ -67,6 +73,18 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 	public function getState()
 	{
 		return $this->state;
+	}
+
+	
+	public function getMinSelected()
+	{
+		return $this->min_selected;
+	}
+
+	
+	public function getMaxSelected()
+	{
+		return $this->max_selected;
 	}
 
 	
@@ -126,6 +144,34 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setMinSelected($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->min_selected !== $v) {
+			$this->min_selected = $v;
+			$this->modifiedColumns[] = WptoolItemTypePeer::MIN_SELECTED;
+		}
+
+		return $this;
+	} 
+	
+	public function setMaxSelected($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->max_selected !== $v) {
+			$this->max_selected = $v;
+			$this->modifiedColumns[] = WptoolItemTypePeer::MAX_SELECTED;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array())) {
@@ -143,6 +189,8 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 			$this->description = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->rank = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->state = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->min_selected = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+			$this->max_selected = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -151,7 +199,7 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 4; 
+						return $startcol + 6; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WptoolItemType object", $e);
 		}
@@ -347,6 +395,12 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 			case 3:
 				return $this->getState();
 				break;
+			case 4:
+				return $this->getMinSelected();
+				break;
+			case 5:
+				return $this->getMaxSelected();
+				break;
 			default:
 				return null;
 				break;
@@ -361,6 +415,8 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 			$keys[1] => $this->getDescription(),
 			$keys[2] => $this->getRank(),
 			$keys[3] => $this->getState(),
+			$keys[4] => $this->getMinSelected(),
+			$keys[5] => $this->getMaxSelected(),
 		);
 		return $result;
 	}
@@ -388,6 +444,12 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 			case 3:
 				$this->setState($value);
 				break;
+			case 4:
+				$this->setMinSelected($value);
+				break;
+			case 5:
+				$this->setMaxSelected($value);
+				break;
 		} 	}
 
 	
@@ -399,6 +461,8 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setDescription($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setRank($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setState($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setMinSelected($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setMaxSelected($arr[$keys[5]]);
 	}
 
 	
@@ -410,6 +474,8 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WptoolItemTypePeer::DESCRIPTION)) $criteria->add(WptoolItemTypePeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(WptoolItemTypePeer::RANK)) $criteria->add(WptoolItemTypePeer::RANK, $this->rank);
 		if ($this->isColumnModified(WptoolItemTypePeer::STATE)) $criteria->add(WptoolItemTypePeer::STATE, $this->state);
+		if ($this->isColumnModified(WptoolItemTypePeer::MIN_SELECTED)) $criteria->add(WptoolItemTypePeer::MIN_SELECTED, $this->min_selected);
+		if ($this->isColumnModified(WptoolItemTypePeer::MAX_SELECTED)) $criteria->add(WptoolItemTypePeer::MAX_SELECTED, $this->max_selected);
 
 		return $criteria;
 	}
@@ -445,6 +511,10 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 		$copyObj->setRank($this->rank);
 
 		$copyObj->setState($this->state);
+
+		$copyObj->setMinSelected($this->min_selected);
+
+		$copyObj->setMaxSelected($this->max_selected);
 
 
 		if ($deepCopy) {

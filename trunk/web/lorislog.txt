@@ -962,3 +962,21 @@ carattere: 99---
 carattere: 194---
 carattere: 160---
 
+sto facendo i check
+<br />
+<b>Notice</b>:  Undefined variable: p in <b>/var/schoolmesh/lib/model/Appointment.php</b> on line <b>226</b><br />
+sto facendo i check
+<br />
+<b>Notice</b>:  Undefined variable: p in <b>/var/schoolmesh/lib/model/Appointment.php</b> on line <b>226</b><br />
+sto facendo i check
+<br />
+<b>Notice</b>:  Undefined variable: p in <b>/var/schoolmesh/lib/model/Appointment.php</b> on line <b>226</b><br />
+sto facendo i check
+<br />
+<b>Notice</b>:  Undefined variable: p in <b>/var/schoolmesh/lib/model/Appointment.php</b> on line <b>226</b><br />
+sto facendo i check
+<br />
+<b>Notice</b>:  Undefined variable: p in <b>/var/schoolmesh/lib/model/Appointment.php</b> on line <b>226</b><br />
+sto facendo i check
+<br />
+<b>Notice</b>:  Undefined variable: p in <b>/var/schoolmesh/lib/model/Appointment.php</b> on line <b>226</b><br />

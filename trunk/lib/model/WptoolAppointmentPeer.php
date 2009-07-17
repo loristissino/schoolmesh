@@ -20,4 +20,19 @@ class WptoolAppointmentPeer extends BaseWptoolAppointmentPeer
 	}
 
 	
+	public static function countToolsOfTypeForAppointment($typeId, $appointmentId)
+	
+	{
+		
+	$c = new Criteria();
+	
+	$c->add(WptoolAppointmentPeer::APPOINTMENT_ID, $appointmentId);
+	$c->addJoin(WptoolAppointmentPeer::WPTOOL_ITEM_ID, WptoolItemPeer::ID);
+	$c->add(WptoolItemPeer::WPTOOL_ITEM_TYPE_ID, $typeId);
+	
+	return self::doCount($c);
+	
+	}
+	
+	
 }

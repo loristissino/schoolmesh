@@ -3,94 +3,54 @@
 <?php if ($sf_user->hasFlash('error_aux')): ?>
   <div class="error"><?php echo $sf_user->getFlash('error_aux')?></div>
 <?php endif; ?>
-<?php foreach($tools as $group): ?>
-<h4><?php echo $group['description'] ?></h4>
-
-<?php /*
 <table>
 <tr>
+<?php foreach($tools as $group): ?>
 <td>
-<p>I use:</p>
-	<ul>
+<?php if ($group['state']==$workplan->getState()): ?>
+	<p>
+	<?php if($group['min_selected']==0):?>
+		<?php echo image_tag('optional') ?>
+	<?php else: ?>
+		<?php echo image_tag('fill') ?>
+	<?php endif ?>
+	
+	<em><?php echo format_number_choice(
+		'[0]Optional choice|[1]Select at least one item|(1,+Inf]Select at least %1% items', array('%1%' => $group['min_selected']), $group['min_selected']) ?></em></p>
+<?php endif ?>
+<h4><?php echo $group['description'] ?></h4>
 		<?php foreach($group['elements'] as $tool_id=>$tool): ?>
+				&nbsp;
 				<?php if ($tool['chosen']): ?>
-					<li class="sf_admin_action_delete">
-					<?php echo link_to_remote(
-							$tool['description'], array(
-								'update'=>'aux_update',
-								'url' => 'plansandreports/removetool?id='. $workplan->getId() . '&tool='.$tool_id
-								)
-							) ?>
-					</li>
-				<?php endif ?>
-		<?php endforeach ?>
-	</ul>
-</td>
-<td>
-<p>I don't use:</p>
-<ul>
-		<?php foreach($group['elements'] as $tool_id=>$tool): ?>
-				<?php if (!$tool['chosen']): ?>
-					<li class="sf_admin_action_new">
-					<?php echo link_to_remote(
-						$tool['description'], array(
-							'update'=>'aux_update',
-							'url' => 'plansandreports/addtool?id='. $workplan->getId() . '&tool='.$tool_id
-							)
-						) ?>
-					</li>
-				<?php endif ?>
-		<?php endforeach ?>
-	</ul>
-</td>
-</tr>
-</table>
-*/ ?>
-		<?php foreach($group['elements'] as $tool_id=>$tool): ?>
-				&nbsp;&nbsp;&nbsp;&nbsp;
-				<?php if ($tool['chosen']): ?>
-					&nbsp;&nbsp;&nbsp;&nbsp;<strong>
-					<?php echo link_to_remote(
-						sprintf(__('Yes: %s'), $tool['description']), array(
+					&nbsp;&nbsp;<strong>
+					<?php if ($group['state']==$workplan->getState()): ?>
+						<?php echo link_to_remote(
+						sprintf(__('▣ %s'), $tool['description']), array(
 							'update'=>'aux_update',
 							'url' => 'plansandreports/removetool?id='. $workplan->getId() . '&tool='.$tool_id
 							)
 						) ?>
+					<?php else: ?>
+						<?php echo sprintf(__('▣ %s'), $tool['description']) ?>
+					<?php endif ?>
 					</strong>
 				<?php else: ?>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo link_to_remote(
-						sprintf(__('No: %s'), $tool['description']), array(
-							'update'=>'aux_update',
-							'url' => 'plansandreports/addtool?id='. $workplan->getId() . '&tool='.$tool_id
-							)
-						) ?>
+					&nbsp;&nbsp;
+					<?php if ($group['state']==$workplan->getState()): ?>
+						<?php echo link_to_remote(
+							sprintf(__('▢ %s'), $tool['description']), array(
+								'update'=>'aux_update',
+								'url' => 'plansandreports/addtool?id='. $workplan->getId() . '&tool='.$tool_id
+								)
+							) ?>
+						<?php else: ?>
+							<?php echo sprintf(__('▢ %s'), $tool['description']) ?>
+						<?php endif ?>
 				<?php endif ?>
 				<br />
 		<?php endforeach ?>
-<?php /*
-		<?php foreach($group['elements'] as $tool_id=>$tool): ?>
-				<?php if ($tool['chosen']): ?>
-					&nbsp;&nbsp;&nbsp;&nbsp;<strong>
-					<?php echo link_to_remote(
-						sprintf(__('Yes: %s'), $tool['description']), array(
-							'update'=>'aux_update',
-							'url' => 'plansandreports/removetool?id='. $workplan->getId() . '&tool='.$tool_id
-							)
-						) ?>
-					</strong><br />
-				<?php endif ?>
-		<?php endforeach ?>
-		<?php foreach($group['elements'] as $tool_id=>$tool): ?>
-				<?php if (!$tool['chosen']): ?>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<?php echo link_to_remote(
-						sprintf(__('No: %s'), $tool['description']), array(
-							'update'=>'aux_update',
-							'url' => 'plansandreports/addtool?id='. $workplan->getId() . '&tool='.$tool_id
-							)
-						) ?><br />
-				<?php endif ?>
-		<?php endforeach ?>
-*/ ?>
+</td>
 <?php endforeach ?>
+</tr>
+</table>
 </div>
