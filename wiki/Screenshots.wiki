@@ -1,17 +1,13 @@
-#summary One-sentence summary of this page.
+= Some screenshots of the application.
 
-= Introduction =
-
-Some screenshots of the application.
-
-Workplans management:
+== Workplans management ==
 
 http://schoolmesh.googlecode.com/files/workplans.png
 
-One workplan:
+== One workplan ==
 
 http://schoolmesh.googlecode.com/files/workplan.png
 
-Some choices of tools and about modules:
+== Some choices of tools and about modules ==
 
 http://schoolmesh.googlecode.com/files/tools.png
