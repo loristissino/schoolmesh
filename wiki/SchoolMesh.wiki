@@ -26,9 +26,10 @@ There will also be some place for activities like Teachers' workplans and final 
 
 = Current status =
 
-Planning / Prototyping. Some source code is here, but it is far from being full working.
+Alpha testing. 
+
+The work is nearly finished for what concerns teachers' workplans and final reports. There are some [Screenshots].
 
 = Installation =
 
 See [Instructions].
-
