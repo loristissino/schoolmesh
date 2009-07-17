@@ -10,5 +10,12 @@ class WptoolItemTypePeer extends BaseWptoolItemTypePeer
 		return parent::doSelectOne($c);
 	}
 
+	static public function getAllNeededForState($state)
+	{
+		$c=new Criteria();
+		$c->add(WptoolItemTypePeer::STATE, $state);
+		$c->addAscendingOrderByColumn(WptoolItemTypePeer::RANK);
+		return parent::doSelect($c);
+	}
 	
 }

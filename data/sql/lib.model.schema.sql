@@ -343,6 +343,8 @@ CREATE TABLE `wptool_item_type`
 	`description` VARCHAR(50),
 	`rank` INTEGER,
 	`state` INTEGER,
+	`min_selected` INTEGER,
+	`max_selected` INTEGER,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 

@@ -52,27 +52,25 @@ class Wpinfo extends BaseWpinfo
 		}
 
 
-		$v=chop(html_entity_decode(strip_tags(str_replace('</p>', '<br />',$v), '<br><em>')));
-		
-//		$template=$this->getWpinfoType()->getTemplate();
-/*		
-		if ($template!='')
-			{
-				
-			$template=str_replace('<', '\<', $template);
-			$template=str_replace('>', '\>', $template);
-			$template=str_replace('.', '\.', $template);
-			
-			$template='|'.$template.'|';
+		$v=str_replace('</p>', '<br />',$v);
+		$v=str_replace('<br/>', '<br />',$v);
+		$v=str_replace('<br>', '<br />',$v);
 
-			if (!preg_match($template, $v))
-				{
-					$result['result']='error_info';
-					$result['message']='Content did not match the template.';
-					return $result;
-				}
+		$v=html_entity_decode(strip_tags($v, '<br><em>'));
+				
+		$lines=explode('<br />', $v);
+				
+		$newcontent='';
+		foreach($lines as $line)
+			{
+				$line=ltrim(rtrim($line));
+				if (!(($line=='')||($line==' ')||($line==chr(194).chr(160))))  // don't know why, but these chars are added up...
+					{
+						$newcontent .= $line .'<br />';
+					}
 			}
-*/	
+			
+		$v=$newcontent;
 
 		if (!$this->checkContentAgainstTemplate($v))
 			{
@@ -96,6 +94,7 @@ class Wpinfo extends BaseWpinfo
 		$c->add(WpinfoPeer::WPINFO_TYPE_ID, $this->getWpinfoTypeId());
 		$c->add(WpinfoPeer::ID, $this->getId(), Criteria::NOT_EQUAL);
 		$c->add(WpinfoPeer::CONTENT, '', Criteria::NOT_EQUAL);
+		$c->add(WpinfoPeer::CONTENT, $this->getContent(), Criteria::NOT_EQUAL);
 		$c->addJoin(WpinfoPeer::APPOINTMENT_ID, AppointmentPeer::ID); 
 		$c->add(AppointmentPeer::USER_ID, $this->getAppointment()->getUserId());
 		$c->addAscendingOrderByColumn(WpinfoPeer::CONTENT);

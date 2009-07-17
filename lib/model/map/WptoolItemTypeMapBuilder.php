@@ -41,5 +41,9 @@ class WptoolItemTypeMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('STATE', 'State', 'INTEGER', false, null);
 
+		$tMap->addColumn('MIN_SELECTED', 'MinSelected', 'INTEGER', false, null);
+
+		$tMap->addColumn('MAX_SELECTED', 'MaxSelected', 'INTEGER', false, null);
+
 	} 
 } 

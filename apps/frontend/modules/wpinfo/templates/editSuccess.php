@@ -117,12 +117,34 @@ editor_selector : \"mceAdvanced\"
 ) ?>
 </li>
 </ul>
-<div id="example" style="display:none">
+<div id="example" style="display:visible">
 <?php if($example): ?>
 <p><strong><?php echo __('You can base your text on the following example:'); ?></strong></p>
+<table cellspacing="0">
+  <thead>
+    <tr>
+      <th class="sf_admin_text"><?php echo __('Content') ?></th>
+      <th class="sf_admin_text"><?php echo __('Actions') ?></th>
+    </tr>
+  </thead>
+			<tr class="sf_admin_row odd">
+				<td><?php echo html_entity_decode($example); ?></td>
+				<td>
+						<ul class="sf_admin_td_actions">
+						<li class="sf_admin_action_replace">
+							<?php echo link_to(
+							__('Use it'),
+							'wpinfo/takeexample?id='.$wpinfo->getId(),
+							array('method' => 'put') 
+							)?>
+						</li>
+					</ul>
+				</td>
+			</tr>
+</table>
 
-<blockquote><?php echo html_entity_decode($example); ?></blockquote>
 <?php else: ?>
+
 <p><?php echo __('No example avaliable for this item.') ?></p>
 <?php endif; ?>
 </div>

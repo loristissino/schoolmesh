@@ -13,7 +13,7 @@ abstract class BaseWptoolItemTypePeer {
 	const CLASS_DEFAULT = 'lib.model.WptoolItemType';
 
 	
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 6;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -31,6 +31,12 @@ abstract class BaseWptoolItemTypePeer {
 	const STATE = 'wptool_item_type.STATE';
 
 	
+	const MIN_SELECTED = 'wptool_item_type.MIN_SELECTED';
+
+	
+	const MAX_SELECTED = 'wptool_item_type.MAX_SELECTED';
+
+	
 	public static $instances = array();
 
 	
@@ -38,20 +44,20 @@ abstract class BaseWptoolItemTypePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'Rank', 'State', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'rank', 'state', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::RANK, self::STATE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'rank', 'state', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'Rank', 'State', 'MinSelected', 'MaxSelected', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'rank', 'state', 'minSelected', 'maxSelected', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::RANK, self::STATE, self::MIN_SELECTED, self::MAX_SELECTED, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'rank', 'state', 'min_selected', 'max_selected', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'Rank' => 2, 'State' => 3, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'state' => 3, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::RANK => 2, self::STATE => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'state' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'Rank' => 2, 'State' => 3, 'MinSelected' => 4, 'MaxSelected' => 5, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'state' => 3, 'minSelected' => 4, 'maxSelected' => 5, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::RANK => 2, self::STATE => 3, self::MIN_SELECTED => 4, self::MAX_SELECTED => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'state' => 3, 'min_selected' => 4, 'max_selected' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	
@@ -100,6 +106,10 @@ abstract class BaseWptoolItemTypePeer {
 		$criteria->addSelectColumn(WptoolItemTypePeer::RANK);
 
 		$criteria->addSelectColumn(WptoolItemTypePeer::STATE);
+
+		$criteria->addSelectColumn(WptoolItemTypePeer::MIN_SELECTED);
+
+		$criteria->addSelectColumn(WptoolItemTypePeer::MAX_SELECTED);
 
 	}
 

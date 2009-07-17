@@ -88,6 +88,18 @@ class wpinfoActions extends sfActions
 	
 	}
 	
+  public function executeTakeexample(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
+    $this->forward404Unless($wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
+	$wpinfo->setContent($wpinfo->getWpinfoType()->getExample());
+	$wpinfo->save();
+	$this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content saved.'));
+	$this->forward('wpinfo', 'edit');
+	
+	}
+	
+	
   public function executeAppend(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));

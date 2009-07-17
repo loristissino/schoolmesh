@@ -3,10 +3,10 @@
 <?php slot('breadcrumbs',
 	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
 	link_to($workplan, 'plansandreports/fill?id='.$workplan->getId()) . ' » ' .
-	__('Workplan Submission')
+	__('Workplan/report submission')
 	)
 	
-	?><h1><?php echo __('Workplan Submission') ?></h1>
+	?><h1><?php echo __('Workplan/report submission') ?></h1>
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
 <?php endif; ?>
