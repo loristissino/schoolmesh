@@ -42,6 +42,7 @@ class Workflow
 				'submitDoneAction'=>'Workplan administratively checked.',
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
+				'logMessageCode'=>'WP_APPROVED',
 				'submitNextState'=>self::WP_WSMC,
 				),
 			'reject' => Array(
@@ -50,6 +51,7 @@ class Workflow
 				'submitDoneAction'=>'Workplan administratively rejected.',
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
+				'logMessageCode'=>'WP_REJECTED',
 				'submitNextState'=>self::WP_DRAFT,
 				),
 			)
@@ -72,6 +74,7 @@ class Workflow
 				'submitDoneAction'=>'Workplan approved.',
 				'submitExtraAction'=>'markSubItems',
 				'submitExtraParameters'=>'false',
+				'logMessageCode'=>'WP_APPROVED',
 				'submitNextState'=>self::IR_DRAFT,
 				),
 			'reject' => Array(
@@ -80,6 +83,7 @@ class Workflow
 				'submitDoneAction'=>'Workplan rejected.',
 				'submitExtraAction'=>'markSubItems',
 				'submitExtraParameters'=>'true',
+				'logMessageCode'=>'WP_REJECTED',
 				'submitNextState'=>self::WP_DRAFT,
 				),
 		),

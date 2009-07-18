@@ -115,7 +115,7 @@ $con->query($sql);
 		
 	}
 
-	public function Approve($user_id, $permissions)
+	public function Approve($user_id, $permissions, $culture='it')
 	{
 		
 	$result=Array();
@@ -146,10 +146,12 @@ $con->query($sql);
 		
 		$message=$steps[$this->getState()]['actions']['approve']['submitDoneAction'];
 		// we need to save the message before adding a line in the log...
-		
-		$this->addEvent($user_id, $steps[$this->getState()]['actions']['approve']['submitDoneAction'], $steps[$this->getState()]['actions']['approve']['submitNextState']);
-		
-		
+
+	    $logmessage=SystemMessagePeer::retrieveByKey($steps[$this->getState()]['actions']['approve']['logMessageCode']);
+		$text = $logmessage->getContent($culture);
+
+		$this->addEvent($user_id, $text, $steps[$this->getState()]['actions']['approve']['submitNextState']);
+				
 		$this->getChecks(); // needed to create children objects for the new state...
 		$con->commit();
 		

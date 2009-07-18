@@ -9,43 +9,38 @@ sfGuardUser:
     password:       lorisp
     is_superadmin:  false
 
-  testteacher:
-    username:      test.teacher
+  john.testteacher:
+    username:      john.testteacher
     password:      testp
     is_superadmin: false
 
-  ika:
-    username:     ika.puszczykowska
-    password:     ikap
-    is_superadmin: false
-
   juri:
-    username:       juri.daldan
+    username:       juri.d
     password:       jurip
     is_superadmin:  false
     
   flavia:
-    username:       flavia.garlato
+    username:       flavia.g
     password:       flaviap
     is_superadmin:  false
     
   francesco:
-    username:       francesco.gri
+    username:       francesco.g
     password:       francescop
     is_superadmin:  false
 
   bianca:
-    username:       bianca.bagala
+    username:       bianca.b
     password:       biancax
     is_superadmin:  false
 
   antonio:
-    username:       antonio.dulio
+    username:       antonio.d
     password:       antoniox
     is_superadmin:  false
 
   gabriella:
-    username:       gabriella.valvasori
+    username:       gabriella.v
     password:       gx
     is_superadmin:  false
     
@@ -168,16 +163,13 @@ sfGuardUserGroup:
     user_id:         gabriella
   tt_smt:
     group_id:      schoolmasterteam
-    user_id:        testteacher
+    user_id:        john.testteacher
   tt_ot:
     group_id:      officeteam
-    user_id:         testteacher
+    user_id:         john.testteacher
   tt_teacher:
     group_id:       teacher
-    user_id:        testteacher
-  ika_teacher:
-    group_id:       teacher
-    user_id:       ika
+    user_id:        john.testteacher
 
   
   

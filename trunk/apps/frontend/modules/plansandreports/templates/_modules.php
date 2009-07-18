@@ -1,9 +1,9 @@
 <?php if ($workplan->countWpmodules()): ?>
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
+<?php if ($sf_user->hasFlash('notice_modules')): ?>
+  <div class="notice"><?php echo $sf_user->getFlash('notice_modules')?></div>
 <?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
+<?php if ($sf_user->hasFlash('error_modules')): ?>
+  <div class="error"><?php echo $sf_user->getFlash('error_modules')?></div>
 <?php endif; ?>
 
 <?php $i=0 ?>

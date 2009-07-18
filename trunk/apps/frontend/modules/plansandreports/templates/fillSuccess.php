@@ -71,7 +71,7 @@
 </li>
 </ul>
 <!--</div>-->
-<div id="modules" style="display:<?php echo ($sf_user->hasFlash('notice')||$sf_user->hasFlash('error'))? 'visible': 'none' ?>">
+<div id="modules" style="display:<?php echo ($sf_user->hasFlash('notice_modules')||$sf_user->hasFlash('error_modules'))? 'visible': 'none' ?>">
 <?php include_partial('modules', array('workplan' => $workplan, 'user' => $sf_user)) ?>
 
 	<ul class="sf_admin_actions">
@@ -106,7 +106,7 @@
 </li>
 </ul>
 <!--</div>-->
-<div id="aux" style="display:<?php echo $sf_user->hasFlash('notice_aux')? 'visible': 'none' ?>">
+<div id="aux" style="display:<?php echo $sf_user->hasFlash('notice_aux')||$sf_user->hasFlash('error_aux')? 'visible': 'none' ?>">
 <?php include_partial('aux', array('workplan' => $workplan, 'tools' => $tools)) ?>
 </div>
 
