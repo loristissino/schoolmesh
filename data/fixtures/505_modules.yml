@@ -46,7 +46,7 @@ Wpmodule:
 
   module3_1_test:
     id:
-    user_id:    testteacher
+    user_id:    john.testteacher
     title:       Sistema solare
     period:      settembre - dicembre
     rank:     1
@@ -55,7 +55,7 @@ Wpmodule:
 
   module3_2_test:
     id:
-    user_id:    testteacher
+    user_id:    john.testteacher
     title:       Corpi celesti
     period:      gennaio - marzo
     rank:     2
@@ -64,7 +64,7 @@ Wpmodule:
 
   module3_3_test:
     id:
-    user_id:    testteacher
+    user_id:    john.testteacher
     title:       Stelle e galassie
     period:      marzo - giugno
     rank:     3
@@ -73,7 +73,7 @@ Wpmodule:
 
   module4_1_test:
     id:
-    user_id:    testteacher
+    user_id:    john.testteacher
     title:       Astronomia osservativa
     period:      settembre - dicembre
     rank:     1
@@ -82,7 +82,7 @@ Wpmodule:
 
   module4_2_test:
     id:
-    user_id:    testteacher
+    user_id:    john.testteacher
     title:       Astrofisica
     period:      gennaio - marzo
     rank:     2
@@ -91,7 +91,7 @@ Wpmodule:
 
   module4_3_test:
     id:
-    user_id:    testteacher
+    user_id:    john.testteacher
     title:       Cosmologia
     period:      marzo - giugno
     rank:     3
@@ -100,7 +100,7 @@ Wpmodule:
 
   module5_1_test:
     id:
-    user_id:    testteacher
+    user_id:    john.testteacher
     title:      Planetologia
     period:      settembre - dicembre
     rank:     1
@@ -109,7 +109,7 @@ Wpmodule:
 
   module5_2_test:
     id:
-    user_id:    testteacher
+    user_id:    john.testteacher
     title:       Astrochimica, esogeologia e esobiologia
     period:      gennaio - marzo
     rank:     2
@@ -118,7 +118,7 @@ Wpmodule:
 
   module5_3_test:
     id:
-    user_id:    testteacher
+    user_id:    john.testteacher
     title:       Astronautica, astrometria e radioastronomia
     period:      marzo - giugno
     rank:     3
@@ -127,7 +127,7 @@ Wpmodule:
 
   module3_1_test_fis:
     id:
-    user_id:    testteacher
+    user_id:    john.testteacher
     title:       Primo modulo
     period:      settembre - dicembre
     rank:     1
@@ -136,7 +136,7 @@ Wpmodule:
 
   module3_2_test_fis:
     id:
-    user_id:    testteacher
+    user_id:    john.testteacher
     title:       Secondo modulo
     period:      gennaio - marzo
     rank:     2
@@ -145,7 +145,7 @@ Wpmodule:
 
   module3_3_test_fis:
     id:
-    user_id:    testteacher
+    user_id:    john.testteacher
     title:       Terzo modulo
     period:      marzo - giugno
     rank:     3

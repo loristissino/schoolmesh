@@ -232,4 +232,11 @@ propel:
     service_id: { type: integer, primaryKey: true, required: true, foreignTable: service, foreignReference: id, onDelete: cascade, onUpdate: cascade }
     
 
-# a comment
+  system_message:
+    id:
+    key: varchar(30)
+    _uniques:
+      key: [key]
+
+  system_message_i18n:
+    content: varchar(255)  

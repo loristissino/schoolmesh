@@ -36,7 +36,6 @@ EOF;
 
     // add your code here
 	
-	
 	$this->logSection('approve-workplans', 'Approving all workplans for testing purposes...');
 
 	if ($options['approver']==null)

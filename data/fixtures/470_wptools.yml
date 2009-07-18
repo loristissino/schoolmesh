@@ -19,13 +19,13 @@ WptoolItemType:
     max_selected: 2
   exams_fr:
     description:  Tipologia delle verifiche effettivamente svolte
-    rank:  2
+    rank:  4
     state: 30
     min_selected: 1
     max_selected: 2
   tools_fr:
     description:  Strumenti usati
-    rank: 3
+    rank: 5
     state: 30
     min_selected: 1
     max_selected: 2

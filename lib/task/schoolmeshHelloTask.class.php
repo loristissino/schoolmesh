@@ -37,6 +37,15 @@ EOF;
     
     $this->log('Hello, world!');
 
+/*	$message=SystemMessagePeer::retrieveByKey('WP_APPROVED');
+
+    $this->log($message->getContent('it'));
+    $this->log($message->getContent('en'));
+    $this->log($message->getContent());
+	
+	return;
+
+*/
     $users = sfGuardUserProfilePeer::doSelect(new Criteria());
     foreach($users as $user)
     {

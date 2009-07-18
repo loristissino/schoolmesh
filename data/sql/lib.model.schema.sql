@@ -634,5 +634,39 @@ CREATE TABLE `subnet_service`
 		ON DELETE CASCADE
 )Type=InnoDB;
 
+#-----------------------------------------------------------------------------
+#-- system_message
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `system_message`;
+
+
+CREATE TABLE `system_message`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`key` VARCHAR(30),
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `key` (`key`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- system_message_i18n
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `system_message_i18n`;
+
+
+CREATE TABLE `system_message_i18n`
+(
+	`content` VARCHAR(255),
+	`id` INTEGER  NOT NULL,
+	`culture` VARCHAR(7)  NOT NULL,
+	PRIMARY KEY (`id`,`culture`),
+	CONSTRAINT `system_message_i18n_FK_1`
+		FOREIGN KEY (`id`)
+		REFERENCES `system_message` (`id`)
+		ON DELETE CASCADE
+)Type=InnoDB;
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;
