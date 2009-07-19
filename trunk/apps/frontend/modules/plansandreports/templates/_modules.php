@@ -15,6 +15,7 @@
       <th class="sf_admin_text" colspan="3"><?php echo __('Rank') ?></th>
       <th class="sf_admin_text"><?php echo __('Period') ?></th>
       <th class="sf_admin_text"><?php echo __('Title') ?></th>
+      <th class="sf_admin_text"><?php echo __('Published?') ?></th>
 	  <?php if ($workplan->getState()>Workflow::WP_DRAFT): ?>
 		<th class="sf_admin_text"><?php echo __('Evaluations') ?></th>
 	  <?php endif ?>  
@@ -38,6 +39,17 @@
 	
       <td><?php echo $wpmodule->getPeriod() ?></td>
       <td><?php echo $wpmodule ?></td>
+      <td>
+	  <?php if ($wpmodule->getIsPublic()): ?>
+		<?php echo image_tag('published', 'title=' . __('published')) ?>
+	  <?php else: ?>
+		<?php if ($wpmodule->getOwner()->getIsMale()): ?>
+			<?php echo image_tag('male', 'title=' . __('private')) ?>
+		<?php else: ?>
+			<?php echo image_tag('female', 'title=' . __('private')) ?>
+		<?php endif ?>
+	  <?php endif ?>
+	</td>
 	  <?php if ($workplan->getState()>Workflow::WP_DRAFT): ?>
 		<td><?php $missing=$wpmodule->getUnevaluated() ?>
 		<?php if ($missing>0): ?>
@@ -56,15 +68,39 @@
 				<?php echo link_to(
 				__('Fill'),
 				'wpmodule/show?id='.$wpmodule->getId(),
-				array('method' => 'get') 
+				array('method' => 'get',  'title'=>__('Fill this module specifying contents, objectives, skills, competencies, etc.')) 
 				)?>
 			</li>
-			<?php if($workplan->getState()==Workflow::WP_DRAFT): ?>
+			<?php if($wpmodule->getIsDeletable()): ?>
 			<li class="sf_admin_action_delete">
 				<?php echo link_to(
 				__('Delete'),
 				'wpmodule/delete?id='.$wpmodule->getId(),
-				array('method' => 'delete', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $user->getProfile()->getIsMale())) 
+				array('method' => 'delete', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $user->getProfile()->getIsMale()), 'title'=>__('Delete this module'))
+				)?>
+			</li>
+			<?php if($wpmodule->getIsPublic()): ?>
+			<li class="sf_admin_action_unpublish">
+				<?php echo link_to(
+				__('Keep private'),
+				'wpmodule/keepprivate?id='.$wpmodule->getId(),
+				array('method' => 'put',  'title'=>__('Do not allow other teachers to see and use this module (until the workplan is submitted)'))
+				)?>
+			</li>
+			<?php else: ?>
+			<li class="sf_admin_action_publish">
+				<?php echo link_to(
+				__('Publish'),
+				'wpmodule/publish?id='.$wpmodule->getId(),
+				array('method' => 'put',  'title'=>__('Allow other teachers to see and use this module'))
+				)?>
+			</li>
+			<?php endif ?>
+			<li class="sf_admin_action_unlink">
+				<?php echo link_to(
+				__('Unlink'),
+				'wpmodule/unlink?id='.$wpmodule->getId(),
+				array('method' => 'put',  'title'=>__('Remove this module from this workplan, but keep it as avaliable for other ones')) 
 				)?>
 			</li>
 			<?php endif ?>

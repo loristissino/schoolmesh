@@ -16,6 +16,7 @@ class Workflow
 		'stateDescription'=>"Workplan draft",
 		'owner' => Array(
 			'viewAction'=>"fill",
+			'exportActionTip'=>'Export the workplan in one of available formats',
 			'displayedAction'=>'Fill',
 			'submitAction'=>"submit",
 			'submitDisplayedAction'=>'Submit this workplan for approval',
@@ -29,6 +30,7 @@ class Workflow
 		'stateDescription'=>"Workplan waiting for administrative check",
 		'owner' => Array(
 			'viewAction'=>"view",
+			'exportActionTip'=>'Export the workplan in one of available formats',
 			'displayedAction'=>'View',
 			'submitAction'=>"",
 			'submitDisplayedAction'=>'',
@@ -61,6 +63,7 @@ class Workflow
 		'stateDescription'=>"Workplan waiting for schoolmaster`s approval",
 		'owner' => Array(
 			'viewAction'=>"view",
+			'exportActionTip'=>'Export the workplan in one of available formats',
 			'displayedAction'=>'View',
 			'submitAction'=>"",
 			'submitDisplayedAction'=>'',
@@ -93,6 +96,7 @@ class Workflow
 		'stateDescription'=>"Intermediate / final report",
 		'owner' => Array(
 			'viewAction'=>"fill",
+			'exportActionTip'=>'Export the workplan in one of available formats',
 			'displayedAction'=>'Fill',
 			'submitAction'=>"submit",
 			'submitDisplayedAction'=>'Submit this report',
@@ -106,6 +110,7 @@ class Workflow
 		'stateDescription'=>"Intermediate report waiting for schoolmaster`s evaluation",
 		'owner' => Array(
 			'viewAction'=>"view",
+			'exportActionTip'=>'Export the report in one of available formats',
 			'displayedAction'=>'View',
 			'submitAction'=>"",
 			'submitDisplayedAction'=>'',
@@ -119,6 +124,7 @@ class Workflow
 		'stateDescription'=>"Final report waiting for administrative check",
 		'owner' => Array(
 			'viewAction'=>"view",
+			'exportActionTip'=>'Export the report in one of available formats',
 			'displayedAction'=>'View',
 			'submitAction'=>"",
 			'submitDisplayedAction'=>'',
@@ -149,6 +155,7 @@ class Workflow
 		'stateDescription'=>"Final report waiting for schoolmaster`s evaluation",
 		'owner' => Array(
 			'viewAction'=>"view",
+			'exportActionTip'=>'Export the report in one of available formats',
 			'displayedAction'=>'View',
 			'submitAction'=>"",
 			'submitDisplayedAction'=>'',
@@ -179,6 +186,7 @@ class Workflow
 		'stateDescription'=>"Final report approved and archived",
 		'owner' => Array(
 			'viewAction'=>"view",
+			'exportActionTip'=>'Export the report in one of available formats',
 			'displayedAction'=>'View',
 			'submitAction'=>"",
 			'submitDisplayedAction'=>'',

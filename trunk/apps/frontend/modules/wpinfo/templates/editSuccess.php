@@ -13,6 +13,9 @@
 		<?php echo image_tag('required', 'title=' . __('Filling required')) ?>
 	<?php endif ?>
 	<?php echo $type->getDescription() ?>
+	<?php if ($type->getTemplate()): ?>
+		<p><?php echo image_tag('star') ?> <?php echo __('This content must match a template. You can base it on the example provided below.') ?>
+	<?php endif ?>
 </p>
 
 <?php if ($sf_user->hasFlash('error_info')): ?>
@@ -43,10 +46,10 @@ editor_selector : \"mceAdvanced\"
 <?php echo $wpinfo->getContent() ?>
 </textarea>
 <br />
-<input type="submit" name="save" value="<?php echo __("Save") ?>" />
-<input type="submit" name="back" value="<?php echo __("Save and go back to workplan") ?>" />
+<input type="submit" name="save" value="<?php echo __("Save") ?>" title="<?php echo __('Save what you wrote until now') ?>" />
+<input type="submit" name="back" value="<?php echo __("Save and go back to plan/report") ?>" title="<?php echo __('Save this content and go back to the workplan/report') ?>" />
 <?php if($next_item): ?>
-	<input type="submit" name="continue" value="<?php echo sprintf(__('Save and go to next item (%s)'), $next_item->getWpinfoType()->getTitle()); ?>" />
+	<input type="submit" name="continue" value="<?php echo sprintf(__('Save and go to next item (%s)'), $next_item->getWpinfoType()->getTitle()); ?>" title="<?php echo sprintf(__('Save and start editing the next item, that happens to be «%s»'), $next_item->getWpinfoType()->getTitle()) ?>" />
 <?php endif; ?>
 </form>
 
@@ -87,14 +90,14 @@ editor_selector : \"mceAdvanced\"
 							<?php echo link_to(
 							__('Append it'),
 							'wpinfo/append?id='.$wpinfo->getId() . '&app='.$hint->getId(),
-							array('method' => 'put') 
+							array('method' => 'put', 'title'=>__('Append this content to what you wrote and saved')) 
 							)?>
 						</li>
 						<li class="sf_admin_action_replace">
 							<?php echo link_to(
 							__('Use it'),
 							'wpinfo/replace?id='.$wpinfo->getId() . '&app='.$hint->getId(),
-							array('method' => 'put') 
+							array('method' => 'put',  'title'=>__('Replace what you wrote with this content')) 
 							)?>
 						</li>
 					</ul>
@@ -108,6 +111,7 @@ editor_selector : \"mceAdvanced\"
 <?php endif; ?>
 </div>
 
+<?php if($example!=$wpinfo->getContent()): ?>
 <h2><?php echo __('Example') ?></h2>
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
@@ -135,7 +139,7 @@ editor_selector : \"mceAdvanced\"
 							<?php echo link_to(
 							__('Use it'),
 							'wpinfo/takeexample?id='.$wpinfo->getId(),
-							array('method' => 'put') 
+							array('method' => 'put',  'title'=>__('Replace what you wrote with this content')) 
 							)?>
 						</li>
 					</ul>
@@ -148,6 +152,6 @@ editor_selector : \"mceAdvanced\"
 <p><?php echo __('No example avaliable for this item.') ?></p>
 <?php endif; ?>
 </div>
-
+<?php endif ?>
 
 </div>

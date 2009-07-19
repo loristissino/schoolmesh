@@ -21,20 +21,16 @@
 	<li class="sf_admin_action_view">
 				<?php echo link_to(
 				__('Complete view of this plan/report'),
-				'plansandreports/view?id='.$workplan->getId()
+				'plansandreports/view?id='.$workplan->getId(),
+				array('title'=>__('View this plan/report in a single page'))
 				)?>
 	</li>
-	<li class="sf_admin_action_export">
-				<?php echo link_to(
-				__('Export'),
-				'plansandreports/export?id='.$workplan->getId()
-//				'plansandreports/view?id='.$workplan->getId().'&sf_format=yaml'
-				)?>
-	</li>
-	<li class="sf_admin_action_help">
+<?php include_partial('export', array('workplan' => $workplan, 'steps'=>$steps)) ?>
+<li class="sf_admin_action_help">
 				<?php echo link_to(
 				__('Help'),
-				'@help'
+				'@help',
+				array('title'=>'Get help on this subject')
 				)?>
 	</li>
 	
@@ -79,14 +75,15 @@
 	<?php echo link_to(
 				__('New'),
 				'wpmodule/new?id='.$workplan->getId(),
-				array('method' => 'post') 
+				array('method' => 'post', 'title'=>__('Create a new module')) 
 				)?>
 	
 	</li>
 	<li class="sf_admin_action_import">
 	<?php echo link_to(
 				__('Import'),
-				'plansandreports/import?id='.$workplan->getId()
+				'plansandreports/import?id='.$workplan->getId(),
+				array('title'=>'Import a module previously prepared')
 				)?>
 	
 	</li>

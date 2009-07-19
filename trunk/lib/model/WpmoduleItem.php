@@ -65,8 +65,10 @@ class WpmoduleItem extends BaseWpmoduleItem
 	 
 		  $this->setRank($this->getWpitemGroup()->countWpmoduleItems()+1);
 		  if (($this->getContent()===NULL) || ($this->getContent()==''))
-			$this->setContent('---');
-		  $this->setIsEditable(true);  
+			{
+				$this->setContent('---');
+				$this->setIsEditable(true);
+			}
 		  parent::save();
 	 
 		  $con->commit();

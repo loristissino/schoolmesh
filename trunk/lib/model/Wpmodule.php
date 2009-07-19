@@ -2,6 +2,40 @@
 
 class Wpmodule extends BaseWpmodule
 {
+	public function getIsDeletable()
+	{
+		
+	return ($this->countUneditableItems()==0);	
+		
+	}
+	
+	
+	public function countUneditableItems()
+	{
+		
+     $con = Propel::getConnection(WpmodulePeer::DATABASE_NAME);
+
+	$sql = 'SELECT count(*) as number
+FROM wpmodule
+JOIN wpitem_group ON wpmodule.id = wpitem_group.wpmodule_id
+JOIN wpmodule_item ON wpitem_group.id = wpmodule_item.wpitem_group_id
+WHERE wpmodule.id = %d
+AND wpmodule_item.is_editable = FALSE';
+
+$sql = sprintf($sql, $this->getId());
+
+$statement = $con->prepare($sql);
+$statement->execute();
+
+$resultset= $statement->fetch(PDO::FETCH_OBJ);
+
+$number=$resultset->number;
+
+	return $number;
+
+
+	}
+	
 	
 	public function getUnevaluated()
 	{
@@ -142,6 +176,17 @@ $number=$resultset->number;
 		parent::save(); 
 	  }
 	}  
+
+
+    public function publish($context, $shared=true)
+	{
+		
+	/* FIXME: I should check if this is invoked by the owner */
+	
+	$this->setIsPublic($shared);
+	$this->save();
+		
+	}
 
 
 	public function applyDefaultValues()
