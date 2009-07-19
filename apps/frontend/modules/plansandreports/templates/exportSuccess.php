@@ -16,10 +16,11 @@
 
 <h2><?php echo __('Available formats for export') ?></h2>
 
-<ul>
-	<li><?php echo link_to(__("YAML"), 'plansandreports/view?id='.$workplan->getId().'&sf_format=yaml') ?></li>
-	<li><?php echo link_to(__("ODT"), 'plansandreports/odt?id='.$workplan->getId()) ?> (experimental)</li>
-	<li><?php echo link_to(__("DOC"), 'plansandreports/doc?id='.$workplan->getId()) ?> (experimental)</li>
-	<li><?php echo link_to(__("RTF"), 'plansandreports/view?id='.$workplan->getId().'&sf_format=rtf') ?> (experimental)</li>
-	<li><?php echo link_to(__("PDF"), 'plansandreports/view?id='.$workplan->getId().'&sf_format=pdf') ?> (experimental)</li>
+<?php /* FIXME: I should use a different CSS class in order to avoid <br> tags here... */ ?>
+<ul class="sf_admin_actions">
+	<li class="sf_admin_action_yaml"><?php echo link_to(__("YAML"), 'plansandreports/view?id='.$workplan->getId().'&sf_format=yaml') ?><br /></li>
+	<li class="sf_admin_action_openoffice"><?php echo link_to(__("OpenOffice.org Document"), 'plansandreports/odt?id='.$workplan->getId()) ?> (experimental)<br /></li>
+	<li class="sf_admin_action_word"><?php echo link_to(__("Microsoft Word Document"), 'plansandreports/doc?id='.$workplan->getId()) ?> (experimental)<br /></li>
+	<li class="sf_admin_action_rtf"><?php echo link_to(__("Rich Text Format"), 'plansandreports/view?id='.$workplan->getId().'&sf_format=rtf') ?> (experimental)<br /></li>
+	<li class="sf_admin_action_pdf"><?php echo link_to(__("PDF"), 'plansandreports/view?id='.$workplan->getId().'&sf_format=pdf') ?> (experimental)<br /></li>
 </ul>

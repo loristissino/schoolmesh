@@ -59,8 +59,8 @@ Wpinfo:
     appointment_id: test_ast_5ap_20
     wpinfo_type_id:  wpcriteria
     content: Test scritti autovalutati, più compiti scritti e esercitazioni varie.
-  test_ast_3ap_30_d:
-    appointment_id: test_ast_3ap_30
+  test_fis_3ap_30_d:
+    appointment_id: test_fis_3ap_30
     wpinfo_type_id:  wpcriteria
     content: Capacità di lettura autonoma dei libri di testo.
   

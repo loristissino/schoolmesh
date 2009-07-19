@@ -86,6 +86,43 @@
   background: url(../images/optional.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_yaml a
+{
+  background: url(../images/yaml.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_word a
+{
+  background: url(../images/word.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_openoffice a
+{
+  background: url(../images/openoffice.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_pdf a
+{
+  background: url(../images/pdf.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_rtf a
+{
+  background: url(../images/rtf.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_publish a
+{
+  background: url(../images/publish.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_unpublish a
+{
+  background: url(../images/unpublish.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_unlink a
+{
+  background: url(../images/link_break.png) no-repeat 0 0;
+}
 
 div.module_content
 {

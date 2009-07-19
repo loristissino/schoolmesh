@@ -35,7 +35,7 @@ class wpmoduleActions extends sfActions
 
 	public function executeUp(sfWebRequest $request)
 	{
-	  $this->forward404Unless($request->getMethod()=="PUT");
+	  $this->forward404Unless($request->getMethod()=="PUT" or $request->getMethod()=="POST");
 	  $item = WpmodulePeer::retrieveByPk($this->getRequestParameter('id'));
 	  $this->forward404Unless($item);
 	  $previous_item = WpmodulePeer::retrieveByRank($item->getRank() - 1, $item->getAppointmentId());
@@ -43,7 +43,45 @@ class wpmoduleActions extends sfActions
 	  $item->swapWith($previous_item);
 	  $this->getUser()->setFlash('notice_modules', $this->getContext()->getI18N()->__('The items were switched'));
 	 
-	  $this->redirect('plansandreports/fill?id='.$item->getAppointmentId(). '#wpmodules'); 	}  
+	  $this->redirect('plansandreports/fill?id='.$item->getAppointmentId(). '#wpmodules');
+	
+	}  
+
+
+	public function executePublish(sfWebRequest $request)
+	{
+	  $this->forward404Unless($request->getMethod()=="PUT" or $request->getMethod()=="POST");
+	  $item = WpmodulePeer::retrieveByPk($this->getRequestParameter('id'));
+	  $this->forward404Unless($item);
+	  $item->publish($this->getContext());
+	  $this->getUser()->setFlash('notice_modules', $this->getContext()->getI18N()->__('The item was published'));
+	  $this->redirect('plansandreports/fill?id='.$item->getAppointmentId(). '#wpmodules'); 
+	
+	}  
+
+	public function executeKeepprivate(sfWebRequest $request)
+	{
+	  $this->forward404Unless($request->getMethod()=="PUT" or $request->getMethod()=="POST");
+	  $item = WpmodulePeer::retrieveByPk($this->getRequestParameter('id'));
+	  $this->forward404Unless($item);
+	  $item->publish($this->getContext(), false);
+	  $this->getUser()->setFlash('notice_modules', $this->getContext()->getI18N()->__('The item is kept private'));
+	  $this->redirect('plansandreports/fill?id='.$item->getAppointmentId(). '#wpmodules'); 
+	
+	}  
+
+	public function executeUnlink(sfWebRequest $request)
+	{
+	  $this->forward404Unless($request->getMethod()=="PUT" or $request->getMethod()=="POST");
+	  $item = WpmodulePeer::retrieveByPk($this->getRequestParameter('id'));
+	  $this->forward404Unless($item);
+	  $item->publish($this->getContext(), false);
+	  $this->getUser()->setFlash('notice_modules', $this->getContext()->getI18N()->__('The item was unlinked'));
+	  $this->redirect('plansandreports/fill?id='.$item->getAppointmentId(). '#wpmodules'); 
+	
+	}  
+
+
 
 	public function executeDown(sfWebRequest $request)
 	{

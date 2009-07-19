@@ -133,10 +133,44 @@ WpmoduleItem:
   module_item_v1:
     wpitem_group_id: wg_tt33fis_contents
     rank:     1
-    content:  primo contenuto
+    content:  proprietà elettroniche dei solidi
     is_editable: false
   module_item_v2:
     wpitem_group_id: wg_tt33fis_contents
     rank:     2
-    content:  secondo contenuto
-    is_editable: true
+    content:  proprietà meccaniche dei solidi
+    is_editable: false
+  module_item_v3:
+    wpitem_group_id: wg_tt33fis_contents
+    rank:     3
+    content:  proprietà ottiche dei solidi
+    is_editable: false
+  module_item_v4:
+    wpitem_group_id: wg_tt33fis_contents
+    rank:     4
+    content:  proprietà magnetiche dei solidi
+    is_editable: false
+
+  module_item_v1a:
+    wpitem_group_id: wg_tt33fis_contents_a
+    rank:     1
+    content:  c1
+    is_editable: false
+
+  module_item_v1b:
+    wpitem_group_id: wg_tt33fis_contents_b
+    rank:     1
+    content:  c1
+    is_editable: false
+
+  module_item_v1c:
+    wpitem_group_id: wg_tt33fis_contents_c
+    rank:     1
+    content:  c1
+    is_editable: false
+
+  module_item_v1d:
+    wpitem_group_id: wg_tt33fis_contents_d
+    rank:     1
+    content:  c1
+    is_editable: 0

@@ -2,13 +2,9 @@
 				<li class="sf_admin_action_<?php echo $steps[$workplan->getState()]['owner']['viewAction'] ?>">
 					<?php echo link_to(
 				__($steps[$workplan->getState()]['owner']['displayedAction']),
-				'plansandreports/'.$steps[$workplan->getState()]['owner']['viewAction'].'?id='.$workplan->getId()
+				'plansandreports/'.$steps[$workplan->getState()]['owner']['viewAction'].'?id='.$workplan->getId(),
+				array('title'=>__($steps[$workplan->getState()]['owner']['displayedAction']))
 				)?>
 				</li>
-				<li class="sf_admin_action_export">
-					<?php echo link_to(
-				__('Export'), 
-				'plansandreports/export?id='.$workplan->getId()
-				)?>
-				</li>
+<?php include_partial('export', array('workplan' => $workplan, 'steps'=>$steps)) ?>
 			</ul>

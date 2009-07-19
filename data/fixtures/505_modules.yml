@@ -69,7 +69,7 @@ Wpmodule:
     period:      marzo - giugno
     rank:     3
     appointment_id:   test_ast_3ap_0
-    is_public:    true
+    is_public:    false
 
   module4_1_test:
     id:
@@ -128,26 +128,44 @@ Wpmodule:
   module3_1_test_fis:
     id:
     user_id:    john.testteacher
-    title:       Primo modulo
+    title:       Fisica dello stato solido
     period:      settembre - dicembre
     rank:     1
-    appointment_id:   test_ast_3ap_30
+    appointment_id:   test_fis_3ap_30
     is_public:    true
 
   module3_2_test_fis:
     id:
     user_id:    john.testteacher
-    title:       Secondo modulo
+    title:       Fisica nucleare
     period:      gennaio - marzo
     rank:     2
-    appointment_id:   test_ast_3ap_30
+    appointment_id:   test_fis_3ap_30
     is_public:    true
 
   module3_3_test_fis:
     id:
     user_id:    john.testteacher
-    title:       Terzo modulo
-    period:      marzo - giugno
+    title:       Fisica delle particelle elementari
+    period:      marzo - aprile
     rank:     3
-    appointment_id:   test_ast_3ap_30
+    appointment_id:   test_fis_3ap_30
+    is_public:    true
+
+  module3_4_test_fis:
+    id:
+    user_id:    john.testteacher
+    title:       Astrofisica
+    period:      maggio
+    rank:     4
+    appointment_id:   test_fis_3ap_30
+    is_public:    true
+
+  module3_5_test_fis:
+    id:
+    user_id:    john.testteacher
+    title:       Geofisica
+    period:      maggio
+    rank:     5
+    appointment_id:   test_fis_3ap_30
     is_public:    true
