@@ -890,6 +890,10 @@
         <source>this content is required and is currently missing</source>
         <target>questo contenuto è richiesto e attualmente manca</target>
       </trans-unit>
+      <trans-unit id="248">
+        <source>The workplan has been correctly imported.</source>
+        <target>Il piano di lavoro è stato correttamente importato.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
