@@ -18,6 +18,35 @@ class Appointment extends BaseAppointment
     return $this->getFirstName(). ' ' . $this->getLastName();    
     }
 
+	public function retrieveImportableWorkplansOfColleagues()
+	
+	{
+		$c=new Criteria();
+		$c->add(AppointmentPeer::STATE, Workflow::WP_DRAFT, Criteria::GREATER_THAN);  // must be already published
+		$c->add(AppointmentPeer::USER_ID, $this->getUserId(), Criteria::NOT_EQUAL);  // not the same teacher
+		$c->add(AppointmentPeer::SUBJECT_ID, $this->getSubjectId());                 // the same subject
+		$c->addJoin(AppointmentPeer::SCHOOLCLASS_ID, SchoolclassPeer::ID);
+		$c->add(SchoolclassPeer::GRADE, $this->getSchoolclass()->getGrade());   // the same grade
+		$c->addDescendingOrderByColumn(AppointmentPeer::YEAR_ID);   // order by year
+		$t = AppointmentPeer::doSelect($c);
+		return $t;
+	}
+
+
+	public function retrieveOtherWorkplansOfSameTeacher()
+	
+	{
+		$c=new Criteria();
+		$c->add(AppointmentPeer::USER_ID, $this->getUserId());  // not the same teacher
+		$c->add(AppointmentPeer::ID, $this->getId(), Criteria::NOT_EQUAL);          // not the same Workplan / Appointment
+		$c->add(AppointmentPeer::SUBJECT_ID, $this->getSubjectId());                 // the same subject
+		$c->addJoin(AppointmentPeer::SCHOOLCLASS_ID, SchoolclassPeer::ID);
+		$c->add(SchoolclassPeer::GRADE, $this->getSchoolclass()->getGrade());   // the same grade
+		$c->addDescendingOrderByColumn(AppointmentPeer::YEAR_ID);   // order by year
+		$t = AppointmentPeer::doSelect($c);
+		return $t;
+	}
+
 
 	public function getWpinfos($criteria = null, PropelPDO $con = null)
 	{
@@ -35,16 +64,6 @@ class Appointment extends BaseAppointment
 		return parent::getWpinfos($criteria);
 		
 	}	
-/*
-	public function getNeededWpinfos()
-	{
-        $criteria = new Criteria();
-		$criteria->addJoin(WpinfoTypePeer::ID, WpinfoPeer::WPINFO_TYPE_ID);
-		$criteria->addAscendingOrderByColumn(WpinfoTypePeer::RANK);
-		return parent::getWpinfos($criteria);
-		
-	}	
-*/
 	public function __toString()
 	{
 			return $this->getSubject() . ' (' . $this->getSchoolclass() . ', ' . $this->getYear() . ')';
@@ -355,6 +374,7 @@ $con->query($sql);
 										{
 											$wpmoduleItem = new WpmoduleItem();
 											$wpmoduleItem->setContent('---');
+											$wpmoduleItem->setIsEditable(true);
 											$wpmoduleItem->setWpitemGroupId($group->getId());
 											$wpmoduleItem->setEvaluation(null);
 											$wpmoduleItem->save();
@@ -874,5 +894,37 @@ public function getContentAsMarkdown()
 	  }
 	
 	}
+
+	protected function copyWpinfosFrom($iworkplan)
+	{
+
+		$wpinfos = $iworkplan->getWpinfos();
+		foreach($wpinfos as $wpinfo)
+			{
+				$newwpinfo = new Wpinfo();
+				$newwpinfo->setAppointmentId($this->getId());
+				$newwpinfo->setWpinfoTypeId($wpinfo->getWpinfoTypeId());
+				$newwpinfo->setContent($wpinfo->getContent());
+				$newwpinfo->save();
+				
+			}
+	}
+
+
+	public function importFromDb($context, $iworkplan)
+	{
+		
+		$this->removeEverything();
+		$this->copyWpinfosFrom($iworkplan);
+		
+		$this->getChecks();
+		
+		$result['result']='notice';
+		$result['message']='The workplan has been correctly imported (only joking).';
+		
+		return $result;
+		
+	}
+
 
 }

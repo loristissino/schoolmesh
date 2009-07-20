@@ -2,6 +2,43 @@
 
 class Wpmodule extends BaseWpmodule
 {
+	
+	public function unlink($context, PropelPDO $con = null)
+	{
+	/* FIXME: I should check if this is invoked by the owner */
+
+	  if (!$this->getIsDeletable())
+		{
+			return false;
+		}
+		
+	  $con = Propel::getConnection(WpmodulePeer::DATABASE_NAME);
+	
+	  if ($this->getRank()!==NULL)
+	{  
+	  try
+	  {
+		$con->beginTransaction();
+	 
+		// decrease all the ranks of the page records of the same category with higher rank 
+		$sql = 'UPDATE '.WpmodulePeer::TABLE_NAME.' SET '.WpmodulePeer::RANK.' = '.WpmodulePeer::RANK.' - 1 WHERE '.WpmodulePeer::RANK.' > '.$this->getRank() . ' AND ' . WpmodulePeer::APPOINTMENT_ID .'='. $this->getAppointmentId();
+		$con->query($sql);
+		// delete the item
+		$this->setAppointmentId(null);
+		$this->save();
+	 
+		$con->commit();
+		return true;
+	  }
+	  catch (Exception $e)
+	  {
+		$con->rollback();
+		throw $e;
+	  }
+	}
+
+	}
+	
 	public function getIsDeletable()
 	{
 		
@@ -215,6 +252,7 @@ $number=$resultset->number;
 						$newWpmoduleItem=new WpmoduleItem();
 						$newWpmoduleItem->setWpitemGroupId($newgroup->getId());
 						$newWpmoduleItem->setContent('---');
+						$newWpmoduleItem->setIsEditable(true);
 						$newWpmoduleItem->save();
 					}
 			}
@@ -223,8 +261,10 @@ $number=$resultset->number;
 	public function delete(PropelPDO $con = null)
 	{  
 	
-	  if ($this->getAppointment()->getState()!=Workflow::WP_DRAFT)
-		return false;
+	  if (!$this->getIsDeletable())
+		{
+			return false;
+		}
 		
 	  $con = Propel::getConnection(WpmodulePeer::DATABASE_NAME);
 	

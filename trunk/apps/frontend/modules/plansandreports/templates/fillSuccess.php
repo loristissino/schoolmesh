@@ -7,35 +7,9 @@
 	
 	?><h1><?php echo __("Workplan: ") . $workplan ?></h1>
 
-<h2><?php echo __("Basic information") ?></h2>
-<?php $state = $workplan->getState() ?>
-<p><?php include_partial('state', array('state' => $state, 'steps' => $steps, 'size'=>'')) ?></p>
-<ul>
-	<li><?php echo __("Teacher: ") . $workplan->getsfGuardUser()->getProfile()->getFullName() ?></li>
-	<li><?php echo __("Class: ") . $workplan->getSchoolclass() ?></li>
-	<li><?php echo __("Year: ") . $workplan->getYear() ?></li>
-	<li><?php echo __("Current state") ?>: <?php echo $state ?> <em>(<?php echo __($steps[$state]['stateDescription']) ?>)</em></li>
-</ul>
+<?php $state=$workplan->getState() ?>
+<?php include_partial('basicinfo', array('workplan'=>$workplan,  'steps'=>$steps)) ?>
 
-	<ul class="sf_admin_actions">
-	<li class="sf_admin_action_view">
-				<?php echo link_to(
-				__('Complete view of this plan/report'),
-				'plansandreports/view?id='.$workplan->getId(),
-				array('title'=>__('View this plan/report in a single page'))
-				)?>
-	</li>
-<?php include_partial('export', array('workplan' => $workplan, 'steps'=>$steps)) ?>
-<li class="sf_admin_action_help">
-				<?php echo link_to(
-				__('Help'),
-				'@help',
-				array('title'=>'Get help on this subject')
-				)?>
-	</li>
-	
-	
-	</ul>
 <hr />
 
 <a name="info"></a>
@@ -121,13 +95,27 @@
 
 <?php if ($steps[$state]['owner']['submitAction']!=''): ?>
 	<ul class="sf_admin_actions">
+	<li class="sf_admin_action_view">
+				<?php echo link_to(
+				__('Show this plan/report'),
+				'plansandreports/view?id='.$workplan->getId(),
+				array('title'=>__('Show this plan/report in a single page'))
+				)?>
+	</li><br />
+<?php include_partial('export', array('workplan' => $workplan, 'steps'=>$steps)) ?><br />
+<li class="sf_admin_action_help">
+				<?php echo link_to(
+				__('Help'),
+				'@help',
+				array('title'=>'Get help on this subject')
+				)?>
+	</li><br />
 	<li class="sf_admin_action_submit">
 				<?php echo link_to(
 				__($steps[$state]['owner']['submitDisplayedAction']),
 				'plansandreports/'. $steps[$state]['owner']['submitAction']. '?id='.$workplan->getId(),
 				array('method' => 'put', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $user->getProfile()->getIsMale()) . ' ' . __('Workplans and reports submitted cannot be modified anymore...')) 
 				)?>
-	</li>
+	</li><br />
 	</ul>
 <?php endif ?>
-<hr />

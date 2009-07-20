@@ -63,11 +63,23 @@ Schoolclass:
     track_id:     igea
     description:    Classe Seconda AI
     
+  3ai:
+    id:             3AI
+    grade:          3
+    section:        A
+    track_id:     igea
+    description:    Classe Terza AI
 
+  3bi:
+    id:             3BI
+    grade:          3
+    section:        B
+    track_id:     igea
+    description:    Classe Terza BI
 Year:
   200708:
     id:             2007
-    description:    2007/09
+    description:    2007/08
   200809:
     id:             2008
     description:    2008/09

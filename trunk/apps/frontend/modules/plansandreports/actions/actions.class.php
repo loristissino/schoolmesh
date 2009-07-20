@@ -21,12 +21,47 @@ class plansandreportsActions extends sfActions
 
 	public function executeImport(sfWebRequest $request)
 	{
-	
-	$this->content=sfYaml::load('uploads/test.yaml');
+    $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+	$this->user=$this->getUser();
+    $this->forward404Unless($this->workplan);
+    $this->forward404Unless($this->workplan->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId()));
 
+	$this->steps = Workflow::getWpfrSteps();
 	
-		
+	if ($this->workplan->getState()!=Workflow::WP_DRAFT)
+		{
+		$this->redirect('plansandreports/view?id='.$this->workplan->getId());
+		}
+
+	$this->c_workplans = $this->workplan->retrieveImportableWorkplansOfColleagues();
+	$this->s_workplans = $this->workplan->retrieveOtherWorkplansOfSameTeacher();
+
 	}
+
+	public function executeImportfromdb(sfWebRequest $request)
+	{
+    $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
+    $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+	$this->user=$this->getUser();
+    $this->forward404Unless($this->workplan);
+    $this->forward404Unless($this->workplan->getState()==Workflow::WP_DRAFT);
+    $this->forward404Unless($this->workplan->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId()));
+
+    $this->iworkplan = AppointmentPeer::retrieveByPk($request->getParameter('from'));
+    $this->forward404Unless($this->iworkplan);
+    $this->forward404Unless(($this->iworkplan->getState()>Workflow::WP_DRAFT) || ($this->iworkplan->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId())));
+	
+	$result=$this->workplan->importFromDB($this->getContext(), $this->iworkplan);
+
+	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+	
+	$this->redirect('plansandreports/fill?id='.$this->workplan->getId());
+
+	}
+
+
+
+
 
 	public function executeWpsubmit(sfWebRequest $request)
 	{
@@ -132,7 +167,7 @@ class plansandreportsActions extends sfActions
   public function executeOdt(sfWebRequest $request)
 	{
 	
-		$document = new Opendocument('mattiussirq', sprintf($this->getContext()->getI18N()->__('workplan di %s'), "Loris Tissino"));
+		$document = new Opendocument('mattiussirq', sprintf($this->getContext()->getI18N()->__('Workplan of the teacher %s'), "Loris Tissino"));
 		$document->setHeader($this->getController()->getPresentationFor('headers', 'workplan'));
 		$document->setContent($this->getController()->getPresentationFor('plansandreports', 'xml'));
 		$document->setResponse($this->getContext()->getResponse());

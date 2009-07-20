@@ -7,4 +7,13 @@
 				)?>
 				</li>
 <?php include_partial('export', array('workplan' => $workplan, 'steps'=>$steps)) ?>
+<?php if ($workplan->getState()==Workflow::WP_DRAFT): ?>
+				<li class="sf_admin_action_import">
+					<?php echo link_to(
+				__('Import'),
+				'plansandreports/import?id='.$workplan->getId(),
+				array('title'=>__('Import the workplan from a file or from the database'))
+				)?>
+				</li>
+<?php endif ?>
 			</ul>
