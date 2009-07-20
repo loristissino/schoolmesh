@@ -159,3 +159,11 @@ WptoolAppointment:
   wptool_appointment_b4:
     appointment_id:  test_ast_3ap_0
     wptool_item_id:  b4
+
+  wptool_appointment_a5:
+    appointment_id:  test_ast_3ap_70
+    wptool_item_id:  a4
+
+  wptool_appointment_a6:
+    appointment_id:  test_ast_3ap_70
+    wptool_item_id:  a5

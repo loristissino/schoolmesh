@@ -10,6 +10,10 @@
 <?php $state=$workplan->getState() ?>
 <?php include_partial('basicinfo', array('workplan'=>$workplan,  'steps'=>$steps)) ?>
 
+<?php if ($sf_user->hasFlash('notice')): ?>
+  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
+<?php endif; ?>
+
 <hr />
 
 <a name="info"></a>

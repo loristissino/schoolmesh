@@ -169,3 +169,12 @@ Wpmodule:
     rank:     5
     appointment_id:   test_fis_3ap_30
     is_public:    true
+
+  module3_1_test_ast1:
+    id:
+    user_id:    john.testteacher
+    title:      Introduzione all'astronomia
+    period:      settembre - dicembre
+    rank:     1
+    appointment_id:   test_ast_3ap_70
+    is_public:    true
