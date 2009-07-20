@@ -100,3 +100,7 @@ WpitemGroup:
   wg_tt33fis_contents_d:
     wpitem_type_id:  contents
     wpmodule_id: module3_5_test_fis
+
+  wg_tt31ast_contents_a1:
+    wpitem_type_id:  contents
+    wpmodule_id: module3_1_test_ast1

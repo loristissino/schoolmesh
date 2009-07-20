@@ -848,6 +848,9 @@ public function getContentAsMarkdown()
 
 
 		$this->removeAllModules();
+		
+		$this->setState(Workflow::WP_DRAFT);
+		$this->save();
 
 /* for some obscure reasons, this does not seem to work:
 
@@ -910,17 +913,76 @@ public function getContentAsMarkdown()
 			}
 	}
 
+	protected function copyWptoolsFrom($iworkplan)
+	{
+
+		$wptools = $iworkplan->getWptoolAppointments();
+		foreach($wptools as $wptool)
+			{
+				$newwptoolappointment = new WptoolAppointment();
+				$newwptoolappointment->setAppointmentId($this->getId());
+				$newwptoolappointment->setWptoolItemId($wptool->getWptoolItemId());
+				$newwptoolappointment->save();
+			}
+	}
+
+	protected function copyWpmodulesFrom($iworkplan)
+	{
+
+		$wpmodules = $iworkplan->getWpmodules();
+		foreach($wpmodules as $wpmodule)
+			{
+				$newwpmodule = new Wpmodule();
+				$newwpmodule->setUserId($this->getUserId());
+				$newwpmodule->setAppointmentId($this->getId());
+				$newwpmodule->setTitle($wpmodule->getTitle());
+				$newwpmodule->setPeriod($wpmodule->getPeriod());
+				$newwpmodule->setIsPublic(false);
+				$newwpmodule->save();
+				$groups = $wpmodule->getWpitemGroups();
+				foreach($groups as $group)
+					{
+						$newgroup = new WpitemGroup();
+						$newgroup->setWpmoduleId($newwpmodule->getId());
+						$newgroup->setWpitemTypeId($group->getWpitemTypeId());
+						$newgroup->save();
+						
+						$items = $group->getWpmoduleItems();
+						foreach($items as $item)
+							{
+								$newitem = new WpmoduleItem();
+								$newitem->setWpitemGroupId($newgroup->getId());
+								$newitem->setContent($item->getContent());
+								$newitem->setEvaluation(null);
+								$newitem->setRank($item->getRank());
+								$newitem->setIsEditable(true);
+								$newitem->save();
+							}
+					}			
+			}
+	}
 
 	public function importFromDb($context, $iworkplan)
 	{
 		
 		$this->removeEverything();
 		$this->copyWpinfosFrom($iworkplan);
-		
-		$this->getChecks();
+		$this->copyWpmodulesFrom($iworkplan);
+		$this->copyWptoolsFrom($iworkplan);
+
+
+/*		
+		This isn't really useful, since contents to be copied had been presumably checked
+		Anyway, they'll be checked when the workplan is submitted
+
+		$this->getChecks($context);
+		$this->getChecks($context);
+		// FIXME: We call it twice because the first time we just get the groups for each module...
+
+*/		
 		
 		$result['result']='notice';
-		$result['message']='The workplan has been correctly imported (only joking).';
+		$result['message']='The workplan has been correctly imported.';
 		
 		return $result;
 		

@@ -67,3 +67,7 @@ Wpinfo:
     appointment_id: test_ast_3ap_70
     wpinfo_type_id:  wpsituation
     content: La classe è divisa in due gruppi con motivazioni molto diverse tra loro.
+  test_ast_3ap_70_f:
+    appointment_id: test_ast_3ap_70
+    wpinfo_type_id:  frsituation
+    content: Alla fine dell'anno si è visto che tutto andava bene.

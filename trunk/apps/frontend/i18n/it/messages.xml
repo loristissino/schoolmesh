@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
-  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-07-20T17:34:52Z" product-name="messages">
+  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-07-20T20:10:01Z" product-name="messages">
     <body>
       <trans-unit id="3">
         <source>Forgot your password?</source>
@@ -876,7 +876,19 @@
       </trans-unit>
       <trans-unit id="243">
         <source>This action will replace all the contents of the workplan.</source>
-        <target>Questa azione sostituirà tutti i contenuti del piano di lavoro.</target>
+        <target>Questa azione sostituir&#xE0; tutti i contenuti del piano di lavoro.</target>
+      </trans-unit>
+      <trans-unit id="245">
+        <source>(opens in a new window)</source>
+        <target>(si apre in una nuova finestra)</target>
+      </trans-unit>
+      <trans-unit id="246">
+        <source>Missing?</source>
+        <target>Mancante?</target>
+      </trans-unit>
+      <trans-unit id="247">
+        <source>this content is required and is currently missing</source>
+        <target>questo contenuto è richiesto e attualmente manca</target>
       </trans-unit>
     </body>
   </file>
