@@ -59,6 +59,7 @@ class WpitemGroup extends BaseWpitemGroup
 						$wpmoduleItem->setWpitemGroupId($this->getId());
 						$wpmoduleItem->setEvaluation(null);
 						$wpmoduleItem->setContent($item);
+						$wpmoduleItem->setIsEditable(true);
 						$wpmoduleItem->save();
 					}
 				}

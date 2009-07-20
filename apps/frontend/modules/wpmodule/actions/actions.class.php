@@ -75,9 +75,10 @@ class wpmoduleActions extends sfActions
 	  $this->forward404Unless($request->getMethod()=="PUT" or $request->getMethod()=="POST");
 	  $item = WpmodulePeer::retrieveByPk($this->getRequestParameter('id'));
 	  $this->forward404Unless($item);
-	  $item->publish($this->getContext(), false);
+	  $appointmentId = $item->getAppointmentId();
+	  $item->unlink($this->getContext());
 	  $this->getUser()->setFlash('notice_modules', $this->getContext()->getI18N()->__('The item was unlinked'));
-	  $this->redirect('plansandreports/fill?id='.$item->getAppointmentId(). '#wpmodules'); 
+	  $this->redirect('plansandreports/fill?id='.$appointmentId . '#wpmodules'); 
 	
 	}  
 

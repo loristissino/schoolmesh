@@ -14,7 +14,7 @@
 	<?php endif ?>
 	<?php echo $type->getDescription() ?>
 	<?php if ($type->getTemplate()): ?>
-		<p><?php echo image_tag('star') ?> <?php echo __('This content must match a template. You can base it on the example provided below.') ?>
+		<p><?php echo image_tag('star') ?> <strong><em><?php echo __('This content must match a template. You can base it on the example provided below.') ?></em></strong>
 	<?php endif ?>
 </p>
 

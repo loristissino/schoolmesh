@@ -63,4 +63,7 @@ Wpinfo:
     appointment_id: test_fis_3ap_30
     wpinfo_type_id:  wpcriteria
     content: Capacità di lettura autonoma dei libri di testo.
-  
+  test_ast_3ap_70_a:
+    appointment_id: test_ast_3ap_70
+    wpinfo_type_id:  wpsituation
+    content: La classe è divisa in due gruppi con motivazioni molto diverse tra loro.

@@ -171,7 +171,7 @@ class wpmoduleitemActions extends sfActions
 	  $previous_item = WpmoduleItemPeer::retrieveByRank($item->getRank() - 1, $item->getWpitemGroupId());
 	  $this->forward404Unless($previous_item);
 	  $item->swapWith($previous_item);
-	  $this->getUser()->setFlash('notice'.$item->getWpitemGroupId(), sprintf('The items were switched'));
+	  $this->getUser()->setFlash('notice'.$item->getWpitemGroupId(), $this->getContext()->getI18N()->__('The items were switched'));
 	 
 	  $this->redirect('wpmodule/view?id='.$item->getWpitemGroup()->getWpmoduleId().'#'.$item->getWpitemGroupId()); 	
 	  }  
@@ -184,7 +184,7 @@ class wpmoduleitemActions extends sfActions
 	  $next_item = WpmoduleItemPeer::retrieveByRank($item->getRank() + 1, $item->getWpitemGroupId());
 	  $this->forward404Unless($next_item);
 	  $item->swapWith($next_item);
-	  $this->getUser()->setFlash('notice'.$item->getWpitemGroupId(), sprintf('The items were switched'));
+	  $this->getUser()->setFlash('notice'.$item->getWpitemGroupId(), $this->getContext()->getI18N()->__('The items were switched'));
 	 
 	  $this->redirect('wpmodule/view?id='.$item->getWpitemGroup()->getWpmoduleId().'#'.$item->getWpitemGroupId()); 
 	}  

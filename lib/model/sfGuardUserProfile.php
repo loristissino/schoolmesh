@@ -38,6 +38,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 	    $c = new Criteria();
 		$c->add(AppointmentPeer::USER_ID, $this->getUserId());
 		$c->addDescendingOrderByColumn(AppointmentPeer::YEAR_ID);
+		$c->addAscendingOrderByColumn(AppointmentPeer::STATE);
 		$c->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID);
 		$c->addAscendingOrderByColumn(AppointmentPeer::SUBJECT_ID);
 		$t = AppointmentPeer::doSelectJoinAll($c);

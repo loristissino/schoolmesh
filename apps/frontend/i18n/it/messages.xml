@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
-  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-07-04T12:52:20Z" product-name="messages">
+  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-07-20T17:34:52Z" product-name="messages">
     <body>
       <trans-unit id="3">
         <source>Forgot your password?</source>
@@ -327,8 +327,8 @@
         <target>Stato corrente</target>
       </trans-unit>
       <trans-unit id="105">
-        <source>Complete view of this plan/report</source>
-        <target>Vista completa di questo piano di lavoro / relazione</target>
+        <source>Show this plan/report</source>
+        <target>Mostra questo piano di lavoro / relazione in un'unica pagina</target>
       </trans-unit>
       <trans-unit id="106">
         <source>Export as plain text (yaml)</source>
@@ -516,19 +516,19 @@
       </trans-unit>
       <trans-unit id="153">
         <source>Manage items</source>
-        <target/>
+        <target>Gestisci gli elementi</target>
       </trans-unit>
       <trans-unit id="154">
-        <source>workplan di %s</source>
-        <target/>
+        <source>Workplan of the teacher %s</source>
+        <target>Piano di lavoro del docente %s</target>
       </trans-unit>
       <trans-unit id="155">
         <source>Export</source>
-        <target/>
+        <target>Esporta</target>
       </trans-unit>
       <trans-unit id="156">
         <source>Available formats for export</source>
-        <target/>
+        <target>Formati disponibili per l'esportazione</target>
       </trans-unit>
       <trans-unit id="157">
         <source>YAML</source>
@@ -552,7 +552,7 @@
       </trans-unit>
       <trans-unit id="162">
         <source>Content</source>
-        <target/>
+        <target>Contenuto</target>
       </trans-unit>
       <trans-unit id="163">
         <source>[0]Are you sure?|[1]Are you sure?</source>
@@ -629,6 +629,254 @@
       <trans-unit id="181">
         <source>Filled</source>
         <target>Compilato</target>
+      </trans-unit>
+      <trans-unit id="182">
+        <source>The item was published</source>
+        <target>L'elemento &#xE8; stato pubblicato</target>
+      </trans-unit>
+      <trans-unit id="183">
+        <source>The item is kept private</source>
+        <target>L'elemento &#xE8; stato contrassegnato come privato</target>
+      </trans-unit>
+      <trans-unit id="184">
+        <source>The item was unlinked</source>
+        <target>L'elemento &#xE8; stato scollegato</target>
+      </trans-unit>
+      <trans-unit id="185">
+        <source>Module: </source>
+        <target>Modulo: </target>
+      </trans-unit>
+      <trans-unit id="186">
+        <source>OpenOffice.org Document</source>
+        <target>Documento OpenOffice.org</target>
+      </trans-unit>
+      <trans-unit id="187">
+        <source>Microsoft Word Document</source>
+        <target>Documento Microsoft Word </target>
+      </trans-unit>
+      <trans-unit id="188">
+        <source>Rich Text Format</source>
+        <target>Documento Rich Text Format</target>
+      </trans-unit>
+      <trans-unit id="189">
+        <source>Complete view</source>
+        <target>Vista completa</target>
+      </trans-unit>
+      <trans-unit id="190">
+        <source>Published?</source>
+        <target>Pubblicato?</target>
+      </trans-unit>
+      <trans-unit id="191">
+        <source>published</source>
+        <target>pubblicato</target>
+      </trans-unit>
+      <trans-unit id="192">
+        <source>private</source>
+        <target>privato</target>
+      </trans-unit>
+      <trans-unit id="193">
+        <source>Fill this module specifying contents, objectives, skills, competencies, etc.</source>
+        <target>Compila questo modulo specificando contenuti, obiettivi, abilit&#xE0;, competenze, ecc.</target>
+      </trans-unit>
+      <trans-unit id="194">
+        <source>Delete this module</source>
+        <target>Elimina questo modulo</target>
+      </trans-unit>
+      <trans-unit id="195">
+        <source>Keep private</source>
+        <target>Rendi privato</target>
+      </trans-unit>
+      <trans-unit id="196">
+        <source>Do not allow other teachers to see and use this module (until the workplan is submitted)</source>
+        <target>Non permettere ad altri docenti di vedere e usare questo modulo (finch&#xE9; il piano di lavoro non &#xE8; stato consegnato)</target>
+      </trans-unit>
+      <trans-unit id="197">
+        <source>Publish</source>
+        <target>Pubblica</target>
+      </trans-unit>
+      <trans-unit id="198">
+        <source>Allow other teachers to see and use this module</source>
+        <target>Consenti ad altri docenti di vedere e usare questo modulo</target>
+      </trans-unit>
+      <trans-unit id="199">
+        <source>Unlink</source>
+        <target>Scollega</target>
+      </trans-unit>
+      <trans-unit id="200">
+        <source>Remove this module from this workplan, but keep it as avaliable for other ones</source>
+        <target>Rimuovi questo modulo dal piano di lavoro corrente, tenendolo a disposizione per altri piani di lavoro</target>
+      </trans-unit>
+      <trans-unit id="201">
+        <source>[0]Optional choice|[1]Select at least one item|(1,+Inf]Select at least %1% items</source>
+        <target>[0]Scelta opzionale|[1]Seleziona almeno un elemento|(1,+Inf]Seleziona almeno %1% elementi</target>
+      </trans-unit>
+      <trans-unit id="202">
+        <source>&#x25A3; %s</source>
+        <target>&#x25A3; %s</target>
+      </trans-unit>
+      <trans-unit id="203">
+        <source>&#x25A2; %s</source>
+        <target>&#x25A2; %s</target>
+      </trans-unit>
+      <trans-unit id="204">
+        <source>Fill this field (required)</source>
+        <target>Compila questo campo (richiesto)</target>
+      </trans-unit>
+      <trans-unit id="205">
+        <source>Fill this field (optional)</source>
+        <target>Compila questo campo (facoltativo)</target>
+      </trans-unit>
+      <trans-unit id="206">
+        <source>Workplan/report submission</source>
+        <target>Consegna del piano/relazione</target>
+      </trans-unit>
+      <trans-unit id="207">
+        <source>Create a new module</source>
+        <target>Crea un nuovo modulo</target>
+      </trans-unit>
+      <trans-unit id="208">
+        <source>Import</source>
+        <target>Importa</target>
+      </trans-unit>
+      <trans-unit id="209">
+        <source>Show this plan/report in a single page</source>
+        <target>Mostra questo piano/relazione in una singola pagina</target>
+      </trans-unit>
+      <trans-unit id="210">
+        <source>Item # %d</source>
+        <target>Elemento # %d</target>
+      </trans-unit>
+      <trans-unit id="211">
+        <source>Here you can manage all the items of this group as a list of paragraphs (this could be useful for copy&amp;paste operations from legacy documents).</source>
+        <target>Qui puoi gestire tutti gli elementi di questo gruppo come una serie di capoversi (potrebbe essere utile nel caso si debbano fare operazioni di copia&amp;incolla da vecchi documenti).</target>
+      </trans-unit>
+      <trans-unit id="212">
+        <source>This content must match a template. You can base it on the example provided below.</source>
+        <target>Questo contenuto deve corrispondere a un modello. Puoi basarti sull'esempio fornito in fondo.</target>
+      </trans-unit>
+      <trans-unit id="213">
+        <source>Save what you wrote until now</source>
+        <target>Salva ci&#xF2; che hai scritto fino ad ora</target>
+      </trans-unit>
+      <trans-unit id="214">
+        <source>Save and go back to plan/report</source>
+        <target>Salva e torna al piano/relazione</target>
+      </trans-unit>
+      <trans-unit id="215">
+        <source>Save this content and go back to the workplan/report</source>
+        <target>Salva ci&#xF2; che hai scritto e torna al piano di lavoro/relazione</target>
+      </trans-unit>
+      <trans-unit id="216">
+        <source>Save and start editing the next item, that happens to be &#xAB;%s&#xBB;</source>
+        <target>Salva e passa alla compilazione dell'elemento successivo, &#xAB;%s&#xBB;</target>
+      </trans-unit>
+      <trans-unit id="217">
+        <source>Information</source>
+        <target>Informazioni</target>
+      </trans-unit>
+      <trans-unit id="218">
+        <source>Append it</source>
+        <target>Aggiungi</target>
+      </trans-unit>
+      <trans-unit id="219">
+        <source>Append this content to what you wrote and saved</source>
+        <target>Aggiungi questo contenuto a quanto hai finora scritto e salvato</target>
+      </trans-unit>
+      <trans-unit id="220">
+        <source>Use it</source>
+        <target>Usa</target>
+      </trans-unit>
+      <trans-unit id="221">
+        <source>Replace what you wrote with this content</source>
+        <target>Sostituisci quanto hai scritto finora con questo contenuto</target>
+      </trans-unit>
+      <trans-unit id="222">
+        <source>Export the workplan in one of the available formats</source>
+        <target>Esporta il piano di lavoro in uno dei formati disponibili</target>
+      </trans-unit>
+      <trans-unit id="223">
+        <source>There must be at least one module</source>
+        <target>Deve essere presente almeno un modulo</target>
+      </trans-unit>
+      <trans-unit id="224">
+        <source>Invalid or duplicate title for module</source>
+        <target>Titolo illecito o duplicato per il modulo</target>
+      </trans-unit>
+      <trans-unit id="225">
+        <source>Invalid period specification for module</source>
+        <target>Periodo illecito specificato per il modulo</target>
+      </trans-unit>
+      <trans-unit id="226">
+        <source>Missing group %s</source>
+        <target>Manca il gruppo %s</target>
+      </trans-unit>
+      <trans-unit id="227">
+        <source>There must be at least an item in group &#xAB;%s&#xBB;</source>
+        <target>Deve essere presente almeno un elemento nel gruppo &#xAB;%s&#xBB;</target>
+      </trans-unit>
+      <trans-unit id="228">
+        <source>Invalid content for item &#xAB;%s&#xBB; in group &#xAB;%s&#xBB;</source>
+        <target>Contenuto illecito per l'elemento &#xAB;%s&#xBB; nel gruppo &#xAB;%s&#xBB;</target>
+      </trans-unit>
+      <trans-unit id="229">
+        <source>Missing evaluation for item &#xAB;%s&#xBB; in group &#xAB;%s&#xBB;</source>
+        <target>Manca la valutazione per l'elemento &#xAB;%s&#xBB; nel gruppo &#xAB;%s&#xBB;</target>
+      </trans-unit>
+      <trans-unit id="230">
+        <source>Module accepted</source>
+        <target>Modulo accettato</target>
+      </trans-unit>
+      <trans-unit id="231">
+        <source>Tools selected</source>
+        <target>Strumenti selezionati</target>
+      </trans-unit>
+      <trans-unit id="232">
+        <source>Missing selection of tools</source>
+        <target>Selezione degli strumenti mancante</target>
+      </trans-unit>
+      <trans-unit id="233">
+        <source>Some errors prevented the submission of the workplan</source>
+        <target>Alcuni errori hanno impedito la consegna del piano/relazione</target>
+      </trans-unit>
+      <trans-unit id="233">
+        <source>The items have been replaced.</source>
+        <target>Gli elementi sono stati sostituiti.</target>
+      </trans-unit>
+      <trans-unit id="234">
+        <source>Import the workplan from a file or from the database</source>
+        <target>Importa il piano di lavoro da un file o dalla base di dati</target>
+      </trans-unit>
+      <trans-unit id="235">
+        <source>Import this workplan from the database, replacing all the contents of &#xAB;%s&#xBB;</source>
+        <target>Importa questo piano di lavoro dalla base di dati, sostituendo tutti i contenuti di &#xAB;%s&#xBB;</target>
+      </trans-unit>
+      <trans-unit id="236">
+        <source>Workplan import</source>
+        <target>Importazione del piano di lavoro</target>
+      </trans-unit>
+      <trans-unit id="237">
+        <source>Import one of your workplans</source>
+        <target>Importa uno dei tuoi piani di lavoro</target>
+      </trans-unit>
+      <trans-unit id="238">
+        <source>Import a workplan of a colleague</source>
+        <target>Importa il piano di lavoro di un tuo collega</target>
+      </trans-unit>
+      <trans-unit id="239">
+        <source>Teacher</source>
+        <target>Docente</target>
+      </trans-unit>
+      <trans-unit id="240">
+        <source>Import from a file</source>
+        <target>Importa da un file</target>
+      </trans-unit>
+      <trans-unit id="241">
+        <source>Not implemented yet</source>
+        <target>Non ancora implementato</target>
+      </trans-unit>
+      <trans-unit id="243">
+        <source>This action will replace all the contents of the workplan.</source>
+        <target>Questa azione sostituirà tutti i contenuti del piano di lavoro.</target>
       </trans-unit>
     </body>
   </file>
