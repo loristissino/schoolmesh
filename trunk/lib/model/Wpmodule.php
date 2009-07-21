@@ -38,7 +38,22 @@ class Wpmodule extends BaseWpmodule
 	}
 
 	}
+
+
+	public function link($workplan, $context, PropelPDO $con = null)
+	{
+	/* FIXME: I should check if this is invoked by the owner */
+
+	$this->setAppointment($workplan);
+	$this->setRank($this->getAppointment()->countWpmodules()+1);
+	$this->save();
+	/* FIXME: Put this actions in a transaction... */
 	
+	
+	}
+
+
+
 	public function getIsDeletable()
 	{
 		

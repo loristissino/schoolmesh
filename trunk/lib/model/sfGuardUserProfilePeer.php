@@ -18,4 +18,14 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	return $t;
 	}
 	
+	
+	public static function retrieveAllUsers()
+	{
+	$c = new Criteria();
+	$c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
+	$t = self::doSelect($c);
+	return $t;
+		
+	}
+	
 }

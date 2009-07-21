@@ -37,7 +37,7 @@ class Appointment extends BaseAppointment
 	
 	{
 		$c=new Criteria();
-		$c->add(AppointmentPeer::USER_ID, $this->getUserId());  // not the same teacher
+		$c->add(AppointmentPeer::USER_ID, $this->getUserId());  // the same teacher
 		$c->add(AppointmentPeer::ID, $this->getId(), Criteria::NOT_EQUAL);          // not the same Workplan / Appointment
 		$c->add(AppointmentPeer::SUBJECT_ID, $this->getSubjectId());                 // the same subject
 		$c->addJoin(AppointmentPeer::SCHOOLCLASS_ID, SchoolclassPeer::ID);
@@ -46,6 +46,19 @@ class Appointment extends BaseAppointment
 		$t = AppointmentPeer::doSelect($c);
 		return $t;
 	}
+
+
+	public function retrieveOtherModulesOfSameTeacher()
+	
+	{
+		$c=new Criteria();
+		$c->add(WpmodulePeer::USER_ID, $this->getUserId());  // the same teacher
+//		$c->add(WpmodulePeer::APPOINTMENT_ID, $this->getId(), Criteria::NOT_EQUAL);  // not the same Workplan / Appointment
+		$c->addDescendingOrderByColumn(WpmodulePeer::UPDATED_AT);   // order by last update
+		$t = WpmodulePeer::doSelect($c);
+		return $t;
+	}
+
 
 
 	public function getWpinfos($criteria = null, PropelPDO $con = null)

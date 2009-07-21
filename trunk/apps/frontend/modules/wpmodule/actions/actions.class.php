@@ -82,6 +82,21 @@ class wpmoduleActions extends sfActions
 	
 	}  
 
+	public function executeLink(sfWebRequest $request)
+	{
+	  $this->forward404Unless($request->getMethod()=="PUT" or $request->getMethod()=="POST");
+	  $item = WpmodulePeer::retrieveByPk($this->getRequestParameter('id'));
+	  $this->forward404Unless($item);
+	
+	  $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('workplan'));
+	  $this->forward404Unless($this->workplan);
+
+	  $result=$item->link($this->workplan, $this->getContext());
+
+	  $this->getUser()->setFlash('notice_modules', $this->getContext()->getI18N()->__('The item was linked'));
+	  $this->redirect('plansandreports/fill?id='.$this->workplan->getId() . '#wpmodules'); 
+	
+	}  
 
 
 	public function executeDown(sfWebRequest $request)
@@ -105,7 +120,17 @@ class wpmoduleActions extends sfActions
 
   public function executeShow(sfWebRequest $request)
   {
-	$this->redirect('wpmodule/view?id='.$request->getParameter('id'));
+    $this->wpmodule = WpmodulePeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($this->wpmodule);
+
+	$this->owner=$this->wpmodule->getOwner();;
+	$this->workplan = $this->wpmodule->getAppointment();
+		
+    $this->forward404Unless($this->owner->getUserId()==$this->getUser()->getProfile()->getSfGuardUser()->getId() or 
+		$this->getIsPublic());
+	$this->item_groups=$this->wpmodule->getWpitemGroups();
+		
+	$this->setLayout('popup_layout');
 	}
 
   public function executeView(sfWebRequest $request)
@@ -120,7 +145,6 @@ class wpmoduleActions extends sfActions
 	$this->workplan = $this->wpmodule->getAppointment();
 	$this->wpstate = $this->workplan->getState();
 	$this->ownerId=$this->wpmodule->getUserId();
-	$this->owner=$this->wpmodule->getOwner();
 	$this->item_groups=$this->wpmodule->getWpitemGroups();
 	
 	if ($this->workplan->getState() > Workflow::WP_DRAFT)

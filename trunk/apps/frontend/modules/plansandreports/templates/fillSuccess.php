@@ -60,7 +60,7 @@
 	<li class="sf_admin_action_import">
 	<?php echo link_to(
 				__('Import'),
-				'plansandreports/import?id='.$workplan->getId(),
+				'plansandreports/importmodule?id='.$workplan->getId(),
 				array('title'=>'Import a module previously prepared')
 				)?>
 	

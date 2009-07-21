@@ -1,4 +1,5 @@
 <?php use_helper('Javascript') ?>
+<?php use_helper('Form') ?>
 <?php use_javascript('tiny_mce/tiny_mce.js') ?>
 <?php slot('breadcrumbs',
 	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
@@ -24,7 +25,7 @@
 <?php if ($sf_user->hasFlash('notice_info')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice_info')?></div>
 <?php endif; ?>
-<form action="<?php echo url_for('wpinfo/update?id='.$wpinfo->getId()) ?>" method="POST">
+<form action="<?php echo url_for('wpinfo/update?id='.$wpinfo->getId()) ?>" method="POST" name="editform">
 
 <?php echo javascript_tag("
 tinyMCE.init({
@@ -46,11 +47,34 @@ editor_selector : \"mceAdvanced\"
 <?php echo $wpinfo->getContent() ?>
 </textarea>
 <br />
+
+<?php /*
+<p><a href="#" onClick="var f = document.editform; var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', 'name'); m.setAttribute('value', 'save'); f.appendChild(m); f.submit(); return false;">save</a></p>
+
+
+<input type="image" src="/schoolmesh/images/replace.png" name="save" alt="<?php echo __("Save") ?>" title="<?php echo __('Save what you wrote until now') ?>" />save...<br />
+<input type="image" src="/schoolmesh/images/replace.png" name="back" alt="<?php echo __("Save and go back to plan/report") ?>" title="<?php echo __('Save this content and go back to the workplan/report') ?>" /><br />
+<input type="image" src="/schoolmesh/images/replace.png" name="continue" alt="<?php echo sprintf(__('Save and go to next item (%s)'), $next_item->getWpinfoType()->getTitle()); ?>" title="<?php echo sprintf(__('Save and start editing the next item, that happens to be «%s»'), $next_item->getWpinfoType()->getTitle()) ?>" /><br />
+<br />
+*/ ?>
+
+<h2><?php echo __('Actions') ?></h2>
+
+<?php echo submit_image_tag('save', array('name'=>'save', 'title'=>__('Save what you wrote until now'))) ?>&nbsp;&nbsp;<?php echo __("Save") ?><br />
+<?php echo submit_image_tag('saveandback', array('name'=>'back', 'title'=>__('Save this content and go back to the workplan/report'))); ?>&nbsp;&nbsp;<?php echo __("Save and go back to plan/report") ?><br />
+
+<?php if($next_item): ?>
+<?php echo submit_image_tag('saveandnext', array('name'=>'continue', 'title'=>sprintf(__('Save and start editing the next item, that happens to be «%s»'), $next_item->getWpinfoType()->getTitle()))); ?>&nbsp;&nbsp;<?php echo sprintf(__('Save and go to next item'), $next_item->getWpinfoType()->getTitle()) ?><br />
+<?php endif ?>
+
+<?php /*
 <input type="submit" name="save" value="<?php echo __("Save") ?>" title="<?php echo __('Save what you wrote until now') ?>" />
 <input type="submit" name="back" value="<?php echo __("Save and go back to plan/report") ?>" title="<?php echo __('Save this content and go back to the workplan/report') ?>" />
 <?php if($next_item): ?>
 	<input type="submit" name="continue" value="<?php echo sprintf(__('Save and go to next item (%s)'), $next_item->getWpinfoType()->getTitle()); ?>" title="<?php echo sprintf(__('Save and start editing the next item, that happens to be «%s»'), $next_item->getWpinfoType()->getTitle()) ?>" />
 <?php endif; ?>
+
+*/ ?>
 </form>
 
 <h2><?php echo __('Hints') ?></h2>

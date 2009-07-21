@@ -58,15 +58,16 @@ class wpinfoActions extends sfActions
 	if($result['result']=='notice_info')
 		{
 			$wpinfo->save();
-			if ($request->getParameter('save'))
+			if ($request->getParameter('save') || $request->getParameter('save_x'))
+				// we check also save_x to support image submit
 				{
 					$this->redirect('wpinfo/edit?id=' . $wpinfo->getId());
 				}
-			if ($request->getParameter('back'))
+			if ($request->getParameter('back') || $request->getParameter('back_x'))
 				{
 					$this->redirect('plansandreports/fill?id=' . $wpinfo->getAppointmentId());
 				}
-			if ($request->getParameter('continue'))
+			if ($request->getParameter('continue') || $request->getParameter('continue_x'))
 				{
 					$this->redirect('wpinfo/edit?id=' . $wpinfo->getNext()->getId());
 				}

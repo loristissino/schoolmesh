@@ -38,6 +38,20 @@ class plansandreportsActions extends sfActions
 
 	}
 
+	public function executeImportmodule(sfWebRequest $request)
+	{
+    $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+	$this->user=$this->getUser();
+    $this->forward404Unless($this->workplan);
+    $this->forward404Unless($this->workplan->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId()));
+
+	$this->steps = Workflow::getWpfrSteps();
+	
+//	$this->c_modules = $this->workplan->retrieveImportableModulesOfColleagues();
+	$this->s_modules = $this->workplan->retrieveOtherModulesOfSameTeacher();
+
+	}
+
 	public function executeImportfromdb(sfWebRequest $request)
 	{
     $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
@@ -194,6 +208,11 @@ class plansandreportsActions extends sfActions
 	$whoIsViewing = $this->getUser()->getProfile()->getSfGuardUser()->getId();
 	
     $this->forward404Unless($this->workplan->isViewableBy($whoIsViewing));
+
+	if ($request->getParameter('layout')=='popup')
+		{
+			$this->setLayout('popup_layout');
+		};
 
 	switch($request->getRequestFormat())
 		{

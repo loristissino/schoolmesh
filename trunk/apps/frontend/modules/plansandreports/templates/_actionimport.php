@@ -2,8 +2,8 @@
 				<li class="sf_admin_action_view">
 					<?php echo link_to(
 				__('View'),
-				'plansandreports/view?id=' . $iworkplan->getId(),
-				array('title'=>__('Show this plan/report') . ' ' . __('(opens in a new window)'), 'target'=>'_blank')
+				'plansandreports/view?id=' . $iworkplan->getId(). '&layout=popup',
+				array('title'=>__('Show this plan/report') . ' ' . __('(opens in a new window)'), 'popup' => array('popupWindow', 'width=600,height=300,left=250,top=0,scrollbars=yes'))
 				)?>
 				</li>
 				<li class="sf_admin_action_import">
