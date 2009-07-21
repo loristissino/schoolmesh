@@ -567,8 +567,8 @@
         <target>Salva e torna al piano di lavoro</target>
       </trans-unit>
       <trans-unit id="166">
-        <source>Save and go to next item (%s)</source>
-        <target>Salva e vai all'elemento successivo (%s)</target>
+        <source>Save and go to next item</source>
+        <target>Salva e vai all'elemento successivo</target>
       </trans-unit>
       <trans-unit id="167">
         <source>Hints</source>

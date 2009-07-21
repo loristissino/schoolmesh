@@ -67,7 +67,7 @@
 			<?php /* here I should show edit or show depending on the state */ ?>
 				<?php echo link_to(
 				__('Fill'),
-				'wpmodule/show?id='.$wpmodule->getId(),
+				'wpmodule/view?id='.$wpmodule->getId(),
 				array('method' => 'get',  'title'=>__('Fill this module specifying contents, objectives, skills, competencies, etc.')) 
 				)?>
 			</li>
