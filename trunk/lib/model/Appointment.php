@@ -51,13 +51,42 @@ class Appointment extends BaseAppointment
 	public function retrieveOtherModulesOfSameTeacher()
 	
 	{
-		$c=new Criteria();
-		$c->add(WpmodulePeer::USER_ID, $this->getUserId());  // the same teacher
-//		$c->add(WpmodulePeer::APPOINTMENT_ID, $this->getId(), Criteria::NOT_EQUAL);  // not the same Workplan / Appointment
-		$c->addDescendingOrderByColumn(WpmodulePeer::UPDATED_AT);   // order by last update
-		$t = WpmodulePeer::doSelect($c);
-		return $t;
-	}
+
+	$connection = Propel::getConnection();
+
+	$userId = $this->getUserId();
+
+	$sql = 'SELECT wpmodule.id as id, title, period, schoolclass_id, wpmodule.updated_at as last_update , appointment_id FROM ' . WpmodulePeer::TABLE_NAME .
+	' LEFT JOIN ' . AppointmentPeer::TABLE_NAME . ' ON ' . WpmodulePeer::APPOINTMENT_ID . ' = ' . AppointmentPeer::ID .
+    ' LEFT JOIN ' . SchoolclassPeer::TABLE_NAME . ' ON ' . AppointmentPeer::SCHOOLCLASS_ID . ' = ' . SchoolclassPeer::ID . 
+    ' LEFT JOIN ' . YearPeer::TABLE_NAME . ' ON ' . AppointmentPeer::YEAR_ID . ' = ' . YearPeer::ID .
+    ' WHERE ' . WpmodulePeer::USER_ID . ' = %d ' .
+    ' ORDER BY ' . WpmodulePeer::UPDATED_AT . ' DESC';
+
+
+	$sql = sprintf($sql, $userId);
+
+    $statement = $connection->prepare($sql);
+    $statement->execute();
+    $resultset = $statement->fetchAll(PDO::FETCH_OBJ);
+
+
+	return $resultset;
+	/*
+	SELECT * FROM wpmodule LEFT JOIN appointment ON wpmodule.APPOINTMENT_ID = appointment.ID LEFT JOIN schoolclass ON appointment.SCHOOLCLASS_ID = schoolclass.ID LEFT JOIN year ON appointment.YEAR_ID = year.ID WHERE wpmodule.USER_ID = 4822 ORDER BY wpmodule.UPDATED_AT DESC
+	
+	/*
+	SELECT *
+FROM `wpmodule`
+LEFT JOIN appointment ON wpmodule.appointment_id = appointment.id
+LEFT JOIN schoolclass ON appointment.schoolclass_id = schoolclass.id
+LEFT JOIN year ON appointment.year_id = year.id
+WHERE wpmodule.user_id =4822
+ORDER BY wpmodule.updated_at DESC
+
+*/ 
+
+}
 
 
 

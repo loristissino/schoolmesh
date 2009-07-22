@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
-  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-07-20T20:10:01Z" product-name="messages">
+  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-07-22T16:58:30Z" product-name="messages">
     <body>
       <trans-unit id="3">
         <source>Forgot your password?</source>
@@ -24,11 +24,11 @@
       </trans-unit>
       <trans-unit id="11">
         <source>%fullname% logged out</source>
-        <target/>
+        <target></target>
       </trans-unit>
       <trans-unit id="12">
         <source>Login status of %fullname% (&lt;strong&gt;%username%&lt;/strong&gt;) from workstation %workstation% (%ip%): </source>
-        <target/>
+        <target></target>
       </trans-unit>
       <trans-unit id="13">
         <source>Login time: %timestamp%</source>
@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="36">
         <source>Checked</source>
-        <target/>
+        <target></target>
       </trans-unit>
       <trans-unit id="37">
         <source>You may login</source>
@@ -248,11 +248,11 @@
       </trans-unit>
       <trans-unit id="85">
         <source>min</source>
-        <target/>
+        <target></target>
       </trans-unit>
       <trans-unit id="86">
         <source>max</source>
-        <target/>
+        <target></target>
       </trans-unit>
       <trans-unit id="87">
         <source>rich text edit</source>
@@ -532,23 +532,23 @@
       </trans-unit>
       <trans-unit id="157">
         <source>YAML</source>
-        <target/>
+        <target></target>
       </trans-unit>
       <trans-unit id="158">
         <source>ODT</source>
-        <target/>
+        <target></target>
       </trans-unit>
       <trans-unit id="159">
         <source>DOC</source>
-        <target/>
+        <target></target>
       </trans-unit>
       <trans-unit id="160">
         <source>RTF</source>
-        <target/>
+        <target></target>
       </trans-unit>
       <trans-unit id="161">
         <source>PDF</source>
-        <target/>
+        <target></target>
       </trans-unit>
       <trans-unit id="162">
         <source>Content</source>
@@ -888,11 +888,75 @@
       </trans-unit>
       <trans-unit id="247">
         <source>this content is required and is currently missing</source>
-        <target>questo contenuto è richiesto e attualmente manca</target>
+        <target>questo contenuto &#xE8; richiesto e attualmente manca</target>
       </trans-unit>
       <trans-unit id="248">
         <source>The workplan has been correctly imported.</source>
-        <target>Il piano di lavoro è stato correttamente importato.</target>
+        <target>Il piano di lavoro &#xE8; stato correttamente importato.</target>
+      </trans-unit>
+      <trans-unit id="249">
+        <source>User management</source>
+        <target>Gestione degli utenti</target>
+      </trans-unit>
+      <trans-unit id="250">
+        <source>The item was linked</source>
+        <target>L'elemento è stato collegato</target>
+      </trans-unit>
+      <trans-unit id="251">
+        <source>Workplan module import</source>
+        <target>Importazione di modulo di piano di lavoro</target>
+      </trans-unit>
+      <trans-unit id="252">
+        <source>workplan di %s</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="253">
+        <source>Import one of your modules</source>
+        <target>Importa uno dei tuoi moduli</target>
+      </trans-unit>
+      <trans-unit id="254">
+        <source>Import a module of a colleague</source>
+        <target>Importa un modulo di un collega</target>
+      </trans-unit>
+      <trans-unit id="255">
+        <source>Show this module</source>
+        <target>Mostra questo modulo</target>
+      </trans-unit>
+      <trans-unit id="256">
+        <source>Import this module from the database</source>
+        <target>Importa questo modulo dalla base di dati</target>
+      </trans-unit>
+      <trans-unit id="257">
+        <source>Link</source>
+        <target>Collega</target>
+      </trans-unit>
+      <trans-unit id="258">
+        <source>Link this module to the workplan</source>
+        <target>Collega questo modulo al piano di lavoro</target>
+      </trans-unit>
+      <trans-unit id="259">
+        <source>Save this content and go back to the module</source>
+        <target>Salva questo contenuto e torma al modulo</target>
+      </trans-unit>
+      <trans-unit id="260">
+        <source>Save and go back to the module</source>
+        <target>Salva e torna al modulo</target>
+      </trans-unit>
+      <trans-unit id="261">
+        <source>Save these items and go back to the module</source>
+        <target>Salva questi elementi e torna al modulo</target>
+      </trans-unit>
+      <trans-unit id="262">
+        <source>You can now edit &#xAB;%s&#xBB;</source>
+        <target>Ora puoi compilare il campo &#xAB;%s&#xBB;</target>
+      </trans-unit>
+      <trans-unit id="263">
+        <source>Save and go to next item, &#xAB;%s&#xBB;</source>
+        <target>Salva e vai all'elemento successivo</target>
+      </trans-unit>
+      <trans-unit id="264">
+        <source>orphan module</source>
+        <target></target>
       </trans-unit>
     </body>
   </file>

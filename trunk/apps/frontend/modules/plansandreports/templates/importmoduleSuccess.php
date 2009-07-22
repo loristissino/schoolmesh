@@ -19,6 +19,7 @@
     <tr>
       <th class="sf_admin_text"><?php echo __('Last update') ?></th>
       <th class="sf_admin_text"><?php echo __('Title') ?></th>
+      <th class="sf_admin_text"><?php echo __('Class') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
@@ -26,14 +27,20 @@
 	<?php $i=0 ?>
 	<?php foreach($s_modules as $wpmodule): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
-      <td><?php echo format_datetime($wpmodule->getUpdatedAt()) ?></td>
-      <td><?php echo $wpmodule->getTitle() ?></td>
-	  <td><?php include_partial('actionmoduleimport', array('wpmodule'=>$wpmodule, 'workplan'=>$workplan, 'user'=>$user))?></td>
+		<?php /* WARNING: Since we use PDO directly, objects are raw and we don't have Getters here: */ ?>
+      <td><?php  echo format_datetime($wpmodule->last_update) ?></td>
+      <td><?php  echo $wpmodule->title ?></td>
+      <td><?php  echo $wpmodule->schoolclass_id ?></td>
+	  <td><?php include_partial('actionmoduleimport', array('wpmodule'=>$wpmodule, 'workplan'=>$workplan))?></td>
 	</td>
     </tr>
     <?php endforeach; ?>
   </tbody>
 </table>
+
+<pre>
+<?php print_r($s_modules) ?>
+</pre>
 
 </div>
 
