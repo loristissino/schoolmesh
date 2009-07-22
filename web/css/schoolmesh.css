@@ -127,6 +127,18 @@
 {
   background: url(../images/link.png) no-repeat 0 0;
 }
+#sf_admin_container ul li.sf_admin_action_save a
+{
+  background: url(../images/save.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_saveandback a
+{
+  background: url(../images/saveandback.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_saveandnext a
+{
+  background: url(../images/saveandnext.png) no-repeat 0 0;
+}
 
 div.module_content
 {

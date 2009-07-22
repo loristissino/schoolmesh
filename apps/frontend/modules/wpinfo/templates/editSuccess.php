@@ -25,7 +25,7 @@
 <?php if ($sf_user->hasFlash('notice_info')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice_info')?></div>
 <?php endif; ?>
-<form action="<?php echo url_for('wpinfo/update?id='.$wpinfo->getId()) ?>" method="POST" name="editform">
+<form action="<?php echo url_for('wpinfo/update?id='.$wpinfo->getId()) ?>" method="POST" id="editform">
 
 <?php echo javascript_tag("
 tinyMCE.init({
@@ -46,19 +46,33 @@ editor_selector : \"mceAdvanced\"
 <textarea name="value" class="mceAdvanced" style="width:100%">
 <?php echo $wpinfo->getContent() ?>
 </textarea>
-<br />
-
-<?php /*
-<p><a href="#" onClick="var f = document.editform; var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', 'name'); m.setAttribute('value', 'save'); f.appendChild(m); f.submit(); return false;">save</a></p>
-
-
-<input type="image" src="/schoolmesh/images/replace.png" name="save" alt="<?php echo __("Save") ?>" title="<?php echo __('Save what you wrote until now') ?>" />save...<br />
-<input type="image" src="/schoolmesh/images/replace.png" name="back" alt="<?php echo __("Save and go back to plan/report") ?>" title="<?php echo __('Save this content and go back to the workplan/report') ?>" /><br />
-<input type="image" src="/schoolmesh/images/replace.png" name="continue" alt="<?php echo sprintf(__('Save and go to next item (%s)'), $next_item->getWpinfoType()->getTitle()); ?>" title="<?php echo sprintf(__('Save and start editing the next item, that happens to be «%s»'), $next_item->getWpinfoType()->getTitle()) ?>" /><br />
-<br />
-*/ ?>
 
 <h2><?php echo __('Actions') ?></h2>
+
+<ul class="sf_admin_actions">
+	<li class="sf_admin_action_save">
+	<a href="<?php echo url_for('plansandreports/fill?id='.$wpinfo->getAppointment()->getId()) ?>" 
+		onClick="var f = document.getElementById('editform'); var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', 'save'); m.setAttribute('value', 'save'); f.appendChild(m); f.submit(); return false;"
+		title="<?php echo __('Save what you wrote until now') ?>"
+	><?php echo __("Save") ?></a>
+	</li>
+	<li class="sf_admin_action_saveandback">
+	<a href="<?php echo url_for('plansandreports/fill?id='.$wpinfo->getAppointment()->getId()) ?>" 
+		onClick="var f = document.getElementById('editform'); var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', 'back'); m.setAttribute('value', 'back'); f.appendChild(m); f.submit(); return false;"
+		title="<?php echo __('Save this content and go back to the workplan/report') ?>"
+	><?php echo __("Save and go back to plan/report") ?></a>
+	</li>
+<?php if($next_item): ?>
+	<li class="sf_admin_action_saveandnext">
+	<a href="<?php echo url_for('plansandreports/fill?id='.$wpinfo->getAppointment()->getId()) ?>" 
+	onClick="var f = document.getElementById('editform'); var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', 'continue'); m.setAttribute('value', 'continue'); f.appendChild(m); f.submit(); return false;"
+		title="<?php echo sprintf(__('Save and start editing the next item, that happens to be «%s»'), $next_item->getWpinfoType()->getTitle()) ?>"
+	><?php echo sprintf(__('Save and go to next item, «%s»'), $next_item->getWpinfoType()->getTitle()) ?></a>
+	</li>
+<?php endif ?>
+</ul>
+
+<?php /*
 
 <?php echo submit_image_tag('save', array('name'=>'save', 'title'=>__('Save what you wrote until now'))) ?>&nbsp;&nbsp;<?php echo __("Save") ?><br />
 <?php echo submit_image_tag('saveandback', array('name'=>'back', 'title'=>__('Save this content and go back to the workplan/report'))); ?>&nbsp;&nbsp;<?php echo __("Save and go back to plan/report") ?><br />
@@ -104,7 +118,7 @@ editor_selector : \"mceAdvanced\"
 				<td><?php echo html_entity_decode($hint->getContent()); ?></td>
 				<td>
 					<?php foreach($hint->getUsedIn() as $used_in): ?>
-						<em>&nbsp;<?php echo sprintf(__('Used in «%s»'), $used_in); ?></em><br />
+						<em>&nbsp;<?php echo sprintf(__('Used in «%s»'), $used_in ? $used_in : __('orphan module')); ?></em><br />
 					<?php endforeach; ?>
 					</ul>
 				</td>

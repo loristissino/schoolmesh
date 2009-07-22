@@ -97,6 +97,10 @@
 
 <?php include_partial('workflow', array('workflow_logs' => $workflow_logs)) ?>
 
+<hr />
+<h2><?php echo __("Actions") ?></h2>
+
+
 <?php if ($steps[$state]['owner']['submitAction']!=''): ?>
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_view">

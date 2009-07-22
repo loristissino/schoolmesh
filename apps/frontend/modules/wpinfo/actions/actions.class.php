@@ -55,9 +55,15 @@ class wpinfoActions extends sfActions
 
 	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 
+	$this->result=$result['message'];
+	
 	if($result['result']=='notice_info')
 		{
 			$wpinfo->save();
+			
+//			$this->params = $this->getRequest()->getParameterHolder()->getAll();
+//			return;
+			
 			if ($request->getParameter('save') || $request->getParameter('save_x'))
 				// we check also save_x to support image submit
 				{
@@ -69,7 +75,14 @@ class wpinfoActions extends sfActions
 				}
 			if ($request->getParameter('continue') || $request->getParameter('continue_x'))
 				{
+					$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']) . sprintf($this->getContext()->getI18N()->__('You can now edit «%s»'), $wpinfo->getNext()->getWpinfoType()->getTitle()));
 					$this->redirect('wpinfo/edit?id=' . $wpinfo->getNext()->getId());
+				}
+			else
+				{
+					
+					$this->redirect('plansandreports/fill?id=' . $wpinfo->getAppointmentId());
+	
 				}
 		}
 	else
@@ -106,7 +119,7 @@ class wpinfoActions extends sfActions
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
     $this->forward404Unless($wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
     $this->forward404Unless($wpinfo2 = WpinfoPeer::retrieveByPk($request->getParameter('app')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('app')));
-	$wpinfo->setContent($wpinfo->getContent() .  $wpinfo2->getContent());
+	$wpinfo->setCheckedContent($this->getUser()->getProfile()->getSfGuardUser()->getId(), $wpinfo->getContent() .  '<br />' . $wpinfo2->getContent());
 	$wpinfo->save();
 	$this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content saved.'));
 	$this->forward('wpinfo', 'edit');
