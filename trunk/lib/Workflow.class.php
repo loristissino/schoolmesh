@@ -100,7 +100,7 @@ class Workflow
 			'displayedAction'=>'Fill',
 			'submitAction'=>"submit",
 			'submitDisplayedAction'=>'Submit this report',
-			'submitDoneAction'=>'Report submitted for approval',
+			'submitDoneAction'=>'Report submitted for approval.',
 			'submitNextState'=>self::FR_WADMC,
 			),
 		'actions' => Array(),

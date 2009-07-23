@@ -74,4 +74,17 @@ class Opendocument{
 			$this->file2serve = $docfile;
 		}
 
+	public static function html2odtxml($text)
+		{
+		$text=str_replace('<br />', '<text:line-break/>', html_entity_decode($text));
+		$text=str_replace('<em>', '<text:span text:style-name="T1">', $text);
+		$text=str_replace('</em>', '</text:span>', $text);
+		$text=str_replace('<sup>', '<text:span text:style-name="T2">', $text);
+		$text=str_replace('</sup>', '</text:span>', $text);
+		$text=str_replace('<sub>', '<text:span text:style-name="T3">', $text);
+		$text=str_replace('</sub>', '</text:span>', $text);
+		$text=str_replace('<hr />', '<text:p text:style-name="Horizontal_20_Line"/>', $text);
+		return $text;
+		}
+
 	};

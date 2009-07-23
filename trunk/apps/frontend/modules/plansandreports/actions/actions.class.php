@@ -74,9 +74,6 @@ class plansandreportsActions extends sfActions
 	}
 
 
-
-
-
 	public function executeWpsubmit(sfWebRequest $request)
 	{
     $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
@@ -222,6 +219,8 @@ class plansandreportsActions extends sfActions
 	$whoIsViewing = $this->getUser()->getProfile()->getSfGuardUser()->getId();
 	
     $this->forward404Unless($this->workplan->isViewableBy($whoIsViewing));
+	
+	$this->steps = Workflow::getWpfrSteps();
 
 	if ($request->getParameter('layout')=='popup')
 		{

@@ -9,7 +9,7 @@
 				<li class="sf_admin_action_import">
 					<?php echo link_to(
 				__('Import'),
-				'plansandreports/importmodulefromdb?id=' . $workplan->getId() . '&module=' . $wpmodule->id, 
+				'wpmodule/import?id=' . $wpmodule->id . '&workplan=' . $workplan->getId(), 
 				array('method' => 'put', 'title'=>__('Import this module from the database'))
 				)?>
 				</li>
