@@ -424,7 +424,7 @@
 		<text:p text:style-name="P18">Test scritti autovalutati, più compiti scritti e esercitazioni varie.</text:p>
 		<text:p text:style-name="P4"></text:p>
 				<text:p text:style-name="P4">Prove di verifica sommative</text:p>
-		<text:p text:style-name="P18"></text:p>
+		<text:p text:style-name="P18">Primo periodo: scritte 2; orali 2; pratiche 0.<text:line-break/>Secondo periodo: scritte 3; orali 2; pratiche 0.<text:line-break/></text:p>
 		<text:p text:style-name="P4"></text:p>
 				<text:p text:style-name="P4">Recupero programmato</text:p>
 		<text:p text:style-name="P18">Se necessario.</text:p>
@@ -457,9 +457,9 @@
 		<text:p/>
 			<text:p text:style-name="P10">Abilità</text:p>
 		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">prima abilità (con valori di x<text:span text:style-name="T2">2</text:span>)</text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">seconda abilità (con valori di x log <text:span text:style-name="T3">10</text:span> <text:span text:style-name="T1">n</text:span>)</text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">terza abilità (con valori <text:span text:style-name="T1">enfatizzati</text:span>)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">prima abilità (con valori di</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">seconda abilità (con valori di x lo</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">terza abilità (con valori)</text:p></text:list-item>
 					<text:list-item><text:p text:style-name="P1">quarta abilità</text:p></text:list-item>
 				</text:list>
 		<text:p/>
@@ -481,12 +481,22 @@
 	<text:p />
 			<text:p text:style-name="P10">Contenuti</text:p>
 		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">---</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">uno</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">due</text:p></text:list-item>
 				</text:list>
 		<text:p/>
 			<text:p text:style-name="P10">Conoscenze</text:p>
 		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">---</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">sdf</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">sdf</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">as</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">df</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">asf</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">as</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">f</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">asf</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">asdf</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">asdf</text:p></text:list-item>
 				</text:list>
 		<text:p/>
 			<text:p text:style-name="P10">Abilità</text:p>
