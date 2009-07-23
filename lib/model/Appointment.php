@@ -288,7 +288,7 @@ $con->query($sql);
 				
 		foreach($wpinfotypes as $wpinfotype)
 			{
-
+				$flash='error_info';
 				$wpinfo=WpinfoPeer::retrieveByAppointmentIdAndType($this->getId(), $wpinfotype->getId());
 				if (!$wpinfo)
 					{
@@ -307,7 +307,8 @@ $con->query($sql);
 										false,
 										$context->getI18N()->__('Content cannot be empty'),
 										$wpinfotype->getTitle(),
-										'wpinfo/edit?id=' . $wpinfo->getId()));
+										'wpinfo/edit?id=' . $wpinfo->getId(),
+										$flash));
 								}
 							elseif (!$wpinfo->checkContentAgainstTemplate($wpinfo->getContent(), $wpinfotype->getTemplate()))
 								{
@@ -316,7 +317,8 @@ $con->query($sql);
 										false,
 										$context->getI18N()->__('Content doesn\'t match template'),
 										$wpinfotype->getTitle(),
-										'wpinfo/edit?id=' . $wpinfo->getId()));
+										'wpinfo/edit?id=' . $wpinfo->getId(),
+										$flash));
 								}
 							else
 								{
@@ -358,7 +360,8 @@ $con->query($sql);
 									false,
 									$context->getI18N()->__('Invalid or duplicate title for module'),
 									$wpmodule->getTitle(),
-									'wpmodule/view?id=' . $wpmodule->getId()));
+									'wpmodule/view?id=' . $wpmodule->getId()
+									));
 							$moduleIsOk=false;
 						}
 					else
@@ -375,7 +378,8 @@ $con->query($sql);
 									false,
 									$context->getI18N()->__('Invalid period specification for module'),
 									$wpmodule->getTitle(),
-									'wpmodule/view?id=' . $wpmodule->getId()));
+									'wpmodule/view?id=' . $wpmodule->getId()
+									));
 								$moduleIsOk=false;
 
 						}
@@ -443,7 +447,9 @@ $con->query($sql);
 																false,
 																sprintf($context->getI18N()->__('Invalid content for item «%s» in group «%s»'), $item->getContent(), $it->getTitle()),
 																$wpmodule->getTitle(),
-																'wpmodule/view?id=' . $wpmodule->getId()));
+																'wpmodule/view?id=' . $wpmodule->getId(),
+																'error'. $group->getId(),
+																$group->getId()));
 																$moduleIsOk=false;
 
 													};
@@ -455,7 +461,9 @@ $con->query($sql);
 																false,
 																sprintf($context->getI18N()->__('Missing evaluation for item «%s» in group «%s»'), $item->getContent(), $it->getTitle()),
 																$wpmodule->getTitle(),
-																'wpmodule/view?id=' . $wpmodule->getId(). '#' . $group->getId()));
+																'wpmodule/view?id=' . $wpmodule->getId(). '#' . $group->getId(),
+																'error'. $group->getId(),
+																$group->getId()));
 																$moduleIsOk=false;
 												}
 										}
@@ -478,6 +486,8 @@ $con->query($sql);
 		
 		foreach ($wptoolItemTypes as $type)
 			{
+				$flash='error_aux'.$type->getId();
+
 				if ($context)
 					{
 				
@@ -496,7 +506,8 @@ $con->query($sql);
 											false,
 											$context->getI18N()->__('Missing selection of tools'),
 											$type->getDescription(),
-											'plansandreports/fill?id=' . $this->getId(). '#wpaux'));
+											'plansandreports/fill?id=' . $this->getId(),
+											$flash, 'wpaux'));
 							}
 						}
 				
@@ -566,7 +577,7 @@ $con->query($sql);
 	else
 		{
 			$result['result']='error';
-			$result['message']='Some errors prevented the submission of the workplan';
+			$result['message']='Some errors prevented the submission of the document';
 		}
 
 	return $result;
@@ -711,6 +722,7 @@ public function getWorkflowLogs()
 		$group[$item->getWptoolItemTypeId()]['description']=$item->getWptoolItemType()->getDescription();
 		$group[$item->getWptoolItemTypeId()]['min_selected']=$item->getWptoolItemType()->getMinSelected();
 		$group[$item->getWptoolItemTypeId()]['state']=$item->getWptoolItemType()->getState();
+		$group[$item->getWptoolItemTypeId()]['id']=$item->getWptoolItemType()->getId();
 		
 		$isChosen=@in_array($item->getId(), $chosen);
 		if (!$onlyChosen)

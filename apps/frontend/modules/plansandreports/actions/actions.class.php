@@ -86,8 +86,14 @@ class plansandreportsActions extends sfActions
 	$result=$this->workplan->teacherSubmit(/*$this->getUser()->getProfile()->getSfGuardUser()->getId(), */$this->getContext());
 	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 	
-	$this->checks = $result['checks'];
+	if (isset($result['checks']))
+		{
+			$this->checks = $result['checks'];
+		}
+		
+	$this->steps=Workflow::getWpfrSteps();
 	
+	$this->workflow_logs = $this->workplan->getWorkflowLogs();
 //	return $this->redirect('@plansandreports');
 
 	}
@@ -161,6 +167,14 @@ class plansandreportsActions extends sfActions
 	$this->tools = $this->workplan->getTools();
 	
 	$this->workflow_logs = $this->workplan->getWorkflowLogs();
+
+	if($request->getParameter('flash'))
+		{
+			$this->getUser()->setFlash($request->getParameter('flash'), $this->getContext()->getI18N()->__('This item is not correctly filled.'));
+			$this->getUser()->setAttribute('aux', 1);
+		}
+
+
 
   }
 

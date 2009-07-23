@@ -38,10 +38,6 @@
   </tbody>
 </table>
 
-<pre>
-<?php print_r($s_modules) ?>
-</pre>
-
 </div>
 
 <h3><?php echo __('Import a module of a colleague') ?></h3>

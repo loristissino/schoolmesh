@@ -8,6 +8,9 @@
 <?php foreach($tools as $group): ?>
 <td>
 <?php if ($group['state']==$workplan->getState()): ?>
+	<?php if ($sf_user->hasFlash('error_aux'. $group['id'])): ?>
+  <div class="error"><?php echo $sf_user->getFlash('error_aux'.$group['id'])?></div>
+<?php endif; ?>
 	<p>
 	<?php if($group['min_selected']==0):?>
 		<?php echo image_tag('optional') ?>
@@ -17,6 +20,7 @@
 	
 	<em><?php echo format_number_choice(
 		'[0]Optional choice|[1]Select at least one item|(1,+Inf]Select at least %1% items', array('%1%' => $group['min_selected']), $group['min_selected']) ?></em></p>
+
 <?php endif ?>
 <h4><?php echo $group['description'] ?></h4>
 		<?php foreach($group['elements'] as $tool_id=>$tool): ?>
