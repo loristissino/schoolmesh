@@ -18,6 +18,7 @@ sfGuardUserProfile:
     first_name:     John
     last_name:      Test Teacher
     gender:            M
+    email:     john@example.com
     role_id:       doc
     disk_set_soft_blocks_quota: 4000
     disk_set_hard_blocks_quota: 5000

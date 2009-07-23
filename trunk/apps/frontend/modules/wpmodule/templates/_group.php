@@ -18,11 +18,14 @@
 </ul>
 </div>
 
-<div id="group<?php echo $item_group->getId() ?>" style="display:<?php echo ($sf_user->hasFlash('notice'.$item_group->getId())||$sf_user->hasFlash('evaluation'.$item_group->getId()))? 'visible': 'none' ?>">
+<div id="group<?php echo $item_group->getId() ?>" style="display:<?php echo ($sf_user->hasFlash('notice'.$item_group->getId())||$sf_user->hasFlash('evaluation'.$item_group->getId()) || $sf_user->hasFlash('error'.$item_group->getId()))? 'visible': 'none' ?>">
 
 <?php $i=0 ?>
 <?php if ($sf_user->hasFlash('notice'.$item_group->getId())): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice'.$item_group->getId())?></div>
+<?php endif; ?>
+<?php if ($sf_user->hasFlash('error'.$item_group->getId())): ?>
+  <div class="error"><?php echo $sf_user->getFlash('error'.$item_group->getId())?></div>
 <?php endif; ?>
 <?php if ($sf_user->hasFlash('evaluation'.$item_group->getId())): ?>
   <div class="notice"><?php echo
@@ -37,10 +40,11 @@
 <table cellspacing="0">
   <thead>
     <tr>
-      <th class="sf_admin_text" colspan="3">Rank</th>
-      <th class="sf_admin_text">Text</th>
+      <th class="sf_admin_text" colspan="3"><?php echo __('Rank') ?></th>
+      <th class="sf_admin_text"><?php echo __('Missing?') ?></th>
+      <th class="sf_admin_text"><?php echo __('Content') ?></th>
 	<?php if(($wpstate==30) && ($item_group->getWpitemType()->getEvaluationMax()>=0)): ?>
-      <th class="sf_admin_text">Evaluation<br />
+      <th class="sf_admin_text"><?php echo __('Evaluation') ?><br />
 	
 	<span class="sf_admin_description">
 		<?php echo __('min') .': '. $item_group->getWpitemType()->getEvaluationMin() ?> = <em><?php echo $item_group->getWpitemType()->getEvaluationMinDescription() ?></em> <br />
@@ -67,6 +71,10 @@
 		<?php include_partial('moveup', array('wpmoduleitem' => $wpmodule_item)) ?>
 	<?php endif ?>
 	</td>
+	<td><?php if ($wpmodule_item->getContent()=='---'): ?>
+			<?php echo image_tag('notdone', 'title=' . __('this content is required and is currently missing')). ' ' ?>
+<?php endif ?>
+</td>
       <td><span id="moduleitem_<?php echo $wpmodule_item->getId()?>" class="editText"><?php echo html_entity_decode($wpmodule_item->getContent())?></span>
 
 	<?php if($wpmodule_item->getIsEditable()): ?>

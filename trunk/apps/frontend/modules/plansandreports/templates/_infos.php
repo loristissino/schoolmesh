@@ -34,7 +34,7 @@
 				<?php echo link_to(
 				__('Fill'),
 				'wpinfo/edit?id='.$wpinfo->getId(),
-				array('method' => 'get', 'title'=>$wpinfo->getWpinfoType()->getIsRequired()?__('Fill this field (required)'):__('Fill this field (optional)')) 
+				array('title'=>$wpinfo->getWpinfoType()->getIsRequired()?__('Fill this field (required)'):__('Fill this field (optional)')) 
 				)?>
 			</li>
 			<?php endif ?>

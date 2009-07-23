@@ -72,6 +72,8 @@ class Wpinfo extends BaseWpinfo
 			
 		$v=$newcontent;
 
+		$this->setContent($v);
+
 		if (!$this->checkContentAgainstTemplate($v))
 			{
 				$result['result']='error_info';
@@ -79,7 +81,6 @@ class Wpinfo extends BaseWpinfo
 				return $result;
 			}
 			
-		$this->setContent($v);
 		
 		$result['result']='notice_info';
 		$result['message']='Content saved.';

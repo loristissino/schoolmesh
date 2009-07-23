@@ -29,6 +29,10 @@ class wpmoduleActions extends sfActions
 		if ($newvalue=='') $newvalue='---';
 		$module->$set_func($newvalue);
 		$module->save();
+		
+		$this->getUser()->setFlash($request->getParameter('flash'), '');
+
+		
 		return $this->renderText($module->$get_func());
 		
 	}
@@ -156,6 +160,14 @@ class wpmoduleActions extends sfActions
 					$this->getUser()->setFlash('evaluation'.$item_group->getId(), $missing);
 			}
 		}
+		
+		if($request->getParameter('flash'))
+		{
+			$this->getUser()->setFlash($request->getParameter('flash'), $this->getContext()->getI18N()->__('This item is not correctly filled.'), false);
+		}
+
+
+		$this->steps=Workflow::getWpfrSteps();
 	}
 
 

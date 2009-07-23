@@ -5,9 +5,11 @@
 	$workplan
 	)
 	
-	?><h1><?php echo __("Workplan: ") . $workplan ?></h1>
+	?>
+	<?php $state=$workplan->getState() ?>
+	<h1><?php echo __($steps[$state]['stateDescription']) . ': ' . $workplan ?></h1>
 
-<?php $state=$workplan->getState() ?>
+
 <?php include_partial('basicinfo', array('workplan'=>$workplan,  'steps'=>$steps)) ?>
 
 <?php if ($sf_user->hasFlash('notice')): ?>
@@ -71,7 +73,6 @@
 
 <a name="wpaux"></a>
 <h2><?php echo __("Aux") ?></h2>
-<!--<div id="sf_admin_container">-->
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
 <?php echo link_to_function(
@@ -80,17 +81,12 @@
 ) ?>
 </li>
 </ul>
-<!--</div>-->
-<div id="aux" style="display:<?php echo $sf_user->hasFlash('notice_aux')||$sf_user->hasFlash('error_aux')? 'visible': 'none' ?>">
+
+<div id="aux" style="display:<?php echo $sf_user->hasFlash('notice_aux')||strpos($sf_user->getAttributeHolder()->serialize(), 'error_aux')? 'visible': 'none' ?>">
 <?php include_partial('aux', array('workplan' => $workplan, 'tools' => $tools)) ?>
 </div>
 
-
-
 <hr />
-
-
-
 
 
 <h2><?php echo __("Workflow") ?></h2>
@@ -98,32 +94,6 @@
 <?php include_partial('workflow', array('workflow_logs' => $workflow_logs)) ?>
 
 <hr />
-<h2><?php echo __("Actions") ?></h2>
-
-
 <?php if ($steps[$state]['owner']['submitAction']!=''): ?>
-	<ul class="sf_admin_actions">
-	<li class="sf_admin_action_view">
-				<?php echo link_to(
-				__('Show this plan/report'),
-				'plansandreports/view?id='.$workplan->getId(),
-				array('title'=>__('Show this plan/report in a single page'))
-				)?>
-	</li><br />
-<?php include_partial('export', array('workplan' => $workplan, 'steps'=>$steps)) ?><br />
-<li class="sf_admin_action_help">
-				<?php echo link_to(
-				__('Help'),
-				'@help',
-				array('title'=>'Get help on this subject')
-				)?>
-	</li><br />
-	<li class="sf_admin_action_submit">
-				<?php echo link_to(
-				__($steps[$state]['owner']['submitDisplayedAction']),
-				'plansandreports/'. $steps[$state]['owner']['submitAction']. '?id='.$workplan->getId(),
-				array('method' => 'put', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $user->getProfile()->getIsMale()) . ' ' . __('Workplans and reports submitted cannot be modified anymore...')) 
-				)?>
-	</li><br />
-	</ul>
+	<?php include_partial('wpactions', array('workplan'=>$workplan, 'steps'=>$steps)) ?>
 <?php endif ?>

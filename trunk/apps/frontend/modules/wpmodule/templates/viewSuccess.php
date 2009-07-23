@@ -7,7 +7,12 @@
 	)
 	
 	?>
-<h1><?php echo __('Module: ') ?><span id="moduletitle" class="editText"><?php echo $wpmodule->getTitle() ?></span><?php echo input_in_place_editor_tag('moduletitle', 'wpmodule/editInLine?property=Title&id='.$wpmodule->getId(), array('cols'=>'50', 'rows'=>1)) ?></h1>
+
+<h1><?php echo __('Module: ') ?>
+<?php if ($wpmodule->getTitle()=='---'): ?>
+			<?php echo image_tag('notdone', 'title=' . __('this content is required and is currently missing')). ' ' ?>
+<?php endif ?>
+<span id="moduletitle" class="editText"><?php echo $wpmodule->getTitle() ?></span><?php echo input_in_place_editor_tag('moduletitle', 'wpmodule/editInLine?property=Title&id='.$wpmodule->getId(), array('cols'=>'50', 'rows'=>1)) ?></h1>
 
 
 <div id="sf_admin_container">
@@ -16,6 +21,9 @@
 <li><?php echo __('Teacher: ') ?><strong><?php echo $owner->getFullName() ?></strong></li>
 <li><?php echo __('Workplan / Report: ') ?><strong><?php echo link_to($workplan, 'plansandreports/fill?id='.$workplan->getId()) ?></strong></li>
 <li><?php echo __('Period: ') ?>
+<?php if ($wpmodule->getPeriod()=='---'): ?>
+			<?php echo image_tag('notdone', 'title=' . __('this content is required and is currently missing')). ' ' ?>
+<?php endif ?>
 <strong><span id="moduleperiod" class="editText"><?php echo $wpmodule->getPeriod() ?></span></strong></li>
 <?php echo input_in_place_editor_tag('moduleperiod', 'wpmodule/editInLine?property=Period&id='.$wpmodule->getId(), array('cols'=>'50', 'rows'=>1)) ?>
 </ul>
@@ -33,9 +41,9 @@
 			<ul class="sf_admin_td_actions">
 
 				<li class="sf_admin_action_back">
-				<?php echo link_to(sprintf(__('Back to workplan/report %s'), $workplan), 'plansandreports/fill?id='.$workplan->getId()) ?>
-				</li>
-			</ul>
+				<?php echo link_to(sprintf(__('Back to document «%s»'), $workplan), 'plansandreports/fill?id='.$workplan->getId()) ?>
+				</li><br />
+	</ul>
 
 
 </div>

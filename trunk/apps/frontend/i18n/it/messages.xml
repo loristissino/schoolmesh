@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
-  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-07-22T16:58:30Z" product-name="messages">
+  <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-07-23T14:10:48Z" product-name="messages">
     <body>
       <trans-unit id="3">
         <source>Forgot your password?</source>
@@ -24,11 +24,11 @@
       </trans-unit>
       <trans-unit id="11">
         <source>%fullname% logged out</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="12">
         <source>Login status of %fullname% (&lt;strong&gt;%username%&lt;/strong&gt;) from workstation %workstation% (%ip%): </source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="13">
         <source>Login time: %timestamp%</source>
@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="36">
         <source>Checked</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="37">
         <source>You may login</source>
@@ -248,11 +248,11 @@
       </trans-unit>
       <trans-unit id="85">
         <source>min</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="86">
         <source>max</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="87">
         <source>rich text edit</source>
@@ -292,7 +292,7 @@
       </trans-unit>
       <trans-unit id="96">
         <source>(Evaluation: %d)</source>
-        <target>(Valutazione: %d)</target>
+        <target>(Indicazione realizzazione: %d)</target>
       </trans-unit>
       <trans-unit id="97">
         <source>Details, comments, general information</source>
@@ -327,40 +327,36 @@
         <target>Stato corrente</target>
       </trans-unit>
       <trans-unit id="105">
-        <source>Show this plan/report</source>
-        <target>Mostra questo piano di lavoro / relazione in un'unica pagina</target>
+        <source>Show this document</source>
+        <target>Mostra questo documento</target>
       </trans-unit>
       <trans-unit id="106">
         <source>Export as plain text (yaml)</source>
         <target>Esporta come file di testo (yaml)</target>
-      </trans-unit>
-      <trans-unit id="107">
-        <source>Are you sure? Workplans and reports submitted cannot be modified anymore...</source>
-        <target>Sei sicuro? I piani di lavoro e le relazioni inviate non possono essere pi&#xF9; modificate.</target>
       </trans-unit>
       <trans-unit id="108">
         <source>Save</source>
         <target>Salva</target>
       </trans-unit>
       <trans-unit id="109">
-        <source>Workplans submitted</source>
-        <target>Piano di lavoro inviati</target>
+        <source>Document submitted</source>
+        <target>Documento consegnato</target>
       </trans-unit>
       <trans-unit id="111">
         <source>For each item type, evaluation is expressed with a minimum and a maximum as follows:</source>
-        <target>Per ogni elemento, la valutazione &#xE8; espressa sulla base delle seguenti scale:</target>
+        <target>Per ogni elemento, l'indicazione di realizzazione &#xE8; espressa sulla base delle seguenti scale:</target>
       </trans-unit>
       <trans-unit id="112">
         <source>Edit Wpinfo</source>
-        <target>Modifica informazioni nel piano di lavoro</target>
+        <target>Modifica informazioni nel documento</target>
       </trans-unit>
       <trans-unit id="113">
         <source>Workplans approved</source>
         <target>Piani di lavoro approvati</target>
       </trans-unit>
       <trans-unit id="114">
-        <source>Submit this workplan for approval</source>
-        <target>Consegna questo piano di lavoro</target>
+        <source>Submit this document for approval</source>
+        <target>Consegna questo documento</target>
       </trans-unit>
       <trans-unit id="115">
         <source>Rank</source>
@@ -375,8 +371,8 @@
         <target>Titolo</target>
       </trans-unit>
       <trans-unit id="118">
-        <source>Evaluations</source>
-        <target>Valutazione</target>
+        <source>Evaluation</source>
+        <target>Realizzazione</target>
       </trans-unit>
       <trans-unit id="119">
         <source>Actions</source>
@@ -384,11 +380,11 @@
       </trans-unit>
       <trans-unit id="120">
         <source>[0]Evaluation completed|[1]Missing one evaluation out of %2%|[1,+Inf]Missing %1% evaluations out of %2%</source>
-        <target>[0]Valutazione completata|[1]Manca una valutazione su %2%|[1,+Inf]Mancano %1% valutazioni su %2%</target>
+        <target>[0]Indicazioni completate|[1]Manca un'indicazione su %2%|[1,+Inf]Mancano %1% indicazioni su %2%</target>
       </trans-unit>
       <trans-unit id="121">
         <source>[0]Evaluation completed|[1]Missing one evaluation|[1,+Inf]Missing %1% evaluations</source>
-        <target>[0]Valutazione completata|[1]Manca una valutazione|[1,+Inf]Mancano %1% valutazioni</target>
+        <target>[0]Indicazioni completate|[1]Manca un'indicazione|[1,+Inf]Mancano %1% indicazioni</target>
       </trans-unit>
       <trans-unit id="122">
         <source>A new item was inserted</source>
@@ -397,10 +393,6 @@
       <trans-unit id="123">
         <source>The item was deleted</source>
         <target>L'elemento &#xE8; stato eliminato</target>
-      </trans-unit>
-      <trans-unit id="124">
-        <source>Submit this report</source>
-        <target>Consegna questa relazione</target>
       </trans-unit>
       <trans-unit id="125">
         <source>The items were switched</source>
@@ -418,10 +410,6 @@
         <source>The module</source>
         <target>Modulo</target>
       </trans-unit>
-      <trans-unit id="129">
-        <source>Workplan / Report: </source>
-        <target>Piano di lavoro / Relazione</target>
-      </trans-unit>
       <trans-unit id="130">
         <source>Title: </source>
         <target>Titolo: </target>
@@ -433,10 +421,6 @@
       <trans-unit id="132">
         <source>Module view: %s</source>
         <target>Modulo: %s</target>
-      </trans-unit>
-      <trans-unit id="133">
-        <source>Workplan submitted for approval.</source>
-        <target>Piano di lavoro consegnato.</target>
       </trans-unit>
       <trans-unit id="134">
         <source>Where am I? </source>
@@ -532,23 +516,23 @@
       </trans-unit>
       <trans-unit id="157">
         <source>YAML</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="158">
         <source>ODT</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="159">
         <source>DOC</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="160">
         <source>RTF</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="161">
         <source>PDF</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="162">
         <source>Content</source>
@@ -559,8 +543,8 @@
         <target>[0]Sei sicura?|[1]Sei sicuro?</target>
       </trans-unit>
       <trans-unit id="164">
-        <source>Workplans and reports submitted cannot be modified anymore...</source>
-        <target>I piani di lavoro e le relazioni inviate non possono essere pi&#xF9; modificate.</target>
+        <source>Documents submitted cannot be modified anymore.</source>
+        <target>I documenti inviati non possono pi&#xF9; essere modificati.</target>
       </trans-unit>
       <trans-unit id="165">
         <source>Save and go back to workplan</source>
@@ -640,7 +624,7 @@
       </trans-unit>
       <trans-unit id="184">
         <source>The item was unlinked</source>
-        <target>L'elemento &#xE8; stato scollegato</target>
+        <target>L'elemento &#xE8; stato sganciato</target>
       </trans-unit>
       <trans-unit id="185">
         <source>Module: </source>
@@ -663,12 +647,12 @@
         <target>Vista completa</target>
       </trans-unit>
       <trans-unit id="190">
-        <source>Published?</source>
-        <target>Pubblicato?</target>
+        <source>Public?</source>
+        <target>Pubblico?</target>
       </trans-unit>
       <trans-unit id="191">
-        <source>published</source>
-        <target>pubblicato</target>
+        <source>public</source>
+        <target>pubblico</target>
       </trans-unit>
       <trans-unit id="192">
         <source>private</source>
@@ -700,7 +684,7 @@
       </trans-unit>
       <trans-unit id="199">
         <source>Unlink</source>
-        <target>Scollega</target>
+        <target>Sgancia</target>
       </trans-unit>
       <trans-unit id="200">
         <source>Remove this module from this workplan, but keep it as avaliable for other ones</source>
@@ -727,8 +711,8 @@
         <target>Compila questo campo (facoltativo)</target>
       </trans-unit>
       <trans-unit id="206">
-        <source>Workplan/report submission</source>
-        <target>Consegna del piano/relazione</target>
+        <source>Document submission</source>
+        <target>Consegna del documento</target>
       </trans-unit>
       <trans-unit id="207">
         <source>Create a new module</source>
@@ -739,8 +723,8 @@
         <target>Importa</target>
       </trans-unit>
       <trans-unit id="209">
-        <source>Show this plan/report in a single page</source>
-        <target>Mostra questo piano/relazione in una singola pagina</target>
+        <source>Show this document in a single page</source>
+        <target>Mostra questo documento in una singola pagina</target>
       </trans-unit>
       <trans-unit id="210">
         <source>Item # %d</source>
@@ -759,12 +743,12 @@
         <target>Salva ci&#xF2; che hai scritto fino ad ora</target>
       </trans-unit>
       <trans-unit id="214">
-        <source>Save and go back to plan/report</source>
-        <target>Salva e torna al piano/relazione</target>
+        <source>Save and go back to the main document</source>
+        <target>Salva e torna al documento principale</target>
       </trans-unit>
       <trans-unit id="215">
-        <source>Save this content and go back to the workplan/report</source>
-        <target>Salva ci&#xF2; che hai scritto e torna al piano di lavoro/relazione</target>
+        <source>Save this content and go back to the main document</source>
+        <target>Salva ci&#xF2; che hai scritto e torna al documento principale</target>
       </trans-unit>
       <trans-unit id="216">
         <source>Save and start editing the next item, that happens to be &#xAB;%s&#xBB;</source>
@@ -820,7 +804,7 @@
       </trans-unit>
       <trans-unit id="229">
         <source>Missing evaluation for item &#xAB;%s&#xBB; in group &#xAB;%s&#xBB;</source>
-        <target>Manca la valutazione per l'elemento &#xAB;%s&#xBB; nel gruppo &#xAB;%s&#xBB;</target>
+        <target>Manca l'indicazione di realizzazione per l'elemento &#xAB;%s&#xBB; nel gruppo &#xAB;%s&#xBB;</target>
       </trans-unit>
       <trans-unit id="230">
         <source>Module accepted</source>
@@ -835,8 +819,8 @@
         <target>Selezione degli strumenti mancante</target>
       </trans-unit>
       <trans-unit id="233">
-        <source>Some errors prevented the submission of the workplan</source>
-        <target>Alcuni errori hanno impedito la consegna del piano/relazione</target>
+        <source>Some errors prevented the submission of the document</source>
+        <target>Alcuni errori hanno impedito la consegna del documento</target>
       </trans-unit>
       <trans-unit id="233">
         <source>The items have been replaced.</source>
@@ -900,7 +884,7 @@
       </trans-unit>
       <trans-unit id="250">
         <source>The item was linked</source>
-        <target>L'elemento è stato collegato</target>
+        <target>L'elemento &#xE8; stato agganciato</target>
       </trans-unit>
       <trans-unit id="251">
         <source>Workplan module import</source>
@@ -908,7 +892,7 @@
       </trans-unit>
       <trans-unit id="252">
         <source>workplan di %s</source>
-        <target></target>
+        <target/>
       </trans-unit>
       <trans-unit id="253">
         <source>Import one of your modules</source>
@@ -928,7 +912,7 @@
       </trans-unit>
       <trans-unit id="257">
         <source>Link</source>
-        <target>Collega</target>
+        <target>Aggancia</target>
       </trans-unit>
       <trans-unit id="258">
         <source>Link this module to the workplan</source>
@@ -947,8 +931,8 @@
         <target>Salva questi elementi e torna al modulo</target>
       </trans-unit>
       <trans-unit id="262">
-        <source>You can now edit &#xAB;%s&#xBB;</source>
-        <target>Ora puoi compilare il campo &#xAB;%s&#xBB;</target>
+        <source>You are now filling the field &#xAB;%s&#xBB;.</source>
+        <target>Adesso stai compilando il campo &#xAB;%s&#xBB;.</target>
       </trans-unit>
       <trans-unit id="263">
         <source>Save and go to next item, &#xAB;%s&#xBB;</source>
@@ -956,7 +940,67 @@
       </trans-unit>
       <trans-unit id="264">
         <source>orphan module</source>
-        <target></target>
+        <target/>
+      </trans-unit>
+      <trans-unit id="265">
+        <source>This item is not correctly filled.</source>
+        <target>Questo elemento non &#xE8; stato compilato correttamente</target>
+      </trans-unit>
+      <trans-unit id="266">
+        <source>It will be then administratively checked and approved by the schoolmaster</source>
+        <target>Verr&#xE0; successivamente controllato dal punto di vista amministrativo e approvato dal Dirigente Scolastico</target>
+      </trans-unit>
+      <trans-unit id="267">
+        <source>Back to my workplans and reports</source>
+        <target>Torna ai miei piani di lavoro</target>
+      </trans-unit>
+      <trans-unit id="269">
+        <source>Submission successful</source>
+        <target>Consegna avvenuta con successo</target>
+      </trans-unit>
+      <trans-unit id="270">
+        <source>Congratulations.</source>
+        <target>Congratulazioni.</target>
+      </trans-unit>
+      <trans-unit id="271">
+        <source>The document &#xAB;%s&#xBB; was successfully submitted.</source>
+        <target>Il documento &#xAB;%s&#xBB; &#xE8; stato consegnato correttamente.</target>
+      </trans-unit>
+      <trans-unit id="272">
+        <source>It must now be administratively checked and then approved by the schoolmaster.</source>
+        <target>Dovr&#xE0; essere controllato dal punto di vista amministrativo e successivamente approvato dal Dirigente Scolastico.</target>
+      </trans-unit>
+      <trans-unit id="273">
+        <source>A confirm message has been sent to your email address %s</source>
+        <target>Un messaggio di conferma ti &#xE8; stato spedito all'indirizzo email %s</target>
+      </trans-unit>
+      <trans-unit id="274">
+        <source>Content replaced.</source>
+        <target>Contenuto sostituito.</target>
+      </trans-unit>
+      <trans-unit id="275">
+        <source>Content appended.</source>
+        <target>Contenuto aggiunto.</target>
+      </trans-unit>
+      <trans-unit id="276">
+        <source>Submit this workplan for approval</source>
+        <target>Consegna questo piano di lavoro</target>
+      </trans-unit>
+      <trans-unit id="277">
+        <source>Workplan / Report: </source>
+        <target>Piano di lavoro / Relazione: </target>
+      </trans-unit>
+      <trans-unit id="278">
+        <source>Back to document &#xAB;%s&#xBB;</source>
+        <target>Torna al documento &#xAB;%s&#xBB;</target>
+      </trans-unit>
+      <trans-unit id="279">
+        <source>Document: </source>
+        <target>Documento: </target>
+      </trans-unit>
+      <trans-unit id="280">
+        <source>Workplans submitted</source>
+        <target/>
       </trans-unit>
     </body>
   </file>

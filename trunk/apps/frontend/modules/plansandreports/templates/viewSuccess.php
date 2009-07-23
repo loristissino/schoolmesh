@@ -6,7 +6,7 @@
 	__('Complete view')
 	)
 	
-	?><h1><?php echo __("Workplan: ") . $workplan ?></h1><h1>
+	?><h1><?php echo __("Document: ") . $workplan ?></h1><h1>
 
 <h2><?php echo __("General information") ?></h2>
 <ul>

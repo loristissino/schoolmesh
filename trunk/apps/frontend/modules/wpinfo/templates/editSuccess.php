@@ -59,8 +59,8 @@ editor_selector : \"mceAdvanced\"
 	<li class="sf_admin_action_saveandback">
 	<a href="<?php echo url_for('plansandreports/fill?id='.$wpinfo->getAppointment()->getId()) ?>" 
 		onClick="var f = document.getElementById('editform'); var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', 'back'); m.setAttribute('value', 'back'); f.appendChild(m); f.submit(); return false;"
-		title="<?php echo __('Save this content and go back to the workplan/report') ?>"
-	><?php echo __("Save and go back to plan/report") ?></a>
+		title="<?php echo __('Save this content and go back to the main document') ?>"
+	><?php echo __("Save and go back to the main document") ?></a>
 	</li>
 <?php if($next_item): ?>
 	<li class="sf_admin_action_saveandnext">

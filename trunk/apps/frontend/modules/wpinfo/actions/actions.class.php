@@ -37,6 +37,13 @@ class wpinfoActions extends sfActions
 
 	$this->forward404Unless($this->wpinfo->getAppointment()->getUserId()==$this->getUser()->getProfile()->getSfGuardUser()->getId());
 
+
+	if($request->getParameter('flash'))
+		{
+			$this->getUser()->setFlash($request->getParameter('flash'), $this->getContext()->getI18N()->__('This item is not correctly filled.'));
+		}
+
+
 	if ($this->wpinfo->getContent()=='')
 		$this->wpinfo->setContent($this->wpinfo->getWpinfoType()->getRenderedTemplate());
 	$this->type=$this->wpinfo->getWpinfoType();
@@ -57,9 +64,11 @@ class wpinfoActions extends sfActions
 
 	$this->result=$result['message'];
 	
+	$wpinfo->save();
+	
 	if($result['result']=='notice_info')
 		{
-			$wpinfo->save();
+//			$wpinfo->save();
 			
 //			$this->params = $this->getRequest()->getParameterHolder()->getAll();
 //			return;
@@ -75,7 +84,8 @@ class wpinfoActions extends sfActions
 				}
 			if ($request->getParameter('continue') || $request->getParameter('continue_x'))
 				{
-					$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']) . sprintf($this->getContext()->getI18N()->__('You can now edit «%s»'), $wpinfo->getNext()->getWpinfoType()->getTitle()));
+					$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']). ' ' . 
+					sprintf($this->getContext()->getI18N()->__('You are now filling the field «%s».'), $wpinfo->getNext()->getWpinfoType()->getTitle()));
 					$this->redirect('wpinfo/edit?id=' . $wpinfo->getNext()->getId());
 				}
 			else
@@ -87,7 +97,7 @@ class wpinfoActions extends sfActions
 		}
 	else
 		{
-		$this->forward('wpinfo', 'edit');
+	$this->redirect('wpinfo/edit?id=' . $wpinfo->getId());
 		}
 }
   public function executeReplace(sfWebRequest $request)
@@ -97,8 +107,8 @@ class wpinfoActions extends sfActions
     $this->forward404Unless($wpinfo2 = WpinfoPeer::retrieveByPk($request->getParameter('app')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('app')));
 	$wpinfo->setContent($wpinfo2->getContent());
 	$wpinfo->save();
-	$this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content saved.'));
-	$this->forward('wpinfo', 'edit');
+	$this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content replaced.'));
+	$this->redirect('wpinfo/edit?id=' . $wpinfo->getId());
 	
 	}
 	
@@ -108,8 +118,8 @@ class wpinfoActions extends sfActions
     $this->forward404Unless($wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
 	$wpinfo->setContent($wpinfo->getWpinfoType()->getExample());
 	$wpinfo->save();
-	$this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content saved.'));
-	$this->forward('wpinfo', 'edit');
+	$this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content replaced.'));
+	$this->redirect('wpinfo/edit?id=' . $wpinfo->getId());
 	
 	}
 	
@@ -121,7 +131,7 @@ class wpinfoActions extends sfActions
     $this->forward404Unless($wpinfo2 = WpinfoPeer::retrieveByPk($request->getParameter('app')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('app')));
 	$wpinfo->setCheckedContent($this->getUser()->getProfile()->getSfGuardUser()->getId(), $wpinfo->getContent() .  '<br />' . $wpinfo2->getContent());
 	$wpinfo->save();
-	$this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content saved.'));
+	$this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content appended.'));
 	$this->forward('wpinfo', 'edit');
 	
 	}

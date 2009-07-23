@@ -15,9 +15,9 @@
       <th class="sf_admin_text" colspan="3"><?php echo __('Rank') ?></th>
       <th class="sf_admin_text"><?php echo __('Period') ?></th>
       <th class="sf_admin_text"><?php echo __('Title') ?></th>
-      <th class="sf_admin_text"><?php echo __('Published?') ?></th>
+      <th class="sf_admin_text"><?php echo __('Public?') ?></th>
 	  <?php if ($workplan->getState()>Workflow::WP_DRAFT): ?>
-		<th class="sf_admin_text"><?php echo __('Evaluations') ?></th>
+		<th class="sf_admin_text"><?php echo __('Evaluation') ?></th>
 	  <?php endif ?>  
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
@@ -41,7 +41,7 @@
       <td><?php echo $wpmodule ?></td>
       <td>
 	  <?php if ($wpmodule->getIsPublic()): ?>
-		<?php echo image_tag('published', 'title=' . __('published')) ?>
+		<?php echo image_tag('public', 'title=' . __('public')) ?>
 	  <?php else: ?>
 		<?php if ($wpmodule->getOwner()->getIsMale()): ?>
 			<?php echo image_tag('male', 'title=' . __('private')) ?>
@@ -68,7 +68,7 @@
 				<?php echo link_to(
 				__('Fill'),
 				'wpmodule/view?id='.$wpmodule->getId(),
-				array('method' => 'get',  'title'=>__('Fill this module specifying contents, objectives, skills, competencies, etc.')) 
+				array('title'=>__('Fill this module specifying contents, objectives, skills, competencies, etc.')) 
 				)?>
 			</li>
 			<?php if($wpmodule->getIsDeletable()): ?>
