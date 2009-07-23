@@ -8,8 +8,6 @@
 	
 	?><h1><?php echo __('Workplan module import') ?> - <?php echo $workplan ?></h1>
 
-<?php include_partial('basicinfo', array('workplan'=>$workplan, 'steps'=>$steps)) ?>
-
 <h3><?php echo __('Import one of your modules') ?></h3>
 
 <div class="sf_admin_list">

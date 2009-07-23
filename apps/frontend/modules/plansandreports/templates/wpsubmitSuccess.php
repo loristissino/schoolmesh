@@ -10,7 +10,7 @@
 
 <?php if ($sf_user->hasFlash('notice')): ?>
 <h2><?php echo $sf_user->getFlash('notice')?></h2>
-<?php echo image_tag('submitted_big', 'title=' . __('Submission successful')) ?>
+<?php echo image_tag('wpfr_workflow_10', 'title=' . __('Submission successful')) ?>
 <p><strong><?php echo __('Congratulations.') ?></strong>
 <p><?php echo sprintf(__('The document «%s» was successfully submitted.'), $workplan) ?><br />
 <?php echo __('It must now be administratively checked and then approved by the schoolmaster.') ?><br />

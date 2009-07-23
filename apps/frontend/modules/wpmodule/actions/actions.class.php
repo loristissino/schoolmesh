@@ -102,6 +102,24 @@ class wpmoduleActions extends sfActions
 	
 	}  
 
+	public function executeImport(sfWebRequest $request)
+	{
+	  $this->forward404Unless($request->getMethod()=="PUT" or $request->getMethod()=="POST");
+	  $item = WpmodulePeer::retrieveByPk($this->getRequestParameter('id'));
+	  $this->forward404Unless($item);
+	
+	  $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('workplan'));
+	  $this->forward404Unless($this->workplan);
+
+	  $result=$this->workplan->importWpmodule($item);
+
+	  $this->getUser()->setFlash('notice_modules', $this->getContext()->getI18N()->__('The item was imported'));
+	  $this->redirect('plansandreports/fill?id='.$this->workplan->getId() . '#wpmodules'); 
+	
+	}  
+
+
+
 
 	public function executeDown(sfWebRequest $request)
 	{

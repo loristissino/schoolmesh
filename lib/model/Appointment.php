@@ -555,13 +555,9 @@ $con->query($sql);
 	if ($possibleAction=='')
 		{
 			$result['result']='error';
-			$result['message']='This action is not allowed for a workplan/report in this state';
+			$result['message']='This action is not allowed for a document in this state.';
 			return $result;
 		}
-
-//	$this->markSubItems('false');
-	$result['result']='notice';
-	$result['message']='Comunicazione provvisoria - piano di lavoro consegnato';
 
 	$checks=$this->getChecks($context); //sfContext::getInstance());
 
@@ -986,6 +982,15 @@ public function getContentAsMarkdown()
 		$wpmodules = $iworkplan->getWpmodules();
 		foreach($wpmodules as $wpmodule)
 			{
+				$this->importWpmodule($wpmodule);
+			}
+	}
+
+
+   public function importWpmodule($wpmodule)
+
+	{
+		
 				$newwpmodule = new Wpmodule();
 				$newwpmodule->setUserId($this->getUserId());
 				$newwpmodule->setAppointmentId($this->getId());
@@ -1013,8 +1018,10 @@ public function getContentAsMarkdown()
 								$newitem->save();
 							}
 					}			
-			}
+		
 	}
+
+
 
 	public function importFromDb($context, $iworkplan)
 	{

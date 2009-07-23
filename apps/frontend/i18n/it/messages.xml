@@ -1002,6 +1002,14 @@
         <source>Workplans submitted</source>
         <target/>
       </trans-unit>
+      <trans-unit id="281">
+        <source>This action is not allowed for a document in this state.</source>
+        <target>Questa azione non è consentita per un documento in questo stato.</target>
+      </trans-unit>
+      <trans-unit id="282">
+        <source>Workplan submitted for approval.</source>
+        <target>Piano di lavoro consegnato.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

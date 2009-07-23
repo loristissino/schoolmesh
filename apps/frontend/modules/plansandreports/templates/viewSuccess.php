@@ -8,12 +8,7 @@
 	
 	?><h1><?php echo __("Document: ") . $workplan ?></h1><h1>
 
-<h2><?php echo __("General information") ?></h2>
-<ul>
-	<li><?php echo __("Teacher: ") . $workplan->getsfGuardUser()->getProfile()->getFullName() ?></li>
-	<li><?php echo __("Class: ") . $workplan->getSchoolclass() ?></li>
-	<li><?php echo __("Year: ") . $workplan->getYear() ?></li>
-</ul>
+<?php include_partial('basicinfo', array('workplan' => $workplan, 'steps' =>$steps)) ?>
 
 <h2><?php echo __('Details, comments, general information') ?></h2>
 
@@ -21,11 +16,11 @@
 
 <h2><?php echo __("Modules") ?></h2>
 
-<?php if ($workplan->getState()>Workflow::WP_DRAFT): ?>
+<?php if ($workplan->getState()>=Workflow::IR_DRAFT): ?>
 	<?php include_partial('wpmodule/legenda', array('wpitemTypes' => $wpitemTypes)) ?>
 <?php endif ?>
 
-<?php include_partial('modules_shown', array('workplan' => $workplan, 'is_owner' => $is_owner, 'state'=>$workplan->getState())) ?>
+<?php include_partial('modules_shown', array('workplan' => $workplan, 'is_owner' => $is_owner)) ?>
 
 <h2><?php echo __("Aux") ?></h2>
 

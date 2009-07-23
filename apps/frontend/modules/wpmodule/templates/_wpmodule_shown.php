@@ -10,8 +10,10 @@
 							<?php /* if (!$wpmodule_item->getIsEditable()): */?>
 							<li>
 							<?php echo html_entity_decode($wpmodule_item->getContent()) ?>
-							<?php if (($state>=Workflow::IR_DRAFT) && $wpmodule_item->getEvaluation()>0): ?>
-								<em><?php echo sprintf(__('(Evaluation: %d)'), $wpmodule_item->getEvaluation()) ?></em>
+							<?php if (($workplan->getState()>=Workflow::IR_DRAFT) && $wpmodule_item->getEvaluation()>0): ?>
+								<?php for($i=0;$i<$wpmodule_item->getEvaluation(); $i++): ?>
+									<?php echo image_tag('award', 'title=' . sprintf(__('(Evaluation: %d)'), $wpmodule_item->getEvaluation())) ?>
+								<?php endfor ?>
 							<?php endif ?>
 							</li>
 							<?php /* endif */ ?>
