@@ -130,6 +130,7 @@ propel:
     id: ~
     appointment_id:   ~
     wpinfo_type_id:  ~
+    updated_at: 
     content:   longvarchar
 
   wptool_item_type:
@@ -163,6 +164,7 @@ propel:
   wpitem_type:
     id:          ~
     title:        varchar(50)
+    singular: varchar(50)
     description:  varchar(200)
     style:       varchar(50)
     rank:    { type: integer, required: true }

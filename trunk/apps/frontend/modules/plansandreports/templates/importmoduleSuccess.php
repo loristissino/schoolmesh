@@ -15,8 +15,9 @@
 <table cellspacing="0">
   <thead>
     <tr>
-      <th class="sf_admin_text"><?php echo __('Last update') ?></th>
+      <th class="sf_admin_text"><?php echo __('Period') ?></th>
       <th class="sf_admin_text"><?php echo __('Title') ?></th>
+      <th class="sf_admin_text"><?php echo __('Last update') ?></th>
       <th class="sf_admin_text"><?php echo __('Class') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
@@ -26,8 +27,9 @@
 	<?php foreach($s_modules as $wpmodule): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
 		<?php /* WARNING: Since we use PDO directly, objects are raw and we don't have Getters here: */ ?>
-      <td><?php  echo format_datetime($wpmodule->last_update) ?></td>
+      <td><?php  echo $wpmodule->period ?></td>
       <td><?php  echo $wpmodule->title ?></td>
+      <td><?php  echo format_date($wpmodule->last_update, 'd') ?> <?php  echo format_date($wpmodule->last_update, 't') ?></td>
       <td><?php  echo $wpmodule->schoolclass_id ?></td>
 	  <td><?php include_partial('actionmoduleimport', array('wpmodule'=>$wpmodule, 'workplan'=>$workplan))?></td>
 	</td>

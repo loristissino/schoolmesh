@@ -318,6 +318,7 @@ CREATE TABLE `wpinfo`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`appointment_id` INTEGER,
 	`wpinfo_type_id` INTEGER,
+	`updated_at` DATETIME,
 	`content` TEXT,
 	PRIMARY KEY (`id`),
 	INDEX `wpinfo_FI_1` (`appointment_id`),
@@ -434,6 +435,7 @@ CREATE TABLE `wpitem_type`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`title` VARCHAR(50),
+	`singular` VARCHAR(50),
 	`description` VARCHAR(200),
 	`style` VARCHAR(50),
 	`rank` INTEGER  NOT NULL,

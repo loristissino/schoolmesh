@@ -15,6 +15,7 @@ class BaseWpitemTypeForm extends BaseFormPropel
     $this->setWidgets(array(
       'id'                         => new sfWidgetFormInputHidden(),
       'title'                      => new sfWidgetFormInput(),
+      'singular'                   => new sfWidgetFormInput(),
       'description'                => new sfWidgetFormInput(),
       'style'                      => new sfWidgetFormInput(),
       'rank'                       => new sfWidgetFormInput(),
@@ -29,6 +30,7 @@ class BaseWpitemTypeForm extends BaseFormPropel
     $this->setValidators(array(
       'id'                         => new sfValidatorPropelChoice(array('model' => 'WpitemType', 'column' => 'id', 'required' => false)),
       'title'                      => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'singular'                   => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'description'                => new sfValidatorString(array('max_length' => 200, 'required' => false)),
       'style'                      => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'rank'                       => new sfValidatorInteger(),

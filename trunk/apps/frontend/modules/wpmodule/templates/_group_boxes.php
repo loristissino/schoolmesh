@@ -1,26 +1,13 @@
 <?php use_helper('Form'); ?>
 <?php use_helper('Object'); ?>
 
-<hr />
-<a name="<?php echo $item_group->getId() ?>"></a>
-<?php // for the icon associated to the style I should use the CSS, I know... ?>
-<?php echo image_tag($item_group->getWpitemType()->getStyle()) ?>
-<h3 class="itemgroup_<?php echo $item_group->getWpitemType()->getStyle() ?>"><?php echo $item_group->getWpitemType()->getTitle() ?></h3>
-<p><em><?php echo $item_group->getWpitemType()->getDescription() ?></em></p>
-<div id="sf_admin_container">
-	<ul class="sf_admin_actions">
-	<li class="sf_admin_action_toggle">
-<?php echo link_to_function(
-  __('Toggle'),
-  visual_effect('toggle_blind', 'group'.$item_group->getId())
-) ?>
-</li>
-</ul>
-</div>
-
 <div id="group<?php echo $item_group->getId() ?>" style="display:<?php echo ($sf_user->hasFlash('notice'.$item_group->getId())||$sf_user->hasFlash('evaluation'.$item_group->getId()) || $sf_user->hasFlash('error'.$item_group->getId()))? 'visible': 'none' ?>">
 
 <?php $i=0 ?>
+
+<a name="<?php echo $item_group->getId() ?>"></a>
+<h3><?php echo $item_group->getWpitemType()->getTitle() ?></h3>
+
 <?php if ($sf_user->hasFlash('notice'.$item_group->getId())): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice'.$item_group->getId())?></div>
 <?php endif; ?>
@@ -35,13 +22,14 @@
 		$sf_user->getFlash('evaluation'.$item_group->getId())) ?>
 	</div>
 <?php endif; ?>
+
 <div class="sf_admin_list">
 
 <table cellspacing="0">
   <thead>
     <tr>
       <th class="sf_admin_text" colspan="3"><?php echo __('Rank') ?></th>
-      <th class="sf_admin_text"><?php echo __('Content') ?></th>
+      <th class="sf_admin_text"><?php echo $item_group->getWpitemType()->getSingular() ?></th>
 	<?php if(($wpstate==30) && ($item_group->getWpitemType()->getEvaluationMax()>=0)): ?>
       <th class="sf_admin_text"><?php echo __('Evaluation') ?><br />
 	

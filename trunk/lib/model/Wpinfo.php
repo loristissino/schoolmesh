@@ -59,18 +59,21 @@ class Wpinfo extends BaseWpinfo
 		$v=html_entity_decode(strip_tags($v, '<br><em>'));
 				
 		$lines=explode('<br />', $v);
-				
-		$newcontent='';
-		foreach($lines as $line)
+		
+		if (sizeof($lines)>1)
 			{
-				$line=ltrim(rtrim($line));
-				if (!(($line=='')||($line==' ')||($line==chr(194).chr(160))))  // don't know why, but these chars are added up...
+				$newcontent='';
+				foreach($lines as $line)
 					{
-						$newcontent .= $line .'<br />';
+						$line=ltrim(rtrim($line));
+						if (!(($line=='')||($line==' ')||($line==chr(194).chr(160))))  // don't know why, but these chars are added up...
+							{
+								$newcontent .= $line .'<br />';
+							}
 					}
+			$newcontent = substr($newcontent, 0, -6);
+			$v=$newcontent;
 			}
-			
-		$v=$newcontent;
 
 		$this->setContent($v);
 

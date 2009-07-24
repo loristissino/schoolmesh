@@ -69,6 +69,7 @@ class Opendocument{
 		{
 			$docfile = str_replace('.odt', '.doc', $this->file2serve);
 			$cmd='unoconv --server localhost --port 2090 --stdout -f doc ' . $this->file2serve . ' > ' . $docfile;
+//			$cmd='unoconv --stdout -f doc ' . $this->file2serve . ' > ' . $docfile;
 			exec($cmd);
 			unlink($this->file2serve);
 			$this->file2serve = $docfile;
