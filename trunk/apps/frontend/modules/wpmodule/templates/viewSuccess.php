@@ -44,7 +44,6 @@
 <?php endforeach ?>
 
 
-<hr />
 <h2><?php echo __('Actions') ?></h2>
 			<ul class="sf_admin_td_actions">
 

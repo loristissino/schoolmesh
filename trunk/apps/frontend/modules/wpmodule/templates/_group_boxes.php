@@ -7,6 +7,14 @@
 
 <a name="<?php echo $item_group->getId() ?>"></a>
 <h3><?php echo $item_group->getWpitemType()->getTitle() ?></h3>
+<ul class="sf_admin_actions">
+	<li class="sf_admin_action_toggle">
+<?php echo link_to_function(
+  __('Hide'),
+  visual_effect('toggle_blind', 'group'.$item_group->getId()), array(__('Hide'))
+) ?>
+</li>
+</ul>
 
 <?php if ($sf_user->hasFlash('notice'.$item_group->getId())): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice'.$item_group->getId())?></div>
@@ -124,4 +132,8 @@
 </div>
 
 </div>
+
+<hr />
+
 </div>
+
