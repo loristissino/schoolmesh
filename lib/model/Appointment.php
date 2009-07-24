@@ -390,11 +390,6 @@ $con->query($sql);
 								{
 									continue;
 								}
-							if (!$it->getisRequired())
-								{
-									continue;
-								}
-							
 							$group=WpitemGroupPeer::retrieveByModuleAndType($wpmodule->getId(), $it->getId());
 							if (!$group)
 								{
@@ -416,7 +411,7 @@ $con->query($sql);
 							else
 								{
 									$items=$group->getWpmoduleItems();	
-									if (sizeof($items)==0)
+									if (sizeof($items)==0 && $it->getIsRequired())
 										{
 											$wpmoduleItem = new WpmoduleItem();
 											$wpmoduleItem->setContent('---');
@@ -440,6 +435,7 @@ $con->query($sql);
 									else
 										{
 											foreach($items as $item)
+												{
 												if(($item->getContent()=='---'||$item->getContent()=='') and $context)
 													{
 														array_push($result['checks'],
@@ -466,6 +462,7 @@ $con->query($sql);
 																$group->getId()));
 																$moduleIsOk=false;
 												}
+											}
 										}
 								}
 						}

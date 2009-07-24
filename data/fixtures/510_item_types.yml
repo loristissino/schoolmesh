@@ -1,6 +1,7 @@
 WpitemType:
   contents:
     title:        Contenuti
+    singular: Contenuto
     description:  Argomenti disciplinari trattati
     style: contents
     rank:      1
@@ -12,6 +13,7 @@ WpitemType:
     evaluation_max_description: Trattato completamente
   knowledge:
     title:        Conoscenze
+    singular: Conoscenza
     description:  Nuclei fondanti della disciplina, saperi essenziali
     style: knowledge
     rank:      2
@@ -23,6 +25,7 @@ WpitemType:
     evaluation_max_description: Conoscenza generalmente pienamente acquisita
   skills:
     title:        Abilità
+    singular: Abilità
     description:  |
          Capacità nell'utilizzare e padroneggiare conoscenze anche 
          per portare a termine compiti e risolvere problemi 
@@ -36,6 +39,7 @@ WpitemType:
     evaluation_max_description: Abilità generalmente pienamente acquisita
   competencies:
     title:        Competenze
+    singular: Competenza
     description:  |
          Capacità di usare conoscenze e abilità personali 
          in situazioni di lavoro/studio
@@ -49,6 +53,7 @@ WpitemType:
     evaluation_max_description: Competenza generalmente pienamente acquisita
   wpcomments:
     title:        Note e commenti in fase di progettazione
+    singular: Nota
     description:  |
          Osservazioni generali sul modulo (compilazione facoltativa)
     style: notes
@@ -61,11 +66,12 @@ WpitemType:
     evaluation_max_description:
   frcomments:
     title:        Note e commenti in fase di relazione finale
+    singular: Nota
     description:  |
          Osservazioni generali sul modulo (compilazione facoltativa)
     style: notes
     rank:     6
-    state:    2
+    state:    3
     is_required: false
     evaluation_min: 0
     evaluation_max:  -1

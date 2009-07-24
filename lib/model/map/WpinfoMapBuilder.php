@@ -39,6 +39,8 @@ class WpinfoMapBuilder implements MapBuilder {
 
 		$tMap->addForeignKey('WPINFO_TYPE_ID', 'WpinfoTypeId', 'INTEGER', 'wpinfo_type', 'ID', false, null);
 
+		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'TIMESTAMP', false, null);
+
 		$tMap->addColumn('CONTENT', 'Content', 'LONGVARCHAR', false, null);
 
 	} 

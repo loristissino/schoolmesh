@@ -13,7 +13,7 @@ abstract class BaseWpinfoPeer {
 	const CLASS_DEFAULT = 'lib.model.Wpinfo';
 
 	
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 5;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -28,6 +28,9 @@ abstract class BaseWpinfoPeer {
 	const WPINFO_TYPE_ID = 'wpinfo.WPINFO_TYPE_ID';
 
 	
+	const UPDATED_AT = 'wpinfo.UPDATED_AT';
+
+	
 	const CONTENT = 'wpinfo.CONTENT';
 
 	
@@ -38,20 +41,20 @@ abstract class BaseWpinfoPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'AppointmentId', 'WpinfoTypeId', 'Content', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'appointmentId', 'wpinfoTypeId', 'content', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::APPOINTMENT_ID, self::WPINFO_TYPE_ID, self::CONTENT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'appointment_id', 'wpinfo_type_id', 'content', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'AppointmentId', 'WpinfoTypeId', 'UpdatedAt', 'Content', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'appointmentId', 'wpinfoTypeId', 'updatedAt', 'content', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::APPOINTMENT_ID, self::WPINFO_TYPE_ID, self::UPDATED_AT, self::CONTENT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'appointment_id', 'wpinfo_type_id', 'updated_at', 'content', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'AppointmentId' => 1, 'WpinfoTypeId' => 2, 'Content' => 3, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'appointmentId' => 1, 'wpinfoTypeId' => 2, 'content' => 3, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::APPOINTMENT_ID => 1, self::WPINFO_TYPE_ID => 2, self::CONTENT => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'appointment_id' => 1, 'wpinfo_type_id' => 2, 'content' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'AppointmentId' => 1, 'WpinfoTypeId' => 2, 'UpdatedAt' => 3, 'Content' => 4, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'appointmentId' => 1, 'wpinfoTypeId' => 2, 'updatedAt' => 3, 'content' => 4, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::APPOINTMENT_ID => 1, self::WPINFO_TYPE_ID => 2, self::UPDATED_AT => 3, self::CONTENT => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'appointment_id' => 1, 'wpinfo_type_id' => 2, 'updated_at' => 3, 'content' => 4, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	
@@ -98,6 +101,8 @@ abstract class BaseWpinfoPeer {
 		$criteria->addSelectColumn(WpinfoPeer::APPOINTMENT_ID);
 
 		$criteria->addSelectColumn(WpinfoPeer::WPINFO_TYPE_ID);
+
+		$criteria->addSelectColumn(WpinfoPeer::UPDATED_AT);
 
 		$criteria->addSelectColumn(WpinfoPeer::CONTENT);
 

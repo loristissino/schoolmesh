@@ -16,6 +16,7 @@ class BaseWpitemTypeFormFilter extends BaseFormFilterPropel
   {
     $this->setWidgets(array(
       'title'                      => new sfWidgetFormFilterInput(),
+      'singular'                   => new sfWidgetFormFilterInput(),
       'description'                => new sfWidgetFormFilterInput(),
       'style'                      => new sfWidgetFormFilterInput(),
       'rank'                       => new sfWidgetFormFilterInput(),
@@ -29,6 +30,7 @@ class BaseWpitemTypeFormFilter extends BaseFormFilterPropel
 
     $this->setValidators(array(
       'title'                      => new sfValidatorPass(array('required' => false)),
+      'singular'                   => new sfValidatorPass(array('required' => false)),
       'description'                => new sfValidatorPass(array('required' => false)),
       'style'                      => new sfValidatorPass(array('required' => false)),
       'rank'                       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
@@ -57,6 +59,7 @@ class BaseWpitemTypeFormFilter extends BaseFormFilterPropel
     return array(
       'id'                         => 'Number',
       'title'                      => 'Text',
+      'singular'                   => 'Text',
       'description'                => 'Text',
       'style'                      => 'Text',
       'rank'                       => 'Number',

@@ -191,8 +191,10 @@ class plansandreportsActions extends sfActions
 
   public function executeOdt(sfWebRequest $request)
 	{
+		$this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+		$this->forward404Unless($this->workplan);
 	
-		$document = new Opendocument('mattiussirq', sprintf($this->getContext()->getI18N()->__('Workplan of the teacher %s'), "Loris Tissino"));
+		$document = new Opendocument('mattiussirq', $this->workplan);  // the second parameter is the document name
 		$document->setHeader($this->getController()->getPresentationFor('headers', 'workplan'));
 		$document->setContent($this->getController()->getPresentationFor('plansandreports', 'xml'));
 		$document->setResponse($this->getContext()->getResponse());

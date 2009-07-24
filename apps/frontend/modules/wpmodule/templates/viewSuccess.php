@@ -15,8 +15,6 @@
 <span id="moduletitle" class="editText"><?php echo $wpmodule->getTitle() ?></span><?php echo input_in_place_editor_tag('moduletitle', 'wpmodule/editInLine?property=Title&id='.$wpmodule->getId(), array('cols'=>'50', 'rows'=>1)) ?></h1>
 
 
-<div id="sf_admin_container">
-
 <ul>
 <li><?php echo __('Teacher: ') ?><strong><?php echo $owner->getFullName() ?></strong></li>
 <li><?php echo __('Workplan / Report: ') ?><strong><?php echo link_to($workplan, 'plansandreports/fill?id='.$workplan->getId()) ?></strong></li>
@@ -29,12 +27,22 @@
 </ul>
 
 
+<table>
+<tr>
 <?php foreach($item_groups as $item_group): ?>
-
 	<?php if($wpstate>=$item_group->getWpitemType()->getState()): ?>
-		<?php include_partial('group', array('item_group' => $item_group, 'wpstate' => $wpstate)) ?>
+		<?php include_partial('group_head', array('item_group' => $item_group, 'wpstate' => $wpstate, 'size'=>sizeof($item_groups))) ?>
 	<?php endif ?>
 <?php endforeach ?>
+</tr>
+</table>
+
+<?php foreach($item_groups as $item_group): ?>
+	<?php if($wpstate>=$item_group->getWpitemType()->getState()): ?>
+		<?php include_partial('group_boxes', array('item_group' => $item_group, 'wpstate' => $wpstate)) ?>
+	<?php endif ?>
+<?php endforeach ?>
+
 
 <hr />
 <h2><?php echo __('Actions') ?></h2>
@@ -45,5 +53,3 @@
 				</li><br />
 	</ul>
 
-
-</div>

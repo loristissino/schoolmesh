@@ -19,6 +19,9 @@ abstract class BaseWpinfo extends BaseObject  implements Persistent {
 	protected $wpinfo_type_id;
 
 	
+	protected $updated_at;
+
+	
 	protected $content;
 
 	
@@ -61,6 +64,33 @@ abstract class BaseWpinfo extends BaseObject  implements Persistent {
 	public function getWpinfoTypeId()
 	{
 		return $this->wpinfo_type_id;
+	}
+
+	
+	public function getUpdatedAt($format = 'Y-m-d H:i:s')
+	{
+		if ($this->updated_at === null) {
+			return null;
+		}
+
+
+		if ($this->updated_at === '0000-00-00 00:00:00') {
+									return null;
+		} else {
+			try {
+				$dt = new DateTime($this->updated_at);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->updated_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+						return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
 	}
 
 	
@@ -120,6 +150,38 @@ abstract class BaseWpinfo extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setUpdatedAt($v)
+	{
+						if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+									try {
+				if (is_numeric($v)) { 					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+															$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->updated_at !== null || $dt !== null ) {
+			
+			$currNorm = ($this->updated_at !== null && $tmpDt = new DateTime($this->updated_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) 					)
+			{
+				$this->updated_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = WpinfoPeer::UPDATED_AT;
+			}
+		} 
+		return $this;
+	} 
+	
 	public function setContent($v)
 	{
 		if ($v !== null) {
@@ -150,7 +212,8 @@ abstract class BaseWpinfo extends BaseObject  implements Persistent {
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->appointment_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->wpinfo_type_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->content = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->updated_at = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->content = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -159,7 +222,7 @@ abstract class BaseWpinfo extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 4; 
+						return $startcol + 5; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Wpinfo object", $e);
 		}
@@ -229,6 +292,11 @@ abstract class BaseWpinfo extends BaseObject  implements Persistent {
 	
 	public function save(PropelPDO $con = null)
 	{
+    if ($this->isModified() && !$this->isColumnModified(WpinfoPeer::UPDATED_AT))
+    {
+      $this->setUpdatedAt(time());
+    }
+
 		if ($this->isDeleted()) {
 			throw new PropelException("You cannot save an object that has been deleted.");
 		}
@@ -371,6 +439,9 @@ abstract class BaseWpinfo extends BaseObject  implements Persistent {
 				return $this->getWpinfoTypeId();
 				break;
 			case 3:
+				return $this->getUpdatedAt();
+				break;
+			case 4:
 				return $this->getContent();
 				break;
 			default:
@@ -386,7 +457,8 @@ abstract class BaseWpinfo extends BaseObject  implements Persistent {
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getAppointmentId(),
 			$keys[2] => $this->getWpinfoTypeId(),
-			$keys[3] => $this->getContent(),
+			$keys[3] => $this->getUpdatedAt(),
+			$keys[4] => $this->getContent(),
 		);
 		return $result;
 	}
@@ -412,6 +484,9 @@ abstract class BaseWpinfo extends BaseObject  implements Persistent {
 				$this->setWpinfoTypeId($value);
 				break;
 			case 3:
+				$this->setUpdatedAt($value);
+				break;
+			case 4:
 				$this->setContent($value);
 				break;
 		} 	}
@@ -424,7 +499,8 @@ abstract class BaseWpinfo extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setAppointmentId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setWpinfoTypeId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setContent($arr[$keys[3]]);
+		if (array_key_exists($keys[3], $arr)) $this->setUpdatedAt($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setContent($arr[$keys[4]]);
 	}
 
 	
@@ -435,6 +511,7 @@ abstract class BaseWpinfo extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpinfoPeer::ID)) $criteria->add(WpinfoPeer::ID, $this->id);
 		if ($this->isColumnModified(WpinfoPeer::APPOINTMENT_ID)) $criteria->add(WpinfoPeer::APPOINTMENT_ID, $this->appointment_id);
 		if ($this->isColumnModified(WpinfoPeer::WPINFO_TYPE_ID)) $criteria->add(WpinfoPeer::WPINFO_TYPE_ID, $this->wpinfo_type_id);
+		if ($this->isColumnModified(WpinfoPeer::UPDATED_AT)) $criteria->add(WpinfoPeer::UPDATED_AT, $this->updated_at);
 		if ($this->isColumnModified(WpinfoPeer::CONTENT)) $criteria->add(WpinfoPeer::CONTENT, $this->content);
 
 		return $criteria;
@@ -469,6 +546,8 @@ abstract class BaseWpinfo extends BaseObject  implements Persistent {
 		$copyObj->setAppointmentId($this->appointment_id);
 
 		$copyObj->setWpinfoTypeId($this->wpinfo_type_id);
+
+		$copyObj->setUpdatedAt($this->updated_at);
 
 		$copyObj->setContent($this->content);
 

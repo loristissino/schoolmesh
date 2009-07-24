@@ -16,6 +16,7 @@ class BaseWpinfoForm extends BaseFormPropel
       'id'             => new sfWidgetFormInputHidden(),
       'appointment_id' => new sfWidgetFormPropelChoice(array('model' => 'Appointment', 'add_empty' => true)),
       'wpinfo_type_id' => new sfWidgetFormPropelChoice(array('model' => 'WpinfoType', 'add_empty' => true)),
+      'updated_at'     => new sfWidgetFormDateTime(),
       'content'        => new sfWidgetFormTextarea(),
     ));
 
@@ -23,6 +24,7 @@ class BaseWpinfoForm extends BaseFormPropel
       'id'             => new sfValidatorPropelChoice(array('model' => 'Wpinfo', 'column' => 'id', 'required' => false)),
       'appointment_id' => new sfValidatorPropelChoice(array('model' => 'Appointment', 'column' => 'id', 'required' => false)),
       'wpinfo_type_id' => new sfValidatorPropelChoice(array('model' => 'WpinfoType', 'column' => 'id', 'required' => false)),
+      'updated_at'     => new sfValidatorDateTime(array('required' => false)),
       'content'        => new sfValidatorString(array('required' => false)),
     ));
 

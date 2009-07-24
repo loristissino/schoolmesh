@@ -15,6 +15,7 @@
       <th class="sf_admin_text" colspan="3"><?php echo __('Rank') ?></th>
       <th class="sf_admin_text"><?php echo __('Period') ?></th>
       <th class="sf_admin_text"><?php echo __('Title') ?></th>
+      <th class="sf_admin_text"><?php echo __('Last update') ?></th>
       <th class="sf_admin_text"><?php echo __('Public?') ?></th>
 	  <?php if ($workplan->getState()>Workflow::WP_DRAFT): ?>
 		<th class="sf_admin_text"><?php echo __('Evaluation') ?></th>
@@ -39,6 +40,7 @@
 	
       <td><?php echo $wpmodule->getPeriod() ?></td>
       <td><?php echo $wpmodule ?></td>
+      <td><?php  echo format_date($wpmodule->getUpdatedAt(), 'd') ?> <?php  echo format_date($wpmodule->getUpdatedAt(), 't') ?></td>
       <td>
 	  <?php if ($wpmodule->getIsPublic()): ?>
 		<?php echo image_tag('public', 'title=' . __('public')) ?>

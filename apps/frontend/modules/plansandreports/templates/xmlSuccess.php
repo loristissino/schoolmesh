@@ -36,13 +36,21 @@
 <text:p text:style-name="P16"/><?php /* page break */ ?>
 <?php foreach($workplan->getWpinfos() as $wpinfo): ?>
 	<?php if($workplan->getState()>=$wpinfo->getWpinfoType()->getState()): ?>
-		<text:p text:style-name="P4"><?php echo $wpinfo->getWpinfoType()->getTitle() ?></text:p>
-		<text:p text:style-name="P18"><?php echo Opendocument::html2odtxml($wpinfo->getContent()) ?></text:p>
-		<text:p text:style-name="P4"></text:p>
+		<?php if($wpinfo->getContent()!=''): ?>
+			<text:p text:style-name="P9"><?php echo $wpinfo->getWpinfoType()->getTitle() ?></text:p>
+			<text:p text:style-name="P17"><?php echo Opendocument::html2odtxml($wpinfo->getContent()) ?></text:p>
+			<text:p text:style-name="P1"></text:p>
+		<?php endif ?>
 	<?php endif ?>
 <?php endforeach ?>
-<text:p text:style-name="P16"/><?php /* page break */ ?>
-<text:p text:style-name="P4">TAVOLA DI PROGRAMMAZIONE DELLA DISCIPLINA</text:p>
+<text:p text:style-name="P1"></text:p>
+<text:p text:style-name="P9">Tavola di programmazione della disciplina</text:p>
+<?php foreach($workplan->getWpmodules() as $wpmodule): ?>
+	<text:p text:style-name="P17"><?php echo $wpmodule->getRank() ?>. <?php echo $wpmodule->getTitle() ?> (<?php echo $wpmodule->getPeriod() ?>)</text:p>
+<?php endforeach ?>
+
+<text:p text:style-name="P16"/><?php /* page break */ ?> 
+
 <text:p text:style-name="P4"></text:p>
 <?php foreach($workplan->getWpmodules() as $wpmodule): ?>
 	<text:p text:style-name="P10">Titolo del modulo</text:p>
@@ -60,7 +68,7 @@
 		<text:p/>
 	<?php endforeach ?>
 <?php echo Opendocument::html2odtxml('<hr />'); ?>
-<?php /*	<text:p text:style-name="P16"/><?php /* page break */ ?> 
+<text:p text:style-name="P16"/><?php /* page break */ ?> 
 <?php endforeach ?>
 <text:p text:style-name="Standard"/>
 <text:p text:style-name="P1"/>

@@ -11,7 +11,7 @@
   <thead>
     <tr>
       <th class="sf_admin_text"><?php echo __('Title') ?></th>
-      <th class="sf_admin_text"><?php echo __('Missing?') ?></th>
+      <th class="sf_admin_text"><?php echo __('Last update') ?></th>
       <th class="sf_admin_text"><?php echo __('Content') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
@@ -21,12 +21,12 @@
 	<?php if($state >= $wpinfo->getWpinfoType()->getState()): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <th><?php echo $wpinfo->getWpinfoType()->getTitle() ?></th>
+      <td><?php echo $wpinfo->getUpdatedAt() ?></td>
       <td>
-	  <?php if ($wpinfo->getContent()=='' and $wpinfo->getWpinfoType()->getIsRequired()): ?>
+		  <?php if ($wpinfo->getContent()=='' and $wpinfo->getWpinfoType()->getIsRequired()): ?>
 			<?php echo image_tag('notdone', 'title=' . __('this content is required and is currently missing')) ?>
 	  <?php endif ?>
-		</td>
-      <td><?php echo  html_entity_decode($wpinfo->getContent()) ?></td>
+	<?php echo  html_entity_decode($wpinfo->getContent()) ?></td>
       <td>
 		<ul class="sf_admin_td_actions">
 			<?php if ($wpinfo->getWpinfoType()->getState()==$state): ?>
