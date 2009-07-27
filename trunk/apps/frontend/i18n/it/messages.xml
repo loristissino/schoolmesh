@@ -1010,6 +1010,14 @@
         <source>Workplan submitted for approval.</source>
         <target>Piano di lavoro consegnato.</target>
       </trans-unit>
+      <trans-unit id="283">
+        <source>Today, </source>
+        <target>Oggi, </target>
+      </trans-unit>
+      <trans-unit id="284">
+        <source>Yesterday, </source>
+        <target>Ieri, </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

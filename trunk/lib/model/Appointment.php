@@ -56,7 +56,7 @@ class Appointment extends BaseAppointment
 
 	$userId = $this->getUserId();
 
-	$sql = 'SELECT wpmodule.id as id, title, period, schoolclass_id, wpmodule.updated_at as last_update , appointment_id FROM ' . WpmodulePeer::TABLE_NAME .
+	$sql = 'SELECT wpmodule.id as id, title, period, schoolclass_id, UNIX_TIMESTAMP(wpmodule.updated_at) as last_update , appointment_id FROM ' . WpmodulePeer::TABLE_NAME .
 	' LEFT JOIN ' . AppointmentPeer::TABLE_NAME . ' ON ' . WpmodulePeer::APPOINTMENT_ID . ' = ' . AppointmentPeer::ID .
     ' LEFT JOIN ' . SchoolclassPeer::TABLE_NAME . ' ON ' . AppointmentPeer::SCHOOLCLASS_ID . ' = ' . SchoolclassPeer::ID . 
     ' LEFT JOIN ' . YearPeer::TABLE_NAME . ' ON ' . AppointmentPeer::YEAR_ID . ' = ' . YearPeer::ID .
