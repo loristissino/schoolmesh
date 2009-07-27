@@ -29,7 +29,7 @@
 		<?php /* WARNING: Since we use PDO directly, objects are raw and we don't have Getters here: */ ?>
       <td><?php  echo $wpmodule->period ?></td>
       <td><?php  echo $wpmodule->title ?></td>
-      <td><?php  echo format_date($wpmodule->last_update, 'd') ?> <?php  echo format_date($wpmodule->last_update, 't') ?></td>
+      <td><?php  echo Generic::datetime($wpmodule->last_update, $sf_context) ?></td>
       <td><?php  echo $wpmodule->schoolclass_id ?></td>
 	  <td><?php include_partial('actionmoduleimport', array('wpmodule'=>$wpmodule, 'workplan'=>$workplan))?></td>
 	</td>

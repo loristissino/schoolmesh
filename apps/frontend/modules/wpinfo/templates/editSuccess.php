@@ -11,8 +11,11 @@
 <h2><?php echo $type->getTitle() ?></h2>
 <p>
 	<?php if ($type->getIsRequired()): ?>
-		<?php echo image_tag('required', 'title=' . __('Filling required')) ?>
+		<?php echo image_tag('fill', 'title=' . __('Filling required')) ?>
+	<?php else: ?>
+		<?php echo image_tag('optional', 'title=' . __('Filling required')) ?>
 	<?php endif ?>
+	
 	<?php echo $type->getDescription() ?>
 	<?php if ($type->getTemplate()): ?>
 		<p><?php echo image_tag('star') ?> <strong><em><?php echo __('This content must match a template. You can base it on the example provided below.') ?></em></strong>

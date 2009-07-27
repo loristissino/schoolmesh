@@ -40,7 +40,7 @@
 	
       <td><?php echo $wpmodule->getPeriod() ?></td>
       <td><?php echo $wpmodule ?></td>
-      <td><?php  echo format_date($wpmodule->getUpdatedAt(), 'd') ?> <?php  echo format_date($wpmodule->getUpdatedAt(), 't') ?></td>
+      <td><?php  echo Generic::datetime($wpmodule->getUpdatedAt('U'), $sf_context) ?></td>
       <td>
 	  <?php if ($wpmodule->getIsPublic()): ?>
 		<?php echo image_tag('public', 'title=' . __('public')) ?>

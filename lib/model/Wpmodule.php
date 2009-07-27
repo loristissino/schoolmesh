@@ -2,10 +2,13 @@
 
 class Wpmodule extends BaseWpmodule
 {
-	
+
+
 	public function unlink($context, PropelPDO $con = null)
 	{
 	/* FIXME: I should check if this is invoked by the owner */
+
+
 
 	  if (!$this->getIsDeletable())
 		{
