@@ -72,22 +72,39 @@ class Appointment extends BaseAppointment
 
 
 	return $resultset;
-	/*
-	SELECT * FROM wpmodule LEFT JOIN appointment ON wpmodule.APPOINTMENT_ID = appointment.ID LEFT JOIN schoolclass ON appointment.SCHOOLCLASS_ID = schoolclass.ID LEFT JOIN year ON appointment.YEAR_ID = year.ID WHERE wpmodule.USER_ID = 4822 ORDER BY wpmodule.UPDATED_AT DESC
-	
-	/*
-	SELECT *
-FROM `wpmodule`
-LEFT JOIN appointment ON wpmodule.appointment_id = appointment.id
-LEFT JOIN schoolclass ON appointment.schoolclass_id = schoolclass.id
-LEFT JOIN year ON appointment.year_id = year.id
-WHERE wpmodule.user_id =4822
-ORDER BY wpmodule.updated_at DESC
 
-*/ 
 
 }
 
+	public function retrieveImportableModulesOfColleagues()
+	
+	{
+
+	$connection = Propel::getConnection();
+
+	$userId = $this->getUserId();
+
+	$sql = 'SELECT wpmodule.id as id, title, period, UNIX_TIMESTAMP(wpmodule.updated_at) as last_update , appointment_id, ' . SfGuardUserProfilePeer::LAST_NAME . ' as teacher FROM ' . WpmodulePeer::TABLE_NAME .
+	' JOIN ' . SfGuardUserProfilePeer::TABLE_NAME . ' ON ' . WpmodulePeer::USER_ID . ' = ' . SfGuardUserProfilePeer::USER_ID . 
+	' LEFT JOIN ' . AppointmentPeer::TABLE_NAME . ' ON ' . WpmodulePeer::APPOINTMENT_ID . ' = ' . AppointmentPeer::ID .
+    ' LEFT JOIN ' . SchoolclassPeer::TABLE_NAME . ' ON ' . AppointmentPeer::SCHOOLCLASS_ID . ' = ' . SchoolclassPeer::ID . 
+    ' LEFT JOIN ' . YearPeer::TABLE_NAME . ' ON ' . AppointmentPeer::YEAR_ID . ' = ' . YearPeer::ID .
+    ' WHERE ' . WpmodulePeer::IS_PUBLIC . ' = TRUE ' .
+	' AND ' . WpmodulePeer::USER_ID . ' <> %d ' .
+    ' ORDER BY ' . WpmodulePeer::UPDATED_AT . ' DESC';
+
+
+	$sql = sprintf($sql, $userId);
+
+    $statement = $connection->prepare($sql);
+    $statement->execute();
+    $resultset = $statement->fetchAll(PDO::FETCH_OBJ);
+
+
+	return $resultset;
+
+
+}
 
 
 	public function getWpinfos($criteria = null, PropelPDO $con = null)
@@ -450,7 +467,7 @@ $con->query($sql);
 
 													};
 												
-												if((($item->getEvaluation()==null)&&$this->getState()==Workflow::IR_DRAFT) and $context)
+												if($it->getEvaluationMax()>0 && (($item->getEvaluation()==null)&&$this->getState()==Workflow::IR_DRAFT) and $context)
 													{
 														array_push($result['checks'],
 															new Check(

@@ -47,7 +47,7 @@ class plansandreportsActions extends sfActions
 
 	$this->steps = Workflow::getWpfrSteps();
 	
-//	$this->c_modules = $this->workplan->retrieveImportableModulesOfColleagues();
+	$this->c_modules = $this->workplan->retrieveImportableModulesOfColleagues();
 	$this->s_modules = $this->workplan->retrieveOtherModulesOfSameTeacher();
 
 	}

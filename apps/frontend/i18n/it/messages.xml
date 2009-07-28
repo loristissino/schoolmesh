@@ -1018,6 +1018,18 @@
         <source>Yesterday, </source>
         <target>Ieri, </target>
       </trans-unit>
+      <trans-unit id="285">
+        <source>Hide</source>
+        <target>Nascondi</target>
+      </trans-unit>
+      <trans-unit id="286">
+        <source>The item was imported</source>
+        <target>L'elemento &#xE8; stato importato</target>
+      </trans-unit>
+      <trans-unit id="286">
+        <source>Submit this report</source>
+        <target>Consegna questa relazione</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

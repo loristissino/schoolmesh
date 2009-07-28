@@ -21,7 +21,7 @@
 	<?php if($state >= $wpinfo->getWpinfoType()->getState()): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <th><?php echo $wpinfo->getWpinfoType()->getTitle() ?></th>
-      <td><?php echo $wpinfo->getUpdatedAt() ?></td>
+      <td><?php echo Generic::datetime($wpinfo->getUpdatedAt('U'), $sf_context) ?></td>
       <td>
 		  <?php if ($wpinfo->getContent()=='' and $wpinfo->getWpinfoType()->getIsRequired()): ?>
 			<?php echo image_tag('notdone', 'title=' . __('this content is required and is currently missing')) ?>

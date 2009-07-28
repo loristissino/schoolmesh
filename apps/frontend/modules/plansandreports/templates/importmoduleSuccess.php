@@ -42,3 +42,32 @@
 
 <h3><?php echo __('Import a module of a colleague') ?></h3>
 
+<div class="sf_admin_list">
+
+<table cellspacing="0">
+  <thead>
+    <tr>
+      <th class="sf_admin_text"><?php echo __('Period') ?></th>
+      <th class="sf_admin_text"><?php echo __('Title') ?></th>
+      <th class="sf_admin_text"><?php echo __('Last update') ?></th>
+      <th class="sf_admin_text"><?php echo __('Teacher') ?></th>
+      <th class="sf_admin_text"><?php echo __('Actions') ?></th>
+    </tr>
+  </thead>
+  <tbody>
+	<?php $i=0 ?>
+	<?php foreach($c_modules as $wpmodule): ?>
+    <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
+		<?php /* WARNING: Since we use PDO directly, objects are raw and we don't have Getters here: */ ?>
+      <td><?php  echo $wpmodule->period ?></td>
+      <td><?php  echo $wpmodule->title ?></td>
+      <td><?php  echo Generic::datetime($wpmodule->last_update, $sf_context) ?></td>
+      <td><?php  echo $wpmodule->teacher ?></td>
+	  <td><?php include_partial('actionmoduleimport', array('wpmodule'=>$wpmodule, 'workplan'=>$workplan))?></td>
+	</td>
+    </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>
+
+</div>
