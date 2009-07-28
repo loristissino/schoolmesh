@@ -148,8 +148,7 @@ class wpmoduleActions extends sfActions
 	$this->owner=$this->wpmodule->getOwner();;
 	$this->workplan = $this->wpmodule->getAppointment();
 		
-    $this->forward404Unless($this->owner->getUserId()==$this->getUser()->getProfile()->getSfGuardUser()->getId() or 
-		$this->getIsPublic());
+    $this->forward404Unless($this->owner->getUserId()==$this->getUser()->getProfile()->getSfGuardUser()->getId() or $this->wpmodule->getIsPublic());
 	$this->item_groups=$this->wpmodule->getWpitemGroups();
 		
 	$this->setLayout('popup_layout');

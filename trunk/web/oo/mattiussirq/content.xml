@@ -410,7 +410,7 @@
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P15">Docente:<text:tab/>Prof. John Test Teacher</text:p>
 <text:p text:style-name="P15">Materia:<text:tab/>Astronomia</text:p>
-<text:p text:style-name="P15">Classe:<text:tab/>3AP</text:p>
+<text:p text:style-name="P15">Classe:<text:tab/>3BP</text:p>
 <text:p text:style-name="P16"/>						<text:p text:style-name="P9">Livelli di partenza rilevati</text:p>
 			<text:p text:style-name="P17">La classe è meravigliosa!</text:p>
 			<text:p text:style-name="P1"></text:p>
@@ -429,15 +429,11 @@
 									<text:p text:style-name="P9">Recupero programmato</text:p>
 			<text:p text:style-name="P17">Se necessario.</text:p>
 			<text:p text:style-name="P1"></text:p>
-																	<text:p text:style-name="P9">Situazione finale della classe</text:p>
-			<text:p text:style-name="P17">cbcvbxcvb<text:line-break/>xcvb<text:line-break/>xvb<text:line-break/>xcv</text:p>
-			<text:p text:style-name="P1"></text:p>
-									<text:p text:style-name="P9">Recupero attuato</text:p>
-			<text:p text:style-name="P17">vbxcvbxcvb<text:line-break/>xc<text:line-break/>vb<text:line-break/>xcv<text:line-break/>bx<text:line-break/>cvb<text:line-break/>xcvb<text:line-break/>xcvb</text:p>
-			<text:p text:style-name="P1"></text:p>
-							<text:p text:style-name="P1"></text:p>
+														<text:p text:style-name="P1"></text:p>
 <text:p text:style-name="P9">Tavola di programmazione della disciplina</text:p>
 	<text:p text:style-name="P17">1. Sistema solare (settembre - dicembre)</text:p>
+	<text:p text:style-name="P17">2. Astronomia osservativa (settembre - dicembre)</text:p>
+	<text:p text:style-name="P17">3. Introduzione alla shell di Linux (aprile - maggio)</text:p>
 
 <text:p text:style-name="P16"/> 
 
@@ -464,7 +460,7 @@
 		<text:list text:style-name="L2">
 					<text:list-item><text:p text:style-name="P1">prima abilità (con valori di x<text:span text:style-name="T2">2</text:span>)</text:p></text:list-item>
 					<text:list-item><text:p text:style-name="P1">seconda abilità (con valori di x log <text:span text:style-name="T3">10</text:span> <text:span text:style-name="T1">n</text:span>)</text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">terza abilità (con valori <text:span text:style-name="T1">enfatizzati</text:span>)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">asdf</text:p></text:list-item>
 					<text:list-item><text:p text:style-name="P1">quarta abilità</text:p></text:list-item>
 					<text:list-item><text:p text:style-name="P1">gdgsdfg</text:p></text:list-item>
 				</text:list>
@@ -477,12 +473,54 @@
 		<text:p/>
 			<text:p text:style-name="P10">Note e commenti in fase di progettazione</text:p>
 		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">jljlj lkj òlkj òljòl</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">lkjk jlkj òljò l</text:p></text:list-item>
 				</text:list>
 		<text:p/>
 			<text:p text:style-name="P10">Note e commenti in fase di relazione finale</text:p>
 		<text:list text:style-name="L2">
 				</text:list>
 		<text:p/>
+	<text:p text:style-name="Horizontal_20_Line"/><text:p text:style-name="P16"/> 
+	<text:p text:style-name="P10">Titolo del modulo</text:p>
+	<text:p text:style-name="P9">Astronomia osservativa</text:p>
+	<text:p text:style-name="P10">Periodo di svolgimento</text:p>
+	<text:p text:style-name="P9">settembre - dicembre</text:p>
+	<text:p />
+			<text:p text:style-name="P10">Contenuti</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">---</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Conoscenze</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">---</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Abilità</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">---</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Competenze</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">---</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Note e commenti in fase di progettazione</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Note e commenti in fase di relazione finale</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+	<text:p text:style-name="Horizontal_20_Line"/><text:p text:style-name="P16"/> 
+	<text:p text:style-name="P10">Titolo del modulo</text:p>
+	<text:p text:style-name="P9">Introduzione alla shell di Linux</text:p>
+	<text:p text:style-name="P10">Periodo di svolgimento</text:p>
+	<text:p text:style-name="P9">aprile - maggio</text:p>
+	<text:p />
 	<text:p text:style-name="Horizontal_20_Line"/><text:p text:style-name="P16"/> 
 <text:p text:style-name="Standard"/>
 <text:p text:style-name="P1"/>
