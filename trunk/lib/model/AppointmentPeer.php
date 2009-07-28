@@ -280,6 +280,41 @@ if (isset($content['workplan_report']['tools']))
 
 	}
 
+	public static function listWorkplans($year, $sortby)
+	{
 
+	$connection = Propel::getConnection();
+
+$sql = 'SELECT appointment_id as id, first_name, last_name, schoolclass_id, state, subject_id, subject.description as subject, count( wpmodule.id ) AS wpmodules
+FROM appointment
+JOIN sf_guard_user_profile ON appointment.user_id = sf_guard_user_profile.user_id
+JOIN subject ON subject.id = appointment.subject_id
+LEFT JOIN wpmodule ON wpmodule.appointment_id = appointment.id
+WHERE appointment.year_id =%d
+GROUP BY first_name, last_name, schoolclass_id, state, subject_id, subject.description
+ORDER BY %s
+';
+
+	$sortorder= 'schoolclass_id';
+
+switch ($sortby)
+{
+	case 'class': $sortorder='schoolclass_id'; break;
+	case 'teacher': $sortorder='last_name, first_name'; break;
+	case 'state': $sortorder='state'; break;
+	case 'subject': $sortorder= 'subject'; break;
+	
+	$sortorder= 'schoolclass_id';
+}
+
+	$sql = sprintf($sql, $year, $sortorder);
+
+    $statement = $connection->prepare($sql);
+    $statement->execute();
+    $resultset = $statement->fetchAll(PDO::FETCH_OBJ);
+
+	return $resultset;
+
+	}
 
 }

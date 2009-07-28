@@ -14,9 +14,9 @@ sfGuardUserProfile:
     disk_used_files: 2500
     disk_updated_at: <?php echo time() . "\n" ?>
   test.teacher:
-    user_id:        john.testteacher
+    user_id:        john.test
     first_name:     John
-    last_name:      Test Teacher
+    last_name:      Test
     gender:            M
     email:     john@example.com
     role_id:       doc

@@ -11,7 +11,10 @@
 <?php if ($sf_user->hasFlash('error')): ?>
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
+
 <div class="sf_admin_list">
+
+<?php if(sizeof($workplans)>0): ?>
 
 <table cellspacing="0">
   <thead>
@@ -43,4 +46,7 @@
     <?php endforeach; ?>
   </tbody>
 </table>
+<?php else: ?>
+<p><?php echo __('You don\'t have any workplan set.') ?></p>
+<?php endif ?>
 </div>

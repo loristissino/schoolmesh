@@ -8,7 +8,7 @@ Wpevent:
   wp70_10:
     created_at: <?php echo date("U", mktime(0,0,0, 10, 20, 2007)) . "\n" ?>
     appointment_id: test_ast_3ap_70
-    user_id:  	john.testteacher
+    user_id:  	john.test
     comment:  Workplan submitted
     state:  10
   wp70_20:
@@ -26,7 +26,7 @@ Wpevent:
   wp70_40:
     created_at: <?php echo date("U", mktime(0,0,0, 1, 31, 2008)) . "\n" ?>
     appointment_id: test_ast_3ap_70
-    user_id:  	john.testteacher
+    user_id:  	john.test
     comment:  Intermediate report submitted
     state:  40
   wp70_30a:
@@ -38,7 +38,7 @@ Wpevent:
   wp70_50:
     created_at: <?php echo date("U", mktime(0,0,0, 6, 2, 2008)) . "\n" ?>
     appointment_id: test_ast_3ap_70
-    user_id:  	john.testteacher
+    user_id:  	john.test
     comment:  Final report submitted
     state:  50
   wp70_60:
@@ -68,7 +68,7 @@ Wpevent:
   wp10_10:
     created_at: <?php echo date("U", mktime(0,0,0, 10, 31, 2008)) . "\n" ?>
     appointment_id: test_ast_4ap_10
-    user_id:  	john.testteacher
+    user_id:  	john.test
     comment:  Workplan submitted
     state:  10
   wp20_0:
@@ -80,7 +80,7 @@ Wpevent:
   wp20_10:
     created_at: <?php echo date("U", mktime(0,0,0, 11, 2, 2008)) . "\n" ?>
     appointment_id: test_ast_5ap_20
-    user_id:  	john.testteacher
+    user_id:  	john.test
     comment:  Workplan submitted
     state: 10
   wp20_20:
@@ -98,7 +98,7 @@ Wpevent:
   wp30_10:
     created_at: <?php echo date("U", mktime(0,0,0, 11, 2, 2008)) . "\n" ?>
     appointment_id: test_fis_3ap_30
-    user_id:  	john.testteacher
+    user_id:  	john.test
     comment:  Workplan submitted
     state: 10
   wp30_20:
@@ -123,7 +123,7 @@ Wpevent:
   wp40_10:
     created_at: <?php echo date("U", mktime(0,0,0, 11, 2, 2007)) . "\n" ?>
     appointment_id: test_fis_4ap_40
-    user_id:  	john.testteacher
+    user_id:  	john.test
     comment:  Workplan submitted
     state: 10
   wp40_20:
@@ -141,7 +141,7 @@ Wpevent:
   wp40_40:
     created_at: <?php echo date("U", mktime(0,0,0, 12, 2, 2008)) . "\n" ?>
     appointment_id: test_fis_4ap_40
-    user_id:  	john.testteacher
+    user_id:  	john.test
     comment:  Intermediate report submitted
     state: 40
 
@@ -154,7 +154,7 @@ Wpevent:
   wp50_10:
     created_at: <?php echo date("U", mktime(0,0,0, 11, 2, 2007)) . "\n" ?>
     appointment_id:   test_fis_5ap_50
-    user_id:  	john.testteacher
+    user_id:  	john.test
     comment:  Workplan submitted
     state: 10
   wp50_20:
@@ -172,7 +172,7 @@ Wpevent:
   wp50_50:
     created_at: <?php echo date("U", mktime(0,0,0, 6, 10, 2008)) . "\n" ?>
     appointment_id:   test_fis_5ap_50
-    user_id:  	john.testteacher
+    user_id:  	john.test
     comment:  Final report submitted
     state: 50
 
@@ -185,7 +185,7 @@ Wpevent:
   wp60_10:
     created_at: <?php echo date("U", mktime(0,0,0, 11, 2, 2007)) . "\n" ?>
     appointment_id:   test_ast_3bp_60
-    user_id:  	john.testteacher
+    user_id:  	john.test
     comment:  Workplan submitted
     state: 10
   wp60_20:
@@ -203,7 +203,7 @@ Wpevent:
   wp60_50:
     created_at: <?php echo date("U", mktime(0,0,0, 6, 10, 2008)) . "\n" ?>
     appointment_id:   test_ast_3bp_60
-    user_id:  	john.testteacher
+    user_id:  	john.test
     comment:  Final report submitted
     state: 50
   wp60_60:
