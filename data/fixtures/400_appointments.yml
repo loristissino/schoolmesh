@@ -1,54 +1,54 @@
 Appointment:
   test_ast_3ap_70:
-    user_id: john.testteacher
+    user_id: john.test
     subject_id: ast
     schoolclass_id: 3ap
     year_id:         200708
     state: 70
   test_ast_3ap_0:
-    user_id: john.testteacher
+    user_id: john.test
     subject_id: ast
     schoolclass_id: 3ap
     year_id:         200809
     state: 0
   test_ast_4ap_10:
-    user_id: john.testteacher
+    user_id: john.test
     subject_id: ast
     schoolclass_id: 4ap
     year_id:         200809
     state: 10
   test_ast_5ap_20:
-    user_id: john.testteacher
+    user_id: john.test
     subject_id: ast
     schoolclass_id: 5ap
     year_id:         200809
     state: 20
   test_fis_3ap_30:
-    user_id: john.testteacher
+    user_id: john.test
     subject_id: fis
     schoolclass_id: 3ap
     year_id:         200809
     state: 30
   test_fis_4ap_40:
-    user_id: john.testteacher
+    user_id: john.test
     subject_id: fis
     schoolclass_id: 4ap
     state: 40
     year_id:         200708
   test_fis_5ap_50:
-    user_id: john.testteacher
+    user_id: john.test
     subject_id: fis
     schoolclass_id: 5ap
     state: 50
     year_id:         200708
   test_ast_3bp_60:
-    user_id: john.testteacher
+    user_id: john.test
     subject_id: ast
     schoolclass_id: 3bp
     state: 60
     year_id:         200708
   test_ast_3bp_0:
-    user_id: john.testteacher
+    user_id: john.test
     subject_id: ast
     schoolclass_id: 3bp
     state: 0

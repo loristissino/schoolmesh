@@ -1,2 +1,5 @@
 default:
-  credentials: planning
+  credentials: [[ planning, schoolmaster ]]
+
+list:
+  credentials: [[ schoolmaster, office ]]

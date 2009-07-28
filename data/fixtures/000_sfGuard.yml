@@ -9,8 +9,8 @@ sfGuardUser:
     password:       lorisp
     is_superadmin:  false
 
-  john.testteacher:
-    username:      john.testteacher
+  john.test:
+    username:      john.test
     password:      testp
     is_superadmin: false
 
@@ -161,15 +161,9 @@ sfGuardUserGroup:
   gabriella:
     group_id:      officeteam
     user_id:         gabriella
-  tt_smt:
-    group_id:      schoolmasterteam
-    user_id:        john.testteacher
-  tt_ot:
-    group_id:      officeteam
-    user_id:         john.testteacher
   tt_teacher:
     group_id:       teacher
-    user_id:        john.testteacher
+    user_id:        john.test
 
   
   

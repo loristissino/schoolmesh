@@ -39,10 +39,10 @@ EOF;
     // add your code here
 	
 	
-	$this->logSection(sfContext::getInstance()->getI18N()->__('Workplan'), 'COMMENT');
+//	$this->logSection(sfContext::getInstance()->getI18N()->__('Workplan'), 'COMMENT');
 	
 	
-	return;
+//	return;
 	
 	$file=$arguments['file'];
 	
@@ -122,6 +122,7 @@ EOF;
 		$appointment->setSubject($mysubject);
 		$appointment->setSchoolclass($myclass);
 		$appointment->setYear($myyear);
+		$appointment->setState(0);
 		$appointment->save();
 		$appointment->getChecks();
 

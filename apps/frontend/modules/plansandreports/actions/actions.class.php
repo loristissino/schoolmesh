@@ -10,6 +10,19 @@
  */
 class plansandreportsActions extends sfActions
 {
+	
+	
+	public function executeList(sfWebRequest $request)
+	{
+
+		$sortby = $request->getParameter('sortby');
+		$this->sortby=$sortby;
+		$this->forward404Unless(in_array($sortby, array('class', 'teacher', 'subject', 'state')));
+		$this->workplans = AppointmentPeer::listWorkplans(sfConfig::get('app_config_current_year'), $sortby);
+		$this->steps = Workflow::getWpfrSteps();
+		
+	}
+	
   public function executeIndex(sfWebRequest $request)
   {
 //    $this->workplans = AppointmentPeer::doSelect(new Criteria());
