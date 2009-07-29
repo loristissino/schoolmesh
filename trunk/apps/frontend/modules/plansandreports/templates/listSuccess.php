@@ -17,12 +17,12 @@
 <div id="sf_admin_bar">
 <div class="sf_admin_filter">
   
-<form action="<?php echo url_for('plansandreports/list?sortby=' . $sortby ) ?>" method="get">
+<form action="<?php echo url_for('plansandreports/setfilterlistpreference?filter=set' ) ?>" method="get">
     <table cellspacing="0">
       <tfoot>
         <tr>
           <td colspan="2">
-               <a onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit();return false;" href="<?php echo url_for('plansandreports/list?sortby='.$sortby.'&filtered_user_id=none') ?>"><?php echo __('Reset') ?></a>            <input type="submit" value="<?php echo __('Filter') ?>" />
+               <a onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit();return false;" href="<?php echo url_for('plansandreports/setfilterlistpreference?filter=reset') ?>"><?php echo __('Reset') ?></a>            <input type="submit" value="<?php echo __('Filter') ?>" />
           </td>
         </tr>
       </tfoot>
@@ -51,19 +51,19 @@ array('related_class'=>'sfGuardUserProfile',
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
 
-<form action="<?php echo url_for('plansandreports/batchapprove') ?>" method="post">
+<form action="<?php echo url_for('plansandreports/batch') ?>" method="post">
 
 <table cellspacing="0">
   <thead>
     <tr>
 	  <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
 
-      <th class="sf_admin_text"><?php echo link_to(__('Class'), url_for( 'plansandreports/list?sortby=class&filtered_user_id='. $filtered_user_id)) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('Subject'), url_for('plansandreports/list?sortby=subject&filtered_user_id='. $filtered_user_id)) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('Teacher'), url_for( 'plansandreports/list?sortby=teacher&filtered_user_id='. $filtered_user_id)) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Class'), url_for( 'plansandreports/setsortlistpreference?sortby=class')) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Subject'), url_for('plansandreports/setsortlistpreference?sortby=subject')) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Teacher'), url_for( 'plansandreports/setsortlistpreference?sortby=teacher')) ?></th>
       <th class="sf_admin_text"><?php echo __('Modules') ?></th>
 	  <?php /*<th class="sf_admin_text"><?php echo __('Last action') ?></th> */ ?>
-	  <th class="sf_admin_text"><?php echo link_to(__('State'), url_for( 'plansandreports/list?sortby=state&filtered_user_id='. $filtered_user_id)) ?></th>
+	  <th class="sf_admin_text"><?php echo link_to(__('State'), url_for( 'plansandreports/setsortlistpreference?sortby=state')) ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
@@ -97,8 +97,8 @@ array('related_class'=>'sfGuardUserProfile',
 
 <?php echo options_for_select(array(
   '' => __('Choose an action'),
-  'batchApprove' => __('Approve selected documents'),
-  'batchReject' => __('Reject selected documents'),
+  'Approve' => __('Approve selected documents'),
+  'Reject' => __('Reject selected documents'),
 ), 0) ?>
   </select>
 

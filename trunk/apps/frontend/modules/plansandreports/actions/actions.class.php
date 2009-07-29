@@ -24,6 +24,49 @@ class plansandreportsActions extends sfActions
 
   }
 
+public function executeBatch(sfWebRequest $request)
+{
+	$action=$request->getParameter('batch_action');
+
+	if ($action=='')
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must specify an action.'));
+			$this->redirect('plansandreports/list');
+		}
+
+
+
+    $ids = $request->getParameter('ids');
+    $workplans = AppointmentPeer::retrieveByPks($ids);
+	
+	if (sizeof($workplans)==0)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least a document.'));
+			$this->redirect('plansandreports/list');
+		}
+	
+	$number=0;
+    foreach ($workplans as $workplan)
+    {
+		$result = $workplan->$action($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions());
+		if ($result['result']=='notice')
+			{
+				$number++;
+			}
+	}
+	
+	if ($number==sizeof($workplans))
+		{
+			$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('The requested action has been performed.'));
+		}
+	else
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('The requested action could not be performed.'));
+		}
+    $this->redirect('plansandreports/list');
+}
+
+  
 
   public function executeApprove(sfWebRequest $request)
   {
@@ -43,20 +86,51 @@ class plansandreportsActions extends sfActions
   }
 
 
+	public function executeSetsortlistpreference(sfWebRequest $request)
+	{
+		$sortby = $request->getParameter('sortby');
+		$this->forward404Unless(in_array($sortby, array('', 'class', 'teacher', 'subject', 'state')));
+		$this->getUser()->setAttribute('sortby', $sortby);
+		$this->redirect('plansandreports/list');
+	}
+	
+	public function executeSetfilterlistpreference(sfWebRequest $request)
+	{
+		$filter = $request->getParameter('filter');
+		if ($filter=='reset')
+			{
+				$this->getUser()->setAttribute('filter', '');
+				$this->getUser()->setAttribute('filtered_user_id', '');
+			}
+		if ($filter=='set')
+			{
+				$this->getUser()->setAttribute('filter', 'set');
+				$this->getUser()->setAttribute('filtered_user_id', $request->getParameter('filtered_user_id'));
+			}
+			
+		$this->redirect('plansandreports/list');
+	}
+
 
 
 	public function executeList(sfWebRequest $request)
 	{
-
-		$sortby = $request->getParameter('sortby');
-		$this->sortby=$sortby;
-		if (!in_array($sortby, array('class', 'teacher', 'subject', 'state')))
+		if (!$sortby=$this->getUser()->getAttribute('sortby'))
 			{
 				$sortby='class';
 			}
-	
-		$this->filtered_user_id=$request->getParameter('filtered_user_id');
-		$this->workplans = AppointmentPeer::listWorkplans(sfConfig::get('app_config_current_year'), $sortby, $this->filtered_user_id);
+
+		if (!$filter=$this->getUser()->getAttribute('filter'))
+			{
+				$filter='';
+			}
+
+		if (!$this->filtered_user_id=$this->getUser()->getAttribute('filtered_user_id'))
+			{
+				$this->filtered_user_id='';
+			}
+
+		$this->workplans = AppointmentPeer::listWorkplans(sfConfig::get('app_config_current_year'), $sortby, $filter, $this->filtered_user_id);
 //		$this->teachers = AppointmentPeer::listTeachers(sfConfig::get('app_config_current_year'));
 		$this->steps = Workflow::getWpfrSteps();
 //		$this->filtered_user_id=571;
@@ -126,7 +200,7 @@ class plansandreportsActions extends sfActions
 	}
 
 
-	public function executeWpsubmit(sfWebRequest $request)
+	public function executeSubmit(sfWebRequest $request)
 	{
     $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
 		

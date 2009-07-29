@@ -7,6 +7,15 @@
 				array('title'=>__('Show this document') . ' ' . __('(opens in a new window)'), 'popup' => array('popupWindow', 'width=600,height=300,left=250,top=0,scrollbars=yes'))
 				)?>
 				</li>
+				
+				<li class="sf_admin_action_export">
+					<?php echo link_to(
+				__('Export'),
+				'plansandreports/export?id='.$workplan->id,
+				array('title'=>__(__($steps[$workplan->state]['owner']['exportActionTip'])))
+				)?>
+				</li>
+
 			<?php if(@$sf_user->hasCredential($steps[$workplan->state]['actions']['approve']['permission'])): ?>
 				<li class="sf_admin_action_approve">
 					<?php echo link_to(

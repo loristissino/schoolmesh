@@ -280,7 +280,7 @@ if (isset($content['workplan_report']['tools']))
 
 	}
 
-	public static function listWorkplans($year, $sortby, $filtered_user_id='none')
+	public static function listWorkplans($year, $sortby, $filter, $filtered_user_id='none')
 	{
 
 	$connection = Propel::getConnection();
@@ -296,11 +296,20 @@ GROUP BY first_name, last_name, schoolclass_id, state, subject_id, subject.descr
 ORDER BY %s
 ';
 
-$filter ='';
-if ($filtered_user_id!='none' && $filtered_user_id!='')
+
+$sqlfilter ='';
+
+if ($filter=='set')
 	{
-		$filter='AND appointment.user_id = %d ';
-		$filter=sprintf($filter, $filtered_user_id);
+
+
+	if ($filtered_user_id!='')
+		{
+			$sqlfilter='AND appointment.user_id = %d ';
+			$sqlfilter=sprintf($sqlfilter, $filtered_user_id);
+		}
+
+
 	}
 
 $sortorder= 'schoolclass_id';
@@ -315,7 +324,7 @@ switch ($sortby)
 	$sortorder= 'schoolclass_id';
 }
 
-	$sql = sprintf($sql, $year, $filter, $sortorder);
+	$sql = sprintf($sql, $year, $sqlfilter, $sortorder);
 
     $statement = $connection->prepare($sql);
     $statement->execute();

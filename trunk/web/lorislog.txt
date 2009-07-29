@@ -1,3 +1,9 @@
 Array
 (
+    [username] => francesco.g
+    [first_name] => Francesco
+    [middle_name] => 
+    [last_name] => Genova
+    [email] => 
+    [old_user_id] => 890
 )

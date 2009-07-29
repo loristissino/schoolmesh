@@ -17,13 +17,14 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	$t = sfGuardUserPeer::doSelectOne($c);
 	return $t;
 	}
-	
-	
+
+
 	public static function retrieveAllUsers()
 	{
 	$c = new Criteria();
 	$c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
-	$t = self::doSelect($c);
+	$c->addJoin(RolePeer::ID, sfGuardUserProfilePeer::ROLE_ID);
+	$t = self::doSelectJoinAll($c);
 	return $t;
 		
 	}
