@@ -140,6 +140,11 @@
   background: url(../images/saveandnext.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_users a
+{
+  background: url(../images/users.png) no-repeat 0 0;
+}
+
 div.module_content
 {
   padding-left: 40px;

@@ -8,31 +8,18 @@ help:
   url: help
   param: { module: help, action: index } 
 
-schoolmaster:
-  url: schoolmaster
-  param: { module: schoolmaster, action: index } 
-
-schoolmaster_wpsubmitted:
-  url: schoolmaster/wpsubmitted
-  param: { module: schoolmaster, action: wpsubmitted } 
-
-office:
-  url: office
-  param: { module: office, action: index } 
-
 wpfrview:
   url: plansandreports/:id/view.:sf_format
   param: { module: plansandreports, action: view }
   requirements:
     sf_format: (?:html|yaml)  
 
-
-submit:
-  url: plansandreports/:id/submit.html
-  param: { module: plansandreports, action: wpsubmit } 
-  options:
-    module:              plansandreports
-    prefix_path:        plansandreports
+#submit:
+#  url: plansandreports/:id/submit.html
+#  param: { module: plansandreports, action: wpsubmit } 
+#  options:
+#    module:              plansandreports
+#    prefix_path:        plansandreports
 
 addtool:
   url: plansandreports/addtool/:id/tool/:tool
@@ -47,15 +34,6 @@ removetool:
   options:
     module:              plansandreports
     prefix_path:        plansandreports
-
-appointment:
-  class: sfPropelRouteCollection
-  options:
-    model:               Appointment
-    module:              schoolmaster_plansandreports
-    prefix_path:         schoolmaster_plansandreports
-    column:              id
-    with_wildcard_routes: true
 
 lanlogin:
   url:   /lanlogin/:username/:workstation/:ip
@@ -72,7 +50,6 @@ lanlogout:
 profile:
   url:  /profile
   param: {module: profile, action: index }
-
 
 sf_guard_user_profile:
   class: sfPropelRouteCollection
@@ -123,6 +100,9 @@ plansandreports:
   url: plansandreports
   param: { module: plansandreports, action: index } 
 
+users:
+  url: users
+  param: { module: users, action: index } 
 
 service:
   class: sfPropelRouteCollection
