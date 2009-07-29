@@ -1,6 +1,6 @@
-workplan_list:
-  url:     /plansandreports/list/sortby:typ
-  param:   { module: plansandreports, action: list }
+#workplan_list:
+#  url:     /plansandreports/list/sortby:typ
+#  param:   { module: plansandreports, action: list }
 #  requirements:
 #    order: (class|teacher|subject|state)
 
@@ -110,15 +110,18 @@ workstation:
     column:              id
     with_wildcard_routes: true
 
-plansandreports:
-  class: sfPropelRouteCollection
-  options:
-    model:               Appointment
-    module:              plansandreports
-    prefix_path:        plansandreports
-    column:              id
-    with_wildcard_routes: true
+#plansandreports:
+#  class: sfPropelRouteCollection
+#  options:
+#    model:               Appointment
+#    module:              plansandreports
+#    prefix_path:        plansandreports
+#    column:              id
+#    with_wildcard_routes: true
 
+plansandreports:
+  url: plansandreports
+  param: { module: plansandreports, action: index } 
 
 
 service:

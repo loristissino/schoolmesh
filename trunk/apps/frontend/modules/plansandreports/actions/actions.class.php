@@ -11,16 +11,55 @@
 class plansandreportsActions extends sfActions
 {
 	
+  public function executeReject(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
+    $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+
+	$result = $workplan->Reject($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions());
+
+	$this->getUser()->setFlash($result['result'], $result['message']);
+
+	$this->redirect('plansandreports/list');
+
+  }
+
+
+  public function executeApprove(sfWebRequest $request)
+  {
+    $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
 	
+	$this->content='approving workplan ' . $workplan->getId();
+	
+    $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
+    $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+
+	$result = $workplan->Approve($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions());
+
+	$this->getUser()->setFlash($result['result'], $result['message']);
+
+	$this->redirect('plansandreports/list');
+
+  }
+
+
+
+
 	public function executeList(sfWebRequest $request)
 	{
 
 		$sortby = $request->getParameter('sortby');
 		$this->sortby=$sortby;
-		$this->forward404Unless(in_array($sortby, array('class', 'teacher', 'subject', 'state')));
-		$this->workplans = AppointmentPeer::listWorkplans(sfConfig::get('app_config_current_year'), $sortby);
+		if (!in_array($sortby, array('class', 'teacher', 'subject', 'state')))
+			{
+				$sortby='class';
+			}
+	
+		$this->filtered_user_id=$request->getParameter('filtered_user_id');
+		$this->workplans = AppointmentPeer::listWorkplans(sfConfig::get('app_config_current_year'), $sortby, $this->filtered_user_id);
+//		$this->teachers = AppointmentPeer::listTeachers(sfConfig::get('app_config_current_year'));
 		$this->steps = Workflow::getWpfrSteps();
-		
+//		$this->filtered_user_id=571;
 	}
 	
   public function executeIndex(sfWebRequest $request)

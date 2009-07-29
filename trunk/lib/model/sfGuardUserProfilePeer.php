@@ -27,5 +27,18 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	return $t;
 		
 	}
-	
+
+
+	public static function retrieveTeachersWithAppointments()
+	{
+	$c = new Criteria();
+	$c->addJoin(AppointmentPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
+	$c->add(AppointmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
+	$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+	$t = self::doSelect($c);
+	return $t;
+
+	}
+
+
 }
