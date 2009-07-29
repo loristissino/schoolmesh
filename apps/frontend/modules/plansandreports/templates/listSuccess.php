@@ -1,5 +1,7 @@
 <?php use_helper('Javascript') ?>
 <?php use_helper('Form') ?>
+<?php use_helper('Object') ?>
+
 
 <?php slot('title', __("Workplans and reports' monitoring")) ?>
 <?php slot('breadcrumbs',
@@ -11,6 +13,44 @@
 
 <h1><?php echo __("Workplans and reports' monitoring") ?></h1>
 
+
+<div id="sf_admin_bar">
+<div class="sf_admin_filter">
+  
+<form action="<?php echo url_for('plansandreports/list?sortby=' . $sortby ) ?>" method="get">
+    <table cellspacing="0">
+      <tfoot>
+        <tr>
+          <td colspan="2">
+               <a onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit();return false;" href="<?php echo url_for('plansandreports/list?sortby='.$sortby.'&filtered_user_id=none') ?>"><?php echo __('Reset') ?></a>            <input type="submit" value="<?php echo __('Filter') ?>" />
+          </td>
+        </tr>
+      </tfoot>
+      <tbody>
+<tr class="sf_admin_form_row sf_admin_foreignkey sf_admin_filter_field_user_id">
+    <td>
+      <label for="appointment_filters_teacher_id"><?php echo __('Teacher') ?></label>    </td>
+    <td>
+<?php echo object_select_tag($filtered_user_id, 'getFilteredUserId',
+array('related_class'=>'sfGuardUserProfile',
+  'include_custom'=>__('Choose a teacher'),
+  'peer_method'=>'retrieveTeachersWithAppointments'
+  ))?>
+          </td>
+  </tr>
+              </tbody>
+    </table>
+  </form>
+</div>
+</div>
+
+<?php if ($sf_user->hasFlash('notice')): ?>
+  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
+<?php endif; ?>
+<?php if ($sf_user->hasFlash('error')): ?>
+  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
+<?php endif; ?>
+
 <form action="<?php echo url_for('plansandreports/batchapprove') ?>" method="post">
 
 <table cellspacing="0">
@@ -18,12 +58,12 @@
     <tr>
 	  <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
 
-      <th class="sf_admin_text"><?php echo link_to(__('Class'), 'plansandreports/list?sortby=class') ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('Subject'), url_for('plansandreports/list?sortby=subject')) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('Teacher'), 'plansandreports/list?sortby=teacher') ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Class'), url_for( 'plansandreports/list?sortby=class&filtered_user_id='. $filtered_user_id)) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Subject'), url_for('plansandreports/list?sortby=subject&filtered_user_id='. $filtered_user_id)) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Teacher'), url_for( 'plansandreports/list?sortby=teacher&filtered_user_id='. $filtered_user_id)) ?></th>
       <th class="sf_admin_text"><?php echo __('Modules') ?></th>
 	  <?php /*<th class="sf_admin_text"><?php echo __('Last action') ?></th> */ ?>
-	  <th class="sf_admin_text"><?php echo link_to(__('State'), 'plansandreports/list?sortby=state') ?></th>
+	  <th class="sf_admin_text"><?php echo link_to(__('State'), url_for( 'plansandreports/list?sortby=state&filtered_user_id='. $filtered_user_id)) ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
@@ -32,7 +72,7 @@
     <?php foreach ($workplans as $workplan): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
 	<td>
-  <input type="checkbox" name="ids[]" value="<?php echo $workplan-id ?>" class="sf_admin_batch_checkbox" />
+  <input type="checkbox" name="ids[]" value="<?php echo $workplan->id ?>" class="sf_admin_batch_checkbox" />
 </td>
 
       <td><?php echo $workplan->schoolclass_id ?></td>
@@ -42,7 +82,7 @@
 	  <?php /*<?php $lastlog=$workplan->getLastLog() ?>  
 	  <td><?php echo $lastlog?$lastlog->getCreatedAt():'' ?></td>*/ ?>
 	  <td><?php include_partial('state', array('state' => $workplan->state, 'steps' => $steps, 'size'=>'r')) ?></td>
-	  <td><?php /* include_partial('action_monitor', array('workplan' => $workplan, 'steps' => $steps)) */ ?></td>
+	  <td><?php  include_partial('action_monitor', array('workplan' => $workplan, 'steps' => $steps))  ?></td>
  	
 	</td>
     </tr>
