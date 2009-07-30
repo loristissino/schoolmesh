@@ -9,6 +9,10 @@
 
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_users">
-		<?php echo link_to(__('Users list'), 'users/list') ?>
+		<?php echo link_to(__('User list'), 'users/list') ?>
+	</li><br />
+	<li class="sf_admin_action_userchecks">
+		<?php echo link_to(__('Run user checks'), 'users/runuserchecks/html') ?>
+	</li><br />
 	</ul>
 

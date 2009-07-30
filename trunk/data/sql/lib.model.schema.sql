@@ -91,6 +91,7 @@ CREATE TABLE `sf_guard_user_profile`
 	`birthdate` DATE,
 	`birthplace` VARCHAR(50),
 	`import_code` VARCHAR(20),
+	`posix_uid` INTEGER,
 	`disk_set_soft_blocks_quota` INTEGER default 0,
 	`disk_set_hard_blocks_quota` INTEGER default 0,
 	`disk_set_soft_files_quota` INTEGER default 0,
@@ -108,6 +109,21 @@ CREATE TABLE `sf_guard_user_profile`
 	CONSTRAINT `sf_guard_user_profile_FK_2`
 		FOREIGN KEY (`role_id`)
 		REFERENCES `role` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- reserved_username
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `reserved_username`;
+
+
+CREATE TABLE `reserved_username`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`username` VARCHAR(20),
+	PRIMARY KEY (`id`),
+	KEY `reserved_username_I_1`(`username`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

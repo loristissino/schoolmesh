@@ -324,8 +324,11 @@ $con->query($sql);
 										false,
 										$context->getI18N()->__('Content cannot be empty'),
 										$wpinfotype->getTitle(),
-										'wpinfo/edit?id=' . $wpinfo->getId(),
-										$flash));
+										array(
+											'link_to'=>'wpinfo/edit?id=' . $wpinfo->getId(),
+											'flash'=>$flash)
+											)
+										);
 								}
 							elseif (!$wpinfo->checkContentAgainstTemplate($wpinfo->getContent(), $wpinfotype->getTemplate()))
 								{
@@ -334,8 +337,11 @@ $con->query($sql);
 										false,
 										$context->getI18N()->__('Content doesn\'t match template'),
 										$wpinfotype->getTitle(),
-										'wpinfo/edit?id=' . $wpinfo->getId(),
-										$flash));
+										array(
+											'link_to'=>'wpinfo/edit?id=' . $wpinfo->getId(),
+											'flash'=>$flash)
+											)
+										);
 								}
 							else
 								{
@@ -357,7 +363,10 @@ $con->query($sql);
 						false,
 						$context->getI18N()->__('There must be at least one module'),
 						'',
-						'plansandreports/fill?id=' . $this->getId()));
+						array(
+							'link_to'=>'plansandreports/fill?id=' . $this->getId()
+							)
+						));
 					
 			}
 			
@@ -377,7 +386,9 @@ $con->query($sql);
 									false,
 									$context->getI18N()->__('Invalid or duplicate title for module'),
 									$wpmodule->getTitle(),
-									'wpmodule/view?id=' . $wpmodule->getId()
+									array(
+										'link_to'=>'wpmodule/view?id=' . $wpmodule->getId()
+									)
 									));
 							$moduleIsOk=false;
 						}
@@ -395,7 +406,9 @@ $con->query($sql);
 									false,
 									$context->getI18N()->__('Invalid period specification for module'),
 									$wpmodule->getTitle(),
-									'wpmodule/view?id=' . $wpmodule->getId()
+									array(
+										'link_to'=>'wpmodule/view?id=' . $wpmodule->getId()
+										)
 									));
 								$moduleIsOk=false;
 
@@ -421,7 +434,10 @@ $con->query($sql);
 													false,
 													sprintf($context->getI18N()->__('Missing group %s'), $it->getTitle()),
 													$wpmodule->getTitle(),
-													'wpmodule/view?id=' . $wpmodule->getId()));
+													array(
+														'link_to'=>'wpmodule/view?id=' . $wpmodule->getId()
+														)
+													));
 													$moduleIsOk=false;
 										}
 								}
@@ -445,7 +461,10 @@ $con->query($sql);
 															false,
 															sprintf($context->getI18N()->__('There must be at least an item in group «%s»'), $it->getTitle()),
 															$wpmodule->getTitle(),
-															'wpmodule/view?id=' . $wpmodule->getId()));
+															array(
+																'link_to'=>'wpmodule/view?id=' . $wpmodule->getId()
+																)
+															));
 															$moduleIsOk=false;
 												}
 										}
@@ -460,9 +479,12 @@ $con->query($sql);
 																false,
 																sprintf($context->getI18N()->__('Invalid content for item «%s» in group «%s»'), $item->getContent(), $it->getTitle()),
 																$wpmodule->getTitle(),
-																'wpmodule/view?id=' . $wpmodule->getId(),
-																'error'. $group->getId(),
-																$group->getId()));
+																array(
+																	'link_to'=>'wpmodule/view?id=' . $wpmodule->getId(),
+																	'flash'=>'error'. $group->getId(),
+																	'fragment'=>$group->getId()
+																	)
+																));
 																$moduleIsOk=false;
 
 													};
@@ -474,9 +496,12 @@ $con->query($sql);
 																false,
 																sprintf($context->getI18N()->__('Missing evaluation for item «%s» in group «%s»'), $item->getContent(), $it->getTitle()),
 																$wpmodule->getTitle(),
-																'wpmodule/view?id=' . $wpmodule->getId(). '#' . $group->getId(),
-																'error'. $group->getId(),
-																$group->getId()));
+																array(
+																	'link_to'=>'wpmodule/view?id=' . $wpmodule->getId(). '#' . $group->getId(),
+																	'flash'=>'error'. $group->getId(),
+																	'fragment'=>$group->getId()
+																	)
+																));
 																$moduleIsOk=false;
 												}
 											}
@@ -520,8 +545,11 @@ $con->query($sql);
 											false,
 											$context->getI18N()->__('Missing selection of tools'),
 											$type->getDescription(),
-											'plansandreports/fill?id=' . $this->getId(),
-											$flash, 'wpaux'));
+											array(
+												'link_to'=>'plansandreports/fill?id=' . $this->getId(),
+												'flash'=>$flash, 
+												'fragment'=>'wpaux')
+											));
 							}
 						}
 				
