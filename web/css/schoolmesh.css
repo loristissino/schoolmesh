@@ -144,6 +144,15 @@
 {
   background: url(../images/users.png) no-repeat 0 0;
 }
+#sf_admin_container ul li.sf_admin_action_userchecks a
+{
+  background: url(../images/userchecks.png) no-repeat 0 0;
+}
+
+div.check_results
+{
+  padding-left: 40px;
+}
 
 div.module_content
 {

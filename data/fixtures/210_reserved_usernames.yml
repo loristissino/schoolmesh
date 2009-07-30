@@ -1,0 +1,13 @@
+ReservedUsername:
+<?php foreach(array(
+'root',
+'www-data',
+'admin',
+'administrator',
+'amministratore',
+
+
+) as $username): ?>
+  <?php echo $username ?>:
+    username: <?php echo $username . "\n" ?>
+<?php endforeach ?>

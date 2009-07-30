@@ -120,6 +120,12 @@ whosonline:
   requirements:
     sf_format: (?:html|atom|txt)
 
+userchecks:
+  url: /users/runuserchecks/:sf_format
+  param: { module: users, action: runuserchecks, sf_format:html }
+  requirements:
+    sf_format: (?:html|txt)
+
 sf_guard_signin:
   url:   /login
   param: { module: sfGuardAuth, action: signin }

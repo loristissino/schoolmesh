@@ -14,6 +14,8 @@
 			
             $this->setWidgets(array(
 			  'old_user_id'  => new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
+			  'posix_uid' => new sfWidgetFormInput(),
+			  'old_username' =>  new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
 			  'username' => new sfWidgetFormInput(),
               'first_name'    => new sfWidgetFormInput(),
               'middle_name'   => new sfWidgetFormInput(),
@@ -25,15 +27,27 @@
 			$this->widgetSchema->setNameFormat('userinfo[%s]');
 			
 			$this->setValidators(array(
-				'username' => new sfValidatorString(array('trim' => true, 'min_length'=>4)),
+				'username' => new sfValidatorAnd(array(
+					new sfValidatorString(array('trim' => true, 'min_length'=>4, 'max_length'=>20)),
+					new sfValidatorRegex(array('pattern'=>'/^[a-z.0-9]*$/')),
+			)),
 				'first_name' => new sfValidatorString(array('trim' => true)),
+				'old_username' => new sfValidatorString(),
 				'old_user_id' => new sfValidatorNumber(),
+				'posix_uid' => new sfValidatorNumber(array('required'=>false)),  
 				'last_name' => new sfValidatorString(array('trim' => true)),
 				'middle_name'  => new sfValidatorString(array('trim' => true, 'required' => false)),
 				'email'   => new sfValidatorEmail(array('trim' => true, 'required'=>false)),
 				'birthdate' => new sfValidatorDate(array('required'=>false))
 			));
 
-			
-          }
+			$this->validatorSchema->setPostValidator(new sfValidatorAnd(array(
+					new sfValidatorPropelUnique(
+						array('model'=>'ReservedUsername', 'column'=>'username')),
+					new sfValidatorPropelUnique(
+						array('model'=>'sfGuardUser', 'column'=>'username', 'field'=>'username'))
+						))
+					);
         }
+
+	}

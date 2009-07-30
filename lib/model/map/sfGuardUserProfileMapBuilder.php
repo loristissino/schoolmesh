@@ -55,6 +55,8 @@ class sfGuardUserProfileMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('IMPORT_CODE', 'ImportCode', 'VARCHAR', false, 20);
 
+		$tMap->addColumn('POSIX_UID', 'PosixUid', 'INTEGER', false, null);
+
 		$tMap->addColumn('DISK_SET_SOFT_BLOCKS_QUOTA', 'DiskSetSoftBlocksQuota', 'INTEGER', false, null);
 
 		$tMap->addColumn('DISK_SET_HARD_BLOCKS_QUOTA', 'DiskSetHardBlocksQuota', 'INTEGER', false, null);

@@ -2,20 +2,25 @@
 class Check{
 	
 	private $_isPassed;
-	private $_content;
 	private $_message;
-	private $_linkTo;
+	private $_content;
+	private $_link_to;
 	private $_flash;
 	private $_fragment;
+	private $_command;
 	
-	public function __construct($isPassed, $message, $content='', $linkTo='', $flash='', $fragment='')
+	public function __construct($isPassed, $message, $content, array $parameters=array())
 		{
 			$this->_isPassed = $isPassed;
 			$this->_content = $content;
 			$this->_message = $message;
-			$this->_linkTo=$linkTo;
-			$this->_flash=$flash;
-			$this->_fragment=$fragment;
+
+			foreach($parameters as $key=>$value)
+			{
+				$keyname='_'.$key;
+				$this->$keyname=$value;
+			}
+
 		}
 
 	public function getMessage()
@@ -35,7 +40,7 @@ class Check{
 
 	public function getLinkTo()
 		{
-			return $this->_linkTo;
+			return $this->_link_to;
 		}
 
 	public function getFlash()
@@ -45,5 +50,9 @@ class Check{
 	public function getFragment()
 		{
 			return $this->_fragment;
+		}
+	public function getCommand()
+		{
+			return $this->_command;
 		}
 	};

@@ -9,6 +9,7 @@ all:
     
   config:
     current_year:   2008  # only the first of the two years of a scholastic/academic year
+    posix_homedir: /home/testhome  
 
   ldap:
     host: localhost

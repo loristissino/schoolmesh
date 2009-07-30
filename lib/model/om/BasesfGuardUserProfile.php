@@ -43,6 +43,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $import_code;
 
 	
+	protected $posix_uid;
+
+	
 	protected $disk_set_soft_blocks_quota;
 
 	
@@ -178,6 +181,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	public function getImportCode()
 	{
 		return $this->import_code;
+	}
+
+	
+	public function getPosixUid()
+	{
+		return $this->posix_uid;
 	}
 
 	
@@ -424,6 +433,20 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		return $this;
 	} 
 	
+	public function setPosixUid($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->posix_uid !== $v) {
+			$this->posix_uid = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::POSIX_UID;
+		}
+
+		return $this;
+	} 
+	
 	public function setDiskSetSoftBlocksQuota($v)
 	{
 		if ($v !== null) {
@@ -588,13 +611,14 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->birthdate = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
 			$this->birthplace = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->import_code = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
-			$this->disk_set_soft_blocks_quota = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
-			$this->disk_set_hard_blocks_quota = ($row[$startcol + 12] !== null) ? (int) $row[$startcol + 12] : null;
-			$this->disk_set_soft_files_quota = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
-			$this->disk_set_hard_files_quota = ($row[$startcol + 14] !== null) ? (int) $row[$startcol + 14] : null;
-			$this->disk_used_blocks = ($row[$startcol + 15] !== null) ? (int) $row[$startcol + 15] : null;
-			$this->disk_used_files = ($row[$startcol + 16] !== null) ? (int) $row[$startcol + 16] : null;
-			$this->disk_updated_at = ($row[$startcol + 17] !== null) ? (string) $row[$startcol + 17] : null;
+			$this->posix_uid = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
+			$this->disk_set_soft_blocks_quota = ($row[$startcol + 12] !== null) ? (int) $row[$startcol + 12] : null;
+			$this->disk_set_hard_blocks_quota = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
+			$this->disk_set_soft_files_quota = ($row[$startcol + 14] !== null) ? (int) $row[$startcol + 14] : null;
+			$this->disk_set_hard_files_quota = ($row[$startcol + 15] !== null) ? (int) $row[$startcol + 15] : null;
+			$this->disk_used_blocks = ($row[$startcol + 16] !== null) ? (int) $row[$startcol + 16] : null;
+			$this->disk_used_files = ($row[$startcol + 17] !== null) ? (int) $row[$startcol + 17] : null;
+			$this->disk_updated_at = ($row[$startcol + 18] !== null) ? (string) $row[$startcol + 18] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -603,7 +627,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 18; 
+						return $startcol + 19; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating sfGuardUserProfile object", $e);
 		}
@@ -835,24 +859,27 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				return $this->getImportCode();
 				break;
 			case 11:
-				return $this->getDiskSetSoftBlocksQuota();
+				return $this->getPosixUid();
 				break;
 			case 12:
-				return $this->getDiskSetHardBlocksQuota();
+				return $this->getDiskSetSoftBlocksQuota();
 				break;
 			case 13:
-				return $this->getDiskSetSoftFilesQuota();
+				return $this->getDiskSetHardBlocksQuota();
 				break;
 			case 14:
-				return $this->getDiskSetHardFilesQuota();
+				return $this->getDiskSetSoftFilesQuota();
 				break;
 			case 15:
-				return $this->getDiskUsedBlocks();
+				return $this->getDiskSetHardFilesQuota();
 				break;
 			case 16:
-				return $this->getDiskUsedFiles();
+				return $this->getDiskUsedBlocks();
 				break;
 			case 17:
+				return $this->getDiskUsedFiles();
+				break;
+			case 18:
 				return $this->getDiskUpdatedAt();
 				break;
 			default:
@@ -876,13 +903,14 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$keys[8] => $this->getBirthdate(),
 			$keys[9] => $this->getBirthplace(),
 			$keys[10] => $this->getImportCode(),
-			$keys[11] => $this->getDiskSetSoftBlocksQuota(),
-			$keys[12] => $this->getDiskSetHardBlocksQuota(),
-			$keys[13] => $this->getDiskSetSoftFilesQuota(),
-			$keys[14] => $this->getDiskSetHardFilesQuota(),
-			$keys[15] => $this->getDiskUsedBlocks(),
-			$keys[16] => $this->getDiskUsedFiles(),
-			$keys[17] => $this->getDiskUpdatedAt(),
+			$keys[11] => $this->getPosixUid(),
+			$keys[12] => $this->getDiskSetSoftBlocksQuota(),
+			$keys[13] => $this->getDiskSetHardBlocksQuota(),
+			$keys[14] => $this->getDiskSetSoftFilesQuota(),
+			$keys[15] => $this->getDiskSetHardFilesQuota(),
+			$keys[16] => $this->getDiskUsedBlocks(),
+			$keys[17] => $this->getDiskUsedFiles(),
+			$keys[18] => $this->getDiskUpdatedAt(),
 		);
 		return $result;
 	}
@@ -932,24 +960,27 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->setImportCode($value);
 				break;
 			case 11:
-				$this->setDiskSetSoftBlocksQuota($value);
+				$this->setPosixUid($value);
 				break;
 			case 12:
-				$this->setDiskSetHardBlocksQuota($value);
+				$this->setDiskSetSoftBlocksQuota($value);
 				break;
 			case 13:
-				$this->setDiskSetSoftFilesQuota($value);
+				$this->setDiskSetHardBlocksQuota($value);
 				break;
 			case 14:
-				$this->setDiskSetHardFilesQuota($value);
+				$this->setDiskSetSoftFilesQuota($value);
 				break;
 			case 15:
-				$this->setDiskUsedBlocks($value);
+				$this->setDiskSetHardFilesQuota($value);
 				break;
 			case 16:
-				$this->setDiskUsedFiles($value);
+				$this->setDiskUsedBlocks($value);
 				break;
 			case 17:
+				$this->setDiskUsedFiles($value);
+				break;
+			case 18:
 				$this->setDiskUpdatedAt($value);
 				break;
 		} 	}
@@ -970,13 +1001,14 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[8], $arr)) $this->setBirthdate($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setBirthplace($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setImportCode($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setDiskSetSoftBlocksQuota($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setDiskSetHardBlocksQuota($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setDiskSetSoftFilesQuota($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setDiskSetHardFilesQuota($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setDiskUsedBlocks($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setDiskUsedFiles($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setDiskUpdatedAt($arr[$keys[17]]);
+		if (array_key_exists($keys[11], $arr)) $this->setPosixUid($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setDiskSetSoftBlocksQuota($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setDiskSetHardBlocksQuota($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setDiskSetSoftFilesQuota($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setDiskSetHardFilesQuota($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setDiskUsedBlocks($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setDiskUsedFiles($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setDiskUpdatedAt($arr[$keys[18]]);
 	}
 
 	
@@ -995,6 +1027,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::BIRTHDATE)) $criteria->add(sfGuardUserProfilePeer::BIRTHDATE, $this->birthdate);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::BIRTHPLACE)) $criteria->add(sfGuardUserProfilePeer::BIRTHPLACE, $this->birthplace);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::IMPORT_CODE)) $criteria->add(sfGuardUserProfilePeer::IMPORT_CODE, $this->import_code);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::POSIX_UID)) $criteria->add(sfGuardUserProfilePeer::POSIX_UID, $this->posix_uid);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::DISK_SET_SOFT_BLOCKS_QUOTA)) $criteria->add(sfGuardUserProfilePeer::DISK_SET_SOFT_BLOCKS_QUOTA, $this->disk_set_soft_blocks_quota);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::DISK_SET_HARD_BLOCKS_QUOTA)) $criteria->add(sfGuardUserProfilePeer::DISK_SET_HARD_BLOCKS_QUOTA, $this->disk_set_hard_blocks_quota);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::DISK_SET_SOFT_FILES_QUOTA)) $criteria->add(sfGuardUserProfilePeer::DISK_SET_SOFT_FILES_QUOTA, $this->disk_set_soft_files_quota);
@@ -1053,6 +1086,8 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$copyObj->setBirthplace($this->birthplace);
 
 		$copyObj->setImportCode($this->import_code);
+
+		$copyObj->setPosixUid($this->posix_uid);
 
 		$copyObj->setDiskSetSoftBlocksQuota($this->disk_set_soft_blocks_quota);
 
