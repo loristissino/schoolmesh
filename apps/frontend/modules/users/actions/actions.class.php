@@ -77,14 +77,24 @@ class usersActions extends sfActions
 			if ($this->form->isValid())
 			{
 				$params = $this->form->getValues();
-				
 				$this->current_user=sfGuardUserProfilePeer::retrieveByPk($params['old_user_id']);
+
+				if (!$this->current_user->isValidUsername($params['username']))
+				{
+					$this->getUser()->setFlash('error',
+						$this->getContext()->getI18N()->__('The username could not be changed because the one you proposed is reserved or already in use.')
+					);
+					
+					$this->redirect('users/edit?id='. $params['old_user_id']);
+				}
+
 				$this->current_user->setPosixUid($params['posix_uid']);
 				$this->current_user->setFirstName($params['first_name']);
 				$this->current_user->setMiddleName($params['middle_name']);
 				$this->current_user->setLastName($params['last_name']);
 				$this->current_user->setEmail($params['email']);
 				$this->current_user->setBirthdate($params['birthdate']);
+				$this->current_user->setRoleId($params['main_role']);
 				$this->current_user->getSfGuardUser()->setUsername($params['username']);
 				$this->current_user->save();
 				
@@ -110,6 +120,7 @@ class usersActions extends sfActions
 			'last_name'=>$this->current_user->getLastName(),
 			'email'=>$this->current_user->getEmail(),
 			'birthdate' => $this->current_user->getBirthdate(),
+			'main_role'=>$this->current_user->getRoleId(),
 		)
 	);
 	

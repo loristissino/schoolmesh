@@ -13,7 +13,7 @@ abstract class BasesfGuardUserProfilePeer {
 	const CLASS_DEFAULT = 'lib.model.sfGuardUserProfile';
 
 	
-	const NUM_COLUMNS = 19;
+	const NUM_COLUMNS = 21;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -41,6 +41,12 @@ abstract class BasesfGuardUserProfilePeer {
 
 	
 	const EMAIL = 'sf_guard_user_profile.EMAIL';
+
+	
+	const IS_EMAIL_VERIFIED = 'sf_guard_user_profile.IS_EMAIL_VERIFIED';
+
+	
+	const EMAIL_VERIFICATION_CODE = 'sf_guard_user_profile.EMAIL_VERIFICATION_CODE';
 
 	
 	const BIRTHDATE = 'sf_guard_user_profile.BIRTHDATE';
@@ -83,20 +89,20 @@ abstract class BasesfGuardUserProfilePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('UserId', 'FirstName', 'MiddleName', 'LastName', 'Pronunciation', 'RoleId', 'Gender', 'Email', 'Birthdate', 'Birthplace', 'ImportCode', 'PosixUid', 'DiskSetSoftBlocksQuota', 'DiskSetHardBlocksQuota', 'DiskSetSoftFilesQuota', 'DiskSetHardFilesQuota', 'DiskUsedBlocks', 'DiskUsedFiles', 'DiskUpdatedAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('userId', 'firstName', 'middleName', 'lastName', 'pronunciation', 'roleId', 'gender', 'email', 'birthdate', 'birthplace', 'importCode', 'posixUid', 'diskSetSoftBlocksQuota', 'diskSetHardBlocksQuota', 'diskSetSoftFilesQuota', 'diskSetHardFilesQuota', 'diskUsedBlocks', 'diskUsedFiles', 'diskUpdatedAt', ),
-		BasePeer::TYPE_COLNAME => array (self::USER_ID, self::FIRST_NAME, self::MIDDLE_NAME, self::LAST_NAME, self::PRONUNCIATION, self::ROLE_ID, self::GENDER, self::EMAIL, self::BIRTHDATE, self::BIRTHPLACE, self::IMPORT_CODE, self::POSIX_UID, self::DISK_SET_SOFT_BLOCKS_QUOTA, self::DISK_SET_HARD_BLOCKS_QUOTA, self::DISK_SET_SOFT_FILES_QUOTA, self::DISK_SET_HARD_FILES_QUOTA, self::DISK_USED_BLOCKS, self::DISK_USED_FILES, self::DISK_UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('user_id', 'first_name', 'middle_name', 'last_name', 'pronunciation', 'role_id', 'gender', 'email', 'birthdate', 'birthplace', 'import_code', 'posix_uid', 'disk_set_soft_blocks_quota', 'disk_set_hard_blocks_quota', 'disk_set_soft_files_quota', 'disk_set_hard_files_quota', 'disk_used_blocks', 'disk_used_files', 'disk_updated_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
+		BasePeer::TYPE_PHPNAME => array ('UserId', 'FirstName', 'MiddleName', 'LastName', 'Pronunciation', 'RoleId', 'Gender', 'Email', 'IsEmailVerified', 'EmailVerificationCode', 'Birthdate', 'Birthplace', 'ImportCode', 'PosixUid', 'DiskSetSoftBlocksQuota', 'DiskSetHardBlocksQuota', 'DiskSetSoftFilesQuota', 'DiskSetHardFilesQuota', 'DiskUsedBlocks', 'DiskUsedFiles', 'DiskUpdatedAt', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('userId', 'firstName', 'middleName', 'lastName', 'pronunciation', 'roleId', 'gender', 'email', 'isEmailVerified', 'emailVerificationCode', 'birthdate', 'birthplace', 'importCode', 'posixUid', 'diskSetSoftBlocksQuota', 'diskSetHardBlocksQuota', 'diskSetSoftFilesQuota', 'diskSetHardFilesQuota', 'diskUsedBlocks', 'diskUsedFiles', 'diskUpdatedAt', ),
+		BasePeer::TYPE_COLNAME => array (self::USER_ID, self::FIRST_NAME, self::MIDDLE_NAME, self::LAST_NAME, self::PRONUNCIATION, self::ROLE_ID, self::GENDER, self::EMAIL, self::IS_EMAIL_VERIFIED, self::EMAIL_VERIFICATION_CODE, self::BIRTHDATE, self::BIRTHPLACE, self::IMPORT_CODE, self::POSIX_UID, self::DISK_SET_SOFT_BLOCKS_QUOTA, self::DISK_SET_HARD_BLOCKS_QUOTA, self::DISK_SET_SOFT_FILES_QUOTA, self::DISK_SET_HARD_FILES_QUOTA, self::DISK_USED_BLOCKS, self::DISK_USED_FILES, self::DISK_UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('user_id', 'first_name', 'middle_name', 'last_name', 'pronunciation', 'role_id', 'gender', 'email', 'is_email_verified', 'email_verification_code', 'birthdate', 'birthplace', 'import_code', 'posix_uid', 'disk_set_soft_blocks_quota', 'disk_set_hard_blocks_quota', 'disk_set_soft_files_quota', 'disk_set_hard_files_quota', 'disk_used_blocks', 'disk_used_files', 'disk_updated_at', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('UserId' => 0, 'FirstName' => 1, 'MiddleName' => 2, 'LastName' => 3, 'Pronunciation' => 4, 'RoleId' => 5, 'Gender' => 6, 'Email' => 7, 'Birthdate' => 8, 'Birthplace' => 9, 'ImportCode' => 10, 'PosixUid' => 11, 'DiskSetSoftBlocksQuota' => 12, 'DiskSetHardBlocksQuota' => 13, 'DiskSetSoftFilesQuota' => 14, 'DiskSetHardFilesQuota' => 15, 'DiskUsedBlocks' => 16, 'DiskUsedFiles' => 17, 'DiskUpdatedAt' => 18, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('userId' => 0, 'firstName' => 1, 'middleName' => 2, 'lastName' => 3, 'pronunciation' => 4, 'roleId' => 5, 'gender' => 6, 'email' => 7, 'birthdate' => 8, 'birthplace' => 9, 'importCode' => 10, 'posixUid' => 11, 'diskSetSoftBlocksQuota' => 12, 'diskSetHardBlocksQuota' => 13, 'diskSetSoftFilesQuota' => 14, 'diskSetHardFilesQuota' => 15, 'diskUsedBlocks' => 16, 'diskUsedFiles' => 17, 'diskUpdatedAt' => 18, ),
-		BasePeer::TYPE_COLNAME => array (self::USER_ID => 0, self::FIRST_NAME => 1, self::MIDDLE_NAME => 2, self::LAST_NAME => 3, self::PRONUNCIATION => 4, self::ROLE_ID => 5, self::GENDER => 6, self::EMAIL => 7, self::BIRTHDATE => 8, self::BIRTHPLACE => 9, self::IMPORT_CODE => 10, self::POSIX_UID => 11, self::DISK_SET_SOFT_BLOCKS_QUOTA => 12, self::DISK_SET_HARD_BLOCKS_QUOTA => 13, self::DISK_SET_SOFT_FILES_QUOTA => 14, self::DISK_SET_HARD_FILES_QUOTA => 15, self::DISK_USED_BLOCKS => 16, self::DISK_USED_FILES => 17, self::DISK_UPDATED_AT => 18, ),
-		BasePeer::TYPE_FIELDNAME => array ('user_id' => 0, 'first_name' => 1, 'middle_name' => 2, 'last_name' => 3, 'pronunciation' => 4, 'role_id' => 5, 'gender' => 6, 'email' => 7, 'birthdate' => 8, 'birthplace' => 9, 'import_code' => 10, 'posix_uid' => 11, 'disk_set_soft_blocks_quota' => 12, 'disk_set_hard_blocks_quota' => 13, 'disk_set_soft_files_quota' => 14, 'disk_set_hard_files_quota' => 15, 'disk_used_blocks' => 16, 'disk_used_files' => 17, 'disk_updated_at' => 18, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
+		BasePeer::TYPE_PHPNAME => array ('UserId' => 0, 'FirstName' => 1, 'MiddleName' => 2, 'LastName' => 3, 'Pronunciation' => 4, 'RoleId' => 5, 'Gender' => 6, 'Email' => 7, 'IsEmailVerified' => 8, 'EmailVerificationCode' => 9, 'Birthdate' => 10, 'Birthplace' => 11, 'ImportCode' => 12, 'PosixUid' => 13, 'DiskSetSoftBlocksQuota' => 14, 'DiskSetHardBlocksQuota' => 15, 'DiskSetSoftFilesQuota' => 16, 'DiskSetHardFilesQuota' => 17, 'DiskUsedBlocks' => 18, 'DiskUsedFiles' => 19, 'DiskUpdatedAt' => 20, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('userId' => 0, 'firstName' => 1, 'middleName' => 2, 'lastName' => 3, 'pronunciation' => 4, 'roleId' => 5, 'gender' => 6, 'email' => 7, 'isEmailVerified' => 8, 'emailVerificationCode' => 9, 'birthdate' => 10, 'birthplace' => 11, 'importCode' => 12, 'posixUid' => 13, 'diskSetSoftBlocksQuota' => 14, 'diskSetHardBlocksQuota' => 15, 'diskSetSoftFilesQuota' => 16, 'diskSetHardFilesQuota' => 17, 'diskUsedBlocks' => 18, 'diskUsedFiles' => 19, 'diskUpdatedAt' => 20, ),
+		BasePeer::TYPE_COLNAME => array (self::USER_ID => 0, self::FIRST_NAME => 1, self::MIDDLE_NAME => 2, self::LAST_NAME => 3, self::PRONUNCIATION => 4, self::ROLE_ID => 5, self::GENDER => 6, self::EMAIL => 7, self::IS_EMAIL_VERIFIED => 8, self::EMAIL_VERIFICATION_CODE => 9, self::BIRTHDATE => 10, self::BIRTHPLACE => 11, self::IMPORT_CODE => 12, self::POSIX_UID => 13, self::DISK_SET_SOFT_BLOCKS_QUOTA => 14, self::DISK_SET_HARD_BLOCKS_QUOTA => 15, self::DISK_SET_SOFT_FILES_QUOTA => 16, self::DISK_SET_HARD_FILES_QUOTA => 17, self::DISK_USED_BLOCKS => 18, self::DISK_USED_FILES => 19, self::DISK_UPDATED_AT => 20, ),
+		BasePeer::TYPE_FIELDNAME => array ('user_id' => 0, 'first_name' => 1, 'middle_name' => 2, 'last_name' => 3, 'pronunciation' => 4, 'role_id' => 5, 'gender' => 6, 'email' => 7, 'is_email_verified' => 8, 'email_verification_code' => 9, 'birthdate' => 10, 'birthplace' => 11, 'import_code' => 12, 'posix_uid' => 13, 'disk_set_soft_blocks_quota' => 14, 'disk_set_hard_blocks_quota' => 15, 'disk_set_soft_files_quota' => 16, 'disk_set_hard_files_quota' => 17, 'disk_used_blocks' => 18, 'disk_used_files' => 19, 'disk_updated_at' => 20, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, )
 	);
 
 	
@@ -153,6 +159,10 @@ abstract class BasesfGuardUserProfilePeer {
 		$criteria->addSelectColumn(sfGuardUserProfilePeer::GENDER);
 
 		$criteria->addSelectColumn(sfGuardUserProfilePeer::EMAIL);
+
+		$criteria->addSelectColumn(sfGuardUserProfilePeer::IS_EMAIL_VERIFIED);
+
+		$criteria->addSelectColumn(sfGuardUserProfilePeer::EMAIL_VERIFICATION_CODE);
 
 		$criteria->addSelectColumn(sfGuardUserProfilePeer::BIRTHDATE);
 
