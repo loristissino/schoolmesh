@@ -8,6 +8,13 @@ class Generic{
     return ($x - ($x % $y)) / $y;
 	}
 	
+	public static function decode($text)
+	
+	{
+		$text=str_replace('&#039;', "'", $text);
+		return html_entity_decode($text);
+	}
+	
 	public static function datetime($date, $context=null)
 		{
 			

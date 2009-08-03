@@ -58,6 +58,26 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
             return $this->getGender()=='M' ? 1: 0;
         }
 
+
+		public function isValidUsername($username)
+		
+		{
+			
+			if ($username==$this->getUsername())
+			{
+				return true;
+			}
+				
+			if(!($user=ReservedUsernamePeer::retrieveByUsername($username) or sfGuardUserProfilePeer::retrieveByUsername($username)))
+			
+			{
+				return true;
+			}
+			
+			return false;
+			
+		}
+
         protected function posix_getpwnam($username)
         {
 			// We can't use posix_getpwnam() here, because it doesn't support /etc/nsswithc.conf setup
@@ -98,11 +118,12 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
 			$userinfo=array();
 
-			list($userinfo['name'], $userinfo['passwd'], $userinfo['uid'], $userinfo['gid'], $userinfo['gecos'], $userinfo['dir'], $userinfo['shell'])=explode(':', $result[0]);
+			@list($userinfo['name'], $userinfo['passwd'], $userinfo['uid'], $userinfo['gid'], $userinfo['gecos'], $userinfo['dir'], $userinfo['shell'])=@explode(':', $result[0]);
 			
 			return $userinfo;
 			
 		}
+
 
 		public function checkPosix()
 		{
@@ -122,14 +143,16 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 									// user exists, but username has been changed
 									$checks[]=new Check(false, 'username has been changed', $this->getFullName(),
 										array('command'=>
-											sprintf('sudo usermod -l %s %s', $this->getUsername(), $userinfo['name'])));
+											sprintf('sudo usermod -l %s -d "%s" %s', $this->getUsername(), sfConfig::get('app_config_posix_homedir') .'/'. $this->getUsername(), $userinfo['name'])));
 								}
 
 					else
 					{
 
+					$role=RolePeer::retrieveByPK($this->getRoleId());
+
 					$checks[]=new Check(false, 'user does not exists', $this->getFullName(),
-					array('command'=>'sudo useradd -d ' . sfConfig::get('app_config_posix_homedir') .'/'. $this->getUsername() . ' -m -s /bin/false ' . $this->getUsername())
+					array('command'=>'sudo useradd -d ' . sfConfig::get('app_config_posix_homedir') .'/'. $this->getUsername() . ' -m -s /bin/false -g ' . $role->getPosixName() . ' ' . $this->getUsername())
 					);
 					}
 					
@@ -181,9 +204,42 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 				
 			}
 			
-			$checks[]=new Check(true, 'user has home directory', $this->getFullName());
+			$dir=sfConfig::get('app_config_posix_homedir') . '/' . $this->getUsername();
+			$result=array();
+			$return_var=0;
+			$cmd = 'sudo stat -c "%F:%u:%a" "'. $dir .'"';
+
+			exec($cmd, $result, $return_var);
+			// here we expect a result like "directory:<uid>:711"
+
+			if ($return_var!=0)
+			{
+				$checks[]=new Check(false, 'missing home directory', $this->getFullName(),
+				array('command'=>'sudo mkdir "' . $dir . '"'));
+				
+				return $checks;
+				
+			}
 			
+			list($type, $uid, $access)=explode(':', $result[0]);
 			
+			if ($type!='directory')
+			{
+				$checks[]=new Check(false, 'home directory is not a directory', $this->getFullName(),
+					array('command'=>'echo "not a directory:"  "' . $dir . '"'));
+				
+				return $checks;
+				
+			}
+
+			// Since now on, we assume that the directory exists
+
+			if ($userinfo['dir']!=$dir)
+			{
+				$checks[]=new Check(false, 'home directory is not correctly set', $this->getFullName(),
+					array('command'=>sprintf('sudo usermod -d "%s" %s', $dir, $this->getUsername())));
+				}
+
 			return $checks;
 		}
 

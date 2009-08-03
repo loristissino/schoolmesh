@@ -3,7 +3,7 @@ FIXME: I wonder if it is possible to call a template .txt.php from a .php...
 */ ?>
 <?php $oldcontent=''; ?>
 <?php foreach($checks as $check): ?>
-<?php if($check->getContent()!=$oldcontent): ?>
+<?php if($check->getContent()!=$oldcontent && $check->getCommand()): ?>
 
 # Commands concerning <?php echo $check->getContent() ."\n" ?>
 <?php $oldcontent=$check->getContent() ?>

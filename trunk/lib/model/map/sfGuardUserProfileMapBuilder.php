@@ -35,19 +35,23 @@ class sfGuardUserProfileMapBuilder implements MapBuilder {
 
 		$tMap->addForeignPrimaryKey('USER_ID', 'UserId', 'INTEGER' , 'sf_guard_user', 'ID', true, null);
 
-		$tMap->addColumn('FIRST_NAME', 'FirstName', 'VARCHAR', false, 255);
+		$tMap->addColumn('FIRST_NAME', 'FirstName', 'VARCHAR', false, 50);
 
-		$tMap->addColumn('MIDDLE_NAME', 'MiddleName', 'VARCHAR', false, 255);
+		$tMap->addColumn('MIDDLE_NAME', 'MiddleName', 'VARCHAR', false, 50);
 
-		$tMap->addColumn('LAST_NAME', 'LastName', 'VARCHAR', false, 255);
+		$tMap->addColumn('LAST_NAME', 'LastName', 'VARCHAR', false, 50);
 
-		$tMap->addColumn('PRONUNCIATION', 'Pronunciation', 'VARCHAR', false, 255);
+		$tMap->addColumn('PRONUNCIATION', 'Pronunciation', 'VARCHAR', false, 100);
 
 		$tMap->addForeignKey('ROLE_ID', 'RoleId', 'INTEGER', 'role', 'ID', false, null);
 
 		$tMap->addColumn('GENDER', 'Gender', 'VARCHAR', false, 1);
 
 		$tMap->addColumn('EMAIL', 'Email', 'VARCHAR', false, 50);
+
+		$tMap->addColumn('IS_EMAIL_VERIFIED', 'IsEmailVerified', 'BOOLEAN', false, null);
+
+		$tMap->addColumn('EMAIL_VERIFICATION_CODE', 'EmailVerificationCode', 'VARCHAR', false, 32);
 
 		$tMap->addColumn('BIRTHDATE', 'Birthdate', 'DATE', false, null);
 

@@ -11,6 +11,8 @@ foreach($students as $student)
 		array_push($mystudents, $ms);
 	}
 
+
+/*
 $schoolclasses=array("3ap","4ap", "5ap", "3bp", "4bp", "5bp");
 
 foreach($schoolclasses as $schoolclass)
@@ -26,6 +28,7 @@ foreach($schoolclasses as $schoolclass)
 			array_push($mystudents,$ms);
 			}
 	}
+*/
 ?>
 
 sfGuardUser:

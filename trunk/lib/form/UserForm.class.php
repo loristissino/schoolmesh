@@ -22,6 +22,8 @@
               'last_name' => new sfWidgetFormInput(),
 			  'email' => new sfWidgetFormInput(),
 			  'birthdate' => new sfWidgetFormI18nDate(array('culture'=>'it', 'years'=>$years)),  
+			  'main_role' => new sfWidgetFormPropelSelect(array('model'=>'role')),  
+			  
             ));
 			
 			$this->widgetSchema->setNameFormat('userinfo[%s]');
@@ -38,16 +40,25 @@
 				'last_name' => new sfValidatorString(array('trim' => true)),
 				'middle_name'  => new sfValidatorString(array('trim' => true, 'required' => false)),
 				'email'   => new sfValidatorEmail(array('trim' => true, 'required'=>false)),
-				'birthdate' => new sfValidatorDate(array('required'=>false))
+				'birthdate' => new sfValidatorDate(array('required'=>false)),
+				'main_role' => new sfValidatorPropelChoice(array('model'=>'role')),  
 			));
+/*
+
+This seems to work only for new records, not when updating.
+
+see http://groups.google.com/group/symfony-users/browse_thread/thread/7592a2a80dd1385
+
 
 			$this->validatorSchema->setPostValidator(new sfValidatorAnd(array(
 					new sfValidatorPropelUnique(
-						array('model'=>'ReservedUsername', 'column'=>'username')),
+						array('model'=>'ReservedUsername', 'column'=>'username', 'primary_key'=>'user_id'),
+						array('invalid'=>'This is a reserved username')),
 					new sfValidatorPropelUnique(
 						array('model'=>'sfGuardUser', 'column'=>'username', 'field'=>'username'))
 						))
 					);
-        }
+*/
+			}
 
 	}
