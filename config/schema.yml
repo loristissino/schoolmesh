@@ -31,7 +31,7 @@ propel:
     role_id:      ~
     gender:      varchar(1)
     email:        varchar(50)
-    is_email_verified: boolean
+    email_state: { type: integer, default: 0 }
     email_verification_code: varchar(32)
     birthdate:    date
     birthplace:   varchar(50)

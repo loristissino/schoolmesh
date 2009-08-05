@@ -18,21 +18,41 @@
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
 
-<h2>Form</h2>
+<form action="<?php echo url_for('users/edit?id='. $current_user->getSfGuardUser()->getId()) ?>" method="POST">
 
-<form action="<?php echo url_for('users/edit') ?>" method="POST">
+<h2><?php echo __('Basic information') ?></h2>
+
   <table>
-    <?php echo $form ?>
+    <?php echo $userform ?>
+	<tr>
+		<th><label>Used blocks</label></th>
+		<td><?php echo $current_user->getDiskUsedBlocks() ?></td>
+	</tr>
+	<tr>
+		<th><label>Used files</label></th>
+		<td><?php echo $current_user->getDiskUsedFiles() ?></td>
+	</tr>
+	<tr>
+		<th><label>Last check</label></th>
+		<td><?php echo $current_user->getDiskUpdatedAt() ?> ---
+		<?php
+			echo link_to(
+				__('Check now'),
+				url_for('users/updatequota?id=' . $current_user->getUserId()),
+				array('method'=>'post')
+			)
+		
+		?>
+		
+		</td>
+	</tr>
     <tr>
       <td colspan="2">
          <input type="submit" value="<?php echo __('Save') ?>">
       </td>
     </tr>
   </table>
-</form>
 
-
-<h2><?php echo __('Basic information') ?></h2>
 
 <?php /*
 

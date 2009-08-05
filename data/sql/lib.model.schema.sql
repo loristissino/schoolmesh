@@ -88,7 +88,7 @@ CREATE TABLE `sf_guard_user_profile`
 	`role_id` INTEGER,
 	`gender` VARCHAR(1),
 	`email` VARCHAR(50),
-	`is_email_verified` TINYINT,
+	`email_state` INTEGER default 0,
 	`email_verification_code` VARCHAR(32),
 	`birthdate` DATE,
 	`birthplace` VARCHAR(50),

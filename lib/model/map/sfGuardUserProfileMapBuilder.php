@@ -49,7 +49,7 @@ class sfGuardUserProfileMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('EMAIL', 'Email', 'VARCHAR', false, 50);
 
-		$tMap->addColumn('IS_EMAIL_VERIFIED', 'IsEmailVerified', 'BOOLEAN', false, null);
+		$tMap->addColumn('EMAIL_STATE', 'EmailState', 'INTEGER', false, null);
 
 		$tMap->addColumn('EMAIL_VERIFICATION_CODE', 'EmailVerificationCode', 'VARCHAR', false, 32);
 

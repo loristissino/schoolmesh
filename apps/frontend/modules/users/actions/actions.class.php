@@ -56,6 +56,22 @@ class usersActions extends sfActions
 
 	
   }
+  public function executeUpdatequota(sfWebRequest $request)
+	{
+		
+		$this->forward404Unless($this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id')));
+		
+		$this->current_user->updateQuotaInfo();
+
+		$this->getUser()->setFlash('notice',
+			$this->getContext()->getI18N()->__('Quota information has been updated.')
+			);
+		
+		$this->redirect('users/edit?id='. $request->getParameter('id'));
+	
+	
+	
+	}  
 
 
   public function executeList(sfWebRequest $request)
@@ -69,32 +85,37 @@ class usersActions extends sfActions
   {
 	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
 	
-	$this->form = new UserForm();
+	$this->userform = new UserForm();
 	
 	if ($request->isMethod('post'))
 		{
-			$this->form->bind($request->getParameter('userinfo'));
-			if ($this->form->isValid())
+			$this->userform->bind($request->getParameter('userinfo'));
+			if ($this->userform->isValid())
 			{
-				$params = $this->form->getValues();
-				$this->current_user=sfGuardUserProfilePeer::retrieveByPk($params['old_user_id']);
+				$params = $this->userform->getValues();
+				$this->current_user=sfGuardUserProfilePeer::retrieveByPk($params['id']);
 
 				if (!$this->current_user->isValidUsername($params['username']))
 				{
 					$this->getUser()->setFlash('error',
 						$this->getContext()->getI18N()->__('The username could not be changed because the one you proposed is reserved or already in use.')
 					);
-					
-					$this->redirect('users/edit?id='. $params['old_user_id']);
+					$this->redirect('users/edit?id='. $params['id']);
 				}
 
 				$this->current_user->setPosixUid($params['posix_uid']);
 				$this->current_user->setFirstName($params['first_name']);
 				$this->current_user->setMiddleName($params['middle_name']);
 				$this->current_user->setLastName($params['last_name']);
+				$this->current_user->setPronunciation($params['pronunciation']);
 				$this->current_user->setEmail($params['email']);
 				$this->current_user->setBirthdate($params['birthdate']);
 				$this->current_user->setRoleId($params['main_role']);
+				$this->current_user->setEmailState($params['email_state']);
+				$this->current_user->setDiskSetSoftBlocksQuota($params['soft_blocks_quota']);
+				$this->current_user->setDiskSetHardBlocksQuota($params['hard_blocks_quota']);
+				$this->current_user->setDiskSetSoftFilesQuota($params['soft_files_quota']);
+				$this->current_user->setDiskSetSoftFilesQuota($params['hard_files_quota']);
 				$this->current_user->getSfGuardUser()->setUsername($params['username']);
 				$this->current_user->save();
 				
@@ -103,29 +124,33 @@ class usersActions extends sfActions
 					$this->getContext()->getI18N()->__('You might need to run User Checks in order to apply the changes.')
 					);
 				
-				$this->redirect('users/edit?id='. $params['old_user_id']);
 			}
+			
+			
 		}
-	else
-	{
 
-	$this->form->setDefaults(
+	$this->userform->setDefaults(
 		array(
-			'old_user_id' => $this->current_user->getUserId(),
+			'id' => $this->current_user->getUserId(),
 			'posix_uid' => $this->current_user->getPosixUId(),
 			'username' => $this->current_user->getUsername(),
 			'old_username' => $this->current_user->getUsername(),
 			'first_name'=>$this->current_user->getFirstName(),
 			'middle_name'=>$this->current_user->getMiddleName(),
 			'last_name'=>$this->current_user->getLastName(),
+			'pronunciation'=>$this->current_user->getPronunciation(),
 			'email'=>$this->current_user->getEmail(),
+			'email_state'=>$this->current_user->getEmailState(),
 			'birthdate' => $this->current_user->getBirthdate(),
 			'main_role'=>$this->current_user->getRoleId(),
+			'soft_blocks_quota' => $this->current_user->getDiskSetSoftBlocksQuota(),
+			'hard_blocks_quota' => $this->current_user->getDiskSetHardBlocksQuota(),
+			'soft_files_quota' => $this->current_user->getDiskSetSoftFilesQuota(),
+			'hard_files_quota' => $this->current_user->getDiskSetHardFilesQuota(),
 		)
 	);
 	
 		
-	}
 	
   }
 
