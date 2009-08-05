@@ -39,7 +39,11 @@
 <?php $oldcontent=''; ?>
 <?php foreach($checks as $check): ?>
 <?php if($check->getContent()!=$oldcontent): ?>
-	<p><strong><?php echo $check->getContent() ?></strong></p>
+	<p><strong><?php echo $check->getContent() ?></strong>
+	<?php if($check->getLinkTo()): ?>
+		<?php echo link_to('(' . __('Edit') .')', $check->getLinkTo()) ?>
+	<?php endif ?>
+	</p>
 	<?php $oldcontent=$check->getContent() ?>
 <?php endif ?>
 	<div class='check_results'>

@@ -204,4 +204,10 @@ class Workflow
 		return self::$wpfrSteps;
 	}
 
+
+	static public function getEmailVerificationStates()
+	{
+		return array('unverified', 'waiting', 'verified');
+	}
+
 };

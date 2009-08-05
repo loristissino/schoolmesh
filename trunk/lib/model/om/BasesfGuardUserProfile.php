@@ -34,7 +34,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $email;
 
 	
-	protected $is_email_verified;
+	protected $email_state;
 
 	
 	protected $email_verification_code;
@@ -94,6 +94,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	
 	public function applyDefaultValues()
 	{
+		$this->email_state = 0;
 		$this->disk_set_soft_blocks_quota = 0;
 		$this->disk_set_hard_blocks_quota = 0;
 		$this->disk_set_soft_files_quota = 0;
@@ -151,9 +152,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	}
 
 	
-	public function getIsEmailVerified()
+	public function getEmailState()
 	{
-		return $this->is_email_verified;
+		return $this->email_state;
 	}
 
 	
@@ -391,15 +392,15 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		return $this;
 	} 
 	
-	public function setIsEmailVerified($v)
+	public function setEmailState($v)
 	{
 		if ($v !== null) {
-			$v = (boolean) $v;
+			$v = (int) $v;
 		}
 
-		if ($this->is_email_verified !== $v) {
-			$this->is_email_verified = $v;
-			$this->modifiedColumns[] = sfGuardUserProfilePeer::IS_EMAIL_VERIFIED;
+		if ($this->email_state !== $v || $v === 0) {
+			$this->email_state = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::EMAIL_STATE;
 		}
 
 		return $this;
@@ -611,7 +612,11 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	
 	public function hasOnlyDefaultValues()
 	{
-						if (array_diff($this->modifiedColumns, array(sfGuardUserProfilePeer::DISK_SET_SOFT_BLOCKS_QUOTA,sfGuardUserProfilePeer::DISK_SET_HARD_BLOCKS_QUOTA,sfGuardUserProfilePeer::DISK_SET_SOFT_FILES_QUOTA,sfGuardUserProfilePeer::DISK_SET_HARD_FILES_QUOTA,sfGuardUserProfilePeer::DISK_USED_BLOCKS,sfGuardUserProfilePeer::DISK_USED_FILES))) {
+						if (array_diff($this->modifiedColumns, array(sfGuardUserProfilePeer::EMAIL_STATE,sfGuardUserProfilePeer::DISK_SET_SOFT_BLOCKS_QUOTA,sfGuardUserProfilePeer::DISK_SET_HARD_BLOCKS_QUOTA,sfGuardUserProfilePeer::DISK_SET_SOFT_FILES_QUOTA,sfGuardUserProfilePeer::DISK_SET_HARD_FILES_QUOTA,sfGuardUserProfilePeer::DISK_USED_BLOCKS,sfGuardUserProfilePeer::DISK_USED_FILES))) {
+				return false;
+			}
+
+			if ($this->email_state !== 0) {
 				return false;
 			}
 
@@ -654,7 +659,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->role_id = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
 			$this->gender = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->email = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->is_email_verified = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
+			$this->email_state = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
 			$this->email_verification_code = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->birthdate = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
 			$this->birthplace = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
@@ -898,7 +903,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				return $this->getEmail();
 				break;
 			case 8:
-				return $this->getIsEmailVerified();
+				return $this->getEmailState();
 				break;
 			case 9:
 				return $this->getEmailVerificationCode();
@@ -954,7 +959,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$keys[5] => $this->getRoleId(),
 			$keys[6] => $this->getGender(),
 			$keys[7] => $this->getEmail(),
-			$keys[8] => $this->getIsEmailVerified(),
+			$keys[8] => $this->getEmailState(),
 			$keys[9] => $this->getEmailVerificationCode(),
 			$keys[10] => $this->getBirthdate(),
 			$keys[11] => $this->getBirthplace(),
@@ -1007,7 +1012,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->setEmail($value);
 				break;
 			case 8:
-				$this->setIsEmailVerified($value);
+				$this->setEmailState($value);
 				break;
 			case 9:
 				$this->setEmailVerificationCode($value);
@@ -1060,7 +1065,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[5], $arr)) $this->setRoleId($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setGender($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setEmail($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setIsEmailVerified($arr[$keys[8]]);
+		if (array_key_exists($keys[8], $arr)) $this->setEmailState($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setEmailVerificationCode($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setBirthdate($arr[$keys[10]]);
 		if (array_key_exists($keys[11], $arr)) $this->setBirthplace($arr[$keys[11]]);
@@ -1088,7 +1093,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::ROLE_ID)) $criteria->add(sfGuardUserProfilePeer::ROLE_ID, $this->role_id);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::GENDER)) $criteria->add(sfGuardUserProfilePeer::GENDER, $this->gender);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::EMAIL)) $criteria->add(sfGuardUserProfilePeer::EMAIL, $this->email);
-		if ($this->isColumnModified(sfGuardUserProfilePeer::IS_EMAIL_VERIFIED)) $criteria->add(sfGuardUserProfilePeer::IS_EMAIL_VERIFIED, $this->is_email_verified);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::EMAIL_STATE)) $criteria->add(sfGuardUserProfilePeer::EMAIL_STATE, $this->email_state);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::EMAIL_VERIFICATION_CODE)) $criteria->add(sfGuardUserProfilePeer::EMAIL_VERIFICATION_CODE, $this->email_verification_code);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::BIRTHDATE)) $criteria->add(sfGuardUserProfilePeer::BIRTHDATE, $this->birthdate);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::BIRTHPLACE)) $criteria->add(sfGuardUserProfilePeer::BIRTHPLACE, $this->birthplace);
@@ -1147,7 +1152,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 
 		$copyObj->setEmail($this->email);
 
-		$copyObj->setIsEmailVerified($this->is_email_verified);
+		$copyObj->setEmailState($this->email_state);
 
 		$copyObj->setEmailVerificationCode($this->email_verification_code);
 

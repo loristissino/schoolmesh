@@ -9,7 +9,8 @@ all:
     
   config:
     current_year:   2008  # only the first of the two years of a scholastic/academic year
-    posix_homedir: /home/testhome  
+    posix_homedir: /home/testhome 
+    posix_basefolder: Mattiussi  # this folder contains symbolic links and other stuff; should be present in each homedir
 
   ldap:
     host: localhost

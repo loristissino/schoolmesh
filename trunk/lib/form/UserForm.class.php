@@ -1,6 +1,8 @@
 <?php
         class UserForm extends sfForm
         {
+			
+			
           public function configure()
           {
 			
@@ -13,16 +15,23 @@
 
 			
             $this->setWidgets(array(
-			  'old_user_id'  => new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
-			  'posix_uid' => new sfWidgetFormInput(),
+			  'id'  => new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
+			  'posix_uid' => new sfWidgetFormInput(array(), array('size'=>8)),
 			  'old_username' =>  new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
-			  'username' => new sfWidgetFormInput(),
-              'first_name'    => new sfWidgetFormInput(),
-              'middle_name'   => new sfWidgetFormInput(),
-              'last_name' => new sfWidgetFormInput(),
+			  'username' => new sfWidgetFormInput(array(), array('size'=>25)),
+              'first_name'    => new sfWidgetFormInput(array(), array('size'=>50)),
+              'middle_name'   => new sfWidgetFormInput(array(), array('size'=>15)),
+              'last_name' => new sfWidgetFormInput(array(), array('size'=>50)),
+              'pronunciation' => new sfWidgetFormInput(array(), array('size'=>70)),
 			  'email' => new sfWidgetFormInput(),
+			  'email_state' => new sfWidgetFormSelect(array('choices' =>
+Workflow::getEmailVerificationStates())),  
 			  'birthdate' => new sfWidgetFormI18nDate(array('culture'=>'it', 'years'=>$years)),  
-			  'main_role' => new sfWidgetFormPropelSelect(array('model'=>'role')),  
+			  'main_role' => new sfWidgetFormPropelSelect(array('model'=>'role')),
+			  'soft_blocks_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
+			  'hard_blocks_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
+			  'soft_files_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
+			  'hard_files_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
 			  
             ));
 			
@@ -35,14 +44,42 @@
 			)),
 				'first_name' => new sfValidatorString(array('trim' => true)),
 				'old_username' => new sfValidatorString(),
-				'old_user_id' => new sfValidatorNumber(),
-				'posix_uid' => new sfValidatorNumber(array('required'=>false)),  
+				'id' => new sfValidatorInteger(),
+				'posix_uid' => new sfValidatorInteger(array('required'=>false, 'min'=>500, 'max'=>65534)),  
 				'last_name' => new sfValidatorString(array('trim' => true)),
 				'middle_name'  => new sfValidatorString(array('trim' => true, 'required' => false)),
+				'pronunciation'  => new sfValidatorString(array('trim' => true, 'required' => false, 'max_length'=>100)),
 				'email'   => new sfValidatorEmail(array('trim' => true, 'required'=>false)),
+				'email_state' => new sfValidatorInteger(array('min'=>0, 'max'=>2)),  
 				'birthdate' => new sfValidatorDate(array('required'=>false)),
 				'main_role' => new sfValidatorPropelChoice(array('model'=>'role')),  
+				'soft_blocks_quota' => new sfValidatorInteger(array('required'=>false, 'min'=>0)),  
+				'hard_blocks_quota' => new sfValidatorInteger(array('required'=>false, 'min'=>0)),  
+				'soft_files_quota' => new sfValidatorInteger(array('required'=>false, 'min'=>0)),  
+				'hard_files_quota' => new sfValidatorInteger(array('required'=>false, 'min'=>0)),  
 			));
+			
+			
+			
+		$this->validatorSchema->setPostValidator(
+			new sfValidatorAnd(array(
+				new sfValidatorOr(array(
+					new sfValidatorSchemaCompare('username', sfValidatorSchemaCompare::EQUAL, 'old_username'),
+					new smValidatorUsername('username'))),
+				new sfValidatorSchemaCompare('soft_blocks_quota',
+					sfValidatorSchemaCompare::LESS_THAN_EQUAL, 'hard_blocks_quota',
+					array(),
+					array('invalid' => 'The soft blocks quota ("%left_field%") must be less than the hard blocks quota ("%right_field%").')
+				),
+				new sfValidatorSchemaCompare('soft_files_quota',
+					sfValidatorSchemaCompare::LESS_THAN_EQUAL, 'hard_files_quota',
+					array(),
+					array('invalid' => 'The soft files quota ("%left_field%") must be less than the hard files quota ("%right_field%").')
+				)
+			))
+		);
+
+
 /*
 
 This seems to work only for new records, not when updating.
