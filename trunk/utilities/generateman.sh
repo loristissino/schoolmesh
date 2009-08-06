@@ -6,5 +6,5 @@ for file in *pandoc.txt
 		pandoc -s --write man $file -o ${file%pandoc.txt}1
 	done
 
-sudo cp -v /var/schoolmesh/doc/*man /usr/local/share/man/man1/
+sudo cp -v /var/schoolmesh/doc/*1 /usr/local/share/man/man1/
 

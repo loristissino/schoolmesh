@@ -36,23 +36,24 @@
 
 <hr />
 
-<?php $oldcontent=''; ?>
-<?php foreach($checks as $check): ?>
-<?php if($check->getContent()!=$oldcontent): ?>
-	<p><strong><?php echo $check->getContent() ?></strong>
-	<?php if($check->getLinkTo()): ?>
-		<?php echo link_to('(' . __('Edit') .')', $check->getLinkTo()) ?>
-	<?php endif ?>
-	</p>
-	<?php $oldcontent=$check->getContent() ?>
-<?php endif ?>
-	<div class='check_results'>
+<?php foreach($userlist as $current_user): ?>
 	<p>
-		<?php echo image_tag($check->getIsPassed()? 'done':'notdone', 'title=' . ($check->getIsPassed()?__('passed'):__('failed'))); ?>
-		<?php echo $check->getMessage() ?>
-	</p>
-	</div>
-<?php endforeach; ?>
+	<?php echo image_tag($current_user->getCountFailedChecks()==0? 'done':'notdone', 'title=' . $current_user->getCountFailedChecks()==0?__('passed'):__('failed')) ?>
+	<strong>	
+	<?php echo link_to_function(
+  $current_user,
+  visual_effect('toggle_blind', 'user'.$current_user->getUsername()), array(__('Hide'))
+) ?></strong>  (<?php echo format_number_choice('[0]No check failed.|[1]One check failed.|(1,+Inf]A total of %1 checks failed.', array('%1'=>($current_user->getCountFailedChecks())), $current_user->getCountFailedChecks()); ?>)</p>
+
+		<div class='check_results' id="user<?php echo $current_user->getUsername() ?>" style="display:<?php echo $current_user->getCountFailedChecks()>0? 'none': 'none' ?>">
+		<?php foreach($current_user->getChecks() as $check): ?>
+		<p>
+			<?php echo image_tag($check->getIsPassed()? 'done':'notdone', 'title=' . ($check->getIsPassed()?__('passed'):__('failed'))); ?>
+			<?php echo $check->getMessage() ?>
+		</p>
+		<?php endforeach ?>
+		</div>
+<?php endforeach ?>
 
 <?php if ($failed>0): ?>
 
@@ -65,7 +66,7 @@
 	</ul>
 
 <textarea rows="20" cols="80">
-<?php include_partial('commands', array('checks'=>$checks)) ?>
+<?php include_partial('commands', array('userlist'=>$userlist)) ?>
 </textarea>
 <?php endif ?>
 

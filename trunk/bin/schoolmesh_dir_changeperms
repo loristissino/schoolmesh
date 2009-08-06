@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ $# -eq 0 ] ; then
+	echo "This script is a wrapper. See schoolmesh(1) for details."
+	exit 1
+fi
+	
+PERMS=$1
+DIR=$2
+
+if [ ! -d "$DIR" ] ; then
+	echo "Not a directory: $DIR"
+	exit 1
+fi
+
+sudo chmod $1 "$2"
+
+

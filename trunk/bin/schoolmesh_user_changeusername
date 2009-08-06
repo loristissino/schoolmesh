@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if [ $# -eq 0 ] ; then
+	echo "This script is a wrapper. See schoolmesh(1) for details."
+	exit 1
+fi
+	
+NEWNAME=$1
+HOMEDIR=$2
+OLDNAME=$3
+	
+if [ ! -d "$HOMEDIR" ] ; then
+	echo "Not a directory: $HOMEDIR"
+	exit 2
+fi
+
+if [ ! -d "$HOMEDIR/$OLDNAME" ] ; then
+	echo "Not a directory: $HOMEDIR/$OLDNAME"
+	exit 3
+fi
+
+getent passwd $OLDNAME > /dev/null
+
+if [ $? -ne 0 ] ; then
+	echo "Not a user: $OLDNAME"
+	exit 4
+fi
+
+getent passwd $NEWNAME > /dev/null
+
+if [ $? -eq 0 ] ; then
+	echo "Already a user: $NEWNAME"
+	exit 5
+fi
+
+sudo usermod -l $NEWNAME -d "$HOMEDIR/$NEWNAME" $OLDNAME && echo "user $OLDNAME -> user $NEWNAME"
+sudo mv -v "$HOMEDIR/$OLDNAME" "$HOMEDIR/$NEWNAME"
+
+

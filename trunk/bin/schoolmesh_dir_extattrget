@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ $# -eq 0 ] ; then
+	echo "This script is a wrapper. See schoolmesh(1) for details."
+	exit 1
+fi
+
+DIR=$1
+
+if [ ! -d "$DIR" ] ; then
+	echo "Not a directory: $DIR"
+	exit 1
+fi
+
+sudo lsattr -d "$DIR"
+
+

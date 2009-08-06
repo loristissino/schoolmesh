@@ -27,15 +27,18 @@ class usersActions extends sfActions
   {
 	$this->user = $this->getUser();
 	$this->userlist = sfGuardUserProfilePeer::retrieveAllUsers();
+	$this->nome="Ciao";
 	
 	$this->checks=array();
 	$this->ok=0;
 	$this->failed=0;
 	foreach($this->userlist as $current_user)
 	{
+		$current_user->setCountFailedChecks(0);
 		foreach($current_user->checkPosix() as $check)
 		{
-			$this->checks[]=$check;
+			
+			$current_user->addCheck($check);
 			if ($check->getIsPassed())
 			{
 				$this->ok++;
@@ -43,17 +46,18 @@ class usersActions extends sfActions
 			else
 			{
 				$this->failed++;
+				$current_user->incCountFailedChecks();
 			}
 		}
 	}
 	
 	if ($request->getRequestFormat()=='txt')
 		{
+
 			$this->setLayout(false);
 			$this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename="posixscript.sh"');
 			$this->getResponse()->setContentType('application/x-shellscript; charset=utf-8');
 		}
-
 	
   }
   public function executeUpdatequota(sfWebRequest $request)

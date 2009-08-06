@@ -10,6 +10,35 @@
 class sfGuardUserProfile extends BasesfGuardUserProfile
 {
 	
+		protected $countFailedChecks;
+		
+		protected $checks=array();
+		
+		public function addCheck($check)
+		{
+			$this->checks[]=$check;
+		}
+
+		public function getChecks()
+		{
+			return $this->checks;
+		}
+		
+		public function setCountFailedChecks($value)
+		{
+			$this->failedChecks=$value;
+		}
+		
+		public function getCountFailedChecks()
+		{
+			return $this->failedChecks;
+		}
+
+		public function incCountFailedChecks()
+		{
+			$this->failedChecks++;
+		}
+
 		public function __toString()
 		{
 				return $this->getFullName();
@@ -136,7 +165,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		
 			$result=array();
 			$return_var=0;
-			$cmd='sudo quota --no-wrap -v -u ' . $this->getUsername() . '| tail -1| gawk \'{print $2 ":" $3 ":" $4 ":" $5 ":" $6 ":" $7}\'';
+			$cmd='schoolmesh_user_quotaget ' . $this->getUsername();
 			exec($cmd, $result, $return_var);
 					
 			$quotainfo=array();
@@ -162,6 +191,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$this->setDiskUsedFiles($quotainfo['used_files']);
 			$this->setDiskUpdatedAt(time());
 			$this->save();
+			return $quotainfo;
 			
 		}
 
@@ -186,20 +216,24 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 									
 									// user exists, but username has been changed
 									$checks[]=new Check(false, 'username has been changed', $this->getFullName(),
-										array('command'=>
-											sprintf('sudo usermod -l %s -d "%s" %s', $this->getUsername(), sfConfig::get('app_config_posix_homedir') .'/'. $this->getUsername(), $userinfo['name'])));
-									$checks[]=new Check(false, '... probably homedir must be moved too', $this->getFullName(),
-										array('command'=>
-											sprintf('sudo mv "%s" "%s"', sfConfig::get('app_config_posix_homedir') .'/'. $userinfo['name'], sfConfig::get('app_config_posix_homedir') .'/'. $this->getUsername())));
-
+										array('command'=>sprintf(
+											'schoolmesh_user_changeusername %s "%s" %s', 
+											$this->getUsername(), 
+											sfConfig::get('app_config_posix_homedir'), 
+											$userinfo['name'])));
 								}
-
 					else
 					{
 
 
 					$checks[]=new Check(false, 'user does not exists', $this->getFullName(),
-					array('command'=>'sudo useradd -d ' . sfConfig::get('app_config_posix_homedir') .'/'. $this->getUsername() . ' -m -s /bin/false -g ' . $role->getPosixName() . ' ' . $this->getUsername())
+						array('command'=>sprintf(
+							'schoolmesh_user_add %s "%s" %s "%s"',
+							$this->getUsername(),
+							sfConfig::get('app_config_posix_homedir'),
+							$role->getPosixName(),
+							$this->getFullname()
+							))
 					);
 					}
 					
@@ -243,7 +277,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			else
 			{
 					$checks[]=new Check(false, 'full name is not ok', $this->getFullName(),
-					array('command'=>sprintf('sudo usermod -c "%s" %s', 
+					array('command'=>sprintf('schoolmesh_user_changefullname "%s" %s', 
 						$this->getFullname(),
 						$this->getUsername()
 						))
@@ -258,15 +292,13 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			else
 			{
 					$checks[]=new Check(false, 'main group is not ok', $this->getFullName(),
-					array('command'=>sprintf('sudo usermod -g %s %s', 
+					array('command'=>sprintf('schoolmesh_user_changegroup %s %s', 
 						$role->getPosixName(),
 						$this->getUsername()
 						))
 					);
 				
 			}
-			
-			
 			
 			$dir=sfConfig::get('app_config_posix_homedir') . '/' . $this->getUsername();
 			$result=array();
@@ -298,48 +330,29 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
 			// Since now on, we assume that the directory exists
 
-			if ($userinfo['dir']!=$dir)
-			{
-				$checks[]=new Check(false, 'home directory is not correctly set', $this->getFullName(),
-					array('command'=>sprintf('sudo usermod -d "%s" %s', $dir, $this->getUsername())));
-			}
-			else
-			{
-				$checks[]=new Check(true, 'home directory is correctly set', $this->getFullName());
-			}
+			$checks[]=new Check(true, 'home directory is correctly set', $this->getFullName());
 				
 			if ($access!='711')
 			{
 				$checks[]=new Check(false, 'home directory has not proper permissions', $this->getFullName(),
-					array('command'=>sprintf('sudo chmod 711 "%s"', $dir)));
+					array('command'=>sprintf('schoolmesh_dir_changeperms 711 "%s"', $dir)));
 			}
 			else
 			{
 				$checks[]=new Check(true, 'home directory has proper permissions', $this->getFullName());
 			}
 				
-			if ($uid!=$this->getPosixUid())
+			if ($uid!=$this->getPosixUid() || $gid!=0)
 			{
-				$checks[]=new Check(false, 'home directory does not belong to user', $this->getFullName(),
-					array('command'=>sprintf('sudo chown %s "%s"', $this->getUsername(), $dir)));
+				$checks[]=new Check(false, 'home directory does not belong to user:root', $this->getFullName(),
+					array('command'=>sprintf('schoolmesh_dir_changeowner %s "%s"', $this->getUsername(), $dir)));
 			}
 			else
 			{
 				$checks[]=new Check(true, 'home directory belongs to user', $this->getFullName());
 			}
-				
-			if ($gid!=0)
-			{
-				$checks[]=new Check(false, "home directory's gid is not 0", $this->getFullName(),
-					array('command'=>sprintf('sudo chgrp root "%s"', $dir)));
-			}
-			else
-			{
-				$checks[]=new Check(true, "home directory's gid is 0", $this->getFullName());
-			}
 
-
-			$quotainfo=$this->getQuotaInfo();
+			$quotainfo=$this->updateQuotaInfo();
 			
 			if ($quotainfo['soft_blocks_quota']!=$this->getDiskSetSoftBlocksQuota()
 				or $quotainfo['hard_blocks_quota']!=$this->getDiskSetHardBlocksQuota()
@@ -347,7 +360,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 				or $quotainfo['soft_blocks_quota']!=$this->getDiskSetSoftBlocksQuota())
 			{
 				$checks[]=new Check(false, "set quotas do not match", $this->getFullName(),
-					array('command'=>sprintf('sudo setquota -u %s %d %d %d %d %s',
+					array('command'=>sprintf('schoolmesh_user_quotaset %s %d %d %d %d %s',
 						$this->getUsername(),
 						$this->getDiskSetSoftBlocksQuota(),
 						$this->getDiskSetHardBlocksQuota(),
@@ -371,7 +384,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			if ($return_var!=0)
 			{
 				$checks[]=new Check(false, 'missing basefolder', $this->getFullName(),
-				array('command'=>'sudo mkdir "' . $basefolder . '"'));
+				array('command'=>'schoolmesh_dir_create "' . $basefolder . '"'));
 				
 				return $checks;
 				
@@ -393,33 +406,23 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			if ($access!='711')
 			{
 				$checks[]=new Check(false, 'basefolder has not proper permissions', $this->getFullName(),
-					array('command'=>sprintf('sudo chmod 711 "%s"', $basefolder)));
+					array('command'=>sprintf('schoolmesh_dir_changeperms 711 "%s"', $basefolder)));
 			}
 			else
 			{
 				$checks[]=new Check(true, 'basefolder has proper permissions', $this->getFullName());
 			}
 				
-			if ($uid!=$this->getPosixUid())
+			if ($uid!=$this->getPosixUid() || $gid!=0)
 			{
-				$checks[]=new Check(false, 'basefolder does not belong to user', $this->getFullName(),
-					array('command'=>sprintf('sudo chown %s "%s"', $this->getUsername(), $basefolder)));
+				$checks[]=new Check(false, 'basefolder does not belong to user:root', $this->getFullName(),
+					array('command'=>sprintf('schoolmesh_dir_changeowner %s "%s"', $this->getUsername(), $basefolder)));
 			}
 			else
 			{
-				$checks[]=new Check(true, 'basefolder belongs to user', $this->getFullName());
+				$checks[]=new Check(true, 'basefolder belongs to user:root', $this->getFullName());
 			}
 				
-			if ($gid!=0)
-			{
-				$checks[]=new Check(false, "basefolder's gid is not 0", $this->getFullName(),
-					array('command'=>sprintf('sudo chgrp root "%s"', $basefolder)));
-			}
-			else
-			{
-				$checks[]=new Check(true, "basefolder's gid is 0", $this->getFullName());
-			}
-
 
 			$result=array();
 			$cmd = 'sudo lsattr -d "'. $basefolder .'"';
@@ -429,7 +432,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			if (substr($result[0],4,1)!='i')
 			{
 				$checks[]=new Check(false, "basefolder has not immutable flag set", $this->getFullName(),
-					array('command'=>sprintf('sudo chattr +i "%s"', $basefolder)));
+					array('command'=>sprintf('schoolmesh_dir_extattrset +i "%s"', $basefolder)));
 			}
 			else
 			{
