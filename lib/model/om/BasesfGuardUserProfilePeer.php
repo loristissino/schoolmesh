@@ -13,7 +13,7 @@ abstract class BasesfGuardUserProfilePeer {
 	const CLASS_DEFAULT = 'lib.model.sfGuardUserProfile';
 
 	
-	const NUM_COLUMNS = 21;
+	const NUM_COLUMNS = 26;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -82,6 +82,21 @@ abstract class BasesfGuardUserProfilePeer {
 	const DISK_UPDATED_AT = 'sf_guard_user_profile.DISK_UPDATED_AT';
 
 	
+	const SYSTEM_NOTES = 'sf_guard_user_profile.SYSTEM_NOTES';
+
+	
+	const IS_DELETED = 'sf_guard_user_profile.IS_DELETED';
+
+	
+	const HAS_GOOGLEAPPS_ACCOUNT = 'sf_guard_user_profile.HAS_GOOGLEAPPS_ACCOUNT';
+
+	
+	const GOOGLEAPPS_ACCOUNT_APPROVED_AT = 'sf_guard_user_profile.GOOGLEAPPS_ACCOUNT_APPROVED_AT';
+
+	
+	const HAS_MOODLE_ACCOUNT = 'sf_guard_user_profile.HAS_MOODLE_ACCOUNT';
+
+	
 	public static $instances = array();
 
 	
@@ -89,20 +104,20 @@ abstract class BasesfGuardUserProfilePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('UserId', 'FirstName', 'MiddleName', 'LastName', 'Pronunciation', 'RoleId', 'Gender', 'Email', 'EmailState', 'EmailVerificationCode', 'Birthdate', 'Birthplace', 'ImportCode', 'PosixUid', 'DiskSetSoftBlocksQuota', 'DiskSetHardBlocksQuota', 'DiskSetSoftFilesQuota', 'DiskSetHardFilesQuota', 'DiskUsedBlocks', 'DiskUsedFiles', 'DiskUpdatedAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('userId', 'firstName', 'middleName', 'lastName', 'pronunciation', 'roleId', 'gender', 'email', 'emailState', 'emailVerificationCode', 'birthdate', 'birthplace', 'importCode', 'posixUid', 'diskSetSoftBlocksQuota', 'diskSetHardBlocksQuota', 'diskSetSoftFilesQuota', 'diskSetHardFilesQuota', 'diskUsedBlocks', 'diskUsedFiles', 'diskUpdatedAt', ),
-		BasePeer::TYPE_COLNAME => array (self::USER_ID, self::FIRST_NAME, self::MIDDLE_NAME, self::LAST_NAME, self::PRONUNCIATION, self::ROLE_ID, self::GENDER, self::EMAIL, self::EMAIL_STATE, self::EMAIL_VERIFICATION_CODE, self::BIRTHDATE, self::BIRTHPLACE, self::IMPORT_CODE, self::POSIX_UID, self::DISK_SET_SOFT_BLOCKS_QUOTA, self::DISK_SET_HARD_BLOCKS_QUOTA, self::DISK_SET_SOFT_FILES_QUOTA, self::DISK_SET_HARD_FILES_QUOTA, self::DISK_USED_BLOCKS, self::DISK_USED_FILES, self::DISK_UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('user_id', 'first_name', 'middle_name', 'last_name', 'pronunciation', 'role_id', 'gender', 'email', 'email_state', 'email_verification_code', 'birthdate', 'birthplace', 'import_code', 'posix_uid', 'disk_set_soft_blocks_quota', 'disk_set_hard_blocks_quota', 'disk_set_soft_files_quota', 'disk_set_hard_files_quota', 'disk_used_blocks', 'disk_used_files', 'disk_updated_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, )
+		BasePeer::TYPE_PHPNAME => array ('UserId', 'FirstName', 'MiddleName', 'LastName', 'Pronunciation', 'RoleId', 'Gender', 'Email', 'EmailState', 'EmailVerificationCode', 'Birthdate', 'Birthplace', 'ImportCode', 'PosixUid', 'DiskSetSoftBlocksQuota', 'DiskSetHardBlocksQuota', 'DiskSetSoftFilesQuota', 'DiskSetHardFilesQuota', 'DiskUsedBlocks', 'DiskUsedFiles', 'DiskUpdatedAt', 'SystemNotes', 'IsDeleted', 'HasGoogleappsAccount', 'GoogleappsAccountApprovedAt', 'HasMoodleAccount', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('userId', 'firstName', 'middleName', 'lastName', 'pronunciation', 'roleId', 'gender', 'email', 'emailState', 'emailVerificationCode', 'birthdate', 'birthplace', 'importCode', 'posixUid', 'diskSetSoftBlocksQuota', 'diskSetHardBlocksQuota', 'diskSetSoftFilesQuota', 'diskSetHardFilesQuota', 'diskUsedBlocks', 'diskUsedFiles', 'diskUpdatedAt', 'systemNotes', 'isDeleted', 'hasGoogleappsAccount', 'googleappsAccountApprovedAt', 'hasMoodleAccount', ),
+		BasePeer::TYPE_COLNAME => array (self::USER_ID, self::FIRST_NAME, self::MIDDLE_NAME, self::LAST_NAME, self::PRONUNCIATION, self::ROLE_ID, self::GENDER, self::EMAIL, self::EMAIL_STATE, self::EMAIL_VERIFICATION_CODE, self::BIRTHDATE, self::BIRTHPLACE, self::IMPORT_CODE, self::POSIX_UID, self::DISK_SET_SOFT_BLOCKS_QUOTA, self::DISK_SET_HARD_BLOCKS_QUOTA, self::DISK_SET_SOFT_FILES_QUOTA, self::DISK_SET_HARD_FILES_QUOTA, self::DISK_USED_BLOCKS, self::DISK_USED_FILES, self::DISK_UPDATED_AT, self::SYSTEM_NOTES, self::IS_DELETED, self::HAS_GOOGLEAPPS_ACCOUNT, self::GOOGLEAPPS_ACCOUNT_APPROVED_AT, self::HAS_MOODLE_ACCOUNT, ),
+		BasePeer::TYPE_FIELDNAME => array ('user_id', 'first_name', 'middle_name', 'last_name', 'pronunciation', 'role_id', 'gender', 'email', 'email_state', 'email_verification_code', 'birthdate', 'birthplace', 'import_code', 'posix_uid', 'disk_set_soft_blocks_quota', 'disk_set_hard_blocks_quota', 'disk_set_soft_files_quota', 'disk_set_hard_files_quota', 'disk_used_blocks', 'disk_used_files', 'disk_updated_at', 'system_notes', 'is_deleted', 'has_googleapps_account', 'googleapps_account_approved_at', 'has_moodle_account', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('UserId' => 0, 'FirstName' => 1, 'MiddleName' => 2, 'LastName' => 3, 'Pronunciation' => 4, 'RoleId' => 5, 'Gender' => 6, 'Email' => 7, 'EmailState' => 8, 'EmailVerificationCode' => 9, 'Birthdate' => 10, 'Birthplace' => 11, 'ImportCode' => 12, 'PosixUid' => 13, 'DiskSetSoftBlocksQuota' => 14, 'DiskSetHardBlocksQuota' => 15, 'DiskSetSoftFilesQuota' => 16, 'DiskSetHardFilesQuota' => 17, 'DiskUsedBlocks' => 18, 'DiskUsedFiles' => 19, 'DiskUpdatedAt' => 20, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('userId' => 0, 'firstName' => 1, 'middleName' => 2, 'lastName' => 3, 'pronunciation' => 4, 'roleId' => 5, 'gender' => 6, 'email' => 7, 'emailState' => 8, 'emailVerificationCode' => 9, 'birthdate' => 10, 'birthplace' => 11, 'importCode' => 12, 'posixUid' => 13, 'diskSetSoftBlocksQuota' => 14, 'diskSetHardBlocksQuota' => 15, 'diskSetSoftFilesQuota' => 16, 'diskSetHardFilesQuota' => 17, 'diskUsedBlocks' => 18, 'diskUsedFiles' => 19, 'diskUpdatedAt' => 20, ),
-		BasePeer::TYPE_COLNAME => array (self::USER_ID => 0, self::FIRST_NAME => 1, self::MIDDLE_NAME => 2, self::LAST_NAME => 3, self::PRONUNCIATION => 4, self::ROLE_ID => 5, self::GENDER => 6, self::EMAIL => 7, self::EMAIL_STATE => 8, self::EMAIL_VERIFICATION_CODE => 9, self::BIRTHDATE => 10, self::BIRTHPLACE => 11, self::IMPORT_CODE => 12, self::POSIX_UID => 13, self::DISK_SET_SOFT_BLOCKS_QUOTA => 14, self::DISK_SET_HARD_BLOCKS_QUOTA => 15, self::DISK_SET_SOFT_FILES_QUOTA => 16, self::DISK_SET_HARD_FILES_QUOTA => 17, self::DISK_USED_BLOCKS => 18, self::DISK_USED_FILES => 19, self::DISK_UPDATED_AT => 20, ),
-		BasePeer::TYPE_FIELDNAME => array ('user_id' => 0, 'first_name' => 1, 'middle_name' => 2, 'last_name' => 3, 'pronunciation' => 4, 'role_id' => 5, 'gender' => 6, 'email' => 7, 'email_state' => 8, 'email_verification_code' => 9, 'birthdate' => 10, 'birthplace' => 11, 'import_code' => 12, 'posix_uid' => 13, 'disk_set_soft_blocks_quota' => 14, 'disk_set_hard_blocks_quota' => 15, 'disk_set_soft_files_quota' => 16, 'disk_set_hard_files_quota' => 17, 'disk_used_blocks' => 18, 'disk_used_files' => 19, 'disk_updated_at' => 20, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, )
+		BasePeer::TYPE_PHPNAME => array ('UserId' => 0, 'FirstName' => 1, 'MiddleName' => 2, 'LastName' => 3, 'Pronunciation' => 4, 'RoleId' => 5, 'Gender' => 6, 'Email' => 7, 'EmailState' => 8, 'EmailVerificationCode' => 9, 'Birthdate' => 10, 'Birthplace' => 11, 'ImportCode' => 12, 'PosixUid' => 13, 'DiskSetSoftBlocksQuota' => 14, 'DiskSetHardBlocksQuota' => 15, 'DiskSetSoftFilesQuota' => 16, 'DiskSetHardFilesQuota' => 17, 'DiskUsedBlocks' => 18, 'DiskUsedFiles' => 19, 'DiskUpdatedAt' => 20, 'SystemNotes' => 21, 'IsDeleted' => 22, 'HasGoogleappsAccount' => 23, 'GoogleappsAccountApprovedAt' => 24, 'HasMoodleAccount' => 25, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('userId' => 0, 'firstName' => 1, 'middleName' => 2, 'lastName' => 3, 'pronunciation' => 4, 'roleId' => 5, 'gender' => 6, 'email' => 7, 'emailState' => 8, 'emailVerificationCode' => 9, 'birthdate' => 10, 'birthplace' => 11, 'importCode' => 12, 'posixUid' => 13, 'diskSetSoftBlocksQuota' => 14, 'diskSetHardBlocksQuota' => 15, 'diskSetSoftFilesQuota' => 16, 'diskSetHardFilesQuota' => 17, 'diskUsedBlocks' => 18, 'diskUsedFiles' => 19, 'diskUpdatedAt' => 20, 'systemNotes' => 21, 'isDeleted' => 22, 'hasGoogleappsAccount' => 23, 'googleappsAccountApprovedAt' => 24, 'hasMoodleAccount' => 25, ),
+		BasePeer::TYPE_COLNAME => array (self::USER_ID => 0, self::FIRST_NAME => 1, self::MIDDLE_NAME => 2, self::LAST_NAME => 3, self::PRONUNCIATION => 4, self::ROLE_ID => 5, self::GENDER => 6, self::EMAIL => 7, self::EMAIL_STATE => 8, self::EMAIL_VERIFICATION_CODE => 9, self::BIRTHDATE => 10, self::BIRTHPLACE => 11, self::IMPORT_CODE => 12, self::POSIX_UID => 13, self::DISK_SET_SOFT_BLOCKS_QUOTA => 14, self::DISK_SET_HARD_BLOCKS_QUOTA => 15, self::DISK_SET_SOFT_FILES_QUOTA => 16, self::DISK_SET_HARD_FILES_QUOTA => 17, self::DISK_USED_BLOCKS => 18, self::DISK_USED_FILES => 19, self::DISK_UPDATED_AT => 20, self::SYSTEM_NOTES => 21, self::IS_DELETED => 22, self::HAS_GOOGLEAPPS_ACCOUNT => 23, self::GOOGLEAPPS_ACCOUNT_APPROVED_AT => 24, self::HAS_MOODLE_ACCOUNT => 25, ),
+		BasePeer::TYPE_FIELDNAME => array ('user_id' => 0, 'first_name' => 1, 'middle_name' => 2, 'last_name' => 3, 'pronunciation' => 4, 'role_id' => 5, 'gender' => 6, 'email' => 7, 'email_state' => 8, 'email_verification_code' => 9, 'birthdate' => 10, 'birthplace' => 11, 'import_code' => 12, 'posix_uid' => 13, 'disk_set_soft_blocks_quota' => 14, 'disk_set_hard_blocks_quota' => 15, 'disk_set_soft_files_quota' => 16, 'disk_set_hard_files_quota' => 17, 'disk_used_blocks' => 18, 'disk_used_files' => 19, 'disk_updated_at' => 20, 'system_notes' => 21, 'is_deleted' => 22, 'has_googleapps_account' => 23, 'googleapps_account_approved_at' => 24, 'has_moodle_account' => 25, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, )
 	);
 
 	
@@ -185,6 +200,16 @@ abstract class BasesfGuardUserProfilePeer {
 		$criteria->addSelectColumn(sfGuardUserProfilePeer::DISK_USED_FILES);
 
 		$criteria->addSelectColumn(sfGuardUserProfilePeer::DISK_UPDATED_AT);
+
+		$criteria->addSelectColumn(sfGuardUserProfilePeer::SYSTEM_NOTES);
+
+		$criteria->addSelectColumn(sfGuardUserProfilePeer::IS_DELETED);
+
+		$criteria->addSelectColumn(sfGuardUserProfilePeer::HAS_GOOGLEAPPS_ACCOUNT);
+
+		$criteria->addSelectColumn(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_APPROVED_AT);
+
+		$criteria->addSelectColumn(sfGuardUserProfilePeer::HAS_MOODLE_ACCOUNT);
 
 	}
 

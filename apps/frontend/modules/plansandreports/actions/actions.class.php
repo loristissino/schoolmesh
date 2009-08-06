@@ -312,6 +312,9 @@ public function executeBatch(sfWebRequest $request)
 		$whoIsViewing = $this->getUser()->getProfile()->getSfGuardUser()->getId();
 		
 		$this->forward404Unless($this->workplan->isViewableBy($whoIsViewing));
+		
+		$this->tools = $this->workplan->getTools(false);
+
 
 	}
 

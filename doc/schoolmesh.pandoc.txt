@@ -1,0 +1,32 @@
+% SCHOOLMESH(1) Schoolmesh utilities User Manuals
+% Loris Tissino
+% August 6, 2009
+
+# NAME
+
+schoolmesh - command line utilities to be used with SchoolMesh web application 
+
+# SYNOPSIS
+
+schoolmesh\_useradd [*options*] login  
+schoolmesh\_userdel [*options*] login  
+schoolmesh\_usermod [*options*] login  
+schoolmesh\_quotaget login  
+schoolmesh\_quotaset [*options*] login  
+
+# DESCRIPTION
+
+These utilities are really only basic wrapper scripts to be used together with
+SchoolMesh. The idea is to provide flexibility. For instance, instead of calling
+directly __useradd__, we call __schoolmesh\_useradd__. This way, if one day we 
+need to change the behaviour needed to add a system user (for instance, using _ldap_,
+or contacting a different server), we just need to change the wrapper scripts.
+
+# OPTIONS
+
+Options are mostly the same as their counterpart basic posix commands.
+
+# SEE ALSO
+
+The SchoolMesh project is described ad <http://schoolmesh.mattiussilab.net/>.
+

@@ -44,6 +44,11 @@ propel:
     disk_used_blocks: { type: integer, default: 0 }
     disk_used_files: { type: integer, default: 0 }
     disk_updated_at: timestamp
+    system_notes: varchar(255)
+    is_deleted: boolean
+    has_googleapps_account: boolean
+    googleapps_account_approved_at: timestamp
+    has_moodle_account: boolean
     
   reserved_username:
     id:   
