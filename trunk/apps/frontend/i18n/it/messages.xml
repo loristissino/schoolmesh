@@ -1030,6 +1030,14 @@
         <source>Submit this report</source>
         <target>Consegna questa relazione</target>
       </trans-unit>
+      <trans-unit id="287">
+        <source>[0]Ms %s|[1]Mr %s</source>
+        <target>[0]Prof.ssa %s|[1]Prof. %s</target>
+      </trans-unit>
+      <trans-unit id="288">
+        <source>filled on %s</source>
+        <target>compilato il %s</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

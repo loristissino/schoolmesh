@@ -73,6 +73,21 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $disk_updated_at;
 
 	
+	protected $system_notes;
+
+	
+	protected $is_deleted;
+
+	
+	protected $has_googleapps_account;
+
+	
+	protected $googleapps_account_approved_at;
+
+	
+	protected $has_moodle_account;
+
+	
 	protected $asfGuardUser;
 
 	
@@ -269,6 +284,57 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		} else {
 			return $dt->format($format);
 		}
+	}
+
+	
+	public function getSystemNotes()
+	{
+		return $this->system_notes;
+	}
+
+	
+	public function getIsDeleted()
+	{
+		return $this->is_deleted;
+	}
+
+	
+	public function getHasGoogleappsAccount()
+	{
+		return $this->has_googleapps_account;
+	}
+
+	
+	public function getGoogleappsAccountApprovedAt($format = 'Y-m-d H:i:s')
+	{
+		if ($this->googleapps_account_approved_at === null) {
+			return null;
+		}
+
+
+		if ($this->googleapps_account_approved_at === '0000-00-00 00:00:00') {
+									return null;
+		} else {
+			try {
+				$dt = new DateTime($this->googleapps_account_approved_at);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->googleapps_account_approved_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+						return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
+	}
+
+	
+	public function getHasMoodleAccount()
+	{
+		return $this->has_moodle_account;
 	}
 
 	
@@ -610,6 +676,94 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		return $this;
 	} 
 	
+	public function setSystemNotes($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->system_notes !== $v) {
+			$this->system_notes = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::SYSTEM_NOTES;
+		}
+
+		return $this;
+	} 
+	
+	public function setIsDeleted($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_deleted !== $v) {
+			$this->is_deleted = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::IS_DELETED;
+		}
+
+		return $this;
+	} 
+	
+	public function setHasGoogleappsAccount($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->has_googleapps_account !== $v) {
+			$this->has_googleapps_account = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::HAS_GOOGLEAPPS_ACCOUNT;
+		}
+
+		return $this;
+	} 
+	
+	public function setGoogleappsAccountApprovedAt($v)
+	{
+						if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+									try {
+				if (is_numeric($v)) { 					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+															$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->googleapps_account_approved_at !== null || $dt !== null ) {
+			
+			$currNorm = ($this->googleapps_account_approved_at !== null && $tmpDt = new DateTime($this->googleapps_account_approved_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) 					)
+			{
+				$this->googleapps_account_approved_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_APPROVED_AT;
+			}
+		} 
+		return $this;
+	} 
+	
+	public function setHasMoodleAccount($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->has_moodle_account !== $v) {
+			$this->has_moodle_account = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::HAS_MOODLE_ACCOUNT;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array(sfGuardUserProfilePeer::EMAIL_STATE,sfGuardUserProfilePeer::DISK_SET_SOFT_BLOCKS_QUOTA,sfGuardUserProfilePeer::DISK_SET_HARD_BLOCKS_QUOTA,sfGuardUserProfilePeer::DISK_SET_SOFT_FILES_QUOTA,sfGuardUserProfilePeer::DISK_SET_HARD_FILES_QUOTA,sfGuardUserProfilePeer::DISK_USED_BLOCKS,sfGuardUserProfilePeer::DISK_USED_FILES))) {
@@ -672,6 +826,11 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->disk_used_blocks = ($row[$startcol + 18] !== null) ? (int) $row[$startcol + 18] : null;
 			$this->disk_used_files = ($row[$startcol + 19] !== null) ? (int) $row[$startcol + 19] : null;
 			$this->disk_updated_at = ($row[$startcol + 20] !== null) ? (string) $row[$startcol + 20] : null;
+			$this->system_notes = ($row[$startcol + 21] !== null) ? (string) $row[$startcol + 21] : null;
+			$this->is_deleted = ($row[$startcol + 22] !== null) ? (boolean) $row[$startcol + 22] : null;
+			$this->has_googleapps_account = ($row[$startcol + 23] !== null) ? (boolean) $row[$startcol + 23] : null;
+			$this->googleapps_account_approved_at = ($row[$startcol + 24] !== null) ? (string) $row[$startcol + 24] : null;
+			$this->has_moodle_account = ($row[$startcol + 25] !== null) ? (boolean) $row[$startcol + 25] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -680,7 +839,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 21; 
+						return $startcol + 26; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating sfGuardUserProfile object", $e);
 		}
@@ -941,6 +1100,21 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			case 20:
 				return $this->getDiskUpdatedAt();
 				break;
+			case 21:
+				return $this->getSystemNotes();
+				break;
+			case 22:
+				return $this->getIsDeleted();
+				break;
+			case 23:
+				return $this->getHasGoogleappsAccount();
+				break;
+			case 24:
+				return $this->getGoogleappsAccountApprovedAt();
+				break;
+			case 25:
+				return $this->getHasMoodleAccount();
+				break;
 			default:
 				return null;
 				break;
@@ -972,6 +1146,11 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$keys[18] => $this->getDiskUsedBlocks(),
 			$keys[19] => $this->getDiskUsedFiles(),
 			$keys[20] => $this->getDiskUpdatedAt(),
+			$keys[21] => $this->getSystemNotes(),
+			$keys[22] => $this->getIsDeleted(),
+			$keys[23] => $this->getHasGoogleappsAccount(),
+			$keys[24] => $this->getGoogleappsAccountApprovedAt(),
+			$keys[25] => $this->getHasMoodleAccount(),
 		);
 		return $result;
 	}
@@ -1050,6 +1229,21 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			case 20:
 				$this->setDiskUpdatedAt($value);
 				break;
+			case 21:
+				$this->setSystemNotes($value);
+				break;
+			case 22:
+				$this->setIsDeleted($value);
+				break;
+			case 23:
+				$this->setHasGoogleappsAccount($value);
+				break;
+			case 24:
+				$this->setGoogleappsAccountApprovedAt($value);
+				break;
+			case 25:
+				$this->setHasMoodleAccount($value);
+				break;
 		} 	}
 
 	
@@ -1078,6 +1272,11 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[18], $arr)) $this->setDiskUsedBlocks($arr[$keys[18]]);
 		if (array_key_exists($keys[19], $arr)) $this->setDiskUsedFiles($arr[$keys[19]]);
 		if (array_key_exists($keys[20], $arr)) $this->setDiskUpdatedAt($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setSystemNotes($arr[$keys[21]]);
+		if (array_key_exists($keys[22], $arr)) $this->setIsDeleted($arr[$keys[22]]);
+		if (array_key_exists($keys[23], $arr)) $this->setHasGoogleappsAccount($arr[$keys[23]]);
+		if (array_key_exists($keys[24], $arr)) $this->setGoogleappsAccountApprovedAt($arr[$keys[24]]);
+		if (array_key_exists($keys[25], $arr)) $this->setHasMoodleAccount($arr[$keys[25]]);
 	}
 
 	
@@ -1106,6 +1305,11 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::DISK_USED_BLOCKS)) $criteria->add(sfGuardUserProfilePeer::DISK_USED_BLOCKS, $this->disk_used_blocks);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::DISK_USED_FILES)) $criteria->add(sfGuardUserProfilePeer::DISK_USED_FILES, $this->disk_used_files);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::DISK_UPDATED_AT)) $criteria->add(sfGuardUserProfilePeer::DISK_UPDATED_AT, $this->disk_updated_at);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::SYSTEM_NOTES)) $criteria->add(sfGuardUserProfilePeer::SYSTEM_NOTES, $this->system_notes);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::IS_DELETED)) $criteria->add(sfGuardUserProfilePeer::IS_DELETED, $this->is_deleted);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::HAS_GOOGLEAPPS_ACCOUNT)) $criteria->add(sfGuardUserProfilePeer::HAS_GOOGLEAPPS_ACCOUNT, $this->has_googleapps_account);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_APPROVED_AT)) $criteria->add(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_APPROVED_AT, $this->googleapps_account_approved_at);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::HAS_MOODLE_ACCOUNT)) $criteria->add(sfGuardUserProfilePeer::HAS_MOODLE_ACCOUNT, $this->has_moodle_account);
 
 		return $criteria;
 	}
@@ -1177,6 +1381,16 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$copyObj->setDiskUsedFiles($this->disk_used_files);
 
 		$copyObj->setDiskUpdatedAt($this->disk_updated_at);
+
+		$copyObj->setSystemNotes($this->system_notes);
+
+		$copyObj->setIsDeleted($this->is_deleted);
+
+		$copyObj->setHasGoogleappsAccount($this->has_googleapps_account);
+
+		$copyObj->setGoogleappsAccountApprovedAt($this->googleapps_account_approved_at);
+
+		$copyObj->setHasMoodleAccount($this->has_moodle_account);
 
 
 		$copyObj->setNew(true);

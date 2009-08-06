@@ -401,7 +401,7 @@
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P1"/>
-<text:p text:style-name="P7">ANNO SCOLASTICO 2008-2009</text:p>
+<text:p text:style-name="P7">ANNO SCOLASTICO 2008/09</text:p>
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P1"/>
@@ -413,20 +413,25 @@
 <text:p text:style-name="P15">Classe:<text:tab/>4AP</text:p>
 <text:p text:style-name="P16"/>						<text:p text:style-name="P9">Livelli di partenza rilevati</text:p>
 			<text:p text:style-name="P17">La classe è così così.</text:p>
-			<text:p text:style-name="P1"></text:p>
-									<text:p text:style-name="P9">Area di progetto</text:p>
+			<text:p text:style-name="P10">(compilato il 06/08/2009)</text:p>
+			<text:p text:style-name="P1" />
+										<text:p text:style-name="P9">Area di progetto</text:p>
 			<text:p text:style-name="P17">La classe sarà impegnata in un&#039;area di progetto con un lavoro commissionato dall&#039;Agenzia Spaziale Europea.</text:p>
-			<text:p text:style-name="P1"></text:p>
-									<text:p text:style-name="P9">Attività extracurricolari</text:p>
+			<text:p text:style-name="P10">(compilato il 06/08/2009)</text:p>
+			<text:p text:style-name="P1" />
+										<text:p text:style-name="P9">Attività extracurricolari</text:p>
 			<text:p text:style-name="P17">Progetto CLIL.</text:p>
-			<text:p text:style-name="P1"></text:p>
-									<text:p text:style-name="P9">Valutazione</text:p>
+			<text:p text:style-name="P10">(compilato il 06/08/2009)</text:p>
+			<text:p text:style-name="P1" />
+										<text:p text:style-name="P9">Valutazione</text:p>
 			<text:p text:style-name="P17">Test scritti autovalutati, più compiti scritti e esercitazioni varie.</text:p>
-			<text:p text:style-name="P1"></text:p>
-													<text:p text:style-name="P9">Recupero programmato</text:p>
+			<text:p text:style-name="P10">(compilato il 06/08/2009)</text:p>
+			<text:p text:style-name="P1" />
+														<text:p text:style-name="P9">Recupero programmato</text:p>
 			<text:p text:style-name="P17">Se necessario.</text:p>
-			<text:p text:style-name="P1"></text:p>
-				<text:p text:style-name="P1"></text:p>
+			<text:p text:style-name="P10">(compilato il 06/08/2009)</text:p>
+			<text:p text:style-name="P1" />
+					<text:p text:style-name="P1"></text:p>
 <text:p text:style-name="P9">Tavola di programmazione della disciplina</text:p>
 	<text:p text:style-name="P17">1. Astronomia osservativa (settembre - dicembre)</text:p>
 	<text:p text:style-name="P17">2. Astrofisica (gennaio - marzo)</text:p>
@@ -454,185 +459,55 @@
 	<text:p />
 	<text:p text:style-name="Horizontal_20_Line"/><text:p text:style-name="P16"/> 
 <text:p text:style-name="Standard"/>
-<text:p text:style-name="P1"/>
-<table:table table:name="Tabella7" table:style-name="Tabella7">
-<table:table-column table:style-name="Tabella7.A"/>
-<table:table-column table:style-name="Tabella7.B"/>
-<table:table-column table:style-name="Tabella7.C"/>
-<table:table-row table:style-name="Tabella7.1">
-<table:table-cell table:style-name="Tabella7.A1" office:value-type="string">
-<text:p text:style-name="P5">METODOLOGIA DI LAVORO
-</text:p>
-</table:table-cell>
-<table:table-cell table:style-name="Tabella7.A1" office:value-type="string">
-<text:p text:style-name="P5">TIPOLOGIA DELLE VERIFICHE
-</text:p>
-</table:table-cell>
-<table:table-cell table:style-name="Tabella7.C1" office:value-type="string">
-<text:p text:style-name="P5">STRUMENTI
-</text:p>
-</table:table-cell>
-</table:table-row>
-<table:table-row table:style-name="Tabella7.1">
-<table:table-cell table:style-name="Tabella7.A1" office:value-type="string">
-<text:p text:style-name="P12">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Lezione frontale
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Lezione dialogata
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Lavori di gruppo
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Compiti a casa
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Risoluzione di problemi
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Problem Posing
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Ricerche 
-</text:span>
-</text:p>
-<text:p text:style-name="P14">
-</text:p>
-<text:p text:style-name="P14">
-</text:p>
-<text:p text:style-name="P14">
-</text:p>
-</table:table-cell>
-<table:table-cell table:style-name="Tabella7.A1" office:value-type="string">
-<text:p text:style-name="P12">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Test
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Domande alla classe
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Interrogazione
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Domande aperte
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Prove di laboratorio
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Relazioni 
-<text:s/>scritte 
-<text:s/>ed orali 
-</text:span>
-</text:p>
-<text:p text:style-name="P14">
-</text:p>
-<text:p text:style-name="P29">
-</text:p>
-<text:p text:style-name="P14">
-</text:p>
-<text:p text:style-name="P14">
-</text:p>
-</table:table-cell>
-<table:table-cell table:style-name="Tabella7.C1" office:value-type="string">
-<text:p text:style-name="P12">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Libri di testo
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Laboratorio di Informatica
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Lavagna Luminosa
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Proiettore
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Help in linea
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Appunti delle lezioni
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Fotocopie
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Ricerche su Internet 
-</text:span>
-</text:p>
-<text:p text:style-name="Standard">
-<text:span text:style-name="T1">
-</text:span>
-<text:span text:style-name="T2"> Calcolatrice
-</text:span>
-</text:p>
-<text:p text:style-name="P14">
-</text:p>
-</table:table-cell>
-</table:table-row>
-</table:table>
-<text:p text:style-name="Standard"/>
-<text:p text:style-name="P1"/>
+<text:p text:style-name="P9">Metodologia di lavoro</text:p>
+								<text:p text:style-name="P1">
+				▢ 				Problem posing				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Lavori di gruppo				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Ricerche				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Compiti a casa				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Lezione frontale				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Risoluzione di problemi				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Lezione dialogata				</text:p>
+				<text:p text:style-name="P1" />
+<text:p text:style-name="P9">Tipologia delle verifiche previste</text:p>
+								<text:p text:style-name="P1">
+				▢ 				Prove di laboratorio				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Domande alla classe				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Relazioni scritte e orali				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Interrogazione				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Domande aperte				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Test				</text:p>
+				<text:p text:style-name="P1" />
+<text:p text:style-name="P9">Strumenti previsti</text:p>
+								<text:p text:style-name="P1">
+				▢ 				Laboratorio informatico				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Calcolatrice				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Appunti delle lezioni				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Lavagna luminosa				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Fotocopie				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Proiettore				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Libri di testo				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Ricerche su Internet				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Help in linea				</text:p>
+				<text:p text:style-name="P1" />
 </office:text>
 </office:body></office:document-content>

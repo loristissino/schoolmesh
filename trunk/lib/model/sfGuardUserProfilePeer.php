@@ -24,6 +24,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	$c = new Criteria();
 	$c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
 	$c->addJoin(RolePeer::ID, sfGuardUserProfilePeer::ROLE_ID);
+	$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
 	$t = self::doSelectJoinAll($c);
 	return $t;
 		

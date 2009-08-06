@@ -101,6 +101,11 @@ CREATE TABLE `sf_guard_user_profile`
 	`disk_used_blocks` INTEGER default 0,
 	`disk_used_files` INTEGER default 0,
 	`disk_updated_at` DATETIME,
+	`system_notes` VARCHAR(255),
+	`is_deleted` TINYINT,
+	`has_googleapps_account` TINYINT,
+	`googleapps_account_approved_at` DATETIME,
+	`has_moodle_account` TINYINT,
 	PRIMARY KEY (`user_id`),
 	CONSTRAINT `sf_guard_user_profile_FK_1`
 		FOREIGN KEY (`user_id`)
