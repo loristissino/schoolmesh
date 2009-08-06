@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ $# -eq 0 ] ; then
+	echo "This script is a wrapper. See schoolmesh(1) for details."
+	exit 1
+fi
+	
+USERNAME=$1
+DIR=$2
+
+if [ ! -d "$DIR" ] ; then
+	echo "Not a directory: $DIR"
+	exit 1
+fi
+
+getent passwd $USERNAME > /dev/null
+
+if [ $? -ne 0 ] ; then
+	echo "Not a user: $USERNAME"
+	exit 5
+fi
+
+sudo chown -v $USERNAME:root "$DIR"
+
+
