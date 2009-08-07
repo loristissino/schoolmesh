@@ -22,6 +22,85 @@ class usersActions extends sfActions
 	
   }
 
+  public function executeUploadgoogleappsdata(sfWebRequest $request)
+  {
+	$this->form = new UploadForm();
+	
+	if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('info'), $request->getFiles('info'));
+	  
+      if ($this->form->isValid())
+      {
+        $file = $this->form->getValue('file');
+		
+		$row = 0;
+		$this->imported=0;
+		$this->skipped=0;
+	
+		$this->checks=array();
+	
+		$handle = fopen($file->getTempName(), "r");
+		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+		{
+			$row++;
+			list($username, $firstname, $lastname, $lastlogin, $firstlogin, $quota)=$data;
+			if ($row==1)
+			{
+					
+				if($username!='Username'||$firstname!='FirstName'||$lastname!='LastName'||$lastlogin!='LastLogin'||$firstlogin!='FirstLogin'||$quota!='Quota')
+				{
+					$this->getUser()->setFlash('error',
+						$this->getContext()->getI18N()->__('File headers are not correct.'));
+					$this->redirect('users/uploadgoogleappsdata');
+				}
+				continue;  // we skip the first line
+			}
+			
+			if ($username!='')
+			{
+				$this->imported++;
+
+				$user=sfGuardUserProfilePeer::retrieveByUsername($username);
+				if($user)
+				{
+					if ($user->getProfile()->getFirstname()!=$firstname)
+					{
+						$check = new Check(false, sprintf($this->getContext()->getI18N()->__('first name (%s) do not match with the one stored in the DB (%s)'), $firstname, $user->getProfile()->getFirstname()), $username);
+						$this->checks[]=$check;
+						continue;
+					}
+					if ($user->getProfile()->getLastname()!=$lastname)
+					{
+						$check = new Check(false, sprintf($this->getContext()->getI18N()->__('last name (%s) do not match with the one stored in the DB (%s)'), $lastname, $user->getProfile()->getLastname()), $username);
+						$this->checks[]=$check;
+						continue;
+					}
+					else
+					{
+						$check = new Check(true, 'user found', $username);
+						$user->getProfile()->setHasGoogleAppsAccount(true);
+						$user->getProfile()->save();
+					}
+				}
+				else
+				{
+					$check = new Check(false, 'user not found', $username);
+				}
+				
+				$this->checks[]=$check;
+			}
+			else
+			{
+				$this->skipped++;
+			}
+		}
+		
+	  }
+	}
+
+
+  }
 
   public function executeRunuserchecks(sfWebRequest $request)
   {

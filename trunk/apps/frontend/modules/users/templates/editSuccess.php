@@ -58,3 +58,8 @@
 
 <?php include_partial('teams', array('current_user'=>$current_user)) ?>
 
+<h2><?php echo __('Google Apps account') ?></h2>
+
+<?php include_partial('googleapps', array('current_user'=>$current_user)) ?>
+
+

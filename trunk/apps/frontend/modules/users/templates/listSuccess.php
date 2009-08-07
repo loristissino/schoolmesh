@@ -34,7 +34,7 @@
       <th class="sf_admin_text"><?php echo link_to(__('Last name'), url_for( 'users/setsortlistpreference?sortby=lastname')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Blocks'), url_for('users/setsortlistpreference?sortby=blocks')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Files'), url_for('users/setsortlistpreference?sortby=files')) ?></th>
-      <th class="sf_admin_text"><?php echo __('Permissions') ?></th>
+      <th class="sf_admin_text"><?php echo __('Accounts') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
@@ -54,10 +54,10 @@
       <td><?php echo $user->getDiskUsedBlocks() ?></td>
       <td><?php echo $user->getDiskUsedFiles() ?></td>
 	  <td>
-		<?php foreach($user->getSfGuardUser()->getAllPermissions() as $permission): ?>
-			<?php echo $permission ?>
-		<?php endforeach ?>
-		</td>
+		<?php if($user->getHasGoogleAppsAccount()): ?>
+			<?php echo image_tag('googleapps', 'title=' . __('Google Apps account')) ?>
+		<?php endif ?>
+	  </td>
 	<td><?php include_partial('actions', array('user'=>$user)) ?></td>
  	
 

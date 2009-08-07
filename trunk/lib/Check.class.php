@@ -55,4 +55,13 @@ class Check{
 		{
 			return $this->_command;
 		}
+		
+	public function getImageTag()
+		{
+			return $this->getIsPassed()?'done':'notdone';
+		}
+	public function getImageTitle()
+		{
+			return $this->getIsPassed()?'passed':'failed';
+		}
 	};
