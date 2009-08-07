@@ -208,6 +208,9 @@ class usersActions extends sfActions
 					$this->getContext()->getI18N()->__('User information updated.') . ' ' .
 					$this->getContext()->getI18N()->__('You might need to run User Checks in order to apply the changes.')
 					);
+					
+				$this->redirect('users/edit?id='. $params['id']);
+
 				
 			}
 			
