@@ -39,6 +39,25 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$this->failedChecks++;
 		}
 
+		public function getGenderChoice()
+		{
+			switch($this->getGender())
+			{
+				case 'M': return 1;
+				case 'F': return 0;
+				default: return 2;
+			}
+		}
+
+		public function setGenderChoice($gender)
+		{
+			switch($gender)
+			{
+				case 1: $this->setGender('M'); break;
+				case 0: $this->setGender('F'); break;
+				default: $this->setGender(null);
+			}
+		}
 		public function __toString()
 		{
 				return $this->getFullName();
@@ -52,6 +71,20 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
         {
                 return $this->getsfGuardUser()->getUsername();
         }
+
+		public function getIsDeletable()
+		{
+			$appointments=AppointmentPeer::countAppointmentsOfUser($this->getUserId());
+			$enrolments=EnrolmentPeer::countCurrentEnrolmentsOfUser($this->getUserId());
+			if($appointments==0 && $enrolments==0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 
         public function getCurrentAppointments()
         {
@@ -167,18 +200,25 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$return_var=0;
 			$cmd='schoolmesh_user_quotaget ' . $this->getUsername();
 			exec($cmd, $result, $return_var);
-					
-			$quotainfo=array();
-			list(
-				$quotainfo['used_blocks'],
-				$quotainfo['soft_blocks_quota'],
-				$quotainfo['hard_blocks_quota'],
-				$quotainfo['used_files'],
-				$quotainfo['soft_files_quota'],
-				$quotainfo['hard_files_quota']
-				) = explode(':', $result[0]);
+			
+			if(isset($result[0]))
+				{
+					$quotainfo=array();
+					list(
+						$quotainfo['used_blocks'],
+						$quotainfo['soft_blocks_quota'],
+						$quotainfo['hard_blocks_quota'],
+						$quotainfo['used_files'],
+						$quotainfo['soft_files_quota'],
+						$quotainfo['hard_files_quota']
+						) = explode(':', $result[0]);
 
-			return $quotainfo;
+					return $quotainfo;
+				}
+			else
+			{
+				return false;
+			}
 
 		}
 
@@ -298,6 +338,16 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 						))
 					);
 				
+			}
+			
+			if ($this->getIsDeleted())
+			{
+					$checks[]=new Check(false, 'user must be deleted', $this->getFullName(),
+					array('command'=>sprintf('schoolmesh_user_del %s', 
+						$this->getUsername()
+						))
+					);
+					return $checks;
 			}
 			
 			$dir=sfConfig::get('app_config_posix_homedir') . '/' . $this->getUsername();

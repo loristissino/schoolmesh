@@ -43,7 +43,18 @@
 	<?php echo link_to_function(
   $current_user,
   visual_effect('toggle_blind', 'user'.$current_user->getUsername()), array(__('Hide'))
-) ?></strong>  (<?php echo format_number_choice('[0]No check failed.|[1]One check failed.|(1,+Inf]A total of %1 checks failed.', array('%1'=>($current_user->getCountFailedChecks())), $current_user->getCountFailedChecks()); ?>)</p>
+) ?></strong>  (<?php echo format_number_choice('[0]No check failed.|[1]One check failed.|(1,+Inf]A total of %1 checks failed.', array('%1'=>($current_user->getCountFailedChecks())), $current_user->getCountFailedChecks()); ?>)
+
+	<?php echo link_to(
+  __('Edit'),
+  url_for('users/edit?id=' . $current_user->getUserId())
+)  
+ ?>
+
+
+
+
+</p>
 
 		<div class='check_results' id="user<?php echo $current_user->getUsername() ?>" style="display:<?php echo $current_user->getCountFailedChecks()>0? 'none': 'none' ?>">
 		<?php foreach($current_user->getChecks() as $check): ?>

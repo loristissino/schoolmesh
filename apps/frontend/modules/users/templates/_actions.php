@@ -6,4 +6,13 @@
 				array('title'=>__('Edit information about this user'))
 				)?>
 				</li>
+				<?php if($user->getIsDeleted()): ?>
+				<li class="sf_admin_action_undelete">
+					<?php echo link_to(
+				__('Undelete'),
+				'users/undelete?id='.$user->getUserId(),
+				array('title'=>__('Undelete this user'), 'method'=>'POST')
+				)?>
+				</li>
+				<?php endif ?>
 			</ul>
