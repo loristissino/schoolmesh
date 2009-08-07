@@ -23,18 +23,29 @@
               'middle_name'   => new sfWidgetFormInput(array(), array('size'=>15)),
               'last_name' => new sfWidgetFormInput(array(), array('size'=>50)),
               'pronunciation' => new sfWidgetFormInput(array(), array('size'=>70)),
+			  'gender' => new sfWidgetFormSelect(array('choices' =>array('F', 'M', 'unknown'))),  
 			  'email' => new sfWidgetFormInput(),
 			  'email_state' => new sfWidgetFormSelect(array('choices' =>
 Workflow::getEmailVerificationStates())),  
 			  'birthdate' => new sfWidgetFormI18nDate(array('culture'=>'it', 'years'=>$years)),  
-			  'main_role' => new sfWidgetFormPropelSelect(array('model'=>'role')),
+			  'main_role' => new sfWidgetFormPropelSelect(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
 			  'soft_blocks_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
 			  'hard_blocks_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
 			  'soft_files_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
 			  'hard_files_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
 			  
             ));
+
+			if(isset($this->options['new']))
+			{
+            $this->setWidgets(array(
+			  'username' => new sfWidgetFormInput(array(), array('size'=>25)),
+			  'main_role' => new sfWidgetFormPropelSelect(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
+            ));
+			}
 			
+
+
 			$this->widgetSchema->setNameFormat('userinfo[%s]');
 			
 			$this->setValidators(array(
@@ -49,6 +60,7 @@ Workflow::getEmailVerificationStates())),
 				'last_name' => new sfValidatorString(array('trim' => true)),
 				'middle_name'  => new sfValidatorString(array('trim' => true, 'required' => false)),
 				'pronunciation'  => new sfValidatorString(array('trim' => true, 'required' => false, 'max_length'=>100)),
+				'gender' => new sfValidatorInteger(array('min'=>0, 'max'=>2)),
 				'email'   => new sfValidatorEmail(array('trim' => true, 'required'=>false)),
 				'email_state' => new sfValidatorInteger(array('min'=>0, 'max'=>2)),  
 				'birthdate' => new sfValidatorDate(array('required'=>false)),
@@ -59,6 +71,16 @@ Workflow::getEmailVerificationStates())),
 				'hard_files_quota' => new sfValidatorInteger(array('required'=>false, 'min'=>0)),  
 			));
 			
+			if(isset($this->options['new']))
+			{
+				$this->setValidators(array(
+					'username' => new sfValidatorAnd(array(
+						new sfValidatorString(array('trim' => true, 'min_length'=>4, 'max_length'=>20)),
+						new sfValidatorRegex(array('pattern'=>'/^[a-z.0-9]*$/')),
+				)),
+					'main_role' => new sfValidatorPropelChoice(array('model'=>'role')),  
+				));
+			}
 			
 			
 		$this->validatorSchema->setPostValidator(
@@ -78,7 +100,6 @@ Workflow::getEmailVerificationStates())),
 				)
 			))
 		);
-
 
 /*
 

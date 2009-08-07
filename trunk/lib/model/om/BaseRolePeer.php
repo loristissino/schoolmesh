@@ -13,7 +13,7 @@ abstract class BaseRolePeer {
 	const CLASS_DEFAULT = 'lib.model.Role';
 
 	
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 5;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -31,6 +31,9 @@ abstract class BaseRolePeer {
 	const POSIX_NAME = 'role.POSIX_NAME';
 
 	
+	const MAY_BE_MAIN_ROLE = 'role.MAY_BE_MAIN_ROLE';
+
+	
 	public static $instances = array();
 
 	
@@ -38,20 +41,20 @@ abstract class BaseRolePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'QualityCode', 'PosixName', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'qualityCode', 'posixName', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::QUALITY_CODE, self::POSIX_NAME, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'quality_code', 'posix_name', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'QualityCode', 'PosixName', 'MayBeMainRole', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'qualityCode', 'posixName', 'mayBeMainRole', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::QUALITY_CODE, self::POSIX_NAME, self::MAY_BE_MAIN_ROLE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'quality_code', 'posix_name', 'may_be_main_role', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'QualityCode' => 2, 'PosixName' => 3, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'qualityCode' => 2, 'posixName' => 3, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::QUALITY_CODE => 2, self::POSIX_NAME => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'quality_code' => 2, 'posix_name' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'QualityCode' => 2, 'PosixName' => 3, 'MayBeMainRole' => 4, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'qualityCode' => 2, 'posixName' => 3, 'mayBeMainRole' => 4, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::QUALITY_CODE => 2, self::POSIX_NAME => 3, self::MAY_BE_MAIN_ROLE => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'quality_code' => 2, 'posix_name' => 3, 'may_be_main_role' => 4, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	
@@ -100,6 +103,8 @@ abstract class BaseRolePeer {
 		$criteria->addSelectColumn(RolePeer::QUALITY_CODE);
 
 		$criteria->addSelectColumn(RolePeer::POSIX_NAME);
+
+		$criteria->addSelectColumn(RolePeer::MAY_BE_MAIN_ROLE);
 
 	}
 

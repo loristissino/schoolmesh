@@ -25,49 +25,36 @@
   <table>
     <?php echo $userform ?>
 	<tr>
-		<th><label>Used blocks</label></th>
-		<td><?php echo $current_user->getDiskUsedBlocks() ?></td>
-	</tr>
-	<tr>
-		<th><label>Used files</label></th>
-		<td><?php echo $current_user->getDiskUsedFiles() ?></td>
-	</tr>
-	<tr>
-		<th><label>Last check</label></th>
-		<td><?php echo $current_user->getDiskUpdatedAt() ?> ---
-		<?php
-			echo link_to(
-				__('Check now'),
-				url_for('users/updatequota?id=' . $current_user->getUserId()),
-				array('method'=>'post')
-			)
-		
-		?>
-		
-		</td>
-	</tr>
-    <tr>
       <td colspan="2">
-         <input type="submit" value="<?php echo __('Save') ?>">
+         <input type="submit" name="save" value="<?php echo __('Save') ?>">
       </td>
     </tr>
+	<?php if($current_user->getIsDeleted()): ?>
+	<tr>
+      <td colspan="2">
+         <input type="submit" name="undelete" value="<?php echo __('Undelete') ?>">
+      </td>
+    </tr>
+	<?php else: ?>
+		<?php if($current_user->getIsDeletable()): ?>
+		<tr>
+		  <td colspan="2">
+			 <input type="submit" name="delete" value="<?php echo __('Delete') ?>">
+		  </td>
+		</tr>
+		<?php endif ?>
+	<?php endif ?>
   </table>
 
+<h2><?php echo __('Disk usage') ?></h2>
 
-<?php /*
-
-<ul>
-<li><?php echo __('First name') ?>: <strong><?php echo $current_user->getProfile()->getFirstName() ?></strong></li>
-<li><?php echo __('Middle name') ?>: <strong><?php echo $current_user->getProfile()->getMiddleName() ?></strong></li>
-<li><?php echo __('Last name') ?>: <strong><?php echo $current_user->getProfile()->getLastName() ?></strong></li>
-</ul>
+<?php include_partial('quotas', array('current_user'=>$current_user)) ?>
 
 <h2><?php echo __('Credentials') ?></h2>
-<ul>
-	<?php foreach($current_user->getAllPermissions() as $permission): ?>
-			<li><?php echo $permission ?></li>
-		<?php endforeach ?>
-</ul>
 
+<?php include_partial('credentials', array('current_user'=>$current_user)) ?>
 
-*/ ?>
+<h2><?php echo __('Teams') ?></h2>
+
+<?php include_partial('teams', array('current_user'=>$current_user)) ?>
+

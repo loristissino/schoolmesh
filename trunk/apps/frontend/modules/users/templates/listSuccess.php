@@ -11,6 +11,8 @@
 
 ?><h1><?php echo __("User management")?></h1>
 
+<?php include_partial('filter', array('filtered_role_id'=>$filtered_role_id, 'filtered_schoolclass_id'=>$filtered_schoolclass_id)) ?>
+
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
 <?php endif; ?>
@@ -25,11 +27,13 @@
     <tr>
 	  <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
 
-      <th class="sf_admin_text"><?php echo link_to(__('Gender'), url_for( 'plansandreports/setsortlistpreference?sortby=gender')) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('Username'), url_for( 'plansandreports/setsortlistpreference?sortby=username')) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('Role'), url_for( 'plansandreports/setsortlistpreference?sortby=group')) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('First name'), url_for('plansandreports/setsortlistpreference?sortby=firstname')) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('Last name'), url_for( 'plansandreports/setsortlistpreference?sortby=lastname')) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Gender'), url_for( 'users/setsortlistpreference?sortby=gender')) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Username'), url_for( 'users/setsortlistpreference?sortby=username')) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Role'), url_for( 'users/setsortlistpreference?sortby=role')) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('First name'), url_for('users/setsortlistpreference?sortby=firstname')) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Last name'), url_for( 'users/setsortlistpreference?sortby=lastname')) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Blocks'), url_for('users/setsortlistpreference?sortby=blocks')) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Files'), url_for('users/setsortlistpreference?sortby=files')) ?></th>
       <th class="sf_admin_text"><?php echo __('Permissions') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
@@ -42,11 +46,13 @@
   <input type="checkbox" name="ids[]" value="<?php echo $user->getId() ?>" class="sf_admin_batch_checkbox" />
 </td>
 
-      <td><?php echo $user->getGender() ?></td>
+      <td><?php include_partial('gender', array('gender'=>$user->getGender())) ?></td>
       <td><?php echo $user->getUsername() ?></td>
       <td><?php echo $user->getRole() ?></td>
       <td><?php echo $user->getFirstName() ?></td>
       <td><?php echo $user->getLastName() ?></td>
+      <td><?php echo $user->getDiskUsedBlocks() ?></td>
+      <td><?php echo $user->getDiskUsedFiles() ?></td>
 	  <td>
 		<?php foreach($user->getSfGuardUser()->getAllPermissions() as $permission): ?>
 			<?php echo $permission ?>
@@ -67,14 +73,24 @@
 
 <?php echo options_for_select(array(
   '' => __('Choose an action'),
-  'Approve' => __('Approve selected documents'),
-  'Reject' => __('Reject selected documents'),
+  'Delete' => __('Delete selected users'),
 ), 0) ?>
   </select>
 
 <?php echo submit_tag(_('Ok')) ?>
 
 </li>
+<li class="sf_admin_action_new">
+<?php
+echo link_to(
+__('New user'),
+url_for('users/new')
+) ?>
+</li>
+
+</ul>
+
+
 </ul>
 
 </form>

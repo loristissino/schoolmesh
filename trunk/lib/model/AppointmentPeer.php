@@ -245,6 +245,14 @@ if (isset($content['workplan_report']['tools']))
 	}
 
 
+	public static function countAppointmentsOfUser($userId)
+	{
+	$c=new Criteria();
+	$c->add(AppointmentPeer::USER_ID, $userId);
+	$app =  parent::doCount($c);
+	return $app;
+	}
+
 	public static function retrieveByTeacherSchoolclassSubjectYear($teacherFirstName, $teacherLastName, $schoolclass, $subject, $year)
 	{
 	

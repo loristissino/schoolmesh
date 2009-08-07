@@ -27,7 +27,6 @@ class usersActions extends sfActions
   {
 	$this->user = $this->getUser();
 	$this->userlist = sfGuardUserProfilePeer::retrieveAllUsers();
-	$this->nome="Ciao";
 	
 	$this->checks=array();
 	$this->ok=0;
@@ -66,24 +65,95 @@ class usersActions extends sfActions
 		$this->forward404Unless($this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id')));
 		
 		$this->current_user->updateQuotaInfo();
-
+/*
 		$this->getUser()->setFlash('notice',
 			$this->getContext()->getI18N()->__('Quota information has been updated.')
 			);
-		
-		$this->redirect('users/edit?id='. $request->getParameter('id'));
-	
-	
+*/		
+		return $this->renderPartial('quotas', array('current_user'=>$this->current_user));
 	
 	}  
+
+  public function executeUndelete(sfWebRequest $request)
+	{
+		$this->forward404Unless($request->isMethod('POST'));
+		$this->forward404Unless($this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id')));
+		$this->current_user->setIsDeleted(false);
+		$this->current_user->save();
+		
+		return $this->redirect('users/list');
+	
+	}  
+
+
+	public function executeSetsortlistpreference(sfWebRequest $request)
+	{
+		$sortby = $request->getParameter('sortby');
+		$this->forward404Unless(in_array($sortby, array('', 'gender', 'username', 'role', 'firstname', 'lastname', 'blocks', 'files')));
+		$this->getUser()->setAttribute('sortby', $sortby);
+		$this->redirect('users/list');
+	}
+
+	public function executeSetfilterlistpreference(sfWebRequest $request)
+	{
+		$filter = $request->getParameter('filter');
+		if ($filter=='reset')
+			{
+				$this->getUser()->setAttribute('filter', '');
+				$this->getUser()->setAttribute('filtered_role_id', '');
+			}
+		if ($filter=='set')
+			{
+				$this->getUser()->setAttribute('filter', 'set');
+				$this->getUser()->setAttribute('filtered_role_id', $request->getParameter('filtered_role_id'));
+				$this->getUser()->setAttribute('filtered_schoolclass_id', $request->getParameter('filtered_schoolclass_id'));
+				
+			}
+			
+		$this->redirect('users/list');
+	}
+
 
 
   public function executeList(sfWebRequest $request)
   {
 	$this->user = $this->getUser();
 	
-	$this->userlist = sfGuardUserProfilePeer::retrieveAllUsers();
+	$sortby=$this->getUser()->getAttribute('sortby');
+	
+	if (!$filter=$this->getUser()->getAttribute('filter'))
+		{
+			$filter='';
+		}
+
+	if (!$this->filtered_role_id=$this->getUser()->getAttribute('filtered_role_id'))
+		{
+			$this->filtered_role_id='';
+		}
+	if (!$this->filtered_schoolclass_id=$this->getUser()->getAttribute('filtered_schoolclass_id'))
+		{
+			$this->filtered_schoolclass_id='';
+		}
+	
+	$this->userlist = sfGuardUserProfilePeer::retrieveAllUsers($sortby, $filter, $this->filtered_role_id, $this->filtered_schoolclass_id);
   }
+
+  public function executeNew(sfWebRequest $request)
+	{
+		$this->userform = new UserForm(array(), array('new'=>true));
+	}  
+
+  public function executeCreate(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post'));
+
+    $this->userform = new UserForm(array(), array('new'=>true));
+
+    $this->processForm($request, $this->userform);
+
+    $this->setTemplate('new');
+  }
+
 
   public function executeEdit(sfWebRequest $request)
   {
@@ -106,12 +176,23 @@ class usersActions extends sfActions
 					);
 					$this->redirect('users/edit?id='. $params['id']);
 				}
+				
+				if($this->current_user->getIsDeletable()&&$request->getParameter('delete'))
+				{
+					$this->current_user->setIsDeleted(true);
+				}
+				
+				if($request->getParameter('undelete'))
+				{
+					$this->current_user->setIsDeleted(false);
+				}
 
 				$this->current_user->setPosixUid($params['posix_uid']);
 				$this->current_user->setFirstName($params['first_name']);
 				$this->current_user->setMiddleName($params['middle_name']);
 				$this->current_user->setLastName($params['last_name']);
 				$this->current_user->setPronunciation($params['pronunciation']);
+				$this->current_user->setGenderChoice($params['gender']);
 				$this->current_user->setEmail($params['email']);
 				$this->current_user->setBirthdate($params['birthdate']);
 				$this->current_user->setRoleId($params['main_role']);
@@ -143,6 +224,7 @@ class usersActions extends sfActions
 			'middle_name'=>$this->current_user->getMiddleName(),
 			'last_name'=>$this->current_user->getLastName(),
 			'pronunciation'=>$this->current_user->getPronunciation(),
+			'gender'=>$this->current_user->getGenderChoice(),
 			'email'=>$this->current_user->getEmail(),
 			'email_state'=>$this->current_user->getEmailState(),
 			'birthdate' => $this->current_user->getBirthdate(),
@@ -154,10 +236,26 @@ class usersActions extends sfActions
 		)
 	);
 	
-		
 	
   }
 
+	protected function processForm(sfWebRequest $request, sfForm $form)
+	  {
+		$form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+		if ($form->isValid())
+		{
+		  $params = $this->userform->getValues();
+		  $current_sfuser = new sfGuardUser();
+		  $current_sfuser->setUsername($params['username']);
+		  $current_sfuser->save();
+		  $current_user = new sfGuardUserProfile();
+		  $current_user->setUserId($current_sfuser->getId());
+		  $current_user->setRoleId($params['main_role']);  
+		  $current_user->save();
+
+		  $this->redirect('users/edit?id='.$current_user->getUserId());
+		}
+	}
 
 
 }

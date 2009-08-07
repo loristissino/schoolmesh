@@ -45,7 +45,7 @@ propel:
     disk_used_files: { type: integer, default: 0 }
     disk_updated_at: timestamp
     system_notes: varchar(255)
-    is_deleted: boolean
+    is_deleted: { type: boolean, default: false }
     has_googleapps_account: boolean
     googleapps_account_approved_at: timestamp
     has_moodle_account: boolean
@@ -97,7 +97,8 @@ propel:
     id:           ~
     description:  varchar(100)
     quality_code: varchar(10)        
-    posix_name: varchar(20):
+    posix_name: varchar(20)
+    may_be_main_role: boolean
 
   user_team:
     id: ~

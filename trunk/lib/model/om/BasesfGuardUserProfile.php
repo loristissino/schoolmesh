@@ -116,6 +116,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$this->disk_set_hard_files_quota = 0;
 		$this->disk_used_blocks = 0;
 		$this->disk_used_files = 0;
+		$this->is_deleted = false;
 	}
 
 	
@@ -696,7 +697,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$v = (boolean) $v;
 		}
 
-		if ($this->is_deleted !== $v) {
+		if ($this->is_deleted !== $v || $v === false) {
 			$this->is_deleted = $v;
 			$this->modifiedColumns[] = sfGuardUserProfilePeer::IS_DELETED;
 		}
@@ -766,7 +767,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	
 	public function hasOnlyDefaultValues()
 	{
-						if (array_diff($this->modifiedColumns, array(sfGuardUserProfilePeer::EMAIL_STATE,sfGuardUserProfilePeer::DISK_SET_SOFT_BLOCKS_QUOTA,sfGuardUserProfilePeer::DISK_SET_HARD_BLOCKS_QUOTA,sfGuardUserProfilePeer::DISK_SET_SOFT_FILES_QUOTA,sfGuardUserProfilePeer::DISK_SET_HARD_FILES_QUOTA,sfGuardUserProfilePeer::DISK_USED_BLOCKS,sfGuardUserProfilePeer::DISK_USED_FILES))) {
+						if (array_diff($this->modifiedColumns, array(sfGuardUserProfilePeer::EMAIL_STATE,sfGuardUserProfilePeer::DISK_SET_SOFT_BLOCKS_QUOTA,sfGuardUserProfilePeer::DISK_SET_HARD_BLOCKS_QUOTA,sfGuardUserProfilePeer::DISK_SET_SOFT_FILES_QUOTA,sfGuardUserProfilePeer::DISK_SET_HARD_FILES_QUOTA,sfGuardUserProfilePeer::DISK_USED_BLOCKS,sfGuardUserProfilePeer::DISK_USED_FILES,sfGuardUserProfilePeer::IS_DELETED))) {
 				return false;
 			}
 
@@ -795,6 +796,10 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			}
 
 			if ($this->disk_used_files !== 0) {
+				return false;
+			}
+
+			if ($this->is_deleted !== false) {
 				return false;
 			}
 
