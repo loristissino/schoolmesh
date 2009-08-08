@@ -44,12 +44,32 @@ propel:
     disk_used_blocks: { type: integer, default: 0 }
     disk_used_files: { type: integer, default: 0 }
     disk_updated_at: timestamp
-    system_notes: varchar(255)
+    system_alerts: varchar(255)
     is_deleted: { type: boolean, default: false }
-    has_googleapps_account: boolean
+    googleapps_account_status: integer
     googleapps_account_approved_at: timestamp
+    googleapps_account_temporary_password: varchar(10)
     has_moodle_account: boolean
-    
+    moodle_account_temporary_password: varchar(10)
+
+# notes about Google Apps accounts:
+#
+#  googleapps_account_status:
+#        this is set when the user list in csv format is downloaded from google and uploaded to schoolmesh, if the user is found in it
+#        possible values:
+#        0: the account does not exist
+#        1: the account exists, but was never used (first login = 0)
+#        3-7: reserved
+#        8: the account exists, and was used (last time more than a month ago)
+#        9: the account exists, and was used recently (last time less than a month ago)
+#  googleapps_account_approved:
+#        it is timestamped when the user provides the agreement signed by him or the parents
+#        if it is set to null, it means that the account is not yet approved (so the user will not show up in the user list to be sent to google)
+#  googleapps_account_temporary_password:
+#        it is generated when the google account is approved
+#        it is needed to produce the letter with instructions for the user
+#        it is set to null when we discover that the user has done a successful login
+
   reserved_username:
     id:   
     username: { type: varchar(20), index: true }

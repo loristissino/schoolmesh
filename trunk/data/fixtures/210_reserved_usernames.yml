@@ -5,6 +5,8 @@ ReservedUsername:
 'admin',
 'administrator',
 'amministratore',
+'webmaster',
+'info',
 
 
 ) as $username): ?>

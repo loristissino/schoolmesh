@@ -25,4 +25,5 @@ if [ ! -d "$BASEDIR" ] ; then
 	exit 7
 fi
 
-sudo setquota -u $USERNAME $SBQ $HBQ $SFQ $HFQ "$BASEDIR"
+sudo setquota -u $USERNAME $SBQ $HBQ $SFQ $HFQ "$BASEDIR"  &&  echo $USERNAME quota set  || echo $USERNAME quota not set
+

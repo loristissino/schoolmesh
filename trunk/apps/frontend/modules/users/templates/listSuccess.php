@@ -34,12 +34,14 @@
       <th class="sf_admin_text"><?php echo link_to(__('Last name'), url_for( 'users/setsortlistpreference?sortby=lastname')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Blocks'), url_for('users/setsortlistpreference?sortby=blocks')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Files'), url_for('users/setsortlistpreference?sortby=files')) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Alerts'), url_for('users/setsortlistpreference?sortby=alerts')) ?></th>
       <th class="sf_admin_text"><?php echo __('Accounts') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
   <tbody>
 	<?php $i=0 ?>
+	<?php $ga_states=Workflow::getGoogleappsAccountStatusses(); ?>
     <?php foreach ($userlist as $user): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
 	<td>
@@ -54,8 +56,13 @@
       <td><?php echo $user->getDiskUsedBlocks() ?></td>
       <td><?php echo $user->getDiskUsedFiles() ?></td>
 	  <td>
-		<?php if($user->getHasGoogleAppsAccount()): ?>
-			<?php echo image_tag('googleapps', 'title=' . __('Google Apps account')) ?>
+		<?php if($user->getSystemAlerts()!=''): ?>
+			<?php echo image_tag('error', 'title=' . $user->getSystemAlerts()) ?>
+		<?php endif ?>
+	  </td>
+	  <td>
+		<?php if($user->getGoogleappsAccountStatus()): ?>
+			<?php echo image_tag('googleapps', 'title=' . __('Google Apps account') . ': ' .__($ga_states[$user->getGoogleappsAccountStatus()])) ?>
 		<?php endif ?>
 	  </td>
 	<td><?php include_partial('actions', array('user'=>$user)) ?></td>

@@ -1,1 +1,300 @@
-flavia.g  --       2       0       0              2     0     0
+Array
+(
+    [0] => sfGuardUserProfile Object
+        (
+            [countFailedChecks:protected] => 
+            [checks:protected] => Array
+                (
+                )
+
+            [user_id:protected] => 3
+            [first_name:protected] => John
+            [middle_name:protected] => 
+            [last_name:protected] => Test
+            [pronunciation:protected] => 
+            [role_id:protected] => 3
+            [gender:protected] => M
+            [email:protected] => john@example.com
+            [email_state:protected] => 0
+            [email_verification_code:protected] => 
+            [birthdate:protected] => 
+            [birthplace:protected] => 
+            [import_code:protected] => 
+            [posix_uid:protected] => 2004
+            [disk_set_soft_blocks_quota:protected] => 4000
+            [disk_set_hard_blocks_quota:protected] => 5000
+            [disk_set_soft_files_quota:protected] => 2000
+            [disk_set_hard_files_quota:protected] => 3000
+            [disk_used_blocks:protected] => 23
+            [disk_used_files:protected] => 23
+            [disk_updated_at:protected] => 2009-08-08 19:25:18
+            [system_alerts:protected] => googleapps account missing
+            [is_deleted:protected] => 
+            [googleapps_account_status:protected] => 0
+            [googleapps_account_approved_at:protected] => 2009-08-08 19:21:14
+            [googleapps_account_temporary_password:protected] => 7464445
+            [has_moodle_account:protected] => 
+            [moodle_account_temporary_password:protected] => 
+            [asfGuardUser:protected] => sfGuardUser Object
+                (
+                    [profile:protected] => 
+                    [groups:protected] => 
+                    [permissions:protected] => 
+                    [allPermissions:protected] => 
+                    [id:protected] => 3
+                    [username:protected] => john.test
+                    [algorithm:protected] => sha1
+                    [salt:protected] => aa8c41bb37bddb64e79dbfb9c3e00dd0
+                    [password:protected] => 8686350bef073b2142e07d1bf52ebe9803ce672d
+                    [created_at:protected] => 2009-08-08 19:17:20
+                    [last_login:protected] => 
+                    [is_active:protected] => 1
+                    [is_super_admin:protected] => 
+                    [collsfGuardUserPermissions:protected] => 
+                    [lastsfGuardUserPermissionCriteria:private] => 
+                    [collsfGuardUserGroups:protected] => 
+                    [lastsfGuardUserGroupCriteria:private] => 
+                    [collsfGuardRememberKeys:protected] => 
+                    [lastsfGuardRememberKeyCriteria:private] => 
+                    [singlesfGuardUserProfile:protected] => sfGuardUserProfile Object
+ *RECURSION*
+                    [collAppointments:protected] => 
+                    [lastAppointmentCriteria:private] => 
+                    [collEnrolments:protected] => 
+                    [lastEnrolmentCriteria:private] => 
+                    [collUserTeams:protected] => 
+                    [lastUserTeamCriteria:private] => 
+                    [collWpevents:protected] => 
+                    [lastWpeventCriteria:private] => 
+                    [collWpmodules:protected] => 
+                    [lastWpmoduleCriteria:private] => 
+                    [collLanlogs:protected] => 
+                    [lastLanlogCriteria:private] => 
+                    [alreadyInSave:protected] => 
+                    [alreadyInValidation:protected] => 
+                    [validationFailures:protected] => Array
+                        (
+                        )
+
+                    [_new:private] => 
+                    [_deleted:private] => 
+                    [modifiedColumns:protected] => Array
+                        (
+                        )
+
+                )
+
+            [aRole:protected] => 
+            [alreadyInSave:protected] => 
+            [alreadyInValidation:protected] => 
+            [validationFailures:protected] => Array
+                (
+                )
+
+            [_new:private] => 
+            [_deleted:private] => 
+            [modifiedColumns:protected] => Array
+                (
+                )
+
+        )
+
+    [1] => sfGuardUserProfile Object
+        (
+            [countFailedChecks:protected] => 
+            [checks:protected] => Array
+                (
+                )
+
+            [user_id:protected] => 16
+            [first_name:protected] => Kenny
+            [middle_name:protected] => 
+            [last_name:protected] => McBain
+            [pronunciation:protected] => 
+            [role_id:protected] => 10
+            [gender:protected] => M
+            [email:protected] => 
+            [email_state:protected] => 0
+            [email_verification_code:protected] => 
+            [birthdate:protected] => 
+            [birthplace:protected] => 
+            [import_code:protected] => 
+            [posix_uid:protected] => 2015
+            [disk_set_soft_blocks_quota:protected] => 3000
+            [disk_set_hard_blocks_quota:protected] => 4000
+            [disk_set_soft_files_quota:protected] => 1000
+            [disk_set_hard_files_quota:protected] => 1500
+            [disk_used_blocks:protected] => 1
+            [disk_used_files:protected] => 1
+            [disk_updated_at:protected] => 2009-08-08 19:18:01
+            [system_alerts:protected] => 
+            [is_deleted:protected] => 
+            [googleapps_account_status:protected] => 0
+            [googleapps_account_approved_at:protected] => 2009-08-08 20:29:03
+            [googleapps_account_temporary_password:protected] => 5379542
+            [has_moodle_account:protected] => 
+            [moodle_account_temporary_password:protected] => 
+            [asfGuardUser:protected] => sfGuardUser Object
+                (
+                    [profile:protected] => 
+                    [groups:protected] => 
+                    [permissions:protected] => 
+                    [allPermissions:protected] => 
+                    [id:protected] => 16
+                    [username:protected] => kenny.mcbain
+                    [algorithm:protected] => sha1
+                    [salt:protected] => e01e0f841152e3c7c973db23736bfe48
+                    [password:protected] => 21afa0a849757747b571feaa0af5789a85b40506
+                    [created_at:protected] => 2009-08-08 19:17:20
+                    [last_login:protected] => 
+                    [is_active:protected] => 1
+                    [is_super_admin:protected] => 
+                    [collsfGuardUserPermissions:protected] => 
+                    [lastsfGuardUserPermissionCriteria:private] => 
+                    [collsfGuardUserGroups:protected] => 
+                    [lastsfGuardUserGroupCriteria:private] => 
+                    [collsfGuardRememberKeys:protected] => 
+                    [lastsfGuardRememberKeyCriteria:private] => 
+                    [singlesfGuardUserProfile:protected] => sfGuardUserProfile Object
+ *RECURSION*
+                    [collAppointments:protected] => 
+                    [lastAppointmentCriteria:private] => 
+                    [collEnrolments:protected] => 
+                    [lastEnrolmentCriteria:private] => 
+                    [collUserTeams:protected] => 
+                    [lastUserTeamCriteria:private] => 
+                    [collWpevents:protected] => 
+                    [lastWpeventCriteria:private] => 
+                    [collWpmodules:protected] => 
+                    [lastWpmoduleCriteria:private] => 
+                    [collLanlogs:protected] => 
+                    [lastLanlogCriteria:private] => 
+                    [alreadyInSave:protected] => 
+                    [alreadyInValidation:protected] => 
+                    [validationFailures:protected] => Array
+                        (
+                        )
+
+                    [_new:private] => 
+                    [_deleted:private] => 
+                    [modifiedColumns:protected] => Array
+                        (
+                        )
+
+                )
+
+            [aRole:protected] => 
+            [alreadyInSave:protected] => 
+            [alreadyInValidation:protected] => 
+            [validationFailures:protected] => Array
+                (
+                )
+
+            [_new:private] => 
+            [_deleted:private] => 
+            [modifiedColumns:protected] => Array
+                (
+                )
+
+        )
+
+    [2] => sfGuardUserProfile Object
+        (
+            [countFailedChecks:protected] => 
+            [checks:protected] => Array
+                (
+                )
+
+            [user_id:protected] => 18
+            [first_name:protected] => Susanne Irina
+            [middle_name:protected] => 
+            [last_name:protected] => Zacharias
+            [pronunciation:protected] => 
+            [role_id:protected] => 10
+            [gender:protected] => M
+            [email:protected] => 
+            [email_state:protected] => 0
+            [email_verification_code:protected] => 
+            [birthdate:protected] => 
+            [birthplace:protected] => 
+            [import_code:protected] => 
+            [posix_uid:protected] => 2017
+            [disk_set_soft_blocks_quota:protected] => 3000
+            [disk_set_hard_blocks_quota:protected] => 4000
+            [disk_set_soft_files_quota:protected] => 1000
+            [disk_set_hard_files_quota:protected] => 1500
+            [disk_used_blocks:protected] => 1
+            [disk_used_files:protected] => 1
+            [disk_updated_at:protected] => 2009-08-08 19:18:02
+            [system_alerts:protected] => 
+            [is_deleted:protected] => 
+            [googleapps_account_status:protected] => 0
+            [googleapps_account_approved_at:protected] => 2009-08-08 20:28:39
+            [googleapps_account_temporary_password:protected] => 4617147
+            [has_moodle_account:protected] => 
+            [moodle_account_temporary_password:protected] => 
+            [asfGuardUser:protected] => sfGuardUser Object
+                (
+                    [profile:protected] => 
+                    [groups:protected] => 
+                    [permissions:protected] => 
+                    [allPermissions:protected] => 
+                    [id:protected] => 18
+                    [username:protected] => susanne.zacharias
+                    [algorithm:protected] => sha1
+                    [salt:protected] => cf585bdccb11c8f0c071d32e29beb0d3
+                    [password:protected] => cae2aca4c8af279ae9113de3c737d4f14ed88b28
+                    [created_at:protected] => 2009-08-08 19:17:20
+                    [last_login:protected] => 
+                    [is_active:protected] => 1
+                    [is_super_admin:protected] => 
+                    [collsfGuardUserPermissions:protected] => 
+                    [lastsfGuardUserPermissionCriteria:private] => 
+                    [collsfGuardUserGroups:protected] => 
+                    [lastsfGuardUserGroupCriteria:private] => 
+                    [collsfGuardRememberKeys:protected] => 
+                    [lastsfGuardRememberKeyCriteria:private] => 
+                    [singlesfGuardUserProfile:protected] => sfGuardUserProfile Object
+ *RECURSION*
+                    [collAppointments:protected] => 
+                    [lastAppointmentCriteria:private] => 
+                    [collEnrolments:protected] => 
+                    [lastEnrolmentCriteria:private] => 
+                    [collUserTeams:protected] => 
+                    [lastUserTeamCriteria:private] => 
+                    [collWpevents:protected] => 
+                    [lastWpeventCriteria:private] => 
+                    [collWpmodules:protected] => 
+                    [lastWpmoduleCriteria:private] => 
+                    [collLanlogs:protected] => 
+                    [lastLanlogCriteria:private] => 
+                    [alreadyInSave:protected] => 
+                    [alreadyInValidation:protected] => 
+                    [validationFailures:protected] => Array
+                        (
+                        )
+
+                    [_new:private] => 
+                    [_deleted:private] => 
+                    [modifiedColumns:protected] => Array
+                        (
+                        )
+
+                )
+
+            [aRole:protected] => 
+            [alreadyInSave:protected] => 
+            [alreadyInValidation:protected] => 
+            [validationFailures:protected] => Array
+                (
+                )
+
+            [_new:private] => 
+            [_deleted:private] => 
+            [modifiedColumns:protected] => Array
+                (
+                )
+
+        )
+
+)

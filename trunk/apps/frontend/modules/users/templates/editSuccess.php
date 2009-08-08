@@ -17,6 +17,9 @@
 <?php if ($sf_user->hasFlash('error')): ?>
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
+<?php if ($current_user->getSystemAlerts()!=''): ?>
+  <div class="alert"><?php echo $current_user->getSystemAlerts()?></div>
+<?php endif; ?>
 
 <form action="<?php echo url_for('users/edit?id='. $current_user->getSfGuardUser()->getId()) ?>" method="POST">
 
@@ -61,5 +64,13 @@
 <h2><?php echo __('Google Apps account') ?></h2>
 
 <?php include_partial('googleapps', array('current_user'=>$current_user)) ?>
+
+<h2><?php echo __('Actions') ?></h2>
+
+	<ul class="sf_admin_actions">
+	<li class="sf_admin_action_userchecks">
+		<?php echo link_to(__('Run user checks'), url_for('users/runuserchecks?id=' . $current_user->getUserId())) ?>
+	</li><br />
+	</ul>
 
 

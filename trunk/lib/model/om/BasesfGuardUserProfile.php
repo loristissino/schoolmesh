@@ -73,19 +73,25 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $disk_updated_at;
 
 	
-	protected $system_notes;
+	protected $system_alerts;
 
 	
 	protected $is_deleted;
 
 	
-	protected $has_googleapps_account;
+	protected $googleapps_account_status;
 
 	
 	protected $googleapps_account_approved_at;
 
 	
+	protected $googleapps_account_temporary_password;
+
+	
 	protected $has_moodle_account;
+
+	
+	protected $moodle_account_temporary_password;
 
 	
 	protected $asfGuardUser;
@@ -288,9 +294,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	}
 
 	
-	public function getSystemNotes()
+	public function getSystemAlerts()
 	{
-		return $this->system_notes;
+		return $this->system_alerts;
 	}
 
 	
@@ -300,9 +306,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	}
 
 	
-	public function getHasGoogleappsAccount()
+	public function getGoogleappsAccountStatus()
 	{
-		return $this->has_googleapps_account;
+		return $this->googleapps_account_status;
 	}
 
 	
@@ -333,9 +339,21 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	}
 
 	
+	public function getGoogleappsAccountTemporaryPassword()
+	{
+		return $this->googleapps_account_temporary_password;
+	}
+
+	
 	public function getHasMoodleAccount()
 	{
 		return $this->has_moodle_account;
+	}
+
+	
+	public function getMoodleAccountTemporaryPassword()
+	{
+		return $this->moodle_account_temporary_password;
 	}
 
 	
@@ -677,15 +695,15 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		return $this;
 	} 
 	
-	public function setSystemNotes($v)
+	public function setSystemAlerts($v)
 	{
 		if ($v !== null) {
 			$v = (string) $v;
 		}
 
-		if ($this->system_notes !== $v) {
-			$this->system_notes = $v;
-			$this->modifiedColumns[] = sfGuardUserProfilePeer::SYSTEM_NOTES;
+		if ($this->system_alerts !== $v) {
+			$this->system_alerts = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::SYSTEM_ALERTS;
 		}
 
 		return $this;
@@ -705,15 +723,15 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		return $this;
 	} 
 	
-	public function setHasGoogleappsAccount($v)
+	public function setGoogleappsAccountStatus($v)
 	{
 		if ($v !== null) {
-			$v = (boolean) $v;
+			$v = (int) $v;
 		}
 
-		if ($this->has_googleapps_account !== $v) {
-			$this->has_googleapps_account = $v;
-			$this->modifiedColumns[] = sfGuardUserProfilePeer::HAS_GOOGLEAPPS_ACCOUNT;
+		if ($this->googleapps_account_status !== $v) {
+			$this->googleapps_account_status = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_STATUS;
 		}
 
 		return $this;
@@ -751,6 +769,20 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		return $this;
 	} 
 	
+	public function setGoogleappsAccountTemporaryPassword($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->googleapps_account_temporary_password !== $v) {
+			$this->googleapps_account_temporary_password = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_TEMPORARY_PASSWORD;
+		}
+
+		return $this;
+	} 
+	
 	public function setHasMoodleAccount($v)
 	{
 		if ($v !== null) {
@@ -760,6 +792,20 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->has_moodle_account !== $v) {
 			$this->has_moodle_account = $v;
 			$this->modifiedColumns[] = sfGuardUserProfilePeer::HAS_MOODLE_ACCOUNT;
+		}
+
+		return $this;
+	} 
+	
+	public function setMoodleAccountTemporaryPassword($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->moodle_account_temporary_password !== $v) {
+			$this->moodle_account_temporary_password = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::MOODLE_ACCOUNT_TEMPORARY_PASSWORD;
 		}
 
 		return $this;
@@ -831,11 +877,13 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->disk_used_blocks = ($row[$startcol + 18] !== null) ? (int) $row[$startcol + 18] : null;
 			$this->disk_used_files = ($row[$startcol + 19] !== null) ? (int) $row[$startcol + 19] : null;
 			$this->disk_updated_at = ($row[$startcol + 20] !== null) ? (string) $row[$startcol + 20] : null;
-			$this->system_notes = ($row[$startcol + 21] !== null) ? (string) $row[$startcol + 21] : null;
+			$this->system_alerts = ($row[$startcol + 21] !== null) ? (string) $row[$startcol + 21] : null;
 			$this->is_deleted = ($row[$startcol + 22] !== null) ? (boolean) $row[$startcol + 22] : null;
-			$this->has_googleapps_account = ($row[$startcol + 23] !== null) ? (boolean) $row[$startcol + 23] : null;
+			$this->googleapps_account_status = ($row[$startcol + 23] !== null) ? (int) $row[$startcol + 23] : null;
 			$this->googleapps_account_approved_at = ($row[$startcol + 24] !== null) ? (string) $row[$startcol + 24] : null;
-			$this->has_moodle_account = ($row[$startcol + 25] !== null) ? (boolean) $row[$startcol + 25] : null;
+			$this->googleapps_account_temporary_password = ($row[$startcol + 25] !== null) ? (string) $row[$startcol + 25] : null;
+			$this->has_moodle_account = ($row[$startcol + 26] !== null) ? (boolean) $row[$startcol + 26] : null;
+			$this->moodle_account_temporary_password = ($row[$startcol + 27] !== null) ? (string) $row[$startcol + 27] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -844,7 +892,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 26; 
+						return $startcol + 28; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating sfGuardUserProfile object", $e);
 		}
@@ -1106,19 +1154,25 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				return $this->getDiskUpdatedAt();
 				break;
 			case 21:
-				return $this->getSystemNotes();
+				return $this->getSystemAlerts();
 				break;
 			case 22:
 				return $this->getIsDeleted();
 				break;
 			case 23:
-				return $this->getHasGoogleappsAccount();
+				return $this->getGoogleappsAccountStatus();
 				break;
 			case 24:
 				return $this->getGoogleappsAccountApprovedAt();
 				break;
 			case 25:
+				return $this->getGoogleappsAccountTemporaryPassword();
+				break;
+			case 26:
 				return $this->getHasMoodleAccount();
+				break;
+			case 27:
+				return $this->getMoodleAccountTemporaryPassword();
 				break;
 			default:
 				return null;
@@ -1151,11 +1205,13 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$keys[18] => $this->getDiskUsedBlocks(),
 			$keys[19] => $this->getDiskUsedFiles(),
 			$keys[20] => $this->getDiskUpdatedAt(),
-			$keys[21] => $this->getSystemNotes(),
+			$keys[21] => $this->getSystemAlerts(),
 			$keys[22] => $this->getIsDeleted(),
-			$keys[23] => $this->getHasGoogleappsAccount(),
+			$keys[23] => $this->getGoogleappsAccountStatus(),
 			$keys[24] => $this->getGoogleappsAccountApprovedAt(),
-			$keys[25] => $this->getHasMoodleAccount(),
+			$keys[25] => $this->getGoogleappsAccountTemporaryPassword(),
+			$keys[26] => $this->getHasMoodleAccount(),
+			$keys[27] => $this->getMoodleAccountTemporaryPassword(),
 		);
 		return $result;
 	}
@@ -1235,19 +1291,25 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->setDiskUpdatedAt($value);
 				break;
 			case 21:
-				$this->setSystemNotes($value);
+				$this->setSystemAlerts($value);
 				break;
 			case 22:
 				$this->setIsDeleted($value);
 				break;
 			case 23:
-				$this->setHasGoogleappsAccount($value);
+				$this->setGoogleappsAccountStatus($value);
 				break;
 			case 24:
 				$this->setGoogleappsAccountApprovedAt($value);
 				break;
 			case 25:
+				$this->setGoogleappsAccountTemporaryPassword($value);
+				break;
+			case 26:
 				$this->setHasMoodleAccount($value);
+				break;
+			case 27:
+				$this->setMoodleAccountTemporaryPassword($value);
 				break;
 		} 	}
 
@@ -1277,11 +1339,13 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[18], $arr)) $this->setDiskUsedBlocks($arr[$keys[18]]);
 		if (array_key_exists($keys[19], $arr)) $this->setDiskUsedFiles($arr[$keys[19]]);
 		if (array_key_exists($keys[20], $arr)) $this->setDiskUpdatedAt($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setSystemNotes($arr[$keys[21]]);
+		if (array_key_exists($keys[21], $arr)) $this->setSystemAlerts($arr[$keys[21]]);
 		if (array_key_exists($keys[22], $arr)) $this->setIsDeleted($arr[$keys[22]]);
-		if (array_key_exists($keys[23], $arr)) $this->setHasGoogleappsAccount($arr[$keys[23]]);
+		if (array_key_exists($keys[23], $arr)) $this->setGoogleappsAccountStatus($arr[$keys[23]]);
 		if (array_key_exists($keys[24], $arr)) $this->setGoogleappsAccountApprovedAt($arr[$keys[24]]);
-		if (array_key_exists($keys[25], $arr)) $this->setHasMoodleAccount($arr[$keys[25]]);
+		if (array_key_exists($keys[25], $arr)) $this->setGoogleappsAccountTemporaryPassword($arr[$keys[25]]);
+		if (array_key_exists($keys[26], $arr)) $this->setHasMoodleAccount($arr[$keys[26]]);
+		if (array_key_exists($keys[27], $arr)) $this->setMoodleAccountTemporaryPassword($arr[$keys[27]]);
 	}
 
 	
@@ -1310,11 +1374,13 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::DISK_USED_BLOCKS)) $criteria->add(sfGuardUserProfilePeer::DISK_USED_BLOCKS, $this->disk_used_blocks);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::DISK_USED_FILES)) $criteria->add(sfGuardUserProfilePeer::DISK_USED_FILES, $this->disk_used_files);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::DISK_UPDATED_AT)) $criteria->add(sfGuardUserProfilePeer::DISK_UPDATED_AT, $this->disk_updated_at);
-		if ($this->isColumnModified(sfGuardUserProfilePeer::SYSTEM_NOTES)) $criteria->add(sfGuardUserProfilePeer::SYSTEM_NOTES, $this->system_notes);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::SYSTEM_ALERTS)) $criteria->add(sfGuardUserProfilePeer::SYSTEM_ALERTS, $this->system_alerts);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::IS_DELETED)) $criteria->add(sfGuardUserProfilePeer::IS_DELETED, $this->is_deleted);
-		if ($this->isColumnModified(sfGuardUserProfilePeer::HAS_GOOGLEAPPS_ACCOUNT)) $criteria->add(sfGuardUserProfilePeer::HAS_GOOGLEAPPS_ACCOUNT, $this->has_googleapps_account);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_STATUS)) $criteria->add(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_STATUS, $this->googleapps_account_status);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_APPROVED_AT)) $criteria->add(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_APPROVED_AT, $this->googleapps_account_approved_at);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_TEMPORARY_PASSWORD)) $criteria->add(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_TEMPORARY_PASSWORD, $this->googleapps_account_temporary_password);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::HAS_MOODLE_ACCOUNT)) $criteria->add(sfGuardUserProfilePeer::HAS_MOODLE_ACCOUNT, $this->has_moodle_account);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::MOODLE_ACCOUNT_TEMPORARY_PASSWORD)) $criteria->add(sfGuardUserProfilePeer::MOODLE_ACCOUNT_TEMPORARY_PASSWORD, $this->moodle_account_temporary_password);
 
 		return $criteria;
 	}
@@ -1387,15 +1453,19 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 
 		$copyObj->setDiskUpdatedAt($this->disk_updated_at);
 
-		$copyObj->setSystemNotes($this->system_notes);
+		$copyObj->setSystemAlerts($this->system_alerts);
 
 		$copyObj->setIsDeleted($this->is_deleted);
 
-		$copyObj->setHasGoogleappsAccount($this->has_googleapps_account);
+		$copyObj->setGoogleappsAccountStatus($this->googleapps_account_status);
 
 		$copyObj->setGoogleappsAccountApprovedAt($this->googleapps_account_approved_at);
 
+		$copyObj->setGoogleappsAccountTemporaryPassword($this->googleapps_account_temporary_password);
+
 		$copyObj->setHasMoodleAccount($this->has_moodle_account);
+
+		$copyObj->setMoodleAccountTemporaryPassword($this->moodle_account_temporary_password);
 
 
 		$copyObj->setNew(true);
