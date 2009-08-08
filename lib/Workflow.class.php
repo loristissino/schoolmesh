@@ -210,4 +210,11 @@ class Workflow
 		return array('unverified', 'waiting', 'verified');
 	}
 
+	static public function getGoogleappsAccountStatusses()
+	{
+		return array(0=>'not existent', 1=>'not activated', 8=>'not recently used', 9=>'recently used');
+	}
+
+
+
 };

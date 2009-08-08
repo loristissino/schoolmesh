@@ -46,4 +46,11 @@ class Generic{
 			return date('d/m/Y', $date);
 		
 		}
+		
+		public static function date_difference_from_now($string)
+		{
+			// return the number of days of difference from the date expressed as Ymd (20091231)
+			
+			return floor((time() - mktime(0, 0, 0, substr($string,4,2), substr($string,6,2), substr($string,0,4)))/86400);
+		}
 }

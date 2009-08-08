@@ -17,5 +17,8 @@
 	<li class="sf_admin_action_googleapps">
 		<?php echo link_to(__('Upload Google Apps data'), 'users/uploadgoogleappsdata') ?>
 	</li><br />
+	<li class="sf_admin_action_export">
+		<?php echo link_to(__('Download CSV file to update Google Apps'), url_for('users/googleappsfile?sf_format=txt')) ?>
+	</li><br />
 	</ul>
 

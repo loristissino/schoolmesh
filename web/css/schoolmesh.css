@@ -159,6 +159,17 @@
   background: url(../images/googleapps.png) no-repeat 0 0;
 }
 
+#sf_admin_container .alert
+{
+  margin: 4px 0;
+  padding: 4px 4px 4px 30px;
+  background: url(../images/error.png) no-repeat 10px 4px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  background-color: #fa1;
+}
+
+
 
 div.check_results
 {

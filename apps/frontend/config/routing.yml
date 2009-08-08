@@ -126,6 +126,12 @@ userchecks:
   requirements:
     sf_format: (?:html|txt)
 
+googleappsfile:
+  url: /users/googleappsfile/:sf_format
+  param: { module: users, action: googleappsfile, sf_format:txt }
+  requirements:
+    sf_format: (?:txt)
+
 sf_guard_signin:
   url:   /login
   param: { module: sfGuardAuth, action: signin }

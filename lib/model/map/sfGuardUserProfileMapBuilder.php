@@ -75,15 +75,19 @@ class sfGuardUserProfileMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('DISK_UPDATED_AT', 'DiskUpdatedAt', 'TIMESTAMP', false, null);
 
-		$tMap->addColumn('SYSTEM_NOTES', 'SystemNotes', 'VARCHAR', false, 255);
+		$tMap->addColumn('SYSTEM_ALERTS', 'SystemAlerts', 'VARCHAR', false, 255);
 
 		$tMap->addColumn('IS_DELETED', 'IsDeleted', 'BOOLEAN', false, null);
 
-		$tMap->addColumn('HAS_GOOGLEAPPS_ACCOUNT', 'HasGoogleappsAccount', 'BOOLEAN', false, null);
+		$tMap->addColumn('GOOGLEAPPS_ACCOUNT_STATUS', 'GoogleappsAccountStatus', 'INTEGER', false, null);
 
 		$tMap->addColumn('GOOGLEAPPS_ACCOUNT_APPROVED_AT', 'GoogleappsAccountApprovedAt', 'TIMESTAMP', false, null);
 
+		$tMap->addColumn('GOOGLEAPPS_ACCOUNT_TEMPORARY_PASSWORD', 'GoogleappsAccountTemporaryPassword', 'VARCHAR', false, 10);
+
 		$tMap->addColumn('HAS_MOODLE_ACCOUNT', 'HasMoodleAccount', 'BOOLEAN', false, null);
+
+		$tMap->addColumn('MOODLE_ACCOUNT_TEMPORARY_PASSWORD', 'MoodleAccountTemporaryPassword', 'VARCHAR', false, 10);
 
 	} 
 } 

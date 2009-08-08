@@ -19,6 +19,17 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	}
 
 
+	public static function retrieveUsersForGoogleApps()
+	{
+		$c = new Criteria();
+		$c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
+		$c->add(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_TEMPORARY_PASSWORD, '', Criteria::GREATER_THAN);
+		$c->add(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_APPROVED_AT, 0, Criteria::GREATER_THAN);
+		$t = self::doSelectJoinsfGuardUser($c);
+		
+		return $t;
+	}
+
 	public static function retrieveAllUsers($sortby='', $filter='', $filtered_role_id='', $filtered_schoolclass_id='')
 	{
 	$c = new Criteria();
@@ -49,6 +60,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		case 'role': 	$c->addAscendingOrderByColumn(RolePeer::DESCRIPTION); break;
 		case 'blocks': 	$c->addDescendingOrderByColumn(sfGuardUserProfilePeer::DISK_USED_BLOCKS); break;
 		case 'files': 	$c->addDescendingOrderByColumn(sfGuardUserProfilePeer::DISK_USED_FILES); break;
+		case 'alerts': 	$c->addDescendingOrderByColumn(sfGuardUserProfilePeer::SYSTEM_ALERTS); break;
 
 		default: $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
 	}
@@ -66,7 +78,14 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
 	$t = self::doSelect($c);
 	return $t;
+	}
 
+	public static function resetGoogleAppsAccountInfoForAll()
+	{
+		$connection = Propel::getConnection();
+		$sql = 'UPDATE ' . sfGuardUserProfilePeer::TABLE_NAME . ' SET googleapps_account_status = 0';
+		$statement = $connection->prepare($sql);
+		$statement->execute();
 	}
 
 

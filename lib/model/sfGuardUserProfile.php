@@ -14,6 +14,13 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		
 		protected $checks=array();
 		
+		
+		public function addSystemAlert($alert)
+		{
+			$previous= ($this->getSystemAlerts()=='') ? '' : $this->getSystemAlerts() . ' - ';
+			$this->setSystemAlerts($previous.$alert);
+		}
+		
 		public function addCheck($check)
 		{
 			$this->checks[]=$check;
@@ -140,6 +147,46 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 		}
 
+
+		protected function getGoogleappsAccountAlerts()
+		
+		{
+		
+			if($this->getGoogleappsAccountApprovedAt())
+			{
+				// The account is approved, we assume that the user should have it
+				
+				if($this->getGoogleappsAccountStatus()==0)
+				{
+					$this->addSystemAlert('googleapps account missing');
+				}
+			}
+			else
+			{
+				// The account is not approved, so the user should not have it
+				if($this->getGoogleappsAccountStatus()>0)
+				{
+					$this->addSystemAlert('googleapps account active but not approved');
+				}
+			}
+		}
+
+		public function GoogleappsEnable()
+		{
+			$this->setGoogleappsAccountApprovedAt(time());
+			
+			$temporaryPassword=rand(1000000,9999999);
+			$this->setGoogleappsAccountTemporaryPassword($temporaryPassword);
+			$this->save();
+		}
+
+		public function GoogleappsDisable()
+		{
+			$this->setGoogleappsAccountApprovedAt(null);
+			$this->setGoogleappsAccountTemporaryPassword(null);
+			$this->save();
+		}
+
         protected function posix_getpwnam($username)
         {
 			// We can't use posix_getpwnam() here, because it doesn't support /etc/nsswithc.conf setup
@@ -208,11 +255,13 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 						$quotainfo['used_blocks'],
 						$quotainfo['soft_blocks_quota'],
 						$quotainfo['hard_blocks_quota'],
+						$quotainfo['blocks_grace'],
 						$quotainfo['used_files'],
 						$quotainfo['soft_files_quota'],
-						$quotainfo['hard_files_quota']
+						$quotainfo['hard_files_quota'],
+						$quotainfo['files_grace']
 						) = explode(':', $result[0]);
-
+					
 					return $quotainfo;
 				}
 			else
@@ -230,6 +279,14 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$this->setDiskUsedBlocks($quotainfo['used_blocks']);
 			$this->setDiskUsedFiles($quotainfo['used_files']);
 			$this->setDiskUpdatedAt(time());
+			if($quotainfo['soft_blocks_quota']==0||$quotainfo['soft_files_quota']==0)
+			{
+				$this->addSystemAlert('disk quota not set');
+			}
+			elseif($quotainfo['used_blocks']>$quotainfo['soft_blocks_quota']*.8||$quotainfo['used_files']>$quotainfo['soft_files_quota']*.8)
+			{
+				$this->addSystemAlert('disk quota nearly reached');
+			}
 			$this->save();
 			return $quotainfo;
 			
@@ -284,19 +341,16 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 				
 			$checks[]=new Check(true, 'user exists', $this->getFullName(), array('link_to'=>'users/edit?id='.$this->getsfGuardUser()->getId()));
 			
+			$this->setSystemAlerts('');
+			
 			// Let's check the UID
 			
 			if($this->getPosixUid()>0)
 			{
 				if($userinfo['uid']!=$this->getPosixUid())
 				{
-					$checks[]=new Check(false, 'UIDs do not match', $this->getFullName(),
-					array('command'=>sprintf('echo "Check UID of user %s (%d in the DB, %d in the system)"', 
-						$this->getUsername(),
-						$this->getPosixUid(),
-						$userinfo['uid'])
-						)
-					);
+					$checks[]=new Check(false, 'UIDs do not match', $this->getFullName());
+					$this->addSystemAlert(sprintf('system UID is %d', $userinfo['uid']));
 				}
 				else
 				{
@@ -339,6 +393,13 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 					);
 				
 			}
+			
+			if ($this->getGender()!='M' && $this->getGender()!='F')
+			{
+				$this->addSystemAlert('gender not set');
+			}
+			
+			$this->getGoogleappsAccountAlerts();
 			
 			if ($this->getIsDeleted())
 			{

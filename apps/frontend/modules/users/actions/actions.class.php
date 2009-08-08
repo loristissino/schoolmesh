@@ -22,7 +22,16 @@ class usersActions extends sfActions
 	
   }
 
-  public function executeUploadgoogleappsdata(sfWebRequest $request)
+	public function executeGoogleappsfile(sfWebRequest $request)
+  {
+		$this->userlist=sfGuardUserProfilePeer::retrieveUsersForGoogleApps();
+		$response = $this->getContext()->getResponse();
+		$response->setHttpHeader('Content-Type', 'text/csv');
+		$response->setHttpHeader('Content-Disposition', 'attachment; filename="GoogleAppsData_upload.csv"');
+
+  }
+
+	public function executeUploadgoogleappsdata(sfWebRequest $request)
   {
 	$this->form = new UploadForm();
 	
@@ -33,6 +42,12 @@ class usersActions extends sfActions
       if ($this->form->isValid())
       {
         $file = $this->form->getValue('file');
+		
+		// FIXME: This should be in the model, not here
+		
+		
+		sfGuardUserProfilePeer::resetGoogleAppsAccountInfoForAll();
+		// FIXME: We set the field has_googleapps_account to false for all users assuming that the uploaded file is correct
 		
 		$row = 0;
 		$this->imported=0;
@@ -61,27 +76,39 @@ class usersActions extends sfActions
 			{
 				$this->imported++;
 
-				$user=sfGuardUserProfilePeer::retrieveByUsername($username);
-				if($user)
+				if($user=sfGuardUserProfilePeer::retrieveByUsername($username))
 				{
 					if ($user->getProfile()->getFirstname()!=$firstname)
 					{
 						$check = new Check(false, sprintf($this->getContext()->getI18N()->__('first name (%s) do not match with the one stored in the DB (%s)'), $firstname, $user->getProfile()->getFirstname()), $username);
-						$this->checks[]=$check;
-						continue;
 					}
 					if ($user->getProfile()->getLastname()!=$lastname)
 					{
 						$check = new Check(false, sprintf($this->getContext()->getI18N()->__('last name (%s) do not match with the one stored in the DB (%s)'), $lastname, $user->getProfile()->getLastname()), $username);
-						$this->checks[]=$check;
-						continue;
+					}
+					$check = new Check(true, 'user found', $username);
+						
+					if ($firstlogin==0)
+					{
+						$user->getProfile()->setGoogleappsAccountStatus(1);
 					}
 					else
 					{
-						$check = new Check(true, 'user found', $username);
-						$user->getProfile()->setHasGoogleAppsAccount(true);
-						$user->getProfile()->save();
+						$user->getProfile()->setGoogleappsAccountTemporaryPassword(null);
+						$user->getProfile()->setGoogleappsAccountStatus(8);
 					}
+					if (Generic::date_difference_from_now($lastlogin) <= 30)
+					{
+						// last login is more recent than30 days
+						$user->getProfile()->setGoogleappsAccountStatus(9);
+					}
+					
+					$user->getProfile()->save();
+					
+				}
+				elseif($user=ReservedUsernamePeer::retrieveByUsername($username))
+				{
+					$check = new Check(true, 'found in the reserved user list', $username);
 				}
 				else
 				{
@@ -105,7 +132,16 @@ class usersActions extends sfActions
   public function executeRunuserchecks(sfWebRequest $request)
   {
 	$this->user = $this->getUser();
-	$this->userlist = sfGuardUserProfilePeer::retrieveAllUsers();
+	
+	if($request->hasParameter('id'))
+	{
+		$this->forward404Unless($this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id')));
+		$this->userlist=array($this->current_user);
+	}
+	else
+	{
+		$this->userlist = sfGuardUserProfilePeer::retrieveAllUsers();
+	}
 	
 	$this->checks=array();
 	$this->ok=0;
@@ -144,16 +180,34 @@ class usersActions extends sfActions
 		$this->forward404Unless($this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id')));
 		
 		$this->current_user->updateQuotaInfo();
-/*
-		$this->getUser()->setFlash('notice',
-			$this->getContext()->getI18N()->__('Quota information has been updated.')
-			);
-*/		
 		return $this->renderPartial('quotas', array('current_user'=>$this->current_user));
 	
 	}  
 
-  public function executeUndelete(sfWebRequest $request)
+  public function executeGoogleapps(sfWebRequest $request)
+	{
+		
+		$this->forward404Unless($this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id')));
+		
+		if ($request->getParameter('todo')=='enable')
+		{
+			$this->current_user->GoogleappsEnable();
+		}
+		elseif($request->getParameter('todo')=='disable')
+		{
+			$this->current_user->GoogleappsDisable();
+		}
+		else
+		{
+			$this->forward404();
+		}
+
+
+		return $this->renderPartial('googleapps', array('current_user'=>$this->current_user));
+	
+	}  
+
+	public function executeUndelete(sfWebRequest $request)
 	{
 		$this->forward404Unless($request->isMethod('POST'));
 		$this->forward404Unless($this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id')));
@@ -168,7 +222,7 @@ class usersActions extends sfActions
 	public function executeSetsortlistpreference(sfWebRequest $request)
 	{
 		$sortby = $request->getParameter('sortby');
-		$this->forward404Unless(in_array($sortby, array('', 'gender', 'username', 'role', 'firstname', 'lastname', 'blocks', 'files')));
+		$this->forward404Unless(in_array($sortby, array('', 'gender', 'username', 'role', 'firstname', 'lastname', 'blocks', 'files', 'alerts')));
 		$this->getUser()->setAttribute('sortby', $sortby);
 		$this->redirect('users/list');
 	}
@@ -279,8 +333,9 @@ class usersActions extends sfActions
 				$this->current_user->setDiskSetSoftBlocksQuota($params['soft_blocks_quota']);
 				$this->current_user->setDiskSetHardBlocksQuota($params['hard_blocks_quota']);
 				$this->current_user->setDiskSetSoftFilesQuota($params['soft_files_quota']);
-				$this->current_user->setDiskSetSoftFilesQuota($params['hard_files_quota']);
+				$this->current_user->setDiskSetHardFilesQuota($params['hard_files_quota']);
 				$this->current_user->getSfGuardUser()->setUsername($params['username']);
+				$this->current_user->setSystemAlerts('');
 				$this->current_user->save();
 				
 				$this->getUser()->setFlash('notice',
@@ -318,6 +373,7 @@ class usersActions extends sfActions
 		)
 	);
 	
+
 	
   }
 

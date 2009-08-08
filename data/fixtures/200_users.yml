@@ -13,6 +13,9 @@ sfGuardUserProfile:
     disk_used_blocks: 3000
     disk_used_files: 2500
     disk_updated_at: <?php echo time() . "\n" ?>
+    googleapps_account_approved_at: <?php echo time() . "\n" ?>
+    googleapps_account_temporary_password: 213978
+
   test.teacher:
     user_id:        john.test
     first_name:     John
@@ -27,6 +30,8 @@ sfGuardUserProfile:
     disk_used_blocks: 3000
     disk_used_files: 2500
     disk_updated_at: <?php echo time() . "\n" ?>
+    googleapps_account_approved_at: <?php echo time() . "\n" ?>
+    
   francesco:
     user_id:        francesco
     first_name:     Francesco
@@ -53,6 +58,7 @@ sfGuardUserProfile:
     disk_used_blocks: 4200
     disk_used_files: 2500
     disk_updated_at: <?php echo time() . "\n" ?>
+    googleapps_account_approved_at: null
 
   bianca:
     user_id:        bianca
@@ -60,6 +66,8 @@ sfGuardUserProfile:
     last_name:      Brindisi
     gender:            F
     role_id:       doc
+    system_alerts: test alert
+    googleapps_account_approved_at: null
   juri:
     user_id:        juri
     first_name:     Juri
@@ -80,4 +88,3 @@ sfGuardUserProfile:
     gender:            F
     role_id:       dsga
   
-

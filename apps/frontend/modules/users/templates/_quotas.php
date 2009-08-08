@@ -11,7 +11,11 @@
 	</tr>
 	<tr>
 		<th><label>Last check</label></th>
-		<td><?php echo $current_user->getDiskUpdatedAt() ?> ---
+		<td><?php echo $current_user->getDiskUpdatedAt() ?></td>
+	</tr>
+	<tr>
+		<th><label><?php echo __('Actions') ?></label></th>
+		<td>
 		<?php
 			echo link_to_remote(
 				__('Check now'),
@@ -20,7 +24,6 @@
 					'url'=>'users/updatequota?id=' . $current_user->getUserId())
 		)
 		?>
-		
 		</td>
 	</tr>
 </table>
