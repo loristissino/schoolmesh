@@ -27,9 +27,15 @@ class usersActions extends sfActions
 		$this->userlist=sfGuardUserProfilePeer::retrieveUsersForGoogleApps();
 		$response = $this->getContext()->getResponse();
 		$response->setHttpHeader('Content-Type', 'text/csv');
-		$response->setHttpHeader('Content-Disposition', 'attachment; filename="GoogleAppsData_upload.csv"');
-
+		$response->setHttpHeader('Content-Disposition', 'attachment; filename="GoogleAppsData_upload_'. date('Ymd') . '.csv"');
   }
+
+	public function executeUpload(sfWebRequest $request)
+	{
+		$this->form = new UploadForm();
+		$this->what=$request->getParameter('what');
+		$this->forward404Unless(in_array($this->what, array('classes', 'students', 'teachers', 'appointments', 'others')));
+	}
 
 	public function executeUploadgoogleappsdata(sfWebRequest $request)
   {
@@ -60,6 +66,14 @@ class usersActions extends sfActions
 		{
 			$row++;
 			list($username, $firstname, $lastname, $lastlogin, $firstlogin, $quota)=$data;
+			
+			// NOTE
+			/*
+			If you ask Google to avoid the 'Accept Terms of Service' page, the field 'firstlogin' will not be set
+			Since this is my case,  I'll use lastlogin to see if the account is activated.
+
+			*/
+			
 			if ($row==1)
 			{
 					
@@ -88,7 +102,7 @@ class usersActions extends sfActions
 					}
 					$check = new Check(true, 'user found', $username);
 						
-					if ($firstlogin==0)
+					if ($lastlogin==0)
 					{
 						$user->getProfile()->setGoogleappsAccountStatus(1);
 					}
@@ -97,6 +111,7 @@ class usersActions extends sfActions
 						$user->getProfile()->setGoogleappsAccountTemporaryPassword(null);
 						$user->getProfile()->setGoogleappsAccountStatus(8);
 					}
+					
 					if (Generic::date_difference_from_now($lastlogin) <= 30)
 					{
 						// last login is more recent than30 days

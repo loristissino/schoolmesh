@@ -7,7 +7,7 @@ $students=file("/var/schoolmesh/data/fixtures/studenti.csv");
 foreach($students as $student)
    {   
 		$ms= new Student();
-		list($ms->firstname,$ms->lastname,$ms->username,$ms->gender,$ms->schoolclass)=explode(',',$student);
+		list($ms->firstname,$ms->middlename,$ms->lastname,$ms->username,$ms->gender,$ms->pronunciation,$ms->schoolclass)=explode(',',$student);
 		array_push($mystudents, $ms);
 	}
 
@@ -44,8 +44,10 @@ sfGuardUserProfile:
   <?php echo $ms->username ?>:
     user_id:        <?php echo $ms->username ."\n" ?>
     first_name:   <?php echo $ms->firstname . "\n" ?>
+    middle_name:   <?php echo $ms->middlename . "\n" ?>
     last_name:    <?php echo $ms->lastname . "\n" ?>
     gender:            <?php echo $ms->gender . "\n" ?>
+    pronunciation:            <?php echo $ms->pronunciation . "\n" ?>
     role_id:       stu
     disk_set_soft_blocks_quota: 3000
     disk_set_hard_blocks_quota: 4000

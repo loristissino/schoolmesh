@@ -91,14 +91,6 @@ subnet:
     column:              id
     with_wildcard_routes: true
 
-track:
-  class: sfPropelRouteCollection
-  options:
-    model:               Track
-    module:              track
-    prefix_path:         track
-    column:              id
-    with_wildcard_routes: true
 
 role:
   class: sfPropelRouteCollection

@@ -87,6 +87,7 @@ workstation:
     column:              id
     with_wildcard_routes: true
 
+
 #plansandreports:
 #  class: sfPropelRouteCollection
 #  options:
