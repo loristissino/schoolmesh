@@ -4,7 +4,7 @@
 
 Procedura provvisoria.
 
-1. [Backup dei dati]
+1. [ImpostazioneIniziale Prima di iniziare]
 
 2. [MySQL Configurazione di MySql]
 
