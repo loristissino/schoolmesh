@@ -1,0 +1,14 @@
+"type","first_name","middle_name","last_name","gender","birthdate","birthplace","email","import_code","group"
+"T","Loris",,"Tissino","M",1968-02-27,"Francia","loris.tissino@mattiussilab.net","TSSLRS","dipinfo"
+"T","Bianca",,"Brindisi","F",,,,"BRNBNC","diplingue"
+"T","Francesco","Pietro","Genova","M",1965-12-30,"Valvasone (UD)","francesco.genova@istruzione.it","GNVFRN","dipinfo"
+"O","Pasquale",,"De Rolandis","M",1961-10-22,"Foggia",,"DRLPSQ",
+"T","Gianpiero",,"Bergamo","M",,,,,
+"T","Flavia",,"Gemona","F",,,,,"dipmatfis"
+"T","John",,"Test","M",1965-12-31,"Pordenone","john.test@istruzione.it","TCHTST","dipastro"
+"S","Alice",,"Alessandrini","F",,,,"LSSLCA","4AP"
+"S","Bob",,"Bernardi","M",,,,"BRNBBO",
+"T","Bebé",,"Łasøw","M",,,,"LSOBBE",
+"S","Qualcuno",,"Cognome Molto Lungo","F",,,,"CGMLMS",
+"T","Mario",,"Rossi","M",,,,"RSSMRO",
+"T","Giorgio",,"Simonacci","M",,,,"asdd",

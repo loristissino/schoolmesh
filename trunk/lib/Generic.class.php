@@ -53,4 +53,20 @@ class Generic{
 			
 			return floor((time() - mktime(0, 0, 0, substr($string,4,2), substr($string,6,2), substr($string,0,4)))/86400);
 		}
-}
+		
+		static public function transliterate($text)
+		{
+		  $text = iconv("UTF-8", "US-ASCII//TRANSLIT", $text);
+		  return $text;
+		}
+
+		static public function slugify($text)
+		{
+		  $text=self::transliterate($text);
+		  $text = str_replace(' ', '', $text);
+		  $text = strtolower(trim($text, '-'));
+		return $text;  
+		}
+
+
+	}

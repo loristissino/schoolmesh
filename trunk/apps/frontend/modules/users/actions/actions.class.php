@@ -34,7 +34,36 @@ class usersActions extends sfActions
 	{
 		$this->form = new UploadForm();
 		$this->what=$request->getParameter('what');
-		$this->forward404Unless(in_array($this->what, array('classes', 'students', 'teachers', 'appointments', 'others')));
+		$this->forward404Unless(in_array($this->what, array('classes', 'users','appointments')));
+		
+		if ($request->isMethod('post'))
+		{
+		  $this->form->bind($request->getParameter('info'), $request->getFiles('info'));
+		  
+		  if ($this->form->isValid())
+		  {
+			$file = $this->form->getValue('file');
+			
+			switch($this->what)
+			{
+			
+				case('classes'):
+				{
+					$this->checks=SchoolclassPeer::importFromCSVFile($file->getTempName());
+					break;
+				}
+				
+				case('users'):
+				{
+					$this->checks=sfGuardUserProfilePeer::importFromCSVFile($file->getTempName());
+					break;
+				}
+				
+			}
+		}
+		
+		
+		}
 	}
 
 	public function executeUploadgoogleappsdata(sfWebRequest $request)
@@ -65,6 +94,12 @@ class usersActions extends sfActions
 		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
 		{
 			$row++;
+			if (sizeof($data)<6)
+			{
+				$check = new Check(false, 'not enough data', sprintf('Line %d: ', $row));
+				continue;
+			}
+			
 			list($username, $firstname, $lastname, $lastlogin, $firstlogin, $quota)=$data;
 			
 			// NOTE
@@ -316,7 +351,7 @@ class usersActions extends sfActions
 			{
 				$params = $this->userform->getValues();
 				$this->current_user=sfGuardUserProfilePeer::retrieveByPk($params['id']);
-
+/*
 				if (!$this->current_user->isValidUsername($params['username']))
 				{
 					$this->getUser()->setFlash('error',
@@ -324,7 +359,7 @@ class usersActions extends sfActions
 					);
 					$this->redirect('users/edit?id='. $params['id']);
 				}
-				
+	*/			
 				if($this->current_user->getIsDeletable()&&$request->getParameter('delete'))
 				{
 					$this->current_user->setIsDeleted(true);
@@ -335,23 +370,27 @@ class usersActions extends sfActions
 					$this->current_user->setIsDeleted(false);
 				}
 
-				$this->current_user->setPosixUid($params['posix_uid']);
-				$this->current_user->setFirstName($params['first_name']);
-				$this->current_user->setMiddleName($params['middle_name']);
-				$this->current_user->setLastName($params['last_name']);
-				$this->current_user->setPronunciation($params['pronunciation']);
-				$this->current_user->setGenderChoice($params['gender']);
-				$this->current_user->setEmail($params['email']);
-				$this->current_user->setBirthdate($params['birthdate']);
-				$this->current_user->setRoleId($params['main_role']);
-				$this->current_user->setEmailState($params['email_state']);
-				$this->current_user->setDiskSetSoftBlocksQuota($params['soft_blocks_quota']);
-				$this->current_user->setDiskSetHardBlocksQuota($params['hard_blocks_quota']);
-				$this->current_user->setDiskSetSoftFilesQuota($params['soft_files_quota']);
-				$this->current_user->setDiskSetHardFilesQuota($params['hard_files_quota']);
-				$this->current_user->getSfGuardUser()->setUsername($params['username']);
-				$this->current_user->setSystemAlerts('');
-				$this->current_user->save();
+				$this->current_user
+				->setPosixUid($params['posix_uid'])
+				->setFirstName($params['first_name'])
+				->setMiddleName($params['middle_name'])
+				->setLastName($params['last_name'])
+				->setPronunciation($params['pronunciation'])
+				->setGenderChoice($params['gender'])
+				->setEmail($params['email'])
+				->setBirthdate($params['birthdate'])
+				->setBirthplace($params['birthplace'])
+				->setRoleId($params['main_role'])
+				->setEmailState($params['email_state'])
+				->setDiskSetSoftBlocksQuota($params['soft_blocks_quota'])
+				->setDiskSetHardBlocksQuota($params['hard_blocks_quota'])
+				->setDiskSetSoftFilesQuota($params['soft_files_quota'])
+				->setDiskSetHardFilesQuota($params['hard_files_quota'])
+				->setSystemAlerts('')
+				->save();
+				$this->current_user
+				->getSfGuardUser()->setUsername($params['username'])
+				->save();
 				
 				$this->getUser()->setFlash('notice',
 					$this->getContext()->getI18N()->__('User information updated.') . ' ' .
@@ -380,6 +419,7 @@ class usersActions extends sfActions
 			'email'=>$this->current_user->getEmail(),
 			'email_state'=>$this->current_user->getEmailState(),
 			'birthdate' => $this->current_user->getBirthdate(),
+			'birthplace' => $this->current_user->getBirthplace(),
 			'main_role'=>$this->current_user->getRoleId(),
 			'soft_blocks_quota' => $this->current_user->getDiskSetSoftBlocksQuota(),
 			'hard_blocks_quota' => $this->current_user->getDiskSetHardBlocksQuota(),
@@ -402,9 +442,9 @@ class usersActions extends sfActions
 		  $current_sfuser->setUsername($params['username']);
 		  $current_sfuser->save();
 		  $current_user = new sfGuardUserProfile();
-		  $current_user->setUserId($current_sfuser->getId());
-		  $current_user->setRoleId($params['main_role']);  
-		  $current_user->save();
+		  $current_user->setUserId($current_sfuser->getId())
+		  ->setRoleId($params['main_role'])
+		  ->save();
 
 		  $this->redirect('users/edit?id='.$current_user->getUserId());
 		}

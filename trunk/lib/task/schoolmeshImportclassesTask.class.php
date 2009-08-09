@@ -41,66 +41,18 @@ EOF;
 	
 	$file=$arguments['file'];
 	
+	$file='./'. $file;
+	
 	$this->logSection('import-classes', 'Importing classes from '. $file . '.');
 	
-	if (!is_readable($file))
-		{
-			$this->log($this->formatter->format(sprintf('File %s is not readable', $file), 'ERROR'));
-			return 1;
-		}
-
-	$row = 0;
-	$imported=0;
-	$skipped=0;
+	$checks=SchoolclassPeer::importFromCSVFile($file);
 	
-	$handle = fopen($file, "r");
-	while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-		//$num = count($data);
-		//echo "$num fields in line $row:\n";
-		
-
-		$row++;
-
-		if ($row==1)
-			{
-				// We could check whether the field names are correct...
-			continue;  // we skip the first line
-			}
-
-		list($id, $grade, $section, $track, $description)=$data; 
-
-		$this->log($this->formatter->format(sprintf('Importing class %s', $id), 'COMMENT'));
-		
-		$mytrack = TrackPeer::retrieveByShortcut($track);
-		if(!$mytrack)
-			{
-				$this->log($this->formatter->format(sprintf('   Track %s does not exist, skipping', $track), 'ERROR'));
-				$skipped++;
-				continue;
-			}
-
-		$schoolclass=SchoolclassPeer::retrieveByPK($id);
-		if($schoolclass)
-			{
-				$this->log($this->formatter->format(sprintf('   Class %s already exists, skipping', $id), 'ERROR'));
-				$skipped++;
-				continue;
-			}
-
-		$schoolclass=new Schoolclass();
-		$schoolclass->setId($id);
-		$schoolclass->setGrade($grade);
-		$schoolclass->setSection($section);
-		$schoolclass->setTrack($mytrack);
-		$schoolclass->setDescription($description);
-		$schoolclass->save();
-
-		$imported++;
-		$this->log($this->formatter->format(sprintf('   Class %s imported', $id), 'INFO'));
+	$this->logSection('import-classes', 'Imported classes from '. $file . '.');
+	
+	foreach($checks as $check)
+	{
+			$this->log($this->formatter->format(sprintf('File %s is not readable', $file), $check->getIsPassed()? 'COMMENT':'ERROR'));
 	}
-	fclose($handle);
-
-	$this->log($this->formatter->format(sprintf('Imported correctly %d classes, skipped %d', $imported, $skipped), 'COMMENT'));
 	
   }
 }
