@@ -1,6 +1,6 @@
-#summary Come installare SchoolMesh
+#summary Guida all'installazione e all'aggiornamento
 
-= Come installare SchoolMesh
+=Come installare SchoolMesh
 
 Procedura provvisoria.
 
