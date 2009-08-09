@@ -1,16 +1,16 @@
 #summary Guida all'installazione e all'aggiornamento
 
-=Come installare SchoolMesh
+=Come installare SchoolMesh=
 
 Procedura provvisoria.
 
-1. ...
+1. [Backup dei dati]
 
 2. [MySQL Configurazione di MySql]
 
 3. [ApacheSSL Configurazione di Apache]
 
-
+4. Esecuzione di questo script per scaricare e installare SchoolMesh:
 
 {{{
 #!/bin/bash
