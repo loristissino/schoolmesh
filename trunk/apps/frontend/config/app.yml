@@ -13,6 +13,10 @@ all:
     posix_basefolder: Mattiussi  # this folder contains symbolic links and other stuff; should be present in each homedir
     teachers_default_posix_group: docenti
     students_default_posix_group: allievi
+    class_teachersteam_prefix: cdc  # for the new team of teachers automatically created, and the name will be prefixed with this
+    class_teachersteam_name: Consiglio di classe
+    googleapps_domain: mattiussilab.net
+    googleapps_url: http://webmail.mattiussilab.net
 
   ldap:
     host: localhost
