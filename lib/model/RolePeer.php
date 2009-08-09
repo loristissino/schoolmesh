@@ -26,5 +26,17 @@ class RolePeer extends BaseRolePeer
 	
 		
 	}
+
+	public static function retrieveByPosixName($value)
+	{
+	$c=new Criteria();
+	$c->add(self::POSIX_NAME, $value);
+	$t = self::doSelectOne($c);
+	return $t;
 	
+		
+	}
+
+
+
 }

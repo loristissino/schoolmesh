@@ -36,14 +36,17 @@
 <p><?php echo __(SentencePeer::getSentence('users_bulk_upload_'. $what)) ?></p>
 
 <p><?php echo __('The file should have the following format:') ?></p>
+<div class="example">
 <pre>
 <?php echo __(SentencePeer::getSentence('users_bulk_upload_'. $what . '_format')) . "\n"?>
 <?php echo __(SentencePeer::getSentence('users_bulk_upload_'. $what . '_example')) ?>
 </pre>
+</div>
 
 <p><?php echo __(SentencePeer::getSentence('ga_csv_upload_after')) ?></p>
 
-<form action="<?php echo url_for('users/uploadgoogleappsdata') ?>" method="POST" enctype="multipart/form-data">
+<form action="<?php echo url_for('users/upload?what='.$what) ?>" method="POST" enctype="multipart/form-data">
+
   <table>
     <?php echo $form ?>
 	<tr>

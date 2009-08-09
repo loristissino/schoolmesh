@@ -26,6 +26,13 @@
 <h2><?php echo __('Basic information') ?></h2>
 
   <table>
+	<tr>
+		<th><label><?php echo __('Import code') ?></label></th>
+		<td>
+			<?php echo $current_user->getImportCode() ?>
+		</td>
+	</tr>
+  
     <?php echo $userform ?>
 	<tr>
       <td colspan="2">

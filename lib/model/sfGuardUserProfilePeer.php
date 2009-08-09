@@ -18,6 +18,13 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	return $t;
 	}
 
+	public static function retrieveByImportCode($importCode)
+	{
+	$c=new Criteria();
+	$c->add(self::IMPORT_CODE, $importCode);
+	$t = self::doSelectOne($c);
+	return $t;
+	}
 
 	public static function retrieveUsersForGoogleApps()
 	{
@@ -34,7 +41,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	{
 	$c = new Criteria();
 	$c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
-	$c->addJoin(RolePeer::ID, sfGuardUserProfilePeer::ROLE_ID);
+	$c->addJoin(sfGuardUserProfilePeer::ROLE_ID, RolePeer::ID, Criteria::LEFT_JOIN);
 	
 	if ($filter=='set')
 	{
@@ -87,6 +94,147 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		$statement = $connection->prepare($sql);
 		$statement->execute();
 	}
+
+	public static function importFromCSVFile($file)
+	{
+		$checks=array();
+						
+		if (!is_readable($file))
+		{
+			$checks[] = new Check(false, 'file not readable', $file);
+			return $checks;
+		}
+
+		$row = 0;
+		$imported=0;
+		$skipped=0;
+		
+		$handle = fopen($file, "r");
+		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+			//$num = count($data);
+			//echo "$num fields in line $row:\n";
+			
+
+			$row++;
+
+			if ($row==1)
+				{
+					// We could check whether the field names are correct...
+				continue;  // we skip the first line
+				}
+
+			if (sizeof($data)!=10)
+			{
+				$checks[]=new Check(false, 'Invalid data', sprintf('Line %d: ', $row));
+				continue;
+			}
+
+			list($type,$first_name,$middle_name,$last_name,$gender,$birthdate,$birthplace,$email,$import_code,$group)=$data;
+			
+			if ($import_code=='')
+			{
+				$checks[]=new Check(false, 'Import code not set', sprintf('Line %d: ', $row));
+				continue;
+			}
+			
+			$profile=sfGuardUserProfilePeer::retrieveByImportCode($import_code);
+			
+			if($profile)
+			{
+				if ($profile->getFirstname()!=$first_name or $profile->getLastname()!=$last_name)
+				{
+					$checks[]=new Check(false, sprintf('name does not match («%s %s» != «%s %s»)', 
+						$profile->getFirstname(), $profile->getLastname(),
+						$first_name, $last_name),
+						 sprintf('Line %d: ', $row)
+						); 
+				}
+				else
+				{
+					$profile->updateMiddlename($middle_name)
+					->setGender($gender)
+					->setBirthplace($birthplace)
+					->setBirthdate($birthdate)
+					->updateEmail($email)
+					->save();
+					$checks[]=new Check(true, sprintf('updated info for %s (%s)', 
+						$profile->getFullName(), $profile->getSfGuardUser()->getUsername()),
+						 sprintf('Line %d: ', $row)
+						); 
+				}
+				
+			}
+			
+			else
+			{
+				$profile=new sfGuardUserProfile();
+				$profile
+				->setFirstName($first_name)
+				->setMiddleName($middle_name)
+				->setLastName($last_name)
+				->setGender($gender)
+				->setBirthplace($birthplace)
+				->setBirthdate($birthdate)
+				->setEmail($email)
+				->setImportCode($import_code);
+				
+				$typeok=false;
+				switch($type)
+				{
+					case('T'):
+						// found a teacher
+						$role=RolePeer::retrieveByPosixName(sfConfig::get('app_config_teachers_default_posix_group'));
+						$profile->setRole($role);
+						$typeok=true;
+						break;
+					
+					case('S'):
+						// found a student
+						$role=RolePeer::retrieveByPosixName(sfConfig::get('app_config_students_default_posix_group'));
+						$profile->setRole($role);
+						$typeok=true;
+						break;
+					
+					case('O'):
+						// found another kind of user
+						$typeok=true;
+						break;
+						
+					$checks[]=new Check(false, 'invalid type', sprintf('Line %d: ', $row));
+				}
+
+				if($typeok)
+				{
+					$user = new sfGuardUser();
+					$user
+					->setUsername($profile->findGoodUsername())
+					->save();
+					$profile
+					->setUserId($user->getId())
+					->save();
+
+					$checks[]=new Check(true, sprintf('created user %s (%s)', $profile->getFullName(), $user->getUsername()), sprintf('Line %d: ', $row));
+				}
+				else
+				{
+					$checks[]=new Check(false, 'type not ok', sprintf('Line %d: ', $row));
+				}
+				
+				
+			}
+			
+			
+			
+			
+			$imported++;
+//			$checks[] = new Check(true, sprintf('Class «%s» imported', $id), sprintf('Line %d: ', $row));
+		}
+		
+		fclose($handle);
+		return $checks;
+		
+	}
+
 
 
 }

@@ -15,15 +15,37 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		protected $checks=array();
 		
 		
+		public function findGoodUsername()
+		{
+			$try=Generic::slugify($this->getFirstName().'.'.$this->getLastname());
+			
+			if ($this->getUsernameIsValid($try))
+			{
+				return $try;
+			}
+			
+			else
+			{
+				$try='u'. date('U').rand(100000,900000);
+				
+			}
+			
+			return $try;
+					
+		}
+		
+		
 		public function addSystemAlert($alert)
 		{
 			$previous= ($this->getSystemAlerts()=='') ? '' : $this->getSystemAlerts() . ' - ';
 			$this->setSystemAlerts($previous.$alert);
+			return $this;
 		}
 		
 		public function addCheck($check)
 		{
 			$this->checks[]=$check;
+			return $this;
 		}
 
 		public function getChecks()
@@ -34,6 +56,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		public function setCountFailedChecks($value)
 		{
 			$this->failedChecks=$value;
+			return $this;
 		}
 		
 		public function getCountFailedChecks()
@@ -44,6 +67,25 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		public function incCountFailedChecks()
 		{
 			$this->failedChecks++;
+			return $this;
+		}
+
+		public function updateMiddlename($middlename)
+		{
+			if ($this->getMiddlename()=='')
+			{
+				$this->setMiddlename($middlename);
+			}
+			return $this;
+		}
+			
+		public function updateEmail($email)
+		{
+			if ($this->getEmail()=='')
+			{
+				$this->setEmail($email);
+			}
+			return $this;
 		}
 
 		public function getGenderChoice()
@@ -64,6 +106,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 				case 0: $this->setGender('F'); break;
 				default: $this->setGender(null);
 			}
+			return $this;
 		}
 		public function __toString()
 		{
@@ -126,26 +169,6 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
         {
             return $this->getGender()=='M' ? 1: 0;
         }
-
-
-		public function isValidUsername($username)
-		
-		{
-			
-			if ($username==$this->getUsername())
-			{
-				return true;
-			}
-				
-			if(!($user=ReservedUsernamePeer::retrieveByUsername($username) or sfGuardUserProfilePeer::retrieveByUsername($username)))
-			
-			{
-				return true;
-			}
-			
-			return false;
-			
-		}
 
 
 		protected function getGoogleappsAccountAlerts()
@@ -293,16 +316,49 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		}
 
 
-		public function getUsernameIsValid()
+		public function getUsernameIsAlreadyUsed($username, $checkself=true)
+		
 		{
+
+			if ($checkself && ($username==$this->getUsername()))
+			{
+				return false;
+			}
+				
+			if(ReservedUsernamePeer::retrieveByUsername($username))
+			{
+				return true;
+			}
 			
-			$username=ReservedUsernamePeer::retrieveByUsername($this->getUsername());
-			if ($username)
+			if(sfGuardUserProfilePeer::retrieveByUsername($username))
+			
+			{
+				return true;
+			}
+			
+			return false;
+			
+		}
+
+
+		public function getUsernameIsValid($try='')
+		{
+
+			if ($try!='')
+			{
+				$username=$try;
+			}
+			else
+			{
+				$username=$this->getUsername();
+			}
+			
+			if ($this->getUsernameIsAlreadyUsed($username, false))
 			{
 				return false;
 			}
 			
-			if (preg_match('/^[a-z][a-z0-9\.]{3,19}$/', $this->getUsername()))
+			if (preg_match('/^[a-z][a-z0-9\.]{3,19}$/', $username))
 			{
 				return true;
 			}
@@ -324,6 +380,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 				{
 					$checks[]=new Check(false, 'username is not valid', $this->getFullName());
 					$this->addSystemAlert('username not valid');
+					$this->save();
 					return $checks;
 				}
 			

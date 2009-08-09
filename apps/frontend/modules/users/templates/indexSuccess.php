@@ -21,17 +21,11 @@
 <h3><?php echo __('System administration') ?></h3>
 
 	<ul class="sf_admin_actions">
-	<li class="sf_admin_action_uploadcsv">
-		<?php echo link_to(__('Upload teachers'), url_for('users/upload?what=teachers'), array('title'=>__(SentencePeer::getSentence('users_bulk_upload_teachers'))))?>
-	</li><br />
 		<li class="sf_admin_action_uploadcsv">
 		<?php echo link_to(__('Upload classes'), url_for('users/upload?what=classes'), array('title'=>__(SentencePeer::getSentence('users_bulk_upload_classes'))))?>
 	</li><br />
 	<li class="sf_admin_action_uploadcsv">
-		<?php echo link_to(__('Upload students'), url_for('users/upload?what=students'), array('title'=>__(SentencePeer::getSentence('users_bulk_upload_students'))))?>
-	</li><br />
-	<li class="sf_admin_action_uploadcsv">
-		<?php echo link_to(__('Upload other users'), url_for('users/upload?what=others'), array('title'=>__(SentencePeer::getSentence('users_bulk_upload_others'))))?>
+		<?php echo link_to(__('Upload users'), url_for('users/upload?what=users'), array('title'=>__(SentencePeer::getSentence('users_bulk_upload_users'))))?>
 	</li><br />
 	<li class="sf_admin_action_uploadcsv">
 		<?php echo link_to(__('Upload appointments'), url_for('users/upload?what=appointments'), array('title'=>__(SentencePeer::getSentence('users_bulk_upload_appointments'))))?>
