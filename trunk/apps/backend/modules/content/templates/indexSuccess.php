@@ -12,23 +12,34 @@
 <h2><?php echo __('Users and groups') ?></h2>
 
     <ul>
+       <li><?php echo link_to(__("Reserved usernames"), "@reserved_username") ?></li>	   
        <li><?php echo link_to(__("Teams"), "@team") ?></li>	   
        <li><?php echo link_to(__("Appointments"), "@appointment") ?></li>	   
        <li><?php echo link_to(__("Enrolments"), "@enrolment") ?></li>	   
     </ul>
 
+<h2><?php echo __('Symfony sfGuard') ?></h2>
 
-<h2><?php echo __('Stuff') ?></h2>
+    <ul>
+       <li><?php echo link_to(__("Groups"), "@sf_guard_group") ?></li>	   
+       <li><?php echo link_to(__("Users"), "@sf_guard_user") ?></li>	   
+       <li><?php echo link_to(__("Permissions"), "@sf_guard_permission") ?></li>	   
+    </ul>
+	
+
+<h2><?php echo __('Plans and reports') ?></h2>
+
+    <ul>
+       <li><?php echo link_to(__("General information items"), "@wpinfo_type") ?></li>	   
+       <li><?php echo link_to(__("Group of tools"), "@wptool_item_type") ?></li>	   
+       <li><?php echo link_to(__("Tool items"), "@wptool_item") ?></li>	   
+       <li><?php echo link_to(__("Item types"), "@wpitem_type") ?></li>	   
+    </ul>
+
+<h2><?php echo __('Network') ?></h2>
 
     <ul>
        <li><?php echo link_to(__("Workstations"), "@workstation") ?></li>	   
        <li><?php echo link_to(__("Subnets"), "@subnet") ?></li>	   
     </ul>
 
-<h2><?php echo __('Workplans') ?></h2>
-
-    <ul>
-       <li><?php echo link_to(__("WpinfoType"), "@wpinfo_type") ?></li>	   
-       <li><?php echo link_to(__("WptoolItemType"), "@wptool_item_type") ?></li>	   
-       <li><?php echo link_to(__("WpitemType"), "@wpitem_type") ?></li>	   
-    </ul>

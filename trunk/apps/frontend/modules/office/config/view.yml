@@ -1,2 +1,0 @@
-default:
-  stylesheets:    [global, default, fluid, schoolmesh]
