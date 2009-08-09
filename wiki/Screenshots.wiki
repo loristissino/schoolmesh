@@ -1,6 +1,6 @@
 #summary Have a look!
 
-= Some screenshots of the application.
+= Some screenshots of the application =
 
 == Workplans management ==
 
