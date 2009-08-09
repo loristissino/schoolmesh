@@ -347,13 +347,15 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			if ($try!='')
 			{
 				$username=$try;
+				$checkself=false;
 			}
 			else
 			{
 				$username=$this->getUsername();
+				$checkself=true;
 			}
 			
-			if ($this->getUsernameIsAlreadyUsed($username, false))
+			if ($this->getUsernameIsAlreadyUsed($username, $checkself))
 			{
 				return false;
 			}
