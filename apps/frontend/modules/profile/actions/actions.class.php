@@ -23,9 +23,14 @@ class profileActions extends sfActions
 
         $this->teams=$this->getUser()->getProfile()->getTeams();
 	
-   	$this->credentials=$this->getUser()->hasCredential('admin');
+  }
+
+  public function executeGoogleapps($request)
+  {
 	
   }
+
+
 }
 
 

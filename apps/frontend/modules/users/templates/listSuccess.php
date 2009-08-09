@@ -48,7 +48,7 @@
   <input type="checkbox" name="ids[]" value="<?php echo $user->getId() ?>" class="sf_admin_batch_checkbox" />
 </td>
 
-      <td><?php include_partial('gender', array('gender'=>$user->getGender())) ?><?php echo $user->getImportCode() ?></td>
+      <td><?php include_partial('gender', array('gender'=>$user->getGender())) ?></td>
       <td><?php echo $user->getUsername() ?></td>
       <td><?php echo $user->getRole() ?></td>
       <td><?php echo $user->getFirstName() ?></td>
