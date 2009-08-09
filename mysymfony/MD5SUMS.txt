@@ -1,2 +1,3 @@
-d4dfbf9019e755cb08f4fb4aa047a849  lib_vendor.tar.bz2
-b62d70b4baa2b68efa707c6a3c8b9425  plugins_sfTCPDFPlugin.tar.bz2
+d4dfbf9019e755cb08f4fb4aa047a849  lib_vendor20090809.tar.bz2
+b62d70b4baa2b68efa707c6a3c8b9425  plugins_sfTCPDFPlugin_20090809.tar.bz2
+f21d17ae2cd87ef0daf47e72ecd02ae7  usr_share_php_symfony_20090809.tar.bz2

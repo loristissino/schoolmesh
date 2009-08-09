@@ -75,6 +75,24 @@ class SchoolclassPeer extends BaseSchoolclassPeer
 			$schoolclass->setTrack($mytrack);
 			$schoolclass->setDescription($description);
 			$schoolclass->save();
+			
+			$teamname = sfConfig::get('app_config_class_teachersteam_prefix') . Generic::slugify($id);
+			$team = TeamPeer::retrieveByPosixName($teamname);
+			if($team)
+			{
+				$checks[] = new Check(true, sprintf('Team «%s» already exists', $team), sprintf('Line %d: ', $row));
+			}
+			else
+			{
+				$team = new Team();
+				$team
+				->setDescription(sfConfig::get('app_config_class_teachersteam_name') . ' ' . $id)
+				->setPosixName($teamname)
+				->save();
+				$checks[] = new Check(true, sprintf('Team «%s» created', $team), sprintf('Line %d: ', $row));
+				
+			}
+			
 
 			$imported++;
 			$checks[] = new Check(true, sprintf('Class «%s» imported', $id), sprintf('Line %d: ', $row));
