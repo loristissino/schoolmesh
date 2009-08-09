@@ -1,4 +1,4 @@
-# Have a look!
+#summary Have a look!
 
 = Some screenshots of the application.
 
