@@ -46,6 +46,9 @@ sfGuardUser:
     
 
 sfGuardPermission:
+  superadmin:
+    name:           superadmin
+    description:   Amministrazione di backend
   admin:
     name:           admin
     description:    Amministrazione generale
@@ -74,6 +77,9 @@ sfGuardPermission:
   
 
 sfGuardGroup:
+  superadmin:
+    name:          superadmin
+    description:    Gruppo Amministratori del Backend
   admin:
     name:           admin
     description:    Gruppo Amministratori
@@ -99,8 +105,10 @@ sfGuardGroup:
     name:           officeteam
     description:   Segreteria didattica
 
-
 sfGuardGroupPermission:
+  superadmin:
+    group_id:       superadmin
+    permission_id:  superadmin
   admin:
     group_id:       admin
     permission_id:  admin
@@ -131,6 +139,9 @@ sfGuardUserGroup:
   bianca:
     group_id:       teacher
     user_id:        bianca
+  loris0:
+    group_id:      superadmin
+    user_id:        loris
   loris1:
     group_id:       teacher
     user_id:        loris

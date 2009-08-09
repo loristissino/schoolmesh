@@ -113,7 +113,7 @@ dev:
     cache:                  off
     no_script_name:         off
     etag:                   off
-#    enabled_modules: [ sfGuardGroup, sfGuardUser, sfGuardPermission, sfGuardAuth]
+    enabled_modules: [ sfGuardGroup, sfGuardUser, sfGuardPermission, sfGuardAuth]
 
 test:
   .settings:

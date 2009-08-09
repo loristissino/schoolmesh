@@ -1,3 +1,30 @@
+wptool_item:
+  class: sfPropelRouteCollection
+  options:
+    model:               WptoolItem
+    module:              wptool_item
+    prefix_path:         wptool_item
+    column:              id
+    with_wildcard_routes: true
+
+reserved_username:
+  class: sfPropelRouteCollection
+  options:
+    model:               ReservedUsername
+    module:              reserved_username
+    prefix_path:         reserved_username
+    column:              id
+    with_wildcard_routes: true
+
+track:
+  class: sfPropelRouteCollection
+  options:
+    model:               Track
+    module:              track
+    prefix_path:         track
+    column:              id
+    with_wildcard_routes: true
+
 wpitem_type:
   class: sfPropelRouteCollection
   options:

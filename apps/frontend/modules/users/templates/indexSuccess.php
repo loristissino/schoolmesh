@@ -24,9 +24,6 @@
 	<li class="sf_admin_action_uploadcsv">
 		<?php echo link_to(__('Upload teachers'), url_for('users/upload?what=teachers'), array('title'=>__(SentencePeer::getSentence('users_bulk_upload_teachers'))))?>
 	</li><br />
-		<li class="sf_admin_action_edit">
-		<?php echo link_to(__('Upload tracks'), url_for('track'), array('title'=>__('Manage tracks')))?>
-	</li><br />
 		<li class="sf_admin_action_uploadcsv">
 		<?php echo link_to(__('Upload classes'), url_for('users/upload?what=classes'), array('title'=>__(SentencePeer::getSentence('users_bulk_upload_classes'))))?>
 	</li><br />
@@ -44,7 +41,7 @@
 	</li><br />
 	</ul>
 
-
+<p><?php echo image_tag('star') ?> <?php echo __('Years, Roles, Subjects, Reserved usernames, and Tracks can be managed only in the backend application.') ?></p>
 
 <h3><?php echo __('Google Apps accounts') ?></h3>
 

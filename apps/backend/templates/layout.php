@@ -8,7 +8,7 @@
 
 <title>SchoolMesh - 
 	<?php if (!include_slot('title')): ?>
-	<?php echo __('An integrated environment for school applications'); ?>
+	<?php echo __('An integrated environment for school applications - Backend'); ?>
 	<?php endif; ?>
 </title>
 
@@ -24,27 +24,6 @@
 <?php endif ?>
 <div id="sf_admin_container">
 <?php echo $sf_content ?>
-</div>
-  <div id="navigation">
-    <ul>
-       <li><?php echo link_to(__('Home (backend administration)'), '@homepage') ?></li>	   
-    </ul>
-</div>
-
-<div class="info">
-<h3><?php echo __('Login info') ?></h3>
-<?php if ($sf_user->isAuthenticated()): ?>
-<p><?php echo sprintf(__('You are corrently logged in as %s.'), $sf_user->getProfile()->getFullname()) ?>
-<?php echo link_to(__('You may logout'), '@sf_guard_signout') ?></p>
-<?php else: ?>
-<p><?php echo __('You must login to access this area.') ?></p>
-<?php endif ?>
-</div>
-
-<div class="feedback">
-  <h3>Feedback</h3>
-    <p>Questa applicazione è in via di sviluppo. Si prega di segnalare qualsiasi anomalia inviando un'email
-    all'indirizzo <em><?php echo sfConfig::get('app_mail_webmaster'); ?></em>. Grazie.</p>
 </div>
 
 
