@@ -11,7 +11,11 @@
 	<tr>
 		<th><label><?php echo __('Account approved?') ?></label></th>
 		<td>
-		<?php echo $current_user->getGoogleappsAccountApprovedAt() ?>
+		<?php if($current_user->getGoogleappsAccountApprovedAt()): ?>
+			<?php echo sprintf(__('Approved on %s'), $current_user->getGoogleappsAccountApprovedAt()) ?>
+		<?php else: ?>
+			<?php echo __('Not approved') ?>
+		<?php endif ?>
 		</td>
 	</tr>
 <?php if($current_user->getGoogleappsAccountTemporaryPassword()): ?>
@@ -28,16 +32,17 @@
 		<?php if($current_user->getGoogleappsAccountApprovedAt()): ?>
 			<?php
 				echo link_to_remote(
-					__('Disable'),
+					__('Remove approval'),
 					array(
 						'update'=>'googleapps_update',
-						'url'=>url_for('users/googleapps?id=' . $current_user->getUserId() . '&todo=disable'))
+						'url'=>url_for('users/googleapps?id=' . $current_user->getUserId() . '&todo=disable'),
+						'confirm'=>sprintf(__('You are about to remove the approval for Google Apps account of «%s».'), $current_user->getUsername()) . ' ' . __('Are you sure?'))
 			)
 			?>
 		<?php else: ?>
 			<?php
 				echo link_to_remote(
-					__('Enable'),
+					__('Approve account'),
 					array(
 						'update'=>'googleapps_update',
 						'url'=>url_for('users/googleapps?id=' . $current_user->getUserId() . '&todo=enable'))

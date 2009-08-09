@@ -2,16 +2,16 @@
 <?php use_helper('Form') ?>
 <?php use_helper('Object') ?>
 
-<?php slot('title', __('Google Apps data upload')) ?>
+<?php slot('title', __('Data upload')) ?>
 	
 <?php slot('breadcrumbs',
 	link_to(__("User management"), 'users/index') . ' » ' .
-	__("Google Apps data upload")
+	__("Data upload")
 	)
 
-?><h1><?php echo __("Google Apps data upload")?></h1>
+?><h1><?php echo __("Data upload")?>: <?php echo __($what) ?></h1>
 
-<p><?php echo image_tag('googleapps_big.png') ?></p>
+<p><?php echo image_tag('users_big.png') ?></p>
 
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
@@ -28,12 +28,19 @@
 <p><?php echo image_tag($check->getImageTag(), 'title=' . __($check->getImageTitle())) ?> 
 <strong><?php echo $check->getContent() ?></strong>: <?php echo $check->getMessage() ?></p>
 <?php endforeach ?>
-<?php endif ?>
 
+<?php endif ?>
 
 <h2><?php echo __('Upload form') ?></h2>
 
-<p><?php echo __(SentencePeer::getSentence('ga_csv_upload')) ?></p>
+<p><?php echo __(SentencePeer::getSentence('users_bulk_upload_'. $what)) ?></p>
+
+<p><?php echo __('The file should have the following format:') ?></p>
+<pre>
+<?php echo __(SentencePeer::getSentence('users_bulk_upload_'. $what . '_format')) . "\n"?>
+<?php echo __(SentencePeer::getSentence('users_bulk_upload_'. $what . '_example')) ?>
+</pre>
+
 <p><?php echo __(SentencePeer::getSentence('ga_csv_upload_after')) ?></p>
 
 <form action="<?php echo url_for('users/uploadgoogleappsdata') ?>" method="POST" enctype="multipart/form-data">

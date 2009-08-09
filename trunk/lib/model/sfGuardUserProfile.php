@@ -293,14 +293,43 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		}
 
 
+		public function getUsernameIsValid()
+		{
+			
+			$username=ReservedUsernamePeer::retrieveByUsername($this->getUsername());
+			if ($username)
+			{
+				return false;
+			}
+			
+			if (preg_match('/^[a-z][a-z0-9\.]{3,19}$/', $this->getUsername()))
+			{
+				return true;
+			}
+			
+			return false;
+			
+		}
+
 		public function checkPosix()
 		{
 			$checks=array();
 			
 			$role=RolePeer::retrieveByPK($this->getRoleId());
+			
+			// First thing, we see if the username is less than 20 characters long and matches a Regexp
+			// Input form does this checks, but data could be changed in other manners (or badly uploaded)
+			
+			if (!$this->getUsernameIsValid())
+				{
+					$checks[]=new Check(false, 'username is not valid', $this->getFullName());
+					$this->addSystemAlert('username not valid');
+					return $checks;
+				}
+			
+			
 
-
-			// First, we see if there is a Posix account
+			// Second, we see if there is a Posix account
 
 			$userinfo = $this->posix_getpwnam($this->getUsername());
 						

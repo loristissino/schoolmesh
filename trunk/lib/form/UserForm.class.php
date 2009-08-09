@@ -51,7 +51,7 @@ Workflow::getEmailVerificationStates())),
 			$this->setValidators(array(
 				'username' => new sfValidatorAnd(array(
 					new sfValidatorString(array('trim' => true, 'min_length'=>4, 'max_length'=>20)),
-					new sfValidatorRegex(array('pattern'=>'/^[a-z.0-9]*$/')),
+					new sfValidatorRegex(array('pattern'=>'/^[a-z][a-z0-9\.]{3,19}$/')),
 			)),
 				'first_name' => new sfValidatorString(array('trim' => true)),
 				'old_username' => new sfValidatorString(),

@@ -212,7 +212,7 @@ class Workflow
 
 	static public function getGoogleappsAccountStatusses()
 	{
-		return array(0=>'not existent', 1=>'not activated', 8=>'not recently used', 9=>'recently used');
+		return array(null=>'unverified', 0=>'not existent', 1=>'not activated', 8=>'not recently used', 9=>'recently used');
 	}
 
 
