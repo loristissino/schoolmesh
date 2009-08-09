@@ -1,7 +1,10 @@
-#summary Configuration of MySQL server
+#summary Configurazione di MySQL server
 
 = MySQL =
 
 {{{
 $ sudo apt-get install mysql-server phpmyadmin
 }}}
+
+
+Continuerà...
