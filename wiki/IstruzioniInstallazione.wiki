@@ -6,16 +6,31 @@
 Procedura provvisoria.
 
 1. ...
+
 2. [MySQL Configurazione di MySql]
 
 3. [ApacheSSL Configurazione di Apache]
 
 
+
+{{{
 #!/bin/bash
 [[ -d /var/schoolmesh ]] || sudo mkdir /var/schoolmesh
+
+for file in /var/schoolmesh/config/databases.yml /var/schoolmesh/apps/frontend/config/app.yml
+	do
+		[[ -f "$file" ]] && cp -v "$file" "$file.backup"$(date +%s)
+	done
+
 sudo svn checkout http://schoolmesh.googlecode.com/svn/trunk/ /var/schoolmesh
 
 cd /var/schoolmesh/mysymfony
+
+for file in $(cat MD5SUMS.txt | gawk '{print $2}')
+	do
+		[[ -f "$file" ]] || wget http://....
+	done
+
 
 md5sum -c MD5SUMS.txt
 
@@ -25,19 +40,25 @@ if [[ $? -ne 0 ]]
 		exit 1
 fi
 
-
-cmp MD5SUMS.txt MD5SUMS_current.txt 2> /dev/null
+cmp MD5SUMS.txt MD5SUMS_current.txt > /dev/null 2>&1
 
 if [[ $? -ne 0 ]]
 	then
-		echo "Schoolmesh library updated..."
-		sudo tar xjf mysymfony.tar.bz2
-		sudo mv usr/share/php/symfony /usr/share/php/ 
+		echo "Schoolmesh library upgrade..."
+		sudo tar xjf usr_share_php_symfony*.tar.bz2
+		sudo mv usr/share/php/symfony /usr/share/php/
+		echo "Schoolmesh libvendor upgrade..."
+		sudo tar xjf lib_vendor*.tar.bz2
+		sudo mv lib/vendor /var/schoolmesh
+		echo "Schoolmesh PDF plugin upgrade..."
+		sudo tar xjf plugins_sfTCPDFPlugin*.tar.bz2
+		sudo mv plugins/sfTCPDFPlugin /var/schoolmesh/plugins
 	else
-		echo "Schoolmesh library already up to date..."
+		echo "Schoolmesh libraries already up to date..."
 fi
-
 
 sudo mv MD5SUMS.txt MD5SUMS_current.txt
 
 sudo chown -R www-data:www-data /var/schoolmesh
+
+}}}
