@@ -1,7 +1,6 @@
-#summary One-sentence summary of this page.
+#summary Come installare SchoolMesh
 
-= Come installare SchoolMesh =
-
+= Come installare SchoolMesh
 
 Procedura provvisoria.
 
@@ -30,7 +29,7 @@ cd /var/schoolmesh/mysymfony
 
 for file in $(cat MD5SUMS.txt | gawk '{print $2}')
 	do
-		[[ -f "$file" ]] || wget http://....
+		[[ -f "$file" ]] || wget http://schoolmesh.googlecode.com/files/$file
 	done
 
 
