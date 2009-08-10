@@ -1,4 +1,5 @@
 #summary Installazione/aggiornamento di SchoolMesh e delle librerie Symfony
+#labels Phase-Deploy
 
 = Setup di SchoolMesh =
 
