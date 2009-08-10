@@ -15,5 +15,5 @@ Segue una lista dei pacchetti che dovrebbero essere necessari in Ubuntu, in form
 Nota: probabilmente la lista non è completa - siamo in fase di test.
 
 {{{
-sudo apt-get install subversion gawk pandoc
+sudo apt-get install subversion gawk pandoc php5-cli
 }}}
