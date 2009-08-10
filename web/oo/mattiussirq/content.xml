@@ -410,70 +410,151 @@
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P15">Docente:<text:tab/>Prof. John Test</text:p>
 <text:p text:style-name="P15">Materia:<text:tab/>Astronomia</text:p>
-<text:p text:style-name="P15">Classe:<text:tab/>4AP</text:p>
+<text:p text:style-name="P15">Classe:<text:tab/>3AP</text:p>
 <text:p text:style-name="P16"/>						<text:p text:style-name="P9">Livelli di partenza rilevati</text:p>
-			<text:p text:style-name="P17">La classe è così così.</text:p>
-			<text:p text:style-name="P10">(compilato il 06/08/2009)</text:p>
+			<text:p text:style-name="P17">La classe è divisa in due gruppi con motivazioni molto diverse tra loro.</text:p>
+			<text:p text:style-name="P10">(compilato il 10/08/2009)</text:p>
 			<text:p text:style-name="P1" />
 										<text:p text:style-name="P9">Area di progetto</text:p>
-			<text:p text:style-name="P17">La classe sarà impegnata in un&#039;area di progetto con un lavoro commissionato dall&#039;Agenzia Spaziale Europea.</text:p>
-			<text:p text:style-name="P10">(compilato il 06/08/2009)</text:p>
+			<text:p text:style-name="P17">La classe non svolge l&#039;area di progetto.</text:p>
+			<text:p text:style-name="P10">(compilato il 10/08/2009)</text:p>
 			<text:p text:style-name="P1" />
 										<text:p text:style-name="P9">Attività extracurricolari</text:p>
 			<text:p text:style-name="P17">Progetto CLIL.</text:p>
-			<text:p text:style-name="P10">(compilato il 06/08/2009)</text:p>
+			<text:p text:style-name="P10">(compilato il 10/08/2009)</text:p>
 			<text:p text:style-name="P1" />
 										<text:p text:style-name="P9">Valutazione</text:p>
 			<text:p text:style-name="P17">Test scritti autovalutati, più compiti scritti e esercitazioni varie.</text:p>
-			<text:p text:style-name="P10">(compilato il 06/08/2009)</text:p>
+			<text:p text:style-name="P10">(compilato il 10/08/2009)</text:p>
 			<text:p text:style-name="P1" />
 														<text:p text:style-name="P9">Recupero programmato</text:p>
 			<text:p text:style-name="P17">Se necessario.</text:p>
-			<text:p text:style-name="P10">(compilato il 06/08/2009)</text:p>
+			<text:p text:style-name="P10">(compilato il 10/08/2009)</text:p>
 			<text:p text:style-name="P1" />
 					<text:p text:style-name="P1"></text:p>
 <text:p text:style-name="P9">Tavola di programmazione della disciplina</text:p>
-	<text:p text:style-name="P17">1. Astronomia osservativa (settembre - dicembre)</text:p>
-	<text:p text:style-name="P17">2. Astrofisica (gennaio - marzo)</text:p>
-	<text:p text:style-name="P17">3. Cosmologia (marzo - giugno)</text:p>
+	<text:p text:style-name="P17">1. Sistema solare (settembre - dicembre)</text:p>
+	<text:p text:style-name="P17">2. Corpi celesti (gennaio - marzo)</text:p>
+	<text:p text:style-name="P17">3. Stelle e galassie (marzo - giugno)</text:p>
 
 <text:p text:style-name="P16"/> 
 
 <text:p text:style-name="P4"></text:p>
 	<text:p text:style-name="P10">Titolo del modulo</text:p>
-	<text:p text:style-name="P9">Astronomia osservativa</text:p>
+	<text:p text:style-name="P9">Sistema solare</text:p>
 	<text:p text:style-name="P10">Periodo di svolgimento</text:p>
 	<text:p text:style-name="P9">settembre - dicembre</text:p>
 	<text:p />
+			<text:p text:style-name="P10">Contenuti</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">
+gh</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">gdfhgfdh</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">fghgfhfgh</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">gfh</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">gh</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">gfh</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">ghh</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Conoscenze</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">prima conoscenza</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">seconda conoscenza</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">terza conoscenza</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Abilità</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">prima abilità (con valori di x<text:span text:style-name="T7">2</text:span>)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">seconda abilità (con valori di x log <text:span text:style-name="T8">10</text:span> <text:span text:style-name="T9">n</text:span>)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">terza abilità (con valori <text:span text:style-name="T9">enfatizzati</text:span>)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">quarta abilità</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Competenze</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">prima competenza</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">seconda competenza</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Note e commenti in fase di progettazione</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
 	<text:p text:style-name="Horizontal_20_Line"/><text:p text:style-name="P16"/> 
 	<text:p text:style-name="P10">Titolo del modulo</text:p>
-	<text:p text:style-name="P9">Astrofisica</text:p>
+	<text:p text:style-name="P9">Corpi celesti</text:p>
 	<text:p text:style-name="P10">Periodo di svolgimento</text:p>
 	<text:p text:style-name="P9">gennaio - marzo</text:p>
 	<text:p />
+			<text:p text:style-name="P10">Contenuti</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Conoscenze</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Abilità</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Competenze</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Note e commenti in fase di progettazione</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
 	<text:p text:style-name="Horizontal_20_Line"/><text:p text:style-name="P16"/> 
 	<text:p text:style-name="P10">Titolo del modulo</text:p>
-	<text:p text:style-name="P9">Cosmologia</text:p>
+	<text:p text:style-name="P9">Stelle e galassie</text:p>
 	<text:p text:style-name="P10">Periodo di svolgimento</text:p>
 	<text:p text:style-name="P9">marzo - giugno</text:p>
 	<text:p />
+			<text:p text:style-name="P10">Contenuti</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Conoscenze</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Abilità</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Competenze</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Note e commenti in fase di progettazione</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Note e commenti in fase di relazione finale</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
 	<text:p text:style-name="Horizontal_20_Line"/><text:p text:style-name="P16"/> 
 <text:p text:style-name="Standard"/>
 <text:p text:style-name="P9">Metodologia di lavoro</text:p>
 								<text:p text:style-name="P1">
-				▢ 				Problem posing				</text:p>
+				▣ 				Problem posing				</text:p>
 							<text:p text:style-name="P1">
-				▢ 				Lavori di gruppo				</text:p>
+				▣ 				Lavori di gruppo				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Ricerche				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Compiti a casa				</text:p>
 							<text:p text:style-name="P1">
-				▢ 				Lezione frontale				</text:p>
+				▣ 				Lezione frontale				</text:p>
 							<text:p text:style-name="P1">
-				▢ 				Risoluzione di problemi				</text:p>
+				▣ 				Risoluzione di problemi				</text:p>
 							<text:p text:style-name="P1">
-				▢ 				Lezione dialogata				</text:p>
+				▣ 				Lezione dialogata				</text:p>
 				<text:p text:style-name="P1" />
 <text:p text:style-name="P9">Tipologia delle verifiche previste</text:p>
 								<text:p text:style-name="P1">
@@ -481,9 +562,9 @@
 							<text:p text:style-name="P1">
 				▢ 				Domande alla classe				</text:p>
 							<text:p text:style-name="P1">
-				▢ 				Relazioni scritte e orali				</text:p>
+				▣ 				Relazioni scritte e orali				</text:p>
 							<text:p text:style-name="P1">
-				▢ 				Interrogazione				</text:p>
+				▣ 				Interrogazione				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Domande aperte				</text:p>
 							<text:p text:style-name="P1">
@@ -491,23 +572,23 @@
 				<text:p text:style-name="P1" />
 <text:p text:style-name="P9">Strumenti previsti</text:p>
 								<text:p text:style-name="P1">
-				▢ 				Laboratorio informatico				</text:p>
-							<text:p text:style-name="P1">
 				▢ 				Calcolatrice				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Appunti delle lezioni				</text:p>
 							<text:p text:style-name="P1">
-				▢ 				Lavagna luminosa				</text:p>
+				▣ 				Lavagna luminosa				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Fotocopie				</text:p>
 							<text:p text:style-name="P1">
-				▢ 				Proiettore				</text:p>
+				▣ 				Proiettore				</text:p>
 							<text:p text:style-name="P1">
-				▢ 				Libri di testo				</text:p>
+				▣ 				Libri di testo				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Ricerche su Internet				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Help in linea				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Laboratorio informatico				</text:p>
 				<text:p text:style-name="P1" />
 </office:text>
 </office:body></office:document-content>
