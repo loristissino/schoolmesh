@@ -64,6 +64,7 @@ if [[ $? -ne 0 ]]
         then
                 echo "Schoolmesh library upgrade..."
                 sudo tar xjPf symfonylib*.tar.bz2
+                rm -f symfonylib*.tar.bz2
                 sudo mv MD5SUMS.txt MD5SUMS_current.txt
         else
                 echo "Schoolmesh libraries already up to date..."
