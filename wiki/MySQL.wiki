@@ -1,4 +1,5 @@
 #summary Configurazione di MySQL server
+#labels Phase-Deploy
 
 = MySQL =
 
@@ -6,5 +7,4 @@
 $ sudo apt-get install mysql-server phpmyadmin
 }}}
 
-
-Continuerà...
+Passo successivo: [ModificheLocali Modifiche locali e personalizzazioni]
