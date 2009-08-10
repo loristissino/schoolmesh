@@ -7,3 +7,13 @@ Questo progetto è nato con lo scopo di fornire un'interfaccia agevole di ammini
 L'applicazione è pensata per essere altamente configurabile, ma per il momento non viene dato supporto in merito.
 
 Vale naturalmente il principio che qualsiasi cosa vi succeda usando questa applicazione o le informazioni qui presenti, gli autori non potranno essere ritenuti responsabili.
+
+= Pacchetti necessari =
+
+Segue una lista dei pacchetti che dovrebbero essere necessari in Ubuntu, in forma di comando da impartire per installarli.
+
+Nota: probabilmente la lista non è completa - siamo in fase di test.
+
+{{{
+sudo apt-get install subversion gawk
+}}}
