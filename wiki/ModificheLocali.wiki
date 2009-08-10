@@ -1,0 +1,8 @@
+#summary Modifiche e personalizzazioni locali
+#labels Phase-Deploy
+
+= Modifiche e personalizzazioni locali =
+
+Le più importanti modifiche riguardano le modalità di accesso al database e di autenticazione. 
+
+L'idea di base è di tenere le copie modificate in /etc/schoolmesh e di studiare un meccanismo da applicare quando viene fatto l'aggiornamento del software.
