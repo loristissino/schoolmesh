@@ -63,7 +63,7 @@ cmp MD5SUMS.txt MD5SUMS_current.txt > /dev/null 2>&1
 if [[ $? -ne 0 ]]
         then
                 echo "Schoolmesh library upgrade..."
-                sudo tar xjf symfonylib*.tar.bz2
+                sudo tar xjPf symfonylib*.tar.bz2
                 sudo mv MD5SUMS.txt MD5SUMS_current.txt
         else
                 echo "Schoolmesh libraries already up to date..."
