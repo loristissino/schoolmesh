@@ -7,11 +7,9 @@
 
 1. [ImpostazioneIniziale Prima di iniziare]
 
-2. [MySQL Configurazione di MySql]
+2. [ApacheSSL Configurazione di Apache]
 
-3. [ApacheSSL Configurazione di Apache]
-
-4. Esecuzione di questo script per scaricare e installare SchoolMesh (i test vengono effettuati su una macchina con Ubuntu).
+3. Esecuzione di questo script per scaricare e installare SchoolMesh (i test vengono effettuati su una macchina con Ubuntu).
 
 {{{
 #!/bin/bash
@@ -91,3 +89,7 @@ sudo chown -R $OWNER:www-data "$INSTALLDIR"
 echo "SchoolMesh setup done. Let's see if it works..."
 
 }}}
+
+4. [MySQL Configurazione di MySql]
+
+5. [ModificheLocali Modifiche locali e personalizzazioni]
