@@ -16,6 +16,8 @@ Procedura provvisoria.
 #!/bin/bash
 [[ -d /var/schoolmesh ]] || sudo mkdir /var/schoolmesh
 
+sudo chown -R `whoami` /var/schoolmesh
+
 cd /var/schoolmesh
 
 for file in config/databases.yml apps/frontend/config/app.yml lib/ldap.class.php
