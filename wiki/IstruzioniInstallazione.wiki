@@ -3,7 +3,7 @@
 
 =Come installare SchoolMesh=
 
-Procedura provvisoria.
+*Attenzione.* La procedura descritta qui di seguito è provvisoria e non ancora testata sufficientemente.
 
 1. [ImpostazioneIniziale Prima di iniziare]
 
@@ -11,30 +11,50 @@ Procedura provvisoria.
 
 3. [ApacheSSL Configurazione di Apache]
 
-4. Esecuzione di questo script per scaricare e installare SchoolMesh:
+4. Esecuzione di questo script per scaricare e installare SchoolMesh (i test vengono effettuati su una macchina con Ubuntu).
 
 {{{
 #!/bin/bash
-[[ -d /var/schoolmesh ]] || sudo mkdir /var/schoolmesh
 
-sudo chown -R `whoami` /var/schoolmesh
+OWNER=$(whoami)
+INSTALLDIR=/var/schoolmesh
+CONFIGDIR=/etc/schoolmesh
 
-cd /var/schoolmesh
+# We create the basic directory if necessary:
+[[ -d "$INSTALLDIR" ]] || sudo mkdir "$INSTALLDIR"
 
+# We create the local configuration directory if necessary
+# (all local files must be kept here, in order to avoid conflicts when upgrading)
+[[ -d "CONFIGDIR" ]] || sudo mkdir "$CONFIGDIR"
+
+sudo chown -R $OWNER /var/schoolmesh
+
+cd "$INSTALLDIR"
 
 echo "Backing up current configuration files"
-for file in config/databases.yml apps/frontend/config/app.yml lib/ldap.class.php
+for FILE in config/databases.yml apps/frontend/config/app.yml lib/ldap.class.php
         do
-                [[ -f "$file" ]] && cp -v "$file" "$file.backup"$(date +%s)
+                [[ -f "$FILE" ]] && cp -v "$FILE" "$CONFIGDIR/$FILE.backup"$(date +%s)
         done
 
-svn checkout http://schoolmesh.googlecode.com/svn/trunk/ /var/schoolmesh
+svn checkout http://schoolmesh.googlecode.com/svn/trunk/ "$INSTALLDIR"
 
-cd /var/schoolmesh/mysymfony
+cd mysymfony
 
-for file in $(cat MD5SUMS.txt | gawk '{print $2}')
+
+# download of the necessary files (symfony library and plugins)
+
+dialog --yesno 'We are going to download symfony library and plugins. These files will replace all current symfony version you might have installed. Is it ok to proceed?' 0 0
+
+if [[ $? -eq 1 ]]
+        then
+                dialog --infobox 'Please try the manual installation. Setup will finish here. Thank you.' 0 0
+                exit
+        fi
+
+for FILE in $(cat MD5SUMS.txt | gawk '{print $2}')
         do
-                [[ -f "$file" ]] || wget http://schoolmesh.googlecode.com/files/$file
+                [[ -f "$file" ]] || wget http://schoolmesh.googlecode.com/files/$FILE
         done
 
 
@@ -51,31 +71,22 @@ cmp MD5SUMS.txt MD5SUMS_current.txt > /dev/null 2>&1
 if [[ $? -ne 0 ]]
         then
                 echo "Schoolmesh library upgrade..."
-                sudo tar xjf usr_share_php_symfony*.tar.bz2
-		sudo rm -rf /usr/share/php/symfony
-                sudo mv -v usr/share/php/symfony /usr/share/php/
-                echo "Schoolmesh libvendor upgrade..."
-                sudo tar xjf lib_vendor*.tar.bz2
-		sudo rm -rf /var/schoolmesh/lib/vendor
-                sudo mv -v lib/vendor /var/schoolmesh/lib
-                echo "Schoolmesh PDF plugin upgrade..."
-                sudo tar xjf plugins_sfTCPDFPlugin*.tar.bz2
-		sudo rm -rf /var/schoolmesh/plugins/sfTCPDFPlugin
-                sudo mv -v plugins/sfTCPDFPlugin /var/schoolmesh/plugins
-		sudo rm -rf lib usr plugins
+                sudo tar xjf symfonylib*.tar.bz2
+                sudo mv MD5SUMS.txt MD5SUMS_current.txt
         else
                 echo "Schoolmesh libraries already up to date..."
 fi
 
+cd ..
 
 echo "Copying man pages..."
-sudo cp  /var/schoolmesh/doc/*.[1..9] /usr/local/share/man
+sudo cp  doc/man/schoolmesh* /usr/local/share/man
+sudo mandb
+
 echo "Copying scripts..."
-sudo cp  /var/schoolmesh/bin/schoolmesh* /usr/local/bin
+sudo cp  bin/schoolmesh* /usr/local/bin
 
-sudo mv MD5SUMS.txt MD5SUMS_current.txt
-
-sudo chown -R `whoami`:www-data /var/schoolmesh
+sudo chown -R $OWNER:www-data "$INSTALLDIR"
 
 echo "SchoolMesh setup done".
 
