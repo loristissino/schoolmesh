@@ -20,48 +20,62 @@ sudo chown -R `whoami` /var/schoolmesh
 
 cd /var/schoolmesh
 
-for file in config/databases.yml apps/frontend/config/app.yml lib/ldap.class.php
-	do
-		[[ -f "$file" ]] && cp -v "$file" "$file.backup"$(date +%s)
-	done
 
-sudo svn checkout http://schoolmesh.googlecode.com/svn/trunk/ /var/schoolmesh
+echo "Backing up current configuration files"
+for file in config/databases.yml apps/frontend/config/app.yml lib/ldap.class.php
+        do
+                [[ -f "$file" ]] && cp -v "$file" "$file.backup"$(date +%s)
+        done
+
+svn checkout http://schoolmesh.googlecode.com/svn/trunk/ /var/schoolmesh
 
 cd /var/schoolmesh/mysymfony
 
 for file in $(cat MD5SUMS.txt | gawk '{print $2}')
-	do
-		[[ -f "$file" ]] || wget http://schoolmesh.googlecode.com/files/$file
-	done
+        do
+                [[ -f "$file" ]] || wget http://schoolmesh.googlecode.com/files/$file
+        done
 
 
 md5sum -c MD5SUMS.txt
 
 if [[ $? -ne 0 ]]
-	then
-		echo "MD5 error"
-		exit 1
+        then
+                echo "MD5 error"
+                exit 1
 fi
 
 cmp MD5SUMS.txt MD5SUMS_current.txt > /dev/null 2>&1
 
 if [[ $? -ne 0 ]]
-	then
-		echo "Schoolmesh library upgrade..."
-		sudo tar xjf usr_share_php_symfony*.tar.bz2
-		sudo mv usr/share/php/symfony /usr/share/php/
-		echo "Schoolmesh libvendor upgrade..."
-		sudo tar xjf lib_vendor*.tar.bz2
-		sudo mv lib/vendor /var/schoolmesh
-		echo "Schoolmesh PDF plugin upgrade..."
-		sudo tar xjf plugins_sfTCPDFPlugin*.tar.bz2
-		sudo mv plugins/sfTCPDFPlugin /var/schoolmesh/plugins
-	else
-		echo "Schoolmesh libraries already up to date..."
+        then
+                echo "Schoolmesh library upgrade..."
+                sudo tar xjf usr_share_php_symfony*.tar.bz2
+		sudo rm -rf /usr/share/php/symfony
+                sudo mv -v usr/share/php/symfony /usr/share/php/
+                echo "Schoolmesh libvendor upgrade..."
+                sudo tar xjf lib_vendor*.tar.bz2
+		sudo rm -rf /var/schoolmesh/lib/vendor
+                sudo mv -v lib/vendor /var/schoolmesh/lib
+                echo "Schoolmesh PDF plugin upgrade..."
+                sudo tar xjf plugins_sfTCPDFPlugin*.tar.bz2
+		sudo rm -rf /var/schoolmesh/plugins/sfTCPDFPlugin
+                sudo mv -v plugins/sfTCPDFPlugin /var/schoolmesh/plugins
+		sudo rm -rf lib usr plugins
+        else
+                echo "Schoolmesh libraries already up to date..."
 fi
+
+
+echo "Copying man pages..."
+sudo cp  /var/schoolmesh/doc/*.[1..9] /usr/local/share/man
+echo "Copying scripts..."
+sudo cp  /var/schoolmesh/bin/schoolmesh* /usr/local/bin
 
 sudo mv MD5SUMS.txt MD5SUMS_current.txt
 
-sudo chown -R www-data:www-data /var/schoolmesh
+sudo chown -R `whoami`:www-data /var/schoolmesh
+
+echo "SchoolMesh setup done".
 
 }}}
