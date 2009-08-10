@@ -88,6 +88,6 @@ sudo cp  bin/schoolmesh* /usr/local/bin
 
 sudo chown -R $OWNER:www-data "$INSTALLDIR"
 
-echo "SchoolMesh setup done".
+echo "SchoolMesh setup done. Let's see if it works..."
 
 }}}
