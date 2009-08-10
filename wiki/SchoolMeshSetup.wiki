@@ -83,3 +83,5 @@ sudo chown -R $OWNER:www-data "$INSTALLDIR"
 echo "SchoolMesh setup done. Let's see if it works..."
 
 }}}
+
+Passo successivo: [MySQL Configurazione di MySql]
