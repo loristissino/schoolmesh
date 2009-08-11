@@ -24,7 +24,8 @@
 
 2. Riavviare il server apache.
 
-Passo successivo: [SchoolMeshSetup Setup di SchoolMesh]
+Passo successivo: [MySQL Configurazione di MySql]
+
 
 == SSL ==
 
