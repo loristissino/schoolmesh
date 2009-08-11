@@ -1,6 +1,34 @@
 #summary Configurazione di Apache
+#labels Phase-Deploy
 
-= Configurazione di Apache con mod SSL =
+= Configurazione di Apache =
+
+1. Modificare il file _/etc/apache2/sites-available/default_ aggiungendo le seguenti righe:
+
+{{{
+    Alias "/schoolmesh/sf" "/usr/share/php/data/symfony/web/sf"
+    Alias /schoolmesh "/var/schoolmesh/web/"
+
+    DirectoryIndex index.php
+
+    <Directory "/var/schoolmesh/web">
+      AllowOverride All
+      Allow from All
+    </Directory>
+
+    <Directory "/usr/share/php/data/symfony/web/sf">
+       AllowOverride All
+       Allow from All
+    </Directory>
+}}}
+
+2. Riavviare il server apache.
+
+Passo successivo: [SchoolMeshSetup Setup di SchoolMesh]
+
+== SSL ==
+
+(Da completare)
 
 Abilitazione del modulo ssl di Apache:
 
@@ -12,5 +40,3 @@ $ sudo /etc/init.d/apache2 force-reload
  * Reloading web server config apache2                                   [ OK ] 
 
 }}}
-
-Passo successivo: [SchoolMeshSetup Setup di SchoolMesh]
