@@ -1,0 +1,18 @@
+#summary Uso di SchoolMesh
+#labels Phase-Deploy
+
+= Frontend e Backend =
+
+Da scrivere.
+
+== Dati di prova ==
+
+I file _`data/fixtures/*yml`_ contengono i dati di prova che vengono caricati all'inizio per l'applicazione di test.
+
+Si può cominciare a lavorare con l'applicazione usando gli utenti:
+
+  * _john.test_ (docente)
+  * _antonio.d_ (dirigente scolastico)
+  * _gabriella.v (dsga)
+  * _loris.tissino_ (superadmin)
+  * _juri.d_ (admin)
