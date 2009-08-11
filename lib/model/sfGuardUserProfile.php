@@ -191,14 +191,11 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
         }
 
 
-		protected function getGoogleappsAccountAlerts()
-		
+		protected function addGoogleappsAccountAlerts()
 		{
-		
 			if($this->getGoogleappsAccountApprovedAt())
 			{
 				// The account is approved, we assume that the user should have it
-				
 				if($this->getGoogleappsAccountStatus()==0)
 				{
 					$this->addSystemAlert('googleapps account missing');
@@ -216,18 +213,19 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
 		public function GoogleappsEnable()
 		{
-			$this->setGoogleappsAccountApprovedAt(time());
-			
 			$temporaryPassword=rand(1000000,9999999);
-			$this->setGoogleappsAccountTemporaryPassword($temporaryPassword);
-			$this->save();
+			$this
+			->setGoogleappsAccountApprovedAt(time())
+			->setGoogleappsAccountTemporaryPassword($temporaryPassword)
+			->save();
+			return $this;
 		}
 
 		public function GoogleappsDisable()
 		{
-			$this->setGoogleappsAccountApprovedAt(null);
-			$this->setGoogleappsAccountTemporaryPassword(null);
-			$this->save();
+			$this->setGoogleappsAccountApprovedAt(null)
+			->setGoogleappsAccountTemporaryPassword(null)
+			->save();
 		}
 
         protected function posix_getpwnam($username)
@@ -336,11 +334,11 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		}
 
 
-		public function getUsernameIsAlreadyUsed($username, $checkself=true)
+		public function getUsernameIsAlreadyUsed($username, $ignoreself=true)
 		
 		{
 
-			if ($checkself && ($username==$this->getUsername()))
+			if ($ignoreself && ($username==$this->getUsername()))
 			{
 				return false;
 			}
@@ -363,19 +361,19 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
 		public function getUsernameIsValid($try='')
 		{
-
-			if ($try!='')
+			
+		if ($try!='')
 			{
 				$username=$try;
-				$checkself=false;
+				$ignoreself=false;
 			}
 			else
 			{
 				$username=$this->getUsername();
-				$checkself=true;
+				$ignoreself=true;
 			}
 			
-			if ($this->getUsernameIsAlreadyUsed($username, $checkself))
+			if ($this->getUsernameIsAlreadyUsed($username, $ignoreself))
 			{
 				return false;
 			}
@@ -507,7 +505,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 				$this->addSystemAlert('gender not set');
 			}
 			
-			$this->getGoogleappsAccountAlerts();
+			$this->addGoogleappsAccountAlerts();
 			
 			if ($this->getIsDeleted())
 			{

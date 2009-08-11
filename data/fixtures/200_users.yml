@@ -91,4 +91,10 @@ sfGuardUserProfile:
     last_name:      Vicenza
     gender:            F
     role_id:       dsga
-  
+
+
+  gest:
+    user_id:     guest
+    first_name:   Stefano
+    last_name:    Ospite
+    gender:      M

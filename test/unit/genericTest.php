@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../bootstrap/unit.php';
  
-$t = new lime_test(51, new lime_output_color());
+$t = new lime_test(52, new lime_output_color());
 
 $t->diag('::datetime()');
 
@@ -120,6 +120,16 @@ foreach(array(
 
 $t->diag('::clever_ucwords("it")');
 
+try
+{
+	Generic::clever_ucwords('foo', 'dd');
+	$t->fail('no code should be executed after throwing an exception (invalid culture)');
+}
+catch (Exception $e)
+{
+  $t->pass('exception catched successfully: '. $e);
+}
+
 foreach(array(
 	'FOO'=>'Foo',
 	'foo bar'=>'Foo Bar',
@@ -136,6 +146,7 @@ foreach(array(
 	"FOOO'"=>'Fooò',
 	"FOOU'"=>'Fooù',
 	"F'OOA"=>"F'ooa",
+	"F'OOA"=>"F'Ooa",
 	) as $key=>$value)
 {
 	$t->is(Generic::clever_ucwords('it', $key), $value, sprintf('«%s» correctly transformed into «%s»', $key, $value));

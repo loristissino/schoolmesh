@@ -18,9 +18,9 @@ $t->comment("Technician's Profile");
 unset($c);
 
 $c=new Criteria();
-$c->add(sfGuardUserPeer::USERNAME, 'juri.daldan');
+$c->add(sfGuardUserPeer::USERNAME, 'juri.domodossola');
 $u=sfGuardUserPeer::doSelectOne($c);
-$t->is($u->getProfile()->getFullName(), "Juri Dal Dan", '->getFullName() returns the complete name of the user');
+$t->is($u->getProfile()->getFullName(), "Juri Domodossola", '->getFullName() returns the complete name of the user');
 $t->is(sizeof($u->getProfile()->getCurrentAppointments()), 0, '->getCurrentAppointments() returns 0');
 $t->is(sizeof($u->getProfile()->getTeams()), 1, '->getTeams() returns the correct number of teams');
 

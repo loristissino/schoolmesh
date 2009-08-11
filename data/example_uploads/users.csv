@@ -1,17 +1,18 @@
 "type","first_name","middle_name","last_name","gender","birthdate","birthplace","email","import_code","group"
-"T","Loris",,"Tissino","M",27/02/68,"Francia","loris.tissino@mattiussilab.net","TSSLRS","dipinfo"
-"T","Bianca",,"Brindisi","F",,,,"BRNBNC","diplingue"
-"T","Francesco","Pietro","Genova","M",30/12/65,"Valvasone (UD)","francesco.genova@istruzione.it","GNVFRN","dipinfo"
-"O","Pasquale",,"De Rolandis","M",22/10/61,"Foggia",,"DRLPSQ",
+"T","Loris",,"Tissino","M",27/02/68,"Francia","loris.tissino@mattiussilab.net",1001,"dipinfo"
+"T","Bianca",,"Brindisi","F",,,,1002,"diplingue"
+"T","Francesco","Pietro","Genova","M",30/12/65,"Valvasone (UD)","francesco.genova@istruzione.it",1003,"dipinfo"
+"O","Pasquale",,"De Rolandis","M",22/10/61,"Foggia",,1004,
 "T","Gianpiero",,"Bergamo","M",,,,,
 "T","Flavia",,"Gemona","F",,,,,"dipmatfis"
-"T","John",,"Test","M",31/12/65,"Pordenone","john.test@istruzione.it","TCHTST","dipastro"
-"S","Alice",,"Alessandrini","F",,,,"LSSLCA","4AP"
-"S","Bob",,"Bernardi","M",,,,"BRNBBO",
-"T","Bebé",,"Łasøw","M",,,,"LSOBBE",
-"S","Qualcuno",,"Cognome Molto Lungo","F",,,,"CGMLMS",
-"T","Mario",,"Rossi","M",,,,"RSSMRO",
-"T","Giorgio",,"Simonacci","M",,,,"SMNGRG",
-"T","BRUNA",,"BAGALA’","F",,,,"BGLBRN",
-"T","MARCO",,"DE FILIPPIS","M",,,,"DFLMRC",
-"S","GIORGIO",,"BOTTO’","M",,,,"BTTGRG",
+"T","John",,"Test","M",31/12/65,"Pordenone","john.test@istruzione.it",2001,"dipastro"
+"S","Alice",,"Alessandrini","F",,,,2002,"4AP"
+"S","Bob",,"Bernardi","M",,,,2003,
+"T","Bebé",,"Łasøw","M",,,,2004,
+"S","Alessandra",,"Tassan Zanin Giulianelli","F",,,,2005,
+"T","Mario",,"Rossi","M",,,,2006,
+"T","Giorgio",,"Simonacci","M",,,,2007,
+"T","BRUNA",,"BAGALA’","F",,,,2008,
+"T","MARCO",,"DE FILIPPIS","M",,,,2009,
+"S","GIORGIO",,"BOTTO’","M",,,,2010,
+"S","JURI",,"DOMODOSSOLA","M",,,,2011,
