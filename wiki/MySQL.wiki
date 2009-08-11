@@ -40,9 +40,9 @@ CREATE USER 'schoolmesh'@'localhost' IDENTIFIED BY 'seGreTo';
 
 GRANT ALL PRIVILEGES ON `schoolmesh` . * TO 'schoolmesh'@'localhost' WITH GRANT OPTION ;
 
-GRANT ALL PRIVILEGES ON `schoolmesh` . * TO 'schoolmesh_prod'@'localhost' WITH GRANT OPTION ;
+GRANT ALL PRIVILEGES ON `schoolmesh_prod` . * TO 'schoolmesh'@'localhost' WITH GRANT OPTION ;
 
-GRANT ALL PRIVILEGES ON `schoolmesh` . * TO 'schoolmesh_dev'@'localhost' WITH GRANT OPTION ;
+GRANT ALL PRIVILEGES ON `schoolmesh_test` . * TO 'schoolmesh'@'localhost' WITH GRANT OPTION ;
 
 }}}
 
