@@ -25,56 +25,57 @@ cd "$INSTALLDIR"
 
 echo "Backing up current configuration files"
 for FILE in config/databases.yml apps/frontend/config/app.yml apps/backend/config/app.yml
-        do
-                [[ -f "$FILE" ]] && cp -v "$FILE" "$CONFIGDIR/$FILE.backup"$(date +%s)
-        done
+  do
+    [[ -f "$FILE" ]] && cp -v "$FILE" "$CONFIGDIR/$FILE.backup"$(date +%s)
+  done
 
 svn checkout http://schoolmesh.googlecode.com/svn/trunk/ "$INSTALLDIR"
 
 cd mysymfony
 
-
-# download of the necessary files (symfony library and plugins)
-
-dialog --yesno 'We are going to download symfony library and plugins. These files will replace all current symfony version you might have installed. Is it ok to proceed?' 0 0
-
-if [[ $? -eq 1 ]]
-        then
-                dialog --infobox 'Please try the manual installation. Setup will finish here. Thank you.' 0 0
-                exit
-        fi
-
-for FILE in $(cat MD5SUMS.txt | gawk '{print $2}')
-        do
-                [[ -f "$file" ]] || wget http://schoolmesh.googlecode.com/files/$FILE
-        done
-
-
-md5sum -c MD5SUMS.txt
-
-if [[ $? -ne 0 ]]
-        then
-                echo "MD5 error"
-                exit 1
-fi
-
 cmp MD5SUMS.txt MD5SUMS_current.txt > /dev/null 2>&1
 
 if [[ $? -ne 0 ]]
-        then
-                echo "Schoolmesh library upgrade..."
-                sudo tar xjPf symfonylib*.tar.bz2
-                rm -f symfonylib*.tar.bz2
-                sudo mv MD5SUMS.txt MD5SUMS_current.txt
-        else
-                echo "Schoolmesh libraries already up to date..."
+  then
+    # we must download of the necessary files (symfony library and plugins)
+
+    dialog --yesno 'We are going to download symfony library and plugins. These files will replace all current symfony version you might have installed. Is it ok to proceed?' 0 0
+
+    if [[ $? -eq 1 ]]
+       then
+          dialog --infobox 'Please try the manual installation. Setup will finish here. Thank you.' 0 0
+          exit 1
+    fi
+
+    for FILE in $(cat MD5SUMS.txt | gawk '{print $2}')
+      do
+        [[ -f "$file" ]] || wget http://schoolmesh.googlecode.com/files/$FILE
+      done
+
+    md5sum -c MD5SUMS.txt
+
+    if [[ $? -ne 0 ]]
+      then
+        echo "MD5 error"
+        exit 2
+    fi
+
+    echo "Schoolmesh library upgrade..."
+    sudo tar xjPf symfonylib*.tar.bz2
+    rm -f symfonylib*.tar.bz2
+    sudo mv MD5SUMS.txt MD5SUMS_current.txt
+
+  else
+    echo "Schoolmesh libraries already up to date..."
 fi
 
 cd ..
 
 echo "Copying man pages..."
-sudo cp  doc/man/schoolmesh* /usr/local/share/man
-sudo mandb
+for i in 1 8
+  do
+    sudo cp -v /var/schoolmesh/doc/man/man$i/* /usr/local/share/man/man$i/ 2>/dev/null
+  done
 
 echo "Copying scripts..."
 sudo cp  bin/schoolmesh* /usr/local/bin
