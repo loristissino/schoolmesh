@@ -74,6 +74,7 @@ cd ..
 echo "Copying man pages..."
 for i in 1 8
   do
+    sudo mkdir -p /usr/local/share/man/man$i
     sudo cp -v /var/schoolmesh/doc/man/man$i/* /usr/local/share/man/man$i/ 2>/dev/null
   done
 
