@@ -49,7 +49,7 @@ Se si vuole un'autenticazione basata sul DB, è sufficiente "disabilitare" le du
 
 Altrimenti, cambiare il nome della funzione di autenticazione da usare, scegliendone una tra quelle indicate, e fornendo i dettagli sotto.
 
-== Personalizzazioni delle scuole ==
+== Personalizzazione del layout e dell'interfaccia generale ==
 
 Ogni scuola può personanalizzare secondo le proprie esigenze diverse cose. Alcune personalizzazioni possono essere fatte direttamente modificando i file _app.yml_:
 
@@ -81,3 +81,7 @@ Il logo è nel file _web/images/logo.png_.
 
 Il layout principale della pagina è nel file _apps/frontend/templates/layout_orig.php_.
 Piuttosto di cambiare questo, è preferibile creare un layout diverso e far puntare il link simbolico _apps/frontend/templates/layout.php_ alla propria versione.
+
+# Personalizzazione delle impostazioni
+
+I dati principali non frequentemente modificabili sono amministrabili con l'applicazione di backend.
