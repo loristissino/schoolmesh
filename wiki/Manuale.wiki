@@ -15,4 +15,4 @@ Si può cominciare a lavorare con l'applicazione usando gli utenti:
   * _antonio.d_ (dirigente scolastico)
   * _gabriella.v (dsga)
   * _loris.tissino_ (superadmin)
-  * _juri.d_ (admin)
+  * _juri.domodossola_ (admin)
