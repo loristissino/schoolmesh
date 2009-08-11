@@ -39,6 +39,11 @@ CREATE DATABASE `schoolmesh_test` DEFAULT CHARACTER SET utf8 COLLATE utf8_genera
 CREATE USER 'schoolmesh'@'localhost' IDENTIFIED BY 'seGreTo';
 
 GRANT ALL PRIVILEGES ON `schoolmesh` . * TO 'schoolmesh'@'localhost' WITH GRANT OPTION ;
+
+GRANT ALL PRIVILEGES ON `schoolmesh` . * TO 'schoolmesh_prod'@'localhost' WITH GRANT OPTION ;
+
+GRANT ALL PRIVILEGES ON `schoolmesh` . * TO 'schoolmesh_dev'@'localhost' WITH GRANT OPTION ;
+
 }}}
 
 3. Modificare il file _config/databases.yml_ impostando la password scelta per l'utente _schoolmesh_:
