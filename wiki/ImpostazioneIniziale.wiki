@@ -7,7 +7,7 @@ Questo progetto è nato con lo scopo di fornire un'interfaccia agevole di ammini
 
 L'applicazione è pensata per essere altamente configurabile, ma per il momento non viene dato supporto in merito.
 
-Vale naturalmente il principio che qualsiasi cosa vi succeda usando questa applicazione o le informazioni qui presenti, gli autori non potranno essere ritenuti responsabili.
+Vale naturalmente il principio che, qualsiasi cosa vi succeda usando questa applicazione o le informazioni qui presenti, gli autori non potranno essere ritenuti responsabili.
 
 = Pacchetti necessari =
 
