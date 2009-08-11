@@ -1,5 +1,5 @@
 #summary Guida all'installazione e all'aggiornamento
-#labels Phase-Deploy
+#labels Phase-Deploy,Featured
 
 =Come installare SchoolMesh=
 
