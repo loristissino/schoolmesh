@@ -6,3 +6,32 @@
 Le più importanti modifiche riguardano le modalità di accesso al database e di autenticazione. 
 
 L'idea di base è di tenere le copie modificate in /etc/schoolmesh e di studiare un meccanismo da applicare quando viene fatto l'aggiornamento del software.
+
+I file da prendere in considerazione sono:
+
+  * _apps/frontend/config/app.yml_ (configurazione dell'applicazione di frontend)
+  * _apps/backend/config/app.yml_ (configurazione dell'applicazione di backend)
+  * _config/databases.yml_ (accesso ai database)
+
+== Autenticazione ==
+
+L'autenticazione degli utenti può avvenire secondo modalità personalizzabili.
+
+Nei file __app.yml__ è indicata la funzione da chiamare per verificare la correttezza della coppia username/password:
+
+{{{
+  sf_guard_plugin:
+    check_password_callable: [ldap, checkLdapPassword]
+# to validate the user, the function checkLdapPassword() in the ldap class will be used
+# comment this line to use standard authentication (agains the db)
+}}}
+
+Se si vuole un'autenticazione basata sul DB, è sufficiente "disabilitare" le due righe:
+
+{{{
+#  sf_guard_plugin:
+#    check_password_callable: [ldap, checkLdapPassword]
+}}}
+
+
+ 
