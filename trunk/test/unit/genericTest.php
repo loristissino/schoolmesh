@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../bootstrap/unit.php';
  
-$t = new lime_test(49, new lime_output_color());
+$t = new lime_test(51, new lime_output_color());
 
 $t->diag('::datetime()');
 
@@ -129,6 +129,8 @@ foreach(array(
 	
 	"FOOA'"=>'Fooà',
 	"FOOE'"=>'Fooé',
+	"Foo’"=>'Foò',
+	"Foo`"=>'Foò',
 	'FOO BAR'=>'Foo Bar',
 	"FOOI'"=>'Fooì',
 	"FOOO'"=>'Fooò',
@@ -136,6 +138,6 @@ foreach(array(
 	"F'OOA"=>"F'ooa",
 	) as $key=>$value)
 {
-	$t->is(Generic::clever_ucwords('it', $key), $value, sprintf('«%s» correctly transformed into «%s»)', $key, $value));
+	$t->is(Generic::clever_ucwords('it', $key), $value, sprintf('«%s» correctly transformed into «%s»', $key, $value));
 }
 

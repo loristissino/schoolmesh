@@ -17,28 +17,31 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		
 		public function findGoodUsername()
 		{
+			
 			$try=Generic::slugify($this->getFirstName().'.'.$this->getLastname());
 			
 			if ($this->getUsernameIsValid($try))
 			{
-				return $try;
+				return array('username'=>$try, 'invented'=>false);
 			}
 			
 			else
 			{
 				$try='u'. date('U').rand(100000,900000);
-				
 			}
 			
-			return $try;
+				return array('username'=>$try, 'invented'=>true);
 					
 		}
 		
 		
-		public function addSystemAlert($alert)
+		public function addSystemAlert($alert, $only_if=false)
 		{
-			$previous= ($this->getSystemAlerts()=='') ? '' : $this->getSystemAlerts() . ' - ';
-			$this->setSystemAlerts($previous.$alert);
+			if($only_if)
+			{
+				$previous= ($this->getSystemAlerts()=='') ? '' : $this->getSystemAlerts() . ' - ';
+				$this->setSystemAlerts($previous.$alert);
+			}
 			return $this;
 		}
 		
@@ -79,11 +82,28 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $this;
 		}
 			
-		public function updateEmail($email)
+		public function updateEmail($value)
 		{
 			if ($this->getEmail()=='')
 			{
-				$this->setEmail($email);
+				$this->setEmail($value);
+			}
+			return $this;
+		}
+
+		public function updateBirthplace($value)
+		{
+			if ($this->getBirthplace()=='')
+			{
+				$this->setBirthplace($value);
+			}
+			return $this;
+		}
+		public function updateBirthdate($value)
+		{
+			if ($this->getBirthdate()=='')
+			{
+				$this->setBirthdate($value);
 			}
 			return $this;
 		}
