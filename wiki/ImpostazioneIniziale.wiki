@@ -16,7 +16,7 @@ Segue una lista dei pacchetti che dovrebbero essere necessari in Ubuntu, in form
 Nota: probabilmente la lista non è completa - siamo in fase di test.
 
 {{{
-sudo apt-get install subversion gawk pandoc php5-cli libapache2-mod-php5 php5-common php5-ldap php5-mysql php5-xsl dialog
+sudo apt-get install subversion gawk pandoc php5-cli libapache2-mod-php5 php5-common php5-ldap php5-mysql php5-xsl dialog apache2 apache2-utils
 
 }}}
 
