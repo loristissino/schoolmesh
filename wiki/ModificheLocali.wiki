@@ -13,6 +13,8 @@ I file da prendere in considerazione sono:
   * _apps/backend/config/app.yml_ (configurazione dell'applicazione di backend)
   * _config/databases.yml_ (accesso ai database)
 
+__Attenzione__: questi file vengono sovrascritti con gli aggiornamenti, per cui è importante farsene una copia di sicurezza.
+
 == Autenticazione ==
 
 L'autenticazione degli utenti può avvenire secondo modalità personalizzabili.
@@ -21,17 +23,30 @@ Nei file __app.yml__ è indicata la funzione da chiamare per verificare la corre
 
 {{{
   sf_guard_plugin:
-    check_password_callable: [ldap, checkLdapPassword]
-# to validate the user, the function checkLdapPassword() in the ldap class will be used
-# comment this line to use standard authentication (agains the db)
+    check_password_callable: [Authentication, testOnly]
+
+# to validate the user, the function testOnly() in the Authentication class will be used
+# comment this line to use standard authentication (against the db)
+
+# or choose one of the following functions:
+# testOnly: all users are authenticated whatever password (but null) they provide
+# checkLdapPassword: users are authenticated against a LDAP server, specified in the lines below
+# checkSambaPassword: users are authenticated against a Samba server (probably working also against a Windows authentication server)
+
+  authentication:
+    ldap:
+      host: localhost
+      domain: dc=example,dc=com
+    samba:
+      share: //example/homes
+      address: 192.168.1.1
 }}}
 
 Se si vuole un'autenticazione basata sul DB, è sufficiente "disabilitare" le due righe:
 
 {{{
 #  sf_guard_plugin:
-#    check_password_callable: [ldap, checkLdapPassword]
+#    check_password_callable: [Authentication, testOnly]
 }}}
 
-
- 
+Altrimenti, cambiare il nome della funzione di autenticazione da usare, scegliendone una tra quelle indicate, e fornendo i dettagli sotto.
