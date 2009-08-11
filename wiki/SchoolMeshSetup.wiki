@@ -19,7 +19,7 @@ CONFIGDIR=/etc/schoolmesh
 # (all local files must be kept here, in order to avoid conflicts when upgrading)
 [[ -d "$CONFIGDIR" ]] || sudo mkdir "$CONFIGDIR"
 
-sudo chown -R $OWNER /var/schoolmesh
+sudo chown -R $OWNER "$INSTALLDIR" "$CONFIGDIR"
 
 cd "$INSTALLDIR"
 
