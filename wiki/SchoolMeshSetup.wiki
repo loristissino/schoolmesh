@@ -21,9 +21,6 @@ CONFIGDIR=/etc/schoolmesh
 
 sudo chown -R $OWNER "$INSTALLDIR" "$CONFIGDIR"
 
-exit
-
-
 cd "$INSTALLDIR"
 
 echo "Backing up current configuration files"
