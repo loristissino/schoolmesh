@@ -86,6 +86,7 @@ sudo cp  bin/schoolmesh* /usr/local/bin
 sudo chown -R $OWNER:www-data "$INSTALLDIR"
 
 sudo chmod -R 770 "$INSTALLDIR"/{cache,log}
+sudo chmod -R 770 "$INSTALLDIR"/web/{uploads,oo}
 
 echo "SchoolMesh setup done. Let's see if it works..."
 
