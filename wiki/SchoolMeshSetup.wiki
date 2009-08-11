@@ -3,7 +3,7 @@
 
 = Setup di SchoolMesh =
 
-Eseguire questo script per scaricare e installare SchoolMesh (i test vengono effettuati su una macchina con Ubuntu).
+Eseguire questo script per scaricare e installare SchoolMesh (i test sono stati effettuati su una macchina con Ubuntu).
 
 {{{
 #!/bin/bash
