@@ -75,10 +75,10 @@ all:
 4. Creare la struttura dei database:
 
 {{{
-$ cd /var/schoolmesh
-$ symfony propel:insert-sql --no-confirmation
-$ symfony propel:insert-sql --env=test --no-confirmation
-$ symfony propel:insert-sql --env=prod --no-confirmation
+cd /var/schoolmesh
+symfony propel:insert-sql --no-confirmation
+symfony propel:insert-sql --env=test --no-confirmation
+symfony propel:insert-sql --env=prod --no-confirmation
 }}}
 
 5. Caricare i dati di prova nel database di prova:
