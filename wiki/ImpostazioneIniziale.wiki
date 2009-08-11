@@ -28,4 +28,5 @@ phpmyadmin dbconfig-common libgd2-xpm libmcrypt4 php5-gd php5-mcrypt
 
 ----
 
-Passo successivo: [ApacheSSL Configurazione di Apache]
+Passo successivo: [SchoolMeshSetup Setup di SchoolMesh]
+
