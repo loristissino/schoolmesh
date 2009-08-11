@@ -49,5 +49,7 @@ class WpinfoTypeMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('IS_REQUIRED', 'IsRequired', 'BOOLEAN', false, null);
 
+		$tMap->addColumn('IS_RESERVED', 'IsReserved', 'BOOLEAN', false, null);
+
 	} 
 } 

@@ -8,27 +8,34 @@
 	?>
 
 <h1><?php echo __('Edit Wpinfo') ?></h1>
+
+<? /* FIXME: I should use CSS here, instead of the table */ ?>
+<table>
+<tr>
+<td>
+
+<div id="sf_admin_content">
 <h2><?php echo $type->getTitle() ?></h2>
 <p>
 	<?php if ($type->getIsRequired()): ?>
-		<?php echo image_tag('fill', 'title=' . __('Filling required')) ?>
+		<?php echo image_tag('fill', array('title'=> __('Filling required'), 'alt'=> __('Filling required'))) ?>
 	<?php else: ?>
-		<?php echo image_tag('optional', 'title=' . __('Filling required')) ?>
+		<?php echo image_tag('optional', array('title='=> __('Filling optional'), 'alt'=> __('Filling required'))) ?>
 	<?php endif ?>
 	
-	<?php echo $type->getDescription() ?>
+	<?php echo $type->getDescription() ?></p>
 	<?php if ($type->getTemplate()): ?>
-		<p><?php echo image_tag('star') ?> <strong><em><?php echo __('This content must match a template. You can base it on the example provided below.') ?></em></strong>
+		<p><?php echo image_tag('star', array('alt'=> __('*'))) ?> <strong><em><?php echo __('This content must match a template. You can base it on the example provided below.') ?></em></strong>
 	<?php endif ?>
 </p>
 
 <?php if ($sf_user->hasFlash('error_info')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error_info')?></div>
+  <div class="error"><p><?php echo $sf_user->getFlash('error_info')?></p></div>
 <?php endif; ?>
 <?php if ($sf_user->hasFlash('notice_info')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice_info')?></div>
+  <div class="notice"><p><?php echo $sf_user->getFlash('notice_info')?></p></div>
 <?php endif; ?>
-<form action="<?php echo url_for('wpinfo/update?id='.$wpinfo->getId()) ?>" method="POST" id="editform">
+<form action="<?php echo url_for('wpinfo/update?id='.$wpinfo->getId()) ?>" method="post" id="editform">
 
 <?php echo javascript_tag("
 tinyMCE.init({
@@ -45,8 +52,8 @@ editor_selector : \"mceAdvanced\"
 
 });
 ") ?>
-</script>
-<textarea name="value" class="mceAdvanced" style="width:100%">
+
+<textarea name="value" class="mceAdvanced" style="width:60%" rows="10" cols="50">
 <?php echo $wpinfo->getContent() ?>
 </textarea>
 
@@ -57,14 +64,14 @@ editor_selector : \"mceAdvanced\"
 	<a href="<?php echo url_for('plansandreports/fill?id='.$wpinfo->getAppointment()->getId()) ?>" 
 		onClick="var f = document.getElementById('editform'); var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', 'save'); m.setAttribute('value', 'save'); f.appendChild(m); f.submit(); return false;"
 		title="<?php echo __('Save what you wrote until now') ?>"
-	><?php echo __("Save") ?></a>
+	><?php echo __("Save") ?></a><br>
 	</li>
 	<li class="sf_admin_action_saveandback">
 	<a href="<?php echo url_for('plansandreports/fill?id='.$wpinfo->getAppointment()->getId()) ?>" 
 		onClick="var f = document.getElementById('editform'); var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', 'back'); m.setAttribute('value', 'back'); f.appendChild(m); f.submit(); return false;"
 		title="<?php echo __('Save this content and go back to the main document') ?>"
 	><?php echo __("Save and go back to the main document") ?></a>
-	</li>
+	</li><br>
 <?php if($next_item): ?>
 	<li class="sf_admin_action_saveandnext">
 	<a href="<?php echo url_for('plansandreports/fill?id='.$wpinfo->getAppointment()->getId()) ?>" 
@@ -75,26 +82,16 @@ editor_selector : \"mceAdvanced\"
 <?php endif ?>
 </ul>
 
-<?php /*
-
-<?php echo submit_image_tag('save', array('name'=>'save', 'title'=>__('Save what you wrote until now'))) ?>&nbsp;&nbsp;<?php echo __("Save") ?><br />
-<?php echo submit_image_tag('saveandback', array('name'=>'back', 'title'=>__('Save this content and go back to the workplan/report'))); ?>&nbsp;&nbsp;<?php echo __("Save and go back to plan/report") ?><br />
-
-<?php if($next_item): ?>
-<?php echo submit_image_tag('saveandnext', array('name'=>'continue', 'title'=>sprintf(__('Save and start editing the next item, that happens to be «%s»'), $next_item->getWpinfoType()->getTitle()))); ?>&nbsp;&nbsp;<?php echo sprintf(__('Save and go to next item'), $next_item->getWpinfoType()->getTitle()) ?><br />
-<?php endif ?>
-
-<?php /*
-<input type="submit" name="save" value="<?php echo __("Save") ?>" title="<?php echo __('Save what you wrote until now') ?>" />
-<input type="submit" name="back" value="<?php echo __("Save and go back to plan/report") ?>" title="<?php echo __('Save this content and go back to the workplan/report') ?>" />
-<?php if($next_item): ?>
-	<input type="submit" name="continue" value="<?php echo sprintf(__('Save and go to next item (%s)'), $next_item->getWpinfoType()->getTitle()); ?>" title="<?php echo sprintf(__('Save and start editing the next item, that happens to be «%s»'), $next_item->getWpinfoType()->getTitle()) ?>" />
-<?php endif; ?>
-
-*/ ?>
 </form>
+</div>
 
-<h2><?php echo __('Hints') ?></h2>
+
+</td>
+<td>
+
+<div id="sf_admin_bar">
+
+<h3><?php echo __('Hints') ?></h3>
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
 <?php echo link_to_function(
@@ -114,8 +111,8 @@ editor_selector : \"mceAdvanced\"
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
-
-	<?php foreach($hints as $hint): ?>
+  <tbody>
+<?php foreach($hints as $hint): ?>
 	<?php $i=0 ?>
 			<tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
 				<td><?php echo html_entity_decode($hint->getContent()); ?></td>
@@ -145,6 +142,7 @@ editor_selector : \"mceAdvanced\"
 				</td>
 			</tr>
 <?php endforeach; ?>
+</tbody>
 </table>
 
 <?php else: ?>
@@ -153,7 +151,7 @@ editor_selector : \"mceAdvanced\"
 </div>
 
 <?php if($example!=$wpinfo->getContent()): ?>
-<h2><?php echo __('Example') ?></h2>
+<h3><?php echo __('Example') ?></h3>
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
 <?php echo link_to_function(
@@ -195,4 +193,10 @@ editor_selector : \"mceAdvanced\"
 </div>
 <?php endif ?>
 
+</td>
+</tr>
+</table>
+
+
 </div>
+

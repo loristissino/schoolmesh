@@ -22,6 +22,7 @@ class BaseWpinfoTypeFormFilter extends BaseFormFilterPropel
       'template'    => new sfWidgetFormFilterInput(),
       'example'     => new sfWidgetFormFilterInput(),
       'is_required' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'is_reserved' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
@@ -32,6 +33,7 @@ class BaseWpinfoTypeFormFilter extends BaseFormFilterPropel
       'template'    => new sfValidatorPass(array('required' => false)),
       'example'     => new sfValidatorPass(array('required' => false)),
       'is_required' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'is_reserved' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
     $this->widgetSchema->setNameFormat('wpinfo_type_filters[%s]');
@@ -57,6 +59,7 @@ class BaseWpinfoTypeFormFilter extends BaseFormFilterPropel
       'template'    => 'Text',
       'example'     => 'Text',
       'is_required' => 'Boolean',
+      'is_reserved' => 'Boolean',
     );
   }
 }
