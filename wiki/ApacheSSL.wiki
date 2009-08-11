@@ -3,7 +3,7 @@
 
 = Configurazione di Apache =
 
-1. Modificare il file _/etc/apache2/sites-available/default_ aggiungendo le seguenti righe:
+1. Modificare il file _/etc/apache2/sites-available/default_ aggiungendo le seguenti righe, subito prima di `</VirtualHost>`:
 
 {{{
     Alias "/schoolmesh/sf" "/usr/share/php/data/symfony/web/sf"
@@ -22,7 +22,13 @@
     </Directory>
 }}}
 
-2. Riavviare il server apache.
+2. Modificare i file di configurazione di PHP (_/etc/php5/apache2/php.ini_ e _/etc/php5/cli/php.ini_) in modo che contengano la seguente impostazione:
+
+{{{
+short_open_tag = Off
+}}}
+
+3. Riavviare il server apache.
 
 Passo successivo: [MySQL Configurazione di MySql]
 
