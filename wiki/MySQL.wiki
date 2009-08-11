@@ -3,7 +3,7 @@
 
 = MySQL =
 
-1. Accertarsi che il server MySQL sia in funzione.
+1. Accertarsi che il server MySQL sia in funzione:
 
 {{{
 $ sudo /etc/init.d/mysql status
@@ -21,13 +21,13 @@ Uptime:			3 hours 52 min 11 sec
 Threads: 1  Questions: 5771  Slow queries: 1  Opens: 3984  Flush tables: 1  Open tables: 64  Queries per second avg: 0.414
 }}}
 
-2. Creare, con l'interfaccia preferita (ad esempio con phpMyAdmin) un utente _schoolmesh_ e tre database:
+2. Creare, con l'interfaccia preferita (ad esempio con phpMyAdmin), un utente _schoolmesh_ e i tre database necessari:
 
-  * __schoolmesh__ (database per le prove)
-  * __schoolmesh\_test__ (database per i test automatizzati)
-  * __schoolmesh\_prod__ (database di produzione, da usare con i dati veri)
+  * `schoolmesh` (database per le prove)
+  * `schoolmesh_test` (database per i test automatizzati)
+  * `schoolmesh_prod` (database di produzione, da usare con i dati veri)
 
-Dovrebbero essere sufficienti i seguenti comandi SQL:
+Dovrebbero essere sufficienti i seguenti comandi SQL (ovviamente va sostituita la password):
 
 {{{
 CREATE DATABASE `schoolmesh` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -41,5 +41,51 @@ CREATE USER 'schoolmesh'@'localhost' IDENTIFIED BY 'seGreTo';
 GRANT ALL PRIVILEGES ON `schoolmesh` . * TO 'schoolmesh'@'localhost' WITH GRANT OPTION ;
 }}}
 
+3. Modificare il file _config/databases.yml_ impostando la password scelta per l'utente _schoolmesh_:
+
+{{{
+dev:
+  propel:
+    param:
+      classname: DebugPDO
+test:
+  propel:
+    class: sfPropelDatabase
+    param:
+      classname: DebugPDO
+      dsn: 'mysql:host=localhost;dbname=schoolmesh_test'
+prod:
+  propel:
+    class: sfPropelDatabase
+    param:
+      dsn: 'mysql:host=localhost;dbname=schoolmesh_prod'
+all:
+  propel:
+    class: sfPropelDatabase
+    param:
+      dsn: 'mysql:dbname=schoolmesh;host=localhost'
+      username: schoolmesh
+      password: seGreTo
+      encoding: utf8
+      persistent: true
+      pooling: true
+      classname: PropelPDO
+}}}
+
+4. Creare la struttura dei database:
+
+{{{
+$ cd /var/schoolmesh
+$ symfony propel:insert-sql --no-confirmation
+$ symfony propel:insert-sql --env=test --no-confirmation
+$ symfony propel:insert-sql --env=prod --no-confirmation
+}}}
+
+5. Caricare i dati di prova nel database di prova:
+
+{{{
+$ cd /var/schoolmesh
+$ symfony propel:data-load
+}}}
 
 Passo successivo: [ModificheLocali Modifiche locali e personalizzazioni]
