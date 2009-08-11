@@ -15,7 +15,7 @@ sfGuardUser:
     is_superadmin: false
 
   juri:
-    username:       juri.d
+    username:       juri.domodossola
     password:       jurip
     is_superadmin:  false
     
@@ -43,7 +43,11 @@ sfGuardUser:
     username:       gabriella.v
     password:       gx
     is_superadmin:  false
-    
+
+  guest:
+    username:      stefano.ospite
+    password:      op
+    is_superadmin: false
 
 sfGuardPermission:
   superadmin:

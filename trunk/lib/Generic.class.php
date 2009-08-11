@@ -136,7 +136,9 @@ class Generic{
 
 		static public function clever_ucwords($culture, $text)
 		{
-			return ucwords(Generic::strtolower_utf8(Generic::transform_bad_diacritics($culture, $text)));
+			$text = ucwords(Generic::strtolower_utf8(Generic::transform_bad_diacritics($culture, $text)));
+			$text=preg_replace_callback("/'[aeiou]/", create_function('$matches', 'return strtoupper($matches[0]);'), $text);
+			return $text;
 		}
 
 	}
