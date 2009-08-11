@@ -7,9 +7,9 @@
 
 1. [ImpostazioneIniziale Prima di iniziare]
 
-2. [ApacheSSL Configurazione di Apache]
+2. [SchoolMeshSetup Setup di SchoolMesh]
 
-3. [SchoolMeshSetup Setup di SchoolMesh]
+3. [ApacheSSL Configurazione di Apache]
 
 4. [MySQL Configurazione di MySql]
 
