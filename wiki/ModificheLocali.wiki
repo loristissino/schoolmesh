@@ -82,6 +82,8 @@ Il logo è nel file _web/images/logo.png_.
 Il layout principale della pagina è nel file _apps/frontend/templates/layout_orig.php_.
 Piuttosto di cambiare questo, è preferibile creare un layout diverso e far puntare il link simbolico _apps/frontend/templates/layout.php_ alla propria versione.
 
-# Personalizzazione delle impostazioni #
+== Personalizzazione delle impostazioni ==
 
 I dati principali non frequentemente modificabili sono amministrabili con l'applicazione di backend.
+
+Vedi [Manuale Manuale d'uso]
