@@ -26,6 +26,7 @@
 
 {{{
 short_open_tag = Off
+memory_limit = 128M
 }}}
 
 3. Riavviare il server apache.
