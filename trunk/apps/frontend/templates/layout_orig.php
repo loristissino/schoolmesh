@@ -49,7 +49,7 @@
       <div id="footer">
         <div class="content">
           <span class="schoolmesh">
-            <a href="http://schoolmesh.mattiussilab.net"><img src="/schoolmesh/images/schoolmesh-mini.png" /></a>
+            <a href="http://schoolmesh.mattiussilab.net"><img src="/schoolmesh/images/schoolmesh-mini.png" alt='schoolmesh' /></a>
             powered by <a href="http://www.symfony-project.org/">
             <img src="/schoolmesh/images/symfony.gif" alt="symfony framework" /></a>
           </span>
@@ -57,11 +57,6 @@
         </div>
       </div>
       
-</div>
-
-
-<div>
-
 
 </body>
 </html>

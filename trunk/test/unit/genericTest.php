@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../bootstrap/unit.php';
  
-$t = new lime_test(25, new lime_output_color());
+$t = new lime_test(49, new lime_output_color());
 
 $t->diag('::datetime()');
 
@@ -62,8 +62,10 @@ foreach(array(
 	'foo.bèr'=>'foo.ber',
 	'wladisław'=>'wladislaw',
 	'Łęczewski'=>'Leczewski',
-	'Myklegård' => 'Myklegard',
-	'München'=>'Munchen',
+	'Myklegård' => 'Myklegaard',
+	'München'=>'Muenchen',
+	'Bosøw' => 'Bosow',
+	'Đakovo' => 'Djakovo',
 	'niño'=>'nino',
 	'+-*/'=>'+-*/',
 	) as $key=>$value)
@@ -78,8 +80,62 @@ foreach(array(
 	'foo '=>'foo',
 	' foo'=>'foo',
 	'foo bar'=>'foobar',
+	'foo.bar'=>'foo.bar',
 	'foo-bar'=>'foo-bar',
+	'FOO'=>'foo',
 	) as $key=>$value)
 {
 	$t->is(Generic::slugify($key), $value, sprintf('«%s» is slugified into «%s»', $key, $value));
 }
+
+
+$t->diag('::transform_bad_diacritics("foo")');
+
+try
+{
+	Generic::transform_bad_diacritics('foo', '');
+	$t->fail('no code should be executed after throwing an exception (invalid culture)');
+}
+catch (Exception $e)
+{
+  $t->pass('exception catched successfully: '. $e);
+}
+
+$t->diag('::transform_bad_diacritics("it")');
+
+foreach(array(
+	'foo'=>'foo',
+	'FOO'=>'FOO',
+	"Fooa'"=>'Fooà',
+	"Fooe'"=>'Fooé',
+	"Fooi'"=>'Fooì',
+	"Fooo'"=>'Fooò',
+	"Foou'"=>'Fooù',
+	"F'OOA"=>"F'OOA",
+	) as $key=>$value)
+{
+	$t->is(Generic::transform_bad_diacritics('it', $key), $value, sprintf('bad diacritics were stripped away («%s»  into «%s»)', $key, $value));
+}
+
+
+$t->diag('::clever_ucwords("it")');
+
+foreach(array(
+	'FOO'=>'Foo',
+	'foo bar'=>'Foo Bar',
+	'FOO BAR'=>'Foo Bar',
+	'fOO bAR'=>'Foo Bar',
+	'23foo bar'=>'23foo Bar',
+	
+	"FOOA'"=>'Fooà',
+	"FOOE'"=>'Fooé',
+	'FOO BAR'=>'Foo Bar',
+	"FOOI'"=>'Fooì',
+	"FOOO'"=>'Fooò',
+	"FOOU'"=>'Fooù',
+	"F'OOA"=>"F'ooa",
+	) as $key=>$value)
+{
+	$t->is(Generic::clever_ucwords('it', $key), $value, sprintf('«%s» correctly transformed into «%s»)', $key, $value));
+}
+

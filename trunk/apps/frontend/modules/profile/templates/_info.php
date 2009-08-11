@@ -41,9 +41,9 @@
 
             <p>
                 <?php if($disk_soft_quota_exceeded): ?>
-                    <?php echo image_tag("../sfPropelPlugin/images/error") ?>
+                    <?php echo image_tag('error', array('alt'=>__('failed'))) ?>
                 <?php else: ?>
-                    <?php echo image_tag("../sfPropelPlugin/images/tick") ?>
+                    <?php echo image_tag('tick', array('alt'=>__('passed'))) ?>
                 <?php endif; ?>
     
                 <?php echo __("You are using %percentage%% of your assigned disk space.", array('%percentage%'=>100*$current_user->getProfile()->getDiskUsedBlocks()/$current_user->getProfile()->getDiskSetHardBlocksQuota())) ?>

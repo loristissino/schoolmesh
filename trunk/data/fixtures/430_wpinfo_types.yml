@@ -5,6 +5,7 @@ WpinfoType:
     rank:   1
     state:  0
     is_required: true
+    is_reserved: true
     example: La classe, composta da 20 allievi, si presenta omogenea dal punto di vista delle capacità e degli interessi verso la disciplina.
   wppa:
     title:        Area di progetto

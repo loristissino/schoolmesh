@@ -34,6 +34,9 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	protected $is_required;
 
 	
+	protected $is_reserved;
+
+	
 	protected $collWpinfos;
 
 	
@@ -103,6 +106,12 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	public function getIsRequired()
 	{
 		return $this->is_required;
+	}
+
+	
+	public function getIsReserved()
+	{
+		return $this->is_reserved;
 	}
 
 	
@@ -218,6 +227,20 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setIsReserved($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_reserved !== $v) {
+			$this->is_reserved = $v;
+			$this->modifiedColumns[] = WpinfoTypePeer::IS_RESERVED;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array())) {
@@ -239,6 +262,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$this->template = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->example = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->is_required = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
+			$this->is_reserved = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -247,7 +271,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 8; 
+						return $startcol + 9; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WpinfoType object", $e);
 		}
@@ -455,6 +479,9 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			case 7:
 				return $this->getIsRequired();
 				break;
+			case 8:
+				return $this->getIsReserved();
+				break;
 			default:
 				return null;
 				break;
@@ -473,6 +500,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$keys[5] => $this->getTemplate(),
 			$keys[6] => $this->getExample(),
 			$keys[7] => $this->getIsRequired(),
+			$keys[8] => $this->getIsReserved(),
 		);
 		return $result;
 	}
@@ -512,6 +540,9 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			case 7:
 				$this->setIsRequired($value);
 				break;
+			case 8:
+				$this->setIsReserved($value);
+				break;
 		} 	}
 
 	
@@ -527,6 +558,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setTemplate($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setExample($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setIsRequired($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setIsReserved($arr[$keys[8]]);
 	}
 
 	
@@ -542,6 +574,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpinfoTypePeer::TEMPLATE)) $criteria->add(WpinfoTypePeer::TEMPLATE, $this->template);
 		if ($this->isColumnModified(WpinfoTypePeer::EXAMPLE)) $criteria->add(WpinfoTypePeer::EXAMPLE, $this->example);
 		if ($this->isColumnModified(WpinfoTypePeer::IS_REQUIRED)) $criteria->add(WpinfoTypePeer::IS_REQUIRED, $this->is_required);
+		if ($this->isColumnModified(WpinfoTypePeer::IS_RESERVED)) $criteria->add(WpinfoTypePeer::IS_RESERVED, $this->is_reserved);
 
 		return $criteria;
 	}
@@ -585,6 +618,8 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		$copyObj->setExample($this->example);
 
 		$copyObj->setIsRequired($this->is_required);
+
+		$copyObj->setIsReserved($this->is_reserved);
 
 
 		if ($deepCopy) {

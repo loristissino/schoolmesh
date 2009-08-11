@@ -1,4 +1,4 @@
-.TH SCHOOLMESH 1 "August 6, 2009" "Schoolmesh utilities User Manuals"
+.TH SCHOOLMESH 8 "August 6, 2009" "Schoolmesh utilities User Manuals"
 .SH NAME
 .PP
 schoolmesh - command line utilities to be used with SchoolMesh web
@@ -37,6 +37,17 @@ schoolmesh_dir_changeperms
 .PD
 schoolmesh_dir_changeowner
 \f[I]params\f[]
+.PD 0
+.P
+.PD
+schoolmesh_dir_create \f[I]params\f[]
+schoolmesh_dir_extattrget
+\f[I]params\f[]
+.PD 0
+.P
+.PD
+schoolmesh_dir_extattrset
+\f[I]params\f[]
 .SH DESCRIPTION
 .PP
 These utilities are really only basic wrapper scripts to be used
@@ -49,13 +60,6 @@ need to change the wrapper scripts\.
 .PP
 The wrappers provided are described here below\.
 .SH UTILITIES
-.PP
-\f[CR]
-      schoolmesh_user_quotaget\ *username*
-\f[]
-.PP
-Return information about disk quota set and used for the user
-\f[I]username\f[] just type:
 .PP
 \f[CR]
       schoolmesh_user_changeusername\ *newusername*\ *basedir*\ *oldusername*
@@ -89,15 +93,31 @@ Change the permissions for the directory \f[I]directory\f[]\.
 .PP
 Change the owner to \f[I]username\f[] for the directory
 \f[I]directory\f[]\.
+.PP
+\f[CR]
+      schoolmesh_user_quotaget\ *username*
+\f[]
+.PP
+Return information about disk quota set and used for the user
+\f[I]username\f[]\.
+.PP
+\f[CR]
+      schoolmesh_user_quotaset\ *username*\ *sbq*\ *hbq*\ *sfq*\ *hfq*\ *filesystem*
+\f[]
+.PP
+Set disk quotas for \f[I]username\f[] (soft blocks quota, hard
+blocks quota, soft inodes quota, hard inodes quota)\.
 .SH EXAMPLES
 .PP
 \f[CR]
-      schoolmesh_user_quotaget\ john\ \ 
       schoolmesh_user_changeusername\ john\ /home/users\ jhon\ \ 
       schoolmesh_user_changegroup\ teachers\ john\ \ 
       schoolmesh_user_add\ john\ /home/users\ students\ \[aq]Johnny\ Smith\[aq]\ \ \ \ 
       schoolmesh_dir_changeperms\ 711\ /home/users/john
-      schoolmesh_dir_changeowner\ john\ /home/users/john
+      schoolmesh_dir_changeowner\ john\ /home/users/john\ \ \ 
+      schoolmesh_dir_create\ /home/users/john/www
+      schoolmesh_user_quotaget\ john\ \ 
+      schoolmesh_user_quotaset\ john\ 4000\ 5000\ 300\ 400\ /home/users\ 
 \f[]
 .SH BUGS
 .PP

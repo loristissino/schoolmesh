@@ -329,6 +329,7 @@ CREATE TABLE `wpinfo_type`
 	`template` TEXT,
 	`example` TEXT,
 	`is_required` TINYINT,
+	`is_reserved` TINYINT,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 

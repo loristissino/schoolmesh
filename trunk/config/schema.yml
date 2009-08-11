@@ -155,8 +155,9 @@ propel:
     template:     longvarchar
     example:     longvarchar
     is_required:  boolean
+    is_reserved: boolean
 # state indicates in which of workplan's state this item type should be shown
-
+# is_reserved indicates that this field should not be published and should be seen only by the schoolmaster 
 
   wpinfo:
     id: ~
