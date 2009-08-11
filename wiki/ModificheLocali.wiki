@@ -5,15 +5,13 @@
 
 Le più importanti modifiche riguardano le modalità di accesso al database e di autenticazione. 
 
-L'idea di base è di tenere le copie modificate in /etc/schoolmesh e di studiare un meccanismo da applicare quando viene fatto l'aggiornamento del software.
-
 I file da prendere in considerazione sono:
 
   * _apps/frontend/config/app.yml_ (configurazione dell'applicazione di frontend)
   * _apps/backend/config/app.yml_ (configurazione dell'applicazione di backend)
   * _config/databases.yml_ (accesso ai database)
 
-__Attenzione__: questi file vengono sovrascritti con gli aggiornamenti, per cui è importante farsene una copia di sicurezza.
+*Attenzione*: questi file vengono sovrascritti con gli aggiornamenti, per cui è importante farsene una copia di sicurezza (ad esempio, in _/etc/schoolmesh_.
 
 == Autenticazione ==
 
@@ -50,3 +48,36 @@ Se si vuole un'autenticazione basata sul DB, è sufficiente "disabilitare" le du
 }}}
 
 Altrimenti, cambiare il nome della funzione di autenticazione da usare, scegliendone una tra quelle indicate, e fornendo i dettagli sotto.
+
+== Personalizzazioni delle scuole ==
+
+Ogni scuola può personanalizzare secondo le proprie esigenze diverse cose. Alcune personalizzazioni possono essere fatte direttamente modificando i file _app.yml_:
+
+Per l'ITC Mattiussi ci sono queste voci:
+
+{{{
+  school:
+    name:           ITC Mattiussi
+    town:           Pordenone
+    website:        'http://www.itcmattiussi.it'
+
+  mail:
+    webmaster:      loris.tissino@mattiussilab.net
+    
+  config:
+    current_year:   2008  # only the first of the two years of a scholastic/academic year
+    culture: it
+    posix_homedir: /home/testhome 
+    posix_basefolder: Mattiussi  # this folder contains symbolic links and other stuff; should be present in each homedir
+    teachers_default_posix_group: docenti
+    students_default_posix_group: allievi
+    class_teachersteam_prefix: cdc  # for the new team of teachers automatically created, and the name will be prefixed with this
+    class_teachersteam_name: Consiglio di classe
+    googleapps_domain: mattiussilab.net
+    googleapps_url: http://webmail.mattiussilab.net
+}}}
+
+Il logo è nel file _web/images/logo.png_.
+
+Il layout principale della pagina è nel file _apps/frontend/templates/layout_orig.php_.
+Piuttosto di cambiare questo, è preferibile creare un layout diverso e far puntare il link simbolico _apps/frontend/templates/layout.php_ alla propria versione.
