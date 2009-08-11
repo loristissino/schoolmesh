@@ -29,7 +29,6 @@ for FILE in config/databases.yml apps/frontend/config/app.yml apps/backend/confi
     [[ -f "$FILE" ]] && cp -v "$FILE" "$CONFIGDIR/$FILE.backup"$(date +%s)
   done
 
-exit
 
 svn checkout http://schoolmesh.googlecode.com/svn/trunk/ "$INSTALLDIR"
 
