@@ -1,0 +1,25 @@
+SystemMessage:
+
+  sm_WP_APPROVED:
+    key: WP_APPROVED
+  sm_WP_REJECTED:
+    key: WP_REJECTED
+
+SystemMessageI18n:
+
+  sm_WP_APPROVED_it:
+    id: sm_WP_APPROVED
+    culture: it  
+    content: Piano di lavoro approvato  
+  sm_WP_REJECTED_it:
+    id: sm_WP_REJECTED
+    culture: it  
+    content: Piano di lavoro non approvato  
+  sm_WP_APPROVED_en:
+    id:   sm_WP_APPROVED
+    culture: en  
+    content: Workplan approved  
+  sm_WP_REJECTED_en:
+    id: sm_WP_REJECTED
+    culture: en  
+    content: Workplan rejected  

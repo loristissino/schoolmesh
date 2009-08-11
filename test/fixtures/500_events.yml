@@ -1,0 +1,220 @@
+Wpevent:
+  wp70_0:
+    created_at: <?php echo date("U", mktime(0,0,0, 9, 1, 2007)) . "\n" ?>
+    appointment_id: test_ast_3ap_70
+    user_id:  	loris
+    comment:  Appointment set
+    state:  0
+  wp70_10:
+    created_at: <?php echo date("U", mktime(0,0,0, 10, 20, 2007)) . "\n" ?>
+    appointment_id: test_ast_3ap_70
+    user_id:  	john.test
+    comment:  Workplan submitted
+    state:  10
+  wp70_20:
+    created_at: <?php echo date("U", mktime(0,0,0, 10, 22, 2007)) . "\n" ?>
+    appointment_id: test_ast_3ap_70
+    user_id:  	gabriella
+    comment:  Workplan approved
+    state:  20
+  wp70_30:
+    created_at: <?php echo date("U", mktime(0,0,0, 11, 5, 2007)) . "\n" ?>
+    appointment_id: test_ast_3ap_70
+    user_id:  	antonio
+    comment:  Workplan approved
+    state:  30
+  wp70_40:
+    created_at: <?php echo date("U", mktime(0,0,0, 1, 31, 2008)) . "\n" ?>
+    appointment_id: test_ast_3ap_70
+    user_id:  	john.test
+    comment:  Intermediate report submitted
+    state:  40
+  wp70_30a:
+    created_at: <?php echo date("U", mktime(0,0,0, 2, 5, 2008)) . "\n" ?>
+    appointment_id: test_ast_3ap_70
+    user_id:  	antonio
+    comment: Evaluation of intermediate report done
+    state:  30
+  wp70_50:
+    created_at: <?php echo date("U", mktime(0,0,0, 6, 2, 2008)) . "\n" ?>
+    appointment_id: test_ast_3ap_70
+    user_id:  	john.test
+    comment:  Final report submitted
+    state:  50
+  wp70_60:
+    created_at: <?php echo date("U", mktime(0,0,0, 6, 3, 2008)) . "\n" ?>
+    appointment_id: test_ast_3ap_70
+    user_id:  	gabriella
+    comment:  Final report administratively checked
+    state:  60
+  wp70_70:
+    created_at: <?php echo date("U", mktime(0,0,0, 6, 15, 2008)) . "\n" ?>
+    appointment_id: test_ast_3ap_70
+    user_id:  	antonio
+    comment:  Final report approved and archived
+    state:  70
+  wp0_0:
+    created_at: <?php echo date("U", mktime(0,0,0, 9, 1, 2008)) . "\n" ?>
+    appointment_id: test_ast_3ap_0
+    user_id:  	loris
+    comment:  Appointment set
+    state:  0
+  wp10_0:
+    created_at: <?php echo date("U", mktime(0,0,0, 9, 1, 2008)) . "\n" ?>
+    appointment_id: test_ast_4ap_10
+    user_id:  	loris
+    comment:  Appointment set
+    state:  0
+  wp10_10:
+    created_at: <?php echo date("U", mktime(0,0,0, 10, 31, 2008)) . "\n" ?>
+    appointment_id: test_ast_4ap_10
+    user_id:  	john.test
+    comment:  Workplan submitted
+    state:  10
+  wp20_0:
+    created_at: <?php echo date("U", mktime(0,0,0, 9, 1, 2008)) . "\n" ?>
+    appointment_id: test_ast_5ap_20
+    user_id:  	loris
+    comment:  Appointment set
+    state:  0
+  wp20_10:
+    created_at: <?php echo date("U", mktime(0,0,0, 11, 2, 2008)) . "\n" ?>
+    appointment_id: test_ast_5ap_20
+    user_id:  	john.test
+    comment:  Workplan submitted
+    state: 10
+  wp20_20:
+    created_at: <?php echo date("U", mktime(0,0,0, 11, 3, 2008)) . "\n" ?>
+    appointment_id: test_ast_5ap_20
+    user_id:  	gabriella
+    comment:  Workplan approved
+    state: 20
+  wp30_0:
+    created_at: <?php echo date("U", mktime(0,0,0, 9, 1, 2008)) . "\n" ?>
+    appointment_id: test_fis_3ap_30
+    user_id:  	loris
+    comment:  Appointment set
+    state:  0
+  wp30_10:
+    created_at: <?php echo date("U", mktime(0,0,0, 11, 2, 2008)) . "\n" ?>
+    appointment_id: test_fis_3ap_30
+    user_id:  	john.test
+    comment:  Workplan submitted
+    state: 10
+  wp30_20:
+    created_at: <?php echo date("U", mktime(0,0,0, 11, 3, 2008)) . "\n" ?>
+    appointment_id: test_fis_3ap_30
+    user_id:  	gabriella
+    comment:  Workplan approved
+    state: 20
+  wp30_30:
+    created_at: <?php echo date("U", mktime(0,0,0, 11, 5, 2008)) . "\n" ?>
+    appointment_id: test_fis_3ap_30
+    user_id:  	antonio
+    comment:  Workplan approved
+    state: 30
+
+  wp40_0:
+    created_at: <?php echo date("U", mktime(0,0,0, 9, 1, 2007)) . "\n" ?>
+    appointment_id: test_fis_4ap_40
+    user_id:  	loris
+    comment:  Appointment set
+    state:  0
+  wp40_10:
+    created_at: <?php echo date("U", mktime(0,0,0, 11, 2, 2007)) . "\n" ?>
+    appointment_id: test_fis_4ap_40
+    user_id:  	john.test
+    comment:  Workplan submitted
+    state: 10
+  wp40_20:
+    created_at: <?php echo date("U", mktime(0,0,0, 11, 3, 2007)) . "\n" ?>
+    appointment_id: test_fis_4ap_40
+    user_id:  	gabriella
+    comment:  Workplan approved
+    state: 20
+  wp40_30:
+    created_at: <?php echo date("U", mktime(0,0,0, 11, 5, 2007)) . "\n" ?>
+    appointment_id: test_fis_4ap_40
+    user_id:  	antonio
+    comment:  Workplan approved
+    state: 30
+  wp40_40:
+    created_at: <?php echo date("U", mktime(0,0,0, 12, 2, 2008)) . "\n" ?>
+    appointment_id: test_fis_4ap_40
+    user_id:  	john.test
+    comment:  Intermediate report submitted
+    state: 40
+
+  wp50_0:
+    created_at: <?php echo date("U", mktime(0,0,0, 9, 1, 2007)) . "\n" ?>
+    appointment_id:   test_fis_5ap_50
+    user_id:  	loris
+    comment:  Appointment set
+    state:  0
+  wp50_10:
+    created_at: <?php echo date("U", mktime(0,0,0, 11, 2, 2007)) . "\n" ?>
+    appointment_id:   test_fis_5ap_50
+    user_id:  	john.test
+    comment:  Workplan submitted
+    state: 10
+  wp50_20:
+    created_at: <?php echo date("U", mktime(0,0,0, 11, 3, 2007)) . "\n" ?>
+    appointment_id:   test_fis_5ap_50
+    user_id:  	gabriella
+    comment:  Workplan approved
+    state: 20
+  wp50_30:
+    created_at: <?php echo date("U", mktime(0,0,0, 11, 5, 2007)) . "\n" ?>
+    appointment_id:   test_fis_5ap_50
+    user_id:  	antonio
+    comment:  Workplan approved
+    state: 30
+  wp50_50:
+    created_at: <?php echo date("U", mktime(0,0,0, 6, 10, 2008)) . "\n" ?>
+    appointment_id:   test_fis_5ap_50
+    user_id:  	john.test
+    comment:  Final report submitted
+    state: 50
+
+  wp60_0:
+    created_at: <?php echo date("U", mktime(0,0,0, 9, 1, 2007)) . "\n" ?>
+    appointment_id:   test_ast_3bp_60
+    user_id:  	loris
+    comment:  Appointment set
+    state:  0
+  wp60_10:
+    created_at: <?php echo date("U", mktime(0,0,0, 11, 2, 2007)) . "\n" ?>
+    appointment_id:   test_ast_3bp_60
+    user_id:  	john.test
+    comment:  Workplan submitted
+    state: 10
+  wp60_20:
+    created_at: <?php echo date("U", mktime(0,0,0, 11, 3, 2007)) . "\n" ?>
+    appointment_id:   test_ast_3bp_60
+    user_id:  	gabriella
+    comment:  Workplan approved
+    state: 20
+  wp60_30:
+    created_at: <?php echo date("U", mktime(0,0,0, 11, 5, 2007)) . "\n" ?>
+    appointment_id:   test_ast_3bp_60
+    user_id:  	antonio
+    comment:  Workplan approved
+    state: 30
+  wp60_50:
+    created_at: <?php echo date("U", mktime(0,0,0, 6, 10, 2008)) . "\n" ?>
+    appointment_id:   test_ast_3bp_60
+    user_id:  	john.test
+    comment:  Final report submitted
+    state: 50
+  wp60_60:
+    created_at: <?php echo date("U", mktime(0,0,0, 6, 11, 2008)) . "\n" ?>
+    appointment_id:   test_ast_3bp_60
+    user_id:  	gabriella
+    comment:  Final report administratively checked
+    state: 60
+  wp60_0b:
+    created_at: <?php echo date("U", mktime(0,0,0, 9, 1, 2008)) . "\n" ?>
+    appointment_id:  test_ast_3bp_0
+    user_id:  	loris
+    comment:  Appointment set
+    state:  0

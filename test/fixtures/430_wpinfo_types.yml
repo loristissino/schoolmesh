@@ -1,0 +1,71 @@
+WpinfoType:
+  wpsituation:
+    title:        Livelli di partenza rilevati
+    description:  Situazione generale della classe
+    rank:   1
+    state:  0
+    is_required: true
+    is_reserved: true
+    example: La classe, composta da 20 allievi, si presenta omogenea dal punto di vista delle capacità e degli interessi verso la disciplina.
+  wppa:
+    title:        Area di progetto
+    description:  Eventuali proposte e contributi per l'Area di Progetto (solo Triennio)
+    rank:   2
+    state:  0
+    is_required: false
+  wpextra:
+    title:        Attività extracurricolari
+    description:  Attività integrative ed extracurricolari previste
+    rank:   3
+    state:  0
+    is_required: false
+  wpcriteria:
+    title:         Valutazione
+    description:  Criteri e strumenti adottati per la valutazione
+    rank:   4
+    state:  0
+    is_required: true
+  wpassessements:
+    title:        Prove di verifica sommative
+    description:  Numero e tipo di prove di verifica sommative nei diversi periodi
+    rank:   5
+    state:  0
+    template:  Primo periodo: scritte \d+; orali \d+; pratiche \d+.<br />Secondo periodo: scritte \d+; orali \d+; pratiche \d+.
+    is_required: true
+    example:  Primo periodo: scritte 2; orali 2; pratiche 0.<br />Secondo periodo: scritte 3; orali 2; pratiche 0.
+  wpadditionalclasses:
+    title:       Recupero programmato
+    description:  Tempi e modalità previste per il recupero
+    rank:   6
+    state:  0
+    is_required: true
+  wpbooks:
+    title:       Libri di testo
+    description:  Libri di testo adottati e/o consigliati
+    rank:   7
+    state:  0
+    is_required: false
+  wpcomments:
+    title:        Commenti (progettazione)
+    description:  Commenti ed osservazioni in fase di progettazione
+    rank:   8
+    state:  0
+    is_required: false
+  frsituation:
+    title:        Situazione finale della classe
+    description:  Descrizione della situazione della classe alla fine dell'anno scolastico
+    rank:   9
+    state:  30
+    is_required: true
+  fradditionalclasses:
+    title:        Recupero attuato
+    description:  Tempi e modalità adottate per il recupero
+    rank:   10
+    state:  30
+    is_required: true
+  frconsiderations:
+    title:        Commenti (relazione finale)
+    description:  Commenti ed osservazioni in fase di relazione finale
+    rank:   11
+    state:  30
+    is_required: false

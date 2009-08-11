@@ -3,39 +3,54 @@ Role:
     description:  Dirigente Scolastico
     quality_code: DS
     posix_name:   ds
+    may_be_main_role: true
   dsga:
     description:  Direttore Servizi Generali e Amministrativi
     quality_code: DSGA
     posix_name:   dsga
+    may_be_main_role: true
   doc:
     description:  Docente
     quality_code: DOC
     posix_name:   docenti
+    may_be_main_role: true
   ccc:
     description:  Coordinatore Consiglio di Classe
     quality_code: CCC
     posix_name:   ccc
+    may_be_main_role: false
   scc:
     description:  Segretario Consiglio di Classe
     quality_code: SCC
     posix_name:   scc
+    may_be_main_role: false
   at:
     description:  Assistente Tecnico
     quality_code: AT
     posix_name:   ata
+    may_be_main_role: true
   cm:
     description:  Coordinatore Dipartimento
     quality_code: CM
     posix_name:   cm
+    may_be_main_role: false
   risq:
     description:  Responsabile informatico Sistema Qualità
     quality_code: RISQ
     posix_name:   risq
+    may_be_main_role: false
   rsq:
     description:  Responsabile Sistema Qualità
     quality_code: RSQ
     posix_name:   risq
+    may_be_main_role: false
   stu:
     description: Studente
     quality_code: STU
     posix_name:   allievi
+    may_be_main_role: true
+  member:
+    description: Componente
+    quality_code: MEMBER
+    posix_name:  member
+    may_be_main_role: false

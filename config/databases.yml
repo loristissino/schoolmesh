@@ -8,16 +8,11 @@ test:
     param:
       classname: DebugPDO
       dsn: 'mysql:host=localhost;dbname=schoolmesh_test'
-      username: schoolmesh
-      password: 2hzdBqtSc7MxM22u
 prod:
   propel:
     class: sfPropelDatabase
     param:
-      classname: DebugPDO
       dsn: 'mysql:host=localhost;dbname=schoolmesh_prod'
-      username: schoolmesh
-      password: 2hzdBqtSc7MxM22u
 all:
   propel:
     class: sfPropelDatabase
