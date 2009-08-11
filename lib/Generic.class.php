@@ -107,7 +107,7 @@ class Generic{
 			switch($culture)
 			{
 				case 'it':
-				
+					$text=str_replace(array('’', '`'), "'", $text);
 				    foreach(array(
 						"a'"=>'à',
 						"e'"=>'é',
@@ -136,8 +136,7 @@ class Generic{
 
 		static public function clever_ucwords($culture, $text)
 		{
-			
-			return ucwords(self::strtolower_utf8(self::transform_bad_diacritics($culture, $text)));
+			return ucwords(Generic::strtolower_utf8(Generic::transform_bad_diacritics($culture, $text)));
 		}
 
 	}

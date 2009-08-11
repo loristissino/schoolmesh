@@ -98,6 +98,8 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	public static function importFromCSVFile($file)
 	{
 		$checks=array();
+		
+		$culture=sfConfig::get('app_config_culture');
 						
 		if (!is_readable($file))
 		{
@@ -114,8 +116,8 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 			//$num = count($data);
 			//echo "$num fields in line $row:\n";
 			
-
 			$row++;
+			$checkgroup=sprintf('Line %d: ', $row);
 
 			if ($row==1)
 				{
@@ -125,7 +127,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
 			if (sizeof($data)!=10)
 			{
-				$checks[]=new Check(false, 'Invalid data', sprintf('Line %d: ', $row));
+				$checks[]=new Check(false, 'Invalid data', $checkgroup);
 				continue;
 			}
 
@@ -133,7 +135,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 			
 			if ($import_code=='')
 			{
-				$checks[]=new Check(false, 'Import code not set', sprintf('Line %d: ', $row));
+				$checks[]=new Check(false, 'Import code not set', $checkgroup);
 				continue;
 			}
 			
@@ -141,40 +143,31 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 			
 			if($profile)
 			{
-				if ($profile->getFirstname()!=$first_name or $profile->getLastname()!=$last_name)
-				{
-					$checks[]=new Check(false, sprintf('name does not match («%s %s» != «%s %s»)', 
-						$profile->getFirstname(), $profile->getLastname(),
-						$first_name, $last_name),
-						 sprintf('Line %d: ', $row)
-						); 
-				}
-				else
-				{
-					$profile->updateMiddlename($middle_name)
-					->setGender($gender)
-					->setBirthplace($birthplace)
-					->setBirthdate($birthdate)
-					->updateEmail($email)
-					->save();
-					$checks[]=new Check(true, sprintf('updated info for %s (%s)', 
-						$profile->getFullName(), $profile->getSfGuardUser()->getUsername()),
-						 sprintf('Line %d: ', $row)
-						); 
-				}
+				$profile->updateMiddlename($middle_name)
+				->setGender($gender)
+				->updateBirthplace($birthplace)
+//				->updateBirthdate($birthdate)
+				->updateEmail($email)
+				->save();
+				$checks[]=new Check(true, sprintf('updated info for %s (%s)', 
+					$profile->getFullName(), $profile->getSfGuardUser()->getUsername()),
+					 $checkgroup
+					); 
 				
 			}
 			
 			else
 			{
 				$profile=new sfGuardUserProfile();
+				
+				
 				$profile
-				->setFirstName($first_name)
-				->setMiddleName($middle_name)
-				->setLastName($last_name)
+				->setFirstName(Generic::clever_ucwords($culture, $first_name))
+				->setMiddleName(Generic::clever_ucwords($culture, $middle_name))
+				->setLastName(Generic::clever_ucwords($culture, $last_name))
 				->setGender($gender)
-				->setBirthplace($birthplace)
-				->setBirthdate($birthdate)
+				->setBirthplace(Generic::clever_ucwords($culture, $birthplace))
+		//		->setBirthdate($birthdate)
 				->setEmail($email)
 				->setImportCode($import_code);
 				
@@ -200,30 +193,30 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 						$typeok=true;
 						break;
 						
-					$checks[]=new Check(false, 'invalid type', sprintf('Line %d: ', $row));
+					$checks[]=new Check(false, 'invalid type', $checkgroup);
 				}
 
 				if($typeok)
 				{
 					$user = new sfGuardUser();
+					$username_found=$profile->findGoodUsername();
 					$user
-					->setUsername($profile->findGoodUsername())
+					->setUsername($username_found['username'])
 					->save();
 					$profile
 					->setUserId($user->getId())
+					->addSystemAlert('username invented', $username_found['invented'])
 					->save();
 
-					$checks[]=new Check(true, sprintf('created user %s (%s)', $profile->getFullName(), $user->getUsername()), sprintf('Line %d: ', $row));
+					$checks[]=new Check(true, sprintf('created user %s (%s)', $profile->getFullName(), $user->getUsername()), $checkgroup);
 				}
 				else
 				{
-					$checks[]=new Check(false, 'type not ok', sprintf('Line %d: ', $row));
+					$checks[]=new Check(false, 'type not ok', $checkgroup);
 				}
 				
 				
 			}
-			
-			
 			
 			
 			$imported++;
