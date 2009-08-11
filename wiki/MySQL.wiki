@@ -89,8 +89,15 @@ symfony propel:insert-sql --env=prod --no-confirmation
 5. Caricare i dati di prova nel database di prova:
 
 {{{
-$ cd /var/schoolmesh
-$ symfony propel:data-load
+cd /var/schoolmesh
+symfony propel:data-load
 }}}
+
+6. Accedere con un browser alla pagina http://localhost/schoolmesh/frontend_dev.php e provare a fare il login con le credenziali:
+
+  * username: _john.test_
+  * password: _johnp_
+
+
 
 Passo successivo: [ModificheLocali Modifiche locali e personalizzazioni]
