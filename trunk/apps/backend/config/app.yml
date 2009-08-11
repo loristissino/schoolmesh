@@ -2,4 +2,20 @@
 all:
 
   sf_guard_plugin:
-    check_password_callable: [ldap, checkLdapPassword]
+    check_password_callable: [Authentication, testOnly]
+
+# to validate the user, the function testOnly() in the Authentication class will be used
+# comment this line to use standard authentication (against the db)
+
+# or choose one of the following functions:
+# testOnly: all users are authenticated whatever password (but null) they provide
+# checkLdapPassword: users are authenticated against a LDAP server, specified in the lines below
+# checkSambaPassword: users are authenticated against a Samba server (probably working also against a Windows authentication server)
+
+  authentication:
+    ldap:
+      host: localhost
+      domain: dc=example,dc=com
+    samba:
+      share: //example/homes
+      address: 192.168.1.1

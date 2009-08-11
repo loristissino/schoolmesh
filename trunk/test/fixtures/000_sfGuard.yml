@@ -8,45 +8,59 @@ sfGuardUser:
     username:       loris.tissino
     password:       lorisp
     is_superadmin:  false
-  
+
+  john.test:
+    username:      john.test
+    password:      testp
+    is_superadmin: false
+
   juri:
-    username:       juri.daldan
+    username:       juri.d
     password:       jurip
     is_superadmin:  false
     
   flavia:
-    username:       flavia.garlato
+    username:       flavia.g
     password:       flaviap
     is_superadmin:  false
     
   francesco:
-    username:       francesco.gri
+    username:       francesco.g
     password:       francescop
     is_superadmin:  false
 
   bianca:
-    username:       bianca.bagala
+    username:       bianca.b
     password:       biancax
     is_superadmin:  false
 
   antonio:
-    username:       antonio.dulio
+    username:       antonio.d
     password:       antoniox
     is_superadmin:  false
 
   gabriella:
-    username:       gabriella.valvasori
+    username:       gabriella.v
     password:       gx
     is_superadmin:  false
     
 
 sfGuardPermission:
+  superadmin:
+    name:           superadmin
+    description:   Amministrazione di backend
   admin:
     name:           admin
     description:    Amministrazione generale
   planning:
     name:           planning
     description:    Pianificazione didattica
+  schoolmaster:
+    name:           schoolmaster
+    description:    Permessi del Dirigente Scolastico
+  office:
+    name:           office
+    description:    Permessi della Segreteria didattica
   internet:
     name:           internet
     description:    Gestione accesso a Internet
@@ -63,6 +77,9 @@ sfGuardPermission:
   
 
 sfGuardGroup:
+  superadmin:
+    name:          superadmin
+    description:    Gruppo Amministratori del Backend
   admin:
     name:           admin
     description:    Gruppo Amministratori
@@ -81,10 +98,17 @@ sfGuardGroup:
   quality_pub:
     name:           quality_pub
     description:    Gruppo Gestori Documentazione Qualità
-
-
+  schoolmasterteam:
+    name:           schoolmasterteam
+    description:   Gruppo Collaboratori del Dirigente Scolastico
+  officeteam:
+    name:           officeteam
+    description:   Segreteria didattica
 
 sfGuardGroupPermission:
+  superadmin:
+    group_id:       superadmin
+    permission_id:  superadmin
   admin:
     group_id:       admin
     permission_id:  admin
@@ -100,11 +124,24 @@ sfGuardGroupPermission:
   technician_project:
     group_id:       technician
     permission_id:  project
+  smt_schoolmaster:
+    group_id:       schoolmasterteam
+    permission_id:  schoolmaster
+  office_office:
+    group_id:      officeteam
+    permission_id:  office
+
 
 sfGuardUserGroup:
   admin:
     group_id:       admin
     user_id:        admin
+  bianca:
+    group_id:       teacher
+    user_id:        bianca
+  loris0:
+    group_id:      superadmin
+    user_id:        loris
   loris1:
     group_id:       teacher
     user_id:        loris
@@ -129,5 +166,15 @@ sfGuardUserGroup:
   juri3:
     group_id:       quality_pub
     user_id:        juri
+  antonio:
+    group_id:      schoolmasterteam
+    user_id:        antonio
+  gabriella:
+    group_id:      officeteam
+    user_id:         gabriella
+  tt_teacher:
+    group_id:       teacher
+    user_id:        john.test
+
   
   
