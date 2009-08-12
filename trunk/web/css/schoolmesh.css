@@ -164,6 +164,11 @@
   background: url(../images/googleapps.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_execute a
+{
+  background: url(../images/execute.png) no-repeat 0 0;
+}
+
 #sf_admin_container .alert
 {
   margin: 4px 0;
