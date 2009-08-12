@@ -106,8 +106,10 @@ CREATE TABLE `sf_guard_user_profile`
 	`googleapps_account_status` INTEGER,
 	`googleapps_account_approved_at` DATETIME,
 	`googleapps_account_temporary_password` VARCHAR(10),
-	`has_moodle_account` TINYINT,
+	`moodle_account_status` INTEGER,
 	`moodle_account_temporary_password` VARCHAR(10),
+	`system_account_status` INTEGER,
+	`system_account_is_locked` TINYINT,
 	PRIMARY KEY (`user_id`),
 	CONSTRAINT `sf_guard_user_profile_FK_1`
 		FOREIGN KEY (`user_id`)

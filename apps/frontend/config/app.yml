@@ -43,7 +43,7 @@ all:
 
   system:
     commands_view: true
-    commands_apply: true
+    commands_apply: false
 
   prelogin:
     token: sekretToken  

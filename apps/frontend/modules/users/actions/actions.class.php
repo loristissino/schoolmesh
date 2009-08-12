@@ -434,6 +434,7 @@ class usersActions extends sfActions
 				->save();
 				$this->current_user
 				->getSfGuardUser()->setUsername($params['username'])
+				->setIsActive($params['is_active'])
 				->save();
 				
 				$this->getUser()->setFlash('notice',
@@ -454,6 +455,7 @@ class usersActions extends sfActions
 			'id' => $this->current_user->getUserId(),
 			'posix_uid' => $this->current_user->getPosixUId(),
 			'username' => $this->current_user->getUsername(),
+			'is_active'=> $this->current_user->getsfGuardUser()->getIsActive(),
 			'old_username' => $this->current_user->getUsername(),
 			'first_name'=>$this->current_user->getFirstName(),
 			'middle_name'=>$this->current_user->getMiddleName(),

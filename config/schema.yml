@@ -49,8 +49,10 @@ propel:
     googleapps_account_status: integer
     googleapps_account_approved_at: timestamp
     googleapps_account_temporary_password: varchar(10)
-    has_moodle_account: boolean
+    moodle_account_status: integer
     moodle_account_temporary_password: varchar(10)
+    system_account_status: integer
+    system_account_is_locked: boolean
 
 # notes about Google Apps accounts:
 #

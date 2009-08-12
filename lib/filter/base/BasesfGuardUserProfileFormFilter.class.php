@@ -40,8 +40,10 @@ class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'googleapps_account_status'             => new sfWidgetFormFilterInput(),
       'googleapps_account_approved_at'        => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
       'googleapps_account_temporary_password' => new sfWidgetFormFilterInput(),
-      'has_moodle_account'                    => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'moodle_account_status'                 => new sfWidgetFormFilterInput(),
       'moodle_account_temporary_password'     => new sfWidgetFormFilterInput(),
+      'system_account_status'                 => new sfWidgetFormFilterInput(),
+      'system_account_is_locked'              => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
@@ -70,8 +72,10 @@ class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'googleapps_account_status'             => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'googleapps_account_approved_at'        => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'googleapps_account_temporary_password' => new sfValidatorPass(array('required' => false)),
-      'has_moodle_account'                    => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'moodle_account_status'                 => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'moodle_account_temporary_password'     => new sfValidatorPass(array('required' => false)),
+      'system_account_status'                 => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'system_account_is_locked'              => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
     $this->widgetSchema->setNameFormat('sf_guard_user_profile_filters[%s]');
@@ -115,8 +119,10 @@ class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'googleapps_account_status'             => 'Number',
       'googleapps_account_approved_at'        => 'Date',
       'googleapps_account_temporary_password' => 'Text',
-      'has_moodle_account'                    => 'Boolean',
+      'moodle_account_status'                 => 'Number',
       'moodle_account_temporary_password'     => 'Text',
+      'system_account_status'                 => 'Number',
+      'system_account_is_locked'              => 'Boolean',
     );
   }
 }
