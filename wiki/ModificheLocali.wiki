@@ -49,6 +49,21 @@ Se si vuole un'autenticazione basata sul DB, è sufficiente "disabilitare" le du
 
 Altrimenti, cambiare il nome della funzione di autenticazione da usare, scegliendone una tra quelle indicate, e fornendo i dettagli sotto.
 
+== Amministrazione ==
+
+Per poter fare delle operazioni relative agli utenti (verifica home directory, quote disco, ecc.) è necessario che il server web sia abilitato ad eseguire dei comandi tramite esercizio di delega (con _sudo_).
+
+Nel file _apps/frontend/config/app.yml_ esistono due righe che indicano a SchoolMesh se si deve attendere che queste deleghe siano impostate:
+
+{{{
+  system:
+    commands_view: true
+    commands_apply: false
+}}}
+
+Se si imposta `commands_view` a `false` SchoolMesh non potrà fare le verifiche.
+Se si imposta `commands_apply` a `false` SchoolMesh non potrà apportare le modifiche necessarie (ma genererà degli script da eseguire a parte).
+
 == Personalizzazione del layout e dell'interfaccia generale ==
 
 Ogni scuola può personalizzare secondo le proprie esigenze diverse cose. Alcune personalizzazioni possono essere fatte direttamente modificando i file _app.yml_:
