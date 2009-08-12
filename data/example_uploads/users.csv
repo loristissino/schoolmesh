@@ -1,13 +1,13 @@
 "type","first_name","middle_name","last_name","gender","birthdate","birthplace","email","import_code","group"
-"T","Loris",,"Tissino","M",27/02/68,"Francia","loris.tissino@mattiussilab.net",1001,"dipinfo"
+"T","Cristina",,"Bonucci","F",31/01/68,"Gorizia",,999,"dipinfo"
 "T","Bianca",,"Brindisi","F",,,,1002,"diplingue"
 "T","Francesco","Pietro","Genova","M",30/12/65,"Valvasone (UD)","francesco.genova@istruzione.it",1003,"dipinfo"
 "O","Pasquale",,"De Rolandis","M",22/10/61,"Foggia",,1004,
 "T","Gianpiero",,"Bergamo","M",,,,,
 "T","Flavia",,"Gemona","F",,,,,"dipmatfis"
-"T","John",,"Test","M",31/12/65,"Pordenone","john.test@istruzione.it",2001,"dipastro"
+"T","Fabio",,"Adriani","M",31/12/65,"Pordenone","f.adriani@istruzione.it",2001,"dipastro"
 "S","Alice",,"Alessandrini","F",,,,2002,"4AP"
-"S","Bob",,"Bernardi","M",,,,2003,
+"S","Bob",,"Bernardi","M",,,,2003,"PIPPO"
 "T","Bebé",,"Łasøw","M",,,,2004,
 "S","Alessandra",,"Tassan Zanin Giulianelli","F",,,,2005,
 "T","Mario",,"Rossi","M",,,,2006,
@@ -16,3 +16,6 @@
 "T","MARCO",,"DE FILIPPIS","M",,,,2009,
 "S","GIORGIO",,"BOTTO’","M",,,,2010,
 "S","JURI",,"DOMODOSSOLA","M",,,,2011,
+"K","Paolo",,"Samuelli","M",,,,2012,
+"S","Giulia",,"Donati","F",,,,2009,
+"T","Lucio",,"Stelli","M",,,,2014,

@@ -191,6 +191,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 					case('O'):
 						// found another kind of user
 						$typeok=true;
+						$profile->addSystemAlert('no role assigned');
 						break;
 						
 					$checks[]=new Check(false, 'invalid type', $checkgroup);
@@ -215,7 +216,49 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 					$checks[]=new Check(false, 'type not ok', $checkgroup);
 				}
 				
-				
+
+				switch($type)
+				{
+					case('T'):
+						// it's a teacher
+						$team=TeamPeer::retrieveByPosixName($group);
+						$role=RolePeer::retrieveByPosixName(sfConfig::get('app_config_default_teams_role'));
+						if($team && $role)
+						{
+							$profile->addToTeam($team, $role);
+							$checks[]=new Check(true, sprintf('added to team %s', $group), $checkgroup);
+						}
+						else
+						{
+							$profile->addSystemAlert('missing team');
+						}
+						break;
+					
+					case('S'):
+						// found a student
+						$schoolclass=SchoolclassPeer::retrieveByPK($group);
+						if($schoolclass)
+						{
+							$enrolment=new Enrolment();
+							$enrolment
+							->setSchoolclassId($schoolclass->getId())
+							->setUserId($user->getId())
+							->setYearId(sfConfig::get('app_config_current_year'))
+							->save();
+							$checks[]=new Check(true, 'set class', $checkgroup);
+						}
+						else
+						{
+							$profile->addSystemAlert('missing class');
+						}
+						break;
+					
+				}
+
+
+
+
+
 			}
 			
 			

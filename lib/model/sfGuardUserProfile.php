@@ -45,6 +45,8 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $this;
 		}
 		
+		/* FIXME All the code below should be shared with other scripts and therefore go in an another class */
+		
 		public function addCheck($check)
 		{
 			$this->checks[]=$check;
@@ -72,6 +74,8 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$this->failedChecks++;
 			return $this;
 		}
+
+		/* END FIXME */
 
 		public function updateMiddlename($middlename)
 		{
@@ -156,36 +160,100 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			}
 		}
 
+		public function getCurrentSchoolclassId()
+		{
+	        $c = new Criteria();
+			$c->add(EnrolmentPeer::USER_ID, $this->getUserId());
+			$c->add(EnrolmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
+			$t = EnrolmentPeer::doSelectOne($c);
+			
+			if($t)
+			{
+				return $t->getSchoolclassId();
+			}
+			else
+			{
+				return false;
+			}
+			
+		}
+
         public function getCurrentAppointments()
         {
 	        $c = new Criteria();
-		$c->add(AppointmentPeer::USER_ID, $this->getUserId());
-		$c->add(AppointmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
-		$t = AppointmentPeer::doSelectJoinAllExceptsfGuardUser($c);
-		return $t;
+			$c->add(AppointmentPeer::USER_ID, $this->getUserId());
+			$c->add(AppointmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
+			$t = AppointmentPeer::doSelectJoinAllExceptsfGuardUser($c);
+			return $t;
         }
 
         public function getWorkplans()
         {
-	    $c = new Criteria();
-		$c->add(AppointmentPeer::USER_ID, $this->getUserId());
-		$c->addDescendingOrderByColumn(AppointmentPeer::YEAR_ID);
-		$c->addAscendingOrderByColumn(AppointmentPeer::STATE);
-		$c->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID);
-		$c->addAscendingOrderByColumn(AppointmentPeer::SUBJECT_ID);
-		$t = AppointmentPeer::doSelectJoinAll($c);
-		return $t;
+			$c = new Criteria();
+			$c->add(AppointmentPeer::USER_ID, $this->getUserId());
+			$c->addDescendingOrderByColumn(AppointmentPeer::YEAR_ID);
+			$c->addAscendingOrderByColumn(AppointmentPeer::STATE);
+			$c->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID);
+			$c->addAscendingOrderByColumn(AppointmentPeer::SUBJECT_ID);
+			$t = AppointmentPeer::doSelectJoinAll($c);
+			return $t;
         }
 
         public function getTeams()
         {
 	        $c = new Criteria();
-		$c->add(UserTeamPeer::USER_ID, $this->getUserId());
-		$t = UserTeamPeer::doSelectJoinAllExceptsfGuardUser($c);
-		return $t;
+			$c->add(UserTeamPeer::USER_ID, $this->getUserId());
+			$t = UserTeamPeer::doSelectJoinAllExceptsfGuardUser($c);
+			return $t;
         }
 
-        public function getIsMale()
+        public function getBelongsToTeam($posixname)
+        {
+	        $c = new Criteria();
+			$c->add(UserTeamPeer::USER_ID, $this->getUserId());
+			$c->addJoin(UserTeamPeer::TEAM_ID, TeamPeer::ID);
+			$c->add(TeamPeer::POSIX_NAME, $posixname);
+			$t = UserTeamPeer::doSelectOne($c);
+			
+			if ($t)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+			;
+        }
+		
+		public function addToTeam($team, $role)
+		{
+			if (!$this->getBelongsToTeam($team->getPosixName()))
+			{
+				try
+				{
+					$userteam=new UserTeam();
+					$userteam
+					->setUserId($this->getUserId())
+					->setTeam($team)
+					->setRole($role)
+					->save();
+				}
+				catch(Exception $e)
+				{
+					$this->addSystemAlert(sprintf('user not added to team «%s»', $team->getPosixName()));
+				}
+			}
+			else
+			{
+				$this->addSystemAlert(sprintf('user not added to team «%s»', $team->getPosixName()));
+			}
+			return $this;
+		}
+
+
+
+		public function getIsMale()
         {
             return $this->getGender()=='M' ? 1: 0;
         }
