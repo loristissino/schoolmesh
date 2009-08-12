@@ -1,12 +1,6 @@
 <?php
 
-require_once dirname(__FILE__).'/../bootstrap/unit.php';
-
-new
-sfDatabaseManager(ProjectConfiguration::getApplicationConfiguration('frontend',
-'test', true));
-$loader = new sfPropelData();
-$loader->loadData(sfConfig::get('sf_data_dir').'/fixtures');
+require_once dirname(__FILE__).'/../bootstrap/Propel.php';
 
 $t = new lime_test(12, new lime_output_color());
 

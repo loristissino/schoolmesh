@@ -1,7 +1,7 @@
 <?php
 
 include(dirname(__FILE__).'/../../bootstrap/Propel.php');
- 
+
 $t = new lime_test(9, new lime_output_color());
 
 $t->comment("Teacher's Profile");
