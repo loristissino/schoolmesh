@@ -1,8 +1,8 @@
 <?php
 
-require_once dirname(__FILE__).'/../bootstrap/Propel.php';
+require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(35, new lime_output_color());
+$t = new lime_test(44, new lime_output_color());
 
 $t->diag('sfGuardUserProfilePeer::retrieveByUsername()');
 $user = sfGuardUserProfilePeer::retrieveByUsername('loris.tissino');
@@ -107,4 +107,30 @@ $t->like($profile->getGoogleappsAccountTemporaryPassword(), '/[0-9]*/', 'a passw
 
 $profile->GoogleappsDisable();
 $t->is($profile->getGoogleappsAccountTemporaryPassword(), null, 'a password is unset when an account is disabled');
+
+$t->comment("Teacher's Profile");
+
+$user = sfGuardUserProfilePeer::retrieveByUsername('loris.tissino');
+$profile=$user->getProfile();
+$t->is($profile->getFullName(), "Loris Tissino", '->getFullName() returns the complete name of the user');
+$t->is(sizeof($profile->getCurrentAppointments()), 3, '->getCurrentAppointments() returns the correct number of appointments');
+$t->is(sizeof($profile->getTeams()), 3, '->getTeams() returns the correct number of teams');
+
+$t->comment("Technician's Profile");
+
+$user = sfGuardUserProfilePeer::retrieveByUsername('juri.domodossola');
+$profile=$user->getProfile();
+$t->is($profile->getFullName(), "Juri Domodossola", '->getFullName() returns the complete name of the user');
+$t->is(sizeof($profile->getCurrentAppointments()), 0, '->getCurrentAppointments() returns 0');
+$t->is(sizeof($profile->getTeams()), 1, '->getTeams() returns the correct number of teams');
+
+$t->comment("Student's Profile");
+
+$user = sfGuardUserProfilePeer::retrieveByUsername('helen.abram');
+$profile=$user->getProfile();
+$t->is($profile->getFullName(), "Hélèn Abram", '->getFullName() returns the complete name of the user');
+$t->is(sizeof($profile->getCurrentAppointments()), 0, '->getCurrentAppointments() returns 0');
+$t->is(sizeof($profile->getTeams()), 0, '->getTeams() returns the correct number of teams');
+
+//$t->comment("Admin credentials");
 
