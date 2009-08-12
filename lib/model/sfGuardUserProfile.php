@@ -35,7 +35,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		}
 		
 		
-		public function addSystemAlert($alert, $only_if=false)
+		public function addSystemAlert($alert, $only_if=true)
 		{
 			if($only_if)
 			{
@@ -399,11 +399,20 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			if (!$this->getUsernameIsValid())
 				{
 					$checks[]=new Check(false, 'username is not valid', $this->getFullName());
-					$this->addSystemAlert('username not valid');
-					$this->save();
+					$this
+					->addSystemAlert('username not valid')
+					->save();
 					return $checks;
 				}
 			
+			if (!$role)
+				{
+					$checks[]=new Check(false, 'role is not set', $this->getFullName());
+					$this
+					->addSystemAlert('role not set')
+					->save();
+					return $checks;
+				}
 			
 
 			// Second, we see if there is a Posix account

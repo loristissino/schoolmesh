@@ -8,7 +8,7 @@ sfDatabaseManager(ProjectConfiguration::getApplicationConfiguration('frontend',
 $loader = new sfPropelData();
 $loader->loadData(sfConfig::get('sf_data_dir').'/fixtures');
 
-$t = new lime_test(29, new lime_output_color());
+$t = new lime_test(35, new lime_output_color());
 
 $t->diag('sfGuardUserProfilePeer::retrieveByUsername()');
 $user = sfGuardUserProfilePeer::retrieveByUsername('loris.tissino');
@@ -82,6 +82,26 @@ $user = sfGuardUserProfilePeer::retrieveByUsername('stefano.ospite');
 $profile=$user->getProfile();
 
 $t->is($profile->getIsDeletable(), true, 'returns true for a user with no previous activity');
+
+
+$t->diag('->addSystemAlerts()');
+
+$user = sfGuardUserProfilePeer::retrieveByUsername('stefano.ospite');
+$profile=$user->getProfile();
+
+$t->is($profile->getSystemAlerts(), null, 'a normal user has no system alerts');
+$profile->addSystemAlert('foo');
+$t->is($profile->getSystemAlerts(), 'foo', 'the first system alert is normally set');
+$profile->addSystemAlert('bar');
+$t->is($profile->getSystemAlerts(), 'foo - bar', 'the second system alert is concatenated to the first');
+
+$profile->setSystemAlerts(null);
+$profile->addSystemAlert('foo', false);
+$t->is($profile->getSystemAlerts(), null, 'the second param set to false prevents the alert to be added');
+$profile->addSystemAlert('foo', true);
+$t->is($profile->getSystemAlerts(), 'foo', 'the second param set to true makes the alert added');
+$profile->addSystemAlert('bar', true);
+$t->is($profile->getSystemAlerts(), 'foo - bar', 'the second system alert is concatenated to the first also when param2 is true');
 
 $t->diag('->addGoogleappsAccountAlerts()');
 
