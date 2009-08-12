@@ -22,7 +22,7 @@
     </Directory>
 }}}
 
-2. Modificare i file di configurazione di PHP (_/etc/php5/apache2/php.ini_ e _/etc/php5/cli/php.ini_) in modo che contengano la seguente impostazione:
+2. Modificare i file di configurazione di PHP (_/etc/php5/apache2/php.ini_ e _/etc/php5/cli/php.ini_) in modo che contengano le seguenti impostazioni:
 
 {{{
 short_open_tag = Off
@@ -31,7 +31,7 @@ memory_limit = 128M
 
 3. Riavviare il server apache.
 
-4. Configurare _sudo_ in modo che l'utente _www-data_ abbia la delega per interrogare il sistema sugli utenti e le loro directory:
+4. Configurare _sudo_ in modo che l'utente _www-data_ abbia la delega per interrogare il sistema sugli utenti e le loro directory.
 
 Il file _/etc/sudoers_ (da modificare con `sudo visudo`, non direttamente!) dovrebbe contenere le seguenti voci:
 
@@ -40,10 +40,16 @@ Il file _/etc/sudoers_ (da modificare con `sudo visudo`, non direttamente!) dovr
 User_Alias WEBSERVER=www-data
 
 # Cmnd alias specification
-Cmnd_Alias INFOVIEW = /usr/bin/stat, /usr/bin/lsattr, /usr/bin/getfacl, /usr/bin/quota
+Cmnd_Alias SCHOOLMESH_INFO = /usr/bin/stat, /usr/bin/lsattr, /usr/bin/getfacl, /usr/bin/quota
+Cmnd_Alias SCHOOLMESH_APPLY = /usr/local/bin/schoolmesh*
 
-WEBSERVER SCHOOL=NOPASSWD: INFOVIEW
 
+# User privilege specification
+root    ALL=(ALL) ALL
+
+# Members of the admin group may gain root privileges
+%admin    ALL=(ALL) ALL
+WEBSERVER ALL=NOPASSWD: LOGVIEW, SCHOOLMESH_INFO, SCHOOLMESH_APPLY
 }}}
 
 
