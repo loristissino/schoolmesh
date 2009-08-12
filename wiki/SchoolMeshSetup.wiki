@@ -89,10 +89,6 @@ sudo chmod -R 770 "$INSTALLDIR"/{cache,log}
 sudo chmod -R 770 "$INSTALLDIR"/web/{uploads,oo}
 
 echo "SchoolMesh setup done. Let's see if it works..."
-
-cd "$INSTALLDIR"
-symfony test:unit schoolmesh
-
 }}}
 
 Passo successivo: [ApacheSSL Configurazione di Apache]
