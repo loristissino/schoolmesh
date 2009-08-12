@@ -2,13 +2,18 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(46, new lime_output_color());
-
+$t = new lime_test(58, new lime_output_color());
 $t->diag('sfGuardUserProfilePeer::retrieveByUsername()');
 $user = sfGuardUserProfilePeer::retrieveByUsername('loris.tissino');
 
 $profile=$user->getProfile();
 $t->is($profile->getLastName(), 'Tissino', '::retrieveByUsername() returns the User for the given username');
+
+$t->diag('->getBelongsToTeam()');
+$t->is($profile->getBelongsToTeam('cdc3ap'), true, 'returns true for a Team the user belongs to');
+$t->is($profile->getBelongsToTeam('diplettere'), false, 'returns false for a Team the user does not belong to');
+$t->is($profile->getBelongsToTeam('foobar'), false, 'returns false for a Team that does not exist');
+
 
 $t->diag('->getUsernameIsAlreadyUsed()');
 
@@ -77,6 +82,10 @@ $profile=$user->getProfile();
 
 $t->is($profile->getIsDeletable(), true, 'returns true for a user with no previous activity');
 
+$user = sfGuardUserProfilePeer::retrieveByUsername('helen.abram');
+$profile=$user->getProfile();
+
+$t->is($profile->getIsDeletable(), false, 'returns false for a student enrolled');
 
 $t->diag('->addSystemAlerts()');
 
@@ -108,6 +117,19 @@ $t->like($profile->getGoogleappsAccountTemporaryPassword(), '/[0-9]*/', 'a passw
 $profile->GoogleappsDisable();
 $t->is($profile->getGoogleappsAccountTemporaryPassword(), null, 'a password is unset when an account is disabled');
 
+$t->diag('->addToTeam()');
+
+$user = sfGuardUserProfilePeer::retrieveByUsername('john.test');
+$profile=$user->getProfile();
+
+$role=RolePeer::retrieveByPosixName('ccc');
+$team=TeamPeer::retrieveByPosixName('cdc5bp');
+$profile->addToTeam($team, $role);
+$t->is($profile->getBelongsToTeam('cdc5bp'), true, 'correctly adds a user to a team');
+$profile->addToTeam($team, $role);
+$t->like($profile->getSystemAlerts(), '/not added to team/', 'adds an alert in case of problems');
+
+
 $t->comment("Teacher's Profile");
 
 $user = sfGuardUserProfilePeer::retrieveByUsername('loris.tissino');
@@ -115,6 +137,8 @@ $profile=$user->getProfile();
 $t->is($profile->getFullName(), "Loris Tissino", '->getFullName() returns the complete name of the user');
 $t->is(sizeof($profile->getCurrentAppointments()), 3, '->getCurrentAppointments() returns the correct number of appointments');
 $t->is(sizeof($profile->getTeams()), 3, '->getTeams() returns the correct number of teams');
+$t->is($profile->getRole()->getPosixName(), 'docenti', '->getRole() returns the correct role');
+$t->is($profile->getCurrentSchoolclassId(), null, '->getSchoolclassId() returns null');
 
 $t->comment("Technician's Profile");
 
@@ -123,6 +147,8 @@ $profile=$user->getProfile();
 $t->is($profile->getFullName(), "Juri Domodossola", '->getFullName() returns the complete name of the user');
 $t->is(sizeof($profile->getCurrentAppointments()), 0, '->getCurrentAppointments() returns 0');
 $t->is(sizeof($profile->getTeams()), 1, '->getTeams() returns the correct number of teams');
+$t->is($profile->getRole()->getPosixName(), 'ata', '->getRole() returns the correct role');
+$t->is($profile->getCurrentSchoolclassId(), null, '->getSchoolclassId() returns null');
 
 $t->comment("Student's Profile");
 
@@ -131,8 +157,9 @@ $profile=$user->getProfile();
 $t->is($profile->getFullName(), "Hélèn Abram", '->getFullName() returns the complete name of the user');
 $t->is(sizeof($profile->getCurrentAppointments()), 0, '->getCurrentAppointments() returns 0');
 $t->is(sizeof($profile->getTeams()), 0, '->getTeams() returns the correct number of teams');
+$t->is($profile->getRole()->getPosixName(), 'allievi', '->getRole() returns the correct role');
+$t->is($profile->getCurrentSchoolclassId(), '3AP', '->getSchoolclassId() returns the correct value');
 
-//$t->comment("Admin credentials");
 
 $t->diag('->posix_getpwuid()');
 

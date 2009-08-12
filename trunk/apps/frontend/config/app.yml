@@ -14,6 +14,7 @@ all:
     posix_homedir: /home/testhome 
     posix_basefolder: Mattiussi  # this folder contains symbolic links and other stuff; should be present in each homedir
     teachers_default_posix_group: docenti
+    default_teams_role: member
     students_default_posix_group: allievi
     class_teachersteam_prefix: cdc  # for the new team of teachers automatically created, and the name will be prefixed with this
     class_teachersteam_name: Consiglio di classe

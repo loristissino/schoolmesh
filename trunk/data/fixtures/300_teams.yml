@@ -7,6 +7,10 @@ Team:
     description:  Consiglio di classe 4AP
     posix_name:   cdc4ap
     
+  cdc5bp:
+    description:  Consiglio di classe 5BP
+    posix_name:   cdc5bp
+
   quality:
     description:  Progetto Qualità
     posix_name:   quality
