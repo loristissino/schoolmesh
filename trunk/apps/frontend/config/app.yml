@@ -10,6 +10,7 @@ all:
   config:
     current_year:   2008  # only the first of the two years of a scholastic/academic year
     culture: it
+    base_url: 'https://localhost/schoolmesh'
     posix_homedir: /home/testhome 
     posix_basefolder: Mattiussi  # this folder contains symbolic links and other stuff; should be present in each homedir
     teachers_default_posix_group: docenti
@@ -18,6 +19,7 @@ all:
     class_teachersteam_name: Consiglio di classe
     googleapps_domain: mattiussilab.net
     googleapps_url: http://webmail.mattiussilab.net
+    ciao: true
 
 
   sf_guard_plugin:
@@ -38,6 +40,10 @@ all:
     samba:
       share: //example/homes
       address: 192.168.1.1
+
+  system:
+    commands_view: false
+    commands_apply: false
 
   prelogin:
     token: sekretToken  
