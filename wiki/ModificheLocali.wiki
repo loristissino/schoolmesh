@@ -51,7 +51,7 @@ Altrimenti, cambiare il nome della funzione di autenticazione da usare, sceglien
 
 == Personalizzazione del layout e dell'interfaccia generale ==
 
-Ogni scuola può personanalizzare secondo le proprie esigenze diverse cose. Alcune personalizzazioni possono essere fatte direttamente modificando i file _app.yml_:
+Ogni scuola può personalizzare secondo le proprie esigenze diverse cose. Alcune personalizzazioni possono essere fatte direttamente modificando i file _app.yml_:
 
 Per l'ITC Mattiussi ci sono queste voci:
 
