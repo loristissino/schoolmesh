@@ -62,7 +62,21 @@ Nel file _apps/frontend/config/app.yml_ esistono due righe che indicano a School
 }}}
 
 Se si imposta `commands_view` a `false` SchoolMesh non potrà fare le verifiche.
+
 Se si imposta `commands_apply` a `false` SchoolMesh non potrà apportare le modifiche necessarie (ma genererà degli script da eseguire a parte).
+
+Lo script di test del setup rispecchia queste impostazioni. Ad esempio, se `commands_view` è `false`:
+
+
+{{{
+cd /var/schoolmesh
+symfony test:unit schoolmesh
+....
+# webserver is configured to view data: no
+# webserver is configured to apply changes: no
+...
+ Looks like everything went fine.
+}}}
 
 == Personalizzazione del layout e dell'interfaccia generale ==
 
