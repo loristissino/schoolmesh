@@ -1,4 +1,5 @@
 #summary Have a look!
+#labels Featured
 
 = Some screenshots of the application =
 
