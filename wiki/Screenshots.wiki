@@ -14,3 +14,7 @@ http://schoolmesh.googlecode.com/files/workplan.png
 == Some choices of tools and about modules ==
 
 http://schoolmesh.googlecode.com/files/tools.png
+
+== User management ==
+
+http://schoolmesh.googlecode.com/files/users.png
