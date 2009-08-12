@@ -71,6 +71,11 @@
 <h2><?php echo __('Commands') ?></h2>
 
 	<ul class="sf_admin_actions">
+	<?php if (sfConfig::get('app_system_commands_apply')): ?>
+	<li class="sf_admin_action_execute">
+		<?php echo link_to(__('Execute'), url_for('users/runuserchecks?execute=true' . (isset($id)?'&id='.$id:''))) ?>
+	</li>
+	<?php endif ?>
 	<li class="sf_admin_action_export">
 		<?php echo link_to(__('Download script'), '@userchecks?sf_format=txt') ?>
 	</li>

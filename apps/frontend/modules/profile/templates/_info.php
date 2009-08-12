@@ -1,8 +1,7 @@
 <div class="info">
   <h3><?php echo __("Who, when, where, what, why...") ?></h3>
-  
+   <p>
   <?php if(!$sf_user->isAuthenticated()): ?>
-    <p>
         <?php echo __("Soft authentication: ") ?>
         <?php if (isset($softuser)): ?>
             <?php if($softuser->getProfile()->getIsMale()): ?>
@@ -17,9 +16,7 @@
         <?php endif; ?>
         <?php echo link_to(__('You may login'), '@sf_guard_signin') ?>
 
-   </p>
   <?php else: ?>
-   <p>
     <?php echo __("Normal authentication: ") ?>
         <?php echo __("you logged in as user <b>%username%</b>  (%fullname%).", 
         array('%username%'=>$sf_user->getUsername(), '%fullname%'=>$sf_user->getProfile()->getFullname())) ?>

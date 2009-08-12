@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(44, new lime_output_color());
+$t = new lime_test(46, new lime_output_color());
 
 $t->diag('sfGuardUserProfilePeer::retrieveByUsername()');
 $user = sfGuardUserProfilePeer::retrieveByUsername('loris.tissino');
@@ -134,3 +134,12 @@ $t->is(sizeof($profile->getTeams()), 0, '->getTeams() returns the correct number
 
 //$t->comment("Admin credentials");
 
+$t->diag('->posix_getpwuid()');
+
+$user = sfGuardUserProfilePeer::retrieveByUsername('loris.tissino');
+$profile=$user->getProfile();
+
+$userinfo=$profile->posix_getpwuid(0);
+$t->is($userinfo['name'], 'root', 'returns the correct user');
+$userinfo=$profile->posix_getpwuid(9999);
+$t->is($userinfo, false, 'returns false if the user does not exist');

@@ -1,10 +1,10 @@
-<div id="sf_admin_container">
-
 <h1><?php echo __("Who's on line") ?></h1>
 
 <div class="sf_admin_list">
 
-<table cellspacing="0">
+<?php if(sizeof($lanlog_list)>0): ?>
+
+<table cellspacing="0" summary="List of users online">
 
   <thead>
     <tr>
@@ -38,10 +38,11 @@
   </tbody>
 </table>
 
+<?php endif ?>
+
 </div>
 
 </div>
 
 <div>
 <p><?php echo image_tag('feed-icon-14x14', 'alt=atom feed') ?>&nbsp;<a href="<?php echo url_for('@whosonline?sf_format=atom') ?>">Full feed</a></p>
-</div>

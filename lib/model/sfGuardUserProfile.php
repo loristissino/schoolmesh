@@ -256,9 +256,9 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 		}
 
-        protected function posix_getpwuid($uid)
+        public function posix_getpwuid($uid)
         {
-			// We can't use posix_getpwnam() here, because it doesn't support /etc/nsswithc.conf setup
+			// We can't use posix_getpwnam() here, because it doesn't support /etc/nsswitch.conf setup
 			// So we fallback to the old getent passwd as an external command
 
 			$result=array();
@@ -271,6 +271,10 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 				return false;
 			}
 
+			if (!isset($result[0]))
+			{
+				return false;
+			}
 			$userinfo=array();
 
 			@list($userinfo['name'], $userinfo['passwd'], $userinfo['uid'], $userinfo['gid'], $userinfo['gecos'], $userinfo['dir'], $userinfo['shell'])=@explode(':', $result[0]);
@@ -389,6 +393,8 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
 		public function checkPosix()
 		{
+			$this->setSystemAlerts(null);
+			
 			$checks=array();
 			
 			$role=RolePeer::retrieveByPK($this->getRoleId());
@@ -421,32 +427,35 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 						
 			if (!$userinfo)
 				{
-					// maybe the username has been changed
 					
-					if ($this->getPosixUid() && $userinfo= $this->posix_getpwuid($this->getPosixUid()))
-								{
-									
-									// user exists, but username has been changed
-									$checks[]=new Check(false, 'username has been changed', $this->getFullName(),
-										array('command'=>sprintf(
-											'schoolmesh_user_changeusername %s "%s" %s', 
-											$this->getUsername(), 
-											sfConfig::get('app_config_posix_homedir'), 
-											$userinfo['name'])));
-								}
-					else
+					if(!$this->getIsDeleted())
 					{
-
-
-					$checks[]=new Check(false, 'user does not exists', $this->getFullName(),
-						array('command'=>sprintf(
-							'schoolmesh_user_add %s "%s" %s "%s"',
-							$this->getUsername(),
-							sfConfig::get('app_config_posix_homedir'),
-							$role->getPosixName(),
-							$this->getFullname()
-							))
-					);
+						// maybe the username has been changed
+						
+						if ($this->getPosixUid() && $userinfo= $this->posix_getpwuid($this->getPosixUid()))
+						{
+							
+							// user exists, but username has been changed
+							$checks[]=new Check(false, 'username has been changed', $this->getFullName(),
+								array('command'=>sprintf(
+									'schoolmesh_user_changeusername %s "%s" %s', 
+									$this->getUsername(), 
+									sfConfig::get('app_config_posix_homedir'), 
+									$userinfo['name'])
+									));
+						}
+						else
+						{
+							$checks[]=new Check(false, 'user does not exists', $this->getFullName(),
+								array('command'=>sprintf(
+									'schoolmesh_user_add %s "%s" %s "%s"',
+									$this->getUsername(),
+									sfConfig::get('app_config_posix_homedir'),
+									$role->getPosixName(),
+									$this->getFullname()
+									))
+							);
+						}
 					}
 					
 				return $checks;
@@ -457,6 +466,27 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$checks[]=new Check(true, 'user exists', $this->getFullName(), array('link_to'=>'users/edit?id='.$this->getsfGuardUser()->getId()));
 			
 			$this->setSystemAlerts('');
+			
+			if ($this->getIsDeleted())
+			{
+				if($this->getIsDeletable())
+				{
+					$this
+					->addSystemAlert('deleted but still there')
+					->save();
+					$checks[]=new Check(false, 'user must be deleted', $this->getFullName(),
+						array('command'=>sprintf('schoolmesh_user_del %s', 
+						$this->getUsername()
+						))
+						);
+					return $checks;
+
+				}
+				else
+				{
+					$this->addSystemAlert('deleted but undeletable');
+				}
+			}
 			
 			// Let's check the UID
 			
@@ -516,15 +546,6 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 			$this->addGoogleappsAccountAlerts();
 			
-			if ($this->getIsDeleted())
-			{
-					$checks[]=new Check(false, 'user must be deleted', $this->getFullName(),
-					array('command'=>sprintf('schoolmesh_user_del %s', 
-						$this->getUsername()
-						))
-					);
-					return $checks;
-			}
 			
 			$dir=sfConfig::get('app_config_posix_homedir') . '/' . $this->getUsername();
 			$result=array();

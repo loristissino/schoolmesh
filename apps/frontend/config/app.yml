@@ -42,8 +42,8 @@ all:
       address: 192.168.1.1
 
   system:
-    commands_view: false
-    commands_apply: false
+    commands_view: true
+    commands_apply: true
 
   prelogin:
     token: sekretToken  

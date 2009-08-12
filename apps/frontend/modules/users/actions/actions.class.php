@@ -185,13 +185,15 @@ class usersActions extends sfActions
 	
 	if($request->hasParameter('id'))
 	{
-		$this->forward404Unless($this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id')));
+		$this->id=$request->getParameter('id');
+		$this->forward404Unless($this->current_user=sfGuardUserProfilePeer::retrieveByPk($this->id));
 		$this->userlist=array($this->current_user);
 	}
 	else
 	{
 		$this->userlist = sfGuardUserProfilePeer::retrieveAllUsers();
 	}
+	
 	
 	$this->checks=array();
 	$this->ok=0;
@@ -215,9 +217,47 @@ class usersActions extends sfActions
 		}
 	}
 	
+	if($request->hasParameter('execute'))
+	{
+		
+		$result=array();
+		$return_var=0;
+		$count_passed=0;
+		$count_failed=0;
+        foreach($this->userlist  as $current_user)
+		{
+			foreach($current_user->getChecks() as $check)
+			{
+				if ($check->getCommand())
+				{
+					exec('sudo ' . $check->getCommand(), $result, $return_var);
+					if ($return_var==0)
+					{
+						$count_passed++;
+					}
+					else
+					{
+						$count_failed++;
+					}
+
+				}
+			
+			}
+		}
+			
+		$flash=$count_failed==0? 'notice': 'error';
+
+		$this->getUser()->setFlash($flash, 
+				sprintf($this->getContext()->getI18N()->__('Commands successfully executed: %d'), $count_passed) . '. ' . 
+				sprintf($this->getContext()->getI18N()->__('Commands failed: %d'), $count_failed)
+				);
+
+		$this->redirect('users/runuserchecks'  . (isset($this->id)? '?id='. $this->id:''));
+		}
+	
+	
 	if ($request->getRequestFormat()=='txt')
 		{
-
 			$this->setLayout(false);
 			$this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename="posixscript.sh"');
 			$this->getResponse()->setContentType('application/x-shellscript; charset=utf-8');
@@ -259,10 +299,12 @@ class usersActions extends sfActions
 
 	public function executeUndelete(sfWebRequest $request)
 	{
-		$this->forward404Unless($request->isMethod('POST'));
-		$this->forward404Unless($this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id')));
-		$this->current_user->setIsDeleted(false);
-		$this->current_user->save();
+		$this->forward404Unless($request->isMethod('post'));
+		$this->forward404Unless($user=sfGuardUserPeer::retrieveByPk($request->getParameter('id')));
+		$user
+		->getProfile()
+		->setIsDeleted(false)
+		->save();
 		
 		return $this->redirect('users/list');
 	
@@ -362,12 +404,14 @@ class usersActions extends sfActions
 	*/			
 				if($this->current_user->getIsDeletable()&&$request->getParameter('delete'))
 				{
-					$this->current_user->setIsDeleted(true);
+					$this->current_user
+					->setIsDeleted(true);
 				}
 				
 				if($request->getParameter('undelete'))
 				{
-					$this->current_user->setIsDeleted(false);
+					$this->current_user
+					->setIsDeleted(false);
 				}
 
 				$this->current_user
