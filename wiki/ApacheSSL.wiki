@@ -26,7 +26,7 @@
 
 {{{
 short_open_tag = Off
-memory_limit = 128M
+memory_limit = 64M
 }}}
 
 3. Riavviare il server apache.
@@ -52,7 +52,36 @@ root    ALL=(ALL) ALL
 WEBSERVER ALL=NOPASSWD: LOGVIEW, SCHOOLMESH_INFO, SCHOOLMESH_APPLY
 }}}
 
+5. Effetturare i test relativi alla configurazione di Apache e di SchoolMesh:
 
+{{{
+cd /var/schoolmesh
+symfony test:unit schoolmesh
+}}}
+
+Si dovrebbe ottenere un risultato simile al seguente:
+
+{{{
+1..11
+ok 1 - SchoolMesh seems to be installed correctly.
+# webserver configuration: www-data
+# webserver is configured to view data: yes
+ok 2 - webserver can run /usr/bin/stat
+ok 3 - webserver can run /usr/bin/lsattr
+ok 4 - webserver can run /usr/bin/getfacl
+ok 5 - webserver can run /usr/bin/quota
+# webserver is configured to apply changes: no
+# webserver is not supposed to do some things
+ok 6 - webserver cannot run /sbin/poweroff
+ok 7 - webserver cannot run /usr/bin/killall
+# PHP configuration (cli)
+ok 8 - short_open_tag is set to off
+ok 9 - memory limit is ok
+# PHP configuration (apache)
+ok 10 - short_open_tag is set to off
+ok 11 - memory limit is ok
+ Looks like everything went fine.                                      
+}}}
 
 Passo successivo: [MySQL Configurazione di MySql]
 
