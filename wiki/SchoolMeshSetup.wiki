@@ -39,7 +39,7 @@ cmp MD5SUMS.txt MD5SUMS_current.txt > /dev/null 2>&1
 
 if [[ $? -ne 0 ]]
   then
-    # we must download of the necessary files (symfony library and plugins)
+    # we must download the necessary files (symfony library and plugins)
 
     dialog --yesno 'We are going to download symfony library and plugins. These files will replace all current symfony version you might have installed. Is it ok to proceed?' 0 0
 
