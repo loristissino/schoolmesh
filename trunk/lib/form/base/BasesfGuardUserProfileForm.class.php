@@ -39,8 +39,10 @@ class BasesfGuardUserProfileForm extends BaseFormPropel
       'googleapps_account_status'             => new sfWidgetFormInput(),
       'googleapps_account_approved_at'        => new sfWidgetFormDateTime(),
       'googleapps_account_temporary_password' => new sfWidgetFormInput(),
-      'has_moodle_account'                    => new sfWidgetFormInputCheckbox(),
+      'moodle_account_status'                 => new sfWidgetFormInput(),
       'moodle_account_temporary_password'     => new sfWidgetFormInput(),
+      'system_account_status'                 => new sfWidgetFormInput(),
+      'system_account_is_locked'              => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -70,8 +72,10 @@ class BasesfGuardUserProfileForm extends BaseFormPropel
       'googleapps_account_status'             => new sfValidatorInteger(array('required' => false)),
       'googleapps_account_approved_at'        => new sfValidatorDateTime(array('required' => false)),
       'googleapps_account_temporary_password' => new sfValidatorString(array('max_length' => 10, 'required' => false)),
-      'has_moodle_account'                    => new sfValidatorBoolean(array('required' => false)),
+      'moodle_account_status'                 => new sfValidatorInteger(array('required' => false)),
       'moodle_account_temporary_password'     => new sfValidatorString(array('max_length' => 10, 'required' => false)),
+      'system_account_status'                 => new sfValidatorInteger(array('required' => false)),
+      'system_account_is_locked'              => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('sf_guard_user_profile[%s]');

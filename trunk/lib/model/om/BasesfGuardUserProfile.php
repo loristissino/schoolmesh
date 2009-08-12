@@ -88,10 +88,16 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $googleapps_account_temporary_password;
 
 	
-	protected $has_moodle_account;
+	protected $moodle_account_status;
 
 	
 	protected $moodle_account_temporary_password;
+
+	
+	protected $system_account_status;
+
+	
+	protected $system_account_is_locked;
 
 	
 	protected $asfGuardUser;
@@ -345,15 +351,27 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	}
 
 	
-	public function getHasMoodleAccount()
+	public function getMoodleAccountStatus()
 	{
-		return $this->has_moodle_account;
+		return $this->moodle_account_status;
 	}
 
 	
 	public function getMoodleAccountTemporaryPassword()
 	{
 		return $this->moodle_account_temporary_password;
+	}
+
+	
+	public function getSystemAccountStatus()
+	{
+		return $this->system_account_status;
+	}
+
+	
+	public function getSystemAccountIsLocked()
+	{
+		return $this->system_account_is_locked;
 	}
 
 	
@@ -783,15 +801,15 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		return $this;
 	} 
 	
-	public function setHasMoodleAccount($v)
+	public function setMoodleAccountStatus($v)
 	{
 		if ($v !== null) {
-			$v = (boolean) $v;
+			$v = (int) $v;
 		}
 
-		if ($this->has_moodle_account !== $v) {
-			$this->has_moodle_account = $v;
-			$this->modifiedColumns[] = sfGuardUserProfilePeer::HAS_MOODLE_ACCOUNT;
+		if ($this->moodle_account_status !== $v) {
+			$this->moodle_account_status = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::MOODLE_ACCOUNT_STATUS;
 		}
 
 		return $this;
@@ -806,6 +824,34 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->moodle_account_temporary_password !== $v) {
 			$this->moodle_account_temporary_password = $v;
 			$this->modifiedColumns[] = sfGuardUserProfilePeer::MOODLE_ACCOUNT_TEMPORARY_PASSWORD;
+		}
+
+		return $this;
+	} 
+	
+	public function setSystemAccountStatus($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->system_account_status !== $v) {
+			$this->system_account_status = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::SYSTEM_ACCOUNT_STATUS;
+		}
+
+		return $this;
+	} 
+	
+	public function setSystemAccountIsLocked($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->system_account_is_locked !== $v) {
+			$this->system_account_is_locked = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::SYSTEM_ACCOUNT_IS_LOCKED;
 		}
 
 		return $this;
@@ -882,8 +928,10 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->googleapps_account_status = ($row[$startcol + 23] !== null) ? (int) $row[$startcol + 23] : null;
 			$this->googleapps_account_approved_at = ($row[$startcol + 24] !== null) ? (string) $row[$startcol + 24] : null;
 			$this->googleapps_account_temporary_password = ($row[$startcol + 25] !== null) ? (string) $row[$startcol + 25] : null;
-			$this->has_moodle_account = ($row[$startcol + 26] !== null) ? (boolean) $row[$startcol + 26] : null;
+			$this->moodle_account_status = ($row[$startcol + 26] !== null) ? (int) $row[$startcol + 26] : null;
 			$this->moodle_account_temporary_password = ($row[$startcol + 27] !== null) ? (string) $row[$startcol + 27] : null;
+			$this->system_account_status = ($row[$startcol + 28] !== null) ? (int) $row[$startcol + 28] : null;
+			$this->system_account_is_locked = ($row[$startcol + 29] !== null) ? (boolean) $row[$startcol + 29] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -892,7 +940,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 28; 
+						return $startcol + 30; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating sfGuardUserProfile object", $e);
 		}
@@ -1169,10 +1217,16 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				return $this->getGoogleappsAccountTemporaryPassword();
 				break;
 			case 26:
-				return $this->getHasMoodleAccount();
+				return $this->getMoodleAccountStatus();
 				break;
 			case 27:
 				return $this->getMoodleAccountTemporaryPassword();
+				break;
+			case 28:
+				return $this->getSystemAccountStatus();
+				break;
+			case 29:
+				return $this->getSystemAccountIsLocked();
 				break;
 			default:
 				return null;
@@ -1210,8 +1264,10 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$keys[23] => $this->getGoogleappsAccountStatus(),
 			$keys[24] => $this->getGoogleappsAccountApprovedAt(),
 			$keys[25] => $this->getGoogleappsAccountTemporaryPassword(),
-			$keys[26] => $this->getHasMoodleAccount(),
+			$keys[26] => $this->getMoodleAccountStatus(),
 			$keys[27] => $this->getMoodleAccountTemporaryPassword(),
+			$keys[28] => $this->getSystemAccountStatus(),
+			$keys[29] => $this->getSystemAccountIsLocked(),
 		);
 		return $result;
 	}
@@ -1306,10 +1362,16 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->setGoogleappsAccountTemporaryPassword($value);
 				break;
 			case 26:
-				$this->setHasMoodleAccount($value);
+				$this->setMoodleAccountStatus($value);
 				break;
 			case 27:
 				$this->setMoodleAccountTemporaryPassword($value);
+				break;
+			case 28:
+				$this->setSystemAccountStatus($value);
+				break;
+			case 29:
+				$this->setSystemAccountIsLocked($value);
 				break;
 		} 	}
 
@@ -1344,8 +1406,10 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[23], $arr)) $this->setGoogleappsAccountStatus($arr[$keys[23]]);
 		if (array_key_exists($keys[24], $arr)) $this->setGoogleappsAccountApprovedAt($arr[$keys[24]]);
 		if (array_key_exists($keys[25], $arr)) $this->setGoogleappsAccountTemporaryPassword($arr[$keys[25]]);
-		if (array_key_exists($keys[26], $arr)) $this->setHasMoodleAccount($arr[$keys[26]]);
+		if (array_key_exists($keys[26], $arr)) $this->setMoodleAccountStatus($arr[$keys[26]]);
 		if (array_key_exists($keys[27], $arr)) $this->setMoodleAccountTemporaryPassword($arr[$keys[27]]);
+		if (array_key_exists($keys[28], $arr)) $this->setSystemAccountStatus($arr[$keys[28]]);
+		if (array_key_exists($keys[29], $arr)) $this->setSystemAccountIsLocked($arr[$keys[29]]);
 	}
 
 	
@@ -1379,8 +1443,10 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_STATUS)) $criteria->add(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_STATUS, $this->googleapps_account_status);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_APPROVED_AT)) $criteria->add(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_APPROVED_AT, $this->googleapps_account_approved_at);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_TEMPORARY_PASSWORD)) $criteria->add(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_TEMPORARY_PASSWORD, $this->googleapps_account_temporary_password);
-		if ($this->isColumnModified(sfGuardUserProfilePeer::HAS_MOODLE_ACCOUNT)) $criteria->add(sfGuardUserProfilePeer::HAS_MOODLE_ACCOUNT, $this->has_moodle_account);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::MOODLE_ACCOUNT_STATUS)) $criteria->add(sfGuardUserProfilePeer::MOODLE_ACCOUNT_STATUS, $this->moodle_account_status);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::MOODLE_ACCOUNT_TEMPORARY_PASSWORD)) $criteria->add(sfGuardUserProfilePeer::MOODLE_ACCOUNT_TEMPORARY_PASSWORD, $this->moodle_account_temporary_password);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::SYSTEM_ACCOUNT_STATUS)) $criteria->add(sfGuardUserProfilePeer::SYSTEM_ACCOUNT_STATUS, $this->system_account_status);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::SYSTEM_ACCOUNT_IS_LOCKED)) $criteria->add(sfGuardUserProfilePeer::SYSTEM_ACCOUNT_IS_LOCKED, $this->system_account_is_locked);
 
 		return $criteria;
 	}
@@ -1463,9 +1529,13 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 
 		$copyObj->setGoogleappsAccountTemporaryPassword($this->googleapps_account_temporary_password);
 
-		$copyObj->setHasMoodleAccount($this->has_moodle_account);
+		$copyObj->setMoodleAccountStatus($this->moodle_account_status);
 
 		$copyObj->setMoodleAccountTemporaryPassword($this->moodle_account_temporary_password);
+
+		$copyObj->setSystemAccountStatus($this->system_account_status);
+
+		$copyObj->setSystemAccountIsLocked($this->system_account_is_locked);
 
 
 		$copyObj->setNew(true);

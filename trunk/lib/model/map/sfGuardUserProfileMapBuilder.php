@@ -85,9 +85,13 @@ class sfGuardUserProfileMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('GOOGLEAPPS_ACCOUNT_TEMPORARY_PASSWORD', 'GoogleappsAccountTemporaryPassword', 'VARCHAR', false, 10);
 
-		$tMap->addColumn('HAS_MOODLE_ACCOUNT', 'HasMoodleAccount', 'BOOLEAN', false, null);
+		$tMap->addColumn('MOODLE_ACCOUNT_STATUS', 'MoodleAccountStatus', 'INTEGER', false, null);
 
 		$tMap->addColumn('MOODLE_ACCOUNT_TEMPORARY_PASSWORD', 'MoodleAccountTemporaryPassword', 'VARCHAR', false, 10);
+
+		$tMap->addColumn('SYSTEM_ACCOUNT_STATUS', 'SystemAccountStatus', 'INTEGER', false, null);
+
+		$tMap->addColumn('SYSTEM_ACCOUNT_IS_LOCKED', 'SystemAccountIsLocked', 'BOOLEAN', false, null);
 
 	} 
 } 

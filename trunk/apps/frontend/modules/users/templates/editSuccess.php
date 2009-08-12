@@ -32,7 +32,6 @@
 			<?php echo $current_user->getImportCode() ?>
 		</td>
 	</tr>
-  
     <?php echo $userform ?>
 	<tr>
       <td colspan="2">
