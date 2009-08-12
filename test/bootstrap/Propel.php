@@ -7,4 +7,4 @@ $configuration = ProjectConfiguration::getApplicationConfiguration('frontend', '
 new sfDatabaseManager($configuration);
  
 $loader = new sfPropelData();
-$loader->loadData(sfConfig::get('sf_test_dir').'/fixtures');
+$loader->loadData(sfConfig::get('sf_data_dir').'/fixtures');
