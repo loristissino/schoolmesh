@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__).'/../bootstrap/Propel.php';
+require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
 $t = new lime_test(12, new lime_output_color());
 
