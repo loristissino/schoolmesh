@@ -15,7 +15,7 @@ Per ora lo sviluppo si è concentrato su due aspetti.
 
   * gestione degli utenti di sistema (home directory, quote disco, gruppi, cartelle condivise, acl sui file, ecc.) *3*
   * gestione dell'autenticazione (impostazione/reset delle password di Samba - in futuro anche tramite LDAP, informazioni su chi è on line, ecc.) *3*
-  * gestione dell'accesso a Internet (abilitazione/disabilitazione da parte dei docenti) *3*G
+  * gestione dell'accesso a Internet (abilitazione/disabilitazione da parte dei docenti) *3*
   * gestione degli account di sistemi remoti gestiti dalla scuola per le attività didattiche (in particolare _Google Apps_ per posta elettronica, siti e documenti condivisi, ecc., _Moodle_ per alcune attività di e-learning) *3*
 
 2. Gestione di alcune attività via web:
