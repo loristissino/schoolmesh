@@ -86,7 +86,7 @@ Queste operazioni possono essere svolte (dagli utenti con la credenziale 'admin'
 
 SchoolMesh gestisce due tipi di gruppi di natura molto differente:
 
-  # *GuardGroups*: sono i gruppi che servono all'attribuzione delle credenziali per l'uso dell'applicazione web; ad esempio, il gruppo `admin`, `teacher`, `office`, `schoolmaster` (un utente può fare parte di più _GuardGroups_) -- questi gruppi sono predefiniti nell'applicazione e non possono essere creati o modificati
+  # *Guardgroups*: sono i gruppi che servono all'attribuzione delle credenziali per l'uso dell'applicazione web; ad esempio, il gruppo `admin`, `teacher`, `office`, `schoolmaster` (un utente può fare parte di più _Guardgroups_) -- questi gruppi sono predefiniti nell'applicazione e non possono essere creati o modificati
 
   # *Teams*: sono i gruppi di utenti della normale vita scolastica come classi, consigli di classe, dipartimenti di materia, commissioni, gruppi di lavoro, ecc. (un utente può appartenere ad uno o più _team_ e deve avere all'interno del _team_ un ruolo, come coordinatore, segretario, componente, ecc.) -- team e ruoli possono essere definiti a piacere, ma alcuni vengono predisposti in maniera automatica (ad esempio, quelli dei consigli di classe)
 
@@ -108,7 +108,7 @@ Sono previsti per ora cinque permessi speciali per gli account:
 
   # *shell* per l'accesso al sistema tramite console o via _ssh_ (chi ha questo permesso avrà _/bin/bash_ come shell, gli altri utenti avranno _/bin/false_)
 
-  # *samba* per l'accesso ai calcolatori della rete interna da macchine Microsoft Windows (o comunque con autenticazione fatta da Samba) e conseguente accesso alla propria home directory
+  # *samba* per l'accesso ai calcolatori della rete interna da macchine Microsoft Windows (o comunque con autenticazione fatta da Samba) e conseguente accesso alla propria home directory (andrà verificato come sospendere un utente: è sufficiente un lock?)
 
   # *ldapnfs* per l'accesso ai calcolatori della rete interna mediante autenticazione LDAP, con accesso alla propria home directory via NFS
 
