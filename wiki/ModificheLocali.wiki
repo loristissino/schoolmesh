@@ -116,3 +116,5 @@ Piuttosto di cambiare questo, è preferibile creare un layout diverso e far punt
 I dati principali non frequentemente modificabili sono amministrabili con l'applicazione di backend.
 
 Vedi [Manuale Manuale d'uso]
+
+Passo successivo: [Integrazione Integrazione con Samba, Squid, ecc.]
