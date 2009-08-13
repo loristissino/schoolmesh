@@ -41,7 +41,7 @@ User_Alias WEBSERVER=www-data
 
 # Cmnd alias specification
 Cmnd_Alias SCHOOLMESH_INFO = /usr/bin/stat, /usr/bin/lsattr, /usr/bin/getfacl, /usr/bin/quota
-Cmnd_Alias SCHOOLMESH_APPLY = /usr/local/bin/schoolmesh*
+# Cmnd_Alias SCHOOLMESH_APPLY = /usr/local/bin/schoolmesh*
 
 
 # User privilege specification
@@ -49,10 +49,18 @@ root    ALL=(ALL) ALL
 
 # Members of the admin group may gain root privileges
 %admin    ALL=(ALL) ALL
-WEBSERVER ALL=NOPASSWD: LOGVIEW, SCHOOLMESH_INFO, SCHOOLMESH_APPLY
+WEBSERVER ALL=NOPASSWD: SCHOOLMESH_INFO, SCHOOLMESH_APPLY
 }}}
 
-5. Effetturare i test relativi alla configurazione di Apache e di SchoolMesh:
+Togliere il `#` sulla riga 
+
+{{{
+# Cmnd_Alias SCHOOLMESH_APPLY = /usr/local/bin/schoolmesh*
+}}}
+
+solo se si configura SchoolMesh per l'esecuzione automatica degli script di gestione di sistema (*non raccomandabile per il momento*).
+
+5. Effettuare i test relativi alla configurazione di Apache e di SchoolMesh:
 
 {{{
 cd /var/schoolmesh
