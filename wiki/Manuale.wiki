@@ -30,11 +30,11 @@ L'applicazione è divisa in tre parti:
 
 1. *Frontend*: è l'applicazione con cui interagiscono la maggior parte degli utenti (studenti, docenti, dirigente scolastico, dsga, tecnici).
 
-_L'applicazione di frontend è disponibile via browser all'URL http://.../schoolmesh/index.php_
+_L'applicazione di frontend è disponibile via browser all'URL `http://.../schoolmesh/index.php`_
 
 2. *Backend*: è l'applicazione che serve per la configurazione di alcuni aspetti particolari che richiedono una maggiore delicatezza (es. quali campi devono comparire nei piani di lavoro).
 
-_L'applicazione di backend è disponibile via browser all'URL http://.../schoolmesh/backend.php_
+_L'applicazione di backend è disponibile via browser all'URL `http://.../schoolmesh/backend.php`_
 
 3. *Command Line Interface*: è l'interfaccia a riga di comando per lo svolgimento di alcune attività periodiche o di sistema. I comandi possono essere di due tipi:
 
