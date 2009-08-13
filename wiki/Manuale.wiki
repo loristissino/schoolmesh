@@ -1,9 +1,68 @@
-#summary Uso di SchoolMesh
+#summary Uso di SchoolMesh - Introduzione
 #labels Phase-Deploy
 
-= Frontend e Backend =
+= Introduzione a SchoolMesh =
 
-Da scrivere.
+SchoolMesh è un'applicazione web pensata per gestire l'infrastruttura informatica di una scuola superiore. Lo sviluppo, ancora in corso, è basato sulle esigenze dell'Istituto Tecnico Commerciale "Odorico Mattiussi" di Pordenone. Per quanto possibile, però, si è cercato di renderla utilizzabile anche in altre scuole, con poche operazioni di configurazione/adattamento.
+
+== Cosa si può fare con SchoolMesh ==
+
+_(per ogni voce è indicata la fase di sviluppo: 0 progettazione, 1 proof of concept, 2 prototipizzazione, 3 alpha-testing, 4 beta-testing, 5-produzione)
+
+Per ora lo sviluppo si è concentrato su due aspetti.
+
+1. Integrazione delle diverse applicazioni server in uso nella scuola e per la scuola, con gestione il piuù possibile coordinata e centralizzata delle credenziali di accesso.
+
+  * gestione degli utenti di sistema (home directory, quote disco, gruppi, cartelle condivise, acl sui file, ecc.) *3*
+  * gestione dell'autenticazione (impostazione/reset delle password di Samba - in futuro anche tramite LDAP, informazioni su chi è on line, ecc.) *3*
+  * gestione dell'accesso a Internet (abilitazione/disabilitazione da parte dei docenti) *3*G
+  * gestione degli account di sistemi remoti gestiti dalla scuola per le attività didattiche (in particolare _Google Apps_ per posta elettronica, siti e documenti condivisi, ecc., _Moodle_ per alcune attività di e-learning) *3*
+
+2. Gestione di alcune attività via web:
+
+ * completa del workflow del lavoro di un docente in una classe (piano di lavoro e relazione finale) *4*
+ * gestione della documentazione relativa al sistema Qualità *0*
+ * gestione del workflow del lavoro relativo ai progetti scolastici
+
+== Frontend, Backend, Command Line Interface ==
+
+L'applicazione è divisa in tre parti:
+
+1. *Frontend*: è l'applicazione con cui interagiscono la maggior parte degli utenti (studenti, docenti, dirigente scolastico, dsga, tecnici) per la maggior parte delle attività.
+
+_L'applicazione di frontend è disponibile via browser all'URL http://.../schoolmesh/index.php_
+
+2. *Backend*: è l'applicazione che serve per la configurazione di alcuni aspetti particolari che richiedono una maggiore delicatezza (es. quali campi devono comparire nei piani di lavoro).
+
+_L'applicazione di backend è disponibile via browser all'URL http://.../schoolmesh/backend.php_
+
+3. *Command Line Interface*: è l'interfaccia a riga di comando per lo svolgimento di alcune attività periodiche o di sistema. I comandi possono essere di due tipi:
+
+  a) script bash, tutti con prefisso `schoolmesh_`, posti nella directory _/usr/local/bin_. `man schoolmesh` dà delle informazioni al riguardo.
+
+  b) task di symfony, che possono essere eseguiti dalla directory del progetto
+
+{{{
+cd /var/schoolmesh
+symfony test:unit
+symfony schoolmesh:approve-workplans
+}}}
+
+== Ambienti di esecuzione ==
+
+Per SchoolMesh, come è raccomandato per questo genere di progetti, sono impostati tre diversi _ambienti di esecuzione_:
+
+1. *dev*: è l'ambiente di sviluppo (se sei uno sviluppatore PHP con un po' di esperienza con il framework Symfony e ti interessa collaborare contattaci)
+
+_L'accesso all'ambiente di prova avviene puntando il browser all'URL `http://.../schoolmesh/frontend_dev.php`_ (o `http://.../schoolmesh/backend_dev.php` ed è consentito solo dalla macchina su cui gira il server web_
+
+2. *test*: è l'ambiente in cui sono fatti funzionare i test automatizzati (_unit testing_ e _functional testing_)
+
+3. *prod*: è l'ambiente di produzione, in cui sono presenti i dati veri che non dovrebbero essere toccati/danneggiati (e di cui bisogna fare il backup!)
+
+_L'accesso all'ambiente di produzione avviene puntando il browser all'URL `http://.../schoolmesh/index.php`_ (o `http://.../schoolmesh/backend.php` ed è consentito da tutte le macchine_
+
+Questo spiega il motivo per cui in fase di installazione sono stati creati tre database. In ambiente di produzione ne basterebbe uno.
 
 == Dati di prova ==
 
@@ -16,3 +75,6 @@ Si può cominciare a lavorare con l'applicazione usando gli utenti:
   * _gabriella.v (dsga)
   * _loris.tissino_ (superadmin)
   * _juri.domodossola_ (admin)
+
+
+
