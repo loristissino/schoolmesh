@@ -95,9 +95,21 @@ symfony propel:data-load
 
 6. Accedere con un browser alla pagina http://localhost/schoolmesh/frontend_dev.php e provare a fare il login con le credenziali:
 
-  * username: _john.test_
-  * password: _johnp_
+  * username: _john.test_ (docente)
+  * password: _a_
 
+oppure
 
+  * username: _helen.abram_ (studentessa)
+  * password: _a_
+
+oppure
+
+  * username: _loris.tissino_ (superadmin)
+  * password: _a_
+
+(con quest'ultimo utente è possibile accedere anche alla pagina di gestione del backend http://localhost/schoolmesh/backend_dev.php)
+
+(Nella configurazione di prova la password non viene controllata, basta che ci sia qualche carattere.)
 
 Passo successivo: [ModificheLocali Modifiche locali e personalizzazioni]
