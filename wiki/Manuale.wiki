@@ -64,6 +64,58 @@ _L'accesso all'ambiente di produzione avviene puntando il browser all'URL `http:
 
 Questo spiega il motivo per cui in fase di installazione sono stati creati tre database. In ambiente di produzione ne basterebbe uno. Nota che le istruzioni hanno fatto inserire i dati solo nel database di sviluppo. Per quello di test non ce n'è bisogno, perché i dati di prova vengono comunque ricaricati ogni volta. Per quello di produzione è bene che ci siano i dati reali.
 
+== Utenti, gruppi, credenziali e permessi ==
+
+I dati relativi agli utenti e ai gruppi sono memorizzati nel database. 
+
+=== Utenti ===
+
+Non esiste una mappa 1:1 tra utenti di sistema e utenti registrati nel database. Infatti:
+
+  # ci possono essere utenti di sistema che non hanno un corrispondente utente nel database (es. _root_); nel database la tabella `reserved_username` permette di definire dei nomi utenti riservati, non assegnabili agli utenti
+  # ci possono essere utenti nel database che non hanno una controparte nel sistema (ad esempio, un docente che non insegna più nella scuola, ma di cui la scuola detiene i piani di lavoro degli anni precedenti); per questi utenti si dovrà impostare il flag `is_active` a false
+
+L'applicazione consente di eseguire dei controlli automatici sulla coerenza tra dati del database e dati di sistema, proponendo le operazioni da eseguire in caso di discordanza (ad esempio creazione dell'utente e della sua home directory).
+
+Queste operazioni possono essere svolte (dagli utenti con la credenziale 'admin') in uno dei due modi seguenti:
+
+  * facendo produrre a SchoolMesh uno script che dovrà essere eseguito dall'utente in una shell (tramite download o con _copia & incolla_)
+  * delegando il server web ad eseguire i comandi necessari (al momento questa opzione è disabilitata di default)
+
+=== Gruppi ===
+
+SchoolMesh gestisce due tipi di gruppi di natura molto differente:
+
+  # *GuardGroups*: sono i gruppi che servono all'attribuzione delle credenziali per l'uso dell'applicazione web; ad esempio, il gruppo `admin`, `teacher`, `office`, `schoolmaster` (un utente può fare parte di più _GuardGroups_) -- questi gruppi sono predefiniti nell'applicazione e non possono essere creati o modificati
+
+  # *Teams*: sono i gruppi di utenti della normale vita scolastica come classi, consigli di classe, dipartimenti di materia, commissioni, gruppi di lavoro, ecc. (un utente può appartenere ad uno o più _team_ e deve avere all'interno del _team_ un ruolo, come coordinatore, segretario, componente, ecc.) -- team e ruoli possono essere definiti a piacere, ma alcuni vengono predisposti in maniera automatica (ad esempio, quelli dei consigli di classe)
+
+Per i _team_ è previsto che vengano predisposti automaticamente delle cartelle condivise (ed eventualmente dei gruppi con Google Apps).
+
+=== Permessi e credenziali ===
+
+Nella terminologia di symfony, adottata anche in SchoolMesh, un permesso (_permission_) è la facoltà che viene assegnata ad un utente o a un gruppo di visualizzare una certa pagina o eseguire una certa operazione con l'applicazione web.
+
+Ad esempio, il permesso _planning_ consente di accedere alla pagina per la preparazione del piano di lavoro, il permesso _internet_ di abilitare/disabilitare l'accesso a Internet in un laboratorio, ecc.
+
+I permessi possono essere associati direttamente ad un utente oppure ad un gruppo. Così, se _tizio_ appartiene al gruppo _teacher_ e il gruppo _teacher_ ha il permesso _project_, _tizio_ avrà il permesso _project_.
+
+Symfony chiama _credenziale_ un permesso di cui dispone un utente correntemente autenticato.
+
+SchoolMesh utilizza il meccanismo dei permessi per la gestione, a livello di singolo utente degli account di sistema nella rete interna e su internet.
+
+Sono previsti per ora cinque permessi speciali per gli account:
+
+  # *shell* per l'accesso al sistema tramite console o via _ssh_ (chi ha questo permesso avrà _/bin/bash_ come shell, gli altri utenti avranno _/bin/false_)
+
+  # *samba* per l'accesso ai calcolatori della rete interna da macchine Microsoft Windows (o comunque con autenticazione fatta da Samba) e conseguente accesso alla propria home directory
+
+  # *ldapnfs* per l'accesso ai calcolatori della rete interna mediante autenticazione LDAP, con accesso alla propria home directory via NFS
+
+  # *moodle* per l'accesso ai servizi della piattaforma Moodle (su server esterno o interno)
+
+  # *googleapps* per l'accesso ai servizi offerti da Google con il proprio _Google Apps Educational Edition_
+
 == Dati di prova ==
 
 I file _`data/fixtures/*yml`_ contengono i dati di prova che vengono caricati all'inizio per l'applicazione di test.
