@@ -232,6 +232,9 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 						{
 							$profile->addSystemAlert('missing team');
 						}
+						
+						$guardgroup=sfGuardGroupProfilePeer::retrieveGuardGroupByName('teacher');
+						$profile->addToGuardGroup($guardgroup);
 						break;
 					
 					case('S'):

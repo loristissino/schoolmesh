@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(24, new lime_output_color());
+$t = new lime_test(26, new lime_output_color());
 
 $t->diag('::importFromCSVFile()');
 $checks=sfGuardUserProfilePeer::importFromCSVFile('data/example_uploads/users.csv');
@@ -85,6 +85,10 @@ $t->like($profile->getSystemAlerts(), '/missing class/', 'a system alert is set 
 $user = sfGuardUserProfilePeer::retrieveByUsername('cristina.bonucci');
 $profile=$user->getProfile();
 $t->is($profile->getBelongsToTeam('dipinfo'), true, 'teacher correctly put in the team specified');
+$guardgroup=sfGuardGroupProfilePeer::retrieveGuardGroupByName('teacher');
+$t->is($profile->getBelongsToGuardGroup($guardgroup), true, 'teacher belongs to the «teacher» guard group');
+
+$t->is($profile->hasPermission('internet'), true, 'teacher has the «internet» permission');
 
 $user = sfGuardUserProfilePeer::retrieveByUsername('lucio.stelli');
 $profile=$user->getProfile();

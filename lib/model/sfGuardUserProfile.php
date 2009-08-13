@@ -14,6 +14,56 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		
 		protected $checks=array();
 		
+		public function getBelongsToGuardGroup($group)
+		{
+			if (!$group instanceof sfGuardGroup)
+			{
+				throw new Exception('the parameter must be a sfGuardGroup object');
+			}
+			$c=new Criteria();
+			$c->add(sfGuardUserGroupPeer::USER_ID, $this->getUserId());
+			$c->add(sfGuardUserGroupPeer::GROUP_ID, $group->getId());
+			if ($user_group = sfGuardUserGroupPeer::doSelectOne($c))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		public function addToGuardGroup($group)
+		{
+			if (!$group instanceof sfGuardGroup)
+			{
+				throw new Exception('the parameter must be a sfGuardGroup object');
+			}
+			
+			if ($this->getBelongsToGuardGroup($group))
+			{
+				return $this;
+			}
+			
+			$usergroup = new sfGuardUserGroup();
+			$usergroup
+			->setUserId($this->getUserId())
+			->setGroupId($group->getId())
+			->save();
+			
+			return $this;
+		}
+		
+		public function getPermissions()
+		{
+			return $this->getsfGuardUser()->getAllPermissionNames();
+		}
+		
+		public function hasPermission($value)
+		{
+			// similar to sfGuardUser::hasCredential(), that only works for authenticated users
+			return in_array($value, $permissions=$this->getPermissions());
+		}
 		
 		public function findGoodUsername()
 		{

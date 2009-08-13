@@ -2,18 +2,43 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(58, new lime_output_color());
+$t = new lime_test(68, new lime_output_color());
+
+$loris_permissions=array(
+	'superadmin',
+	'admin',
+	'planning',
+	'internet',
+);
+
+$teacher_expected_permissions=array(
+	'planning'=>true,
+	'internet'=>true,
+	'office'=>false,
+);
+
+function test_permissions($t, $profile, $permissions)
+{
+	foreach($permissions as $permission=>$expected_result)
+	{
+		$t->is($profile->hasPermission($permission), $expected_result, sprintf('->hasPermission() returns %s for «%s»', $expected_result?'true':'false', $permission));
+	}
+}
+
 $t->diag('sfGuardUserProfilePeer::retrieveByUsername()');
 $user = sfGuardUserProfilePeer::retrieveByUsername('loris.tissino');
 
 $profile=$user->getProfile();
 $t->is($profile->getLastName(), 'Tissino', '::retrieveByUsername() returns the User for the given username');
 
-$t->diag('->getBelongsToTeam()');
-$t->is($profile->getBelongsToTeam('cdc3ap'), true, 'returns true for a Team the user belongs to');
-$t->is($profile->getBelongsToTeam('diplettere'), false, 'returns false for a Team the user does not belong to');
-$t->is($profile->getBelongsToTeam('foobar'), false, 'returns false for a Team that does not exist');
+$t->diag('->getBelongsToGuardGroup()');
+$group=sfGuardGroupProfilePeer::retrieveGuardGroupByName('teacher');
+$t->is($profile->getBelongsToGuardGroup($group), true, 'returns true for a group the user belongs to');
+$group=sfGuardGroupProfilePeer::retrieveGuardGroupByName('student');
+$t->is($profile->getBelongsToGuardGroup($group), false, 'returns false for a group the user does not belong to');
 
+$t->diag('->getPermissions()');
+$t->is_deeply($profile->getPermissions(), $loris_permissions, 'returns the correct array of permissions');
 
 $t->diag('->getUsernameIsAlreadyUsed()');
 
@@ -139,6 +164,11 @@ $t->is(sizeof($profile->getCurrentAppointments()), 3, '->getCurrentAppointments(
 $t->is(sizeof($profile->getTeams()), 3, '->getTeams() returns the correct number of teams');
 $t->is($profile->getRole()->getPosixName(), 'docenti', '->getRole() returns the correct role');
 $t->is($profile->getCurrentSchoolclassId(), null, '->getSchoolclassId() returns null');
+$t->is($profile->getBelongsToTeam('cdc3ap'), true, '->getBelongsToTeam() returns true for a Team the user belongs to');
+$t->is($profile->getBelongsToTeam('diplettere'), false, '->getBelongsToTeam() returns false for a Team the user does not belong to');
+$t->is($profile->getBelongsToTeam('foobar'), false, '->getBelongsToTeam() returns false for a Team that does not exist');
+
+test_permissions($t, $profile, $teacher_expected_permissions);
 
 $t->comment("Technician's Profile");
 
@@ -170,3 +200,16 @@ $userinfo=$profile->posix_getpwuid(0);
 $t->is($userinfo['name'], 'root', 'returns the correct user');
 $userinfo=$profile->posix_getpwuid(9999);
 $t->is($userinfo, false, 'returns false if the user does not exist');
+
+$t->diag('->addToGuardGroup()');
+
+$user = sfGuardUserProfilePeer::retrieveByUsername('juri.domodossola');
+$profile=$user->getProfile();
+$group=sfGuardGroupProfilePeer::retrieveGuardGroupByName('teacher');
+
+$t->is($profile->getBelongsToGuardGroup($group), false, 'the user does not belong to the group');
+$profile->addToGuardGroup($group);
+$t->pass('the user is added to the group');
+$t->is($profile->getBelongsToGuardGroup($group), true, 'the user now belongs to the group');
+$t->is($profile->hasPermission('planning'), true, 'the user now has a permission related to the group');
+
