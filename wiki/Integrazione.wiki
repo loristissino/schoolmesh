@@ -1,0 +1,7 @@
+#summary One-sentence summary of this page.
+
+= Integrazione con Samba, Squid, ecc. =
+
+Si può fare in modo che il logon degli utenti autenticati da Samba venga riconosciuto da SchoolMesh in quella che viene chiamata "autenticazione leggera".
+
+(da completare)
