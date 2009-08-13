@@ -70,7 +70,7 @@ I dati relativi agli utenti e ai gruppi sono memorizzati nel database.
 
 === Utenti ===
 
-Non esiste una mappa 1:1 tra utenti di sistema e utenti registrati nel database. Infatti:
+Non esiste una corrispondenza 1:1 tra utenti di sistema e utenti registrati nel database. Infatti:
 
   # ci possono essere utenti di sistema che non hanno un corrispondente utente nel database (es. _root_); nel database la tabella `reserved_username` permette di definire dei nomi utenti riservati, non assegnabili agli utenti
   # ci possono essere utenti nel database che non hanno una controparte nel sistema (ad esempio, un docente che non insegna più nella scuola, ma di cui la scuola detiene i piani di lavoro degli anni precedenti); per questi utenti si dovrà impostare il flag `is_active` a false
@@ -102,7 +102,7 @@ I permessi possono essere associati direttamente ad un utente oppure ad un grupp
 
 Symfony chiama _credenziale_ un permesso di cui dispone un utente correntemente autenticato.
 
-SchoolMesh utilizza il meccanismo dei permessi per la gestione, a livello di singolo utente degli account di sistema nella rete interna e su internet.
+SchoolMesh utilizza il meccanismo dei permessi per la gestione, a livello di singolo utente, degli account di sistema nella rete interna e su internet.
 
 Sono previsti per ora cinque permessi speciali per gli account:
 
