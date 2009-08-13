@@ -22,13 +22,13 @@ Per ora lo sviluppo si è concentrato su due aspetti.
 
  * completa del workflow del lavoro di un docente in una classe (piano di lavoro e relazione finale) *4*
  * gestione della documentazione relativa al sistema Qualità *0*
- * gestione del workflow del lavoro relativo ai progetti scolastici
+ * gestione del workflow del lavoro relativo ai progetti scolastici *1*
 
 == Frontend, Backend, Command Line Interface ==
 
 L'applicazione è divisa in tre parti:
 
-1. *Frontend*: è l'applicazione con cui interagiscono la maggior parte degli utenti (studenti, docenti, dirigente scolastico, dsga, tecnici) per la maggior parte delle attività.
+1. *Frontend*: è l'applicazione con cui interagiscono la maggior parte degli utenti (studenti, docenti, dirigente scolastico, dsga, tecnici).
 
 _L'applicazione di frontend è disponibile via browser all'URL http://.../schoolmesh/index.php_
 
@@ -38,7 +38,7 @@ _L'applicazione di backend è disponibile via browser all'URL http://.../schoolm
 
 3. *Command Line Interface*: è l'interfaccia a riga di comando per lo svolgimento di alcune attività periodiche o di sistema. I comandi possono essere di due tipi:
 
-  a) script bash, tutti con prefisso `schoolmesh_`, posti nella directory _/usr/local/bin_. `man schoolmesh` dà delle informazioni al riguardo.
+  a) script bash, tutti con prefisso `schoolmesh_`, posti nella directory _/usr/local/bin_. (vedi [ManPage pagina man]).
 
   b) task di symfony, che possono essere eseguiti dalla directory del progetto
 
@@ -54,15 +54,15 @@ Per SchoolMesh, come è raccomandato per questo genere di progetti, sono imposta
 
 1. *dev*: è l'ambiente di sviluppo (se sei uno sviluppatore PHP con un po' di esperienza con il framework Symfony e ti interessa collaborare contattaci)
 
-_L'accesso all'ambiente di prova avviene puntando il browser all'URL `http://.../schoolmesh/frontend_dev.php`_ (o `http://.../schoolmesh/backend_dev.php` ed è consentito solo dalla macchina su cui gira il server web_
+_L'accesso all'ambiente di prova avviene puntando il browser all'URL `http://.../schoolmesh/frontend_dev.php` (o `http://.../schoolmesh/backend_dev.php` ed è consentito solo dalla macchina su cui gira il server web._
 
 2. *test*: è l'ambiente in cui sono fatti funzionare i test automatizzati (_unit testing_ e _functional testing_)
 
 3. *prod*: è l'ambiente di produzione, in cui sono presenti i dati veri che non dovrebbero essere toccati/danneggiati (e di cui bisogna fare il backup!)
 
-_L'accesso all'ambiente di produzione avviene puntando il browser all'URL `http://.../schoolmesh/index.php`_ (o `http://.../schoolmesh/backend.php` ed è consentito da tutte le macchine_
+_L'accesso all'ambiente di produzione avviene puntando il browser all'URL `http://.../schoolmesh/index.php` (o `http://.../schoolmesh/backend.php` ed è consentito da tutte le macchine._
 
-Questo spiega il motivo per cui in fase di installazione sono stati creati tre database. In ambiente di produzione ne basterebbe uno.
+Questo spiega il motivo per cui in fase di installazione sono stati creati tre database. In ambiente di produzione ne basterebbe uno. Nota che le istruzioni hanno fatto inserire i dati solo nel database di sviluppo. Per quello di test non ce n'è bisogno, perché i dati di prova vengono comunque ricaricati ogni volta. Per quello di produzione è bene che ci siano i dati reali.
 
 == Dati di prova ==
 
