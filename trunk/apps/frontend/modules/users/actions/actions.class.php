@@ -303,7 +303,7 @@ class usersActions extends sfActions
 		$this->forward404Unless($user=sfGuardUserPeer::retrieveByPk($request->getParameter('id')));
 		$user
 		->getProfile()
-		->setIsDeleted(false)
+		->setIsScheduledForDeletion(false)
 		->save();
 		
 		return $this->redirect('users/list');
@@ -405,13 +405,13 @@ class usersActions extends sfActions
 				if($this->current_user->getIsDeletable()&&$request->getParameter('delete'))
 				{
 					$this->current_user
-					->setIsDeleted(true);
+					->setIsScheduledForDeletion(true);
 				}
 				
 				if($request->getParameter('undelete'))
 				{
 					$this->current_user
-					->setIsDeleted(false);
+					->setIsScheduledForDeletion(false);
 				}
 
 				$this->current_user

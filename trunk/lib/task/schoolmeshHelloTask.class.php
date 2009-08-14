@@ -57,5 +57,16 @@ EOF;
 			$this->log($this->formatter->format('    -> ' . $permission, 'COMMENT'));
 		}
     }
+	
+$user=sfGuardUserProfilePeer::retrieveByUsername('john.test');
+echo 'Has office permission? ' . ($user->getProfile()->hasPermission('office')?'yes':'no') . "\n";
+echo "Adding permission...\n";
+$user->addPermissionByName('office');
+echo 'Has office permission? ' . ($user->getProfile()->hasPermission('office')?'yes':'no') . "\n";
+echo "Revoking permission...\n";
+$user->getProfile()->revokeUserPermission('office');
+sleep(1);
+echo 'Has office permission? ' . ($user->getProfile()->hasPermission('office')?'yes':'no') . "\n";
+
   }
 }

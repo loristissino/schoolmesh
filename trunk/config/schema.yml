@@ -45,8 +45,9 @@ propel:
     disk_used_files: { type: integer, default: 0 }
     disk_updated_at: timestamp
     system_alerts: varchar(255)
-    is_deleted: { type: boolean, default: false }
+    is_scheduled_for_deletion: { type: boolean, default: false }
     googleapps_account_status: integer
+    googleapps_account_lastlogin_at: timestamp
     googleapps_account_approved_at: timestamp
     googleapps_account_temporary_password: varchar(10)
     moodle_account_status: integer

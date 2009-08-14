@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(26, new lime_output_color());
+$t = new lime_test(28, new lime_output_color());
 
 $t->diag('::importFromCSVFile()');
 $checks=sfGuardUserProfilePeer::importFromCSVFile('data/example_uploads/users.csv');
@@ -94,3 +94,11 @@ $user = sfGuardUserProfilePeer::retrieveByUsername('lucio.stelli');
 $profile=$user->getProfile();
 $t->like($profile->getSystemAlerts(), '/missing team/', 'a system alert is set when no team is specified');
 
+
+$t->diag('::retrievePermissionByName()');
+
+$permission=sfGuardUserProfilePeer::retrievePermissionByName('foobar');
+$t->is($permission, false, '::retrievePermissionByName() returns false if the permission does not exists');
+
+$permission=sfGuardUserProfilePeer::retrievePermissionByName('planning');
+$t->is($permission->getDescription(), 'Pianificazione didattica', '::retrievePermissionByName() returns the correct permission');
