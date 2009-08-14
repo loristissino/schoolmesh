@@ -7,6 +7,7 @@ Scaricare lo script di installazione (disponibile all'URL http://schoolmesh.goog
 
 {{{
 wget http://schoolmesh.googlecode.com/files/schoolmeshsetup-0.090814.sh
+chmod +x schoolmeshsetup-0.090814.sh
 ./schoolmeshsetup-0.090814.sh
 }}}
 
