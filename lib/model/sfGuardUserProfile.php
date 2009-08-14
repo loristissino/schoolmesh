@@ -54,17 +54,76 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $this;
 		}
 		
-		public function getPermissions()
+		public function getWebPermissions()
 		{
 			return $this->getsfGuardUser()->getAllPermissionNames();
 		}
 		
-		public function hasPermission($value)
+		public function hasPermission($value, $random=0)
 		{
 			// similar to sfGuardUser::hasCredential(), that only works for authenticated users
-			return in_array($value, $permissions=$this->getPermissions());
+			return in_array($value, $permissions=$this->getWebPermissions());
 		}
 		
+		
+		public function addUserPermission($value)
+		{
+			$this->getSfGuardUser()->addPermissionByName($value);
+			return $this;
+/*			
+			if (!$this->hasPermission($value))
+			{
+				$permission=sfGuardUserProfilePeer::retrievePermissionByName($value);
+				
+				if (!$permission)
+				{
+					throw new Exception(sprintf('The permission %s does not exist', $value));
+				}
+				
+				$user_permission=new sfGuardUserPermission();
+				$user_permission
+				->setUserId($this->getUserId())
+				->setPermissionId($permission->getId())
+				->save();
+			}
+			return $this;
+
+*/
+		}
+
+		public function revokeUserPermission($value)
+		{
+			if (!$this->hasPermission($value,4))
+			{
+				return $this;
+			}
+
+			$permission=sfGuardUserProfilePeer::retrievePermissionByName($value);
+			if (!$permission)
+			{
+				throw new Exception(sprintf('The permission %s does not exist', $value));
+			}
+
+			$c=new Criteria();
+			$c->add(sfGuardUserPermissionPeer::PERMISSION_ID, $permission->getId());
+			$c->add(sfGuardUserPermissionPeer::USER_ID, $this->getUserId());
+			$user_permission=sfGuardUserPermissionPeer::doSelectOne($c);
+				
+			if (!$user_permission)
+			{
+				return $this;
+			}
+				
+				$user=sfGuardUserPeer::retrieveByPK($user_permission->getUserId());
+				$permission=sfGuardPermissionPeer::retrieveByPK($user_permission->getPermissionId());
+				
+			$user_permission->delete();
+			
+			return $this;
+			
+		}
+
+
 		public function findGoodUsername()
 		{
 			

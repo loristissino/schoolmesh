@@ -21,6 +21,6 @@ all:
       username: schoolmesh
       password: 2hzdBqtSc7MxM22u
       encoding: utf8
-      persistent: true
+      persistent: false
       pooling: true
       classname: PropelPDO

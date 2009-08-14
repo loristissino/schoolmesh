@@ -10,6 +10,13 @@
 class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 {
 	
+	public static function retrievePermissionByName($value)
+	{
+		$c=new Criteria();
+		$c->add(sfGuardPermissionPeer::NAME, $value);
+		return sfGuardPermissionPeer::doSelectOne($c);
+	}
+	
 	public static function retrieveByUsername($username)
 	{
 	$c=new Criteria();

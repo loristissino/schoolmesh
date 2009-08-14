@@ -21,7 +21,7 @@
   <div class="alert"><?php echo $current_user->getSystemAlerts()?></div>
 <?php endif; ?>
 
-<form action="<?php echo url_for('users/edit?id='. $current_user->getSfGuardUser()->getId()) ?>" method="POST">
+<form action="<?php echo url_for('users/edit?id='. $current_user->getSfGuardUser()->getId()) ?>" method="post">
 
 <h2><?php echo __('Basic information') ?></h2>
 
@@ -38,7 +38,7 @@
          <input type="submit" name="save" value="<?php echo __('Save') ?>">
       </td>
     </tr>
-	<?php if($current_user->getIsDeleted()): ?>
+	<?php if($current_user->getIsScheduledForDeletion()): ?>
 	<tr>
       <td colspan="2">
          <input type="submit" name="undelete" value="<?php echo __('Undelete') ?>">

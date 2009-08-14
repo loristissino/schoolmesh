@@ -6,7 +6,7 @@
 				array('title'=>__('Edit information about this user'))
 				)?>
 				</li>
-				<?php if($user->getIsDeleted()): ?>
+				<?php if($user->getIsScheduledForDeletion()): ?>
 				<li class="sf_admin_action_undelete">
 					<?php echo link_to(
 				__('Undelete'),

@@ -50,8 +50,8 @@ sfGuardUser:
     is_superadmin: false
 
 sfGuardPermission:
-  superadmin:
-    name:           superadmin
+  backadmin:
+    name:           backadmin
     description:   Amministrazione di backend
   admin:
     name:           admin
@@ -77,13 +77,26 @@ sfGuardPermission:
   project:
     name:           project
     description:    Progettazione attività scolastiche
+  shell:
+    name:           shell
+    description:   Accesso al sistema da terminale
+  samba:
+    name:           samba
+    description:   Autenticazione SAMBA e accesso alla home directory
+  ldapnfs:
+    name:           ldapnfs
+    description:   Autenticazione LDAP e accesso alla home directory
+  moodle:
+    name:           moodle
+    description:   Accesso alla piattaforma di e-learning Moodle
+  googleapps:
+    name:           googleapps
+    description:   Accesso ai servizi Google Apps
+
     
   
 
 sfGuardGroup:
-  superadmin:
-    name:          superadmin
-    description:    Gruppo Amministratori del Backend
   admin:
     name:           admin
     description:    Gruppo Amministratori
@@ -110,9 +123,6 @@ sfGuardGroup:
     description:   Segreteria didattica
 
 sfGuardGroupPermission:
-  superadmin:
-    group_id:       superadmin
-    permission_id:  superadmin
   admin:
     group_id:       admin
     permission_id:  admin
@@ -143,9 +153,6 @@ sfGuardUserGroup:
   bianca:
     group_id:       teacher
     user_id:        bianca
-  loris0:
-    group_id:      superadmin
-    user_id:        loris
   loris1:
     group_id:       teacher
     user_id:        loris
@@ -181,4 +188,8 @@ sfGuardUserGroup:
     user_id:        john.test
 
   
+sfGuardUserPermission:
+  backadmin1:
+    user_id:      loris
+    permission_id:  backadmin
   

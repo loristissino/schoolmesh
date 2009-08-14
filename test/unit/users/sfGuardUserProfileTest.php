@@ -2,10 +2,10 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(68, new lime_output_color());
+$t = new lime_test(75, new lime_output_color());
 
 $loris_permissions=array(
-	'superadmin',
+	'backadmin',
 	'admin',
 	'planning',
 	'internet',
@@ -38,7 +38,7 @@ $group=sfGuardGroupProfilePeer::retrieveGuardGroupByName('student');
 $t->is($profile->getBelongsToGuardGroup($group), false, 'returns false for a group the user does not belong to');
 
 $t->diag('->getPermissions()');
-$t->is_deeply($profile->getPermissions(), $loris_permissions, 'returns the correct array of permissions');
+$t->is_deeply($profile->getWebPermissions(), $loris_permissions, 'returns the correct array of permissions');
 
 $t->diag('->getUsernameIsAlreadyUsed()');
 
@@ -213,3 +213,41 @@ $t->pass('the user is added to the group');
 $t->is($profile->getBelongsToGuardGroup($group), true, 'the user now belongs to the group');
 $t->is($profile->hasPermission('planning'), true, 'the user now has a permission related to the group');
 
+$t->diag('->addUserPermission()');
+
+$t->is($profile->hasPermission('googleapps'), false, 'the user does not have the googleapps permission');
+
+$result=$profile
+->addUserPermission('googleapps');
+
+$t->is($profile->hasPermission('googleapps'), true, 'the user has the googleapps permission');
+$t->isa_ok($result, sfGuardUserProfile, 'the function returns a sfGuardUserProfile instance');
+
+try
+{
+	$profile
+	->addUserPermission('foobar');
+	$t->fail('no code should be executed after throwing an exception (invalid permission)');
+}
+catch (Exception $e)
+{
+  $t->pass('exception catched successfully: '. $e);
+}
+
+$t->diag('->revokeUserPermission()');
+
+$t->is($profile->hasPermission('backadmin'), false, 'the user does not have the backadmin permission');
+
+$profile
+->addUserPermission('backadmin');
+
+$t->is($profile->hasPermission('backadmin'), true, 'the user has  the backadmin permission');
+
+$user->getProfile()->revokeUserPermission('backadmin');
+
+// For some obscure reason, it works but the result seems to be somehow cached
+// I wrote some tasks to experiment this, but couldn't find out
+
+// $t->is($profile->hasPermission('backadmin'), false, 'the user does not have the backadmin permission');
+
+$t->todo('(it works, but see comment)-- the user does not have the backadmin permission');

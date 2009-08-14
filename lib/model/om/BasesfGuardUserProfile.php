@@ -76,10 +76,13 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $system_alerts;
 
 	
-	protected $is_deleted;
+	protected $is_scheduled_for_deletion;
 
 	
 	protected $googleapps_account_status;
+
+	
+	protected $googleapps_account_lastlogin_at;
 
 	
 	protected $googleapps_account_approved_at;
@@ -128,7 +131,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$this->disk_set_hard_files_quota = 0;
 		$this->disk_used_blocks = 0;
 		$this->disk_used_files = 0;
-		$this->is_deleted = false;
+		$this->is_scheduled_for_deletion = false;
 	}
 
 	
@@ -306,15 +309,42 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	}
 
 	
-	public function getIsDeleted()
+	public function getIsScheduledForDeletion()
 	{
-		return $this->is_deleted;
+		return $this->is_scheduled_for_deletion;
 	}
 
 	
 	public function getGoogleappsAccountStatus()
 	{
 		return $this->googleapps_account_status;
+	}
+
+	
+	public function getGoogleappsAccountLastloginAt($format = 'Y-m-d H:i:s')
+	{
+		if ($this->googleapps_account_lastlogin_at === null) {
+			return null;
+		}
+
+
+		if ($this->googleapps_account_lastlogin_at === '0000-00-00 00:00:00') {
+									return null;
+		} else {
+			try {
+				$dt = new DateTime($this->googleapps_account_lastlogin_at);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->googleapps_account_lastlogin_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+						return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
 	}
 
 	
@@ -727,15 +757,15 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		return $this;
 	} 
 	
-	public function setIsDeleted($v)
+	public function setIsScheduledForDeletion($v)
 	{
 		if ($v !== null) {
 			$v = (boolean) $v;
 		}
 
-		if ($this->is_deleted !== $v || $v === false) {
-			$this->is_deleted = $v;
-			$this->modifiedColumns[] = sfGuardUserProfilePeer::IS_DELETED;
+		if ($this->is_scheduled_for_deletion !== $v || $v === false) {
+			$this->is_scheduled_for_deletion = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION;
 		}
 
 		return $this;
@@ -752,6 +782,38 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->modifiedColumns[] = sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_STATUS;
 		}
 
+		return $this;
+	} 
+	
+	public function setGoogleappsAccountLastloginAt($v)
+	{
+						if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+									try {
+				if (is_numeric($v)) { 					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+															$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->googleapps_account_lastlogin_at !== null || $dt !== null ) {
+			
+			$currNorm = ($this->googleapps_account_lastlogin_at !== null && $tmpDt = new DateTime($this->googleapps_account_lastlogin_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) 					)
+			{
+				$this->googleapps_account_lastlogin_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_LASTLOGIN_AT;
+			}
+		} 
 		return $this;
 	} 
 	
@@ -859,7 +921,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	
 	public function hasOnlyDefaultValues()
 	{
-						if (array_diff($this->modifiedColumns, array(sfGuardUserProfilePeer::EMAIL_STATE,sfGuardUserProfilePeer::DISK_SET_SOFT_BLOCKS_QUOTA,sfGuardUserProfilePeer::DISK_SET_HARD_BLOCKS_QUOTA,sfGuardUserProfilePeer::DISK_SET_SOFT_FILES_QUOTA,sfGuardUserProfilePeer::DISK_SET_HARD_FILES_QUOTA,sfGuardUserProfilePeer::DISK_USED_BLOCKS,sfGuardUserProfilePeer::DISK_USED_FILES,sfGuardUserProfilePeer::IS_DELETED))) {
+						if (array_diff($this->modifiedColumns, array(sfGuardUserProfilePeer::EMAIL_STATE,sfGuardUserProfilePeer::DISK_SET_SOFT_BLOCKS_QUOTA,sfGuardUserProfilePeer::DISK_SET_HARD_BLOCKS_QUOTA,sfGuardUserProfilePeer::DISK_SET_SOFT_FILES_QUOTA,sfGuardUserProfilePeer::DISK_SET_HARD_FILES_QUOTA,sfGuardUserProfilePeer::DISK_USED_BLOCKS,sfGuardUserProfilePeer::DISK_USED_FILES,sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION))) {
 				return false;
 			}
 
@@ -891,7 +953,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				return false;
 			}
 
-			if ($this->is_deleted !== false) {
+			if ($this->is_scheduled_for_deletion !== false) {
 				return false;
 			}
 
@@ -924,14 +986,15 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->disk_used_files = ($row[$startcol + 19] !== null) ? (int) $row[$startcol + 19] : null;
 			$this->disk_updated_at = ($row[$startcol + 20] !== null) ? (string) $row[$startcol + 20] : null;
 			$this->system_alerts = ($row[$startcol + 21] !== null) ? (string) $row[$startcol + 21] : null;
-			$this->is_deleted = ($row[$startcol + 22] !== null) ? (boolean) $row[$startcol + 22] : null;
+			$this->is_scheduled_for_deletion = ($row[$startcol + 22] !== null) ? (boolean) $row[$startcol + 22] : null;
 			$this->googleapps_account_status = ($row[$startcol + 23] !== null) ? (int) $row[$startcol + 23] : null;
-			$this->googleapps_account_approved_at = ($row[$startcol + 24] !== null) ? (string) $row[$startcol + 24] : null;
-			$this->googleapps_account_temporary_password = ($row[$startcol + 25] !== null) ? (string) $row[$startcol + 25] : null;
-			$this->moodle_account_status = ($row[$startcol + 26] !== null) ? (int) $row[$startcol + 26] : null;
-			$this->moodle_account_temporary_password = ($row[$startcol + 27] !== null) ? (string) $row[$startcol + 27] : null;
-			$this->system_account_status = ($row[$startcol + 28] !== null) ? (int) $row[$startcol + 28] : null;
-			$this->system_account_is_locked = ($row[$startcol + 29] !== null) ? (boolean) $row[$startcol + 29] : null;
+			$this->googleapps_account_lastlogin_at = ($row[$startcol + 24] !== null) ? (string) $row[$startcol + 24] : null;
+			$this->googleapps_account_approved_at = ($row[$startcol + 25] !== null) ? (string) $row[$startcol + 25] : null;
+			$this->googleapps_account_temporary_password = ($row[$startcol + 26] !== null) ? (string) $row[$startcol + 26] : null;
+			$this->moodle_account_status = ($row[$startcol + 27] !== null) ? (int) $row[$startcol + 27] : null;
+			$this->moodle_account_temporary_password = ($row[$startcol + 28] !== null) ? (string) $row[$startcol + 28] : null;
+			$this->system_account_status = ($row[$startcol + 29] !== null) ? (int) $row[$startcol + 29] : null;
+			$this->system_account_is_locked = ($row[$startcol + 30] !== null) ? (boolean) $row[$startcol + 30] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -940,7 +1003,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 30; 
+						return $startcol + 31; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating sfGuardUserProfile object", $e);
 		}
@@ -1205,27 +1268,30 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				return $this->getSystemAlerts();
 				break;
 			case 22:
-				return $this->getIsDeleted();
+				return $this->getIsScheduledForDeletion();
 				break;
 			case 23:
 				return $this->getGoogleappsAccountStatus();
 				break;
 			case 24:
-				return $this->getGoogleappsAccountApprovedAt();
+				return $this->getGoogleappsAccountLastloginAt();
 				break;
 			case 25:
-				return $this->getGoogleappsAccountTemporaryPassword();
+				return $this->getGoogleappsAccountApprovedAt();
 				break;
 			case 26:
-				return $this->getMoodleAccountStatus();
+				return $this->getGoogleappsAccountTemporaryPassword();
 				break;
 			case 27:
-				return $this->getMoodleAccountTemporaryPassword();
+				return $this->getMoodleAccountStatus();
 				break;
 			case 28:
-				return $this->getSystemAccountStatus();
+				return $this->getMoodleAccountTemporaryPassword();
 				break;
 			case 29:
+				return $this->getSystemAccountStatus();
+				break;
+			case 30:
 				return $this->getSystemAccountIsLocked();
 				break;
 			default:
@@ -1260,14 +1326,15 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$keys[19] => $this->getDiskUsedFiles(),
 			$keys[20] => $this->getDiskUpdatedAt(),
 			$keys[21] => $this->getSystemAlerts(),
-			$keys[22] => $this->getIsDeleted(),
+			$keys[22] => $this->getIsScheduledForDeletion(),
 			$keys[23] => $this->getGoogleappsAccountStatus(),
-			$keys[24] => $this->getGoogleappsAccountApprovedAt(),
-			$keys[25] => $this->getGoogleappsAccountTemporaryPassword(),
-			$keys[26] => $this->getMoodleAccountStatus(),
-			$keys[27] => $this->getMoodleAccountTemporaryPassword(),
-			$keys[28] => $this->getSystemAccountStatus(),
-			$keys[29] => $this->getSystemAccountIsLocked(),
+			$keys[24] => $this->getGoogleappsAccountLastloginAt(),
+			$keys[25] => $this->getGoogleappsAccountApprovedAt(),
+			$keys[26] => $this->getGoogleappsAccountTemporaryPassword(),
+			$keys[27] => $this->getMoodleAccountStatus(),
+			$keys[28] => $this->getMoodleAccountTemporaryPassword(),
+			$keys[29] => $this->getSystemAccountStatus(),
+			$keys[30] => $this->getSystemAccountIsLocked(),
 		);
 		return $result;
 	}
@@ -1350,27 +1417,30 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->setSystemAlerts($value);
 				break;
 			case 22:
-				$this->setIsDeleted($value);
+				$this->setIsScheduledForDeletion($value);
 				break;
 			case 23:
 				$this->setGoogleappsAccountStatus($value);
 				break;
 			case 24:
-				$this->setGoogleappsAccountApprovedAt($value);
+				$this->setGoogleappsAccountLastloginAt($value);
 				break;
 			case 25:
-				$this->setGoogleappsAccountTemporaryPassword($value);
+				$this->setGoogleappsAccountApprovedAt($value);
 				break;
 			case 26:
-				$this->setMoodleAccountStatus($value);
+				$this->setGoogleappsAccountTemporaryPassword($value);
 				break;
 			case 27:
-				$this->setMoodleAccountTemporaryPassword($value);
+				$this->setMoodleAccountStatus($value);
 				break;
 			case 28:
-				$this->setSystemAccountStatus($value);
+				$this->setMoodleAccountTemporaryPassword($value);
 				break;
 			case 29:
+				$this->setSystemAccountStatus($value);
+				break;
+			case 30:
 				$this->setSystemAccountIsLocked($value);
 				break;
 		} 	}
@@ -1402,14 +1472,15 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[19], $arr)) $this->setDiskUsedFiles($arr[$keys[19]]);
 		if (array_key_exists($keys[20], $arr)) $this->setDiskUpdatedAt($arr[$keys[20]]);
 		if (array_key_exists($keys[21], $arr)) $this->setSystemAlerts($arr[$keys[21]]);
-		if (array_key_exists($keys[22], $arr)) $this->setIsDeleted($arr[$keys[22]]);
+		if (array_key_exists($keys[22], $arr)) $this->setIsScheduledForDeletion($arr[$keys[22]]);
 		if (array_key_exists($keys[23], $arr)) $this->setGoogleappsAccountStatus($arr[$keys[23]]);
-		if (array_key_exists($keys[24], $arr)) $this->setGoogleappsAccountApprovedAt($arr[$keys[24]]);
-		if (array_key_exists($keys[25], $arr)) $this->setGoogleappsAccountTemporaryPassword($arr[$keys[25]]);
-		if (array_key_exists($keys[26], $arr)) $this->setMoodleAccountStatus($arr[$keys[26]]);
-		if (array_key_exists($keys[27], $arr)) $this->setMoodleAccountTemporaryPassword($arr[$keys[27]]);
-		if (array_key_exists($keys[28], $arr)) $this->setSystemAccountStatus($arr[$keys[28]]);
-		if (array_key_exists($keys[29], $arr)) $this->setSystemAccountIsLocked($arr[$keys[29]]);
+		if (array_key_exists($keys[24], $arr)) $this->setGoogleappsAccountLastloginAt($arr[$keys[24]]);
+		if (array_key_exists($keys[25], $arr)) $this->setGoogleappsAccountApprovedAt($arr[$keys[25]]);
+		if (array_key_exists($keys[26], $arr)) $this->setGoogleappsAccountTemporaryPassword($arr[$keys[26]]);
+		if (array_key_exists($keys[27], $arr)) $this->setMoodleAccountStatus($arr[$keys[27]]);
+		if (array_key_exists($keys[28], $arr)) $this->setMoodleAccountTemporaryPassword($arr[$keys[28]]);
+		if (array_key_exists($keys[29], $arr)) $this->setSystemAccountStatus($arr[$keys[29]]);
+		if (array_key_exists($keys[30], $arr)) $this->setSystemAccountIsLocked($arr[$keys[30]]);
 	}
 
 	
@@ -1439,8 +1510,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::DISK_USED_FILES)) $criteria->add(sfGuardUserProfilePeer::DISK_USED_FILES, $this->disk_used_files);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::DISK_UPDATED_AT)) $criteria->add(sfGuardUserProfilePeer::DISK_UPDATED_AT, $this->disk_updated_at);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::SYSTEM_ALERTS)) $criteria->add(sfGuardUserProfilePeer::SYSTEM_ALERTS, $this->system_alerts);
-		if ($this->isColumnModified(sfGuardUserProfilePeer::IS_DELETED)) $criteria->add(sfGuardUserProfilePeer::IS_DELETED, $this->is_deleted);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION)) $criteria->add(sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION, $this->is_scheduled_for_deletion);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_STATUS)) $criteria->add(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_STATUS, $this->googleapps_account_status);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_LASTLOGIN_AT)) $criteria->add(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_LASTLOGIN_AT, $this->googleapps_account_lastlogin_at);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_APPROVED_AT)) $criteria->add(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_APPROVED_AT, $this->googleapps_account_approved_at);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_TEMPORARY_PASSWORD)) $criteria->add(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_TEMPORARY_PASSWORD, $this->googleapps_account_temporary_password);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::MOODLE_ACCOUNT_STATUS)) $criteria->add(sfGuardUserProfilePeer::MOODLE_ACCOUNT_STATUS, $this->moodle_account_status);
@@ -1521,9 +1593,11 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 
 		$copyObj->setSystemAlerts($this->system_alerts);
 
-		$copyObj->setIsDeleted($this->is_deleted);
+		$copyObj->setIsScheduledForDeletion($this->is_scheduled_for_deletion);
 
 		$copyObj->setGoogleappsAccountStatus($this->googleapps_account_status);
+
+		$copyObj->setGoogleappsAccountLastloginAt($this->googleapps_account_lastlogin_at);
 
 		$copyObj->setGoogleappsAccountApprovedAt($this->googleapps_account_approved_at);
 

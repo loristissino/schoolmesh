@@ -77,9 +77,11 @@ class sfGuardUserProfileMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('SYSTEM_ALERTS', 'SystemAlerts', 'VARCHAR', false, 255);
 
-		$tMap->addColumn('IS_DELETED', 'IsDeleted', 'BOOLEAN', false, null);
+		$tMap->addColumn('IS_SCHEDULED_FOR_DELETION', 'IsScheduledForDeletion', 'BOOLEAN', false, null);
 
 		$tMap->addColumn('GOOGLEAPPS_ACCOUNT_STATUS', 'GoogleappsAccountStatus', 'INTEGER', false, null);
+
+		$tMap->addColumn('GOOGLEAPPS_ACCOUNT_LASTLOGIN_AT', 'GoogleappsAccountLastloginAt', 'TIMESTAMP', false, null);
 
 		$tMap->addColumn('GOOGLEAPPS_ACCOUNT_APPROVED_AT', 'GoogleappsAccountApprovedAt', 'TIMESTAMP', false, null);
 
