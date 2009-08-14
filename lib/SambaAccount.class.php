@@ -1,61 +1,23 @@
 <?php
 /**
- * ExternalAccount class
+ * GoogleappsAccount class
  * @package schoolmesh
  * @subpackage classes
  */
-abstract class ExternalAccount {
+class SambaAccount extends ExternalAccount {
 
-//	protected $user;
-	protected $_type;
-	protected $_profile;
-	protected $_info=array();
-
-	public function __construct($type)
+	public function __construct()
 	{
-		$this->_type=$type;
+		parent::__construct('samba');
 		$this->applyDefaultValues();
 	}
-	
-	public function applyDefaultValues()
+
+
+		public function applyDefaultValues()
 	{
 		
 	}
 	
-	public function setProfile($profile)
-	{
-		if (!$profile instanceof sfGuardUserProfile)
-		{
-			throw new Exception('not a valid user');
-		}
-		$this->_profile=$profile;
-		return $this;
-	}
-
-	public function getProfile()
-	{
-		return $this->_profile;
-	}
-   public function setInfo($key, $value)
-	{
-		$this->info[$key]=$value;
-	}
-
-    public function getInfo($key)
-	{
-		return @$this->info[$key];
-	}
-	
-  /**
-   * Returns the type of  External account
-   *
-   * @return String the type of account
-   */
-  public function getTypeOfAccount()
-	{
-		return $this->_type;
-	}
-
   /**
    * Returns the status of the External account
    *
@@ -110,7 +72,7 @@ abstract class ExternalAccount {
   /**
    * Informs about whether the account can be definitely removed
    *
-   * @return Boolean|String true if the account can be definitely removed, a string with the explanation of the reason otherwise
+   * @return Boolean true if the account can be definitely removed, false otherwise
    */
   public function getIsDeletable()
 	{

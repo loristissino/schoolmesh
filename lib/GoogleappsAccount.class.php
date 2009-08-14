@@ -6,6 +6,13 @@
  */
 class GoogleappsAccount extends ExternalAccount {
 
+	public function __construct()
+	{
+		parent::__construct('googleapps');
+		$this->applyDefaultValues();
+	}
+
+
 		public function applyDefaultValues()
 	{
 		

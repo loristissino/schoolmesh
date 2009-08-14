@@ -10,9 +10,45 @@
 class sfGuardUserProfile extends BasesfGuardUserProfile
 {
 	
+		protected $_accounts=array();
+	
 		protected $countFailedChecks;
 		
 		protected $checks=array();
+		
+		public function addAccount($account)
+		{
+			if (!$account instanceof ExternalAccount)
+			{
+				throw new Exception('expected an ExternalAccount instance');
+			}
+		
+			if(array_key_exists($account->getTypeOfAccount(), $this->getExternalAccounts()))
+			{
+				return $this;
+			}
+			
+			$account->setProfile($this);
+			$this->_accounts[$account->getTypeOfAccount()]=$account;
+			return $this;
+		}
+		
+		public function getExternalAccounts()
+		{
+			return $this->_accounts;
+		}
+
+		public function getExternalAccountByName($name)
+		{
+			if (array_key_exists($name, $this->getExternalAccounts()))
+			{
+				return $this->_accounts[$name];
+			}
+			else
+			{
+				return false;
+			}
+		}
 		
 		public function getBelongsToGuardGroup($group)
 		{
@@ -107,8 +143,8 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$c=new Criteria();
 			$c->add(sfGuardUserPermissionPeer::PERMISSION_ID, $permission->getId());
 			$c->add(sfGuardUserPermissionPeer::USER_ID, $this->getUserId());
-			$user_permission=sfGuardUserPermissionPeer::doSelectOne($c);
-				
+			$user_permission=sfGuardUserPermissionPeer::doDelete($c);
+/*				
 			if (!$user_permission)
 			{
 				return $this;
@@ -118,7 +154,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 				$permission=sfGuardPermissionPeer::retrieveByPK($user_permission->getPermissionId());
 				
 			$user_permission->delete();
-			
+	*/		
 			return $this;
 			
 		}
