@@ -3,92 +3,11 @@
 
 = Setup di SchoolMesh =
 
-Eseguire questo script per scaricare e installare SchoolMesh (i test sono stati effettuati su una macchina con Ubuntu).
+Scaricare lo script di installazione (disponibile all'URL http://schoolmesh.googlecode.com/files) ed eseguirlo (i test sono stati effettuati su una macchina Ubuntu 8.04, 8.10 e 9.04).
 
 {{{
-#!/bin/bash
-
-OWNER=$(whoami)
-INSTALLDIR=/var/schoolmesh
-CONFIGDIR=/etc/schoolmesh
-
-echo "Creating the basic directories if necessary..."
-[[ -d "$INSTALLDIR" ]] || sudo mkdir "$INSTALLDIR"
-
-echo "Creating the local configuration directories if necessary..."
-# We create the local configuration directory if necessary
-# (all local files must be kept here, in order to avoid conflicts when upgrading)
-[[ -d "$CONFIGDIR" ]] || sudo mkdir -p "$CONFIGDIR/"{frontend,backend}/config
-
-sudo chown -R $OWNER "$INSTALLDIR" "$CONFIGDIR"
-
-cd "$INSTALLDIR"
-
-echo "Backing up current configuration files"
-for FILE in config/databases.yml apps/frontend/config/app.yml apps/backend/config/app.yml
-  do
-    [[ -f "$FILE" ]] && cp -v "$FILE" "$CONFIGDIR/$FILE.backup"$(date +%s)
-  done
-
-
-svn checkout http://schoolmesh.googlecode.com/svn/trunk/ "$INSTALLDIR"
-
-cd mysymfony
-
-cmp MD5SUMS.txt MD5SUMS_current.txt > /dev/null 2>&1
-
-if [[ $? -ne 0 ]]
-  then
-    # we must download the necessary files (symfony library and plugins)
-
-    dialog --yesno 'We are going to download symfony library and plugins. These files will replace all current symfony version you might have installed. Is it ok to proceed?' 0 0
-
-    if [[ $? -eq 1 ]]
-       then
-          dialog --infobox 'Please try the manual installation. Setup will finish here. Thank you.' 0 0
-          exit 1
-    fi
-
-    for FILE in $(cat MD5SUMS.txt | gawk '{print $2}')
-      do
-        [[ -f "$file" ]] || wget http://schoolmesh.googlecode.com/files/$FILE
-      done
-
-    md5sum -c MD5SUMS.txt
-
-    if [[ $? -ne 0 ]]
-      then
-        echo "MD5 error"
-        exit 2
-    fi
-
-    echo "Schoolmesh library upgrade..."
-    sudo tar xjPf symfonylib*.tar.bz2
-    rm -f symfonylib*.tar.bz2
-    sudo mv MD5SUMS.txt MD5SUMS_current.txt
-
-  else
-    echo "Schoolmesh libraries already up to date..."
-fi
-
-cd ..
-
-echo "Copying man pages..."
-for i in 1 8
-  do
-    sudo mkdir -p /usr/local/share/man/man$i
-    sudo cp -v /var/schoolmesh/doc/man/man$i/* /usr/local/share/man/man$i/ 2>/dev/null
-  done
-
-echo "Copying scripts..."
-sudo cp  bin/schoolmesh* /usr/local/bin
-
-sudo chown -R $OWNER:www-data "$INSTALLDIR"
-
-sudo chmod -R 770 "$INSTALLDIR"/{cache,log}
-sudo chmod -R 770 "$INSTALLDIR"/web/{uploads,oo}
-
-echo "SchoolMesh setup done."
+wget http://schoolmesh.googlecode.com/files/schoolmeshsetup-0.090814.sh
+./schoolmeshsetup-0.090814.sh
 }}}
 
 Passo successivo: [ApacheSSL Configurazione di Apache]
