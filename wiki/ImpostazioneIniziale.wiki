@@ -18,8 +18,9 @@ sudo apt-get update
 sudo apt-get install subversion gawk pandoc php5-cli libapache2-mod-php5 php5-common \
 php5-ldap php5-mysql php5-xsl dialog apache2 apache2-utils mysql-server \
 libdbd-mysql-perl libdbi-perl libhtml-template-perl libnet-daemon-perl \
-libplrpc-perl mysql-client-5.0 mysql-server-5.0 mysql-server-core-5.0 \
-phpmyadmin dbconfig-common libgd2-xpm libmcrypt4 php5-gd php5-mcrypt wget quota
+libplrpc-perl mysql-client-5.0 mysql-server-5.0  \
+phpmyadmin dbconfig-common libgd2-xpm libmcrypt4 php5-gd php5-mcrypt wget \
+quota tidy
 }}}
 
 ----
