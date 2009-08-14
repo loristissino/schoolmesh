@@ -116,3 +116,5 @@ $ sudo /etc/init.d/apache2 force-reload
  * Reloading web server config apache2                                   [ OK ] 
 
 }}}
+
+Passo successivo: [MYSQL Configurazione di MySql]
