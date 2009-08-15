@@ -33,18 +33,13 @@ $testAccount = $profile->getAccountByType('samba');
 
 $t->isa_ok($testAccount, SambaAccount, '->getAccountByName() returns the correct account type for Samba accounts');
 
-$t->like($testAccount->getInfo(), '/samba/', 'the info field is kept for Samba accounts');
+$t->like($testAccount->getAccountInfo('message'), '/samba/', 'the info field is kept for Samba accounts');
 
 $testAccount = $profile->getAccountByType('moodle');
 
 $t->isa_ok($testAccount, MoodleAccount, '->getAccountByName() returns the correct account type for Moodle accounts');
 
-$t->like($testAccount->getInfo(), '/moodle/', 'the info field is kept for Moodle accounts');
-
-foreach($profile->getAccounts() as $account)
-{
-	echo $account->getHello() . "\n";
-}
+$t->like($testAccount->getAccountInfo('message'), '/moodle/', 'the info field is kept for Moodle accounts');
 
 $otherMoodleAccount = new MoodleAccount();
 $profile->addAccount($otherMoodleAccount);

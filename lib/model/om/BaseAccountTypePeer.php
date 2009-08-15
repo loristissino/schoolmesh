@@ -13,7 +13,7 @@ abstract class BaseAccountTypePeer {
 	const CLASS_DEFAULT = 'lib.model.AccountType';
 
 	
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 5;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -28,6 +28,9 @@ abstract class BaseAccountTypePeer {
 	const DESCRIPTION = 'account_type.DESCRIPTION';
 
 	
+	const STYLE = 'account_type.STYLE';
+
+	
 	const IS_EXTERNAL = 'account_type.IS_EXTERNAL';
 
 	
@@ -38,20 +41,20 @@ abstract class BaseAccountTypePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'Description', 'IsExternal', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'description', 'isExternal', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::NAME, self::DESCRIPTION, self::IS_EXTERNAL, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'description', 'is_external', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'Description', 'Style', 'IsExternal', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'description', 'style', 'isExternal', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::NAME, self::DESCRIPTION, self::STYLE, self::IS_EXTERNAL, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'description', 'style', 'is_external', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'Description' => 2, 'IsExternal' => 3, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'description' => 2, 'isExternal' => 3, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NAME => 1, self::DESCRIPTION => 2, self::IS_EXTERNAL => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'description' => 2, 'is_external' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'Description' => 2, 'Style' => 3, 'IsExternal' => 4, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'description' => 2, 'style' => 3, 'isExternal' => 4, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NAME => 1, self::DESCRIPTION => 2, self::STYLE => 3, self::IS_EXTERNAL => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'description' => 2, 'style' => 3, 'is_external' => 4, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	
@@ -98,6 +101,8 @@ abstract class BaseAccountTypePeer {
 		$criteria->addSelectColumn(AccountTypePeer::NAME);
 
 		$criteria->addSelectColumn(AccountTypePeer::DESCRIPTION);
+
+		$criteria->addSelectColumn(AccountTypePeer::STYLE);
 
 		$criteria->addSelectColumn(AccountTypePeer::IS_EXTERNAL);
 

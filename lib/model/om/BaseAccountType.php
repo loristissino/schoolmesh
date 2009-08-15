@@ -19,6 +19,9 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 	protected $description;
 
 	
+	protected $style;
+
+	
 	protected $is_external;
 
 	
@@ -61,6 +64,12 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 	public function getDescription()
 	{
 		return $this->description;
+	}
+
+	
+	public function getStyle()
+	{
+		return $this->style;
 	}
 
 	
@@ -112,6 +121,20 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setStyle($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->style !== $v) {
+			$this->style = $v;
+			$this->modifiedColumns[] = AccountTypePeer::STYLE;
+		}
+
+		return $this;
+	} 
+	
 	public function setIsExternal($v)
 	{
 		if ($v !== null) {
@@ -142,7 +165,8 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->name = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->description = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-			$this->is_external = ($row[$startcol + 3] !== null) ? (boolean) $row[$startcol + 3] : null;
+			$this->style = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->is_external = ($row[$startcol + 4] !== null) ? (boolean) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -151,7 +175,7 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 4; 
+						return $startcol + 5; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating AccountType object", $e);
 		}
@@ -345,6 +369,9 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 				return $this->getDescription();
 				break;
 			case 3:
+				return $this->getStyle();
+				break;
+			case 4:
 				return $this->getIsExternal();
 				break;
 			default:
@@ -360,7 +387,8 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getName(),
 			$keys[2] => $this->getDescription(),
-			$keys[3] => $this->getIsExternal(),
+			$keys[3] => $this->getStyle(),
+			$keys[4] => $this->getIsExternal(),
 		);
 		return $result;
 	}
@@ -386,6 +414,9 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 				$this->setDescription($value);
 				break;
 			case 3:
+				$this->setStyle($value);
+				break;
+			case 4:
 				$this->setIsExternal($value);
 				break;
 		} 	}
@@ -398,7 +429,8 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setName($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setDescription($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setIsExternal($arr[$keys[3]]);
+		if (array_key_exists($keys[3], $arr)) $this->setStyle($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setIsExternal($arr[$keys[4]]);
 	}
 
 	
@@ -409,6 +441,7 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(AccountTypePeer::ID)) $criteria->add(AccountTypePeer::ID, $this->id);
 		if ($this->isColumnModified(AccountTypePeer::NAME)) $criteria->add(AccountTypePeer::NAME, $this->name);
 		if ($this->isColumnModified(AccountTypePeer::DESCRIPTION)) $criteria->add(AccountTypePeer::DESCRIPTION, $this->description);
+		if ($this->isColumnModified(AccountTypePeer::STYLE)) $criteria->add(AccountTypePeer::STYLE, $this->style);
 		if ($this->isColumnModified(AccountTypePeer::IS_EXTERNAL)) $criteria->add(AccountTypePeer::IS_EXTERNAL, $this->is_external);
 
 		return $criteria;
@@ -443,6 +476,8 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 		$copyObj->setName($this->name);
 
 		$copyObj->setDescription($this->description);
+
+		$copyObj->setStyle($this->style);
 
 		$copyObj->setIsExternal($this->is_external);
 

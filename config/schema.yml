@@ -77,6 +77,7 @@ propel:
     id:
     name:           { type: varchar, size: 255, required: true, index: unique }
     description:    { type: longvarchar }
+    style:            { type: varchar(50) }
     is_external:   { type: boolean, required: true }
 
   account:

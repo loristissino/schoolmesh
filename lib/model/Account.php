@@ -2,6 +2,32 @@
 
 class Account extends BaseAccount
 {
+	
+	private $_info = array();
+	
+	public function __construct()
+	{
+		parent::__construct();
+		$this->_info=unserialize($this->getInfo());
+	}
+	
+	public function save(PropelPDO $con = null)
+	{
+		$this->setInfo(serialize($this->_info));
+		parent::save();
+	}
+	
+   public function setAccountInfo($key, $value)
+	{
+		$this->_info[$key]=$value;
+	}
+
+    public function getAccountInfo($key)
+	{
+		return @$this->_info[$key];
+	}
+	
+	
 	function getRealAccount()
 	{
 		switch($this->getAccountType()->getName())
@@ -30,10 +56,5 @@ class Account extends BaseAccount
 		return $realAccount;
 	}
 	
-	function getHello()
-	{
-		return "Generic account";
-	}
-
 	
 }
