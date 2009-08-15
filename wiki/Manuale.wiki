@@ -84,7 +84,6 @@ Queste operazioni possono essere svolte (dagli utenti con la credenziale 'admin'
 SchoolMesh gestisce due tipi di gruppi di natura molto differente:
 
   # *Guardgroups*: sono i gruppi che servono all'attribuzione delle credenziali per l'uso dell'applicazione web; ad esempio, il gruppo `admin`, `teacher`, `office`, `schoolmaster` (un utente può fare parte di più _Guardgroups_) -- questi gruppi sono predefiniti nell'applicazione e non possono essere creati o modificati
-
   # *Teams*: sono i gruppi di utenti della normale vita scolastica come classi, consigli di classe, dipartimenti di materia, commissioni, gruppi di lavoro, ecc. (un utente può appartenere ad uno o più _team_ e deve avere all'interno del _team_ un ruolo, come coordinatore, segretario, componente, ecc.) -- team e ruoli possono essere definiti a piacere, ma alcuni vengono predisposti in maniera automatica (ad esempio, quelli dei consigli di classe)
 
 Per i _team_ è previsto che vengano predisposti automaticamente delle cartelle condivise (ed eventualmente dei gruppi con Google Apps).
@@ -105,9 +104,8 @@ Uno degli scopi principali di SchoolMesh è di consentire la gestione coerente d
 
 Oltre agli account di SchoolMesh, che consentono l'accesso all'applicazione web, vi è infatti la necessità/possibilità di gestire:
 
-  # account interni alla scuola, come ad esempio gli account Samba per l'autenticazione degli utenti nel dominio della scuola
-
-  # account esterni, come quelli sulla piattaforma di e-learning Moodle e per la gestione di diverse attività web (posta elettronica, documenti e siti web condivisi, ecc.) offerti da Google con la sua _Google Apps Educational Edition_
+  * account interni alla scuola, come ad esempio gli account Samba per l'autenticazione degli utenti nel dominio della scuola
+  * account esterni, come quelli sulla piattaforma di e-learning Moodle e per la gestione di diverse attività web (posta elettronica, documenti e siti web condivisi, ecc.) offerti da Google con la sua _Google Apps Educational Edition_
 
 Per questo motivo, SchoolMesh è un'applicazione strutturata per la gestione il più possibile sincronizzata di questi account, con un sistema modulare ed espandibile.
 
@@ -126,9 +124,7 @@ Gli account "figli" devono appartenere ad una delle tipologie riportate nella ta
 La maggior parte degli utenti di SchoolMesh disporrà, tipicamente, almeno degli account _posix_, _samba_ e _moodle_, ma è importante notare che esistono importanti eccezioni a questa regola. Vediamo qualche esempio.
 
   # alcuni utenti _posix_ non hanno un corrispondente utente nel database di SchoolMesh (es. _root_, _daemon_, _bin_, _sys_, ecc.); nel database si SchoolMesh la tabella `reserved_username` permette di definire dei nomi utenti riservati, non assegnabili agli utenti
-
   # alcuni utenti nel database possono non avere alcun account (ad esempio, un docente che non insegna più nella scuola, ma di cui la scuola detiene i piani di lavoro degli anni precedenti); per questi utenti si dovrà impostare il flag `is_active` a false, ma dovranno essere mantenuti nel database; sarà invece possibile rimuovere tutti i loro file dai dischi (ad eccezione di quelli posti in cartelle condivise, come quelli del dipartimento di materia)
-
   # un account _moodle_ potrebbe essere sospeso o annullato per uno studente che ne ha abusato
 
 === Gli account Google Apps ===
@@ -140,18 +136,15 @@ Per gli account Google Apps, l'uso dei quali prevede l'accettazione di particola
 Affinché un utente possa essere rimosso dal database interno di SchoolMesh devono essere soddisfatte tutte le seguenti condizioni:
 
   # non deve comparire come soggetto coinvolto attivamente in progetti scolastici (anche passati)
-
   # non deve comparire come autore di operazioni nel workflow di qualsiasi attività (ad esempio, non può essere rimosso un dirigente scolastico che ha approvato un piano di lavoro)
-
   # se è un docente, non deve risultare titolare di alcun insegnamento (anche passato) a cui è legato un piano di lavoro / relazione finale
-
   # se è uno studente, non deve risultare più iscritto
 
 Inoltre, tutti gli account di quell'utente devono risultare rimossi.
 
 A questo scopo, la funzione _isDeletable()_ relativa ad ogni account "figlio" restituirà un valore affermativo secondo principi diversi, in modo da consentire ai sistemisti di effettuare le operazioni necessarie.
 
-|| *account* || casi in cui _isDeletable()_==false || suggerimenti per il sistemista ||
+|| *account* || *casi in cui _isDeletable()_ restituisce _false_* || *suggerimenti per il sistemista* ||
 || _posix_ || sono presenti dei file dell'utente || tutti i file dell'utente devono essere rimossi o ne deve essere cambiato il proprietario ||
 || _shell_ || l'utente dispone della credenziale _admin_ || eliminare la credenziale _admin_ per l'utente ||
 || _samba_ || ??? || ... ||
