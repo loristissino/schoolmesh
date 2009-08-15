@@ -1,6 +1,6 @@
 <?php
 
-class schoolmeshRevokePermissionTask extends sfBaseTask
+class schoolmeshShowAccountsTask extends sfBaseTask
 {
   protected function configure()
   {
@@ -17,13 +17,14 @@ class schoolmeshRevokePermissionTask extends sfBaseTask
     ));
 
     $this->namespace        = 'schoolmesh';
-    $this->name             = 'revokePermission';
-    $this->briefDescription = 'Revokes a permission to a user';
+    $this->name             = 'showAccounts';
+    $this->briefDescription = 'Shows the account of a user';
     $this->detailedDescription = "";
   }
 
   protected function execute($arguments = array(), $options = array())
   {
+	
     // initialize the database connection
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
@@ -31,8 +32,25 @@ class schoolmeshRevokePermissionTask extends sfBaseTask
     // add your code here
     
 	$user=sfGuardUserProfilePeer::retrieveByUsername('john.test');
-    $this->log('Adding samba account');
-	$user->getProfile()->revokeUserPermission('office');
+	
+	$accounts=$user->getProfile()->getAccounts();
+	
+	if (sizeof($accounts)>0)
+	{
+		
+		$i=0;
+		foreach($accounts as $account)
+		{
+			echo "Account # " .$i++ . "\n";
+			$account->sayHallo();
+			echo $account->getAccountType() . "\n";
+		}
+	}
+	else
+	{
+		echo "No accounts\n";
+	}
 
   }
+  
 }

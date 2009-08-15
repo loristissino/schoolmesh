@@ -73,6 +73,20 @@ propel:
 #        it is needed to produce the letter with instructions for the user
 #        it is set to null when we discover that the user has done a successful login
 
+  account_type:
+    id:
+    name:           { type: varchar, size: 255, required: true, index: unique }
+    description:    { type: longvarchar }
+    is_external:   { type: boolean, required: true }
+
+  account:
+    id: 
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade, onUpdate: cascade }
+    account_type_id: { type: integer, foreignTable: account_type, foreignReference: id, required: true, onDelete: restrict, onUpdate: cascade }
+    info:  longvarchar
+    _uniques:
+      ua: [user_id, account_type_id]
+
   reserved_username:
     id:   
     username: { type: varchar(20), index: true }

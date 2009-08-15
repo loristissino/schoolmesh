@@ -1,6 +1,6 @@
 <?php
 
-class schoolmeshRevokePermissionTask extends sfBaseTask
+class schoolmeshAddAccountsTask extends sfBaseTask
 {
   protected function configure()
   {
@@ -17,13 +17,14 @@ class schoolmeshRevokePermissionTask extends sfBaseTask
     ));
 
     $this->namespace        = 'schoolmesh';
-    $this->name             = 'revokePermission';
-    $this->briefDescription = 'Revokes a permission to a user';
+    $this->name             = 'addAccounts';
+    $this->briefDescription = 'Adds a pair of account to a user';
     $this->detailedDescription = "";
   }
 
   protected function execute($arguments = array(), $options = array())
   {
+	
     // initialize the database connection
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
@@ -32,7 +33,16 @@ class schoolmeshRevokePermissionTask extends sfBaseTask
     
 	$user=sfGuardUserProfilePeer::retrieveByUsername('john.test');
     $this->log('Adding samba account');
-	$user->getProfile()->revokeUserPermission('office');
+
+	$sambaAccount = new SambaAccount();
+	$user->getProfile()->addAccount($sambaAccount);
+
+	$this->log('Adding moodle account');
+
+	$moodleAccount = new MoodleAccount();
+	$user->getProfile()->addAccount($moodleAccount);
+	
 
   }
+  
 }
