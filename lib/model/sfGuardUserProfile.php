@@ -10,7 +10,7 @@
 class sfGuardUserProfile extends BasesfGuardUserProfile
 {
 	
-		protected $_accounts=array();
+//		protected $_accounts=array();
 	
 		protected $countFailedChecks;
 		
@@ -18,38 +18,35 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		
 		public function addAccount($account)
 		{
-			if (!$account instanceof ExternalAccount)
+			if (!$account instanceof Account)
 			{
-				throw new Exception('expected an ExternalAccount instance');
+				throw new Exception('expected an Account instance');
 			}
-		
-			if(array_key_exists($account->getTypeOfAccount(), $this->getExternalAccounts()))
+			
+			if ($this->hasAccountOfType($account->getAccountType()->getName()))
 			{
 				return $this;
 			}
+
+			$account
+			->setUserId($this->getUserId())
+			->save();
 			
-			$account->setProfile($this);
-			$this->_accounts[$account->getTypeOfAccount()]=$account;
 			return $this;
-		}
 		
-		public function getExternalAccounts()
-		{
-			return $this->_accounts;
 		}
 
-		public function getExternalAccountByName($name)
+		public function removeAccountByName($type)
 		{
-			if (array_key_exists($name, $this->getExternalAccounts()))
-			{
-				return $this->_accounts[$name];
-			}
-			else
-			{
-				return false;
-			}
+	        $c = new Criteria();
+			$c->add(AccountPeer::USER_ID, $this->getUserId());
+			$c->addJoin(AccountPeer::ACCOUNT_TYPE_ID, AccountTypePeer::ID);
+			$c->add(AccountTypePeer::NAME, $type);
+			AccountPeer::doDelete($c);
+			return $this;
 		}
-		
+
+
 		public function getBelongsToGuardGroup($group)
 		{
 			if (!$group instanceof sfGuardGroup)
@@ -144,17 +141,6 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$c->add(sfGuardUserPermissionPeer::PERMISSION_ID, $permission->getId());
 			$c->add(sfGuardUserPermissionPeer::USER_ID, $this->getUserId());
 			$user_permission=sfGuardUserPermissionPeer::doDelete($c);
-/*				
-			if (!$user_permission)
-			{
-				return $this;
-			}
-				
-				$user=sfGuardUserPeer::retrieveByPK($user_permission->getUserId());
-				$permission=sfGuardPermissionPeer::retrieveByPK($user_permission->getPermissionId());
-				
-			$user_permission->delete();
-	*/		
 			return $this;
 			
 		}
@@ -322,6 +308,50 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			}
 			
 		}
+
+        public function getAccounts()
+        {
+	        $c = new Criteria();
+			$c->add(AccountPeer::USER_ID, $this->getUserId());
+			$t = AccountPeer::doSelect($c);
+			
+			$r=array();
+			
+			foreach($t as $account)
+			{
+				$r[]=$account->getRealAccount();
+			}
+			return $r;
+        }
+		
+		public function hasAccountOfType($type)
+		{
+	        $c = new Criteria();
+			$c->add(AccountPeer::USER_ID, $this->getUserId());
+			$c->addJoin(AccountPeer::ACCOUNT_TYPE_ID, AccountTypePeer::ID);
+			$c->add(AccountTypePeer::NAME, $type);
+			return AccountPeer::doCount($c);
+		}
+
+		public function getAccountByType($type)
+		{
+	        $c = new Criteria();
+			$c->add(AccountPeer::USER_ID, $this->getUserId());
+			$c->addJoin(AccountPeer::ACCOUNT_TYPE_ID, AccountTypePeer::ID);
+			$c->add(AccountTypePeer::NAME, $type);
+			$t = AccountPeer::doSelectOne($c);
+			if ($t)
+			{
+				return $t->getRealAccount();
+			}
+			else
+			{
+				return null;
+			}
+			
+			
+		}
+
 
         public function getCurrentAppointments()
         {

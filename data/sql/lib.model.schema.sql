@@ -124,6 +124,51 @@ CREATE TABLE `sf_guard_user_profile`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- account_type
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `account_type`;
+
+
+CREATE TABLE `account_type`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255)  NOT NULL,
+	`description` TEXT,
+	`is_external` TINYINT  NOT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `account_type_U_1` (`name`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- account
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `account`;
+
+
+CREATE TABLE `account`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER  NOT NULL,
+	`account_type_id` INTEGER  NOT NULL,
+	`info` TEXT,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `ua` (`user_id`, `account_type_id`),
+	CONSTRAINT `account_FK_1`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	INDEX `account_FI_2` (`account_type_id`),
+	CONSTRAINT `account_FK_2`
+		FOREIGN KEY (`account_type_id`)
+		REFERENCES `account_type` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- reserved_username
 #-----------------------------------------------------------------------------
 

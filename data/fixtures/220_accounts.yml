@@ -1,0 +1,15 @@
+Account:
+  loris_login:
+    user_id:        loris
+    account_type_id:     login
+  loris_googleapps:
+    user_id:        loris
+    account_type_id:   googleapps
+  loris_ldapnfs:
+    user_id:        loris
+    account_type_id:   ldapnfs
+
+  juri_login:
+    user_id:        juri
+    account_type_id:     login
+
