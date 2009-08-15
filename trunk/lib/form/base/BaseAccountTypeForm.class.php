@@ -16,6 +16,7 @@ class BaseAccountTypeForm extends BaseFormPropel
       'id'          => new sfWidgetFormInputHidden(),
       'name'        => new sfWidgetFormInput(),
       'description' => new sfWidgetFormTextarea(),
+      'style'       => new sfWidgetFormInput(),
       'is_external' => new sfWidgetFormInputCheckbox(),
     ));
 
@@ -23,6 +24,7 @@ class BaseAccountTypeForm extends BaseFormPropel
       'id'          => new sfValidatorPropelChoice(array('model' => 'AccountType', 'column' => 'id', 'required' => false)),
       'name'        => new sfValidatorString(array('max_length' => 255)),
       'description' => new sfValidatorString(array('required' => false)),
+      'style'       => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'is_external' => new sfValidatorBoolean(),
     ));
 

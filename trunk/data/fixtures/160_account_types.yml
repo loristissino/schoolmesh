@@ -2,24 +2,30 @@ AccountType:
   posix:
     name:           posix
     description:  Posix account
+    style:            posix
     is_external:   false
   samba:
     name:           samba
     description:  Account Samba per l'autenticazione e l'accesso a file e stampanti condivisi
+    style:            samba
     is_external:   false
   login:
     name:           login
     description:  Accesso diretto al server principale tramite SSH e Bash
+    style:            login
     is_external:   false
   googleapps:
     name:           googleapps
     description:   Account Google Apps per i servizi web
+    style:            googleapps
     is_external:   true
   moodle:
     name:           moodle
     description:   Account Moodle per i servizi di e-learning
+    style:            moodle
     is_external:   true
   ldapnfs:
     name:           ldapnfs
     description:   Account LDAP/NFS per l'autenticazione e l'accesso a file e stampanti condivisi
+    style:            ldapnfs
     is_external:   false

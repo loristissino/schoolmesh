@@ -135,6 +135,7 @@ CREATE TABLE `account_type`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(255)  NOT NULL,
 	`description` TEXT,
+	`style` VARCHAR(50),
 	`is_external` TINYINT  NOT NULL,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `account_type_U_1` (`name`)
