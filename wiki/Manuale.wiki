@@ -113,7 +113,7 @@ Per ogni utente, infatti, è possibile definire degli account "figli" dell'accou
 
 Gli account "figli" devono appartenere ad una delle tipologie riportate nella tabella seguente (eventualmente altre se ne potranno aggiungere):
 
-|| *nome* || *tipo || *descrizione* ||
+|| *nome* || *tipo* || *descrizione* ||
 || _posix_ || interno || è l'account principale che consente ad un utente di avere una propria _home directory_; ad esso sono legate le quote disco, i permessi su file e directory, l'appartenenza ad uno o più gruppi posix, le _access control list_, ecc. ||
 || _shell_ || interno || è la possibilità che viene data ad un utente di accedere via terminale al server di autenticazione tramite SSH; presuppone l'esistenza di un account _posix_ non bloccato e con una shell appropriata (ad esempio (_bin/bash_) ||
 || _samba_ || interno || è la possibilità che viene data ad un utente di accedere ai calcolatori della rete interna mediante autenticazione SMB; presuppone l'esistenza di un account _posix_ (non bloccato?) e di un account Samba ||
