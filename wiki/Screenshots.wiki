@@ -5,17 +5,17 @@
 
 == Workplans management ==
 
-<img src="http://schoolmesh.googlecode.com/files/workplans.png" width="686" height="358" alt="workplans" />
+http://schoolmesh.googlecode.com/files/workplans.png
 
 == One workplan ==
 
-<img src="http://schoolmesh.googlecode.com/files/workplan.png" width="678" height="520" alt="workplan" />
+http://schoolmesh.googlecode.com/files/workplan.png
 
 
 == Some choices of tools and about modules ==
 
-<img src="http://schoolmesh.googlecode.com/files/tools.png" width="670" height="502" alt="tools" />
+http://schoolmesh.googlecode.com/files/tools.png
 
 == User management ==
 
-<img src="http://schoolmesh.googlecode.com/files/users.png" width="1166" height="406" alt="user management" />
+http://schoolmesh.googlecode.com/files/users.png

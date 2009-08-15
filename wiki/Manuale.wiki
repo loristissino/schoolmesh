@@ -121,6 +121,10 @@ Gli account "figli" devono appartenere ad una delle tipologie riportate nella ta
 || _googleapps_ || esterno || è un account gestito da Google per il dominio della scuola, nell'ambito del servizio _Google Apps Educational Edition_ ||
 || _moodle_ || esterno || è un account gestito dalla scuola, su server esterno, dedicato alle attività di e-learning ||
 
+(Gli account esterni sono quelli per cui la sincronizzazione potrebbe non essere fatta in tempo reale: ad esempio, si potrebbe dover scaricare un file CSV con i dati aggiornati e caricarlo successivamente.)
+
+Si noti che gli account "figli" di questo tipo sono registrati nel database interno di SchoolMesh (dove è descritto come dovrebbe essere il mondo, non come è effettivamente: per questo motivo sono necessari i controlli di coerenza).
+
 La maggior parte degli utenti di SchoolMesh disporrà, tipicamente, almeno degli account _posix_, _samba_ e _moodle_, ma è importante notare che esistono importanti eccezioni a questa regola. Vediamo qualche esempio.
 
   # alcuni utenti _posix_ non hanno un corrispondente utente nel database di SchoolMesh (es. _root_, _daemon_, _bin_, _sys_, ecc.); nel database si SchoolMesh la tabella `reserved_username` permette di definire dei nomi utenti riservati, non assegnabili agli utenti
@@ -130,6 +134,26 @@ La maggior parte degli utenti di SchoolMesh disporrà, tipicamente, almeno degli
 === Gli account Google Apps ===
 
 Per gli account Google Apps, l'uso dei quali prevede l'accettazione di particolari termini di servizio, è necessario predisporre un documento che gli allievi minorenni devono fare firmare a un genitore. In assenza di questo documento, l'account non potrà essere attivato.
+
+=== Creazione degli account ===
+
+Gli account principali (quelli di SchoolMesh) possono essere creati (`/index.php/users/new`) e gestiti (`/index.php/users_`) singolarmente tramite l'apposita pagina di amministrazione, in cui è possibile anche caricare un file in formato CSV contenente i dati degli utenti (vedi esempio nella directory `data/example_uploads`).
+
+Quando i dati vengono importati viene adottato il seguente flusso di lavoro (nel caso più semplice, in cui non ci sono errori o dati duplicati):
+
+  # viene creato un profilo utente (nome, cognome, data e luogo di nascita, sesso, ecc.)
+  # viene determinato uno _username_ a partire dal nome e dal cognome e verificato che esso sia compatibile con le regole interne e non sia in conflitto con altri username o username riservati (in questo caso ne viene predisposto uno provvisorio)
+  # l'utente viene fatto appartenere al _GuardGroup_ di competenza (_student_, _teacher_, _technician_, ecc.)
+  # nel caso di studenti e insegnanti, l'utente viene inserito in un _Team_ (la classe o il dipartimento di materia)
+
+Ai _GuardGroup_ principali (_student_, _teacher_, _technician_, ecc.) corrispondono delle credenziali per i vari tipi di account (definibili nel file _app.yml_). Così, se per il _GuardGroup_ degli studenti è prevista la credenziale _posix_, il singolo studente erediterà questa credenziale.
+
+Finita l'importazione dei dati, saranno quindi presenti nel database di SchoolMesh un certo numero di utenti con alcune credenziali relative agli account, ma ancora senza account effettivi.
+
+A questo punto, si possono lanciare i controlli di coerenza degli account:
+
+  # in primo luogo, per tutti gli utenti che dispongono della credenziale _posix_, ma che non hanno un account _posix_, verrà creato un account "figlio" _posix_, per tutti gli utenti che dispongono della credenziale _samba_ verrà creato un account "figlio" _samba_, ecc. (viene fatto anche il controllo inverso, segnalando come anomalia il fatto che un utente abbia un account "figlio" senza la corrispondente credenziale)
+  # in secondo luogo, per tutti gli account "figlio" verranno seguite le regole specifiche per verificare la corrispondenza con il "mondo reale" (nel database c'è scritto che _mario.rossi_ ha un account _posix_ con determinate quote disco impostate e una specifica home directory? bene, verifichiamo se è vero) -- per le mancate corrispondenze vengono proposte delle soluzioni e delle operazioni da compiere.
 
 === Rimozione di un utente dal database di SchoolMesh ===
 
@@ -159,6 +183,16 @@ Per ogni account "figlio" possono essere avviati, quando lo si desidera, dei con
 Per ogni account "figlio" la funzione _getChecks()_ restituirà un insieme di oggetti contenenti l'esito dei controlli effettuati (_passed_, _warning_, _failed_) nonché una descrizione delle operazioni da eseguire per ripristinare la coerenza.
 
 (Nota tecnica: dal punto di vista di SchoolMesh, gli account "figli" sono istanze delle classi PosixAccount, SambaAccount, MoodleAccount, ecc., tutte derivate della classe Account; in questo modo eventuali altri tipi di account potranno essere definiti semplicemente aggiungendo una nuova classe derivata, a patto che implementi i metodi necessari.)
+
+La tabella seguente riassume alcuni dei controlli che vengono fatti:
+
+|| *account* || *controlli* ||
+|| _posix_ || esiste l'utente? ha una sua home directory? il campo gecos corrisponde? ha permessi adeguati? ... ||
+|| _login_ || l'utente ha una shell corretta? è sospeso? ||
+|| _samba_ || l'utente ha un account samba? ||
+|| _ldapnfs || l'utente ha un account ldapnfs? ||
+|| _googleapps_ || l'utente ha un account Google Apps? ||
+|| _moodle_ || l'utente ha un account Moodle? ||
 
 
 == Dati di prova ==
