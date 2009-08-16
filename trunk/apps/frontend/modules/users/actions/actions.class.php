@@ -194,7 +194,19 @@ class usersActions extends sfActions
 		$this->userlist = sfGuardUserProfilePeer::retrieveAllUsers();
 	}
 	
+	$this->checkList = new CheckList();
 	
+	foreach($this->userlist as $current_user)
+	{
+		foreach($current_user->checkPosix() as $check)
+		{
+			$this->checkList->addCheck($check);
+		}
+	}
+	
+
+
+/*
 	$this->checks=array();
 	$this->ok=0;
 	$this->failed=0;
@@ -216,6 +228,8 @@ class usersActions extends sfActions
 			}
 		}
 	}
+	*/
+	
 	
 	if($request->hasParameter('execute'))
 	{
@@ -245,11 +259,12 @@ class usersActions extends sfActions
 			}
 		}
 			
-		$flash=$count_failed==0? 'notice': 'error';
+		$flash=$this->checkList()->getTotalResults(Check::FAILED)==0? 'notice': 'error';
 
 		$this->getUser()->setFlash($flash, 
-				sprintf($this->getContext()->getI18N()->__('Commands successfully executed: %d'), $count_passed) . '. ' . 
-				sprintf($this->getContext()->getI18N()->__('Commands failed: %d'), $count_failed)
+				sprintf($this->getContext()->getI18N()->__('Commands successfully executed: %d'), $this->checkList()->getTotalResults(Check::PASSED)) . '. ' . 
+				sprintf($this->getContext()->getI18N()->__('Warnings: %d'), $this->checkList()->getTotalResults(Check::WARNING)) . '. ' .
+				sprintf($this->getContext()->getI18N()->__('Commands failed: %d'), $this->checkList()->getTotalResults(Check::FAILED))
 				);
 
 		$this->redirect('users/runuserchecks'  . (isset($this->id)? '?id='. $this->id:''));

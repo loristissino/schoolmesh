@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(26, new lime_output_color());
+$t = new lime_test(27, new lime_output_color());
 
 $t->comment('Check class');
 
@@ -59,8 +59,11 @@ $t->is($checkList->getResultsByGroupName('groupB', Check::WARNING), 0, '->getRes
 $checkList->addCheck(new Check(Check::WARNING, 'strange behaviour 1', 'groupA'));
 $checkList->addCheck(new Check(Check::WARNING, 'strange behaviour 2', 'groupA'));
 $checkList->addCheck(new Check(Check::PASSED, 'everything ok', 'groupA'));
-$checkList->addCheck(new Check(Check::FAILED, 'everything ok', 'groupA'));
+$checkList->addCheck(new Check(Check::FAILED, 'everything wrong', 'groupA'));
+$checkList->addCheck(new Check(Check::FAILED, 'too bad!', 'groupB'));
 
 $t->is($checkList->getResultsByGroupName('groupA', Check::WARNING), 3, '->getResultsByGroupName() returns the correct number of warnings');
 
 $t->is($checkList->countChecksByGroupName('groupA'), 5, '->countChecksByGroupName() returns the correct number of checks for a group');
+
+$t->is($checkList->getTotalResults(Check::FAILED), 3, '->getTotalResults() returns the correct grandtotal');

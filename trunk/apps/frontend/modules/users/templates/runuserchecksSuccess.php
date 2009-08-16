@@ -18,55 +18,11 @@
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
 
-<?php if(isset($checks)): ?>
+<?php if(isset($checkList)): ?>
 
-<h2><?php echo __('Checks') ?></h2>
+<?php include_partial('content/checks', array('checkList'=>$checkList, 'start_closed'=>true)) ?>
 
-<p><?php echo format_number_choice('[0]No check has been done.|[1]One check has been done.|(1,+Inf]A total of %1 checks have been done.', array('%1'=>($ok+$failed)), $ok+$failed); ?></p>
-<ul>
-<li>
-<strong style="color:<?php echo ($failed>0)? 'red':'green' ?>">
-<?php echo format_number_choice('[0]No check failed.|[1]One check failed.|(1,+Inf]A total of %1 checks failed.', array('%1'=>($failed)), $failed); ?>
-</strong>
-</li>
-<li>
-<?php echo format_number_choice('[0]No check passed.|[1]One check passed.|(1,+Inf]A total of %1 checks passed.', array('%1'=>$ok), $ok); ?>
-</li>
-</ul>
-
-<hr />
-
-<?php foreach($userlist as $current_user): ?>
-	<p>
-	<?php echo image_tag($current_user->getCountFailedChecks()==0? 'done':'notdone', 'title=' . $current_user->getCountFailedChecks()==0?__('passed'):__('failed')) ?>
-	<strong>	
-	<?php echo link_to_function(
-  $current_user,
-  visual_effect('toggle_blind', 'user'.$current_user->getUsername()), array(__('Hide'))
-) ?></strong>  (<?php echo format_number_choice('[0]No check failed.|[1]One check failed.|(1,+Inf]A total of %1 checks failed.', array('%1'=>($current_user->getCountFailedChecks())), $current_user->getCountFailedChecks()); ?>)
-
-	<?php echo link_to(
-  __('Edit'),
-  url_for('users/edit?id=' . $current_user->getUserId())
-)  
- ?>
-
-
-
-
-</p>
-
-		<div class='check_results' id="user<?php echo $current_user->getUsername() ?>" style="display:<?php echo $current_user->getCountFailedChecks()>0? 'none': 'none' ?>">
-		<?php foreach($current_user->getChecks() as $check): ?>
-		<p>
-			<?php echo image_tag($check->getIsPassed()? 'done':'notdone', 'title=' . ($check->getIsPassed()?__('passed'):__('failed'))); ?>
-			<?php echo $check->getMessage() ?>
-		</p>
-		<?php endforeach ?>
-		</div>
-<?php endforeach ?>
-
-<?php if ($failed>0): ?>
+<?php if ($checkList->getTotalResults(Check::FAILED)>0): ?>
 
 <h2><?php echo __('Commands') ?></h2>
 
@@ -82,8 +38,9 @@
 	</ul>
 
 <textarea rows="20" cols="80">
-<?php include_partial('commands', array('userlist'=>$userlist)) ?>
+CODICE DA RISCRIVERE - REFACTORING IN CORSO...
+<?php// include_partial('commands', array('userlist'=>$userlist)) ?>
 </textarea>
-<?php endif ?>
+<?php endif /* are there failed */?>
 
-<?php endif ?>
+<?php endif /* is there a Checklist */?>
