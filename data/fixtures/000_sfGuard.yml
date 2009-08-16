@@ -77,8 +77,11 @@ sfGuardPermission:
   project:
     name:           project
     description:    Progettazione attività scolastiche
-  shell:
-    name:           shell
+  posix:
+    name:           posix
+    description:   Home directory
+  login:
+    name:           login
     description:   Accesso al sistema da terminale
   samba:
     name:           samba
@@ -132,6 +135,12 @@ sfGuardGroupPermission:
   teacher_internet:
     group_id:       teacher
     permission_id:  internet
+  teacher_posix:
+    group_id:       teacher
+    permission_id:  posix
+  teacher_samba:
+    group_id:       teacher
+    permission_id:  samba
   technician_internet:
     group_id:       technician
     permission_id:  internet
@@ -144,6 +153,12 @@ sfGuardGroupPermission:
   office_office:
     group_id:      officeteam
     permission_id:  office
+  student_posix:
+    group_id:       student
+    permission_id:  posix
+  student_samba:
+    group_id:       student
+    permission_id:  samba
 
 
 sfGuardUserGroup:

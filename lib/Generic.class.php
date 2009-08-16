@@ -157,5 +157,24 @@ class Generic{
 			$text=preg_replace_callback("/'[aeiou]/", create_function('$matches', 'return strtoupper($matches[0]);'), $text);
 			return $text;
 		}
+		
+		static public function executeCommand($command)
+		{
+			$info=array();
+			$result=array();
+			$return_var=0;
+			
+			$command='schoolmesh_' . $command;
+			
+			exec($command, $result, $return_var);
+			foreach($result as $line)
+			{
+				list($key, $value)=explode('=', $line);
+				$info[$key]=$value;
+			}
+			
+			return $info;
+		}
+		
 
 	}

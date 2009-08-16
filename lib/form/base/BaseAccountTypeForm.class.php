@@ -16,16 +16,16 @@ class BaseAccountTypeForm extends BaseFormPropel
       'id'          => new sfWidgetFormInputHidden(),
       'name'        => new sfWidgetFormInput(),
       'description' => new sfWidgetFormTextarea(),
-      'style'       => new sfWidgetFormInput(),
       'is_external' => new sfWidgetFormInputCheckbox(),
+      'rank'        => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
       'id'          => new sfValidatorPropelChoice(array('model' => 'AccountType', 'column' => 'id', 'required' => false)),
       'name'        => new sfValidatorString(array('max_length' => 255)),
       'description' => new sfValidatorString(array('required' => false)),
-      'style'       => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'is_external' => new sfValidatorBoolean(),
+      'rank'        => new sfValidatorInteger(array('required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(

@@ -27,13 +27,11 @@
     <tr>
 	  <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
 
-      <th class="sf_admin_text"><?php echo link_to(__('Gender'), url_for( 'users/setsortlistpreference?sortby=gender')) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('G'), url_for( 'users/setsortlistpreference?sortby=gender')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Username'), url_for( 'users/setsortlistpreference?sortby=username')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Role'), url_for( 'users/setsortlistpreference?sortby=role')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('First name'), url_for('users/setsortlistpreference?sortby=firstname')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Last name'), url_for( 'users/setsortlistpreference?sortby=lastname')) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('Blocks'), url_for('users/setsortlistpreference?sortby=blocks')) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('Files'), url_for('users/setsortlistpreference?sortby=files')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Alerts'), url_for('users/setsortlistpreference?sortby=alerts')) ?></th>
       <th class="sf_admin_text"><?php echo __('Accounts') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
@@ -53,18 +51,16 @@
       <td><?php echo $user->getRole() ?></td>
       <td><?php echo $user->getFirstName() ?></td>
       <td><?php echo $user->getLastName() ?></td>
-      <td><?php echo $user->getDiskUsedBlocks() ?></td>
-      <td><?php echo $user->getDiskUsedFiles() ?></td>
 	  <td>
 		<?php if($user->getSystemAlerts()!=''): ?>
 			<?php echo image_tag('error', 'title=' . $user->getSystemAlerts()) ?>
 		<?php endif ?>
 	  </td>
 	  <td>
-		<?php if($user->getGoogleappsAccountStatus()): ?>
-			<?php echo image_tag('googleapps', 'title=' . __('Google Apps account') . ': ' .__($ga_states[$user->getGoogleappsAccountStatus()])) ?>
-		<?php endif ?>
-	  </td>
+		<?php foreach ($user->getAccounts() as $account): ?>
+			<?php echo image_tag($account->getAccountType(), 'title=' .$account->getAccountType()) ?>
+		<?php endforeach ?>
+	 </td>
 	<td><?php include_partial('actions', array('user'=>$user)) ?></td>
  	
 

@@ -1,11 +1,11 @@
 <?php
 
-class GoogleappsAccount extends Account
+class LoginAccount extends Account
 {
 	
 	function __construct()
 	{
-		$this->setAccountType(AccountTypePeer::retrieveByName('googleapps'));
+		$this->setAccountType(AccountTypePeer::retrieveByName('login'));
 	}
 	
 	public function updateInfoFromRealWorld()
@@ -15,7 +15,7 @@ class GoogleappsAccount extends Account
 
 	public function getImage()
 	{
-		return 'googleapps';
+		return 'baby im a login account!';
 	}
 
 

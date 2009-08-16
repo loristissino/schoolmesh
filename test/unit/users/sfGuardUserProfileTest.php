@@ -9,6 +9,8 @@ $loris_permissions=array(
 	'admin',
 	'planning',
 	'internet',
+	'posix',
+	'samba',
 );
 
 $teacher_expected_permissions=array(

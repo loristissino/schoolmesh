@@ -41,5 +41,11 @@ class AccountMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('INFO', 'Info', 'LONGVARCHAR', false, null);
 
+		$tMap->addColumn('SETTINGS', 'Settings', 'LONGVARCHAR', false, null);
+
+		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'TIMESTAMP', false, null);
+
+		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null);
+
 	} 
 } 

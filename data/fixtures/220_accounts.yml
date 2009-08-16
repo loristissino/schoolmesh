@@ -1,4 +1,10 @@
 Account:
+  loris_posix:
+    user_id:        loris
+    account_type_id:     posix
+  loris_samba:
+    user_id:        loris
+    account_type_id:    samba
   loris_login:
     user_id:        loris
     account_type_id:     login
@@ -9,7 +15,19 @@ Account:
     user_id:        loris
     account_type_id:   ldapnfs
 
+  juri_posix:
+    user_id:        juri
+    account_type_id:     posix
   juri_login:
     user_id:        juri
     account_type_id:     login
+  juri_samba:
+    user_id:        juri
+    account_type_id:    samba
 
+  john.test_posix:
+    user_id:       john.test
+    account_type_id:     posix
+  john.test_samba:
+    user_id:       john.test
+    account_type_id:     samba

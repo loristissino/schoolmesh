@@ -20,7 +20,6 @@ all:
     class_teachersteam_name: Consiglio di classe
     googleapps_domain: mattiussilab.net
     googleapps_url: http://webmail.mattiussilab.net
-    ciao: true
 
 
   sf_guard_plugin:

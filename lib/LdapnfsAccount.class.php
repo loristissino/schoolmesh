@@ -1,11 +1,11 @@
 <?php
 
-class GoogleappsAccount extends Account
+class LdapnfsAccount extends Account
 {
 	
 	function __construct()
 	{
-		$this->setAccountType(AccountTypePeer::retrieveByName('googleapps'));
+		$this->setAccountType(AccountTypePeer::retrieveByName('ldapnfs'));
 	}
 	
 	public function updateInfoFromRealWorld()
@@ -15,7 +15,7 @@ class GoogleappsAccount extends Account
 
 	public function getImage()
 	{
-		return 'googleapps';
+		return 'ldapnfs';
 	}
 
 

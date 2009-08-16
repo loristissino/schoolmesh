@@ -13,7 +13,7 @@ abstract class BaseAccountPeer {
 	const CLASS_DEFAULT = 'lib.model.Account';
 
 	
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 7;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -31,6 +31,15 @@ abstract class BaseAccountPeer {
 	const INFO = 'account.INFO';
 
 	
+	const SETTINGS = 'account.SETTINGS';
+
+	
+	const UPDATED_AT = 'account.UPDATED_AT';
+
+	
+	const CREATED_AT = 'account.CREATED_AT';
+
+	
 	public static $instances = array();
 
 	
@@ -38,20 +47,20 @@ abstract class BaseAccountPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'AccountTypeId', 'Info', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'accountTypeId', 'info', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::ACCOUNT_TYPE_ID, self::INFO, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'account_type_id', 'info', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'AccountTypeId', 'Info', 'Settings', 'UpdatedAt', 'CreatedAt', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'accountTypeId', 'info', 'settings', 'updatedAt', 'createdAt', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::ACCOUNT_TYPE_ID, self::INFO, self::SETTINGS, self::UPDATED_AT, self::CREATED_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'account_type_id', 'info', 'settings', 'updated_at', 'created_at', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'AccountTypeId' => 2, 'Info' => 3, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'accountTypeId' => 2, 'info' => 3, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::ACCOUNT_TYPE_ID => 2, self::INFO => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'account_type_id' => 2, 'info' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'AccountTypeId' => 2, 'Info' => 3, 'Settings' => 4, 'UpdatedAt' => 5, 'CreatedAt' => 6, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'accountTypeId' => 2, 'info' => 3, 'settings' => 4, 'updatedAt' => 5, 'createdAt' => 6, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::ACCOUNT_TYPE_ID => 2, self::INFO => 3, self::SETTINGS => 4, self::UPDATED_AT => 5, self::CREATED_AT => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'account_type_id' => 2, 'info' => 3, 'settings' => 4, 'updated_at' => 5, 'created_at' => 6, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	
@@ -100,6 +109,12 @@ abstract class BaseAccountPeer {
 		$criteria->addSelectColumn(AccountPeer::ACCOUNT_TYPE_ID);
 
 		$criteria->addSelectColumn(AccountPeer::INFO);
+
+		$criteria->addSelectColumn(AccountPeer::SETTINGS);
+
+		$criteria->addSelectColumn(AccountPeer::UPDATED_AT);
+
+		$criteria->addSelectColumn(AccountPeer::CREATED_AT);
 
 	}
 

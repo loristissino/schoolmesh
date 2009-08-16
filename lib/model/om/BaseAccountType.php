@@ -19,10 +19,10 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 	protected $description;
 
 	
-	protected $style;
+	protected $is_external;
 
 	
-	protected $is_external;
+	protected $rank;
 
 	
 	protected $collAccounts;
@@ -67,15 +67,15 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 	}
 
 	
-	public function getStyle()
-	{
-		return $this->style;
-	}
-
-	
 	public function getIsExternal()
 	{
 		return $this->is_external;
+	}
+
+	
+	public function getRank()
+	{
+		return $this->rank;
 	}
 
 	
@@ -121,20 +121,6 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
-	public function setStyle($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->style !== $v) {
-			$this->style = $v;
-			$this->modifiedColumns[] = AccountTypePeer::STYLE;
-		}
-
-		return $this;
-	} 
-	
 	public function setIsExternal($v)
 	{
 		if ($v !== null) {
@@ -144,6 +130,20 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 		if ($this->is_external !== $v) {
 			$this->is_external = $v;
 			$this->modifiedColumns[] = AccountTypePeer::IS_EXTERNAL;
+		}
+
+		return $this;
+	} 
+	
+	public function setRank($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->rank !== $v) {
+			$this->rank = $v;
+			$this->modifiedColumns[] = AccountTypePeer::RANK;
 		}
 
 		return $this;
@@ -165,8 +165,8 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->name = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->description = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-			$this->style = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->is_external = ($row[$startcol + 4] !== null) ? (boolean) $row[$startcol + 4] : null;
+			$this->is_external = ($row[$startcol + 3] !== null) ? (boolean) $row[$startcol + 3] : null;
+			$this->rank = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -369,10 +369,10 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 				return $this->getDescription();
 				break;
 			case 3:
-				return $this->getStyle();
+				return $this->getIsExternal();
 				break;
 			case 4:
-				return $this->getIsExternal();
+				return $this->getRank();
 				break;
 			default:
 				return null;
@@ -387,8 +387,8 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getName(),
 			$keys[2] => $this->getDescription(),
-			$keys[3] => $this->getStyle(),
-			$keys[4] => $this->getIsExternal(),
+			$keys[3] => $this->getIsExternal(),
+			$keys[4] => $this->getRank(),
 		);
 		return $result;
 	}
@@ -414,10 +414,10 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 				$this->setDescription($value);
 				break;
 			case 3:
-				$this->setStyle($value);
+				$this->setIsExternal($value);
 				break;
 			case 4:
-				$this->setIsExternal($value);
+				$this->setRank($value);
 				break;
 		} 	}
 
@@ -429,8 +429,8 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setName($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setDescription($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setStyle($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setIsExternal($arr[$keys[4]]);
+		if (array_key_exists($keys[3], $arr)) $this->setIsExternal($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setRank($arr[$keys[4]]);
 	}
 
 	
@@ -441,8 +441,8 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(AccountTypePeer::ID)) $criteria->add(AccountTypePeer::ID, $this->id);
 		if ($this->isColumnModified(AccountTypePeer::NAME)) $criteria->add(AccountTypePeer::NAME, $this->name);
 		if ($this->isColumnModified(AccountTypePeer::DESCRIPTION)) $criteria->add(AccountTypePeer::DESCRIPTION, $this->description);
-		if ($this->isColumnModified(AccountTypePeer::STYLE)) $criteria->add(AccountTypePeer::STYLE, $this->style);
 		if ($this->isColumnModified(AccountTypePeer::IS_EXTERNAL)) $criteria->add(AccountTypePeer::IS_EXTERNAL, $this->is_external);
+		if ($this->isColumnModified(AccountTypePeer::RANK)) $criteria->add(AccountTypePeer::RANK, $this->rank);
 
 		return $criteria;
 	}
@@ -477,9 +477,9 @@ abstract class BaseAccountType extends BaseObject  implements Persistent {
 
 		$copyObj->setDescription($this->description);
 
-		$copyObj->setStyle($this->style);
-
 		$copyObj->setIsExternal($this->is_external);
+
+		$copyObj->setRank($this->rank);
 
 
 		if ($deepCopy) {

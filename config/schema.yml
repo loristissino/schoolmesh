@@ -77,16 +77,21 @@ propel:
     id:
     name:           { type: varchar, size: 255, required: true, index: unique }
     description:    { type: longvarchar }
-    style:            { type: varchar(50) }
     is_external:   { type: boolean, required: true }
+    rank:    integer
 
   account:
-    id: 
-    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade, onUpdate: cascade }
-    account_type_id: { type: integer, foreignTable: account_type, foreignReference: id, required: true, onDelete: restrict, onUpdate: cascade }
+    id:   
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade, onUpdate: cascade, index:true }
+    account_type_id: { type: integer, foreignTable: account_type, foreignReference: id, required: true, onDelete: restrict, onUpdate: cascade, index: true }
     info:  longvarchar
+    settings: longvarchar
+    updated_at: ~
+    created_at: ~
     _uniques:
       ua: [user_id, account_type_id]
+# info: it is a serialized array of information read from the actual system in which the account is present
+# settings: it is a serialized array of information that should be set in the actual system
 
   reserved_username:
     id:   
