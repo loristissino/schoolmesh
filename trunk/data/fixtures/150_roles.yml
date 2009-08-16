@@ -5,7 +5,7 @@ Role:
     posix_name:   ds
     may_be_main_role: true
   dsga:
-    description:  Direttore Servizi Generali e Amministrativi
+    description:  Dirett. Servizi Gen. e Amm.vi
     quality_code: DSGA
     posix_name:   dsga
     may_be_main_role: true

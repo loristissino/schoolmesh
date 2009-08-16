@@ -17,6 +17,9 @@ class BaseAccountForm extends BaseFormPropel
       'user_id'         => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => false)),
       'account_type_id' => new sfWidgetFormPropelChoice(array('model' => 'AccountType', 'add_empty' => false)),
       'info'            => new sfWidgetFormTextarea(),
+      'settings'        => new sfWidgetFormTextarea(),
+      'updated_at'      => new sfWidgetFormDateTime(),
+      'created_at'      => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
@@ -24,6 +27,9 @@ class BaseAccountForm extends BaseFormPropel
       'user_id'         => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id')),
       'account_type_id' => new sfValidatorPropelChoice(array('model' => 'AccountType', 'column' => 'id')),
       'info'            => new sfValidatorString(array('required' => false)),
+      'settings'        => new sfValidatorString(array('required' => false)),
+      'updated_at'      => new sfValidatorDateTime(array('required' => false)),
+      'created_at'      => new sfValidatorDateTime(array('required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(

@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(15, new lime_output_color());
+$t = new lime_test(13, new lime_output_color());
 
 $t->comment('Sample user');
 
@@ -10,7 +10,7 @@ $user=sfGuardUserProfilePeer::retrieveByUsername('loris.tissino');
 $profile=$user->getProfile();
 
 $accounts=$profile->getAccounts();
-$t->is(sizeof($accounts), 3, '->getAccounts() retrieves the correct number of accounts');
+$t->is(sizeof($accounts), 5, '->getAccounts() retrieves the correct number of accounts');
 
 $sambaAccount = new SambaAccount();
 
@@ -27,19 +27,15 @@ $t->pass('->addAccount() can add a Moodle Account');
 $t->is($profile->hasAccountOfType('moodle'), true, '->hasAccountOfType() returns true for an existing account');
 
 $accounts=$profile->getAccounts();
-$t->is(sizeof($accounts), 5, '->getAccounts() retrieves the correct number of accounts');
+$t->is(sizeof($accounts), 6, '->getAccounts() retrieves the correct number of accounts');
 
 $testAccount = $profile->getAccountByType('samba');
 
 $t->isa_ok($testAccount, SambaAccount, '->getAccountByName() returns the correct account type for Samba accounts');
 
-$t->like($testAccount->getAccountInfo('message'), '/samba/', 'the info field is kept for Samba accounts');
-
 $testAccount = $profile->getAccountByType('moodle');
 
 $t->isa_ok($testAccount, MoodleAccount, '->getAccountByName() returns the correct account type for Moodle accounts');
-
-$t->like($testAccount->getAccountInfo('message'), '/moodle/', 'the info field is kept for Moodle accounts');
 
 $otherMoodleAccount = new MoodleAccount();
 $profile->addAccount($otherMoodleAccount);

@@ -28,10 +28,10 @@ abstract class BaseAccountTypePeer {
 	const DESCRIPTION = 'account_type.DESCRIPTION';
 
 	
-	const STYLE = 'account_type.STYLE';
+	const IS_EXTERNAL = 'account_type.IS_EXTERNAL';
 
 	
-	const IS_EXTERNAL = 'account_type.IS_EXTERNAL';
+	const RANK = 'account_type.RANK';
 
 	
 	public static $instances = array();
@@ -41,19 +41,19 @@ abstract class BaseAccountTypePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'Description', 'Style', 'IsExternal', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'description', 'style', 'isExternal', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::NAME, self::DESCRIPTION, self::STYLE, self::IS_EXTERNAL, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'description', 'style', 'is_external', ),
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'Description', 'IsExternal', 'Rank', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'description', 'isExternal', 'rank', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::NAME, self::DESCRIPTION, self::IS_EXTERNAL, self::RANK, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'description', 'is_external', 'rank', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'Description' => 2, 'Style' => 3, 'IsExternal' => 4, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'description' => 2, 'style' => 3, 'isExternal' => 4, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NAME => 1, self::DESCRIPTION => 2, self::STYLE => 3, self::IS_EXTERNAL => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'description' => 2, 'style' => 3, 'is_external' => 4, ),
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'Description' => 2, 'IsExternal' => 3, 'Rank' => 4, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'description' => 2, 'isExternal' => 3, 'rank' => 4, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NAME => 1, self::DESCRIPTION => 2, self::IS_EXTERNAL => 3, self::RANK => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'description' => 2, 'is_external' => 3, 'rank' => 4, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
@@ -102,9 +102,9 @@ abstract class BaseAccountTypePeer {
 
 		$criteria->addSelectColumn(AccountTypePeer::DESCRIPTION);
 
-		$criteria->addSelectColumn(AccountTypePeer::STYLE);
-
 		$criteria->addSelectColumn(AccountTypePeer::IS_EXTERNAL);
+
+		$criteria->addSelectColumn(AccountTypePeer::RANK);
 
 	}
 

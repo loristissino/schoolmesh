@@ -1,0 +1,60 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+	then
+		echo "This script is a wrapper. See schoolmesh(1) for details."
+		exit 1
+	fi
+
+USERNAME=$1
+BASEFOLDER=$2
+
+INFO=$(getent passwd $USERNAME 2>/dev/null)
+
+if [[ $? -ne 0 ]]
+	then
+		echo found=0
+		exit 0
+fi
+
+echo found=1
+echo username=$(echo $INFO | cut -d: -f1)
+echo uid=$(echo $INFO | cut -d: -f3)
+echo gid=$(echo $INFO | cut -d: -f4)
+echo group=$(id -gn $USERNAME)
+echo gecos=$(echo $INFO | cut -d: -f5)
+
+HOMEDIR=$(echo $INFO | cut -d: -f6)
+echo homedir=$HOMEDIR
+echo homedir_user=$(stat -c '%U' "$HOMEDIR")
+echo homedir_group=$(stat -c '%G' "$HOMEDIR")
+echo homedir_permissions=$(stat -c '%a' "$HOMEDIR")
+echo homedir_filetype=$(stat -c '%F' "$HOMEDIR")
+echo shell=$(echo $INFO | cut -d: -f7)
+
+sudo quota --no-wrap --verbose --raw-grace --user $1 | tail -1 | gawk '{
+	print "used_blocks=" $2 
+	print "soft_blocks_quota=" $3 
+	print "hard_blocks_quota=" $4 
+	print "blocks_grace=" $5
+	print "used_blocks=" $6 
+	print "soft_files_quota=" $7 
+	print "hard_files_quota=" $8
+	print "files_grace=" $9
+	}'
+	
+	
+BASEFOLDER="$HOMEDIR/$BASEFOLDER"
+
+if [[ ! -d "$BASEFOLDER" ]]
+	then
+		echo basefolder_found=0
+		exit 0
+fi
+
+echo basefolder_user=$(sudo stat -c '%U' "$BASEFOLDER")
+echo basefolder_group=$(sudo stat -c '%G' "$BASEFOLDER")
+echo basefolder_permissions=$(sudo stat -c '%a' "$BASEFOLDER")
+echo basefolder_filetype=$(sudo stat -c '%F' "$BASEFOLDER")
+
+echo basefolder_attr=$(sudo lsattr -d "$BASEFOLDER" | cut -d ' ' -f1)

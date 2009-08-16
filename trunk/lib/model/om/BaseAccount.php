@@ -22,6 +22,15 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 	protected $info;
 
 	
+	protected $settings;
+
+	
+	protected $updated_at;
+
+	
+	protected $created_at;
+
+	
 	protected $asfGuardUser;
 
 	
@@ -67,6 +76,66 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 	public function getInfo()
 	{
 		return $this->info;
+	}
+
+	
+	public function getSettings()
+	{
+		return $this->settings;
+	}
+
+	
+	public function getUpdatedAt($format = 'Y-m-d H:i:s')
+	{
+		if ($this->updated_at === null) {
+			return null;
+		}
+
+
+		if ($this->updated_at === '0000-00-00 00:00:00') {
+									return null;
+		} else {
+			try {
+				$dt = new DateTime($this->updated_at);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->updated_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+						return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
+	}
+
+	
+	public function getCreatedAt($format = 'Y-m-d H:i:s')
+	{
+		if ($this->created_at === null) {
+			return null;
+		}
+
+
+		if ($this->created_at === '0000-00-00 00:00:00') {
+									return null;
+		} else {
+			try {
+				$dt = new DateTime($this->created_at);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->created_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+						return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
 	}
 
 	
@@ -134,6 +203,84 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setSettings($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->settings !== $v) {
+			$this->settings = $v;
+			$this->modifiedColumns[] = AccountPeer::SETTINGS;
+		}
+
+		return $this;
+	} 
+	
+	public function setUpdatedAt($v)
+	{
+						if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+									try {
+				if (is_numeric($v)) { 					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+															$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->updated_at !== null || $dt !== null ) {
+			
+			$currNorm = ($this->updated_at !== null && $tmpDt = new DateTime($this->updated_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) 					)
+			{
+				$this->updated_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = AccountPeer::UPDATED_AT;
+			}
+		} 
+		return $this;
+	} 
+	
+	public function setCreatedAt($v)
+	{
+						if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+									try {
+				if (is_numeric($v)) { 					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+															$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->created_at !== null || $dt !== null ) {
+			
+			$currNorm = ($this->created_at !== null && $tmpDt = new DateTime($this->created_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) 					)
+			{
+				$this->created_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = AccountPeer::CREATED_AT;
+			}
+		} 
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array())) {
@@ -151,6 +298,9 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 			$this->user_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->account_type_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->info = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->settings = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->updated_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->created_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -159,7 +309,7 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 4; 
+						return $startcol + 7; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Account object", $e);
 		}
@@ -229,6 +379,16 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 	
 	public function save(PropelPDO $con = null)
 	{
+    if ($this->isModified() && !$this->isColumnModified(AccountPeer::UPDATED_AT))
+    {
+      $this->setUpdatedAt(time());
+    }
+
+    if ($this->isNew() && !$this->isColumnModified(AccountPeer::CREATED_AT))
+    {
+      $this->setCreatedAt(time());
+    }
+
 		if ($this->isDeleted()) {
 			throw new PropelException("You cannot save an object that has been deleted.");
 		}
@@ -373,6 +533,15 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 			case 3:
 				return $this->getInfo();
 				break;
+			case 4:
+				return $this->getSettings();
+				break;
+			case 5:
+				return $this->getUpdatedAt();
+				break;
+			case 6:
+				return $this->getCreatedAt();
+				break;
 			default:
 				return null;
 				break;
@@ -387,6 +556,9 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 			$keys[1] => $this->getUserId(),
 			$keys[2] => $this->getAccountTypeId(),
 			$keys[3] => $this->getInfo(),
+			$keys[4] => $this->getSettings(),
+			$keys[5] => $this->getUpdatedAt(),
+			$keys[6] => $this->getCreatedAt(),
 		);
 		return $result;
 	}
@@ -414,6 +586,15 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 			case 3:
 				$this->setInfo($value);
 				break;
+			case 4:
+				$this->setSettings($value);
+				break;
+			case 5:
+				$this->setUpdatedAt($value);
+				break;
+			case 6:
+				$this->setCreatedAt($value);
+				break;
 		} 	}
 
 	
@@ -425,6 +606,9 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setUserId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setAccountTypeId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setInfo($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setSettings($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setUpdatedAt($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
 	}
 
 	
@@ -436,6 +620,9 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(AccountPeer::USER_ID)) $criteria->add(AccountPeer::USER_ID, $this->user_id);
 		if ($this->isColumnModified(AccountPeer::ACCOUNT_TYPE_ID)) $criteria->add(AccountPeer::ACCOUNT_TYPE_ID, $this->account_type_id);
 		if ($this->isColumnModified(AccountPeer::INFO)) $criteria->add(AccountPeer::INFO, $this->info);
+		if ($this->isColumnModified(AccountPeer::SETTINGS)) $criteria->add(AccountPeer::SETTINGS, $this->settings);
+		if ($this->isColumnModified(AccountPeer::UPDATED_AT)) $criteria->add(AccountPeer::UPDATED_AT, $this->updated_at);
+		if ($this->isColumnModified(AccountPeer::CREATED_AT)) $criteria->add(AccountPeer::CREATED_AT, $this->created_at);
 
 		return $criteria;
 	}
@@ -471,6 +658,12 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 		$copyObj->setAccountTypeId($this->account_type_id);
 
 		$copyObj->setInfo($this->info);
+
+		$copyObj->setSettings($this->settings);
+
+		$copyObj->setUpdatedAt($this->updated_at);
+
+		$copyObj->setCreatedAt($this->created_at);
 
 
 		$copyObj->setNew(true);

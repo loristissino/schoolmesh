@@ -135,8 +135,8 @@ CREATE TABLE `account_type`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(255)  NOT NULL,
 	`description` TEXT,
-	`style` VARCHAR(50),
 	`is_external` TINYINT  NOT NULL,
+	`rank` INTEGER,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `account_type_U_1` (`name`)
 )Type=InnoDB;
@@ -154,14 +154,18 @@ CREATE TABLE `account`
 	`user_id` INTEGER  NOT NULL,
 	`account_type_id` INTEGER  NOT NULL,
 	`info` TEXT,
+	`settings` TEXT,
+	`updated_at` DATETIME,
+	`created_at` DATETIME,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `ua` (`user_id`, `account_type_id`),
+	KEY `account_I_1`(`user_id`),
+	KEY `account_I_2`(`account_type_id`),
 	CONSTRAINT `account_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE,
-	INDEX `account_FI_2` (`account_type_id`),
 	CONSTRAINT `account_FK_2`
 		FOREIGN KEY (`account_type_id`)
 		REFERENCES `account_type` (`id`)

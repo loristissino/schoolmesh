@@ -383,6 +383,7 @@ class usersActions extends sfActions
   public function executeEdit(sfWebRequest $request)
   {
 	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
+	$this->accounts = $this->current_user->getAccounts();
 	
 	$this->userform = new UserForm();
 	

@@ -39,9 +39,9 @@ class AccountTypeMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('DESCRIPTION', 'Description', 'LONGVARCHAR', false, null);
 
-		$tMap->addColumn('STYLE', 'Style', 'VARCHAR', false, 50);
-
 		$tMap->addColumn('IS_EXTERNAL', 'IsExternal', 'BOOLEAN', true, null);
+
+		$tMap->addColumn('RANK', 'Rank', 'INTEGER', false, null);
 
 	} 
 } 

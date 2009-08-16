@@ -9,4 +9,10 @@ class MoodleAccount extends Account
 		$this->setAccountType(AccountTypePeer::retrieveByName('moodle'));
 	}
 	
+	public function getImage()
+	{
+		return 'baby im a moodle account!';
+	}
+	
+	
 }

@@ -12,9 +12,6 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 	
 //		protected $_accounts=array();
 	
-		protected $countFailedChecks;
-		
-		protected $checks=array();
 		
 		public function addAccount($account)
 		{
@@ -42,7 +39,13 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$c->add(AccountPeer::USER_ID, $this->getUserId());
 			$c->addJoin(AccountPeer::ACCOUNT_TYPE_ID, AccountTypePeer::ID);
 			$c->add(AccountTypePeer::NAME, $type);
-			AccountPeer::doDelete($c);
+			$account = AccountPeer::doSelectOne($c);
+			// For some reason, I've got a Foreign Key violation if I use AccountPeer::delete($c);
+			
+			if ($account)
+			{
+				$account->delete();
+			}
 			return $this;
 		}
 
@@ -176,38 +179,6 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $this;
 		}
 		
-		/* FIXME All the code below should be shared with other scripts and therefore go in an another class */
-		
-		public function addCheck($check)
-		{
-			$this->checks[]=$check;
-			return $this;
-		}
-
-		public function getChecks()
-		{
-			return $this->checks;
-		}
-		
-		public function setCountFailedChecks($value)
-		{
-			$this->failedChecks=$value;
-			return $this;
-		}
-		
-		public function getCountFailedChecks()
-		{
-			return $this->failedChecks;
-		}
-
-		public function incCountFailedChecks()
-		{
-			$this->failedChecks++;
-			return $this;
-		}
-
-		/* END FIXME */
-
 		public function updateMiddlename($middlename)
 		{
 			if ($this->getMiddlename()=='')

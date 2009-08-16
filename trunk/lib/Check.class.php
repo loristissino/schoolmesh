@@ -1,18 +1,31 @@
 <?php 
 class Check{
 	
-	private $_isPassed;
+	const FAILED = 0;
+	const WARNING = 1;
+	const PASSED = 2;
+	
+	private $_result;
 	private $_message;
-	private $_content;
+	private $_group;
 	private $_link_to;
 	private $_flash;
 	private $_fragment;
 	private $_command;
 	
-	public function __construct($isPassed, $message, $content, array $parameters=array())
+	public function __construct($result, $message, $group, array $parameters=array())
 		{
-			$this->_isPassed = $isPassed;
-			$this->_content = $content;
+			if (!in_array($result, array(self::FAILED, self::WARNING, self::PASSED)))
+			{
+				throw new Exception('result invalid: '. $result);
+			}
+			if ($group=='')
+			{
+				throw new Exception('group invalid: '. $group);
+			}
+
+			$this->_result = $result;
+			$this->_group = $group;
 			$this->_message = $message;
 
 			foreach($parameters as $key=>$value)
@@ -28,14 +41,14 @@ class Check{
 			return $this->_message;
 		}
 
-	public function getContent()
+	public function getGroup()
 		{
-			return $this->_content;
+			return $this->_group;
 		}
 
-	public function getIsPassed()
+	public function getResult()
 		{
-			return $this->_isPassed;
+			return $this->_result;
 		}
 
 	public function getLinkTo()
@@ -58,10 +71,20 @@ class Check{
 		
 	public function getImageTag()
 		{
-			return $this->getIsPassed()?'done':'notdone';
+			$images=array(
+				self::FAILED=>'notdone',
+				self::WARNING=>'dubious',
+				self::PASSED=>'done'
+			);
+			return $images[$this->getResult()];
 		}
 	public function getImageTitle()
 		{
-			return $this->getIsPassed()?'passed':'failed';
+			$titles=array(
+				self::FAILED=>'failed',
+				self::WARNING=>'warning',
+				self::PASSED=>'passed'
+			);
+			return $titles[$this->getResult()];
 		}
 	};

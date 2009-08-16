@@ -21,6 +21,20 @@
   <div class="alert"><?php echo $current_user->getSystemAlerts()?></div>
 <?php endif; ?>
 
+<pre>
+<?php
+
+	
+	$myaccounts=$sf_data->getRaw('accounts');
+	 foreach($myaccounts as $account)
+		{	
+			echo $account->getAccountType() . ': ' .$account->getImage() . "\n";
+
+		}
+?>
+</pre>
+
+
 <form action="<?php echo url_for('users/edit?id='. $current_user->getSfGuardUser()->getId()) ?>" method="post">
 
 <h2><?php echo __('Basic information') ?></h2>
