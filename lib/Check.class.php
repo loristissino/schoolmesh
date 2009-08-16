@@ -2,8 +2,9 @@
 class Check{
 	
 	const FAILED = 0;
-	const WARNING = 1;
-	const PASSED = 2;
+	const PASSED = 1;
+	const WARNING = 2;
+	
 	
 	private $_result;
 	private $_message;
@@ -19,7 +20,7 @@ class Check{
 			{
 				throw new Exception('result invalid: '. $result);
 			}
-			if ($group=='')
+			if ($group=='' || is_numeric($group))
 			{
 				throw new Exception('group invalid: '. $group);
 			}

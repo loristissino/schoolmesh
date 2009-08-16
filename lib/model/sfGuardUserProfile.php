@@ -284,6 +284,8 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
         {
 	        $c = new Criteria();
 			$c->add(AccountPeer::USER_ID, $this->getUserId());
+			$c->addJoin(AccountPeer::ACCOUNT_TYPE_ID, AccountTypePeer::ID);
+			$c->addAscendingOrderByColumn(AccountTypePeer::RANK);
 			$t = AccountPeer::doSelect($c);
 			
 			$r=array();
@@ -681,7 +683,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 			$this->setSystemAlerts('');
 			
-			if ($this->getIsDeleted())
+			if ($this->getIsScheduledForDeletion())
 			{
 				if($this->getIsDeletable())
 				{
