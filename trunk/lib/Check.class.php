@@ -46,11 +46,23 @@ class Check{
 		{
 			return $this->_group;
 		}
+		
+	public function getContent()
+		{
+			/* FIXME this is a duplication, I need to refactor the code for workplans to use getGroup() */
+			return $this->getGroup();
+			
+		}
 
 	public function getResult()
 		{
 			return $this->_result;
 		}
+
+	public function getIsPassed()
+	{
+		return ($this->_result!=0);
+	}
 
 	public function getLinkTo()
 		{

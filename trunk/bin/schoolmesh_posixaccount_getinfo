@@ -52,6 +52,7 @@ if [[ ! -d "$BASEFOLDER" ]]
 		exit 0
 fi
 
+echo basefolder_found=1
 echo basefolder_user=$(sudo stat -c '%U' "$BASEFOLDER")
 echo basefolder_group=$(sudo stat -c '%G' "$BASEFOLDER")
 echo basefolder_permissions=$(sudo stat -c '%a' "$BASEFOLDER")

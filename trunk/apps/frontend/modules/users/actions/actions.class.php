@@ -191,25 +191,21 @@ class usersActions extends sfActions
 	}
 	else
 	{
-		$this->userlist = sfGuardUserProfilePeer::retrieveAllUsers();
+		$this->userlist = sfGuardUserProfilePeer::retrieveAllUsers('username');
+	
 	}
 	
 	$this->checkList = new CheckList();
 	
+	$availableAccounts=sfConfig::get('app_config_accounts');
+	
 	foreach($this->userlist as $current_user)
 	{
-		foreach($current_user->checkPosix() as $check)
-		{
-			$this->checkList->addCheck($check);
-		}
+		$current_user->checkAccounts($availableAccounts, $this->checkList);
 	}
-	
-
-
 	
 	if($request->hasParameter('execute'))
 	{
-		
 		$result=array();
 		$return_var=0;
 		$count_passed=0;
@@ -255,14 +251,8 @@ class usersActions extends sfActions
 		}
 	
   }
-  public function executeCreateaccounts(sfWebRequest $request)
-  {
-	$this->user = $this->getUser();
-	
-	$this->checkList = sfGuardUserProfilePeer::createMissingAccounts(sfConfig::get('app_config_accounts'));
-		
-  }
-  public function executeUpdatequota(sfWebRequest $request)
+
+	public function executeUpdatequota(sfWebRequest $request)
 	{
 		
 		$this->forward404Unless($this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id')));
@@ -382,6 +372,7 @@ class usersActions extends sfActions
   {
 	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
 	$this->accounts = $this->current_user->getAccounts();
+	$this->available_accounts=sfConfig::get('app_config_accounts');
 	
 	$this->userform = new UserForm();
 	
@@ -425,17 +416,20 @@ class usersActions extends sfActions
 				->setBirthplace($params['birthplace'])
 				->setRoleId($params['main_role'])
 				->setEmailState($params['email_state'])
-				->setDiskSetSoftBlocksQuota($params['soft_blocks_quota'])
-				->setDiskSetHardBlocksQuota($params['hard_blocks_quota'])
-				->setDiskSetSoftFilesQuota($params['soft_files_quota'])
-				->setDiskSetHardFilesQuota($params['hard_files_quota'])
 				->setSystemAlerts('')
 				->save();
 				$this->current_user
 				->getSfGuardUser()->setUsername($params['username'])
 				->setIsActive($params['is_active'])
 				->save();
-				
+
+/*
+				->setDiskSetSoftBlocksQuota($params['soft_blocks_quota'])
+				->setDiskSetHardBlocksQuota($params['hard_blocks_quota'])
+				->setDiskSetSoftFilesQuota($params['soft_files_quota'])
+				->setDiskSetHardFilesQuota($params['hard_files_quota'])
+*/
+
 				$this->getUser()->setFlash('notice',
 					$this->getContext()->getI18N()->__('User information updated.') . ' ' .
 					$this->getContext()->getI18N()->__('You might need to run User Checks in order to apply the changes.')
@@ -466,14 +460,14 @@ class usersActions extends sfActions
 			'birthdate' => $this->current_user->getBirthdate(),
 			'birthplace' => $this->current_user->getBirthplace(),
 			'main_role'=>$this->current_user->getRoleId(),
-			'soft_blocks_quota' => $this->current_user->getDiskSetSoftBlocksQuota(),
-			'hard_blocks_quota' => $this->current_user->getDiskSetHardBlocksQuota(),
-			'soft_files_quota' => $this->current_user->getDiskSetSoftFilesQuota(),
-			'hard_files_quota' => $this->current_user->getDiskSetHardFilesQuota(),
 		)
 	);
 	
-
+/*			'soft_blocks_quota' => $this->current_user->getDiskSetSoftBlocksQuota(),
+			'hard_blocks_quota' => $this->current_user->getDiskSetHardBlocksQuota(),
+			'soft_files_quota' => $this->current_user->getDiskSetSoftFilesQuota(),
+			'hard_files_quota' => $this->current_user->getDiskSetHardFilesQuota(),
+*/
 	
   }
 

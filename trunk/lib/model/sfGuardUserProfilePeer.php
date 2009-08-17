@@ -281,7 +281,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		
 	}
 
-
+/*
 	public static function createMissingAccounts($availableAccounts)
 	{
 	
@@ -367,5 +367,5 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		
 	}
 
-
+*/
 }

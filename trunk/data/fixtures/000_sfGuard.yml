@@ -219,4 +219,10 @@ sfGuardUserPermission:
   backadmin1:
     user_id:      loris
     permission_id:  backadmin
+  loris_login:
+    user_id:      loris
+    permission_id:  login
+  juri_login:
+    user_id:      juri
+    permission_id:  login
   

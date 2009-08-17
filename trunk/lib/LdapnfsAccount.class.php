@@ -18,5 +18,10 @@ class LdapnfsAccount extends Account
 		return 'ldapnfs';
 	}
 
+	public function getChecks($checkGroup, &$checkList=null, $alerts='')
+	{
+		return $this;
+	}
+
 
 }

@@ -1,13 +1,14 @@
 <?php /* This content is nearly identical to the one in _command.txt.php 
 FIXME: I wonder if it is possible to call a template .txt.php from a .php...
 */ ?>
-<?php foreach($userlist as $current_user): ?>
-<?php if($current_user->getCountFailedChecks()>0): ?>
+<?php foreach($checkList->getGroupNames() as $groupname): ?>
+<?php if($checkList->getResultsByGroupName($groupname, Check::FAILED)+$checkList->getResultsByGroupName($groupname, Check::WARNING)>0): ?>
 
-# Commands concerning <?php echo $current_user ."\n" ?>
-<?php foreach($current_user->getChecks() as $check): ?>
-<?php if ($check->getCommand()): ?>
-<?php echo $check->getCommand() . "\n" ?>
+# <?php echo $groupname ?>
+
+<?php foreach($checkList->getChecksByGroupName($groupname) as $check): ?>
+<?php if ($check->getCommand()!=''): ?>
+<?php echo $check->getCommand() ?>
 <?php endif ?>
 <?php endforeach ?>
 <?php endif ?>

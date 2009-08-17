@@ -17,6 +17,10 @@ class GoogleappsAccount extends Account
 	{
 		return 'googleapps';
 	}
+	public function getChecks($checkGroup, &$checkList=null, $alerts='')
+	{
+		return $this;
+	}
 
 
 }

@@ -85,6 +85,66 @@
 
 <?php include_partial('googleapps', array('current_user'=>$current_user)) ?>
 
+
+<h2><?php echo __('Accounts') ?></h2>
+
+	<table>
+	  <thead>
+    <tr>
+      <th class="sf_admin_text"><?php echo __('Name') ?></th>
+      <th class="sf_admin_text"><?php echo __('Credential') ?></th>
+      <th class="sf_admin_text"><?php echo __('Account') ?></th>
+      <th class="sf_admin_text"><?php echo __('Info') ?></th>
+      <th class="sf_admin_text"><?php echo __('Settings') ?></th>
+      <th class="sf_admin_text"><?php echo __('Actions') ?></th>
+    </tr>
+  </thead>
+<tbody>  
+	<?php foreach($available_accounts as $available_account): ?>
+	<tr>
+		<th><label><?php echo image_tag($available_account) ?>&nbsp;<?php echo $available_account ?></label></th>
+		<td>
+			<?php echo $current_user->hasPermission($available_account)?__('enabled'):__('disabled') ?>
+		</td>
+		<td>
+			<?php echo $current_user->hasAccountOfType($available_account)?__('yes'):__('no') ?>
+		</td>
+		<td>
+			<?php if ($current_user->hasAccountOfType($available_account)): ?>
+				<?php $info=unserialize(Generic::decode($current_user->getAccountByType($available_account)->getInfo())); ?>
+				<table>
+				<?php foreach($info as $key=>$value): ?>
+				<tr>
+				<th><?php echo $key ?></th>
+				<td><?php echo $value ?></td>
+				</tr>
+				<?php endforeach ?>
+				</table>
+			<?php endif ?>
+		</td>
+		<td>
+			<?php if ($current_user->hasAccountOfType($available_account)): ?>
+				<?php $info=unserialize(Generic::decode($current_user->getAccountByType($available_account)->getSettings())); ?>
+				<table>
+				<?php foreach($info as $key=>$value): ?>
+				<tr>
+				<th><?php echo $key ?></th>
+				<td><?php echo $value ?></td>
+				</tr>
+				<?php endforeach ?>
+				</table>
+			<?php endif ?>
+		</td>
+		<td>
+		</td>
+	</tr>
+	<?php endforeach ?>
+	</tbody>
+	</table>
+	
+
+
+
 <h2><?php echo __('Actions') ?></h2>
 
 	<ul class="sf_admin_actions">

@@ -19,10 +19,10 @@
 
 <?php foreach($checkList->getGroupNames() as $groupname): ?>
 	<p>
-	<strong>	
+	<strong>
 	<?php echo link_to_function(
-  $groupname,
-  visual_effect('toggle_blind', $groupname), array(__('Hide'))
+	$groupname,
+  visual_effect('toggle_blind', $groupname)
 ) ?></strong>  (<?php foreach(array(Check::PASSED=>'green', Check::WARNING=>'orange', Check::FAILED=>'red') as $key=>$value): ?>
 
 <?php if($checkList->getResultsByGroupName($groupname, $key)>0): ?>

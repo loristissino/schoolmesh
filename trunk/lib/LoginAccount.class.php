@@ -15,8 +15,12 @@ class LoginAccount extends Account
 
 	public function getImage()
 	{
-		return 'baby im a login account!';
+		return 'login';
 	}
 
+	public function getChecks($checkGroup, &$checkList=null, $alerts='')
+	{
+		return $this;
+	}
 
 }
