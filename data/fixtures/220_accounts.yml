@@ -31,3 +31,11 @@ Account:
   john.test_samba:
     user_id:       john.test
     account_type_id:     samba
+
+  giulia.d_posix:
+    user_id:       giulia.d
+    account_type_id:     posix
+  giulia.d_samba:
+    user_id:       giulia.d
+    account_type_id:     samba
+

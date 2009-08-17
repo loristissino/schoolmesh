@@ -22,6 +22,9 @@ class contentActions extends sfActions
 */
     public function executeIndex($request)
   {
+	
+//	$this->availableaccounts=sfConfig::get('app_config_accounts');
+
   }
 
     public function executeWebserver($request)

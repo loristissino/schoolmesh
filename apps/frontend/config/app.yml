@@ -20,6 +20,7 @@ all:
     class_teachersteam_name: Consiglio di classe
     googleapps_domain: mattiussilab.net
     googleapps_url: http://webmail.mattiussilab.net
+    accounts: [ posix, login, samba, googleapps ]
 
 
   sf_guard_plugin:

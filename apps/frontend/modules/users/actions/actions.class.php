@@ -206,30 +206,6 @@ class usersActions extends sfActions
 	
 
 
-/*
-	$this->checks=array();
-	$this->ok=0;
-	$this->failed=0;
-	foreach($this->userlist as $current_user)
-	{
-		$current_user->setCountFailedChecks(0);
-		foreach($current_user->checkPosix() as $check)
-		{
-			
-			$current_user->addCheck($check);
-			if ($check->getIsPassed())
-			{
-				$this->ok++;
-			}
-			else
-			{
-				$this->failed++;
-				$current_user->incCountFailedChecks();
-			}
-		}
-	}
-	*/
-	
 	
 	if($request->hasParameter('execute'))
 	{
@@ -278,6 +254,13 @@ class usersActions extends sfActions
 			$this->getResponse()->setContentType('application/x-shellscript; charset=utf-8');
 		}
 	
+  }
+  public function executeCreateaccounts(sfWebRequest $request)
+  {
+	$this->user = $this->getUser();
+	
+	$this->checkList = sfGuardUserProfilePeer::createMissingAccounts(sfConfig::get('app_config_accounts'));
+		
   }
   public function executeUpdatequota(sfWebRequest $request)
 	{

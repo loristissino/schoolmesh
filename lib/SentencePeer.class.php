@@ -17,6 +17,7 @@ class SentencePeer{
 	'users_bulk_upload_classes_example'=>"1AI,1,A,I,Classe 1^A IGEA\n2AI,2,A,I,Classe 2^A IGEA\n...",
 	
 	'run_user_checks'=>'Run all system checks to see whether everything is ok.',
+	'create_accounts'=>'Create all missing children accounts (in the database)',
 	);
 
 	public static function getSentence($key)

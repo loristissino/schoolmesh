@@ -44,6 +44,18 @@ sfGuardUser:
     password:       gx
     is_superadmin:  false
 
+  lucia.d:
+    username:       lucia.d
+    password:       ld
+    is_superadmin:  false
+    is_active:         false
+
+  giulia.d:
+    username:       giulia.d
+    password:       gd
+    is_superadmin:  false
+    is_active:         false
+
   guest:
     username:      stefano.ospite
     password:      op

@@ -30,6 +30,9 @@
 	<li class="sf_admin_action_uploadcsv">
 		<?php echo link_to(__('Upload appointments'), url_for('users/upload?what=appointments'), array('title'=>__(SentencePeer::getSentence('users_bulk_upload_appointments'))))?>
 	</li><br />
+	<li class="sf_admin_action_accounts">
+		<?php echo link_to(__('Create missing accounts'), 'users/createaccounts', array('title'=>__(SentencePeer::getSentence('create_accounts')))) ?>
+	</li><br />
 	<li class="sf_admin_action_userchecks">
 		<?php echo link_to(__('Run user checks'), 'users/runuserchecks', array('title'=>__(SentencePeer::getSentence('run_user_checks')))) ?>
 	</li><br />

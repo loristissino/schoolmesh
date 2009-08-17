@@ -282,5 +282,90 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	}
 
 
+	public static function createMissingAccounts($availableAccounts)
+	{
+	
+	$checkList=new CheckList();
+	
+	if (sizeof($availableAccounts)==0)
+	{
+		$checkList->addCheck(
+			new Check(Check::WARNING, 'no available accounts', 'config')
+			);
+		return $checkList;
+	}
+	
+	$profiles=self::retrieveAllUsers();
+	
+	foreach($profiles as $profile)
+	{
+		$user=$profile->getsfGuardUser();
+		$currentAccounts=$profile->getAccounts();
+		$profile->setSystemAlerts('');
+		
+//		echo 'working on '. $user->getUsername() . sprintf(" (%s accounts) -- %s\n", sizeof($currentAccounts), $user->getIsActive()?'true':'false');
+		if(!$user->getIsActive())
+		{
+			if(sizeof($currentAccounts)>0)
+				{
+					$profile
+					->addSystemAlert('user not active with accounts')
+					->save();
+					$checkList->addCheck(
+						new Check(Check::WARNING, sprintf('not active, but with %d account(s)', sizeof($currentAccounts)), $profile->getUsername())
+						);
+				}
+			continue;
+		}
+	
+	
+		foreach($availableAccounts as $availableAccount)
+		{
+			if($profile->hasPermission($availableAccount))
+			{
+				if($profile->hasAccountOfType($availableAccount))
+				{
+					$checkList->addCheck(
+						new Check(Check::PASSED, sprintf('account %s exists', $availableAccount), $profile->getUsername())
+					);
+					
+				}
+				else
+				{
+					$account = AccountPeer::createAccountOfType($availableAccount);
+					$profile->addAccount($account);
+					$checkList->addCheck(
+						new Check(Check::WARNING, sprintf('account %s created', $availableAccount), $profile->getUsername())
+					);
+					
+				}
+			}
+			
+		}
+		
+		$currentAccounts=$profile->getAccounts();
+		
+		foreach($currentAccounts as $currentAccount)
+		{
+			if (!in_array($currentAccount->getAccountType(), $availableAccounts))
+			{
+				$profile
+				->addSystemAlert(sprintf('extra account %s', $currentAccount->getAccountType()))
+				->save();
+				$checkList->addCheck(
+					new Check(Check::WARNING, sprintf('account %s should not be available', $currentAccount->getAccountType()), $profile->getUsername())
+				);
+			}
+			
+		}
+		
+		
+	}
+	
+			return $checkList;
+		
+		
+	}
+
 
 }

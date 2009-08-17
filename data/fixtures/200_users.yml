@@ -92,8 +92,21 @@ sfGuardUserProfile:
     role_id:       dsga
 
 
-  gest:
+  guest:
     user_id:     guest
     first_name:   Stefano
     last_name:    Ospite
     gender:      M
+
+
+  lucia.d:
+    user_id:        lucia.d
+    first_name:     Lucia
+    last_name:      Di Donati
+    gender:            F
+
+  giulia.d:
+    user_id:        giulia.d
+    first_name:     Giulia
+    last_name:      Di Donati
+    gender:            F
