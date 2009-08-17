@@ -3,39 +3,94 @@
 class Account extends BaseAccount
 {
 	
-	private $_info = array();
+	protected $_info = array();
+	protected $_settings = array();
 	
 	public function __construct()
 	{
 		parent::__construct();
 		$this->_info=unserialize($this->getInfo());
+		if ($this->getInfo())
+		{
+			$this->_info=unserialize($this->getInfo());
+		}
+		else
+		{
+			$this->_info=array();
+		}
+		if ($this->getSettings())
+		{
+			$this->_settings=unserialize($this->getSettings());
+		}
+		else
+		{
+			$this->_settings=array();
+		}
 	}
 	
 	public function getUsername()
 	{
-		return 'john.test';
 		$c=new Criteria();
 		$c->add(sfGuardUserPeer::ID, $this->getUserId());
 		$t=sfGuardUserPeer::doSelectOne($c);
 		return $t->getUsername();
 	}
 	
+	public function getProfile()
+	{
+		$c=new Criteria();
+		$c->add(sfGuardUserProfilePeer::USER_ID, $this->getUserId());
+		$t=sfGuardUserProfilePeer::doSelectOne($c);
+		return $t;
+	}
+	
 	public function save(PropelPDO $con = null)
 	{
 		$this->setInfo(serialize($this->_info));
+		$this->setSettings(serialize($this->_settings));
 		parent::save();
 	}
 	
    public function setAccountInfo($key, $value)
 	{
 		$this->_info[$key]=$value;
+		return $this;
 	}
 
     public function getAccountInfo($key)
 	{
-		return @$this->_info[$key];
+		if (@array_key_exists($key, $this->_info))
+		{
+			return $this->_info[$key];
+		}
+		else
+		{
+			return null;
+		}
 	}
 		
+   public function setAccountSetting($key, $value)
+	{
+		$this->_settings[$key]=$value;
+		$this->save();
+
+
+		return $this;
+	}
+
+    public function getAccountSetting($key)
+	{
+		$this->_settings=unserialize($this->getSettings());
+		if (array_key_exists($key, $this->_settings))
+		{
+			return $this->_settings[$key];
+		}
+		else
+		{
+			return null;
+		}
+	}
+
 	function getRealAccount()
 	{
 		switch($this->getAccountType()->getName())
@@ -74,13 +129,14 @@ class Account extends BaseAccount
 	
 	public function updateInfoFromRealWorld()
 	{
-		throw new Exception('This function must be implemented in a derived class');
+		throw new Exception(sprintf('This function must be implemented in the derived class «%s»', $this->getAccountType()));
 		return $this;
 	}
 	
-	public function getChecks()
+	public function getChecks($checkGroup, &$checkList=null, $alerts='')
 	{
-		throw new Exception('This function must be implemented in a derived class');
+		throw new Exception(sprintf('This function must be implemented in the derived class «%s»', $this->getAccountType()));
+		return $this;
 	}
 	
 	public function getImage()

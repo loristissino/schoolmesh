@@ -11,7 +11,12 @@ class SambaAccount extends Account
 	
 	public function getImage()
 	{
-		return 'baby im a samba account!';
+		return 'samba';
+	}
+
+	public function getChecks($checkGroup, &$checkList=null, $alerts='')
+	{
+		return $this;
 	}
 
 }

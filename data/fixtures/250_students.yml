@@ -10,25 +10,6 @@ foreach($students as $student)
 		list($ms->firstname,$ms->middlename,$ms->lastname,$ms->username,$ms->gender,$ms->pronunciation,$ms->schoolclass)=explode(',',$student);
 		array_push($mystudents, $ms);
 	}
-
-
-/*
-$schoolclasses=array("3ap","4ap", "5ap", "3bp", "4bp", "5bp");
-
-foreach($schoolclasses as $schoolclass)
-	{
-		for($i=10;$i<=20;$i++)
-			{
-				$ms= new Student();
-				$ms->gender = ($i & 1)? 'M':'F';
-				$ms->username= (($ms->gender=='M')? 'john':'mary') . "$schoolclass.$i";
-				$ms->firstname=  ($ms->gender=='M')? 'John':'Mary';
-				$ms->lastname=  "Doe " . $schoolclass . "$i";
-				$ms->schoolclass = $schoolclass;
-			array_push($mystudents,$ms);
-			}
-	}
-*/
 ?>
 
 sfGuardUser:
@@ -64,4 +45,11 @@ Enrolment:
     user_id:        <?php echo $ms->username . "\n" ?>
     schoolclass_id:    <?php echo $ms->schoolclass . "\n" ?>
     year_id:         200809
+<?php endforeach; ?>
+
+sfGuardUserGroup:
+<?php foreach($mystudents as $ms): ?>
+  <?php echo $ms->username ?>:
+    group_id:      student
+    user_id:        <?php echo $ms->username . "\n" ?>
 <?php endforeach; ?>

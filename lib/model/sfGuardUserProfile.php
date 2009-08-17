@@ -98,7 +98,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		public function hasPermission($value, $random=0)
 		{
 			// similar to sfGuardUser::hasCredential(), that only works for authenticated users
-			return in_array($value, $permissions=$this->getWebPermissions());
+			return in_array($value, $this->getWebPermissions());
 		}
 		
 		
@@ -606,6 +606,113 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return false;
 			
 		}
+
+		public function checkAccounts($availableAccounts, &$checkList=null)
+		{
+			if (!$checkList instanceof CheckList)
+			{
+				$checkList=new CheckList();
+			}
+			
+			$checkGroup=$this->getUsername();
+			
+			$this->setSystemAlerts('');
+
+			if (sizeof($availableAccounts)==0)
+			{
+				$checkList->addCheck(
+					new Check(Check::WARNING, 'no available accounts', 'schoolmesh')
+					);
+				return $this;
+			}
+	
+			$role=RolePeer::retrieveByPK($this->getRoleId());
+			
+			// First thing, we see if the username is less than 20 characters long and matches a Regexp
+			// Input form does this checks, but data could be changed in other manners (or badly uploaded)
+			
+			if (!$this->getUsernameIsValid())
+				{
+					$checkList->addCheck(new Check(Check::FAILED, 'schoolmesh: username is not valid', $checkGroup));
+					$this
+					->addSystemAlert('username not valid')
+					->save();
+					return $this;
+				}
+			
+			if (!$role)
+				{
+					$checkList->addCheck(new Check(Check::FAILED, 'schoolmesh: role is not set', $checkGroup));
+					$this
+					->addSystemAlert('role not set')
+					->save();
+					return $this;
+				}
+
+/* FIXME When a user is set to a role, we must add them to the right sfGuardGroup */
+
+			$currentAccounts=$this->getAccounts();
+		
+			if(!$this->getsfGuardUser()->getIsActive())
+			{
+				if(sizeof($currentAccounts)>0)
+					{
+						$this
+						->addSystemAlert('user not active with accounts');
+						$checkList->addCheck(
+							new Check(Check::FAILED, sprintf('schoolmesh: user not active, but with %d account(s)', sizeof($currentAccounts)), $checkGroup)
+							);
+					}
+				return $this;
+			}
+	
+			foreach($availableAccounts as $availableAccount)
+			{
+				if($this->hasPermission($availableAccount))
+				{
+					if($this->hasAccountOfType($availableAccount))
+					{
+						$checkList->addCheck(
+							new Check(Check::PASSED, sprintf('schoolmesh: «%s» account exists', $availableAccount), $checkGroup)
+						);
+						
+					}
+					else
+					{
+						$account = AccountPeer::createAccountOfType($availableAccount);
+						$this->addAccount($account);
+						$checkList->addCheck(
+							new Check(Check::WARNING, sprintf('schoolmesh: «%s» account created', $availableAccount), $checkGroup)
+						);
+						
+					}
+				}
+			}
+		
+			$currentAccounts=$this->getAccounts();
+			
+			foreach($currentAccounts as $currentAccount)
+			{
+				if (!in_array($currentAccount->getAccountType(), $availableAccounts))
+				{
+					$this
+					->addSystemAlert(sprintf('extra account %s', $currentAccount->getAccountType()));
+					$checkList->addCheck(
+						new Check(Check::WARNING, sprintf('schoolmesh: account «%s» should not be available', $currentAccount->getAccountType()), $checkGroup)
+					);
+				}
+				else
+				{
+					$alerts='';
+					$currentAccount->getChecks($checkGroup, $checkList, $alerts);
+					$this->addSystemAlert($alerts, $alerts!='');
+				}
+			}
+			
+			$this->save();
+			return $this;
+		}
+
 
 		public function checkPosix()
 		{

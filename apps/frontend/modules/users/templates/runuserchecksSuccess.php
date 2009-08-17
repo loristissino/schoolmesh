@@ -20,7 +20,7 @@
 
 <?php if(isset($checkList)): ?>
 
-<?php include_partial('content/checks', array('checkList'=>$checkList, 'start_closed'=>true)) ?>
+<?php include_partial('content/checks', array('checkList'=>$checkList, 'start_closed'=>false)) ?>
 
 <?php if ($checkList->getTotalResults(Check::FAILED)>0): ?>
 
@@ -38,8 +38,7 @@
 	</ul>
 
 <textarea rows="20" cols="80">
-CODICE DA RISCRIVERE - REFACTORING IN CORSO...
-<?php// include_partial('commands', array('userlist'=>$userlist)) ?>
+<?php include_partial('commands', array('checkList'=>$checkList)) ?>
 </textarea>
 <?php endif /* are there failed */?>
 

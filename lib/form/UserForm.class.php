@@ -1,11 +1,8 @@
 <?php
         class UserForm extends sfForm
         {
-			
-			
           public function configure()
           {
-			
 			$years_min=sfConfig::get('app_config_current_year')-65;
 			$years_max=sfConfig::get('app_config_current_year')-13;
 			foreach(range($years_min, $years_max) as $year)
@@ -31,11 +28,10 @@ Workflow::getEmailVerificationStates())),
 			  'birthdate' => new sfWidgetFormI18nDate(array('culture'=>'it', 'years'=>$years)),  
 			  'birthplace' => new sfWidgetFormInput(array(), array('size'=>50)),  
 			  'main_role' => new sfWidgetFormPropelSelect(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
-			  'soft_blocks_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
+/*			  'soft_blocks_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
 			  'hard_blocks_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
 			  'soft_files_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
-			  'hard_files_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
-			  
+			  'hard_files_quota' => new sfWidgetFormInput(array(), array('size'=>8)),*/
             ));
 
 			if(isset($this->options['new']))
@@ -45,9 +41,6 @@ Workflow::getEmailVerificationStates())),
 			  'main_role' => new sfWidgetFormPropelSelect(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
             ));
 			}
-			
-
-
 			$this->widgetSchema->setNameFormat('userinfo[%s]');
 			
 			$this->setValidators(array(
@@ -69,10 +62,10 @@ Workflow::getEmailVerificationStates())),
 				'birthdate' => new sfValidatorDate(array('required'=>false)),
 				'birthplace' => new sfValidatorString(array('trim'=>true, 'required'=>false)),
 				'main_role' => new sfValidatorPropelChoice(array('model'=>'role')),  
-				'soft_blocks_quota' => new sfValidatorInteger(array('required'=>false, 'min'=>0)),  
+/*				'soft_blocks_quota' => new sfValidatorInteger(array('required'=>false, 'min'=>0)),  
 				'hard_blocks_quota' => new sfValidatorInteger(array('required'=>false, 'min'=>0)),  
 				'soft_files_quota' => new sfValidatorInteger(array('required'=>false, 'min'=>0)),  
-				'hard_files_quota' => new sfValidatorInteger(array('required'=>false, 'min'=>0)),  
+				'hard_files_quota' => new sfValidatorInteger(array('required'=>false, 'min'=>0)),  */
 			));
 			
 			if(isset($this->options['new']))
@@ -86,7 +79,12 @@ Workflow::getEmailVerificationStates())),
 				));
 			}
 			
-			
+		$this->validatorSchema->setPostValidator(
+				new sfValidatorOr(array(
+					new sfValidatorSchemaCompare('username', sfValidatorSchemaCompare::EQUAL, 'old_username'),
+					new smValidatorUsername('username')))
+				);
+		/* KEPT FOR REFERENCE 
 		$this->validatorSchema->setPostValidator(
 			new sfValidatorAnd(array(
 				new sfValidatorOr(array(
@@ -104,7 +102,7 @@ Workflow::getEmailVerificationStates())),
 				)
 			))
 		);
-
+*/
 /*
 
 This seems to work only for new records, not when updating.
