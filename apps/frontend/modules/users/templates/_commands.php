@@ -8,7 +8,7 @@ FIXME: I wonder if it is possible to call a template .txt.php from a .php...
 
 <?php foreach($checkList->getChecksByGroupName($groupname) as $check): ?>
 <?php if ($check->getCommand()!=''): ?>
-<?php echo $check->getCommand() ?>
+<?php echo $check->getCommand() . "\n" ?>
 <?php endif ?>
 <?php endforeach ?>
 <?php endif ?>

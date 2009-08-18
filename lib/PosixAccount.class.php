@@ -146,7 +146,8 @@ class PosixAccount extends Account
 				'field'=>'shell',
 				'match'=>$this->getProfile()->hasPermission('login')?'/bin/bash':'/bin/false',
 				'true'=>sprintf('shell is correctly set to «%s»', $this->getProfile()->hasPermission('login')?'/bin/bash':'/bin/false'),
-				'false'=>sprintf('shell is not set to «%s»', $this->getProfile()->hasPermission('login')?'/bin/bash':'/bin/false')
+				'false'=>sprintf('shell is not set to «%s»', $this->getProfile()->hasPermission('login')?'/bin/bash':'/bin/false'),
+				'command'=>sprintf('schoolmesh_posixaccount_changeshell %s "%s"', $this->getUsername(), $this->getProfile()->hasPermission('login')?'/bin/bash':'/bin/false'),
 				),
 			array(
 				'field'=>'basefolder_found',

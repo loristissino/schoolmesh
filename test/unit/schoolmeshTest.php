@@ -12,7 +12,7 @@ $commands_apply= sfConfig::get('app_system_commands_apply');
 $wget =  'wget -O - --no-check-certificate '  . $base_url . '/frontend_dev.php/content/webserver/cmd/%s 2>/dev/null';
 
 $tests=7;
-if($commands_view) $tests+=4;
+if($commands_view) $tests+=5;
 if($commands_apply) $tests+=1;
 
 $t = new lime_test($tests, new lime_output_color());
@@ -42,6 +42,7 @@ if ($commands_view)
 		'/usr/bin/lsattr',
 		'/usr/bin/getfacl',
 		'/usr/bin/quota',
+		'/usr/bin/chage --list'
 	) as $sudocmd)
 
 	{
