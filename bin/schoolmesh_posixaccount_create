@@ -1,16 +1,12 @@
 #!/bin/bash
 
-if [ $# -eq 0 ]
-	then
-		echo "This script is a wrapper. See schoolmesh(1) for details."
-		exit 1
-	fi
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
 
 USERNAME=$1
 GROUP=$2
 FULLNAME=$3
-
-source /var/schoolmesh/config/schoolmesh.ini
 
 if [ ! -d "$POSIX_HOMEDIR" ] ; then
 	echo "Not a directory: $POSIX_HOMEDIR"

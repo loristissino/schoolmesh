@@ -22,7 +22,7 @@
 
 <?php include_partial('content/checks', array('checkList'=>$checkList, 'start_closed'=>false)) ?>
 
-<?php if ($checkList->getTotalResults(Check::FAILED)>0): ?>
+<?php if ($checkList->getTotalResults(Check::FAILED)+$checkList->getTotalResults(Check::WARNING)>0): ?>
 
 <h2><?php echo __('Commands') ?></h2>
 
@@ -33,7 +33,8 @@
 	</li>
 	<?php endif ?>
 	<li class="sf_admin_action_export">
-		<?php echo link_to(__('Download script'), '@userchecks?sf_format=txt') ?>
+		<?php echo link_to(__('Download script'), url_for('users/runuserchecks?sf_format=txt' . (isset($id)?'&id='.$id:'')) ) ?>
+		<?php //echo link_to(__('Download script'), '@userchecks?sf_format=txt') ?>
 	</li>
 	</ul>
 
