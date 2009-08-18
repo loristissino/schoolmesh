@@ -1,3 +1,6 @@
+<?php
+	$raw_account=$sf_data->getRaw('account');
+?>
 <?php use_helper('Javascript') ?>
 <?php use_helper('Form') ?>
 <?php use_helper('Object') ?>
@@ -6,7 +9,8 @@
 <?php slot('breadcrumbs',
 	link_to(__("User management"), 'users/index') . ' » ' .
 	link_to(__("User list"), 'users/list') . ' » ' .
-	'TODO'
+	link_to($profile->getFullName(), 'users/edit?id=' . $profile->getUserId()) . ' » '.
+	$account
 	)
 	
 	?><h1><?php echo sprintf(__('Edit %s'), $account)?></h1>
@@ -18,9 +22,6 @@
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
 
-<?php
-	$raw_account=$sf_data->getRaw('account');
-?>
 
 <form action="<?php echo url_for('users/editaccount?id='. $account->getId()) ?>" method="post">
 

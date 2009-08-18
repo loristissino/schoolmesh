@@ -480,6 +480,8 @@ class usersActions extends sfActions
 	$this->account=$this->account->getRealAccount();
 	$type=$this->account->getAccountType();
 	
+	$this->profile=$this->account->getProfile();
+	
 	$form=ucfirst($type) . 'AccountForm';
 	
 	$this->form = new $form();

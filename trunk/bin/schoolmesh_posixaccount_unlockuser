@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+	then
+		echo "This script is a wrapper. See schoolmesh(1) for details."
+		exit 1
+	fi
+
+USERNAME=$1
+
+getent passwd $USERNAME > /dev/null
+
+if [ $? -ne 0 ] ; then
+	echo "unlocked=0"
+	exit 1
+fi
+
+sudo usermod -U $USERNAME && sudo chage -E -1 $USERNAME && echo "unlocked=1" && exit 0
+
+echo "unlocked=0"
+exit 2
+
+

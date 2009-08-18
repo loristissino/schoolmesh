@@ -24,7 +24,7 @@ class PosixAccount extends Account
    */
 	public function updateInfoFromRealWorld()
 	{
-		$info=Generic::executeCommand(sprintf('posixaccount_getinfo %s %s', $this->getUsername(), sfConfig::get('app_config_posix_basefolder')));
+		$info=Generic::executeCommand(sprintf('posixaccount_getinfo %s', $this->getUsername()));
 		
 		// first, we retrieve the values...
 		foreach($info as $key=>$value)
@@ -56,7 +56,7 @@ class PosixAccount extends Account
 		}
 
 		$this->setExists($this->getAccountInfo('found')==1);
-		$this->setIsLocked(null);
+		$this->setIsLocked($this->getAccountInfo('user_locked')==1);
 		
 		return $this;
 	}

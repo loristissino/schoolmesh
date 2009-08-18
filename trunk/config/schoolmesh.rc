@@ -1,0 +1,12 @@
+# This file contains settings for schoolmesh-related shell scripts (schoolmesh_*).
+# It must be sourced in order to have a common configuration.
+
+if [ $# -eq 0 ]
+	then
+		echo "This script is a wrapper. See schoolmesh(1) for details."
+		exit 1
+	fi
+
+CONFIG_READ=1
+POSIX_HOMEDIR=/home/testhome
+POSIX_BASEFOLDER=Mattiussi

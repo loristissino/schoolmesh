@@ -169,7 +169,7 @@ class Generic{
 			$result=array();
 			$return_var=0;
 			
-			$command='schoolmesh_' . $command;
+			$command='sudo schoolmesh_' . $command;
 			
 			exec($command, $result, $return_var);
 			foreach($result as $line)
