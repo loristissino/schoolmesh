@@ -1,13 +1,10 @@
 #!/bin/bash
 
-if [ $# -eq 0 ]
-	then
-		echo "This script is a wrapper. See schoolmesh(1) for details."
-		exit 1
-	fi
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
 
 USERNAME=$1
-BASEFOLDER=$2
 
 INFO=$(getent passwd $USERNAME 2>/dev/null)
 
@@ -23,6 +20,19 @@ echo uid=$(echo $INFO | cut -d: -f3)
 echo gid=$(echo $INFO | cut -d: -f4)
 echo group=$(id -gn $USERNAME)
 echo gecos=$(echo $INFO | cut -d: -f5)
+
+EXPIRE=$(LANG=POSIX sudo chage --list $USERNAME | gawk 'BEGIN {FS=": "}{
+	if ($1 ~ /^Account expires/) print $2
+	}')
+
+# here we assume that a user is locked when a expire date is set
+# not always true, of course, so if needed this must be fixed
+if [[ $EXPIRE = "never" ]]
+	then
+		echo user_locked=0
+	else
+		echo user_locked=1
+fi
 
 HOMEDIR=$(echo $INFO | cut -d: -f6)
 echo homedir=$HOMEDIR
@@ -53,6 +63,7 @@ if [[ ! -d "$BASEFOLDER" ]]
 fi
 
 echo basefolder_found=1
+echo basefolder=$BASEFOLDER
 echo basefolder_user=$(sudo stat -c '%U' "$BASEFOLDER")
 echo basefolder_group=$(sudo stat -c '%G' "$BASEFOLDER")
 echo basefolder_permissions=$(sudo stat -c '%a' "$BASEFOLDER")
