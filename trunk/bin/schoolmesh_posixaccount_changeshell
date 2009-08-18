@@ -1,0 +1,14 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+	
+USERNAME=$1
+SHELL=$2
+
+checkUsername $USERNAME
+
+checkShell $SHELL
+
+sudo usermod -s "$SHELL" $USERNAME && echo "changed shell: user $USERNAME ($SHELL)"
