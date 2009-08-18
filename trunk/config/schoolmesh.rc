@@ -10,3 +10,33 @@ if [ $# -eq 0 ]
 CONFIG_READ=1
 POSIX_HOMEDIR=/home/testhome
 POSIX_BASEFOLDER=Mattiussi
+
+# DO NET EDIT PASS THIS LINE
+
+function checkUsername()
+{
+getent passwd $1 > /dev/null
+
+if [ $? -ne 0 ] ; then
+	echo "Not a user: $1"
+	exit 1
+fi	
+}
+
+function checkString()
+{
+if [ -z $1 ] ; then
+	echo "Not a valid string: $1"
+	exit 2
+fi
+}
+
+function checkShell()
+{
+if [ $(grep -c "^$1\$" /etc/shells) -ne 1 ] ; then
+	echo "Not a valid shell: $1"
+	exit 7
+fi
+}
+
+

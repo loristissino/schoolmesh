@@ -3,14 +3,15 @@
 CONFIG_READ=0
 source /var/schoolmesh/config/schoolmesh.rc $@
 if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
-
+	
 USERNAME=$1
+FULLNAME=$2
 
 checkUsername $USERNAME
+checkString $FULLNAME
 
-sudo usermod -L $USERNAME && sudo chage -E 1 $USERNAME && echo "locked=1" && exit 0
+sudo usermod -c "$FULLNAME" $USERNAME && echo "changed fullname: user $USERNAME ($FULLNAME)"  && exit 0
 
-echo "locked=0"
+echo "Something wrong"
 exit 99
-
 

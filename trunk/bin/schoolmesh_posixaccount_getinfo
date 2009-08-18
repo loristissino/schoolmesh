@@ -54,7 +54,7 @@ sudo quota --no-wrap --verbose --raw-grace --user $1 | tail -1 | gawk '{
 	}'
 	
 	
-BASEFOLDER="$HOMEDIR/$BASEFOLDER"
+BASEFOLDER="$HOMEDIR/$POSIX_BASEFOLDER"
 
 if [[ ! -d "$BASEFOLDER" ]]
 	then
