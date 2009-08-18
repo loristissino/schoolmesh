@@ -13,7 +13,7 @@ abstract class BaseAccountPeer {
 	const CLASS_DEFAULT = 'lib.model.Account';
 
 	
-	const NUM_COLUMNS = 7;
+	const NUM_COLUMNS = 13;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -34,6 +34,24 @@ abstract class BaseAccountPeer {
 	const SETTINGS = 'account.SETTINGS';
 
 	
+	const EXISTS = 'account.EXISTS';
+
+	
+	const IS_LOCKED = 'account.IS_LOCKED';
+
+	
+	const TEMPORARY_PASSWORD = 'account.TEMPORARY_PASSWORD';
+
+	
+	const INFO_UPDATED_AT = 'account.INFO_UPDATED_AT';
+
+	
+	const LAST_KNOWN_LOGIN_AT = 'account.LAST_KNOWN_LOGIN_AT';
+
+	
+	const QUOTA_PERCENTAGE = 'account.QUOTA_PERCENTAGE';
+
+	
 	const UPDATED_AT = 'account.UPDATED_AT';
 
 	
@@ -47,20 +65,20 @@ abstract class BaseAccountPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'AccountTypeId', 'Info', 'Settings', 'UpdatedAt', 'CreatedAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'accountTypeId', 'info', 'settings', 'updatedAt', 'createdAt', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::ACCOUNT_TYPE_ID, self::INFO, self::SETTINGS, self::UPDATED_AT, self::CREATED_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'account_type_id', 'info', 'settings', 'updated_at', 'created_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'AccountTypeId', 'Info', 'Settings', 'Exists', 'IsLocked', 'TemporaryPassword', 'InfoUpdatedAt', 'LastKnownLoginAt', 'QuotaPercentage', 'UpdatedAt', 'CreatedAt', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'accountTypeId', 'info', 'settings', 'exists', 'isLocked', 'temporaryPassword', 'infoUpdatedAt', 'lastKnownLoginAt', 'quotaPercentage', 'updatedAt', 'createdAt', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::ACCOUNT_TYPE_ID, self::INFO, self::SETTINGS, self::EXISTS, self::IS_LOCKED, self::TEMPORARY_PASSWORD, self::INFO_UPDATED_AT, self::LAST_KNOWN_LOGIN_AT, self::QUOTA_PERCENTAGE, self::UPDATED_AT, self::CREATED_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'account_type_id', 'info', 'settings', 'exists', 'is_locked', 'temporary_password', 'info_updated_at', 'last_known_login_at', 'quota_percentage', 'updated_at', 'created_at', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'AccountTypeId' => 2, 'Info' => 3, 'Settings' => 4, 'UpdatedAt' => 5, 'CreatedAt' => 6, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'accountTypeId' => 2, 'info' => 3, 'settings' => 4, 'updatedAt' => 5, 'createdAt' => 6, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::ACCOUNT_TYPE_ID => 2, self::INFO => 3, self::SETTINGS => 4, self::UPDATED_AT => 5, self::CREATED_AT => 6, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'account_type_id' => 2, 'info' => 3, 'settings' => 4, 'updated_at' => 5, 'created_at' => 6, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'AccountTypeId' => 2, 'Info' => 3, 'Settings' => 4, 'Exists' => 5, 'IsLocked' => 6, 'TemporaryPassword' => 7, 'InfoUpdatedAt' => 8, 'LastKnownLoginAt' => 9, 'QuotaPercentage' => 10, 'UpdatedAt' => 11, 'CreatedAt' => 12, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'accountTypeId' => 2, 'info' => 3, 'settings' => 4, 'exists' => 5, 'isLocked' => 6, 'temporaryPassword' => 7, 'infoUpdatedAt' => 8, 'lastKnownLoginAt' => 9, 'quotaPercentage' => 10, 'updatedAt' => 11, 'createdAt' => 12, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::ACCOUNT_TYPE_ID => 2, self::INFO => 3, self::SETTINGS => 4, self::EXISTS => 5, self::IS_LOCKED => 6, self::TEMPORARY_PASSWORD => 7, self::INFO_UPDATED_AT => 8, self::LAST_KNOWN_LOGIN_AT => 9, self::QUOTA_PERCENTAGE => 10, self::UPDATED_AT => 11, self::CREATED_AT => 12, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'account_type_id' => 2, 'info' => 3, 'settings' => 4, 'exists' => 5, 'is_locked' => 6, 'temporary_password' => 7, 'info_updated_at' => 8, 'last_known_login_at' => 9, 'quota_percentage' => 10, 'updated_at' => 11, 'created_at' => 12, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	
@@ -111,6 +129,18 @@ abstract class BaseAccountPeer {
 		$criteria->addSelectColumn(AccountPeer::INFO);
 
 		$criteria->addSelectColumn(AccountPeer::SETTINGS);
+
+		$criteria->addSelectColumn(AccountPeer::EXISTS);
+
+		$criteria->addSelectColumn(AccountPeer::IS_LOCKED);
+
+		$criteria->addSelectColumn(AccountPeer::TEMPORARY_PASSWORD);
+
+		$criteria->addSelectColumn(AccountPeer::INFO_UPDATED_AT);
+
+		$criteria->addSelectColumn(AccountPeer::LAST_KNOWN_LOGIN_AT);
+
+		$criteria->addSelectColumn(AccountPeer::QUOTA_PERCENTAGE);
 
 		$criteria->addSelectColumn(AccountPeer::UPDATED_AT);
 

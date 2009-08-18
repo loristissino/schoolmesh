@@ -86,12 +86,21 @@ propel:
     account_type_id: { type: integer, foreignTable: account_type, foreignReference: id, required: true, onDelete: restrict, onUpdate: cascade, index: true }
     info:  longvarchar
     settings: longvarchar
+    exists: boolean
+    is_locked: boolean
+    temporary_password: varchar(10)
+    info_updated_at: timestamp
+    last_known_login_at: timestamp
+    quota_percentage: integer
     updated_at: ~
     created_at: ~
     _uniques:
       ua: [user_id, account_type_id]
 # info: it is a serialized array of information read from the actual system in which the account is present
 # settings: it is a serialized array of information that should be set in the actual system
+# quota_percentage: an integer in the range 0-100
+# is_locked: true if it is locked (suspended), false if it is active, null if unknown
+
 
   reserved_username:
     id:   

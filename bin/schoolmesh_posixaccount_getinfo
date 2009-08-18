@@ -37,7 +37,7 @@ sudo quota --no-wrap --verbose --raw-grace --user $1 | tail -1 | gawk '{
 	print "soft_blocks_quota=" $3 
 	print "hard_blocks_quota=" $4 
 	print "blocks_grace=" $5
-	print "used_blocks=" $6 
+	print "used_files=" $6 
 	print "soft_files_quota=" $7 
 	print "hard_files_quota=" $8
 	print "files_grace=" $9

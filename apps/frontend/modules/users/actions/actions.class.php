@@ -182,6 +182,7 @@ class usersActions extends sfActions
   public function executeRunuserchecks(sfWebRequest $request)
   {
 	$this->user = $this->getUser();
+	$this->referer= $request->getReferer();
 	
 	if($request->hasParameter('id'))
 	{
@@ -463,6 +464,77 @@ class usersActions extends sfActions
 		)
 	);
 	
+/*			'soft_blocks_quota' => $this->current_user->getDiskSetSoftBlocksQuota(),
+			'hard_blocks_quota' => $this->current_user->getDiskSetHardBlocksQuota(),
+			'soft_files_quota' => $this->current_user->getDiskSetSoftFilesQuota(),
+			'hard_files_quota' => $this->current_user->getDiskSetHardFilesQuota(),
+*/
+	
+  }
+
+
+  public function executeEditaccount(sfWebRequest $request)
+  {
+	$this->account=AccountPeer::retrieveByPk($request->getParameter('id'));
+	
+	$this->account=$this->account->getRealAccount();
+	$type=$this->account->getAccountType();
+	
+	$form=ucfirst($type) . 'AccountForm';
+	
+	$this->form = new $form();
+	
+	if ($request->isMethod('post'))
+		{
+			$this->form->bind($request->getParameter('accountinfo'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				$this->accoun=sfGuardUserProfilePeer::retrieveByPk($params['id']);
+
+				$this->account
+				->setAccountSetting('soft_blocks_quota', $params['soft_blocks_quota'])
+				->setAccountSetting('hard_blocks_quota', $params['hard_blocks_quota'])
+				->setAccountSetting('soft_files_quota', $params['soft_files_quota'])
+				->setAccountSetting('hard_files_quota', $params['hard_files_quota'])
+				->save();
+
+				$this->getUser()->setFlash('notice',
+					$this->getContext()->getI18N()->__('User information updated.') . ' ' .
+					$this->getContext()->getI18N()->__('You might need to run User Checks in order to apply the changes.')
+					);
+					
+				$this->redirect('users/editaccount?id='. $params['id']);
+
+				
+			}
+			
+			
+		}
+
+
+	$this->account->setFormDefaults($this->form);
+	/*
+	$this->form->setDefaults(
+		array(
+			'id' => $this->current_user->getUserId(),
+			'posix_uid' => $this->current_user->getPosixUId(),
+			'username' => $this->current_user->getUsername(),
+			'is_active'=> $this->current_user->getsfGuardUser()->getIsActive(),
+			'old_username' => $this->current_user->getUsername(),
+			'first_name'=>$this->current_user->getFirstName(),
+			'middle_name'=>$this->current_user->getMiddleName(),
+			'last_name'=>$this->current_user->getLastName(),
+			'pronunciation'=>$this->current_user->getPronunciation(),
+			'gender'=>$this->current_user->getGenderChoice(),
+			'email'=>$this->current_user->getEmail(),
+			'email_state'=>$this->current_user->getEmailState(),
+			'birthdate' => $this->current_user->getBirthdate(),
+			'birthplace' => $this->current_user->getBirthplace(),
+			'main_role'=>$this->current_user->getRoleId(),
+		)
+	);
+	*/
 /*			'soft_blocks_quota' => $this->current_user->getDiskSetSoftBlocksQuota(),
 			'hard_blocks_quota' => $this->current_user->getDiskSetHardBlocksQuota(),
 			'soft_files_quota' => $this->current_user->getDiskSetSoftFilesQuota(),

@@ -13,7 +13,6 @@
 			
             $this->setWidgets(array(
 			  'id'  => new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
-			  'posix_uid' => new sfWidgetFormInput(array(), array('size'=>8)),
 			  'old_username' =>  new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
 			  'username' => new sfWidgetFormInput(array(), array('size'=>25)),
 			  'is_active'=> new sfWidgetFormSelect(array('choices' =>array('no', 'yes'))), 

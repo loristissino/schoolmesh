@@ -701,6 +701,14 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 						new Check(Check::WARNING, sprintf('schoolmesh: account «%s» should not be available', $currentAccount->getAccountType()), $checkGroup)
 					);
 				}
+				elseif (!$this->hasPermission($currentAccount->getAccountType()))
+				{
+					$this
+					->addSystemAlert(sprintf('no credential for account %s', $currentAccount->getAccountType()));
+					$checkList->addCheck(
+						new Check(Check::WARNING, sprintf('schoolmesh: the user does not have the credential for account «%s»', $currentAccount->getAccountType()), $checkGroup)
+					);
+				}
 				else
 				{
 					$alerts='';

@@ -43,6 +43,18 @@ class AccountMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('SETTINGS', 'Settings', 'LONGVARCHAR', false, null);
 
+		$tMap->addColumn('EXISTS', 'Exists', 'BOOLEAN', false, null);
+
+		$tMap->addColumn('IS_LOCKED', 'IsLocked', 'BOOLEAN', false, null);
+
+		$tMap->addColumn('TEMPORARY_PASSWORD', 'TemporaryPassword', 'VARCHAR', false, 10);
+
+		$tMap->addColumn('INFO_UPDATED_AT', 'InfoUpdatedAt', 'TIMESTAMP', false, null);
+
+		$tMap->addColumn('LAST_KNOWN_LOGIN_AT', 'LastKnownLoginAt', 'TIMESTAMP', false, null);
+
+		$tMap->addColumn('QUOTA_PERCENTAGE', 'QuotaPercentage', 'INTEGER', false, null);
+
 		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'TIMESTAMP', false, null);
 
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null);
