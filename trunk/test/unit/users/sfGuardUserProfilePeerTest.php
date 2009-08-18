@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(28, new lime_output_color());
+$t = new lime_test(27, new lime_output_color());
 
 $t->diag('::importFromCSVFile()');
 $checks=sfGuardUserProfilePeer::importFromCSVFile('data/example_uploads/users.csv');
@@ -49,14 +49,6 @@ foreach(array(
 	$t->is($found, false, sprintf('not imported (%s)', $value));
 }
 
-$all_active=true;
-
-foreach($profiles as $profile)
-{
-	$all_active=$all_active&&$profile->getSfGuardUser()->getIsActive();
-}
-
-$t->is($all_active, true, 'by default, user are always created as active users');
 
 foreach(array(
 	'alice.alessandrini'=>'allievi',

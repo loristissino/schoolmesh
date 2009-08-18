@@ -21,6 +21,7 @@
   <div class="alert"><?php echo $current_user->getSystemAlerts()?></div>
 <?php endif; ?>
 
+<?php /*
 <pre>
 <?php
 
@@ -33,7 +34,7 @@
 		}
 ?>
 </pre>
-
+*/ ?>
 
 <form action="<?php echo url_for('users/edit?id='. $current_user->getSfGuardUser()->getId()) ?>" method="post">
 
@@ -68,23 +69,12 @@
 		<?php endif ?>
 	<?php endif ?>
   </table>
-
+<?php /*
 <h2><?php echo __('Disk usage') ?></h2>
-
 <?php include_partial('quotas', array('current_user'=>$current_user)) ?>
-
-<h2><?php echo __('Credentials') ?></h2>
-
-<?php include_partial('credentials', array('current_user'=>$current_user)) ?>
-
-<h2><?php echo __('Teams') ?></h2>
-
-<?php include_partial('teams', array('current_user'=>$current_user)) ?>
-
 <h2><?php echo __('Google Apps account') ?></h2>
-
 <?php include_partial('googleapps', array('current_user'=>$current_user)) ?>
-
+*/ ?>
 
 <h2><?php echo __('Accounts') ?></h2>
 
@@ -94,8 +84,11 @@
       <th class="sf_admin_text"><?php echo __('Name') ?></th>
       <th class="sf_admin_text"><?php echo __('Credential') ?></th>
       <th class="sf_admin_text"><?php echo __('Account') ?></th>
-      <th class="sf_admin_text"><?php echo __('Info') ?></th>
-      <th class="sf_admin_text"><?php echo __('Settings') ?></th>
+      <th class="sf_admin_text"><?php echo __('Really exists?') ?></th>
+      <th class="sf_admin_text"><?php echo __('Is locked?') ?></th>
+      <th class="sf_admin_text"><?php echo __('Last sync') ?></th>
+      <th class="sf_admin_text"><?php echo __('Last known login') ?></th>
+      <th class="sf_admin_text"><?php echo __('Quota') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
@@ -109,6 +102,65 @@
 		<td>
 			<?php echo $current_user->hasAccountOfType($available_account)?__('yes'):__('no') ?>
 		</td>
+		<?php if($current_user->hasAccountOfType($available_account)): ?>
+		<?php $account=$current_user->getAccountByType($available_account) ?>
+		<td>
+			<?php echo $account->getExists()?__('yes'):__('no') ?>
+		</td>
+		<td>
+			<?php echo $account->getIsLocked()?__('yes'):__('no') ?>
+		</td>
+		<td>
+			<?php echo Generic::datetime($account->getInfoUpdatedAt('U'), $sf_context) ?>
+		</td>
+		<td>
+			<?php echo Generic::datetime($account->getLastKnownLoginAt('U'), $sf_context) ?>
+		</td>
+		<td>
+			<?php echo $account->getQuotaPercentage() ? $account->getQuotaPercentage() . '%':'' ?>
+		</td>
+		<?php else: ?>
+		<td colspan="5"></td>
+		<?php endif ?>
+		<td>
+			<ul class="sf_admin_td_actions">
+				<?php if ($current_user->hasAccountOfType($available_account)): ?>
+				<li class="sf_admin_action_edit">
+					<?php echo link_to(
+				__('Edit'),
+				'users/editaccount?id='.$account->getId(),
+				array('title'=>__('Edit information about this account'))
+				)?>
+				</li>
+				<?php endif ?>
+			</ul>
+		</td>
+	</tr>
+	<?php endforeach ?>
+	</tbody>
+	</table>
+	
+<h2><?php echo __('Teams') ?></h2>
+
+<?php include_partial('teams', array('current_user'=>$current_user)) ?>
+
+<h2><?php echo __('Credentials') ?></h2>
+
+<?php include_partial('credentials', array('current_user'=>$current_user)) ?>
+
+
+
+<h2><?php echo __('Actions') ?></h2>
+
+	<ul class="sf_admin_actions">
+	<li class="sf_admin_action_userchecks">
+		<?php echo link_to(__('Run user checks'), url_for('users/runuserchecks?id=' . $current_user->getUserId())) ?>
+	</li><br />
+	</ul>
+
+
+
+<?php /*
 		<td>
 			<?php if ($current_user->hasAccountOfType($available_account)): ?>
 				<?php $info=unserialize(Generic::decode($current_user->getAccountByType($available_account)->getInfo())); ?>
@@ -135,22 +187,4 @@
 				</table>
 			<?php endif ?>
 		</td>
-		<td>
-		</td>
-	</tr>
-	<?php endforeach ?>
-	</tbody>
-	</table>
-	
-
-
-
-<h2><?php echo __('Actions') ?></h2>
-
-	<ul class="sf_admin_actions">
-	<li class="sf_admin_action_userchecks">
-		<?php echo link_to(__('Run user checks'), url_for('users/runuserchecks?id=' . $current_user->getUserId())) ?>
-	</li><br />
-	</ul>
-
-
+*/?>

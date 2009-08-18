@@ -6,6 +6,7 @@ $t = new lime_test(75, new lime_output_color());
 
 $loris_permissions=array(
 	'backadmin',
+	'login',
 	'admin',
 	'planning',
 	'internet',

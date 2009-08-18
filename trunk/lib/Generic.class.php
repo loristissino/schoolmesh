@@ -35,6 +35,11 @@ class Generic{
 	public static function datetime($date, $context=null)
 		{
 			
+			if ($date===null)
+			{
+				return null;
+			}
+			
 			$datebegin= self::int_int_divide($date, 86400)*86400;
 			
 			$difference = time() - $datebegin; 

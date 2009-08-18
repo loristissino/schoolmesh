@@ -42,3 +42,7 @@
 		<?php endforeach ?>
 		</div>
 <?php endforeach ?>
+
+<h2><?php echo __('Actions') ?></h2>
+
+<p><a href="<?php echo $sf_request->getReferer() ?>">Back</a></p>

@@ -25,6 +25,24 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 	protected $settings;
 
 	
+	protected $exists;
+
+	
+	protected $is_locked;
+
+	
+	protected $temporary_password;
+
+	
+	protected $info_updated_at;
+
+	
+	protected $last_known_login_at;
+
+	
+	protected $quota_percentage;
+
+	
 	protected $updated_at;
 
 	
@@ -82,6 +100,84 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 	public function getSettings()
 	{
 		return $this->settings;
+	}
+
+	
+	public function getExists()
+	{
+		return $this->exists;
+	}
+
+	
+	public function getIsLocked()
+	{
+		return $this->is_locked;
+	}
+
+	
+	public function getTemporaryPassword()
+	{
+		return $this->temporary_password;
+	}
+
+	
+	public function getInfoUpdatedAt($format = 'Y-m-d H:i:s')
+	{
+		if ($this->info_updated_at === null) {
+			return null;
+		}
+
+
+		if ($this->info_updated_at === '0000-00-00 00:00:00') {
+									return null;
+		} else {
+			try {
+				$dt = new DateTime($this->info_updated_at);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->info_updated_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+						return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
+	}
+
+	
+	public function getLastKnownLoginAt($format = 'Y-m-d H:i:s')
+	{
+		if ($this->last_known_login_at === null) {
+			return null;
+		}
+
+
+		if ($this->last_known_login_at === '0000-00-00 00:00:00') {
+									return null;
+		} else {
+			try {
+				$dt = new DateTime($this->last_known_login_at);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->last_known_login_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+						return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
+	}
+
+	
+	public function getQuotaPercentage()
+	{
+		return $this->quota_percentage;
 	}
 
 	
@@ -217,6 +313,126 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setExists($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->exists !== $v) {
+			$this->exists = $v;
+			$this->modifiedColumns[] = AccountPeer::EXISTS;
+		}
+
+		return $this;
+	} 
+	
+	public function setIsLocked($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_locked !== $v) {
+			$this->is_locked = $v;
+			$this->modifiedColumns[] = AccountPeer::IS_LOCKED;
+		}
+
+		return $this;
+	} 
+	
+	public function setTemporaryPassword($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->temporary_password !== $v) {
+			$this->temporary_password = $v;
+			$this->modifiedColumns[] = AccountPeer::TEMPORARY_PASSWORD;
+		}
+
+		return $this;
+	} 
+	
+	public function setInfoUpdatedAt($v)
+	{
+						if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+									try {
+				if (is_numeric($v)) { 					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+															$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->info_updated_at !== null || $dt !== null ) {
+			
+			$currNorm = ($this->info_updated_at !== null && $tmpDt = new DateTime($this->info_updated_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) 					)
+			{
+				$this->info_updated_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = AccountPeer::INFO_UPDATED_AT;
+			}
+		} 
+		return $this;
+	} 
+	
+	public function setLastKnownLoginAt($v)
+	{
+						if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+									try {
+				if (is_numeric($v)) { 					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+															$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->last_known_login_at !== null || $dt !== null ) {
+			
+			$currNorm = ($this->last_known_login_at !== null && $tmpDt = new DateTime($this->last_known_login_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) 					)
+			{
+				$this->last_known_login_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = AccountPeer::LAST_KNOWN_LOGIN_AT;
+			}
+		} 
+		return $this;
+	} 
+	
+	public function setQuotaPercentage($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->quota_percentage !== $v) {
+			$this->quota_percentage = $v;
+			$this->modifiedColumns[] = AccountPeer::QUOTA_PERCENTAGE;
+		}
+
+		return $this;
+	} 
+	
 	public function setUpdatedAt($v)
 	{
 						if ($v === null || $v === '') {
@@ -299,8 +515,14 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 			$this->account_type_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->info = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->settings = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->updated_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->created_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->exists = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
+			$this->is_locked = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
+			$this->temporary_password = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->info_updated_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->last_known_login_at = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->quota_percentage = ($row[$startcol + 10] !== null) ? (int) $row[$startcol + 10] : null;
+			$this->updated_at = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->created_at = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -309,7 +531,7 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 7; 
+						return $startcol + 13; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Account object", $e);
 		}
@@ -537,9 +759,27 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 				return $this->getSettings();
 				break;
 			case 5:
-				return $this->getUpdatedAt();
+				return $this->getExists();
 				break;
 			case 6:
+				return $this->getIsLocked();
+				break;
+			case 7:
+				return $this->getTemporaryPassword();
+				break;
+			case 8:
+				return $this->getInfoUpdatedAt();
+				break;
+			case 9:
+				return $this->getLastKnownLoginAt();
+				break;
+			case 10:
+				return $this->getQuotaPercentage();
+				break;
+			case 11:
+				return $this->getUpdatedAt();
+				break;
+			case 12:
 				return $this->getCreatedAt();
 				break;
 			default:
@@ -557,8 +797,14 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 			$keys[2] => $this->getAccountTypeId(),
 			$keys[3] => $this->getInfo(),
 			$keys[4] => $this->getSettings(),
-			$keys[5] => $this->getUpdatedAt(),
-			$keys[6] => $this->getCreatedAt(),
+			$keys[5] => $this->getExists(),
+			$keys[6] => $this->getIsLocked(),
+			$keys[7] => $this->getTemporaryPassword(),
+			$keys[8] => $this->getInfoUpdatedAt(),
+			$keys[9] => $this->getLastKnownLoginAt(),
+			$keys[10] => $this->getQuotaPercentage(),
+			$keys[11] => $this->getUpdatedAt(),
+			$keys[12] => $this->getCreatedAt(),
 		);
 		return $result;
 	}
@@ -590,9 +836,27 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 				$this->setSettings($value);
 				break;
 			case 5:
-				$this->setUpdatedAt($value);
+				$this->setExists($value);
 				break;
 			case 6:
+				$this->setIsLocked($value);
+				break;
+			case 7:
+				$this->setTemporaryPassword($value);
+				break;
+			case 8:
+				$this->setInfoUpdatedAt($value);
+				break;
+			case 9:
+				$this->setLastKnownLoginAt($value);
+				break;
+			case 10:
+				$this->setQuotaPercentage($value);
+				break;
+			case 11:
+				$this->setUpdatedAt($value);
+				break;
+			case 12:
 				$this->setCreatedAt($value);
 				break;
 		} 	}
@@ -607,8 +871,14 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setAccountTypeId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setInfo($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setSettings($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setUpdatedAt($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
+		if (array_key_exists($keys[5], $arr)) $this->setExists($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setIsLocked($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setTemporaryPassword($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setInfoUpdatedAt($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setLastKnownLoginAt($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setQuotaPercentage($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setUpdatedAt($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setCreatedAt($arr[$keys[12]]);
 	}
 
 	
@@ -621,6 +891,12 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(AccountPeer::ACCOUNT_TYPE_ID)) $criteria->add(AccountPeer::ACCOUNT_TYPE_ID, $this->account_type_id);
 		if ($this->isColumnModified(AccountPeer::INFO)) $criteria->add(AccountPeer::INFO, $this->info);
 		if ($this->isColumnModified(AccountPeer::SETTINGS)) $criteria->add(AccountPeer::SETTINGS, $this->settings);
+		if ($this->isColumnModified(AccountPeer::EXISTS)) $criteria->add(AccountPeer::EXISTS, $this->exists);
+		if ($this->isColumnModified(AccountPeer::IS_LOCKED)) $criteria->add(AccountPeer::IS_LOCKED, $this->is_locked);
+		if ($this->isColumnModified(AccountPeer::TEMPORARY_PASSWORD)) $criteria->add(AccountPeer::TEMPORARY_PASSWORD, $this->temporary_password);
+		if ($this->isColumnModified(AccountPeer::INFO_UPDATED_AT)) $criteria->add(AccountPeer::INFO_UPDATED_AT, $this->info_updated_at);
+		if ($this->isColumnModified(AccountPeer::LAST_KNOWN_LOGIN_AT)) $criteria->add(AccountPeer::LAST_KNOWN_LOGIN_AT, $this->last_known_login_at);
+		if ($this->isColumnModified(AccountPeer::QUOTA_PERCENTAGE)) $criteria->add(AccountPeer::QUOTA_PERCENTAGE, $this->quota_percentage);
 		if ($this->isColumnModified(AccountPeer::UPDATED_AT)) $criteria->add(AccountPeer::UPDATED_AT, $this->updated_at);
 		if ($this->isColumnModified(AccountPeer::CREATED_AT)) $criteria->add(AccountPeer::CREATED_AT, $this->created_at);
 
@@ -660,6 +936,18 @@ abstract class BaseAccount extends BaseObject  implements Persistent {
 		$copyObj->setInfo($this->info);
 
 		$copyObj->setSettings($this->settings);
+
+		$copyObj->setExists($this->exists);
+
+		$copyObj->setIsLocked($this->is_locked);
+
+		$copyObj->setTemporaryPassword($this->temporary_password);
+
+		$copyObj->setInfoUpdatedAt($this->info_updated_at);
+
+		$copyObj->setLastKnownLoginAt($this->last_known_login_at);
+
+		$copyObj->setQuotaPercentage($this->quota_percentage);
 
 		$copyObj->setUpdatedAt($this->updated_at);
 

@@ -7,18 +7,20 @@ if [ $# -eq 0 ]
 	fi
 
 USERNAME=$1
-HOMEDIR=$2
-GROUP=$3
-FULLNAME=$4
-BASEFOLDER=$5
+GROUP=$2
+FULLNAME=$3
 
-if [ ! -d "$HOMEDIR" ] ; then
-	echo "Not a directory: $HOMEDIR"
+source /var/schoolmesh/config/schoolmesh.ini
+
+if [ ! -d "$POSIX_HOMEDIR" ] ; then
+	echo "Not a directory: $POSIX_HOMEDIR"
 	exit 2
 fi
 
-if [ -e "$HOMEDIR/$USERNAME" ] ; then
-	echo "File exists: $HOMEDIR/$USERNAME"
+COMPLETEDIR="$POSIX_HOMEDIR/$USERNAME"
+
+if [ -e "$COMPLETEDIR" ] ; then
+	echo "File exists: $COMPLETEDIR"
 	exit 3
 fi
 
@@ -41,18 +43,22 @@ if [ -z "$FULLNAME" ] ; then
 	exit 7
 fi
 
-if [ -z "$BASEFOLDER" ] ; then
+if [ -z "$POSIX_BASEFOLDER" ] ; then
 	echo "Missing basefolder"
 	exit 8
 fi
 
-sudo useradd -d "$HOMEDIR/$USERNAME" -g $GROUP -c "$FULLNAME" $USERNAME -s /bin/false && echo "added user $USERNAME"
-sudo mkdir -v "$HOMEDIR/$USERNAME"
-sudo chown -v $USERNAME:root "$HOMEDIR/$USERNAME"
-sudo chmod -v 711 "$HOMEDIR/$USERNAME"
-sudo mkdir -v "$HOMEDIR/$USERNAME/$BASEFOLDER"
-sudo chown -v root:root "$HOMEDIR/$USERNAME/$BASEFOLDER"
-sudo chmod -v 755 "$HOMEDIR/$USERNAME/$BASEFOLDER"
-sudo chattr +i "$HOMEDIR/$USERNAME/$BASEFOLDER"
+BASEFOLDER="$COMPLETEDIR/$POSIX_BASEFOLDER"
+
+sudo useradd -d "$COMPLETEDIR" -g $GROUP -c "$FULLNAME" $USERNAME -s /bin/false && echo "added user $USERNAME" || exit 20
+sudo mkdir -v "$COMPLETEDIR" || exit 20
+sudo chown -v $USERNAME:root "$COMPLETEDIR"  || exit 20
+sudo chmod -v 711 "$COMPLETEDIR" || exit 20
+sudo mkdir -v "$BASEFOLDER" || exit 20
+sudo chown -v root:root "$BASEFOLDER" || exit 20
+sudo chmod -v 755 "$BASEFOLDER" || exit 20
+sudo chattr +i "$BASEFOLDER" || exit 20
+
+exit 0
 
 

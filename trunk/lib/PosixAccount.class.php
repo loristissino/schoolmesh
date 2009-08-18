@@ -3,20 +3,61 @@
 class PosixAccount extends Account
 {
 	
+	protected $config;
+	
 	function __construct()
 	{
-		$this->setAccountInfo('message', 'posix account');
 		$this->setAccountType(AccountTypePeer::retrieveByName('posix'));
+		
+//		$config=parse_ini_file('/var/schoolmesh/config/schoolmesh.ini');
+//		print_r($config);
+		// It would be better not to have it hardcoded here, but I am not sure where to set the location...
 	}
 	
+/**
+   * Makes somehow a query to the real world, updating all relevant fields.
+   * This function may store information with the setAccountInfo() function.
+   * It must take care of updating the info_updated_at field when updating data.
+   * Also, if relevant, it must calculate the quota_percentage field.
+   *
+   * @return self
+   */
 	public function updateInfoFromRealWorld()
 	{
 		$info=Generic::executeCommand(sprintf('posixaccount_getinfo %s %s', $this->getUsername(), sfConfig::get('app_config_posix_basefolder')));
+		
+		// first, we retrieve the values...
 		foreach($info as $key=>$value)
 		{
 			$this->setAccountInfo($key, $value);
 		}
-//		$this->save();
+		// second, we copy them in the settings if they are empty (but only editable ones)
+		foreach(array(
+			'soft_blocks_quota',
+			'hard_blocks_quota',
+			'soft_files_quota',
+			'hard_files_quota',
+		) as $key)
+		{
+			if(!$this->getAccountSetting($key))
+			{
+				$this->setAccountSetting($key, $this->getAccountInfo($key));
+			}
+		}
+		$this->setInfoUpdatedAt(time());
+		
+		if ($this->getAccountInfo('soft_blocks_quota')>0)
+		{
+			$this->setQuotaPercentage(100 * $this->getAccountInfo('used_blocks')/$this->getAccountInfo('soft_blocks_quota'));
+		}
+		else
+		{
+			$this->setQuotaPercentage(null);
+		}
+
+		$this->setExists($this->getAccountInfo('found')==1);
+		$this->setIsLocked(null);
+		
 		return $this;
 	}
 
@@ -35,13 +76,12 @@ class PosixAccount extends Account
 		if ($this->getAccountInfo('found')==0)
 		{
 			$checkList->addCheck(new Check(Check::FAILED, 'posix: account not found', $checkGroup, array(
-				'command'=>sprintf('schoolmesh_posixaccount_create %s "%s" %s "%s" "%s"',
+				'command'=>sprintf('schoolmesh_posixaccount_create %s %s "%s"',
 					$this->getUsername(),
-					sfConfig::get('app_config_posix_homedir'),
 					$role->getPosixName(),
-					$this->getProfile()->getFullName(),
-					sfConfig::get('app_config_posix_basefolder'))
+					$this->getProfile()->getFullName())
 				)));
+			$this->save();
 			return $this;
 		}
 
@@ -75,7 +115,8 @@ class PosixAccount extends Account
 				'field'=>'gecos',
 				'match'=>$this->getProfile()->getFullName(),
 				'true'=>'full name is ok',
-				'false'=>'full name does not match'
+				'false'=>'full name does not match',
+				'command'=>sprintf('schoolmesh_posixaccount_changefullname %s "%s"', $this->getUsername(), $this->getProfile()->getFullName()),
 				),
 			array(
 				'field'=>'homedir_user',
@@ -147,14 +188,50 @@ class PosixAccount extends Account
 				}
 				else
 				{
-					$checkList->addCheck(new Check(Check::WARNING, 'posix: '. $check['false'] . sprintf(' (got «%s», expected «%s»)', $this->getAccountInfo($check['field']), $check['match']), $checkGroup));
+					$checkList->addCheck(new Check(Check::WARNING, 'posix: '. $check['false'] . sprintf(' (got «%s», expected «%s»)', $this->getAccountInfo($check['field']), $check['match']), $checkGroup, 
+					
+					isset($check['command'])? array('command'=>$check['command']) : array()
+					
+					));
 				}
 			}
 
-//		$checkList->addCheck(new Check(Check::PASSED, 'posix: ok1 - '. $this->getUsername(), $this->getUsername()));
-
 		$this->save();
 		return $this;
+	}
+
+
+	public function setFormDefaults(&$form)
+	{
+		if (! $form instanceof PosixAccountForm)
+		{
+			throw new Exception('The form must be a PosixAccountForm instance');
+		}
+
+ob_start();
+
+echo "setting default values...\n";
+echo 'sta get ... ' . $this->getAccountInfo('soft_blocks_quota') . "\n";
+
+print_r($this->getInfo());
+
+print_r($this->_info);
+
+
+fwrite(fopen('lorislog.txt', 'a'), ob_get_contents());fclose($f);ob_end_clean();
+
+
+	$form->setDefaults(
+		array(
+			'id' => $this->getId(),
+			'used_files' => $this->getAccountInfo('used_files'),
+			'used_blocks' => $this->getAccountInfo('used_blocks'),
+			'soft_blocks_quota' => $this->getAccountSetting('soft_blocks_quota'),
+			'hard_blocks_quota' => $this->getAccountSetting('hard_blocks_quota'),
+			'soft_files_quota' => $this->getAccountSetting('soft_files_quota'),
+			'hard_files_quota' => $this->getAccountSetting('hard_files_quota'),
+			)
+		);
 	}
 
 }

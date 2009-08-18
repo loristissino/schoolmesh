@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(19, new lime_output_color());
+$t = new lime_test(20, new lime_output_color());
 
 $t->comment('Sample user');
 
@@ -62,7 +62,7 @@ $availablePermissions=array('posix', 'samba');
 
 $profile->checkAccounts($availablePermissions, $checkList);
 
-$t->is(sizeof($checkList->getAllChecks()), 5, 'ok');
+$t->is(sizeof($checkList->getAllChecks()), 17, 'ok');
 
 $posixAccount=$profile->getAccountByType('posix');
 
@@ -77,6 +77,7 @@ $t->is($posixAccount->getAccountSetting('foo'), 'bar', 'settings result correctl
 $t->is($posixAccount->getAccountSetting('oof'), 123, 'works with numbers');
 $t->is($posixAccount->getAccountSetting('bar'), null, 'if a setting is not set, we get null');
 
+$t->is($posixAccount->getUsername(), 'helen.abram', '->getUsername() retrieves the correct username');
 
 /*unset($posixAccount);
 $posixAccount=$profile->getAccountByType('posix');

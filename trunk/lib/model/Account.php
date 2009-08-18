@@ -28,6 +28,11 @@ class Account extends BaseAccount
 		}
 	}
 	
+	public function __toString()
+	{
+		return sprintf('Account «%s»', $this->getAccountType()->getName());
+	}
+	
 	public function getUsername()
 	{
 		$c=new Criteria();
@@ -59,7 +64,7 @@ class Account extends BaseAccount
 
     public function getAccountInfo($key)
 	{
-		if (@array_key_exists($key, $this->_info))
+		if (array_key_exists($key, $this->_info))
 		{
 			return $this->_info[$key];
 		}
@@ -122,11 +127,22 @@ class Account extends BaseAccount
 			$realAccount->$key = $value;
 		}
 		
+		$realAccount->_info=unserialize($this->getInfo()); // We need it!!
+		$realAccount->_settings=unserialize($this->getSettings()); // We need it!!
+		
 		$realAccount->setNew(false);
 		
 		return $realAccount;
 	}
 	
+/**
+   * Makes somehow a query to the real world, updating all relevant fields.
+   * This function may store information with the setAccountInfo() function.
+   * It must take care of updating the info_updated_at field when updating data.
+   * Also, if relevant, it must calculate the quota_percentage field.
+   *
+   * @return self
+   */
 	public function updateInfoFromRealWorld()
 	{
 		throw new Exception(sprintf('This function must be implemented in the derived class «%s»', $this->getAccountType()));
@@ -148,5 +164,26 @@ class Account extends BaseAccount
 	{
 		return '';
 	}
+	
+  /**
+   * Creates the External account
+   *
+   * @return Boolean true if the account was created, false otherwise
+   */
+  public function createAccount()
+	{
+		return false;
+	}
+	
+  /**
+   * Informs about whether the account can be definitely removed
+   *
+   * @return Boolean|String true if the account can be definitely removed, a string with the explanation of the reason otherwise
+   */
+  public function getIsDeletable()
+	{
+		return false;
+	}
+
 	
 }
