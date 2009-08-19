@@ -10,12 +10,13 @@ if [ $# -eq 0 ]
 CONFIG_READ=1
 POSIX_HOMEDIR=/home/testhome
 POSIX_BASEFOLDER=Mattiussi
+POSIX_BASEFOLDER_OWNER=root:root
 
 # DO NET EDIT PASS THIS LINE
 
 function checkUsername()
 {
-getent passwd $1 > /dev/null
+getent passwd "$1" > /dev/null
 
 if [ $? -ne 0 ] ; then
 	echo "Not a user: $1"
@@ -23,11 +24,23 @@ if [ $? -ne 0 ] ; then
 fi	
 }
 
-function checkString()
+function checkNotUsername()
 {
-if [ -z $1 ] ; then
-	echo "Not a valid string: $1"
+getent passwd "$1" > /dev/null
+
+if [ $? -eq 0 ] ; then
+	echo "Already a user: $1"
 	exit 2
+fi	
+}
+
+function checkGroup()
+{
+getent group "$GROUP" > /dev/null
+
+if [ $? -ne 0 ] ; then
+	echo "Not a group: $GROUP"
+	exit 3
 fi
 }
 
@@ -38,5 +51,31 @@ if [ $(grep -c "^$1\$" /etc/shells) -ne 1 ] ; then
 	exit 7
 fi
 }
+
+function checkString()
+{
+if [ -z "$1" ] ; then
+	echo "Not a valid string: $1"
+	exit 11
+fi
+}
+
+
+function checkDirectory()
+{
+if [ ! -d "$1" ] ; then
+	echo "Not a directory: $1"
+	exit 12
+fi
+}
+
+function checkNotFile()
+{
+if [ -e "$1" ] ; then
+	echo "File exists: $1"
+	exit 13
+fi
+}
+
 
 

@@ -8,53 +8,19 @@ USERNAME=$1
 GROUP=$2
 FULLNAME=$3
 
-if [ ! -d "$POSIX_HOMEDIR" ] ; then
-	echo "Not a directory: $POSIX_HOMEDIR"
-	exit 2
-fi
+checkDirectory "$POSIX_HOMEDIR"
+checkNotUsername $USERNAME
 
-COMPLETEDIR="$POSIX_HOMEDIR/$USERNAME"
+HOMEDIR="$POSIX_HOMEDIR/$USERNAME"
 
-if [ -e "$COMPLETEDIR" ] ; then
-	echo "File exists: $COMPLETEDIR"
-	exit 3
-fi
-
-getent passwd $USERNAME > /dev/null
-
-if [ $? -eq 0 ] ; then
-	echo "Already a user: $USERNAME"
-	exit 5
-fi
-
-getent group $GROUP > /dev/null
-
-if [ $? -ne 0 ] ; then
-	echo "Not a group: $GROUP"
-	exit 6
-fi
-
-if [ -z "$FULLNAME" ] ; then
-	echo "Missing fullname"
-	exit 7
-fi
-
-if [ -z "$POSIX_BASEFOLDER" ] ; then
-	echo "Missing basefolder"
-	exit 8
-fi
+checkNotFile "$HOMEDIR"
+checkGroup "$GROUP"
+checkString "$FULLNAME"
+checkString "$POSIX_BASEFOLDER"
 
 BASEFOLDER="$COMPLETEDIR/$POSIX_BASEFOLDER"
 
-sudo useradd -d "$COMPLETEDIR" -g $GROUP -c "$FULLNAME" $USERNAME -s /bin/false && echo "added user $USERNAME" || exit 20
-sudo mkdir -v "$COMPLETEDIR" || exit 20
-sudo chown -v $USERNAME:root "$COMPLETEDIR"  || exit 20
-sudo chmod -v 711 "$COMPLETEDIR" || exit 20
-sudo mkdir -v "$BASEFOLDER" || exit 20
-sudo chown -v root:root "$BASEFOLDER" || exit 20
-sudo chmod -v 755 "$BASEFOLDER" || exit 20
-sudo chattr +i "$BASEFOLDER" || exit 20
-
-exit 0
-
+sudo useradd -d "$HOMEDIR" -g $GROUP -c "$FULLNAME" $USERNAME -s /bin/false && echo "added user $USERNAME" || exit 20
+schoolmesh_posixaccount_createhomedir $USERNAME
+schoolmesh_posixaccount_createbasefolder $USERNAME
 

@@ -25,6 +25,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	protected $may_be_main_role;
 
 	
+	protected $default_guardgroup;
+
+	
 	protected $collsfGuardUserProfiles;
 
 	
@@ -82,6 +85,12 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	public function getMayBeMainRole()
 	{
 		return $this->may_be_main_role;
+	}
+
+	
+	public function getDefaultGuardgroup()
+	{
+		return $this->default_guardgroup;
 	}
 
 	
@@ -155,6 +164,20 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setDefaultGuardgroup($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->default_guardgroup !== $v) {
+			$this->default_guardgroup = $v;
+			$this->modifiedColumns[] = RolePeer::DEFAULT_GUARDGROUP;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array())) {
@@ -173,6 +196,7 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			$this->quality_code = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->posix_name = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->may_be_main_role = ($row[$startcol + 4] !== null) ? (boolean) $row[$startcol + 4] : null;
+			$this->default_guardgroup = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -181,7 +205,7 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 5; 
+						return $startcol + 6; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Role object", $e);
 		}
@@ -399,6 +423,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			case 4:
 				return $this->getMayBeMainRole();
 				break;
+			case 5:
+				return $this->getDefaultGuardgroup();
+				break;
 			default:
 				return null;
 				break;
@@ -414,6 +441,7 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			$keys[2] => $this->getQualityCode(),
 			$keys[3] => $this->getPosixName(),
 			$keys[4] => $this->getMayBeMainRole(),
+			$keys[5] => $this->getDefaultGuardgroup(),
 		);
 		return $result;
 	}
@@ -444,6 +472,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			case 4:
 				$this->setMayBeMainRole($value);
 				break;
+			case 5:
+				$this->setDefaultGuardgroup($value);
+				break;
 		} 	}
 
 	
@@ -456,6 +487,7 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setQualityCode($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setPosixName($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setMayBeMainRole($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setDefaultGuardgroup($arr[$keys[5]]);
 	}
 
 	
@@ -468,6 +500,7 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RolePeer::QUALITY_CODE)) $criteria->add(RolePeer::QUALITY_CODE, $this->quality_code);
 		if ($this->isColumnModified(RolePeer::POSIX_NAME)) $criteria->add(RolePeer::POSIX_NAME, $this->posix_name);
 		if ($this->isColumnModified(RolePeer::MAY_BE_MAIN_ROLE)) $criteria->add(RolePeer::MAY_BE_MAIN_ROLE, $this->may_be_main_role);
+		if ($this->isColumnModified(RolePeer::DEFAULT_GUARDGROUP)) $criteria->add(RolePeer::DEFAULT_GUARDGROUP, $this->default_guardgroup);
 
 		return $criteria;
 	}
@@ -505,6 +538,8 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		$copyObj->setPosixName($this->posix_name);
 
 		$copyObj->setMayBeMainRole($this->may_be_main_role);
+
+		$copyObj->setDefaultGuardgroup($this->default_guardgroup);
 
 
 		if ($deepCopy) {

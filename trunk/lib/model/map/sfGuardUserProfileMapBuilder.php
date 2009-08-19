@@ -59,41 +59,7 @@ class sfGuardUserProfileMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('IMPORT_CODE', 'ImportCode', 'VARCHAR', false, 20);
 
-		$tMap->addColumn('POSIX_UID', 'PosixUid', 'INTEGER', false, null);
-
-		$tMap->addColumn('DISK_SET_SOFT_BLOCKS_QUOTA', 'DiskSetSoftBlocksQuota', 'INTEGER', false, null);
-
-		$tMap->addColumn('DISK_SET_HARD_BLOCKS_QUOTA', 'DiskSetHardBlocksQuota', 'INTEGER', false, null);
-
-		$tMap->addColumn('DISK_SET_SOFT_FILES_QUOTA', 'DiskSetSoftFilesQuota', 'INTEGER', false, null);
-
-		$tMap->addColumn('DISK_SET_HARD_FILES_QUOTA', 'DiskSetHardFilesQuota', 'INTEGER', false, null);
-
-		$tMap->addColumn('DISK_USED_BLOCKS', 'DiskUsedBlocks', 'INTEGER', false, null);
-
-		$tMap->addColumn('DISK_USED_FILES', 'DiskUsedFiles', 'INTEGER', false, null);
-
-		$tMap->addColumn('DISK_UPDATED_AT', 'DiskUpdatedAt', 'TIMESTAMP', false, null);
-
 		$tMap->addColumn('SYSTEM_ALERTS', 'SystemAlerts', 'VARCHAR', false, 255);
-
-		$tMap->addColumn('IS_SCHEDULED_FOR_DELETION', 'IsScheduledForDeletion', 'BOOLEAN', false, null);
-
-		$tMap->addColumn('GOOGLEAPPS_ACCOUNT_STATUS', 'GoogleappsAccountStatus', 'INTEGER', false, null);
-
-		$tMap->addColumn('GOOGLEAPPS_ACCOUNT_LASTLOGIN_AT', 'GoogleappsAccountLastloginAt', 'TIMESTAMP', false, null);
-
-		$tMap->addColumn('GOOGLEAPPS_ACCOUNT_APPROVED_AT', 'GoogleappsAccountApprovedAt', 'TIMESTAMP', false, null);
-
-		$tMap->addColumn('GOOGLEAPPS_ACCOUNT_TEMPORARY_PASSWORD', 'GoogleappsAccountTemporaryPassword', 'VARCHAR', false, 10);
-
-		$tMap->addColumn('MOODLE_ACCOUNT_STATUS', 'MoodleAccountStatus', 'INTEGER', false, null);
-
-		$tMap->addColumn('MOODLE_ACCOUNT_TEMPORARY_PASSWORD', 'MoodleAccountTemporaryPassword', 'VARCHAR', false, 10);
-
-		$tMap->addColumn('SYSTEM_ACCOUNT_STATUS', 'SystemAccountStatus', 'INTEGER', false, null);
-
-		$tMap->addColumn('SYSTEM_ACCOUNT_IS_LOCKED', 'SystemAccountIsLocked', 'BOOLEAN', false, null);
 
 	} 
 } 
