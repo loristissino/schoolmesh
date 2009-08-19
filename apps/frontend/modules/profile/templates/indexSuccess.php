@@ -37,9 +37,15 @@
 <?php if ($sf_user->hasCredential('admin')): ?>
 	<li class="sf_admin_action_users"><?php echo link_to(__('Manage users'), url_for('users')) ?></li><br />
 <?php endif ?>
+</ul>
+
+<h2><?php echo __('Accounts') ?></h2>
+
+<p>TODO</p>
+<?php /*
 <?php if ($sf_user->getProfile()->getGoogleappsAccountApprovedAt()): ?>
 	<li class="sf_admin_action_googleapps"><?php echo link_to(sprintf(__('Use Google Apps account «%s»'), sfConfig::get('app_config_googleapps_domain')), url_for('profile/googleapps')) ?></li><br />
 	<?php else: ?>
 	<li class="sf_admin_action_googleapps"><?php echo link_to(sprintf(__('Ask for a Google Apps account «%s»'), sfConfig::get('app_config_googleapps_domain')), url_for('profile/googleapps')) ?></li><br />
 <?php endif ?>
-</ul>
+*/ ?>

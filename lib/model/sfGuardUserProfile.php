@@ -161,7 +161,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 			else
 			{
-				$try='u'. date('U').rand(100000,900000);
+				$try='u'. date('U').rand(1000,9999).crc32($try);
 			}
 			
 				return array('username'=>$try, 'invented'=>true);

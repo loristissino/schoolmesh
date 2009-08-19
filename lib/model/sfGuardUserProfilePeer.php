@@ -217,6 +217,13 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 					->save();
 
 					$checks[]=new Check(true, sprintf('created user %s (%s)', $profile->getFullName(), $user->getUsername()), $checkgroup);
+				
+					if ($role->getDefaultGuardGroup())
+					{
+						$guardGroup=sfGuardGroupProfilePeer::retrieveGuardGroupByName($role->getDefaultGuardGroup());
+						$profile->addToGuardGroup($guardGroup);
+					}
+
 				}
 				else
 				{
@@ -264,11 +271,6 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 						break;
 					
 				}
-
-
-
-
-
 			}
 			
 			
