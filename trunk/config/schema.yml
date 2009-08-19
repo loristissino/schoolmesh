@@ -37,6 +37,7 @@ propel:
     birthplace:   varchar(50)
     import_code:  varchar(20)
     system_alerts: varchar(255)
+    is_scheduled_for_deletion: { type: boolean, default: false }
 #    posix_uid:    integer
 #    disk_set_soft_blocks_quota: { type: integer, default: 0 }
 #    disk_set_hard_blocks_quota: { type: integer, default: 0 }
@@ -45,7 +46,6 @@ propel:
 #    disk_used_blocks: { type: integer, default: 0 }
 #    disk_used_files: { type: integer, default: 0 }
 #    disk_updated_at: timestamp
-#    is_scheduled_for_deletion: { type: boolean, default: false }
 #    googleapps_account_status: integer
 #    googleapps_account_lastlogin_at: timestamp
 #    googleapps_account_approved_at: timestamp

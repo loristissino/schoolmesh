@@ -61,5 +61,7 @@ class sfGuardUserProfileMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('SYSTEM_ALERTS', 'SystemAlerts', 'VARCHAR', false, 255);
 
+		$tMap->addColumn('IS_SCHEDULED_FOR_DELETION', 'IsScheduledForDeletion', 'BOOLEAN', false, null);
+
 	} 
 } 

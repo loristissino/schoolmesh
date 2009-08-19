@@ -94,6 +94,7 @@ CREATE TABLE `sf_guard_user_profile`
 	`birthplace` VARCHAR(50),
 	`import_code` VARCHAR(20),
 	`system_alerts` VARCHAR(255),
+	`is_scheduled_for_deletion` TINYINT default 0,
 	PRIMARY KEY (`user_id`),
 	CONSTRAINT `sf_guard_user_profile_FK_1`
 		FOREIGN KEY (`user_id`)
