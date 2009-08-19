@@ -61,6 +61,11 @@ class Account extends BaseAccount
 		$this->_info[$key]=$value;
 		return $this;
 	}
+   public function resetInfo()
+	{
+		$this->_info=array();
+		return $this;
+	}
 
     public function getAccountInfo($key)
 	{
@@ -98,7 +103,10 @@ class Account extends BaseAccount
 
 	function getRealAccount()
 	{
-		switch($this->getAccountType()->getName())
+		
+		$type=ucfirst($this->getAccountType()->getName()). 'Account';		
+		$realAccount = new $type();
+/*		switch($this->getAccountType()->getName())
 		{
 			case 'posix':
 				$realAccount=new PosixAccount();
@@ -121,7 +129,7 @@ class Account extends BaseAccount
 			default:
 				throw new Exception ('not a valid account type given: ' . $this->getAccountType());
 		}
-		
+	*/	
 		foreach($this as $key=>$value)
 		{
 			$realAccount->$key = $value;

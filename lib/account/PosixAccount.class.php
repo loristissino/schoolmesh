@@ -24,6 +24,7 @@ class PosixAccount extends Account
    */
 	public function updateInfoFromRealWorld()
 	{
+		$this->resetInfo();
 		$info=Generic::executeCommand(sprintf('posixaccount_getinfo %s', $this->getUsername()));
 		
 		// first, we retrieve the values...
@@ -89,7 +90,7 @@ class PosixAccount extends Account
 		{
 			// we save the UID for future reference
 			$this->setAccountSetting('uid', $this->getAccountInfo('uid'));
-			$checkList->addCheck(new Check(Check::WARNING, 'posix: UID saved for future reference', $checkGroup));
+			$checkList->addCheck(new Check(Check::PASSED, 'posix: UID saved for future reference', $checkGroup));
 		}
 		else
 		{
@@ -110,6 +111,7 @@ class PosixAccount extends Account
 				'match'=>$role->getPosixName(),
 				'true'=>'group is ok',
 				'false'=>'group does not match',
+				'command'=>sprintf('schoolmesh_posixaccount_changegroup %s %s', $this->getUsername(), $role->getPosixName()),
 				),
 			array(
 				'field'=>'gecos',
@@ -119,28 +121,32 @@ class PosixAccount extends Account
 				'command'=>sprintf('schoolmesh_posixaccount_changefullname %s "%s"', $this->getUsername(), $this->getProfile()->getFullName()),
 				),
 			array(
+				'field'=>'homedir_found',
+				'match'=>'1',
+				'true'=>'homedir found',
+				'false'=>'homedir not found',
+				'command'=>sprintf('schoolmesh_posixaccount_createhomedir %s', $this->getUsername()),
+				),
+			array(
 				'field'=>'homedir_user',
 				'match'=>$this->getUsername(),
 				'true'=>sprintf('homedir is owned by «%s»', $this->getUsername()),
-				'false'=>'homedir is not owned by the user'
-				),
-			array(
-				'field'=>'homedir_filetype',
-				'match'=>'directory',
-				'true'=>'homedir exists and is a directory',
-				'false'=>'homedir does not exist or is not a directory'
+				'false'=>'homedir is not owned by the user',
+				'command'=>sprintf('schoolmesh_posixaccount_repairhomedir %s # (user)', $this->getUsername()),
 				),
 			array(
 				'field'=>'homedir_permissions',
 				'match'=>711,
 				'true'=>'homedir permissions are ok',
-				'false'=>'homedir permissions are not ok'
+				'false'=>'homedir permissions are not ok',
+				'command'=>sprintf('schoolmesh_posixaccount_repairhomedir %s # (permission)', $this->getUsername()),
 				),
 			array(
 				'field'=>'homedir_group',
 				'match'=>'root',
 				'true'=>'homedir group is root',
-				'false'=>'homedir group is not root'
+				'false'=>'homedir group is not root',
+				'command'=>sprintf('schoolmesh_posixaccount_repairhomedir %s # (group)', $this->getUsername()),
 				),
 			array(
 				'field'=>'shell',
@@ -154,30 +160,35 @@ class PosixAccount extends Account
 				'match'=>1,
 				'true'=>'basefolder was found',
 				'false'=>'basefolder was not found',
+				'command'=>sprintf('schoolmesh_posixaccount_createbasefolder %s', $this->getUsername()),
 				),
 			array(
 				'field'=>'basefolder_user',
 				'match'=>'root',
 				'true'=>'basefolder owner is ok',
 				'false'=>'basefolder owner is not ok',
+				'command'=>sprintf('schoolmesh_posixaccount_repairbasefolder %s # (user)', $this->getUsername()),
 				),
 			array(
 				'field'=>'basefolder_group',
 				'match'=>'root',
 				'true'=>'basefolder group is ok',
 				'false'=>'basefolder group is not ok',
+				'command'=>sprintf('schoolmesh_posixaccount_repairbasefolder %s # (group)', $this->getUsername()),
 				),
 			array(
 				'field'=>'basefolder_permissions',
 				'match'=>'755',
 				'true'=>'basefolder permissions are ok',
 				'false'=>'basefolder permissions are not ok',
+				'command'=>sprintf('schoolmesh_posixaccount_repairbasefolder %s # (permissions)', $this->getUsername()),
 				),
 			array(
-				'field'=>'basefolder_lsattr',
-				'match'=>'',
+				'field'=>'basefolder_attr',
+				'match'=>'----i--------------',
 				'true'=>'basefolder extended attributes are ok',
 				'false'=>'basefolder extended attributes are not ok',
+				'command'=>sprintf('schoolmesh_posixaccount_repairbasefolder %s # (attr)', $this->getUsername()),
 				),
 			);
 
@@ -208,18 +219,6 @@ class PosixAccount extends Account
 		{
 			throw new Exception('The form must be a PosixAccountForm instance');
 		}
-
-ob_start();
-
-echo "setting default values...\n";
-echo 'sta get ... ' . $this->getAccountInfo('soft_blocks_quota') . "\n";
-
-print_r($this->getInfo());
-
-print_r($this->_info);
-
-
-fwrite(fopen('lorislog.txt', 'a'), ob_get_contents());fclose($f);ob_end_clean();
 
 
 	$form->setDefaults(

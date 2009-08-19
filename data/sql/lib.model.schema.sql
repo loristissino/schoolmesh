@@ -93,24 +93,7 @@ CREATE TABLE `sf_guard_user_profile`
 	`birthdate` DATE,
 	`birthplace` VARCHAR(50),
 	`import_code` VARCHAR(20),
-	`posix_uid` INTEGER,
-	`disk_set_soft_blocks_quota` INTEGER default 0,
-	`disk_set_hard_blocks_quota` INTEGER default 0,
-	`disk_set_soft_files_quota` INTEGER default 0,
-	`disk_set_hard_files_quota` INTEGER default 0,
-	`disk_used_blocks` INTEGER default 0,
-	`disk_used_files` INTEGER default 0,
-	`disk_updated_at` DATETIME,
 	`system_alerts` VARCHAR(255),
-	`is_scheduled_for_deletion` TINYINT default 0,
-	`googleapps_account_status` INTEGER,
-	`googleapps_account_lastlogin_at` DATETIME,
-	`googleapps_account_approved_at` DATETIME,
-	`googleapps_account_temporary_password` VARCHAR(10),
-	`moodle_account_status` INTEGER,
-	`moodle_account_temporary_password` VARCHAR(10),
-	`system_account_status` INTEGER,
-	`system_account_is_locked` TINYINT,
 	PRIMARY KEY (`user_id`),
 	CONSTRAINT `sf_guard_user_profile_FK_1`
 		FOREIGN KEY (`user_id`)
@@ -306,6 +289,7 @@ CREATE TABLE `role`
 	`quality_code` VARCHAR(10),
 	`posix_name` VARCHAR(20),
 	`may_be_main_role` TINYINT,
+	`default_guardgroup` VARCHAR(20),
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 

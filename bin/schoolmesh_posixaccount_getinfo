@@ -35,7 +35,16 @@ if [[ $EXPIRE = "never" ]]
 fi
 
 HOMEDIR=$(echo $INFO | cut -d: -f6)
+
+if [[ ! -d "$HOMEDIR" ]]
+	then
+		echo homedir_found=0
+		exit 0
+fi
+
+echo homedir_found=1
 echo homedir=$HOMEDIR
+
 echo homedir_user=$(stat -c '%U' "$HOMEDIR")
 echo homedir_group=$(stat -c '%G' "$HOMEDIR")
 echo homedir_permissions=$(stat -c '%a' "$HOMEDIR")

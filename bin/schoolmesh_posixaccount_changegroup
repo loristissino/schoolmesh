@@ -1,0 +1,17 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+USERNAME=$1
+GROUP=$2
+
+checkUsername "$USERNAME"
+checkGroup "$GROUP"
+
+sudo usermod -g "$GROUP" "$USERNAME" && echo "changed group: user $USERNAME group $GROUP" && exit 0
+
+echo "Something wrong"
+
+exit 99

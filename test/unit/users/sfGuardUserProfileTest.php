@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(75, new lime_output_color());
+$t = new lime_test(72, new lime_output_color());
 
 $loris_permissions=array(
 	'backadmin',
@@ -133,17 +133,6 @@ $profile->addSystemAlert('foo', true);
 $t->is($profile->getSystemAlerts(), 'foo', 'the second param set to true makes the alert added');
 $profile->addSystemAlert('bar', true);
 $t->is($profile->getSystemAlerts(), 'foo - bar', 'the second system alert is concatenated to the first also when param2 is true');
-
-$t->diag('->addGoogleappsAccountAlerts()');
-
-//$profile->addGoogleappsAccountAlerts();
-$t->unlike($profile->getSystemAlerts(), '/googleapps account missing/', 'a new user does not have googleapps account activated');
-
-$profile->GoogleappsEnable();
-$t->like($profile->getGoogleappsAccountTemporaryPassword(), '/[0-9]*/', 'a password is set when an account is enabled');
-
-$profile->GoogleappsDisable();
-$t->is($profile->getGoogleappsAccountTemporaryPassword(), null, 'a password is unset when an account is disabled');
 
 $t->diag('->addToTeam()');
 

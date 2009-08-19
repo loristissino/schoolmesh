@@ -1,0 +1,18 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+	
+USERNAME=$1
+HOMEDIR="$POSIX_HOMEDIR/$USERNAME"
+BASEFOLDER="$HOMEDIR/$POSIX_BASEFOLDER"
+
+checkUsername $USERNAME
+checkDirectory "$HOMEDIR"
+
+sudo mkdir "$BASEFOLDER" && sudo chown $POSIX_BASEFOLDER_OWNER "$BASEFOLDER" && sudo chattr +i "$BASEFOLDER" && echo "created basefolder $USERNAME ($BASEFOLDER)"  && exit 0
+
+echo "Something wrong"
+exit 99
+

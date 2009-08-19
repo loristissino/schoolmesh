@@ -1,0 +1,16 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+	
+USERNAME=$1
+HOMEDIR="$POSIX_HOMEDIR/$USERNAME"
+
+checkUsername $USERNAME
+
+sudo mkdir "$HOMEDIR" && sudo chown $USERNAME "$HOMEDIR" && sudo chgrp root "$HOMEDIR" && sudo chmod 711 "$HOMEDIR" && echo "created homedir $USERNAME ($HOMEDIR)"  && exit 0
+
+echo "Something wrong"
+exit 99
+

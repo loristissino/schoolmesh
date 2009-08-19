@@ -43,5 +43,7 @@ class RoleMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('MAY_BE_MAIN_ROLE', 'MayBeMainRole', 'BOOLEAN', false, null);
 
+		$tMap->addColumn('DEFAULT_GUARDGROUP', 'DefaultGuardgroup', 'VARCHAR', false, 20);
+
 	} 
 } 
