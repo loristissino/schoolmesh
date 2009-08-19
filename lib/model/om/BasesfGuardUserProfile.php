@@ -52,6 +52,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $system_alerts;
 
 	
+	protected $is_scheduled_for_deletion;
+
+	
 	protected $asfGuardUser;
 
 	
@@ -74,6 +77,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	public function applyDefaultValues()
 	{
 		$this->email_state = 0;
+		$this->is_scheduled_for_deletion = false;
 	}
 
 	
@@ -179,6 +183,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	public function getSystemAlerts()
 	{
 		return $this->system_alerts;
+	}
+
+	
+	public function getIsScheduledForDeletion()
+	{
+		return $this->is_scheduled_for_deletion;
 	}
 
 	
@@ -404,13 +414,31 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		return $this;
 	} 
 	
+	public function setIsScheduledForDeletion($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_scheduled_for_deletion !== $v || $v === false) {
+			$this->is_scheduled_for_deletion = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
-						if (array_diff($this->modifiedColumns, array(sfGuardUserProfilePeer::EMAIL_STATE))) {
+						if (array_diff($this->modifiedColumns, array(sfGuardUserProfilePeer::EMAIL_STATE,sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION))) {
 				return false;
 			}
 
 			if ($this->email_state !== 0) {
+				return false;
+			}
+
+			if ($this->is_scheduled_for_deletion !== false) {
 				return false;
 			}
 
@@ -435,6 +463,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->birthplace = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
 			$this->import_code = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
 			$this->system_alerts = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
+			$this->is_scheduled_for_deletion = ($row[$startcol + 14] !== null) ? (boolean) $row[$startcol + 14] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -443,7 +472,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 14; 
+						return $startcol + 15; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating sfGuardUserProfile object", $e);
 		}
@@ -683,6 +712,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			case 13:
 				return $this->getSystemAlerts();
 				break;
+			case 14:
+				return $this->getIsScheduledForDeletion();
+				break;
 			default:
 				return null;
 				break;
@@ -707,6 +739,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$keys[11] => $this->getBirthplace(),
 			$keys[12] => $this->getImportCode(),
 			$keys[13] => $this->getSystemAlerts(),
+			$keys[14] => $this->getIsScheduledForDeletion(),
 		);
 		return $result;
 	}
@@ -764,6 +797,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			case 13:
 				$this->setSystemAlerts($value);
 				break;
+			case 14:
+				$this->setIsScheduledForDeletion($value);
+				break;
 		} 	}
 
 	
@@ -785,6 +821,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[11], $arr)) $this->setBirthplace($arr[$keys[11]]);
 		if (array_key_exists($keys[12], $arr)) $this->setImportCode($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setSystemAlerts($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setIsScheduledForDeletion($arr[$keys[14]]);
 	}
 
 	
@@ -806,6 +843,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::BIRTHPLACE)) $criteria->add(sfGuardUserProfilePeer::BIRTHPLACE, $this->birthplace);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::IMPORT_CODE)) $criteria->add(sfGuardUserProfilePeer::IMPORT_CODE, $this->import_code);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::SYSTEM_ALERTS)) $criteria->add(sfGuardUserProfilePeer::SYSTEM_ALERTS, $this->system_alerts);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION)) $criteria->add(sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION, $this->is_scheduled_for_deletion);
 
 		return $criteria;
 	}
@@ -863,6 +901,8 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$copyObj->setImportCode($this->import_code);
 
 		$copyObj->setSystemAlerts($this->system_alerts);
+
+		$copyObj->setIsScheduledForDeletion($this->is_scheduled_for_deletion);
 
 
 		$copyObj->setNew(true);

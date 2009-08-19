@@ -32,7 +32,7 @@
 
   <?php endif; ?>
   </p>
-  
+  <?php /*
    <?php if(isset($current_user)): ?>
         <?php if ($current_user->getProfile()->getDiskSetHardBlocksQuota()>0): ?>
 
@@ -43,11 +43,11 @@
                     <?php echo image_tag('tick', array('alt'=>__('passed'))) ?>
                 <?php endif; ?>
     
-                <?php echo __("You are using %percentage%% of your assigned disk space.", array('%percentage%'=>100*$current_user->getProfile()->getDiskUsedBlocks()/$current_user->getProfile()->getDiskSetHardBlocksQuota())) ?>
-                <?php echo __("Last check was on %date%.", array('%date%'=>format_datetime($current_user->getProfile()->getDiskUpdatedAt()))) ?>
+                <?php //echo __("You are using %percentage%% of your assigned disk space.", array('%percentage%'=>100*$current_user->getProfile()->getDiskUsedBlocks()/$current_user->getProfile()->getDiskSetHardBlocksQuota())) ?>
+                <?php //echo __("Last check was on %date%.", array('%date%'=>format_datetime($current_user->getProfile()->getDiskUpdatedAt()))) ?>
             </p>
         <?php endif; ?>
     <?php endif; ?>
-
+*/ ?>
 
 </div>
