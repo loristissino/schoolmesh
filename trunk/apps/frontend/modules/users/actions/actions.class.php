@@ -406,7 +406,6 @@ class usersActions extends sfActions
 				}
 
 				$this->current_user
-				->setPosixUid($params['posix_uid'])
 				->setFirstName($params['first_name'])
 				->setMiddleName($params['middle_name'])
 				->setLastName($params['last_name'])
@@ -423,6 +422,13 @@ class usersActions extends sfActions
 				->getSfGuardUser()->setUsername($params['username'])
 				->setIsActive($params['is_active'])
 				->save();
+				
+				$role=RolePeer::retrieveByPK($params['main_role']);
+				if ($role->getDefaultGuardGroup())
+				{
+					$group=sfGuardGroupProfilePeer::retrieveGuardGroupByName($role->getDefaultGuardGroup());
+					$this->current_user->addToGuardGroup($group);
+				}
 
 /*
 				->setDiskSetSoftBlocksQuota($params['soft_blocks_quota'])
@@ -447,7 +453,6 @@ class usersActions extends sfActions
 	$this->userform->setDefaults(
 		array(
 			'id' => $this->current_user->getUserId(),
-			'posix_uid' => $this->current_user->getPosixUId(),
 			'username' => $this->current_user->getUsername(),
 			'is_active'=> $this->current_user->getsfGuardUser()->getIsActive(),
 			'old_username' => $this->current_user->getUsername(),

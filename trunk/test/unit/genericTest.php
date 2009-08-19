@@ -152,3 +152,19 @@ foreach(array(
 	$t->is(Generic::clever_ucwords('it', $key), $value, sprintf('«%s» correctly transformed into «%s»', $key, $value));
 }
 
+
+
+Generic::string2number('paolo');
+echo "\n";
+Generic::string2number('paolo');
+echo "\n";
+Generic::string2number('Paolo');
+echo "\n";
+Generic::string2number('Paola');
+echo "\n";
+Generic::string2number('paola');
+echo "\n";
+Generic::string2number('paoloo');
+echo "\n";
+Generic::string2number('polo');
+echo "\n";

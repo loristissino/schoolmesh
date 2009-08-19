@@ -181,5 +181,5 @@ class Generic{
 			return $info;
 		}
 		
-
+	
 	}

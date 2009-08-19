@@ -14,6 +14,7 @@ Role:
     quality_code: DOC
     posix_name:   docenti
     may_be_main_role: true
+    default_guardgroup: teacher
   ccc:
     description:  Coordinatore Consiglio di Classe
     quality_code: CCC
@@ -49,6 +50,7 @@ Role:
     quality_code: STU
     posix_name:   allievi
     may_be_main_role: true
+    default_guardgroup: student
   member:
     description: Componente
     quality_code: MEMBER
