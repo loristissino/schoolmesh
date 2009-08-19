@@ -1,0 +1,23 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+	
+USERNAME=$1
+SBQ=$2
+HBQ=$3
+SFQ=$4
+HFQ=$5
+
+checkUsername $USERNAME
+checkInteger $SBQ
+checkInteger $HBQ
+checkInteger $SFQ
+checkInteger $HFQ
+
+sudo setquota -u $USERNAME -a $SBQ $HBQ $SFQ $HFQ  &&  echo "quota set for user $USERNAME" && exit 0
+
+echo "Something wrong"
+exit 99
+

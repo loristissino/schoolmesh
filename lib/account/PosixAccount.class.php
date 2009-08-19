@@ -9,9 +9,6 @@ class PosixAccount extends Account
 	{
 		$this->setAccountType(AccountTypePeer::retrieveByName('posix'));
 		
-//		$config=parse_ini_file('/var/schoolmesh/config/schoolmesh.ini');
-//		print_r($config);
-		// It would be better not to have it hardcoded here, but I am not sure where to set the location...
 	}
 	
 /**
@@ -190,23 +187,21 @@ class PosixAccount extends Account
 				'false'=>'basefolder extended attributes are not ok',
 				'command'=>sprintf('schoolmesh_posixaccount_repairbasefolder %s # (attr)', $this->getUsername()),
 				),
+			array(
+				'field'=>array('soft_blocks_quota', 'hard_blocks_quota', 'soft_files_quota', 'hard_files_quota'),
+				'match'=>array(
+					$this->getAccountSetting('soft_blocks_quota'), $this->getAccountSetting('hard_blocks_quota'), $this->getAccountSetting('soft_files_quota'), $this->getAccountSetting('hard_files_quota'),
+					),
+				'true'=>'quota settings match',
+				'false'=>'quota settings do not match',
+				'command'=>sprintf('schoolmesh_posixaccount_setquota %s %d %d %d %d', $this->getUsername(),
+					$this->getAccountSetting('soft_blocks_quota'), $this->getAccountSetting('hard_blocks_quota'), $this->getAccountSetting('soft_files_quota'), $this->getAccountSetting('hard_files_quota')
+					),
+				),
 			);
 
-			foreach($checks as $check)
-			{
-				if ($this->getAccountInfo($check['field'])==$check['match'])
-				{
-					$checkList->addCheck(new Check(Check::PASSED, 'posix: '. $check['true'], $checkGroup));
-				}
-				else
-				{
-					$checkList->addCheck(new Check(Check::WARNING, 'posix: '. $check['false'] . sprintf(' (got «%s», expected «%s»)', $this->getAccountInfo($check['field']), $check['match']), $checkGroup, 
-					
-					isset($check['command'])? array('command'=>$check['command']) : array()
-					
-					));
-				}
-			}
+
+		$this->makeComparisons(&$checkList, $checks, $checkGroup);
 
 		$this->save();
 		return $this;
