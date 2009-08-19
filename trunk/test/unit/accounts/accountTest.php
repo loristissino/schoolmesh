@@ -62,7 +62,7 @@ $availablePermissions=array('posix', 'samba');
 
 $profile->checkAccounts($availablePermissions, $checkList);
 
-$t->is(sizeof($checkList->getAllChecks()), 17, 'ok');
+$t->is(sizeof($checkList->getAllChecks()), 18, 'ok');
 
 $posixAccount=$profile->getAccountByType('posix');
 

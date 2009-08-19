@@ -152,8 +152,7 @@ foreach(array(
 	$t->is(Generic::clever_ucwords('it', $key), $value, sprintf('«%s» correctly transformed into «%s»', $key, $value));
 }
 
-
-
+/*
 Generic::string2number('paolo');
 echo "\n";
 Generic::string2number('paolo');
@@ -167,4 +166,18 @@ echo "\n";
 Generic::string2number('paoloo');
 echo "\n";
 Generic::string2number('polo');
+echo "\n";
+*/
+
+$a=array(1, 2, 3);
+$b=array(1, '2', 3);
+
+
+echo "Sono uguali? " . ($a==$b) ? 'yeah': 'no' . "\n";
+
+print_r($a);
+print_r($b);
+
+print_r(array_diff($a, $b));
+
 echo "\n";

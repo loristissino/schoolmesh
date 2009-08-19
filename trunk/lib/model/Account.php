@@ -69,7 +69,7 @@ class Account extends BaseAccount
 
     public function getAccountInfo($key)
 	{
-		if (array_key_exists($key, $this->_info))
+		if (@array_key_exists($key, $this->_info))
 		{
 			return $this->_info[$key];
 		}
@@ -192,6 +192,67 @@ class Account extends BaseAccount
 	{
 		return false;
 	}
+
+
+	protected function makeComparisons(&$checkList, $checks, $checkGroup)
+	{
+			foreach($checks as $check)
+			{
+				
+				if (is_array($check['field']))
+				{
+					if (sizeof($check['field'])!=sizeof($check['match']))
+					{
+						throw new Exception ('The comparison arrays have not the same size.');
+					}
+					$test=true;
+					for($i=0; $i<sizeof($check['field']); $i++)
+					{
+						$test=$test && ($this->getAccountInfo($check['field'][$i])==$check['match'][$i]);
+					}
+				}
+				else
+				{
+					$test=$this->getAccountInfo($check['field'])==$check['match'];
+				}
+				
+				if ($test)
+				{
+					$checkList->addCheck(new Check(Check::PASSED, 'posix: '. $check['true'], $checkGroup));
+				}
+				else
+				{
+					
+					if (is_array($check['field']))
+					{
+						$got=array();
+						foreach($check['field'] as $field)
+						{
+							$got[]=$this->getAccountInfo($field);
+						}
+						$got=implode(', ', $got);
+						$expected=array();
+						foreach($check['match'] as $match)
+						{
+							$expected[]=$match;
+						}
+						$expected=implode(', ', $expected);
+					}
+					else
+					{
+						$got=$this->getAccountInfo($check['field']);
+						$expected=$check['match'];
+					}
+					
+					$checkList->addCheck(new Check(Check::WARNING, $this->getAccountType()->getName().  ': '. $check['false'] . sprintf(' (got «%s», expected «%s»)', $got, $expected), $checkGroup, 
+					
+					isset($check['command'])? array('command'=>$check['command']) : array()
+					
+					));
+				}
+			}
+		}
+
 
 	
 }
