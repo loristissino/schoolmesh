@@ -170,7 +170,7 @@ A questo scopo, la funzione _isDeletable()_ relativa ad ogni account "figlio" re
 
 || *account* || *casi in cui _isDeletable()_ restituisce _false_* || *suggerimenti per il sistemista* ||
 || _posix_ || sono presenti dei file dell'utente || tutti i file dell'utente devono essere rimossi o ne deve essere cambiato il proprietario ||
-|| _shell_ || l'utente dispone della credenziale _admin_ || eliminare la credenziale _admin_ per l'utente ||
+|| _shell_ || la shell è impostata a _/bin/false_ || impostare la shell a _/bin/false_ ||
 || _samba_ || ??? || ... ||
 || _ldapnfs_ || ??? || ... ||
 || _googleapps_ || esiste ancora l'account sul server di _Google Apps_ || rimuovere prima l'account sul server di _Google Apps_, oppure (se ad esempio lo si vuole mantenere per ex studenti) inserire l'account tra i `reserved_username` ||
