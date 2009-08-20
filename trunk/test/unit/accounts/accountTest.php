@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(20, new lime_output_color());
+$t = new lime_test(22, new lime_output_color());
 
 $t->comment('Sample user');
 
@@ -62,7 +62,11 @@ $availablePermissions=array('posix', 'samba');
 
 $profile->checkAccounts($availablePermissions, $checkList);
 
-$t->is(sizeof($checkList->getAllChecks()), 18, 'ok');
+$checks=$checkList->getAllChecks();
+
+$t->is(sizeof($checks), 17, 'all checks are correctly run');
+
+//print_r($checks);
 
 $posixAccount=$profile->getAccountByType('posix');
 
@@ -79,14 +83,16 @@ $t->is($posixAccount->getAccountSetting('bar'), null, 'if a setting is not set, 
 
 $t->is($posixAccount->getUsername(), 'helen.abram', '->getUsername() retrieves the correct username');
 
-/*unset($posixAccount);
+$user=sfGuardUserProfilePeer::retrieveByUsername('loris.tissino');
+$profile=$user->getProfile();
+
 $posixAccount=$profile->getAccountByType('posix');
 
-$posixAccount->updateInfoFromRealWorld();
-$t->is($posixAccount->getAccountSetting('foo'), 'bar', 'settings result correctly saved');
-$t->is($posixAccount->getAccountSetting('oof'), 123, 'works with numbers');
-$t->is($posixAccount->getAccountSetting('bar'), null, 'if a setting is not set, we get null');
+$t->comment('AccountPeer');
 
+$loginAccount=AccountPeer::retrieveByUserIdAndType($user->getId(), 'login');
+$t->isa_ok($loginAccount, LoginAccount, '::retrieveByUserIdAndType() retrieves the correct account');
 
-
-*/
+$t->comment('Account');
+$loginAccount=$posixAccount->getSiblingAccountByType('login');
+$t->isa_ok($loginAccount, LoginAccount, '->getSiblingAccountByType() retrieves the correct account');

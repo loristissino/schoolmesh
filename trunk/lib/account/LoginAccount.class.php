@@ -18,12 +18,17 @@ class LoginAccount extends Account
 		{
 			$this->setAccountInfo($key, $value);
 		}
+		$this->setInfoUpdatedAt(time());
+
+		$posixAccount=$this->getSiblingAccountByType('posix');
+
+		$this->setExists($posixAccount->getExists());
+		$this->setIsLocked($posixAccount->getIsLocked());
+		$this->setAccountInfo('shell', $posixAccount->getAccountInfo('shell'));
+		
 		// second, we copy them in the settings if they are empty (but only editable ones)
 		foreach(array(
-			'soft_blocks_quota',
-			'hard_blocks_quota',
-			'soft_files_quota',
-			'hard_files_quota',
+			'shell',
 		) as $key)
 		{
 			if(!$this->getAccountSetting($key))
@@ -31,20 +36,16 @@ class LoginAccount extends Account
 				$this->setAccountSetting($key, $this->getAccountInfo($key));
 			}
 		}
-		$this->setInfoUpdatedAt(time());
+
 		
-		if ($this->getAccountInfo('soft_blocks_quota')>0)
+		if($this->getAccountInfo('lastlogin_known')==1)
 		{
-			$this->setQuotaPercentage(100 * $this->getAccountInfo('used_blocks')/$this->getAccountInfo('soft_blocks_quota'));
+			$this->setLastKnownLoginAt($this->getAccountInfo('lastlogin_at'));
 		}
 		else
 		{
-			$this->setQuotaPercentage(null);
+			$this->setLastKnownLoginAt(null);
 		}
-
-		$this->setExists($this->getAccountInfo('found')==1);
-		$this->setIsLocked($this->getAccountInfo('user_locked')==1);
-		
 		return $this;
 	}
 
@@ -55,7 +56,48 @@ class LoginAccount extends Account
 
 	public function getChecks($checkGroup, &$checkList=null, $alerts='')
 	{
+		$this->updateInfoFromRealWorld();
+		
+		$checks=array(
+			array(
+				'field'=>'shell',
+				'match'=>$this->getAccountSetting('shell'),
+				'true'=>'shell is correctly set',
+				'false'=>'shell is not correctly set',
+				'command'=>sprintf('schoolmesh_loginaccount_changeshell %s "%s"', $this->getUsername(), $this->getAccountSetting('shell')),
+				),
+			);
+
+		$this->makeComparisons(&$checkList, $checks, $checkGroup);
+		$this->save();
+		return $this;
+	}
+	
+	public function saveSettings($params)
+	{
+		
+		$this
+		->setAccountSetting('shell', $params['shell'])
+		->save();
 		return $this;
 	}
 
+	public function setFormDefaults(&$form)
+	{
+		if (! $form instanceof LoginAccountForm)
+		{
+			throw new Exception('The form must be a LoginAccountForm instance');
+		}
+
+	$form->setDefaults(
+		array(
+			'id' => $this->getId(),
+			'shell' => $this->getAccountSetting('shell')
+			)
+		);
+	}
+
+
 }
+
+
