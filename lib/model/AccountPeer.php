@@ -33,4 +33,21 @@ class AccountPeer extends BaseAccountPeer
 		
 	}
 	
+	public static function retrieveByUserIdAndType($userId, $type)
+	{
+		$c=new Criteria();
+		$c->add(AccountPeer::USER_ID, $userId);
+		$c->addJoin(AccountTypePeer::ID, AccountPeer::ACCOUNT_TYPE_ID);
+		$c->add(AccountTypePeer::NAME, $type);
+		$t=AccountPeer::doSelectOne($c);
+		if ($t)
+		{
+			return $t->getRealAccount();
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
 }

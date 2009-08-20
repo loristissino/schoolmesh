@@ -146,13 +146,6 @@ class PosixAccount extends Account
 				'command'=>sprintf('schoolmesh_posixaccount_repairhomedir %s # (group)', $this->getUsername()),
 				),
 			array(
-				'field'=>'shell',
-				'match'=>$this->getProfile()->hasPermission('login')?'/bin/bash':'/bin/false',
-				'true'=>sprintf('shell is correctly set to «%s»', $this->getProfile()->hasPermission('login')?'/bin/bash':'/bin/false'),
-				'false'=>sprintf('shell is not set to «%s»', $this->getProfile()->hasPermission('login')?'/bin/bash':'/bin/false'),
-				'command'=>sprintf('schoolmesh_posixaccount_changeshell %s "%s"', $this->getUsername(), $this->getProfile()->hasPermission('login')?'/bin/bash':'/bin/false'),
-				),
-			array(
 				'field'=>'basefolder_found',
 				'match'=>1,
 				'true'=>'basefolder was found',
@@ -207,6 +200,16 @@ class PosixAccount extends Account
 		return $this;
 	}
 
+	public function saveSettings($params)
+	{
+		$this
+		->setAccountSetting('soft_blocks_quota', $params['soft_blocks_quota'])
+		->setAccountSetting('hard_blocks_quota', $params['hard_blocks_quota'])
+		->setAccountSetting('soft_files_quota', $params['soft_files_quota'])
+		->setAccountSetting('hard_files_quota', $params['hard_files_quota'])
+		->save();
+		return $this;
+	}
 
 	public function setFormDefaults(&$form)
 	{

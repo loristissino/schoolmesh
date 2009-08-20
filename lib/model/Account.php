@@ -49,6 +49,11 @@ class Account extends BaseAccount
 		return $t;
 	}
 	
+	public function getSiblingAccountByType($type)
+	{
+		return AccountPeer::retrieveByUserIdAndType($this->getUserId(), $type);
+	}
+	
 	public function save(PropelPDO $con = null)
 	{
 		$this->setInfo(serialize($this->_info));
@@ -105,6 +110,7 @@ class Account extends BaseAccount
 	{
 		
 		$type=ucfirst($this->getAccountType()->getName()). 'Account';		
+		
 		$realAccount = new $type();
 /*		switch($this->getAccountType()->getName())
 		{
@@ -163,6 +169,12 @@ class Account extends BaseAccount
 		return $this;
 	}
 	
+	public function saveSettings($params)
+	{
+		throw new Exception(sprintf('This function must be implemented in the derived class «%s»', $this->getAccountType()));
+		return $this;
+	}
+
 	public function getImage()
 	{
 		throw new Exception(sprintf('This function must be implemented in the derived class «%s»', $this->getAccountType()));
@@ -192,6 +204,8 @@ class Account extends BaseAccount
 	{
 		return false;
 	}
+
+
 
 
 	protected function makeComparisons(&$checkList, $checks, $checkGroup)

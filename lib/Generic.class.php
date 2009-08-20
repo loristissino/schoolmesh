@@ -163,13 +163,13 @@ class Generic{
 			return $text;
 		}
 		
-		static public function executeCommand($command)
+		static public function executeCommand($command, $withSudo=true)
 		{
 			$info=array();
 			$result=array();
 			$return_var=0;
 			
-			$command='sudo schoolmesh_' . $command;
+			$command=($withSudo? 'sudo ':'') . 'schoolmesh_' . $command;
 			
 			exec($command, $result, $return_var);
 			foreach($result as $line)
