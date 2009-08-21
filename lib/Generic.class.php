@@ -172,12 +172,15 @@ class Generic{
 			$command=($withSudo? 'sudo ':'') . 'schoolmesh_' . $command;
 			
 			exec($command, $result, $return_var);
+			
 			foreach($result as $line)
 			{
-				list($key, $value)=explode('=', $line);
-				$info[$key]=$value;
+				if (strpos($line, '='))
+				{
+					list($key, $value)=explode('=', $line);
+					$info[$key]=$value;
+				}
 			}
-			
 			return $info;
 		}
 		

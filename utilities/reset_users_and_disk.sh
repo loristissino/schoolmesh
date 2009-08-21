@@ -22,7 +22,7 @@ sudo mount -v -t ext3 -o loop,acl,usrjquota=aquota.user,jqfmt=vfsv0 /home/discov
 sudo quotacheck -avug
 sudo service quota start
 
-for USER in antonio.d loris.tissino john.test francesco.g bianca.b juri.d marin.djakovo vincenzo.decarolis marcis.decarrabas enzo.dalo wladyslaw.leczewski kenny.mcbain finn.myklegaard susanne.zacharias flavia.g helen.abram gabriella.v pinco pinco2
+for USER in bianca.b enzo.dalo paolo.stefanutti juri.daldan federico.missio asdasd juri.domodossola stefano.ospitino blip blip2 blip3 giulia.d alice.alessandrini bebe.lasow bianca.brindisi bob.bernardi bruna.bagala cristina.bonucci fabio.adriani francesco.genova giorgio.botto giorgio.simonacci juri.dom lucio.stelli marco.defilippis mario.rossi alessandra.tassanzg giorgio.piccoli giorgio.piccoletti bianca.benzo.dalo finn.myklegaard flavia.g francesco.g helen.abram john.test kenny.mcbain loris.tissino marcis.decarrabas marin.djakovo susanne.zacharias vincenzo.decarolis wladyslaw.leczewski
 	do
 		if getent passwd $USER; then
 			echo 'removing user ' $USER '...'
@@ -33,7 +33,7 @@ for USER in antonio.d loris.tissino john.test francesco.g bianca.b juri.d marin.
 cd "$POSIX_HOMEDIR"
 pwd
 
-sudo find -type d -name "$POSIX_BASEFOLDER" -exec chattr -i {} \;
-sudo find -type d -exec rm -r {} \;
+sudo find . -type d -name "$POSIX_BASEFOLDER" -exec chattr -i {} \;
+sudo find . -mindepth 1 -type d -exec rm -r {} \;
 
 

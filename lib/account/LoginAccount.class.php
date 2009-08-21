@@ -46,6 +46,8 @@ class LoginAccount extends Account
 		{
 			$this->setLastKnownLoginAt(null);
 		}
+		
+		
 		return $this;
 	}
 
@@ -95,6 +97,11 @@ class LoginAccount extends Account
 			'shell' => $this->getAccountSetting('shell')
 			)
 		);
+	}
+
+	public function getIsDeletable()
+	{
+		return $this->getAccountInfo('shell')=='/bin/false';
 	}
 
 

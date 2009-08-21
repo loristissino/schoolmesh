@@ -55,7 +55,8 @@ class PosixAccount extends Account
 
 		$this->setExists($this->getAccountInfo('found')==1);
 		$this->setIsLocked($this->getAccountInfo('user_locked')==1);
-		
+
+
 		return $this;
 	}
 
@@ -231,5 +232,22 @@ class PosixAccount extends Account
 			)
 		);
 	}
+
+	public function getIsDeletable()
+	{
+		return ($this->getAccountInfo('used_blocks')==0 and $this->getAccountInfo('used_files')==0);
+	}
+	
+	public function getBasicInfo()
+	{
+		$info=array(
+			'Used blocks'=>$this->getAccountInfo('used_blocks'),
+			'Blocks quota'=>$this->getAccountInfo('soft_blocks_quota'),
+			'Used files'=>$this->getAccountInfo('used_files'),
+			'Files quota'=>$this->getAccountInfo('soft_files_quota'),
+		);
+		return $info;
+	}
+
 
 }
