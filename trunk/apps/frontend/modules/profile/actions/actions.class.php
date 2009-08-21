@@ -25,6 +25,69 @@ class profileActions extends sfActions
 	
   }
 
+  public function executeViewaccount(sfWebRequest $request)
+	{
+	$availableAccounts=sfConfig::get('app_config_accounts');
+	$type=$request->getParameter('type');
+	
+	$user=$this->getUser();
+	$profile=$user->getProfile();
+	
+	$this->account=$profile->getAccountByType($type);
+	
+	$this->forward404unless($this->account);
+	
+	$this->info=$this->account->getBasicInfo();
+	
+	}  
+
+  public function executeEditprofile(sfWebRequest $request)
+	{
+	
+		$user=$this->getUser();
+		$this->profile=$user->getProfile();
+		
+		$this->form=new ProfileForm();
+
+		if ($request->isMethod('post'))
+		{
+			$this->form->bind($request->getParameter('userinfo'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+
+				$old_email=$this->profile->getEmail();
+
+				$this->profile
+				->setPronunciation($params['pronunciation'])
+				->setEmail($params['email']);
+				
+				$email_warning='';
+				if ($old_email!=$params['email'])
+				{
+					$email_warning=$this->getContext()->getI18N()->__('An email was sent to you to verify your email address.');
+					$this->profile->sendEmailVerification();
+				}
+				
+				$this->profile->save();
+				
+				$this->getUser()->setFlash('notice',
+					$this->getContext()->getI18N()->__('User information updated.'). ' ' . $email_warning
+					);
+					
+				$this->redirect('profile/editprofile	');
+			}
+		}
+
+		$this->form->setDefaults(
+			array(
+				'pronunciation'=>$this->profile->getPronunciation(),
+				'email'=>$this->profile->getEmail(),
+			)
+		);
+	
+	}  
+
   public function executeGoogleapps($request)
   {
 	

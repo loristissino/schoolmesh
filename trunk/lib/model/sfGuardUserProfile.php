@@ -10,8 +10,12 @@
 class sfGuardUserProfile extends BasesfGuardUserProfile
 {
 	
-//		protected $_accounts=array();
-	
+		public function sendEmailVerification()
+		{
+			$this->setEmailVerificationCode(sha1(rand(10000000,99999999)));
+			$this->addSystemAlert('should send email verification');
+			$this->setEmailState(1);
+		}
 		
 		public function addAccount($account)
 		{
@@ -106,25 +110,6 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		{
 			$this->getSfGuardUser()->addPermissionByName($value);
 			return $this;
-/*			
-			if (!$this->hasPermission($value))
-			{
-				$permission=sfGuardUserProfilePeer::retrievePermissionByName($value);
-				
-				if (!$permission)
-				{
-					throw new Exception(sprintf('The permission %s does not exist', $value));
-				}
-				
-				$user_permission=new sfGuardUserPermission();
-				$user_permission
-				->setUserId($this->getUserId())
-				->setPermissionId($permission->getId())
-				->save();
-			}
-			return $this;
-
-*/
 		}
 
 		public function revokeUserPermission($value)
@@ -173,8 +158,12 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		{
 			if($only_if)
 			{
-				$previous= ($this->getSystemAlerts()=='') ? '' : $this->getSystemAlerts() . ' - ';
-				$this->setSystemAlerts($previous.$alert);
+				if (!strpos($this->getSystemAlerts(), $alert))
+				{
+					// we don't add the alert twice
+					$previous= ($this->getSystemAlerts()=='') ? '' : $this->getSystemAlerts() . ' - ';
+					$this->setSystemAlerts($previous.$alert);
+				}
 			}
 			return $this;
 		}
@@ -250,16 +239,25 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
 		public function getIsDeletable()
 		{
-			$appointments=AppointmentPeer::countAppointmentsOfUser($this->getUserId());
-			$enrolments=EnrolmentPeer::countCurrentEnrolmentsOfUser($this->getUserId());
-			if($appointments==0 && $enrolments==0)
-			{
-				return true;
-			}
-			else
+			if (AppointmentPeer::countAppointmentsOfUser($this->getUserId())>0)
 			{
 				return false;
 			}
+			
+			if (EnrolmentPeer::countCurrentEnrolmentsOfUser($this->getUserId())>0)
+			{
+				return false;
+			}
+	
+			foreach($this->getAccounts() as $account)
+			{
+				if (!$account->getIsDeletable())
+				{
+					return false;
+				}
+			}
+			
+			return true;
 		}
 
 		public function getCurrentSchoolclassId()

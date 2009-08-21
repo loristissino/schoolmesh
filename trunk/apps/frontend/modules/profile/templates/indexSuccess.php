@@ -41,7 +41,16 @@
 
 <h2><?php echo __('Accounts') ?></h2>
 
-<p>TODO</p>
+<ul class="sf_admin_actions">
+<li class="sf_admin_action_schoolmesh"><strong><?php echo link_to(__('SchoolMesh main account'), url_for('profile/editprofile')) ?></strong></li><br />
+<?php if(sizeof($sf_user->getProfile()->getAccounts())>0): ?>
+<?php foreach($sf_user->getProfile()->getAccounts() as $account): ?>
+<li class="sf_admin_action_<?php echo $account->getAccountType() ?>"><?php echo link_to(__($account->__toString()), url_for(('profile/viewaccount?type='. $account->getAccountType()))) ?></li><br />
+<?php endforeach ?>
+<?php endif ?>
+</ul>
+
+
 <?php /*
 <?php if ($sf_user->getProfile()->getGoogleappsAccountApprovedAt()): ?>
 	<li class="sf_admin_action_googleapps"><?php echo link_to(sprintf(__('Use Google Apps account «%s»'), sfConfig::get('app_config_googleapps_domain')), url_for('profile/googleapps')) ?></li><br />

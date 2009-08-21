@@ -169,6 +169,38 @@
   background: url(../images/execute.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_schoolmesh a
+{
+  background: url(../images/schoolmesh.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_login a
+{
+  background: url(../images/login.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_posix a
+{
+  background: url(../images/posix.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_samba a
+{
+  background: url(../images/samba.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_moodle a
+{
+  background: url(../images/moodle.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_googleapps a
+{
+  background: url(../images/googleapps.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_ldapnfs a
+{
+  background: url(../images/ldapnfs.png) no-repeat 0 0;
+}
+
 #sf_admin_container .alert
 {
   margin: 4px 0;

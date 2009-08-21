@@ -384,15 +384,6 @@ class usersActions extends sfActions
 			{
 				$params = $this->userform->getValues();
 				$this->current_user=sfGuardUserProfilePeer::retrieveByPk($params['id']);
-/*
-				if (!$this->current_user->isValidUsername($params['username']))
-				{
-					$this->getUser()->setFlash('error',
-						$this->getContext()->getI18N()->__('The username could not be changed because the one you proposed is reserved or already in use.')
-					);
-					$this->redirect('users/edit?id='. $params['id']);
-				}
-	*/			
 				if($this->current_user->getIsDeletable()&&$request->getParameter('delete'))
 				{
 					$this->current_user

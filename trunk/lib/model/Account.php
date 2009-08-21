@@ -112,30 +112,7 @@ class Account extends BaseAccount
 		$type=ucfirst($this->getAccountType()->getName()). 'Account';		
 		
 		$realAccount = new $type();
-/*		switch($this->getAccountType()->getName())
-		{
-			case 'posix':
-				$realAccount=new PosixAccount();
-				break;
-			case 'samba':
-				$realAccount=new SambaAccount();
-				break;
-			case 'moodle':
-				$realAccount=new MoodleAccount();
-				break;
-			case 'login':
-				$realAccount=new LoginAccount();
-				break;
-			case 'googleapps':
-				$realAccount=new GoogleappsAccount();
-				break;
-			case 'ldapnfs':
-				$realAccount=new LdapnfsAccount();
-				break;
-			default:
-				throw new Exception ('not a valid account type given: ' . $this->getAccountType());
-		}
-	*/	
+		
 		foreach($this as $key=>$value)
 		{
 			$realAccount->$key = $value;
@@ -182,7 +159,7 @@ class Account extends BaseAccount
 	
 	public function getBasicInfo()
 	{
-		return '';
+		return array();
 	}
 	
   /**

@@ -32,6 +32,12 @@
 			<?php echo Generic::datetime($account->getInfoUpdatedAt('U'), $sf_context) ?>
 		</td>
 	</tr>
+	<tr>
+		<th><label><?php echo __('Is deletable?') ?></label></th>
+		<td>
+			<?php echo $account->getIsDeletable()? __('yes'): __('no') ?>
+		</td>
+	</tr>
 	<?php include_partial($account->getAccountType(), array('account'=>$account)) ?>
     <?php echo $form ?>
 	<tr>
