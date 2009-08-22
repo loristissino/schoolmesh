@@ -30,10 +30,16 @@ for USER in bianca.b enzo.dalo paolo.stefanutti juri.daldan federico.missio asda
 		fi
 	done
 
-cd "$POSIX_HOMEDIR"
-pwd
+dialog --yesno "You are going to remove all directories in $POSIX_HOMEDIR_USERS. Is it ok to proceed?" 0 0
 
-sudo find . -type d -name "$POSIX_BASEFOLDER" -exec chattr -i {} \;
-sudo find . -mindepth 1 -type d -exec rm -r {} \;
+    if [[ $? -eq 1 ]]
+       then
+          dialog --infobox 'Please try the manual installation. Setup will finish here. Thank you.' 0 0
+          exit 1
+    fi
+
+sudo find "$POSIX_HOMEDIR_USERS" -type d -name "$POSIX_BASEFOLDER" -exec chattr -i {} \;
+
+sudo find "$POSIX_HOMEDIR_USERS" -mindepth 1 -type d -exec rm -r {} \;
 
 

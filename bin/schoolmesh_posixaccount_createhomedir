@@ -5,7 +5,7 @@ source /var/schoolmesh/config/schoolmesh.rc $@
 if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
 	
 USERNAME=$1
-HOMEDIR="$POSIX_HOMEDIR/$USERNAME"
+HOMEDIR="$POSIX_HOMEDIR_USERS/$USERNAME"
 
 checkUsername $USERNAME
 
