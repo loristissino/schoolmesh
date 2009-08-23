@@ -11,4 +11,6 @@ checkUsername $USERNAME
 
 checkShell $SHELL
 
-sudo usermod -s "$SHELL" $USERNAME && echo "changed shell: user $USERNAME ($SHELL)"
+sudo usermod -s "$SHELL" $USERNAME && msg_ok "changed shell: $USERNAME ($SHELL)" && exit 0
+
+unexpectedError $@

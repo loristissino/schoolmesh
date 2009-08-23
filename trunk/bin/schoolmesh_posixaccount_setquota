@@ -16,8 +16,6 @@ checkInteger $HBQ
 checkInteger $SFQ
 checkInteger $HFQ
 
-sudo setquota -u $USERNAME -a $SBQ $HBQ $SFQ $HFQ  &&  echo "quota set for user $USERNAME" && exit 0
+sudo setquota -u $USERNAME -a $SBQ $HBQ $SFQ $HFQ  &&  msg_ok "quota set: $USERNAME ($SBQ $HBQ $SFQ $HFQ)" && exit 0
 
-echo "Something wrong"
-exit 99
-
+unexpectedError $@

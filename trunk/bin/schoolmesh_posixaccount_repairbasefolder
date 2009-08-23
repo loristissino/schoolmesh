@@ -11,8 +11,6 @@ BASEFOLDER="$HOMEDIR/$POSIX_BASEFOLDER"
 checkUsername $USERNAME
 checkDirectory "$BASEFOLDER"
 
-sudo chattr -i "$BASEFOLDER" && sudo chown $POSIX_BASEFOLDER_OWNER "$BASEFOLDER" && sudo chattr +i "$BASEFOLDER" && echo "repaired basefolder $USERNAME ($BASEFOLDER)"  && exit 0
+sudo chattr -i "$BASEFOLDER" && sudo chown $POSIX_BASEFOLDER_OWNER "$BASEFOLDER" && sudo chattr +i "$BASEFOLDER" && msg_ok "repaired basefolder: $USERNAME ($BASEFOLDER)"  && exit 0
 
-echo "Something wrong"
-exit 99
-
+unexpectedError $@

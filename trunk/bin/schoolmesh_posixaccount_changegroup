@@ -10,8 +10,6 @@ GROUP=$2
 checkUsername "$USERNAME"
 checkGroup "$GROUP"
 
-sudo usermod -g "$GROUP" "$USERNAME" && echo "changed group: user $USERNAME group $GROUP" && exit 0
+sudo usermod -g "$GROUP" "$USERNAME" && msg_ok "changed group: $USERNAME ($GROUP)" && exit 0
 
-echo "Something wrong"
-
-exit 99
+unexpectedError $@
