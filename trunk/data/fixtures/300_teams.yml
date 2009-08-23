@@ -56,10 +56,6 @@ Team:
     posix_name:  dipirc
 
 UserTeam:
-  loris_3ap_doc:
-    user_id:      loris
-    team_id: cdc3ap
-    role_id:      doc
   loris_3ap_scc:
     user_id:      loris
     team_id: cdc3ap
@@ -71,10 +67,6 @@ UserTeam:
 
   flavia_3ap_doc:
     user_id:      flavia
-    team_id: cdc3ap
-    role_id:      doc
-  bianca_3ap_doc:
-    user_id:      bianca
     team_id: cdc3ap
     role_id:      doc
   bianca_3ap_ccc:

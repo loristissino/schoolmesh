@@ -48,7 +48,7 @@
 
       <td><?php include_partial('gender', array('gender'=>$user->getGender())) ?></td>
       <td><?php echo $user->getUsername() ?></td>
-      <td><?php echo $user->getRole() ?></td>
+      <td><?php echo $user->getRoleDescription() ?></td>
       <td><?php echo $user->getFirstName() ?></td>
       <td><?php echo $user->getLastName() ?></td>
 	  <td>

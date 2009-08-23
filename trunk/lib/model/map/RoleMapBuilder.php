@@ -35,7 +35,9 @@ class RoleMapBuilder implements MapBuilder {
 
 		$tMap->addPrimaryKey('ID', 'Id', 'INTEGER', true, null);
 
-		$tMap->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 100);
+		$tMap->addColumn('MALE_DESCRIPTION', 'MaleDescription', 'VARCHAR', false, 100);
+
+		$tMap->addColumn('FEMALE_DESCRIPTION', 'FemaleDescription', 'VARCHAR', false, 100);
 
 		$tMap->addColumn('QUALITY_CODE', 'QualityCode', 'VARCHAR', false, 10);
 

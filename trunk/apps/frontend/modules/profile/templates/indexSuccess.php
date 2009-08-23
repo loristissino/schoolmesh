@@ -25,7 +25,7 @@
 <h2><?php echo __('Which groups I belong to') ?></h2>
 <ul>
 <?php for($i=0; $i<sizeof($teams); $i++): ?>
-    <li><?php echo $teams[$i]->getTeam()->getDescription(); ?> (<?php echo $teams[$i]->getRole()->getDescription(); ?>)</li>    
+    <li><?php echo $teams[$i]->getTeam()->getDescription(); ?> (<?php echo $profile->getIsMale()? $teams[$i]->getRole()->getMaleDescription(): $teams[$i]->getRole()->getFemaleDescription(); ?>)</li>    
 <?php endfor ?>
 
 </ul>

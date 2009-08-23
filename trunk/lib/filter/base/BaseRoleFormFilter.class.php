@@ -15,7 +15,8 @@ class BaseRoleFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'description'        => new sfWidgetFormFilterInput(),
+      'male_description'   => new sfWidgetFormFilterInput(),
+      'female_description' => new sfWidgetFormFilterInput(),
       'quality_code'       => new sfWidgetFormFilterInput(),
       'posix_name'         => new sfWidgetFormFilterInput(),
       'may_be_main_role'   => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
@@ -23,7 +24,8 @@ class BaseRoleFormFilter extends BaseFormFilterPropel
     ));
 
     $this->setValidators(array(
-      'description'        => new sfValidatorPass(array('required' => false)),
+      'male_description'   => new sfValidatorPass(array('required' => false)),
+      'female_description' => new sfValidatorPass(array('required' => false)),
       'quality_code'       => new sfValidatorPass(array('required' => false)),
       'posix_name'         => new sfValidatorPass(array('required' => false)),
       'may_be_main_role'   => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
@@ -46,7 +48,8 @@ class BaseRoleFormFilter extends BaseFormFilterPropel
   {
     return array(
       'id'                 => 'Number',
-      'description'        => 'Text',
+      'male_description'   => 'Text',
+      'female_description' => 'Text',
       'quality_code'       => 'Text',
       'posix_name'         => 'Text',
       'may_be_main_role'   => 'Boolean',

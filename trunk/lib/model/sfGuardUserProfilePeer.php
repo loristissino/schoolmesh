@@ -71,7 +71,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		case 'username': 	$c->addAscendingOrderByColumn(sfGuardUserPeer::USERNAME); break;
 		case 'firstname': 	$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME); break;
 		case 'lastname': 	$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME); break;
-		case 'role': 	$c->addAscendingOrderByColumn(RolePeer::DESCRIPTION); break;
+		case 'role': 	$c->addAscendingOrderByColumn(RolePeer::MALE_DESCRIPTION); break;
 		case 'blocks': 	$c->addDescendingOrderByColumn(sfGuardUserProfilePeer::DISK_USED_BLOCKS); break;
 		case 'files': 	$c->addDescendingOrderByColumn(sfGuardUserProfilePeer::DISK_USED_FILES); break;
 		case 'alerts': 	$c->addDescendingOrderByColumn(sfGuardUserProfilePeer::SYSTEM_ALERTS); break;

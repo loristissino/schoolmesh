@@ -14,7 +14,8 @@ class BaseRoleForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'                 => new sfWidgetFormInputHidden(),
-      'description'        => new sfWidgetFormInput(),
+      'male_description'   => new sfWidgetFormInput(),
+      'female_description' => new sfWidgetFormInput(),
       'quality_code'       => new sfWidgetFormInput(),
       'posix_name'         => new sfWidgetFormInput(),
       'may_be_main_role'   => new sfWidgetFormInputCheckbox(),
@@ -23,7 +24,8 @@ class BaseRoleForm extends BaseFormPropel
 
     $this->setValidators(array(
       'id'                 => new sfValidatorPropelChoice(array('model' => 'Role', 'column' => 'id', 'required' => false)),
-      'description'        => new sfValidatorString(array('max_length' => 100, 'required' => false)),
+      'male_description'   => new sfValidatorString(array('max_length' => 100, 'required' => false)),
+      'female_description' => new sfValidatorString(array('max_length' => 100, 'required' => false)),
       'quality_code'       => new sfValidatorString(array('max_length' => 10, 'required' => false)),
       'posix_name'         => new sfValidatorString(array('max_length' => 20, 'required' => false)),
       'may_be_main_role'   => new sfValidatorBoolean(array('required' => false)),

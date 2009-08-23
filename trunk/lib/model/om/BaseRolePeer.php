@@ -13,7 +13,7 @@ abstract class BaseRolePeer {
 	const CLASS_DEFAULT = 'lib.model.Role';
 
 	
-	const NUM_COLUMNS = 6;
+	const NUM_COLUMNS = 7;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -22,7 +22,10 @@ abstract class BaseRolePeer {
 	const ID = 'role.ID';
 
 	
-	const DESCRIPTION = 'role.DESCRIPTION';
+	const MALE_DESCRIPTION = 'role.MALE_DESCRIPTION';
+
+	
+	const FEMALE_DESCRIPTION = 'role.FEMALE_DESCRIPTION';
 
 	
 	const QUALITY_CODE = 'role.QUALITY_CODE';
@@ -44,20 +47,20 @@ abstract class BaseRolePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'QualityCode', 'PosixName', 'MayBeMainRole', 'DefaultGuardgroup', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'qualityCode', 'posixName', 'mayBeMainRole', 'defaultGuardgroup', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::QUALITY_CODE, self::POSIX_NAME, self::MAY_BE_MAIN_ROLE, self::DEFAULT_GUARDGROUP, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'quality_code', 'posix_name', 'may_be_main_role', 'default_guardgroup', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'MaleDescription', 'FemaleDescription', 'QualityCode', 'PosixName', 'MayBeMainRole', 'DefaultGuardgroup', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'maleDescription', 'femaleDescription', 'qualityCode', 'posixName', 'mayBeMainRole', 'defaultGuardgroup', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::MALE_DESCRIPTION, self::FEMALE_DESCRIPTION, self::QUALITY_CODE, self::POSIX_NAME, self::MAY_BE_MAIN_ROLE, self::DEFAULT_GUARDGROUP, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'male_description', 'female_description', 'quality_code', 'posix_name', 'may_be_main_role', 'default_guardgroup', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'QualityCode' => 2, 'PosixName' => 3, 'MayBeMainRole' => 4, 'DefaultGuardgroup' => 5, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'qualityCode' => 2, 'posixName' => 3, 'mayBeMainRole' => 4, 'defaultGuardgroup' => 5, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::QUALITY_CODE => 2, self::POSIX_NAME => 3, self::MAY_BE_MAIN_ROLE => 4, self::DEFAULT_GUARDGROUP => 5, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'quality_code' => 2, 'posix_name' => 3, 'may_be_main_role' => 4, 'default_guardgroup' => 5, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'MaleDescription' => 1, 'FemaleDescription' => 2, 'QualityCode' => 3, 'PosixName' => 4, 'MayBeMainRole' => 5, 'DefaultGuardgroup' => 6, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'maleDescription' => 1, 'femaleDescription' => 2, 'qualityCode' => 3, 'posixName' => 4, 'mayBeMainRole' => 5, 'defaultGuardgroup' => 6, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::MALE_DESCRIPTION => 1, self::FEMALE_DESCRIPTION => 2, self::QUALITY_CODE => 3, self::POSIX_NAME => 4, self::MAY_BE_MAIN_ROLE => 5, self::DEFAULT_GUARDGROUP => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'male_description' => 1, 'female_description' => 2, 'quality_code' => 3, 'posix_name' => 4, 'may_be_main_role' => 5, 'default_guardgroup' => 6, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	
@@ -101,7 +104,9 @@ abstract class BaseRolePeer {
 
 		$criteria->addSelectColumn(RolePeer::ID);
 
-		$criteria->addSelectColumn(RolePeer::DESCRIPTION);
+		$criteria->addSelectColumn(RolePeer::MALE_DESCRIPTION);
+
+		$criteria->addSelectColumn(RolePeer::FEMALE_DESCRIPTION);
 
 		$criteria->addSelectColumn(RolePeer::QUALITY_CODE);
 

@@ -27,7 +27,7 @@ class BaseUserTeamForm extends BaseFormPropel
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorPropelUnique(array('model' => 'UserTeam', 'column' => array('user_id', 'team_id', 'role_id')))
+      new sfValidatorPropelUnique(array('model' => 'UserTeam', 'column' => array('user_id', 'team_id')))
     );
 
     $this->widgetSchema->setNameFormat('user_team[%s]');

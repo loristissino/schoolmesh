@@ -356,7 +356,8 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`description` VARCHAR(100),
+	`male_description` VARCHAR(100),
+	`female_description` VARCHAR(100),
 	`quality_code` VARCHAR(10),
 	`posix_name` VARCHAR(20),
 	`may_be_main_role` TINYINT,
@@ -378,7 +379,7 @@ CREATE TABLE `user_team`
 	`team_id` INTEGER  NOT NULL,
 	`role_id` INTEGER  NOT NULL,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `utr` (`user_id`, `team_id`, `role_id`),
+	UNIQUE KEY `utr` (`user_id`, `team_id`),
 	CONSTRAINT `user_team_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
