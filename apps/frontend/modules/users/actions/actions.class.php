@@ -178,7 +178,6 @@ class usersActions extends sfActions
 
 
   }
-
   public function executeRunuserchecks(sfWebRequest $request)
   {
 	$this->user = $this->getUser();
@@ -244,6 +243,77 @@ class usersActions extends sfActions
 		}
 	
 	
+	if ($request->getRequestFormat()=='txt')
+		{
+			$this->setLayout(false);
+			$this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename="posixscript.sh"');
+			$this->getResponse()->setContentType('application/x-shellscript; charset=utf-8');
+		}
+	
+  }
+
+  public function executeRunteamchecks(sfWebRequest $request)
+  {
+	$this->user = $this->getUser();
+	$this->referer= $request->getReferer();
+	
+	if($request->hasParameter('id'))
+	{
+		$this->id=$request->getParameter('id');
+		$this->forward404Unless($this->team=TeamPeer::retrieveByPk($this->id));
+		$this->teamlist=array($this->team);
+	}
+	else
+	{
+		$this->teamlist = TeamPeer::doSelect(new Criteria());
+	}
+	
+	$this->checkList = new CheckList();
+	
+	foreach($this->teamlist as $team)
+	{
+		$team->checkTeam($this->checkList);
+	}
+	/*
+	if($request->hasParameter('execute'))
+	{
+		$result=array();
+		$return_var=0;
+		$count_passed=0;
+		$count_failed=0;
+        foreach($this->userlist  as $current_user)
+		{
+			foreach($current_user->getChecks() as $check)
+			{
+				if ($check->getCommand())
+				{
+					exec('sudo ' . $check->getCommand(), $result, $return_var);
+					if ($return_var==0)
+					{
+						$count_passed++;
+					}
+					else
+					{
+						$count_failed++;
+					}
+
+				}
+			
+			}
+		}
+			
+		$flash=$this->checkList()->getTotalResults(Check::FAILED)==0? 'notice': 'error';
+
+		$this->getUser()->setFlash($flash, 
+				sprintf($this->getContext()->getI18N()->__('Commands successfully executed: %d'), $this->checkList()->getTotalResults(Check::PASSED)) . '. ' . 
+				sprintf($this->getContext()->getI18N()->__('Warnings: %d'), $this->checkList()->getTotalResults(Check::WARNING)) . '. ' .
+				sprintf($this->getContext()->getI18N()->__('Commands failed: %d'), $this->checkList()->getTotalResults(Check::FAILED))
+				);
+
+		$this->redirect('users/runteamchecks'  . (isset($this->id)? '?id='. $this->id:''));
+		}
+	
+	*/
 	if ($request->getRequestFormat()=='txt')
 		{
 			$this->setLayout(false);

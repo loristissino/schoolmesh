@@ -952,7 +952,7 @@ abstract class BaseUserTeamPeer {
 
   static public function getUniqueColumnNames()
   {
-    return array(array('user_id', 'team_id', 'role_id'));
+    return array(array('user_id', 'team_id'));
   }
 	
 	public static function getTableMap()

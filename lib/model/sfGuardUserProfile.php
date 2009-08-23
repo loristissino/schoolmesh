@@ -237,6 +237,16 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
                 return $this->getsfGuardUser()->getUsername();
         }
 
+        public function getRoleDescription()
+        {
+			if ($this->getRole())
+			{
+				return $this->getRole()->getRoleDescriptionByGender($this->getIsMale());
+			}
+                return null;
+        }
+
+
 		public function getIsDeletable()
 		{
 			if (AppointmentPeer::countAppointmentsOfUser($this->getUserId())>0)

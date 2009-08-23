@@ -153,7 +153,7 @@ $user = sfGuardUserProfilePeer::retrieveByUsername('loris.tissino');
 $profile=$user->getProfile();
 $t->is($profile->getFullName(), "Loris Tissino", '->getFullName() returns the complete name of the user');
 $t->is(sizeof($profile->getCurrentAppointments()), 3, '->getCurrentAppointments() returns the correct number of appointments');
-$t->is(sizeof($profile->getTeams()), 3, '->getTeams() returns the correct number of teams');
+$t->is(sizeof($profile->getTeams()), 2, '->getTeams() returns the correct number of teams');
 $t->is($profile->getRole()->getPosixName(), 'docenti', '->getRole() returns the correct role');
 $t->is($profile->getCurrentSchoolclassId(), null, '->getSchoolclassId() returns null');
 $t->is($profile->getBelongsToTeam('cdc3ap'), true, '->getBelongsToTeam() returns true for a Team the user belongs to');

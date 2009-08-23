@@ -11,7 +11,11 @@ class Role extends BaseRole
 {
     public function __toString()
     {
-        return $this->getDescription();
+        return $this->getMaleDescription();
     }
-    
+	
+	public function getRoleDescriptionByGender($isMale=true)
+	{
+		return ($isMale? $this->getMaleDescription(): $this->getFemaleDescription());
+	}
 }
