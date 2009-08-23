@@ -20,7 +20,8 @@ checkString "$POSIX_BASEFOLDER"
 
 BASEFOLDER="$COMPLETEDIR/$POSIX_BASEFOLDER"
 
-sudo useradd -d "$HOMEDIR" -g $GROUP -c "$FULLNAME" $USERNAME -s /bin/false && echo "added user $USERNAME" || exit 20
+sudo useradd -d "$HOMEDIR" -g $GROUP -c "$FULLNAME" $USERNAME -s /bin/false && msg_ok "added user: $USERNAME" || unexpectedError $@
+
 schoolmesh_posixaccount_createhomedir $USERNAME
 schoolmesh_posixaccount_createbasefolder $USERNAME
 schoolmesh_posixaccount_setquota $USERNAME $POSIX_DEFAULT_QUOTA_SBQ $POSIX_DEFAULT_QUOTA_HBQ $POSIX_DEFAULT_QUOTA_SFQ $POSIX_DEFAULT_QUOTA_HFQ

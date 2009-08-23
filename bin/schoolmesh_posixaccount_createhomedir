@@ -9,8 +9,6 @@ HOMEDIR="$POSIX_HOMEDIR_USERS/$USERNAME"
 
 checkUsername $USERNAME
 
-sudo mkdir "$HOMEDIR" && sudo chown $USERNAME "$HOMEDIR" && sudo chgrp root "$HOMEDIR" && sudo chmod 711 "$HOMEDIR" && echo "created homedir $USERNAME ($HOMEDIR)"  && exit 0
+sudo mkdir "$HOMEDIR" && sudo chown $USERNAME "$HOMEDIR" && sudo chgrp root "$HOMEDIR" && sudo chmod 711 "$HOMEDIR" && msg_ok "created homedir: $USERNAME ($HOMEDIR)"  && exit 0
 
-echo "Something wrong"
-exit 99
-
+unexpectedError $@

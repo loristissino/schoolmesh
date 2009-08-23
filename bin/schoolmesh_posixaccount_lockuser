@@ -8,9 +8,6 @@ USERNAME=$1
 
 checkUsername $USERNAME
 
-sudo usermod -L $USERNAME && sudo chage -E 1 $USERNAME && echo "locked=1" && exit 0
+sudo usermod -L $USERNAME && sudo chage -E 1 $USERNAME && msg_ok "locked user: $USER" && exit 0
 
-echo "locked=0"
-exit 99
-
-
+unexpectedError $@

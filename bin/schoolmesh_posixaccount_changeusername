@@ -5,6 +5,6 @@ source /var/schoolmesh/config/schoolmesh.rc $@
 if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
 
 
-echo "Not implemented yet'
+msg_failed "Not implemented yet'
+exit 0
 
-exit

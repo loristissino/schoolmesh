@@ -11,8 +11,6 @@ BASEFOLDER="$HOMEDIR/$POSIX_BASEFOLDER"
 checkUsername $USERNAME
 checkDirectory "$HOMEDIR"
 
-sudo mkdir "$BASEFOLDER" && sudo chown $POSIX_BASEFOLDER_OWNER "$BASEFOLDER" && sudo chattr +i "$BASEFOLDER" && echo "created basefolder $USERNAME ($BASEFOLDER)"  && exit 0
+sudo mkdir "$BASEFOLDER" && sudo chown $POSIX_BASEFOLDER_OWNER "$BASEFOLDER" && sudo chattr +i "$BASEFOLDER" && msg_ok "created basefolder: $USERNAME ($BASEFOLDER)"  && exit 0
 
-echo "Something wrong"
-exit 99
-
+unexpectedError $@

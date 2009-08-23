@@ -10,8 +10,6 @@ FULLNAME=$2
 checkUsername $USERNAME
 checkString $FULLNAME
 
-sudo usermod -c "$FULLNAME" $USERNAME && echo "changed fullname: user $USERNAME ($FULLNAME)"  && exit 0
+sudo usermod -c "$FULLNAME" $USERNAME && msg_ok "changed fullname: $USERNAME ($FULLNAME)"  && exit 0
 
-echo "Something wrong"
-exit 99
-
+unexpectedError $@

@@ -20,12 +20,27 @@ POSIX_DEFAULT_QUOTA_HFQ=1500
 
 # DO NET EDIT PASS THIS LINE
 
+OPOK=0
+OPFAILED=0
+
+function msg_ok()
+	{
+	OPOK=$(($OPOK + 1))	
+	echo -e "\033[1;32m:-) $@\033[0m"	
+	}
+
+function msg_failed()
+	{
+	OPFAILED=$(($OPFAILED + 1))	
+	echo -e "\033[1;31m:-( $@\033[0m"	
+	}
+
 function checkUsername()
 {
 getent passwd "$1" > /dev/null
 
 if [ $? -ne 0 ] ; then
-	echo "Not a user: $1"
+	msg_failed "Not a user: $1"
 	exit 1
 fi	
 }
@@ -35,7 +50,7 @@ function checkNotUsername()
 getent passwd "$1" > /dev/null
 
 if [ $? -eq 0 ] ; then
-	echo "Already a user: $1"
+	msg_failed "Already a user: $1"
 	exit 2
 fi	
 }
@@ -45,7 +60,7 @@ function checkGroup()
 getent group "$GROUP" > /dev/null
 
 if [ $? -ne 0 ] ; then
-	echo "Not a group: $GROUP"
+	msg_failed "Not a group: $GROUP"
 	exit 3
 fi
 }
@@ -53,7 +68,7 @@ fi
 function checkShell()
 {
 if [ $(grep -c "^$1\$" /etc/shells) -ne 1 ] ; then
-	echo "Not a valid shell: $1"
+	msg_failed "Not a valid shell: $1"
 	exit 7
 fi
 }
@@ -61,15 +76,19 @@ fi
 function checkString()
 {
 if [ -z "$1" ] ; then
-	echo "Not a valid string: $1"
+	msg_failed "Not a valid string: $1"
 	exit 11
 fi
 }
 
 function checkInteger()
 {
+if [ -z "$1" ] ; then
+	msg_failed "Not a valid number: $1"
+	exit 11
+fi
 if [ $(echo "$1" | grep -c "^[0-9]*$") -ne 1 ] ; then
-	echo "Not a valid number: $1"
+	msg_failed "Not a valid number: $1"
 	exit 12
 fi
 }
@@ -77,7 +96,7 @@ fi
 function checkDirectory()
 {
 if [ ! -d "$1" ] ; then
-	echo "Not a directory: $1"
+	msg_failed "Not a directory: $1"
 	exit 21
 fi
 }
@@ -85,10 +104,14 @@ fi
 function checkNotFile()
 {
 if [ -e "$1" ] ; then
-	echo "File exists: $1"
+	msg_failed "File exists: $1"
 	exit 22
 fi
 }
 
-
+function unexpectedError()
+{
+msg_failed $(basename $0) $@ '-- unexpected error'
+exit 99
+}
 
