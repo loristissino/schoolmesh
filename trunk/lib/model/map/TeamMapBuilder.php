@@ -41,5 +41,9 @@ class TeamMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('QUALITY_CODE', 'QualityCode', 'VARCHAR', false, 10);
 
+		$tMap->addColumn('NEEDS_FOLDER', 'NeedsFolder', 'BOOLEAN', false, null);
+
+		$tMap->addColumn('NEEDS_MAILING_LIST', 'NeedsMailingList', 'BOOLEAN', false, null);
+
 	} 
 } 

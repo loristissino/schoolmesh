@@ -22,6 +22,12 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 	protected $quality_code;
 
 	
+	protected $needs_folder;
+
+	
+	protected $needs_mailing_list;
+
+	
 	protected $collUserTeams;
 
 	
@@ -43,6 +49,8 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 	
 	public function applyDefaultValues()
 	{
+		$this->needs_folder = false;
+		$this->needs_mailing_list = false;
 	}
 
 	
@@ -67,6 +75,18 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 	public function getQualityCode()
 	{
 		return $this->quality_code;
+	}
+
+	
+	public function getNeedsFolder()
+	{
+		return $this->needs_folder;
+	}
+
+	
+	public function getNeedsMailingList()
+	{
+		return $this->needs_mailing_list;
 	}
 
 	
@@ -126,9 +146,45 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setNeedsFolder($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->needs_folder !== $v || $v === false) {
+			$this->needs_folder = $v;
+			$this->modifiedColumns[] = TeamPeer::NEEDS_FOLDER;
+		}
+
+		return $this;
+	} 
+	
+	public function setNeedsMailingList($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->needs_mailing_list !== $v || $v === false) {
+			$this->needs_mailing_list = $v;
+			$this->modifiedColumns[] = TeamPeer::NEEDS_MAILING_LIST;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
-						if (array_diff($this->modifiedColumns, array())) {
+						if (array_diff($this->modifiedColumns, array(TeamPeer::NEEDS_FOLDER,TeamPeer::NEEDS_MAILING_LIST))) {
+				return false;
+			}
+
+			if ($this->needs_folder !== false) {
+				return false;
+			}
+
+			if ($this->needs_mailing_list !== false) {
 				return false;
 			}
 
@@ -143,6 +199,8 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 			$this->description = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->posix_name = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->quality_code = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->needs_folder = ($row[$startcol + 4] !== null) ? (boolean) $row[$startcol + 4] : null;
+			$this->needs_mailing_list = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -151,7 +209,7 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 4; 
+						return $startcol + 6; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Team object", $e);
 		}
@@ -347,6 +405,12 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 			case 3:
 				return $this->getQualityCode();
 				break;
+			case 4:
+				return $this->getNeedsFolder();
+				break;
+			case 5:
+				return $this->getNeedsMailingList();
+				break;
 			default:
 				return null;
 				break;
@@ -361,6 +425,8 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 			$keys[1] => $this->getDescription(),
 			$keys[2] => $this->getPosixName(),
 			$keys[3] => $this->getQualityCode(),
+			$keys[4] => $this->getNeedsFolder(),
+			$keys[5] => $this->getNeedsMailingList(),
 		);
 		return $result;
 	}
@@ -388,6 +454,12 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 			case 3:
 				$this->setQualityCode($value);
 				break;
+			case 4:
+				$this->setNeedsFolder($value);
+				break;
+			case 5:
+				$this->setNeedsMailingList($value);
+				break;
 		} 	}
 
 	
@@ -399,6 +471,8 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setDescription($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setPosixName($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setQualityCode($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setNeedsFolder($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setNeedsMailingList($arr[$keys[5]]);
 	}
 
 	
@@ -410,6 +484,8 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(TeamPeer::DESCRIPTION)) $criteria->add(TeamPeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(TeamPeer::POSIX_NAME)) $criteria->add(TeamPeer::POSIX_NAME, $this->posix_name);
 		if ($this->isColumnModified(TeamPeer::QUALITY_CODE)) $criteria->add(TeamPeer::QUALITY_CODE, $this->quality_code);
+		if ($this->isColumnModified(TeamPeer::NEEDS_FOLDER)) $criteria->add(TeamPeer::NEEDS_FOLDER, $this->needs_folder);
+		if ($this->isColumnModified(TeamPeer::NEEDS_MAILING_LIST)) $criteria->add(TeamPeer::NEEDS_MAILING_LIST, $this->needs_mailing_list);
 
 		return $criteria;
 	}
@@ -445,6 +521,10 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 		$copyObj->setPosixName($this->posix_name);
 
 		$copyObj->setQualityCode($this->quality_code);
+
+		$copyObj->setNeedsFolder($this->needs_folder);
+
+		$copyObj->setNeedsMailingList($this->needs_mailing_list);
 
 
 		if ($deepCopy) {

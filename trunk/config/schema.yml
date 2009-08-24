@@ -142,6 +142,8 @@ propel:
     description:  varchar(100)
     posix_name:   varchar(20)
     quality_code: varchar(10)
+    needs_folder: { type: boolean, default: false }
+    needs_mailing_list:  { type: boolean, default: false }
     
   role:
     id:           ~
