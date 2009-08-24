@@ -12,14 +12,21 @@ class Team extends BaseTeam
 	public function checkTeam(&$checkList)
 	
 	{
+	
+		$checkGroup=$this->getDescription();
+		$checkList->addCheck(new Check(Check::PASSED, 'checking team ' . $this->getId(), $checkGroup);
 		
-		$checkList->addCheck(new Check(Check::PASSED, 'checking team ' . $this->getId(), $this->getDescription()));
+		if $this->needsFolder()
+		{
+			
+			
+		}
 	
 		$userteams=$this->getUserTeamsJoinsfGuardUser();
 		foreach($userteams as $userteam)
 		{
 			$profile=sfGuardUserProfilePeer::retrieveByPK($userteam->getUserId());
-			$checkList->addCheck(new Check(Check::PASSED, sprintf('%s (%s)', $profile->getFullname(), $userteam->getRole()), $this->getDescription()));
+			$checkList->addCheck(new Check(Check::PASSED, sprintf('%s (%s)', $profile->getFullname(), $userteam->getRole()), $checkGroup);
 		}
 	
 		

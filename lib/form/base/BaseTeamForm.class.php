@@ -13,17 +13,21 @@ class BaseTeamForm extends BaseFormPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'id'           => new sfWidgetFormInputHidden(),
-      'description'  => new sfWidgetFormInput(),
-      'posix_name'   => new sfWidgetFormInput(),
-      'quality_code' => new sfWidgetFormInput(),
+      'id'                 => new sfWidgetFormInputHidden(),
+      'description'        => new sfWidgetFormInput(),
+      'posix_name'         => new sfWidgetFormInput(),
+      'quality_code'       => new sfWidgetFormInput(),
+      'needs_folder'       => new sfWidgetFormInputCheckbox(),
+      'needs_mailing_list' => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
-      'id'           => new sfValidatorPropelChoice(array('model' => 'Team', 'column' => 'id', 'required' => false)),
-      'description'  => new sfValidatorString(array('max_length' => 100, 'required' => false)),
-      'posix_name'   => new sfValidatorString(array('max_length' => 20, 'required' => false)),
-      'quality_code' => new sfValidatorString(array('max_length' => 10, 'required' => false)),
+      'id'                 => new sfValidatorPropelChoice(array('model' => 'Team', 'column' => 'id', 'required' => false)),
+      'description'        => new sfValidatorString(array('max_length' => 100, 'required' => false)),
+      'posix_name'         => new sfValidatorString(array('max_length' => 20, 'required' => false)),
+      'quality_code'       => new sfValidatorString(array('max_length' => 10, 'required' => false)),
+      'needs_folder'       => new sfValidatorBoolean(array('required' => false)),
+      'needs_mailing_list' => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('team[%s]');

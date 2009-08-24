@@ -343,6 +343,8 @@ CREATE TABLE `team`
 	`description` VARCHAR(100),
 	`posix_name` VARCHAR(20),
 	`quality_code` VARCHAR(10),
+	`needs_folder` TINYINT default 0,
+	`needs_mailing_list` TINYINT default 0,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 

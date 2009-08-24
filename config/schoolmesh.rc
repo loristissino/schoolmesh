@@ -57,13 +57,25 @@ fi
 
 function checkGroup()
 {
-getent group "$GROUP" > /dev/null
+getent group "$1" > /dev/null
 
 if [ $? -ne 0 ] ; then
-	msg_failed "Not a group: $GROUP"
+	msg_failed "Not a group: $1"
 	exit 3
 fi
 }
+
+function checkNotGroup()
+{
+getent group "$1" > /dev/null
+
+if [ $? -eq 0 ] ; then
+	msg_failed "Already a group: $1"
+	exit 4
+fi
+}
+
+
 
 function checkShell()
 {
