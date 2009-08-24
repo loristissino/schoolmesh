@@ -121,6 +121,19 @@ if [ -e "$1" ] ; then
 fi
 }
 
+
+function userBelongsToGroup()
+{
+USER=$1
+GROUP=$2
+groups $USER | tr ' ' '\n' | grep "^$GROUP\$" > /dev/null
+if [ $? -eq 0 ] ; then
+	BELONGS=1
+else
+	BELONGS=0
+fi	
+}
+
 function unexpectedError()
 {
 msg_failed $(basename $0) $@ '-- unexpected error'
