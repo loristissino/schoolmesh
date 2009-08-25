@@ -33,7 +33,7 @@ class Team extends BaseTeam
 			{
 				$checkList->addCheck(new Check(Check::PASSED, 'team\'s posix group exists', $checkGroup));
 			}
-			if ($info['folder_found']!=1)
+			if (@$info['folder_found']!=1)
 			{
 				$checkList->addCheck(new Check(Check::WARNING, 'team\'s posix folder does not exist', $checkGroup));
 			}
