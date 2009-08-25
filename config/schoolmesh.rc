@@ -25,13 +25,13 @@ OPFAILED=0
 
 function msg_ok()
 	{
-	OPOK=$(($OPOK + 1))	
+	let "OPOK += 1"	
 	echo -e "\033[1;32m:-) $@\033[0m"	
 	}
 
 function msg_failed()
 	{
-	OPFAILED=$(($OPFAILED + 1))	
+	let "OPFAILED += 1"
 	echo -e "\033[1;31m:-( $@\033[0m"	
 	}
 

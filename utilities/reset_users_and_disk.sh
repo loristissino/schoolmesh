@@ -30,16 +30,34 @@ for USER in bianca.b enzo.dalo paolo.stefanutti juri.daldan federico.missio asda
 		fi
 	done
 
+for GROUP in ds dsga ata cdc3ap cdc4ap quality dipmatfis dipscienze dipdirfin diplingue dipinfo dipecononaz dipscmotorie dipttd dipirc 
+	do
+		if getent group $GROUP; then
+			echo 'removing group ' $GROUP '...'
+			sudo groupdel $GROUP
+		fi
+	done
+
 dialog --yesno "You are going to remove all directories in $POSIX_HOMEDIR_USERS. Is it ok to proceed?" 0 0
 
-    if [[ $? -eq 1 ]]
-       then
-          dialog --infobox 'Please try the manual installation. Setup will finish here. Thank you.' 0 0
-          exit 1
-    fi
+if [[ $? -eq 1 ]]
+   then
+	  dialog --infobox 'Directories not removed' 0 0
+else
+	sudo find "$POSIX_HOMEDIR_USERS" -type d -name "$POSIX_BASEFOLDER" -exec chattr -i {} \;
+	sudo find "$POSIX_HOMEDIR_USERS" -mindepth 1 -type d -exec rm -r {} \;
+fi
 
-sudo find "$POSIX_HOMEDIR_USERS" -type d -name "$POSIX_BASEFOLDER" -exec chattr -i {} \;
+dialog --yesno "You are going to remove all directories in $POSIX_HOMEDIR_TEAMS. Is it ok to proceed?" 0 0
 
-sudo find "$POSIX_HOMEDIR_USERS" -mindepth 1 -type d -exec rm -r {} \;
+if [[ $? -eq 1 ]]
+   then
+	  dialog --infobox 'Directories not removed' 0 0
+else
+	sudo find "$POSIX_HOMEDIR_TEAMS" -mindepth 1 -type d -exec rm -r {} \;
+fi
+
+
+
 
 
