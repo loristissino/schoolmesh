@@ -72,6 +72,16 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 				return false;
 			}
 		}
+		
+		public function getGuardGroups()
+		{
+			$c=new Criteria();
+			$c->add(sfGuardUserGroupPeer::USER_ID, $this->getUserId());
+			$c->addJoin(sfGuardUserGroupPeer::GROUP_ID, sfGuardGroupPeer::ID);
+			$t = sfGuardUserGroupPeer::doSelectJoinsfGuardGroup($c);
+			return $t;
+		}
+		
 
 		public function addToGuardGroup($group)
 		{

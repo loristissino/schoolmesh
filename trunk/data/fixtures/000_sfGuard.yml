@@ -107,9 +107,21 @@ sfGuardPermission:
   googleapps:
     name:           googleapps
     description:   Accesso ai servizi Google Apps
-
-    
-  
+  login_resetpwd:
+    name:           login_resetpwd
+    description:   Possibilità di reimpostare una nuova password per gli account di tipo "login"
+  samba_resetpwd:
+    name:           samba_resetpwd
+    description:   Possibilità di reimpostare una nuova password per gli account di tipo "samba"
+  ldapnfs_resetpwd:
+    name:           ldapnfs_resetpwd
+    description:   Possibilità di reimpostare una nuova password per gli account di tipo "ldapnfs"
+  moodle_resetpwd:
+    name:           moodle_resetpwd
+    description:   Possibilità di reimpostare una nuova password per gli account di tipo "moodle"
+  googleapps_resetpwd:
+    name:           googleapps_resetpwd
+    description:   Possibilità di reimpostare una nuova password per gli account di tipo "googleapps"
 
 sfGuardGroup:
   admin:
@@ -216,12 +228,15 @@ sfGuardUserGroup:
 
   
 sfGuardUserPermission:
-  backadmin1:
+  loris_backadmin:
     user_id:      loris
     permission_id:  backadmin
   loris_login:
     user_id:      loris
     permission_id:  login
+  loris_login_resetpwd:
+    user_id:      loris
+    permission_id:  login_resetpwd
   juri_login:
     user_id:      juri
     permission_id:  login

@@ -43,6 +43,17 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		
 		return $t;
 	}
+	
+	public static function retrieveUsersOfGuardGroup($guardgroupName)
+	{
+		$c=new Criteria();
+		$c->addJoin(sfGuardUserGroupPeer::GROUP_ID, sfGuardGroupPeer::ID);
+		$c->add(sfGuardGroupPeer::NAME, $guardgroupName);
+		$c->addJoin(sfGuardUserProfilePeer::USER_ID, sfGuardUserGroupPeer::USER_ID);
+		$t = sfGuardUserGroupPeer::doSelectJoinAll($c);
+		return $t;
+	}
+	
 
 	public static function retrieveAllUsers($sortby='', $filter='', $filtered_role_id='', $filtered_schoolclass_id='')
 	{
@@ -268,6 +279,9 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 						{
 							$profile->addSystemAlert('missing class');
 						}
+						
+						$guardgroup=sfGuardGroupProfilePeer::retrieveGuardGroupByName('student');
+						$profile->addToGuardGroup($guardgroup);
 						break;
 					
 				}
