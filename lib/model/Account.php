@@ -181,9 +181,13 @@ class Account extends BaseAccount
 	{
 		return false;
 	}
+	
 
-
-
+  public function resetPassword()
+	{
+		throw new Exception(sprintf('This function must be implemented in the derived class «%s»', $this->getAccountType()));
+		return $this;
+	}
 
 	protected function makeComparisons(&$checkList, $checks, $checkGroup)
 	{

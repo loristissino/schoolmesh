@@ -69,12 +69,6 @@
 		<?php endif ?>
 	<?php endif ?>
   </table>
-<?php /*
-<h2><?php echo __('Disk usage') ?></h2>
-<?php include_partial('quotas', array('current_user'=>$current_user)) ?>
-<h2><?php echo __('Google Apps account') ?></h2>
-<?php include_partial('googleapps', array('current_user'=>$current_user)) ?>
-*/ ?>
 
 <h2><?php echo __('Accounts') ?></h2>
 
@@ -143,6 +137,11 @@
 <h2><?php echo __('Teams') ?></h2>
 
 <?php include_partial('teams', array('current_user'=>$current_user)) ?>
+
+<h2><?php echo __('GuardGroups') ?></h2>
+
+<?php include_partial('guardgroups', array('current_user'=>$current_user)) ?>
+
 
 <h2><?php echo __('Credentials') ?></h2>
 
