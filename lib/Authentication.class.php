@@ -6,6 +6,37 @@ class Authentication {
 	{
 		return true;
 	}
+	
+	static function checkFirstSambaThenDBPassword($username, $password)
+	{
+		
+	$user=sfGuardUserProfilePeer::retrieveByUsername($username);
+	$profile=$user->getProfile();
+	if ($profile->hasAccountOfType('samba'))
+	{
+		return self::checkSambaPassword($username, $password);
+	}
+	else
+	{
+		return self::checkDBPassword($username, $password);
+	}
+	}
+	
+	static function checkDBPassword($username, $password)
+	{
+	$user=sfGuardUserProfilePeer::retrieveByUsername($username);
+	$algorithm = $user->getAlgorithm();
+    if (false !== $pos = strpos($algorithm, '::'))
+    {
+      $algorithm = array(substr($algorithm, 0, $pos), substr($algorithm, $pos + 2));
+    }
+    if (!is_callable($algorithm))
+    {
+      throw new sfException(sprintf('The algorithm callable "%s" is not callable.', $algorithm));
+    }
+
+    return $user->getPassword() == call_user_func_array($algorithm, array($user->getSalt().$password));
+	}
 
 	static function checkLdapPassword($username, $password)
 	{

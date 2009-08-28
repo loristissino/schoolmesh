@@ -54,12 +54,8 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		}
 
 
-		public function getBelongsToGuardGroup($group)
+		public function getBelongsToGuardGroup(sfGuardGroup $group)
 		{
-			if (!$group instanceof sfGuardGroup)
-			{
-				throw new Exception('the parameter must be a sfGuardGroup object');
-			}
 			$c=new Criteria();
 			$c->add(sfGuardUserGroupPeer::USER_ID, $this->getUserId());
 			$c->add(sfGuardUserGroupPeer::GROUP_ID, $group->getId());
@@ -71,6 +67,13 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			{
 				return false;
 			}
+		}
+		
+		
+		public function getBelongsToGuardGroupByName($groupname)
+		{
+			$group=sfGuardGroupProfilePeer::retrieveByName($groupname);
+			return $this->getBelongsToGuardGroup($group);
 		}
 		
 		public function getGuardGroups()
