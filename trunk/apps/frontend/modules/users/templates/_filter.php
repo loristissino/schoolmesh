@@ -6,7 +6,7 @@
       <tfoot>
         <tr>
           <td colspan="2">
-               <a onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit();return false;" href="<?php echo url_for('users/setfilterlistpreference?filter=reset') ?>"><?php echo __('Reset') ?></a>            <input type="submit" value="<?php echo __('Filter') ?>" />
+               <a onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'post'; f.action = this.href;f.submit();return false;" href="<?php echo url_for('users/setfilterlistpreference?filter=reset') ?>"><?php echo __('Reset') ?></a>            <input type="submit" value="<?php echo __('Filter') ?>" />
           </td>
         </tr>
       </tfoot>

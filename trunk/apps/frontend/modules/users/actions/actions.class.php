@@ -491,13 +491,6 @@ class usersActions extends sfActions
 					$this->current_user->addToGuardGroup($group);
 				}
 
-/*
-				->setDiskSetSoftBlocksQuota($params['soft_blocks_quota'])
-				->setDiskSetHardBlocksQuota($params['hard_blocks_quota'])
-				->setDiskSetSoftFilesQuota($params['soft_files_quota'])
-				->setDiskSetHardFilesQuota($params['hard_files_quota'])
-*/
-
 				$this->getUser()->setFlash('notice',
 					$this->getContext()->getI18N()->__('User information updated.') . ' ' .
 					$this->getContext()->getI18N()->__('You might need to run User Checks in order to apply the changes.')
@@ -529,12 +522,6 @@ class usersActions extends sfActions
 			'main_role'=>$this->current_user->getRoleId(),
 		)
 	);
-	
-/*			'soft_blocks_quota' => $this->current_user->getDiskSetSoftBlocksQuota(),
-			'hard_blocks_quota' => $this->current_user->getDiskSetHardBlocksQuota(),
-			'soft_files_quota' => $this->current_user->getDiskSetSoftFilesQuota(),
-			'hard_files_quota' => $this->current_user->getDiskSetHardFilesQuota(),
-*/
 	
   }
 
