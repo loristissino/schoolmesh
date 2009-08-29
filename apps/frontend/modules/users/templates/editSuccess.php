@@ -119,13 +119,22 @@
 		<td>
 			<ul class="sf_admin_td_actions">
 				<?php if ($current_user->hasAccountOfType($available_account)): ?>
-				<li class="sf_admin_action_edit">
-					<?php echo link_to(
-				__('Edit'),
-				'users/editaccount?id='.$account->getId(),
-				array('title'=>__('Edit information about this account'))
-				)?>
-				</li>
+					<li class="sf_admin_action_edit">
+						<?php echo link_to(
+					__('Edit'),
+					'users/editaccount?id='.$account->getId(),
+					array('title'=>__('Edit information about this account'))
+					)?>
+					</li>
+					<?php if ($account->getPasswordIsResettable()): ?>
+						<li class="sf_admin_action_passwordreset">
+							<?php echo link_to(
+						__('Password reset'),
+						'passwordreset/confirm?info[username]=' . $current_user->getUsername() . '&info[account]=' . $account->getAccountType() . '&choose=Choose',
+						array('title'=>__('Reset the password for this account'))
+						)?>
+						</li>
+					<?php endif ?>
 				<?php endif ?>
 			</ul>
 		</td>

@@ -23,7 +23,7 @@ propel:
 
   sf_guard_user_profile:
     _attributes:  { phpName: sfGuardUserProfile }
-    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade, onUpdate: cascade, primaryKey: true }
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade, primaryKey: true }
     first_name:   varchar(50)
     middle_name:  varchar(50)
     last_name:    varchar(50)
@@ -66,8 +66,8 @@ propel:
 
   account:
     id:   
-    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade, onUpdate: cascade, index:true }
-    account_type_id: { type: integer, foreignTable: account_type, foreignReference: id, required: true, onDelete: restrict, onUpdate: cascade, index: true }
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade, index:true }
+    account_type_id: { type: integer, foreignTable: account_type, foreignReference: id, required: true, onDelete: restrict, index: true }
     info:  longvarchar
     settings: longvarchar
     exists: boolean

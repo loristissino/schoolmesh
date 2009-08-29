@@ -215,6 +215,11 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			}
 			return $this;
 		}
+		
+		public function getTextBirthdate()
+		{
+			return date('d/m/Y', $this->getBirthdate());
+		}
 
 		public function getGenderChoice()
 		{

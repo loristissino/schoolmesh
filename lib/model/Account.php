@@ -188,6 +188,11 @@ class Account extends BaseAccount
 		throw new Exception(sprintf('This function must be implemented in the derived class «%s»', $this->getAccountType()));
 		return $this;
 	}
+	
+  public function getPasswordIsResettable()
+	{
+		return false;
+	}
 
 	protected function makeComparisons(&$checkList, $checks, $checkGroup)
 	{
@@ -213,7 +218,7 @@ class Account extends BaseAccount
 				
 				if ($test)
 				{
-					$checkList->addCheck(new Check(Check::PASSED, 'posix: '. $check['true'], $checkGroup));
+					$checkList->addCheck(new Check(Check::PASSED, $this->getAccountType() . ': '. $check['true'], $checkGroup));
 				}
 				else
 				{

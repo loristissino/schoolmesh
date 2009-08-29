@@ -115,6 +115,13 @@ class LoginAccount extends Account
 		return $this;
 	}
 
+
+  public function getPasswordIsResettable()
+	{
+		return true;
+	}
+
+
 }
 
 
