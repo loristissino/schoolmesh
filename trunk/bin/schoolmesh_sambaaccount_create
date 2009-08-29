@@ -1,0 +1,13 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+USERNAME=$1
+FULLNAME=$2
+
+checkUsername $USERNAME
+checkString "$FULLNAME"
+
+echo -e "alfa\nalfa\n" | sudo pdbedit -a -t -f "$FULLNAME" $USERNAME && msg_ok "added user: $USERNAME" || unexpectedError $@

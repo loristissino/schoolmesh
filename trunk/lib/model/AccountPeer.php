@@ -33,6 +33,8 @@ class AccountPeer extends BaseAccountPeer
 		
 	}
 	
+	
+	
 	public static function retrieveByUserIdAndType($userId, $type)
 	{
 		$c=new Criteria();

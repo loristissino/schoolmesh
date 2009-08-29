@@ -173,7 +173,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			{
 				if (!strpos($this->getSystemAlerts(), $alert))
 				{
-					// we don't add the alert twice
+					// we don't add the alert twice //FIXME Something broken here
 					$previous= ($this->getSystemAlerts()=='') ? '' : $this->getSystemAlerts() . ' - ';
 					$this->setSystemAlerts($previous.$alert);
 				}

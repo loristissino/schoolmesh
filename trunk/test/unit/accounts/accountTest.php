@@ -56,7 +56,7 @@ $t->diag("Let's check the accounts...");
 $user=sfGuardUserProfilePeer::retrieveByUsername('helen.abram');
 $profile=$user->getProfile();
 
-$t->is_deeply($profile->getWebPermissions(), array('posix', 'samba'), 'the user starts with the right credentials');
+$t->is_deeply($profile->getWebPermissions(), array('login', 'posix', 'samba'), 'the user starts with the right credentials');
 
 $availablePermissions=array('posix', 'samba');
 

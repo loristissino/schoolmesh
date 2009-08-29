@@ -172,9 +172,8 @@ class Generic{
 			$command='LANG=it_IT.utf-8; ' . ($withSudo? 'sudo ':'') . 'schoolmesh_' . $command;
 			
 			// FIXME: this is needed, but should be more general than it_IT.utf8
-			
 			exec($command, $result, $return_var);
-			
+
 			foreach($result as $line)
 			{
 				if (strpos($line, '='))
