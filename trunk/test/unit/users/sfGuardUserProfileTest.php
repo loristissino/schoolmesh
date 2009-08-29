@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(72, new lime_output_color());
+$t = new lime_test(75, new lime_output_color());
 
 $loris_permissions=array(
 	'backadmin',
@@ -243,3 +243,17 @@ $user->getProfile()->revokeUserPermission('backadmin');
 // $t->is($profile->hasPermission('backadmin'), false, 'the user does not have the backadmin permission');
 
 $t->todo('(it works, but see comment)-- the user does not have the backadmin permission');
+
+$t->comment('System alerts');
+
+$user = sfGuardUserProfilePeer::retrieveByUsername('helen.abram');
+$profile=$user->getProfile();
+
+$profile->addSystemAlert('alpha alert');
+$t->is($profile->getSystemAlerts(), 'alpha alert', 'first alert is correctly set');
+
+$profile->addSystemAlert('alpha alert');
+$t->is($profile->getSystemAlerts(), 'alpha alert', 'a second identical alert is not added');
+
+$profile->addSystemAlert('beta alert');
+$t->is($profile->getSystemAlerts(), 'alpha alert - beta alert', 'a second different alert is added');
