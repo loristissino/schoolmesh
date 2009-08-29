@@ -44,7 +44,7 @@
          <input type="submit" name="Confirm" value="<?php echo __('Confirm') ?>">
 		<?php echo link_to(
 			__('Cancel'),
-			url_for('passwordreset/index')
+			$referer
 			);
 		?>
       </td>

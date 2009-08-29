@@ -28,6 +28,11 @@ class AccountPeer extends BaseAccountPeer
 			default:
 				throw new Exception ('not a valid account type given: ' . $ype);
 		}
+		
+		if ($realAccount->getPasswordIsResettable())
+		{
+			$realAccount->setTemporaryPassword(rand(1000000,9999999));
+		}
 	
 		return $realAccount;
 		

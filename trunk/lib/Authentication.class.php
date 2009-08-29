@@ -58,12 +58,12 @@ class Authentication {
 	{
 		$share = sfConfig::get('app_authentication_samba_share');
 		$address = sfConfig::get('app_authentication_samba_address');
-		$command = sprintf('echo exit | smbclient "%s" "%s" -I $s -U %s', $share, $password, $address, $username);
+		$command = sprintf('echo exit | smbclient "%s" "%s" -I %s -U %s', $share, $password, $address, $username);
 
 		$output="";
 		$result=-1;
 		@exec($command, $output, $result);
-
+		
 		return ($result == 0);
 	}
  

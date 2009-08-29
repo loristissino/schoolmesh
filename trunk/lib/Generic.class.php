@@ -173,6 +173,20 @@ class Generic{
 			
 			// FIXME: this is needed, but should be more general than it_IT.utf8
 			exec($command, $result, $return_var);
+/*			
+ob_start();
+
+echo "executed: $command\ngot\n";
+print_r($result);
+echo "return var: $return_var\n";
+
+fwrite(fopen('lorislog.txt', 'a'), ob_get_contents());fclose($f);ob_end_clean();
+*/
+
+if ($return_var!=0)
+{
+	throw new Exception('Could not execute command '. $command . ' (got: '. serialize($result) . ')');
+}
 
 			foreach($result as $line)
 			{

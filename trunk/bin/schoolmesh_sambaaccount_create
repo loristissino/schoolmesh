@@ -6,8 +6,10 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 
 USERNAME=$1
 FULLNAME=$2
+PASSWORD=$3
 
 checkUsername $USERNAME
 checkString "$FULLNAME"
+checkString "$PASSWORD"
 
-echo -e "alfa\nalfa\n" | sudo pdbedit -a -t -f "$FULLNAME" $USERNAME && msg_ok "added user: $USERNAME" || unexpectedError $@
+echo -e "$PASSWORD\n$PASSWORD\n" | sudo pdbedit -a -t -f "$FULLNAME" $USERNAME > /dev/null && msg_ok "added user: $USERNAME" || unexpectedError $@

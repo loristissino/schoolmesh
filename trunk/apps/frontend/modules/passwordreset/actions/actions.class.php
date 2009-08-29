@@ -43,6 +43,7 @@ class passwordresetActions extends sfActions
 	{
 		$this->available_accounts=sfConfig::get('app_config_accounts');
 		$this->form = new ConfirmUserForm();
+		$this->referer=$request->getReferer();
 		
 		
 		if ($request->isMethod('post'))
