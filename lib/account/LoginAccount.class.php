@@ -84,12 +84,8 @@ class LoginAccount extends Account
 		return $this;
 	}
 
-	public function setFormDefaults(&$form)
+	public function setFormDefaults(LoginAccountForm &$form)
 	{
-		if (! $form instanceof LoginAccountForm)
-		{
-			throw new Exception('The form must be a LoginAccountForm instance');
-		}
 
 	$form->setDefaults(
 		array(

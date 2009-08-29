@@ -54,7 +54,7 @@ class PosixAccount extends Account
 		}
 
 		$this->setExists($this->getAccountInfo('found')==1);
-		$this->setIsLocked($this->getAccountInfo('user_locked')==1);
+		$this->setIsLocked($this->getAccountInfo('user_locked')==1); 
 
 
 		return $this;

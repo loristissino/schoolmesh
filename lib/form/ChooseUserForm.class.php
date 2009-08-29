@@ -7,9 +7,13 @@
 			
 			$accountChoices=array('0'=>'Choose the account type');
 			
-			foreach($accounts as $account)
+			foreach($accounts as $accountName)
 			{
-				$accountChoices[$account]=$account;
+				$account=AccountPeer::createAccountOfType($accountName);
+				if ($account->getPasswordIsResettable())
+				{
+					$accountChoices[$accountName]=$accountName;
+				}
 			}
 			
 			$userlist=sfGuardUserProfilePeer::retrieveUsersOfGuardGroup('student');

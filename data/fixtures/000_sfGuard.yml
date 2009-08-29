@@ -234,9 +234,6 @@ sfGuardUserPermission:
   loris_login:
     user_id:      loris
     permission_id:  login
-  loris_login_resetpwd:
-    user_id:      loris
-    permission_id:  login_resetpwd
   juri_login:
     user_id:      juri
     permission_id:  login

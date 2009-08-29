@@ -1,0 +1,25 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+USERNAME=$1
+
+TMPFILE=$(mktemp)
+
+sudo pdbedit -L -v -u $USERNAME 2>/dev/null > $TMPFILE
+
+if [[ $? -ne 0 ]]
+	then
+		echo found=0
+		exit 0
+fi
+
+echo found=1
+
+cat $TMPFILE
+echo fullname=$(grep '^Full Name:' $TMPFILE | sed 's/[^:]*\: *//')
+echo user_SID=$(grep '^User SID:' $TMPFILE | sed 's/[^:]*\: *//')
+echo logon_hours=$(grep '^Logon hours *:' $TMPFILE | sed 's/[^:]*\: *//')
+echo account_flags=$(grep '^Account Flags:' $TMPFILE | sed 's/[^:]*\: *//')
