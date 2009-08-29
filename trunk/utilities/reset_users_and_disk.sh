@@ -22,6 +22,8 @@ sudo mount -v -t ext3 -o loop,acl,usrjquota=aquota.user,jqfmt=vfsv0 /home/discov
 sudo quotacheck -avug
 sudo service quota start
 
+#exit
+
 for USER in bianca.b enzo.dalo paolo.stefanutti juri.daldan federico.missio asdasd juri.domodossola stefano.ospitino blip blip2 blip3 giulia.d alice.alessandrini bebe.lasow bianca.brindisi bob.bernardi bruna.bagala cristina.bonucci fabio.adriani francesco.genova giorgio.botto giorgio.simonacci juri.dom lucio.stelli marco.defilippis mario.rossi alessandra.tassanzg giorgio.piccoli giorgio.piccoletti bianca.benzo.dalo finn.myklegaard flavia.g francesco.g helen.abram john.test kenny.mcbain loris.tissino marcis.decarrabas marin.djakovo susanne.zacharias vincenzo.decarolis wladyslaw.leczewski
 	do
 		if getent passwd $USER; then

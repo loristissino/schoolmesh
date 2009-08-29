@@ -53,14 +53,14 @@ class passwordresetActions extends sfActions
 				$params = $this->form->getValues();
 				$this->account=$params['account'];
 				$this->username=$params['username'];
-				if(!$this->getUser()->hasPermission($this->account.'_resetpwd'))
+				if(!($this->getUser()->hasCredential($this->account.'_resetpwd')||($this->getUser()->hasCredential('admin'))))
 				{
 					$this->getUser()->setFlash('error', sprintf('You don\'t have the required permission to reset passwords of type %s.', $this->account));
 					$this->redirect('passwordreset/index');
 				}
 				
 				$user=sfGuardUserProfilePeer::retrieveByUsername($this->username);
-				if (!$user->getProfile()->getBelongsToGuardGroupByName('student'))
+				if ((!$user->getProfile()->getBelongsToGuardGroupByName('student'))&&(!$this->getUser()->hasCredential('admin')))
 				{
 					$this->getUser()->setFlash('error', sprintf('You don\'t have the required permission to reset passwords for user %s.', $this->username));
 					$this->redirect('passwordreset/index');
@@ -73,6 +73,9 @@ class passwordresetActions extends sfActions
 				}
 				
 				$user->getProfile()->getAccountByType($this->account)->resetPassword();
+				$user->getProfile()
+				->addSystemAlert(sprintf('password reset by %s', $this->getUser()->getUsername()))
+				->save();
 				$this->getUser()->setFlash('notice', 'Password successfully reset.');
 				$this->redirect('passwordreset/view?username='. $this->username . '&account=' . $this->account);
 			}
@@ -84,17 +87,28 @@ class passwordresetActions extends sfActions
 		$this->account=$request->getParameter('info[account]');
 		$this->username=$request->getParameter('info[username]');
 		
-		if(!$this->getUser()->hasPermission($this->account.'_resetpwd'))
+		if(!($this->getUser()->hasCredential($this->account.'_resetpwd')||($this->getUser()->hasCredential('admin'))))
 		{
-			$this->getUser()->setFlash('error', sprintf('You don\'t have the required permission to reset passwords of type %s', $this->account));
+			$this->getUser()->setFlash('error', sprintf('Yyyyou don\'t have the required creential to reset passwords of type %s', $this->account));
 			$this->redirect('passwordreset/index');
 		}
 		
 		$user=sfGuardUserProfilePeer::retrieveByUsername($this->username);
 		
-		if (!$user->getProfile()->getBelongsToGuardGroupByName('student'))
+		if(!$user)
 		{
-			$this->getUser()->setFlash('error', sprintf('You don\'t have the required permission to reset passwords for user %s', $this->username));
+			$this->getUser()->setFlash('error', 'You must select a user');
+			$this->redirect('passwordreset/index');
+		}
+		
+		if ((!$user->getProfile()->getBelongsToGuardGroupByName('student'))&&(!$this->getUser()->hasCredential('admin')))
+		{
+			$this->getUser()->setFlash('error', sprintf('You don\'t have the required permission to reset passwords for user %s.', $this->username));
+			$this->redirect('passwordreset/index');
+		}
+		if (!$user->getProfile()->hasAccountOfType($this->account))
+		{
+			$this->getUser()->setFlash('error', sprintf('User %s does not have an account of type %s.', $this->username, $this->account));
 			$this->redirect('passwordreset/index');
 		}
 

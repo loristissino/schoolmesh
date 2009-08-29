@@ -46,3 +46,8 @@ sfGuardUserGroup:
     group_id:      student
     user_id:        <?php echo $ms->username . "\n" ?>
 <?php endforeach; ?>
+
+sfGuardUserPermission:
+  helen_login:
+    user_id:      helen.abram
+    permission_id:  login

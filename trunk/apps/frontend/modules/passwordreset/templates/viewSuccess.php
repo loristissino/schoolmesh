@@ -35,4 +35,10 @@
   
   </table>
 
+<hr />
 
+<p><?php echo link_to(
+	'Homepage',
+	'@homepage'
+	)
+	?></p>

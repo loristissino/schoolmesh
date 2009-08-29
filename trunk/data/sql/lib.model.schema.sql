@@ -99,7 +99,6 @@ CREATE TABLE `sf_guard_user_profile`
 	CONSTRAINT `sf_guard_user_profile_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
-		ON UPDATE CASCADE
 		ON DELETE CASCADE,
 	INDEX `sf_guard_user_profile_FI_2` (`role_id`),
 	CONSTRAINT `sf_guard_user_profile_FK_2`
@@ -154,12 +153,10 @@ CREATE TABLE `account`
 	CONSTRAINT `account_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
-		ON UPDATE CASCADE
 		ON DELETE CASCADE,
 	CONSTRAINT `account_FK_2`
 		FOREIGN KEY (`account_type_id`)
 		REFERENCES `account_type` (`id`)
-		ON UPDATE CASCADE
 		ON DELETE RESTRICT
 )Type=InnoDB;
 
