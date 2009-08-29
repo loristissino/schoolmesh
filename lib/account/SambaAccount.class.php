@@ -17,7 +17,7 @@ class SambaAccount extends Account
 	public function updateInfoFromRealWorld()
 	{
 		$this->resetInfo();
-		$info=Generic::executeCommand(sprintf('sambaaccount_getinfo %s', $this->getUsername()));
+		$info=Generic::executeCommand(sprintf('sambaaccount_getinfo %s', $this->getUsername()), false);
 		
 		// first, we retrieve the values...
 		foreach($info as $key=>$value)
@@ -75,9 +75,10 @@ class SambaAccount extends Account
 		if ($this->getAccountInfo('found')==0)
 		{
 			$checkList->addCheck(new Check(Check::FAILED, 'samba: account not found', $checkGroup, array(
-				'command'=>sprintf('schoolmesh_sambaaccount_create %s "%s"',
+				'command'=>sprintf('schoolmesh_sambaaccount_create %s "%s" "%s"',
 					$this->getUsername(),
-					$this->getProfile()->getFullName())
+					$this->getProfile()->getFullName(),
+					$this->getTemporaryPassword())
 				)));
 			$this->save();
 			return $this;
@@ -110,7 +111,7 @@ class SambaAccount extends Account
 		->setTemporaryPassword(rand(100000,999999))
 		->save();
 		
-		Generic::executeCommand(sprintf('sambaaccount_setpassword %s "%s"', $this->getUsername(), $this->getTemporaryPassword()));
+		Generic::executeCommand(sprintf('sambaaccount_setpassword %s "%s"', $this->getUsername(), $this->getTemporaryPassword()), false);
 		return $this;
 	}
 

@@ -17,13 +17,13 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$this->setEmailState(1);
 		}
 		
-		public function addAccount($account)
+		public function addAccount(Account $account)
 		{
-			if (!$account instanceof Account)
+/*			if (!$account instanceof Account)
 			{
 				throw new Exception('expected an Account instance');
 			}
-			
+	*/		
 			if ($this->hasAccountOfType($account->getAccountType()->getName()))
 			{
 				return $this;

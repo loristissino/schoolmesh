@@ -22,7 +22,7 @@ class PosixAccount extends Account
 	public function updateInfoFromRealWorld()
 	{
 		$this->resetInfo();
-		$info=Generic::executeCommand(sprintf('posixaccount_getinfo %s', $this->getUsername()));
+		$info=Generic::executeCommand(sprintf('posixaccount_getinfo %s', $this->getUsername()), false);
 		
 		// first, we retrieve the values...
 		foreach($info as $key=>$value)

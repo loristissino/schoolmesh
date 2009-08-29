@@ -11,7 +11,7 @@ class LoginAccount extends Account
 	public function updateInfoFromRealWorld()
 	{
 		$this->resetInfo();
-		$info=Generic::executeCommand(sprintf('loginaccount_getinfo %s', $this->getUsername()));
+		$info=Generic::executeCommand(sprintf('loginaccount_getinfo %s', $this->getUsername()), false);
 		
 		// first, we retrieve the values...
 		foreach($info as $key=>$value)
