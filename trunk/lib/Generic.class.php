@@ -163,7 +163,7 @@ class Generic{
 			return $text;
 		}
 		
-		static public function executeCommand($command, $withSudo=true)
+		static public function executeCommand($command, $withSudo=false)
 		{
 			$info=array();
 			$result=array();

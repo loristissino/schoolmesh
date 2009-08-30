@@ -8,17 +8,17 @@ TEAMNAME=$1
 checkGroup "$TEAMNAME"
 
 USERNAME=$2
-checkUsername $USERNAME
+checkString $USERNAME
 
 DESCRIPTION=$3
 checkString "$DESCRIPTION"
 
 FOLDER="$POSIX_HOMEDIR_TEAMS/$TEAMNAME"
-checkDirectory "$FOLDER"
+#checkDirectory "$FOLDER"
 
 USERFOLDER="$POSIX_HOMEDIR_USERS/$USERNAME/$POSIX_BASEFOLDER"
 
-checkDirectory "$USERFOLDER"
+#checkDirectory "$USERFOLDER"
 
 userBelongsToGroup $USERNAME $TEAMNAME
 
