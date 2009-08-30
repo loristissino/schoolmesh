@@ -69,15 +69,6 @@ class Team extends BaseTeam
 			}
 
 
-ob_start();
-
-echo $command . "\n";
-echo $username . "\n";
-print_r($info);
-
-fwrite(fopen('lorislog.txt', 'a'), ob_get_contents());fclose($f);ob_end_clean();
-
-
 			if (($info['link_found']!=1)||($info['belongs']!=1))
 			{
 				$checkList->addCheck(new Check(Check::WARNING, sprintf('user %s does not belong to the group or does not have a link in their folder for «%s»', $user->getUsername(), $this->getPosixName()), $checkGroup,
@@ -89,7 +80,6 @@ fwrite(fopen('lorislog.txt', 'a'), ob_get_contents());fclose($f);ob_end_clean();
 				$checkList->addCheck(new Check(Check::PASSED, sprintf('user %s has a link in their folder for %s', $user->getUsername(), $this->getPosixName()), $checkGroup));
 			}
 
-			$checkList->addCheck(new Check(Check::PASSED, sprintf('%s', $user->getUsername()), $checkGroup));
 		}
 		
 		

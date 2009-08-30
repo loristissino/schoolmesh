@@ -23,7 +23,7 @@ propel:
 
   sf_guard_user_profile:
     _attributes:  { phpName: sfGuardUserProfile }
-    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade, primaryKey: true }
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onUpdate: cascade, onDelete: cascade, primaryKey: true }
     first_name:   varchar(50)
     middle_name:  varchar(50)
     last_name:    varchar(50)
@@ -66,7 +66,7 @@ propel:
 
   account:
     id:   
-    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: cascade, index:true }
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onUpdate: cascade, onDelete: cascade, index:true }
     account_type_id: { type: integer, foreignTable: account_type, foreignReference: id, required: true, onDelete: restrict, index: true }
     info:  longvarchar
     settings: longvarchar
@@ -110,7 +110,6 @@ propel:
     content:  { type: varchar(255), required: true }
     state: integer
     assignee_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: false, onDelete: restrict, onUpdate: cascade, index:true }
-
 
   appointment:
     id: ~

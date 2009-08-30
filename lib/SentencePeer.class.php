@@ -13,6 +13,7 @@ class SentencePeer{
 	
 	'users_bulk_upload_appointments'=>'Upload a file in CSV format containing updated information about appointments.',
 
+	'users_bulk_upload_classes'=>'Upload a file in CSV format containing updated information about classes.',
 	'users_bulk_upload_classes_format'=>'id,grade,section,track,description',
 	'users_bulk_upload_classes_example'=>"1AI,1,A,I,Classe 1^A IGEA\n2AI,2,A,I,Classe 2^A IGEA\n...",
 	

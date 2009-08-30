@@ -69,12 +69,13 @@ class SchoolclassPeer extends BaseSchoolclassPeer
 				}
 
 			$schoolclass=new Schoolclass();
-			$schoolclass->setId($id);
-			$schoolclass->setGrade($grade);
-			$schoolclass->setSection($section);
-			$schoolclass->setTrack($mytrack);
-			$schoolclass->setDescription($description);
-			$schoolclass->save();
+			$schoolclass
+			->setId($id)
+			->setGrade($grade)
+			->setSection($section)
+			->setTrack($mytrack)
+			->setDescription($description)
+			->save();
 			
 			$teamname = sfConfig::get('app_config_class_teachersteam_prefix') . Generic::slugify($id);
 			$team = TeamPeer::retrieveByPosixName($teamname);
@@ -88,6 +89,8 @@ class SchoolclassPeer extends BaseSchoolclassPeer
 				$team
 				->setDescription(sfConfig::get('app_config_class_teachersteam_name') . ' ' . $id)
 				->setPosixName($teamname)
+				->setNeedsFolder(true)
+				->setNeedsMailingList(false)
 				->save();
 				$checks[] = new Check(true, sprintf('Team «%s» created', $team), sprintf('Line %d: ', $row));
 				
