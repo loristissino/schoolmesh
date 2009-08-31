@@ -424,6 +424,22 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			}
 			return $this;
 		}
+		
+		public function changeRoleInTeam(Team $team, Role $role)
+		{
+	        $c = new Criteria();
+			$c->add(UserTeamPeer::USER_ID, $this->getUserId());
+			$c->add(UserTeamPeer::TEAM_ID, $team->getId());
+			$t = UserTeamPeer::doSelectOne($c);
+			if ($t)
+			{
+				$t
+				->setRoleId($role->getId())
+				->save();
+			}
+			return $this;
+			
+		}
 
 
 

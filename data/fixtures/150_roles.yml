@@ -42,6 +42,12 @@ Role:
     quality_code: CM
     posix_name:   cm
     may_be_main_role: false
+  sm:
+    male_description:  Segretario Dipartimento
+    female_description:  Segretaria Dipartimento
+    quality_code: SM
+    posix_name:   sm
+    may_be_main_role: false
   risq:
     male_description:  Responsabile informatico Sistema Qualità
     female_description:  Responsabile informatica Sistema Qualità

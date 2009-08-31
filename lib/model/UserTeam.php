@@ -10,5 +10,10 @@ class UserTeam extends BaseUserTeam
     {
         return $this->getsfGuardUser()->getProfile()->getLastName();
     }
+	
+	public function __toString()
+	{
+		return $this->getTeam()->getDescription();
+	}
     
 }
