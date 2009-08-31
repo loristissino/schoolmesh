@@ -400,7 +400,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			;
         }
 		
-		public function addToTeam($team, $role)
+		public function addToTeam(Team $team, Role $role)
 		{
 			if (!$this->getBelongsToTeam($team->getPosixName()))
 			{

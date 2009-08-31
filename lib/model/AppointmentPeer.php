@@ -343,5 +343,118 @@ switch ($sortby)
 
 	}
 
+	public static function importFromCSVFile($file)
+	{
+		$checkList=new CheckList();
+				
+		if (!is_readable($file))
+		{
+			$checksList->addCheck(new Check(Check::FAILED, 'file not readable', $file));
+			return $checkList;
+		}
+		else
+		{
+			$checkList->addCheck(new Check(Check::PASSED, 'starting import', 'test'));
+		}
 
+		$row = 0;
+		$imported=0;
+		$skipped=0;
+
+		$role=RolePeer::retrieveByPosixName(sfConfig::get('app_config_default_teams_role'));
+
+		$handle = fopen($file, "r");
+		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+			//$num = count($data);
+			//echo "$num fields in line $row:\n";
+			
+
+			$row++;
+			$groupName= sprintf('Line %d: ', $row);
+
+			if ($row==1)
+				{
+					// We could check whether the field names are correct...
+				continue;  // we skip the first line
+				}
+				
+			if (sizeof($data)!=4)
+			{
+				$checkList->addCheck(new Check(Check::FAILED, 'Invalid data', $groupName));
+				continue;
+			}
+	
+
+			list($username, $schoolclass, $subject, $year)=$data; 
+
+			$sfUser= sfGuardUserProfilePeer::retrieveByUsername($username);
+			if(!$sfUser)
+				{
+					$checkList->addCheck(new Check(Check::FAILED, sprintf('Not a user: %s', $username), $groupName));
+					$skipped++;
+					continue;
+				}
+				
+			$mysubject = SubjectPeer::retrieveByShortcut($subject);
+			if(!$mysubject)
+				{
+					$checkList->addCheck(new Check(Check::FAILED, sprintf('Not a subject: %s', $mysubject), $groupName));
+					$skipped++;
+					continue;
+				}
+
+			$myclass= SchoolclassPeer::retrieveByPK($schoolclass);
+			if(!$myclass)
+				{
+					$checkList->addCheck(new Check(Check::FAILED, sprintf('Not a class: %s', $myclass), $groupName));
+					$skipped++;
+					continue;
+				}
+
+			$myyear= YearPeer::retrieveByPK($year);
+			if(!$myyear)
+				{
+					$checkList->addCheck(new Check(Check::FAILED, sprintf('Not a year: %s', $myyear), $groupName));
+					$skipped++;
+					continue;
+				}
+
+			$appointment=AppointmentPeer::retrieveByUsernameSchoolclassSubjectYear($username,$schoolclass, $subject, $year);
+			if($appointment)
+				{
+					$checkList->addCheck(new Check(Check::WARNING, sprintf('Appointment already exists: %s,  %s, %s, %s', $username, $mysubject, $myclass, $myyear), $groupName));
+					$skipped++;
+					continue;
+				}
+			
+			$appointment=new Appointment();
+			
+			$appointment
+			->setUserId($sfUser->getId())
+			->setSubject($mysubject)
+			->setSchoolclass($myclass)
+			->setYear($myyear)
+			->setState(0)
+			->save();
+			
+			$appointment->getChecks();
+			
+			$teamname=sfConfig::get('app_config_class_teachersteam_prefix'). Generic::slugify($schoolclass);
+			
+			$team=TeamPeer::retrieveByPosixName($teamname);
+			
+			if ($team)
+			{
+				$sfUser->getProfile()->addToTeam($team, $role);
+			}
+			
+			$imported++;
+			$checkList->addCheck(new Check(Check::PASSED, sprintf('   Appointment %s (%s, %s) imported', $username, $schoolclass, $subject),$groupName));
+
+		}
+		fclose($handle);
+		
+		return $checkList;
+
+	}
 }
