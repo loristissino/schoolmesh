@@ -22,7 +22,11 @@ sudo -u $USERNAME cat "$POSIX_HOMEDIR_USERS/$USERNAME/$POSIX_BASEFOLDER/Consigli
 
 sudo -u $USERNAME rm -f "$POSIX_HOMEDIR_USERS/$USERNAME/$POSIX_BASEFOLDER/Consiglio di classe 3AP/testfile.txt" 2>/dev/null && msg_failed "$USERNAME can remove a file that they do not own" || msg_ok "$USERNAME cannot remove a file they do not own"
 
+USERNAME=marco.defilippis
+echo abc | sudo -u $USERNAME dd of="$POSIX_HOMEDIR_USERS/$USERNAME/$POSIX_BASEFOLDER/Materiali 4AP (Informatica gestionale)/testfile.txt" 2>/dev/null && msg_ok "$USERNAME can write a file in their public folder" || msg_failed "$USERNAME cannot write a file in their public folder"
 
+USERNAME=helen.abram
+sudo -u $USERNAME cat "$POSIX_HOMEDIR_USERS/$USERNAME/$POSIX_BASEFOLDER/Materiali 4AP (Informatica gestionale)/testfile.txt" 2>/dev/null && msg_ok "$USERNAME can read a file in a teacher's public folder" || msg_failed "$USERNAME cannot read a teacher's public folder"
 
 echo RESULTS:
 echo OK: $OPOK
