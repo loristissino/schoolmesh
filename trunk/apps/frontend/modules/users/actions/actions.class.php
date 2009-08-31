@@ -531,6 +531,43 @@ class usersActions extends sfActions
 	
   }
 
+  public function executeChangerole(sfWebRequest $request)
+  {
+	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
+	$this->team = UserTeamPeer::retrieveByPK($request->getParameter('team'));
+	
+//	$this->forward404Unless($this->team);
+
+	$this->form = new TeamChangeRoleForm();
+	
+	if ($request->isMethod('post'))
+		{
+			$this->form->bind($request->getParameter('info'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				$this->current_user=sfGuardUserProfilePeer::retrieveByPK($params['id']);
+				$this->team=UserTeamPeer::retrieveByPk($params['team']);
+				$this->role=RolePeer::retrieveByPk($params['role']);
+				
+				$this->current_user
+				->changeRoleInTeam($this->team->getTeam(), $this->role);
+				
+				$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Role successfully changed.'));
+				$this->redirect('users/edit?id='. $params['id']);
+			}
+		}
+
+	$this->form->setDefaults(
+		array(
+			'id' => $this->current_user->getUserId(),
+			'team' => $this->team->getId(),
+			'role'=> $this->team->getRoleId(),
+		)
+	);
+		
+	}
+
 
   public function executeEditaccount(sfWebRequest $request)
   {
