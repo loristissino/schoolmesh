@@ -31,6 +31,12 @@
 
 <?php endif ?>
 
+
+<?php if(isset($checkList)): ?>
+
+<?php include_partial('content/checks', array('checkList'=>$checkList, 'start_closed'=>false)) ?>
+<?php endif ?>
+
 <h2><?php echo __('Upload form') ?></h2>
 
 <p><?php echo __(SentencePeer::getSentence('users_bulk_upload_'. $what)) ?></p>

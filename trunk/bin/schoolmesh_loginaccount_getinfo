@@ -6,7 +6,7 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 
 USERNAME=$1
 
-checkUsername $USERNAME
+checkString $USERNAME
 
 LASTLOGIN=$(/usr/sbin/dump-utmp  /var/log/wtmp | grep "^$USERNAME "| cut -d '|' -f8 | tail -1)
 # we can't use "last command", because (strangely enough) it does not show the year

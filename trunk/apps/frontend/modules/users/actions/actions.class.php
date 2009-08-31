@@ -59,6 +59,12 @@ class usersActions extends sfActions
 					break;
 				}
 				
+				case('appointments'):
+				{
+					$this->checkList=AppointmentPeer::importFromCSVFile($file->getTempName());
+					break;
+				}
+				
 			}
 		}
 		

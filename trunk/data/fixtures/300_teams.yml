@@ -11,6 +11,24 @@ Team:
     needs_folder: true
     needs_mailing_list: false
     
+  cdc5ap:
+    description:  Consiglio di classe 5AP
+    posix_name:   cdc5ap
+    needs_folder: false
+    needs_mailing_list: true
+
+  cdc3bp:
+    description:  Consiglio di classe 3BP
+    posix_name:   cdc3bp
+    needs_folder: true
+    needs_mailing_list: true
+
+  cdc4bp:
+    description:  Consiglio di classe 4BP
+    posix_name:   cdc4bp
+    needs_folder: true
+    needs_mailing_list: false
+    
   cdc5bp:
     description:  Consiglio di classe 5BP
     posix_name:   cdc5bp
