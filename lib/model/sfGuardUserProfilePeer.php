@@ -70,7 +70,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		if ($filtered_schoolclass_id!='')
 		{
 			$c->addJoin(sfGuardUserProfilePeer::USER_ID, EnrolmentPeer::USER_ID, Criteria::LEFT_JOIN);
-			$c->add(EnrolmentPeer::YEAR_ID, 2008);
+			$c->add(EnrolmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
 			$c->add(EnrolmentPeer::SCHOOLCLASS_ID, $filtered_schoolclass_id);
 		}
 	}
