@@ -35,7 +35,8 @@ class Team extends BaseTeam
 			}
 			if (@$info['folder_found']!=1)
 			{
-				$checkList->addCheck(new Check(Check::WARNING, 'team\'s posix folder does not exist', $checkGroup));
+				$checkList->addCheck(new Check(Check::WARNING, 'team\'s posix folder does not exist', $checkGroup,
+				array('command'=>sprintf('schoolmesh_posixteam_foldercreate %s', $this->getPosixName()))));
 			}
 			else
 			{
