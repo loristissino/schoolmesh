@@ -55,13 +55,13 @@ EOF;
 			foreach ($current_appointments as $appointment)
 			{
 				$folder=sprintf('Materiali %s (%s)', $appointment->getSchoolclass()->getId(), $appointment->getSubject()->getDescription());
-				echo sprintf('[[ -d "%1$s" ]] || sudo mkdir -v "%1$s" && sudo chown  %2$s:root "%1$s" && sudo chmod 700 "%1$s" && msg_ok "Done with folder \"%1$s\""', $folder, $user->getUsername()) . "\n";
+				echo sprintf('[[ -d "%1$s" ]] || sudo mkdir -v "%1$s" && sudo chown  %2$s:root "%1$s" && sudo chmod 700 "%1$s" && msg_ok "Done with folder \'%1$s\'"', $folder, $user->getUsername()) . "\n";
 				
 				$students=sfGuardUserProfilePeer::retrieveAllUsers('', 'set', $students_role->getId(), $appointment->getSchoolclass()->getId());
 				foreach($students as $student)
 				{
 					$studentfolder='$POSIX_HOMEDIR_USERS/' . $student->getUsername() . '/$POSIX_BASEFOLDER';
-					echo "echo making link for " . $student->getUsername() . "...\n";
+					echo 'echo "making link for ' . $student->getUsername() . '..."' . "\n";
 					echo sprintf ('sudo ln -sf "%1$s/%2$s" "%3$s/%2$s"', $teacherfolder, $folder, $studentfolder) . "\n";
 				}
 			}
