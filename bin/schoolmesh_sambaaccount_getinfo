@@ -8,7 +8,7 @@ USERNAME=$1
 
 TMPFILE=$(mktemp)
 
-sudo pdbedit -L -v -u $USERNAME 2>/dev/null > $TMPFILE
+sudo /usr/bin/pdbedit -Lvu $USERNAME 2>/dev/null > $TMPFILE
 
 if [[ $? -ne 0 ]]
 	then
