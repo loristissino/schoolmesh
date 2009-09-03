@@ -184,6 +184,29 @@ class usersActions extends sfActions
 
 
   }
+
+
+  public function executeBatch(sfWebRequest $request)
+{
+	
+	
+	$action=$request->getParameter('batch_action');
+
+	if ($action=='')
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must specify an action.'));
+			$this->redirect('users/list');
+		}
+
+//    $ids = $request->getParameter('ids');
+
+//	$this->users=sfGuardUserProfilePeer::retrieveByPKs($ids);
+	
+	$this->forward('users', 'runuserchecks');
+	
+}  
+
+
   public function executeRunuserchecks(sfWebRequest $request)
   {
 	$this->user = $this->getUser();
@@ -195,10 +218,14 @@ class usersActions extends sfActions
 		$this->forward404Unless($this->current_user=sfGuardUserProfilePeer::retrieveByPk($this->id));
 		$this->userlist=array($this->current_user);
 	}
+	elseif ($request->hasParameter('ids'))
+	{
+		$ids = $request->getParameter('ids');
+		$this->userlist = sfGuardUserProfilePeer::retrieveByPKs($ids);
+	}
 	else
 	{
 		$this->userlist = sfGuardUserProfilePeer::retrieveAllUsers('username');
-	
 	}
 	
 	$this->checkList = new CheckList();

@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../bootstrap/unit.php';
  
-$t = new lime_test(52, new lime_output_color());
+$t = new lime_test(53, new lime_output_color());
 
 $t->diag('::datetime()');
 
@@ -152,32 +152,10 @@ foreach(array(
 	$t->is(Generic::clever_ucwords('it', $key), $value, sprintf('«%s» correctly transformed into «%s»', $key, $value));
 }
 
-/*
-Generic::string2number('paolo');
-echo "\n";
-Generic::string2number('paolo');
-echo "\n";
-Generic::string2number('Paolo');
-echo "\n";
-Generic::string2number('Paola');
-echo "\n";
-Generic::string2number('paola');
-echo "\n";
-Generic::string2number('paoloo');
-echo "\n";
-Generic::string2number('polo');
-echo "\n";
-*/
 
-$a=array(1, 2, 3);
-$b=array(1, '2', 3);
+$t->diag('::clever_date("it")');
 
+$date=Generic::clever_date('it', '10/03/1997');
 
-echo "Sono uguali? " . ($a==$b) ? 'yeah': 'no' . "\n";
+$t->is(date_format($date, 'd/m/Y'), '10/03/1997', 'date correcty parsed');
 
-print_r($a);
-print_r($b);
-
-print_r(array_diff($a, $b));
-
-echo "\n";

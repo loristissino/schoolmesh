@@ -163,6 +163,25 @@ class Generic{
 			return $text;
 		}
 		
+		static public function clever_date($culture, $value)
+		{
+			switch($culture)
+			{
+				case 'it':
+					$format = '%d/%m/%Y';
+					break;
+				default:
+					throw new Exception('invalid culture');
+				}
+			
+				$info=strptime($value, $format);
+				
+				$date=($info['tm_year']+1900) . '-' . ($info['tm_mon']+1) . '-' . $info['tm_mday'];
+				$date_object=date_create($date);
+				return $date_object;
+		}
+		
+		
 		static public function executeCommand($command, $withSudo=false)
 		{
 			$info=array();

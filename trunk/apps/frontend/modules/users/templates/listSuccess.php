@@ -43,7 +43,7 @@
     <?php foreach ($userlist as $user): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
 	<td>
-  <input type="checkbox" name="ids[]" value="<?php echo $user->getId() ?>" class="sf_admin_batch_checkbox" />
+  <input type="checkbox" name="ids[]" value="<?php echo $user->getUserId() ?>" class="sf_admin_batch_checkbox" />
 </td>
 
       <td><?php include_partial('gender', array('gender'=>$user->getGender())) ?></td>
@@ -77,6 +77,7 @@
 <?php echo options_for_select(array(
   '' => __('Choose an action'),
   'Delete' => __('Delete selected users'),
+  'runuserchecks' => __('Run user checks'),  
 ), 0) ?>
   </select>
 
