@@ -85,6 +85,7 @@ CREATE TABLE `sf_guard_user_profile`
 	`middle_name` VARCHAR(50),
 	`last_name` VARCHAR(50),
 	`pronunciation` VARCHAR(100),
+	`extra_info` TEXT,
 	`role_id` INTEGER,
 	`gender` VARCHAR(1),
 	`email` VARCHAR(50),
@@ -99,6 +100,7 @@ CREATE TABLE `sf_guard_user_profile`
 	CONSTRAINT `sf_guard_user_profile_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE CASCADE,
 	INDEX `sf_guard_user_profile_FI_2` (`role_id`),
 	CONSTRAINT `sf_guard_user_profile_FK_2`
@@ -153,6 +155,7 @@ CREATE TABLE `account`
 	CONSTRAINT `account_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
 		ON DELETE CASCADE,
 	CONSTRAINT `account_FK_2`
 		FOREIGN KEY (`account_type_id`)

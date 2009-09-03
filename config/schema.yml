@@ -28,6 +28,7 @@ propel:
     middle_name:  varchar(50)
     last_name:    varchar(50)
     pronunciation: varchar(100)
+    info: longvarchar
     role_id:      ~
     gender:      varchar(1)
     email:        varchar(50)
@@ -129,6 +130,7 @@ propel:
     user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    info: longvarchar
     created_at:   
     updated_at:
     import_code:  varchar(20)

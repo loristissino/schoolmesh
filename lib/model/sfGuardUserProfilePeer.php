@@ -143,13 +143,13 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 				continue;  // we skip the first line
 				}
 
-			if (sizeof($data)!=10)
+			if (sizeof($data)!=11)
 			{
 				$checks[]=new Check(false, 'Invalid data', $checkgroup);
 				continue;
 			}
 
-			list($type,$first_name,$middle_name,$last_name,$gender,$birthdate,$birthplace,$email,$import_code,$group)=$data;
+			list($type,$first_name,$middle_name,$last_name,$gender,$birthdate,$birthplace,$email,$import_code,$group, $info)=$data;
 			
 			if ($import_code=='')
 			{
@@ -163,8 +163,8 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 			{
 				$profile->updateMiddlename($middle_name)
 				->setGender($gender)
-				->updateBirthplace($birthplace)
-//				->updateBirthdate($birthdate)
+				->setBirthplace($birthplace)
+				->setBirthdate(Generic::clever_date($culture, $birthdate))
 				->updateEmail($email)
 				->save();
 				$checks[]=new Check(true, sprintf('updated info for %s (%s)', 
@@ -185,7 +185,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 				->setLastName(Generic::clever_ucwords($culture, $last_name))
 				->setGender($gender)
 				->setBirthplace(Generic::clever_ucwords($culture, $birthplace))
-		//		->setBirthdate($birthdate)
+				->setBirthdate(Generic::clever_date($culture, $birthdate))
 				->setEmail($email)
 				->setImportCode($import_code);
 				
