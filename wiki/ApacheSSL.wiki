@@ -48,9 +48,12 @@ Il file _/etc/sudoers_ (da modificare con `sudo visudo`, non direttamente!) dovr
 User_Alias WEBSERVER=www-data
 
 # Cmnd alias specification
-Cmnd_Alias SCHOOLMESH_INFO = /usr/bin/stat, /usr/bin/lsattr, /usr/bin/getfacl, /usr/bin/quota
-# Cmnd_Alias SCHOOLMESH_APPLY = /usr/local/bin/schoolmesh*
+Cmnd_Alias SCHOOLMESH_INFO = /usr/bin/stat, /usr/bin/lsattr, /usr/bin/getfacl, /usr/bin/quota, /usr/bin/chage --list, /usr/bin/pdbedit -Lvu *
 
+Cmnd_Alias SCHOOLMESH_RESETSAMBAPASSWORD = /usr/bin/smbpasswd
+Cmnd_Alias SCHOOLMESH_RESETLOGINPASSWORD = /usr/sbin/chpasswd
+
+# Cmnd_Alias SCHOOLMESH_APPLY = /usr/local/bin/schoolmesh*
 
 # User privilege specification
 root    ALL=(ALL) ALL
