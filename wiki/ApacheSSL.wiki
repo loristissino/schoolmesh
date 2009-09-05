@@ -71,7 +71,18 @@ Togliere il `#` sulla riga
 
 solo se si configura SchoolMesh per l'esecuzione automatica degli script di gestione di sistema (*non raccomandabile per il momento*).
 
-6. Effettuare i test relativi alla configurazione di Apache e di SchoolMesh:
+6. Modificare il file _apps/frontend/config/app.yml_ in modo che contenga le informazioni corrette nella sezione _config_:
+
+{{{
+  config:
+    current_year:   2009  # only the first of the two years of a scholastic/academic year
+    culture: it
+    base_url: 'http://localhost/schoolmesh'
+}}}
+
+(Notare che nell'esempio fornito c'è 2008 al posto di 2009 e https al posto di http.)
+
+7. Effettuare i test relativi alla configurazione di Apache e di SchoolMesh:
 
 {{{
 cd /var/schoolmesh
