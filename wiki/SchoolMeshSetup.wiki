@@ -5,7 +5,7 @@
 
 Scaricare lo script di installazione (disponibile all'URL http://schoolmesh.googlecode.com/files) ed eseguirlo (i test sono stati effettuati su una macchina Ubuntu 8.04, 8.10 e 9.04).
 
-Prima di iniziare, fare una copia di backup del file di configurazione dell'accesso al database (_config/databases.yml_), mettendola fuori dalla directory _/var/schoolmesh_, poi rimuovere tutto il contenuto di _/var/schoolmesh_.
+Prima di iniziare, fare una copia di backup del file di configurazione dell'accesso al database (_config/databases.yml_) e della configurazione posix (_config/schoolmesh.rc_) mettendole fuori dalla directory _/var/schoolmesh_, poi rimuovere tutto il contenuto di _/var/schoolmesh_.
 
 {{{
 wget http://schoolmesh.googlecode.com/files/schoolmeshsetup-0.090814.sh

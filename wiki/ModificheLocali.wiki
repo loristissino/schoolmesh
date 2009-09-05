@@ -38,8 +38,40 @@ Nei file __app.yml__ è indicata la funzione da chiamare per verificare la corre
     samba_address: 127.0.0.1
 }}}
 
+== Configurazione POSIX ==
+
+Il file da modificare per la configurazione degli account POSIX è _config/schoolmesh.rc_, che nelle prime righe contiene voci come le seguenti:
+
+{{{
+# This file contains settings for schoolmesh-related shell scripts (schoolmesh_*).
+# It must be sourced in order to have a common configuration.
+
+if [ $# -eq 0 ]
+	then
+		echo "This script is a wrapper. See schoolmesh(1) for details."
+		exit 1
+	fi
+
+CONFIG_READ=1
+POSIX_HOMEDIR=/home/testhome
+POSIX_HOMEDIR_USERS="$POSIX_HOMEDIR/users"
+POSIX_HOMEDIR_TEAMS="$POSIX_HOMEDIR/teams"
+POSIX_BASEFOLDER=Mattiussi
+POSIX_BASEFOLDER_OWNER=root:root
+POSIX_DEFAULT_QUOTA_SBQ=2000
+POSIX_DEFAULT_QUOTA_HBQ=3000
+POSIX_DEFAULT_QUOTA_SFQ=1000
+POSIX_DEFAULT_QUOTA_HFQ=1500
+
+# DO NET EDIT PASS THIS LINE
+}}}
+
+Modificare le voci come ritenuto necessario.
+
 
 == Amministrazione ==
+
+(Questo è da rivedere, qualcosa è cambiato)
 
 Per poter fare delle operazioni relative agli utenti (verifica home directory, quote disco, ecc.) è necessario che il server web sia abilitato ad eseguire dei comandi tramite esercizio di delega (con _sudo_).
 
