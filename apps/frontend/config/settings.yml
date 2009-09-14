@@ -1,6 +1,7 @@
 prod:
   .settings:
     no_script_name:         off
+    cache:                  off
     logging_enabled:        off
 
 dev:

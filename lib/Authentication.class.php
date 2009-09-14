@@ -24,18 +24,18 @@ class Authentication {
 	
 	static function checkDBPassword($username, $password)
 	{
-	$user=sfGuardUserProfilePeer::retrieveByUsername($username);
-	$algorithm = $user->getAlgorithm();
-    if (false !== $pos = strpos($algorithm, '::'))
-    {
-      $algorithm = array(substr($algorithm, 0, $pos), substr($algorithm, $pos + 2));
-    }
-    if (!is_callable($algorithm))
-    {
-      throw new sfException(sprintf('The algorithm callable "%s" is not callable.', $algorithm));
-    }
+		$user=sfGuardUserProfilePeer::retrieveByUsername($username);
+		$algorithm = $user->getAlgorithm();
+		if (false !== $pos = strpos($algorithm, '::'))
+		{
+		  $algorithm = array(substr($algorithm, 0, $pos), substr($algorithm, $pos + 2));
+		}
+		if (!is_callable($algorithm))
+		{
+		  throw new sfException(sprintf('The algorithm callable "%s" is not callable.', $algorithm));
+		}
 
-    return $user->getPassword() == call_user_func_array($algorithm, array($user->getSalt().$password));
+		return $user->getPassword() == call_user_func_array($algorithm, array($user->getSalt().$password));
 	}
 
 	static function checkLdapPassword($username, $password)

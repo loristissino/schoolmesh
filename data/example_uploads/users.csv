@@ -1,21 +1,22 @@
-"type","first_name","middle_name","last_name","gender","birthdate","birthplace","email","import_code","group"
-"T","Cristina",,"Bonucci","F",31/01/68,"Gorizia",,999,"dipinfo"
-"T","Bianca",,"Brindisi","F",,,,1002,"diplingue"
-"T","Francesco","Pietro","Genova","M",30/12/65,"Valvasone (UD)","francesco.genova@istruzione.it",1003,"dipinfo"
-"O","Pasquale",,"De Rolandis","M",22/10/61,"Foggia",,1004,
-"T","Gianpiero",,"Bergamo","M",,,,,
-"T","Flavia",,"Gemona","F",,,,,"dipmatfis"
-"T","Fabio",,"Adriani","M",31/12/65,"Pordenone","f.adriani@istruzione.it",2001,"dipastro"
-"S","Alice",,"Alessandrini","F",,,,2002,"4AP"
-"S","Bob",,"Bernardi","M",,,,2003,"PIPPO"
-"T","Bebé",,"Łasøw","M",,,,2004,
-"S","Alessandra",,"Tassan Zanin Giulianelli","F",,,,2005,
-"T","Mario",,"Rossi","M",,,,2006,
-"T","Giorgio",,"Simonacci","M",,,,2007,
-"T","BRUNA",,"BAGALA’","F",,,,2008,
-"T","MARCO",,"DE FILIPPIS","M",,,,2009,
-"S","GIORGIO",,"BOTTO’","M",,,,2010,
-"S","JURI",,"DOMODOSSOLA","M",,,,2011,
-"K","Paolo",,"Samuelli","M",,,,2012,
-"S","Giulia",,"Donati","F",,,,2009,
-"T","Lucio",,"Stelli","M",,,,2014,
+"type","first_name","middle_name","last_name","gender","birthdate","birthplace","email","import_code","group","extra info"
+"T","Cristina",,"Bonucci","F",31/01/68,"Gorizia",,999,"dipinfo",1
+"T","Bianca",,"Brindisi","F",,,,1002,"diplingue",1
+"T","Francesco","Pietro","Genova","M",30/12/65,"Valvasone (UD)","francesco.genova@istruzione.it",1003,"dipinfo",1
+"O","Pasquale",,"De Rolandis","M",22/10/61,"Foggia",,1004,,1
+"T","Gianpiero",,"Bergamo","M",,,,,,1
+"T","Flavia",,"Gemona","F",,,,,"dipmatfis",1
+"T","Fabio",,"Adriani","M",31/12/65,"Pordenone","f.adriani@istruzione.it",2001,"dipastro",1
+"S","Alice",,"Alessandrini","F",,,,2002,"4AP",1
+"S","Bob",,"Bernardi","M",,,,2003,"PIPPO",1
+"T","Bebé",,"Łasøw","M",,,,2004,,1
+"S","Alessandra",,"Tassan Zanin Giulianelli","F",,,,2005,,1
+"T","Mario",,"Rossi","M",,,,2006,,1
+"T","Giorgio",,"Simonacci","M",,,,2007,,1
+"T","BRUNA",,"BAGALA’","F",,,,2008,,1
+"T","MARCO",,"DE FILIPPIS","M",,,,2009,,1
+"S","GIORGIO",,"BOTTO’","M",,,,2010,,1
+"S","JURI",,"DOMODOSSOLA","M",,,,2011,,1
+"K","Paolo",,"Samuelli","M",,,,2012,,1
+"S","Giulia",,"Donati","F",,,,2009,,1
+"T","Lucio",,"Stelli","M",,,,2014,,1
+"T","Paola",,"Moretti","F",,,,"moryt","diplet",1

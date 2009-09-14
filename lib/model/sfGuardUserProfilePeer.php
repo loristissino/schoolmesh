@@ -145,7 +145,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
 			if (sizeof($data)!=11)
 			{
-				$checks[]=new Check(false, 'Invalid data', $checkgroup);
+				$checks[]=new Check(false, 'Invalid data: size=' . sizeof($data), $checkgroup);
 				continue;
 			}
 
