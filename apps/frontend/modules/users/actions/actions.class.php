@@ -197,10 +197,69 @@ class usersActions extends sfActions
 			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must specify an action.'));
 			$this->redirect('users/list');
 		}
+		
+	switch($action)
+	{
+		case 'runuserchecks':
+			$this->forward('users', 'runuserchecks');
+		case 'getletter':
+			$this->forward('users', 'getletter');
+	}
 	
-	$this->forward('users', 'runuserchecks');
 	
 }  
+
+	public function executeXml(sfWebRequest $request)
+	{
+		$this->user = $this->getUser();
+		$this->referer= $request->getReferer();
+		
+		if($request->hasParameter('id'))
+		{
+			$this->id=$request->getParameter('id');
+			$this->forward404Unless($this->current_user=sfGuardUserProfilePeer::retrieveByPk($this->id));
+			$this->userlist=array($this->current_user);
+		}
+		elseif ($request->hasParameter('ids'))
+		{
+			$ids = $request->getParameter('ids');
+			$this->userlist = sfGuardUserProfilePeer::retrieveByPKs($ids);
+		}
+		else
+		{
+				$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select some users.'));
+				$this->redirect('users/list');
+		}
+		
+		set_time_limit(0);
+		
+		$this->available_accounts=sfConfig::get('app_config_accounts');
+		
+		$this->profiles=array();
+		
+		foreach($this->userlist as $current_user)
+		{
+			$this->profiles[]=$current_user;
+		}
+		
+		$this->setLayout('odt_content');
+
+		
+	}
+
+
+  public function executeGetletter(sfWebRequest $request)
+  {
+	
+	$document = new Opendocument('mattiussirq', 'letter');  // the second parameter is the document name
+	$document->setHeader($this->getController()->getPresentationFor('headers', 'letter'));
+	$document->setContent($this->getController()->getPresentationFor('users', 'xml'));
+	$document->setResponse($this->getContext()->getResponse());
+	return sfView::NONE;
+
+  }
+
+
 
 
   public function executeRunuserchecks(sfWebRequest $request)

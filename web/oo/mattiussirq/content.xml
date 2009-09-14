@@ -385,178 +385,55 @@
 <text:sequence-decl text:display-outline-level="0" text:name="Text"/>
 <text:sequence-decl text:display-outline-level="0" text:name="Drawing"/>
 </text:sequence-decls>
-<text:p text:style-name="P30"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P6">PIANO DI LAVORO</text:p>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P7">ANNO SCOLASTICO 2009/10</text:p>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P1"/>
-<text:p text:style-name="P15">Docente:<text:tab/>Prof.ssa Paola Moretti</text:p>
-<text:p text:style-name="P15">Materia:<text:tab/>Italiano</text:p>
-<text:p text:style-name="P15">Classe:<text:tab/>1AI</text:p>
-<text:p text:style-name="P16"/>						<text:p text:style-name="P9">Livelli di partenza rilevati</text:p>
-			<text:p text:style-name="P17">La classe rivela livelli di partenza molto diversificati confermati dai test d’ingresso somministrati.<text:line-break/>Ci sono alunni che presentano lacune e incertezze nell’ortografia.<text:line-break/>La classe manifesta nel suo complesso un buon livello di partecipazione alle attività proposte, il clima è sereno e di collaborazione.<text:line-break/>Un gruppo di alunni necessita tuttavia di sollecitazioni al lavoro e all’interesse.</text:p>
-			<text:p text:style-name="P10">(compilato il 05/09/2009)</text:p>
-			<text:p text:style-name="P1" />
-																		<text:p text:style-name="P9">Valutazione</text:p>
-			<text:p text:style-name="P17">fhfghgf</text:p>
-			<text:p text:style-name="P10">(compilato il 05/09/2009)</text:p>
-			<text:p text:style-name="P1" />
-										<text:p text:style-name="P9">Prove di verifica sommative</text:p>
-			<text:p text:style-name="P17">Primo periodo: scritte 2; orali 2; pratiche 0.<text:line-break/>Secondo periodo: scritte 3; orali 2; pratiche 0.</text:p>
-			<text:p text:style-name="P10">(compilato il 05/09/2009)</text:p>
-			<text:p text:style-name="P1" />
-										<text:p text:style-name="P9">Recupero programmato</text:p>
-			<text:p text:style-name="P17">fghfg</text:p>
-			<text:p text:style-name="P10">(compilato il 05/09/2009)</text:p>
-			<text:p text:style-name="P1" />
-												<text:p text:style-name="P1"></text:p>
-<text:p text:style-name="P9">Tavola di programmazione della disciplina</text:p>
-	<text:p text:style-name="P17">1. Antologia (settembre dicembre)</text:p>
+
+<text:p text:style-name="P9">Jessica Bortoli</text:p>
+<text:p text:style-name="P9">Data di nascita: 25/05/1991</text:p>
+<text:p text:style-name="P9">Matricola: 0000003130</text:p>
+
+<text:p text:style-name="P9"/>
+<text:p text:style-name="P9"/>
+<text:p text:style-name="P12">Pordenone, 14/09/2009</text:p><text:p text:style-name="P9"/><text:p text:style-name="P9"/><text:p text:style-name="P12">Cara Jessica,</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Ti è stato creato un account utente per l&apos;uso dei calcolatori dell&apos;Istituto.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Questo account ti consentirà di:</text:p><text:list text:style-name="L1"><text:list-item><text:p text:style-name="P10">autenticarti in tutti i laboratori;</text:p></text:list-item><text:list-item><text:p text:style-name="P10">avere a disposizione uno spazio su disco per la memorizzazione dei tuoi documenti;</text:p></text:list-item><text:list-item><text:p text:style-name="P10">avere uno spazio comune per gruppi di lavoro di cui eventualmente fai parte;</text:p></text:list-item><text:list-item><text:p text:style-name="P10">accedere in maniera semplificata alla piattaforma di <text:span text:style-name="T4">e-learning</text:span> dell&apos;istituto, se e quando sarà necessario.</text:p></text:list-item></text:list><text:p text:style-name="P9"/><text:p text:style-name="P12">L&apos;uso dell&apos;account comporta l&apos;accettazione del Regolamento di Istituto in merito.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Riepiloghiamo di seguito le informazioni rilevanti:</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Nome e cognome: <text:span text:style-name="T6">Jessica Bortoli</text:span></text:p><text:p text:style-name="P12">Nome utente (username): <text:span text:style-name="T6">jessica.bortoli</text:span></text:p><text:p text:style-name="P12">Password assegnata provvisoriamente: <text:span text:style-name="T6">
+	1865841</text:span></text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">È bene ricordare due cose importanti.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">La prima è che la password non va condivisa con altri utenti e dovrebbe essere cambiata al più presto, secondo le modalità indicate alla pagina web <text:a xlink:type="simple" xlink:href="http://www.mattiussilab.net/help">http://www.mattiussilab.net/help</text:a>.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">La seconda è che i "nomi utente" (username) sono stati predisposti seguendo lo schema <text:span text:style-name="T6">nome.cognome</text:span>. Può essere però capitato che nel tuo caso non si sia potuto seguire questo schema (ad esempio in casi di omonimia – due persone con lo stesso nome e cognome – oppure quando per la presenza di più nomi e/o più cognomi si sarebbe arrivati a superare i venti caratteri) e sia stata adottata una soluzione diversa. Sappi che, se vuoi, puoi chiedere che il tuo nome utente (jessica.bortoli) venga cambiato. Rivolgiti ad uno dei tecnici per ulteriori informazioni in merito.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Saluti e buon lavoro.</text:p><text:p text:style-name="P9"/>
 
 <text:p text:style-name="P16"/> 
+<text:p text:style-name="P9">Diana Cannavacciuolo</text:p>
+<text:p text:style-name="P9">Data di nascita: 02/02/1991</text:p>
+<text:p text:style-name="P9">Matricola: 0000003113</text:p>
 
-<text:p text:style-name="P4"></text:p>
-	<text:p text:style-name="P10">Titolo del modulo</text:p>
-	<text:p text:style-name="P9">Antologia</text:p>
-	<text:p text:style-name="P10">Periodo di svolgimento</text:p>
-	<text:p text:style-name="P9">settembre dicembre</text:p>
-	<text:p />
-			<text:p text:style-name="P10">Contenuti</text:p>
-		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">Tecniche di lettura: la fabula, l’intreccio, le sequenze.</text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">I personaggi: i ruoli e le funzioni.</text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">Il narratore esterno e interno (ruolo e punti di vista).</text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">Tecniche espressive:</text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">La fiaba, il mito, l’aneddoto…</text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">La narrazione complessa: il racconto, la novella, il romanzo (“I promessi sposi”: i primi capitoli).</text:p></text:list-item>
-				</text:list>
-		<text:p/>
-			<text:p text:style-name="P10">Conoscenze</text:p>
-		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">Individuare gli elementi costitutivi di semplici testi narrativi, letterari e non letterari, espositivi e descrittivi.</text:p></text:list-item>
-				</text:list>
-		<text:p/>
-			<text:p text:style-name="P10">Abilità</text:p>
-		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">hgfhfg</text:p></text:list-item>
-				</text:list>
-		<text:p/>
-			<text:p text:style-name="P10">Competenze</text:p>
-		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">ghfghfgh</text:p></text:list-item>
-				</text:list>
-		<text:p/>
-			<text:p text:style-name="P10">Note e commenti in fase di progettazione</text:p>
-		<text:list text:style-name="L2">
-				</text:list>
-		<text:p/>
-			<text:p text:style-name="P10">Note e commenti in fase di relazione finale</text:p>
-		<text:list text:style-name="L2">
-				</text:list>
-		<text:p/>
-	<text:p text:style-name="Horizontal_20_Line"/><text:p text:style-name="P16"/> 
-<text:p text:style-name="Standard"/>
-<text:p text:style-name="P9">Metodologia di lavoro</text:p>
-								<text:p text:style-name="P1">
-				▢ 				Lavori di gruppo				</text:p>
-							<text:p text:style-name="P1">
-				▣ 				Ricerche				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Compiti a casa				</text:p>
-							<text:p text:style-name="P1">
-				▣ 				Lezione frontale				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Risoluzione di problemi				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Lezione dialogata				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Problem posing				</text:p>
-				<text:p text:style-name="P1" />
-<text:p text:style-name="P9">Tipologia delle verifiche previste</text:p>
-								<text:p text:style-name="P1">
-				▣ 				Relazioni scritte e orali				</text:p>
-							<text:p text:style-name="P1">
-				▣ 				Interrogazione				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Domande aperte				</text:p>
-							<text:p text:style-name="P1">
-				▣ 				Test				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Prove di laboratorio				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Domande alla classe				</text:p>
-				<text:p text:style-name="P1" />
-<text:p text:style-name="P9">Strumenti previsti</text:p>
-								<text:p text:style-name="P1">
-				▣ 				Appunti delle lezioni				</text:p>
-							<text:p text:style-name="P1">
-				▣ 				Lavagna luminosa				</text:p>
-							<text:p text:style-name="P1">
-				▣ 				Fotocopie				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Proiettore				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Libri di testo				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Ricerche su Internet				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Help in linea				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Laboratorio informatico				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Calcolatrice				</text:p>
-				<text:p text:style-name="P1" />
-<text:p text:style-name="P9">Tipologia delle verifiche effettivamente svolte</text:p>
-								<text:p text:style-name="P1">
-				▢ 				Domande aperte				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Test				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Prove di laboratorio				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Domande alla classe				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Relazioni scritte e orali				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Interrogazione				</text:p>
-				<text:p text:style-name="P1" />
-<text:p text:style-name="P9">Strumenti usati</text:p>
-								<text:p text:style-name="P1">
-				▢ 				Fotocopie				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Proiettore				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Libri di testo				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Ricerche su Internet				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Help in linea				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Laboratorio informatico				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Calcolatrice				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Appunti delle lezioni				</text:p>
-							<text:p text:style-name="P1">
-				▢ 				Lavagna luminosa				</text:p>
-				<text:p text:style-name="P1" />
+<text:p text:style-name="P9"/>
+<text:p text:style-name="P9"/>
+<text:p text:style-name="P12">Pordenone, 14/09/2009</text:p><text:p text:style-name="P9"/><text:p text:style-name="P9"/><text:p text:style-name="P12">Cara Diana,</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Ti è stato creato un account utente per l&apos;uso dei calcolatori dell&apos;Istituto.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Questo account ti consentirà di:</text:p><text:list text:style-name="L1"><text:list-item><text:p text:style-name="P10">autenticarti in tutti i laboratori;</text:p></text:list-item><text:list-item><text:p text:style-name="P10">avere a disposizione uno spazio su disco per la memorizzazione dei tuoi documenti;</text:p></text:list-item><text:list-item><text:p text:style-name="P10">avere uno spazio comune per gruppi di lavoro di cui eventualmente fai parte;</text:p></text:list-item><text:list-item><text:p text:style-name="P10">accedere in maniera semplificata alla piattaforma di <text:span text:style-name="T4">e-learning</text:span> dell&apos;istituto, se e quando sarà necessario.</text:p></text:list-item></text:list><text:p text:style-name="P9"/><text:p text:style-name="P12">L&apos;uso dell&apos;account comporta l&apos;accettazione del Regolamento di Istituto in merito.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Riepiloghiamo di seguito le informazioni rilevanti:</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Nome e cognome: <text:span text:style-name="T6">Diana Cannavacciuolo</text:span></text:p><text:p text:style-name="P12">Nome utente (username): <text:span text:style-name="T6">diana.cannavacciuolo</text:span></text:p><text:p text:style-name="P12">Password assegnata provvisoriamente: <text:span text:style-name="T6">
+	7460791</text:span></text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">È bene ricordare due cose importanti.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">La prima è che la password non va condivisa con altri utenti e dovrebbe essere cambiata al più presto, secondo le modalità indicate alla pagina web <text:a xlink:type="simple" xlink:href="http://www.mattiussilab.net/help">http://www.mattiussilab.net/help</text:a>.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">La seconda è che i "nomi utente" (username) sono stati predisposti seguendo lo schema <text:span text:style-name="T6">nome.cognome</text:span>. Può essere però capitato che nel tuo caso non si sia potuto seguire questo schema (ad esempio in casi di omonimia – due persone con lo stesso nome e cognome – oppure quando per la presenza di più nomi e/o più cognomi si sarebbe arrivati a superare i venti caratteri) e sia stata adottata una soluzione diversa. Sappi che, se vuoi, puoi chiedere che il tuo nome utente (diana.cannavacciuolo) venga cambiato. Rivolgiti ad uno dei tecnici per ulteriori informazioni in merito.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Saluti e buon lavoro.</text:p><text:p text:style-name="P9"/>
+
+<text:p text:style-name="P16"/> 
+<text:p text:style-name="P9">Francesco Cimino</text:p>
+<text:p text:style-name="P9">Data di nascita: 14/07/1991</text:p>
+<text:p text:style-name="P9">Matricola: 0000003134</text:p>
+
+<text:p text:style-name="P9"/>
+<text:p text:style-name="P9"/>
+<text:p text:style-name="P12">Pordenone, 14/09/2009</text:p><text:p text:style-name="P9"/><text:p text:style-name="P9"/><text:p text:style-name="P12">Caro Francesco,</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Ti è stato creato un account utente per l&apos;uso dei calcolatori dell&apos;Istituto.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Questo account ti consentirà di:</text:p><text:list text:style-name="L1"><text:list-item><text:p text:style-name="P10">autenticarti in tutti i laboratori;</text:p></text:list-item><text:list-item><text:p text:style-name="P10">avere a disposizione uno spazio su disco per la memorizzazione dei tuoi documenti;</text:p></text:list-item><text:list-item><text:p text:style-name="P10">avere uno spazio comune per gruppi di lavoro di cui eventualmente fai parte;</text:p></text:list-item><text:list-item><text:p text:style-name="P10">accedere in maniera semplificata alla piattaforma di <text:span text:style-name="T4">e-learning</text:span> dell&apos;istituto, se e quando sarà necessario.</text:p></text:list-item></text:list><text:p text:style-name="P9"/><text:p text:style-name="P12">L&apos;uso dell&apos;account comporta l&apos;accettazione del Regolamento di Istituto in merito.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Riepiloghiamo di seguito le informazioni rilevanti:</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Nome e cognome: <text:span text:style-name="T6">Francesco Cimino</text:span></text:p><text:p text:style-name="P12">Nome utente (username): <text:span text:style-name="T6">francesco.cimino</text:span></text:p><text:p text:style-name="P12">Password assegnata provvisoriamente: <text:span text:style-name="T6">
+	3006381</text:span></text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">È bene ricordare due cose importanti.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">La prima è che la password non va condivisa con altri utenti e dovrebbe essere cambiata al più presto, secondo le modalità indicate alla pagina web <text:a xlink:type="simple" xlink:href="http://www.mattiussilab.net/help">http://www.mattiussilab.net/help</text:a>.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">La seconda è che i "nomi utente" (username) sono stati predisposti seguendo lo schema <text:span text:style-name="T6">nome.cognome</text:span>. Può essere però capitato che nel tuo caso non si sia potuto seguire questo schema (ad esempio in casi di omonimia – due persone con lo stesso nome e cognome – oppure quando per la presenza di più nomi e/o più cognomi si sarebbe arrivati a superare i venti caratteri) e sia stata adottata una soluzione diversa. Sappi che, se vuoi, puoi chiedere che il tuo nome utente (francesco.cimino) venga cambiato. Rivolgiti ad uno dei tecnici per ulteriori informazioni in merito.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Saluti e buon lavoro.</text:p><text:p text:style-name="P9"/>
+
+<text:p text:style-name="P16"/> 
+<text:p text:style-name="P9">Valentina Lunardelli</text:p>
+<text:p text:style-name="P9">Data di nascita: 09/03/1990</text:p>
+<text:p text:style-name="P9">Matricola: 0000002945</text:p>
+
+<text:p text:style-name="P9"/>
+<text:p text:style-name="P9"/>
+<text:p text:style-name="P12">Pordenone, 14/09/2009</text:p><text:p text:style-name="P9"/><text:p text:style-name="P9"/><text:p text:style-name="P12">Cara Valentina,</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Ti è stato creato un account utente per l&apos;uso dei calcolatori dell&apos;Istituto.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Questo account ti consentirà di:</text:p><text:list text:style-name="L1"><text:list-item><text:p text:style-name="P10">autenticarti in tutti i laboratori;</text:p></text:list-item><text:list-item><text:p text:style-name="P10">avere a disposizione uno spazio su disco per la memorizzazione dei tuoi documenti;</text:p></text:list-item><text:list-item><text:p text:style-name="P10">avere uno spazio comune per gruppi di lavoro di cui eventualmente fai parte;</text:p></text:list-item><text:list-item><text:p text:style-name="P10">accedere in maniera semplificata alla piattaforma di <text:span text:style-name="T4">e-learning</text:span> dell&apos;istituto, se e quando sarà necessario.</text:p></text:list-item></text:list><text:p text:style-name="P9"/><text:p text:style-name="P12">L&apos;uso dell&apos;account comporta l&apos;accettazione del Regolamento di Istituto in merito.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Riepiloghiamo di seguito le informazioni rilevanti:</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Nome e cognome: <text:span text:style-name="T6">Valentina Lunardelli</text:span></text:p><text:p text:style-name="P12">Nome utente (username): <text:span text:style-name="T6">valentina.lunardelli</text:span></text:p><text:p text:style-name="P12">Password assegnata provvisoriamente: <text:span text:style-name="T6">
+	ACCOUNT NON PRESENTE</text:span></text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">È bene ricordare due cose importanti.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">La prima è che la password non va condivisa con altri utenti e dovrebbe essere cambiata al più presto, secondo le modalità indicate alla pagina web <text:a xlink:type="simple" xlink:href="http://www.mattiussilab.net/help">http://www.mattiussilab.net/help</text:a>.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">La seconda è che i "nomi utente" (username) sono stati predisposti seguendo lo schema <text:span text:style-name="T6">nome.cognome</text:span>. Può essere però capitato che nel tuo caso non si sia potuto seguire questo schema (ad esempio in casi di omonimia – due persone con lo stesso nome e cognome – oppure quando per la presenza di più nomi e/o più cognomi si sarebbe arrivati a superare i venti caratteri) e sia stata adottata una soluzione diversa. Sappi che, se vuoi, puoi chiedere che il tuo nome utente (valentina.lunardelli) venga cambiato. Rivolgiti ad uno dei tecnici per ulteriori informazioni in merito.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Saluti e buon lavoro.</text:p><text:p text:style-name="P9"/>
+
+<text:p text:style-name="P16"/> 
+<text:p text:style-name="P9">Alessio Martinuzzi</text:p>
+<text:p text:style-name="P9">Data di nascita: 30/06/1991</text:p>
+<text:p text:style-name="P9">Matricola: 0000003082</text:p>
+
+<text:p text:style-name="P9"/>
+<text:p text:style-name="P9"/>
+<text:p text:style-name="P12">Pordenone, 14/09/2009</text:p><text:p text:style-name="P9"/><text:p text:style-name="P9"/><text:p text:style-name="P12">Caro Alessio,</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Ti è stato creato un account utente per l&apos;uso dei calcolatori dell&apos;Istituto.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Questo account ti consentirà di:</text:p><text:list text:style-name="L1"><text:list-item><text:p text:style-name="P10">autenticarti in tutti i laboratori;</text:p></text:list-item><text:list-item><text:p text:style-name="P10">avere a disposizione uno spazio su disco per la memorizzazione dei tuoi documenti;</text:p></text:list-item><text:list-item><text:p text:style-name="P10">avere uno spazio comune per gruppi di lavoro di cui eventualmente fai parte;</text:p></text:list-item><text:list-item><text:p text:style-name="P10">accedere in maniera semplificata alla piattaforma di <text:span text:style-name="T4">e-learning</text:span> dell&apos;istituto, se e quando sarà necessario.</text:p></text:list-item></text:list><text:p text:style-name="P9"/><text:p text:style-name="P12">L&apos;uso dell&apos;account comporta l&apos;accettazione del Regolamento di Istituto in merito.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Riepiloghiamo di seguito le informazioni rilevanti:</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Nome e cognome: <text:span text:style-name="T6">Alessio Martinuzzi</text:span></text:p><text:p text:style-name="P12">Nome utente (username): <text:span text:style-name="T6">alessio.martinuzzi</text:span></text:p><text:p text:style-name="P12">Password assegnata provvisoriamente: <text:span text:style-name="T6">
+	5972080</text:span></text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">È bene ricordare due cose importanti.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">La prima è che la password non va condivisa con altri utenti e dovrebbe essere cambiata al più presto, secondo le modalità indicate alla pagina web <text:a xlink:type="simple" xlink:href="http://www.mattiussilab.net/help">http://www.mattiussilab.net/help</text:a>.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">La seconda è che i "nomi utente" (username) sono stati predisposti seguendo lo schema <text:span text:style-name="T6">nome.cognome</text:span>. Può essere però capitato che nel tuo caso non si sia potuto seguire questo schema (ad esempio in casi di omonimia – due persone con lo stesso nome e cognome – oppure quando per la presenza di più nomi e/o più cognomi si sarebbe arrivati a superare i venti caratteri) e sia stata adottata una soluzione diversa. Sappi che, se vuoi, puoi chiedere che il tuo nome utente (alessio.martinuzzi) venga cambiato. Rivolgiti ad uno dei tecnici per ulteriori informazioni in merito.</text:p><text:p text:style-name="P9"/><text:p text:style-name="P12">Saluti e buon lavoro.</text:p><text:p text:style-name="P9"/>
+
 </office:text>
 </office:body></office:document-content>

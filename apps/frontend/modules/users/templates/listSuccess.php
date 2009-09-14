@@ -77,7 +77,8 @@
 <?php echo options_for_select(array(
   '' => __('Choose an action'),
   'Delete' => __('Delete selected users'),
-  'runuserchecks' => __('Run user checks'),  
+  'runuserchecks' => __('Run user checks'),
+  'getletter' => __('Get introduction letter')  
 ), 0) ?>
   </select>
 
