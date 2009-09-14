@@ -30,4 +30,12 @@ class headersActions extends sfActions
 	$this->reference = 'My ref';
 
 	}
+  public function executeLetter(sfWebRequest $request)
+  {
+	$this->setLayout('odt_styles');
+	$this->title = 'Lettera di introduzione';
+	$this->revision = '91.13';
+	$this->code = '1';
+	$this->reference = '2';
+   }
 }
