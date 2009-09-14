@@ -42,6 +42,60 @@ class profileActions extends sfActions
 	
 	}  
 
+  public function executeChangeaccountpassword(sfWebRequest $request)
+	{
+		$availableAccounts=sfConfig::get('app_config_accounts');
+		$type=$request->getParameter('type');
+		
+		$user=$this->getUser();
+		$profile=$user->getProfile();
+		
+		$this->form=new ChangePasswordForm();
+
+		$this->account=$profile->getAccountByType($type);
+
+		if ($request->isMethod('post'))
+		{
+			$this->form->bind($request->getParameter('userinfo'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				$type=$params['type'];
+				
+				$this->account=$profile->getAccountByType($type);
+				$this->forward404unless($this->account);
+				
+				$this->account->changePassword($params['password'], true);
+				
+				$this->getUser()->setFlash('notice',
+					$this->getContext()->getI18N()->__('Password successfully changed.')
+					);
+					
+				$this->redirect('profile/viewaccount?type=' . $type);
+			}
+			else
+			{
+				$params=$request->getParameter('userinfo');
+				$type=$params['type'];
+				$this->account=$profile->getAccountByType($type);
+			}
+			
+		}
+
+		
+		$this->forward404unless($this->account);
+		
+		$this->form->setDefaults(
+			array(
+				'type'=>$this->account->getAccountType(),
+			)
+		);
+
+	
+	}  
+
+
+
   public function executeEditprofile(sfWebRequest $request)
 	{
 	
