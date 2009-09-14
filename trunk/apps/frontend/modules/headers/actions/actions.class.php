@@ -33,7 +33,7 @@ class headersActions extends sfActions
   public function executeLetter(sfWebRequest $request)
   {
 	$this->setLayout('odt_styles');
-	$this->title = 'Lettera di introduzione';
+	$this->title = 'Lettera di benvenuto';
 	$this->revision = '91.13';
 	$this->code = '1';
 	$this->reference = '2';
