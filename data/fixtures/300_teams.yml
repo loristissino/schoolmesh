@@ -65,9 +65,24 @@ Team:
     needs_folder: true
     needs_mailing_list: true
 
-  deplang:
-    description: Dipartimento di Lingue
-    posix_name:  diplingue
+  depeng:
+    description: Dipartimento di Lingua Inglese
+    posix_name:  dipinglese
+    needs_folder: true
+    needs_mailing_list: true
+  depfre:
+    description: Dipartimento di Lingua Francese
+    posix_name:  dipfrancese
+    needs_folder: true
+    needs_mailing_list: true
+  depger:
+    description: Dipartimento di Lingua Tedesca
+    posix_name:  diptedesco
+    needs_folder: true
+    needs_mailing_list: true
+  depspa:
+    description: Dipartimento di Lingua Spagnola
+    posix_name:  dipspagnolo
     needs_folder: true
     needs_mailing_list: true
 
@@ -79,7 +94,7 @@ Team:
 
   depbiz:
     description: Dipartimento di Economia aziendale
-    posix_name:  dipecononaz
+    posix_name:  dipeconomaz
     needs_folder: true
     needs_mailing_list: true
 
@@ -98,6 +113,11 @@ Team:
   deprel:
     description: Dipartimento di Insegnamento della Religione cattolica
     posix_name:  dipirc
+    needs_folder: true
+    needs_mailing_list: true
+  deph:
+    description: Dipartimento per il Sostegno all'Handicap
+    posix_name:  dipsostegno
     needs_folder: true
     needs_mailing_list: true
 

@@ -183,11 +183,25 @@ class Account extends BaseAccount
 	}
 	
 
-  public function resetPassword()
+  public function changePassword($password, $is_reset=false)
 	{
 		throw new Exception(sprintf('This function must be implemented in the derived class «%s»', $this->getAccountType()));
 		return $this;
 	}
+	
+	
+  public function resetPassword()
+	{
+		$password=rand(100000,999999);
+		
+		$this
+		->setTemporaryPassword($password)
+		->changePassword($password)
+		->save();
+		
+		return $this;
+	}
+	
 	
   public function getPasswordIsResettable()
 	{

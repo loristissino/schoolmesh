@@ -105,17 +105,19 @@ class SambaAccount extends Account
 	}
 
 
-  public function resetPassword()
+  public function changePassword($password, $is_reset=false)
 	{
-		$this
-		->setTemporaryPassword(rand(100000,999999))
-		->save();
-		
-		Generic::executeCommand(sprintf('sambaaccount_setpassword %s "%s"', $this->getUsername(), $this->getTemporaryPassword()), false);
+		Generic::executeCommand(sprintf('sambaaccount_setpassword %s "%s"', $this->getUsername(), $password), false);
+		if($is_reset)
+		{
+			$this
+			->setTemporaryPassword(null)
+			->save();
+		}
 		return $this;
 	}
-
-
+	
+  
   public function getPasswordIsResettable()
 	{
 		return true;
