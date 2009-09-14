@@ -32,6 +32,7 @@
 	</li><br />
 	<li class="sf_admin_action_userchecks">
 		<?php echo link_to(__('Run user checks'), 'users/runuserchecks', array('title'=>__(SentencePeer::getSentence('run_user_checks')))) ?>
+		(<?php echo __('deprecated') ?>)
 	</li><br />
 	<li class="sf_admin_action_userchecks">
 		<?php echo link_to(__('Run team checks'), 'users/runteamchecks', array('title'=>__(SentencePeer::getSentence('run_team_checks')))) ?>

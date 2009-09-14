@@ -180,7 +180,6 @@ propel:
     comment:   { type: varchar(255) }
     state:  integer
 
-
   wpinfo_type:
     id:          ~
     title:        varchar(50)

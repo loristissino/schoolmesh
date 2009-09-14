@@ -146,7 +146,6 @@ sf_guard_password:
   param: { module: sfGuardAuth, action: password }
 
 
-
 # default rules
 
 homepage:

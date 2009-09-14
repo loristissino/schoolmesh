@@ -79,3 +79,11 @@ sfGuardUserProfile:
     first_name:     Giulia
     last_name:      Di Donati
     gender:            F
+
+
+  vinicio:
+    user_id:        vinicio
+    first_name:    Vinicio
+    last_name:    Grimaldi
+    gender:            M
+    role_id:        ds
