@@ -11,7 +11,8 @@
 
 ?><h1><?php echo __("User management")?></h1>
 
-<?php include_partial('filter', array('filtered_role_id'=>$filtered_role_id, 'filtered_schoolclass_id'=>$filtered_schoolclass_id)) ?>
+<?php //include_partial('filter', array('filtered_role_id'=>$filtered_role_id, 'filtered_schoolclass_id'=>$filtered_schoolclass_id)) ?>
+<?php include_partial('filter2', array('roles'=>$roles, 'filtered_role_id'=>$filtered_role_id, 'filtered_schoolclass_id'=>$filtered_schoolclass_id, 'schoolclasses'=>$schoolclasses)) ?>
 
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>

@@ -126,7 +126,7 @@
 					array('title'=>__('Edit information about this account'))
 					)?>
 					</li>
-					<?php if ($account->getPasswordIsResettable()): ?>
+					<?php if ($account->getExists()&&$account->getPasswordIsResettable()): ?>
 						<li class="sf_admin_action_passwordreset">
 							<?php echo link_to(
 						__('Password reset'),

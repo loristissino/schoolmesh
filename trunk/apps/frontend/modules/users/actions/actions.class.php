@@ -18,8 +18,7 @@ class usersActions extends sfActions
 
   public function executeIndex(sfWebRequest $request)
   {
-	$this->user = $this->getUser();
-	
+	$this->user = $this->getUser();	
   }
 
 	public function executeGoogleappsfile(sfWebRequest $request)
@@ -431,30 +430,49 @@ class usersActions extends sfActions
 
 	public function executeSetfilterlistpreference(sfWebRequest $request)
 	{
-		$filter = $request->getParameter('filter');
-		if ($filter=='reset')
+
+		if ($request->hasParameter('schoolclass'))
+		{
+			$filtered_schoolclass_id=$request->getParameter('schoolclass');
+			$this->getUser()->setAttribute('filtered_schoolclass_id', $filtered_schoolclass_id);
+			$this->redirect('users/list');
+		}
+		else
+		{
+			$this->getUser()->setAttribute('filtered_schoolclass_id', '');
+		}
+
+		$this->roles=RolePeer::retrieveMainRoles();
+		$role = $request->getParameter('role');
+		if ($role=='all')
 			{
 				$this->getUser()->setAttribute('filter', '');
 				$this->getUser()->setAttribute('filtered_role_id', '');
 			}
-		if ($filter=='set')
+		elseif ($filtered_role=RolePeer::retrieveByPK($role))
 			{
 				$this->getUser()->setAttribute('filter', 'set');
-				$this->getUser()->setAttribute('filtered_role_id', $request->getParameter('filtered_role_id'));
-				$this->getUser()->setAttribute('filtered_schoolclass_id', $request->getParameter('filtered_schoolclass_id'));
+				$this->getUser()->setAttribute('filtered_role_id', $role);
+				$this->filtered_role_id=$role;
 				
+				if($filtered_role->getPosixName()==sfConfig::get('app_config_students_default_posix_group'))
+				{
+					$schoolclasses=SchoolclassPeer::retrieveCurrentSchoolclasses();
+					return $this->renderPartial('filter2', array('filtered_role_id'=>$this->filtered_role_id, 'roles'=>$this->roles, 'schoolclasses'=>$schoolclasses));
+				}
 			}
 			
-		$this->redirect('users/list');
+		return $this->redirect('users/list');
 	}
-
-
 
   public function executeList(sfWebRequest $request)
   {
 	$this->user = $this->getUser();
 	
 	$sortby=$this->getUser()->getAttribute('sortby');
+	
+	$this->roles=RolePeer::retrieveMainRoles();
+	$this->schoolclasses=SchoolclassPeer::retrieveCurrentSchoolclasses();
 	
 	if (!$filter=$this->getUser()->getAttribute('filter'))
 		{
