@@ -380,7 +380,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$t = UserTeamPeer::doSelectJoinAllExceptsfGuardUser($c);
 			return $t;
         }
-
+				
         public function getBelongsToTeam($posixname)
         {
 	        $c = new Criteria();
@@ -424,7 +424,21 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			}
 			return $this;
 		}
-		
+
+
+		public function removeFromTeam(Team $team)
+		{
+			
+			$userteam=UserTeamPeer::retrieveUserTeam($this->getSfGuardUser(), $team);
+			if ($userteam)
+			{
+				$userteam->delete();
+			}
+			
+			return $this;
+		}
+
+
 		public function changeRoleInTeam(Team $team, Role $role)
 		{
 	        $c = new Criteria();

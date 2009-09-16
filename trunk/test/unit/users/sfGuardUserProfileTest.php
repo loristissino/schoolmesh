@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(75, new lime_output_color());
+$t = new lime_test(76, new lime_output_color());
 
 $loris_permissions=array(
 	'backadmin',
@@ -146,6 +146,10 @@ $t->is($profile->getBelongsToTeam('cdc5bp'), true, 'correctly adds a user to a t
 $profile->addToTeam($team, $role);
 $t->like($profile->getSystemAlerts(), '/not added to team/', 'adds an alert in case of problems');
 
+$t->diag('->removeFromTeam()');
+
+$profile->removeFromTeam($team);
+$t->is($profile->getBelongsToTeam('cdc5bp'), false, 'correctly removes a user from a team');
 
 $t->comment("Teacher's Profile");
 

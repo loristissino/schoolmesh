@@ -18,7 +18,7 @@ class usersActions extends sfActions
 
   public function executeIndex(sfWebRequest $request)
   {
-	$this->user = $this->getUser();	
+	$this->user = $this->getUser();
   }
 
 	public function executeGoogleappsfile(sfWebRequest $request)
@@ -599,6 +599,20 @@ class usersActions extends sfActions
 	
   }
 
+  public function executeRemovefromteam(sfWebRequest $request)
+  {
+	
+	$this->forward404Unless($request->isMethod('delete'));
+	
+	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
+	$this->team = TeamPeer::retrieveByPK($request->getParameter('team'));
+	
+	$this->current_user->removeFromTeam($this->team);
+	$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('User successfully removed from team.'));
+	$this->redirect('users/edit?id='. $this->current_user->getUserId());
+	}
+
+
   public function executeChangerole(sfWebRequest $request)
   {
 	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
@@ -635,6 +649,47 @@ class usersActions extends sfActions
 	);
 		
 	}
+
+
+  public function executeAddtoteam(sfWebRequest $request)
+  {
+	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('user'));
+	
+	if ($request->isMethod('post'))
+	{
+
+		if ($request->getParameter('role')==-1)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select a role.'));
+			$this->redirect('users/addtoteam?user='. $this->current_user->getUserId());
+		}
+
+		$this->forward404Unless($role=RolePeer::retrieveByPK($request->getParameter('role')));
+
+		$ids=$request->getParameter('id[]');
+		
+		foreach($ids as $id)
+		{
+			$team=TeamPeer::retrieveByPK($id);
+			$this->current_user->addToTeam($team, $role);
+		}
+		
+		$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('User successfully added to team.'));
+		$this->redirect('users/edit?id='. $this->current_user->getUserId());
+	}
+
+	$this->teams=TeamPeer::doSelect(new Criteria());
+	
+	$roles=RolePeer::doSelect(new Criteria());
+
+	$this->roles=Array(-1=>'select one');
+	foreach($roles as $role)
+	{
+		$this->roles[$role->getId()]=$this->current_user->getIsMale()? $role->getMaleDescription(): $role->getFemaleDescription();
+    }
+
+	}
+
 
 
   public function executeEditaccount(sfWebRequest $request)
