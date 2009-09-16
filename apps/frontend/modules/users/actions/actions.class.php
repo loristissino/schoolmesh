@@ -469,6 +469,8 @@ class usersActions extends sfActions
   {
 	$this->user = $this->getUser();
 	
+	$page=$request->getParameter('page', 1);
+	
 	$sortby=$this->getUser()->getAttribute('sortby');
 	
 	$this->roles=RolePeer::retrieveMainRoles();
@@ -488,8 +490,11 @@ class usersActions extends sfActions
 			$this->filtered_schoolclass_id='';
 		}
 	
-	$this->userlist = sfGuardUserProfilePeer::retrieveAllUsers($sortby, $filter, $this->filtered_role_id, $this->filtered_schoolclass_id);
-  }
+//	$this->userlist = sfGuardUserProfilePeer::retrieveAllUsers($sortby, $filter, $this->filtered_role_id, $this->filtered_schoolclass_id);
+	$this->pager = sfGuardUserProfilePeer::retrieveAllUsers($page, $sortby, $filter, $this->filtered_role_id, $this->filtered_schoolclass_id);
+
+
+	}
 
   public function executeNew(sfWebRequest $request)
 	{
