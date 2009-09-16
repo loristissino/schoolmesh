@@ -133,6 +133,23 @@ Il logo è nel file _web/images/logo.png_.
 Il layout principale della pagina è nel file _apps/frontend/templates/layout_orig.php_.
 Piuttosto di cambiare questo, è preferibile creare un layout diverso e far puntare il link simbolico _apps/frontend/templates/layout.php_ alla propria versione.
 
+== Configurazione per gli script esterni ==
+
+Il file _/var/schoolmesh/config/schoolmesh.rc_ imposta delle variabili ad uso degli script esterni che devono essere eseguiti per la gestione degli account. È qui che devono essere cambiati i valori per adattarli alle proprie esigenze:
+
+{{{
+CONFIG_READ=1
+POSIX_HOMEDIR=/home
+POSIX_HOMEDIR_USERS="$POSIX_HOMEDIR/users"
+POSIX_HOMEDIR_TEAMS="$POSIX_HOMEDIR/teams"
+POSIX_BASEFOLDER=Mattiussi
+POSIX_BASEFOLDER_OWNER=root:root
+POSIX_DEFAULT_QUOTA_SBQ=2000
+POSIX_DEFAULT_QUOTA_HBQ=3000
+POSIX_DEFAULT_QUOTA_SFQ=1000
+POSIX_DEFAULT_QUOTA_HFQ=1500
+}}}
+
 == Personalizzazione delle impostazioni ==
 
 I dati principali non frequentemente modificabili sono amministrabili con l'applicazione di backend.

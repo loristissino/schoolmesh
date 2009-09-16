@@ -3,6 +3,8 @@
 
 = Configurazione di Apache =
 
+Qui di seguito viene dato per scontato che la directory in cui risiede il software sia _var/schoolmesh_. Se si installa il software altrove, andranno modificate di conseguenza le istruzioni.
+
 1. Modificare il file _/etc/apache2/sites-available/default_ aggiungendo le seguenti righe, subito prima di `</VirtualHost>`:
 
 {{{
@@ -26,18 +28,39 @@
 
 {{{
 short_open_tag = Off
-memory_limit = 64M
+memory_limit = 128M
+}}}
+
+Comando:
+
+{{{
+sudo gedit /etc/php5/apache2/php.ini /etc/php5/cli/php.ini
 }}}
 
 3. Riavviare il server apache.
 
-4. Modificare il file _apps/frontend/config/app.yml_ mettendo nella riga
+Comando:
 
 {{{
+sudo /etc/init.d/apache2 restart
+}}}
+
+4. Modificare il file _/var/schoolmesh/apps/frontend/config/app.yml_ in modo che contenga le informazioni corrette nella sezione _config_:
+
+{{{
+  config:
+    current_year:   2009  # only the first of the two years of a scholastic/academic year
+    culture: it
     base_url: 'http://localhost/schoolmesh'
 }}}
 
-l'indirizzo corretto (NOTA: di default viene messo https anziché http, devo cambiare...)
+Comando:
+
+{{{
+sudo gedit /var/schoolmesh/apps/frontend/config/app.yml
+}}}
+
+(Notare che nell'esempio fornito c'è 2008 al posto di 2009 e https al posto di http.)
 
 5. Configurare _sudo_ in modo che l'utente _www-data_ abbia la delega per interrogare il sistema sugli utenti e le loro directory.
 
@@ -71,18 +94,7 @@ Togliere il `#` sulla riga
 
 solo se si configura SchoolMesh per l'esecuzione automatica degli script di gestione di sistema (*non raccomandabile per il momento*).
 
-6. Modificare il file _apps/frontend/config/app.yml_ in modo che contenga le informazioni corrette nella sezione _config_:
-
-{{{
-  config:
-    current_year:   2009  # only the first of the two years of a scholastic/academic year
-    culture: it
-    base_url: 'http://localhost/schoolmesh'
-}}}
-
-(Notare che nell'esempio fornito c'è 2008 al posto di 2009 e https al posto di http.)
-
-7. Effettuare i test relativi alla configurazione di Apache e di SchoolMesh:
+6. Effettuare i test relativi alla configurazione di Apache e di SchoolMesh:
 
 {{{
 cd /var/schoolmesh
@@ -132,3 +144,4 @@ $ sudo /etc/init.d/apache2 force-reload
 }}}
 
 Passo successivo: [MYSQL Configurazione di MySql]
+

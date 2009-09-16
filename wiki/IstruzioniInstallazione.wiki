@@ -16,3 +16,12 @@
 5. [ModificheLocali Modifiche locali e personalizzazioni]
 
 6. [Integrazione Integrazione con Samba, Squid, ecc.]
+
+=Come aggiornare SchoolMesh=
+
+Per gli aggiornamenti, dovrebbe essere sufficiente eseguire lo script `schoolmesh_application_update`:
+
+{{{
+$ sudo schoolmesh_application_update go
+}}}
+
