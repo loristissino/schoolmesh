@@ -1,0 +1,56 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+SCHOOLMESHDIR=/var/schoolmesh
+
+cd $SCHOOLMESHDIR
+
+TODAY=$(date +%Y-%m-%d-%H%M%S)
+echo $TODAY
+
+BACKUPDIR=/etc/schoolmesh/$TODAY
+
+FILELIST="config/databases.yml config/schoolmesh.rc apps/frontend/config/app.yml apps/backend/config/app.yml"
+
+sudo mkdir $BACKUPDIR
+sudo mkdir -p $BACKUPDIR/{config,apps/frontend/config,apps/backend/config}
+
+msg_ok "Starting backup of configuration files..."
+
+for FILE in $FILELIST
+	do
+		sudo cp -v $FILE "$BACKUPDIR/$FILE" || msg_failed "File $FILE not found"
+	done
+
+msg_ok "Starting svn update..."
+
+svn update
+
+msg_ok "Restoring configuration files..."
+for FILE in $FILELIST
+	do
+		sudo cp -v "$BACKUPDIR/$FILE" $FILE || msg_failed "File $FILE not found"
+	done
+
+msg_ok "Setting correct owner..."
+sudo chown -R www-data:adm $SCHOOLMESHDIR
+msg_ok "Applying correct permissions to files..."
+sudo find $SCHOOLMESHDIR -type f -exec chmod 660 {} \;
+msg_ok "Applying correct permissions to directories..."
+sudo find $SCHOOLMESHDIR -type d -exec chmod 770 {} \;
+
+msg_ok "Cleaning the cache..."
+sudo -u www-data symfony cc
+
+msg_ok "Copying man pages..."
+for i in 1 8
+  do
+    sudo cp -v doc/man/man$i/* /usr/local/share/man/man$i/ 2>/dev/null
+  done
+
+msg_ok  "Copying scripts..."
+sudo cp  bin/schoolmesh* /usr/local/bin
+
