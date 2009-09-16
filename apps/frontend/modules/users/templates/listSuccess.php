@@ -86,7 +86,7 @@ results found.', array('%1%' => $pager->getNbResults()), $pager->getNbResults())
 <?php endif ?>
 
 <?php include_partial('plansandreports/checkalljs') ?>
-    <ul class="sf_admin_actions">
+ <ul class="sf_admin_actions">
       <li class="sf_admin_batch_actions_choice">
   <select name="batch_action">
 
