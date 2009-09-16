@@ -192,7 +192,7 @@ class Account extends BaseAccount
 	
   public function resetPassword()
 	{
-		$password=rand(100000,999999);
+		$password=rand(1000000,9999999);
 		
 		$this
 		->setTemporaryPassword($password)

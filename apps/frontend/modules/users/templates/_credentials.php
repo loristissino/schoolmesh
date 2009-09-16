@@ -11,6 +11,18 @@
 		</td>
 	</tr>
 </table>
+<ul class="sf_admin_actions">
+<?php if ($sf_user->hasCredential('backadmin')): ?>
+<li class="sf_admin_action_new">
+<?php
+echo link_to(
+__('Add credential'),
+url_for('users/addcredential?user='.$current_user->getUserId())
+) ?>
+</li>
+<?php endif ?>
+</ul>
+
 </div>
 
 

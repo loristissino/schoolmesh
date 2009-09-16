@@ -17,4 +17,13 @@ class sfGuardGroupProfilePeer extends sfGuardGroupPeer
 	  return sfGuardGroupPeer::doSelectOne($c); 
 	}
 	
+	
+	static public function retrieveAllPermissions($name)
+	{
+	  $c = new Criteria;
+	  $c->add(sfGuardGroupPeer::NAME, $name);
+	  return sfGuardGroupPeer::doSelectOne($c); 
+	}
+	
+	
 }
