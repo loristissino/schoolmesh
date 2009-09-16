@@ -14,6 +14,8 @@ class SchoolclassPeer extends BaseSchoolclassPeer
 	{
 		$c=new Criteria();
 		$c->addJoin(SchoolclassPeer::TRACK_ID, TrackPeer::ID);
+		$c->addAscendingOrderByColumn(SchoolclassPeer::ID);
+
 		return self::doSelectJoinAll($c);
 	}
 

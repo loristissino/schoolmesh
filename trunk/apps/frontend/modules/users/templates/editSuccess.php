@@ -48,6 +48,14 @@
 		</td>
 	</tr>
     <?php echo $userform ?>
+	<?php if ($current_user->getCurrentSchoolclassId()): ?>
+	<tr>
+		<th><label><?php echo __('Schoolclass') ?></label></th>
+		<td>
+			<?php echo $current_user->getCurrentSchoolclassId() ?>
+		</td>
+	</tr>
+	<?php endif ?>
 	<tr>
       <td colspan="2">
          <input type="submit" name="save" value="<?php echo __('Save') ?>">

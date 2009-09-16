@@ -55,7 +55,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	}
 	
 
-	public static function retrieveAllUsers($sortby='', $filter='', $filtered_role_id='', $filtered_schoolclass_id='')
+	public static function retrieveAllUsers($page, $sortby='', $filter='', $filtered_role_id='', $filtered_schoolclass_id='')
 	{
 	$c = new Criteria();
 	$c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
@@ -89,9 +89,13 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
 		default: $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
 	}
-	$t = self::doSelectJoinAll($c);
-	return $t;
-		
+	
+	$pager = new sfPropelPager('sfGuardUserProfile', 30);
+	$pager->setCriteria($c);
+	$pager->setPage($page);
+	$pager->init();
+	
+	return $pager;
 	}
 
 

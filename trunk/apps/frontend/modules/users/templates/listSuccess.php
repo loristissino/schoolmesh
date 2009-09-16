@@ -21,6 +21,10 @@
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
 
+<p><?php echo format_number_choice('[0]No result found.|[1]One result found.|(1,+Inf]%1%
+results found.', array('%1%' => $pager->getNbResults()), $pager->getNbResults()) ?> 
+<?php echo sprintf(__('Displaying results %d to %d.'), $pager->getFirstIndice(), $pager->getLastIndice()) ?></p>
+
 <form action="<?php echo url_for('users/batch') ?>" method="post">
 
 <table cellspacing="0">
@@ -41,7 +45,7 @@
   <tbody>
 	<?php $i=0 ?>
 	<?php $ga_states=Workflow::getGoogleappsAccountStatusses(); ?>
-    <?php foreach ($userlist as $user): ?>
+    <?php foreach ($pager->getResults() as $user): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
 	<td>
   <input type="checkbox" name="ids[]" value="<?php echo $user->getUserId() ?>" class="sf_admin_batch_checkbox" />
@@ -69,6 +73,17 @@
     <?php endforeach; ?>
   </tbody>
 </table>
+
+<?php if ($pager->haveToPaginate()): ?>
+  <?php echo link_to('&lt;&lt;', 'users/list?page='.$pager->getFirstPage()) ?>
+  <?php echo link_to('&lt;', 'users/list?page='.$pager->getPreviousPage()) ?>
+  <?php $links = $pager->getLinks(); foreach ($links as $page): ?>
+    <?php echo ($page == $pager->getPage()) ? $page : link_to($page, 'users/list?page='.$page) ?>
+    <?php if ($page != $pager->getCurrentMaxLink()): ?> - <?php endif ?>
+  <?php endforeach ?>
+  <?php echo link_to('&gt;', 'users/list?page='.$pager->getNextPage()) ?>
+  <?php echo link_to('&gt;&gt;', 'users/list?page='.$pager->getLastPage()) ?>
+<?php endif ?>
 
 <?php include_partial('plansandreports/checkalljs') ?>
     <ul class="sf_admin_actions">
