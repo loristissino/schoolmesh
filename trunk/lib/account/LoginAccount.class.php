@@ -101,13 +101,15 @@ class LoginAccount extends Account
 	}
 
 
-  public function resetPassword()
+  public function changePassword($password, $is_reset=false)
 	{
-		$this
-		->setTemporaryPassword(rand(100000,999999))
-		->save();
-		
 		Generic::executeCommand(sprintf('loginaccount_setpassword %s "%s"', $this->getUsername(), $this->getTemporaryPassword()));
+		if($is_reset)
+		{
+			$this
+			->setTemporaryPassword(null)
+			->save();
+		}
 		return $this;
 	}
 

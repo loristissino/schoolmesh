@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(76, new lime_output_color());
+$t = new lime_test(79, new lime_output_color());
 
 $loris_permissions=array(
 	'backadmin',
@@ -208,6 +208,14 @@ $profile->addToGuardGroup($group);
 $t->pass('the user is added to the group');
 $t->is($profile->getBelongsToGuardGroup($group), true, 'the user now belongs to the group');
 $t->is($profile->hasPermission('planning'), true, 'the user now has a permission related to the group');
+
+$t->diag('->removeFromGuardGroup()');
+
+$t->is($profile->getBelongsToGuardGroup($group), true, 'the user belongs to the group');
+$profile->removeFromGuardGroup($group);
+$t->pass('the user is removed from the group');
+$t->is($profile->getBelongsToGuardGroup($group), false, 'the user does not belong anymore to the group');
+//$t->is($profile->hasPermission('planning'), false, 'the user does not have anymore a permission related to the group');
 
 $t->diag('->addUserPermission()');
 

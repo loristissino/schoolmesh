@@ -86,13 +86,8 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		}
 		
 
-		public function addToGuardGroup($group)
+		public function addToGuardGroup(sfGuardGroup $group)
 		{
-			if (!$group instanceof sfGuardGroup)
-			{
-				throw new Exception('the parameter must be a sfGuardGroup object');
-			}
-			
 			if ($this->getBelongsToGuardGroup($group))
 			{
 				return $this;
@@ -106,7 +101,22 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 			return $this;
 		}
-		
+
+		public function removeFromGuardGroup(sfGuardGroup $group)
+		{
+			$c=new Criteria();
+			$c->add(sfGuardUserGroupPeer::USER_ID, $this->getUserId());
+			$c->add(sfGuardUserGroupPeer::GROUP_ID, $group->getId());
+			$user_group = sfGuardUserGroupPeer::doSelectOne($c);
+			if ($user_group)
+			{
+				$user_group->delete();
+			}
+			return $this;
+		}
+
+
+
 		public function getWebPermissions()
 		{
 			return $this->getsfGuardUser()->getAllPermissionNames();

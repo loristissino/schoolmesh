@@ -612,6 +612,18 @@ class usersActions extends sfActions
 	$this->redirect('users/edit?id='. $this->current_user->getUserId());
 	}
 
+  public function executeRemovefromguardgroup(sfWebRequest $request)
+  {
+	$this->forward404Unless($request->isMethod('delete'));
+	$this->forward404Unless($this->getUser()->hasCredential('backadmin'));
+	
+	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
+	$this->guardgroup = sfGuardGroupProfilePeer::retrieveGuardGroupByName($request->getParameter('guardgroup'));
+	
+	$this->current_user->removeFromGuardGroup($this->guardgroup);
+	$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('User successfully removed from team.'));
+	$this->redirect('users/edit?id='. $this->current_user->getUserId());
+	}
 
   public function executeChangerole(sfWebRequest $request)
   {
@@ -690,7 +702,55 @@ class usersActions extends sfActions
 
 	}
 
+  public function executeAddtoguardgroup(sfWebRequest $request)
+  {
+	
+	$this->forward404Unless($this->getUser()->hasCredential('backadmin'));
 
+	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('user'));
+	
+	if ($request->isMethod('post'))
+	{
+		$ids=$request->getParameter('id[]');
+		
+		foreach($ids as $id)
+		{
+			$group=sfGuardGroupProfilePeer::retrieveByPK($id);
+			$this->current_user->addToGuardGroup($group);
+		}
+		
+		$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('User successfully added to guardgroup.'));
+		$this->redirect('users/edit?id='. $this->current_user->getUserId());
+	}
+
+	$this->guardgroups=sfGuardGroupProfilePeer::doSelect(new Criteria());
+	
+	}
+
+  public function executeAddcredential(sfWebRequest $request)
+  {
+	
+	$this->forward404Unless($this->getUser()->hasCredential('backadmin'));
+
+	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('user'));
+	
+	if ($request->isMethod('post'))
+	{
+		$ids=$request->getParameter('id[]');
+		
+		foreach($ids as $id)
+		{
+			$credential=sfGuardPermissionPeer::retrieveByPK($id);
+			$this->current_user->addUserPermission($credential->getName());
+		}
+		
+		$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Credential successfully given to user.'));
+		$this->redirect('users/edit?id='. $this->current_user->getUserId());
+	}
+
+	$this->credentials=sfGuardPermissionPeer::doSelect(new Criteria());
+	
+	}
 
   public function executeEditaccount(sfWebRequest $request)
   {
