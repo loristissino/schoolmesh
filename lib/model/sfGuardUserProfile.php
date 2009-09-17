@@ -122,7 +122,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $this->getsfGuardUser()->getAllPermissionNames();
 		}
 		
-		public function hasPermission($value, $random=0)
+		public function hasPermission($value)
 		{
 			// similar to sfGuardUser::hasCredential(), that only works for authenticated users
 			return in_array($value, $this->getWebPermissions());
@@ -137,11 +137,11 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
 		public function revokeUserPermission($value)
 		{
-			if (!$this->hasPermission($value,4))
+			if (!$this->hasPermission($value))
 			{
 				return $this;
 			}
-
+/*
 			$permission=sfGuardUserProfilePeer::retrievePermissionByName($value);
 			if (!$permission)
 			{
@@ -152,8 +152,40 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$c->add(sfGuardUserPermissionPeer::PERMISSION_ID, $permission->getId());
 			$c->add(sfGuardUserPermissionPeer::USER_ID, $this->getUserId());
 			$user_permission=sfGuardUserPermissionPeer::doDelete($c);
+*/			
+			$user_permission=$this->getUserPermission($value);
+			
+			if ($user_permission)
+			{
+				$user_permission->delete();
+			}
+			
+//			sfGuardUserPermissionPeer::doDelete($c);
+			
 			return $this;
 			
+		}
+		
+		public function getUserPermission($value)
+		{
+			$permission=sfGuardUserProfilePeer::retrievePermissionByName($value);
+			if (!$permission)
+			{
+				throw new Exception(sprintf('The permission %s does not exist', $value));
+			}
+
+			$c=new Criteria();
+			$c->add(sfGuardUserPermissionPeer::PERMISSION_ID, $permission->getId());
+			$c->add(sfGuardUserPermissionPeer::USER_ID, $this->getUserId());
+			$user_permission=sfGuardUserPermissionPeer::doSelectOne($c);
+			
+			return $user_permission;
+		}
+		
+		
+		public function hasUserPermission($value)
+		{
+			return is_object($this->getUserPermission($value));
 		}
 
 

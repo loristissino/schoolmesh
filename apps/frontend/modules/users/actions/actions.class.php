@@ -625,7 +625,19 @@ class usersActions extends sfActions
 	$this->redirect('users/edit?id='. $this->current_user->getUserId());
 	}
 
-  public function executeChangerole(sfWebRequest $request)
+  public function executeRevokepermission(sfWebRequest $request)
+  {
+	$this->forward404Unless($request->isMethod('delete'));
+	$this->forward404Unless($this->getUser()->hasCredential('backadmin'));
+	
+	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
+	
+	$this->current_user->revokeUserPermission($request->getParameter('permission'));
+	$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Permission successfully removed.'));
+	$this->redirect('users/edit?id='. $this->current_user->getUserId());
+	}
+
+public function executeChangerole(sfWebRequest $request)
   {
 	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
 	$this->team = UserTeamPeer::retrieveByPK($request->getParameter('team'));
