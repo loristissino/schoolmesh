@@ -28,6 +28,7 @@
 <?php else: ?>
 	<?php echo checkbox_tag('id[]', $credential->getId(), false) ?>&nbsp;<?php echo $credential->getName() ?>
 <?php endif ?>
+
 <br />
 <?php endforeach ?>
 </p>
