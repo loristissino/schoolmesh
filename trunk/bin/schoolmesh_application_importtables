@@ -4,6 +4,24 @@ CONFIG_READ=0
 source /var/schoolmesh/config/schoolmesh.rc $@
 if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
 
+#@ # NAME
+#@
+#@ {} - Utility for the import of data from a backup sql file
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *database* *inputfile*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to import data into the database. The input file must be in SQL format.
+#@ The output of *schoolmesh_application_dumptables(8)* should be adequate.
+#@
+#@ # EXAMPLES
+#@
+#@	{} schoolmesh myfile.sql  
+#@	{} schoolmesh_prod myfile.sql
+
 USERNAME=$(cat /var/schoolmesh/config/databases.yml | grep username | gawk '{print $2}')
 PASSWORD=$(cat /var/schoolmesh/config/databases.yml | grep password | gawk '{print $2}')
 

@@ -1,5 +1,39 @@
 #!/bin/bash
 
+cd /var/schoolmesh/bin/
+
+for FILE in schoolmesh_application_importtables 
+	do
+		cat > /tmp/$FILE <<EOT
+% {}(8) Schoolmesh User Manuals
+% Loris Tissino
+% August 6, 2009
+
+EOT
+
+	UPCASE=$(echo $FILE | tr [a-z] [A-Z])
+	sed -i -e "s/{}/$UPCASE/" /tmp/$FILE
+
+	grep '^#@' $FILE | sed -e 's/^#@ //' -e 's/^#@//' >> /tmp/$FILE
+
+		cat >> /tmp/$FILE <<EOT
+
+# BUGS
+
+Probably many.
+
+# SEE ALSO
+
+The SchoolMesh project is described at <http://schoolmesh.mattiussilab.net/>.
+
+EOT
+
+		CMDNAME=$(echo $FILE | sed s/_/\\\\\\\\_/g)
+		echo $CMDNAME
+		sed "s/{}/$CMDNAME/g" /tmp/$FILE > /var/schoolmesh/doc/pandoc.man/$FILE.8
+
+	done
+
 cd /var/schoolmesh/doc/pandoc.man
 
 for FILE in *
