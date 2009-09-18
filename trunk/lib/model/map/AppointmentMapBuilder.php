@@ -45,6 +45,8 @@ class AppointmentMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('STATE', 'State', 'INTEGER', false, null);
 
+		$tMap->addColumn('HOURS', 'Hours', 'INTEGER', false, null);
+
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null);
 
 		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'TIMESTAMP', false, null);

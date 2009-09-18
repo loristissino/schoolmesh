@@ -41,6 +41,10 @@ class WpmoduleMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('PERIOD', 'Period', 'VARCHAR', false, 100);
 
+		$tMap->addColumn('HOURS_ESTIMATED', 'HoursEstimated', 'INTEGER', false, null);
+
+		$tMap->addColumn('HOURS_USED', 'HoursUsed', 'INTEGER', false, null);
+
 		$tMap->addForeignKey('APPOINTMENT_ID', 'AppointmentId', 'INTEGER', 'appointment', 'ID', false, null);
 
 		$tMap->addColumn('RANK', 'Rank', 'INTEGER', false, null);

@@ -13,7 +13,7 @@ abstract class BaseWpmodulePeer {
 	const CLASS_DEFAULT = 'lib.model.Wpmodule';
 
 	
-	const NUM_COLUMNS = 9;
+	const NUM_COLUMNS = 11;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -29,6 +29,12 @@ abstract class BaseWpmodulePeer {
 
 	
 	const PERIOD = 'wpmodule.PERIOD';
+
+	
+	const HOURS_ESTIMATED = 'wpmodule.HOURS_ESTIMATED';
+
+	
+	const HOURS_USED = 'wpmodule.HOURS_USED';
 
 	
 	const APPOINTMENT_ID = 'wpmodule.APPOINTMENT_ID';
@@ -53,20 +59,20 @@ abstract class BaseWpmodulePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'Title', 'Period', 'AppointmentId', 'Rank', 'IsPublic', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'title', 'period', 'appointmentId', 'rank', 'isPublic', 'createdAt', 'updatedAt', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::TITLE, self::PERIOD, self::APPOINTMENT_ID, self::RANK, self::IS_PUBLIC, self::CREATED_AT, self::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'title', 'period', 'appointment_id', 'rank', 'is_public', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'Title', 'Period', 'HoursEstimated', 'HoursUsed', 'AppointmentId', 'Rank', 'IsPublic', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'title', 'period', 'hoursEstimated', 'hoursUsed', 'appointmentId', 'rank', 'isPublic', 'createdAt', 'updatedAt', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::TITLE, self::PERIOD, self::HOURS_ESTIMATED, self::HOURS_USED, self::APPOINTMENT_ID, self::RANK, self::IS_PUBLIC, self::CREATED_AT, self::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'title', 'period', 'hours_estimated', 'hours_used', 'appointment_id', 'rank', 'is_public', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'Title' => 2, 'Period' => 3, 'AppointmentId' => 4, 'Rank' => 5, 'IsPublic' => 6, 'CreatedAt' => 7, 'UpdatedAt' => 8, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'title' => 2, 'period' => 3, 'appointmentId' => 4, 'rank' => 5, 'isPublic' => 6, 'createdAt' => 7, 'updatedAt' => 8, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::TITLE => 2, self::PERIOD => 3, self::APPOINTMENT_ID => 4, self::RANK => 5, self::IS_PUBLIC => 6, self::CREATED_AT => 7, self::UPDATED_AT => 8, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'title' => 2, 'period' => 3, 'appointment_id' => 4, 'rank' => 5, 'is_public' => 6, 'created_at' => 7, 'updated_at' => 8, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'Title' => 2, 'Period' => 3, 'HoursEstimated' => 4, 'HoursUsed' => 5, 'AppointmentId' => 6, 'Rank' => 7, 'IsPublic' => 8, 'CreatedAt' => 9, 'UpdatedAt' => 10, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'title' => 2, 'period' => 3, 'hoursEstimated' => 4, 'hoursUsed' => 5, 'appointmentId' => 6, 'rank' => 7, 'isPublic' => 8, 'createdAt' => 9, 'updatedAt' => 10, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::TITLE => 2, self::PERIOD => 3, self::HOURS_ESTIMATED => 4, self::HOURS_USED => 5, self::APPOINTMENT_ID => 6, self::RANK => 7, self::IS_PUBLIC => 8, self::CREATED_AT => 9, self::UPDATED_AT => 10, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'title' => 2, 'period' => 3, 'hours_estimated' => 4, 'hours_used' => 5, 'appointment_id' => 6, 'rank' => 7, 'is_public' => 8, 'created_at' => 9, 'updated_at' => 10, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	
@@ -115,6 +121,10 @@ abstract class BaseWpmodulePeer {
 		$criteria->addSelectColumn(WpmodulePeer::TITLE);
 
 		$criteria->addSelectColumn(WpmodulePeer::PERIOD);
+
+		$criteria->addSelectColumn(WpmodulePeer::HOURS_ESTIMATED);
+
+		$criteria->addSelectColumn(WpmodulePeer::HOURS_USED);
 
 		$criteria->addSelectColumn(WpmodulePeer::APPOINTMENT_ID);
 

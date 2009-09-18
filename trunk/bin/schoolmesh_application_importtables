@@ -1,0 +1,16 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+USERNAME=$(cat /var/schoolmesh/config/databases.yml | grep username | gawk '{print $2}')
+PASSWORD=$(cat /var/schoolmesh/config/databases.yml | grep password | gawk '{print $2}')
+
+DATABASE=$1
+INFILE=$2
+
+checkFile $INFILE
+
+cat $INFILE | mysql $DATABASE --user=$USERNAME --password=$PASSWORD && msg_ok "Successfully imported data" || msg_failed "Data could not be imported"
+
