@@ -13,7 +13,7 @@ abstract class BaseEnrolmentPeer {
 	const CLASS_DEFAULT = 'lib.model.Enrolment';
 
 	
-	const NUM_COLUMNS = 7;
+	const NUM_COLUMNS = 8;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -29,6 +29,9 @@ abstract class BaseEnrolmentPeer {
 
 	
 	const YEAR_ID = 'enrolment.YEAR_ID';
+
+	
+	const INFO = 'enrolment.INFO';
 
 	
 	const CREATED_AT = 'enrolment.CREATED_AT';
@@ -47,20 +50,20 @@ abstract class BaseEnrolmentPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'SchoolclassId', 'YearId', 'CreatedAt', 'UpdatedAt', 'ImportCode', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'schoolclassId', 'yearId', 'createdAt', 'updatedAt', 'importCode', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::SCHOOLCLASS_ID, self::YEAR_ID, self::CREATED_AT, self::UPDATED_AT, self::IMPORT_CODE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'schoolclass_id', 'year_id', 'created_at', 'updated_at', 'import_code', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'SchoolclassId', 'YearId', 'Info', 'CreatedAt', 'UpdatedAt', 'ImportCode', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'schoolclassId', 'yearId', 'info', 'createdAt', 'updatedAt', 'importCode', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::SCHOOLCLASS_ID, self::YEAR_ID, self::INFO, self::CREATED_AT, self::UPDATED_AT, self::IMPORT_CODE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'schoolclass_id', 'year_id', 'info', 'created_at', 'updated_at', 'import_code', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'SchoolclassId' => 2, 'YearId' => 3, 'CreatedAt' => 4, 'UpdatedAt' => 5, 'ImportCode' => 6, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'schoolclassId' => 2, 'yearId' => 3, 'createdAt' => 4, 'updatedAt' => 5, 'importCode' => 6, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::SCHOOLCLASS_ID => 2, self::YEAR_ID => 3, self::CREATED_AT => 4, self::UPDATED_AT => 5, self::IMPORT_CODE => 6, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'schoolclass_id' => 2, 'year_id' => 3, 'created_at' => 4, 'updated_at' => 5, 'import_code' => 6, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'SchoolclassId' => 2, 'YearId' => 3, 'Info' => 4, 'CreatedAt' => 5, 'UpdatedAt' => 6, 'ImportCode' => 7, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'schoolclassId' => 2, 'yearId' => 3, 'info' => 4, 'createdAt' => 5, 'updatedAt' => 6, 'importCode' => 7, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::SCHOOLCLASS_ID => 2, self::YEAR_ID => 3, self::INFO => 4, self::CREATED_AT => 5, self::UPDATED_AT => 6, self::IMPORT_CODE => 7, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'schoolclass_id' => 2, 'year_id' => 3, 'info' => 4, 'created_at' => 5, 'updated_at' => 6, 'import_code' => 7, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	
@@ -109,6 +112,8 @@ abstract class BaseEnrolmentPeer {
 		$criteria->addSelectColumn(EnrolmentPeer::SCHOOLCLASS_ID);
 
 		$criteria->addSelectColumn(EnrolmentPeer::YEAR_ID);
+
+		$criteria->addSelectColumn(EnrolmentPeer::INFO);
 
 		$criteria->addSelectColumn(EnrolmentPeer::CREATED_AT);
 
@@ -967,7 +972,7 @@ abstract class BaseEnrolmentPeer {
 
   static public function getUniqueColumnNames()
   {
-    return array(array('user_id', 'schoolclass_id', 'year_id'));
+    return array(array('user_id', 'year_id'));
   }
 	
 	public static function getTableMap()

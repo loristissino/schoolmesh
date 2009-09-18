@@ -393,6 +393,75 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 		}
 
+        public function getEnrolments()
+        {
+	        $c = new Criteria();
+			$c->add(EnrolmentPeer::USER_ID, $this->getUserId());
+			$c->addAscendingOrderByColumn(EnrolmentPeer::YEAR_ID);
+			$t = EnrolmentPeer::doSelectJoinAllExceptsfGuardUser($c);
+			return $t;
+        }
+		
+		public function modifyEnrolment($enrolmentId, $schoolclassId, $yearId)
+		{
+			
+			$result=array();
+			
+			$enrolment=EnrolmentPeer::retrieveByPK($enrolmentId);
+			$year=YearPeer::retrieveByPk($yearId);
+			$schoolclass=SchoolclassPeer::retrieveByPk($schoolclassId);
+
+			try
+			{
+				$enrolment
+				->setSchoolclass($schoolclass)
+				->setYear($year)
+				->save();
+				
+				$result['result']='notice';
+				$result['message']='Enrolment successfully saved.';
+			}
+			
+			catch (Exception $exception)
+			{
+				$result['result']='error';
+				$result['message']='Enrolment could not be saved.';
+			}
+
+			return $result;
+			
+		}
+		
+		public function addEnrolment($schoolclassId, $yearId)
+		{
+			
+			$result=array();
+			
+			$enrolment=new Enrolment();
+			$year=YearPeer::retrieveByPk($yearId);
+			$schoolclass=SchoolclassPeer::retrieveByPk($schoolclassId);
+
+			try
+			{
+				$enrolment
+				->setUserId($this->getUserId())
+				->setSchoolclass($schoolclass)
+				->setYear($year)
+				->save();
+				
+				$result['result']='notice';
+				$result['message']='Enrolment successfully saved.';
+			}
+			
+			catch (Exception $exception)
+			{
+				$result['result']='error';
+				$result['message']='Enrolment could not be saved.';
+			}
+
+			return $result;
+			
+		}
 
         public function getCurrentAppointments()
         {

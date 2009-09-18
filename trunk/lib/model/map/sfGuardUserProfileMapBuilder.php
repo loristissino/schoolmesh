@@ -43,7 +43,7 @@ class sfGuardUserProfileMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('PRONUNCIATION', 'Pronunciation', 'VARCHAR', false, 100);
 
-		$tMap->addColumn('EXTRA_INFO', 'ExtraInfo', 'LONGVARCHAR', false, null);
+		$tMap->addColumn('INFO', 'Info', 'LONGVARCHAR', false, null);
 
 		$tMap->addForeignKey('ROLE_ID', 'RoleId', 'INTEGER', 'role', 'ID', false, null);
 

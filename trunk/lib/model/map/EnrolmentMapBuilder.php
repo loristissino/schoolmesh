@@ -41,6 +41,8 @@ class EnrolmentMapBuilder implements MapBuilder {
 
 		$tMap->addForeignKey('YEAR_ID', 'YearId', 'INTEGER', 'year', 'ID', true, null);
 
+		$tMap->addColumn('INFO', 'Info', 'LONGVARCHAR', false, null);
+
 		$tMap->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null);
 
 		$tMap->addColumn('UPDATED_AT', 'UpdatedAt', 'TIMESTAMP', false, null);

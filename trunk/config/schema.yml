@@ -135,7 +135,7 @@ propel:
     updated_at:
     import_code:  varchar(20)
     _uniques:
-      usy: [user_id, schoolclass_id, year_id]
+      usy: [user_id, year_id]
     
 
   team:

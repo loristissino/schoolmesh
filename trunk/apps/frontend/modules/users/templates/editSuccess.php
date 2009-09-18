@@ -78,6 +78,18 @@
 	<?php endif ?>
   </table>
 
+
+<?php if ($current_user->getRole()->getPosixName()==sfConfig::get('app_config_students_default_posix_group')): ?>
+	<h2><?php echo __('Enrolments') ?></h2>
+	<?php include_partial('enrolments', array('current_user'=>$current_user)) ?>
+<?php endif ?>
+
+<?php if ($current_user->getRole()->getPosixName()==sfConfig::get('app_config_teachers_default_posix_group')): ?>
+	<h2><?php echo __('Appointments') ?></h2>
+	<?php //include_partial('appointments', array('current_user'=>$current_user)) ?>
+<?php endif ?>
+
+
 <h2><?php echo __('Accounts') ?></h2>
 
 	<table>
@@ -163,7 +175,6 @@
 <h2><?php echo __('Credentials') ?></h2>
 
 <?php include_partial('credentials', array('current_user'=>$current_user)) ?>
-
 
 
 <h2><?php echo __('Actions') ?></h2>

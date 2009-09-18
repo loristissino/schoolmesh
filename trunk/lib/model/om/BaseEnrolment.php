@@ -22,6 +22,9 @@ abstract class BaseEnrolment extends BaseObject  implements Persistent {
 	protected $year_id;
 
 	
+	protected $info;
+
+	
 	protected $created_at;
 
 	
@@ -79,6 +82,12 @@ abstract class BaseEnrolment extends BaseObject  implements Persistent {
 	public function getYearId()
 	{
 		return $this->year_id;
+	}
+
+	
+	public function getInfo()
+	{
+		return $this->info;
 	}
 
 	
@@ -210,6 +219,20 @@ abstract class BaseEnrolment extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setInfo($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->info !== $v) {
+			$this->info = $v;
+			$this->modifiedColumns[] = EnrolmentPeer::INFO;
+		}
+
+		return $this;
+	} 
+	
 	public function setCreatedAt($v)
 	{
 						if ($v === null || $v === '') {
@@ -305,9 +328,10 @@ abstract class BaseEnrolment extends BaseObject  implements Persistent {
 			$this->user_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->schoolclass_id = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->year_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
-			$this->created_at = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->updated_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->import_code = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->info = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->created_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->updated_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->import_code = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -316,7 +340,7 @@ abstract class BaseEnrolment extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 7; 
+						return $startcol + 8; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Enrolment object", $e);
 		}
@@ -558,12 +582,15 @@ abstract class BaseEnrolment extends BaseObject  implements Persistent {
 				return $this->getYearId();
 				break;
 			case 4:
-				return $this->getCreatedAt();
+				return $this->getInfo();
 				break;
 			case 5:
-				return $this->getUpdatedAt();
+				return $this->getCreatedAt();
 				break;
 			case 6:
+				return $this->getUpdatedAt();
+				break;
+			case 7:
 				return $this->getImportCode();
 				break;
 			default:
@@ -580,9 +607,10 @@ abstract class BaseEnrolment extends BaseObject  implements Persistent {
 			$keys[1] => $this->getUserId(),
 			$keys[2] => $this->getSchoolclassId(),
 			$keys[3] => $this->getYearId(),
-			$keys[4] => $this->getCreatedAt(),
-			$keys[5] => $this->getUpdatedAt(),
-			$keys[6] => $this->getImportCode(),
+			$keys[4] => $this->getInfo(),
+			$keys[5] => $this->getCreatedAt(),
+			$keys[6] => $this->getUpdatedAt(),
+			$keys[7] => $this->getImportCode(),
 		);
 		return $result;
 	}
@@ -611,12 +639,15 @@ abstract class BaseEnrolment extends BaseObject  implements Persistent {
 				$this->setYearId($value);
 				break;
 			case 4:
-				$this->setCreatedAt($value);
+				$this->setInfo($value);
 				break;
 			case 5:
-				$this->setUpdatedAt($value);
+				$this->setCreatedAt($value);
 				break;
 			case 6:
+				$this->setUpdatedAt($value);
+				break;
+			case 7:
 				$this->setImportCode($value);
 				break;
 		} 	}
@@ -630,9 +661,10 @@ abstract class BaseEnrolment extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setUserId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setSchoolclassId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setYearId($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setCreatedAt($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setUpdatedAt($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setImportCode($arr[$keys[6]]);
+		if (array_key_exists($keys[4], $arr)) $this->setInfo($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setUpdatedAt($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setImportCode($arr[$keys[7]]);
 	}
 
 	
@@ -644,6 +676,7 @@ abstract class BaseEnrolment extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EnrolmentPeer::USER_ID)) $criteria->add(EnrolmentPeer::USER_ID, $this->user_id);
 		if ($this->isColumnModified(EnrolmentPeer::SCHOOLCLASS_ID)) $criteria->add(EnrolmentPeer::SCHOOLCLASS_ID, $this->schoolclass_id);
 		if ($this->isColumnModified(EnrolmentPeer::YEAR_ID)) $criteria->add(EnrolmentPeer::YEAR_ID, $this->year_id);
+		if ($this->isColumnModified(EnrolmentPeer::INFO)) $criteria->add(EnrolmentPeer::INFO, $this->info);
 		if ($this->isColumnModified(EnrolmentPeer::CREATED_AT)) $criteria->add(EnrolmentPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(EnrolmentPeer::UPDATED_AT)) $criteria->add(EnrolmentPeer::UPDATED_AT, $this->updated_at);
 		if ($this->isColumnModified(EnrolmentPeer::IMPORT_CODE)) $criteria->add(EnrolmentPeer::IMPORT_CODE, $this->import_code);
@@ -682,6 +715,8 @@ abstract class BaseEnrolment extends BaseObject  implements Persistent {
 		$copyObj->setSchoolclassId($this->schoolclass_id);
 
 		$copyObj->setYearId($this->year_id);
+
+		$copyObj->setInfo($this->info);
 
 		$copyObj->setCreatedAt($this->created_at);
 
