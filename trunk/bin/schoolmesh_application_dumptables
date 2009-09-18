@@ -1,0 +1,107 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+USERNAME=$(cat /var/schoolmesh/config/databases.yml | grep username | gawk '{print $2}')
+PASSWORD=$(cat /var/schoolmesh/config/databases.yml | grep password | gawk '{print $2}')
+
+DATABASE=$1
+OUTFILE=$2
+
+checkString $OUTFILE
+checkNotFile $OUTFILE
+
+
+TABLES="
+schoolclass
+sf_guard_user
+subject
+subnet
+track
+year
+"
+
+for TABLE in $TABLES
+	do
+		mysqldump  $DATABASE $TABLE --user=$USERNAME --password=$PASSWORD --no-create-info >> $OUTFILE
+	done
+
+
+exit
+
+mysqldump  $DATABASE role --user=$USERNAME --password=$PASSWORD --no-create-info >> $OUTFILE
+
+
+
+
+account
+account_type
+appointment
+enrolment
+lanlog
+reserved_username
+role
+schoolclass
+service
+sf_guard_group
+sf_guard_group_permission
+sf_guard_permission
+sf_guard_remember_key
+sf_guard_user
+sf_guard_user_group
+sf_guard_user_permission
+sf_guard_user_profile
+subject
+subnet
+subnet_service
+system_message
+system_message_i18n
+team
+ticket
+ticket_event
+ticket_type
+track
+user_account
+user_team
+workstation
+workstation_service
+wpevent
+wpinfo
+wpinfo_type
+wpitem_group
+wpitem_type
+wpmodule
+wpmodule_item
+wptool_appointment
+wptool_item
+wptool_item_type
+year
+
+
+account
+account_type
+appointment
+role
+schoolclass
+service
+sf_guard_group
+sf_guard_permission
+sf_guard_user
+subject
+subnet
+system_message
+team
+ticket
+ticket_type
+track
+workstation
+wpitem_group
+wpitem_type
+wpmodule
+year
+
+
+
+
