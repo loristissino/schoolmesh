@@ -79,13 +79,14 @@
   </table>
 
 
-<?php if ($current_user->getRole()->getPosixName()==sfConfig::get('app_config_students_default_posix_group')): ?>
+<?php if ($current_user->getRole() && $current_user->getRole()->getPosixName()==sfConfig::get('app_config_students_default_posix_group')): ?>
 	<h2><?php echo __('Enrolments') ?></h2>
 	<?php include_partial('enrolments', array('current_user'=>$current_user)) ?>
 <?php endif ?>
 
-<?php if ($current_user->getRole()->getPosixName()==sfConfig::get('app_config_teachers_default_posix_group')): ?>
+<?php if ($current_user->getRole() && $current_user->getRole()->getPosixName()==sfConfig::get('app_config_teachers_default_posix_group')): ?>
 	<h2><?php echo __('Appointments') ?></h2>
+	<p>TO DO...</p>
 	<?php //include_partial('appointments', array('current_user'=>$current_user)) ?>
 <?php endif ?>
 
@@ -109,7 +110,7 @@
 <tbody>  
 	<?php foreach($available_accounts as $available_account): ?>
 	<tr>
-		<th><label><?php echo image_tag($available_account) ?>&nbsp;<?php echo $available_account ?></label></th>
+		<th><?php echo image_tag($available_account) ?>&nbsp;<?php echo $available_account ?></th>
 		<td>
 			<?php echo $current_user->hasPermission($available_account)?__('enabled'):__('disabled') ?>
 		</td>
