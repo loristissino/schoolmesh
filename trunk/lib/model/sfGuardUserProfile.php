@@ -401,7 +401,16 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$t = EnrolmentPeer::doSelectJoinAllExceptsfGuardUser($c);
 			return $t;
         }
-		
+
+        public function getCurrentEnrolment()
+        {
+	        $c = new Criteria();
+			$c->add(EnrolmentPeer::USER_ID, $this->getUserId());
+			$c->add(EnrolmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
+			$t = EnrolmentPeer::doSelectOne($c);
+			return $t;
+        }
+
 		public function modifyEnrolment($enrolmentId, $schoolclassId, $yearId)
 		{
 			

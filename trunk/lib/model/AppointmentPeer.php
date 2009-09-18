@@ -352,10 +352,6 @@ switch ($sortby)
 			$checksList->addCheck(new Check(Check::FAILED, 'file not readable', $file));
 			return $checkList;
 		}
-		else
-		{
-			$checkList->addCheck(new Check(Check::PASSED, 'starting import', 'test'));
-		}
 
 		$row = 0;
 		$imported=0;

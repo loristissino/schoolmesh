@@ -54,7 +54,7 @@ class usersActions extends sfActions
 				
 				case('users'):
 				{
-					$this->checks=sfGuardUserProfilePeer::importFromCSVFile($file->getTempName());
+					$this->checkList=sfGuardUserProfilePeer::importFromCSVFile($file->getTempName());
 					break;
 				}
 				

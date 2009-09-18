@@ -119,17 +119,22 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
 	public static function importFromCSVFile($file)
 	{
-		$checks=array();
+//		$checks=array();
+		
+		$checkList=new CheckList();
+
 		
 		$culture=sfConfig::get('app_config_culture');
 						
 		if (!is_readable($file))
 		{
-			$checks[] = new Check(false, 'file not readable', $file);
+			$checkList->addCheck(new Check(Check::FAILED, 'File not readable', $file));
 			return $checks;
 		}
 
 		$row = 0;
+		$groupName= sprintf('Line %d: ', $row);
+
 		$imported=0;
 		$skipped=0;
 		
@@ -139,7 +144,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 			//echo "$num fields in line $row:\n";
 			
 			$row++;
-			$checkgroup=sprintf('Line %d: ', $row);
+			$groupName= sprintf('Line %d: ', $row);
 
 			if ($row==1)
 				{
@@ -149,15 +154,23 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
 			if (sizeof($data)!=11)
 			{
-				$checks[]=new Check(false, 'Invalid data: size=' . sizeof($data), $checkgroup);
+				$checkList->addCheck(new Check(Check::FAILED, 'Invalid data', $groupName));
 				continue;
 			}
 
 			list($type,$first_name,$middle_name,$last_name,$gender,$birthdate,$birthplace,$email,$import_code,$group, $info)=$data;
-			
+
+//			$checkList->addCheck(new Check(Check::FAILED, 'Type is ' . $type, $groupName));
+
 			if ($import_code=='')
 			{
-				$checks[]=new Check(false, 'Import code not set', $checkgroup);
+				$checkList->addCheck(new Check(Check::FAILED, 'Import code not set', $groupName));
+				continue;
+			}
+			
+			if (!in_array($type, array('S', 'T', 'O')))
+			{
+				$checkList->addCheck(new Check(Check::FAILED, sprintf('Not a valid type: %s', $type), $groupName));
 				continue;
 			}
 			
@@ -165,17 +178,77 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 			
 			if($profile)
 			{
+				$checkList->addCheck(new Check(Check::PASSED, sprintf('found user with import code %d', $import_code), $groupName));
+				
+				$foundLastname=$profile->getLastName();
+				$readLastname=Generic::clever_ucwords($culture, $last_name);
+				
+				if ($foundLastname!=$readLastname)
+				{
+					$checkList->addCheck(new Check(Check::WARNING, sprintf('last name does not match: have «%s», got «%s»', $foundLastname, $readLastname), $groupName));
+				}
+				
 				$profile->updateMiddlename($middle_name)
 				->setGender($gender)
 				->setBirthplace($birthplace)
 				->setBirthdate(Generic::clever_date($culture, $birthdate))
 				->updateEmail($email)
 				->save();
-				$checks[]=new Check(true, sprintf('updated info for %s (%s)', 
-					$profile->getFullName(), $profile->getSfGuardUser()->getUsername()),
-					 $checkgroup
-					); 
 				
+				$checkList->addCheck(new Check(Check::PASSED, sprintf('updated info for %s (%s)', 
+					$profile->getFullName(), $profile->getSfGuardUser()->getUsername()), $groupName));
+					
+				switch($type)
+				{
+					case('T'):
+						break;
+					
+					case('S'):
+						// found a student
+						
+						$enrolment=$profile->getCurrentEnrolment();
+						
+						if ($enrolment)
+						{
+							if($enrolment->getSchoolclassId()!=$group)
+							{
+								$result=$profile->modifyEnrolment($enrolment->getId(), $group, sfConfig::get('app_config_current_year'));
+								if ($result['result']=='notice')
+								{
+									$checkList->addCheck(new Check(Check::WARNING, sprintf('class updated for %s (%s)', 
+										$profile->getFullName(), $group), $groupName));
+								}
+								else
+								{
+									$checkList->addCheck(new Check(Check::FAILED, sprintf('could not set class for %s (%s)', 
+										$profile->getFullName(), $group) .  '   type is '. $type, $groupName));
+								}
+							}
+							else
+							{
+								$checkList->addCheck(new Check(Check::PASSED, sprintf('class maintained for %s (%s)', 
+									$profile->getFullName(), $group), $groupName));
+							}
+						}
+						else
+						{
+							$result=$profile->addEnrolment($group, sfConfig::get('app_config_current_year'));
+							if ($result['result']=='notice')
+							{
+							$checkList->addCheck(new Check(Check::WARNING, sprintf('class set for %s (%s)', 
+								$profile->getFullName(), $group), $groupName));
+							}
+							else
+							{
+							$checkList->addCheck(new Check(Check::FAILED, sprintf('could not set class for %s (%s)', 
+								$profile->getFullName(), $group).  '   type is '. $type, $groupName));
+							}
+						}
+						
+						break;
+					
+				}
+
 			}
 			
 			else
@@ -216,8 +289,8 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 						$profile->addSystemAlert('no role assigned');
 						break;
 						
-					$checks[]=new Check(false, 'invalid type', $checkgroup);
-				}
+					$checkList->addCheck(new Check(Check::FAILED, 'invalid type', $groupName));
+			}
 
 				if($typeok)
 				{
@@ -231,7 +304,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 					->addSystemAlert('username invented', $username_found['invented'])
 					->save();
 
-					$checks[]=new Check(true, sprintf('created user %s (%s)', $profile->getFullName(), $user->getUsername()), $checkgroup);
+					$checkList->addCheck(new Check(Check::PASSED, sprintf('created user %s (%s)', $profile->getFullName(), $user->getUsername()), $groupName));
 				
 					if ($role->getDefaultGuardGroup())
 					{
@@ -239,10 +312,6 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 						$profile->addToGuardGroup($guardGroup);
 					}
 
-				}
-				else
-				{
-					$checks[]=new Check(false, 'type not ok', $checkgroup);
 				}
 				
 
@@ -255,7 +324,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 						if($team && $role)
 						{
 							$profile->addToTeam($team, $role);
-							$checks[]=new Check(true, sprintf('added to team %s', $group), $checkgroup);
+							$checkList->addCheck(new Check(Check::PASSED, sprintf('added to team %s', $group), $groupName));
 						}
 						else
 						{
@@ -277,7 +346,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 							->setUserId($user->getId())
 							->setYearId(sfConfig::get('app_config_current_year'))
 							->save();
-							$checks[]=new Check(true, 'set class', $checkgroup);
+							$checkList->addCheck(new Check(Check::PASSED, sprintf('enrolled to class %s', $group), $groupName));
 						}
 						else
 						{
@@ -297,7 +366,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		}
 		
 		fclose($handle);
-		return $checks;
+		return $checkList;
 		
 	}
 
