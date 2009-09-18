@@ -22,6 +22,12 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	protected $period;
 
 	
+	protected $hours_estimated;
+
+	
+	protected $hours_used;
+
+	
 	protected $appointment_id;
 
 	
@@ -88,6 +94,18 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	public function getPeriod()
 	{
 		return $this->period;
+	}
+
+	
+	public function getHoursEstimated()
+	{
+		return $this->hours_estimated;
+	}
+
+	
+	public function getHoursUsed()
+	{
+		return $this->hours_used;
 	}
 
 	
@@ -223,6 +241,34 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setHoursEstimated($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->hours_estimated !== $v) {
+			$this->hours_estimated = $v;
+			$this->modifiedColumns[] = WpmodulePeer::HOURS_ESTIMATED;
+		}
+
+		return $this;
+	} 
+	
+	public function setHoursUsed($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->hours_used !== $v) {
+			$this->hours_used = $v;
+			$this->modifiedColumns[] = WpmodulePeer::HOURS_USED;
+		}
+
+		return $this;
+	} 
+	
 	public function setAppointmentId($v)
 	{
 		if ($v !== null) {
@@ -350,11 +396,13 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 			$this->user_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->title = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->period = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->appointment_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
-			$this->rank = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
-			$this->is_public = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
-			$this->created_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->updated_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->hours_estimated = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+			$this->hours_used = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->appointment_id = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
+			$this->rank = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
+			$this->is_public = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
+			$this->created_at = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->updated_at = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -363,7 +411,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 9; 
+						return $startcol + 11; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Wpmodule object", $e);
 		}
@@ -607,18 +655,24 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				return $this->getPeriod();
 				break;
 			case 4:
-				return $this->getAppointmentId();
+				return $this->getHoursEstimated();
 				break;
 			case 5:
-				return $this->getRank();
+				return $this->getHoursUsed();
 				break;
 			case 6:
-				return $this->getIsPublic();
+				return $this->getAppointmentId();
 				break;
 			case 7:
-				return $this->getCreatedAt();
+				return $this->getRank();
 				break;
 			case 8:
+				return $this->getIsPublic();
+				break;
+			case 9:
+				return $this->getCreatedAt();
+				break;
+			case 10:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -635,11 +689,13 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 			$keys[1] => $this->getUserId(),
 			$keys[2] => $this->getTitle(),
 			$keys[3] => $this->getPeriod(),
-			$keys[4] => $this->getAppointmentId(),
-			$keys[5] => $this->getRank(),
-			$keys[6] => $this->getIsPublic(),
-			$keys[7] => $this->getCreatedAt(),
-			$keys[8] => $this->getUpdatedAt(),
+			$keys[4] => $this->getHoursEstimated(),
+			$keys[5] => $this->getHoursUsed(),
+			$keys[6] => $this->getAppointmentId(),
+			$keys[7] => $this->getRank(),
+			$keys[8] => $this->getIsPublic(),
+			$keys[9] => $this->getCreatedAt(),
+			$keys[10] => $this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -668,18 +724,24 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 				$this->setPeriod($value);
 				break;
 			case 4:
-				$this->setAppointmentId($value);
+				$this->setHoursEstimated($value);
 				break;
 			case 5:
-				$this->setRank($value);
+				$this->setHoursUsed($value);
 				break;
 			case 6:
-				$this->setIsPublic($value);
+				$this->setAppointmentId($value);
 				break;
 			case 7:
-				$this->setCreatedAt($value);
+				$this->setRank($value);
 				break;
 			case 8:
+				$this->setIsPublic($value);
+				break;
+			case 9:
+				$this->setCreatedAt($value);
+				break;
+			case 10:
 				$this->setUpdatedAt($value);
 				break;
 		} 	}
@@ -693,11 +755,13 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setUserId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setTitle($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setPeriod($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setAppointmentId($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setRank($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setIsPublic($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setUpdatedAt($arr[$keys[8]]);
+		if (array_key_exists($keys[4], $arr)) $this->setHoursEstimated($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setHoursUsed($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setAppointmentId($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setRank($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setIsPublic($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setUpdatedAt($arr[$keys[10]]);
 	}
 
 	
@@ -709,6 +773,8 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpmodulePeer::USER_ID)) $criteria->add(WpmodulePeer::USER_ID, $this->user_id);
 		if ($this->isColumnModified(WpmodulePeer::TITLE)) $criteria->add(WpmodulePeer::TITLE, $this->title);
 		if ($this->isColumnModified(WpmodulePeer::PERIOD)) $criteria->add(WpmodulePeer::PERIOD, $this->period);
+		if ($this->isColumnModified(WpmodulePeer::HOURS_ESTIMATED)) $criteria->add(WpmodulePeer::HOURS_ESTIMATED, $this->hours_estimated);
+		if ($this->isColumnModified(WpmodulePeer::HOURS_USED)) $criteria->add(WpmodulePeer::HOURS_USED, $this->hours_used);
 		if ($this->isColumnModified(WpmodulePeer::APPOINTMENT_ID)) $criteria->add(WpmodulePeer::APPOINTMENT_ID, $this->appointment_id);
 		if ($this->isColumnModified(WpmodulePeer::RANK)) $criteria->add(WpmodulePeer::RANK, $this->rank);
 		if ($this->isColumnModified(WpmodulePeer::IS_PUBLIC)) $criteria->add(WpmodulePeer::IS_PUBLIC, $this->is_public);
@@ -749,6 +815,10 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 		$copyObj->setTitle($this->title);
 
 		$copyObj->setPeriod($this->period);
+
+		$copyObj->setHoursEstimated($this->hours_estimated);
+
+		$copyObj->setHoursUsed($this->hours_used);
 
 		$copyObj->setAppointmentId($this->appointment_id);
 

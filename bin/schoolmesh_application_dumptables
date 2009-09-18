@@ -15,93 +15,74 @@ checkNotFile $OUTFILE
 
 
 TABLES="
-schoolclass
-sf_guard_user
-subject
-subnet
 track
 year
-"
-
-for TABLE in $TABLES
-	do
-		mysqldump  $DATABASE $TABLE --user=$USERNAME --password=$PASSWORD --no-create-info >> $OUTFILE
-	done
-
-
-exit
-
-mysqldump  $DATABASE role --user=$USERNAME --password=$PASSWORD --no-create-info >> $OUTFILE
-
-
-
-
-account
-account_type
-appointment
-enrolment
-lanlog
-reserved_username
-role
+subject
 schoolclass
+sf_guard_user
+sf_guard_permission
+subnet
+account_type
+
+role
+account
 service
 sf_guard_group
-sf_guard_group_permission
-sf_guard_permission
-sf_guard_remember_key
-sf_guard_user
-sf_guard_user_group
-sf_guard_user_permission
-sf_guard_user_profile
-subject
-subnet
-subnet_service
 system_message
 system_message_i18n
 team
 ticket
-ticket_event
 ticket_type
-track
-user_account
-user_team
 workstation
+wpitem_group
+wpitem_type
+wpmodule
+
+appointment
+enrolment
+reserved_username
+lanlog
+sf_guard_group_permission
+sf_guard_remember_key
+sf_guard_user_group
+sf_guard_user_profile
+sf_guard_user_permission
+subnet_service
+ticket_event
+user_team
 workstation_service
 wpevent
 wpinfo
 wpinfo_type
-wpitem_group
-wpitem_type
-wpmodule
-wpmodule_item
 wptool_appointment
 wptool_item
 wptool_item_type
-year
+wpmodule_item
+"
 
+TEMPFILE0=$(mktemp)
+TEMPFILE1=$(mktemp)
+TEMPFILE2=$(mktemp)
 
-account
-account_type
-appointment
-role
-schoolclass
-service
-sf_guard_group
-sf_guard_permission
-sf_guard_user
-subject
-subnet
-system_message
-team
-ticket
-ticket_type
-track
-workstation
-wpitem_group
-wpitem_type
-wpmodule
-year
+TABLESDUMPED=0
 
+for TABLE in $TABLES
+	do
+		mysqldump  $DATABASE $TABLE --user=$USERNAME --password=$PASSWORD --no-create-info --complete-insert >> $OUTFILE && msg_ok "Dumped table  $TABLE"
+		let "TABLESDUMPED += 1"
+		echo $TABLE >> $TEMPFILE0
+	done
 
+echo "Dumped $TABLESDUMPED tables"
 
+sort $TEMPFILE0 > $TEMPFILE1
 
+echo 'show tables;' | mysql $DATABASE --user=$USERNAME --password=$PASSWORD --raw --skip-column-names | sort > $TEMPFILE2
+
+TOTALNUMBER=$(cat $TEMPFILE2 | wc -l)
+
+echo "Available $TOTALNUMBER tables"
+
+diff $TEMPFILE1 $TEMPFILE2  && msg_ok "Successfully dumped all tables" || msg_failed "Not all tables have been dumped"
+
+rm -f $TEMPFILE0 $TEMPFILE1 $TEMPFILE2
