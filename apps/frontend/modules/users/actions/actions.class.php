@@ -674,6 +674,85 @@ public function executeChangerole(sfWebRequest $request)
 		
 	}
 
+public function executeEditenrolment(sfWebRequest $request)
+  {
+	$this->enrolment=EnrolmentPeer::retrieveByPK($request->getParameter('id'));
+	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($this->enrolment->getUserId());
+	
+	$this->form = new EditEnrolmentForm();
+	
+	if ($request->isMethod('post'))
+		{
+			$this->form->bind($request->getParameter('info'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				$this->enrolment=EnrolmentPeer::retrieveByPK($request->getParameter('id'));
+				$current_user=$this->enrolment->getsfGuardUser()->getProfile();
+				
+				$result=$current_user->modifyEnrolment($this->enrolment->getId(), $params['class'], $params['year']);
+				
+				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+				
+				if ($result['result']=='notice')
+				{
+					$this->redirect('users/edit?id='. $current_user->getUserId());
+				}
+				else
+				{
+					$this->redirect('users/editenrolment?id='. $this->enrolment->getId());
+				}
+			}
+
+		}
+
+	$this->form->setDefaults(
+		array(
+			'year' => $this->enrolment->getYear()->getId(),
+			'class'=> $this->enrolment->getSchoolclass(),
+		)
+	);
+		
+	}
+
+public function executeAddenrolment(sfWebRequest $request)
+  {
+	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('user'));
+	
+	$this->form = new EditEnrolmentForm();
+	
+	if ($request->isMethod('post'))
+		{
+			$this->form->bind($request->getParameter('info'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				$result=$this->current_user->addEnrolment($params['class'], $params['year']);
+				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+				
+				if ($result['result']=='notice')
+				{
+					$this->redirect('users/edit?id='. $this->current_user->getUserId());
+				}
+				else
+				{
+					$this->redirect('users/addenrolment?user='. $this->current_user->getUserId());
+				}
+				
+				
+				
+			}
+		}
+
+	$this->form->setDefaults(
+		array(
+			'year' => sfConfig::get('app_config_students_default_posix_group')
+		)
+	);
+		
+	}
+
+
 
   public function executeAddtoteam(sfWebRequest $request)
   {

@@ -17,6 +17,7 @@ class BaseEnrolmentForm extends BaseFormPropel
       'user_id'        => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => false)),
       'schoolclass_id' => new sfWidgetFormPropelChoice(array('model' => 'Schoolclass', 'add_empty' => false)),
       'year_id'        => new sfWidgetFormPropelChoice(array('model' => 'Year', 'add_empty' => false)),
+      'info'           => new sfWidgetFormTextarea(),
       'created_at'     => new sfWidgetFormDateTime(),
       'updated_at'     => new sfWidgetFormDateTime(),
       'import_code'    => new sfWidgetFormInput(),
@@ -27,13 +28,14 @@ class BaseEnrolmentForm extends BaseFormPropel
       'user_id'        => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id')),
       'schoolclass_id' => new sfValidatorPropelChoice(array('model' => 'Schoolclass', 'column' => 'id')),
       'year_id'        => new sfValidatorPropelChoice(array('model' => 'Year', 'column' => 'id')),
+      'info'           => new sfValidatorString(array('required' => false)),
       'created_at'     => new sfValidatorDateTime(array('required' => false)),
       'updated_at'     => new sfValidatorDateTime(array('required' => false)),
       'import_code'    => new sfValidatorString(array('max_length' => 20, 'required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorPropelUnique(array('model' => 'Enrolment', 'column' => array('user_id', 'schoolclass_id', 'year_id')))
+      new sfValidatorPropelUnique(array('model' => 'Enrolment', 'column' => array('user_id', 'year_id')))
     );
 
     $this->widgetSchema->setNameFormat('enrolment[%s]');

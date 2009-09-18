@@ -85,7 +85,7 @@ CREATE TABLE `sf_guard_user_profile`
 	`middle_name` VARCHAR(50),
 	`last_name` VARCHAR(50),
 	`pronunciation` VARCHAR(100),
-	`extra_info` TEXT,
+	`info` TEXT,
 	`role_id` INTEGER,
 	`gender` VARCHAR(1),
 	`email` VARCHAR(50),
@@ -306,11 +306,12 @@ CREATE TABLE `enrolment`
 	`user_id` INTEGER  NOT NULL,
 	`schoolclass_id` VARCHAR(5)  NOT NULL,
 	`year_id` INTEGER  NOT NULL,
+	`info` TEXT,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	`import_code` VARCHAR(20),
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `usy` (`user_id`, `schoolclass_id`, `year_id`),
+	UNIQUE KEY `usy` (`user_id`, `year_id`),
 	CONSTRAINT `enrolment_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
