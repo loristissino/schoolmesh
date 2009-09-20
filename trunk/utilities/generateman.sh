@@ -6,7 +6,7 @@ for FILE in schoolmesh_application_importtables
 	do
 		cat > /tmp/$FILE <<EOT
 % {}(8) Schoolmesh User Manuals
-% Loris Tissino
+% Loris Tissino (loris.tissino@mattiussilab.net)
 % August 6, 2009
 
 EOT
@@ -30,7 +30,7 @@ EOT
 
 		CMDNAME=$(echo $FILE | sed s/_/\\\\\\\\_/g)
 		echo $CMDNAME
-		sed "s/{}/$CMDNAME/g" /tmp/$FILE > /var/schoolmesh/doc/pandoc.man/$FILE.8
+		sed -e "s/{}/$CMDNAME/g" -e "s/{-}/$FILE/" /tmp/$FILE > /var/schoolmesh/doc/pandoc.man/$FILE.8
 
 	done
 
