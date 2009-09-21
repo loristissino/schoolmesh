@@ -20,7 +20,12 @@
 <ul class="sf_admin_actions">
 	<li class="sf_admin_action_yaml"><?php echo link_to(__("YAML"), 'plansandreports/view?id='.$workplan->getId().'&sf_format=yaml') ?><br /></li>
 	<li class="sf_admin_action_openoffice"><?php echo link_to(__("OpenOffice.org Document"), 'plansandreports/odt?id='.$workplan->getId()) ?> (experimental)<br /></li>
+
+<?php /*
+
 	<li class="sf_admin_action_word"><?php echo link_to(__("Microsoft Word Document"), 'plansandreports/doc?id='.$workplan->getId()) ?> (experimental)<br /></li>
 	<li class="sf_admin_action_rtf"><?php echo link_to(__("Rich Text Format"), 'plansandreports/view?id='.$workplan->getId().'&sf_format=rtf') ?> (experimental)<br /></li>
-	<li class="sf_admin_action_pdf"><?php echo link_to(__("PDF"), 'plansandreports/view?id='.$workplan->getId().'&sf_format=pdf') ?> (experimental)<br /></li>
+
+*/ ?>
+	<li class="sf_admin_action_pdf"><?php echo link_to(__("PDF"), 'plansandreports/pdf?id='.$workplan->getId()) ?> (experimental)<br /></li>
 </ul>

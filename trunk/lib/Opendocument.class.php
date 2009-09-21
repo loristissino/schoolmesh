@@ -41,6 +41,11 @@ class Opendocument{
 					$this->convertToDoc();
 					$mimetype="application/msword";
 				}
+			elseif ($this->type=='pdf')
+				{
+					$this->convertToPdf();
+					$mimetype="application/pdf";
+				}
 			else
 				{
 					$mimetype='application/vnd.oasis.opendocument.text';
@@ -68,13 +73,22 @@ class Opendocument{
 	private function convertToDoc()
 		{
 			$docfile = str_replace('.odt', '.doc', $this->file2serve);
-			$cmd='unoconv --server localhost --port 2090 --stdout -f doc ' . $this->file2serve . ' > ' . $docfile;
+			$cmd='unoconv --server localhost --port 2002 --stdout -f doc ' . $this->file2serve . ' > ' . $docfile;
 //			$cmd='unoconv --stdout -f doc ' . $this->file2serve . ' > ' . $docfile;
 			exec($cmd);
 			unlink($this->file2serve);
 			$this->file2serve = $docfile;
 		}
 
+	private function convertToPdf()
+		{
+			$docfile = str_replace('.odt', '.doc', $this->file2serve);
+			$cmd='unoconv --server localhost --port 2002 --stdout -f pdf ' . $this->file2serve . ' > ' . $docfile;
+//			$cmd='unoconv --stdout -f doc ' . $this->file2serve . ' > ' . $docfile;
+			exec($cmd);
+			unlink($this->file2serve);
+			$this->file2serve = $docfile;
+		}
 	public static function html2odtxml($text)
 		{
 		$text=str_replace('<br />', '<text:line-break/>', html_entity_decode($text));

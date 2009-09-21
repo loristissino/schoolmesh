@@ -334,7 +334,18 @@ public function executeBatch(sfWebRequest $request)
   public function executeDoc(sfWebRequest $request)
 	{
 	
-		$document = new Opendocument('mattiussirq', sprintf($this->getContext()->getI18N()->__('workplan di %s'), "Loris Tissino"), 'doc');
+		$document = new Opendocument('mattiussirq', $this->workplan, 'doc');
+		$document->setHeader($this->getController()->getPresentationFor('headers', 'workplan'));
+		$document->setContent($this->getController()->getPresentationFor('plansandreports', 'xml'));
+		$document->setResponse($this->getContext()->getResponse());
+		return sfView::NONE;
+		
+	}
+
+  public function executePdf(sfWebRequest $request)
+	{
+	
+		$document = new Opendocument('mattiussirq', $this->workplan, 'pdf');
 		$document->setHeader($this->getController()->getPresentationFor('headers', 'workplan'));
 		$document->setContent($this->getController()->getPresentationFor('plansandreports', 'xml'));
 		$document->setResponse($this->getContext()->getResponse());
@@ -365,7 +376,7 @@ public function executeBatch(sfWebRequest $request)
 					$this->getResponse()->setContentType('text/plain');
 					return $this->renderText(sfYaml::dump($this->workplan->getCompleteContentAsArray(), 10));
 					
-				case 'rtf':
+/*				case 'rtf':
 					$pandoc = new Pandoc($this->workplan->getContentAsMarkdown());
 					if (!$pandoc->generateFile('--to=rtf -s'))
 						return $this->renderText("File could not be generated");
@@ -377,8 +388,8 @@ public function executeBatch(sfWebRequest $request)
 					$response->setHttpHeader('Content-Disposition', 'attachment; filename="pianodilavoro.rtf"');
 					$response->setContent($pandoc->getGeneratedFile());
 					return sfView::NONE; 
-
-					
+*/
+/*					
 				case 'pdf':
 						$config = sfTCPDFPluginConfigHandler::loadConfig();
   sfTCPDFPluginConfigHandler::includeLangFile($this->getUser()->getCulture());
@@ -481,9 +492,9 @@ public function executeBatch(sfWebRequest $request)
  
   return sfView::NONE;
 
+*/
 					
 		}
-
 
 	$this->workflow_logs = $this->workplan->getWorkflowLogs();
 	$this->wpinfos = $this->workplan->getWpinfos();
