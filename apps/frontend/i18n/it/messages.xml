@@ -799,8 +799,8 @@
         <target>Deve essere presente almeno un elemento nel gruppo &#xAB;%s&#xBB;</target>
       </trans-unit>
       <trans-unit id="228">
-        <source>Invalid content for item &#xAB;%s&#xBB; in group &#xAB;%s&#xBB;</source>
-        <target>Contenuto illecito per l'elemento &#xAB;%s&#xBB; nel gruppo &#xAB;%s&#xBB;</target>
+        <source>Invalid text</source>
+        <target>Testo illecito</target>
       </trans-unit>
       <trans-unit id="229">
         <source>Missing evaluation for item &#xAB;%s&#xBB; in group &#xAB;%s&#xBB;</source>
@@ -1037,6 +1037,66 @@
       <trans-unit id="288">
         <source>filled on %s</source>
         <target>compilato il %s</target>
+      </trans-unit>
+      <trans-unit id="289">
+        <source>Fill this document</source>
+        <target>Compila questo documento</target>
+      </trans-unit>
+      <trans-unit id="290">
+        <source>Edit heading</source>
+        <target>Modifica l'intestazione</target>
+      </trans-unit>
+      <trans-unit id="290">
+        <source>Hours estimated</source>
+        <target>Ore necessarie</target>
+      </trans-unit>
+      <trans-unit id="291">
+        <source>Edit module heading</source>
+        <target>Modifica intestazione modulo</target>
+      </trans-unit>
+      <trans-unit id="292">
+        <source>Hours estimated: </source>
+        <target>Ore necessarie stimate: </target>
+      </trans-unit>
+      <trans-unit id="293">
+        <source>[0]No check failed.|[1]One check failed.|(1,+Inf]A total of %1 checks failed.</source>
+        <target>[0]Nessun esito negativo.|[1]Un esito negativo.|(1,+Inf]%1 esiti negativi.</target>
+      </trans-unit>
+      <trans-unit id="294">
+        <source>[0]No check passed.|[1]One check passed.|(1,+Inf]A total of %1 checks passed.</source>
+        <target>[0]Nessun esito positivo.|[1]On esito positivo.|(1,+Inf]%1 esiti positivi.</target>
+      </trans-unit>
+      <trans-unit id="295">
+        <source>[0]There were no warnings.|[1]There was one warning.|(1,+Inf]There were %1 warnings.</source>
+        <target>[0]Nessun avvertimento.|[1]Un avvertimento.|(1,+Inf]%1 avvertimenti.</target>
+      </trans-unit>
+      <trans-unit id="296">
+        <source>[0]ok|[1]one failed|(1,+Inf]%1 failed</source>
+        <target>[0]ok|[1]un errore|(1,+Inf]%1 errori</target>
+      </trans-unit>
+      <trans-unit id="297">
+        <source>[0]all wrong|[1]one check passed|(1,+Inf]%1 passed</source>
+        <target>[0]tutto errato|[1]un esito positivo|(1,+Inf]%1 esiti positivi</target>
+      </trans-unit>
+      <trans-unit id="298">
+        <source>[0]ok|[1]one warning|(1,+Inf]%1 warnings</source>
+        <target>[0]ok|[1]un avvertimento|(1,+Inf]%1 avvertimenti</target>
+      </trans-unit>
+      <trans-unit id="299">
+        <source>Valid title</source>
+        <target>Titolo valido</target>
+      </trans-unit>
+      <trans-unit id="300">
+        <source>Checks</source>
+        <target>Controlli</target>
+      </trans-unit>
+      <trans-unit id="301">
+        <source>[0]No check was done.|[1]One check was done.|(1,+Inf]A total of %1 checks were done.</source>
+        <target>[0]Non è stato effettuato nessun controllo.|[1]È stato effettuato un controllo.|(1,+Inf]Sono stati effettuati %1 controlli.</target>
+      </trans-unit>
+      <trans-unit id="302">
+        <source>Hours</source>
+        <target>Ore</target>
       </trans-unit>
     </body>
   </file>

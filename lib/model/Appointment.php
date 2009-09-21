@@ -2,15 +2,20 @@
 
 class Appointment extends BaseAppointment
 {
+	
+	public function getOwner()
+	{
+		return $this->getsfGuardUser();
+	}
     
     public function getFirstName()
     {
-    return $this->getsfGuardUser()->getProfile()->getFirstName();    
+		return $this->getOwner()->getProfile()->getFirstName();    
     }
 
     public function getLastName()
     {
-    return $this->getsfGuardUser()->getProfile()->getLastName();    
+    return $this->getOwner()->getProfile()->getLastName();    
     }
 
     public function getFullName()
@@ -423,7 +428,7 @@ $con->query($sql);
 						
 					foreach ($neededItemTypes as $it)
 						{
-							$groupname=sprintf('Mod. %d) %s -- %s', $count, $wpmodule->getTitle(), $it->getTitle());
+							$groupname=sprintf('Mod. %d) %s » %s', $count, $wpmodule->getTitle(), $it->getTitle());
 							if ($it->getState()>$this->getState())
 								{
 									continue;
@@ -480,13 +485,13 @@ $con->query($sql);
 										{
 											foreach($items as $item)
 												{
-													$groupname=sprintf('Mod. %d) %s -- %s :: %s', $count, $wpmodule->getTitle(), $it->getTitle(), $item->getContent());
+													$groupname=sprintf('Mod. %d) %s » %s :: %s', $count, $wpmodule->getTitle(), $it->getTitle(), $item->getContent());
 
 													if(($item->getContent()=='---'||$item->getContent()==''))
 													{
 														$checkList->addCheck(new Check(
 															Check::FAILED,
-															'Invalid content',
+															'Invalid text',
 															$groupname));
 															/*
 																array(
@@ -595,7 +600,7 @@ $con->query($sql);
 			$this->markSubItems('false');
 			$result['result']='notice';
 			$result['message']=$steps[$this->getState()]['owner']['submitDoneAction'];
-			$this->addEvent($user_id, $steps[$this->getState()]['owner']['submitDoneAction'], $steps[$this->getState()]['owner']['submitNextState']);
+			$this->addEvent($this->getOwner()->getId(), $steps[$this->getState()]['owner']['submitDoneAction'], $steps[$this->getState()]['owner']['submitNextState']);
 		}
 	else
 		{
