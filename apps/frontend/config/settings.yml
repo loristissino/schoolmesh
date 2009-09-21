@@ -33,6 +33,7 @@ all:
     # Form security secret (CSRF protection)
 #    csrf_secret:       MyGreatSecret     # Unique secret to enable CSRF protection or false to disable
     csrf_secret:   false
+    check_lock:    on 
     
     # Output escaping settings
     escaping_strategy:      'on'            # Determines how variables are made available to templates. Accepted values: on, off.
