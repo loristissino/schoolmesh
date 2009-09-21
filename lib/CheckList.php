@@ -38,13 +38,10 @@ class CheckList{
 		return $this->_shortMessages[$result];
 	}
 
-	public function addCheck($check)
+	public function addCheck(Check $check)
 		{
 			
-			if (!$check instanceof Check)
-			{
-				throw new Exception('you can add only Check instances');
-			}
+			
 			$this->_checks[$check->getGroup()]['checks'][]=$check;
 			@$this->_checks[$check->getGroup()][$check->getResult()]++;
 

@@ -24,7 +24,11 @@
 <?php endif ?>
 <strong><span id="moduleperiod" class="editText"><?php echo $wpmodule->getPeriod() ?></span></strong></li>
 <?php echo input_in_place_editor_tag('moduleperiod', 'wpmodule/editInLine?property=Period&id='.$wpmodule->getId(), array('cols'=>'50', 'rows'=>1)) ?>
+<li><?php echo __('Hours estimated: ') ?>
+<strong><span id="modulehours_estimated" class="editText"><?php echo $wpmodule->getHoursEstimated() ?></span></strong></li>
+<?php echo input_in_place_editor_tag('modulehours_estimated', 'wpmodule/editInLine?property=HoursEstimated&id='.$wpmodule->getId(), array('cols'=>'5', 'rows'=>1)) ?>
 </ul>
+
 
 
 <table>
@@ -46,7 +50,9 @@
 
 <h2><?php echo __('Actions') ?></h2>
 			<ul class="sf_admin_td_actions">
-
+				<li class="sf_admin_action_edit">
+				<?php echo link_to(__('Edit heading'), 'wpmodule/editheading?id='.$wpmodule->getId()) ?>
+				</li><br />
 				<li class="sf_admin_action_back">
 				<?php echo link_to(sprintf(__('Back to document «%s»'), $workplan), 'plansandreports/fill?id='.$workplan->getId()) ?>
 				</li><br />

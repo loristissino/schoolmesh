@@ -27,14 +27,11 @@
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
 
-<?php include_partial('wpactions', array('workplan'=>$workplan, 'steps'=>$steps)) ?>
-
-
-
-
+<?php include_partial('wpactions', array('workplan'=>$workplan, 'steps'=>$steps, 'show_fill'=>true)) ?>
 
 </div>
 <hr />
+<?php /*
 <?php if(isset($checks)): ?>
 <?php foreach($checks as $check): ?>
 	<p>
@@ -47,5 +44,10 @@
 		<?php endif ?>
 	</p>
 <?php endforeach; ?>
+<?php endif ?>
+*/ ?>
+
+<?php if(isset($checkList)): ?>
+	<?php include_partial('content/checks', array('checkList'=>$checkList, 'start_closed'=>false)) ?>
 <?php endif ?>
 
