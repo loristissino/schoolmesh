@@ -21,10 +21,9 @@
 	<p>
 	<strong>
 	<?php echo link_to_function(
-	$groupname,
+	image_tag($checkList->getResultsByGroupName($groupname, Check::FAILED)>0? 'stop': 'go'),
   visual_effect('toggle_blind', $groupname)
-) ?></strong>  (<?php foreach(array(Check::PASSED=>'green', Check::WARNING=>'orange', Check::FAILED=>'red') as $key=>$value): ?>
-
+) ?> &nbsp;<?php echo $groupname ?></strong>  (<?php foreach(array(Check::PASSED=>'green', Check::WARNING=>'orange', Check::FAILED=>'red') as $key=>$value): ?>
 <?php if($checkList->getResultsByGroupName($groupname, $key)>0): ?>
 	<span style="color: <?php echo $value ?>">
 		<?php echo format_number_choice($checkList->getShortMessage($key), array('%1'=>$checkList->getResultsByGroupName($groupname, $key)), $checkList->getResultsByGroupName($groupname, $key)) ?> 
@@ -37,7 +36,7 @@
 		<?php foreach($checkList->getChecksByGroupName($groupname) as $check): ?>
 		<p>
 			<?php echo image_tag($check->getImageTag(), 'title=' . $check->getImageTitle()); ?>
-			<?php echo $check->getMessage() ?>
+			<?php echo __($check->getMessage()) ?>
 		</p>
 		<?php endforeach ?>
 		</div>

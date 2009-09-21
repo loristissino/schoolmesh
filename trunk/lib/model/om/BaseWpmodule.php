@@ -70,6 +70,8 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	
 	public function applyDefaultValues()
 	{
+		$this->hours_estimated = 0;
+		$this->hours_used = 0;
 	}
 
 	
@@ -247,7 +249,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->hours_estimated !== $v) {
+		if ($this->hours_estimated !== $v || $v === 0) {
 			$this->hours_estimated = $v;
 			$this->modifiedColumns[] = WpmodulePeer::HOURS_ESTIMATED;
 		}
@@ -261,7 +263,7 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->hours_used !== $v) {
+		if ($this->hours_used !== $v || $v === 0) {
 			$this->hours_used = $v;
 			$this->modifiedColumns[] = WpmodulePeer::HOURS_USED;
 		}
@@ -381,7 +383,15 @@ abstract class BaseWpmodule extends BaseObject  implements Persistent {
 	
 	public function hasOnlyDefaultValues()
 	{
-						if (array_diff($this->modifiedColumns, array())) {
+						if (array_diff($this->modifiedColumns, array(WpmodulePeer::HOURS_ESTIMATED,WpmodulePeer::HOURS_USED))) {
+				return false;
+			}
+
+			if ($this->hours_estimated !== 0) {
+				return false;
+			}
+
+			if ($this->hours_used !== 0) {
 				return false;
 			}
 

@@ -15,6 +15,7 @@
       <th class="sf_admin_text" colspan="3"><?php echo __('Rank') ?></th>
       <th class="sf_admin_text"><?php echo __('Period') ?></th>
       <th class="sf_admin_text"><?php echo __('Title') ?></th>
+      <th class="sf_admin_text"><?php echo __('Hours') ?></th>
       <th class="sf_admin_text"><?php echo __('Last update') ?></th>
       <th class="sf_admin_text"><?php echo __('Public?') ?></th>
 	  <?php if ($workplan->getState()>Workflow::WP_DRAFT): ?>
@@ -40,6 +41,7 @@
 	
       <td><?php echo $wpmodule->getPeriod() ?></td>
       <td><?php echo $wpmodule ?></td>
+      <td><?php echo $wpmodule->getHoursEstimated() ?></td>
       <td><?php  echo Generic::datetime($wpmodule->getUpdatedAt('U'), $sf_context) ?></td>
       <td>
 	  <?php if ($wpmodule->getIsPublic()): ?>
