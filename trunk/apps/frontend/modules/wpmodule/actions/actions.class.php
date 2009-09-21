@@ -12,6 +12,46 @@ class wpmoduleActions extends sfActions
 {
 
 
+	public function executeEditheading(sfWebRequest $request)
+	  {
+		$this->forward404Unless($this->wpmodule=WpmodulePeer::retrieveByPK($request->getParameter('id')));
+		$this->forward404Unless($this->wpmodule->isOwnedBy($this->getUser()->getProfile()->getUserId()));
+		$this->owner=$this->getUser()->getProfile();
+		$this->workplan=$this->wpmodule->getAppointment();
+		
+	//	$this->forward404Unless($this->team);
+
+		$this->form = new EditWpmoduleHeadingForm();
+		
+		if ($request->isMethod('post'))
+			{
+				$this->form->bind($request->getParameter('info'));
+				if ($this->form->isValid())
+				{
+					$params = $this->form->getValues();
+					
+					$this->wpmodule
+					->setTitle($params['title'])
+					->setPeriod($params['period'])
+					->setHoursEstimated($params['hours_estimated'])
+					->save();
+					
+					$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Heading successfully saved.'));
+					$this->redirect('wpmodule/view?id='. $this->wpmodule->getId());
+				}
+			}
+
+		$this->form->setDefaults(
+			array(
+				'title' => $this->wpmodule->getTitle(),
+				'period'=> $this->wpmodule->getPeriod(),
+				'hours_estimated'=>$this->wpmodule->getHoursEstimated()
+			)
+		);
+		}
+
+
+
 	public function executeEditInLine(sfWebRequest $request)
 	{
 

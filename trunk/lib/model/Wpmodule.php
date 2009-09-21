@@ -193,6 +193,13 @@ $number=$resultset->number;
 		return $t;
 	}
 	
+	
+	public function isOwnedBy($userId)
+	{
+		return ($this->getUserId()==$userId);
+	}
+
+	
 		public function save(PropelPDO $con = null)
 	{
 	  // New records need to be initialized with rank = maxRank +1

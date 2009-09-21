@@ -7,6 +7,15 @@
 				array('title'=>__('Show this document in a single page'))
 				)?>
 	</li><br />
+	<?php if (isset($show_fill) && ($show_fill==true)): ?>
+		<li class="sf_admin_action_fill">
+				<?php echo link_to(
+				__('Fill this document'),
+				'plansandreports/fill?id='.$workplan->getId(),
+				array('title'=>__('Fill this document'))
+				)?>
+	</li><br />
+	<?php endif ?>
 	<?php include_partial('export', array('workplan' => $workplan, 'steps'=>$steps)) ?><br />
 	<?php if($workplan->getState()==Workflow::WP_DRAFT || $workplan->getState()==Workflow::IR_DRAFT): ?>
 	<li class="sf_admin_action_submit">

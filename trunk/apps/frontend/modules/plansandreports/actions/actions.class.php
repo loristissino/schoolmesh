@@ -202,22 +202,22 @@ public function executeBatch(sfWebRequest $request)
 
 	public function executeSubmit(sfWebRequest $request)
 	{
-    $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
-		
+    $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));	
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
 	
-	$result=$this->workplan->teacherSubmit(/*$this->getUser()->getProfile()->getSfGuardUser()->getId(), */$this->getContext());
+	$this->forward404Unless($this->workplan->isOwnedBy($this->getUser()->getProfile()->getUserId()));
+	
+	$result=$this->workplan->teacherSubmit();
 	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 	
-	if (isset($result['checks']))
+	if (isset($result['checkList']))
 		{
-			$this->checks = $result['checks'];
+			$this->checkList = $result['checkList'];
 		}
 		
 	$this->steps=Workflow::getWpfrSteps();
 	
 	$this->workflow_logs = $this->workplan->getWorkflowLogs();
-//	return $this->redirect('@plansandreports');
 
 	}
 
