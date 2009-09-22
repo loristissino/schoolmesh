@@ -37,5 +37,7 @@ class ReservedUsernameMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('USERNAME', 'Username', 'VARCHAR', false, 20);
 
+		$tMap->addColumn('ALIASES_TO', 'AliasesTo', 'VARCHAR', false, 20);
+
 	} 
 } 

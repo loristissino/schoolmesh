@@ -91,6 +91,7 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	
 	public function applyDefaultValues()
 	{
+		$this->hours = 0;
 	}
 
 	
@@ -302,7 +303,7 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->hours !== $v) {
+		if ($this->hours !== $v || $v === 0) {
 			$this->hours = $v;
 			$this->modifiedColumns[] = AppointmentPeer::HOURS;
 		}
@@ -390,7 +391,11 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	
 	public function hasOnlyDefaultValues()
 	{
-						if (array_diff($this->modifiedColumns, array())) {
+						if (array_diff($this->modifiedColumns, array(AppointmentPeer::HOURS))) {
+				return false;
+			}
+
+			if ($this->hours !== 0) {
 				return false;
 			}
 
