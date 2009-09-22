@@ -289,8 +289,37 @@ if (isset($content['workplan_report']['tools']))
 
 	}
 
-	public static function listWorkplans($year, $sortby, $filter, $filtered_user_id='none')
+	public static function listWorkplans($page, $year, $sortby)
 	{
+	
+	
+		$c= new Criteria();
+		$c->addJoin(AppointmentPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
+		$c->addJoin(AppointmentPeer::SUBJECT_ID, SubjectPeer::ID);
+		
+		switch($sortby)
+		{
+			case 'class': $c->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID); break;
+			case 'teacher': $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME); break;
+			case 'subject': $c->addAscendingOrderByColumn(SubjectPeer::DESCRIPTION); break;
+			case 'hours': $c->addAscendingOrderByColumn(AppointmentPeer::HOURS); break;
+			case 'state': $c->addAscendingOrderByColumn(AppointmentPeer::STATE); break;
+
+			default: $c->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID);
+		}
+		
+		$pager = new sfPropelPager('Appointment', 10);
+		$pager->setCriteria($c);
+		$pager->setPage($page);
+		$pager->init();
+	
+		return $pager;
+
+	
+	
+	
+	
+		/*
 
 	$connection = Propel::getConnection();
 
@@ -340,6 +369,9 @@ switch ($sortby)
     $resultset = $statement->fetchAll(PDO::FETCH_OBJ);
 
 	return $resultset;
+
+*/
+
 
 	}
 

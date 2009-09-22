@@ -176,8 +176,8 @@ CREATE TABLE `reserved_username`
 	`username` VARCHAR(20),
 	`aliases_to` VARCHAR(20),
 	PRIMARY KEY (`id`),
-	KEY `reserved_username_I_1`(`username`),
-	KEY `reserved_username_I_2`(`aliases_to`)
+	UNIQUE KEY `reserved_username_U_1` (`username`),
+	KEY `reserved_username_I_1`(`aliases_to`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

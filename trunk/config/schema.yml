@@ -89,7 +89,7 @@ propel:
 
   reserved_username:
     id:   
-    username: { type: varchar(20), index: true }
+    username: { type: varchar(20), index: unique }
     aliases_to: { type: varchar(20), index: true }
 
 

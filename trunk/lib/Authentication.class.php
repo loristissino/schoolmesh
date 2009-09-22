@@ -58,6 +58,13 @@ class Authentication {
 	{
 		$share = sfConfig::get('app_authentication_samba_share');
 		$address = sfConfig::get('app_authentication_samba_address');
+		
+/*		if ($realuser=ReservedUsernamePeer::retrieveByUserName($username))
+		{
+			$username=$realuser->getAliasTo();
+		}
+*/
+		
 		$command = sprintf('echo exit | smbclient "%s" "%s" -I %s -U %s', $share, $password, $address, $username);
 
 		$output="";

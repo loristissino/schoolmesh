@@ -234,7 +234,7 @@ abstract class BaseReservedUsernamePeer {
 
   static public function getUniqueColumnNames()
   {
-    return array();
+    return array(array('username'));
   }
 	
 	public static function getTableMap()

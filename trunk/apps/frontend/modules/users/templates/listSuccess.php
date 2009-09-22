@@ -21,11 +21,9 @@
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
 
-<p><?php echo format_number_choice('[0]No result found.|[1]One result found.|(1,+Inf]%1%
-results found.', array('%1%' => $pager->getNbResults()), $pager->getNbResults()) ?> 
-<?php echo sprintf(__('Displaying results %d to %d.'), $pager->getFirstIndice(), $pager->getLastIndice()) ?></p>
+<?php include_partial('content/pagerhead', array('pager'=>$pager)) ?>
 
-<?php include_partial('pager', array('pager'=>$pager)) ?>
+<?php include_partial('content/pager', array('pager'=>$pager, 'link'=>'users/list')) ?>
 
 <form action="<?php echo url_for('users/batch') ?>" method="post">
 
@@ -76,7 +74,7 @@ results found.', array('%1%' => $pager->getNbResults()), $pager->getNbResults())
   </tbody>
 </table>
 
-<?php include_partial('pager', array('pager'=>$pager)) ?>
+<?php include_partial('content/pager', array('pager'=>$pager, 'link'=>'users/list')) ?>
 
 <?php include_partial('plansandreports/checkalljs') ?>
  <ul class="sf_admin_actions">

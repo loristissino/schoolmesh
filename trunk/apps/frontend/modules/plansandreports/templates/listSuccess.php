@@ -13,7 +13,7 @@
 
 <h1><?php echo __("Workplans and reports' monitoring") ?></h1>
 
-
+<?php /*
 <div id="sf_admin_bar">
 <div class="sf_admin_filter">
   
@@ -44,12 +44,19 @@ array('related_class'=>'sfGuardUserProfile',
 </div>
 </div>
 
+*/ ?>
+
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
 <?php endif; ?>
 <?php if ($sf_user->hasFlash('error')): ?>
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
+
+
+<?php include_partial('content/pagerhead', array('pager'=>$pager)) ?>
+
+<?php include_partial('content/pager', array('pager'=>$pager, 'link'=>'plansandreports/list')) ?>
 
 <form action="<?php echo url_for('plansandreports/batch') ?>" method="post">
 
@@ -61,7 +68,7 @@ array('related_class'=>'sfGuardUserProfile',
       <th class="sf_admin_text"><?php echo link_to(__('Class'), url_for( 'plansandreports/setsortlistpreference?sortby=class')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Subject'), url_for('plansandreports/setsortlistpreference?sortby=subject')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Teacher'), url_for( 'plansandreports/setsortlistpreference?sortby=teacher')) ?></th>
-      <th class="sf_admin_text"><?php echo __('Modules') ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Hours'), url_for( 'plansandreports/setsortlistpreference?sortby=hours'))  ?></th>
 	  <?php /*<th class="sf_admin_text"><?php echo __('Last action') ?></th> */ ?>
 	  <th class="sf_admin_text"><?php echo link_to(__('State'), url_for( 'plansandreports/setsortlistpreference?sortby=state')) ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
@@ -69,19 +76,19 @@ array('related_class'=>'sfGuardUserProfile',
   </thead>
   <tbody>
 	<?php $i=0 ?>
-    <?php foreach ($workplans as $workplan): ?>
+    <?php foreach ($pager->getResults() as $workplan): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
 	<td>
-  <input type="checkbox" name="ids[]" value="<?php echo $workplan->id ?>" class="sf_admin_batch_checkbox" />
+  <input type="checkbox" name="ids[]" value="<?php echo $workplan->getId() ?>" class="sf_admin_batch_checkbox" />
 </td>
 
-      <td><?php echo $workplan->schoolclass_id ?></td>
-      <td><?php echo $workplan->subject ?></td>
-      <td><?php echo sprintf('%s %s', $workplan->first_name, $workplan->last_name) ?></td>
-	  <td><?php echo $workplan->wpmodules ?></td>
+      <td><?php echo $workplan->getSchoolclassId() ?></td>
+      <td><?php echo $workplan->getSubject()->getDescription() ?></td>
+      <td><?php echo $workplan->getFullName() ?></td>
+	  <td><?php echo $workplan->getHours() ?></td>
 	  <?php /*<?php $lastlog=$workplan->getLastLog() ?>  
 	  <td><?php echo $lastlog?$lastlog->getCreatedAt():'' ?></td>*/ ?>
-	  <td><?php include_partial('state', array('state' => $workplan->state, 'steps' => $steps, 'size'=>'r')) ?></td>
+	  <td><?php  include_partial('state', array('state' => $workplan->getState(), 'steps' => $steps, 'size'=>'r')) ?></td>
 	  <td><?php  include_partial('action_monitor', array('workplan' => $workplan, 'steps' => $steps))  ?></td>
  	
 	</td>
@@ -89,6 +96,9 @@ array('related_class'=>'sfGuardUserProfile',
     <?php endforeach; ?>
   </tbody>
 </table>
+
+<?php include_partial('content/pager', array('pager'=>$pager, 'link'=>'plansandreports/list')) ?>
+
 
 <?php include_partial('checkalljs') ?>
     <ul class="sf_admin_actions">
