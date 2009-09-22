@@ -2,7 +2,7 @@
 
 cd /var/schoolmesh/bin/
 
-for FILE in schoolmesh_application_importtables 
+for FILE in schoolmesh_application_importtables schoolmesh_application_update
 	do
 		cat > /tmp/$FILE <<EOT
 % {}(8) Schoolmesh User Manuals

@@ -89,7 +89,7 @@ public function executeBatch(sfWebRequest $request)
 	public function executeSetsortlistpreference(sfWebRequest $request)
 	{
 		$sortby = $request->getParameter('sortby');
-		$this->forward404Unless(in_array($sortby, array('', 'class', 'teacher', 'subject', 'state')));
+		$this->forward404Unless(in_array($sortby, array('', 'class', 'teacher', 'subject', 'state', 'hours')));
 		$this->getUser()->setAttribute('sortby', $sortby);
 		$this->redirect('plansandreports/list');
 	}
@@ -115,11 +115,14 @@ public function executeBatch(sfWebRequest $request)
 
 	public function executeList(sfWebRequest $request)
 	{
+		
+		$page=$request->getParameter('page', 1);
+
 		if (!$sortby=$this->getUser()->getAttribute('sortby'))
 			{
 				$sortby='class';
 			}
-
+/*
 		if (!$filter=$this->getUser()->getAttribute('filter'))
 			{
 				$filter='';
@@ -129,11 +132,9 @@ public function executeBatch(sfWebRequest $request)
 			{
 				$this->filtered_user_id='';
 			}
-
-		$this->workplans = AppointmentPeer::listWorkplans(sfConfig::get('app_config_current_year'), $sortby, $filter, $this->filtered_user_id);
-//		$this->teachers = AppointmentPeer::listTeachers(sfConfig::get('app_config_current_year'));
+*/
+		$this->pager = AppointmentPeer::listWorkplans($page, sfConfig::get('app_config_current_year'), $sortby);
 		$this->steps = Workflow::getWpfrSteps();
-//		$this->filtered_user_id=571;
 	}
 	
   public function executeIndex(sfWebRequest $request)

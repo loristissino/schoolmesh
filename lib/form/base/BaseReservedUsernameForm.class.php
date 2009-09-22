@@ -24,6 +24,10 @@ class BaseReservedUsernameForm extends BaseFormPropel
       'aliases_to' => new sfValidatorString(array('max_length' => 20, 'required' => false)),
     ));
 
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorPropelUnique(array('model' => 'ReservedUsername', 'column' => array('username')))
+    );
+
     $this->widgetSchema->setNameFormat('reserved_username[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
