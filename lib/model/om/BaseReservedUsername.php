@@ -16,6 +16,9 @@ abstract class BaseReservedUsername extends BaseObject  implements Persistent {
 	protected $username;
 
 	
+	protected $aliases_to;
+
+	
 	protected $alreadyInSave = false;
 
 	
@@ -43,6 +46,12 @@ abstract class BaseReservedUsername extends BaseObject  implements Persistent {
 	public function getUsername()
 	{
 		return $this->username;
+	}
+
+	
+	public function getAliasesTo()
+	{
+		return $this->aliases_to;
 	}
 
 	
@@ -74,6 +83,20 @@ abstract class BaseReservedUsername extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setAliasesTo($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->aliases_to !== $v) {
+			$this->aliases_to = $v;
+			$this->modifiedColumns[] = ReservedUsernamePeer::ALIASES_TO;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array())) {
@@ -89,6 +112,7 @@ abstract class BaseReservedUsername extends BaseObject  implements Persistent {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->username = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
+			$this->aliases_to = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -97,7 +121,7 @@ abstract class BaseReservedUsername extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 2; 
+						return $startcol + 3; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ReservedUsername object", $e);
 		}
@@ -268,6 +292,9 @@ abstract class BaseReservedUsername extends BaseObject  implements Persistent {
 			case 1:
 				return $this->getUsername();
 				break;
+			case 2:
+				return $this->getAliasesTo();
+				break;
 			default:
 				return null;
 				break;
@@ -280,6 +307,7 @@ abstract class BaseReservedUsername extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getUsername(),
+			$keys[2] => $this->getAliasesTo(),
 		);
 		return $result;
 	}
@@ -301,6 +329,9 @@ abstract class BaseReservedUsername extends BaseObject  implements Persistent {
 			case 1:
 				$this->setUsername($value);
 				break;
+			case 2:
+				$this->setAliasesTo($value);
+				break;
 		} 	}
 
 	
@@ -310,6 +341,7 @@ abstract class BaseReservedUsername extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setUsername($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setAliasesTo($arr[$keys[2]]);
 	}
 
 	
@@ -319,6 +351,7 @@ abstract class BaseReservedUsername extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(ReservedUsernamePeer::ID)) $criteria->add(ReservedUsernamePeer::ID, $this->id);
 		if ($this->isColumnModified(ReservedUsernamePeer::USERNAME)) $criteria->add(ReservedUsernamePeer::USERNAME, $this->username);
+		if ($this->isColumnModified(ReservedUsernamePeer::ALIASES_TO)) $criteria->add(ReservedUsernamePeer::ALIASES_TO, $this->aliases_to);
 
 		return $criteria;
 	}
@@ -350,6 +383,8 @@ abstract class BaseReservedUsername extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setUsername($this->username);
+
+		$copyObj->setAliasesTo($this->aliases_to);
 
 
 		$copyObj->setNew(true);

@@ -174,8 +174,10 @@ CREATE TABLE `reserved_username`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`username` VARCHAR(20),
+	`aliases_to` VARCHAR(20),
 	PRIMARY KEY (`id`),
-	KEY `reserved_username_I_1`(`username`)
+	KEY `reserved_username_I_1`(`username`),
+	KEY `reserved_username_I_2`(`aliases_to`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -263,7 +265,7 @@ CREATE TABLE `appointment`
 	`schoolclass_id` VARCHAR(5)  NOT NULL,
 	`year_id` INTEGER  NOT NULL,
 	`state` INTEGER,
-	`hours` INTEGER,
+	`hours` INTEGER default 0,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	`import_code` VARCHAR(20),

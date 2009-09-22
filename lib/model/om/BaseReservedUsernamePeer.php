@@ -13,7 +13,7 @@ abstract class BaseReservedUsernamePeer {
 	const CLASS_DEFAULT = 'lib.model.ReservedUsername';
 
 	
-	const NUM_COLUMNS = 2;
+	const NUM_COLUMNS = 3;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -25,6 +25,9 @@ abstract class BaseReservedUsernamePeer {
 	const USERNAME = 'reserved_username.USERNAME';
 
 	
+	const ALIASES_TO = 'reserved_username.ALIASES_TO';
+
+	
 	public static $instances = array();
 
 	
@@ -32,20 +35,20 @@ abstract class BaseReservedUsernamePeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Username', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'username', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USERNAME, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'username', ),
-		BasePeer::TYPE_NUM => array (0, 1, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Username', 'AliasesTo', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'username', 'aliasesTo', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USERNAME, self::ALIASES_TO, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'username', 'aliases_to', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Username' => 1, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'username' => 1, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USERNAME => 1, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'username' => 1, ),
-		BasePeer::TYPE_NUM => array (0, 1, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Username' => 1, 'AliasesTo' => 2, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'username' => 1, 'aliasesTo' => 2, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USERNAME => 1, self::ALIASES_TO => 2, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'username' => 1, 'aliases_to' => 2, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	
@@ -90,6 +93,8 @@ abstract class BaseReservedUsernamePeer {
 		$criteria->addSelectColumn(ReservedUsernamePeer::ID);
 
 		$criteria->addSelectColumn(ReservedUsernamePeer::USERNAME);
+
+		$criteria->addSelectColumn(ReservedUsernamePeer::ALIASES_TO);
 
 	}
 

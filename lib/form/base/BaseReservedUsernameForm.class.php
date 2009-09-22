@@ -13,13 +13,15 @@ class BaseReservedUsernameForm extends BaseFormPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'id'       => new sfWidgetFormInputHidden(),
-      'username' => new sfWidgetFormInput(),
+      'id'         => new sfWidgetFormInputHidden(),
+      'username'   => new sfWidgetFormInput(),
+      'aliases_to' => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
-      'id'       => new sfValidatorPropelChoice(array('model' => 'ReservedUsername', 'column' => 'id', 'required' => false)),
-      'username' => new sfValidatorString(array('max_length' => 20, 'required' => false)),
+      'id'         => new sfValidatorPropelChoice(array('model' => 'ReservedUsername', 'column' => 'id', 'required' => false)),
+      'username'   => new sfValidatorString(array('max_length' => 20, 'required' => false)),
+      'aliases_to' => new sfValidatorString(array('max_length' => 20, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('reserved_username[%s]');
