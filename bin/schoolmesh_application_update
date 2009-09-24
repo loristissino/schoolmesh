@@ -74,7 +74,7 @@ msg_ok "Copying man pages..."
 for i in 1 8
   do
     sudo cp -v doc/man/man$i/* /usr/local/share/man/man$i/ 2>/dev/null
-	sudo chmod +r /usr/local/share/man/man/man$i/*
+	sudo chmod +r /usr/local/share/man/man$i/*
   done
 
 msg_ok  "Copying scripts..."

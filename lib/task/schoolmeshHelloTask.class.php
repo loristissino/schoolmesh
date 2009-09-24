@@ -50,14 +50,21 @@ EOF;
     foreach($users as $user)
     {
     $this->log($this->formatter->format('  Hello, ' . $user->getFullName(), 'INFO'));
-	$permissions=$user->getsfGuardUser()->getAllPermissionNames();
+	
+	$checkList=new CheckList();
+	$availableAccounts=array('posix');
+	$user->checkAccounts($availableAccounts, $checkList);
+	
+/*	$permissions=$user->getsfGuardUser()->getAllPermissionNames();
 	if (sizeof($permissions)>0)
 		foreach($permissions as $permission)
 		{
 			$this->log($this->formatter->format('    -> ' . $permission, 'COMMENT'));
+
 		}
+*/
     }
-	
+/*	
 $user=sfGuardUserProfilePeer::retrieveByUsername('john.test');
 echo 'Has office permission? ' . ($user->getProfile()->hasPermission('office')?'yes':'no') . "\n";
 echo "Adding permission...\n";
@@ -67,6 +74,12 @@ echo "Revoking permission...\n";
 $user->getProfile()->revokeUserPermission('office');
 sleep(1);
 echo 'Has office permission? ' . ($user->getProfile()->hasPermission('office')?'yes':'no') . "\n";
+*/
 
-  }
+		foreach($checkList->getAllChecks() as $check)
+		{
+			echo $check->getCommand() . "\n";			
+		}
+	}
+
 }
