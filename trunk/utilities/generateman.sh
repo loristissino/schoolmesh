@@ -2,7 +2,7 @@
 
 cd /var/schoolmesh/bin/
 
-for FILE in schoolmesh_application_importtables schoolmesh_application_update
+for FILE in schoolmesh_application_importtables schoolmesh_application_update schoolmesh_posixaccount_create schoolmesh_posixaccount_changefullname
 	do
 		cat > /tmp/$FILE <<EOT
 % {}(8) Schoolmesh User Manuals

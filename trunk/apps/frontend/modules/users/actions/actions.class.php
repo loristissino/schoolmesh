@@ -423,7 +423,7 @@ class usersActions extends sfActions
 	public function executeSetsortlistpreference(sfWebRequest $request)
 	{
 		$sortby = $request->getParameter('sortby');
-		$this->forward404Unless(in_array($sortby, array('', 'gender', 'username', 'role', 'firstname', 'lastname', 'blocks', 'files', 'alerts')));
+		$this->forward404Unless(in_array($sortby, array('', 'gender', 'username', 'importcode', 'role', 'firstname', 'lastname', 'blocks', 'files', 'alerts')));
 		$this->getUser()->setAttribute('sortby', $sortby);
 		$this->redirect('users/list');
 	}
@@ -491,7 +491,7 @@ class usersActions extends sfActions
 		}
 	
 //	$this->userlist = sfGuardUserProfilePeer::retrieveAllUsers($sortby, $filter, $this->filtered_role_id, $this->filtered_schoolclass_id);
-	$this->pager = sfGuardUserProfilePeer::retrieveAllUsers($page, $sortby, $filter, $this->filtered_role_id, $this->filtered_schoolclass_id);
+	$this->pager = sfGuardUserProfilePeer::retrieveAllUsers(sfConfig::get('app_config_users_max_per_page'), $page, $sortby, $filter, $this->filtered_role_id, $this->filtered_schoolclass_id);
 
 
 	}

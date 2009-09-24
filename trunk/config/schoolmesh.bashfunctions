@@ -68,7 +68,7 @@ fi
 function checkString()
 {
 if [ -z "$1" ] ; then
-	msg_failed "Not a valid string: $1"
+	msg_failed "Not a valid string: $1 ($2)"
 	exit 11
 fi
 }

@@ -1,0 +1,5 @@
+# From revision 316 to revision 317:
+
+Add in app.yml:
+
+    users_max_per_page: 30
