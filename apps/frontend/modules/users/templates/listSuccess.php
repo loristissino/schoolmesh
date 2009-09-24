@@ -34,6 +34,7 @@
 
       <th class="sf_admin_text"><?php echo link_to(__('G'), url_for( 'users/setsortlistpreference?sortby=gender')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Username'), url_for( 'users/setsortlistpreference?sortby=username')) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Import Code'), url_for( 'users/setsortlistpreference?sortby=importcode')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Role'), url_for( 'users/setsortlistpreference?sortby=role')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('First name'), url_for('users/setsortlistpreference?sortby=firstname')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Last name'), url_for( 'users/setsortlistpreference?sortby=lastname')) ?></th>
@@ -53,6 +54,7 @@
 
       <td><?php include_partial('gender', array('gender'=>$user->getGender())) ?></td>
       <td><?php echo $user->getUsername() ?></td>
+      <td><?php echo $user->getImportCode() ?></td>
       <td><?php echo $user->getRoleDescription() ?></td>
       <td><?php echo $user->getFirstName() ?></td>
       <td><?php echo $user->getLastName() ?></td>

@@ -55,7 +55,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	}
 	
 
-	public static function retrieveAllUsers($page, $sortby='', $filter='', $filtered_role_id='', $filtered_schoolclass_id='')
+	public static function retrieveAllUsers($max_per_page, $page, $sortby='', $filter='', $filtered_role_id='', $filtered_schoolclass_id='')
 	{
 	$c = new Criteria();
 	$c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
@@ -80,6 +80,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	{
 		case 'gender': 	$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::GENDER); break;
 		case 'username': 	$c->addAscendingOrderByColumn(sfGuardUserPeer::USERNAME); break;
+		case 'importcode': 	$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::IMPORT_CODE); break;
 		case 'firstname': 	$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME); break;
 		case 'lastname': 	$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME); break;
 		case 'role': 	$c->addAscendingOrderByColumn(RolePeer::MALE_DESCRIPTION); break;
@@ -90,7 +91,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		default: $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
 	}
 	
-	$pager = new sfPropelPager('sfGuardUserProfile', 30);
+	$pager = new sfPropelPager('sfGuardUserProfile', $max_per_page);
 	$pager->setCriteria($c);
 	$pager->setPage($page);
 	$pager->init();

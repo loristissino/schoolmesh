@@ -4,6 +4,23 @@ CONFIG_READ=0
 source /var/schoolmesh/config/schoolmesh.rc $@
 if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
 
+#@ # NAME
+#@
+#@ {} - Create a posix account for a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username* *group* *fullname*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to create a posix account.
+#@ Some checks are done before the creation.
+#@
+#@ # EXAMPLES
+#@
+#@	{-} john students 'John Doe'
+
 USERNAME=$1
 GROUP=$2
 FULLNAME=$3
@@ -15,8 +32,8 @@ HOMEDIR="$POSIX_HOMEDIR_USERS/$USERNAME"
 
 checkNotFile "$HOMEDIR"
 checkGroup "$GROUP"
-checkString "$FULLNAME"
-checkString "$POSIX_BASEFOLDER"
+checkString "$FULLNAME" "full name"
+checkString "$POSIX_BASEFOLDER" "posix basefolder"
 
 BASEFOLDER="$COMPLETEDIR/$POSIX_BASEFOLDER"
 

@@ -3,12 +3,29 @@
 CONFIG_READ=0
 source /var/schoolmesh/config/schoolmesh.rc $@
 if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
-	
+
+#@ # NAME
+#@
+#@ {} - Change full name for a posix account of a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username* *fullname*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to change the full name (aka Gecos field) of a posix account.
+#@
+#@ # EXAMPLES
+#@
+#@	{-} john "John Doe"
+
+
 USERNAME=$1
 FULLNAME=$2
 
 checkUsername $USERNAME
-checkString $FULLNAME
+checkString $FULLNAME "full name"
 
 sudo usermod -c "$FULLNAME" $USERNAME && msg_ok "changed fullname: $USERNAME ($FULLNAME)"  && exit 0
 
