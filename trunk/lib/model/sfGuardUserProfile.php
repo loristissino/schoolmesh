@@ -441,7 +441,40 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 		}
 		
-		public function addEnrolment($schoolclassId, $yearId)
+		public function modifyAppointment($appointmentId, $schoolclassId, $yearId, $subjectId, $hours)
+		{
+			
+			$result=array();
+			
+			$appointment=AppointmentPeer::retrieveByPK($appointmentId);
+/*			$year=YearPeer::retrieveByPk($yearId);
+			$schoolclass=SchoolclassPeer::retrieveByPk($schoolclassId);
+			$subject=SchoolclassPeer::retrieveByPk($schoolclassId);
+*/
+			try
+			{
+				$appointment
+				->setSchoolclassId($schoolclassId)
+				->setYearId($yearId)
+				->setSubjectId($subjectId)
+				->setHours($hours)
+				->save();
+				
+				$result['result']='notice';
+				$result['message']='Appointment successfully saved.';
+			}
+			
+			catch (Exception $exception)
+			{
+				$result['result']='error';
+				$result['message']='Appointment could not be saved.';
+			}
+
+			return $result;
+			
+		}
+
+	public function addEnrolment($schoolclassId, $yearId)
 		{
 			
 			$result=array();
@@ -560,13 +593,54 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
 		public function unenrol(Enrolment $enrolment)
 		{
-			if ($enrolment)
+			
+			$result=Array();
+
+			try
 			{
-				$enrolment->delete();
+				if ($enrolment)
+				{
+					$enrolment->delete();
+				}
 			}
-			return $this;
+			catch (Exception $exception)
+			{
+				$result['result']='error';
+				$result['message']='The enrolment could not be deleted';
+				return $result;
+			}
+			
+			$result['result']='notice';
+			$result['message']='The enrolment was successfully deleted';
+			
+			return $result;
 		}
 
+		public function removeAppointment(Appointment $appointment)
+		{
+			
+			$result=Array();
+			
+			try {
+				if ($appointment)
+				{
+					$appointment->delete();
+				}
+				
+			}
+			
+			catch (Exception $exception)
+			{
+				$result['result']='error';
+				$result['message']='The appointment could not be deleted';
+				return $result;
+			}
+			
+			$result['result']='notice';
+			$result['message']='The appointment was successfully deleted';
+			
+			return $result;
+		}
 
 		public function changeRoleInTeam(Team $team, Role $role)
 		{

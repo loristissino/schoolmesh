@@ -621,8 +621,8 @@ class usersActions extends sfActions
 	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
 	$this->enrolment = EnrolmentPeer::retrieveByPK($request->getParameter('enrolment'));
 	
-	$this->current_user->unenrol($this->enrolment);
-	$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Enrolment successfully deleted.'));
+	$result=$this->current_user->unenrol($this->enrolment);
+	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 	$this->redirect('users/edit?id='. $this->current_user->getUserId());
 	}
 
@@ -634,8 +634,8 @@ class usersActions extends sfActions
 	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
 	$this->appointment = AppointmentPeer::retrieveByPK($request->getParameter('appointment'));
 	
-	$this->current_user->unenrol($this->enrolment);
-	$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Enrolment successfully deleted.'));
+	$result=$this->current_user->removeAppointment($this->appointment);
+	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 	$this->redirect('users/edit?id='. $this->current_user->getUserId());
 	}
 
@@ -740,6 +740,50 @@ public function executeEditenrolment(sfWebRequest $request)
 		)
 	);
 		
+	}
+
+public function executeEditappointment(sfWebRequest $request)
+  {
+	$this->appointment=AppointmentPeer::retrieveByPK($request->getParameter('id'));
+	
+	$this->forward404Unless($this->appointment->getState()==Workflow::AP_ASSIGNED);
+	
+	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($this->appointment->getUserId());
+	
+	$this->form = new EditAppointmentForm();
+	
+	if ($request->isMethod('post'))
+		{
+			$this->form->bind($request->getParameter('info'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				$current_user=$this->appointment->getsfGuardUser()->getProfile();
+				
+				$result=$current_user->modifyAppointment($this->appointment->getId(), $params['class'], $params['year'], $params['subject'], $params['hours']);
+				
+				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+				
+				if ($result['result']=='notice')
+				{
+					$this->redirect('users/edit?id='. $current_user->getUserId());
+				}
+				else
+				{
+					$this->redirect('users/editappointment?id='. $this->appointment->getId());
+				}
+			}
+
+		}
+
+	$this->form->setDefaults(
+		array(
+			'year' => $this->appointment->getYear()->getId(),
+			'class'=> $this->appointment->getSchoolclass(),
+			'subject'=> $this->appointment->getSubject()->getId(),
+			'hours'=>$this->appointment->getHours()
+		)
+	);
 	}
 
 public function executeAddenrolment(sfWebRequest $request)
