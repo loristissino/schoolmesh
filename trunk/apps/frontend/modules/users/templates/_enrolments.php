@@ -26,6 +26,15 @@
 					)
 				?>
 				</li>
+				<li class="sf_admin_action_delete">
+				<?php echo link_to(
+					sprintf(__('Unenrol'), $current_user->getFullname()),
+					url_for('users/unenrol?id='.$current_user->getUserId(). '&enrolment=' . $enrolment->getId()),
+					array('method' => 'delete', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))
+					)
+				?>
+				</li>
+
 				<?php // endif ?>
 			</ul>
 		</td>

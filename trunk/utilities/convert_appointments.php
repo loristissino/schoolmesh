@@ -2,6 +2,7 @@
 <?php
 	$handle = fopen(@$_SERVER["argv"][1], "r") or die("no file\n");
 	$row=0;
+	echo "username,class,subject,year\n";
 	while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) 
 	
 	{
@@ -9,7 +10,6 @@
 		if ($row==1)
 			{
 				$subjects=$data;
-				print_r($line);
 			}
 		else
 			{
@@ -20,7 +20,7 @@
 						$subject=$subjects[$i];
 						if ($teacher>'')
 						{
-							echo "$teacher,$class,$subject\n";
+							echo "$teacher,$class,$subject,2009_10\n";
 						}
 					}
 			}
