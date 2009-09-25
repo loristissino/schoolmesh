@@ -50,7 +50,7 @@ Wpmodule:
     title:       Sistema solare
     period:      settembre - dicembre
     rank:     1
-    appointment_id:   test_ast_3ap_0
+    appointment_id:   test_ast_3ap_10
     is_public:    true
 
   module3_2_test:
@@ -59,7 +59,7 @@ Wpmodule:
     title:       Corpi celesti
     period:      gennaio - marzo
     rank:     2
-    appointment_id:   test_ast_3ap_0
+    appointment_id:   test_ast_3ap_10
     is_public:    true
 
   module3_3_test:
@@ -68,7 +68,7 @@ Wpmodule:
     title:       Stelle e galassie
     period:      marzo - giugno
     rank:     3
-    appointment_id:   test_ast_3ap_0
+    appointment_id:   test_ast_3ap_10
     is_public:    false
 
   module4_1_test:
@@ -77,7 +77,7 @@ Wpmodule:
     title:       Astronomia osservativa
     period:      settembre - dicembre
     rank:     1
-    appointment_id:   test_ast_4ap_10
+    appointment_id:   test_ast_4ap_20
     is_public:    true
 
   module4_2_test:
@@ -86,7 +86,7 @@ Wpmodule:
     title:       Astrofisica
     period:      gennaio - marzo
     rank:     2
-    appointment_id:   test_ast_4ap_10
+    appointment_id:   test_ast_4ap_20
     is_public:    true
 
   module4_3_test:
@@ -95,7 +95,7 @@ Wpmodule:
     title:       Cosmologia
     period:      marzo - giugno
     rank:     3
-    appointment_id:   test_ast_4ap_10
+    appointment_id:   test_ast_4ap_20
     is_public:    true
 
   module5_1_test:
@@ -104,7 +104,7 @@ Wpmodule:
     title:      Planetologia
     period:      settembre - dicembre
     rank:     1
-    appointment_id:   test_ast_5ap_20
+    appointment_id:   test_ast_5ap_30
     is_public:    true
 
   module5_2_test:
@@ -113,7 +113,7 @@ Wpmodule:
     title:       Astrochimica, esogeologia e esobiologia
     period:      gennaio - marzo
     rank:     2
-    appointment_id:   test_ast_5ap_20
+    appointment_id:   test_ast_5ap_30
     is_public:    true
 
   module5_3_test:
@@ -122,7 +122,7 @@ Wpmodule:
     title:       Astronautica, astrometria e radioastronomia
     period:      marzo - giugno
     rank:     3
-    appointment_id:   test_ast_5ap_20
+    appointment_id:   test_ast_5ap_30
     is_public:    true
 
   module3_1_test_fis:
@@ -131,7 +131,7 @@ Wpmodule:
     title:       Fisica dello stato solido
     period:      settembre - dicembre
     rank:     1
-    appointment_id:   test_fis_3ap_30
+    appointment_id:   test_fis_3ap_40
     is_public:    true
 
   module3_2_test_fis:
@@ -140,7 +140,7 @@ Wpmodule:
     title:       Fisica nucleare
     period:      gennaio - marzo
     rank:     2
-    appointment_id:   test_fis_3ap_30
+    appointment_id:   test_fis_3ap_40
     is_public:    true
 
   module3_3_test_fis:
@@ -149,7 +149,7 @@ Wpmodule:
     title:       Fisica delle particelle elementari
     period:      marzo - aprile
     rank:     3
-    appointment_id:   test_fis_3ap_30
+    appointment_id:   test_fis_3ap_40
     is_public:    true
 
   module3_4_test_fis:
@@ -158,7 +158,7 @@ Wpmodule:
     title:       Astrofisica
     period:      maggio
     rank:     4
-    appointment_id:   test_fis_3ap_30
+    appointment_id:   test_fis_3ap_40
     is_public:    true
 
   module3_5_test_fis:
@@ -167,7 +167,7 @@ Wpmodule:
     title:       Geofisica
     period:      maggio
     rank:     5
-    appointment_id:   test_fis_3ap_30
+    appointment_id:   test_fis_3ap_40
     is_public:    true
 
   module3_1_test_ast1:
@@ -176,5 +176,5 @@ Wpmodule:
     title:      Introduzione all'astronomia
     period:      settembre - dicembre
     rank:     1
-    appointment_id:   test_ast_3ap_70
+    appointment_id:   test_ast_3ap_80
     is_public:    true

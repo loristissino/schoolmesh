@@ -1,16 +1,33 @@
 <?php 
 class Workflow
 {
-	const 	WP_DRAFT = 0;
-	const 	WP_WADMC = 10;
-	const 	WP_WSMC = 20;
-	const 	IR_DRAFT = 30;
-	const 	IR_WSMC = 40;
-	const 	FR_WADMC = 50;
-	const 	FR_WSMC = 60;
-	const 	FR_ARCHIVED = 70;
+	const 	AP_ASSIGNED = 0;
+	const 	WP_DRAFT = 10;
+	const 	WP_WADMC = 20;
+	const 	WP_WSMC = 30;
+	const 	IR_DRAFT = 40;
+	const 	IR_WSMC = 50;
+	const 	FR_WADMC = 60;
+	const 	FR_WSMC = 70;
+	const 	FR_ARCHIVED = 80;
 	
 	static private $wpfrSteps=Array(
+
+	self::AP_ASSIGNED=>Array(
+		'stateDescription'=>"Appointment just set",
+		'owner' => Array(),
+		'actions' => Array(
+			'confirm' => Array(
+				'permission'=>'office',
+				'submitDisplayedAction'=>'Confirm appointment',
+				'submitDoneAction'=>'Appointment confirmed.',
+				'submitExtraAction'=>'',
+				'submitExtraParameters'=>'',
+				'logMessageCode'=>'AP_CONFIRMED',
+				'submitNextState'=>self::WP_DRAFT,
+				)
+			)
+		),
 
 	self::WP_DRAFT => Array(
 		'stateDescription'=>"Workplan draft",

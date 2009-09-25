@@ -1,3 +1,7 @@
+# From revision 319 to revision 320:
+
+Changed Appointments/Workplans workflow, adding a AP_ASSIGNED initial state. Constants changed meaning. Updated data fixtures.
+
 # From revision 316 to revision 317:
 
 Add in app.yml:
