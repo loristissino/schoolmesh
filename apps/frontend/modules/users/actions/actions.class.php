@@ -612,6 +612,21 @@ class usersActions extends sfActions
 	$this->redirect('users/edit?id='. $this->current_user->getUserId());
 	}
 
+
+  public function executeUnenrol(sfWebRequest $request)
+  {
+	
+	$this->forward404Unless($request->isMethod('delete'));
+	
+	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
+	$this->enrolment = EnrolmentPeer::retrieveByPK($request->getParameter('enrolment'));
+	
+	$this->current_user->unenrol($this->enrolment);
+	$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Enrolment successfully deleted.'));
+	$this->redirect('users/edit?id='. $this->current_user->getUserId());
+	}
+
+
   public function executeRemovefromguardgroup(sfWebRequest $request)
   {
 	$this->forward404Unless($request->isMethod('delete'));

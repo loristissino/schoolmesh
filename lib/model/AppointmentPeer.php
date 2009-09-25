@@ -406,14 +406,14 @@ switch ($sortby)
 				continue;  // we skip the first line
 				}
 				
-			if (sizeof($data)!=4)
+			if (sizeof($data)!=5)
 			{
 				$checkList->addCheck(new Check(Check::FAILED, 'Invalid data', $groupName));
 				continue;
 			}
 	
 
-			list($username, $schoolclass, $subject, $year)=$data; 
+			list($username, $schoolclass, $subject, $hours, $year)=$data; 
 
 			$sfUser= sfGuardUserProfilePeer::retrieveByUsername($username);
 			if(!$sfUser)
@@ -461,6 +461,7 @@ switch ($sortby)
 			->setUserId($sfUser->getId())
 			->setSubject($mysubject)
 			->setSchoolclass($myclass)
+			->setHours($hours)
 			->setYear($myyear)
 			->setState(0)
 			->save();

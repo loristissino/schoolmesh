@@ -558,6 +558,15 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $this;
 		}
 
+		public function unenrol(Enrolment $enrolment)
+		{
+			if ($enrolment)
+			{
+				$enrolment->delete();
+			}
+			return $this;
+		}
+
 
 		public function changeRoleInTeam(Team $team, Role $role)
 		{
