@@ -1,3 +1,14 @@
+# From revision 321 to revision 322:
+
+Change WpinfoType in the database, 0->10, 30->40 (state)
+Workplans:
+	Recupero -> Recupero programmato
+	Commenti - > Commenti (progettazione)
+	Considerazioni finali -> Situazione finale della classe
+	Tipologia delle verifiche -> Tipologia delle verifiche previste
+	Strumenti -> Strumenti previsti
+	
+
 # From revision 319 to revision 320:
 
 Changed Appointments/Workplans workflow, adding a AP_ASSIGNED initial state. Constants changed meaning. Updated data fixtures.
