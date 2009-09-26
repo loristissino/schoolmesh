@@ -36,7 +36,7 @@
 					url_for('users/editappointment?id='.$appointment->getId())
 					)
 				?>
-				</li>
+				</li>				
 				<?php endif ?>
 				<?php  if ($appointment->getState()==Workflow::AP_ASSIGNED): ?>
 				<li class="sf_admin_action_delete">
@@ -46,8 +46,19 @@
 					array('method' => 'delete', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))
 					)
 				?>
-				<?php endif ?>
 				</li>
+				<?php endif ?>
+				<?php /*
+				<?php  if ($sf_user->hasCredential('backadmin')): ?>
+				<li class="sf_admin_action_upload">
+				<?php echo link_to(
+					__('Upload file'),
+					url_for('users/upload?id='.$current_user->getUserId(). '&appointment=' . $appointment->getId() . '&what=workplan')
+					)
+				?>
+				</li>
+				<?php endif ?>
+				<?php */ ?>
 
 			</ul>
 		</td>

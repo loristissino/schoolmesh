@@ -504,6 +504,40 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $result;
 			
 		}
+	public function addAppointment($schoolclassId, $yearId, $subjectId, $hours)
+		{
+			
+			$result=array();
+			
+			$appointment=new Appointment();
+/*			$year=YearPeer::retrieveByPk($yearId);
+			$schoolclass=SchoolclassPeer::retrieveByPk($schoolclassId);
+			$subject=SubjectPeer::retrieveByPk($subjectId);
+*/
+			try
+			{
+				$appointment
+				->setUserId($this->getUserId())
+				->setSchoolclassId($schoolclassId)
+				->setYearId($yearId)
+				->setSubjectId($subjectId)
+				->setHours($hours)
+				->setState(Workflow::AP_ASSIGNED)
+				->save();
+				
+				$result['result']='notice';
+				$result['message']='Appointment successfully saved.';
+			}
+			
+			catch (Exception $exception)
+			{
+				$result['result']='error';
+				$result['message']='Appointment could not be saved.' . $exception;
+			}
+
+			return $result;
+			
+		}
 
         public function getCurrentAppointments()
         {
