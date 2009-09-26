@@ -17,7 +17,7 @@ class Workflow
 		'stateDescription'=>"Appointment just set",
 		'owner' => Array(),
 		'actions' => Array(
-			'confirm' => Array(
+			'approve' => Array(
 				'permission'=>'office',
 				'submitDisplayedAction'=>'Confirm appointment',
 				'submitDoneAction'=>'Appointment confirmed.',

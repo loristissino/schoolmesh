@@ -15,6 +15,7 @@
 				array('title'=>__(__($steps[$workplan->getState()]['owner']['exportActionTip'])))
 				)?>
 				</li>
+				<?php endif ?>
 
 			<?php if(@$sf_user->hasCredential($steps[$workplan->getState()]['actions']['approve']['permission'])): ?>
 				<li class="sf_admin_action_approve">
@@ -34,7 +35,6 @@
 				)?>
 				</li>
 			<?php endif ?>
-				<?php endif ?>
 				
 			</ul>
 			

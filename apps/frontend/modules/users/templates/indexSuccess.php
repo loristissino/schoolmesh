@@ -21,13 +21,13 @@
 <h3><?php echo __('System administration') ?></h3>
 
 	<ul class="sf_admin_actions">
-		<li class="sf_admin_action_uploadcsv">
+		<li class="sf_admin_action_upload">
 		<?php echo link_to(__('Upload classes'), url_for('users/upload?what=classes'), array('title'=>__(SentencePeer::getSentence('users_bulk_upload_classes'))))?>
 	</li><br />
-	<li class="sf_admin_action_uploadcsv">
+	<li class="sf_admin_action_upload">
 		<?php echo link_to(__('Upload users'), url_for('users/upload?what=users'), array('title'=>__(SentencePeer::getSentence('users_bulk_upload_users'))))?>
 	</li><br />
-	<li class="sf_admin_action_uploadcsv">
+	<li class="sf_admin_action_upload">
 		<?php echo link_to(__('Upload appointments'), url_for('users/upload?what=appointments'), array('title'=>__(SentencePeer::getSentence('users_bulk_upload_appointments'))))?>
 	</li><br />
 	<li class="sf_admin_action_userchecks">
@@ -44,7 +44,7 @@
 <h3><?php echo __('Google Apps accounts') ?></h3>
 
 	<ul class="sf_admin_actions">
-	<li class="sf_admin_action_uploadcsv">
+	<li class="sf_admin_action_upload">
 		<?php echo link_to(__('Upload Google Apps data'), 'users/uploadgoogleappsdata', array('title'=>__(SentencePeer::getSentence('ga_csv_upload')))) ?>
 	</li><br />
 	<li class="sf_admin_action_export">

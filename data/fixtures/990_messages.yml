@@ -4,6 +4,8 @@ SystemMessage:
     key: WP_APPROVED
   sm_WP_REJECTED:
     key: WP_REJECTED
+  sm_AP_CONFIRMED:
+    key: AP_CONFIRMED  
 
 SystemMessageI18n:
 
@@ -15,6 +17,10 @@ SystemMessageI18n:
     id: sm_WP_REJECTED
     culture: it  
     content: Piano di lavoro non approvato  
+  sm_AP_CONFIRMED_it:
+    id: sm_AP_CONFIRMED
+    culture: it  
+    content: Incarico assegnato  
   sm_WP_APPROVED_en:
     id:   sm_WP_APPROVED
     culture: en  
@@ -23,3 +29,7 @@ SystemMessageI18n:
     id: sm_WP_REJECTED
     culture: en  
     content: Workplan rejected  
+  sm_AP_CONFIRMED_en:
+    id: sm_AP_CONFIRMED
+    culture: en  
+    content: Appointment confirmed  

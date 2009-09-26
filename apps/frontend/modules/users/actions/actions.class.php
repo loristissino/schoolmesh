@@ -33,7 +33,7 @@ class usersActions extends sfActions
 	{
 		$this->form = new UploadForm();
 		$this->what=$request->getParameter('what');
-		$this->forward404Unless(in_array($this->what, array('classes', 'users','appointments')));
+		$this->forward404Unless(in_array($this->what, array('classes', 'users','appointments','workplan')));
 		
 		if ($request->isMethod('post'))
 		{
@@ -817,12 +817,48 @@ public function executeAddenrolment(sfWebRequest $request)
 
 	$this->form->setDefaults(
 		array(
-			'year' => sfConfig::get('app_config_students_default_posix_group')
+			'year' => sfConfig::get('app_config_current_year')
 		)
 	);
 		
 	}
 
+public function executeAddappointment(sfWebRequest $request)
+  {
+	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('user'));
+	
+	$this->form = new EditAppointmentForm();
+	
+	if ($request->isMethod('post'))
+		{
+			$this->form->bind($request->getParameter('info'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				$result=$this->current_user->addAppointment($params['class'], $params['year'], $params['subject'], $params['hours']);
+				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+				
+				if ($result['result']=='notice')
+				{
+					$this->redirect('users/edit?id='. $this->current_user->getUserId());
+				}
+				else
+				{
+					$this->redirect('users/addappointment?user='. $this->current_user->getUserId());
+				}
+				
+				
+				
+			}
+		}
+
+	$this->form->setDefaults(
+		array(
+			'year' => sfConfig::get('app_config_current_year')
+		)
+	);
+		
+	}
 
 
   public function executeAddtoteam(sfWebRequest $request)

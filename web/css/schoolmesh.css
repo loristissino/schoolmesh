@@ -154,9 +154,9 @@
   background: url(../images/undelete.png) no-repeat 0 0;
 }
 
-#sf_admin_container ul li.sf_admin_action_uploadcsv a
+#sf_admin_container ul li.sf_admin_action_upload a
 {
-  background: url(../images/upload_csv.png) no-repeat 0 0;
+  background: url(../images/upload.png) no-repeat 0 0;
 }
 
 #sf_admin_container ul li.sf_admin_action_googleapps a

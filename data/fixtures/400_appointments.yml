@@ -47,11 +47,11 @@ Appointment:
     schoolclass_id: 3bp
     state: 70
     year_id:         200708
-  test_ast_3bp_10:
+  test_ast_3bp_0:
     user_id: john.test
     subject_id: ast
     schoolclass_id: 3bp
-    state: 10
+    state: 0
     year_id:         200809
 
   loris_lig_3ap_a:

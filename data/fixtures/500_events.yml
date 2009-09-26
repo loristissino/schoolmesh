@@ -214,7 +214,7 @@ Wpevent:
     state: 60
   wp60_0b:
     created_at: <?php echo date("U", mktime(0,0,0, 9, 1, 2008)) . "\n" ?>
-    appointment_id:  test_ast_3bp_10
+    appointment_id:  test_ast_3bp_0
     user_id:  	loris
     comment:  Appointment set
     state:  0
