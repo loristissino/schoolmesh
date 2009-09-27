@@ -543,6 +543,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
         {
 	        $c = new Criteria();
 			$c->add(AppointmentPeer::USER_ID, $this->getUserId());
+			$c->add(AppointmentPeer::STATE, Workflow::AP_ASSIGNED, Criteria::GREATER_THAN);
 			$c->add(AppointmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
 			$t = AppointmentPeer::doSelectJoinAllExceptsfGuardUser($c);
 			return $t;

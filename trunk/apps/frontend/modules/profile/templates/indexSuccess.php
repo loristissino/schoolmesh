@@ -10,14 +10,31 @@
 
 <?php if (sizeof($appointments)>0): ?>
 <h2><?php echo __('What I teach') ?></h2>
-<ul>
-<?php for($i=0; $i<sizeof($appointments); $i++): ?>
-    <li><?php echo $appointments[$i]->getSubject()->getDescription() . ' -> '. $appointments[$i]->getSchoolclass() . ' (' . $appointments[$i]->getYear() . ')'; ?></li>    
-<?php endfor ?>
+<ul class="sf_admin_actions">
+<?php foreach ($appointments as $appointment): ?>
+    <li class="sf_admin_action_fill"><?php echo link_to(
+		$appointment->getSubject()->getDescription() . ' -> '. $appointment->getSchoolclass() . ' (' . $appointment->getYear() . ')',
+		url_for('plansandreports/fill?id=' . $appointment->getId())
+		)
+		?><br />
+		</li>
+<?php endforeach ?>
 </ul>
 
-<p><?php echo link_to('Plans and reports', '@plansandreports') ?></p>
+<?php endif ?>
 
+<?php if ($sf_user->hasCredential('planning')): ?>
+<h2><?php echo __('My appointments') ?></h2>
+<ul class="sf_admin_actions">
+    <li class="sf_admin_action_items"><?php echo link_to('Full view of plans and reports', '@plansandreports') ?></li>
+</ul>
+<?php endif ?>
+
+<?php if ($sf_user->hasCredential('office')): ?>
+<h2><?php echo __('Office actions') ?></h2>
+<ul class="sf_admin_actions">
+    <li class="sf_admin_action_items"><?php echo link_to('Manage appointments', 'plansandreports/list') ?></li>
+</ul>
 <?php endif ?>
 
 <?php if (sizeof($teams)>0): ?>

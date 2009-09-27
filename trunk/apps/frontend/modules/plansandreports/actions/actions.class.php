@@ -15,12 +15,13 @@ class plansandreportsActions extends sfActions
   {
     $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
     $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+	$page=$request->getParameter('page', 1);
 
 	$result = $workplan->Reject($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions());
 
 	$this->getUser()->setFlash($result['result'], $result['message']);
 
-	$this->redirect('plansandreports/list');
+	$this->redirect('plansandreports/list?page=' . $page);
 
   }
 
@@ -71,6 +72,7 @@ public function executeBatch(sfWebRequest $request)
   public function executeApprove(sfWebRequest $request)
   {
     $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+	$page=$request->getParameter('page', 1);
 	
 	$this->content='approving workplan ' . $workplan->getId();
 	
@@ -81,7 +83,7 @@ public function executeBatch(sfWebRequest $request)
 
 	$this->getUser()->setFlash($result['result'], $result['message']);
 
-	$this->redirect('plansandreports/list');
+	$this->redirect('plansandreports/list?page='.$page);
 
   }
 
@@ -116,7 +118,7 @@ public function executeBatch(sfWebRequest $request)
 	public function executeList(sfWebRequest $request)
 	{
 		
-		$page=$request->getParameter('page', 1);
+		$this->page=$request->getParameter('page', 1);
 
 		if (!$sortby=$this->getUser()->getAttribute('sortby'))
 			{
@@ -133,7 +135,7 @@ public function executeBatch(sfWebRequest $request)
 				$this->filtered_user_id='';
 			}
 */
-		$this->pager = AppointmentPeer::listWorkplans($page, sfConfig::get('app_config_current_year'), $sortby);
+		$this->pager = AppointmentPeer::listWorkplans($this->page, sfConfig::get('app_config_current_year'), $sortby);
 		$this->steps = Workflow::getWpfrSteps();
 	}
 	

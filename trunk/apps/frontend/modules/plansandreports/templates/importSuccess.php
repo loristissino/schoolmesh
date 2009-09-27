@@ -12,6 +12,8 @@
 
 <h3><?php echo __('Import one of your workplans') ?></h3>
 
+<?php if (sizeof($s_workplans)>0): ?>
+
 <div class="sf_admin_list">
 
 <table cellspacing="0">
@@ -41,7 +43,13 @@
 
 </div>
 
+<?php else: ?>
+	<p><?php echo __('No workplan found.') ?></p>
+<?php endif ?>
+
 <h3><?php echo __('Import a workplan of a colleague') ?></h3>
+
+<?php if (sizeof($c_workplans)>0): ?>
 
 <div class="sf_admin_list">
 
@@ -73,6 +81,10 @@
 </table>
 
 </div>
+
+<?php else: ?>
+	<p><?php echo __('No workplan found.') ?></p>
+<?php endif ?>
 
 <h3><?php echo __('Import from a file') ?></h3>
 <p><?php echo __('Not implemented yet') ?></p>
