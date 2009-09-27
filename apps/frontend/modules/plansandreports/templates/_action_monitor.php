@@ -21,7 +21,7 @@
 				<li class="sf_admin_action_approve">
 					<?php echo link_to(
 				__('Approve'),
-				'plansandreports/approve?id=' . $workplan->getId(), 
+				'plansandreports/approve?id=' . $workplan->getId() . '&page=' . $page, 
 				array('method'=>'put', 'title' => __($steps[$workplan->getState()]['actions']['approve']['submitDisplayedAction']))
 				)?>
 				</li>
@@ -30,7 +30,7 @@
 				<li class="sf_admin_action_reject">
 					<?php echo link_to(
 				__('Reject'),
-				'plansandreports/reject?id=' . $workplan->getId(), 
+				'plansandreports/reject?id=' . $workplan->getId(). '&page=' . $page, 
 				array('method' => 'post', 'title' => __($steps[$workplan->getState()]['actions']['reject']['submitDisplayedAction']))
 				)?>
 				</li>

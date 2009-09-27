@@ -23,6 +23,7 @@
       <th class="sf_admin_text"><?php echo __('Class') ?></th>
       <th class="sf_admin_text"><?php echo __('Subject') ?></th>
       <th class="sf_admin_text"><?php echo __('Modules') ?></th>
+      <th class="sf_admin_text"><?php echo __('Hours') ?></th>
 	  <?php /*<th class="sf_admin_text"><?php echo __('Last action') ?></th> */ ?>
 	  <th class="sf_admin_text"><?php echo __('State') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
@@ -36,6 +37,7 @@
       <td><?php echo $workplan->getSchoolclass() ?></td>
       <td><?php echo $workplan->getSubject() ?></td>
 	  <td><?php echo $workplan->countWpmodules() ?></td>
+	  <td><?php echo $workplan->getHours() ?></td>
 	  <?php /*<?php $lastlog=$workplan->getLastLog() ?>  
 	  <td><?php echo $lastlog?$lastlog->getCreatedAt():'' ?></td>*/ ?>
 	  <td><?php include_partial('state', array('state' => $workplan->getState(), 'steps' => $steps, 'size'=>'r')) ?></td>

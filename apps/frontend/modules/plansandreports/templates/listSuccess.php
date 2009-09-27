@@ -89,7 +89,7 @@ array('related_class'=>'sfGuardUserProfile',
 	  <?php /*<?php $lastlog=$workplan->getLastLog() ?>  
 	  <td><?php echo $lastlog?$lastlog->getCreatedAt():'' ?></td>*/ ?>
 	  <td><?php  include_partial('state', array('state' => $workplan->getState(), 'steps' => $steps, 'size'=>'r')) ?></td>
-	  <td><?php  include_partial('action_monitor', array('workplan' => $workplan, 'steps' => $steps))  ?></td>
+	  <td><?php  include_partial('action_monitor', array('workplan' => $workplan, 'steps' => $steps, 'page'=> $page))  ?></td>
  	
 	</td>
     </tr>
