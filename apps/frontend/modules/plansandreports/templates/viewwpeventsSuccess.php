@@ -31,6 +31,7 @@
       <th class="sf_admin_text"><?php echo __('Date') ?></th>
       <th class="sf_admin_text"><?php echo __('User') ?></th>
       <th class="sf_admin_text"><?php echo __('Comment') ?></th>
+      <th class="sf_admin_text"><?php echo __('State') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
@@ -40,6 +41,7 @@
       <td><?php echo Generic::datetime($event->getCreatedAt('U')) ?></td>
       <td><?php echo $event->getSfGuardUser()->getProfile()->getFullname()?></td>
       <td><?php echo $event->getComment()?></td>
+      <td><?php include_partial('state', array('steps'=>Workflow::getWpfrSteps(), 'state'=>$event->getState(), 'size'=>'r')) ?></td>
 	  <td>
 	<ul class="sf_admin_td_actions">  
 				<li class="sf_admin_action_edit">
@@ -73,7 +75,7 @@
 <?php
 echo link_to(
 __('Add event'),
-url_for('users/addwpevent?appointment='.$workplan->getId())
+url_for('plansandreports/addwpevent?appointment='.$workplan->getId())
 ) ?>
 </li>
 </ul>
