@@ -3,7 +3,7 @@
 class Wpevent extends BaseWpevent
 {
 	
-	public function modifyWpevent($userId, $date, $comment)
+	public function modifyWpevent($userId, $date, $comment, $state)
 	{
 		$result=Array();
 		
@@ -13,6 +13,7 @@ class Wpevent extends BaseWpevent
 			->setUserId($userId)
 			->setCreatedAt($date)
 			->setComment($comment)
+			->setState($state)
 			->save();
 			
 			$result['result']='notice';

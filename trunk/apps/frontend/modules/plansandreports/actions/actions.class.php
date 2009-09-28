@@ -545,7 +545,7 @@ public function executeEditwpevent(sfWebRequest $request)
 			{
 				$params = $this->form->getValues();
 				
-				$result=$this->event->modifyWpevent($params['user'], $params['date'], $params['comment']);
+				$result=$this->event->modifyWpevent($params['user'], $params['date'], $params['comment'], $params['state']);
 				
 				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 				
@@ -565,12 +565,49 @@ public function executeEditwpevent(sfWebRequest $request)
 		array(
 			'date' => $this->event->getCreatedAt(),
 			'user'=> $this->event->getUserId(),
-			'comment' => $this->event->getComment()
+			'comment' => $this->event->getComment(),
+			'state' => $this->event->getState()
 		)
 	);
 		
 	}
 
+public function executeAddwpevent(sfWebRequest $request)
+  {
+	$this->form = new EditWpeventForm();
+	$this->appointment=AppointmentPeer::retrieveByPK($request->getParameter('appointment'));
+	$this->forward404Unless($this->appointment);
+	
+	if ($request->isMethod('post'))
+		{
+			$this->form->bind($request->getParameter('info'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				
+				$wpevent = new Wpevent();
+				$wpevent
+				->setAppointmentId($this->appointment->getId())
+				->setUserId($params['user'])
+				->setCreatedAt($params['date'])
+				->setComment($params['comment'])
+				->setState($params['state'])
+				->save();
+				
+				$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('New event saved.'));
+				
+				$this->redirect('plansandreports/viewwpevents?id='. $this->appointment->getId());
+				
+			}
+		}
+
+	$this->form->setDefaults(
+		array(
+			'date' => date('U'),
+		)
+	);
+		
+	}
 
 public function executeRemovewpevent(sfWebRequest $request)
   {

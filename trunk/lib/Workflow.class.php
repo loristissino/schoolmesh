@@ -221,6 +221,16 @@ class Workflow
 		return self::$wpfrSteps;
 	}
 
+	static public function getWpfrStates()
+	{
+		$steps=self::$wpfrSteps;
+		$states=Array();
+		foreach($steps as $key=>$value)
+		{
+			$states[$key]=$value['stateDescription'];
+		}
+		return $states;
+	}
 
 	static public function getEmailVerificationStates()
 	{
