@@ -857,6 +857,14 @@ public function getWorkflowLogs()
 		
 	}
 
+public function getWpevents($criteria = null, PropelPDO $con = null)
+
+	{
+		$criteria = new Criteria();
+		$criteria->addDescendingOrderByColumn(WpeventPeer::CREATED_AT);
+		$criteria->addJoin(WpeventPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
+		return parent::getWpevents($criteria);
+	}
 
 public function getContentAsMarkdown()
 	{

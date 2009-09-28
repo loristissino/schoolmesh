@@ -2,4 +2,16 @@ default:
   credentials: [[ planning, schoolmaster, office ]]
 
 list:
-  credentials: [[ schoolmaster, office ]]
+  credentials: [[ schoolmaster, office, backadmin ]]
+
+viewwpevents:
+  credential: [[ backadmin ]]
+
+addwpevent:
+  credential: [[ backadmin ]]
+
+editwpevent:
+  credential: [[ backadmin ]]
+
+removewpevent:
+  credential: [[ backadmin ]]
