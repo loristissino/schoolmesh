@@ -7,7 +7,7 @@ To develop SchoolMesh, we used some free softare and resources that it's right t
 
 1. The symfony framework: http://www.symfony-project.org/
 
-2. Some icons from open source collections, like Crystal Clear http://commons.wikimedia.org/wiki/Crystal_Clear (GPL) and Silk http://www.famfamfam.com/archive/silk-icon-set-released/ (CC Attribution 3.0)
+2. Some icons from open source collections, like _Crystal Clear_ http://commons.wikimedia.org/wiki/Crystal_Clear (GPL) and _FamFamFam Silk_ http://www.famfamfam.com/archive/silk-icon-set-released/ (CC Attribution 3.0)
 
 =Registered Trademarks=
 
