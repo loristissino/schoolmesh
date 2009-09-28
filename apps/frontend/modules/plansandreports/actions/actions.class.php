@@ -522,6 +522,72 @@ public function executeBatch(sfWebRequest $request)
   }
 
 
+  public function executeViewwpevents(sfWebRequest $request)
+  {
+    $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($this->workplan);
+	
+	$this->events=$this->workplan->getWpevents();
+
+  }
+
+
+public function executeEditwpevent(sfWebRequest $request)
+  {
+	$this->event=WpeventPeer::retrieveByPK($request->getParameter('id'));
+	
+	$this->form = new EditWpeventForm();
+	
+	if ($request->isMethod('post'))
+		{
+			$this->form->bind($request->getParameter('info'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				
+				$result=$this->event->modifyWpevent($params['user'], $params['date'], $params['comment']);
+				
+				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+				
+				if ($result['result']=='notice')
+				{
+					$this->redirect('plansandreports/viewwpevents?id='. $this->event->getAppointmentId());
+				}
+				else
+				{
+					$this->redirect('plansandreports/editwpevent?id='. $this->event->getId());
+				}
+
+			}
+		}
+
+	$this->form->setDefaults(
+		array(
+			'date' => $this->event->getCreatedAt(),
+			'user'=> $this->event->getUserId(),
+			'comment' => $this->event->getComment()
+		)
+	);
+		
+	}
+
+
+public function executeRemovewpevent(sfWebRequest $request)
+  {
+	$this->event=WpeventPeer::retrieveByPK($request->getParameter('id'));
+	$this->forward404Unless($request->isMethod('delete'));
+	
+	$this->appointmentId=$this->event->getAppointmentId();
+
+	$this->event->delete();
+
+	$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Event successfully deleted.'));
+				
+	$this->redirect('plansandreports/viewwpevents?id='. $this->appointmentId);
+		
+	}
+
+
 
   public function executeNew(sfWebRequest $request)
   {

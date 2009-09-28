@@ -36,5 +36,22 @@
 				</li>
 			<?php endif ?>
 				
+			<?php if(@$sf_user->hasCredential($steps[$workplan->getState()]['actions']['reject']['permission'])): ?>
+				<li class="sf_admin_action_reject">
+					<?php echo link_to(
+				__('Reject'),
+				'plansandreports/reject?id=' . $workplan->getId(). '&page=' . $page, 
+				array('method' => 'post', 'title' => __($steps[$workplan->getState()]['actions']['reject']['submitDisplayedAction']))
+				)?>
+				</li>
+			<?php endif ?>
+			<?php if(@$sf_user->hasCredential('backadmin')): ?>
+				<li class="sf_admin_action_log">
+					<?php echo link_to(
+				__('View events'),
+				'plansandreports/viewwpevents?id=' . $workplan->getId() . '&page=' . $page)
+				?>
+				</li>
+			<?php endif ?>
 			</ul>
 			
