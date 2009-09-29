@@ -545,7 +545,7 @@ public function executeEditwpevent(sfWebRequest $request)
 			{
 				$params = $this->form->getValues();
 				
-				$result=$this->event->modifyWpevent($params['user'], $params['date'], $params['comment'], $params['state']);
+				$result=$this->event->modifyWpevent($params['user'], $params['date'], $params['comment'], $params['state'], $params['update_state']);
 				
 				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 				

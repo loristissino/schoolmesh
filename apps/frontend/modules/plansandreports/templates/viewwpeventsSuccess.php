@@ -12,6 +12,7 @@
 	<li><?php echo __("Teacher: ") . $workplan->getsfGuardUser()->getProfile()->getFullName() ?></li>
 	<li><?php echo __("Class: ") . $workplan->getSchoolclass() ?></li>
 	<li><?php echo __("Year: ") . $workplan->getYear() ?></li>
+	<li><?php echo __("State: ") . $workplan->getState() ?></li>
 </ul>
 
 <h2><?php echo __('Events') ?></h2>

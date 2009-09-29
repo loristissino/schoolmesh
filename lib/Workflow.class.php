@@ -14,7 +14,7 @@ class Workflow
 	static private $wpfrSteps=Array(
 
 	self::AP_ASSIGNED=>Array(
-		'stateDescription'=>"Appointment just set",
+		'stateDescription'=>"Appointment not confirmed",
 		'owner' => Array(),
 		'actions' => Array(
 			'approve' => Array(

@@ -508,7 +508,9 @@ $con->query($sql);
 													{
 														$checkList->addCheck(new Check(
 															Check::FAILED,
-															'Missing evaluation'));
+															'Missing evaluation',
+															$groupname
+															));
 															/*
 																array(
 																	'link_to'=>'wpmodule/view?id=' . $wpmodule->getId(). '#' . $group->getId(),

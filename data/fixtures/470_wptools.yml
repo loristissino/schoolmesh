@@ -2,31 +2,31 @@ WptoolItemType:
   methodology:
     description:  Metodologia di lavoro
     rank: 1
-    state: 0
+    state: 10
     min_selected: 1
     max_selected: 2
   exams:
     description:  Tipologia delle verifiche previste
     rank:  2
-    state: 0
+    state: 10
     min_selected: 2
     max_selected: 2
   tools:
     description:  Strumenti previsti
     rank: 3
-    state: 0
+    state: 10
     min_selected: 0
     max_selected: 2
   exams_fr:
     description:  Tipologia delle verifiche effettivamente svolte
     rank:  4
-    state: 30
+    state: 40
     min_selected: 1
     max_selected: 2
   tools_fr:
     description:  Strumenti usati
     rank: 5
-    state: 30
+    state: 40
     min_selected: 1
     max_selected: 2
 
