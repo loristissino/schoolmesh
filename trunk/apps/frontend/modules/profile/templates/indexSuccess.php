@@ -26,7 +26,7 @@
 <?php if ($sf_user->hasCredential('planning')): ?>
 <h2><?php echo __('My appointments') ?></h2>
 <ul class="sf_admin_actions">
-    <li class="sf_admin_action_items"><?php echo link_to('Full view of plans and reports', '@plansandreports') ?></li>
+    <li class="sf_admin_action_items"><?php echo link_to(__('Full view of plans and reports'), '@plansandreports') ?></li>
 </ul>
 <?php endif ?>
 

@@ -1098,6 +1098,18 @@
         <source>Hours</source>
         <target>Ore</target>
       </trans-unit>
+      <trans-unit id="303">
+        <source>Appointment not confirmed</source>
+        <target>Incarico non confermato</target>
+      </trans-unit>
+      <trans-unit id="304">
+        <source>My appointments</source>
+        <target>I miei incarichi</target>
+      </trans-unit>
+      <trans-unit id="304">
+        <source>Full view of plans and reports</source>
+        <target>Elenco completo di piani di lavoro e relazioni</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

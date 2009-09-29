@@ -3,7 +3,7 @@
 class Wpevent extends BaseWpevent
 {
 	
-	public function modifyWpevent($userId, $date, $comment, $state)
+	public function modifyWpevent($userId, $date, $comment, $state, $update_state=false)
 	{
 		$result=Array();
 		
@@ -15,6 +15,11 @@ class Wpevent extends BaseWpevent
 			->setComment($comment)
 			->setState($state)
 			->save();
+			
+			if ($update_state)
+			{
+				$this->getAppointment()->setState($state)->save();
+			}
 			
 			$result['result']='notice';
 			$result['message']='The event was successfully saved.';
