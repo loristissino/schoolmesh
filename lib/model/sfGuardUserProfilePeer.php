@@ -99,6 +99,19 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	return $pager;
 	}
 
+	public static function retrieveAllButStudents()
+	
+	{
+				
+		$c = new Criteria();
+		$c->addJoin(sfGuardUserProfilePeer::ROLE_ID, RolePeer::ID);
+		$c->add(RolePeer::POSIX_NAME, sfConfig::get('app_config_students_default_posix_group'), Criteria::NOT_EQUAL);
+		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+		
+		return parent::doSelect($c);
+	}
+
+
 
 	public static function retrieveTeachersWithAppointments()
 	{
