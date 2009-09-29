@@ -1,0 +1,28 @@
+.TH SCHOOLMESH_APPLICATION_DUMPTABLES 8 "August 6, 2009" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_application_dumptables - Utility to backup data from the
+database
+.SH SYNOPSIS
+.PP
+schoolmesh_application_dumptables database outfile
+.SH DESCRIPTION
+.PP
+This script makes a backup of the data of SchoolMesh database, in
+the form of a SQL plaintext file\. The tables are backed up in an
+order that allows to reimport them without problems\. The output
+can be used with \f[I]schoolmesh_application_importtables(8)\f[]\.
+.SH EXAMPLES
+.PP
+\f[CR]
+      schoolmesh_application_dumptables\ schoolmesh_prod\ mybackupfile\.sql\ 
+\f[]
+.SH BUGS
+.PP
+Probably many\.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>\.
+.SH AUTHOR
+Loris Tissino (loris.tissino@mattiussilab.net)

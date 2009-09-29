@@ -117,7 +117,7 @@ public function executeBatch(sfWebRequest $request)
 
 	public function executeList(sfWebRequest $request)
 	{
-		
+		$max_per_page=sfConfig::get('app_config_appointments_max_per_page', 20);
 		$this->page=$request->getParameter('page', 1);
 
 		if (!$sortby=$this->getUser()->getAttribute('sortby'))
@@ -135,7 +135,7 @@ public function executeBatch(sfWebRequest $request)
 				$this->filtered_user_id='';
 			}
 */
-		$this->pager = AppointmentPeer::listWorkplans($this->page, sfConfig::get('app_config_current_year'), $sortby);
+		$this->pager = AppointmentPeer::listWorkplans($max_per_page, $this->page, sfConfig::get('app_config_current_year'), $sortby);
 		$this->steps = Workflow::getWpfrSteps();
 	}
 	

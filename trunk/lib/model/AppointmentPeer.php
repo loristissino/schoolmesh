@@ -289,7 +289,7 @@ if (isset($content['workplan_report']['tools']))
 
 	}
 
-	public static function listWorkplans($page, $year, $sortby)
+	public static function listWorkplans($max_per_page, $page, $year, $sortby)
 	{
 	
 	
@@ -308,7 +308,7 @@ if (isset($content['workplan_report']['tools']))
 			default: $c->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID);
 		}
 		
-		$pager = new sfPropelPager('Appointment', 10);
+		$pager = new sfPropelPager('Appointment', $max_per_page);
 		$pager->setCriteria($c);
 		$pager->setPage($page);
 		$pager->init();

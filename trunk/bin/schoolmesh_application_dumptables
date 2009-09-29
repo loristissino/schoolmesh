@@ -4,13 +4,31 @@ CONFIG_READ=0
 source /var/schoolmesh/config/schoolmesh.rc $@
 if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
 
+#@ # NAME
+#@
+#@ {} - Utility to backup data from the database
+#@
+#@ # SYNOPSIS
+#@
+#@ {} database outfile
+#@
+#@ # DESCRIPTION
+#@
+#@ This script makes a backup of the data of SchoolMesh database, in the form of a SQL plaintext file.
+#@ The tables are backed up in an order that allows to reimport them without problems.
+#@ The output can be used with *schoolmesh_application_importtables(8)*.
+#@ 
+#@ # EXAMPLES
+#@
+#@	{-} schoolmesh_prod mybackupfile.sql 
+
 USERNAME=$(cat /var/schoolmesh/config/databases.yml | grep username | gawk '{print $2}')
 PASSWORD=$(cat /var/schoolmesh/config/databases.yml | grep password | gawk '{print $2}')
 
 DATABASE=$1
 OUTFILE=$2
 
-checkString $OUTFILE
+checkString $DATABASE "database"
 checkNotFile $OUTFILE
 
 
