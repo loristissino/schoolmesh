@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(27, new lime_output_color());
+$t = new lime_test(28, new lime_output_color());
 
 $t->diag('::importFromCSVFile()');
 $checks=sfGuardUserProfilePeer::importFromCSVFile('data/example_uploads/users.csv');
@@ -94,3 +94,17 @@ $t->is($permission, false, '::retrievePermissionByName() returns false if the pe
 
 $permission=sfGuardUserProfilePeer::retrievePermissionByName('planning');
 $t->is($permission->getDescription(), 'Pianificazione didattica', '::retrievePermissionByName() returns the correct permission');
+
+$t->diag('::retrieveAllButStudents()');
+$nonstudents=sfGuardUserProfilePeer::retrieveAllButStudents();
+
+$check=array();
+foreach($nonstudents as $profile)
+{
+	$check[]=$profile->getFullName();
+}
+
+$t->is_deeply($check, array(
+0 => 'Fabio Adriani',  1 => 'Bruna Bagalà',  2 => 'Cristina Bonucci',  3 => 'Bianca Brindisi',  4 => 'Bianca Brindisi',  5 => 'Antonio Danubio',  6 => 'Marco De Filippis',  7 => 'Juri Domodossola',  8 => 'Flavia Gemona',  9 => 'Francesco Genova',  10 => 'Francesco Genova',  11 => 'Vinicio Grimaldi',  12 => 'Paola Moretti',  13 => 'Mario Rossi',  14 => 'Giorgio Simonacci',  15 => 'Lucio Stelli',  16 => 'John Test',  17 => 'Loris Tissino',  18 => 'Gabriella Vicenza',  19 => 'Bebé Łasøw'
+), '::retrieveAllButStudents() returns all users but students');
+
