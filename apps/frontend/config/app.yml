@@ -12,6 +12,7 @@ all:
     culture: it
     base_url: 'https://localhost/schoolmesh'
     users_max_per_page: 100
+    appointments_max_per_page: 25
     posix_homedir: /home/testhome 
     posix_basefolder: Mattiussi  # this folder contains symbolic links and other stuff; should be present in each homedir
     teachers_default_posix_group: docenti

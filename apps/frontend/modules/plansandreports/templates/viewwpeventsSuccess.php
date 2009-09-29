@@ -39,7 +39,7 @@
   <tbody>
     <?php foreach ($events as $event): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
-      <td><?php echo Generic::datetime($event->getCreatedAt('U')) ?></td>
+      <td><?php echo Generic::datetime($event->getCreatedAt('U'), $sf_context) ?></td>
       <td><?php echo $event->getSfGuardUser()->getProfile()->getFullname()?></td>
       <td><?php echo $event->getComment()?></td>
       <td><?php include_partial('state', array('steps'=>Workflow::getWpfrSteps(), 'state'=>$event->getState(), 'size'=>'r')) ?></td>

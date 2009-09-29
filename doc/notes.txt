@@ -1,3 +1,9 @@
+# From revision 331 to revision 332:
+
+Add in app.yml:
+
+    appointments_max_per_page: 30
+
 # From revision 321 to revision 322:
 
 Change WpinfoType in the database, 0->10, 30->40 (state)

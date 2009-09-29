@@ -1,76 +1,33 @@
 % SCHOOLMESH(8) Schoolmesh utilities User Manuals
 % Loris Tissino
-% August 6, 2009
+% September 29, 2009
 
 # NAME
 
 schoolmesh - command line utilities to be used with SchoolMesh web application 
 
-# SYNOPSIS
+# UTILITY LIST
 
-schoolmesh\_user\_add *params*   
-schoolmesh\_user\_del *params*   
-schoolmesh\_user\_changeusername *params*   
-schoolmesh\_user\_quotaget *params*   
-schoolmesh\_user\_quotaset *params*     
-schoolmesh\_dir\_changeperms *params*     
-schoolmesh\_dir\_changeowner *params*     
-schoolmesh\_dir\_create *params*
-schoolmesh\_dir\_extattrget *params*  
-schoolmesh\_dir\_extattrset *params*  
+schoolmesh_application_dumptables
+
+schoolmesh_application_importtables
+
+schoolmesh_application_update
+
+schoolmesh_posixaccount_changefullname
+
+schoolmesh_posixaccount_create
 
 
 # DESCRIPTION
 
 These utilities are really only basic wrapper scripts to be used together with
 SchoolMesh. The idea is to provide flexibility. For instance, instead of calling
-directly __useradd__, we call __schoolmesh\_user\_adduser__. This way, if one day we 
+directly __useradd__, we call __schoolmesh\_posixaccount\_create__. This way, if one day we 
 need to change the behaviour needed to add a system user (for instance, using _ldap_,
 or contacting a different server), we just need to change the wrapper scripts.
 
-The wrappers provided are described here below.
-
-# UTILITIES
-
-    schoolmesh_user_changeusername *newusername* *basedir* *oldusername*
-
-Change *oldusername* to *newusername*. Also change the home directory, using *basedir/newusername* as path.
-
-    schoolmesh_user_changegroup *group* *username*
-
-Change the primary group of *username* to *group*.
-
-    schoolmesh_user_add *username* *basedir* *group* *fullname*
-
-Add user *username* and creates the home directory setting proper permissions. Use *fullname* as gecos field.
-
-    schoolmesh_dir_changeperms *permissions* *directory*
-
-Change the permissions for the directory *directory*.
-
-    schoolmesh_dir_changeowner *username* *directory*
-
-Change the owner to *username* for the directory *directory*.
-
-    schoolmesh_user_quotaget *username*
-
-Return information about disk quota set and used for the user *username*.
-
-    schoolmesh_user_quotaset *username* *sbq* *hbq* *sfq* *hfq* *filesystem*
-
-Set disk quotas for *username* (soft blocks quota, hard blocks quota, soft inodes quota, hard inodes quota).
-
-# EXAMPLES
-
-	schoolmesh_user_changeusername john /home/users jhon  
-	schoolmesh_user_changegroup teachers john  
-    schoolmesh_user_add john /home/users students 'Johnny Smith'	
-	schoolmesh_dir_changeperms 711 /home/users/john
-	schoolmesh_dir_changeowner john /home/users/john   
-	schoolmesh_dir_create /home/users/john/www
-    schoolmesh_user_quotaget john  
-    schoolmesh_user_quotaset john 4000 5000 300 400 /home/users 
-
+Each utility should have its own man page (work in progress).
 
 # BUGS
 
@@ -79,4 +36,3 @@ Probably many.
 # SEE ALSO
 
 The SchoolMesh project is described at <http://schoolmesh.mattiussilab.net/>.
-

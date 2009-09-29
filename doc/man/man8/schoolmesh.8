@@ -1,124 +1,30 @@
-.TH SCHOOLMESH 8 "August 6, 2009" "Schoolmesh utilities User Manuals"
+.TH SCHOOLMESH 8 "September 29, 2009" "Schoolmesh utilities User Manuals"
 .SH NAME
 .PP
 schoolmesh - command line utilities to be used with SchoolMesh web
 application
-.SH SYNOPSIS
+.SH UTILITY LIST
 .PP
-schoolmesh_user_add
-\f[I]params\f[]
-.PD 0
-.P
-.PD
-schoolmesh_user_del
-\f[I]params\f[]
-.PD 0
-.P
-.PD
-schoolmesh_user_changeusername
-\f[I]params\f[]
-.PD 0
-.P
-.PD
-schoolmesh_user_quotaget
-\f[I]params\f[]
-.PD 0
-.P
-.PD
-schoolmesh_user_quotaset
-\f[I]params\f[]
-.PD 0
-.P
-.PD
-schoolmesh_dir_changeperms
-\f[I]params\f[]
-.PD 0
-.P
-.PD
-schoolmesh_dir_changeowner
-\f[I]params\f[]
-.PD 0
-.P
-.PD
-schoolmesh_dir_create \f[I]params\f[]
-schoolmesh_dir_extattrget
-\f[I]params\f[]
-.PD 0
-.P
-.PD
-schoolmesh_dir_extattrset
-\f[I]params\f[]
+schoolmesh_application_dumptables
+.PP
+schoolmesh_application_importtables
+.PP
+schoolmesh_application_update
+.PP
+schoolmesh_posixaccount_changefullname
+.PP
+schoolmesh_posixaccount_create
 .SH DESCRIPTION
 .PP
 These utilities are really only basic wrapper scripts to be used
 together with SchoolMesh\. The idea is to provide flexibility\. For
 instance, instead of calling directly \f[B]useradd\f[], we call
-\f[B]schoolmesh_user_adduser\f[]\. This way, if one day we need to
-change the behaviour needed to add a system user (for instance,
-using \f[I]ldap\f[], or contacting a different server), we just
-need to change the wrapper scripts\.
+\f[B]schoolmesh_posixaccount_create\f[]\. This way, if one day we
+need to change the behaviour needed to add a system user (for
+instance, using \f[I]ldap\f[], or contacting a different server),
+we just need to change the wrapper scripts\.
 .PP
-The wrappers provided are described here below\.
-.SH UTILITIES
-.PP
-\f[CR]
-      schoolmesh_user_changeusername\ *newusername*\ *basedir*\ *oldusername*
-\f[]
-.PP
-Change \f[I]oldusername\f[] to \f[I]newusername\f[]\. Also change
-the home directory, using \f[I]basedir/newusername\f[] as path\.
-.PP
-\f[CR]
-      schoolmesh_user_changegroup\ *group*\ *username*
-\f[]
-.PP
-Change the primary group of \f[I]username\f[] to \f[I]group\f[]\.
-.PP
-\f[CR]
-      schoolmesh_user_add\ *username*\ *basedir*\ *group*\ *fullname*
-\f[]
-.PP
-Add user \f[I]username\f[] and creates the home directory setting
-proper permissions\. Use \f[I]fullname\f[] as gecos field\.
-.PP
-\f[CR]
-      schoolmesh_dir_changeperms\ *permissions*\ *directory*
-\f[]
-.PP
-Change the permissions for the directory \f[I]directory\f[]\.
-.PP
-\f[CR]
-      schoolmesh_dir_changeowner\ *username*\ *directory*
-\f[]
-.PP
-Change the owner to \f[I]username\f[] for the directory
-\f[I]directory\f[]\.
-.PP
-\f[CR]
-      schoolmesh_user_quotaget\ *username*
-\f[]
-.PP
-Return information about disk quota set and used for the user
-\f[I]username\f[]\.
-.PP
-\f[CR]
-      schoolmesh_user_quotaset\ *username*\ *sbq*\ *hbq*\ *sfq*\ *hfq*\ *filesystem*
-\f[]
-.PP
-Set disk quotas for \f[I]username\f[] (soft blocks quota, hard
-blocks quota, soft inodes quota, hard inodes quota)\.
-.SH EXAMPLES
-.PP
-\f[CR]
-      schoolmesh_user_changeusername\ john\ /home/users\ jhon\ \ 
-      schoolmesh_user_changegroup\ teachers\ john\ \ 
-      schoolmesh_user_add\ john\ /home/users\ students\ \[aq]Johnny\ Smith\[aq]\ \ \ \ 
-      schoolmesh_dir_changeperms\ 711\ /home/users/john
-      schoolmesh_dir_changeowner\ john\ /home/users/john\ \ \ 
-      schoolmesh_dir_create\ /home/users/john/www
-      schoolmesh_user_quotaget\ john\ \ 
-      schoolmesh_user_quotaset\ john\ 4000\ 5000\ 300\ 400\ /home/users\ 
-\f[]
+Each utility should have its own man page (work in progress)\.
 .SH BUGS
 .PP
 Probably many\.
