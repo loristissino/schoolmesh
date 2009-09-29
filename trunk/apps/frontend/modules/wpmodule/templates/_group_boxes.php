@@ -38,7 +38,7 @@
     <tr>
       <th class="sf_admin_text" colspan="3"><?php echo __('Rank') ?></th>
       <th class="sf_admin_text"><?php echo $item_group->getWpitemType()->getSingular() ?></th>
-	<?php if(($wpstate==30) && ($item_group->getWpitemType()->getEvaluationMax()>=0)): ?>
+	<?php if(($wpstate==Workflow::IR_DRAFT) && ($item_group->getWpitemType()->getEvaluationMax()>=0)): ?>
       <th class="sf_admin_text"><?php echo __('Evaluation') ?><br />
 	
 	<span class="sf_admin_description">
@@ -74,7 +74,7 @@
 		<?php echo input_in_place_editor_tag('moduleitem_'.$wpmodule_item->getId(), 'wpmoduleitem/editInLine?property=Content&id='.$wpmodule_item->getId(), array('cols'=>'90', 'rows'=>1)) ?>
 	<?php endif ?>
 	</td>
-	<?php if(($wpstate==30) && ($item_group->getWpitemType()->getEvaluationMax()>=0)): ?>
+	<?php if(($wpstate==Workflow::IR_DRAFT) && ($item_group->getWpitemType()->getEvaluationMax()>=0)): ?>
 	<td>
 		<?php //include_partial('evaluation', array('wpmodule_item' => $wpmodule_item, 'item_group'=>$item_group)) ?>
 		<?php include_partial('evaluation2', array(
