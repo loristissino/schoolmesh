@@ -14,7 +14,7 @@ There is a lot of things to do. Here we'll list them just to keep a reference.
   # profile management
   # google apps integration
   # moodle integration
-  # better template engine for OpenOffice Documents
+  # better template engine for _OpenOffice.org_ documents
 
 == Configuration ==
 
