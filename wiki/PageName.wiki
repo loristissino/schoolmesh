@@ -1,0 +1,28 @@
+#summary TODO list
+#labels Phase-Design
+
+= SchoolMesh TO DO list =
+
+There is a lot of things to do. Here we'll list them just to keep a reference.
+
+== Development ==
+
+  # internal search engine (with Lucene)
+  # functional tests
+  # code revision
+  # school projects management
+  # profile management
+  # google apps integration
+  # moodle integration
+  # better template engine for OpenOffice Documents
+
+== Configuration ==
+
+  # Mail server (possibly with Google Apps)
+  # DNS server
+  # Apache (SSL)
+
+== Documentation ==
+
+  # General user's guide
+  # Teacher's guide
