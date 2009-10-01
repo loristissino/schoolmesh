@@ -92,3 +92,9 @@ for i in 1 8
 	done
 
 rm $FILELIST
+
+WIKIFILE=/home/loris/Importanti/SchoolMesh/wiki/ManPage.wiki
+
+echo "{{{" > $WIKIFILE
+man schoolmesh | col -b >> $WIKIFILE
+echo "}}}" >> $WIKIFILE

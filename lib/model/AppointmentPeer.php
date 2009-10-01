@@ -300,7 +300,10 @@ if (isset($content['workplan_report']['tools']))
 		switch($sortby)
 		{
 			case 'class': $c->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID); break;
-			case 'teacher': $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME); break;
+			case 'teacher': 
+				$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+				$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
+				break;
 			case 'subject': $c->addAscendingOrderByColumn(SubjectPeer::DESCRIPTION); break;
 			case 'hours': $c->addAscendingOrderByColumn(AppointmentPeer::HOURS); break;
 			case 'state': $c->addAscendingOrderByColumn(AppointmentPeer::STATE); break;

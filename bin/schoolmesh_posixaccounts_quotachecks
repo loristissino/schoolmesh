@@ -1,0 +1,30 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+TYPE=$1
+GROUP=$2
+
+checkDirectory "$POSIX_HOMEDIR_USERS"
+
+checkString $TYPE "Type"
+
+[[ "$TYPE" = "primary" ]] || [[ "$TYPE" == "all" ]] || msg_failed "not a valid type: $TYPE"
+
+checkGroup $GROUP
+
+if [[ "$TYPE" = "primary" ]]
+	then
+		for USERNAME in $(schoolmesh_posixaccount_listusers primary $GROUP)
+			do
+				schoolmesh_posixaccount_quotausercheck $USERNAME	
+			done
+fi
+
+if [[ "$TYPE" = "all" ]]
+	then
+		msg_failed "Not implemented yet"
+fi
+
