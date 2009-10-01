@@ -5,3 +5,16 @@
 Si può fare in modo che il logon degli utenti autenticati da Samba venga riconosciuto da SchoolMesh in quella che viene chiamata "autenticazione leggera".
 
 (da completare)
+
+== Configurazione quote disco ==
+
+Per far sì che le quote disco siano gestibili, bisogna impostare nel file _/etc/fstab_, per la directory home, l'opzione _usrquota_.
+
+Se si vogliono anche le ACL, bisogna impostare l'opzione _acl_.
+
+Esempio:
+
+{{{
+# /dev/sdb5
+UUID=73c413d6-a6d6-4279-ad84-0255d1db83de /home ext3 relatime,defaults,usrquota,acl       0       2
+}}}
