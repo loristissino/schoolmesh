@@ -1,0 +1,21 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+USERNAME=$1
+
+checkUsername "$USERNAME"
+
+checkDirectory "$POSIX_HOMEDIR_USERS"
+
+QUOTA=$(schoolmesh_posixaccount_getinfo $USERNAME | grep '^used_blocks=[0-9]*\*')
+if [[ ! "$QUOTA" = "" ]]; then
+	msg_failed $USERNAME $QUOTA
+	HOMEDIR="$POSIX_HOMEDIR_USERS/$USERNAME"
+	sudo du -m -S -x $HOMEDIR | sort -n -r | head -5
+else
+	msg_ok $USERNAME
+fi
+
