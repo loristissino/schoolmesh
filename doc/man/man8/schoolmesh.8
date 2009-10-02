@@ -5,17 +5,38 @@ schoolmesh - command line utilities to be used with SchoolMesh web
 application
 .SH UTILITY LIST
 .PP
-schoolmesh_application_dumptables
+schoolmesh_application_dumptables -
+\f[I]Backup data from the database in SQL format\f[]
 .PP
-schoolmesh_application_importtables
+schoolmesh_application_importtables -
+\f[I]Import data from a backup sql file\f[]
 .PP
-schoolmesh_application_update
+schoolmesh_application_update -
+\f[I]Update the application with the newest SVN release\f[]
 .PP
-schoolmesh_posixaccount_changefullname
+schoolmesh_loginaccount_getinfo -
+\f[I]Get info about the login account of a user\f[]
 .PP
-schoolmesh_posixaccount_create
+schoolmesh_loginaccount_getshells -
+\f[I]Get a list of available shells on the system\f[]
 .PP
-schoolmesh_posixaccount_getinfo
+schoolmesh_loginaccount_setpassword -
+\f[I]Change the login password for a user\f[]
+.PP
+schoolmesh_posixaccount_changefullname -
+\f[I]Change full name for a posix account of a user\f[]
+.PP
+schoolmesh_posixaccount_create -
+\f[I]Create a posix account for a user\f[]
+.PP
+schoolmesh_posixaccount_getinfo -
+\f[I]Get info about the posix account of a user\f[]
+.PP
+schoolmesh_sambaaccount_create -
+\f[I]Create a samba account for a user\f[]
+.PP
+schoolmesh_sambaaccount_getinfo -
+\f[I]Get info about the samba (SMB/CIFS) account of a user\f[]
 .SH DESCRIPTION
 .PP
 These utilities are really only basic wrapper scripts to be used

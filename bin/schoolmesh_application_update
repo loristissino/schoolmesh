@@ -6,7 +6,7 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 
 #@ # NAME
 #@
-#@ {} - Utility to update the application with the newest SVN release
+#@ {} - Update the application with the newest SVN release
 #@
 #@ # SYNOPSIS
 #@

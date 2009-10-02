@@ -1,0 +1,34 @@
+% SCHOOLMESH_SAMBAACCOUNT_CREATE(8) Schoolmesh User Manuals
+% Loris Tissino (loris.tissino@mattiussilab.net)
+% October 2009
+
+# NAME
+
+schoolmesh\_sambaaccount\_create - Create a samba account for a user
+
+# SYNOPSIS
+
+schoolmesh\_sambaaccount\_create *username* *fullname* *password*
+
+# DESCRIPTION
+
+Use this script to create a posix account.
+Some checks are done before the creation.
+
+# EXAMPLES
+
+	schoolmesh_sambaaccount_create john 'John Doe' ck33LmrdH_45
+
+# TO DO
+
+	Passwords should not be passed on the command line. This must be modified,
+ probably by passing a file name containing the password.
+
+# BUGS
+
+Probably many.
+
+# SEE ALSO
+
+The SchoolMesh project is described at <http://schoolmesh.mattiussilab.net/>.
+

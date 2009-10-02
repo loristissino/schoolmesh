@@ -6,7 +6,7 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 
 #@ # NAME
 #@
-#@ {} - Utility for the import of data from a backup sql file
+#@ {} - Import data from a backup sql file
 #@
 #@ # SYNOPSIS
 #@
