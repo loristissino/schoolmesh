@@ -9,13 +9,17 @@ for FILE in schoolmesh_*
 	do
 	if grep '^#@' $FILE >/dev/null; then
 	echo "making man page for " $FILE "..."
+	
+	DESCRIPTION=$(grep '^#@ {} - ' $FILE| head -1 | sed 's/^#@ {} - //')
+
 	echo $FILE >> $FILELIST
+	echo "- _$DESCRIPTION"_ >> $FILELIST
 	echo "" >>$FILELIST
 	
 		cat > /tmp/$FILE <<EOT
 % {}(8) Schoolmesh User Manuals
 % Loris Tissino (loris.tissino@mattiussilab.net)
-% August 6, 2009
+% {DATE}
 
 EOT
 
@@ -38,7 +42,11 @@ EOT
 
 		CMDNAME=$(echo $FILE | sed s/_/\\\\\\\\_/g)
 		echo $CMDNAME
+		
+		FILEDATE=$(LANG=C date +'%B %Y' -r $FILE)
+		
 		sed -e "s/{}/$CMDNAME/g" -e "s/{-}/$FILE/" /tmp/$FILE > /var/schoolmesh/doc/pandoc.man/$FILE.8
+		sed -i "s/{DATE}/$FILEDATE/" /var/schoolmesh/doc/pandoc.man/$FILE.8
 
 	fi
 

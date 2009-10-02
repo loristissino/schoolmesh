@@ -4,6 +4,24 @@ CONFIG_READ=0
 source /var/schoolmesh/config/schoolmesh.rc $@
 if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
 
+#@ # NAME
+#@
+#@ {} - Get info about the login account of a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username*
+#@
+#@ # DESCRIPTION
+#@
+#@ This script generates a list of pairs *key=value* about a login account.
+#@ If the user is not found, returns *found=0*.
+#@
+#@ # EXAMPLES
+#@
+#@	{-} john
+
+
 USERNAME=$1
 
 checkString $USERNAME
