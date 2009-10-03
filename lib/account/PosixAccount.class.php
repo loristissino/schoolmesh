@@ -29,6 +29,17 @@ class PosixAccount extends Account
 		{
 			$this->setAccountInfo($key, $value);
 		}
+		
+		// ... but we have to strip the * from quota values in excess...
+		
+		foreach(array(
+			'used_blocks',
+			'used_files',
+		) as $key)
+		{
+			$this->setAccountInfo($key, (int) $this->getAccountInfo($key));
+		}
+		
 		// second, we copy them in the settings if they are empty (but only editable ones)
 		foreach(array(
 			'soft_blocks_quota',
