@@ -1,0 +1,30 @@
+.TH SCHOOLMESH_POSIXACCOUNTS_LIST 8 "October 2009" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_posixaccounts_list - Get a list of posix users belonging
+to a specified group
+.SH SYNOPSIS
+.PP
+schoolmesh_posixaccounts_list primary | secondary | all
+\f[I]group\f[]
+.SH DESCRIPTION
+.PP
+Use this script to get a list of users belonging to a specified
+group\. You can decide to check only primary groups, only
+secondary, or both\.
+.SH EXAMPLES
+.PP
+\f[CR]
+      schoolmesh_posixaccounts_list\ primary\ students\ \ 
+      schoolmesh_posixaccounts_list\ secondary\ students\ \ 
+      schoolmesh_posixaccounts_list\ all\ students
+\f[]
+.SH BUGS
+.PP
+Probably many\.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>\.
+.SH AUTHOR
+Loris Tissino (loris.tissino@mattiussilab.net)

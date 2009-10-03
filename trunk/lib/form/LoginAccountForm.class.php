@@ -12,7 +12,7 @@ class LoginAccountForm extends sfForm
 {
   public function configure()
   {
-	$shells=Generic::executeCommand('loginaccount_getshells', false);
+	$shells=Generic::executeCommand('loginaccounts_getshells', false);
 
 	$this->setWidgets(array(
 	  'id'  => new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
