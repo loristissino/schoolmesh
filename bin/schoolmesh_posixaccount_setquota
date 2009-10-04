@@ -3,7 +3,25 @@
 CONFIG_READ=0
 source /var/schoolmesh/config/schoolmesh.rc $@
 if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
-	
+
+#@ # NAME
+#@
+#@ {} - Set the quota of a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username* *soft-blocks-quota* *hard-blocks-quota* *soft-files-quota* *hard-files-quota*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to set the quota for a user.
+#@ Blocks quota are expressed in KiB.
+#@ The number of files is the number of i-nodes.
+#@
+#@ # EXAMPLES
+#@
+#@	{-} john 80000 100000 5000 6000
+
 USERNAME=$1
 SBQ=$2
 HBQ=$3
