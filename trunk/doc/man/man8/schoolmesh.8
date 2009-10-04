@@ -14,6 +14,9 @@ schoolmesh_application_importtables -
 schoolmesh_application_update -
 \f[I]Update the application with the newest SVN release\f[]
 .PP
+schoolmesh_loginaccount_changeshell -
+\f[I]Change the shell for the login account of a user\f[]
+.PP
 schoolmesh_loginaccount_getinfo -
 \f[I]Get info about the login account of a user\f[]
 .PP
@@ -26,11 +29,19 @@ schoolmesh_loginaccounts_getshells -
 schoolmesh_posixaccount_changefullname -
 \f[I]Change full name for a posix account of a user\f[]
 .PP
+schoolmesh_posixaccount_changegroup -
+\f[I]Change the primary group of a user\f[]
+.PP
 schoolmesh_posixaccount_create -
 \f[I]Create a posix account for a user\f[]
 .PP
 schoolmesh_posixaccount_getinfo -
 \f[I]Get info about the posix account of a user\f[]
+.PP
+schoolmesh_posixaccount_quotausercheck -
+\f[I]Check if the quota of a user was exceeded\f[]
+.PP
+schoolmesh_posixaccount_setquota - \f[I]Set the quota of a user\f[]
 .PP
 schoolmesh_posixaccounts_list -
 \f[I]Get a list of posix users belonging to a specified group\f[]

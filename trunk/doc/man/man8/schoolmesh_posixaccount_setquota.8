@@ -1,0 +1,27 @@
+.TH SCHOOLMESH_POSIXACCOUNT_SETQUOTA 8 "October 2009" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_posixaccount_setquota - Set the quota of a user
+.SH SYNOPSIS
+.PP
+schoolmesh_posixaccount_setquota \f[I]username\f[]
+\f[I]soft-blocks-quota\f[] \f[I]hard-blocks-quota\f[]
+\f[I]soft-files-quota\f[] \f[I]hard-files-quota\f[]
+.SH DESCRIPTION
+.PP
+Use this script to set the quota for a user\. Blocks quota are
+expressed in KiB\. The number of files is the number of i-nodes\.
+.SH EXAMPLES
+.PP
+\f[CR]
+      schoolmesh_posixaccount_setquota\ john\ 80000\ 100000\ 5000\ 6000
+\f[]
+.SH BUGS
+.PP
+Probably many\.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>\.
+.SH AUTHOR
+Loris Tissino (loris.tissino@mattiussilab.net)
