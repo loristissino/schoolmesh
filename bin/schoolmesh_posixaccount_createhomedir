@@ -4,6 +4,25 @@ CONFIG_READ=0
 source /var/schoolmesh/config/schoolmesh.rc $@
 if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
 	
+#@ # NAME
+#@
+#@ {} - Create the home directory for a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to create the home directory for a user.
+#@ The home directory will be placed in the directory specified in _schoolmesh.rc_
+#@ and will be named as the username.
+#@ It will be assigned root group owner and 711 permissions.
+#@
+#@ # EXAMPLES
+#@
+#@	{-} john
+
 USERNAME=$1
 HOMEDIR="$POSIX_HOMEDIR_USERS/$USERNAME"
 
