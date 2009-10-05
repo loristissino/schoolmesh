@@ -5,7 +5,8 @@ echo "" > $FILELIST
 
 cd /var/schoolmesh/bin/
 
-for FILE in schoolmesh_*
+# the sed stuff here is because otherwise the order is not ok 
+for FILE in $(ls schoolmesh_*| sed 's/_/0/g' | sort | sed 's/0/_/g')
 	do
 	if grep '^#@' $FILE >/dev/null; then
 	echo "making man page for " $FILE "..."

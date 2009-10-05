@@ -4,6 +4,23 @@ CONFIG_READ=0
 source /var/schoolmesh/config/schoolmesh.rc $@
 if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
 
+#@ # NAME
+#@
+#@ {} - Unlock a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to unlock a user.
+#@
+#@ # EXAMPLES
+#@
+#@	{-} john
+
+
 USERNAME=$1
 
 checkUsername $USERNAME
