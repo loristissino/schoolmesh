@@ -37,13 +37,28 @@ UTILITY LIST
 
        schoolmesh_posixaccount_create - Create a posix account for a user
 
+       schoolmesh_posixaccount_createbasefolder  - Create the basefolder for a
+       user
+
+       schoolmesh_posixaccount_createhomedir - Create the home directory for a
+       user
+
        schoolmesh_posixaccount_getinfo - Get info about the posix account of a
        user
+
+       schoolmesh_posixaccount_lockuser - Lock a user
 
        schoolmesh_posixaccount_quotausercheck - Check if the quota of  a  user
        was exceeded
 
+       schoolmesh_posixaccount_repairbasefolder  -  Repair the basefolder of a
+       user
+
+       schoolmesh_posixaccount_repairhomedir - Repair the basefolder of a user
+
        schoolmesh_posixaccount_setquota - Set the quota of a user
+
+       schoolmesh_posixaccount_unlockuser - Unlock a user
 
        schoolmesh_posixaccounts_list  - Get a list of posix users belonging to
        a specified group
