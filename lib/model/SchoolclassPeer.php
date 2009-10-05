@@ -12,6 +12,10 @@ class SchoolclassPeer extends BaseSchoolclassPeer
 		
 	public static function retrieveCurrentSchoolclasses()
 	{
+		/* FIXME
+			this should return only classes with students currently enrolled...
+		*/
+		
 		$c=new Criteria();
 		$c->addJoin(SchoolclassPeer::TRACK_ID, TrackPeer::ID);
 		$c->addAscendingOrderByColumn(TrackPeer::DESCRIPTION);

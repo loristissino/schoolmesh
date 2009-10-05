@@ -1110,6 +1110,47 @@
         <source>Full view of plans and reports</source>
         <target>Elenco completo di piani di lavoro e relazioni</target>
       </trans-unit>
+      <trans-unit id="305">
+        <source>My classes</source>
+        <target>Le mie classi</target>
+      </trans-unit>
+      <trans-unit id="306">
+        <source>First name</source>
+        <target>Nome</target>
+      </trans-unit>
+      <trans-unit id="307">
+        <source>Last name</source>
+        <target>Cognome</target>
+      </trans-unit>
+      <trans-unit id="308">
+        <source>Number</source>
+        <target>Numero</target>
+      </trans-unit>
+      <trans-unit id="309">
+        <source>Gender</source>
+        <target>Sesso</target>
+      </trans-unit>
+      <trans-unit id="310">
+        <source>Pronunciation</source>
+        <target>Pronuncia</target>
+      </trans-unit>
+      <trans-unit id="311">
+        <source>Classes</source>
+        <target>Classi</target>
+      </trans-unit>
+      <trans-unit id="312">
+        <source>Class %s</source>
+        <target>Classe %s</target>
+      </trans-unit>
+      <trans-unit id="313">
+        <source>Description</source>
+        <target>Descrizione</target>
+      </trans-unit>
+      <trans-unit id="314">
+        <source>[0]no subjects|[1]one subject|(1,+Inf]%1% subjects</source>
+        <target>[0]nessuna materia|[1]una materia|(1,+Inf]%1% materie</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
+

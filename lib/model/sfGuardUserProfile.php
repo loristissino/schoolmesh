@@ -545,9 +545,27 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$c->add(AppointmentPeer::USER_ID, $this->getUserId());
 			$c->add(AppointmentPeer::STATE, Workflow::AP_ASSIGNED, Criteria::GREATER_THAN);
 			$c->add(AppointmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
+			$c->addDescendingOrderByColumn(AppointmentPeer::UPDATED_AT);
+			$c->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID);
 			$t = AppointmentPeer::doSelectJoinAllExceptsfGuardUser($c);
 			return $t;
         }
+		
+        public function getCurrentSchoolclasses()
+        {
+			$appointments=$this->getCurrentAppointments();
+			
+			$schoolclasses=Array();
+			
+			foreach($appointments as $appointment)
+			{
+				@$schoolclasses[$appointment->getSchoolclassId()]++;
+			}
+			
+			return $schoolclasses;
+        }
+		
+		
 
         public function getWorkplans()
         {

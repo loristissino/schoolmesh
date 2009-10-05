@@ -20,7 +20,7 @@ class profileActions extends sfActions
 		$this->profile = $this->getUser()->getProfile();
         $this->name = $this->profile->getFullName();
 		
-        $this->appointments = $this->getUser()->getProfile()->getCurrentAppointments();
+        $this->schoolclasses = $this->getUser()->getProfile()->getCurrentSchoolclasses();
 
         $this->teams=$this->getUser()->getProfile()->getTeams();
 	

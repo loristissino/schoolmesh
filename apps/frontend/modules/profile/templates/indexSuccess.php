@@ -7,7 +7,7 @@
 <?php end_slot() ?>
 
 <h1><?php echo __('%fullname%: my profile', array('%fullname%' => $sf_user->getProfile()->getFullname())) ?></h1>
-
+<?php /*
 <?php if (sizeof($appointments)>0): ?>
 <h2><?php echo __('What I teach') ?></h2>
 <ul class="sf_admin_actions">
@@ -20,8 +20,10 @@
 		</li>
 <?php endforeach ?>
 </ul>
-
 <?php endif ?>
+
+*/ ?>
+
 
 <?php if ($sf_user->hasCredential('planning')): ?>
 <h2><?php echo __('My appointments') ?></h2>
@@ -30,7 +32,26 @@
 </ul>
 <?php endif ?>
 
-<?php if ($sf_user->hasCredential('office')): ?>
+<?php if (sizeof($schoolclasses)>0): ?>
+<h2><?php echo __('My classes') ?></h2>
+<ul class="sf_admin_actions">
+<?php foreach ($schoolclasses as $schoolclass_id => $schoolclass_subjectsnb): ?>
+    <li class="sf_admin_action_users"><?php echo link_to(
+		$schoolclass_id,
+		url_for('schoolclasses/view?id=' . $schoolclass_id)
+		)
+		?>
+		<?php if ($schoolclass_subjectsnb>1): ?>
+			(<strong><?php echo format_number_choice('[0]no subjects|[1]one subject|(1,+Inf]%1% subjects', array('%1%'=>$schoolclass_subjectsnb), $schoolclass_subjectsnb) ?></strong>)
+		<?php endif ?>
+			<br />
+		</li>
+<?php endforeach ?>
+</ul>
+<?php endif ?>
+
+
+<?php if ($sf_user->hasCredential('office') || $sf_user->hasCredential('schoolmasterteam')): ?>
 <h2><?php echo __('Office actions') ?></h2>
 <ul class="sf_admin_actions">
     <li class="sf_admin_action_items"><?php echo link_to('Manage appointments', 'plansandreports/list') ?></li>
