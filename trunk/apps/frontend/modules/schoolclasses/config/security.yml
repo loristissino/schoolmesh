@@ -1,0 +1,3 @@
+default:
+  credentials: [[ planning, schoolmaster, office, admin ]]
+

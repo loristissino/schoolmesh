@@ -28,4 +28,16 @@ class Schoolclass extends BaseSchoolclass
  
   }
 
+	public function getCurrentEnrolments()
+	{
+		
+		$c=new Criteria();
+		$c->add(EnrolmentPeer::SCHOOLCLASS_ID, $this->getId());
+		$c->add(EnrolmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
+		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+		$c->addJoin(EnrolmentPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
+		return EnrolmentPeer::doSelectJoinAll($c);
+	}
+
+
 }
