@@ -401,27 +401,71 @@
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P1"/>
-<text:p text:style-name="P7">ANNO SCOLASTICO 2008/09</text:p>
+<text:p text:style-name="P7">ANNO SCOLASTICO 2009/10</text:p>
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P1"/>
-<text:p text:style-name="P15">Docente:<text:tab/>Prof. Pinco Palla</text:p>
-<text:p text:style-name="P15">Materia:<text:tab/>Insegnamento della Religione Cattolica</text:p>
-<text:p text:style-name="P15">Classe:<text:tab/>1AI</text:p>
-<text:p text:style-name="P16"/>																																<text:p text:style-name="P1"></text:p>
+<text:p text:style-name="P15">Docente:<text:tab/>Prof. Loris Tissino</text:p>
+<text:p text:style-name="P15">Materia:<text:tab/>Laboratorio di informatica gestionale</text:p>
+<text:p text:style-name="P15">Classe:<text:tab/>3AP</text:p>
+<text:p text:style-name="P16"/>						<text:p text:style-name="P9">Livelli di partenza rilevati</text:p>
+			<text:p text:style-name="P17">rth<text:line-break/>thg<text:line-break/>sgsgsdgsdfgs<text:line-break/>dfg<text:line-break/>sdfg</text:p>
+			<text:p text:style-name="P10">(compilato il 06/10/2009)</text:p>
+			<text:p text:style-name="P1" />
+																																<text:p text:style-name="P1"></text:p>
 <text:p text:style-name="P9">Tavola di programmazione della disciplina</text:p>
+	<text:p text:style-name="P17">1. Introduzione alla fotgrsf (settenbrs ottobre)</text:p>
 
 <text:p text:style-name="P16"/> 
 
 <text:p text:style-name="P4"></text:p>
+	<text:p text:style-name="P10">Titolo del modulo</text:p>
+	<text:p text:style-name="P9">Introduzione alla fotgrsf</text:p>
+	<text:p text:style-name="P10">Periodo di svolgimento</text:p>
+	<text:p text:style-name="P9">settenbrs ottobre</text:p>
+	<text:p />
+			<text:p text:style-name="P10">Contenuti</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">fotografia dell&#039;Ottocento</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">sdfasdfasdf</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">sd</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">vasd</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">f</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">asdf</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">asdf</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">asdf</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Conoscenze</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">---</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Abilità</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">---</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Competenze</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">---</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Note e commenti in fase di progettazione</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+			<text:p text:style-name="P10">Note e commenti in fase di relazione finale</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+	<text:p text:style-name="Horizontal_20_Line"/><text:p text:style-name="P16"/> 
 <text:p text:style-name="Standard"/>
 <text:p text:style-name="P9">Metodologia di lavoro</text:p>
 								<text:p text:style-name="P1">
-				▢ 				Lavori di gruppo				</text:p>
-							<text:p text:style-name="P1">
 				▢ 				Ricerche				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Compiti a casa				</text:p>
@@ -433,6 +477,8 @@
 				▢ 				Lezione dialogata				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Problem posing				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Lavori di gruppo				</text:p>
 				<text:p text:style-name="P1" />
 <text:p text:style-name="P9">Tipologia delle verifiche previste</text:p>
 								<text:p text:style-name="P1">
@@ -450,8 +496,6 @@
 				<text:p text:style-name="P1" />
 <text:p text:style-name="P9">Strumenti previsti</text:p>
 								<text:p text:style-name="P1">
-				▢ 				Appunti delle lezioni				</text:p>
-							<text:p text:style-name="P1">
 				▢ 				Lavagna luminosa				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Fotocopie				</text:p>
@@ -467,6 +511,8 @@
 				▢ 				Laboratorio informatico				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Calcolatrice				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Appunti delle lezioni				</text:p>
 				<text:p text:style-name="P1" />
 </office:text>
 </office:body></office:document-content>

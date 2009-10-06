@@ -1,0 +1,46 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Enable/disable the application
+#@
+#@ # SYNOPSIS
+#@
+#@ {} enabled | disabled *environment*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to enable or disable the application.
+#@
+#@ # WARNINGS
+#@ 
+#@ This will delete all the contents of the database. Be sure to make a backup before using it.
+#@
+#@ # EXAMPLES
+#@
+#@	{-} enabled prod 
+#@	{-} disabled prod
+
+STATE=$1
+ENVIR=$2
+
+checkString "$STATE" "state"
+
+checkString "$ENVIR" "environment"
+
+checkOneOf $STATE enabled disabled
+checkOneOf $ENVIR dev prod test
+
+if [[ $STATE = 'enabled' ]]; then
+	NEWSTATE=enable
+else
+	NEWSTATE=disable
+fi
+
+cd /var/schoolmesh
+symfony project:$NEWSTATE frontend $ENVIR
+symfony project:$NEWSTATE backend $ENVIR

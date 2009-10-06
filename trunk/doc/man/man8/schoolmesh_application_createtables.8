@@ -1,0 +1,31 @@
+.TH SCHOOLMESH_APPLICATION_CREATETABLES 8 "October 2009" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_application_createtables - Create empty tables for the
+database
+.SH SYNOPSIS
+.PP
+schoolmesh_application_createtables \f[I]environment\f[]
+.SH DESCRIPTION
+.PP
+Use this script to create empty tables in the database (using the
+schoolmesh symfony-generated script)\.
+.SH WARNINGS
+.PP
+This will delete all the contents of the database\. Be sure to make
+a backup before using it\.
+.SH EXAMPLES
+.PP
+\f[CR]
+      schoolmesh_application_createtables\ prod\ 
+      schoolmesh_application_createtables\ dev
+\f[]
+.SH BUGS
+.PP
+Probably many\.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>\.
+.SH AUTHOR
+Loris Tissino (loris.tissino@mattiussilab.net)
