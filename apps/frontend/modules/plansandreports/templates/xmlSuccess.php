@@ -60,6 +60,7 @@
 	<text:p text:style-name="P9"><?php echo $wpmodule->getPeriod() ?></text:p>
 	<text:p />
 	<?php foreach($wpmodule->getWpitemGroups() as $wpitemgroup): ?>
+	<?php if ($workplan->getState() >= $wpitemgroup->getWpitemType()->getState()): ?>
 		<text:p text:style-name="P10"><?php echo $wpitemgroup->getWpitemType()->getTitle() ?></text:p>
 		<text:list text:style-name="L2">
 		<?php foreach($wpitemgroup->getWpmoduleItems() as $wpmoduleitem): ?>
@@ -67,6 +68,7 @@
 		<?php endforeach ?>
 		</text:list>
 		<text:p/>
+	<?php endif ?>
 	<?php endforeach ?>
 <?php echo Opendocument::html2odtxml('<hr />'); ?>
 <text:p text:style-name="P16"/><?php /* page break */ ?> 

@@ -562,6 +562,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 				@$schoolclasses[$appointment->getSchoolclassId()]++;
 			}
 			
+			ksort($schoolclasses);
 			return $schoolclasses;
         }
 		

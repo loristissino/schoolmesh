@@ -25,11 +25,11 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@	{-} prod 
 #@	{-} dev
 
-ENVIRONMENT=$1
+ENVIR=$1
 
-checkString $ENVIRONMENT "environment"
+checkString $ENVIR "environment"
 
-[[ $ENVIRONMENT = 'prod' ]] || [[ $ENVIRONMENT = 'dev' ]] || [[ $ENVIRONMENT = 'test' ]] || msg_failed "not a valid environment"
+checkOneOf $ENVIR dev prod test
 
 cd /var/schoolmesh
 symfony propel:insert-sql --env=$ENVIRONMENT
