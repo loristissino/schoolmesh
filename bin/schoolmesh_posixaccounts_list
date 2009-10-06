@@ -28,7 +28,7 @@ GROUP=$2
 
 checkString $TYPE "Type"
 
-[[ "$TYPE" = "primary" ]] || [[ $TYPE == "secondary" ]] || [[ "$TYPE" == "all" ]] || msg_failed "not a valid type: $TYPE"
+checkOneOf $TYPE primary secondary all
 
 checkGroup $GROUP
 
