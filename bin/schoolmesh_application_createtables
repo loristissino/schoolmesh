@@ -32,5 +32,5 @@ checkString $ENVIR "environment"
 checkOneOf $ENVIR dev prod test
 
 cd /var/schoolmesh
-symfony propel:insert-sql --env=$ENVIRONMENT
+symfony propel:insert-sql --env=$ENVIR
 

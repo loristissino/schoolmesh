@@ -118,7 +118,8 @@ class Wpinfo extends BaseWpinfo
 						$w=new Hint($item->getContent(), $item->getId());
 						$previous=$w->getContent();
 					}
-				$w->addUsedIn($item->getAppointment());
+					if ($w)
+						$w->addUsedIn($item->getAppointment());
 			}
 		if (isset($w))
 			{
