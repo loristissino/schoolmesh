@@ -59,7 +59,7 @@ cd /var/schoolmesh/doc/pandoc.man
 cat > schoolmesh.8 <<EOT
 % SCHOOLMESH(8) Schoolmesh utilities User Manuals
 % Loris Tissino
-% September 29, 2009
+% $(LANG=C date +'%B %Y')
 
 # NAME
 
@@ -104,6 +104,30 @@ rm $FILELIST
 
 WIKIFILE=/home/loris/Importanti/SchoolMesh/wiki/ManPage.wiki
 
-echo "{{{" > $WIKIFILE
-man schoolmesh | col -b >> $WIKIFILE
-echo "}}}" >> $WIKIFILE
+
+cat > $WIKIFILE <<EOT
+= Man Pages =
+
+These are the man pages for the scripts used by the application and available for command line activities.
+
+EOT
+
+cd /usr/local/share/man
+
+for i in 8
+	do
+		echo "Entering directory man$i"
+		cd man$i
+
+		for FILE in schoolmesh*
+		do
+			CMDNAME=${FILE%.8}
+			echo considering $CMDNAME
+			echo -e "== $CMDNAME ==\n" >> $WIKIFILE
+			echo "{{{" >> $WIKIFILE
+			man $CMDNAME | col -b >> $WIKIFILE
+			echo "}}}" >> $WIKIFILE
+			echo -e "\n\n" >> $WIKIFILE
+		done
+	done
+
