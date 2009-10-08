@@ -327,7 +327,8 @@ $con->query($sql);
 								$checkList->addCheck(new Check(
 								Check::FAILED,
 								'Content cannot be empty',
-								$wpinfotype->getDescription()));
+								$wpinfotype->getDescription(),
+								array('link_to'=>'wpinfo/edit?id=' . $wpinfo->getId())));
 								/*
 								
 										$wpinfotype->getTitle(),
@@ -342,7 +343,8 @@ $con->query($sql);
 									$ckeckList->addCheck(new Check(
 										Check::FAILED,
 										'Content doesn\'t match template',
-										$wpinfotype));
+										$wpinfotype->getDescription(),
+										array('link_to'=>'wpinfo/edit?id=' . $wpinfo->getId())));
 /*										$wpinfotype->getTitle(),
 										array(
 											'link_to'=>'wpinfo/edit?id=' . $wpinfo->getId(),
@@ -395,7 +397,9 @@ $con->query($sql);
 							$checkList->addCheck(new Check(
 								Check::FAILED,
 								'Invalid or duplicate title for module',
-								$groupname));
+								$groupname,
+								array('link_to'=>'wpmodule/view?id=' . $wpmodule->getId())
+								));
 								/*
 									$wpmodule->getTitle(),
 									array(
@@ -416,7 +420,9 @@ $con->query($sql);
 							$checkList->addCheck(new Check(
 								Check::FAILED,
 								'Invalid period specification for module',
-								$groupname));
+								$groupname,
+								array('link_to'=>'wpmodule/view?id=' . $wpmodule->getId())
+								));
 								/*
 									$wpmodule->getTitle(),
 									array(
@@ -492,7 +498,10 @@ $con->query($sql);
 														$checkList->addCheck(new Check(
 															Check::FAILED,
 															'Invalid text',
-															$groupname));
+															$groupname,
+															array('link_to'=>'wpmodule/view?id=' . $wpmodule->getId())
+															
+															));
 															/*
 																array(
 																	'link_to'=>'wpmodule/view?id=' . $wpmodule->getId(),
@@ -509,7 +518,9 @@ $con->query($sql);
 														$checkList->addCheck(new Check(
 															Check::FAILED,
 															'Missing evaluation',
-															$groupname
+															$groupname,
+															array('link_to'=>'wpmodule/view?id=' . $wpmodule->getId())
+
 															));
 															/*
 																array(
@@ -555,7 +566,9 @@ $con->query($sql);
 						$checkList->addCheck(new Check(
 							Check::FAILED,
 							'Missing selection of tools',
-							$type->getDescription()));
+							$type->getDescription(),
+							array('link_to'=>'plansandreports/fill?id=' . $this->getId())
+							));
 							/*
 									array(
 										'link_to'=>'plansandreports/fill?id=' . $this->getId(),
