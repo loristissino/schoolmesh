@@ -5,13 +5,13 @@ list:
   credentials: [[ schoolmaster, office, backadmin ]]
 
 viewwpevents:
-  credential: [[ backadmin ]]
+  credentials: [[ backadmin ]]
 
 addwpevent:
-  credential: [[ backadmin ]]
+  credentials: [[ backadmin ]]
 
 editwpevent:
-  credential: [[ backadmin ]]
+  credentials: [[ backadmin ]]
 
 removewpevent:
-  credential: [[ backadmin ]]
+  credentials: [[ backadmin ]]

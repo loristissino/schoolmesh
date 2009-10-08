@@ -37,6 +37,9 @@
 		<p>
 			<?php echo image_tag($check->getImageTag(), 'title=' . $check->getImageTitle()); ?>
 			<?php echo __($check->getMessage()) ?>
+			<?php if ($check->getLinkTo()): ?>
+				<?php echo link_to(image_tag('fill', array('alt'=>__('Fill'))), $check->getLinkTo(), array('title'=>__('Fill'))) ?>
+			<?php endif ?>
 		</p>
 		<?php endforeach ?>
 		</div>
