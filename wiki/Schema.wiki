@@ -1,0 +1,5 @@
+#summary Schema diagram
+
+= The model schema =
+
+http://schoolmesh.googlecode.com/svn/trunk/graph/propel.schema.png
