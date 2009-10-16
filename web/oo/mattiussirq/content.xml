@@ -408,31 +408,87 @@
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P1"/>
-<text:p text:style-name="P15">Docente:<text:tab/>Prof. Loris Tissino</text:p>
-<text:p text:style-name="P15">Materia:<text:tab/>Laboratorio di informatica gestionale</text:p>
-<text:p text:style-name="P15">Classe:<text:tab/>4APR</text:p>
+<text:p text:style-name="P15">Docente: Prof. Tizio Esempio</text:p>
+<text:p text:style-name="P15">Materia: Economia aziendale</text:p>
+<text:p text:style-name="P15">Classe: 3BIG</text:p>
 <text:p text:style-name="P16"/>						<text:p text:style-name="P9">Livelli di partenza rilevati</text:p>
-			<text:p text:style-name="P17">La classe, composta da 20 allievi, si presenta omogenea dal punto di vista delle capacità e degli interessi verso la disciplina.</text:p>
-			<text:p text:style-name="P10">(compilato il 21/09/2009)</text:p>
+			<text:p text:style-name="P17">In questa prima fase dell’anno scolastico la classe si dimostra attenta e complessivamente disponibile al dialogo educativo. Il lavoro domestico viene svolto con discreta applicazione. L’impatto con una terminologia specifica più rigorosa crea indubbiamente alcune difficoltà sia nella fase di esposizione e rielaborazione dei concetti sia nelle applicazioni pratiche; è auspicabile quindi da parte degli studenti una maggiore responsabilità e autonomia nello studio.</text:p>
+			<text:p text:style-name="P10">(compilato il 09/10/2009)</text:p>
 			<text:p text:style-name="P1" />
-																																<text:p text:style-name="P1"></text:p>
+																		<text:p text:style-name="P9">Valutazione</text:p>
+			<text:p text:style-name="P17">Alla valutazione finale concorreranno: il livello di profitto raggiunto, la partecipazione, l’impegno, la progressione nell’apprendimento, il metodo di studio ed ogni contributo dato alla discussione ed al lavoro collettivo.<text:line-break/>Sarà utilizzata l’intera gamma dei voti a disposizione. Per la corrispondenza dei voti tra livelli di conoscenze, abilità e competenze si farà riferimento a quanto indicato nel POF. I voti assegnati saranno comunicati agli studenti mediante informazioni verbali e/o scritte.</text:p>
+			<text:p text:style-name="P10">(compilato il 09/10/2009)</text:p>
+			<text:p text:style-name="P1" />
+										<text:p text:style-name="P9">Prove di verifica sommative</text:p>
+			<text:p text:style-name="P17">Primo periodo: scritte 2; orali 2; pratiche 0.<text:line-break/>Secondo periodo: scritte 3; orali 2; pratiche 0.</text:p>
+			<text:p text:style-name="P10">(compilato il 09/10/2009)</text:p>
+			<text:p text:style-name="P1" />
+										<text:p text:style-name="P9">Recupero programmato</text:p>
+			<text:p text:style-name="P17">Gli interventi finalizzati al recupero delle conoscenze pregresse saranno quantificati in base alle difficoltà incontrate dagli alunni. Il recupero avverrà prevalentemente in itinere, rivedendo gli argomenti già proposti, puntualizzando concetti e modalità operative. Nei casi più gravi si farà ricorso allo “Sportello aperto” oppure saranno attivati “Corsi di recupero”.</text:p>
+			<text:p text:style-name="P10">(compilato il 09/10/2009)</text:p>
+			<text:p text:style-name="P1" />
+															<text:p text:style-name="P1"></text:p>
 <text:p text:style-name="P9">Tavola di programmazione della disciplina</text:p>
-	<text:p text:style-name="P17">1. fgdfg (dfgsdfg)</text:p>
+	<text:p text:style-name="P17">1. Imposta sul Valore Aggiunto (settembre - ottobre)</text:p>
+	<text:p text:style-name="P17">2. --- (---)</text:p>
 
 <text:p text:style-name="P16"/> 
 
 <text:p text:style-name="P4"></text:p>
 	<text:p text:style-name="P10">Titolo del modulo</text:p>
-	<text:p text:style-name="P9">fgdfg</text:p>
+	<text:p text:style-name="P9">Imposta sul Valore Aggiunto</text:p>
 	<text:p text:style-name="P10">Periodo di svolgimento</text:p>
-	<text:p text:style-name="P9">dfgsdfg</text:p>
+	<text:p text:style-name="P9">settembre - ottobre</text:p>
 	<text:p />
 				<text:p text:style-name="P10">Contenuti</text:p>
 		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">prova con una cosa <text:span text:style-name="T3">enfatizzata</text:span> e una in grassetto.</text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">x<text:span text:style-name="T5">3</text:span></text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">a<text:span text:style-name="T6">i</text:span></text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">sdfgsdfg</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">L’IVA: caratteri generali</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Presupposti dell’imposta</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Classificazione delle operazioni</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">La base imponibile e le aliquote</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">La fattura immediata, differita, il documento di trasporto</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Note di variazione</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Volume d’affari</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Registrazione, liquidazione periodica, e versamenti dell’imposta</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+					<text:p text:style-name="P10">Conoscenze</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">Classificazione delle operazioni ai fini dell’imposta sul valore aggiunto</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Classificazione dei soggetti IVA e degli obblighi posti a carico di ciascuna categoria di contribuenti</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Individuazione degli elementi che compongono l’imponibile e di quelli che non vi rientrano</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Conoscenza degli obblighi e delle modalità di registrazione e di liquidazione dell’imposta e del relativo versamento</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+					<text:p text:style-name="P10">Abilità</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">Riconoscere le operazioni imponibili da quelle non imponibili, esenti ed escluse</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Determinare la base imponibile di una      fattura</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Compilare documenti di vendita</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Annotare i documenti di acquisto e di      vendita nei registri IVA  Liquidare l’imposta</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+					<text:p text:style-name="P10">Competenze</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">Analizzare i presupposti dell’IVA e i suoi ambiti di applicazione</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+					<text:p text:style-name="P10">Note e commenti in fase di progettazione</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+				<text:p text:style-name="Horizontal_20_Line"/><text:p text:style-name="P16"/> 
+	<text:p text:style-name="P10">Titolo del modulo</text:p>
+	<text:p text:style-name="P9">---</text:p>
+	<text:p text:style-name="P10">Periodo di svolgimento</text:p>
+	<text:p text:style-name="P9">---</text:p>
+	<text:p />
+				<text:p text:style-name="P10">Contenuti</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">Le stagioni: 1 - la primavera</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Le stagioni: 2 - l&#039;estate</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Le stagioni: 3 - l&#039;autunno</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Le stagioni: 4 - l&#039;inverno</text:p></text:list-item>
 				</text:list>
 		<text:p/>
 					<text:p text:style-name="P10">Conoscenze</text:p>
@@ -464,17 +520,17 @@
 							<text:p text:style-name="P1">
 				▢ 				Problem posing				</text:p>
 							<text:p text:style-name="P1">
-				▢ 				Lavori di gruppo				</text:p>
+				▣ 				Lavori di gruppo				</text:p>
 							<text:p text:style-name="P1">
-				▢ 				Ricerche				</text:p>
+				▣ 				Ricerche				</text:p>
 							<text:p text:style-name="P1">
-				▢ 				Compiti a casa				</text:p>
+				▣ 				Compiti a casa				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Lezione frontale				</text:p>
 				<text:p text:style-name="P1" />
 <text:p text:style-name="P9">Tipologia delle verifiche previste</text:p>
 								<text:p text:style-name="P1">
-				▢ 				Domande aperte				</text:p>
+				▣ 				Domande aperte				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Test				</text:p>
 							<text:p text:style-name="P1">
@@ -482,9 +538,9 @@
 							<text:p text:style-name="P1">
 				▢ 				Domande alla classe				</text:p>
 							<text:p text:style-name="P1">
-				▢ 				Relazioni scritte e orali				</text:p>
+				▣ 				Relazioni scritte e orali				</text:p>
 							<text:p text:style-name="P1">
-				▢ 				Interrogazione				</text:p>
+				▣ 				Interrogazione				</text:p>
 				<text:p text:style-name="P1" />
 <text:p text:style-name="P9">Strumenti previsti</text:p>
 								<text:p text:style-name="P1">

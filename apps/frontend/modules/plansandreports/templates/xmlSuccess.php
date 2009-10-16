@@ -30,9 +30,9 @@
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P1"/>
-<text:p text:style-name="P15"><?php echo __('Teacher') ?>:<text:tab/><?php echo format_number_choice(__('[0]Ms %s|[1]Mr %s'), array('%s'=>$workplan->getFullname()), $workplan->getSfGuardUser()->getProfile()->getIsMale()) ?></text:p>
-<text:p text:style-name="P15"><?php echo __('Subject') ?>:<text:tab/><?php echo $workplan->getSubject() ?></text:p>
-<text:p text:style-name="P15"><?php echo __('Class') ?>:<text:tab/><?php echo $workplan->getSchoolclass() ?></text:p>
+<text:p text:style-name="P15"><?php echo __('Teacher') ?>: <?php echo format_number_choice(__('[0]Ms %s|[1]Mr %s'), array('%s'=>$workplan->getFullname()), $workplan->getSfGuardUser()->getProfile()->getIsMale()) ?></text:p>
+<text:p text:style-name="P15"><?php echo __('Subject') ?>: <?php echo $workplan->getSubject() ?></text:p>
+<text:p text:style-name="P15"><?php echo __('Class') ?>: <?php echo $workplan->getSchoolclass() ?></text:p>
 <text:p text:style-name="P16"/><?php /* page break */ ?>
 <?php foreach($workplan->getWpinfos() as $wpinfo): ?>
 	<?php if($workplan->getState()>=$wpinfo->getWpinfoType()->getState()): ?>

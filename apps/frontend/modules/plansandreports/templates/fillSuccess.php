@@ -19,7 +19,7 @@
 <hr />
 
 <a name="info"></a>
-<h2><?php echo __('Details, comments, general information') ?></h2>
+<h2><?php echo __('General information') ?></h2>
 <!--<div id="sf_admin_container">-->
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
