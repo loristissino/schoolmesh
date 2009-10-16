@@ -296,6 +296,7 @@ if (isset($content['workplan_report']['tools']))
 		$c= new Criteria();
 		$c->addJoin(AppointmentPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
 		$c->addJoin(AppointmentPeer::SUBJECT_ID, SubjectPeer::ID);
+		$c->add(AppointmentPeer::YEAR_ID, $year);
 		
 		switch($sortby)
 		{

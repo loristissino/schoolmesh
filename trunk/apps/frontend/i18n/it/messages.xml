@@ -295,8 +295,8 @@
         <target>(Indicazione realizzazione: %d)</target>
       </trans-unit>
       <trans-unit id="97">
-        <source>Details, comments, general information</source>
-        <target>Dettagli, commenti, informazioni generali</target>
+        <source>General information</source>
+        <target>Parte generale</target>
       </trans-unit>
       <trans-unit id="98">
         <source>Aux</source>
@@ -1150,7 +1150,46 @@
         <source>[0]no subjects|[1]one subject|(1,+Inf]%1% subjects</source>
         <target>[0]nessuna materia|[1]una materia|(1,+Inf]%1% materie</target>
       </trans-unit>
+      <trans-unit id="315">
+        <source>[0]No result found.|[1]One result found.|(1,+Inf]%1% results found.</source>
+        <target>[0]Nessun risultato trovato.|[1]Un risultato trovato.|(1,+Inf]%1% risultati trovati.</target>
+      </trans-unit>
+      <trans-unit id="316">
+        <source>Displaying results %d to %d.</source>
+        <target>Visualizzazione dei risultati da %d a %d.</target>
+      </trans-unit>
+      <trans-unit id="317">
+        <source>Workplans and reports' monitoring</source>
+        <target>Monitoraggio di piani di lavoro e relazioni finali</target>
+      </trans-unit>
+      <trans-unit id="318">
+        <source>Monitoring</source>
+        <target>Monitoraggio</target>
+      </trans-unit>
+      <trans-unit id="319">
+        <source>Approve</source>
+        <target>Approva</target>
+      </trans-unit>
+	  <trans-unit id="320">
+        <source>Reject</source>
+        <target>Respingi</target>
+      </trans-unit>
+	  <trans-unit id="321">
+        <source>Confirm appointment</source>
+        <target>Conferma incarico</target>
+      </trans-unit>
+	  <trans-unit id="322">
+        <source>Approve workplan</source>
+        <target>Approva piano di lavoro</target>
+      </trans-unit>
+	  <trans-unit id="323">
+        <source>Reject workplan</source>
+        <target>Rifiuta piano di lavoro</target>
+      </trans-unit>
+	  <trans-unit id="324">
+        <source>View events</source>
+        <target>Visualizza eventi</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
-
