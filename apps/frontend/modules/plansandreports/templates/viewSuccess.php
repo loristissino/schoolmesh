@@ -10,7 +10,7 @@
 
 <?php include_partial('basicinfo', array('workplan' => $workplan, 'steps' =>$steps)) ?>
 
-<h2><?php echo __('Details, comments, general information') ?></h2>
+<h2><?php echo __('General information') ?></h2>
 
 <?php include_partial('infos_shown', array('wpinfos' => $wpinfos, 'state'=>$workplan->getState())) ?>
 

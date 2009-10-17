@@ -43,6 +43,13 @@
 				'plansandreports/viewwpevents?id=' . $workplan->getId() . '&page=' . $page)
 				?>
 				</li>
+				<li class="sf_admin_action_edit">
+					<?php echo link_to(
+				__('Edit'),
+				'plansandreports/fill?id=' . $workplan->getId() . '&page=' . $page)
+				?>
+				</li>
+				
 			<?php endif ?>
 			</ul>
 			

@@ -8,7 +8,7 @@ all:
     webmaster:      loris.tissino@mattiussilab.net
     
   config:
-    current_year:   2008  # only the first of the two years of a scholastic/academic year
+    current_year:   2009 # only the first of the two years of a scholastic/academic year
     culture: it
     base_url: 'https://localhost/schoolmesh'
     users_max_per_page: 100

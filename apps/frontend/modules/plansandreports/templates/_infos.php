@@ -29,7 +29,7 @@
 	<?php echo  html_entity_decode($wpinfo->getContent()) ?></td>
       <td>
 		<ul class="sf_admin_td_actions">
-			<?php if ($wpinfo->getWpinfoType()->getState()==$state): ?>
+			<?php if ($wpinfo->getWpinfoType()->getState()==$state || $sf_user->hasCredential('backadmin')): ?>
 			<li class="sf_admin_action_<?php echo $wpinfo->getWpinfoType()->getIsRequired()? 'fill':'optional'; ?>">
 				<?php echo link_to(
 				__('Fill'),

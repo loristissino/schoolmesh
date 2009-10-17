@@ -37,9 +37,9 @@ class WpmoduleMapBuilder implements MapBuilder {
 
 		$tMap->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', false, null);
 
-		$tMap->addColumn('TITLE', 'Title', 'VARCHAR', false, 100);
+		$tMap->addColumn('TITLE', 'Title', 'VARCHAR', false, 255);
 
-		$tMap->addColumn('PERIOD', 'Period', 'VARCHAR', false, 100);
+		$tMap->addColumn('PERIOD', 'Period', 'VARCHAR', false, 255);
 
 		$tMap->addColumn('HOURS_ESTIMATED', 'HoursEstimated', 'INTEGER', false, null);
 
