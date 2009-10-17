@@ -29,8 +29,8 @@ class BaseWpmoduleForm extends BaseFormPropel
     $this->setValidators(array(
       'id'              => new sfValidatorPropelChoice(array('model' => 'Wpmodule', 'column' => 'id', 'required' => false)),
       'user_id'         => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id', 'required' => false)),
-      'title'           => new sfValidatorString(array('max_length' => 100, 'required' => false)),
-      'period'          => new sfValidatorString(array('max_length' => 100, 'required' => false)),
+      'title'           => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'period'          => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'hours_estimated' => new sfValidatorInteger(array('required' => false)),
       'hours_used'      => new sfValidatorInteger(array('required' => false)),
       'appointment_id'  => new sfValidatorPropelChoice(array('model' => 'Appointment', 'column' => 'id', 'required' => false)),

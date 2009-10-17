@@ -33,10 +33,12 @@ class Wpinfo extends BaseWpinfo
 			return preg_match($template, $content);
 		}
 	
-	public function setCheckedContent($user_id, $v)
+	public function setCheckedContent($user, $v)
 	{
 		
-		if ($this->getAppointment()->getState()!=$this->getWpinfoType()->getState())
+		$user_id=$user->getProfile()->getSfGuardUser()->getId();
+		
+		if ($this->getAppointment()->getState()!=$this->getWpinfoType()->getState() && !($user->hasCredential('backadmin')))
 		{
 					$result['result']='error_info';
 					$result['message']='This content is not editable in this state.';
@@ -44,7 +46,7 @@ class Wpinfo extends BaseWpinfo
 		}
 		
 
-		if ($this->getAppointment()->getUserId()!=$user_id)
+		if ($this->getAppointment()->getUserId()!=$user_id && !($user->hasCredential('backadmin')))
 		{
 					$result['result']='error_info';
 					$result['message']='This content is editable only by the owner';

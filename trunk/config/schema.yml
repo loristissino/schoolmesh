@@ -222,8 +222,8 @@ propel:
   wpmodule:
     id:         ~
     user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: cascade, onUpdate: cascade }
-    title:        varchar(100)
-    period:       varchar(100)
+    title:        varchar(255)
+    period:       varchar(255)
     hours_estimated:    { type:  integer, default: 0 }
     hours_used:     { type:  integer, default: 0 }
     appointment_id:   

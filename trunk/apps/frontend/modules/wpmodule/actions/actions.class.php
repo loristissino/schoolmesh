@@ -198,10 +198,13 @@ class wpmoduleActions extends sfActions
   {
     $this->wpmodule = WpmodulePeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->wpmodule);
+	$this->user=$this->getUser();
+
 
 	$this->owner=$this->wpmodule->getOwner();;
 		
-    $this->forward404Unless($this->owner->getUserId()==$this->getUser()->getProfile()->getSfGuardUser()->getId());
+    $this->forward404Unless($this->owner->getUserId()==$this->getUser()->getProfile()->getSfGuardUser()->getId()
+		|| $this->user->hasCredential('backadmin'));
 
 	$this->workplan = $this->wpmodule->getAppointment();
 	$this->wpstate = $this->workplan->getState();

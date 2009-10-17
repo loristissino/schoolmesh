@@ -34,8 +34,12 @@ class wpinfoActions extends sfActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($this->wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
+	
+	$this->user=$this->getUser();
 
-	$this->forward404Unless($this->wpinfo->getAppointment()->getUserId()==$this->getUser()->getProfile()->getSfGuardUser()->getId());
+
+	$this->forward404Unless($this->wpinfo->getAppointment()->getUserId()==$this->getUser()->getProfile()->getSfGuardUser()->getId()
+		|| $this->user->hasCredential('backadmin'));
 
 
 	if($request->getParameter('flash'))
@@ -58,7 +62,7 @@ class wpinfoActions extends sfActions
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
     $this->forward404Unless($wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
 
-    $result=$wpinfo->setCheckedContent($this->getUser()->getProfile()->getSfGuardUser()->getId(), $request->getParameter('value'));
+    $result=$wpinfo->setCheckedContent($this->getUser(), $request->getParameter('value'));
 
 	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 

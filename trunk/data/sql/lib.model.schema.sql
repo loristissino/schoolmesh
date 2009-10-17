@@ -552,8 +552,8 @@ CREATE TABLE `wpmodule`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`user_id` INTEGER,
-	`title` VARCHAR(100),
-	`period` VARCHAR(100),
+	`title` VARCHAR(255),
+	`period` VARCHAR(255),
 	`hours_estimated` INTEGER default 0,
 	`hours_used` INTEGER default 0,
 	`appointment_id` INTEGER,
