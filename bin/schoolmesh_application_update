@@ -43,43 +43,58 @@ FILELIST="config/databases.yml config/schoolmesh.rc apps/frontend/config/app.yml
 sudo mkdir $BACKUPDIR
 sudo mkdir -p $BACKUPDIR/{config,apps/frontend/config,apps/backend/config}
 
-msg_ok "Starting backup of configuration files..."
+echo -n "Starting backup of configuration files... "
 
 for FILE in $FILELIST
 	do
 		sudo cp -v $FILE "$BACKUPDIR/$FILE" || msg_failed "File $FILE not found"
 	done
 
-msg_ok "Starting svn update..."
+msg_ok "done."
+
+echo -n "Starting svn update... "
 
 svn update --accept theirs-full --non-interactive
 
-msg_ok "Restoring configuration files..."
+msg_ok "done."
+
+echo -n "Restoring configuration files... "
 for FILE in $FILELIST
 	do
 		sudo cp -v "$BACKUPDIR/$FILE" $FILE || msg_failed "File $FILE not found"
 	done
 
-msg_ok "Setting correct owner..."
-sudo chown -R www-data:adm $SCHOOLMESHDIR
-msg_ok "Applying correct permissions to files..."
-sudo find $SCHOOLMESHDIR -type f -exec chmod 660 {} \;
-msg_ok "Applying correct permissions to directories..."
-sudo find $SCHOOLMESHDIR -type d -exec chmod 770 {} \;
+msg_ok "done."
 
-msg_ok "Cleaning the cache..."
+echo -n "Setting correct owner... "
+sudo find $SCHOOLMESHDIR ! -owner www-data -exec chown -R www-data:adm {} \;
+msg_ok "done."
+
+echo -n "Applying correct permissions to files... "
+sudo find $SCHOOLMESHDIR -type f ! -perm 660 -exec chmod 660 {} \;
+msg_ok "done."
+
+echo -n "Applying correct permissions to directories... "
+sudo find $SCHOOLMESHDIR -type d ! -perm 770 -exec chmod 770 {} \;
+msg_ok "done."
+
+
+echo -n "Cleaning the cache... "
 sudo -u www-data symfony cc
+msg_ok "done."
 
-msg_ok "Copying man pages..."
+echo -n "Copying man pages... "
 for i in 1 8
   do
     sudo cp -v doc/man/man$i/* /usr/local/share/man/man$i/ 2>/dev/null
 	sudo chmod +r /usr/local/share/man/man$i/*
   done
+msg_ok "done."
 
-msg_ok  "Copying scripts..."
+echo -n "Copying scripts... "
 sudo cp  bin/schoolmesh* /usr/local/bin
 sudo chown root:root /usr/local/bin/schoolmesh*
 sudo chmod 755 /usr/local/bin/schoolmesh*
 
+msg_ok "done."
 

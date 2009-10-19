@@ -810,6 +810,7 @@ public function getWorkflowLogs()
 	{
 	$data['workplan_report']['id']=$this->getId();
 	$data['workplan_report']['year']=$this->getYear()->getDescription();
+	$data['workplan_report']['hours']=$this->getHours();
 	$data['workplan_report']['teacher']['firstname']=$this->getFirstName();
 	$data['workplan_report']['teacher']['lastname']=$this->getLastName();
 	$data['workplan_report']['teacher']['id']=$this->getUserId();
@@ -843,6 +844,7 @@ public function getWorkflowLogs()
 			foreach($modules as $wpmodule)
 				{
 					$data['workplan_report']['modules'][$wpmodule->getTitle()]['period']=$wpmodule->getPeriod();
+					$data['workplan_report']['modules'][$wpmodule->getTitle()]['hours_estimated']=$wpmodule->getHoursEstimated();
 					$data['workplan_report']['modules'][$wpmodule->getTitle()]['details']=Array();
 					$wpItemGroups=$wpmodule->getWpItemGroups();
 					if (@sizeof($wpItemGroups)>0)

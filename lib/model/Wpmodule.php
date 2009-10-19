@@ -8,8 +8,6 @@ class Wpmodule extends BaseWpmodule
 	{
 	/* FIXME: I should check if this is invoked by the owner */
 
-
-
 	  if (!$this->getIsDeletable())
 		{
 			return false;
