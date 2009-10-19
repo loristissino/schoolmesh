@@ -54,7 +54,7 @@
 <?php if ($sf_user->hasCredential('office') || $sf_user->hasCredential('schoolmasterteam')): ?>
 <h2><?php echo __('Office actions') ?></h2>
 <ul class="sf_admin_actions">
-    <li class="sf_admin_action_items"><?php echo link_to('Manage appointments', 'plansandreports/list') ?></li>
+    <li class="sf_admin_action_items"><?php echo link_to(__('Manage appointments'), 'plansandreports/list') ?></li>
 </ul>
 <?php endif ?>
 

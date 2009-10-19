@@ -1186,9 +1186,17 @@
         <source>Reject workplan</source>
         <target>Rifiuta piano di lavoro</target>
       </trans-unit>
-	  <trans-unit id="324">
+      <trans-unit id="324">
         <source>View events</source>
         <target>Visualizza eventi</target>
+      </trans-unit>
+      <trans-unit id="325">
+        <source>Office actions</source>
+        <target>Attività della segreteria</target>
+      </trans-unit>
+      <trans-unit id="326">
+        <source>Manage appointments</source>
+        <target>Gestione incarichi docenti</target>
       </trans-unit>
     </body>
   </file>
