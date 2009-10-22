@@ -173,7 +173,7 @@ class Appointment extends BaseAppointment
 		
 	}
 
-	protected function markSubItems($newstate, $con=null)
+	public function markSubItems($newstate, $con=null)
 	{
 		$con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
 	 

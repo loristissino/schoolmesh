@@ -8,5 +8,8 @@ class ProjectConfiguration extends sfProjectConfiguration
   public function setup()
   {
     $this->enableAllPluginsExcept(array('sfDoctrinePlugin', 'sfCompat10Plugin'));
+	
+$this->getEventDispatcher()->connect('application.log', array('sfGuardUserProfilePeer', 'GotALoginLogout'));
+	
   }
 }

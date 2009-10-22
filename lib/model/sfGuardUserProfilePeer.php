@@ -384,6 +384,22 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		
 	}
 
+	public static function GotALoginLogout(sfEvent $event)
+	{
+		
+		$parameters=$event->getParameters();
+		if (preg_match('/authenticated/', $parameters[0]))
+		{
+			ob_start();
+			print_r($parameters);
+			print_r($event->getSubject()->getAttributeHolder());
+			$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
+		}
+		
+
+		
+	}
+
 /*
 	public static function createMissingAccounts($availableAccounts)
 	{

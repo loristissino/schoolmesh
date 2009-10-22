@@ -13,15 +13,53 @@ class plansandreportsActions extends sfActions
 	
   public function executeReject(sfWebRequest $request)
   {
-    $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
-    $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
-	$page=$request->getParameter('page', 1);
+//    $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
+    $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+	$this->page=$request->getParameter('page', 1);
+	
+	$steps=Workflow::getWpFrSteps();
+	$message=SystemMessagePeer::retrieveByKey($steps[$this->workplan->getState()]['actions']['reject']['logMessageCode']);
+	
+	$this->form = new EditWpRejectForm();
+	
+	if ($request->isMethod('post'))
+		{
+			$this->form->bind($request->getParameter('info'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				
+				$result=$this->event->modifyWpevent($params['user'], $params['date'], $params['comment'], $params['state'], $params['update_state']);
+				
+				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+				
+				if ($result['result']=='notice')
+				{
+					$this->redirect('plansandreports/viewwpevents?id='. $this->event->getAppointmentId());
+				}
+				else
+				{
+					$this->redirect('plansandreports/editwpevent?id='. $this->event->getId());
+				}
 
+			}
+		}
+
+	$this->form->setDefaults(
+		array(
+			'comment' => $message->getContent()
+			)
+	);
+
+/*
 	$result = $workplan->Reject($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions());
 
 	$this->getUser()->setFlash($result['result'], $result['message']);
 
 	$this->redirect('plansandreports/list?page=' . $page);
+*/
+
+
 
   }
 
