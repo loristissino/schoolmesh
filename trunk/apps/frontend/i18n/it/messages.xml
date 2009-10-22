@@ -1198,6 +1198,39 @@
         <source>Manage appointments</source>
         <target>Gestione incarichi docenti</target>
       </trans-unit>
+      <trans-unit id="326">
+        <source>Schoolmaster's actions</source>
+        <target>Attività del Dirigente Scolastico</target>
+      </trans-unit>
+      <trans-unit id="327">
+        <source>Accounts</source>
+        <target>Account</target>
+      </trans-unit>
+      <trans-unit id="328">
+        <source>SchoolMesh main account</source>
+        <target>Account principale dell'applicazione SchoolMesh</target>
+      </trans-unit>
+      <trans-unit id="329">
+        <source>Change password</source>
+        <target>Modifica password</target>
+      </trans-unit>
+      <trans-unit id="330">
+        <source>Password</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id="331">
+        <source>Password again</source>
+        <target>Password (ripeti)</target>
+      </trans-unit>
+      <trans-unit id="332">
+        <source>Comment</source>
+        <target>Commento</target>
+      </trans-unit>
+      <trans-unit id="333">
+        <source>Reject document</source>
+        <target>Respingi documento</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
+

@@ -251,7 +251,7 @@ $con->query($sql);
 
 	}
 
-	public function Reject($user_id, $permissions)
+	public function Reject($user_id, $permissions, $comment='')
 	{
 		
 	$result=Array();
@@ -279,10 +279,17 @@ $con->query($sql);
 		if($steps[$this->getState()]['actions']['reject']['submitExtraAction']!='')
 			$this->$steps[$this->getState()]['actions']['reject']['submitExtraAction']($steps[$this->getState()]['actions']['reject']['submitExtraParameters'], $con);
 		
-		$message=$steps[$this->getState()]['actions']['reject']['submitDoneAction'];
+		if ($comment=='')
+		{
+			$message=$steps[$this->getState()]['actions']['reject']['submitDoneAction'];
+		}
+		else
+		{
+			$message=$comment;
+		}
 		// we need to save the message before adding a line in the log...
 		
-		$this->addEvent($user_id, $steps[$this->getState()]['actions']['reject']['submitDoneAction'], $steps[$this->getState()]['actions']['reject']['submitNextState']);
+		$this->addEvent($user_id, $message, $steps[$this->getState()]['actions']['reject']['submitNextState']);
 
 		$con->commit();
 		

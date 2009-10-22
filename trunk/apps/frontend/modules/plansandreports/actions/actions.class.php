@@ -29,17 +29,17 @@ class plansandreportsActions extends sfActions
 			{
 				$params = $this->form->getValues();
 				
-				$result=$this->event->modifyWpevent($params['user'], $params['date'], $params['comment'], $params['state'], $params['update_state']);
+				$result=$this->workplan->Reject($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions(), $params['comment']);
 				
 				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 				
 				if ($result['result']=='notice')
 				{
-					$this->redirect('plansandreports/viewwpevents?id='. $this->event->getAppointmentId());
+					$this->redirect('plansandreports/list?page='. $this->page);
 				}
 				else
 				{
-					$this->redirect('plansandreports/editwpevent?id='. $this->event->getId());
+					$this->redirect('plansandreports/reject?id='. $this->workplan->getId() . '&page=' . $this->page);
 				}
 
 			}

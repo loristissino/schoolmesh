@@ -6,7 +6,7 @@
 <?php slot('breadcrumbs', 'TODO'
 	)
 	
-	?><h1><?php echo __('Reject Appointment')?></h1>
+	?><h1><?php echo __('Reject document')?></h1>
 
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>

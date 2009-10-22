@@ -51,12 +51,22 @@
 <?php endif ?>
 
 
-<?php if ($sf_user->hasCredential('office') || $sf_user->hasCredential('schoolmasterteam')): ?>
+<?php if ($sf_user->hasCredential('office')): ?>
 <h2><?php echo __('Office actions') ?></h2>
 <ul class="sf_admin_actions">
     <li class="sf_admin_action_items"><?php echo link_to(__('Manage appointments'), 'plansandreports/list') ?></li>
 </ul>
 <?php endif ?>
+
+<?php if ($sf_user->hasCredential('schoolmaster')): ?>
+<h2><?php echo __("Schoolmaster's actions") ?></h2>
+<ul class="sf_admin_actions">
+    <li class="sf_admin_action_items"><?php echo link_to(__('Manage appointments'), 'plansandreports/list') ?></li>
+</ul>
+<?php endif ?>
+
+
+
 
 <?php if (sizeof($teams)>0): ?>
 
@@ -69,13 +79,12 @@
 </ul>
 <?php endif ?>
 
-<h2><?php echo __('Actions') ?></h2>
-
-<ul class="sf_admin_actions">
 <?php if ($sf_user->hasCredential('admin')): ?>
+<h2><?php echo __('Actions') ?></h2>
+<ul class="sf_admin_actions">
 	<li class="sf_admin_action_users"><?php echo link_to(__('Manage users'), url_for('users')) ?></li><br />
-<?php endif ?>
 </ul>
+<?php endif ?>
 
 <h2><?php echo __('Accounts') ?></h2>
 
