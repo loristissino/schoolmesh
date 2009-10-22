@@ -30,8 +30,8 @@
 				<li class="sf_admin_action_reject">
 					<?php echo link_to(
 				__('Reject'),
-				'plansandreports/reject?id=' . $workplan->getId(). '&page=' . $page, 
-				array('method' => 'post', 'title' => __($steps[$workplan->getState()]['actions']['reject']['submitDisplayedAction']))
+				'plansandreports/reject?id=' . $workplan->getId(). '&page=' . $page,
+				array('title' => __($steps[$workplan->getState()]['actions']['reject']['submitDisplayedAction']))
 				)?>
 				</li>
 			<?php endif ?>

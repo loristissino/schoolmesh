@@ -19,6 +19,19 @@ class Wpevent extends BaseWpevent
 			if ($update_state)
 			{
 				$this->getAppointment()->setState($state)->save();
+				
+				if ($state==Workflow::WP_DRAFT)
+				{
+					$this->getAppointment()->markSubItems(true);
+				}
+				if ($state==Workflow::WP_DRAFT)
+				{
+					$this->getAppointment()->markSubItems(true);
+				}
+				if ($state==Workflow::IR_DRAFT)
+				{
+					$this->getAppointment()->markSubItems(false);
+				}
 			}
 			
 			$result['result']='notice';
