@@ -39,6 +39,8 @@ propel:
     import_code:  varchar(20)
     system_alerts: varchar(255)
     is_scheduled_for_deletion: { type: boolean, default: false }
+    last_action_at: timestamp
+    last_login_at: timestamp
 
 # notes about Google Apps accounts:
 #
@@ -284,7 +286,7 @@ propel:
     created_at: 
     updated_at:
     is_online: { type: boolean, required: true, default: 0 }
-
+    os_used: varchar(100)
 
   service:
     id:

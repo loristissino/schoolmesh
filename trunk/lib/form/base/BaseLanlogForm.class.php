@@ -19,6 +19,7 @@ class BaseLanlogForm extends BaseFormPropel
       'created_at'     => new sfWidgetFormDateTime(),
       'updated_at'     => new sfWidgetFormDateTime(),
       'is_online'      => new sfWidgetFormInputCheckbox(),
+      'os_used'        => new sfWidgetFormInput(),
     ));
 
     $this->setValidators(array(
@@ -28,6 +29,7 @@ class BaseLanlogForm extends BaseFormPropel
       'created_at'     => new sfValidatorDateTime(array('required' => false)),
       'updated_at'     => new sfValidatorDateTime(array('required' => false)),
       'is_online'      => new sfValidatorBoolean(),
+      'os_used'        => new sfValidatorString(array('max_length' => 100, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('lanlog[%s]');

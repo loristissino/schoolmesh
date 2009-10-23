@@ -96,6 +96,8 @@ CREATE TABLE `sf_guard_user_profile`
 	`import_code` VARCHAR(20),
 	`system_alerts` VARCHAR(255),
 	`is_scheduled_for_deletion` TINYINT default 0,
+	`last_action_at` DATETIME,
+	`last_login_at` DATETIME,
 	PRIMARY KEY (`user_id`),
 	CONSTRAINT `sf_guard_user_profile_FK_1`
 		FOREIGN KEY (`user_id`)
@@ -702,6 +704,7 @@ CREATE TABLE `lanlog`
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	`is_online` TINYINT default 0 NOT NULL,
+	`os_used` VARCHAR(100),
 	PRIMARY KEY (`id`),
 	INDEX `lanlog_FI_1` (`user_id`),
 	CONSTRAINT `lanlog_FK_1`

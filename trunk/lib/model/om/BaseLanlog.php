@@ -28,6 +28,9 @@ abstract class BaseLanlog extends BaseObject  implements Persistent {
 	protected $is_online;
 
 	
+	protected $os_used;
+
+	
 	protected $asfGuardUser;
 
 	
@@ -128,6 +131,12 @@ abstract class BaseLanlog extends BaseObject  implements Persistent {
 	public function getIsOnline()
 	{
 		return $this->is_online;
+	}
+
+	
+	public function getOsUsed()
+	{
+		return $this->os_used;
 	}
 
 	
@@ -259,6 +268,20 @@ abstract class BaseLanlog extends BaseObject  implements Persistent {
 		return $this;
 	} 
 	
+	public function setOsUsed($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->os_used !== $v) {
+			$this->os_used = $v;
+			$this->modifiedColumns[] = LanlogPeer::OS_USED;
+		}
+
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array(LanlogPeer::IS_ONLINE))) {
@@ -282,6 +305,7 @@ abstract class BaseLanlog extends BaseObject  implements Persistent {
 			$this->created_at = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->updated_at = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->is_online = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
+			$this->os_used = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -290,7 +314,7 @@ abstract class BaseLanlog extends BaseObject  implements Persistent {
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 6; 
+						return $startcol + 7; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Lanlog object", $e);
 		}
@@ -520,6 +544,9 @@ abstract class BaseLanlog extends BaseObject  implements Persistent {
 			case 5:
 				return $this->getIsOnline();
 				break;
+			case 6:
+				return $this->getOsUsed();
+				break;
 			default:
 				return null;
 				break;
@@ -536,6 +563,7 @@ abstract class BaseLanlog extends BaseObject  implements Persistent {
 			$keys[3] => $this->getCreatedAt(),
 			$keys[4] => $this->getUpdatedAt(),
 			$keys[5] => $this->getIsOnline(),
+			$keys[6] => $this->getOsUsed(),
 		);
 		return $result;
 	}
@@ -569,6 +597,9 @@ abstract class BaseLanlog extends BaseObject  implements Persistent {
 			case 5:
 				$this->setIsOnline($value);
 				break;
+			case 6:
+				$this->setOsUsed($value);
+				break;
 		} 	}
 
 	
@@ -582,6 +613,7 @@ abstract class BaseLanlog extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setCreatedAt($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setUpdatedAt($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setIsOnline($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setOsUsed($arr[$keys[6]]);
 	}
 
 	
@@ -595,6 +627,7 @@ abstract class BaseLanlog extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(LanlogPeer::CREATED_AT)) $criteria->add(LanlogPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(LanlogPeer::UPDATED_AT)) $criteria->add(LanlogPeer::UPDATED_AT, $this->updated_at);
 		if ($this->isColumnModified(LanlogPeer::IS_ONLINE)) $criteria->add(LanlogPeer::IS_ONLINE, $this->is_online);
+		if ($this->isColumnModified(LanlogPeer::OS_USED)) $criteria->add(LanlogPeer::OS_USED, $this->os_used);
 
 		return $criteria;
 	}
@@ -634,6 +667,8 @@ abstract class BaseLanlog extends BaseObject  implements Persistent {
 		$copyObj->setUpdatedAt($this->updated_at);
 
 		$copyObj->setIsOnline($this->is_online);
+
+		$copyObj->setOsUsed($this->os_used);
 
 
 		$copyObj->setNew(true);

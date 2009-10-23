@@ -13,6 +13,7 @@
       <th class="sf_admin_text">Calcolatore</th>
       <th class="sf_admin_text">Sottorete</th>
       <th class="sf_admin_text">Online dalle</th>
+      <th class="sf_admin_text">Ultima azione</th>
       <th class="sf_admin_text">Accesso a Internet abilitato?</th>
     </tr>
   </thead>
@@ -23,14 +24,15 @@
 
       <td><strong><?php echo $lanlog->getsfGuardUser()->getUsername() ?></strong></td>
 	  <td><?php echo $lanlog->getsfGuardUser()->getProfile()->getFullname() ?></td>
-      <td><?php echo $lanlog->getWorkstation() ?></td>
-      <td><?php echo $lanlog->getWorkstation()->getSubnet() ?></td>
-      <td><?php echo $lanlog->getCreatedAt() ?></td>
-      <td><?php if ($lanlog->getWorkstation()->getIsEnabled()): ?>
-                    <?php echo image_tag(sfConfig::get('sf_admin_module_web_dir').'/images/tick.png', array('alt' => __('Checked', array(), 'sf_admin'), 'title' => __('Checked', array(), 'sf_admin'))) ?>
-                <?php else: ?>
+      <td><?php //echo $lanlog->getWorkstation() ?></td>
+      <td><?php //echo $lanlog->getWorkstation()->getSubnet() ?></td>
+      <td><?php echo Generic::datetime($lanlog->getsfGuardUser()->getProfile()->getLastLoginAt('U'), $sf_context) ?></td>
+      <td><?php echo Generic::datetime($lanlog->getsfGuardUser()->getProfile()->getLastActionAt('U'), $sf_context) ?></td>
+      <td><?php //if ($lanlog->getWorkstation()->getIsEnabled()): ?>
+                    <?php //echo image_tag(sfConfig::get('sf_admin_module_web_dir').'/images/tick.png', array('alt' => __('Checked', array(), 'sf_admin'), 'title' => __('Checked', array(), 'sf_admin'))) ?>
+                <?php //else: ?>
                     &nbsp;
-            <?php endif; ?>
+            <?php //endif; ?>
 </td>
 </td>
     </tr>

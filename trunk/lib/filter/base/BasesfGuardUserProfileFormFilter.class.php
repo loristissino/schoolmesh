@@ -30,6 +30,8 @@ class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'import_code'               => new sfWidgetFormFilterInput(),
       'system_alerts'             => new sfWidgetFormFilterInput(),
       'is_scheduled_for_deletion' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'last_action_at'            => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
+      'last_login_at'             => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -48,6 +50,8 @@ class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'import_code'               => new sfValidatorPass(array('required' => false)),
       'system_alerts'             => new sfValidatorPass(array('required' => false)),
       'is_scheduled_for_deletion' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'last_action_at'            => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'last_login_at'             => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
     ));
 
     $this->widgetSchema->setNameFormat('sf_guard_user_profile_filters[%s]');
@@ -81,6 +85,8 @@ class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'import_code'               => 'Text',
       'system_alerts'             => 'Text',
       'is_scheduled_for_deletion' => 'Boolean',
+      'last_action_at'            => 'Date',
+      'last_login_at'             => 'Date',
     );
   }
 }

@@ -45,5 +45,7 @@ class LanlogMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('IS_ONLINE', 'IsOnline', 'BOOLEAN', true, null);
 
+		$tMap->addColumn('OS_USED', 'OsUsed', 'VARCHAR', false, 100);
+
 	} 
 } 

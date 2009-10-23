@@ -65,5 +65,9 @@ class sfGuardUserProfileMapBuilder implements MapBuilder {
 
 		$tMap->addColumn('IS_SCHEDULED_FOR_DELETION', 'IsScheduledForDeletion', 'BOOLEAN', false, null);
 
+		$tMap->addColumn('LAST_ACTION_AT', 'LastActionAt', 'TIMESTAMP', false, null);
+
+		$tMap->addColumn('LAST_LOGIN_AT', 'LastLoginAt', 'TIMESTAMP', false, null);
+
 	} 
 } 

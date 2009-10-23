@@ -383,22 +383,44 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		return $checkList;
 		
 	}
-
-	public static function GotALoginLogout(sfEvent $event)
+	
+	
+	public static function retrieveOnLine()
 	{
-		
-		$parameters=$event->getParameters();
-		if (preg_match('/authenticated/', $parameters[0]))
-		{
-			ob_start();
-			print_r($parameters);
-			print_r($event->getSubject()->getAttributeHolder());
-			$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
-		}
-		
-
+		$c=new Criteria();
+		$timelimit=time() - 3*60;
+		$c->add(sfGuardUserProfilePeer::LAST_ACTION_AT, $timelimit, Criteria::GREATER_THAN);
+		return parent::doSelect($c);
 		
 	}
+	
+
+	public static function registerLogin(sfEvent $event)
+	{
+
+// There are two problems for registering logouts:
+// first, the event does not say who actually logged out;
+// second, users get logged out by timeout and this wouldn't be tracked
+// I read on the mailing list that the preferred method is to update a db entry for every action
+// and assume that users are on line when they performed an action in the last XX seconds.
+
+		$parameters=$event->getParameters();
+		if ($parameters[0]=='User is authenticated')
+		{
+			
+			$ah=$event->getSubject()->getAttributeHolder();
+			
+			$user_id=$ah->get('user_id', null, 'sfGuardSecurityUser');
+			
+			$profile=sfGuardUserProfilePeer::retrieveByPK($user_id);
+			$profile
+			->setLastLoginAt(time())
+			->save();
+			
+		}
+				
+	}
+
 
 /*
 	public static function createMissingAccounts($availableAccounts)
