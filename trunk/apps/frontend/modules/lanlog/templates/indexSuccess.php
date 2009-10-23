@@ -1,3 +1,12 @@
+<?php use_helper('Javascript') ?>
+<?php slot('title', __("Who's on line")) ?>
+<?php slot('breadcrumbs',
+	__("Who's on line")
+	)
+	
+	?>
+
+
 <h1><?php echo __("Who's on line") ?></h1>
 
 <div class="sf_admin_list">
@@ -8,13 +17,13 @@
 
   <thead>
     <tr>
-      <th class="sf_admin_text">Username</th>
-      <th class="sf_admin_text">Nome completo</th>
-      <th class="sf_admin_text">Calcolatore</th>
-      <th class="sf_admin_text">Sottorete</th>
-      <th class="sf_admin_text">Online dalle</th>
-      <th class="sf_admin_text">Ultima azione</th>
-      <th class="sf_admin_text">Accesso a Internet abilitato?</th>
+      <th class="sf_admin_text"><?php echo __('Username') ?></th>
+      <th class="sf_admin_text"><?php echo __('Full name') ?></th>
+      <th class="sf_admin_text"><?php echo __('Host') ?></th>
+      <th class="sf_admin_text"><?php echo __('Subnet') ?></th>
+      <th class="sf_admin_text"><?php echo __('Online since') ?></th>
+      <th class="sf_admin_text"><?php echo __('Last action') ?></th>
+      <th class="sf_admin_text"><?php echo __('Internet access enabled?') ?></th>
     </tr>
   </thead>
   <tbody>
