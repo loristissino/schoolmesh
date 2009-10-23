@@ -4,7 +4,49 @@ CONFIG_READ=0
 source /var/schoolmesh/config/schoolmesh.rc $@
 if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
 
+#@ # NAME
+#@
+#@ {} - Change username for the posix account of a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *new_username* *old_username*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to change the username of a user.
+#@ 
+#@ # WARNINGS
+#@ 
+#@ If the user has also external accounts, theese won't be affected.
+#@ Internal accounts, like samba, that depend on the existence of
+#@ posix one, will be deleted, but *not recreated*.
+#@
+#@ # EXAMPLES
+#@
+#@	{-} johnn john
 
-msg_failed "Not implemented yet'
-exit 0
+NEW_USERNAME=$1
+OLD_USERNAME=$2
 
+checkUsername $OLD_USERNAME
+checkString $NEW_USERNAME "new username"
+checkNotUsername $NEW_USERNAME
+checkDirectory "$POSIX_HOMEDIR_USERS"
+
+OLD_HOMEDIR=$(schoolmesh_posixaccount_getinfo $OLD_USERNAME | grep homedir= | cut -d '=' -f 2)
+
+echo $OLD_HOMEDIR
+checkDirectory "$OLD_HOMEDIR"
+
+NEW_HOMEDIR="$POSIX_HOMEDIR_USERS/$NEW_USERNAME"
+checkNotFile "$NEW_HOMEDIR"
+
+SAMBA_ACCOUNT=$(schoolmesh_sambaaccount_getinfo $OLD_USERNAME | head -1)
+
+if [ $SAMBA_ACCOUNT = 'found=1' ]; then
+	schoolmesh_sambaaccount_delete $OLD_USERNAME
+fi
+
+sudo mv "$OLD_HOMEDIR" "$NEW_HOMEDIR" && msg_ok "Homedir changed: $OLD_HOMEDIR -> $NEW_HOMEDIR" || unexpectedError $@
+sudo usermod --login $NEW_USERNAME --home "$NEW_HOMEDIR" $OLD_USERNAME && msg_ok "Username changed: $OLD_USERNAME -> $NEW_USERNAME" || unexpectedError $@

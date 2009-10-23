@@ -1230,6 +1230,22 @@
         <source>Reject document</source>
         <target>Respingi documento</target>
       </trans-unit>
+      <trans-unit id="334">
+        <source>Full name</source>
+        <target>Nome completo</target>
+      </trans-unit>
+      <trans-unit id="335">
+        <source>Host</source>
+        <target>Calcolatore</target>
+      </trans-unit>
+      <trans-unit id="336">
+        <source>Subnet</source>
+        <target>Sottorete</target>
+      </trans-unit>
+      <trans-unit id="337">
+        <source>Online since</source>
+        <target>In linea dalle</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

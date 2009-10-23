@@ -1,2 +1,2 @@
 default:
-  stylesheets:    [global, default, fluid]
+  stylesheets:    [global, default, fluid, schoolmesh]
