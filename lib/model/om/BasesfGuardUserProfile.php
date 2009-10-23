@@ -58,6 +58,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $is_scheduled_for_deletion;
 
 	
+	protected $last_action_at;
+
+	
+	protected $last_login_at;
+
+	
 	protected $asfGuardUser;
 
 	
@@ -198,6 +204,60 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	public function getIsScheduledForDeletion()
 	{
 		return $this->is_scheduled_for_deletion;
+	}
+
+	
+	public function getLastActionAt($format = 'Y-m-d H:i:s')
+	{
+		if ($this->last_action_at === null) {
+			return null;
+		}
+
+
+		if ($this->last_action_at === '0000-00-00 00:00:00') {
+									return null;
+		} else {
+			try {
+				$dt = new DateTime($this->last_action_at);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->last_action_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+						return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
+	}
+
+	
+	public function getLastLoginAt($format = 'Y-m-d H:i:s')
+	{
+		if ($this->last_login_at === null) {
+			return null;
+		}
+
+
+		if ($this->last_login_at === '0000-00-00 00:00:00') {
+									return null;
+		} else {
+			try {
+				$dt = new DateTime($this->last_login_at);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->last_login_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+						return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
 	}
 
 	
@@ -451,6 +511,70 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		return $this;
 	} 
 	
+	public function setLastActionAt($v)
+	{
+						if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+									try {
+				if (is_numeric($v)) { 					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+															$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->last_action_at !== null || $dt !== null ) {
+			
+			$currNorm = ($this->last_action_at !== null && $tmpDt = new DateTime($this->last_action_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) 					)
+			{
+				$this->last_action_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = sfGuardUserProfilePeer::LAST_ACTION_AT;
+			}
+		} 
+		return $this;
+	} 
+	
+	public function setLastLoginAt($v)
+	{
+						if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+									try {
+				if (is_numeric($v)) { 					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+															$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->last_login_at !== null || $dt !== null ) {
+			
+			$currNorm = ($this->last_login_at !== null && $tmpDt = new DateTime($this->last_login_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) 					)
+			{
+				$this->last_login_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = sfGuardUserProfilePeer::LAST_LOGIN_AT;
+			}
+		} 
+		return $this;
+	} 
+	
 	public function hasOnlyDefaultValues()
 	{
 						if (array_diff($this->modifiedColumns, array(sfGuardUserProfilePeer::EMAIL_STATE,sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION))) {
@@ -488,6 +612,8 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->import_code = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
 			$this->system_alerts = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
 			$this->is_scheduled_for_deletion = ($row[$startcol + 15] !== null) ? (boolean) $row[$startcol + 15] : null;
+			$this->last_action_at = ($row[$startcol + 16] !== null) ? (string) $row[$startcol + 16] : null;
+			$this->last_login_at = ($row[$startcol + 17] !== null) ? (string) $row[$startcol + 17] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -496,7 +622,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->ensureConsistency();
 			}
 
-						return $startcol + 16; 
+						return $startcol + 18; 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating sfGuardUserProfile object", $e);
 		}
@@ -742,6 +868,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			case 15:
 				return $this->getIsScheduledForDeletion();
 				break;
+			case 16:
+				return $this->getLastActionAt();
+				break;
+			case 17:
+				return $this->getLastLoginAt();
+				break;
 			default:
 				return null;
 				break;
@@ -768,6 +900,8 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$keys[13] => $this->getImportCode(),
 			$keys[14] => $this->getSystemAlerts(),
 			$keys[15] => $this->getIsScheduledForDeletion(),
+			$keys[16] => $this->getLastActionAt(),
+			$keys[17] => $this->getLastLoginAt(),
 		);
 		return $result;
 	}
@@ -831,6 +965,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			case 15:
 				$this->setIsScheduledForDeletion($value);
 				break;
+			case 16:
+				$this->setLastActionAt($value);
+				break;
+			case 17:
+				$this->setLastLoginAt($value);
+				break;
 		} 	}
 
 	
@@ -854,6 +994,8 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[13], $arr)) $this->setImportCode($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setSystemAlerts($arr[$keys[14]]);
 		if (array_key_exists($keys[15], $arr)) $this->setIsScheduledForDeletion($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setLastActionAt($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setLastLoginAt($arr[$keys[17]]);
 	}
 
 	
@@ -877,6 +1019,8 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::IMPORT_CODE)) $criteria->add(sfGuardUserProfilePeer::IMPORT_CODE, $this->import_code);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::SYSTEM_ALERTS)) $criteria->add(sfGuardUserProfilePeer::SYSTEM_ALERTS, $this->system_alerts);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION)) $criteria->add(sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION, $this->is_scheduled_for_deletion);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::LAST_ACTION_AT)) $criteria->add(sfGuardUserProfilePeer::LAST_ACTION_AT, $this->last_action_at);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::LAST_LOGIN_AT)) $criteria->add(sfGuardUserProfilePeer::LAST_LOGIN_AT, $this->last_login_at);
 
 		return $criteria;
 	}
@@ -938,6 +1082,10 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$copyObj->setSystemAlerts($this->system_alerts);
 
 		$copyObj->setIsScheduledForDeletion($this->is_scheduled_for_deletion);
+
+		$copyObj->setLastActionAt($this->last_action_at);
+
+		$copyObj->setLastLoginAt($this->last_login_at);
 
 
 		$copyObj->setNew(true);

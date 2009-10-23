@@ -13,7 +13,7 @@ abstract class BaseLanlogPeer {
 	const CLASS_DEFAULT = 'lib.model.Lanlog';
 
 	
-	const NUM_COLUMNS = 6;
+	const NUM_COLUMNS = 7;
 
 	
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -37,6 +37,9 @@ abstract class BaseLanlogPeer {
 	const IS_ONLINE = 'lanlog.IS_ONLINE';
 
 	
+	const OS_USED = 'lanlog.OS_USED';
+
+	
 	public static $instances = array();
 
 	
@@ -44,20 +47,20 @@ abstract class BaseLanlogPeer {
 
 	
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'WorkstationId', 'CreatedAt', 'UpdatedAt', 'IsOnline', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'workstationId', 'createdAt', 'updatedAt', 'isOnline', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::WORKSTATION_ID, self::CREATED_AT, self::UPDATED_AT, self::IS_ONLINE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'workstation_id', 'created_at', 'updated_at', 'is_online', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'WorkstationId', 'CreatedAt', 'UpdatedAt', 'IsOnline', 'OsUsed', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'workstationId', 'createdAt', 'updatedAt', 'isOnline', 'osUsed', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::WORKSTATION_ID, self::CREATED_AT, self::UPDATED_AT, self::IS_ONLINE, self::OS_USED, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'workstation_id', 'created_at', 'updated_at', 'is_online', 'os_used', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'WorkstationId' => 2, 'CreatedAt' => 3, 'UpdatedAt' => 4, 'IsOnline' => 5, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'workstationId' => 2, 'createdAt' => 3, 'updatedAt' => 4, 'isOnline' => 5, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::WORKSTATION_ID => 2, self::CREATED_AT => 3, self::UPDATED_AT => 4, self::IS_ONLINE => 5, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'workstation_id' => 2, 'created_at' => 3, 'updated_at' => 4, 'is_online' => 5, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'WorkstationId' => 2, 'CreatedAt' => 3, 'UpdatedAt' => 4, 'IsOnline' => 5, 'OsUsed' => 6, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'workstationId' => 2, 'createdAt' => 3, 'updatedAt' => 4, 'isOnline' => 5, 'osUsed' => 6, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::WORKSTATION_ID => 2, self::CREATED_AT => 3, self::UPDATED_AT => 4, self::IS_ONLINE => 5, self::OS_USED => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'workstation_id' => 2, 'created_at' => 3, 'updated_at' => 4, 'is_online' => 5, 'os_used' => 6, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	
@@ -110,6 +113,8 @@ abstract class BaseLanlogPeer {
 		$criteria->addSelectColumn(LanlogPeer::UPDATED_AT);
 
 		$criteria->addSelectColumn(LanlogPeer::IS_ONLINE);
+
+		$criteria->addSelectColumn(LanlogPeer::OS_USED);
 
 	}
 

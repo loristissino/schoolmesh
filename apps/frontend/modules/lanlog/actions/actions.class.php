@@ -13,7 +13,11 @@ class lanlogActions extends sfActions
 
   public function executeIndex(sfWebRequest $request)
 	{
-	$this->lanlog_list = LanlogPeer::retrieveOnline();
+//	$this->lanlog_list = LanlogPeer::retrieveOnline();
+
+// FIXME This must be reviewed in order to take in consideration users logged on (the network) and in (the application)
+	$this->lanlog_list = sfGuardUserProfilePeer::retrieveOnline();
+
 	}  
 
   public function executeCreate(sfWebRequest $request)

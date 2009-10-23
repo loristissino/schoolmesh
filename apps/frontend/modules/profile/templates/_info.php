@@ -30,6 +30,9 @@
         
         <?php echo link_to(__('You may logout'), '@sf_guard_signout') ?>
 
+<?php /*
+		<br /><?php echo sprintf(__('Your last action was at: %s'), Generic::datetime($sf_user->getProfile()->getLastActionAt('U'), $sf_context)) ?>
+*/ ?>
   <?php endif; ?>
   </p>
   <?php /*
