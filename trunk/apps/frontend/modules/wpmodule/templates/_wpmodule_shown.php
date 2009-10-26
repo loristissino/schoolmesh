@@ -11,9 +11,13 @@
 							<li>
 							<?php echo html_entity_decode($wpmodule_item->getContent()) ?>
 							<?php if (isset($workplan) && ($workplan->getState()>=Workflow::IR_DRAFT) && $wpmodule_item->getEvaluation()>0): ?>
-								<?php for($i=0;$i<$wpmodule_item->getEvaluation(); $i++): ?>
+								<?php /*
+<?php for($i=0;$i<$wpmodule_item->getEvaluation(); $i++): ?>
 									<?php echo image_tag('award', 'title=' . sprintf(__('(Evaluation: %d)'), $wpmodule_item->getEvaluation())) ?>
 								<?php endfor ?>
+*/ ?>
+
+							<?php echo sprintf("(%d)", $wpmodule_item->getEvaluation()) ?>
 							<?php endif ?>
 							</li>
 							<?php /* endif */ ?>

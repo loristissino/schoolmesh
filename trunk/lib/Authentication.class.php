@@ -2,8 +2,21 @@
 
 class Authentication {
 
+/*
+
+This code must be refactored. In particular, it would be nicer to have a sort of PAM-like authentication schema, maybe 
+defining an array of authentication modes.
+*/
+
+
 	static function testOnly($username, $password)
 	{
+	$user=sfGuardUserProfilePeer::retrieveByUsername($username);
+	$profile=$user->getProfile();
+		$profile
+		->setLastLoginAt(time())
+		->save();
+
 		return true;
 	}
 	
@@ -12,13 +25,37 @@ class Authentication {
 		
 	$user=sfGuardUserProfilePeer::retrieveByUsername($username);
 	$profile=$user->getProfile();
+	
 	if ($profile->hasAccountOfType('samba'))
 	{
-		return self::checkSambaPassword($username, $password);
+		$authenticationOk=self::checkSambaPassword($username, $password);
+		if ($authenticationOk)
+		{
+			$profile
+			->setLastLoginAt(time())
+			->save();
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	else
 	{
-		return self::checkDBPassword($username, $password);
+		$authenticationOk=self::checkDBPassword($username, $password);
+		if ($authenticationOk)
+		{
+			$profile
+			->setLastLoginAt(time())
+			->save();
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+
 	}
 	}
 	
@@ -70,6 +107,7 @@ class Authentication {
 		$output="";
 		$result=-1;
 		@exec($command, $output, $result);
+		
 		
 		return ($result == 0);
 	}

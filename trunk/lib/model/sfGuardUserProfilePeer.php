@@ -404,6 +404,8 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 // I read on the mailing list that the preferred method is to update a db entry for every action
 // and assume that users are on line when they performed an action in the last XX seconds.
 
+// Anyway, this solution works only if logging is enabled -- which is not always true.
+/*
 		$parameters=$event->getParameters();
 		if ($parameters[0]=='User is authenticated')
 		{
@@ -418,7 +420,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 			->save();
 			
 		}
-				
+*/				
 	}
 
 
