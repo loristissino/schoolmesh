@@ -1246,6 +1246,10 @@
         <source>Online since</source>
         <target>In linea dalle</target>
       </trans-unit>
+      <trans-unit id="338">
+        <source>Hours: </source>
+        <target>Ore: </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

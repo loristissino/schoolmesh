@@ -25,6 +25,7 @@
     </tr>
   </thead>
   <tbody>
+	<?php $hours_sum=0 ?>
     <?php foreach ($workplan->getWpmodules() as $wpmodule): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <td><?php echo $wpmodule->getRank() ?></td>
@@ -41,7 +42,7 @@
 	
       <td><?php echo $wpmodule->getPeriod() ?></td>
       <td><?php echo $wpmodule ?></td>
-      <td><?php echo $wpmodule->getHoursEstimated() ?></td>
+      <td><?php echo $wpmodule->getHoursEstimated(); $hours_sum+=$wpmodule->getHoursEstimated(); ?></td>
       <td><?php  echo Generic::datetime($wpmodule->getUpdatedAt('U'), $sf_context) ?></td>
       <td>
 	  <?php if ($wpmodule->getIsPublic()): ?>
@@ -112,6 +113,11 @@
 	  </td>
     </tr>
     <?php endforeach; ?>
+	<tr>
+		<td colspan="5"></td>
+		<td><?php echo sprintf("%d (%d)", $hours_sum , $workplan->getHours()) ?></td>
+		<td colspan="3"></td>
+	</tr>
   </tbody>
 </table>
 </div>

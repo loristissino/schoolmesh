@@ -6,6 +6,10 @@ SystemMessage:
     key: WP_REJECTED
   sm_AP_CONFIRMED:
     key: AP_CONFIRMED  
+  sm_WP_ADCHECKED:
+    key: WP_ADCHECKED
+  sm_WP_ADREJECTED:
+    key: WP_ADREJECTED
 
 SystemMessageI18n:
 
@@ -33,3 +37,11 @@ SystemMessageI18n:
     id: sm_AP_CONFIRMED
     culture: en  
     content: Appointment confirmed  
+  sm_WP_ADCHECKED_it:
+    id: sm_WP_ADCHECKED
+    culture: it  
+    content: Piano di lavoro portato all'attenzione del DS  
+  sm_WP_ADREJECTED_it:
+    id: sm_WP_ADREJECTED
+    culture: it  
+    content: Piano di lavoro riportato al docente  

@@ -61,7 +61,7 @@ class Workflow
 				'submitDoneAction'=>'Workplan administratively checked.',
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
-				'logMessageCode'=>'WP_APPROVED',
+				'logMessageCode'=>'WP_ADCHECKED',
 				'submitNextState'=>self::WP_WSMC,
 				),
 			'reject' => Array(
@@ -70,7 +70,7 @@ class Workflow
 				'submitDoneAction'=>'Workplan administratively rejected.',
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
-				'logMessageCode'=>'WP_REJECTED',
+				'logMessageCode'=>'WP_ADREJECTED',
 				'submitNextState'=>self::WP_DRAFT,
 				),
 			)
