@@ -1064,7 +1064,7 @@
       </trans-unit>
       <trans-unit id="294">
         <source>[0]No check passed.|[1]One check passed.|(1,+Inf]A total of %1 checks passed.</source>
-        <target>[0]Nessun esito positivo.|[1]On esito positivo.|(1,+Inf]%1 esiti positivi.</target>
+        <target>[0]Nessun esito positivo.|[1]Un esito positivo.|(1,+Inf]%1 esiti positivi.</target>
       </trans-unit>
       <trans-unit id="295">
         <source>[0]There were no warnings.|[1]There was one warning.|(1,+Inf]There were %1 warnings.</source>
@@ -1250,7 +1250,10 @@
         <source>Hours: </source>
         <target>Ore: </target>
       </trans-unit>
+      <trans-unit id="339">
+        <source>Import a module previously prepared</source>
+        <target>Importa un modulo preparato precedentemente</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
-

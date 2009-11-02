@@ -22,15 +22,15 @@ class Wpevent extends BaseWpevent
 				
 				if ($state==Workflow::WP_DRAFT)
 				{
-					$this->getAppointment()->markSubItems(true);
+					$this->getAppointment()->markSubItems('true');
 				}
 				if ($state==Workflow::WP_DRAFT)
 				{
-					$this->getAppointment()->markSubItems(true);
+					$this->getAppointment()->markSubItems('true');
 				}
 				if ($state==Workflow::IR_DRAFT)
 				{
-					$this->getAppointment()->markSubItems(false);
+					$this->getAppointment()->markSubItems('false');
 				}
 			}
 			

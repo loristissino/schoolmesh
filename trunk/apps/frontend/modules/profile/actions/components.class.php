@@ -15,14 +15,6 @@ class profileComponents extends sfComponents
 				->setLastActionAt(time())
 				->save();
 				
-ob_start();
-
-
-echo 'passato di qua: ' . time() . "\n";
-
-$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
-
-				
 				/* FIXME This should be refactored ...
 				
                 $this->disk_soft_quota_exceeded = $this->current_user->getProfile()->getDiskUsedBlocks() > $this->current_user->getProfile()->getDiskSetSoftBlocksQuota();

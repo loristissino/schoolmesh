@@ -4,6 +4,26 @@ CONFIG_READ=0
 source /var/schoolmesh/config/schoolmesh.rc $@
 if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
 
+#@ # NAME
+#@
+#@ {} - Get a list of users specifying who of them exceeds their quota
+#@
+#@ # SYNOPSIS
+#@
+#@ {} primary | secondary | all *group*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to get a list of users with information about disk quota exceeded. 
+#@ You can decide to check only primary groups, only secondary, or both.
+#@
+#@ # EXAMPLES
+#@
+#@	{-} primary students  
+#@	{-} secondary students  
+#@	{-} all students
+
+
 TYPE=$1
 GROUP=$2
 
@@ -11,13 +31,13 @@ checkDirectory "$POSIX_HOMEDIR_USERS"
 
 checkString $TYPE "Type"
 
-[[ "$TYPE" = "primary" ]] || [[ "$TYPE" == "all" ]] || msg_failed "not a valid type: $TYPE"
+checkOneOf $TYPE primary secondary all
 
 checkGroup $GROUP
 
 if [[ "$TYPE" = "primary" ]]
 	then
-		for USERNAME in $(schoolmesh_posixaccount_listusers primary $GROUP)
+		for USERNAME in $(schoolmesh_posixaccounts_list primary $GROUP)
 			do
 				schoolmesh_posixaccount_quotausercheck $USERNAME	
 			done

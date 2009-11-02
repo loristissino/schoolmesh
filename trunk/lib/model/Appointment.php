@@ -175,6 +175,12 @@ class Appointment extends BaseAppointment
 
 	public function markSubItems($newstate, $con=null)
 	{
+		
+		if (!is_string($newstate))
+		{
+			throw new Exception('state must be a string!');
+		}
+		
 		$con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
 	 
 //		$sql = 'UPDATE '.WpmoduleItemPeer::TABLE_NAME.' SET '.WpmoduleItemPeer::IS_EDITABLE.' = FALSE WHERE '.WpmoduleItemPeer::RANK.' > '.$this->getRank() . ' AND ' . WpmoduleItemPeer::WPITEM_GROUP_ID .'='. $this->getWpitemGroupId();
@@ -1109,6 +1115,12 @@ public function getContentAsMarkdown()
 		
 		return $result;
 		
+	}
+
+	public function delete(PropelPDO $con = null)
+	{
+		$this->removeEverything();
+		parent::delete($con);
 	}
 
 

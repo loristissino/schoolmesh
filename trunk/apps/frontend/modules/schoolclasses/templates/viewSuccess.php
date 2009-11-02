@@ -1,3 +1,6 @@
+<?php use_helper('Javascript') ?>
+<?php use_helper('Form') ?>
+<?php use_helper('Object') ?>
 <?php slot('title', $schoolclass_id) ?>
 <?php slot('breadcrumbs',
 	link_to(__('Classes'), 'schoolclasses/index') . ' » ' . 
@@ -8,11 +11,29 @@
 	<h1><?php echo sprintf(__('Class %s'), $schoolclass_id) ?></h1>
 
 
+
 <?php if(sizeof($enrolments)>0): ?>
+
+<?php if(isset($appointment)): ?>
+	<p><?php echo $appointment->getSubject()->getDescription() ?>
+	<form action="<?php echo url_for('schoolclasses/grid?id=' . $schoolclass_id . '&appointment=' . $appointment->getId()) ?>" method="get">
+<?php endif ?>
+
+<?php if ($sf_user->hasFlash('notice')): ?>
+  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
+<?php endif; ?>
+<?php if ($sf_user->hasFlash('error')): ?>
+  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
+<?php endif; ?>
 
 <table cellspacing="0">
   <thead>
     <tr>
+
+<?php if(isset($appointment)): ?>
+	  <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
+<?php endif ?>
+
       <th class="sf_admin_text"><?php echo __('Number') ?></th>
       <th class="sf_admin_text"><?php echo __('Gender') ?></th>
       <th class="sf_admin_text"><?php echo __('First name') ?></th>
@@ -24,6 +45,13 @@
 	<?php $i=0 ?>
     <?php foreach ($enrolments as $enrolment): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
+	
+<?php if(isset($appointment)): ?>
+		<td>
+  <input type="checkbox" name="ids[]" value="<?php echo $enrolment->getsfGuardUser()->getId() ?>" class="sf_admin_batch_checkbox" />
+</td>
+<?php endif ?>
+
       <td><?php echo $i ?></td>
       <td><?php include_partial('users/gender', array('gender'=>$enrolment->getsfGuardUser()->getProfile()->getGender())) ?></td>
       <td><?php echo $enrolment->getsfGuardUser()->getProfile()->getFirstName() ?></td>
@@ -34,4 +62,35 @@
   </tbody>  
 </table>  
 
+<?php if(isset($appointment)): ?>
+
+<?php include_partial('plansandreports/checkalljs') ?>
+ <ul class="sf_admin_actions">
+      <li class="sf_admin_batch_actions_choice">
+  <select name="batch_action">
+
+<?php echo options_for_select(array(
+  '' => __('Choose an action'),
+  'preparegrid' => __('Prepare grid'),
+), 0) ?>
+  </select>
+
+<?php echo submit_tag(_('Ok')) ?>
+
+</li>
+
+</ul>
+
+
+</ul>
+
+
+</form>
+
 <?php endif ?>
+
+
+
+<?php endif ?>
+
+

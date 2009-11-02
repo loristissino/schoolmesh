@@ -59,11 +59,11 @@
 	  
 	<td>
 	<?php if($wpmodule_item->getRank()< $item_group->countWpmoduleItems()): ?>
-		<?php include_partial('movedown', array('wpmoduleitem' => $wpmodule_item)) ?>
+		<?php include_partial('content/movedown', array('module'=>'wpmoduleitem', 'id' => $wpmodule_item->getId())) ?>
 	<?php endif ?>
 	</td>
 	<td><?php if($wpmodule_item->getRank()>1): ?>
-		<?php include_partial('moveup', array('wpmoduleitem' => $wpmodule_item)) ?>
+		<?php include_partial('content/moveup', array('module'=>'wpmoduleitem', 'id' => $wpmodule_item->getId())) ?>
 	<?php endif ?>
 	</td>
       <td><?php if ($wpmodule_item->getContent()=='---'): ?>

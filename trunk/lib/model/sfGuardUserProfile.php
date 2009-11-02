@@ -287,11 +287,27 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		{
 				return $this->getFullName();
 		}
-        public function getFullName()
+        public function getFullName($maxLength=0)
         {
+			if ($maxLength==0)
+			{
                 return $this->getFirstName() . ' ' . $this->getLastName();
-        }
+			}
 
+			$try=$this->getFullName(0);
+			if (strlen($try)<=$maxLength)
+			{
+				return $try;
+			}
+				
+			$try=substr($this->getFirstName(), 0, 1) . '. '. $this->getLastName();
+			if (strlen($try)<=$maxLength)
+				{
+					return $try;
+				}
+			return substr($try, 0, $maxLength-1) . '…';
+        }
+		
         public function getUsername()
         {
                 return $this->getsfGuardUser()->getUsername();
