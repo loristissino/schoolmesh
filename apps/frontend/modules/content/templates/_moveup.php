@@ -1,10 +1,10 @@
 <?php echo link_to(
 		image_tag(sfConfig::get('sf_admin_module_web_dir').'/images/desc.png',
 			array(
-				'alt' => __('Move up', array(), 'sf_admin'),
-				'title' => __('Move up', array(), 'sf_admin'))
+				'alt' => __('Move up'),
+				'title' => __('Move up'))
 				),
-		'wpmodule/up?id='.$wpmodule->getId(),
+		$module .'/up?id='.$id,
 			array('method' => 'put') 
 		)?>
 

@@ -32,11 +32,11 @@
 	  
 	<td>
 	<?php if($wpmodule->getRank()<$workplan->countWpmodules()): ?>
-		<?php include_partial('movedown', array('wpmodule' => $wpmodule)) ?>
+		<?php include_partial('content/movedown', array('module' => 'wpmodule', 'id'=>$wpmodule->getId())) ?>
 	<?php endif ?>
 	</td>
 	<td><?php if($wpmodule->getRank()>1): ?>
-		<?php include_partial('moveup', array('wpmodule' => $wpmodule)) ?>
+		<?php include_partial('content/moveup', array('module' => 'wpmodule', 'id'=>$wpmodule->getId())) ?>
 	<?php endif ?>
 	</td>
 	

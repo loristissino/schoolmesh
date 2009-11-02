@@ -15,12 +15,12 @@ class profileActions extends sfActions
   *
   * @param sfRequest $request A request object
   */
-  public function executeIndex($request)
+  public function executeIndex(sfWebRequest $request)
   {
 		$this->profile = $this->getUser()->getProfile();
         $this->name = $this->profile->getFullName();
 		
-        $this->schoolclasses = $this->getUser()->getProfile()->getCurrentSchoolclasses();
+//        $this->appointments = $this->getUser()->getProfile()->getCurrentAppointments();
 
         $this->teams=$this->getUser()->getProfile()->getTeams();
 	

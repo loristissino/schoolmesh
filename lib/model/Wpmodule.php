@@ -45,10 +45,23 @@ class Wpmodule extends BaseWpmodule
 	{
 	/* FIXME: I should check if this is invoked by the owner */
 
-	$this->setAppointment($workplan);
-	$this->setRank($this->getAppointment()->countWpmodules()+1);
-	$this->save();
-	/* FIXME: Put this actions in a transaction... */
+
+	  $con = Propel::getConnection(WpmodulePeer::DATABASE_NAME);
+	  try
+	  {
+		$con->beginTransaction();
+		$this
+		->setAppointment($workplan)
+		->setRank($this->getAppointment()->countWpmodules()+1)
+		->save();
+		$con->commit();
+		return true;
+	  }
+	  catch (Exception $e)
+	  {
+		$con->rollback();
+		throw $e;
+	  }
 	
 	
 	}

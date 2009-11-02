@@ -32,6 +32,8 @@
 </ul>
 <?php endif ?>
 
+
+<?php /*
 <?php if (sizeof($schoolclasses)>0): ?>
 <h2><?php echo __('My classes') ?></h2>
 <ul class="sf_admin_actions">
@@ -49,6 +51,8 @@
 <?php endforeach ?>
 </ul>
 <?php endif ?>
+
+*/ ?>
 
 
 <?php if ($sf_user->hasCredential('office')): ?>

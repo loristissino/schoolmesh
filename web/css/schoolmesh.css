@@ -209,6 +209,20 @@
   background: url(../images/log.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_flag_red a
+{
+  background: url(../images/flag_red.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_flag_green a
+{
+  background: url(../images/flag_green.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_flag_gray a
+{
+  background: url(../images/flag_gray.png) no-repeat 0 0;
+}
+
 #sf_admin_container .alert
 {
   margin: 4px 0;

@@ -19,4 +19,13 @@
 	)?>
 	</li>
 <?php endif ?>
+<?php if ($workplan->getState()>Workflow::AP_ASSIGNED): ?>
+	<li class="sf_admin_action_users">
+		<?php echo link_to(
+	__('View class'),
+	'schoolclasses/view?id='.$workplan->getSchoolclassId() . '&appointment=' . $workplan->getId(),
+	array('title'=>__('View the list of students enrolled in this class'))
+	)?>
+	</li>
+<?php endif ?>
 </ul>
