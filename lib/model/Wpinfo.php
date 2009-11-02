@@ -120,7 +120,7 @@ class Wpinfo extends BaseWpinfo
 						$w=new Hint($item->getContent(), $item->getId());
 						$previous=$w->getContent();
 					}
-					if ($w)
+					if (isset($w))
 						$w->addUsedIn($item->getAppointment());
 			}
 		if (isset($w))

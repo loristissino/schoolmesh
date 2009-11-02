@@ -191,13 +191,21 @@ $sql = 'UPDATE  `wpmodule_item`
 
  JOIN `wpitem_group` ON `wpmodule_item`.`wpitem_group_id` = `wpitem_group`.`id`
 
-JOIN `wpmodule` ON `wpitem_group`.`wpmodule_id`
+JOIN `wpmodule` ON `wpitem_group`.`wpmodule_id` = `wpmodule`.`id`
 
 JOIN `appointment` ON `wpmodule`.`appointment_id` = `appointment`.`id`
 
 SET `is_editable` = ' . $newstate . '
 
 WHERE `appointment`.`id` = ' . $this->getId();
+
+
+ob_start();
+
+echo "$sql\n";
+
+$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
+
 
 $con->query($sql);
 		
