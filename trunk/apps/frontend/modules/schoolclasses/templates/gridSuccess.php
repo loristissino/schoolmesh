@@ -51,7 +51,7 @@
 		<?php foreach($wpitem_group->getWpmoduleItems() as $wpmodule_item): ?>
 			<tr>
 				<td width="20">&nbsp;</td>
-				<td><?php echo $wpmodule_item->getContent() ?></td>
+				<td><?php echo html_entity_decode($wpmodule_item->getContent()) ?></td>
 				<?php include_partial('ticks', array('students'=>$students, 'appointment_id'=>$appointment->getId(), 'wpmodule_item_id'=>$wpmodule_item->getId())) ?>
 			</tr>
 		<?php endforeach ?>
