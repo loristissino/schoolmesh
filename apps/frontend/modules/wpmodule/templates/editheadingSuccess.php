@@ -18,14 +18,24 @@
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
 
-<form action="<?php echo url_for('wpmodule/editheading?id=' . $wpmodule->getId()) ?>" method="post">
+<form action="<?php echo url_for('wpmodule/editheading?id=' . $wpmodule->getId()) ?>" method="post" id="editform">
 
   <table>
     <?php echo $form ?>
 	<tr>
       <td colspan="2">
-         <input type="submit" name="save" value="<?php echo __('Save') ?>">
-      </td>
+<ul class="sf_admin_actions">
+	<li class="sf_admin_action_saveandback">
+	<a href="<?php echo url_for('wpmodule/editheading?id='.$wpmodule->getId()) ?>" 
+		onClick="var f = document.getElementById('editform'); var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', 'save'); m.setAttribute('value', 'Save'); f.appendChild(m); f.submit(); return false;"
+		title="<?php echo __('Save this contents and go back to the module') ?>"
+	><?php echo __("Save and go back to the module") ?></a>
+	</li>
+
+</ul>
+
+
+		</td>
     </tr>
   </table>
   

@@ -221,15 +221,28 @@ class Workflow
 		return self::$wpfrSteps;
 	}
 
-	static public function getWpfrStates()
+	static public function getWpfrStates($asObjects=false)
 	{
+		
+		//FIXME It would be better to return always objects that implement array access
+		
 		$steps=self::$wpfrSteps;
 		$states=Array();
+		
 		foreach($steps as $key=>$value)
 		{
-			$states[$key]=$value['stateDescription'];
+			if($asObjects)
+			{
+				$states[]=new Item($key, $value['stateDescription']);
+			}
+			else
+			{
+				$states[$key]=$value['stateDescription'];
+			}
+			
 		}
 		return $states;
+		
 	}
 
 	static public function getEmailVerificationStates()

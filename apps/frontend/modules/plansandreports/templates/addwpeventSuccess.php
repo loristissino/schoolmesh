@@ -8,12 +8,7 @@
 	
 	?><h1><?php echo __('Add event')?></h1>
 
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
 
 <form action="<?php echo url_for('plansandreports/addwpevent?appointment='. $appointment->getId()) ?>" method="post">
 

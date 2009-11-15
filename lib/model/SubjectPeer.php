@@ -15,8 +15,21 @@ class SubjectPeer extends BaseSubjectPeer
 	{
 	$c=new Criteria();
 	$c->add(self::SHORTCUT, $shortcut);
-	$t = self::doSelectOne($c);
+	$t = parent::doSelectOne($c);
 	return $t;
 		
 	}
+
+	static public function retrieveAllByRank()
+	{
+	$c=new Criteria();
+	$c->addAscendingOrderByColumn(SubjectPeer::RANK);
+	$t = parent::doSelect($c);
+	return $t;
+		
+	}
+
+
+
+
 }

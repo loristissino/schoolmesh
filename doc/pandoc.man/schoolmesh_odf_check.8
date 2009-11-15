@@ -1,0 +1,35 @@
+% SCHOOLMESH_ODF_CHECK(8) Schoolmesh User Manuals
+% Loris Tissino (loris.tissino@mattiussilab.net)
+% November 2009
+
+# NAME
+
+schoolmesh\_odf\_check - Get a specific portion of an OpenOffice.org document's content.xml file
+
+# SYNOPSIS
+
+schoolmesh\_odf\_check *path/to/document* *row* *column*
+
+# DESCRIPTION
+
+When generating documents from templates, sometimes weird errors occur, and the generated
+document cannot be opened (OpenOffice.org complains saying *Format error discovered in the file
+in the sub-document content.xml at ... (row, col)*).
+
+This utility might be handy to find the specific error.
+
+When preparing templates, you may want to uncheck *Size optimization for XML format* in the
+General tab of the Load/Save section of OpenOffice.org options dialog.
+
+# EXAMPLES
+
+	schoolmesh_odf_check ~/Desktop/myfile.odt 2 5218
+
+# BUGS
+
+Probably many.
+
+# SEE ALSO
+
+The SchoolMesh project is described at <http://schoolmesh.mattiussilab.net/>.
+

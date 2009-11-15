@@ -21,7 +21,7 @@
 		<p><?php echo $wpmodule->getPeriod() ?></p>
 	</td>
 <?php foreach($students as $student): ?>
-	<td width="20"><?php echo image_tag(sfConfig::get('app_config_base_url').'/vertical.php?text='. urlencode($student->getProfile()->getFullName(20)) .
+	<td width="20"><?php echo image_tag('/schoolmesh/vertical.php?text='. urlencode($student->getProfile()->getFullName(20)) .
 	'&backcolor=255-255-255&textcolor=0-0-0',
 			array(
 				'alt' => $student->getProfile()->getFullName(),

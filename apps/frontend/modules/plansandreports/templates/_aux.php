@@ -1,7 +1,7 @@
 <?php use_helper('Javascript') ?>
 <div id="aux_update">
 <?php if ($sf_user->hasFlash('error_aux')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error_aux')?></div>
+  <div class="error"><?php echo __($sf_user->getFlash('error_aux')) ?></div>
 <?php endif; ?>
 <table>
 <tr>
@@ -31,7 +31,8 @@
 						<?php echo link_to_remote(
 						sprintf(__('▣ %s'), $tool['description']), array(
 							'update'=>'aux_update',
-							'url' => 'plansandreports/removetool?id='. $workplan->getId() . '&tool='.$tool_id
+							'url' => 'plansandreports/removetool?id='. $workplan->getId() . '&tool='.$tool_id,
+							'loading'=>'$(\'loader' . $tool_id . '\').show();',
 							)
 						) ?>
 					<?php else: ?>
@@ -44,13 +45,14 @@
 						<?php echo link_to_remote(
 							sprintf(__('▢ %s'), $tool['description']), array(
 								'update'=>'aux_update',
-								'url' => 'plansandreports/addtool?id='. $workplan->getId() . '&tool='.$tool_id
+								'url' => 'plansandreports/addtool?id='. $workplan->getId() . '&tool='.$tool_id,
+								'loading'=>'$(\'loader' . $tool_id . '\').show();',
 								)
 							) ?>
 						<?php else: ?>
 							<?php echo sprintf(__('▢ %s'), $tool['description']) ?>
 						<?php endif ?>
-				<?php endif ?>
+				<?php endif ?><?php echo image_tag('loader.gif', array('style'=>'vertical-align: middle; display: none', 'id'=>'loader'.$tool_id)) ?>
 				<br />
 		<?php endforeach ?>
 </td>

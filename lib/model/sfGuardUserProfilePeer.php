@@ -102,25 +102,36 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	public static function retrieveAllButStudents()
 	
 	{
-				
 		$c = new Criteria();
 		$c->addJoin(sfGuardUserProfilePeer::ROLE_ID, RolePeer::ID);
 		$c->add(RolePeer::POSIX_NAME, sfConfig::get('app_config_students_default_posix_group'), Criteria::NOT_EQUAL);
 		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
 		
 		return parent::doSelect($c);
 	}
 
 
 
-	public static function retrieveTeachersWithAppointments()
+	public static function retrieveTeachers()
 	{
-	$c = new Criteria();
+/*	$c = new Criteria();
 	$c->addJoin(AppointmentPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
 	$c->add(AppointmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
 	$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
 	$t = self::doSelect($c);
 	return $t;
+
+*/
+
+		$c = new Criteria();
+		$c->addJoin(sfGuardUserProfilePeer::ROLE_ID, RolePeer::ID);
+		$c->add(RolePeer::POSIX_NAME, sfConfig::get('app_config_teachers_default_posix_group'));
+		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
+		
+		return parent::doSelect($c);
+
 	}
 
 	public static function resetGoogleAppsAccountInfoForAll()
@@ -392,6 +403,106 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		$c->add(sfGuardUserProfilePeer::LAST_ACTION_AT, $timelimit, Criteria::GREATER_THAN);
 		return parent::doSelect($c);
 		
+	}
+	
+	public static function getWelcomeLetter($ids, $filetype='odt', $context=null)
+	{
+		$result=Array();
+
+		$usertypes=Array();
+		
+		$users=self::retrieveByPks($ids);
+		foreach($users as $user)
+		{
+			@$usertypes[$user->getRoleId()]++;
+		}
+		
+		if (sizeof($usertypes)!=1)
+		{
+			$result['result']='error';
+			$result['message']='It is not possible to get welcome letters for users with different roles.';
+			return $result;
+		}
+		
+		
+		try
+		{
+			$templatename='welcomeletter_' . $users[0]->getRole()->getPosixName() .'.odt';
+			$odf=new OdfDoc($templatename, 'Welcome letter', $filetype);
+		}
+		catch (Exception $e)
+		{
+			if ($e InstanceOf OdfDocTemplateException)
+			{
+				$result['result']='error';
+				$result['message']='Template not found or not readable: '. $templatename;
+				return $result;
+			}
+			
+			if ($e InstanceOf OdfException)
+			{
+				$result['result']='error';
+				$result['message']='Template not valid: '. $templatename;
+				return $result;
+			}
+			
+			throw $e;
+		}
+		
+		$odfdoc=$odf->getOdfDocument();
+		$letters=$odfdoc->setSegment('letters');
+		$count=0;
+		foreach($users as $user)
+		{
+			$count++;
+			
+			if($context)
+			{
+				if ($user->getIsMale())
+				{
+					$salutation=$context->getI18n()->__('Dear %malename%', array('%malename%'=>$user->getFirstName()));
+				}
+				else
+				{
+					$salutation=$context->getI18n()->__('Dear %femalename%', array('%femalename%'=>$user->getFirstName()));
+				}
+			}
+			else
+			{
+				$salutation='Dear '. $user->getFirstName();
+			}
+			
+			$letters->userSalutation($salutation);
+			$letters->userUsername($user->getUsername());
+			$letters->userFullName($user->getFullName());
+			$letters->userSchoolclass($user->getCurrentSchoolclassId());
+			$letters->userBirthdate($user->getBirthdate('d/m/Y'));
+			$letters->userImportCode($user->getImportCode());
+			
+			
+			$sambaAccount=$user->getAccountByType('samba');
+			if (is_object($sambaAccount))
+			{
+				$letters->userSambaPassword($sambaAccount->getTemporaryPassword());
+			}
+			else
+			{
+				$letters->userSambaPassword('ERROR');
+			}
+			
+			
+			$letters->letterDate(date('d/m/Y'));
+			$pagebreak=($count<sizeof($users))?'<pagebreak>':'';
+			$letters->pagebreak($pagebreak);
+			$letters->merge();
+		}
+		
+		$odfdoc->mergeSegment($letters);
+
+		$result['content']=$odf;
+		$result['result']='notice';
+		return $result;
+
 	}
 	
 

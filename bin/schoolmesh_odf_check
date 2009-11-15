@@ -1,0 +1,62 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Get a specific portion of an OpenOffice.org document's content.xml file
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *path/to/document* *row* *column*
+#@
+#@ # DESCRIPTION
+#@
+#@ When generating documents from templates, sometimes weird errors occur, and the generated
+#@ document cannot be opened (OpenOffice.org complains saying *Format error discovered in the file
+#@ in the sub-document content.xml at ... (row, col)*).
+#@
+#@ This utility might be handy to find the specific error.
+#@
+#@ When preparing templates, you may want to uncheck *Size optimization for XML format* in the
+#@ General tab of the Load/Save section of OpenOffice.org options dialog.
+#@
+#@ # EXAMPLES
+#@
+#@	{-} ~/Desktop/myfile.odt 2 5218
+
+TEMPLATE=$1
+ROW=$2
+COL=$3
+
+checkFile "$TEMPLATE"
+checkInteger $ROW
+checkInteger $COL
+
+TEMPDIR=$(mktemp -d)
+
+cp $TEMPLATE $TEMPDIR
+
+cd $TEMPDIR
+unzip * >/dev/null
+
+LINE=$(sed -n ${ROW},${ROW}p content.xml)
+
+LENGTH=$(echo -n $LINE | wc -c)
+
+if [[ $LENGTH > 10 ]]; then
+	let START=$COL-50
+	if [[ $START < 0 ]]; then
+		START=1
+	fi
+	echo "From position $START, 100 chars..."
+	echo ${LINE:$START:100}
+else
+	echo "Full line:"
+	echo $LINE
+fi
+
+echo $TEMPDIR
+# rm -rf $TEMPDIR

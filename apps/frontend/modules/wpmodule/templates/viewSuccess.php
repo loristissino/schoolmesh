@@ -54,7 +54,7 @@
 				<?php echo link_to(__('Edit heading'), 'wpmodule/editheading?id='.$wpmodule->getId()) ?>
 				</li><br />
 				<li class="sf_admin_action_back">
-				<?php echo link_to(sprintf(__('Back to document «%s»'), $workplan), 'plansandreports/fill?id='.$workplan->getId()) ?>
+				<?php echo link_to(sprintf(__('Back to document «%s»'), $workplan), 'plansandreports/fill?id='.$workplan->getId(). '&ref=wpmodule#modules')  ?>
 				</li><br />
 	</ul>
 

@@ -289,15 +289,24 @@ if (isset($content['workplan_report']['tools']))
 
 	}
 
-	public static function listWorkplans($max_per_page, $page, $year, $sortby)
+	public static function listWorkplans($max_per_page, $page, $year, $sortby, $filter='', $filter_id=-1)
 	{
-	
-	
 		$c= new Criteria();
 		$c->addJoin(AppointmentPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
 		$c->addJoin(AppointmentPeer::SUBJECT_ID, SubjectPeer::ID);
 		$c->add(AppointmentPeer::YEAR_ID, $year);
-		
+
+		if ($filter_id>=0)
+		{
+			switch($filter)
+			{
+				case 'class': $c->add(AppointmentPeer::SCHOOLCLASS_ID, $filter_id); break;
+				case 'teacher': $c->add(AppointmentPeer::USER_ID, $filter_id);	break;
+				case 'subject': $c->add(AppointmentPeer::SUBJECT_ID, $filter_id); break;
+				case 'state': $c->add(AppointmentPeer::STATE, $filter_id); break;
+			}
+		}
+
 		switch($sortby)
 		{
 			case 'class': $c->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID); break;
@@ -312,6 +321,10 @@ if (isset($content['workplan_report']['tools']))
 			default: $c->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID);
 		}
 		
+
+
+
+
 		$pager = new sfPropelPager('Appointment', $max_per_page);
 		$pager->setCriteria($c);
 		$pager->setPage($page);

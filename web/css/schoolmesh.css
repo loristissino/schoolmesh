@@ -256,3 +256,23 @@ white-space:nowrap;
 background:#ccf;
 }
 
+#schoolmesh_alerts {
+text-align:left;
+vertical-align:middle;
+font-size:14px;
+font-weight: bold;
+white-space:nowrap;
+background:#e00;
+}
+
+
+.chosen
+{
+font-weight: bold;	
+background-color: #e7eef6;
+}
+
+.unchosen
+{
+font-weight: normal;
+}

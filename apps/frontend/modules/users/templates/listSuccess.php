@@ -87,7 +87,7 @@
   '' => __('Choose an action'),
   'Delete' => __('Delete selected users'),
   'runuserchecks' => __('Run user checks'),
-  'getletter' => __('Get introduction letter')  
+  'getletter' => __('Get welcome letter')  
 ), 0) ?>
   </select>
 
