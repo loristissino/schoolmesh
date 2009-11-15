@@ -1,3 +1,13 @@
+# From revision 366 to revision 367:
+
+Added sfOdfPlugin, we should need to change settings.yml
+
+	enabled_modules:
+      - default
+      - sfGuardAuth
+      - sfGuardUser
+      - sfOdfOdt  
+
 # From revision 331 to revision 332:
 
 Add in app.yml:

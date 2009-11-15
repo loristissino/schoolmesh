@@ -35,6 +35,7 @@ removetool:
     module:              plansandreports
     prefix_path:        plansandreports
 
+
 lanlogin:
   url:   /lanlogin/:username/:workstation/:ip
   param: { module: lanlog, action: create } 
@@ -100,6 +101,7 @@ workstation:
 plansandreports:
   url: plansandreports
   param: { module: plansandreports, action: index } 
+
 
 users:
   url: users

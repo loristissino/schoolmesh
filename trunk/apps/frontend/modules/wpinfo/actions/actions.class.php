@@ -133,7 +133,7 @@ class wpinfoActions extends sfActions
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
     $this->forward404Unless($wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
     $this->forward404Unless($wpinfo2 = WpinfoPeer::retrieveByPk($request->getParameter('app')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('app')));
-	$wpinfo->setCheckedContent($this->getUser()->getProfile()->getSfGuardUser()->getId(), $wpinfo->getContent() .  '<br />' . $wpinfo2->getContent());
+	$wpinfo->setCheckedContent($this->getUser(), $wpinfo->getContent() .  '<br />' . $wpinfo2->getContent());
 	$wpinfo->save();
 	$this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content appended.'));
 	$this->forward('wpinfo', 'edit');

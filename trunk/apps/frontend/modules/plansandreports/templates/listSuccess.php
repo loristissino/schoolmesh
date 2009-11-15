@@ -13,39 +13,6 @@
 
 <h1><?php echo __("Workplans and reports' monitoring") ?></h1>
 
-<?php /*
-<div id="sf_admin_bar">
-<div class="sf_admin_filter">
-  
-<form action="<?php echo url_for('plansandreports/setfilterlistpreference?filter=set' ) ?>" method="get">
-    <table cellspacing="0">
-      <tfoot>
-        <tr>
-          <td colspan="2">
-               <a onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;f.submit();return false;" href="<?php echo url_for('plansandreports/setfilterlistpreference?filter=reset') ?>"><?php echo __('Reset') ?></a>            <input type="submit" value="<?php echo __('Filter') ?>" />
-          </td>
-        </tr>
-      </tfoot>
-      <tbody>
-<tr class="sf_admin_form_row sf_admin_foreignkey sf_admin_filter_field_user_id">
-    <td>
-      <label for="appointment_filters_teacher_id"><?php echo __('Teacher') ?></label>    </td>
-    <td>
-<?php echo object_select_tag($filtered_user_id, 'getFilteredUserId',
-array('related_class'=>'sfGuardUserProfile',
-  'include_custom'=>__('Choose a teacher'),
-  'peer_method'=>'retrieveTeachersWithAppointments'
-  ))?>
-          </td>
-  </tr>
-              </tbody>
-    </table>
-  </form>
-</div>
-</div>
-
-*/ ?>
-
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
 <?php endif; ?>
@@ -55,6 +22,8 @@ array('related_class'=>'sfGuardUserProfile',
 
 
 <?php include_partial('content/pagerhead', array('pager'=>$pager)) ?>
+
+<?php if($pager->getNbResults()>0): ?>
 
 <?php include_partial('content/pager', array('pager'=>$pager, 'link'=>'plansandreports/list')) ?>
 
@@ -118,3 +87,54 @@ array('related_class'=>'sfGuardUserProfile',
 </ul>
 
 </form>
+
+<?php endif ?>
+
+<hr />
+
+
+<h2><?php echo __('Filters') ?></h2>
+<?php include_partial('content/filter',
+	array(
+		'title'=>'State',
+		'type'=>'state',
+		'link_selectall'=>'All states',
+		'link_selectall_tooltip'=>'Show documents in all states',
+		'items'=>$states,
+		'separator'=>' - '
+		)
+	)
+?>
+<?php include_partial('content/filter',
+	array(
+		'title'=>'Teacher',
+		'type'=>'teacher',
+		'link_selectall'=>'All teachers',
+		'link_selectall_tooltip'=>'Show documents of all teachers',
+		'items'=>$teachers,
+		'separator'=>' - '
+		)
+	)
+?>
+<?php  include_partial('content/filter',
+	array(
+		'title'=>'Subject',
+		'type'=>'subject',
+		'link_selectall'=>'All subjects',
+		'link_selectall_tooltip'=>'Show documents for all subjects',
+		'items'=>$subjects,
+		'separator'=>' - '
+		)
+	) 
+?>
+<?php include_partial('content/filter',
+	array(
+		'title'=>'Class',
+		'type'=>'class',
+		'link_selectall'=>'All classes',
+		'link_selectall_tooltip'=>'Show documents for all classes',
+		'items'=>$schoolclasses,
+		'separator'=>' - '
+		)
+	)
+?>

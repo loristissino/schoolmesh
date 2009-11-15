@@ -27,12 +27,23 @@ class contentActions extends sfActions
 
   }
 
+
+	public function executeUnoconv(sfWebRequest $request)
+	{
+		$this->getResponse()->setContentType('text/plain; Charset: utf-8');
+		
+		$result=OdfDocPeer::startUnoconv();
+		return $this->renderText('scheduled!'. "\n" . $result);
+
+	}
+
+
     public function executeWebserver($request)
 	
 	{
 		$cmd=$request->getParameter('cmd');
 		sfConfig::set('sf_web_debug', false);
-		$this->getResponse()->setContentType('text/plain; Charset: utf-u');
+		$this->getResponse()->setContentType('text/plain; Charset: utf-8');
 
 		switch($cmd)
 		{

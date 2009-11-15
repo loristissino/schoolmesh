@@ -17,11 +17,16 @@
 </head>
 <body>
 <div id="container">
-<?php if (has_slot('breadcrumbs')): ?>
-<div id="breadcrumbs">
-<p><?php echo __('Where am I? ') . link_to(__("Home"), "@homepage") ?> » <?php include_slot('breadcrumbs') ?></p>
-</div>
-<?php endif ?>
+	<?php if ($sf_user->hasFlash('schoolmesh_alerts')): ?>
+		<div id="schoolmesh_alerts">
+			<?php echo $sf_user->getFlash('schoolmesh_alerts') ?>
+		</div>
+	<?php endif ?>
+	<?php if (has_slot('breadcrumbs')): ?>
+		<div id="breadcrumbs">
+			<p><?php echo __('Where am I? ') . link_to(__("Home"), "@homepage") ?> » <?php include_slot('breadcrumbs') ?></p>
+		</div>
+	<?php endif ?>
 <div id="sf_admin_container">
 <?php echo $sf_content ?>
 </div>
@@ -31,10 +36,9 @@
        <li><?php echo link_to(__("Who's on line"), "@whosonline") ?></li>
        <li><?php echo link_to(__("My profile"), "@profile")  ?></li>
        <li><?php echo link_to(__("Workstation list"), "@workstation")  ?></li>
-       <li><?php echo link_to(__("Plans and Reports"), "@plansandreports")  ?></li>	   
+       <li><?php //echo link_to(__("Plans and Reports"), "@plansandreports")  ?></li>	   
     </ul>
 </div>
-
 
 <?php include_component('profile', 'info') ?>
 

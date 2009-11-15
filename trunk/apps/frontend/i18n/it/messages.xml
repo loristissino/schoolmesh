@@ -631,11 +631,11 @@
         <target>Modulo: </target>
       </trans-unit>
       <trans-unit id="186">
-        <source>OpenOffice.org Document</source>
+        <source>OpenOffice.org document</source>
         <target>Documento OpenOffice.org</target>
       </trans-unit>
       <trans-unit id="187">
-        <source>Microsoft Word Document</source>
+        <source>Microsoft Word document</source>
         <target>Documento Microsoft Word </target>
       </trans-unit>
       <trans-unit id="188">
@@ -1104,7 +1104,7 @@
       </trans-unit>
       <trans-unit id="304">
         <source>My appointments</source>
-        <target>I miei incarichi</target>
+        <target>I miei incarichi di docenza</target>
       </trans-unit>
       <trans-unit id="304">
         <source>Full view of plans and reports</source>
@@ -1254,6 +1254,71 @@
         <source>Import a module previously prepared</source>
         <target>Importa un modulo preparato precedentemente</target>
       </trans-unit>
+      <trans-unit id="340">
+        <source>Done with the module.</source>
+        <target>Lavoro sul modulo terminato.</target>
+      </trans-unit>
+      <trans-unit id="341">
+        <source>You cannot add the same item twice.</source>
+        <target>Non è possibile inserire lo stesso elemento due volte.</target>
+      </trans-unit>
+      <trans-unit id="342">
+        <source>You cannot add the same item twice.</source>
+        <target>Non è possibile rimuovere lo stesso elemento due volte.</target>
+      </trans-unit>
+      <trans-unit id="343">
+        <source>Filters</source>
+        <target>Filtri</target>
+      </trans-unit>
+      <trans-unit id="344">
+        <source>All states</source>
+        <target>Tutti gli stati</target>
+      </trans-unit>
+      <trans-unit id="345">
+        <source>All teachers</source>
+        <target>Tutti i docenti</target>
+      </trans-unit>
+      <trans-unit id="346">
+        <source>All subjects</source>
+        <target>Tutte le materie</target>
+      </trans-unit>
+      <trans-unit id="347">
+        <source>All classes</source>
+        <target>Tutte le classi</target>
+      </trans-unit>
+      <trans-unit id="348">
+        <source>Show only these documents</source>
+        <target>Mostra solo questi documenti</target>
+      </trans-unit>
+      <trans-unit id="349">
+        <source>Filter set.</source>
+        <target>Filtro impostato.</target>
+      </trans-unit>
+      <trans-unit id="350">
+        <source>Filter unset.</source>
+        <target>Filtro eliminato.</target>
+      </trans-unit>
+      <trans-unit id="351">
+        <source>The requested action has been performed.</source>
+        <target>L'azione richiesta è stata eseguita.</target>
+      </trans-unit>
+      <trans-unit id="352">
+        <source>Mr. </source>
+        <target>Prof. </target>
+      </trans-unit>
+      <trans-unit id="353">
+        <source>Ms. </source>
+        <target>Prof.ssa </target>
+      </trans-unit>
+      <trans-unit id="354">
+        <source>Dear %malename%</source>
+        <target>Caro %malename%</target>
+      </trans-unit>
+      <trans-unit id="355">
+        <source>Dear %femalename%</source>
+        <target>Cara %femalename%</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
+

@@ -8,7 +8,7 @@ class profileComponents extends sfComponents
             
             $this->current_user = $this->getUser()->isAuthenticated() ? $this->getUser()->getGuardUser() : $this->softuser;
             
-            if (is_object($this->current_user))
+            if ($this->current_user instanceof sfGuardUser)
             {
 				
 				$this->current_user->getProfile()
@@ -20,7 +20,24 @@ class profileComponents extends sfComponents
                 $this->disk_soft_quota_exceeded = $this->current_user->getProfile()->getDiskUsedBlocks() > $this->current_user->getProfile()->getDiskSetSoftBlocksQuota();
 
 */
-            }
+			}
+			
+			if ($this->getUser()->isAuthenticated())
+			{
+				if ($this->getUser()->hasCredential('admin'))
+				{
+					if (!OdfDocPeer::getIsUnoconvActive())
+					{
+						// FIXME: I must provide a more generic way, in order to allow several alerts...
+						$this->getUser()->setFlash('schoolmesh_alerts', 'Unoconv not active!');
+					}
+				}
+			}
+
+			
+			
+			
+			
 //            $this->softuser = softUser::getSoftUsername();
  //           $this->fullname = softUser::getFullname();
           }

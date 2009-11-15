@@ -664,15 +664,25 @@ $con->query($sql);
 
 	$at=WptoolAppointmentPeer::retrieveByAppointmentIdAndToolId($this->getId(), $tool_id);
 
-	if ($this->getState()!=$at->getWptoolItem()->getWptoolItemType()->getState())
+	if ($at)
+	{
+		if ($this->getState()!=$at->getWptoolItem()->getWptoolItemType()->getState())
+			{
+				$result['result']='error_aux';
+				$result['message']='This action is not allowed for a workplan/report in this state';
+				return $result;
+			}
+
+		try {
+			$at->delete();
+		}
+		catch (Exception $e)
 		{
 			$result['result']='error_aux';
-			$result['message']='This action is not allowed for a workplan/report in this state';
+			$result['message']='You cannot remove the same item twice.';
 			return $result;
 		}
-
-	if ($at)
-		$at->delete();
+	}
 
 	$result['result']='notice_aux';
 	$result['message']='The tool was removed';
@@ -702,10 +712,21 @@ $con->query($sql);
 			return $result;
 		}
 
-	$tool= new WptoolAppointment();
-	$tool->setAppointmentId($this->getId());
-	$tool->setWptoolItemId($tool_id);
-	$tool->save();
+	try
+	{
+		$tool= new WptoolAppointment();
+		$tool
+		->setAppointmentId($this->getId())
+		->setWptoolItemId($tool_id)
+		->save();
+	}
+	
+	catch (Exception $e)
+	{
+		$result['result']='error_aux';
+		$result['message']='You cannot add the same item twice.';
+		return $result;
+	}
 
 	$result['result']='notice_aux';
 	$result['message']='The tool was added';
@@ -766,6 +787,7 @@ public function getWorkflowLogs()
 
 	$c=new Criteria();
 	$c->addAscendingOrderByColumn(WptoolItemTypePeer::RANK);
+	$c->addAscendingOrderByColumn(WptoolItemPeer::ID);
 	$t = WptoolItemPeer::doSelectJoinWptoolItemType($c);
 	
 	$chosenTools=$this->getWptoolAppointments();
@@ -894,6 +916,120 @@ public function getWorkflowLogs()
 
 		
 	}
+	
+	
+	public function getOdf($doctype, sfContext $sfContext=null, $template='')
+	{
+		
+		if ($template=='')
+		{
+			$template='workplan.odt';
+		}
+		
+		$teachertitle=$this->getSfGuardUser()->getProfile()->getIsMale()?'Mr. ':'Ms. ';
+
+		if ($sfContext)
+		{
+			$teachertitle=$sfContext->getI18n()->__($teachertitle);
+		}
+	
+		try
+		{
+			$odf=new OdfDoc($template, $this->__toString(). '.' . $doctype, $doctype);
+		}
+		catch (Exception $e)
+		{
+			throw $e;
+		}
+		
+		$odfdoc=$odf->getOdfDocument();
+		
+		$odfdoc->setVars('year',  $this->getYear()->__toString());
+		$odfdoc->setVars('teacher',  $teachertitle . $this->getSfGuardUser()->getProfile()->getFullName());
+		$odfdoc->setVars('subject', $this->getSubject()->getDescription());
+		$odfdoc->setVars('year',  $this->getYear()->__toString());
+		$odfdoc->setVars('schoolclass',  $this->getSchoolclassId());
+		
+		
+		$wpinfos=$this->getWpinfos();
+		
+		$infos=$odfdoc->setSegment('infos');
+		foreach($wpinfos as $wpinfo)
+		{
+			if (
+				$wpinfo->getWpinfoType()->getState()<=$this->getState()
+				&&
+				$wpinfo->getContent()
+				)
+			{
+				$infos->infoTitle($wpinfo->getWpinfoType()->getTitle());
+				$infos->infoDescription($wpinfo->getWpinfoType()->getDescription());
+				$infos->infoContent($wpinfo->getContent());
+				$infos->merge();
+			}
+		}
+		
+		$odfdoc->mergeSegment($infos);
+		
+		
+		$wpmodules=$this->getWpmodules();
+		
+		$modules=$odfdoc->setSegment('modules');
+		
+		$moduleNumber=0;
+		
+		foreach($wpmodules as $wpmodule)
+		{
+			$modules->moduleTitle($wpmodule->getTitle());
+			$modules->moduleNumber(++$moduleNumber);
+			$modules->modulePeriod($wpmodule->getPeriod());
+			
+			foreach($wpmodule->getWpitemGroups() as $wpitemgroup)
+			{
+				$wpitems=$wpitemgroup->getWpmoduleItems();
+				if (($wpitemgroup->getWpitemType()->getState()<=$this->getState())&&(sizeof($wpitems)>0))
+				{
+					$modules->group->groupTitle($wpitemgroup->getWpitemType()->getTitle());
+					
+					foreach($wpitems as $wpitem)
+					{
+						$modules->group->item->itemContent($wpitem->getContent());
+						$modules->group->item->merge();
+					}
+					$modules->group->merge();
+				}
+			}
+			
+			$pagebreak=($moduleNumber<sizeof($wpmodules))?'<pagebreak>':'';
+			$modules->pagebreak($pagebreak);
+
+			$modules->merge();
+		}
+		
+		$odfdoc->mergeSegment($modules);
+
+
+		$tools=$this->getTools(true);
+
+		$toolgroups=$odfdoc->setSegment('toolgroups');
+	
+		if(sizeof($tools)>0)
+			foreach($tools as $toolGroup)
+				if (@sizeof($toolGroup['elements'])>0)
+					{
+					$toolgroups->toolgroupTitle($toolGroup['description']);
+					foreach($toolGroup['elements'] as $element)
+						{
+							$toolgroups->tool->toolContent($element['description']);
+							$toolgroups->tool->merge();
+						}
+					$toolgroups->merge();
+					}
+		$odfdoc->mergeSegment($toolgroups);
+		
+		return $odf;
+	}
+	
 
 public function getWpevents($criteria = null, PropelPDO $con = null)
 

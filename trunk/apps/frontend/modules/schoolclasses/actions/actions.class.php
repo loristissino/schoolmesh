@@ -57,6 +57,8 @@ public function executeGrid(sfWebRequest $request)
 			$this->redirect($redirectURL);
 		}
 
+// FIXME -- must continue this
+//	$this->baseaddress =$_SERVER['SCRIPT_NAME'];
 
 
 }

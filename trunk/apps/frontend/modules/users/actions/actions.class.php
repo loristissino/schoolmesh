@@ -208,21 +208,21 @@ class usersActions extends sfActions
 	
 }  
 
-	public function executeXml(sfWebRequest $request)
-	{
-		$this->user = $this->getUser();
-		$this->referer= $request->getReferer();
-		
+  public function executeGetletter(sfWebRequest $request)
+  {
+
+		set_time_limit(0);
+
 		if($request->hasParameter('id'))
 		{
 			$this->id=$request->getParameter('id');
 			$this->forward404Unless($this->current_user=sfGuardUserProfilePeer::retrieveByPk($this->id));
-			$this->userlist=array($this->current_user);
+			$this->userlist=array($this->id);
 		}
 		elseif ($request->hasParameter('ids'))
 		{
 			$ids = $request->getParameter('ids');
-			$this->userlist = sfGuardUserProfilePeer::retrieveByPKs($ids);
+			$this->userlist = $ids;
 		}
 		else
 		{
@@ -230,31 +230,28 @@ class usersActions extends sfActions
 				$this->redirect('users/list');
 		}
 		
-		set_time_limit(0);
+		$result=sfGuardUserProfilePeer::getWelcomeLetter($ids, 'pdf', $this->getContext());
 		
-		$this->available_accounts=sfConfig::get('app_config_accounts');
-		
-		$this->profiles=array();
-		
-		foreach($this->userlist as $current_user)
+		if ($result['result']=='error')
 		{
-			$this->profiles[]=$current_user;
+			$this->getUser()->setFlash('error', $result['message']);
+			$this->redirect('users/list');
 		}
 		
-		$this->setLayout('odt_content');
+		$odfdoc=$result['content'];
+		if (is_object($odfdoc))
+		{
+			$odfdoc
+			->saveFile()
+			->setResponse($this->getContext()->getResponse());
+			return sfView::NONE;
 
-		
-	}
-
-
-  public function executeGetletter(sfWebRequest $request)
-  {
-	
-	$document = new Opendocument('mattiussirq', 'letter');  // the second parameter is the document name
-	$document->setHeader($this->getController()->getPresentationFor('headers', 'letter'));
-	$document->setContent($this->getController()->getPresentationFor('users', 'xml'));
-	$document->setResponse($this->getContext()->getResponse());
-	return sfView::NONE;
+		}
+		else
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.'));
+			$this->redirect('users/list');
+		}
 
   }
 
