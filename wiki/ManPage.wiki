@@ -40,15 +40,24 @@ UTILITY LIST
        schoolmesh_loginaccounts_getshells  - Get a list of available shells on
        the system
 
+       schoolmesh_odf_check - Get a specific portion of an OpenOffice.org doc
+       ument's content.xml file
+
+       schoolmesh_odf_converter  -  start,  stop or show the status of Unoconv
+       Odf converter
+
        schoolmesh_posixaccount_changefullname - Change full name for  a  posix
        account of a user
 
        schoolmesh_posixaccount_changegroup  -  Change  the  primary group of a
        user
 
+       schoolmesh_posixaccount_changeusername - Change username for the  posix
+       account of a user
+
        schoolmesh_posixaccount_create - Create a posix account for a user
 
-       schoolmesh_posixaccount_createbasefolder - Create the basefolder for  a
+       schoolmesh_posixaccount_createbasefolder  - Create the basefolder for a
        user
 
        schoolmesh_posixaccount_createhomedir - Create the home directory for a
@@ -59,10 +68,10 @@ UTILITY LIST
 
        schoolmesh_posixaccount_lockuser - Lock a user
 
-       schoolmesh_posixaccount_quotausercheck  -  Check if the quota of a user
+       schoolmesh_posixaccount_quotausercheck - Check if the quota of  a  user
        was exceeded
 
-       schoolmesh_posixaccount_repairbasefolder - Repair the basefolder  of  a
+       schoolmesh_posixaccount_repairbasefolder  -  Repair the basefolder of a
        user
 
        schoolmesh_posixaccount_repairhomedir - Repair the basefolder of a user
@@ -71,10 +80,15 @@ UTILITY LIST
 
        schoolmesh_posixaccount_unlockuser - Unlock a user
 
-       schoolmesh_posixaccounts_list - Get a list of posix users belonging  to
+       schoolmesh_posixaccounts_list  - Get a list of posix users belonging to
        a specified group
 
+       schoolmesh_posixaccounts_quotachecks - Get a list of  users  specifying
+       who of them exceeds their quota
+
        schoolmesh_sambaaccount_create - Create a samba account for a user
+
+       schoolmesh_sambaaccount_delete - Delete a samba account for a user
 
        schoolmesh_sambaaccount_getinfo	-  Get info about the samba (SMB/CIFS)
        account of a user
@@ -102,7 +116,7 @@ AUTHOR
 
 
 
-Schoolmesh utilities User ManualsOctober 2009			 SCHOOLMESH(8)
+Schoolmesh utilities User ManualsNovember 2009			 SCHOOLMESH(8)
 }}}
 
 
@@ -272,6 +286,53 @@ AUTHOR
 
 
 Schoolmesh User Manuals 	 October 200SCHOOLMESH_APPLICATION_SETSTATE(8)
+}}}
+
+
+
+== schoolmesh_application_update~ ==
+
+{{{
+SCHOOLMESH_APPLICATION_UPDATE~(8)	     SCHOOLMESH_APPLICATION_UPDATE~(8)
+
+
+
+NAME
+       schoolmesh_application_update~ - Update the application with the newest
+       SVN release
+
+SYNOPSIS
+       schoolmesh_application_update~ go
+
+DESCRIPTION
+       This script updates the application, making a backup of	specific  con
+       figuraton  files  that  might  have been customized, and restoring them
+       afterwards.
+
+WARNINGS
+       This  script  does  not	backup	the  database.	It's  better  to   run
+       schoolmesh_application_dumptables(8) before its use.
+
+       The list of customizable files to backup might be incomplete.
+
+       Run at your own risk. New versions may introduce regressions.
+
+EXAMPLES
+	     schoolmesh_application_update~ go
+
+BUGS
+       Probably many.
+
+SEE ALSO
+       The  SchoolMesh	project  is described at <http://schoolmesh.mattiussi
+       lab.net/>.
+
+AUTHOR
+       Loris Tissino (loris.tissino@mattiussilab.net)
+
+
+
+Schoolmesh User Manuals 	 October 2009SCHOOLMESH_APPLICATION_UPDATE~(8)
 }}}
 
 
@@ -512,6 +573,94 @@ Schoolmesh User Manuals 	 October SCHOOLMESH_LOGINACCOUNTS_GETSHELLS(8)
 
 
 
+== schoolmesh_odf_check ==
+
+{{{
+SCHOOLMESH_ODF_CHECK(8) 			       SCHOOLMESH_ODF_CHECK(8)
+
+
+
+NAME
+       schoolmesh_odf_check - Get a specific portion of an OpenOffice.org doc
+       ument's content.xml file
+
+SYNOPSIS
+       schoolmesh_odf_check path/to/document row column
+
+DESCRIPTION
+       When generating documents from templates, sometimes weird errors occur,
+       and  the  generated document cannot be opened (OpenOffice.org complains
+       saying Format error discovered in the file  in  the  sub-document  con
+       tent.xml at ... (row, col)).
+
+       This utility might be handy to find the specific error.
+
+       When preparing templates, you may want to uncheck Size optimization for
+       XML format in the General tab  of  the  Load/Save  section  of  OpenOf
+       fice.org options dialog.
+
+EXAMPLES
+	     schoolmesh_odf_check ~/Desktop/myfile.odt 2 5218
+
+BUGS
+       Probably many.
+
+SEE ALSO
+       The  SchoolMesh	project  is described at <http://schoolmesh.mattiussi
+       lab.net/>.
+
+AUTHOR
+       Loris Tissino (loris.tissino@mattiussilab.net)
+
+
+
+Schoolmesh User Manuals 	 November 2009	       SCHOOLMESH_ODF_CHECK(8)
+}}}
+
+
+
+== schoolmesh_odf_converter ==
+
+{{{
+SCHOOLMESH_ODF_CONVERTER(8)			   SCHOOLMESH_ODF_CONVERTER(8)
+
+
+
+NAME
+       schoolmesh_odf_converter  -  start,  stop or show the status of Unoconv
+       Odf converter
+
+SYNOPSIS
+       schoolmesh_odf_converter start | stop | status
+
+DESCRIPTION
+       Use this script to start or stop Unoconv Odf converter.
+
+WARNINGS
+       This should be used by an unprivileged user with a minimal X configura
+       tion and little privileges
+
+EXAMPLES
+	     schoolmesh_odf_converter start
+	     schoolmesh_odf_converter stop
+
+BUGS
+       Probably many.
+
+SEE ALSO
+       The  SchoolMesh	project  is described at <http://schoolmesh.mattiussi
+       lab.net/>.
+
+AUTHOR
+       Loris Tissino (loris.tissino@mattiussilab.net)
+
+
+
+Schoolmesh User Manuals 	 November 2009	   SCHOOLMESH_ODF_CONVERTER(8)
+}}}
+
+
+
 == schoolmesh_posixaccount_changefullname ==
 
 {{{
@@ -583,6 +732,48 @@ AUTHOR
 
 
 Schoolmesh User Manuals 	 OctoberSCHOOLMESH_POSIXACCOUNT_CHANGEGROUP(8)
+}}}
+
+
+
+== schoolmesh_posixaccount_changeusername ==
+
+{{{
+SCHOOLMESH_POSIXACCOUNT_CHANGEUSERNAMSCHOOLMESH_POSIXACCOUNT_CHANGEUSERNAME(8)
+
+
+
+NAME
+       schoolmesh_posixaccount_changeusername  - Change username for the posix
+       account of a user
+
+SYNOPSIS
+       schoolmesh_posixaccount_changeusername new_username old_username
+
+DESCRIPTION
+       Use this script to change the username of a user.
+
+WARNINGS
+       If the user has also  external  accounts,  theese  won't  be  affected.
+       Internal  accounts,  like  samba, that depend on the existence of posix
+       one, will be deleted, but not recreated.
+
+EXAMPLES
+	     schoolmesh_posixaccount_changeusername johnn john
+
+BUGS
+       Probably many.
+
+SEE ALSO
+       The SchoolMesh project is  described  at  <http://schoolmesh.mattiussi
+       lab.net/>.
+
+AUTHOR
+       Loris Tissino (loris.tissino@mattiussilab.net)
+
+
+
+Schoolmesh User Manuals 	 OctoSCHOOLMESH_POSIXACCOUNT_CHANGEUSERNAME(8)
 }}}
 
 
@@ -969,6 +1160,47 @@ Schoolmesh User Manuals 	 October 2009 SCHOOLMESH_POSIXACCOUNTS_LIST(8)
 
 
 
+== schoolmesh_posixaccounts_quotachecks ==
+
+{{{
+SCHOOLMESH_POSIXACCOUNTS_QUOTACHECKS(8)SCHOOLMESH_POSIXACCOUNTS_QUOTACHECKS(8)
+
+
+
+NAME
+       schoolmesh_posixaccounts_quotachecks  -	Get a list of users specifying
+       who of them exceeds their quota
+
+SYNOPSIS
+       schoolmesh_posixaccounts_quotachecks primary | secondary | all group
+
+DESCRIPTION
+       Use this script to get a list of  users	with  information  about  disk
+       quota  exceeded. You can decide to check only primary groups, only sec
+       ondary, or both.
+
+EXAMPLES
+	     schoolmesh_posixaccounts_quotachecks primary students
+	     schoolmesh_posixaccounts_quotachecks secondary students
+	     schoolmesh_posixaccounts_quotachecks all students
+
+BUGS
+       Probably many.
+
+SEE ALSO
+       The SchoolMesh project is  described  at  <http://schoolmesh.mattiussi
+       lab.net/>.
+
+AUTHOR
+       Loris Tissino (loris.tissino@mattiussilab.net)
+
+
+
+Schoolmesh User Manuals 	 OctobeSCHOOLMESH_POSIXACCOUNTS_QUOTACHECKS(8)
+}}}
+
+
+
 == schoolmesh_posixaccount_unlockuser ==
 
 {{{
@@ -1044,6 +1276,42 @@ AUTHOR
 
 
 Schoolmesh User Manuals 	 October 2009SCHOOLMESH_SAMBAACCOUNT_CREATE(8)
+}}}
+
+
+
+== schoolmesh_sambaaccount_delete ==
+
+{{{
+SCHOOLMESH_SAMBAACCOUNT_DELETE(8)	     SCHOOLMESH_SAMBAACCOUNT_DELETE(8)
+
+
+
+NAME
+       schoolmesh_sambaaccount_delete - Delete a samba account for a user
+
+SYNOPSIS
+       schoolmesh_sambaaccount_delete username
+
+DESCRIPTION
+       Use this script to delete a samba account.
+
+EXAMPLES
+	     schoolmesh_sambaaccount_delete john
+
+BUGS
+       Probably many.
+
+SEE ALSO
+       The  SchoolMesh	project  is described at <http://schoolmesh.mattiussi
+       lab.net/>.
+
+AUTHOR
+       Loris Tissino (loris.tissino@mattiussilab.net)
+
+
+
+Schoolmesh User Manuals 	 October 2009SCHOOLMESH_SAMBAACCOUNT_DELETE(8)
 }}}
 
 

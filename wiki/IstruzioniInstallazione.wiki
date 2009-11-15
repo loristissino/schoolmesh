@@ -17,6 +17,8 @@
 
 6. [Integrazione Integrazione con Samba, Squid, ecc.]
 
+7. [OpenOffice Template OpenOffice e conversione di documenti]
+
 =Come aggiornare SchoolMesh=
 
 Per gli aggiornamenti, dovrebbe essere sufficiente eseguire lo script `schoolmesh_application_update`:

@@ -10,6 +10,7 @@ I file da prendere in considerazione sono:
   * _apps/frontend/config/app.yml_ (configurazione dell'applicazione di frontend)
   * _apps/backend/config/app.yml_ (configurazione dell'applicazione di backend)
   * _config/databases.yml_ (accesso ai database)
+  * tutti i _template_ dei documenti da produrre (in _web/oo__, salvo diverse configurazioni)
 
 *Attenzione*: questi file vengono sovrascritti con gli aggiornamenti, per cui è importante farsene una copia di sicurezza (ad esempio, in _/etc/schoolmesh_.
 

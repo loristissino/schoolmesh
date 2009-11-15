@@ -7,14 +7,14 @@ There is a lot of things to do. Here we'll list them just to keep a reference.
 
 == Development ==
 
+  # better template engine for _OpenOffice.org_ documents (DONE)
   # internal search engine (with Lucene)
   # functional tests
-  # code revision
+  # complete code revision
   # school projects management
   # profile management
   # google apps integration
   # moodle integration
-  # better template engine for _OpenOffice.org_ documents
 
 == Configuration ==
 
