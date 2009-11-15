@@ -1,0 +1,123 @@
+#summary Integrazione con Samba, Squid, ecc
+
+= Template OpenOffice e conversione di documenti =
+
+SchoolMesh prepara i documenti da stampare o esportare basandosi su modelli (_template_) preparati con OpenOffice.org Writer. Se si vuole ottenere un file in altro formato (es. PDF o Microsoft Word), OpenOffice.org viene utilizzato come convertitore.
+
+== Quadro generale ==
+
+Immaginiamo che la scuola voglia produrre un file PDF per ognuno dei piani di lavoro dei docenti. Il lavoro è organizzato così:
+
+  # l'amministratore prepara un documento ODT, contenente degli appositi segnaposto e la definizione di alcuni stili richiesti, e lo salva con un determinato nome (es. _workplan.odt_)
+  # l'applicazione web legge i dati relativi al particolare piano di lavoro dalla base di dati e produce, basandosi su _workplan.odt_, un nuovo documento ODT temporaneo, contenente il piano di lavoro (es. _/tmp/oo_1234.odt_)
+  # se il documento è richiesto in formato ODT, viene servito quello generato
+  # se il documento è richiesto in formato PDF o DOC, il file temporaneo viene convertito e viene servito il documento generato  
+
+*Attenzione:* nella terminologia di SchoolMesh, un _template_ è un normale documento ODT, seppur contenente dei segnaposto e degli stili particolari. *Non è* un modello di documento OpenOffice. I modelli di documento OpenOffice possono essere utilizzati per generare con facilità diversi _template_ SchoolMesh con alcune caratteristiche comuni (es. stili, intestazione, piè di pagina, ecc.).
+
+== Preparazione dei _template_ ==
+
+I _template_ dei documenti vanno preparati seguendo tre semplici regole:
+
+  # usare correttamente i segnaposto
+  # gestire correttamente le iterazioni  
+  # impostare gli stili necessari 
+
+=== I segnaposto ===
+
+I segnaposto sono dei nomi racchiusi tra parentesi graffe. Le cose fuori dalle parentesi graffe vengono riprodotte letteralmente. Ad esempio, nel _template_ del piano di lavoro del docente, si trovano questi segnaposto:
+
+{{{
+Anno scolastico {year}
+Docente: {teacher}
+Materia: {subject}
+Classe: {schoolclass}
+}}}
+
+=== Le iterazioni ===
+
+Le iterazioni si hanno quando in un documento dovranno essere riportati più valori di una determinata categoria. Ad esempio, più dettagli informativi, ognuno dei quali con un titolo, una descrizione, un contenuto:
+
+{{{
+[!-- BEGIN infos --]
+  {infoTitle}
+  {infoDescription}
+  {infoContent}
+[!-- END infos --]
+}}}
+
+Le iterazioni possono essere annidate. Ad esempio, in un piano di lavoro ci sono più moduli, in un modulo più gruppi di elementi, in un gruppo di elementi più elementi:
+
+{{{
+[!-- BEGIN modules --]
+  {moduleNumber}. {moduleTitle}
+  {modulePeriod}
+  [!-- BEGIN group --]
+    {groupTitle}
+	[!-- BEGIN item --]
+      {itemContent}
+	[!-- END item --]
+  [!-- END group --]
+[!-- END modules --]
+}}}
+
+Nell'esempio qui sopra, l'indentazione è messa per chiarezza, ma nel documento ODT potrebbe essere meglio non averla (si noti che qui sotto _BEGIN item_ e _END item_ non sono in righe a sé per evitare righe vuote nel documento prodotto):
+
+{{{
+[!-- BEGIN group --]
+{groupTitle}[!-- BEGIN item --]
+* {itemContent}[!-- END item --]
+[!-- END group --]
+}}}
+
+Nei casi in cui al termine di un ciclo di iterazione si desidera un cambio di pagina si può usare il segnaposto speciale _pagebreak_. Il nostro risultato finale è questo:
+
+{{{
+[!-- BEGIN modules --]
+{moduleNumber}. {moduleTitle}
+{modulePeriod}
+[!-- BEGIN group --]
+{groupTitle}[!-- BEGIN item --]
+* {itemContent}[!-- END item --]
+
+[!-- END group --]{pagebreak}[!-- END modules --]
+}}}
+
+(Nota: se invece si usasse un salto pagina come stile di OpenOffice, si otterrebbe l'effetto sgradevole di avere un salto pagina anche dopo l'ultimo modulo.)
+
+=== Gli stili ===
+
+I segnaposto possono essere formattati come meglio si ritiene opportuno. L'unica avvertenza è che non se ne può formattare una parte: non ha senso avere in grassetto _{gro_ e in corsivo _upTitle}_.
+
+Tutto ciò che viene sostituito al segnaposto erediterà il formato assegnato al segnaposto stesso. Esistono però tre eccezioni che può essere utile considerare: quando nel database è consentita l'introduzione di marcatori html come *em*, *sup* e *sub*, si vorrà fare in modo che essi vengano mappati su stili diversi nel documento. Ebbene, è sufficiente definire nel proprio template tre stili carattere (denominati rispettivamente _schoolmeshem_, _schoolmeshsup_ e _schoolmeshsub_) e definire per essi le caratteristiche appropriate, per ottenere il risultato desiderato.
+
+Inoltre, per gestire il salto pagina, sarà necessario definire uno stile paragrafo, denominato _schoolmeshpagebreak_, che abbia l'opzione 'Inserisci interruzione di pagina' attivata.
+
+=== Errori nei _template_ ===
+
+Può capitare che si commettano degli errori nella predisposizione dei template, che portano alla generazione di un documento ODT non valido (OpenOffice all'apertura del documento dice "Errore di formato nel file, nel sottodocumento content.xml in Y,X (riga, colonna)").
+
+Può essere utile salvare il documento generato e utilizzare l'utility `schoolmesh_odf_check` per analizzare il risultato.
+
+== Uso del convertitore ==
+
+Affinché il convertitore di documenti possa funzionare, è necessario che esso venga attivato da un utente che ha a disposizione una sessione X.
+
+Un possibile escamotage è il seguente:
+
+  # creare un account fittizio (es. _schoolmesh_) sul server
+  # effettuare il login con quell'account
+  # verificare che da quell'account sia possibile lanciare lo script `schoolmesh_odf_converter start` (se necessario aggiustare i permessi o l'appartenenza del gruppo -- NOTA qui bisogna sistemare un po' in modo che i privilegi siano i minori possibili)
+  # deselezionare tutti i programmi di avvio in _Preferenze/Sessioni_ 
+  # aggiungere, come unico programma d'avvio, _schoolmesh_odf_converter start_
+  # in _Amministrazione/Finestra di accesso_ abilitare l'accesso temporizzato (scheda _Sicurezza_) per l'utente fittizio creato
+
+Il server non dovrà essere utilizzato direttamente dopo l'accesso temporizzato.
+
+Alternative:
+
+  # trovare un altro convertitore affidabile
+  # ospitare il convertitore su un altro host
+  # ospitare il convertitore su una macchina virtuale
+
+
