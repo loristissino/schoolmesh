@@ -76,7 +76,7 @@ class OdfDoc
 		}
 		catch (Exception $e)
 		{
-			throw new OdfDocConversionException('Conversion error '. $this->_file2serve)
+			throw new OdfDocConversionException('Conversion error '. $this->_file2serve);
 		}
 		
 		
