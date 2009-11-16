@@ -9,4 +9,12 @@
  */ 
 class YearPeer extends BaseYearPeer
 {
+	public static function retrieveByDescription($value)
+	{
+		$c=new Criteria();
+		$c->add(self::DESCRIPTION, $value);
+		return self::doSelectOne($c);
+	}
+	
+	
 }
