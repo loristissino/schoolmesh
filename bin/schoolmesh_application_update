@@ -67,7 +67,7 @@ for FILE in $FILELIST
 msg_ok "done."
 
 echo -n "Setting correct owner... "
-sudo find $SCHOOLMESHDIR ! -owner www-data -exec chown -R www-data:adm {} \;
+sudo find $SCHOOLMESHDIR ! -user www-data -exec chown -R www-data:adm {} \;
 msg_ok "done."
 
 echo -n "Applying correct permissions to files... "
