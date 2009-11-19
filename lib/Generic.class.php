@@ -182,6 +182,26 @@ class Generic{
 		}
 		
 		
+		static public function strip_tags_and_attributes($str, $allowable_tags)
+		{
+//			$result=preg_replace('/\/U', '?P=tag', $str);
+//			echo $str . ' ---> ' . $result . "\n";
+			$str=strip_tags($str, $allowable_tags);
+//			$str=preg_replace('/\<<tag>([a-z]*).*\>/U', '<P=tag>', $str); 
+			$str=preg_replace('/\<([a-z]+)[^\>]*>/', '<\\1>', $str); 
+			
+			$str=str_replace(
+				array(
+					'<br>',
+					'<hr>', 
+				),
+				array(
+					'<br />', 
+					'<hr />'
+				), $str);  //this uniforms stand-alone elements 
+			return ltrim(rtrim($str));
+		}
+		
 		static public function executeCommand($command, $withSudo=false)
 		{
 			$info=array();

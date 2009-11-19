@@ -68,6 +68,40 @@ estrae tutti gli studenti della classe 1AIG
 
     // add your code here
 	
+/*	$items=WpmoduleItemPeer::doSelect(new Criteria());
+	foreach($items as $item)
+	{
+	//	if ($item->getRawContent()!=$item->getContent())
+		{
+			echo '### ' . $item->getId() . "\n";
+			echo 'RAW: «' . $item->getRawContent() . "»\n";
+//			echo 'STR: «' . $item->getContent() . "»\n";
+			echo "\n";
+//			$item->setContent($item->getContent());
+//			$item->save();
+		}
+	}
+	*/
+	/*
+	$infos=WpinfoPeer::doSelect(new Criteria());
+	foreach($infos as $info)
+	{
+		$newcontent=Generic::strip_tags_and_attributes($info->getContent(), '<br><em>');
+		if ($info->getContent()!=$newcontent)
+		{
+			echo '### ' . $info->getId() . "\n";
+			echo 'RAW: «' . $info->getContent() . "»\n";
+			echo 'STR: «' . $newcontent . "»\n";
+			echo "\n";
+			$info->setContent($newcontent);
+			$info->save();
+		}
+	}
+	
+	
+	
+	die();
+	*/
 	$year=YearPeer::retrieveByDescription($options['year']);
 	if (!$year)
 	{
