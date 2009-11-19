@@ -410,48 +410,73 @@
 <text:p text:style-name="P1"/>
 <text:p text:style-name="P15">Docente: Prof.ssa Viviana Cecotti</text:p>
 <text:p text:style-name="P15">Materia: Italiano</text:p>
-<text:p text:style-name="P15">Classe: 4BPR</text:p>
+<text:p text:style-name="P15">Classe: 4APR</text:p>
 <text:p text:style-name="P16"/>						<text:p text:style-name="P9">Livelli di partenza rilevati</text:p>
-			<text:p text:style-name="P17">Il livello medio della classe può definirsi discreto in considerazione in considerazione del fatto che il numero esiguo di allievi favorisce la lezione dialogata e interattiva. I due terzi della classe mantengono un profitto positivo, la restante parte della classe, al contrario, appare ancora talvolta discontinua nell’applicazione allo studio e non mette a frutto il lavoro costruito in classe.<text:line-break/>Gli interventi didattici si baseranno su controlli frequenti attraverso verifiche sommative e formative  per accertare i livelli di applicazione e di  apprendimento degli allievi che manifestano alcune incertezze nell’elaborazione autonoma dei contenuti.</text:p>
-			<text:p text:style-name="P10">(compilato il 15/11/2009)</text:p>
+			<text:p text:style-name="P17"><!-- 		@page { size: 21cm 29.7cm; margin: 2cm } 		P { margin-bottom: 0.21cm } 	-->\r
+La classe mantiene un buon livello di socializzazione e nell’insieme collabora in modo proficuo al lavoro scolastico. Alcuni allievi si distinguono per risultati buoni e, talvolta ottimi, per interventi pertinenti nelle lezioni interattive. Il livello medio  nelle verifiche scritte e orali può definirsi discreto.<text:line-break/>Pochi elementi mancano di  puntualità nella consegna del lavoro domestico e devono essere sollecitati a intervenire  in modo adeguato  alle lezioni.</text:p>
+			<text:p text:style-name="P10">(compilato il 05/11/2009)</text:p>
 			<text:p text:style-name="P1" />
-										<text:p text:style-name="P9">Area di progetto</text:p>
-			<text:p text:style-name="P17">ngdghdgh</text:p>
-			<text:p text:style-name="P10">(compilato il 11/11/2009)</text:p>
-			<text:p text:style-name="P1" />
-																												<text:p text:style-name="P1"></text:p>
+																																			<text:p text:style-name="P1"></text:p>
 <text:p text:style-name="P9">Tavola di programmazione della disciplina</text:p>
-	<text:p text:style-name="P17">1. Modulo di prova (chissà quando)</text:p>
-	<text:p text:style-name="P17">2. asdfasdf (sdfsdf)</text:p>
+	<text:p text:style-name="P17">1. La materia cavalleresca. Ariosto e Tasso  (ottobre-dicembre)</text:p>
+	<text:p text:style-name="P17">2. La perdita del centro (gennaio - febbraio)</text:p>
+	<text:p text:style-name="P17">3. La prosa scientifica (marzo - aprile)</text:p>
+	<text:p text:style-name="P17">4. Immagini del poeta nella letteratura italiana e straniera del primo Ottocento (aprile - maggio)</text:p>
 
 <text:p text:style-name="P16"/> 
 
 <text:p text:style-name="P4"></text:p>
 	<text:p text:style-name="P10">Titolo del modulo</text:p>
-	<text:p text:style-name="P9">Modulo di prova</text:p>
+	<text:p text:style-name="P9">La materia cavalleresca. Ariosto e Tasso </text:p>
 	<text:p text:style-name="P10">Periodo di svolgimento</text:p>
-	<text:p text:style-name="P9">chissà quando</text:p>
+	<text:p text:style-name="P9">ottobre-dicembre</text:p>
 	<text:p />
 				<text:p text:style-name="P10">Contenuti</text:p>
 		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">testo in <text:span text:style-name="T3">corsivo</text:span></text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">testo con <text:span text:style-name="T6">pedice</text:span></text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">testo con <text:span text:style-name="T5">apice</text:span></text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Ariosto, <text:span text:style-name="T3">Satire</text:span>: passi dalla III</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">L’"<text:span text:style-name="T3">Orlando furioso</text:span>": tema dell’inchiesta, luoghi delle ricerca, relatività, rapporto con la corte</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">L’"<text:span text:style-name="T3">Orlando furioso</text:span>": <text:span text:style-name="T3">Proemio</text:span></text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">L’"<text:span text:style-name="T3">Orlando furioso</text:span>": <text:span text:style-name="T3">Le donne, i cavalieri, l’arme, gli amori</text:span> (passi)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">L’"<text:span text:style-name="T3">Orlando furioso</text:span>": <text:span text:style-name="T3">Il palazzo di Atlante</text:span> (passi)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">L’"<text:span text:style-name="T3">Orlando furioso</text:span>": <text:span text:style-name="T3">Follia di Orlando</text:span> (passi)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">L’"<text:span text:style-name="T3">Orlando furioso</text:span>": <text:span text:style-name="T3">Rodomonte e Isabella</text:span> (passi)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Torquato Tasso, note biografiche dlienti</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Tasso, “<text:span text:style-name="T3">Aminta</text:span>”: Coro dell’atto I</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Tasso, "<text:span text:style-name="T3">Gerusalemme liberata</text:span>“: struttura dell’opera</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Ripresa dei "ruoli" religiosi tradizionali rispetto al poema ariostesco</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Ambiguità della figura di Satana</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Influenza inquietante del Tribunale dell’Inquisizione</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Tasso, "<text:span text:style-name="T3">Gerusalemme liberata</text:span>“: <text:span text:style-name="T3">Proemio</text:span></text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Tasso, "<text:span text:style-name="T3">Gerusalemme liberata</text:span>“: passi dai canti III e VI (<text:span text:style-name="T3">Tancredi e Clorinda</text:span>)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Tasso, "<text:span text:style-name="T3">Gerusalemme liberata</text:span>“: canto VII (<text:span text:style-name="T3">Erminia</text:span>)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Tasso, "<text:span text:style-name="T3">Gerusalemme liberata</text:span>“: canto XII <text:span text:style-name="T3">(La morte di Clorinda)</text:span></text:p></text:list-item>
 				</text:list>
 		<text:p/>
 					<text:p text:style-name="P10">Conoscenze</text:p>
 		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">---</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">\r
+Rapporto intellettuale società dal Cinquecento all’età barocca</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Funzione morale e civile dell’intellettuale</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Ripercussioni nel privato e nel sociale</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">La realtà umana appare instabile: Cartesio, Montaigne, Pascal e Cervantes come figure “esemplari”</text:p></text:list-item>
 				</text:list>
 		<text:p/>
 					<text:p text:style-name="P10">Abilità</text:p>
 		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">---</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">\r
+Riconoscere i modelli culturali in base agli indicatori: tempo - spazio - valori</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Individuare interrelazioni tra fattori materiali e spirituali</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Prendere appunti</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Acquisire autonomia nella comprensione e nella redazione  dei testi</text:p></text:list-item>
 				</text:list>
 		<text:p/>
 					<text:p text:style-name="P10">Competenze</text:p>
 		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">---</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">\r
+Comprendere, decodificare e interpretare i testi</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Stabilire relazioni e inferenze</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Produrre testi descrittivi e argomentativi semplici</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Costruire dal testo una mappa concettuale e viceversa</text:p></text:list-item>
 				</text:list>
 		<text:p/>
 					<text:p text:style-name="P10">Note e commenti in fase di progettazione</text:p>
@@ -460,34 +485,163 @@
 		<text:p/>
 				<text:p text:style-name="Horizontal_20_Line"/><text:p text:style-name="P16"/> 
 	<text:p text:style-name="P10">Titolo del modulo</text:p>
-	<text:p text:style-name="P9">asdfasdf</text:p>
+	<text:p text:style-name="P9">La perdita del centro</text:p>
 	<text:p text:style-name="P10">Periodo di svolgimento</text:p>
-	<text:p text:style-name="P9">sdfsdf</text:p>
+	<text:p text:style-name="P9">gennaio - febbraio</text:p>
 	<text:p />
 				<text:p text:style-name="P10">Contenuti</text:p>
 		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">sdfasdf</text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">asdf</text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">asd</text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">fas</text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">dfa</text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">sdfads</text:p></text:list-item>
-					<text:list-item><text:p text:style-name="P1">fad</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">L’età del Barocco e della Scienza Nuova</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">La perdita del centro</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">La battaglia delle idee (mappa cognitiva)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Il poema narrativo</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Tassoni, "<text:span text:style-name="T3">Come finì una famosa impresa del Conte di Culagna</text:span>”</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">T. Campanella, note biografiche e visione del mondo</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">T. Campanella, "<text:span text:style-name="T3">Mondo tutto è senso e vita</text:span>" (scheda)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">J. Donne, note biografiche e visione del mondo</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">J. Donne, "<text:span text:style-name="T3">Congedo, a vietarle il lamento</text:span>"  </text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">J. Donne, "<text:span text:style-name="T3">Anatomia del mondo</text:span>” (scheda)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">La rivoluzione scientifica (scheda)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">G. Bruno, note biografiche e visione del mondo</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">G. Bruno, "<text:span text:style-name="T3">Ho illuminato i ciechi</text:span>" (scheda)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Miguel De Cervantes, "<text:span text:style-name="T3">Bacile o elmo? Bacielmo</text:span>" ***</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Capitolo III (scheda) ***</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Don Chisciotte: dalla comicità all&#039;ironia (approfondimento)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1"><text:span text:style-name="T3">Il mio Don Chisciotte rivoluzionario senza età</text:span> (scheda) ***</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Chiavi di lettura del Don Chisciotte</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">TORQUATO ACCETTO ***</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1"><text:span text:style-name="T3">Della dissimulazione onesta  - serpente e colomba</text:span> (scheda)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Il Teatro di Shakespeare (scheda)</text:p></text:list-item>
 				</text:list>
 		<text:p/>
 					<text:p text:style-name="P10">Conoscenze</text:p>
 		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">qualcosa lo scrivo, ma non troppo...</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Rapporto intellettuale società nell’età barocca</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Funzione morale e civile dell’intellettuale</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Ripercussioni nel privato e nel sociale: la realtà umana appare instabile</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Montaigne figura "esemplare"</text:p></text:list-item>
 				</text:list>
 		<text:p/>
 					<text:p text:style-name="P10">Abilità</text:p>
 		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">---</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Comprendere, decodificare e interpretare i testi</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Stabilire relazioni e inferenze</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Produrre testi descrittivi e argomentativi semplici</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Costruire dal testo una mappa concettuale e viceversa</text:p></text:list-item>
 				</text:list>
 		<text:p/>
 					<text:p text:style-name="P10">Competenze</text:p>
 		<text:list text:style-name="L2">
-					<text:list-item><text:p text:style-name="P1">---</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Riconoscere i modelli culturali in base agli indicatori tempo – spazio – valori</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Individuare interrelazioni tra fattori materiali e spirituali</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Prendere appunti</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Acquisire autonomia nella comprensione e nella redazione  dei testi</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+					<text:p text:style-name="P10">Note e commenti in fase di progettazione</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+				<text:p text:style-name="Horizontal_20_Line"/><text:p text:style-name="P16"/> 
+	<text:p text:style-name="P10">Titolo del modulo</text:p>
+	<text:p text:style-name="P9">La prosa scientifica</text:p>
+	<text:p text:style-name="P10">Periodo di svolgimento</text:p>
+	<text:p text:style-name="P9">marzo - aprile</text:p>
+	<text:p />
+				<text:p text:style-name="P10">Contenuti</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">Galileo Galilei, la vita e le opere  Galilei scrittore Galilei, “<text:span text:style-name="T3">Elogio all’intelligenza dell’uomo”</text:span></text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Galilei, “<text:span text:style-name="T3">Contro l’ipse dixit”</text:span></text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Le reazioni  di Cartesio alla condanna di Galilei (scheda)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Cartesio, la vita (scheda) Galilei, <text:span text:style-name="T3">"</text:span><text:span text:style-name="T3">Discorso sul metodo” (brani)</text:span></text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Una filosofia utile alla vita (scheda)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">La complessità del &#039;600 (scheda)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Il razionalismo del Seicento base fondamentale per l&#039;evoluzione del pensiero scientifico europeo</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Il sapere scientifico illuministico</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">L&#039;Enciclopedia: struttura dell’opera</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">La divulgazione scientifica</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Lo sviluppo delle scienze naturali</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">La filosofia sensista</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Vittorio Alfieri, figura ideale di uomo e scrittore</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1"><text:span text:style-name="T3">Alfieri, "Vita"</text:span> (struttura dell’opera)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1"><text:span text:style-name="T3">Alfieri, "I Epoca Infanzia"</text:span> (lettura e analisi di schede)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1"><text:span text:style-name="T3">Alfieri, "Della tirannide"</text:span> (letture antologiche)</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Sensibilità preromantica di Alfieri nei contenuti delle<text:span text:style-name="T3"> Rime</text:span></text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1"><text:span text:style-name="T3">Alfieri, "Tragedie": Saul e Mirra (l</text:span>ettura e analisi di passi antologici, esplorazione dell’intimità psicologica dei protagonisti)</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+					<text:p text:style-name="P10">Conoscenze</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">Rapporto intellettuale società nell’età della Controriforma</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Funzione morale e civile dell’intellettuale</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Ripercussioni nel privato e nel sociale: la realtà umana appare instabile</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Figure esemplari: Galileo e Cartesio</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+					<text:p text:style-name="P10">Abilità</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">Comprendere, decodificare e interpretare i testi</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Stabilire relazioni e inferenze</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Produrre testi descrittivi e argomentativi</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Costruire dal testo una mappa concettuale e viceversa</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+					<text:p text:style-name="P10">Competenze</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1"> 	  \r
+\r
+\r
+Comprendere 	l’intreccio dei fattori individuali e sociali nella biografia</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Riconoscere 	le fasi evolutive nella produzione</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Distinguere "ritratto storico e autoritratto ideale"</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Porre 	un rapporto fra opere e "poetica" individuale</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+					<text:p text:style-name="P10">Note e commenti in fase di progettazione</text:p>
+		<text:list text:style-name="L2">
+				</text:list>
+		<text:p/>
+				<text:p text:style-name="Horizontal_20_Line"/><text:p text:style-name="P16"/> 
+	<text:p text:style-name="P10">Titolo del modulo</text:p>
+	<text:p text:style-name="P9">Immagini del poeta nella letteratura italiana e straniera del primo Ottocento</text:p>
+	<text:p text:style-name="P10">Periodo di svolgimento</text:p>
+	<text:p text:style-name="P9">aprile - maggio</text:p>
+	<text:p />
+				<text:p text:style-name="P10">Contenuti</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">Romanticismo: il disagio del poeta di fronte al presente e alla modernità</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Wolfgang Goethe, <text:span text:style-name="T3">L’artista e il borghese</text:span></text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Thomas Gray, <text:span text:style-name="T3">Elegia scritta in un cimitero campestre</text:span></text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">August Schelgel, <text:span text:style-name="T3">La "malinconia" romantica e l’ansia d’assoluto</text:span></text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">François-Renè de Chateaubriand, <text:span text:style-name="T3">L’"ardore di desiderio" dell’eroe romantico</text:span></text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Ugo Foscolo, <text:span text:style-name="T3">Sonetti</text:span></text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Ugo Foscolo, <text:span text:style-name="T3">Ultime lettere di Jacopo Ortis</text:span> (struttura e temi fondanti dell’opera)</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+					<text:p text:style-name="P10">Conoscenze</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">\r
+Influenze della crisi della società sul ruolo del poeta</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Condizionamenti della classe sociale di appartenenza e della formazione individuale sulle scelte poetiche individuali</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Concezione <text:span text:style-name="T3">marginale</text:span> dell’attività poetica nella società contemporanea</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+					<text:p text:style-name="P10">Abilità</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">\r
+Parafrasare i testi</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Scomporre i testi e individuarne le parole tematiche</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Produrre testi argomentativi di confronto e comparazione</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Interpretare i testi in chiave sincronica e diacronica</text:p></text:list-item>
+				</text:list>
+		<text:p/>
+					<text:p text:style-name="P10">Competenze</text:p>
+		<text:list text:style-name="L2">
+					<text:list-item><text:p text:style-name="P1">\r
+Riconoscere i modelli culturali della prima metà dell’Ottocento</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Localizzare i centri di elaborazione culturale</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Individuare tematiche comuni a testi poetici e testi in prosa</text:p></text:list-item>
+					<text:list-item><text:p text:style-name="P1">Comprendere analogie e differenze tra opere tematicamente confrontabili</text:p></text:list-item>
 				</text:list>
 		<text:p/>
 					<text:p text:style-name="P10">Note e commenti in fase di progettazione</text:p>
@@ -498,25 +652,25 @@
 <text:p text:style-name="Standard"/>
 <text:p text:style-name="P9">Metodologia di lavoro</text:p>
 								<text:p text:style-name="P1">
-				▣ 				Lezione frontale				</text:p>
+				▢ 				Lezione frontale				</text:p>
+							<text:p text:style-name="P1">
+				▢ 				Lezione dialogata				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Lavori di gruppo				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Compiti a casa				</text:p>
 							<text:p text:style-name="P1">
-				▣ 				Risoluzione di problemi				</text:p>
+				▢ 				Risoluzione di problemi				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Problem posing				</text:p>
 							<text:p text:style-name="P1">
-				▣ 				Ricerche				</text:p>
+				▢ 				Ricerche				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Correzione collettiva e individuale degli esercizi				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Interventi individualizzati				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Conversazioni sui temi proposti dal libro di testo				</text:p>
-							<text:p text:style-name="P1">
-				▣ 				Lezione dialogata				</text:p>
 				<text:p text:style-name="P1" />
 <text:p text:style-name="P9">Tipologia delle verifiche previste</text:p>
 								<text:p text:style-name="P1">
@@ -526,23 +680,23 @@
 							<text:p text:style-name="P1">
 				▢ 				Interrogazione				</text:p>
 							<text:p text:style-name="P1">
-				▣ 				Domande aperte				</text:p>
+				▢ 				Domande aperte				</text:p>
 							<text:p text:style-name="P1">
-				▣ 				Prove di laboratorio				</text:p>
+				▢ 				Prove di laboratorio				</text:p>
 							<text:p text:style-name="P1">
-				▣ 				Relazioni scritte e orali				</text:p>
+				▢ 				Relazioni scritte e orali				</text:p>
 							<text:p text:style-name="P1">
-				▣ 				Esercizi strutturati di comprensione orale				</text:p>
+				▢ 				Esercizi strutturati di comprensione orale				</text:p>
 							<text:p text:style-name="P1">
-				▣ 				Esercizi strutturati di comprensione scritta				</text:p>
+				▢ 				Esercizi strutturati di comprensione scritta				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Esercizi semistrutturati di comprensione orale				</text:p>
 							<text:p text:style-name="P1">
-				▣ 				Esercizi semistrutturati di comprensione scritta				</text:p>
+				▢ 				Esercizi semistrutturati di comprensione scritta				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Minicomposizioni (dialoghi, cartoline, sms)				</text:p>
 							<text:p text:style-name="P1">
-				▣ 				Lettura di testi in lingua				</text:p>
+				▢ 				Lettura di testi in lingua				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Prove motorie				</text:p>
 							<text:p text:style-name="P1">
@@ -554,15 +708,15 @@
 							<text:p text:style-name="P1">
 				▢ 				Laboratorio informatico				</text:p>
 							<text:p text:style-name="P1">
-				▣ 				Lavagna luminosa				</text:p>
+				▢ 				Lavagna luminosa				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Proiettore				</text:p>
 							<text:p text:style-name="P1">
-				▣ 				Help in linea				</text:p>
+				▢ 				Help in linea				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Appunti delle lezioni				</text:p>
 							<text:p text:style-name="P1">
-				▣ 				Fotocopie				</text:p>
+				▢ 				Fotocopie				</text:p>
 							<text:p text:style-name="P1">
 				▢ 				Ricerche su Internet				</text:p>
 							<text:p text:style-name="P1">

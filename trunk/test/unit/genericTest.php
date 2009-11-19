@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../bootstrap/unit.php';
  
-$t = new lime_test(53, new lime_output_color());
+$t = new lime_test(77, new lime_output_color());
 
 $t->diag('::datetime()');
 
@@ -159,3 +159,37 @@ $date=Generic::clever_date('it', '10/03/1997');
 
 $t->is(date_format($date, 'd/m/Y'), '10/03/1997', 'date correcty parsed');
 
+$t->diag('::strip_tags_and_attributes()');
+
+$allowable_tags='<br/><br><em><sup><sub>';
+foreach (array(
+'foo' => 'foo',
+'foo<p>bar' => 'foobar',
+'foo<p>bar</p>' => 'foobar',
+'foo<p>bar</p>foo' => 'foobarfoo',
+'foo<p >bar</p>foo' => 'foobarfoo',
+'foo<p>bar</p >foo' => 'foobarfoo',
+'foo<p foo >bar</p >foo' => 'foobarfoo',
+'foo<em>bar</em>foo' => 'foo<em>bar</em>foo',
+'foo<em baz>bar</em>foo' => 'foo<em>bar</em>foo',
+'foo<em baz="moo">bar</em>foo' => 'foo<em>bar</em>foo',
+'foo<em baz=\'moo\'>bar</em>foo' => 'foo<em>bar</em>foo',
+'foo<sup>bar</sup> baz <sub>moo</sub>' => 'foo<sup>bar</sup> baz <sub>moo</sub>',
+'foo<sup abc=\'def\'>bar</sup> baz <sub>moo</sub>' => 'foo<sup>bar</sup> baz <sub>moo</sub>',
+'foo<br/>bar' => 'foo<br />bar',
+'foo<br />bar' => 'foo<br />bar',
+'foo<!-- baz -->bar' => 'foobar',
+'   foo' => 'foo',
+'foo   ' => 'foo',
+'   foo   ' => 'foo',
+"\nfoo" => 'foo',
+"\n\nfoo" => 'foo',
+"\rfoo" => 'foo',
+"\r\nfoo" => 'foo',
+"\n\rfoo" => 'foo',
+
+
+) as $key=>$value)
+{
+	$t->is(Generic::strip_tags_and_attributes($key, $allowable_tags), $value, sprintf('«%s» --> «%s»', $key, $value));
+}

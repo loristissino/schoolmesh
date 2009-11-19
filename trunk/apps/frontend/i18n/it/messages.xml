@@ -499,8 +499,8 @@
         <target>Azione</target>
       </trans-unit>
       <trans-unit id="153">
-        <source>Manage items</source>
-        <target>Gestisci gli elementi</target>
+        <source>Quick list edit</source>
+        <target>Modifica rapida della lista</target>
       </trans-unit>
       <trans-unit id="154">
         <source>Workplan of the teacher %s</source>

@@ -392,10 +392,18 @@ public function executeBatch(sfWebRequest $request)
 			$this->redirect('plansandreports/export?id='. $this->workplan->getId());
 		}
 		
-		$odfdoc
-		->saveFile()
-		->setResponse($this->getContext()->getResponse());
-		return sfView::NONE;
+		try
+		{
+			$odfdoc
+			->saveFile()
+			->setResponse($this->getContext()->getResponse());
+			return sfView::NONE;
+		}
+		catch (Exception $e)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Conversion failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the contents.'));
+			$this->redirect('plansandreports/export?id='. $this->workplan->getId());
+		}
 		
 	}
 

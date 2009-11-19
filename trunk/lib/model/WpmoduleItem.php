@@ -20,8 +20,12 @@ class WpmoduleItem extends BaseWpmoduleItem
 	
 	public function getContent()
 	{
-//			return chop(html_entity_decode(strip_tags(parent::getContent(), '<br><em><sup><sub>')));
-			return chop(strip_tags(parent::getContent(), '<br><em><sup><sub>'));
+			return chop(Generic::strip_tags_and_attributes(parent::getContent(), '<br><em><sup><sub>'));
+	}
+	
+	public function getRawContent()
+	{
+			return parent::getContent();
 	}
 	
 /*	public function getHTMLContent()

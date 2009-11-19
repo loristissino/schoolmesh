@@ -58,7 +58,7 @@ class Wpinfo extends BaseWpinfo
 		$v=str_replace('<br/>', '<br />',$v);
 		$v=str_replace('<br>', '<br />',$v);
 
-		$v=html_entity_decode(strip_tags($v, '<br><em>'));
+		$v=html_entity_decode(Generic::strip_tags_and_attributes($v, '<br><em>'));
 				
 		$lines=explode('<br />', $v);
 		
