@@ -3,12 +3,14 @@
 /**
  * Appointment form base class.
  *
+ * @method Appointment getObject() Returns the current form's model object
+ *
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
+ * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseAppointmentForm extends BaseFormPropel
+abstract class BaseAppointmentForm extends BaseFormPropel
 {
   public function setup()
   {
@@ -18,12 +20,12 @@ class BaseAppointmentForm extends BaseFormPropel
       'subject_id'              => new sfWidgetFormPropelChoice(array('model' => 'Subject', 'add_empty' => false)),
       'schoolclass_id'          => new sfWidgetFormPropelChoice(array('model' => 'Schoolclass', 'add_empty' => false)),
       'year_id'                 => new sfWidgetFormPropelChoice(array('model' => 'Year', 'add_empty' => false)),
-      'state'                   => new sfWidgetFormInput(),
-      'hours'                   => new sfWidgetFormInput(),
+      'state'                   => new sfWidgetFormInputText(),
+      'hours'                   => new sfWidgetFormInputText(),
       'created_at'              => new sfWidgetFormDateTime(),
       'updated_at'              => new sfWidgetFormDateTime(),
-      'import_code'             => new sfWidgetFormInput(),
-      'wptool_appointment_list' => new sfWidgetFormPropelChoiceMany(array('model' => 'WptoolItem')),
+      'import_code'             => new sfWidgetFormInputText(),
+      'wptool_appointment_list' => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => 'WptoolItem')),
     ));
 
     $this->setValidators(array(
@@ -32,12 +34,12 @@ class BaseAppointmentForm extends BaseFormPropel
       'subject_id'              => new sfValidatorPropelChoice(array('model' => 'Subject', 'column' => 'id')),
       'schoolclass_id'          => new sfValidatorPropelChoice(array('model' => 'Schoolclass', 'column' => 'id')),
       'year_id'                 => new sfValidatorPropelChoice(array('model' => 'Year', 'column' => 'id')),
-      'state'                   => new sfValidatorInteger(array('required' => false)),
-      'hours'                   => new sfValidatorInteger(array('required' => false)),
+      'state'                   => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'hours'                   => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'created_at'              => new sfValidatorDateTime(array('required' => false)),
       'updated_at'              => new sfValidatorDateTime(array('required' => false)),
       'import_code'             => new sfValidatorString(array('max_length' => 20, 'required' => false)),
-      'wptool_appointment_list' => new sfValidatorPropelChoiceMany(array('model' => 'WptoolItem', 'required' => false)),
+      'wptool_appointment_list' => new sfValidatorPropelChoice(array('multiple' => true, 'model' => 'WptoolItem', 'required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(
@@ -94,7 +96,7 @@ class BaseAppointmentForm extends BaseFormPropel
       return;
     }
 
-    if (is_null($con))
+    if (null === $con)
     {
       $con = $this->getConnection();
     }

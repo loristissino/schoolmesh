@@ -1,16 +1,14 @@
 <?php
 
-require_once(sfConfig::get('sf_lib_dir').'/filter/base/BaseFormFilterPropel.class.php');
-
 /**
  * sfGuardUserProfile filter form base class.
  *
  * @package    schoolmesh
  * @subpackage filter
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 13459 2008-11-28 14:48:12Z fabien $
+ * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
+abstract class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
 {
   public function setup()
   {
@@ -25,13 +23,13 @@ class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'email'                     => new sfWidgetFormFilterInput(),
       'email_state'               => new sfWidgetFormFilterInput(),
       'email_verification_code'   => new sfWidgetFormFilterInput(),
-      'birthdate'                 => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
+      'birthdate'                 => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'birthplace'                => new sfWidgetFormFilterInput(),
       'import_code'               => new sfWidgetFormFilterInput(),
       'system_alerts'             => new sfWidgetFormFilterInput(),
       'is_scheduled_for_deletion' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
-      'last_action_at'            => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
-      'last_login_at'             => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
+      'last_action_at'            => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'last_login_at'             => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
     ));
 
     $this->setValidators(array(

@@ -1,22 +1,20 @@
 <?php
 
-require_once(sfConfig::get('sf_lib_dir').'/filter/base/BaseFormFilterPropel.class.php');
-
 /**
  * Schoolclass filter form base class.
  *
  * @package    schoolmesh
  * @subpackage filter
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 13459 2008-11-28 14:48:12Z fabien $
+ * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseSchoolclassFormFilter extends BaseFormFilterPropel
+abstract class BaseSchoolclassFormFilter extends BaseFormFilterPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
-      'grade'       => new sfWidgetFormFilterInput(),
-      'section'     => new sfWidgetFormFilterInput(),
+      'grade'       => new sfWidgetFormFilterInput(array('with_empty' => false)),
+      'section'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'track_id'    => new sfWidgetFormPropelChoice(array('model' => 'Track', 'add_empty' => true)),
       'description' => new sfWidgetFormFilterInput(),
     ));

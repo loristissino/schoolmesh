@@ -3,12 +3,14 @@
 /**
  * Lanlog form base class.
  *
+ * @method Lanlog getObject() Returns the current form's model object
+ *
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
+ * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseLanlogForm extends BaseFormPropel
+abstract class BaseLanlogForm extends BaseFormPropel
 {
   public function setup()
   {
@@ -19,7 +21,7 @@ class BaseLanlogForm extends BaseFormPropel
       'created_at'     => new sfWidgetFormDateTime(),
       'updated_at'     => new sfWidgetFormDateTime(),
       'is_online'      => new sfWidgetFormInputCheckbox(),
-      'os_used'        => new sfWidgetFormInput(),
+      'os_used'        => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(

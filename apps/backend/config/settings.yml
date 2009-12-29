@@ -19,7 +19,7 @@ all:
      secure_action:          secure
 
   .settings:
-    i18n:                   on
+    i18n:                   true
     default_culture:        it
     standard_helpers:       [Partial, Cache, Form, I18N, Debug]
 
@@ -91,40 +91,40 @@ all:
 #    orm:                    propel
 #
 #    # Logging
-#    logging_enabled:        on
+#    logging_enabled:        true
 #
 #    # i18n
 #    default_culture:        en        # Default user culture
 #
 #    # enable 1.0 compatibility
-#    compat_10:              off
+#    compat_10:              false
 
 
 prod:
   .settings:
 #    error_reporting:        <?php echo (E_ALL | E_STRICT)."\n" ?>
-    no_script_name:         off
-    web_debug:              on
-    no_script_name:         off
-    logging_enabled:        off
-    etag:                   off
+    no_script_name:         false
+    web_debug:              true
+    no_script_name:         false
+    logging_enabled:        false
+    etag:                   false
     enabled_modules: [ sfGuardGroup, sfGuardUser, sfGuardPermission, sfGuardAuth]
 
 dev:
   .settings:
     error_reporting:        <?php echo (E_ALL | E_STRICT)."\n" ?>
-    web_debug:              off
-    cache:                  off
-    no_script_name:         off
-    etag:                   off
+    web_debug:              false
+    cache:                  false
+    no_script_name:         false
+    etag:                   false
     enabled_modules: [ sfGuardGroup, sfGuardUser, sfGuardPermission, sfGuardAuth]
 
 test:
   .settings:
     error_reporting:        <?php echo ((E_ALL | E_STRICT) ^ E_NOTICE)."\n" ?>
-    cache:                  off
-    web_debug:              off
-    no_script_name:         off
-    etag:                   off
+    cache:                  false
+    web_debug:              false
+    no_script_name:         false
+    etag:                   false
     csrf_secret:       false
 

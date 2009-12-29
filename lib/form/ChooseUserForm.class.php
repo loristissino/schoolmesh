@@ -1,5 +1,5 @@
 <?php
-        class ChooseUserForm extends sfForm
+        class ChooseUserForm extends BaseForm
         {
           public function configure()
           {

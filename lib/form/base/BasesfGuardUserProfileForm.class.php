@@ -3,31 +3,33 @@
 /**
  * sfGuardUserProfile form base class.
  *
+ * @method sfGuardUserProfile getObject() Returns the current form's model object
+ *
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
+ * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BasesfGuardUserProfileForm extends BaseFormPropel
+abstract class BasesfGuardUserProfileForm extends BaseFormPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
       'user_id'                   => new sfWidgetFormInputHidden(),
-      'first_name'                => new sfWidgetFormInput(),
-      'middle_name'               => new sfWidgetFormInput(),
-      'last_name'                 => new sfWidgetFormInput(),
-      'pronunciation'             => new sfWidgetFormInput(),
+      'first_name'                => new sfWidgetFormInputText(),
+      'middle_name'               => new sfWidgetFormInputText(),
+      'last_name'                 => new sfWidgetFormInputText(),
+      'pronunciation'             => new sfWidgetFormInputText(),
       'info'                      => new sfWidgetFormTextarea(),
       'role_id'                   => new sfWidgetFormPropelChoice(array('model' => 'Role', 'add_empty' => true)),
-      'gender'                    => new sfWidgetFormInput(),
-      'email'                     => new sfWidgetFormInput(),
-      'email_state'               => new sfWidgetFormInput(),
-      'email_verification_code'   => new sfWidgetFormInput(),
+      'gender'                    => new sfWidgetFormInputText(),
+      'email'                     => new sfWidgetFormInputText(),
+      'email_state'               => new sfWidgetFormInputText(),
+      'email_verification_code'   => new sfWidgetFormInputText(),
       'birthdate'                 => new sfWidgetFormDate(),
-      'birthplace'                => new sfWidgetFormInput(),
-      'import_code'               => new sfWidgetFormInput(),
-      'system_alerts'             => new sfWidgetFormInput(),
+      'birthplace'                => new sfWidgetFormInputText(),
+      'import_code'               => new sfWidgetFormInputText(),
+      'system_alerts'             => new sfWidgetFormInputText(),
       'is_scheduled_for_deletion' => new sfWidgetFormInputCheckbox(),
       'last_action_at'            => new sfWidgetFormDateTime(),
       'last_login_at'             => new sfWidgetFormDateTime(),
@@ -43,7 +45,7 @@ class BasesfGuardUserProfileForm extends BaseFormPropel
       'role_id'                   => new sfValidatorPropelChoice(array('model' => 'Role', 'column' => 'id', 'required' => false)),
       'gender'                    => new sfValidatorString(array('max_length' => 1, 'required' => false)),
       'email'                     => new sfValidatorString(array('max_length' => 50, 'required' => false)),
-      'email_state'               => new sfValidatorInteger(array('required' => false)),
+      'email_state'               => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'email_verification_code'   => new sfValidatorString(array('max_length' => 32, 'required' => false)),
       'birthdate'                 => new sfValidatorDate(array('required' => false)),
       'birthplace'                => new sfValidatorString(array('max_length' => 50, 'required' => false)),

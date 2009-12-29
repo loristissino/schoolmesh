@@ -3,27 +3,29 @@
 /**
  * Subject form base class.
  *
+ * @method Subject getObject() Returns the current form's model object
+ *
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
+ * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseSubjectForm extends BaseFormPropel
+abstract class BaseSubjectForm extends BaseFormPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'          => new sfWidgetFormInputHidden(),
-      'shortcut'    => new sfWidgetFormInput(),
-      'description' => new sfWidgetFormInput(),
-      'rank'        => new sfWidgetFormInput(),
+      'shortcut'    => new sfWidgetFormInputText(),
+      'description' => new sfWidgetFormInputText(),
+      'rank'        => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
       'id'          => new sfValidatorPropelChoice(array('model' => 'Subject', 'column' => 'id', 'required' => false)),
       'shortcut'    => new sfValidatorString(array('max_length' => 3)),
       'description' => new sfValidatorString(array('max_length' => 255)),
-      'rank'        => new sfValidatorInteger(array('required' => false)),
+      'rank'        => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('subject[%s]');

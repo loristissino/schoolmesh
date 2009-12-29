@@ -3,12 +3,14 @@
 /**
  * Enrolment form base class.
  *
+ * @method Enrolment getObject() Returns the current form's model object
+ *
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
+ * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseEnrolmentForm extends BaseFormPropel
+abstract class BaseEnrolmentForm extends BaseFormPropel
 {
   public function setup()
   {
@@ -20,7 +22,7 @@ class BaseEnrolmentForm extends BaseFormPropel
       'info'           => new sfWidgetFormTextarea(),
       'created_at'     => new sfWidgetFormDateTime(),
       'updated_at'     => new sfWidgetFormDateTime(),
-      'import_code'    => new sfWidgetFormInput(),
+      'import_code'    => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(

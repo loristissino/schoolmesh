@@ -13,7 +13,7 @@ class BaseTagForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'               => new sfWidgetFormInputHidden(),
-      'name'             => new sfWidgetFormInput(),
+      'name'             => new sfWidgetFormInputText(),
       'article_tag_list' => new sfWidgetFormPropelSelectMany(array('model' => 'Article')),
     ));
 

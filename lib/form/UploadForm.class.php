@@ -1,5 +1,5 @@
 <?php
-        class UploadForm extends sfForm
+        class UploadForm extends BaseForm
         {
 			
 			

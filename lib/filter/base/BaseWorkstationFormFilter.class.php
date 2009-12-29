@@ -1,22 +1,20 @@
 <?php
 
-require_once(sfConfig::get('sf_lib_dir').'/filter/base/BaseFormFilterPropel.class.php');
-
 /**
  * Workstation filter form base class.
  *
  * @package    schoolmesh
  * @subpackage filter
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 13459 2008-11-28 14:48:12Z fabien $
+ * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseWorkstationFormFilter extends BaseFormFilterPropel
+abstract class BaseWorkstationFormFilter extends BaseFormFilterPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
       'name'                     => new sfWidgetFormFilterInput(),
-      'ip_cidr'                  => new sfWidgetFormFilterInput(),
+      'ip_cidr'                  => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'mac_address'              => new sfWidgetFormFilterInput(),
       'is_enabled'               => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'subnet_id'                => new sfWidgetFormPropelChoice(array('model' => 'Subnet', 'add_empty' => true)),

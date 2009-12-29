@@ -1,12 +1,12 @@
 <?php
-        class ProfileForm extends sfForm
+        class ProfileForm extends BaseForm
         {
           public function configure()
           {
 			
             $this->setWidgets(array(
-              'pronunciation' => new sfWidgetFormInput(array(), array('size'=>70)),
-			  'email' => new sfWidgetFormInput(),
+              'pronunciation' => new sfWidgetFormInputText(array(), array('size'=>70)),
+			  'email' => new sfWidgetFormInputText(),
             ));
 
 			$this->widgetSchema->setNameFormat('userinfo[%s]');

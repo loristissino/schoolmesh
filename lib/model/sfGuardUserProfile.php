@@ -133,6 +133,15 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return in_array($value, $this->getWebPermissions());
 		}
 		
+		public function hasCheckedPermission($value)
+		{
+			if ($value)
+			{
+				return $this->hasPermission($value);
+			}
+			return false;
+		}
+		
 		
 		public function addUserPermission($value)
 		{

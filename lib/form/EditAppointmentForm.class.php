@@ -1,5 +1,5 @@
 <?php
-        class EditAppointmentForm extends sfForm
+        class EditAppointmentForm extends BaseForm
         {
           public function configure()
           {
@@ -8,7 +8,7 @@
 				'year'  => new sfWidgetFormPropelSelect(array('model'=>'Year', 'add_empty'=>'Choose a year')),
 				'class' => new sfWidgetFormPropelSelect(array('model'=>'Schoolclass', 'add_empty'=>'Choose a class')),
 				'subject' => new sfWidgetFormPropelSelect(array('model'=>'Subject', 'add_empty'=>'Choose a subject')),
-				'hours' => new sfWidgetFormInput(array(), array('size'=>5))
+				'hours' => new sfWidgetFormInputText(array(), array('size'=>5))
 				));
 
 			$this->widgetSchema->setNameFormat('info[%s]');
