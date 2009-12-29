@@ -31,6 +31,18 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	protected $description;
 
 	/**
+	 * The value for the start_date field.
+	 * @var        string
+	 */
+	protected $start_date;
+
+	/**
+	 * The value for the end_date field.
+	 * @var        string
+	 */
+	protected $end_date;
+
+	/**
 	 * @var        array Appointment[] Collection to store aggregation of Appointment objects.
 	 */
 	protected $collAppointments;
@@ -89,6 +101,82 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Get the [optionally formatted] temporal [start_date] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getStartDate($format = 'Y-m-d')
+	{
+		if ($this->start_date === null) {
+			return null;
+		}
+
+
+		if ($this->start_date === '0000-00-00') {
+			// while technically this is not a default value of NULL,
+			// this seems to be closest in meaning.
+			return null;
+		} else {
+			try {
+				$dt = new DateTime($this->start_date);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->start_date, true), $x);
+			}
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [end_date] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getEndDate($format = 'Y-m-d')
+	{
+		if ($this->end_date === null) {
+			return null;
+		}
+
+
+		if ($this->end_date === '0000-00-00') {
+			// while technically this is not a default value of NULL,
+			// this seems to be closest in meaning.
+			return null;
+		} else {
+			try {
+				$dt = new DateTime($this->end_date);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->end_date, true), $x);
+			}
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
+	}
+
+	/**
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
@@ -129,6 +217,104 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	} // setDescription()
 
 	/**
+	 * Sets the value of [start_date] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     Year The current object (for fluent API support)
+	 */
+	public function setStartDate($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->start_date !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->start_date !== null && $tmpDt = new DateTime($this->start_date)) ? $tmpDt->format('Y-m-d') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->start_date = ($dt ? $dt->format('Y-m-d') : null);
+				$this->modifiedColumns[] = YearPeer::START_DATE;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setStartDate()
+
+	/**
+	 * Sets the value of [end_date] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     Year The current object (for fluent API support)
+	 */
+	public function setEndDate($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->end_date !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->end_date !== null && $tmpDt = new DateTime($this->end_date)) ? $tmpDt->format('Y-m-d') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->end_date = ($dt ? $dt->format('Y-m-d') : null);
+				$this->modifiedColumns[] = YearPeer::END_DATE;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setEndDate()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -162,6 +348,8 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->description = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
+			$this->start_date = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->end_date = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -171,7 +359,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 2; // 2 = YearPeer::NUM_COLUMNS - YearPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 4; // 4 = YearPeer::NUM_COLUMNS - YearPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Year object", $e);
@@ -502,6 +690,12 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 			case 1:
 				return $this->getDescription();
 				break;
+			case 2:
+				return $this->getStartDate();
+				break;
+			case 3:
+				return $this->getEndDate();
+				break;
 			default:
 				return null;
 				break;
@@ -525,6 +719,8 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getDescription(),
+			$keys[2] => $this->getStartDate(),
+			$keys[3] => $this->getEndDate(),
 		);
 		return $result;
 	}
@@ -562,6 +758,12 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 			case 1:
 				$this->setDescription($value);
 				break;
+			case 2:
+				$this->setStartDate($value);
+				break;
+			case 3:
+				$this->setEndDate($value);
+				break;
 		} // switch()
 	}
 
@@ -588,6 +790,8 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setDescription($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setStartDate($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setEndDate($arr[$keys[3]]);
 	}
 
 	/**
@@ -601,6 +805,8 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(YearPeer::ID)) $criteria->add(YearPeer::ID, $this->id);
 		if ($this->isColumnModified(YearPeer::DESCRIPTION)) $criteria->add(YearPeer::DESCRIPTION, $this->description);
+		if ($this->isColumnModified(YearPeer::START_DATE)) $criteria->add(YearPeer::START_DATE, $this->start_date);
+		if ($this->isColumnModified(YearPeer::END_DATE)) $criteria->add(YearPeer::END_DATE, $this->end_date);
 
 		return $criteria;
 	}
@@ -658,6 +864,10 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 		$copyObj->setId($this->id);
 
 		$copyObj->setDescription($this->description);
+
+		$copyObj->setStartDate($this->start_date);
+
+		$copyObj->setEndDate($this->end_date);
 
 
 		if ($deepCopy) {

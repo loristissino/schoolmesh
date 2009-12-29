@@ -86,9 +86,18 @@ Year:
   200910:
     id:             2009  
     description:    2009/10
+    start_date: 1/9/2009
+    end_date: 10/6/2010
   201011:
     id:             2010  
     description:    2010/11
+    start_date: 1/9/2010
+    end_date: 10/6/2011
+  201112:
+    id:             2011  
+    description:    2011/12
+    start_date: 1/9/2011
+    end_date: 10/6/2012
     
 Subject:
   irc:

@@ -14,6 +14,14 @@ propel:
   year:
     id:           { type: integer, required: true, primaryKey: true, autoIncrement: false }
     description:  { type: varchar(7), unique: true }
+    start_date: { type: date }
+    end_date: { type: date }
+
+  term:
+    id:   ~
+    description: { type: varchar(30), required: true }
+    end_day:  { type: integer, required: true } # the number of days, following the start date of the year, when the term finishes (an approx. value)
+    has_formal_evaluation: boolean
 
   subject:
     id:           ~

@@ -1,28 +1,28 @@
 <?php
 
 /**
- * Base static class for performing query and update operations on the 'year' table.
+ * Base static class for performing query and update operations on the 'term' table.
  *
  * 
  *
  * @package    lib.model.om
  */
-abstract class BaseYearPeer {
+abstract class BaseTermPeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'year';
+	const TABLE_NAME = 'term';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'Year';
+	const OM_CLASS = 'Term';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.Year';
+	const CLASS_DEFAULT = 'lib.model.Term';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'YearTableMap';
+	const TM_CLASS = 'TermTableMap';
 	
 	/** The total number of columns. */
 	const NUM_COLUMNS = 4;
@@ -31,22 +31,22 @@ abstract class BaseYearPeer {
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'year.ID';
+	const ID = 'term.ID';
 
 	/** the column name for the DESCRIPTION field */
-	const DESCRIPTION = 'year.DESCRIPTION';
+	const DESCRIPTION = 'term.DESCRIPTION';
 
-	/** the column name for the START_DATE field */
-	const START_DATE = 'year.START_DATE';
+	/** the column name for the END_DAY field */
+	const END_DAY = 'term.END_DAY';
 
-	/** the column name for the END_DATE field */
-	const END_DATE = 'year.END_DATE';
+	/** the column name for the HAS_FORMAL_EVALUATION field */
+	const HAS_FORMAL_EVALUATION = 'term.HAS_FORMAL_EVALUATION';
 
 	/**
-	 * An identiy map to hold any loaded instances of Year objects.
+	 * An identiy map to hold any loaded instances of Term objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array Year[]
+	 * @var        array Term[]
 	 */
 	public static $instances = array();
 
@@ -65,10 +65,10 @@ abstract class BaseYearPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'StartDate', 'EndDate', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'startDate', 'endDate', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::START_DATE, self::END_DATE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'start_date', 'end_date', ),
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'EndDay', 'HasFormalEvaluation', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'endDay', 'hasFormalEvaluation', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::END_DAY, self::HAS_FORMAL_EVALUATION, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'end_day', 'has_formal_evaluation', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
@@ -79,10 +79,10 @@ abstract class BaseYearPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'StartDate' => 2, 'EndDate' => 3, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'startDate' => 2, 'endDate' => 3, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::START_DATE => 2, self::END_DATE => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'start_date' => 2, 'end_date' => 3, ),
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'EndDay' => 2, 'HasFormalEvaluation' => 3, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'endDay' => 2, 'hasFormalEvaluation' => 3, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::END_DAY => 2, self::HAS_FORMAL_EVALUATION => 3, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'end_day' => 2, 'has_formal_evaluation' => 3, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
@@ -132,12 +132,12 @@ abstract class BaseYearPeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. YearPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. TermPeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(YearPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(TermPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -153,10 +153,10 @@ abstract class BaseYearPeer {
 	 */
 	public static function addSelectColumns(Criteria $criteria)
 	{
-		$criteria->addSelectColumn(YearPeer::ID);
-		$criteria->addSelectColumn(YearPeer::DESCRIPTION);
-		$criteria->addSelectColumn(YearPeer::START_DATE);
-		$criteria->addSelectColumn(YearPeer::END_DATE);
+		$criteria->addSelectColumn(TermPeer::ID);
+		$criteria->addSelectColumn(TermPeer::DESCRIPTION);
+		$criteria->addSelectColumn(TermPeer::END_DAY);
+		$criteria->addSelectColumn(TermPeer::HAS_FORMAL_EVALUATION);
 	}
 
 	/**
@@ -175,21 +175,21 @@ abstract class BaseYearPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(YearPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(TermPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			YearPeer::addSelectColumns($criteria);
+			TermPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 		$criteria->setDbName(self::DATABASE_NAME); // Set the correct dbName
 
 		if ($con === null) {
-			$con = Propel::getConnection(YearPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(TermPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 		// BasePeer returns a PDOStatement
 		$stmt = BasePeer::doCount($criteria, $con);
@@ -207,7 +207,7 @@ abstract class BaseYearPeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PropelPDO $con
-	 * @return     Year
+	 * @return     Term
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -215,7 +215,7 @@ abstract class BaseYearPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = YearPeer::doSelect($critcopy, $con);
+		$objects = TermPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -232,7 +232,7 @@ abstract class BaseYearPeer {
 	 */
 	public static function doSelect(Criteria $criteria, PropelPDO $con = null)
 	{
-		return YearPeer::populateObjects(YearPeer::doSelectStmt($criteria, $con));
+		return TermPeer::populateObjects(TermPeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -250,12 +250,12 @@ abstract class BaseYearPeer {
 	public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(YearPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(TermPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		if (!$criteria->hasSelectClause()) {
 			$criteria = clone $criteria;
-			YearPeer::addSelectColumns($criteria);
+			TermPeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -273,10 +273,10 @@ abstract class BaseYearPeer {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      Year $value A Year object.
+	 * @param      Term $value A Term object.
 	 * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
 	 */
-	public static function addInstanceToPool(Year $obj, $key = null)
+	public static function addInstanceToPool(Term $obj, $key = null)
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
@@ -294,18 +294,18 @@ abstract class BaseYearPeer {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A Year object or a primary key value.
+	 * @param      mixed $value A Term object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
-			if (is_object($value) && $value instanceof Year) {
+			if (is_object($value) && $value instanceof Term) {
 				$key = (string) $value->getId();
 			} elseif (is_scalar($value)) {
 				// assume we've been passed a primary key
 				$key = (string) $value;
 			} else {
-				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Year object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Term object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
 				throw $e;
 			}
 
@@ -320,7 +320,7 @@ abstract class BaseYearPeer {
 	 * a multi-column primary key, a serialize()d version of the primary key will be returned.
 	 *
 	 * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-	 * @return     Year Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+	 * @return     Term Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
 	 * @see        getPrimaryKeyHash()
 	 */
 	public static function getInstanceFromPool($key)
@@ -344,7 +344,7 @@ abstract class BaseYearPeer {
 	}
 	
 	/**
-	 * Method to invalidate the instance pool of all tables related to year
+	 * Method to invalidate the instance pool of all tables related to term
 	 * by a foreign key with ON DELETE CASCADE
 	 */
 	public static function clearRelatedInstancePool()
@@ -382,11 +382,11 @@ abstract class BaseYearPeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = YearPeer::getOMClass(false);
+		$cls = TermPeer::getOMClass(false);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = YearPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj = YearPeer::getInstanceFromPool($key))) {
+			$key = TermPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj = TermPeer::getInstanceFromPool($key))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj->hydrate($row, 0, true); // rehydrate
@@ -395,7 +395,7 @@ abstract class BaseYearPeer {
 				$obj = new $cls();
 				$obj->hydrate($row);
 				$results[] = $obj;
-				YearPeer::addInstanceToPool($obj, $key);
+				TermPeer::addInstanceToPool($obj, $key);
 			} // if key exists
 		}
 		$stmt->closeCursor();
@@ -418,10 +418,10 @@ abstract class BaseYearPeer {
 	 */
 	public static function buildTableMap()
 	{
-	  $dbMap = Propel::getDatabaseMap(BaseYearPeer::DATABASE_NAME);
-	  if (!$dbMap->hasTable(BaseYearPeer::TABLE_NAME))
+	  $dbMap = Propel::getDatabaseMap(BaseTermPeer::DATABASE_NAME);
+	  if (!$dbMap->hasTable(BaseTermPeer::TABLE_NAME))
 	  {
-	    $dbMap->addTableObject(new YearTableMap());
+	    $dbMap->addTableObject(new TermTableMap());
 	  }
 	}
 
@@ -438,13 +438,13 @@ abstract class BaseYearPeer {
 	 */
 	public static function getOMClass($withPrefix = true)
 	{
-		return $withPrefix ? YearPeer::CLASS_DEFAULT : YearPeer::OM_CLASS;
+		return $withPrefix ? TermPeer::CLASS_DEFAULT : TermPeer::OM_CLASS;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a Year or Criteria object.
+	 * Method perform an INSERT on the database, given a Term or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Year object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or Term object containing data that is used to create the INSERT statement.
 	 * @param      PropelPDO $con the PropelPDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -453,13 +453,17 @@ abstract class BaseYearPeer {
 	public static function doInsert($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(YearPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(TermPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from Year object
+			$criteria = $values->buildCriteria(); // build Criteria from Term object
+		}
+
+		if ($criteria->containsKey(TermPeer::ID) && $criteria->keyContainsValue(TermPeer::ID) ) {
+			throw new PropelException('Cannot insert a value for auto-increment primary key ('.TermPeer::ID.')');
 		}
 
 
@@ -481,9 +485,9 @@ abstract class BaseYearPeer {
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a Year or Criteria object.
+	 * Method perform an UPDATE on the database, given a Term or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Year object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or Term object containing data that is used to create the UPDATE statement.
 	 * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -492,7 +496,7 @@ abstract class BaseYearPeer {
 	public static function doUpdate($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(YearPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(TermPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		$selectCriteria = new Criteria(self::DATABASE_NAME);
@@ -500,10 +504,10 @@ abstract class BaseYearPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(YearPeer::ID);
-			$selectCriteria->add(YearPeer::ID, $criteria->remove(YearPeer::ID), $comparison);
+			$comparison = $criteria->getComparison(TermPeer::ID);
+			$selectCriteria->add(TermPeer::ID, $criteria->remove(TermPeer::ID), $comparison);
 
-		} else { // $values is Year object
+		} else { // $values is Term object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -515,26 +519,26 @@ abstract class BaseYearPeer {
 	}
 
 	/**
-	 * Method to DELETE all rows from the year table.
+	 * Method to DELETE all rows from the term table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
 	public static function doDeleteAll($con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(YearPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(TermPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		$affectedRows = 0; // initialize var to track total num of affected rows
 		try {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(YearPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(TermPeer::TABLE_NAME, $con);
 			// Because this db requires some delete cascade/set null emulation, we have to
 			// clear the cached instance *after* the emulation has happened (since
 			// instances get re-added by the select statement contained therein).
-			YearPeer::clearInstancePool();
-			YearPeer::clearRelatedInstancePool();
+			TermPeer::clearInstancePool();
+			TermPeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -544,9 +548,9 @@ abstract class BaseYearPeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a Year or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a Term or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or Year object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or Term object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PropelPDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -557,20 +561,20 @@ abstract class BaseYearPeer {
 	 public static function doDelete($values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(YearPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(TermPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			YearPeer::clearInstancePool();
+			TermPeer::clearInstancePool();
 
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof Year) {
+		} elseif ($values instanceof Term) {
 			// invalidate the cache for this single object
-			YearPeer::removeInstanceFromPool($values);
+			TermPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else {
@@ -579,11 +583,11 @@ abstract class BaseYearPeer {
 
 
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(YearPeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(TermPeer::ID, (array) $values, Criteria::IN);
 
 			foreach ((array) $values as $singleval) {
 				// we can invalidate the cache for this single object
-				YearPeer::removeInstanceFromPool($singleval);
+				TermPeer::removeInstanceFromPool($singleval);
 			}
 		}
 
@@ -598,7 +602,7 @@ abstract class BaseYearPeer {
 			$con->beginTransaction();
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
-			YearPeer::clearRelatedInstancePool();
+			TermPeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -608,24 +612,24 @@ abstract class BaseYearPeer {
 	}
 
 	/**
-	 * Validates all modified columns of given Year object.
+	 * Validates all modified columns of given Term object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      Year $obj The object to validate.
+	 * @param      Term $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(Year $obj, $cols = null)
+	public static function doValidate(Term $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(YearPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(YearPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(TermPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(TermPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -641,7 +645,7 @@ abstract class BaseYearPeer {
 
 		}
 
-		return BasePeer::doValidate(YearPeer::DATABASE_NAME, YearPeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(TermPeer::DATABASE_NAME, TermPeer::TABLE_NAME, $columns);
 	}
 
 	/**
@@ -649,23 +653,23 @@ abstract class BaseYearPeer {
 	 *
 	 * @param      int $pk the primary key.
 	 * @param      PropelPDO $con the connection to use
-	 * @return     Year
+	 * @return     Term
 	 */
 	public static function retrieveByPK($pk, PropelPDO $con = null)
 	{
 
-		if (null !== ($obj = YearPeer::getInstanceFromPool((string) $pk))) {
+		if (null !== ($obj = TermPeer::getInstanceFromPool((string) $pk))) {
 			return $obj;
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(YearPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(TermPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria = new Criteria(YearPeer::DATABASE_NAME);
-		$criteria->add(YearPeer::ID, $pk);
+		$criteria = new Criteria(TermPeer::DATABASE_NAME);
+		$criteria->add(TermPeer::ID, $pk);
 
-		$v = YearPeer::doSelect($criteria, $con);
+		$v = TermPeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -681,16 +685,16 @@ abstract class BaseYearPeer {
 	public static function retrieveByPKs($pks, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(YearPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(TermPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		$objs = null;
 		if (empty($pks)) {
 			$objs = array();
 		} else {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
-			$criteria->add(YearPeer::ID, $pks, Criteria::IN);
-			$objs = YearPeer::doSelect($criteria, $con);
+			$criteria = new Criteria(TermPeer::DATABASE_NAME);
+			$criteria->add(TermPeer::ID, $pks, Criteria::IN);
+			$objs = TermPeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
@@ -707,9 +711,9 @@ abstract class BaseYearPeer {
 	  return array();
 	}
 
-} // BaseYearPeer
+} // BaseTermPeer
 
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BaseYearPeer::buildTableMap();
+BaseTermPeer::buildTableMap();
 

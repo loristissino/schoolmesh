@@ -1,6 +1,6 @@
 <?php
 
-$font_path="/usr/share/fonts/truetype/msttcorefonts/Arial.ttf";
+$font_path="./Arial.ttf";
 
 header ("Content-type: image/png"); 
 
