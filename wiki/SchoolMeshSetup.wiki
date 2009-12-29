@@ -3,12 +3,12 @@
 
 = Setup di SchoolMesh =
 
-Scaricare lo script di installazione (disponibile all'URL http://schoolmesh.googlecode.com/files) ed eseguirlo (i test sono stati effettuati su una macchina Ubuntu 8.04, 8.10 e 9.04).
+Scaricare lo script di installazione (disponibile all'URL http://code.google.com/p/schoolmesh/downloads/list) ed eseguirlo (i test sono stati effettuati su una macchina Ubuntu 8.04, 8.10 e 9.04).
 
 {{{
-wget http://schoolmesh.googlecode.com/files/schoolmeshsetup-0.090814.sh
-chmod +x schoolmeshsetup-0.090814.sh
-./schoolmeshsetup-0.090814.sh
+wget http://schoolmesh.googlecode.com/files/schoolmeshsetup-1.091229.sh
+chmod +x schoolmeshsetup-1.091229.sh
+./schoolmeshsetup-1.091229.sh
 }}}
 
 Passo successivo: [ApacheSSL Configurazione di Apache]
