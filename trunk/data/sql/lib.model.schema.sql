@@ -51,6 +51,24 @@ CREATE TABLE `year`
 (
 	`id` INTEGER  NOT NULL,
 	`description` VARCHAR(7),
+	`start_date` DATE,
+	`end_date` DATE,
+	PRIMARY KEY (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- term
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `term`;
+
+
+CREATE TABLE `term`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`description` VARCHAR(30)  NOT NULL,
+	`end_day` INTEGER  NOT NULL,
+	`has_formal_evaluation` TINYINT,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 

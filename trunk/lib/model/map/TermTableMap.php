@@ -2,7 +2,7 @@
 
 
 /**
- * This class defines the structure of the 'year' table.
+ * This class defines the structure of the 'term' table.
  *
  *
  *
@@ -13,12 +13,12 @@
  *
  * @package    lib.model.map
  */
-class YearTableMap extends TableMap {
+class TermTableMap extends TableMap {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.YearTableMap';
+	const CLASS_NAME = 'lib.model.map.TermTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators
@@ -30,16 +30,16 @@ class YearTableMap extends TableMap {
 	public function initialize()
 	{
 	  // attributes
-		$this->setName('year');
-		$this->setPhpName('Year');
-		$this->setClassname('Year');
+		$this->setName('term');
+		$this->setPhpName('Term');
+		$this->setClassname('Term');
 		$this->setPackage('lib.model');
-		$this->setUseIdGenerator(false);
+		$this->setUseIdGenerator(true);
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
-		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 7, null);
-		$this->addColumn('START_DATE', 'StartDate', 'DATE', false, null, null);
-		$this->addColumn('END_DATE', 'EndDate', 'DATE', false, null, null);
+		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', true, 30, null);
+		$this->addColumn('END_DAY', 'EndDay', 'INTEGER', true, null, null);
+		$this->addColumn('HAS_FORMAL_EVALUATION', 'HasFormalEvaluation', 'BOOLEAN', false, null, null);
 		// validators
 	} // initialize()
 
@@ -48,8 +48,6 @@ class YearTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Appointment', 'Appointment', RelationMap::ONE_TO_MANY, array('id' => 'year_id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('Enrolment', 'Enrolment', RelationMap::ONE_TO_MANY, array('id' => 'year_id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
 	/**
@@ -65,4 +63,4 @@ class YearTableMap extends TableMap {
 		);
 	} // getBehaviors()
 
-} // YearTableMap
+} // TermTableMap

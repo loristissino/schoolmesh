@@ -1,4 +1,11 @@
 #!/bin/bash
-svn status | grep ^? | grep -v 'cache' | grep -v 'web/uploads' | grep -v 'web/images/sources' | sed 's/^?      //' #  | xargs svn add 
+svn status | grep ^? | \
+grep -v 'cache' | \
+grep -v 'web/uploads' | \
+grep -v 'web/images/sources' | \
+grep -v 'apps/frontend/config/app.yml' | \
+grep -v 'apps/backend/config/app.yml' | \
+grep -v 'config/databases.yml' | \
+sed 's/^?      //' #  | xargs svn add 
 
 
