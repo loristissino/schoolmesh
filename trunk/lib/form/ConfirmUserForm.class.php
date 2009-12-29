@@ -1,11 +1,11 @@
 <?php
-        class ConfirmUserForm extends sfForm
+        class ConfirmUserForm extends BaseForm
         {
           public function configure()
           {
             $this->setWidgets(array(
-			  'username' =>  new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
-			  'account' =>  new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
+			  'username' =>  new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
+			  'account' =>  new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
            ));
 
 			$this->widgetSchema->setNameFormat('info[%s]');

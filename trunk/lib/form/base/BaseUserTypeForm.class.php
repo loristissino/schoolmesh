@@ -13,8 +13,8 @@ class BaseUserTypeForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'                 => new sfWidgetFormInputHidden(),
-      'description'        => new sfWidgetFormInput(),
-      'primary_group_name' => new sfWidgetFormInput(),
+      'description'        => new sfWidgetFormInputText(),
+      'primary_group_name' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(

@@ -1,11 +1,11 @@
 <?php
-        class EditWpRejectForm extends sfForm
+        class EditWpRejectForm extends BaseForm
         {
           public function configure()
           {
 			
             $this->setWidgets(array(
-				'comment' => new sfWidgetFormInput(array(), array('size'=>100)),
+				'comment' => new sfWidgetFormInputText(array(), array('size'=>100)),
 				));
 
 			$this->widgetSchema->setNameFormat('info[%s]');

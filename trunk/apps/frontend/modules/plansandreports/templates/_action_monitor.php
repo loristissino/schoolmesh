@@ -17,16 +17,16 @@
 				</li>
 				<?php endif ?>
 
-			<?php if(@$sf_user->hasCredential($steps[$workplan->getState()]['actions']['approve']['permission'])): ?>
+			<?php if(@$sf_user->getProfile()->hasCheckedPermission($steps[$workplan->getState()]['actions']['approve']['permission'])): ?>
 				<li class="sf_admin_action_approve">
 					<?php echo link_to(
 				__('Approve'),
 				'plansandreports/approve?id=' . $workplan->getId() . '&page=' . $page, 
-				array('method'=>'put', 'title' => __($steps[$workplan->getState()]['actions']['approve']['submitDisplayedAction']))
+				array('method'=>'put', 'title' =>__($steps[$workplan->getState()]['actions']['approve']['submitDisplayedAction']))
 				)?>
 				</li>
 			<?php endif ?>
-			<?php if(@$sf_user->hasCredential($steps[$workplan->getState()]['actions']['reject']['permission'])): ?>
+			<?php if(@$sf_user->getProfile()->hasCheckedPermission($steps[$workplan->getState()]['actions']['reject']['permission'])): ?>
 				<li class="sf_admin_action_reject">
 					<?php echo link_to(
 				__('Reject'),

@@ -3,23 +3,25 @@
 /**
  * Workstation form base class.
  *
+ * @method Workstation getObject() Returns the current form's model object
+ *
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
+ * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseWorkstationForm extends BaseFormPropel
+abstract class BaseWorkstationForm extends BaseFormPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'                       => new sfWidgetFormInputHidden(),
-      'name'                     => new sfWidgetFormInput(),
-      'ip_cidr'                  => new sfWidgetFormInput(),
-      'mac_address'              => new sfWidgetFormInput(),
+      'name'                     => new sfWidgetFormInputText(),
+      'ip_cidr'                  => new sfWidgetFormInputText(),
+      'mac_address'              => new sfWidgetFormInputText(),
       'is_enabled'               => new sfWidgetFormInputCheckbox(),
       'subnet_id'                => new sfWidgetFormPropelChoice(array('model' => 'Subnet', 'add_empty' => true)),
-      'workstation_service_list' => new sfWidgetFormPropelChoiceMany(array('model' => 'Service')),
+      'workstation_service_list' => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => 'Service')),
     ));
 
     $this->setValidators(array(
@@ -29,7 +31,7 @@ class BaseWorkstationForm extends BaseFormPropel
       'mac_address'              => new sfValidatorString(array('max_length' => 17, 'required' => false)),
       'is_enabled'               => new sfValidatorBoolean(array('required' => false)),
       'subnet_id'                => new sfValidatorPropelChoice(array('model' => 'Subnet', 'column' => 'id', 'required' => false)),
-      'workstation_service_list' => new sfValidatorPropelChoiceMany(array('model' => 'Service', 'required' => false)),
+      'workstation_service_list' => new sfValidatorPropelChoice(array('multiple' => true, 'model' => 'Service', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('workstation[%s]');
@@ -82,7 +84,7 @@ class BaseWorkstationForm extends BaseFormPropel
       return;
     }
 
-    if (is_null($con))
+    if (null === $con)
     {
       $con = $this->getConnection();
     }

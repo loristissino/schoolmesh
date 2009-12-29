@@ -10,7 +10,7 @@ all:
   config:
     current_year:   2009 # only the first of the two years of a scholastic/academic year
     culture: it
-    base_url: 'https://localhost/schoolmesh'
+    base_url: 'http://www.schoolmesh.mattiussilab.localhost'
     users_max_per_page: 100
     appointments_max_per_page: 30
     posix_homedir: /home/testhome 

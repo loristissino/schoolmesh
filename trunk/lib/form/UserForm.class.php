@@ -1,5 +1,5 @@
 <?php
-        class UserForm extends sfForm
+        class UserForm extends BaseForm
         {
           public function configure()
           {
@@ -12,31 +12,31 @@
 
 			
             $this->setWidgets(array(
-			  'id'  => new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
-			  'old_username' =>  new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
-			  'username' => new sfWidgetFormInput(array(), array('size'=>25)),
+			  'id'  => new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
+			  'old_username' =>  new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
+			  'username' => new sfWidgetFormInputText(array(), array('size'=>25)),
 			  'is_active'=> new sfWidgetFormSelect(array('choices' =>array('no', 'yes'))), 
-              'first_name'    => new sfWidgetFormInput(array(), array('size'=>50)),
-              'middle_name'   => new sfWidgetFormInput(array(), array('size'=>15)),
-              'last_name' => new sfWidgetFormInput(array(), array('size'=>50)),
-              'pronunciation' => new sfWidgetFormInput(array(), array('size'=>70)),
+              'first_name'    => new sfWidgetFormInputText(array(), array('size'=>50)),
+              'middle_name'   => new sfWidgetFormInputText(array(), array('size'=>15)),
+              'last_name' => new sfWidgetFormInputText(array(), array('size'=>50)),
+              'pronunciation' => new sfWidgetFormInputText(array(), array('size'=>70)),
 			  'gender' => new sfWidgetFormSelect(array('choices' =>array('F', 'M', 'unknown'))),  
-			  'email' => new sfWidgetFormInput(),
+			  'email' => new sfWidgetFormInputText(),
 			  'email_state' => new sfWidgetFormSelect(array('choices' =>
 Workflow::getEmailVerificationStates())),  
 			  'birthdate' => new sfWidgetFormI18nDate(array('culture'=>'it', 'years'=>$years)),  
-			  'birthplace' => new sfWidgetFormInput(array(), array('size'=>50)),  
+			  'birthplace' => new sfWidgetFormInputText(array(), array('size'=>50)),  
 			  'main_role' => new sfWidgetFormPropelSelect(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
-/*			  'soft_blocks_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
-			  'hard_blocks_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
-			  'soft_files_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
-			  'hard_files_quota' => new sfWidgetFormInput(array(), array('size'=>8)),*/
+/*			  'soft_blocks_quota' => new sfWidgetFormInputText(array(), array('size'=>8)),
+			  'hard_blocks_quota' => new sfWidgetFormInputText(array(), array('size'=>8)),
+			  'soft_files_quota' => new sfWidgetFormInputText(array(), array('size'=>8)),
+			  'hard_files_quota' => new sfWidgetFormInputText(array(), array('size'=>8)),*/
             ));
 
 			if(isset($this->options['new']))
 			{
             $this->setWidgets(array(
-			  'username' => new sfWidgetFormInput(array(), array('size'=>25)),
+			  'username' => new sfWidgetFormInputText(array(), array('size'=>25)),
 			  'main_role' => new sfWidgetFormPropelSelect(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
             ));
 			}

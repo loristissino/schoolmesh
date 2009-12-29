@@ -8,20 +8,20 @@
  * @author     Your name here
  * @version    SVN: $Id: sfPropelFormTemplate.php 10377 2008-07-21 07:10:32Z dwhittle $
  */
-class PosixAccountForm extends sfForm
+class PosixAccountForm extends BaseForm
 {
   public function configure()
   {
 
 	$this->setWidgets(array(
-	  'id'  => new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
-	  'used_blocks'  => new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
-	  'used_files'  => new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
-	  'id'  => new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
-	  'soft_blocks_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
-	  'hard_blocks_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
-	  'soft_files_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
-	  'hard_files_quota' => new sfWidgetFormInput(array(), array('size'=>8)),
+	  'id'  => new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
+	  'used_blocks'  => new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
+	  'used_files'  => new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
+	  'id'  => new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
+	  'soft_blocks_quota' => new sfWidgetFormInputText(array(), array('size'=>8)),
+	  'hard_blocks_quota' => new sfWidgetFormInputText(array(), array('size'=>8)),
+	  'soft_files_quota' => new sfWidgetFormInputText(array(), array('size'=>8)),
+	  'hard_files_quota' => new sfWidgetFormInputText(array(), array('size'=>8)),
 	));
 
 	$this->widgetSchema->setNameFormat('accountinfo[%s]');

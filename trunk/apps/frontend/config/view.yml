@@ -13,5 +13,5 @@ default:
 
 #  javascripts:    [%SF_PROTOTYPE_WEB_DIR%/web/js/scriptaculous, %SF_PROTOTYPE_WEB_DIR%/web/js/prototype]
 
-  has_layout:     on
+  has_layout:     true
   layout:         layout

@@ -3,27 +3,29 @@
 /**
  * WptoolItem form base class.
  *
+ * @method WptoolItem getObject() Returns the current form's model object
+ *
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
+ * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseWptoolItemForm extends BaseFormPropel
+abstract class BaseWptoolItemForm extends BaseFormPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'                      => new sfWidgetFormInputHidden(),
-      'description'             => new sfWidgetFormInput(),
+      'description'             => new sfWidgetFormInputText(),
       'wptool_item_type_id'     => new sfWidgetFormPropelChoice(array('model' => 'WptoolItemType', 'add_empty' => true)),
-      'wptool_appointment_list' => new sfWidgetFormPropelChoiceMany(array('model' => 'Appointment')),
+      'wptool_appointment_list' => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => 'Appointment')),
     ));
 
     $this->setValidators(array(
       'id'                      => new sfValidatorPropelChoice(array('model' => 'WptoolItem', 'column' => 'id', 'required' => false)),
       'description'             => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'wptool_item_type_id'     => new sfValidatorPropelChoice(array('model' => 'WptoolItemType', 'column' => 'id', 'required' => false)),
-      'wptool_appointment_list' => new sfValidatorPropelChoiceMany(array('model' => 'Appointment', 'required' => false)),
+      'wptool_appointment_list' => new sfValidatorPropelChoice(array('multiple' => true, 'model' => 'Appointment', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('wptool_item[%s]');
@@ -76,7 +78,7 @@ class BaseWptoolItemForm extends BaseFormPropel
       return;
     }
 
-    if (is_null($con))
+    if (null === $con)
     {
       $con = $this->getConnection();
     }

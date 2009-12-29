@@ -1,13 +1,13 @@
 <?php
-        class EditWpmoduleHeadingForm extends sfForm
+        class EditWpmoduleHeadingForm extends BaseForm
         {
           public function configure()
           {
 			
             $this->setWidgets(array(
-			    'title' => new sfWidgetFormInput(array(), array('size'=>70)),
-			    'period' => new sfWidgetFormInput(array(), array('size'=>30)),
-			    'hours_estimated' => new sfWidgetFormInput(array(), array('size'=>5)),
+			    'title' => new sfWidgetFormInputText(array(), array('size'=>70)),
+			    'period' => new sfWidgetFormInputText(array(), array('size'=>30)),
+			    'hours_estimated' => new sfWidgetFormInputText(array(), array('size'=>5)),
 				));
 
 			$this->widgetSchema->setNameFormat('info[%s]');

@@ -34,7 +34,7 @@ class WpmoduleItemForm extends BaseWpmoduleItemForm
 			)
 			);
 /*        $this->setWidgets(array(
-          'content'         => new sfWidgetFormInput(),
+          'content'         => new sfWidgetFormInputText(),
         ));
 		
 		$this->setValidators(array(

@@ -1,23 +1,21 @@
 <?php
 
-require_once(sfConfig::get('sf_lib_dir').'/filter/base/BaseFormFilterPropel.class.php');
-
 /**
  * Service filter form base class.
  *
  * @package    schoolmesh
  * @subpackage filter
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 13459 2008-11-28 14:48:12Z fabien $
+ * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseServiceFormFilter extends BaseFormFilterPropel
+abstract class BaseServiceFormFilter extends BaseFormFilterPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
       'name'                     => new sfWidgetFormFilterInput(),
       'is_enabled_by_default'    => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
-      'port'                     => new sfWidgetFormFilterInput(),
+      'port'                     => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'is_udp'                   => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'subnet_service_list'      => new sfWidgetFormPropelChoice(array('model' => 'Subnet', 'add_empty' => true)),
       'workstation_service_list' => new sfWidgetFormPropelChoice(array('model' => 'Workstation', 'add_empty' => true)),

@@ -3,12 +3,14 @@
 /**
  * Account form base class.
  *
+ * @method Account getObject() Returns the current form's model object
+ *
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
+ * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseAccountForm extends BaseFormPropel
+abstract class BaseAccountForm extends BaseFormPropel
 {
   public function setup()
   {
@@ -20,10 +22,10 @@ class BaseAccountForm extends BaseFormPropel
       'settings'            => new sfWidgetFormTextarea(),
       'exists'              => new sfWidgetFormInputCheckbox(),
       'is_locked'           => new sfWidgetFormInputCheckbox(),
-      'temporary_password'  => new sfWidgetFormInput(),
+      'temporary_password'  => new sfWidgetFormInputText(),
       'info_updated_at'     => new sfWidgetFormDateTime(),
       'last_known_login_at' => new sfWidgetFormDateTime(),
-      'quota_percentage'    => new sfWidgetFormInput(),
+      'quota_percentage'    => new sfWidgetFormInputText(),
       'updated_at'          => new sfWidgetFormDateTime(),
       'created_at'          => new sfWidgetFormDateTime(),
     ));
@@ -39,7 +41,7 @@ class BaseAccountForm extends BaseFormPropel
       'temporary_password'  => new sfValidatorString(array('max_length' => 10, 'required' => false)),
       'info_updated_at'     => new sfValidatorDateTime(array('required' => false)),
       'last_known_login_at' => new sfValidatorDateTime(array('required' => false)),
-      'quota_percentage'    => new sfValidatorInteger(array('required' => false)),
+      'quota_percentage'    => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'updated_at'          => new sfValidatorDateTime(array('required' => false)),
       'created_at'          => new sfValidatorDateTime(array('required' => false)),
     ));

@@ -3,12 +3,14 @@
 /**
  * Wpevent form base class.
  *
+ * @method Wpevent getObject() Returns the current form's model object
+ *
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
+ * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseWpeventForm extends BaseFormPropel
+abstract class BaseWpeventForm extends BaseFormPropel
 {
   public function setup()
   {
@@ -17,8 +19,8 @@ class BaseWpeventForm extends BaseFormPropel
       'created_at'     => new sfWidgetFormDateTime(),
       'appointment_id' => new sfWidgetFormPropelChoice(array('model' => 'Appointment', 'add_empty' => true)),
       'user_id'        => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
-      'comment'        => new sfWidgetFormInput(),
-      'state'          => new sfWidgetFormInput(),
+      'comment'        => new sfWidgetFormInputText(),
+      'state'          => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -27,7 +29,7 @@ class BaseWpeventForm extends BaseFormPropel
       'appointment_id' => new sfValidatorPropelChoice(array('model' => 'Appointment', 'column' => 'id', 'required' => false)),
       'user_id'        => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id', 'required' => false)),
       'comment'        => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'state'          => new sfValidatorInteger(array('required' => false)),
+      'state'          => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('wpevent[%s]');

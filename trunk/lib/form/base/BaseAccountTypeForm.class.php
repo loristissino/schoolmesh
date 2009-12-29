@@ -3,21 +3,23 @@
 /**
  * AccountType form base class.
  *
+ * @method AccountType getObject() Returns the current form's model object
+ *
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
+ * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseAccountTypeForm extends BaseFormPropel
+abstract class BaseAccountTypeForm extends BaseFormPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'          => new sfWidgetFormInputHidden(),
-      'name'        => new sfWidgetFormInput(),
+      'name'        => new sfWidgetFormInputText(),
       'description' => new sfWidgetFormTextarea(),
       'is_external' => new sfWidgetFormInputCheckbox(),
-      'rank'        => new sfWidgetFormInput(),
+      'rank'        => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -25,7 +27,7 @@ class BaseAccountTypeForm extends BaseFormPropel
       'name'        => new sfValidatorString(array('max_length' => 255)),
       'description' => new sfValidatorString(array('required' => false)),
       'is_external' => new sfValidatorBoolean(),
-      'rank'        => new sfValidatorInteger(array('required' => false)),
+      'rank'        => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(

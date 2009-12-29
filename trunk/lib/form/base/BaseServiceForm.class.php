@@ -3,33 +3,35 @@
 /**
  * Service form base class.
  *
+ * @method Service getObject() Returns the current form's model object
+ *
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
+ * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseServiceForm extends BaseFormPropel
+abstract class BaseServiceForm extends BaseFormPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'                       => new sfWidgetFormInputHidden(),
-      'name'                     => new sfWidgetFormInput(),
+      'name'                     => new sfWidgetFormInputText(),
       'is_enabled_by_default'    => new sfWidgetFormInputCheckbox(),
-      'port'                     => new sfWidgetFormInput(),
+      'port'                     => new sfWidgetFormInputText(),
       'is_udp'                   => new sfWidgetFormInputCheckbox(),
-      'subnet_service_list'      => new sfWidgetFormPropelChoiceMany(array('model' => 'Subnet')),
-      'workstation_service_list' => new sfWidgetFormPropelChoiceMany(array('model' => 'Workstation')),
+      'subnet_service_list'      => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => 'Subnet')),
+      'workstation_service_list' => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => 'Workstation')),
     ));
 
     $this->setValidators(array(
       'id'                       => new sfValidatorPropelChoice(array('model' => 'Service', 'column' => 'id', 'required' => false)),
       'name'                     => new sfValidatorString(array('max_length' => 40, 'required' => false)),
       'is_enabled_by_default'    => new sfValidatorBoolean(array('required' => false)),
-      'port'                     => new sfValidatorInteger(),
+      'port'                     => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647)),
       'is_udp'                   => new sfValidatorBoolean(array('required' => false)),
-      'subnet_service_list'      => new sfValidatorPropelChoiceMany(array('model' => 'Subnet', 'required' => false)),
-      'workstation_service_list' => new sfValidatorPropelChoiceMany(array('model' => 'Workstation', 'required' => false)),
+      'subnet_service_list'      => new sfValidatorPropelChoice(array('multiple' => true, 'model' => 'Subnet', 'required' => false)),
+      'workstation_service_list' => new sfValidatorPropelChoice(array('multiple' => true, 'model' => 'Workstation', 'required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(
@@ -98,7 +100,7 @@ class BaseServiceForm extends BaseFormPropel
       return;
     }
 
-    if (is_null($con))
+    if (null === $con)
     {
       $con = $this->getConnection();
     }
@@ -133,7 +135,7 @@ class BaseServiceForm extends BaseFormPropel
       return;
     }
 
-    if (is_null($con))
+    if (null === $con)
     {
       $con = $this->getConnection();
     }

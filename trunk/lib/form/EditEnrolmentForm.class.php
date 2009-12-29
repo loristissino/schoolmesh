@@ -1,5 +1,5 @@
 <?php
-        class EditEnrolmentForm extends sfForm
+        class EditEnrolmentForm extends BaseForm
         {
           public function configure()
           {

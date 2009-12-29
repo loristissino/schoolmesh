@@ -3,17 +3,19 @@
 /**
  * SystemMessageI18n form base class.
  *
+ * @method SystemMessageI18n getObject() Returns the current form's model object
+ *
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
+ * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseSystemMessageI18nForm extends BaseFormPropel
+abstract class BaseSystemMessageI18nForm extends BaseFormPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
-      'content' => new sfWidgetFormInput(),
+      'content' => new sfWidgetFormInputText(),
       'id'      => new sfWidgetFormInputHidden(),
       'culture' => new sfWidgetFormInputHidden(),
     ));

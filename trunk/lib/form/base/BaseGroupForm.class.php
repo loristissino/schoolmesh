@@ -13,7 +13,7 @@ class BaseGroupForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'                => new sfWidgetFormInputHidden(),
-      'name'              => new sfWidgetFormInput(),
+      'name'              => new sfWidgetFormInputText(),
       'person_group_list' => new sfWidgetFormPropelSelectMany(array('model' => 'Person')),
     ));
 

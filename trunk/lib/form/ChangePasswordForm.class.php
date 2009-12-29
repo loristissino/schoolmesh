@@ -1,5 +1,5 @@
 <?php
-        class ChangePasswordForm extends sfForm
+        class ChangePasswordForm extends BaseForm
         {
           public function configure()
           {
@@ -7,7 +7,7 @@
             $this->setWidgets(array(
 			  'password' => new sfWidgetFormInputPassword(array(), array('size'=>25)),
 			  'password_again' => new sfWidgetFormInputPassword(array(), array('size'=>25)),
-			  'type'  => new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
+			  'type'  => new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
             ));
 			
 			$this->widgetSchema->setNameFormat('userinfo[%s]');

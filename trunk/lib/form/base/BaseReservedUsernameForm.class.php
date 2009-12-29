@@ -3,19 +3,21 @@
 /**
  * ReservedUsername form base class.
  *
+ * @method ReservedUsername getObject() Returns the current form's model object
+ *
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 12815 2008-11-09 10:43:58Z fabien $
+ * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseReservedUsernameForm extends BaseFormPropel
+abstract class BaseReservedUsernameForm extends BaseFormPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'         => new sfWidgetFormInputHidden(),
-      'username'   => new sfWidgetFormInput(),
-      'aliases_to' => new sfWidgetFormInput(),
+      'username'   => new sfWidgetFormInputText(),
+      'aliases_to' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(

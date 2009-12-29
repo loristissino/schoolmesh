@@ -1,12 +1,12 @@
 <?php
-        class TeamChangeRoleForm extends sfForm
+        class TeamChangeRoleForm extends BaseForm
         {
           public function configure()
           {
 			
             $this->setWidgets(array(
-				'id'  => new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
-				'team'  => new sfWidgetFormInput(array('type'=>'hidden', 'is_hidden'=>true)),
+				'id'  => new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
+				'team'  => new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
 				'role' => new sfWidgetFormPropelSelect(array('model'=>'role', 'add_empty'=>'Choose a role'))
 				));
 

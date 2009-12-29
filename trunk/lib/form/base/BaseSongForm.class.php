@@ -14,8 +14,8 @@ class BaseSongForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'     => new sfWidgetFormInputHidden(),
-      'title'  => new sfWidgetFormInput(),
-      'author' => new sfWidgetFormInput(),
+      'title'  => new sfWidgetFormInputText(),
+      'author' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
