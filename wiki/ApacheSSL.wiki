@@ -10,7 +10,7 @@ Inoltre, le configurazioni di Apache possono variare (ad esempio, potrebbe esser
 1. Modificare il file _/etc/apache2/sites-available/default_ aggiungendo le seguenti righe, subito prima di `</VirtualHost>`:
 
 {{{
-    Alias "/schoolmesh/sf" "/usr/share/php/data/symfony/web/sf"
+    Alias "/schoolmesh/sf" "/var/schoolmesh/lib/vendor/symfony/web/sf"
     Alias /schoolmesh "/var/schoolmesh/web/"
 
     DirectoryIndex index.php
@@ -20,7 +20,7 @@ Inoltre, le configurazioni di Apache possono variare (ad esempio, potrebbe esser
       Allow from All
     </Directory>
 
-    <Directory "/usr/share/php/data/symfony/web/sf">
+    <Directory "/var/schoolmesh/lib/vendor/symfony/web/sf">
        AllowOverride All
        Allow from All
     </Directory>
