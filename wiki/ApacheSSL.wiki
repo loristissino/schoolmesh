@@ -29,7 +29,7 @@ Inoltre, le configurazioni di Apache possono variare (ad esempio, potrebbe esser
 2. Se il percorso scelto per l'applicazione non è _/schoolmesh_, modificare la riga del file _web/.htaccess_ contenente la riga relativa alla _RewriteRule_:
 
 {{{
-  RewriteRule ^(.*)$ /schoolmesh2/index.php [QSA,L]
+  RewriteRule ^(.*)$ /schoolmesh/index.php [QSA,L]
 }}} 
 
 3. Modificare i file di configurazione di PHP (_/etc/php5/apache2/php.ini_ e _/etc/php5/cli/php.ini_) in modo che contengano le seguenti impostazioni:
