@@ -60,6 +60,16 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	protected $aWpitemGroup;
 
 	/**
+	 * @var        array StudentSituation[] Collection to store aggregation of StudentSituation objects.
+	 */
+	protected $collStudentSituations;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collStudentSituations.
+	 */
+	private $lastStudentSituationCriteria = null;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -374,6 +384,9 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		if ($deep) {  // also de-associate any related objects?
 
 			$this->aWpitemGroup = null;
+			$this->collStudentSituations = null;
+			$this->lastStudentSituationCriteria = null;
+
 		} // if (deep)
 	}
 
@@ -512,6 +525,14 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
 			}
 
+			if ($this->collStudentSituations !== null) {
+				foreach ($this->collStudentSituations as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -594,6 +615,14 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collStudentSituations !== null) {
+					foreach ($this->collStudentSituations as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -834,6 +863,20 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 		$copyObj->setIsEditable($this->is_editable);
 
 
+		if ($deepCopy) {
+			// important: temporarily setNew(false) because this affects the behavior of
+			// the getter/setter methods for fkey referrer objects.
+			$copyObj->setNew(false);
+
+			foreach ($this->getStudentSituations() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addStudentSituation($relObj->copy($deepCopy));
+				}
+			}
+
+		} // if ($deepCopy)
+
+
 		$copyObj->setNew(true);
 
 		$copyObj->setId(NULL); // this is a auto-increment column, so set to default value
@@ -928,6 +971,301 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collStudentSituations collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addStudentSituations()
+	 */
+	public function clearStudentSituations()
+	{
+		$this->collStudentSituations = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collStudentSituations collection (array).
+	 *
+	 * By default this just sets the collStudentSituations collection to an empty array (like clearcollStudentSituations());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initStudentSituations()
+	{
+		$this->collStudentSituations = array();
+	}
+
+	/**
+	 * Gets an array of StudentSituation objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this WpmoduleItem has previously been saved, it will retrieve
+	 * related StudentSituations from storage. If this WpmoduleItem is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array StudentSituation[]
+	 * @throws     PropelException
+	 */
+	public function getStudentSituations($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WpmoduleItemPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentSituations === null) {
+			if ($this->isNew()) {
+			   $this->collStudentSituations = array();
+			} else {
+
+				$criteria->add(StudentSituationPeer::WPMODULE_ITEM_ID, $this->id);
+
+				StudentSituationPeer::addSelectColumns($criteria);
+				$this->collStudentSituations = StudentSituationPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(StudentSituationPeer::WPMODULE_ITEM_ID, $this->id);
+
+				StudentSituationPeer::addSelectColumns($criteria);
+				if (!isset($this->lastStudentSituationCriteria) || !$this->lastStudentSituationCriteria->equals($criteria)) {
+					$this->collStudentSituations = StudentSituationPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastStudentSituationCriteria = $criteria;
+		return $this->collStudentSituations;
+	}
+
+	/**
+	 * Returns the number of related StudentSituation objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related StudentSituation objects.
+	 * @throws     PropelException
+	 */
+	public function countStudentSituations(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WpmoduleItemPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collStudentSituations === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(StudentSituationPeer::WPMODULE_ITEM_ID, $this->id);
+
+				$count = StudentSituationPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(StudentSituationPeer::WPMODULE_ITEM_ID, $this->id);
+
+				if (!isset($this->lastStudentSituationCriteria) || !$this->lastStudentSituationCriteria->equals($criteria)) {
+					$count = StudentSituationPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collStudentSituations);
+				}
+			} else {
+				$count = count($this->collStudentSituations);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a StudentSituation object to this object
+	 * through the StudentSituation foreign key attribute.
+	 *
+	 * @param      StudentSituation $l StudentSituation
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addStudentSituation(StudentSituation $l)
+	{
+		if ($this->collStudentSituations === null) {
+			$this->initStudentSituations();
+		}
+		if (!in_array($l, $this->collStudentSituations, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collStudentSituations, $l);
+			$l->setWpmoduleItem($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this WpmoduleItem is new, it will return
+	 * an empty collection; or if this WpmoduleItem has previously
+	 * been saved, it will retrieve related StudentSituations from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in WpmoduleItem.
+	 */
+	public function getStudentSituationsJoinYear($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WpmoduleItemPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentSituations === null) {
+			if ($this->isNew()) {
+				$this->collStudentSituations = array();
+			} else {
+
+				$criteria->add(StudentSituationPeer::WPMODULE_ITEM_ID, $this->id);
+
+				$this->collStudentSituations = StudentSituationPeer::doSelectJoinYear($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentSituationPeer::WPMODULE_ITEM_ID, $this->id);
+
+			if (!isset($this->lastStudentSituationCriteria) || !$this->lastStudentSituationCriteria->equals($criteria)) {
+				$this->collStudentSituations = StudentSituationPeer::doSelectJoinYear($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentSituationCriteria = $criteria;
+
+		return $this->collStudentSituations;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this WpmoduleItem is new, it will return
+	 * an empty collection; or if this WpmoduleItem has previously
+	 * been saved, it will retrieve related StudentSituations from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in WpmoduleItem.
+	 */
+	public function getStudentSituationsJoinTerm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WpmoduleItemPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentSituations === null) {
+			if ($this->isNew()) {
+				$this->collStudentSituations = array();
+			} else {
+
+				$criteria->add(StudentSituationPeer::WPMODULE_ITEM_ID, $this->id);
+
+				$this->collStudentSituations = StudentSituationPeer::doSelectJoinTerm($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentSituationPeer::WPMODULE_ITEM_ID, $this->id);
+
+			if (!isset($this->lastStudentSituationCriteria) || !$this->lastStudentSituationCriteria->equals($criteria)) {
+				$this->collStudentSituations = StudentSituationPeer::doSelectJoinTerm($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentSituationCriteria = $criteria;
+
+		return $this->collStudentSituations;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this WpmoduleItem is new, it will return
+	 * an empty collection; or if this WpmoduleItem has previously
+	 * been saved, it will retrieve related StudentSituations from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in WpmoduleItem.
+	 */
+	public function getStudentSituationsJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(WpmoduleItemPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentSituations === null) {
+			if ($this->isNew()) {
+				$this->collStudentSituations = array();
+			} else {
+
+				$criteria->add(StudentSituationPeer::WPMODULE_ITEM_ID, $this->id);
+
+				$this->collStudentSituations = StudentSituationPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentSituationPeer::WPMODULE_ITEM_ID, $this->id);
+
+			if (!isset($this->lastStudentSituationCriteria) || !$this->lastStudentSituationCriteria->equals($criteria)) {
+				$this->collStudentSituations = StudentSituationPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentSituationCriteria = $criteria;
+
+		return $this->collStudentSituations;
+	}
+
+	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -939,8 +1277,14 @@ abstract class BaseWpmoduleItem extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
+			if ($this->collStudentSituations) {
+				foreach ((array) $this->collStudentSituations as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} // if ($deep)
 
+		$this->collStudentSituations = null;
 			$this->aWpitemGroup = null;
 	}
 

@@ -7,11 +7,13 @@
 		<li class="sf_admin_action_<?php echo (false)? 'flag_red': 'flag_gray' ?>">
 		<?php echo link_to_remote('', array(
 					'update'   => $divname,
-					'url'      => 'schoolclasses/tickit'),
+					'url'      => url_for('schoolclasses/tickit?student=' . $student->getId() . '&item=' . $wpmodule_item_id . '&students=' . $ids),
+					'loading'=>'$(\'loader'.$student->getId() . '_' . $wpmodule_item_id . '\').show();'),
 					array(
 					'title'=>$student->getProfile()->getFullName()
 					)
 				) ?>
+		<?php echo image_tag('loader.gif', array('style'=>'vertical-align: middle; display: none', 'id'=>'loader'.$student->getId() . '_' . $wpmodule_item_id)) ?>
 		</li>
 	</ul>
 	</td>

@@ -50,6 +50,7 @@ public function executeGrid(sfWebRequest $request)
 
     $ids = $request->getParameter('ids');
     $this->students = sfGuardUserPeer::retrieveByPks($ids);
+	$this->ids=base64_encode(serialize($ids));
 	
 	if (sizeof($this->students)==0)
 		{
@@ -57,13 +58,25 @@ public function executeGrid(sfWebRequest $request)
 			$this->redirect($redirectURL);
 		}
 
-// FIXME -- must continue this
-//	$this->baseaddress =$_SERVER['SCRIPT_NAME'];
-
-
 }
 
+	public function executeTickit(sfWebRequest $request)
+	{
 
+		$ids = unserialize(base64_decode($request->getParameter('ids')));
+		$this->students = sfGuardUserPeer::retrieveByPks($ids);
 
+		$student_id=$request->getParameter('student');
+		$wpmodule_item_id=$request->getParameter('item');
+		ob_start();
+
+		echo "I was clicked, student is $student_id, item is $wpmodule_item_id\n";
+		
+		$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
+
+		sleep(5);
+  	    return $this->renderPartial('ticks', array('students'=>$this->students, 'ids'=>$ids, 'wpmodule_item_id'=>$wpmodule_item_id));
+
+	}
 
 }

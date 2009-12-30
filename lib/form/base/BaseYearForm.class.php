@@ -17,11 +17,15 @@ abstract class BaseYearForm extends BaseFormPropel
     $this->setWidgets(array(
       'id'          => new sfWidgetFormInputHidden(),
       'description' => new sfWidgetFormInputText(),
+      'start_date'  => new sfWidgetFormDate(),
+      'end_date'    => new sfWidgetFormDate(),
     ));
 
     $this->setValidators(array(
       'id'          => new sfValidatorPropelChoice(array('model' => 'Year', 'column' => 'id', 'required' => false)),
       'description' => new sfValidatorString(array('max_length' => 7, 'required' => false)),
+      'start_date'  => new sfValidatorDate(array('required' => false)),
+      'end_date'    => new sfValidatorDate(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('year[%s]');

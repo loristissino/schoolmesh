@@ -357,6 +357,9 @@ abstract class BaseWpmoduleItemPeer {
 	 */
 	public static function clearRelatedInstancePool()
 	{
+		// invalidate objects in StudentSituationPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
+		StudentSituationPeer::clearInstancePool();
+
 	}
 
 	/**
