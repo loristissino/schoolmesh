@@ -11,4 +11,15 @@ chmod +x schoolmeshsetup-1.091229.sh
 ./schoolmeshsetup-1.091229.sh
 }}}
 
+Copiare i file di configurazione:
+
+{{{
+cd /var/schoolmesh
+cp config/databases.yml-dist config/databases.yml
+cp apps/frontend/config/app.yml-dist apps/frontend/config/app.yml 
+cp apps/backend/config/app.yml-dist apps/backend/config/app.yml
+}}}
+
+Adattare i file di configurazione (quelli copiati, senza _-dist_) alle proprie esigenze, usando il proprio editor preferito. 
+
 Passo successivo: [ApacheSSL Configurazione di Apache]
