@@ -5,7 +5,7 @@
 
 Qui di seguito viene dato per scontato che la directory in cui risiede il software sia _var/schoolmesh_. Se si installa il software altrove, andranno modificate di conseguenza le istruzioni.
 
-Inoltre, le configurazioni di Apache possono variare (ad esempio, potrebbe essere preferibile la soluzione di lasciare inalterato il file _default_).
+Inoltre, le configurazioni di Apache possono variare (ad esempio, potrebbe essere preferibile la soluzione di lasciare inalterato il file _default_, aggiungendo un server virtuale).
 
 1. Modificare il file _/etc/apache2/sites-available/default_ aggiungendo le seguenti righe, subito prima di `</VirtualHost>`:
 
@@ -26,7 +26,13 @@ Inoltre, le configurazioni di Apache possono variare (ad esempio, potrebbe esser
     </Directory>
 }}}
 
-2. Modificare i file di configurazione di PHP (_/etc/php5/apache2/php.ini_ e _/etc/php5/cli/php.ini_) in modo che contengano le seguenti impostazioni:
+2. Se il percorso scelto per l'applicazione non è _/schoolmesh_, modificare la riga del file _web/.htaccess_ contenente la riga relativa alla _RewriteRule_:
+
+{{{
+  RewriteRule ^(.*)$ /schoolmesh2/index.php [QSA,L]
+}}} 
+
+3. Modificare i file di configurazione di PHP (_/etc/php5/apache2/php.ini_ e _/etc/php5/cli/php.ini_) in modo che contengano le seguenti impostazioni:
 
 {{{
 short_open_tag = Off
@@ -39,7 +45,7 @@ Comando:
 sudo gedit /etc/php5/apache2/php.ini /etc/php5/cli/php.ini
 }}}
 
-3. Riavviare il server apache.
+4. Riavviare il server apache.
 
 Comando:
 
@@ -47,7 +53,7 @@ Comando:
 sudo /etc/init.d/apache2 restart
 }}}
 
-4. Modificare il file _/var/schoolmesh/apps/frontend/config/app.yml_ in modo che contenga le informazioni corrette nella sezione _config_:
+5. Modificare il file _/var/schoolmesh/apps/frontend/config/app.yml_ in modo che contenga le informazioni corrette nella sezione _config_:
 
 {{{
   config:
@@ -64,7 +70,7 @@ sudo gedit /var/schoolmesh/apps/frontend/config/app.yml
 
 (Notare che nell'esempio fornito c'è 2008 al posto di 2009 e https al posto di http.)
 
-5. Configurare _sudo_ in modo che l'utente _www-data_ abbia la delega per interrogare il sistema sugli utenti e le loro directory.
+6. Configurare _sudo_ in modo che l'utente _www-data_ abbia la delega per interrogare il sistema sugli utenti e le loro directory.
 
 Il file _/etc/sudoers_ (da modificare con `sudo visudo`, non direttamente!) dovrebbe contenere le seguenti voci:
 
@@ -96,7 +102,7 @@ Togliere il `#` sulla riga
 
 solo se si configura SchoolMesh per l'esecuzione automatica degli script di gestione di sistema (*non raccomandabile per il momento*).
 
-6. Effettuare i test relativi alla configurazione di Apache e di SchoolMesh:
+7. Effettuare i test relativi alla configurazione di Apache e di SchoolMesh:
 
 {{{
 cd /var/schoolmesh
