@@ -5,6 +5,8 @@
 
 Qui di seguito viene dato per scontato che la directory in cui risiede il software sia _var/schoolmesh_. Se si installa il software altrove, andranno modificate di conseguenza le istruzioni.
 
+Inoltre, le configurazioni di Apache possono variare (ad esempio, potrebbe essere preferibile la soluzione di lasciare inalterato il file _default_).
+
 1. Modificare il file _/etc/apache2/sites-available/default_ aggiungendo le seguenti righe, subito prima di `</VirtualHost>`:
 
 {{{
@@ -125,7 +127,6 @@ ok 11 - memory limit is ok
  Looks like everything went fine.                                      
 }}}
 
-Passo successivo: [MySQL Configurazione di MySql]
 
 
 == SSL ==
@@ -143,5 +144,6 @@ $ sudo /etc/init.d/apache2 force-reload
 
 }}}
 
-Passo successivo: [MYSQL Configurazione di MySql]
 
+
+Passo successivo: [MySQL Configurazione di MySql]
