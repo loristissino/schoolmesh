@@ -462,10 +462,6 @@ abstract class BaseTermPeer {
 			$criteria = $values->buildCriteria(); // build Criteria from Term object
 		}
 
-		if ($criteria->containsKey(TermPeer::ID) && $criteria->keyContainsValue(TermPeer::ID) ) {
-			throw new PropelException('Cannot insert a value for auto-increment primary key ('.TermPeer::ID.')');
-		}
-
 
 		// Set the correct dbName
 		$criteria->setDbName(self::DATABASE_NAME);
@@ -651,7 +647,7 @@ abstract class BaseTermPeer {
 	/**
 	 * Retrieve a single object by pkey.
 	 *
-	 * @param      int $pk the primary key.
+	 * @param      string $pk the primary key.
 	 * @param      PropelPDO $con the connection to use
 	 * @return     Term
 	 */

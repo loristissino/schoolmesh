@@ -14,10 +14,14 @@ abstract class BaseYearFormFilter extends BaseFormFilterPropel
   {
     $this->setWidgets(array(
       'description' => new sfWidgetFormFilterInput(),
+      'start_date'  => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'end_date'    => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
     ));
 
     $this->setValidators(array(
       'description' => new sfValidatorPass(array('required' => false)),
+      'start_date'  => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'end_date'    => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
     ));
 
     $this->widgetSchema->setNameFormat('year_filters[%s]');
@@ -37,6 +41,8 @@ abstract class BaseYearFormFilter extends BaseFormFilterPropel
     return array(
       'id'          => 'Number',
       'description' => 'Text',
+      'start_date'  => 'Date',
+      'end_date'    => 'Date',
     );
   }
 }

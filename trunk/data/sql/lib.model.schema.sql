@@ -65,7 +65,7 @@ DROP TABLE IF EXISTS `term`;
 
 CREATE TABLE `term`
 (
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`id` VARCHAR(10)  NOT NULL,
 	`description` VARCHAR(30)  NOT NULL,
 	`end_day` INTEGER  NOT NULL,
 	`has_formal_evaluation` TINYINT,
@@ -666,6 +666,48 @@ CREATE TABLE `wpmodule_item`
 		REFERENCES `wpitem_group` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- student_situation
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `student_situation`;
+
+
+CREATE TABLE `student_situation`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`year_id` INTEGER  NOT NULL,
+	`term_id` VARCHAR(10)  NOT NULL,
+	`wpmodule_item_id` INTEGER  NOT NULL,
+	`user_id` INTEGER  NOT NULL,
+	`evaluation` INTEGER,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `ytwu` (`year_id`, `term_id`, `wpmodule_item_id`, `user_id`),
+	CONSTRAINT `student_situation_FK_1`
+		FOREIGN KEY (`year_id`)
+		REFERENCES `year` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `student_situation_FI_2` (`term_id`),
+	CONSTRAINT `student_situation_FK_2`
+		FOREIGN KEY (`term_id`)
+		REFERENCES `term` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `student_situation_FI_3` (`wpmodule_item_id`),
+	CONSTRAINT `student_situation_FK_3`
+		FOREIGN KEY (`wpmodule_item_id`)
+		REFERENCES `wpmodule_item` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	INDEX `student_situation_FI_4` (`user_id`),
+	CONSTRAINT `student_situation_FK_4`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

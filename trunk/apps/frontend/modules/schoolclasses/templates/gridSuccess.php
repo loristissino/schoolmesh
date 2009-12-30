@@ -52,7 +52,7 @@
 			<tr>
 				<td width="20">&nbsp;</td>
 				<td><?php echo html_entity_decode($wpmodule_item->getContent()) ?></td>
-				<?php include_partial('ticks', array('students'=>$students, 'appointment_id'=>$appointment->getId(), 'wpmodule_item_id'=>$wpmodule_item->getId())) ?>
+				<?php include_partial('ticks', array('students'=>$students, 'ids'=>$ids, 'wpmodule_item_id'=>$wpmodule_item->getId())) ?>
 			</tr>
 		<?php endforeach ?>
 

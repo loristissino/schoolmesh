@@ -12,7 +12,7 @@
 	<?php endif; ?>
 </title>
 
-<link rel="shortcut icon" href="/schoolmesh/images/favicon.ico" />
+<link rel="shortcut icon" href="/images/favicon.ico" />
 
 </head>
 <body>

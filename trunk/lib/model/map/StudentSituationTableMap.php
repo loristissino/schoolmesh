@@ -2,7 +2,7 @@
 
 
 /**
- * This class defines the structure of the 'wpmodule_item' table.
+ * This class defines the structure of the 'student_situation' table.
  *
  *
  *
@@ -13,12 +13,12 @@
  *
  * @package    lib.model.map
  */
-class WpmoduleItemTableMap extends TableMap {
+class StudentSituationTableMap extends TableMap {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.WpmoduleItemTableMap';
+	const CLASS_NAME = 'lib.model.map.StudentSituationTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators
@@ -30,18 +30,18 @@ class WpmoduleItemTableMap extends TableMap {
 	public function initialize()
 	{
 	  // attributes
-		$this->setName('wpmodule_item');
-		$this->setPhpName('WpmoduleItem');
-		$this->setClassname('WpmoduleItem');
+		$this->setName('student_situation');
+		$this->setPhpName('StudentSituation');
+		$this->setClassname('StudentSituation');
 		$this->setPackage('lib.model');
 		$this->setUseIdGenerator(true);
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
-		$this->addForeignKey('WPITEM_GROUP_ID', 'WpitemGroupId', 'INTEGER', 'wpitem_group', 'ID', true, null, null);
-		$this->addColumn('RANK', 'Rank', 'INTEGER', true, null, null);
-		$this->addColumn('CONTENT', 'Content', 'LONGVARCHAR', false, null, null);
+		$this->addForeignKey('YEAR_ID', 'YearId', 'INTEGER', 'year', 'ID', true, null, null);
+		$this->addForeignKey('TERM_ID', 'TermId', 'VARCHAR', 'term', 'ID', true, 10, null);
+		$this->addForeignKey('WPMODULE_ITEM_ID', 'WpmoduleItemId', 'INTEGER', 'wpmodule_item', 'ID', true, null, null);
+		$this->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
 		$this->addColumn('EVALUATION', 'Evaluation', 'INTEGER', false, null, null);
-		$this->addColumn('IS_EDITABLE', 'IsEditable', 'BOOLEAN', false, null, null);
 		// validators
 	} // initialize()
 
@@ -50,8 +50,10 @@ class WpmoduleItemTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('WpitemGroup', 'WpitemGroup', RelationMap::MANY_TO_ONE, array('wpitem_group_id' => 'id', ), 'CASCADE', 'CASCADE');
-    $this->addRelation('StudentSituation', 'StudentSituation', RelationMap::ONE_TO_MANY, array('id' => 'wpmodule_item_id', ), 'CASCADE', 'CASCADE');
+    $this->addRelation('Year', 'Year', RelationMap::MANY_TO_ONE, array('year_id' => 'id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('Term', 'Term', RelationMap::MANY_TO_ONE, array('term_id' => 'id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('WpmoduleItem', 'WpmoduleItem', RelationMap::MANY_TO_ONE, array('wpmodule_item_id' => 'id', ), 'CASCADE', 'CASCADE');
+    $this->addRelation('sfGuardUser', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
 	/**
@@ -67,4 +69,4 @@ class WpmoduleItemTableMap extends TableMap {
 		);
 	} // getBehaviors()
 
-} // WpmoduleItemTableMap
+} // StudentSituationTableMap
