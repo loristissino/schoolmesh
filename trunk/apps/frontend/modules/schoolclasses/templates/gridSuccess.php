@@ -49,10 +49,8 @@
 </tr>
 
 		<?php foreach($wpitem_group->getWpmoduleItems() as $wpmodule_item): ?>
-			<tr>
-				<td width="20">&nbsp;</td>
-				<td><?php echo html_entity_decode($wpmodule_item->getContent()) ?></td>
-				<?php include_partial('ticks', array('students'=>$students, 'ids'=>$ids, 'wpmodule_item_id'=>$wpmodule_item->getId())) ?>
+			<tr id="<?php echo 'ticks_' . $wpmodule_item->getId() ?>">
+				<?php include_partial('ticks', array('students'=>$students, 'ids'=>$ids, 'wpmodule_item'=>$wpmodule_item)) ?>
 			</tr>
 		<?php endforeach ?>
 

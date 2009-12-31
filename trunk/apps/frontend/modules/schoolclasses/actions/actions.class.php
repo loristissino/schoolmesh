@@ -68,15 +68,20 @@ public function executeGrid(sfWebRequest $request)
 
 		$student_id=$request->getParameter('student');
 		$wpmodule_item_id=$request->getParameter('item');
+		$wpmodule_item=WpmoduleItemPeer::retrieveByPK($wpmodule_item_id);
 		ob_start();
 
 		echo "I was clicked, student is $student_id, item is $wpmodule_item_id\n";
+		echo "Student list: \n";
+		print_r($ids);
 		
 		$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
 
-		sleep(5);
-  	    return $this->renderPartial('ticks', array('students'=>$this->students, 'ids'=>$ids, 'wpmodule_item_id'=>$wpmodule_item_id));
+//		sleep(5);
+  	    return $this->renderPartial('ticks', array('students'=>$this->students, 'ids'=>base64_encode(serialize($ids)), 'wpmodule_item'=>$wpmodule_item));
 
 	}
+	
+
 
 }
