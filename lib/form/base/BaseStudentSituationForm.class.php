@@ -16,7 +16,6 @@ abstract class BaseStudentSituationForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'               => new sfWidgetFormInputHidden(),
-      'year_id'          => new sfWidgetFormPropelChoice(array('model' => 'Year', 'add_empty' => false)),
       'term_id'          => new sfWidgetFormPropelChoice(array('model' => 'Term', 'add_empty' => false)),
       'wpmodule_item_id' => new sfWidgetFormPropelChoice(array('model' => 'WpmoduleItem', 'add_empty' => false)),
       'user_id'          => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => false)),
@@ -25,7 +24,6 @@ abstract class BaseStudentSituationForm extends BaseFormPropel
 
     $this->setValidators(array(
       'id'               => new sfValidatorPropelChoice(array('model' => 'StudentSituation', 'column' => 'id', 'required' => false)),
-      'year_id'          => new sfValidatorPropelChoice(array('model' => 'Year', 'column' => 'id')),
       'term_id'          => new sfValidatorPropelChoice(array('model' => 'Term', 'column' => 'id')),
       'wpmodule_item_id' => new sfValidatorPropelChoice(array('model' => 'WpmoduleItem', 'column' => 'id')),
       'user_id'          => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id')),
@@ -33,7 +31,7 @@ abstract class BaseStudentSituationForm extends BaseFormPropel
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorPropelUnique(array('model' => 'StudentSituation', 'column' => array('year_id', 'term_id', 'wpmodule_item_id', 'user_id')))
+      new sfValidatorPropelUnique(array('model' => 'StudentSituation', 'column' => array('term_id', 'wpmodule_item_id', 'user_id')))
     );
 
     $this->widgetSchema->setNameFormat('student_situation[%s]');

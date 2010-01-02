@@ -38,6 +38,8 @@ public function executeGrid(sfWebRequest $request)
 	$this->forward404Unless($this->schoolclass_id = $request->getParameter('id'));
 	
 	$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
+	
+	$this->term_id=sfConfig::get('app_config_current_term');
 
 	$redirectURL='schoolclasses/view?id=' . $this->schoolclass_id . '&appointment=' . $this->appointment->getId();
 
@@ -65,6 +67,8 @@ public function executeGrid(sfWebRequest $request)
 
 		$ids = unserialize(base64_decode($request->getParameter('ids')));
 		$this->students = sfGuardUserPeer::retrieveByPks($ids);
+		
+		$term_id=sfConfig::get('app_config_current_term');
 
 		$student_id=$request->getParameter('student');
 		$wpmodule_item_id=$request->getParameter('item');
@@ -78,7 +82,10 @@ public function executeGrid(sfWebRequest $request)
 		$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
 
 //		sleep(5);
-  	    return $this->renderPartial('ticks', array('students'=>$this->students, 'ids'=>base64_encode(serialize($ids)), 'wpmodule_item'=>$wpmodule_item));
+
+		$wpmodule_item->toggleStudent($student_id, $term_id);
+
+  	    return $this->renderPartial('ticks', array('students'=>$this->students, 'ids'=>base64_encode(serialize($ids)), 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id));
 
 	}
 	

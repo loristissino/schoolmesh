@@ -90,6 +90,9 @@ class WpitemGroup extends BaseWpitemGroup
 		
 		return parent::getWpmoduleItems($criteria, $con);
 	}
+	
+	
+	
 
 		public function getUnevaluated()
 	{

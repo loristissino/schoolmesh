@@ -25,12 +25,6 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 	protected $id;
 
 	/**
-	 * The value for the year_id field.
-	 * @var        int
-	 */
-	protected $year_id;
-
-	/**
 	 * The value for the term_id field.
 	 * @var        string
 	 */
@@ -53,11 +47,6 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 	 * @var        int
 	 */
 	protected $evaluation;
-
-	/**
-	 * @var        Year
-	 */
-	protected $aYear;
 
 	/**
 	 * @var        Term
@@ -100,16 +89,6 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 	public function getId()
 	{
 		return $this->id;
-	}
-
-	/**
-	 * Get the [year_id] column value.
-	 * 
-	 * @return     int
-	 */
-	public function getYearId()
-	{
-		return $this->year_id;
 	}
 
 	/**
@@ -171,30 +150,6 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setId()
-
-	/**
-	 * Set the value of [year_id] column.
-	 * 
-	 * @param      int $v new value
-	 * @return     StudentSituation The current object (for fluent API support)
-	 */
-	public function setYearId($v)
-	{
-		if ($v !== null) {
-			$v = (int) $v;
-		}
-
-		if ($this->year_id !== $v) {
-			$this->year_id = $v;
-			$this->modifiedColumns[] = StudentSituationPeer::YEAR_ID;
-		}
-
-		if ($this->aYear !== null && $this->aYear->getId() !== $v) {
-			$this->aYear = null;
-		}
-
-		return $this;
-	} // setYearId()
 
 	/**
 	 * Set the value of [term_id] column.
@@ -321,11 +276,10 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 		try {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->year_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->term_id = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-			$this->wpmodule_item_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
-			$this->user_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
-			$this->evaluation = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->term_id = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
+			$this->wpmodule_item_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->user_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->evaluation = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -335,7 +289,7 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 6; // 6 = StudentSituationPeer::NUM_COLUMNS - StudentSituationPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 5; // 5 = StudentSituationPeer::NUM_COLUMNS - StudentSituationPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating StudentSituation object", $e);
@@ -358,9 +312,6 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
-		if ($this->aYear !== null && $this->year_id !== $this->aYear->getId()) {
-			$this->aYear = null;
-		}
 		if ($this->aTerm !== null && $this->term_id !== $this->aTerm->getId()) {
 			$this->aTerm = null;
 		}
@@ -409,7 +360,6 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
-			$this->aYear = null;
 			$this->aTerm = null;
 			$this->aWpmoduleItem = null;
 			$this->asfGuardUser = null;
@@ -521,13 +471,6 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 			// were passed to this object by their coresponding set
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
-
-			if ($this->aYear !== null) {
-				if ($this->aYear->isModified() || $this->aYear->isNew()) {
-					$affectedRows += $this->aYear->save($con);
-				}
-				$this->setYear($this->aYear);
-			}
 
 			if ($this->aTerm !== null) {
 				if ($this->aTerm->isModified() || $this->aTerm->isNew()) {
@@ -643,12 +586,6 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
-			if ($this->aYear !== null) {
-				if (!$this->aYear->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aYear->getValidationFailures());
-				}
-			}
-
 			if ($this->aTerm !== null) {
 				if (!$this->aTerm->validate($columns)) {
 					$failureMap = array_merge($failureMap, $this->aTerm->getValidationFailures());
@@ -710,18 +647,15 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getYearId();
-				break;
-			case 2:
 				return $this->getTermId();
 				break;
-			case 3:
+			case 2:
 				return $this->getWpmoduleItemId();
 				break;
-			case 4:
+			case 3:
 				return $this->getUserId();
 				break;
-			case 5:
+			case 4:
 				return $this->getEvaluation();
 				break;
 			default:
@@ -746,11 +680,10 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 		$keys = StudentSituationPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getYearId(),
-			$keys[2] => $this->getTermId(),
-			$keys[3] => $this->getWpmoduleItemId(),
-			$keys[4] => $this->getUserId(),
-			$keys[5] => $this->getEvaluation(),
+			$keys[1] => $this->getTermId(),
+			$keys[2] => $this->getWpmoduleItemId(),
+			$keys[3] => $this->getUserId(),
+			$keys[4] => $this->getEvaluation(),
 		);
 		return $result;
 	}
@@ -786,18 +719,15 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setYearId($value);
-				break;
-			case 2:
 				$this->setTermId($value);
 				break;
-			case 3:
+			case 2:
 				$this->setWpmoduleItemId($value);
 				break;
-			case 4:
+			case 3:
 				$this->setUserId($value);
 				break;
-			case 5:
+			case 4:
 				$this->setEvaluation($value);
 				break;
 		} // switch()
@@ -825,11 +755,10 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 		$keys = StudentSituationPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setYearId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setTermId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setWpmoduleItemId($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setUserId($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setEvaluation($arr[$keys[5]]);
+		if (array_key_exists($keys[1], $arr)) $this->setTermId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setWpmoduleItemId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setUserId($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setEvaluation($arr[$keys[4]]);
 	}
 
 	/**
@@ -842,7 +771,6 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 		$criteria = new Criteria(StudentSituationPeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(StudentSituationPeer::ID)) $criteria->add(StudentSituationPeer::ID, $this->id);
-		if ($this->isColumnModified(StudentSituationPeer::YEAR_ID)) $criteria->add(StudentSituationPeer::YEAR_ID, $this->year_id);
 		if ($this->isColumnModified(StudentSituationPeer::TERM_ID)) $criteria->add(StudentSituationPeer::TERM_ID, $this->term_id);
 		if ($this->isColumnModified(StudentSituationPeer::WPMODULE_ITEM_ID)) $criteria->add(StudentSituationPeer::WPMODULE_ITEM_ID, $this->wpmodule_item_id);
 		if ($this->isColumnModified(StudentSituationPeer::USER_ID)) $criteria->add(StudentSituationPeer::USER_ID, $this->user_id);
@@ -901,8 +829,6 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setYearId($this->year_id);
-
 		$copyObj->setTermId($this->term_id);
 
 		$copyObj->setWpmoduleItemId($this->wpmodule_item_id);
@@ -954,55 +880,6 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 			self::$peer = new StudentSituationPeer();
 		}
 		return self::$peer;
-	}
-
-	/**
-	 * Declares an association between this object and a Year object.
-	 *
-	 * @param      Year $v
-	 * @return     StudentSituation The current object (for fluent API support)
-	 * @throws     PropelException
-	 */
-	public function setYear(Year $v = null)
-	{
-		if ($v === null) {
-			$this->setYearId(NULL);
-		} else {
-			$this->setYearId($v->getId());
-		}
-
-		$this->aYear = $v;
-
-		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the Year object, it will not be re-added.
-		if ($v !== null) {
-			$v->addStudentSituation($this);
-		}
-
-		return $this;
-	}
-
-
-	/**
-	 * Get the associated Year object
-	 *
-	 * @param      PropelPDO Optional Connection object.
-	 * @return     Year The associated Year object.
-	 * @throws     PropelException
-	 */
-	public function getYear(PropelPDO $con = null)
-	{
-		if ($this->aYear === null && ($this->year_id !== null)) {
-			$this->aYear = YearPeer::retrieveByPk($this->year_id);
-			/* The following can be used additionally to
-			   guarantee the related object contains a reference
-			   to this object.  This level of coupling may, however, be
-			   undesirable since it could result in an only partially populated collection
-			   in the referenced object.
-			   $this->aYear->addStudentSituations($this);
-			 */
-		}
-		return $this->aYear;
 	}
 
 	/**
@@ -1166,7 +1043,6 @@ abstract class BaseStudentSituation extends BaseObject  implements Persistent {
 		if ($deep) {
 		} // if ($deep)
 
-			$this->aYear = null;
 			$this->aTerm = null;
 			$this->aWpmoduleItem = null;
 			$this->asfGuardUser = null;

@@ -50,7 +50,6 @@ class YearTableMap extends TableMap {
 	{
     $this->addRelation('Appointment', 'Appointment', RelationMap::ONE_TO_MANY, array('id' => 'year_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Enrolment', 'Enrolment', RelationMap::ONE_TO_MANY, array('id' => 'year_id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('StudentSituation', 'StudentSituation', RelationMap::ONE_TO_MANY, array('id' => 'year_id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
 	/**

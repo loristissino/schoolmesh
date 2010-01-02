@@ -37,7 +37,6 @@ class StudentSituationTableMap extends TableMap {
 		$this->setUseIdGenerator(true);
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
-		$this->addForeignKey('YEAR_ID', 'YearId', 'INTEGER', 'year', 'ID', true, null, null);
 		$this->addForeignKey('TERM_ID', 'TermId', 'VARCHAR', 'term', 'ID', true, 10, null);
 		$this->addForeignKey('WPMODULE_ITEM_ID', 'WpmoduleItemId', 'INTEGER', 'wpmodule_item', 'ID', true, null, null);
 		$this->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
@@ -50,7 +49,6 @@ class StudentSituationTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Year', 'Year', RelationMap::MANY_TO_ONE, array('year_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Term', 'Term', RelationMap::MANY_TO_ONE, array('term_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('WpmoduleItem', 'WpmoduleItem', RelationMap::MANY_TO_ONE, array('wpmodule_item_id' => 'id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('sfGuardUser', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), 'RESTRICT', 'CASCADE');

@@ -25,16 +25,13 @@ abstract class BaseStudentSituationPeer {
 	const TM_CLASS = 'StudentSituationTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 6;
+	const NUM_COLUMNS = 5;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
 	const ID = 'student_situation.ID';
-
-	/** the column name for the YEAR_ID field */
-	const YEAR_ID = 'student_situation.YEAR_ID';
 
 	/** the column name for the TERM_ID field */
 	const TERM_ID = 'student_situation.TERM_ID';
@@ -71,11 +68,11 @@ abstract class BaseStudentSituationPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'YearId', 'TermId', 'WpmoduleItemId', 'UserId', 'Evaluation', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'yearId', 'termId', 'wpmoduleItemId', 'userId', 'evaluation', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::YEAR_ID, self::TERM_ID, self::WPMODULE_ITEM_ID, self::USER_ID, self::EVALUATION, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'year_id', 'term_id', 'wpmodule_item_id', 'user_id', 'evaluation', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'TermId', 'WpmoduleItemId', 'UserId', 'Evaluation', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'termId', 'wpmoduleItemId', 'userId', 'evaluation', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::TERM_ID, self::WPMODULE_ITEM_ID, self::USER_ID, self::EVALUATION, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'term_id', 'wpmodule_item_id', 'user_id', 'evaluation', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -85,11 +82,11 @@ abstract class BaseStudentSituationPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'YearId' => 1, 'TermId' => 2, 'WpmoduleItemId' => 3, 'UserId' => 4, 'Evaluation' => 5, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'yearId' => 1, 'termId' => 2, 'wpmoduleItemId' => 3, 'userId' => 4, 'evaluation' => 5, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::YEAR_ID => 1, self::TERM_ID => 2, self::WPMODULE_ITEM_ID => 3, self::USER_ID => 4, self::EVALUATION => 5, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'year_id' => 1, 'term_id' => 2, 'wpmodule_item_id' => 3, 'user_id' => 4, 'evaluation' => 5, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'TermId' => 1, 'WpmoduleItemId' => 2, 'UserId' => 3, 'Evaluation' => 4, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'termId' => 1, 'wpmoduleItemId' => 2, 'userId' => 3, 'evaluation' => 4, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TERM_ID => 1, self::WPMODULE_ITEM_ID => 2, self::USER_ID => 3, self::EVALUATION => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'term_id' => 1, 'wpmodule_item_id' => 2, 'user_id' => 3, 'evaluation' => 4, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -160,7 +157,6 @@ abstract class BaseStudentSituationPeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 		$criteria->addSelectColumn(StudentSituationPeer::ID);
-		$criteria->addSelectColumn(StudentSituationPeer::YEAR_ID);
 		$criteria->addSelectColumn(StudentSituationPeer::TERM_ID);
 		$criteria->addSelectColumn(StudentSituationPeer::WPMODULE_ITEM_ID);
 		$criteria->addSelectColumn(StudentSituationPeer::USER_ID);
@@ -411,56 +407,6 @@ abstract class BaseStudentSituationPeer {
 	}
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Year table
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     int Number of matching rows.
-	 */
-	public static function doCountJoinYear(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		// we're going to modify criteria, so copy it first
-		$criteria = clone $criteria;
-
-		// We need to set the primary table name, since in the case that there are no WHERE columns
-		// it will be impossible for the BasePeer::createSelectSql() method to determine which
-		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(StudentSituationPeer::TABLE_NAME);
-
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			StudentSituationPeer::addSelectColumns($criteria);
-		}
-		
-		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-		
-		// Set the correct dbName
-		$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(StudentSituationPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-
-		$criteria->addJoin(StudentSituationPeer::YEAR_ID, YearPeer::ID, $join_behavior);
-
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; // no rows returned; we infer that means 0 matches.
-		}
-		$stmt->closeCursor();
-		return $count;
-	}
-
-
-	/**
 	 * Returns the number of rows matching criteria, joining the related Term table
 	 *
 	 * @param      Criteria $criteria
@@ -607,72 +553,6 @@ abstract class BaseStudentSituationPeer {
 		}
 		$stmt->closeCursor();
 		return $count;
-	}
-
-
-	/**
-	 * Selects a collection of StudentSituation objects pre-filled with their Year objects.
-	 * @param      Criteria  $criteria
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of StudentSituation objects.
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function doSelectJoinYear(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$criteria = clone $criteria;
-
-		// Set the correct dbName if it has not been overridden
-		if ($criteria->getDbName() == Propel::getDefaultDB()) {
-			$criteria->setDbName(self::DATABASE_NAME);
-		}
-
-		StudentSituationPeer::addSelectColumns($criteria);
-		$startcol = (StudentSituationPeer::NUM_COLUMNS - StudentSituationPeer::NUM_LAZY_LOAD_COLUMNS);
-		YearPeer::addSelectColumns($criteria);
-
-		$criteria->addJoin(StudentSituationPeer::YEAR_ID, YearPeer::ID, $join_behavior);
-
-		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = StudentSituationPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = StudentSituationPeer::getInstanceFromPool($key1))) {
-				// We no longer rehydrate the object, since this can cause data loss.
-				// See http://propel.phpdb.org/trac/ticket/509
-				// $obj1->hydrate($row, 0, true); // rehydrate
-			} else {
-
-				$cls = StudentSituationPeer::getOMClass(false);
-
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				StudentSituationPeer::addInstanceToPool($obj1, $key1);
-			} // if $obj1 already loaded
-
-			$key2 = YearPeer::getPrimaryKeyHashFromRow($row, $startcol);
-			if ($key2 !== null) {
-				$obj2 = YearPeer::getInstanceFromPool($key2);
-				if (!$obj2) {
-
-					$cls = YearPeer::getOMClass(false);
-
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol);
-					YearPeer::addInstanceToPool($obj2, $key2);
-				} // if obj2 already loaded
-
-				// Add the $obj1 (StudentSituation) to $obj2 (Year)
-				$obj2->addStudentSituation($obj1);
-
-			} // if joined row was not null
-
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
 	}
 
 
@@ -910,8 +790,6 @@ abstract class BaseStudentSituationPeer {
 			$con = Propel::getConnection(StudentSituationPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(StudentSituationPeer::YEAR_ID, YearPeer::ID, $join_behavior);
-
 		$criteria->addJoin(StudentSituationPeer::TERM_ID, TermPeer::ID, $join_behavior);
 
 		$criteria->addJoin(StudentSituationPeer::WPMODULE_ITEM_ID, WpmoduleItemPeer::ID, $join_behavior);
@@ -951,19 +829,14 @@ abstract class BaseStudentSituationPeer {
 		StudentSituationPeer::addSelectColumns($criteria);
 		$startcol2 = (StudentSituationPeer::NUM_COLUMNS - StudentSituationPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		YearPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (YearPeer::NUM_COLUMNS - YearPeer::NUM_LAZY_LOAD_COLUMNS);
-
 		TermPeer::addSelectColumns($criteria);
-		$startcol4 = $startcol3 + (TermPeer::NUM_COLUMNS - TermPeer::NUM_LAZY_LOAD_COLUMNS);
+		$startcol3 = $startcol2 + (TermPeer::NUM_COLUMNS - TermPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		WpmoduleItemPeer::addSelectColumns($criteria);
-		$startcol5 = $startcol4 + (WpmoduleItemPeer::NUM_COLUMNS - WpmoduleItemPeer::NUM_LAZY_LOAD_COLUMNS);
+		$startcol4 = $startcol3 + (WpmoduleItemPeer::NUM_COLUMNS - WpmoduleItemPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		sfGuardUserPeer::addSelectColumns($criteria);
-		$startcol6 = $startcol5 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		$criteria->addJoin(StudentSituationPeer::YEAR_ID, YearPeer::ID, $join_behavior);
+		$startcol5 = $startcol4 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		$criteria->addJoin(StudentSituationPeer::TERM_ID, TermPeer::ID, $join_behavior);
 
@@ -988,136 +861,64 @@ abstract class BaseStudentSituationPeer {
 				StudentSituationPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-			// Add objects for joined Year rows
-
-			$key2 = YearPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-			if ($key2 !== null) {
-				$obj2 = YearPeer::getInstanceFromPool($key2);
-				if (!$obj2) {
-
-					$cls = YearPeer::getOMClass(false);
-
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol2);
-					YearPeer::addInstanceToPool($obj2, $key2);
-				} // if obj2 loaded
-
-				// Add the $obj1 (StudentSituation) to the collection in $obj2 (Year)
-				$obj2->addStudentSituation($obj1);
-			} // if joined row not null
-
 			// Add objects for joined Term rows
 
-			$key3 = TermPeer::getPrimaryKeyHashFromRow($row, $startcol3);
-			if ($key3 !== null) {
-				$obj3 = TermPeer::getInstanceFromPool($key3);
-				if (!$obj3) {
+			$key2 = TermPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			if ($key2 !== null) {
+				$obj2 = TermPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
 
 					$cls = TermPeer::getOMClass(false);
 
-					$obj3 = new $cls();
-					$obj3->hydrate($row, $startcol3);
-					TermPeer::addInstanceToPool($obj3, $key3);
-				} // if obj3 loaded
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					TermPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 loaded
 
-				// Add the $obj1 (StudentSituation) to the collection in $obj3 (Term)
-				$obj3->addStudentSituation($obj1);
+				// Add the $obj1 (StudentSituation) to the collection in $obj2 (Term)
+				$obj2->addStudentSituation($obj1);
 			} // if joined row not null
 
 			// Add objects for joined WpmoduleItem rows
 
-			$key4 = WpmoduleItemPeer::getPrimaryKeyHashFromRow($row, $startcol4);
-			if ($key4 !== null) {
-				$obj4 = WpmoduleItemPeer::getInstanceFromPool($key4);
-				if (!$obj4) {
+			$key3 = WpmoduleItemPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+			if ($key3 !== null) {
+				$obj3 = WpmoduleItemPeer::getInstanceFromPool($key3);
+				if (!$obj3) {
 
 					$cls = WpmoduleItemPeer::getOMClass(false);
 
-					$obj4 = new $cls();
-					$obj4->hydrate($row, $startcol4);
-					WpmoduleItemPeer::addInstanceToPool($obj4, $key4);
-				} // if obj4 loaded
+					$obj3 = new $cls();
+					$obj3->hydrate($row, $startcol3);
+					WpmoduleItemPeer::addInstanceToPool($obj3, $key3);
+				} // if obj3 loaded
 
-				// Add the $obj1 (StudentSituation) to the collection in $obj4 (WpmoduleItem)
-				$obj4->addStudentSituation($obj1);
+				// Add the $obj1 (StudentSituation) to the collection in $obj3 (WpmoduleItem)
+				$obj3->addStudentSituation($obj1);
 			} // if joined row not null
 
 			// Add objects for joined sfGuardUser rows
 
-			$key5 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol5);
-			if ($key5 !== null) {
-				$obj5 = sfGuardUserPeer::getInstanceFromPool($key5);
-				if (!$obj5) {
+			$key4 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol4);
+			if ($key4 !== null) {
+				$obj4 = sfGuardUserPeer::getInstanceFromPool($key4);
+				if (!$obj4) {
 
 					$cls = sfGuardUserPeer::getOMClass(false);
 
-					$obj5 = new $cls();
-					$obj5->hydrate($row, $startcol5);
-					sfGuardUserPeer::addInstanceToPool($obj5, $key5);
-				} // if obj5 loaded
+					$obj4 = new $cls();
+					$obj4->hydrate($row, $startcol4);
+					sfGuardUserPeer::addInstanceToPool($obj4, $key4);
+				} // if obj4 loaded
 
-				// Add the $obj1 (StudentSituation) to the collection in $obj5 (sfGuardUser)
-				$obj5->addStudentSituation($obj1);
+				// Add the $obj1 (StudentSituation) to the collection in $obj4 (sfGuardUser)
+				$obj4->addStudentSituation($obj1);
 			} // if joined row not null
 
 			$results[] = $obj1;
 		}
 		$stmt->closeCursor();
 		return $results;
-	}
-
-
-	/**
-	 * Returns the number of rows matching criteria, joining the related Year table
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     int Number of matching rows.
-	 */
-	public static function doCountJoinAllExceptYear(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		// we're going to modify criteria, so copy it first
-		$criteria = clone $criteria;
-
-		// We need to set the primary table name, since in the case that there are no WHERE columns
-		// it will be impossible for the BasePeer::createSelectSql() method to determine which
-		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(StudentSituationPeer::TABLE_NAME);
-		
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			StudentSituationPeer::addSelectColumns($criteria);
-		}
-		
-		$criteria->clearOrderByColumns(); // ORDER BY should not affect count
-		
-		// Set the correct dbName
-		$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(StudentSituationPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-	
-		$criteria->addJoin(StudentSituationPeer::TERM_ID, TermPeer::ID, $join_behavior);
-
-		$criteria->addJoin(StudentSituationPeer::WPMODULE_ITEM_ID, WpmoduleItemPeer::ID, $join_behavior);
-
-		$criteria->addJoin(StudentSituationPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
-
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; // no rows returned; we infer that means 0 matches.
-		}
-		$stmt->closeCursor();
-		return $count;
 	}
 
 
@@ -1157,8 +958,6 @@ abstract class BaseStudentSituationPeer {
 			$con = Propel::getConnection(StudentSituationPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-		$criteria->addJoin(StudentSituationPeer::YEAR_ID, YearPeer::ID, $join_behavior);
-
 		$criteria->addJoin(StudentSituationPeer::WPMODULE_ITEM_ID, WpmoduleItemPeer::ID, $join_behavior);
 
 		$criteria->addJoin(StudentSituationPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
@@ -1211,8 +1010,6 @@ abstract class BaseStudentSituationPeer {
 			$con = Propel::getConnection(StudentSituationPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-		$criteria->addJoin(StudentSituationPeer::YEAR_ID, YearPeer::ID, $join_behavior);
-
 		$criteria->addJoin(StudentSituationPeer::TERM_ID, TermPeer::ID, $join_behavior);
 
 		$criteria->addJoin(StudentSituationPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
@@ -1265,8 +1062,6 @@ abstract class BaseStudentSituationPeer {
 			$con = Propel::getConnection(StudentSituationPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-		$criteria->addJoin(StudentSituationPeer::YEAR_ID, YearPeer::ID, $join_behavior);
-
 		$criteria->addJoin(StudentSituationPeer::TERM_ID, TermPeer::ID, $join_behavior);
 
 		$criteria->addJoin(StudentSituationPeer::WPMODULE_ITEM_ID, WpmoduleItemPeer::ID, $join_behavior);
@@ -1284,7 +1079,7 @@ abstract class BaseStudentSituationPeer {
 
 
 	/**
-	 * Selects a collection of StudentSituation objects pre-filled with all related objects except Year.
+	 * Selects a collection of StudentSituation objects pre-filled with all related objects except Term.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
@@ -1293,7 +1088,201 @@ abstract class BaseStudentSituationPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinAllExceptYear(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinAllExceptTerm(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		// $criteria->getDbName() will return the same object if not set to another value
+		// so == check is okay and faster
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		StudentSituationPeer::addSelectColumns($criteria);
+		$startcol2 = (StudentSituationPeer::NUM_COLUMNS - StudentSituationPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		WpmoduleItemPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (WpmoduleItemPeer::NUM_COLUMNS - WpmoduleItemPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(StudentSituationPeer::WPMODULE_ITEM_ID, WpmoduleItemPeer::ID, $join_behavior);
+
+		$criteria->addJoin(StudentSituationPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = StudentSituationPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = StudentSituationPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = StudentSituationPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				StudentSituationPeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+				// Add objects for joined WpmoduleItem rows
+
+				$key2 = WpmoduleItemPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				if ($key2 !== null) {
+					$obj2 = WpmoduleItemPeer::getInstanceFromPool($key2);
+					if (!$obj2) {
+	
+						$cls = WpmoduleItemPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					WpmoduleItemPeer::addInstanceToPool($obj2, $key2);
+				} // if $obj2 already loaded
+
+				// Add the $obj1 (StudentSituation) to the collection in $obj2 (WpmoduleItem)
+				$obj2->addStudentSituation($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined sfGuardUser rows
+
+				$key3 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+				if ($key3 !== null) {
+					$obj3 = sfGuardUserPeer::getInstanceFromPool($key3);
+					if (!$obj3) {
+	
+						$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj3 = new $cls();
+					$obj3->hydrate($row, $startcol3);
+					sfGuardUserPeer::addInstanceToPool($obj3, $key3);
+				} // if $obj3 already loaded
+
+				// Add the $obj1 (StudentSituation) to the collection in $obj3 (sfGuardUser)
+				$obj3->addStudentSituation($obj1);
+
+			} // if joined row is not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Selects a collection of StudentSituation objects pre-filled with all related objects except WpmoduleItem.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of StudentSituation objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAllExceptWpmoduleItem(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		// $criteria->getDbName() will return the same object if not set to another value
+		// so == check is okay and faster
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		StudentSituationPeer::addSelectColumns($criteria);
+		$startcol2 = (StudentSituationPeer::NUM_COLUMNS - StudentSituationPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		TermPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (TermPeer::NUM_COLUMNS - TermPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(StudentSituationPeer::TERM_ID, TermPeer::ID, $join_behavior);
+
+		$criteria->addJoin(StudentSituationPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = StudentSituationPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = StudentSituationPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = StudentSituationPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				StudentSituationPeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+				// Add objects for joined Term rows
+
+				$key2 = TermPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				if ($key2 !== null) {
+					$obj2 = TermPeer::getInstanceFromPool($key2);
+					if (!$obj2) {
+	
+						$cls = TermPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					TermPeer::addInstanceToPool($obj2, $key2);
+				} // if $obj2 already loaded
+
+				// Add the $obj1 (StudentSituation) to the collection in $obj2 (Term)
+				$obj2->addStudentSituation($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined sfGuardUser rows
+
+				$key3 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+				if ($key3 !== null) {
+					$obj3 = sfGuardUserPeer::getInstanceFromPool($key3);
+					if (!$obj3) {
+	
+						$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj3 = new $cls();
+					$obj3->hydrate($row, $startcol3);
+					sfGuardUserPeer::addInstanceToPool($obj3, $key3);
+				} // if $obj3 already loaded
+
+				// Add the $obj1 (StudentSituation) to the collection in $obj3 (sfGuardUser)
+				$obj3->addStudentSituation($obj1);
+
+			} // if joined row is not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Selects a collection of StudentSituation objects pre-filled with all related objects except sfGuardUser.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of StudentSituation objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAllExceptsfGuardUser(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -1313,14 +1302,9 @@ abstract class BaseStudentSituationPeer {
 		WpmoduleItemPeer::addSelectColumns($criteria);
 		$startcol4 = $startcol3 + (WpmoduleItemPeer::NUM_COLUMNS - WpmoduleItemPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		sfGuardUserPeer::addSelectColumns($criteria);
-		$startcol5 = $startcol4 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
-
 		$criteria->addJoin(StudentSituationPeer::TERM_ID, TermPeer::ID, $join_behavior);
 
 		$criteria->addJoin(StudentSituationPeer::WPMODULE_ITEM_ID, WpmoduleItemPeer::ID, $join_behavior);
-
-		$criteria->addJoin(StudentSituationPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 
 		$stmt = BasePeer::doSelect($criteria, $con);
@@ -1375,388 +1359,6 @@ abstract class BaseStudentSituationPeer {
 
 				// Add the $obj1 (StudentSituation) to the collection in $obj3 (WpmoduleItem)
 				$obj3->addStudentSituation($obj1);
-
-			} // if joined row is not null
-
-				// Add objects for joined sfGuardUser rows
-
-				$key4 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol4);
-				if ($key4 !== null) {
-					$obj4 = sfGuardUserPeer::getInstanceFromPool($key4);
-					if (!$obj4) {
-	
-						$cls = sfGuardUserPeer::getOMClass(false);
-
-					$obj4 = new $cls();
-					$obj4->hydrate($row, $startcol4);
-					sfGuardUserPeer::addInstanceToPool($obj4, $key4);
-				} // if $obj4 already loaded
-
-				// Add the $obj1 (StudentSituation) to the collection in $obj4 (sfGuardUser)
-				$obj4->addStudentSituation($obj1);
-
-			} // if joined row is not null
-
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
-	}
-
-
-	/**
-	 * Selects a collection of StudentSituation objects pre-filled with all related objects except Term.
-	 *
-	 * @param      Criteria  $criteria
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of StudentSituation objects.
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function doSelectJoinAllExceptTerm(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$criteria = clone $criteria;
-
-		// Set the correct dbName if it has not been overridden
-		// $criteria->getDbName() will return the same object if not set to another value
-		// so == check is okay and faster
-		if ($criteria->getDbName() == Propel::getDefaultDB()) {
-			$criteria->setDbName(self::DATABASE_NAME);
-		}
-
-		StudentSituationPeer::addSelectColumns($criteria);
-		$startcol2 = (StudentSituationPeer::NUM_COLUMNS - StudentSituationPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		YearPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (YearPeer::NUM_COLUMNS - YearPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		WpmoduleItemPeer::addSelectColumns($criteria);
-		$startcol4 = $startcol3 + (WpmoduleItemPeer::NUM_COLUMNS - WpmoduleItemPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		sfGuardUserPeer::addSelectColumns($criteria);
-		$startcol5 = $startcol4 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		$criteria->addJoin(StudentSituationPeer::YEAR_ID, YearPeer::ID, $join_behavior);
-
-		$criteria->addJoin(StudentSituationPeer::WPMODULE_ITEM_ID, WpmoduleItemPeer::ID, $join_behavior);
-
-		$criteria->addJoin(StudentSituationPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
-
-
-		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = StudentSituationPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = StudentSituationPeer::getInstanceFromPool($key1))) {
-				// We no longer rehydrate the object, since this can cause data loss.
-				// See http://propel.phpdb.org/trac/ticket/509
-				// $obj1->hydrate($row, 0, true); // rehydrate
-			} else {
-				$cls = StudentSituationPeer::getOMClass(false);
-
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				StudentSituationPeer::addInstanceToPool($obj1, $key1);
-			} // if obj1 already loaded
-
-				// Add objects for joined Year rows
-
-				$key2 = YearPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-				if ($key2 !== null) {
-					$obj2 = YearPeer::getInstanceFromPool($key2);
-					if (!$obj2) {
-	
-						$cls = YearPeer::getOMClass(false);
-
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol2);
-					YearPeer::addInstanceToPool($obj2, $key2);
-				} // if $obj2 already loaded
-
-				// Add the $obj1 (StudentSituation) to the collection in $obj2 (Year)
-				$obj2->addStudentSituation($obj1);
-
-			} // if joined row is not null
-
-				// Add objects for joined WpmoduleItem rows
-
-				$key3 = WpmoduleItemPeer::getPrimaryKeyHashFromRow($row, $startcol3);
-				if ($key3 !== null) {
-					$obj3 = WpmoduleItemPeer::getInstanceFromPool($key3);
-					if (!$obj3) {
-	
-						$cls = WpmoduleItemPeer::getOMClass(false);
-
-					$obj3 = new $cls();
-					$obj3->hydrate($row, $startcol3);
-					WpmoduleItemPeer::addInstanceToPool($obj3, $key3);
-				} // if $obj3 already loaded
-
-				// Add the $obj1 (StudentSituation) to the collection in $obj3 (WpmoduleItem)
-				$obj3->addStudentSituation($obj1);
-
-			} // if joined row is not null
-
-				// Add objects for joined sfGuardUser rows
-
-				$key4 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol4);
-				if ($key4 !== null) {
-					$obj4 = sfGuardUserPeer::getInstanceFromPool($key4);
-					if (!$obj4) {
-	
-						$cls = sfGuardUserPeer::getOMClass(false);
-
-					$obj4 = new $cls();
-					$obj4->hydrate($row, $startcol4);
-					sfGuardUserPeer::addInstanceToPool($obj4, $key4);
-				} // if $obj4 already loaded
-
-				// Add the $obj1 (StudentSituation) to the collection in $obj4 (sfGuardUser)
-				$obj4->addStudentSituation($obj1);
-
-			} // if joined row is not null
-
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
-	}
-
-
-	/**
-	 * Selects a collection of StudentSituation objects pre-filled with all related objects except WpmoduleItem.
-	 *
-	 * @param      Criteria  $criteria
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of StudentSituation objects.
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function doSelectJoinAllExceptWpmoduleItem(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$criteria = clone $criteria;
-
-		// Set the correct dbName if it has not been overridden
-		// $criteria->getDbName() will return the same object if not set to another value
-		// so == check is okay and faster
-		if ($criteria->getDbName() == Propel::getDefaultDB()) {
-			$criteria->setDbName(self::DATABASE_NAME);
-		}
-
-		StudentSituationPeer::addSelectColumns($criteria);
-		$startcol2 = (StudentSituationPeer::NUM_COLUMNS - StudentSituationPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		YearPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (YearPeer::NUM_COLUMNS - YearPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		TermPeer::addSelectColumns($criteria);
-		$startcol4 = $startcol3 + (TermPeer::NUM_COLUMNS - TermPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		sfGuardUserPeer::addSelectColumns($criteria);
-		$startcol5 = $startcol4 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		$criteria->addJoin(StudentSituationPeer::YEAR_ID, YearPeer::ID, $join_behavior);
-
-		$criteria->addJoin(StudentSituationPeer::TERM_ID, TermPeer::ID, $join_behavior);
-
-		$criteria->addJoin(StudentSituationPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
-
-
-		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = StudentSituationPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = StudentSituationPeer::getInstanceFromPool($key1))) {
-				// We no longer rehydrate the object, since this can cause data loss.
-				// See http://propel.phpdb.org/trac/ticket/509
-				// $obj1->hydrate($row, 0, true); // rehydrate
-			} else {
-				$cls = StudentSituationPeer::getOMClass(false);
-
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				StudentSituationPeer::addInstanceToPool($obj1, $key1);
-			} // if obj1 already loaded
-
-				// Add objects for joined Year rows
-
-				$key2 = YearPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-				if ($key2 !== null) {
-					$obj2 = YearPeer::getInstanceFromPool($key2);
-					if (!$obj2) {
-	
-						$cls = YearPeer::getOMClass(false);
-
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol2);
-					YearPeer::addInstanceToPool($obj2, $key2);
-				} // if $obj2 already loaded
-
-				// Add the $obj1 (StudentSituation) to the collection in $obj2 (Year)
-				$obj2->addStudentSituation($obj1);
-
-			} // if joined row is not null
-
-				// Add objects for joined Term rows
-
-				$key3 = TermPeer::getPrimaryKeyHashFromRow($row, $startcol3);
-				if ($key3 !== null) {
-					$obj3 = TermPeer::getInstanceFromPool($key3);
-					if (!$obj3) {
-	
-						$cls = TermPeer::getOMClass(false);
-
-					$obj3 = new $cls();
-					$obj3->hydrate($row, $startcol3);
-					TermPeer::addInstanceToPool($obj3, $key3);
-				} // if $obj3 already loaded
-
-				// Add the $obj1 (StudentSituation) to the collection in $obj3 (Term)
-				$obj3->addStudentSituation($obj1);
-
-			} // if joined row is not null
-
-				// Add objects for joined sfGuardUser rows
-
-				$key4 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol4);
-				if ($key4 !== null) {
-					$obj4 = sfGuardUserPeer::getInstanceFromPool($key4);
-					if (!$obj4) {
-	
-						$cls = sfGuardUserPeer::getOMClass(false);
-
-					$obj4 = new $cls();
-					$obj4->hydrate($row, $startcol4);
-					sfGuardUserPeer::addInstanceToPool($obj4, $key4);
-				} // if $obj4 already loaded
-
-				// Add the $obj1 (StudentSituation) to the collection in $obj4 (sfGuardUser)
-				$obj4->addStudentSituation($obj1);
-
-			} // if joined row is not null
-
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
-	}
-
-
-	/**
-	 * Selects a collection of StudentSituation objects pre-filled with all related objects except sfGuardUser.
-	 *
-	 * @param      Criteria  $criteria
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of StudentSituation objects.
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function doSelectJoinAllExceptsfGuardUser(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$criteria = clone $criteria;
-
-		// Set the correct dbName if it has not been overridden
-		// $criteria->getDbName() will return the same object if not set to another value
-		// so == check is okay and faster
-		if ($criteria->getDbName() == Propel::getDefaultDB()) {
-			$criteria->setDbName(self::DATABASE_NAME);
-		}
-
-		StudentSituationPeer::addSelectColumns($criteria);
-		$startcol2 = (StudentSituationPeer::NUM_COLUMNS - StudentSituationPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		YearPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (YearPeer::NUM_COLUMNS - YearPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		TermPeer::addSelectColumns($criteria);
-		$startcol4 = $startcol3 + (TermPeer::NUM_COLUMNS - TermPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		WpmoduleItemPeer::addSelectColumns($criteria);
-		$startcol5 = $startcol4 + (WpmoduleItemPeer::NUM_COLUMNS - WpmoduleItemPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		$criteria->addJoin(StudentSituationPeer::YEAR_ID, YearPeer::ID, $join_behavior);
-
-		$criteria->addJoin(StudentSituationPeer::TERM_ID, TermPeer::ID, $join_behavior);
-
-		$criteria->addJoin(StudentSituationPeer::WPMODULE_ITEM_ID, WpmoduleItemPeer::ID, $join_behavior);
-
-
-		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = StudentSituationPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = StudentSituationPeer::getInstanceFromPool($key1))) {
-				// We no longer rehydrate the object, since this can cause data loss.
-				// See http://propel.phpdb.org/trac/ticket/509
-				// $obj1->hydrate($row, 0, true); // rehydrate
-			} else {
-				$cls = StudentSituationPeer::getOMClass(false);
-
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				StudentSituationPeer::addInstanceToPool($obj1, $key1);
-			} // if obj1 already loaded
-
-				// Add objects for joined Year rows
-
-				$key2 = YearPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-				if ($key2 !== null) {
-					$obj2 = YearPeer::getInstanceFromPool($key2);
-					if (!$obj2) {
-	
-						$cls = YearPeer::getOMClass(false);
-
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol2);
-					YearPeer::addInstanceToPool($obj2, $key2);
-				} // if $obj2 already loaded
-
-				// Add the $obj1 (StudentSituation) to the collection in $obj2 (Year)
-				$obj2->addStudentSituation($obj1);
-
-			} // if joined row is not null
-
-				// Add objects for joined Term rows
-
-				$key3 = TermPeer::getPrimaryKeyHashFromRow($row, $startcol3);
-				if ($key3 !== null) {
-					$obj3 = TermPeer::getInstanceFromPool($key3);
-					if (!$obj3) {
-	
-						$cls = TermPeer::getOMClass(false);
-
-					$obj3 = new $cls();
-					$obj3->hydrate($row, $startcol3);
-					TermPeer::addInstanceToPool($obj3, $key3);
-				} // if $obj3 already loaded
-
-				// Add the $obj1 (StudentSituation) to the collection in $obj3 (Term)
-				$obj3->addStudentSituation($obj1);
-
-			} // if joined row is not null
-
-				// Add objects for joined WpmoduleItem rows
-
-				$key4 = WpmoduleItemPeer::getPrimaryKeyHashFromRow($row, $startcol4);
-				if ($key4 !== null) {
-					$obj4 = WpmoduleItemPeer::getInstanceFromPool($key4);
-					if (!$obj4) {
-	
-						$cls = WpmoduleItemPeer::getOMClass(false);
-
-					$obj4 = new $cls();
-					$obj4->hydrate($row, $startcol4);
-					WpmoduleItemPeer::addInstanceToPool($obj4, $key4);
-				} // if $obj4 already loaded
-
-				// Add the $obj1 (StudentSituation) to the collection in $obj4 (WpmoduleItem)
-				$obj4->addStudentSituation($obj1);
 
 			} // if joined row is not null
 
@@ -2073,7 +1675,7 @@ abstract class BaseStudentSituationPeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array(array('year_id', 'term_id', 'wpmodule_item_id', 'user_id'));
+	  return array(array('term_id', 'wpmodule_item_id', 'user_id'));
 	}
 
 } // BaseStudentSituationPeer
