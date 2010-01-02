@@ -678,32 +678,25 @@ DROP TABLE IF EXISTS `student_situation`;
 CREATE TABLE `student_situation`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`year_id` INTEGER  NOT NULL,
 	`term_id` VARCHAR(10)  NOT NULL,
 	`wpmodule_item_id` INTEGER  NOT NULL,
 	`user_id` INTEGER  NOT NULL,
 	`evaluation` INTEGER,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `ytwu` (`year_id`, `term_id`, `wpmodule_item_id`, `user_id`),
+	UNIQUE KEY `twu` (`term_id`, `wpmodule_item_id`, `user_id`),
 	CONSTRAINT `student_situation_FK_1`
-		FOREIGN KEY (`year_id`)
-		REFERENCES `year` (`id`)
-		ON UPDATE CASCADE
-		ON DELETE RESTRICT,
-	INDEX `student_situation_FI_2` (`term_id`),
-	CONSTRAINT `student_situation_FK_2`
 		FOREIGN KEY (`term_id`)
 		REFERENCES `term` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
-	INDEX `student_situation_FI_3` (`wpmodule_item_id`),
-	CONSTRAINT `student_situation_FK_3`
+	INDEX `student_situation_FI_2` (`wpmodule_item_id`),
+	CONSTRAINT `student_situation_FK_2`
 		FOREIGN KEY (`wpmodule_item_id`)
 		REFERENCES `wpmodule_item` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE,
-	INDEX `student_situation_FI_4` (`user_id`),
-	CONSTRAINT `student_situation_FK_4`
+	INDEX `student_situation_FI_3` (`user_id`),
+	CONSTRAINT `student_situation_FK_3`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE

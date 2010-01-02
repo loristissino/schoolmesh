@@ -127,4 +127,82 @@ class WpmoduleItem extends BaseWpmoduleItem
 	  }
 	
 	}
+	
+	
+		public function getStudentsSituations($ids, $term_id)
+	{
+		
+		$c = new Criteria();
+		$c->add(StudentSituationPeer::WPMODULE_ITEM_ID, $this->getId());
+		$c->add(StudentSituationPeer::TERM_ID, $term_id);
+
+		$c->add(StudentSituationPeer::USER_ID, $ids, Criteria::IN);
+		$c->addAscendingOrderByColumn(StudentSituationPeer::USER_ID);
+
+		return StudentSituationPeer::doSelect($c);
+		
+	}
+
+	public function getStudentsSituationsAsArray($ids, $term_id)
+	{
+		
+		$sits=self::getStudentsSituations($ids, $term_id);
+
+		$found=array();
+		
+		foreach($sits as $sit)
+		{
+			$found[]=$sit->getUserId();
+		}
+
+		return $found;
+				
+	}
+	
+	public function toggleStudent($student_id, $term_id)
+	{
+		
+		//FIXME: Add check about the teacher doing the action...
+				
+		$c = new Criteria();
+		$c->add(StudentSituationPeer::WPMODULE_ITEM_ID, $this->getId());
+		$c->add(StudentSituationPeer::TERM_ID, $term_id);
+		$c->add(StudentSituationPeer::USER_ID, $student_id);
+
+		$studentSituation = StudentSituationPeer::doSelectOne($c);
+		
+		$error=false;
+		
+		if ($studentSituation)
+		{
+			try
+			{
+				$studentSituation->delete();
+			}
+			catch (Exception $e)
+			{
+				$error=true;
+			}
+		}
+		else
+		{
+			try
+			{
+				$studentSituation = new StudentSituation();
+				$studentSituation
+				->setTermId($term_id)
+				->setUserId($student_id)
+				->setWpmoduleItemId($this->getId())
+				->setEvaluation(1)
+				->save();
+			}
+			catch (Exception $e)
+			{
+				$error=true;
+			}
+			
+		}
+		
+	}
+	
 }

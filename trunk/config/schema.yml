@@ -268,13 +268,12 @@ propel:
 
   student_situation:
     id:     ~
-    year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     term_id:           { type: varchar(10), foreignTable: term, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     wpmodule_item_id:   { type: integer, foreignTable: wpmodule_item, foreignReference: id, onDelete: cascade, onUpdate: cascade, required: true  }
     user_id:  	{ type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     evaluation:  integer
     _uniques:
-      ytwu:     [year_id, term_id, wpmodule_item_id, user_id]
+      twu:     [term_id, wpmodule_item_id, user_id]
 
   subnet:
     id:

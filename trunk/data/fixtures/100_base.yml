@@ -98,7 +98,24 @@ Year:
     description:    2011/12
     start_date: 1/9/2011
     end_date: 10/6/2012
-    
+
+Term:
+  term1:
+    id:           Term1
+    description: First Term
+    end_day:  120
+    has_formal_evaluation: true
+  term2a:
+    id:           Term2a
+    description: Mid Second Term
+    end_day:  195
+    has_formal_evaluation: false
+  term2:
+    id:           Term2
+    description: Second Term
+    end_day:  285
+    has_formal_evaluation: true
+
 Subject:
   irc:
     shortcut:       IRC

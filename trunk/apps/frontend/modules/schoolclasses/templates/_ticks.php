@@ -1,11 +1,12 @@
 <?php use_helper('Javascript') ?>
+<?php $sits=$wpmodule_item->getStudentsSituationsAsArray(unserialize(base64_decode($ids)), $term_id)->getRawValue() ?>
 <td width="20">&nbsp;</td>
 <td><?php echo html_entity_decode($wpmodule_item->getContent()) ?></td>
 
 <?php foreach ($students as $student): ?>
 <td>
 	<ul class="sf_admin_td_actions">
-		<li class="sf_admin_action_<?php echo (false)? 'flag_red': 'flag_gray' ?>">
+		<li class="sf_admin_action_<?php echo in_array($student->getId(), $sits)? 'flag_red': 'flag_gray' ?>">
 		<?php echo link_to_remote('', array(
 					'update'   => 'ticks_' . $wpmodule_item->getId(),
 					'url'      => url_for('schoolclasses/tickit?student=' . $student->getId() . '&item=' . $wpmodule_item->getId() . '&ids=' . $ids),

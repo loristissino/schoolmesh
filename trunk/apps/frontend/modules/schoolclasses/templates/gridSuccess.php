@@ -9,6 +9,7 @@
 	
 	?>
 	<h1><?php echo __('Observation grid for «%subject%» (class %class%)', array('%subject%'=>$appointment->getSubject()->getDescription(), '%class%'=>$schoolclass_id)) ?></h1>
+	
 
 <?php $nb_cols=sizeof($students) +1 ?>
 
@@ -50,7 +51,7 @@
 
 		<?php foreach($wpitem_group->getWpmoduleItems() as $wpmodule_item): ?>
 			<tr id="<?php echo 'ticks_' . $wpmodule_item->getId() ?>">
-				<?php include_partial('ticks', array('students'=>$students, 'ids'=>$ids, 'wpmodule_item'=>$wpmodule_item)) ?>
+				<?php include_partial('ticks', array('students'=>$students, 'ids'=>$ids, 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id)) ?>
 			</tr>
 		<?php endforeach ?>
 
