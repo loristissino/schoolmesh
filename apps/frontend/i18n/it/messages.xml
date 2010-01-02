@@ -1318,6 +1318,42 @@
         <source>Dear %femalename%</source>
         <target>Cara %femalename%</target>
       </trans-unit>
+      <trans-unit id="356">
+        <source>Observation grid for «%subject%» (class %class%)</source>
+        <target>Griglia di osservazione per «%subject%» (classe %class%)</target>
+      </trans-unit>
+      <trans-unit id="357">
+        <source>All selected students</source>
+        <target>Tutti gli studenti</target>
+      </trans-unit>
+      <trans-unit id="358">
+        <source>All selected students</source>
+        <target>Tutti gli studenti</target>
+      </trans-unit>
+      <trans-unit id="359">
+        <source>All selected students</source>
+        <target>Tutti gli studenti</target>
+      </trans-unit>
+      <trans-unit id="360">
+        <source>[0]currently selected|[1]currently selected</source>
+        <target>[0]al momento selezionata|[1]al momento selezionato</target>
+      </trans-unit>
+      <trans-unit id="361">
+        <source>[0]currently not selected|[1]currently not selected</source>
+        <target>[0]al momento non selezionata|[1]al momento non selezionato</target>
+      </trans-unit>
+      <trans-unit id="362">
+        <source>View class</source>
+        <target>Classe</target>
+      </trans-unit>
+      <trans-unit id="363">
+        <source>Prepare grid</source>
+        <target>Prepara griglia</target>
+      </trans-unit>
+      <trans-unit id="364">
+        <source>Choose an action</source>
+        <target>Scegli un'azione</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

@@ -40,6 +40,7 @@ public function executeGrid(sfWebRequest $request)
 	$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
 	
 	$this->term_id=sfConfig::get('app_config_current_term');
+	$this->term=TermPeer::retrieveByPK($this->term_id);
 
 	$redirectURL='schoolclasses/view?id=' . $this->schoolclass_id . '&appointment=' . $this->appointment->getId();
 
@@ -69,21 +70,25 @@ public function executeGrid(sfWebRequest $request)
 		$this->students = sfGuardUserPeer::retrieveByPks($ids);
 		
 		$term_id=sfConfig::get('app_config_current_term');
-
-		$student_id=$request->getParameter('student');
+	
 		$wpmodule_item_id=$request->getParameter('item');
 		$wpmodule_item=WpmoduleItemPeer::retrieveByPK($wpmodule_item_id);
-		ob_start();
 
-		echo "I was clicked, student is $student_id, item is $wpmodule_item_id\n";
-		echo "Student list: \n";
-		print_r($ids);
+		$student_id=$request->getParameter('student');
 		
-		$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
-
-//		sleep(5);
-
-		$wpmodule_item->toggleStudent($student_id, $term_id);
+		if ($student_id=='all')
+		{
+			foreach($ids as $id)
+			{
+				$wpmodule_item->toggleStudent($id, $term_id);				
+			}
+			
+		}
+		else
+		{
+			
+			$wpmodule_item->toggleStudent($student_id, $term_id);
+		}
 
   	    return $this->renderPartial('ticks', array('students'=>$this->students, 'ids'=>base64_encode(serialize($ids)), 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id));
 

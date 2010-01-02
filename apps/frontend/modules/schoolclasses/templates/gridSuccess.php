@@ -9,6 +9,7 @@
 	
 	?>
 	<h1><?php echo __('Observation grid for «%subject%» (class %class%)', array('%subject%'=>$appointment->getSubject()->getDescription(), '%class%'=>$schoolclass_id)) ?></h1>
+	<h2><?php echo $term->getDescription() ?></h2>
 	
 
 <?php $nb_cols=sizeof($students) +1 ?>
@@ -21,17 +22,17 @@
 		<h2><?php echo ++$wpmodule_nb ?>. <?php echo $wpmodule->getTitle() ?></h2>
 		<p><?php echo $wpmodule->getPeriod() ?></p>
 	</td>
+	<td></td>
 <?php foreach($students as $student): ?>
-	<td width="20"><?php echo image_tag(sfConfig::get('app_config_base_url').'/vertical.php?text='. urlencode($student->getProfile()->getFullName(20)) .
+	<td width="10"><?php echo image_tag(sfConfig::get('app_config_base_url').'/vertical.php?text='. urlencode($student->getProfile()->getFullName(20)) .
 	'&backcolor=255-255-255&textcolor=0-0-0',
 			array(
 				'alt' => $student->getProfile()->getFullName(),
 				'title' => $student->getProfile()->getFullName())
 				)
-			?>
-	</td>
+			?></td>
 <?php endforeach ?>
-	<td width="30"><?php echo image_tag(sfConfig::get('app_config_base_url').'/vertical.php?text='. __('All selected students') . '&backcolor=0-0-0&textcolor=255-255-63', 
+	<td width="10"><?php echo image_tag(sfConfig::get('app_config_base_url').'/vertical.php?text='. __('All selected students') . '&backcolor=0-0-0&textcolor=255-255-63', 
 			array(
 				'alt' => __('All students'),
 				'title' => __('All students'))
@@ -43,7 +44,7 @@
 <?php foreach($wpmodule->getWpitemGroups() as $wpitem_group): ?>
 		<?php if($wpitem_group->getWpItemType()->getEvaluationMin()>0): ?>
 		<tr>
-	<td colspan="2">
+	<td colspan="3">
 			<h3><?php echo $wpitem_group->getWpItemType()->getTitle() ?></h3>
 	</td>
 	<td colspan="<?php echo $nb_cols ?>">
@@ -59,3 +60,9 @@
 	<?php endforeach ?>
 </table>
 <?php endforeach ?>
+
+<hr>
+<h2><?php echo __('Actions') ?></h2>
+<ul class="sf_admin_actions">
+    <li class="sf_admin_action_openoffice"><?php echo link_to(__('Prepare letter'), 'schoolclasses/letter') ?></li>
+</ul>
