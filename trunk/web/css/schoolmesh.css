@@ -223,6 +223,11 @@
   background: url(../images/flag_gray.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_grouptoggle a
+{
+  background: url(../images/group.png) no-repeat 0 0;
+}
+
 #sf_admin_container .alert
 {
   margin: 4px 0;
