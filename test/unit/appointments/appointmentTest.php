@@ -2,23 +2,31 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(5, new lime_output_color());
+$t = new lime_test(1, new lime_output_color());
 
-$wpmoduleitem=WpmoduleItemPeer::retrieveOneByContent('proprietà elettroniche dei solidi');
+$t->comment('Appointment test');
+
+$appointment=AppointmentPeer::retrieveByUsernameSchoolclassSubjectYear('john.test', '3AP', 'FIS', 2008);
+
+$t->like($appointment->getSubject(), '/Fisica/', '->getSubject() returns the correct Subject');
+/*
+
+echo $appointment->getId() . "\n";
 
 $ids=array();
 
 $student=sfGuardUserProfilePeer::retrieveByUsername('vincenzo.decarolis');
-
 $ids[]=$student->getId();
 
 $student=sfGuardUserProfilePeer::retrieveByUsername('helen.abram');
-
 $ids[]=$student->getId();
 
-$sits=$wpmoduleitem->getStudentsSituations($ids, 'term1');
+$suggestions=$appointment->getSuggestionsForStudents($ids, 'Term1');
 
-$t->is(sizeof($sits), 2, '->getStudentsSituations() retrieves the correct objects');
+$t->is(sizeof($suggestions), 2, '->getSuggestionsForStudents() retrieves the correct objects');
+
+
+print_r($suggestions);
 
 sort($ids);
 
@@ -36,3 +44,7 @@ $wpmoduleitem->toggleStudent($student->getId(), 'term1');
 $sits=$wpmoduleitem->getStudentsSituationsAsArray($ids, 'term1');
 $t->is(in_array($student->getId(), $sits), true, '->toggleStudent() moves the student back in');
 
+
+
+
+*/

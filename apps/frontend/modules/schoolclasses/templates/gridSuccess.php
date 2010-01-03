@@ -61,8 +61,45 @@
 </table>
 <?php endforeach ?>
 
+
+<hr>
+
+<table width="100%">
+<tr>
+	<th colspan="2">
+		<h2><?php echo __('Suggestions') ?></h2>
+	</th>
+<?php foreach($students as $student): ?>
+	<td width="10"><?php echo image_tag(sfConfig::get('app_config_base_url').'/vertical.php?text='. urlencode($student->getProfile()->getFullName(20)) .
+	'&backcolor=255-255-255&textcolor=0-0-0',
+			array(
+				'alt' => $student->getProfile()->getFullName(),
+				'title' => $student->getProfile()->getFullName())
+				)
+			?></td>
+<?php endforeach ?>
+	<td width="10"><?php echo image_tag(sfConfig::get('app_config_base_url').'/vertical.php?text='. __('All selected students') . '&backcolor=0-0-0&textcolor=255-255-63', 
+			array(
+				'alt' => __('All students'),
+				'title' => __('All students'))
+				)
+			?>
+	</td>
+
+</tr>
+
+<?php foreach($suggestions as $suggestion): ?>
+<tr id="suggestion_<?php echo $suggestion->getId()?>">
+	<?php include_partial('suggestion', array('students'=>$students, 'appointment_id'=>$appointment->getId(),'suggestion'=>$suggestion, 'ids'=>$ids, 'term_id'=>$term_id)) ?>
+</tr>
+<?php endforeach ?>
+
+</table>
+
+
+
 <hr>
 <h2><?php echo __('Actions') ?></h2>
 <ul class="sf_admin_actions">
-    <li class="sf_admin_action_openoffice"><?php echo link_to(__('Prepare letter'), 'schoolclasses/letter') ?></li>
+    <li class="sf_admin_action_openoffice"><?php echo link_to(__('Prepare letters'), 'schoolclasses/letter') ?></li>
 </ul>

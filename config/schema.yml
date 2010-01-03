@@ -29,6 +29,12 @@ propel:
     description:  { type: varchar(255), required: true }
     rank:     integer
 
+  suggestion:
+    id: ~
+    shortcut:     { type: varchar(20), index: true, required: true, unique: true }
+    content:  { type: varchar(255), required: true }
+    rank:   integer
+
   sf_guard_user_profile:
     _attributes:  { phpName: sfGuardUserProfile }
     user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onUpdate: cascade, onDelete: cascade, primaryKey: true }
@@ -50,23 +56,6 @@ propel:
     last_action_at: timestamp
     last_login_at: timestamp
 
-# notes about Google Apps accounts:
-#
-#  googleapps_account_status:
-#        this is set when the user list in csv format is downloaded from google and uploaded to schoolmesh, if the user is found in it
-#        possible values:
-#        0: the account does not exist
-#        1: the account exists, but was never used (first login = 0)
-#        3-7: reserved
-#        8: the account exists, and was used (last time more than a month ago)
-#        9: the account exists, and was used recently (last time less than a month ago)
-#  googleapps_account_approved:
-#        it is timestamped when the user provides the agreement signed by him or the parents
-#        if it is set to null, it means that the account is not yet approved (so the user will not show up in the user list to be sent to google)
-#  googleapps_account_temporary_password:
-#        it is generated when the google account is approved
-#        it is needed to produce the letter with instructions for the user
-#        it is set to null when we discover that the user has done a successful login
 
   account_type:
     id:
@@ -274,6 +263,15 @@ propel:
     evaluation:  integer
     _uniques:
       twu:     [term_id, wpmodule_item_id, user_id]
+
+  student_suggestion:
+    id:     ~
+    term_id:           { type: varchar(10), foreignTable: term, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    appointment_id:   { type: integer, foreignTable: appointment, foreignReference: id, required: true, onDelete: cascade, onUpdate: cascade, primaryKey: true }
+    user_id:  	{ type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    suggestion_id: ~
+    _uniques:
+      taus:     [term_id, appointment_id, user_id, suggestion_id]
 
   subnet:
     id:

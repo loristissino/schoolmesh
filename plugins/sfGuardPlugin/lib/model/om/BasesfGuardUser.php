@@ -201,6 +201,16 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	private $lastStudentSituationCriteria = null;
 
 	/**
+	 * @var        array StudentSuggestion[] Collection to store aggregation of StudentSuggestion objects.
+	 */
+	protected $collStudentSuggestions;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collStudentSuggestions.
+	 */
+	private $lastStudentSuggestionCriteria = null;
+
+	/**
 	 * @var        array Lanlog[] Collection to store aggregation of Lanlog objects.
 	 */
 	protected $collLanlogs;
@@ -797,6 +807,9 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$this->collStudentSituations = null;
 			$this->lastStudentSituationCriteria = null;
 
+			$this->collStudentSuggestions = null;
+			$this->lastStudentSuggestionCriteria = null;
+
 			$this->collLanlogs = null;
 			$this->lastLanlogCriteria = null;
 
@@ -1036,6 +1049,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collStudentSuggestions !== null) {
+				foreach ($this->collStudentSuggestions as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collLanlogs !== null) {
 				foreach ($this->collLanlogs as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -1211,6 +1232,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 				if ($this->collStudentSituations !== null) {
 					foreach ($this->collStudentSituations as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collStudentSuggestions !== null) {
+					foreach ($this->collStudentSuggestions as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1576,6 +1605,12 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			foreach ($this->getStudentSituations() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addStudentSituation($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getStudentSuggestions() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addStudentSuggestion($relObj->copy($deepCopy));
 				}
 			}
 
@@ -4269,6 +4304,301 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collStudentSuggestions collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addStudentSuggestions()
+	 */
+	public function clearStudentSuggestions()
+	{
+		$this->collStudentSuggestions = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collStudentSuggestions collection (array).
+	 *
+	 * By default this just sets the collStudentSuggestions collection to an empty array (like clearcollStudentSuggestions());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initStudentSuggestions()
+	{
+		$this->collStudentSuggestions = array();
+	}
+
+	/**
+	 * Gets an array of StudentSuggestion objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related StudentSuggestions from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array StudentSuggestion[]
+	 * @throws     PropelException
+	 */
+	public function getStudentSuggestions($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentSuggestions === null) {
+			if ($this->isNew()) {
+			   $this->collStudentSuggestions = array();
+			} else {
+
+				$criteria->add(StudentSuggestionPeer::USER_ID, $this->id);
+
+				StudentSuggestionPeer::addSelectColumns($criteria);
+				$this->collStudentSuggestions = StudentSuggestionPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(StudentSuggestionPeer::USER_ID, $this->id);
+
+				StudentSuggestionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastStudentSuggestionCriteria) || !$this->lastStudentSuggestionCriteria->equals($criteria)) {
+					$this->collStudentSuggestions = StudentSuggestionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastStudentSuggestionCriteria = $criteria;
+		return $this->collStudentSuggestions;
+	}
+
+	/**
+	 * Returns the number of related StudentSuggestion objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related StudentSuggestion objects.
+	 * @throws     PropelException
+	 */
+	public function countStudentSuggestions(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collStudentSuggestions === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(StudentSuggestionPeer::USER_ID, $this->id);
+
+				$count = StudentSuggestionPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(StudentSuggestionPeer::USER_ID, $this->id);
+
+				if (!isset($this->lastStudentSuggestionCriteria) || !$this->lastStudentSuggestionCriteria->equals($criteria)) {
+					$count = StudentSuggestionPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collStudentSuggestions);
+				}
+			} else {
+				$count = count($this->collStudentSuggestions);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a StudentSuggestion object to this object
+	 * through the StudentSuggestion foreign key attribute.
+	 *
+	 * @param      StudentSuggestion $l StudentSuggestion
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addStudentSuggestion(StudentSuggestion $l)
+	{
+		if ($this->collStudentSuggestions === null) {
+			$this->initStudentSuggestions();
+		}
+		if (!in_array($l, $this->collStudentSuggestions, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collStudentSuggestions, $l);
+			$l->setsfGuardUser($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related StudentSuggestions from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getStudentSuggestionsJoinTerm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentSuggestions === null) {
+			if ($this->isNew()) {
+				$this->collStudentSuggestions = array();
+			} else {
+
+				$criteria->add(StudentSuggestionPeer::USER_ID, $this->id);
+
+				$this->collStudentSuggestions = StudentSuggestionPeer::doSelectJoinTerm($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentSuggestionPeer::USER_ID, $this->id);
+
+			if (!isset($this->lastStudentSuggestionCriteria) || !$this->lastStudentSuggestionCriteria->equals($criteria)) {
+				$this->collStudentSuggestions = StudentSuggestionPeer::doSelectJoinTerm($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentSuggestionCriteria = $criteria;
+
+		return $this->collStudentSuggestions;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related StudentSuggestions from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getStudentSuggestionsJoinAppointment($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentSuggestions === null) {
+			if ($this->isNew()) {
+				$this->collStudentSuggestions = array();
+			} else {
+
+				$criteria->add(StudentSuggestionPeer::USER_ID, $this->id);
+
+				$this->collStudentSuggestions = StudentSuggestionPeer::doSelectJoinAppointment($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentSuggestionPeer::USER_ID, $this->id);
+
+			if (!isset($this->lastStudentSuggestionCriteria) || !$this->lastStudentSuggestionCriteria->equals($criteria)) {
+				$this->collStudentSuggestions = StudentSuggestionPeer::doSelectJoinAppointment($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentSuggestionCriteria = $criteria;
+
+		return $this->collStudentSuggestions;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related StudentSuggestions from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getStudentSuggestionsJoinSuggestion($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentSuggestions === null) {
+			if ($this->isNew()) {
+				$this->collStudentSuggestions = array();
+			} else {
+
+				$criteria->add(StudentSuggestionPeer::USER_ID, $this->id);
+
+				$this->collStudentSuggestions = StudentSuggestionPeer::doSelectJoinSuggestion($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentSuggestionPeer::USER_ID, $this->id);
+
+			if (!isset($this->lastStudentSuggestionCriteria) || !$this->lastStudentSuggestionCriteria->equals($criteria)) {
+				$this->collStudentSuggestions = StudentSuggestionPeer::doSelectJoinSuggestion($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentSuggestionCriteria = $criteria;
+
+		return $this->collStudentSuggestions;
+	}
+
+	/**
 	 * Clears out the collLanlogs collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
@@ -4544,6 +4874,11 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collStudentSuggestions) {
+				foreach ((array) $this->collStudentSuggestions as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->collLanlogs) {
 				foreach ((array) $this->collLanlogs as $o) {
 					$o->clearAllReferences($deep);
@@ -4564,6 +4899,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->collWpevents = null;
 		$this->collWpmodules = null;
 		$this->collStudentSituations = null;
+		$this->collStudentSuggestions = null;
 		$this->collLanlogs = null;
 	}
 

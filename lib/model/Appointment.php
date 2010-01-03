@@ -1268,4 +1268,56 @@ public function getContentAsMarkdown()
 	}
 
 
+	public function toggleStudentSuggestion($student_id, $term_id, $suggestion_id)
+	{
+		
+		//FIXME: Add check about the teacher doing the action...
+		
+
+		
+		
+		$c = new Criteria();
+		$c->add(StudentSuggestionPeer::APPOINTMENT_ID, $this->getId());
+		$c->add(StudentSuggestionPeer::TERM_ID, $term_id);
+		$c->add(StudentSuggestionPeer::USER_ID, $student_id);
+		$c->add(StudentSuggestionPeer::SUGGESTION_ID, $suggestion_id);
+
+		$studentSuggestion = StudentSuggestionPeer::doSelectOne($c);
+		
+		$error=false;
+		
+		if ($studentSuggestion)
+		{
+			try
+			{
+				$studentSuggestion->delete();
+			}
+			catch (Exception $e)
+			{
+				$error=true;
+			}
+		}
+		else
+		{
+			
+			try
+			{
+				$studentSuggestion = new StudentSuggestion();
+				$studentSuggestion
+				->setTermId($term_id)
+				->setUserId($student_id)
+				->setAppointmentId($this->getId())
+				->setSuggestionId($suggestion_id)
+				->save();
+			}
+			catch (Exception $e)
+			{
+				$error=true;
+			}
+			
+		}
+
+		
+	}
+
 }

@@ -1,56 +1,46 @@
 <?php
 
 /**
- * Base class that represents a row from the 'term' table.
+ * Base class that represents a row from the 'suggestion' table.
  *
  * 
  *
  * @package    lib.model.om
  */
-abstract class BaseTerm extends BaseObject  implements Persistent {
+abstract class BaseSuggestion extends BaseObject  implements Persistent {
 
 
 	/**
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        TermPeer
+	 * @var        SuggestionPeer
 	 */
 	protected static $peer;
 
 	/**
 	 * The value for the id field.
-	 * @var        string
+	 * @var        int
 	 */
 	protected $id;
 
 	/**
-	 * The value for the description field.
+	 * The value for the shortcut field.
 	 * @var        string
 	 */
-	protected $description;
+	protected $shortcut;
 
 	/**
-	 * The value for the end_day field.
+	 * The value for the content field.
+	 * @var        string
+	 */
+	protected $content;
+
+	/**
+	 * The value for the rank field.
 	 * @var        int
 	 */
-	protected $end_day;
-
-	/**
-	 * The value for the has_formal_evaluation field.
-	 * @var        boolean
-	 */
-	protected $has_formal_evaluation;
-
-	/**
-	 * @var        array StudentSituation[] Collection to store aggregation of StudentSituation objects.
-	 */
-	protected $collStudentSituations;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collStudentSituations.
-	 */
-	private $lastStudentSituationCriteria = null;
+	protected $rank;
 
 	/**
 	 * @var        array StudentSuggestion[] Collection to store aggregation of StudentSuggestion objects.
@@ -78,12 +68,12 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 
 	// symfony behavior
 	
-	const PEER = 'TermPeer';
+	const PEER = 'SuggestionPeer';
 
 	/**
 	 * Get the [id] column value.
 	 * 
-	 * @return     string
+	 * @return     int
 	 */
 	public function getId()
 	{
@@ -91,114 +81,114 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [description] column value.
+	 * Get the [shortcut] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getDescription()
+	public function getShortcut()
 	{
-		return $this->description;
+		return $this->shortcut;
 	}
 
 	/**
-	 * Get the [end_day] column value.
+	 * Get the [content] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getContent()
+	{
+		return $this->content;
+	}
+
+	/**
+	 * Get the [rank] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getEndDay()
+	public function getRank()
 	{
-		return $this->end_day;
-	}
-
-	/**
-	 * Get the [has_formal_evaluation] column value.
-	 * 
-	 * @return     boolean
-	 */
-	public function getHasFormalEvaluation()
-	{
-		return $this->has_formal_evaluation;
+		return $this->rank;
 	}
 
 	/**
 	 * Set the value of [id] column.
 	 * 
-	 * @param      string $v new value
-	 * @return     Term The current object (for fluent API support)
+	 * @param      int $v new value
+	 * @return     Suggestion The current object (for fluent API support)
 	 */
 	public function setId($v)
 	{
 		if ($v !== null) {
-			$v = (string) $v;
+			$v = (int) $v;
 		}
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = TermPeer::ID;
+			$this->modifiedColumns[] = SuggestionPeer::ID;
 		}
 
 		return $this;
 	} // setId()
 
 	/**
-	 * Set the value of [description] column.
+	 * Set the value of [shortcut] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     Term The current object (for fluent API support)
+	 * @return     Suggestion The current object (for fluent API support)
 	 */
-	public function setDescription($v)
+	public function setShortcut($v)
 	{
 		if ($v !== null) {
 			$v = (string) $v;
 		}
 
-		if ($this->description !== $v) {
-			$this->description = $v;
-			$this->modifiedColumns[] = TermPeer::DESCRIPTION;
+		if ($this->shortcut !== $v) {
+			$this->shortcut = $v;
+			$this->modifiedColumns[] = SuggestionPeer::SHORTCUT;
 		}
 
 		return $this;
-	} // setDescription()
+	} // setShortcut()
 
 	/**
-	 * Set the value of [end_day] column.
+	 * Set the value of [content] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Suggestion The current object (for fluent API support)
+	 */
+	public function setContent($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->content !== $v) {
+			$this->content = $v;
+			$this->modifiedColumns[] = SuggestionPeer::CONTENT;
+		}
+
+		return $this;
+	} // setContent()
+
+	/**
+	 * Set the value of [rank] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     Term The current object (for fluent API support)
+	 * @return     Suggestion The current object (for fluent API support)
 	 */
-	public function setEndDay($v)
+	public function setRank($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
 		}
 
-		if ($this->end_day !== $v) {
-			$this->end_day = $v;
-			$this->modifiedColumns[] = TermPeer::END_DAY;
+		if ($this->rank !== $v) {
+			$this->rank = $v;
+			$this->modifiedColumns[] = SuggestionPeer::RANK;
 		}
 
 		return $this;
-	} // setEndDay()
-
-	/**
-	 * Set the value of [has_formal_evaluation] column.
-	 * 
-	 * @param      boolean $v new value
-	 * @return     Term The current object (for fluent API support)
-	 */
-	public function setHasFormalEvaluation($v)
-	{
-		if ($v !== null) {
-			$v = (boolean) $v;
-		}
-
-		if ($this->has_formal_evaluation !== $v) {
-			$this->has_formal_evaluation = $v;
-			$this->modifiedColumns[] = TermPeer::HAS_FORMAL_EVALUATION;
-		}
-
-		return $this;
-	} // setHasFormalEvaluation()
+	} // setRank()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -232,10 +222,10 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	{
 		try {
 
-			$this->id = ($row[$startcol + 0] !== null) ? (string) $row[$startcol + 0] : null;
-			$this->description = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-			$this->end_day = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->has_formal_evaluation = ($row[$startcol + 3] !== null) ? (boolean) $row[$startcol + 3] : null;
+			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
+			$this->shortcut = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
+			$this->content = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->rank = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -245,10 +235,10 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 4; // 4 = TermPeer::NUM_COLUMNS - TermPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 4; // 4 = SuggestionPeer::NUM_COLUMNS - SuggestionPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating Term object", $e);
+			throw new PropelException("Error populating Suggestion object", $e);
 		}
 	}
 
@@ -291,13 +281,13 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(TermPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(SuggestionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		// We don't need to alter the object instance pool; we're just modifying this instance
 		// already in the pool.
 
-		$stmt = TermPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+		$stmt = SuggestionPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
 		$row = $stmt->fetch(PDO::FETCH_NUM);
 		$stmt->closeCursor();
 		if (!$row) {
@@ -306,9 +296,6 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 		$this->hydrate($row, 0, true); // rehydrate
 
 		if ($deep) {  // also de-associate any related objects?
-
-			$this->collStudentSituations = null;
-			$this->lastStudentSituationCriteria = null;
 
 			$this->collStudentSuggestions = null;
 			$this->lastStudentSuggestionCriteria = null;
@@ -332,14 +319,14 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(TermPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(SuggestionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
 		try {
 			$ret = $this->preDelete($con);
 			if ($ret) {
-				TermPeer::doDelete($this, $con);
+				SuggestionPeer::doDelete($this, $con);
 				$this->postDelete($con);
 				$this->setDeleted(true);
 				$con->commit();
@@ -370,7 +357,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(TermPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(SuggestionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
@@ -391,7 +378,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 				}
 				$this->postSave($con);
 				$con->commit();
-				TermPeer::addInstanceToPool($this);
+				SuggestionPeer::addInstanceToPool($this);
 				return $affectedRows;
 			}
 		} catch (PropelException $e) {
@@ -417,29 +404,26 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 		if (!$this->alreadyInSave) {
 			$this->alreadyInSave = true;
 
+			if ($this->isNew() ) {
+				$this->modifiedColumns[] = SuggestionPeer::ID;
+			}
 
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = TermPeer::doInsert($this, $con);
+					$pk = SuggestionPeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
 
+					$this->setId($pk);  //[IMV] update autoincrement primary key
+
 					$this->setNew(false);
 				} else {
-					$affectedRows += TermPeer::doUpdate($this, $con);
+					$affectedRows += SuggestionPeer::doUpdate($this, $con);
 				}
 
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
-			}
-
-			if ($this->collStudentSituations !== null) {
-				foreach ($this->collStudentSituations as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
 			}
 
 			if ($this->collStudentSuggestions !== null) {
@@ -516,18 +500,10 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 			$failureMap = array();
 
 
-			if (($retval = TermPeer::doValidate($this, $columns)) !== true) {
+			if (($retval = SuggestionPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
-
-				if ($this->collStudentSituations !== null) {
-					foreach ($this->collStudentSituations as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
 
 				if ($this->collStudentSuggestions !== null) {
 					foreach ($this->collStudentSuggestions as $referrerFK) {
@@ -555,7 +531,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = TermPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = SuggestionPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		$field = $this->getByPosition($pos);
 		return $field;
 	}
@@ -574,13 +550,13 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getDescription();
+				return $this->getShortcut();
 				break;
 			case 2:
-				return $this->getEndDay();
+				return $this->getContent();
 				break;
 			case 3:
-				return $this->getHasFormalEvaluation();
+				return $this->getRank();
 				break;
 			default:
 				return null;
@@ -601,12 +577,12 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
 	{
-		$keys = TermPeer::getFieldNames($keyType);
+		$keys = SuggestionPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getDescription(),
-			$keys[2] => $this->getEndDay(),
-			$keys[3] => $this->getHasFormalEvaluation(),
+			$keys[1] => $this->getShortcut(),
+			$keys[2] => $this->getContent(),
+			$keys[3] => $this->getRank(),
 		);
 		return $result;
 	}
@@ -623,7 +599,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = TermPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = SuggestionPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -642,13 +618,13 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setDescription($value);
+				$this->setShortcut($value);
 				break;
 			case 2:
-				$this->setEndDay($value);
+				$this->setContent($value);
 				break;
 			case 3:
-				$this->setHasFormalEvaluation($value);
+				$this->setRank($value);
 				break;
 		} // switch()
 	}
@@ -672,12 +648,12 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = TermPeer::getFieldNames($keyType);
+		$keys = SuggestionPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setDescription($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setEndDay($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setHasFormalEvaluation($arr[$keys[3]]);
+		if (array_key_exists($keys[1], $arr)) $this->setShortcut($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setContent($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setRank($arr[$keys[3]]);
 	}
 
 	/**
@@ -687,12 +663,12 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(TermPeer::DATABASE_NAME);
+		$criteria = new Criteria(SuggestionPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(TermPeer::ID)) $criteria->add(TermPeer::ID, $this->id);
-		if ($this->isColumnModified(TermPeer::DESCRIPTION)) $criteria->add(TermPeer::DESCRIPTION, $this->description);
-		if ($this->isColumnModified(TermPeer::END_DAY)) $criteria->add(TermPeer::END_DAY, $this->end_day);
-		if ($this->isColumnModified(TermPeer::HAS_FORMAL_EVALUATION)) $criteria->add(TermPeer::HAS_FORMAL_EVALUATION, $this->has_formal_evaluation);
+		if ($this->isColumnModified(SuggestionPeer::ID)) $criteria->add(SuggestionPeer::ID, $this->id);
+		if ($this->isColumnModified(SuggestionPeer::SHORTCUT)) $criteria->add(SuggestionPeer::SHORTCUT, $this->shortcut);
+		if ($this->isColumnModified(SuggestionPeer::CONTENT)) $criteria->add(SuggestionPeer::CONTENT, $this->content);
+		if ($this->isColumnModified(SuggestionPeer::RANK)) $criteria->add(SuggestionPeer::RANK, $this->rank);
 
 		return $criteria;
 	}
@@ -707,16 +683,16 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(TermPeer::DATABASE_NAME);
+		$criteria = new Criteria(SuggestionPeer::DATABASE_NAME);
 
-		$criteria->add(TermPeer::ID, $this->id);
+		$criteria->add(SuggestionPeer::ID, $this->id);
 
 		return $criteria;
 	}
 
 	/**
 	 * Returns the primary key for this object (row).
-	 * @return     string
+	 * @return     int
 	 */
 	public function getPrimaryKey()
 	{
@@ -726,7 +702,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	/**
 	 * Generic method to set the primary key (id column).
 	 *
-	 * @param      string $key Primary key.
+	 * @param      int $key Primary key.
 	 * @return     void
 	 */
 	public function setPrimaryKey($key)
@@ -740,32 +716,24 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of Term (or compatible) type.
+	 * @param      object $copyObj An object of Suggestion (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setId($this->id);
+		$copyObj->setShortcut($this->shortcut);
 
-		$copyObj->setDescription($this->description);
+		$copyObj->setContent($this->content);
 
-		$copyObj->setEndDay($this->end_day);
-
-		$copyObj->setHasFormalEvaluation($this->has_formal_evaluation);
+		$copyObj->setRank($this->rank);
 
 
 		if ($deepCopy) {
 			// important: temporarily setNew(false) because this affects the behavior of
 			// the getter/setter methods for fkey referrer objects.
 			$copyObj->setNew(false);
-
-			foreach ($this->getStudentSituations() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addStudentSituation($relObj->copy($deepCopy));
-				}
-			}
 
 			foreach ($this->getStudentSuggestions() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
@@ -778,6 +746,8 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 
 		$copyObj->setNew(true);
 
+		$copyObj->setId(NULL); // this is a auto-increment column, so set to default value
+
 	}
 
 	/**
@@ -789,7 +759,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     Term Clone of current object.
+	 * @return     Suggestion Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -808,262 +778,14 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     TermPeer
+	 * @return     SuggestionPeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new TermPeer();
+			self::$peer = new SuggestionPeer();
 		}
 		return self::$peer;
-	}
-
-	/**
-	 * Clears out the collStudentSituations collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addStudentSituations()
-	 */
-	public function clearStudentSituations()
-	{
-		$this->collStudentSituations = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collStudentSituations collection (array).
-	 *
-	 * By default this just sets the collStudentSituations collection to an empty array (like clearcollStudentSituations());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initStudentSituations()
-	{
-		$this->collStudentSituations = array();
-	}
-
-	/**
-	 * Gets an array of StudentSituation objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Term has previously been saved, it will retrieve
-	 * related StudentSituations from storage. If this Term is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array StudentSituation[]
-	 * @throws     PropelException
-	 */
-	public function getStudentSituations($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(TermPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collStudentSituations === null) {
-			if ($this->isNew()) {
-			   $this->collStudentSituations = array();
-			} else {
-
-				$criteria->add(StudentSituationPeer::TERM_ID, $this->id);
-
-				StudentSituationPeer::addSelectColumns($criteria);
-				$this->collStudentSituations = StudentSituationPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(StudentSituationPeer::TERM_ID, $this->id);
-
-				StudentSituationPeer::addSelectColumns($criteria);
-				if (!isset($this->lastStudentSituationCriteria) || !$this->lastStudentSituationCriteria->equals($criteria)) {
-					$this->collStudentSituations = StudentSituationPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastStudentSituationCriteria = $criteria;
-		return $this->collStudentSituations;
-	}
-
-	/**
-	 * Returns the number of related StudentSituation objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related StudentSituation objects.
-	 * @throws     PropelException
-	 */
-	public function countStudentSituations(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(TermPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collStudentSituations === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(StudentSituationPeer::TERM_ID, $this->id);
-
-				$count = StudentSituationPeer::doCount($criteria, false, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(StudentSituationPeer::TERM_ID, $this->id);
-
-				if (!isset($this->lastStudentSituationCriteria) || !$this->lastStudentSituationCriteria->equals($criteria)) {
-					$count = StudentSituationPeer::doCount($criteria, false, $con);
-				} else {
-					$count = count($this->collStudentSituations);
-				}
-			} else {
-				$count = count($this->collStudentSituations);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a StudentSituation object to this object
-	 * through the StudentSituation foreign key attribute.
-	 *
-	 * @param      StudentSituation $l StudentSituation
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addStudentSituation(StudentSituation $l)
-	{
-		if ($this->collStudentSituations === null) {
-			$this->initStudentSituations();
-		}
-		if (!in_array($l, $this->collStudentSituations, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collStudentSituations, $l);
-			$l->setTerm($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Term is new, it will return
-	 * an empty collection; or if this Term has previously
-	 * been saved, it will retrieve related StudentSituations from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Term.
-	 */
-	public function getStudentSituationsJoinWpmoduleItem($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(TermPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collStudentSituations === null) {
-			if ($this->isNew()) {
-				$this->collStudentSituations = array();
-			} else {
-
-				$criteria->add(StudentSituationPeer::TERM_ID, $this->id);
-
-				$this->collStudentSituations = StudentSituationPeer::doSelectJoinWpmoduleItem($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(StudentSituationPeer::TERM_ID, $this->id);
-
-			if (!isset($this->lastStudentSituationCriteria) || !$this->lastStudentSituationCriteria->equals($criteria)) {
-				$this->collStudentSituations = StudentSituationPeer::doSelectJoinWpmoduleItem($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastStudentSituationCriteria = $criteria;
-
-		return $this->collStudentSituations;
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Term is new, it will return
-	 * an empty collection; or if this Term has previously
-	 * been saved, it will retrieve related StudentSituations from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Term.
-	 */
-	public function getStudentSituationsJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(TermPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collStudentSituations === null) {
-			if ($this->isNew()) {
-				$this->collStudentSituations = array();
-			} else {
-
-				$criteria->add(StudentSituationPeer::TERM_ID, $this->id);
-
-				$this->collStudentSituations = StudentSituationPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(StudentSituationPeer::TERM_ID, $this->id);
-
-			if (!isset($this->lastStudentSituationCriteria) || !$this->lastStudentSituationCriteria->equals($criteria)) {
-				$this->collStudentSituations = StudentSituationPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastStudentSituationCriteria = $criteria;
-
-		return $this->collStudentSituations;
 	}
 
 	/**
@@ -1098,8 +820,8 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	 * Gets an array of StudentSuggestion objects which contain a foreign key that references this object.
 	 *
 	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Term has previously been saved, it will retrieve
-	 * related StudentSuggestions from storage. If this Term is new, it will return
+	 * Otherwise if this Suggestion has previously been saved, it will retrieve
+	 * related StudentSuggestions from storage. If this Suggestion is new, it will return
 	 * an empty collection or the current collection, the criteria is ignored on a new object.
 	 *
 	 * @param      PropelPDO $con
@@ -1110,7 +832,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	public function getStudentSuggestions($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(TermPeer::DATABASE_NAME);
+			$criteria = new Criteria(SuggestionPeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -1122,7 +844,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 			   $this->collStudentSuggestions = array();
 			} else {
 
-				$criteria->add(StudentSuggestionPeer::TERM_ID, $this->id);
+				$criteria->add(StudentSuggestionPeer::SUGGESTION_ID, $this->id);
 
 				StudentSuggestionPeer::addSelectColumns($criteria);
 				$this->collStudentSuggestions = StudentSuggestionPeer::doSelect($criteria, $con);
@@ -1135,7 +857,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 				// one, just return the collection.
 
 
-				$criteria->add(StudentSuggestionPeer::TERM_ID, $this->id);
+				$criteria->add(StudentSuggestionPeer::SUGGESTION_ID, $this->id);
 
 				StudentSuggestionPeer::addSelectColumns($criteria);
 				if (!isset($this->lastStudentSuggestionCriteria) || !$this->lastStudentSuggestionCriteria->equals($criteria)) {
@@ -1159,7 +881,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	public function countStudentSuggestions(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(TermPeer::DATABASE_NAME);
+			$criteria = new Criteria(SuggestionPeer::DATABASE_NAME);
 		} else {
 			$criteria = clone $criteria;
 		}
@@ -1175,7 +897,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 				$count = 0;
 			} else {
 
-				$criteria->add(StudentSuggestionPeer::TERM_ID, $this->id);
+				$criteria->add(StudentSuggestionPeer::SUGGESTION_ID, $this->id);
 
 				$count = StudentSuggestionPeer::doCount($criteria, false, $con);
 			}
@@ -1187,7 +909,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 				// one, just return count of the collection.
 
 
-				$criteria->add(StudentSuggestionPeer::TERM_ID, $this->id);
+				$criteria->add(StudentSuggestionPeer::SUGGESTION_ID, $this->id);
 
 				if (!isset($this->lastStudentSuggestionCriteria) || !$this->lastStudentSuggestionCriteria->equals($criteria)) {
 					$count = StudentSuggestionPeer::doCount($criteria, false, $con);
@@ -1216,7 +938,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 		}
 		if (!in_array($l, $this->collStudentSuggestions, true)) { // only add it if the **same** object is not already associated
 			array_push($this->collStudentSuggestions, $l);
-			$l->setTerm($this);
+			$l->setSuggestion($this);
 		}
 	}
 
@@ -1224,18 +946,65 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	/**
 	 * If this collection has already been initialized with
 	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Term is new, it will return
-	 * an empty collection; or if this Term has previously
+	 * Otherwise if this Suggestion is new, it will return
+	 * an empty collection; or if this Suggestion has previously
 	 * been saved, it will retrieve related StudentSuggestions from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Term.
+	 * actually need in Suggestion.
+	 */
+	public function getStudentSuggestionsJoinTerm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SuggestionPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentSuggestions === null) {
+			if ($this->isNew()) {
+				$this->collStudentSuggestions = array();
+			} else {
+
+				$criteria->add(StudentSuggestionPeer::SUGGESTION_ID, $this->id);
+
+				$this->collStudentSuggestions = StudentSuggestionPeer::doSelectJoinTerm($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentSuggestionPeer::SUGGESTION_ID, $this->id);
+
+			if (!isset($this->lastStudentSuggestionCriteria) || !$this->lastStudentSuggestionCriteria->equals($criteria)) {
+				$this->collStudentSuggestions = StudentSuggestionPeer::doSelectJoinTerm($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentSuggestionCriteria = $criteria;
+
+		return $this->collStudentSuggestions;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Suggestion is new, it will return
+	 * an empty collection; or if this Suggestion has previously
+	 * been saved, it will retrieve related StudentSuggestions from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Suggestion.
 	 */
 	public function getStudentSuggestionsJoinAppointment($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(TermPeer::DATABASE_NAME);
+			$criteria = new Criteria(SuggestionPeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -1247,7 +1016,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 				$this->collStudentSuggestions = array();
 			} else {
 
-				$criteria->add(StudentSuggestionPeer::TERM_ID, $this->id);
+				$criteria->add(StudentSuggestionPeer::SUGGESTION_ID, $this->id);
 
 				$this->collStudentSuggestions = StudentSuggestionPeer::doSelectJoinAppointment($criteria, $con, $join_behavior);
 			}
@@ -1256,7 +1025,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 			// called for.  If the criteria is the same as the last
 			// one, just return the collection.
 
-			$criteria->add(StudentSuggestionPeer::TERM_ID, $this->id);
+			$criteria->add(StudentSuggestionPeer::SUGGESTION_ID, $this->id);
 
 			if (!isset($this->lastStudentSuggestionCriteria) || !$this->lastStudentSuggestionCriteria->equals($criteria)) {
 				$this->collStudentSuggestions = StudentSuggestionPeer::doSelectJoinAppointment($criteria, $con, $join_behavior);
@@ -1271,18 +1040,18 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	/**
 	 * If this collection has already been initialized with
 	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Term is new, it will return
-	 * an empty collection; or if this Term has previously
+	 * Otherwise if this Suggestion is new, it will return
+	 * an empty collection; or if this Suggestion has previously
 	 * been saved, it will retrieve related StudentSuggestions from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Term.
+	 * actually need in Suggestion.
 	 */
 	public function getStudentSuggestionsJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(TermPeer::DATABASE_NAME);
+			$criteria = new Criteria(SuggestionPeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -1294,7 +1063,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 				$this->collStudentSuggestions = array();
 			} else {
 
-				$criteria->add(StudentSuggestionPeer::TERM_ID, $this->id);
+				$criteria->add(StudentSuggestionPeer::SUGGESTION_ID, $this->id);
 
 				$this->collStudentSuggestions = StudentSuggestionPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
 			}
@@ -1303,57 +1072,10 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 			// called for.  If the criteria is the same as the last
 			// one, just return the collection.
 
-			$criteria->add(StudentSuggestionPeer::TERM_ID, $this->id);
+			$criteria->add(StudentSuggestionPeer::SUGGESTION_ID, $this->id);
 
 			if (!isset($this->lastStudentSuggestionCriteria) || !$this->lastStudentSuggestionCriteria->equals($criteria)) {
 				$this->collStudentSuggestions = StudentSuggestionPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastStudentSuggestionCriteria = $criteria;
-
-		return $this->collStudentSuggestions;
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Term is new, it will return
-	 * an empty collection; or if this Term has previously
-	 * been saved, it will retrieve related StudentSuggestions from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Term.
-	 */
-	public function getStudentSuggestionsJoinSuggestion($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(TermPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collStudentSuggestions === null) {
-			if ($this->isNew()) {
-				$this->collStudentSuggestions = array();
-			} else {
-
-				$criteria->add(StudentSuggestionPeer::TERM_ID, $this->id);
-
-				$this->collStudentSuggestions = StudentSuggestionPeer::doSelectJoinSuggestion($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(StudentSuggestionPeer::TERM_ID, $this->id);
-
-			if (!isset($this->lastStudentSuggestionCriteria) || !$this->lastStudentSuggestionCriteria->equals($criteria)) {
-				$this->collStudentSuggestions = StudentSuggestionPeer::doSelectJoinSuggestion($criteria, $con, $join_behavior);
 			}
 		}
 		$this->lastStudentSuggestionCriteria = $criteria;
@@ -1373,11 +1095,6 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
-			if ($this->collStudentSituations) {
-				foreach ((array) $this->collStudentSituations as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 			if ($this->collStudentSuggestions) {
 				foreach ((array) $this->collStudentSuggestions as $o) {
 					$o->clearAllReferences($deep);
@@ -1385,8 +1102,7 @@ abstract class BaseTerm extends BaseObject  implements Persistent {
 			}
 		} // if ($deep)
 
-		$this->collStudentSituations = null;
 		$this->collStudentSuggestions = null;
 	}
 
-} // BaseTerm
+} // BaseSuggestion

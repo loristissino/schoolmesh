@@ -54,6 +54,8 @@ public function executeGrid(sfWebRequest $request)
     $ids = $request->getParameter('ids');
     $this->students = sfGuardUserPeer::retrieveByPks($ids);
 	$this->ids=base64_encode(serialize($ids));
+
+	$this->suggestions=SuggestionPeer::retrieveAllByRank();
 	
 	if (sizeof($this->students)==0)
 		{
@@ -94,6 +96,39 @@ public function executeGrid(sfWebRequest $request)
 
 	}
 	
+public function executeSuggestion(sfWebRequest $request)
 
+{
+		$ids = unserialize(base64_decode($request->getParameter('ids')));
+		$this->students = sfGuardUserPeer::retrieveByPks($ids);
+		
+		$term_id=sfConfig::get('app_config_current_term');
+		
+		$suggestion_id=$request->getParameter('suggestion');
+		$suggestion=SuggestionPeer::retrieveByPK($suggestion_id);
+	
+		$appointment_id=$request->getParameter('appointment');
+		$appointment=AppointmentPeer::retrieveByPK($appointment_id);
+
+		$student_id=$request->getParameter('student');
+		
+		if ($student_id=='all')
+		{
+			foreach($ids as $id)
+			{
+				$appointment->toggleStudentSuggestion($id, $term_id, $suggestion_id);				
+			}
+			
+		}
+		else
+		{
+			
+			$appointment->toggleStudentSuggestion($student_id, $term_id, $suggestion_id);
+		}
+
+  	    return $this->renderPartial('suggestion', array('suggestion'=>$suggestion, 'students'=>$this->students, 'ids'=>base64_encode(serialize($ids)), 'appointment_id'=>$appointment->getId(), 'term_id'=>$term_id));
+	
+	
+}
 
 }
