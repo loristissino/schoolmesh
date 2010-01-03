@@ -1354,6 +1354,14 @@
         <source>Choose an action</source>
         <target>Scegli un'azione</target>
       </trans-unit>
+      <trans-unit id="365">
+        <source>Suggestions</source>
+        <target>Suggerimenti</target>
+      </trans-unit>
+      <trans-unit id="366">
+        <source>Prepare letters</source>
+        <target>Prepara le lettere</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

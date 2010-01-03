@@ -90,6 +90,23 @@ CREATE TABLE `subject`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- suggestion
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `suggestion`;
+
+
+CREATE TABLE `suggestion`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`shortcut` VARCHAR(20)  NOT NULL,
+	`content` VARCHAR(255)  NOT NULL,
+	`rank` INTEGER,
+	PRIMARY KEY (`id`),
+	KEY `suggestion_I_1`(`shortcut`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- sf_guard_user_profile
 #-----------------------------------------------------------------------------
 
@@ -701,6 +718,45 @@ CREATE TABLE `student_situation`
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- student_suggestion
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `student_suggestion`;
+
+
+CREATE TABLE `student_suggestion`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`term_id` VARCHAR(10)  NOT NULL,
+	`appointment_id` INTEGER  NOT NULL,
+	`user_id` INTEGER  NOT NULL,
+	`suggestion_id` INTEGER,
+	PRIMARY KEY (`id`,`appointment_id`),
+	UNIQUE KEY `taus` (`term_id`, `appointment_id`, `user_id`, `suggestion_id`),
+	CONSTRAINT `student_suggestion_FK_1`
+		FOREIGN KEY (`term_id`)
+		REFERENCES `term` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `student_suggestion_FI_2` (`appointment_id`),
+	CONSTRAINT `student_suggestion_FK_2`
+		FOREIGN KEY (`appointment_id`)
+		REFERENCES `appointment` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	INDEX `student_suggestion_FI_3` (`user_id`),
+	CONSTRAINT `student_suggestion_FK_3`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `student_suggestion_FI_4` (`suggestion_id`),
+	CONSTRAINT `student_suggestion_FK_4`
+		FOREIGN KEY (`suggestion_id`)
+		REFERENCES `suggestion` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
