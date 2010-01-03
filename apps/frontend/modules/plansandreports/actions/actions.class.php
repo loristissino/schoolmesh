@@ -344,7 +344,7 @@ public function executeBatch(sfWebRequest $request)
 
   }
 
-
+/*
   public function executeXml(sfWebRequest $request)
 	{
 		$this->setLayout('odt_content');
@@ -360,7 +360,8 @@ public function executeBatch(sfWebRequest $request)
 
 
 	}
-
+*/
+/*
   public function executeOdt(sfWebRequest $request)
 	{
 		$this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
@@ -373,7 +374,7 @@ public function executeBatch(sfWebRequest $request)
 		return sfView::NONE;
 		
 	}
-	
+*/
 	public function executeServedoc(sfWebRequest $request)
 	{
 		$this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
@@ -407,7 +408,7 @@ public function executeBatch(sfWebRequest $request)
 		
 	}
 
-  public function executeDoc(sfWebRequest $request)
+/*  public function executeDoc(sfWebRequest $request)
 	{
 	
 		$document = new Opendocument('mattiussirq', $this->workplan, 'doc');
@@ -428,6 +429,7 @@ public function executeBatch(sfWebRequest $request)
 		return sfView::NONE;
 		
 	}
+*/
 
   public function executeView(sfWebRequest $request)
   {

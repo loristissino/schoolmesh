@@ -92,7 +92,7 @@ public function executeGrid(sfWebRequest $request)
 			$wpmodule_item->toggleStudent($student_id, $term_id);
 		}
 
-  	    return $this->renderPartial('ticks', array('students'=>$this->students, 'ids'=>base64_encode(serialize($ids)), 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id));
+  	    return $this->renderPartial('wpmoduleitem', array('students'=>$this->students, 'ids'=>base64_encode(serialize($ids)), 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id));
 
 	}
 	
@@ -127,6 +127,43 @@ public function executeSuggestion(sfWebRequest $request)
 		}
 
   	    return $this->renderPartial('suggestion', array('suggestion'=>$suggestion, 'students'=>$this->students, 'ids'=>base64_encode(serialize($ids)), 'appointment_id'=>$appointment->getId(), 'term_id'=>$term_id));
+	
+	
+}
+
+
+public function executeLetters(sfWebRequest $request)
+	{
+		$this->appointment = AppointmentPeer::retrieveByPk($request->getParameter('appointment'));
+		$this->forward404Unless($this->appointment);
+
+		$this->doctype=$request->getParameter('doctype');
+		$this->forward404Unless(in_array($this->doctype, array('odt', 'doc', 'pdf', 'rtf')));
+		
+		try 
+		{
+			$odfdoc=$this->appointment->getLettersOdf($this->doctype, $this->getContext(), $request->getParameter('template', ''));
+		}
+		catch (Exception $e)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.') . $e->getMessage());
+			$this->redirect('schoolclasses');
+		}
+		
+		try
+		{
+			$odfdoc
+			->saveFile()
+			->setResponse($this->getContext()->getResponse());
+			return sfView::NONE;
+		}
+		catch (Exception $e)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Conversion failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the contents.'));
+			$this->redirect('schoolclasses');
+		}
+		
+	
 	
 	
 }

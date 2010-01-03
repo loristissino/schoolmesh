@@ -6,9 +6,7 @@
 <td width="20"><?php echo image_tag('loader.gif', array('style'=>'vertical-align: middle; display: none', 'id'=>'loader'. $wpmodule_item->getId())) ?></td>
 <?php foreach ($students as $student): ?>
 <td>
-	<ul class="sf_admin_td_actions">
-		<li class="sf_admin_action_<?php echo in_array($student->getId(), $sits)? 'flag_red': 'flag_gray' ?>">
-		<?php echo link_to_remote('', array(
+		<?php echo link_to_remote(in_array($student->getId(), $sits)? '▣': '▢', array(
 					'update'   => 'ticks_' . $wpmodule_item->getId(),
 					'url'      => url_for('schoolclasses/tickit?student=' . $student->getId() . '&item=' . $wpmodule_item->getId() . '&ids=' . $ids),
 					'loading'=>'$(\'loader'. $wpmodule_item->getId() . '\').show();'),
@@ -22,8 +20,6 @@
 						)
 					)
 				) ?>
-		</li>
-	</ul>
 </td>
 <?php endforeach ?>
 <td>
