@@ -1030,6 +1030,117 @@ public function getWorkflowLogs()
 		return $odf;
 	}
 	
+	public function getLettersOdf($doctype, sfContext $sfContext=null, $template='')
+	{
+				
+		if ($template=='')
+		{
+			$template='recovery.odt';
+		}
+		
+		$teachertitle=$this->getSfGuardUser()->getProfile()->getIsMale()?'Mr. ':'Ms. ';
+
+		if ($sfContext)
+		{
+			$teachertitle=$sfContext->getI18n()->__($teachertitle);
+		}
+	
+		try
+		{
+			$odf=new OdfDoc($template, $this->__toString(). '.' . $doctype, $doctype);
+		}
+		catch (Exception $e)
+		{
+			throw $e;
+		}
+		
+		$odfdoc=$odf->getOdfDocument();
+		
+		$odfdoc->setVars('year',  $this->getYear()->__toString());
+		$odfdoc->setVars('teacher',  $teachertitle . $this->getSfGuardUser()->getProfile()->getFullName());
+		$odfdoc->setVars('subject', $this->getSubject()->getDescription());
+		$odfdoc->setVars('year',  $this->getYear()->__toString());
+		$odfdoc->setVars('schoolclass',  $this->getSchoolclassId());
+		
+		
+		$wpinfos=$this->getWpinfos();
+		
+		$infos=$odfdoc->setSegment('infos');
+		foreach($wpinfos as $wpinfo)
+		{
+			if (
+				$wpinfo->getWpinfoType()->getState()<=$this->getState()
+				&&
+				$wpinfo->getContent()
+				)
+			{
+				$infos->infoTitle($wpinfo->getWpinfoType()->getTitle());
+				$infos->infoDescription($wpinfo->getWpinfoType()->getDescription());
+				$infos->infoContent($wpinfo->getContent());
+				$infos->merge();
+			}
+		}
+		
+		$odfdoc->mergeSegment($infos);
+		
+		
+		$wpmodules=$this->getWpmodules();
+		
+		$modules=$odfdoc->setSegment('modules');
+		
+		$moduleNumber=0;
+		
+		foreach($wpmodules as $wpmodule)
+		{
+			$modules->moduleTitle($wpmodule->getTitle());
+			$modules->moduleNumber(++$moduleNumber);
+			$modules->modulePeriod($wpmodule->getPeriod());
+			
+			foreach($wpmodule->getWpitemGroups() as $wpitemgroup)
+			{
+				$wpitems=$wpitemgroup->getWpmoduleItems();
+				if (($wpitemgroup->getWpitemType()->getState()<=$this->getState())&&(sizeof($wpitems)>0))
+				{
+					$modules->group->groupTitle($wpitemgroup->getWpitemType()->getTitle());
+					
+					foreach($wpitems as $wpitem)
+					{
+						$modules->group->item->itemContent($wpitem->getContent());
+						$modules->group->item->merge();
+					}
+					$modules->group->merge();
+				}
+			}
+			
+			$pagebreak=($moduleNumber<sizeof($wpmodules))?'<pagebreak>':'';
+			$modules->pagebreak($pagebreak);
+
+			$modules->merge();
+		}
+		
+		$odfdoc->mergeSegment($modules);
+
+
+		$tools=$this->getTools(true);
+
+		$toolgroups=$odfdoc->setSegment('toolgroups');
+	
+		if(sizeof($tools)>0)
+			foreach($tools as $toolGroup)
+				if (@sizeof($toolGroup['elements'])>0)
+					{
+					$toolgroups->toolgroupTitle($toolGroup['description']);
+					foreach($toolGroup['elements'] as $element)
+						{
+							$toolgroups->tool->toolContent($element['description']);
+							$toolgroups->tool->merge();
+						}
+					$toolgroups->merge();
+					}
+		$odfdoc->mergeSegment($toolgroups);
+		
+		return $odf;
+	}
 
 public function getWpevents($criteria = null, PropelPDO $con = null)
 
@@ -1038,61 +1149,6 @@ public function getWpevents($criteria = null, PropelPDO $con = null)
 		$criteria->addAscendingOrderByColumn(WpeventPeer::CREATED_AT);
 		$criteria->addJoin(WpeventPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
 		return parent::getWpevents($criteria);
-	}
-
-public function getContentAsMarkdown()
-	{
-		
-	// this should be a kind of template, but I don't know how to use the output of the template from the inside of the action...
-	
-	$data=$this->getCompleteContentAsArray();
-	
-	$text='#' . sfContext::getInstance()->getI18N()->__('Workplan'). "\n";
-	
-	$text.='##' . sfContext::getInstance()->getI18N()->__("General information"). "\n";
-
-	$text.='* ' . sfContext::getInstance()->getI18N()->__("Teacher: "). 
-		$data['workplan_report']['teacher']['firstname'] .
-		$data['workplan_report']['teacher']['lastname'] .
-		"\n";
-	$text.='* ' . sfContext::getInstance()->getI18N()->__("Subject: "). 
-		$data['workplan_report']['subject']['description'] .
-		"\n";
-	$text.='* ' . sfContext::getInstance()->getI18N()->__("Class: "). 
-		$data['workplan_report']['class']['id'] . 
-		"\n\n";
-
-	$text.='##' .sfContext::getInstance()->getI18N()->__('Details, comments, general information') . "\n\n";
-
-	foreach($data['workplan_report']['info'] as $infokey=>$infovalue)
-		{
-		$text.='### ' . $infokey . "\n\n";
-		$text.= $infovalue . "\n\n";
-		}
-
-	$text .= '##' .sfContext::getInstance()->getI18N()->__('Modules') . "\n\n";
-
-	foreach($data['workplan_report']['modules'] as $infokey=>$infovalue)
-		{
-		$text.="\n### " . $infokey . "\n";
-		$text.=sfContext::getInstance()->getI18N()->__('Period: ') . $infovalue['period'] . "\n";
-		foreach($infovalue['details'] as $key=>$value)
-			{
-				foreach($value as $k=>$v)
-					{
-					$text.="\n####$k\n";
-					foreach ($v as $ik=>$iv)
-						{
-						$text .='1. '. $iv['content'] . '_(' . $iv['evaluation'] . ')_' ."\n";
-//						$text.="\n$ik -- $iv\n";
-						}
-					}
-			}
-		}
-
-
-	return $text;
-	
 	}
 	
 	

@@ -20,7 +20,6 @@
 <?php /* FIXME: I should use a different CSS class in order to avoid <br> tags here... */ ?>
 <ul class="sf_admin_actions">
 	<li class="sf_admin_action_yaml"><?php echo link_to(__("YAML"), 'plansandreports/view?id='.$workplan->getId().'&sf_format=yaml') ?> <?php echo __('(Useful for personal backup)') ?><br /></li>
-	<li class="sf_admin_action_openoffice"><?php echo link_to(__("OpenOffice.org document"), 'plansandreports/odt?id='.$workplan->getId()) ?> (old way -- deprecated!!)<br /></li>	
 	<li class="sf_admin_action_openoffice"><?php echo link_to(__('OpenOffice.org document'), 'plansandreports/servedoc?id='.$workplan->getId() . '&doctype=odt') ?><br /></li>
 <?php if($unoconv_active): ?>
 	<li class="sf_admin_action_pdf"><?php echo link_to(__("PDF document"), 'plansandreports/servedoc?id='.$workplan->getId() . '&doctype=pdf')  ?><br /></li>

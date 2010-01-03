@@ -52,7 +52,7 @@
 
 		<?php foreach($wpitem_group->getWpmoduleItems() as $wpmodule_item): ?>
 			<tr id="<?php echo 'ticks_' . $wpmodule_item->getId() ?>">
-				<?php include_partial('ticks', array('students'=>$students, 'ids'=>$ids, 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id)) ?>
+				<?php include_partial('wpmoduleitem', array('students'=>$students, 'ids'=>$ids, 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id)) ?>
 			</tr>
 		<?php endforeach ?>
 
@@ -101,5 +101,9 @@
 <hr>
 <h2><?php echo __('Actions') ?></h2>
 <ul class="sf_admin_actions">
-    <li class="sf_admin_action_openoffice"><?php echo link_to(__('Prepare letters'), 'schoolclasses/letter') ?></li>
+    <li class="sf_admin_action_openoffice">
+		<?php echo link_to(
+			__('Prepare letters'), 
+			url_for('schoolclasses/letters?appointment=' . $appointment->getId() .'&doctype=odt')
+			)?></li>
 </ul>
