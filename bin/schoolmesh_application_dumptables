@@ -35,6 +35,8 @@ checkNotFile $OUTFILE
 TABLES="
 track
 year
+term
+suggestion
 subject
 schoolclass
 sf_guard_user
@@ -76,6 +78,8 @@ wptool_appointment
 wptool_item
 wptool_item_type
 wpmodule_item
+student_situation
+student_suggestion
 "
 
 TEMPFILE0=$(mktemp)
