@@ -1038,15 +1038,6 @@ public function getWorkflowLogs()
 			throw new Exception('term not defined');
 		}
 		
-		ob_start();
-
-echo "RECUPERATION LETTER\n";
-echo "term: " . $term->getId(). "\n";
-echo "ids:\n";
-print_r($ids);
-echo "appointment: " . $this->getId(). "\n";
-
-
 				
 		if ($template=='')
 		{
@@ -1078,21 +1069,16 @@ echo "appointment: " . $this->getId(). "\n";
 
 		$students=sfGuardUserProfilePeer::retrieveByPKs($ids);
 		
+		$suggestions=SuggestionPeer::retrieveAllByRank();
+		
 		$letters=$odfdoc->setSegment('letters');
 		
 		$letterNumber=0;
 		
+		$selectedStudents=array();
+		
 		foreach($students as $student)
 		{
-			$selectedModules=array();
-			
-			$letterNumber++;
-			$letters->addresseeStudent($student->getFullName());
-			echo "Student: " .$student->getFullName() . "\n";
-			$letters->teacher($teachertitle. $this->getSfGuardUser()->getProfile()->getFullName());
-			$letters->subject($this->getSubject()->getDescription());
-			$letters->schoolclass($this->getSchoolclass()->getShortcut());
-			$letters->term($term->getDescription());
 			
 			foreach ($wpmodules as $wpmodule)
 			{
@@ -1102,110 +1088,80 @@ echo "appointment: " . $this->getId(). "\n";
 							{
 								if ($wpitem->getStudentSituation($student->getId(), $term->getId()))
 								{
-									echo "wpitem: " . $wpitem->getContent() . "\n";
-									$selectedModules[$wpmodule->getTitle()][$wpitemgroup->getWpitemType()->getTitle()][]=$wpitem->getContent();
+									$selectedStudents[$student->getFullName()]['modules'][$wpmodule->getTitle()][$wpitemgroup->getWpitemType()->getTitle()][]=$wpitem->getContent();
 								}
 								
 							}
 						
 					}
-				
-				
+			}
+			foreach ($suggestions as $suggestion)
+			{
+				if($suggestion->hasStudentSuggestionForAppointment($student->getId(), $this->getId(), $term->getId()))
+				{
+					$selectedStudents[$student->getFullName()]['suggestions'][]=$suggestion->getContent();
+					
+				}
 			}
 			
-			print_r($selectedModules);
 			
-			foreach($selectedModules as $selectedModule_key=>$selectedModule)
+			
+		}
+			
+		$studentsNumber=sizeof(array_keys($selectedStudents));
+		$letterNumber=0;
+		
+		foreach($selectedStudents as $selectedStudent_key=>$selectedStudent_value)
+		{
+			$letterNumber++;
+			$letters->student($selectedStudent_key);
+			$letters->teacher($teachertitle. $this->getSfGuardUser()->getProfile()->getFullName());
+			$letters->subject($this->getSubject()->getDescription());
+			$letters->schoolclass($this->getSchoolclass()->getShortcut());
+			$letters->term($term->getDescription());
+			if (@is_array($selectedStudent_value['modules']))
 			{
-				$todo=false;
-				$letters->modules->moduleTitle($selectedModule_key);
-				foreach($selectedModule as $selectedGroup_key=>$selectedGroup)
+				$selectedModules=$selectedStudent_value['modules'];
+				
+				foreach($selectedModules as $selectedModule_key=>$selectedModule)
 				{
-					$letters->modules->group->groupTitle($selectedGroup_key);
-					foreach($selectedGroup as $selectedItem)
+					$letters->modules->moduleTitle($selectedModule_key);
+					foreach($selectedModule as $selectedGroup_key=>$selectedGroup)
 					{
-						$letters->modules->group->item->itemContent($selectedItem);
-						$letters->modules->group->item->merge();
-						$todo=true;
-						echo "ODF -> Aggiungo un elemento... $selectedItem\n";
-					}
-					if ($todo)
-					{
+						$letters->modules->group->groupTitle($selectedGroup_key);
+						foreach($selectedGroup as $selectedItem)
+						{
+							$letters->modules->group->item->itemContent($selectedItem);
+							$letters->modules->group->item->merge();
+						}
 						$letters->modules->group->merge();
 					}
-				}
-				if ($todo)
-				{
 					$letters->modules->merge();
 				}
 			}
+			
+			if (@is_array($selectedStudent_value['suggestions']))
+			{
+				$selectedSuggestions=$selectedStudent_value['suggestions'];
+			
+				foreach($selectedSuggestions as $selectedSuggestion)
+				{
+					$letters->suggestions->suggestionContent($selectedSuggestion);
+					$letters->suggestions->merge();
+				
+				}
+			}
 
-			$pagebreak=($letterNumber<sizeof($students))?'<pagebreak>':'';
+			$pagebreak=($letterNumber<$studentsNumber)?'<pagebreak>':'';
 			$letters->pagebreak($pagebreak);
 
 			$letters->merge();
-			unset($selectedModules);
 			
 		}
+		
 		
 		$odfdoc->mergeSegment($letters);
 		
-//		$modules=$odfdoc->setSegment('modules');
-		
-//		$moduleNumber=0;
-/*		
-		foreach($wpmodules as $wpmodule)
-		{
-			$modules->moduleTitle($wpmodule->getTitle());
-			$modules->moduleNumber(++$moduleNumber);
-			$modules->modulePeriod($wpmodule->getPeriod());
-			
-			foreach($wpmodule->getWpitemGroups() as $wpitemgroup)
-			{
-				$wpitems=$wpitemgroup->getWpmoduleItems();
-				if (($wpitemgroup->getWpitemType()->getState()<=$this->getState())&&(sizeof($wpitems)>0))
-				{
-					$modules->group->groupTitle($wpitemgroup->getWpitemType()->getTitle());
-					
-					foreach($wpitems as $wpitem)
-					{
-						$modules->group->item->itemContent($wpitem->getContent());
-						$modules->group->item->merge();
-					}
-					$modules->group->merge();
-				}
-			}
-			
-			$pagebreak=($moduleNumber<sizeof($wpmodules))?'<pagebreak>':'';
-			$modules->pagebreak($pagebreak);
-
-			$modules->merge();
-		}
-		
-		$odfdoc->mergeSegment($modules);
-
-
-		$tools=$this->getTools(true);
-
-		$toolgroups=$odfdoc->setSegment('toolgroups');
-	
-		if(sizeof($tools)>0)
-			foreach($tools as $toolGroup)
-				if (@sizeof($toolGroup['elements'])>0)
-					{
-					$toolgroups->toolgroupTitle($toolGroup['description']);
-					foreach($toolGroup['elements'] as $element)
-						{
-							$toolgroups->tool->toolContent($element['description']);
-							$toolgroups->tool->merge();
-						}
-					$toolgroups->merge();
-					}
-		$odfdoc->mergeSegment($toolgroups);
-*/		
-$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
-
-
 	return $odf;
 	}
 

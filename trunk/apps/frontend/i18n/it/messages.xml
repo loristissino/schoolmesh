@@ -1362,7 +1362,22 @@
         <source>Prepare letters</source>
         <target>Prepara le lettere</target>
       </trans-unit>
+      <trans-unit id="367">
+        <source>You must select at least one student.</source>
+        <target>Devi selezionare almeno uno studente.</target>
+      </trans-unit>
+      <trans-unit id="368">
+        <source>You must select an action.</source>
+        <target>Devi selezionare un'azione.</target>
+      </trans-unit>
+      <trans-unit id="369">
+        <source>Fill recuperation grid</source>
+        <target>Compila griglia per il recupero</target>
+      </trans-unit>
+      <trans-unit id="370">
+        <source>Get recuperation letters</source>
+        <target>Scarica lettere per il recupero</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
-
