@@ -72,7 +72,7 @@
 <?php echo options_for_select(array(
   '' => __('Choose an action'),
   'fill_recuperation_grid' => __('Fill recuperation grid'),
-  'prepare_recuperation_letters' => __('Prepare recuperation letters'),
+  'get_recuperation_letters' => __('Get recuperation letters'),
 ), 0) ?>
   </select>
 

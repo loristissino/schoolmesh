@@ -40,8 +40,8 @@ public function executeBatch(sfWebRequest $request)
 	{
 		case ('fill_recuperation_grid'):
 			$this->forward('schoolclasses', 'fillRecuperationGrid');
-		case ('prepare_recuperation_letters'):
-			$this->forward('schoolclasses', 'prepareRecuperationLetters');
+		case ('get_recuperation_letters'):
+			$this->forward('schoolclasses', 'getRecuperationLetters');
 		default:
 			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select an action.'));
 			$this->forward('schoolclasses', 'redirect');
@@ -80,7 +80,7 @@ public function executeFillRecuperationGrid(sfWebRequest $request)
 
 }
 
-public function executePrepareRecuperationLetters(sfWebRequest $request)
+public function executeGetRecuperationLetters(sfWebRequest $request)
 {
 	$this->term_id=sfConfig::get('app_config_current_term');
 	$this->forward404Unless($this->term=TermPeer::retrieveByPK($this->term_id));
@@ -93,7 +93,7 @@ public function executePrepareRecuperationLetters(sfWebRequest $request)
 	
 	if (sizeof($this->students)==0)
 		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least a student.'));
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least one student.'));
 			$this->forward('schoolclasses', 'redirect');
 		}
 
@@ -106,7 +106,7 @@ public function executePrepareRecuperationLetters(sfWebRequest $request)
 		}
 	catch (Exception $e)
 		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.') . $e->getMessage());
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.') . ' '. $e->getMessage());
 			$this->forward('schoolclasses', 'redirect');
 		}
 		
