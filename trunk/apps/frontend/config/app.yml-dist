@@ -9,6 +9,7 @@ all:
     
   config:
     current_year:   2009 # only the first of the two years of a scholastic/academic year
+    current_term:   Term1
     culture: it
     base_url: 'http://www.schoolmesh.mattiussilab.localhost'
     users_max_per_page: 100

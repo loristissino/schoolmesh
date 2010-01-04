@@ -1,3 +1,19 @@
+# Revision 389:
+
+Added some tables.
+
+INSERT INTO `suggestion` (`shortcut`, `content`, `rank`) VALUES
+('individ', 'Studio individuale', 1),
+('itinere', 'Recupero in itinere', 2),
+('sportello', 'Recupero in itinere', 3),
+('corso', 'Corso di recupero', 4);
+
+INSERT INTO `term` (`id`, `description`, `end_day`, `has_formal_evaluation`) VALUES
+('Term1', 'Primo quadrimestre', 120, 1),
+('Term2', 'Secondo quadrimestre', 285, 1),
+('Term2a', 'Secondo quadrimestre, valutazi', 195, 0);
+
+
 # From revision 366 to revision 367:
 
 Added sfOdfPlugin, we should need to change settings.yml
