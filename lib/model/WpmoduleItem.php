@@ -142,7 +142,20 @@ class WpmoduleItem extends BaseWpmoduleItem
 		return StudentSituationPeer::doSelect($c);
 		
 	}
+	
+		public function getStudentSituation($id, $term_id)
+	{
+		
+		$c = new Criteria();
+		$c->add(StudentSituationPeer::WPMODULE_ITEM_ID, $this->getId());
+		$c->add(StudentSituationPeer::TERM_ID, $term_id);
 
+		$c->add(StudentSituationPeer::USER_ID, $id);
+
+		return (StudentSituationPeer::doCount($c)==1);
+		
+	}
+	
 	public function getStudentsSituationsAsArray($ids, $term_id)
 	{
 		

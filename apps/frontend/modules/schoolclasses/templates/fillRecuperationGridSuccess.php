@@ -96,14 +96,3 @@
 
 </table>
 
-
-
-<hr>
-<h2><?php echo __('Actions') ?></h2>
-<ul class="sf_admin_actions">
-    <li class="sf_admin_action_openoffice">
-		<?php echo link_to(
-			__('Prepare letters'), 
-			url_for('schoolclasses/letters?appointment=' . $appointment->getId() .'&doctype=odt')
-			)?></li>
-</ul>

@@ -1030,24 +1030,42 @@ public function getWorkflowLogs()
 		return $odf;
 	}
 	
-	public function getLettersOdf($doctype, sfContext $sfContext=null, $template='')
+	public function getRecuperationLettersOdf($ids, $doctype, sfContext $sfContext=null, $template='')
 	{
+		
+		if (!$term=TermPeer::retrieveByPK(sfConfig::get('app_config_current_term')))
+		{
+			throw new Exception('term not defined');
+		}
+		
+		ob_start();
+
+echo "RECUPERATION LETTER\n";
+echo "term: " . $term->getId(). "\n";
+echo "ids:\n";
+print_r($ids);
+echo "appointment: " . $this->getId(). "\n";
+
+
 				
 		if ($template=='')
 		{
-			$template='recovery.odt';
+			$template='recuperation.odt';
 		}
 		
 		$teachertitle=$this->getSfGuardUser()->getProfile()->getIsMale()?'Mr. ':'Ms. ';
+		$doctitle='Recuperation suggestions';
 
 		if ($sfContext)
 		{
 			$teachertitle=$sfContext->getI18n()->__($teachertitle);
+			$doctitle=$sfContext->getI18n()->__($doctitle);
+
 		}
 	
 		try
 		{
-			$odf=new OdfDoc($template, $this->__toString(). '.' . $doctype, $doctype);
+			$odf=new OdfDoc($template, $doctitle . '.' . $doctype, $doctype);
 		}
 		catch (Exception $e)
 		{
@@ -1056,40 +1074,86 @@ public function getWorkflowLogs()
 		
 		$odfdoc=$odf->getOdfDocument();
 		
-		$odfdoc->setVars('year',  $this->getYear()->__toString());
-		$odfdoc->setVars('teacher',  $teachertitle . $this->getSfGuardUser()->getProfile()->getFullName());
-		$odfdoc->setVars('subject', $this->getSubject()->getDescription());
-		$odfdoc->setVars('year',  $this->getYear()->__toString());
-		$odfdoc->setVars('schoolclass',  $this->getSchoolclassId());
+		$wpmodules=$this->getWpmodules();
+
+		$students=sfGuardUserProfilePeer::retrieveByPKs($ids);
 		
+		$letters=$odfdoc->setSegment('letters');
 		
-		$wpinfos=$this->getWpinfos();
+		$letterNumber=0;
 		
-		$infos=$odfdoc->setSegment('infos');
-		foreach($wpinfos as $wpinfo)
+		foreach($students as $student)
 		{
-			if (
-				$wpinfo->getWpinfoType()->getState()<=$this->getState()
-				&&
-				$wpinfo->getContent()
-				)
+			$selectedModules=array();
+			
+			$letterNumber++;
+			$letters->addresseeStudent($student->getFullName());
+			echo "Student: " .$student->getFullName() . "\n";
+			$letters->teacher($teachertitle. $this->getSfGuardUser()->getProfile()->getFullName());
+			$letters->subject($this->getSubject()->getDescription());
+			$letters->schoolclass($this->getSchoolclass()->getShortcut());
+			$letters->term($term->getDescription());
+			
+			foreach ($wpmodules as $wpmodule)
 			{
-				$infos->infoTitle($wpinfo->getWpinfoType()->getTitle());
-				$infos->infoDescription($wpinfo->getWpinfoType()->getDescription());
-				$infos->infoContent($wpinfo->getContent());
-				$infos->merge();
+				foreach($wpmodule->getWpitemGroups() as $wpitemgroup)
+					{
+						foreach($wpitemgroup->getWpmoduleItems() as $wpitem)
+							{
+								if ($wpitem->getStudentSituation($student->getId(), $term->getId()))
+								{
+									echo "wpitem: " . $wpitem->getContent() . "\n";
+									$selectedModules[$wpmodule->getTitle()][$wpitemgroup->getWpitemType()->getTitle()][]=$wpitem->getContent();
+								}
+								
+							}
+						
+					}
+				
+				
 			}
+			
+			print_r($selectedModules);
+			
+			foreach($selectedModules as $selectedModule_key=>$selectedModule)
+			{
+				$todo=false;
+				$letters->modules->moduleTitle($selectedModule_key);
+				foreach($selectedModule as $selectedGroup_key=>$selectedGroup)
+				{
+					$letters->modules->group->groupTitle($selectedGroup_key);
+					foreach($selectedGroup as $selectedItem)
+					{
+						$letters->modules->group->item->itemContent($selectedItem);
+						$letters->modules->group->item->merge();
+						$todo=true;
+						echo "ODF -> Aggiungo un elemento... $selectedItem\n";
+					}
+					if ($todo)
+					{
+						$letters->modules->group->merge();
+					}
+				}
+				if ($todo)
+				{
+					$letters->modules->merge();
+				}
+			}
+
+			$pagebreak=($letterNumber<sizeof($students))?'<pagebreak>':'';
+			$letters->pagebreak($pagebreak);
+
+			$letters->merge();
+			unset($selectedModules);
+			
 		}
 		
-		$odfdoc->mergeSegment($infos);
+		$odfdoc->mergeSegment($letters);
 		
+//		$modules=$odfdoc->setSegment('modules');
 		
-		$wpmodules=$this->getWpmodules();
-		
-		$modules=$odfdoc->setSegment('modules');
-		
-		$moduleNumber=0;
-		
+//		$moduleNumber=0;
+/*		
 		foreach($wpmodules as $wpmodule)
 		{
 			$modules->moduleTitle($wpmodule->getTitle());
@@ -1138,8 +1202,11 @@ public function getWorkflowLogs()
 					$toolgroups->merge();
 					}
 		$odfdoc->mergeSegment($toolgroups);
-		
-		return $odf;
+*/		
+$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
+
+
+	return $odf;
 	}
 
 public function getWpevents($criteria = null, PropelPDO $con = null)

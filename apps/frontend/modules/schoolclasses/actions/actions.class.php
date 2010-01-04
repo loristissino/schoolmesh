@@ -32,38 +32,99 @@ class schoolclassesActions extends sfActions
   }
 
 
-public function executeGrid(sfWebRequest $request)
+public function executeBatch(sfWebRequest $request)
 {
 	$action=$request->getParameter('batch_action');
-	$this->forward404Unless($this->schoolclass_id = $request->getParameter('id'));
 	
-	$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
-	
+	switch ($action)
+	{
+		case ('fill_recuperation_grid'):
+			$this->forward('schoolclasses', 'fillRecuperationGrid');
+		case ('prepare_recuperation_letters'):
+			$this->forward('schoolclasses', 'prepareRecuperationLetters');
+		default:
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select an action.'));
+			$this->forward('schoolclasses', 'redirect');
+	}
+
+}
+
+
+	public function executeRedirect(sfWebRequest $request)
+	{
+		$this->forward404Unless($this->schoolclass_id = $request->getParameter('id'));
+		$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
+		$redirectURL='schoolclasses/view?id=' . $this->schoolclass_id . '&appointment=' . $this->appointment->getId();
+		$this->redirect($redirectURL);
+	}
+
+public function executeFillRecuperationGrid(sfWebRequest $request)
+{
 	$this->term_id=sfConfig::get('app_config_current_term');
-	$this->term=TermPeer::retrieveByPK($this->term_id);
+	$this->forward404Unless($this->term=TermPeer::retrieveByPK($this->term_id));
 
-	$redirectURL='schoolclasses/view?id=' . $this->schoolclass_id . '&appointment=' . $this->appointment->getId();
-
-	if ($action=='')
-		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must specify an action.'));
-			
-			$this->redirect($redirectURL);
-		}
+	$this->suggestions=SuggestionPeer::retrieveAllByRank();
+	
+	$this->forward404Unless($this->schoolclass_id = $request->getParameter('id'));
+	$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
 
     $ids = $request->getParameter('ids');
     $this->students = sfGuardUserPeer::retrieveByPks($ids);
 	$this->ids=base64_encode(serialize($ids));
-
-	$this->suggestions=SuggestionPeer::retrieveAllByRank();
 	
 	if (sizeof($this->students)==0)
 		{
 			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least a student.'));
-			$this->redirect($redirectURL);
+			$this->forward('schoolclasses', 'redirect');
 		}
 
 }
+
+public function executePrepareRecuperationLetters(sfWebRequest $request)
+{
+	$this->term_id=sfConfig::get('app_config_current_term');
+	$this->forward404Unless($this->term=TermPeer::retrieveByPK($this->term_id));
+	
+	$this->forward404Unless($this->schoolclass_id = $request->getParameter('id'));
+	$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
+
+    $ids = $request->getParameter('ids');
+    $this->students = sfGuardUserPeer::retrieveByPks($ids);
+	
+	if (sizeof($this->students)==0)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least a student.'));
+			$this->forward('schoolclasses', 'redirect');
+		}
+
+	$this->doctype=$request->getParameter('doctype', 'odt');
+	$this->forward404Unless(in_array($this->doctype, array('odt', 'doc', 'pdf', 'rtf')));
+		
+	try 
+		{
+			$odfdoc=$this->appointment->getRecuperationLettersOdf($ids, $this->doctype, $this->getContext(), $request->getParameter('template', ''));
+		}
+	catch (Exception $e)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.') . $e->getMessage());
+			$this->forward('schoolclasses', 'redirect');
+		}
+		
+	try
+		{
+			$odfdoc
+			->saveFile()
+			->setResponse($this->getContext()->getResponse());
+			return sfView::NONE;
+		}
+		catch (Exception $e)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Conversion failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the contents.'));
+			$this->forward('schoolclasses', 'redirect');
+		}
+	
+}
+
 
 	public function executeTickit(sfWebRequest $request)
 	{
@@ -131,41 +192,5 @@ public function executeSuggestion(sfWebRequest $request)
 	
 }
 
-
-public function executeLetters(sfWebRequest $request)
-	{
-		$this->appointment = AppointmentPeer::retrieveByPk($request->getParameter('appointment'));
-		$this->forward404Unless($this->appointment);
-
-		$this->doctype=$request->getParameter('doctype');
-		$this->forward404Unless(in_array($this->doctype, array('odt', 'doc', 'pdf', 'rtf')));
-		
-		try 
-		{
-			$odfdoc=$this->appointment->getLettersOdf($this->doctype, $this->getContext(), $request->getParameter('template', ''));
-		}
-		catch (Exception $e)
-		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.') . $e->getMessage());
-			$this->redirect('schoolclasses');
-		}
-		
-		try
-		{
-			$odfdoc
-			->saveFile()
-			->setResponse($this->getContext()->getResponse());
-			return sfView::NONE;
-		}
-		catch (Exception $e)
-		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Conversion failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the contents.'));
-			$this->redirect('schoolclasses');
-		}
-		
-	
-	
-	
-}
 
 }

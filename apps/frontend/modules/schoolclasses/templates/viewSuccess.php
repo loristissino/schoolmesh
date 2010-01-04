@@ -16,7 +16,7 @@
 
 <?php if(isset($appointment)): ?>
 	<p><?php echo $appointment->getSubject()->getDescription() ?>
-	<form action="<?php echo url_for('schoolclasses/grid?id=' . $schoolclass_id . '&appointment=' . $appointment->getId()) ?>" method="get">
+	<form action="<?php echo url_for('schoolclasses/batch?id=' . $schoolclass_id . '&appointment=' . $appointment->getId()) ?>" method="get">
 <?php endif ?>
 
 <?php if ($sf_user->hasFlash('notice')): ?>
@@ -71,7 +71,8 @@
 
 <?php echo options_for_select(array(
   '' => __('Choose an action'),
-  'preparegrid' => __('Prepare grid'),
+  'fill_recuperation_grid' => __('Fill recuperation grid'),
+  'prepare_recuperation_letters' => __('Prepare recuperation letters'),
 ), 0) ?>
   </select>
 
