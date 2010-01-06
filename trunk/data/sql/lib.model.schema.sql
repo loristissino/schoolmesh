@@ -760,6 +760,89 @@ CREATE TABLE `student_suggestion`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- schoolproject
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `schoolproject`;
+
+
+CREATE TABLE `schoolproject`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`proj_category_id` INTEGER,
+	`year_id` INTEGER  NOT NULL,
+	`user_id` INTEGER  NOT NULL,
+	`title` VARCHAR(255),
+	`description` VARCHAR(255),
+	`notes` TEXT,
+	`hours_approved` INTEGER,
+	PRIMARY KEY (`id`),
+	INDEX `schoolproject_FI_1` (`proj_category_id`),
+	CONSTRAINT `schoolproject_FK_1`
+		FOREIGN KEY (`proj_category_id`)
+		REFERENCES `proj_category` (`id`),
+	INDEX `schoolproject_FI_2` (`year_id`),
+	CONSTRAINT `schoolproject_FK_2`
+		FOREIGN KEY (`year_id`)
+		REFERENCES `year` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `schoolproject_FI_3` (`user_id`),
+	CONSTRAINT `schoolproject_FK_3`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- proj_category
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `proj_category`;
+
+
+CREATE TABLE `proj_category`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`title` VARCHAR(255),
+	`rank` INTEGER  NOT NULL,
+	PRIMARY KEY (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- proj_deadline
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `proj_deadline`;
+
+
+CREATE TABLE `proj_deadline`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`schoolproject_id` INTEGER,
+	`user_id` INTEGER  NOT NULL,
+	`original_deadline_date` DATE,
+	`current_deadline_date` DATE,
+	`description` VARCHAR(255),
+	`notes` TEXT,
+	`completed` TINYINT,
+	`created_at` DATETIME,
+	`updated_at` DATETIME,
+	PRIMARY KEY (`id`),
+	INDEX `proj_deadline_FI_1` (`schoolproject_id`),
+	CONSTRAINT `proj_deadline_FK_1`
+		FOREIGN KEY (`schoolproject_id`)
+		REFERENCES `schoolproject` (`id`),
+	INDEX `proj_deadline_FI_2` (`user_id`),
+	CONSTRAINT `proj_deadline_FK_2`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- subnet
 #-----------------------------------------------------------------------------
 

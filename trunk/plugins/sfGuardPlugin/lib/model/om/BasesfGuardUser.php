@@ -211,6 +211,26 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	private $lastStudentSuggestionCriteria = null;
 
 	/**
+	 * @var        array Schoolproject[] Collection to store aggregation of Schoolproject objects.
+	 */
+	protected $collSchoolprojects;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collSchoolprojects.
+	 */
+	private $lastSchoolprojectCriteria = null;
+
+	/**
+	 * @var        array ProjDeadline[] Collection to store aggregation of ProjDeadline objects.
+	 */
+	protected $collProjDeadlines;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collProjDeadlines.
+	 */
+	private $lastProjDeadlineCriteria = null;
+
+	/**
 	 * @var        array Lanlog[] Collection to store aggregation of Lanlog objects.
 	 */
 	protected $collLanlogs;
@@ -810,6 +830,12 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$this->collStudentSuggestions = null;
 			$this->lastStudentSuggestionCriteria = null;
 
+			$this->collSchoolprojects = null;
+			$this->lastSchoolprojectCriteria = null;
+
+			$this->collProjDeadlines = null;
+			$this->lastProjDeadlineCriteria = null;
+
 			$this->collLanlogs = null;
 			$this->lastLanlogCriteria = null;
 
@@ -1057,6 +1083,22 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collSchoolprojects !== null) {
+				foreach ($this->collSchoolprojects as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collProjDeadlines !== null) {
+				foreach ($this->collProjDeadlines as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collLanlogs !== null) {
 				foreach ($this->collLanlogs as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -1240,6 +1282,22 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 				if ($this->collStudentSuggestions !== null) {
 					foreach ($this->collStudentSuggestions as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collSchoolprojects !== null) {
+					foreach ($this->collSchoolprojects as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collProjDeadlines !== null) {
+					foreach ($this->collProjDeadlines as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1611,6 +1669,18 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			foreach ($this->getStudentSuggestions() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addStudentSuggestion($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getSchoolprojects() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addSchoolproject($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getProjDeadlines() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addProjDeadline($relObj->copy($deepCopy));
 				}
 			}
 
@@ -4599,6 +4669,455 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collSchoolprojects collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addSchoolprojects()
+	 */
+	public function clearSchoolprojects()
+	{
+		$this->collSchoolprojects = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collSchoolprojects collection (array).
+	 *
+	 * By default this just sets the collSchoolprojects collection to an empty array (like clearcollSchoolprojects());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initSchoolprojects()
+	{
+		$this->collSchoolprojects = array();
+	}
+
+	/**
+	 * Gets an array of Schoolproject objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related Schoolprojects from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array Schoolproject[]
+	 * @throws     PropelException
+	 */
+	public function getSchoolprojects($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSchoolprojects === null) {
+			if ($this->isNew()) {
+			   $this->collSchoolprojects = array();
+			} else {
+
+				$criteria->add(SchoolprojectPeer::USER_ID, $this->id);
+
+				SchoolprojectPeer::addSelectColumns($criteria);
+				$this->collSchoolprojects = SchoolprojectPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(SchoolprojectPeer::USER_ID, $this->id);
+
+				SchoolprojectPeer::addSelectColumns($criteria);
+				if (!isset($this->lastSchoolprojectCriteria) || !$this->lastSchoolprojectCriteria->equals($criteria)) {
+					$this->collSchoolprojects = SchoolprojectPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastSchoolprojectCriteria = $criteria;
+		return $this->collSchoolprojects;
+	}
+
+	/**
+	 * Returns the number of related Schoolproject objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Schoolproject objects.
+	 * @throws     PropelException
+	 */
+	public function countSchoolprojects(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collSchoolprojects === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(SchoolprojectPeer::USER_ID, $this->id);
+
+				$count = SchoolprojectPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(SchoolprojectPeer::USER_ID, $this->id);
+
+				if (!isset($this->lastSchoolprojectCriteria) || !$this->lastSchoolprojectCriteria->equals($criteria)) {
+					$count = SchoolprojectPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collSchoolprojects);
+				}
+			} else {
+				$count = count($this->collSchoolprojects);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a Schoolproject object to this object
+	 * through the Schoolproject foreign key attribute.
+	 *
+	 * @param      Schoolproject $l Schoolproject
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addSchoolproject(Schoolproject $l)
+	{
+		if ($this->collSchoolprojects === null) {
+			$this->initSchoolprojects();
+		}
+		if (!in_array($l, $this->collSchoolprojects, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collSchoolprojects, $l);
+			$l->setsfGuardUser($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related Schoolprojects from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getSchoolprojectsJoinProjCategory($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSchoolprojects === null) {
+			if ($this->isNew()) {
+				$this->collSchoolprojects = array();
+			} else {
+
+				$criteria->add(SchoolprojectPeer::USER_ID, $this->id);
+
+				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinProjCategory($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(SchoolprojectPeer::USER_ID, $this->id);
+
+			if (!isset($this->lastSchoolprojectCriteria) || !$this->lastSchoolprojectCriteria->equals($criteria)) {
+				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinProjCategory($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastSchoolprojectCriteria = $criteria;
+
+		return $this->collSchoolprojects;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related Schoolprojects from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getSchoolprojectsJoinYear($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collSchoolprojects === null) {
+			if ($this->isNew()) {
+				$this->collSchoolprojects = array();
+			} else {
+
+				$criteria->add(SchoolprojectPeer::USER_ID, $this->id);
+
+				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinYear($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(SchoolprojectPeer::USER_ID, $this->id);
+
+			if (!isset($this->lastSchoolprojectCriteria) || !$this->lastSchoolprojectCriteria->equals($criteria)) {
+				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinYear($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastSchoolprojectCriteria = $criteria;
+
+		return $this->collSchoolprojects;
+	}
+
+	/**
+	 * Clears out the collProjDeadlines collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addProjDeadlines()
+	 */
+	public function clearProjDeadlines()
+	{
+		$this->collProjDeadlines = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collProjDeadlines collection (array).
+	 *
+	 * By default this just sets the collProjDeadlines collection to an empty array (like clearcollProjDeadlines());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initProjDeadlines()
+	{
+		$this->collProjDeadlines = array();
+	}
+
+	/**
+	 * Gets an array of ProjDeadline objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related ProjDeadlines from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array ProjDeadline[]
+	 * @throws     PropelException
+	 */
+	public function getProjDeadlines($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collProjDeadlines === null) {
+			if ($this->isNew()) {
+			   $this->collProjDeadlines = array();
+			} else {
+
+				$criteria->add(ProjDeadlinePeer::USER_ID, $this->id);
+
+				ProjDeadlinePeer::addSelectColumns($criteria);
+				$this->collProjDeadlines = ProjDeadlinePeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(ProjDeadlinePeer::USER_ID, $this->id);
+
+				ProjDeadlinePeer::addSelectColumns($criteria);
+				if (!isset($this->lastProjDeadlineCriteria) || !$this->lastProjDeadlineCriteria->equals($criteria)) {
+					$this->collProjDeadlines = ProjDeadlinePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastProjDeadlineCriteria = $criteria;
+		return $this->collProjDeadlines;
+	}
+
+	/**
+	 * Returns the number of related ProjDeadline objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related ProjDeadline objects.
+	 * @throws     PropelException
+	 */
+	public function countProjDeadlines(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collProjDeadlines === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(ProjDeadlinePeer::USER_ID, $this->id);
+
+				$count = ProjDeadlinePeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(ProjDeadlinePeer::USER_ID, $this->id);
+
+				if (!isset($this->lastProjDeadlineCriteria) || !$this->lastProjDeadlineCriteria->equals($criteria)) {
+					$count = ProjDeadlinePeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collProjDeadlines);
+				}
+			} else {
+				$count = count($this->collProjDeadlines);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a ProjDeadline object to this object
+	 * through the ProjDeadline foreign key attribute.
+	 *
+	 * @param      ProjDeadline $l ProjDeadline
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addProjDeadline(ProjDeadline $l)
+	{
+		if ($this->collProjDeadlines === null) {
+			$this->initProjDeadlines();
+		}
+		if (!in_array($l, $this->collProjDeadlines, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collProjDeadlines, $l);
+			$l->setsfGuardUser($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related ProjDeadlines from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getProjDeadlinesJoinSchoolproject($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collProjDeadlines === null) {
+			if ($this->isNew()) {
+				$this->collProjDeadlines = array();
+			} else {
+
+				$criteria->add(ProjDeadlinePeer::USER_ID, $this->id);
+
+				$this->collProjDeadlines = ProjDeadlinePeer::doSelectJoinSchoolproject($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(ProjDeadlinePeer::USER_ID, $this->id);
+
+			if (!isset($this->lastProjDeadlineCriteria) || !$this->lastProjDeadlineCriteria->equals($criteria)) {
+				$this->collProjDeadlines = ProjDeadlinePeer::doSelectJoinSchoolproject($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastProjDeadlineCriteria = $criteria;
+
+		return $this->collProjDeadlines;
+	}
+
+	/**
 	 * Clears out the collLanlogs collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
@@ -4879,6 +5398,16 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collSchoolprojects) {
+				foreach ((array) $this->collSchoolprojects as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
+			if ($this->collProjDeadlines) {
+				foreach ((array) $this->collProjDeadlines as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->collLanlogs) {
 				foreach ((array) $this->collLanlogs as $o) {
 					$o->clearAllReferences($deep);
@@ -4900,6 +5429,8 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->collWpmodules = null;
 		$this->collStudentSituations = null;
 		$this->collStudentSuggestions = null;
+		$this->collSchoolprojects = null;
+		$this->collProjDeadlines = null;
 		$this->collLanlogs = null;
 	}
 

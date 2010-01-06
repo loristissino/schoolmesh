@@ -43,6 +43,7 @@ sf_guard_user
 sf_guard_permission
 subnet
 account_type
+proj_category
 
 role
 account
@@ -80,6 +81,8 @@ wptool_item_type
 wpmodule_item
 student_situation
 student_suggestion
+schoolproject
+proj_deadline
 "
 
 TEMPFILE0=$(mktemp)

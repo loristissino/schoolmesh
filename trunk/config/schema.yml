@@ -273,6 +273,33 @@ propel:
     _uniques:
       taus:     [term_id, appointment_id, user_id, suggestion_id]
 
+  schoolproject:
+    id: ~
+    proj_category_id: ~
+    year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    title:        varchar(255)
+    description:       varchar(255)
+    notes:       longvarchar
+    hours_approved: integer
+
+  proj_category:
+    id: ~
+    title: varchar(255)
+    rank: { type: integer, required: true }
+
+  proj_deadline:
+    id:  ~
+    schoolproject_id:  ~
+    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    original_deadline_date: date
+    current_deadline_date: date
+    description: varchar(255)
+    notes:   longvarchar
+    completed: boolean
+    created_at: ~
+    updated_at: ~
+
   subnet:
     id:
     name:   { type: varchar(40), index: true, unique: true }
