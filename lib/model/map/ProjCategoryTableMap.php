@@ -2,7 +2,7 @@
 
 
 /**
- * This class defines the structure of the 'year' table.
+ * This class defines the structure of the 'proj_category' table.
  *
  *
  *
@@ -13,12 +13,12 @@
  *
  * @package    lib.model.map
  */
-class YearTableMap extends TableMap {
+class ProjCategoryTableMap extends TableMap {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.YearTableMap';
+	const CLASS_NAME = 'lib.model.map.ProjCategoryTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators
@@ -30,16 +30,15 @@ class YearTableMap extends TableMap {
 	public function initialize()
 	{
 	  // attributes
-		$this->setName('year');
-		$this->setPhpName('Year');
-		$this->setClassname('Year');
+		$this->setName('proj_category');
+		$this->setPhpName('ProjCategory');
+		$this->setClassname('ProjCategory');
 		$this->setPackage('lib.model');
-		$this->setUseIdGenerator(false);
+		$this->setUseIdGenerator(true);
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
-		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 7, null);
-		$this->addColumn('START_DATE', 'StartDate', 'DATE', false, null, null);
-		$this->addColumn('END_DATE', 'EndDate', 'DATE', false, null, null);
+		$this->addColumn('TITLE', 'Title', 'VARCHAR', false, 255, null);
+		$this->addColumn('RANK', 'Rank', 'INTEGER', true, null, null);
 		// validators
 	} // initialize()
 
@@ -48,9 +47,7 @@ class YearTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Appointment', 'Appointment', RelationMap::ONE_TO_MANY, array('id' => 'year_id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('Enrolment', 'Enrolment', RelationMap::ONE_TO_MANY, array('id' => 'year_id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('Schoolproject', 'Schoolproject', RelationMap::ONE_TO_MANY, array('id' => 'year_id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('Schoolproject', 'Schoolproject', RelationMap::ONE_TO_MANY, array('id' => 'proj_category_id', ), null, null);
 	} // buildRelations()
 
 	/**
@@ -66,4 +63,4 @@ class YearTableMap extends TableMap {
 		);
 	} // getBehaviors()
 
-} // YearTableMap
+} // ProjCategoryTableMap
