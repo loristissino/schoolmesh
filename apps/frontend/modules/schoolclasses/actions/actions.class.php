@@ -60,12 +60,14 @@ public function executeBatch(sfWebRequest $request)
 
 public function executeFillRecuperationGrid(sfWebRequest $request)
 {
+	
 	$this->term_id=sfConfig::get('app_config_current_term');
 	$this->forward404Unless($this->term=TermPeer::retrieveByPK($this->term_id));
 
 	$this->suggestions=SuggestionPeer::retrieveAllByRank();
 	
 	$this->forward404Unless($this->schoolclass_id = $request->getParameter('id'));
+	
 	$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
 
     $ids = $request->getParameter('ids');
