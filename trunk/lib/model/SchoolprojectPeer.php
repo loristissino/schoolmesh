@@ -16,6 +16,16 @@ require 'lib/model/om/BaseSchoolprojectPeer.php';
  */
 class SchoolprojectPeer extends BaseSchoolprojectPeer {
 
+
+    public static function retrieveAllForYear($year)
+	{
+		$c=new Criteria();
+		$c->add(self::YEAR_ID, $year);
+		$c->addJoin(self::USER_ID, sfGuardUserPeer::ID);
+		return self::doSelectJoinAll($c);
+		
+	}
+
 	public static function retrieveByTitleAndYear($title, $yearId)
 	{
 		$c=new Criteria();

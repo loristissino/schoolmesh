@@ -1,3 +1,7 @@
+# Revision 391:
+
+Added tables about projects
+
 # Revision 389:
 
 Added some tables.
@@ -5,7 +9,7 @@ Added some tables.
 INSERT INTO `suggestion` (`shortcut`, `content`, `rank`) VALUES
 ('individ', 'Studio individuale', 1),
 ('itinere', 'Recupero in itinere', 2),
-('sportello', 'Recupero in itinere', 3),
+('sportello', 'Sportello', 3),
 ('corso', 'Corso di recupero', 4);
 
 INSERT INTO `term` (`id`, `description`, `end_day`, `has_formal_evaluation`) VALUES
