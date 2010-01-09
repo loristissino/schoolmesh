@@ -91,12 +91,12 @@
   background: url(../images/yaml.png) no-repeat 0 0;
 }
 
-#sf_admin_container ul li.sf_admin_action_word a
+#sf_admin_container ul li.sf_admin_action_doc a
 {
   background: url(../images/word.png) no-repeat 0 0;
 }
 
-#sf_admin_container ul li.sf_admin_action_openoffice a
+#sf_admin_container ul li.sf_admin_action_odt a
 {
   background: url(../images/openoffice.png) no-repeat 0 0;
 }

@@ -1,5 +1,5 @@
 <?php use_helper('Javascript') ?>
-<?php $sits=$wpmodule_item->getStudentsSituationsAsArray(unserialize(base64_decode($ids)), $term_id)->getRawValue() ?>
+<?php $sits=$wpmodule_item->getStudentsSituationsAsArray(Generic::b64_unserialize($ids), $term_id)->getRawValue() ?>
 <td width="10">&nbsp;</td>
 <td><?php echo html_entity_decode($wpmodule_item->getContent()) ?></td>
 
