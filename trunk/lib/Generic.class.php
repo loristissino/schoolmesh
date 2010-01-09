@@ -238,5 +238,25 @@ if ($return_var!=0)
 			return $info;
 		}
 		
-	
+		
+		
+	public static function b64_serialize($var)
+	{
+		return str_replace('/', '_', base64_encode(serialize($var)));
 	}
+		
+	public static function b64_unserialize($var)
+	{
+		
+		ob_start();
+
+echo "unserializing...$var\n";
+
+
+		$text=base64_decode(str_replace('_', '/', $var));
+		echo "getting... $text";
+$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
+		return unserialize(base64_decode(str_replace('_', '/', $var)));
+	}
+	
+}

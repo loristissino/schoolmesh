@@ -72,7 +72,7 @@ public function executeFillRecuperationGrid(sfWebRequest $request)
 
     $ids = $request->getParameter('ids');
     $this->students = sfGuardUserPeer::retrieveByPks($ids);
-	$this->ids=base64_encode(serialize($ids));
+	$this->ids=Generic::b64_serialize($ids);
 	
 	if (sizeof($this->students)==0)
 		{
@@ -90,8 +90,22 @@ public function executeGetRecuperationLetters(sfWebRequest $request)
 	$this->forward404Unless($this->schoolclass_id = $request->getParameter('id'));
 	$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
 
-    $ids = $request->getParameter('ids');
-    $this->students = sfGuardUserPeer::retrieveByPks($ids);
+
+ob_start();
+
+echo "serialized? " . $request->getParameter('serialized') . "\n";
+echo "doctype=" . $request->getParameter('doctype') . "\n";
+
+print_r($request->getParameter('ids'));
+$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
+
+    $this->ids = $request->getParameter('ids');
+	if ($request->getParameter('serialized')=='true')
+	{
+		$this->ids = Generic::b64_unserialize($this->ids);
+
+	}
+    $this->students = sfGuardUserPeer::retrieveByPks($this->ids);
 	
 	if (sizeof($this->students)==0)
 		{
@@ -99,12 +113,17 @@ public function executeGetRecuperationLetters(sfWebRequest $request)
 			$this->forward('schoolclasses', 'redirect');
 		}
 
-	$this->doctype=$request->getParameter('doctype', 'odt');
+	$this->doctype=$request->getParameter('doctype');
+	if (!in_array($this->doctype, array('odt', 'doc', 'pdf', 'rtf')))
+	{
+		return;
+		// we show the page where the user can choose the doctype
+	}
 	$this->forward404Unless(in_array($this->doctype, array('odt', 'doc', 'pdf', 'rtf')));
 		
 	try 
 		{
-			$odfdoc=$this->appointment->getRecuperationLettersOdf($ids, $this->doctype, $this->getContext(), $request->getParameter('template', ''));
+			$odfdoc=$this->appointment->getRecuperationLettersOdf($this->ids, $this->doctype, $this->getContext(), $request->getParameter('template', ''));
 		}
 	catch (Exception $e)
 		{
@@ -131,7 +150,9 @@ public function executeGetRecuperationLetters(sfWebRequest $request)
 	public function executeTickit(sfWebRequest $request)
 	{
 
-		$ids = unserialize(base64_decode($request->getParameter('ids')));
+		$ids = Generic::b64_unserialize($request->getParameter('ids'));
+		
+		
 		$this->students = sfGuardUserPeer::retrieveByPks($ids);
 		
 		$term_id=sfConfig::get('app_config_current_term');
@@ -155,14 +176,14 @@ public function executeGetRecuperationLetters(sfWebRequest $request)
 			$wpmodule_item->toggleStudent($student_id, $term_id);
 		}
 
-  	    return $this->renderPartial('wpmoduleitem', array('students'=>$this->students, 'ids'=>base64_encode(serialize($ids)), 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id));
+ 	    return $this->renderPartial('wpmoduleitem', array('students'=>$this->students, 'ids'=>Generic::b64_serialize($ids), 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id));
 
 	}
 	
 public function executeSuggestion(sfWebRequest $request)
 
 {
-		$ids = unserialize(base64_decode($request->getParameter('ids')));
+		$ids = Generic::b64_unserialize($request->getParameter('ids'));
 		$this->students = sfGuardUserPeer::retrieveByPks($ids);
 		
 		$term_id=sfConfig::get('app_config_current_term');
@@ -189,9 +210,8 @@ public function executeSuggestion(sfWebRequest $request)
 			$appointment->toggleStudentSuggestion($student_id, $term_id, $suggestion_id);
 		}
 
-  	    return $this->renderPartial('suggestion', array('suggestion'=>$suggestion, 'students'=>$this->students, 'ids'=>base64_encode(serialize($ids)), 'appointment_id'=>$appointment->getId(), 'term_id'=>$term_id));
-	
-	
+  	    return $this->renderPartial('suggestion', array('suggestion'=>$suggestion, 'students'=>$this->students, 'ids'=>Generic::b64_serialize($ids), 'appointment_id'=>$appointment->getId(), 'term_id'=>$term_id));
+		
 }
 
 
