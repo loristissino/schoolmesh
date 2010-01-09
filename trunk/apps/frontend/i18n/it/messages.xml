@@ -1383,8 +1383,8 @@
         <target>Documento PDF</target>
       </trans-unit>
 	  <trans-unit id="372">
-        <source>'Recuperation letters for «%subject%» (class %class%)</source>
-        <target>'Lettere per il recupero «%subject%» (classe %class%)</target>
+        <source>Recuperation letters for «%subject%» (class %class%)</source>
+        <target>Lettere per il recupero «%subject%» (classe %class%)</target>
       </trans-unit>
     </body>
   </file>
