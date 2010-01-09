@@ -90,15 +90,6 @@ public function executeGetRecuperationLetters(sfWebRequest $request)
 	$this->forward404Unless($this->schoolclass_id = $request->getParameter('id'));
 	$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
 
-
-ob_start();
-
-echo "serialized? " . $request->getParameter('serialized') . "\n";
-echo "doctype=" . $request->getParameter('doctype') . "\n";
-
-print_r($request->getParameter('ids'));
-$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
-
     $this->ids = $request->getParameter('ids');
 	if ($request->getParameter('serialized')=='true')
 	{
