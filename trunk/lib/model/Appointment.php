@@ -1070,6 +1070,7 @@ public function getWorkflowLogs()
 		$students=sfGuardUserProfilePeer::retrieveByPKs($ids);
 		
 		$suggestions=SuggestionPeer::retrieveAllByRank();
+		$hints=RecuperationHintPeer::retrieveAllByRankForTeacher($this->getUserId());
 		
 		$letters=$odfdoc->setSegment('letters');
 		
@@ -1104,6 +1105,14 @@ public function getWorkflowLogs()
 				}
 			}
 			
+			foreach ($hints as $hint)
+			{
+				if($hint->hasStudentHintForAppointment($student->getId(), $this->getId(), $term->getId()))
+				{
+					$selectedStudents[$student->getFullName()]['hints'][]=$hint->getContent();
+					
+				}
+			}
 			
 			
 		}
@@ -1152,6 +1161,18 @@ public function getWorkflowLogs()
 				}
 			}
 
+			if (@is_array($selectedStudent_value['hints']))
+			{
+				$selectedHints=$selectedStudent_value['hints'];
+			
+				foreach($selectedHints as $selectedHint)
+				{
+					$letters->hints->hintContent($selectedHint);
+					$letters->hints->merge();
+				
+				}
+			}
+			
 			$pagebreak=($letterNumber<$studentsNumber)?'<pagebreak>':'';
 			$letters->pagebreak($pagebreak);
 
@@ -1347,7 +1368,7 @@ public function getWpevents($criteria = null, PropelPDO $con = null)
 	}
 
 
-	public function toggleStudentSuggestion($student_id, $term_id, $suggestion_id)
+	public function toggleStudentSuggestion($student_id, $term_id, Suggestion $suggestion)
 	{
 		
 		//FIXME: Add check about the teacher doing the action...
@@ -1359,7 +1380,7 @@ public function getWpevents($criteria = null, PropelPDO $con = null)
 		$c->add(StudentSuggestionPeer::APPOINTMENT_ID, $this->getId());
 		$c->add(StudentSuggestionPeer::TERM_ID, $term_id);
 		$c->add(StudentSuggestionPeer::USER_ID, $student_id);
-		$c->add(StudentSuggestionPeer::SUGGESTION_ID, $suggestion_id);
+		$c->add(StudentSuggestionPeer::SUGGESTION_ID, $suggestion->getId());
 
 		$studentSuggestion = StudentSuggestionPeer::doSelectOne($c);
 		
@@ -1386,7 +1407,54 @@ public function getWpevents($criteria = null, PropelPDO $con = null)
 				->setTermId($term_id)
 				->setUserId($student_id)
 				->setAppointmentId($this->getId())
-				->setSuggestionId($suggestion_id)
+				->setSuggestion($suggestion)
+				->save();
+			}
+			catch (Exception $e)
+			{
+				$error=true;
+			}
+			
+		}
+
+		
+	}
+	public function toggleStudentRecuperationHint($student_id, $term_id, RecuperationHint $hint)
+	{
+		
+		//FIXME: Add check about the teacher doing the action...
+		$c = new Criteria();
+		$c->add(StudentHintPeer::APPOINTMENT_ID, $this->getId());
+		$c->add(StudenthintPeer::TERM_ID, $term_id);
+		$c->add(StudentHintPeer::USER_ID, $student_id);
+		$c->add(StudentHintPeer::RECUPERATION_HINT_ID, $hint->getId());
+
+		$studentHint = StudentHintPeer::doSelectOne($c);
+		
+		$error=false;
+		
+		if ($studentHint)
+		{
+			try
+			{
+				$studentHint->delete();
+			}
+			catch (Exception $e)
+			{
+				$error=true;
+			}
+		}
+		else
+		{
+			
+			try
+			{
+				$studentHint = new StudentHint();
+				$studentHint
+				->setTermId($term_id)
+				->setUserId($student_id)
+				->setAppointmentId($this->getId())
+				->setRecuperationHint($hint)
 				->save();
 			}
 			catch (Exception $e)

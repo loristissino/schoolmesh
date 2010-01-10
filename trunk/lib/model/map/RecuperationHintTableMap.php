@@ -2,7 +2,7 @@
 
 
 /**
- * This class defines the structure of the 'term' table.
+ * This class defines the structure of the 'recuperation_hint' table.
  *
  *
  *
@@ -13,12 +13,12 @@
  *
  * @package    lib.model.map
  */
-class TermTableMap extends TableMap {
+class RecuperationHintTableMap extends TableMap {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.TermTableMap';
+	const CLASS_NAME = 'lib.model.map.RecuperationHintTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators
@@ -30,16 +30,16 @@ class TermTableMap extends TableMap {
 	public function initialize()
 	{
 	  // attributes
-		$this->setName('term');
-		$this->setPhpName('Term');
-		$this->setClassname('Term');
+		$this->setName('recuperation_hint');
+		$this->setPhpName('RecuperationHint');
+		$this->setClassname('RecuperationHint');
 		$this->setPackage('lib.model');
-		$this->setUseIdGenerator(false);
+		$this->setUseIdGenerator(true);
 		// columns
-		$this->addPrimaryKey('ID', 'Id', 'VARCHAR', true, 10, null);
-		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', true, 30, null);
-		$this->addColumn('END_DAY', 'EndDay', 'INTEGER', true, null, null);
-		$this->addColumn('HAS_FORMAL_EVALUATION', 'HasFormalEvaluation', 'BOOLEAN', false, null, null);
+		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
+		$this->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', false, null, null);
+		$this->addColumn('CONTENT', 'Content', 'VARCHAR', true, 255, null);
+		$this->addColumn('RANK', 'Rank', 'INTEGER', false, null, null);
 		// validators
 	} // initialize()
 
@@ -48,9 +48,8 @@ class TermTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('StudentSituation', 'StudentSituation', RelationMap::ONE_TO_MANY, array('id' => 'term_id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('StudentSuggestion', 'StudentSuggestion', RelationMap::ONE_TO_MANY, array('id' => 'term_id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('StudentHint', 'StudentHint', RelationMap::ONE_TO_MANY, array('id' => 'term_id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('sfGuardUser', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), 'CASCADE', 'CASCADE');
+    $this->addRelation('StudentHint', 'StudentHint', RelationMap::ONE_TO_MANY, array('id' => 'recuperation_hint_id', ), null, null);
 	} // buildRelations()
 
 	/**
@@ -66,4 +65,4 @@ class TermTableMap extends TableMap {
 		);
 	} // getBehaviors()
 
-} // TermTableMap
+} // RecuperationHintTableMap

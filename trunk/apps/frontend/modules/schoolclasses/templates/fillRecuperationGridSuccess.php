@@ -23,22 +23,8 @@
 		<p><?php echo $wpmodule->getPeriod() ?></p>
 	</td>
 	<td></td>
-<?php foreach($students as $student): ?>
-	<td width="10"><?php echo image_tag(sfConfig::get('app_config_base_url').'/vertical.php?text='. urlencode($student->getProfile()->getFullName(20)) .
-	'&backcolor=255-255-255&textcolor=0-0-0',
-			array(
-				'alt' => $student->getProfile()->getFullName(),
-				'title' => $student->getProfile()->getFullName())
-				)
-			?></td>
-<?php endforeach ?>
-	<td width="10"><?php echo image_tag(sfConfig::get('app_config_base_url').'/vertical.php?text='. __('All selected students') . '&backcolor=0-0-0&textcolor=255-255-63', 
-			array(
-				'alt' => __('All students'),
-				'title' => __('All students'))
-				)
-			?>
-	</td>
+
+<?php include_partial('students', array('students'=>$students)) ?>
 
 </tr>
 <?php foreach($wpmodule->getWpitemGroups() as $wpitem_group): ?>
@@ -67,24 +53,9 @@
 <table width="100%">
 <tr>
 	<th colspan="2">
-		<h2><?php echo __('Suggestions') ?></h2>
+		<h2><?php echo __('Suggested modalities for recuperation') ?></h2>
 	</th>
-<?php foreach($students as $student): ?>
-	<td width="10"><?php echo image_tag(sfConfig::get('app_config_base_url').'/vertical.php?text='. urlencode($student->getProfile()->getFullName(20)) .
-	'&backcolor=255-255-255&textcolor=0-0-0',
-			array(
-				'alt' => $student->getProfile()->getFullName(),
-				'title' => $student->getProfile()->getFullName())
-				)
-			?></td>
-<?php endforeach ?>
-	<td width="10"><?php echo image_tag(sfConfig::get('app_config_base_url').'/vertical.php?text='. __('All selected students') . '&backcolor=0-0-0&textcolor=255-255-63', 
-			array(
-				'alt' => __('All students'),
-				'title' => __('All students'))
-				)
-			?>
-	</td>
+<?php include_partial('students', array('students'=>$students)) ?>
 
 </tr>
 
@@ -96,3 +67,33 @@
 
 </table>
 
+<hr>
+<a name="hints"></a>
+<?php if ($sf_user->hasFlash('notice_hints')): ?>
+  <div class="notice"><?php echo $sf_user->getFlash('notice_hints')?></div>
+<?php endif; ?>
+<table width="100%">
+<tr>
+	<th colspan="2">
+		<h2><?php echo __('Hints') ?></h2>
+	</th>
+<?php include_partial('students', array('students'=>$students)) ?>
+
+</tr>
+
+<?php foreach($hints as $hint): ?>
+<tr id="hint_<?php echo $hint->getId()?>">
+	<?php include_partial('hint', array('students'=>$students, 'appointment_id'=>$appointment->getId(),'hint'=>$hint, 'ids'=>$ids, 'term_id'=>$term_id)) ?>
+</tr>
+<?php endforeach ?>
+
+</table>
+<ul class="sf_admin_actions">
+	<li class="sf_admin_action_new">
+	<?php echo link_to(
+		__('New'),
+		url_for('schoolclasses/addhint'),
+		array('method'=>'POST', 'title'=>__('Add a new hint')) 
+	)?>
+	</li>
+</ul>

@@ -107,6 +107,28 @@ CREATE TABLE `suggestion`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- recuperation_hint
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `recuperation_hint`;
+
+
+CREATE TABLE `recuperation_hint`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER,
+	`content` VARCHAR(255)  NOT NULL,
+	`rank` INTEGER,
+	PRIMARY KEY (`id`),
+	KEY `recuperation_hint_I_1`(`user_id`),
+	CONSTRAINT `recuperation_hint_FK_1`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- sf_guard_user_profile
 #-----------------------------------------------------------------------------
 
@@ -757,6 +779,45 @@ CREATE TABLE `student_suggestion`
 	CONSTRAINT `student_suggestion_FK_4`
 		FOREIGN KEY (`suggestion_id`)
 		REFERENCES `suggestion` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- student_hint
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `student_hint`;
+
+
+CREATE TABLE `student_hint`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`term_id` VARCHAR(10)  NOT NULL,
+	`appointment_id` INTEGER  NOT NULL,
+	`user_id` INTEGER  NOT NULL,
+	`recuperation_hint_id` INTEGER,
+	PRIMARY KEY (`id`,`appointment_id`),
+	UNIQUE KEY `taur` (`term_id`, `appointment_id`, `user_id`, `recuperation_hint_id`),
+	CONSTRAINT `student_hint_FK_1`
+		FOREIGN KEY (`term_id`)
+		REFERENCES `term` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `student_hint_FI_2` (`appointment_id`),
+	CONSTRAINT `student_hint_FK_2`
+		FOREIGN KEY (`appointment_id`)
+		REFERENCES `appointment` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	INDEX `student_hint_FI_3` (`user_id`),
+	CONSTRAINT `student_hint_FK_3`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `student_hint_FI_4` (`recuperation_hint_id`),
+	CONSTRAINT `student_hint_FK_4`
+		FOREIGN KEY (`recuperation_hint_id`)
+		REFERENCES `recuperation_hint` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

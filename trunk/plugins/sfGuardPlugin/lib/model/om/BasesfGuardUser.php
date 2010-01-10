@@ -106,6 +106,16 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	private $lastsfGuardRememberKeyCriteria = null;
 
 	/**
+	 * @var        array RecuperationHint[] Collection to store aggregation of RecuperationHint objects.
+	 */
+	protected $collRecuperationHints;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collRecuperationHints.
+	 */
+	private $lastRecuperationHintCriteria = null;
+
+	/**
 	 * @var        sfGuardUserProfile one-to-one related sfGuardUserProfile object
 	 */
 	protected $singlesfGuardUserProfile;
@@ -209,6 +219,16 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	 * @var        Criteria The criteria used to select the current contents of collStudentSuggestions.
 	 */
 	private $lastStudentSuggestionCriteria = null;
+
+	/**
+	 * @var        array StudentHint[] Collection to store aggregation of StudentHint objects.
+	 */
+	protected $collStudentHints;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collStudentHints.
+	 */
+	private $lastStudentHintCriteria = null;
 
 	/**
 	 * @var        array Schoolproject[] Collection to store aggregation of Schoolproject objects.
@@ -798,6 +818,9 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$this->collsfGuardRememberKeys = null;
 			$this->lastsfGuardRememberKeyCriteria = null;
 
+			$this->collRecuperationHints = null;
+			$this->lastRecuperationHintCriteria = null;
+
 			$this->singlesfGuardUserProfile = null;
 
 			$this->collAccounts = null;
@@ -829,6 +852,9 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 			$this->collStudentSuggestions = null;
 			$this->lastStudentSuggestionCriteria = null;
+
+			$this->collStudentHints = null;
+			$this->lastStudentHintCriteria = null;
 
 			$this->collSchoolprojects = null;
 			$this->lastSchoolprojectCriteria = null;
@@ -997,6 +1023,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collRecuperationHints !== null) {
+				foreach ($this->collRecuperationHints as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->singlesfGuardUserProfile !== null) {
 				if (!$this->singlesfGuardUserProfile->isDeleted()) {
 						$affectedRows += $this->singlesfGuardUserProfile->save($con);
@@ -1077,6 +1111,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 			if ($this->collStudentSuggestions !== null) {
 				foreach ($this->collStudentSuggestions as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collStudentHints !== null) {
+				foreach ($this->collStudentHints as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -1202,6 +1244,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					}
 				}
 
+				if ($this->collRecuperationHints !== null) {
+					foreach ($this->collRecuperationHints as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
 				if ($this->singlesfGuardUserProfile !== null) {
 					if (!$this->singlesfGuardUserProfile->validate($columns)) {
 						$failureMap = array_merge($failureMap, $this->singlesfGuardUserProfile->getValidationFailures());
@@ -1282,6 +1332,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 				if ($this->collStudentSuggestions !== null) {
 					foreach ($this->collStudentSuggestions as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collStudentHints !== null) {
+					foreach ($this->collStudentHints as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1607,6 +1665,12 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			foreach ($this->getRecuperationHints() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addRecuperationHint($relObj->copy($deepCopy));
+				}
+			}
+
 			$relObj = $this->getsfGuardUserProfile();
 			if ($relObj) {
 				$copyObj->setsfGuardUserProfile($relObj->copy($deepCopy));
@@ -1669,6 +1733,12 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			foreach ($this->getStudentSuggestions() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addStudentSuggestion($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getStudentHints() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addStudentHint($relObj->copy($deepCopy));
 				}
 			}
 
@@ -2289,6 +2359,160 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		}
 		if (!in_array($l, $this->collsfGuardRememberKeys, true)) { // only add it if the **same** object is not already associated
 			array_push($this->collsfGuardRememberKeys, $l);
+			$l->setsfGuardUser($this);
+		}
+	}
+
+	/**
+	 * Clears out the collRecuperationHints collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addRecuperationHints()
+	 */
+	public function clearRecuperationHints()
+	{
+		$this->collRecuperationHints = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collRecuperationHints collection (array).
+	 *
+	 * By default this just sets the collRecuperationHints collection to an empty array (like clearcollRecuperationHints());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initRecuperationHints()
+	{
+		$this->collRecuperationHints = array();
+	}
+
+	/**
+	 * Gets an array of RecuperationHint objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related RecuperationHints from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array RecuperationHint[]
+	 * @throws     PropelException
+	 */
+	public function getRecuperationHints($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collRecuperationHints === null) {
+			if ($this->isNew()) {
+			   $this->collRecuperationHints = array();
+			} else {
+
+				$criteria->add(RecuperationHintPeer::USER_ID, $this->id);
+
+				RecuperationHintPeer::addSelectColumns($criteria);
+				$this->collRecuperationHints = RecuperationHintPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(RecuperationHintPeer::USER_ID, $this->id);
+
+				RecuperationHintPeer::addSelectColumns($criteria);
+				if (!isset($this->lastRecuperationHintCriteria) || !$this->lastRecuperationHintCriteria->equals($criteria)) {
+					$this->collRecuperationHints = RecuperationHintPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastRecuperationHintCriteria = $criteria;
+		return $this->collRecuperationHints;
+	}
+
+	/**
+	 * Returns the number of related RecuperationHint objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related RecuperationHint objects.
+	 * @throws     PropelException
+	 */
+	public function countRecuperationHints(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collRecuperationHints === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(RecuperationHintPeer::USER_ID, $this->id);
+
+				$count = RecuperationHintPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(RecuperationHintPeer::USER_ID, $this->id);
+
+				if (!isset($this->lastRecuperationHintCriteria) || !$this->lastRecuperationHintCriteria->equals($criteria)) {
+					$count = RecuperationHintPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collRecuperationHints);
+				}
+			} else {
+				$count = count($this->collRecuperationHints);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a RecuperationHint object to this object
+	 * through the RecuperationHint foreign key attribute.
+	 *
+	 * @param      RecuperationHint $l RecuperationHint
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addRecuperationHint(RecuperationHint $l)
+	{
+		if ($this->collRecuperationHints === null) {
+			$this->initRecuperationHints();
+		}
+		if (!in_array($l, $this->collRecuperationHints, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collRecuperationHints, $l);
 			$l->setsfGuardUser($this);
 		}
 	}
@@ -4669,6 +4893,301 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collStudentHints collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addStudentHints()
+	 */
+	public function clearStudentHints()
+	{
+		$this->collStudentHints = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collStudentHints collection (array).
+	 *
+	 * By default this just sets the collStudentHints collection to an empty array (like clearcollStudentHints());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initStudentHints()
+	{
+		$this->collStudentHints = array();
+	}
+
+	/**
+	 * Gets an array of StudentHint objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related StudentHints from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array StudentHint[]
+	 * @throws     PropelException
+	 */
+	public function getStudentHints($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentHints === null) {
+			if ($this->isNew()) {
+			   $this->collStudentHints = array();
+			} else {
+
+				$criteria->add(StudentHintPeer::USER_ID, $this->id);
+
+				StudentHintPeer::addSelectColumns($criteria);
+				$this->collStudentHints = StudentHintPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(StudentHintPeer::USER_ID, $this->id);
+
+				StudentHintPeer::addSelectColumns($criteria);
+				if (!isset($this->lastStudentHintCriteria) || !$this->lastStudentHintCriteria->equals($criteria)) {
+					$this->collStudentHints = StudentHintPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastStudentHintCriteria = $criteria;
+		return $this->collStudentHints;
+	}
+
+	/**
+	 * Returns the number of related StudentHint objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related StudentHint objects.
+	 * @throws     PropelException
+	 */
+	public function countStudentHints(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collStudentHints === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(StudentHintPeer::USER_ID, $this->id);
+
+				$count = StudentHintPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(StudentHintPeer::USER_ID, $this->id);
+
+				if (!isset($this->lastStudentHintCriteria) || !$this->lastStudentHintCriteria->equals($criteria)) {
+					$count = StudentHintPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collStudentHints);
+				}
+			} else {
+				$count = count($this->collStudentHints);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a StudentHint object to this object
+	 * through the StudentHint foreign key attribute.
+	 *
+	 * @param      StudentHint $l StudentHint
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addStudentHint(StudentHint $l)
+	{
+		if ($this->collStudentHints === null) {
+			$this->initStudentHints();
+		}
+		if (!in_array($l, $this->collStudentHints, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collStudentHints, $l);
+			$l->setsfGuardUser($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related StudentHints from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getStudentHintsJoinTerm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentHints === null) {
+			if ($this->isNew()) {
+				$this->collStudentHints = array();
+			} else {
+
+				$criteria->add(StudentHintPeer::USER_ID, $this->id);
+
+				$this->collStudentHints = StudentHintPeer::doSelectJoinTerm($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentHintPeer::USER_ID, $this->id);
+
+			if (!isset($this->lastStudentHintCriteria) || !$this->lastStudentHintCriteria->equals($criteria)) {
+				$this->collStudentHints = StudentHintPeer::doSelectJoinTerm($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentHintCriteria = $criteria;
+
+		return $this->collStudentHints;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related StudentHints from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getStudentHintsJoinAppointment($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentHints === null) {
+			if ($this->isNew()) {
+				$this->collStudentHints = array();
+			} else {
+
+				$criteria->add(StudentHintPeer::USER_ID, $this->id);
+
+				$this->collStudentHints = StudentHintPeer::doSelectJoinAppointment($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentHintPeer::USER_ID, $this->id);
+
+			if (!isset($this->lastStudentHintCriteria) || !$this->lastStudentHintCriteria->equals($criteria)) {
+				$this->collStudentHints = StudentHintPeer::doSelectJoinAppointment($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentHintCriteria = $criteria;
+
+		return $this->collStudentHints;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related StudentHints from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getStudentHintsJoinRecuperationHint($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentHints === null) {
+			if ($this->isNew()) {
+				$this->collStudentHints = array();
+			} else {
+
+				$criteria->add(StudentHintPeer::USER_ID, $this->id);
+
+				$this->collStudentHints = StudentHintPeer::doSelectJoinRecuperationHint($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentHintPeer::USER_ID, $this->id);
+
+			if (!isset($this->lastStudentHintCriteria) || !$this->lastStudentHintCriteria->equals($criteria)) {
+				$this->collStudentHints = StudentHintPeer::doSelectJoinRecuperationHint($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentHintCriteria = $criteria;
+
+		return $this->collStudentHints;
+	}
+
+	/**
 	 * Clears out the collSchoolprojects collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
@@ -5345,6 +5864,11 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collRecuperationHints) {
+				foreach ((array) $this->collRecuperationHints as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->singlesfGuardUserProfile) {
 				$this->singlesfGuardUserProfile->clearAllReferences($deep);
 			}
@@ -5398,6 +5922,11 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collStudentHints) {
+				foreach ((array) $this->collStudentHints as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->collSchoolprojects) {
 				foreach ((array) $this->collSchoolprojects as $o) {
 					$o->clearAllReferences($deep);
@@ -5418,6 +5947,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->collsfGuardUserPermissions = null;
 		$this->collsfGuardUserGroups = null;
 		$this->collsfGuardRememberKeys = null;
+		$this->collRecuperationHints = null;
 		$this->singlesfGuardUserProfile = null;
 		$this->collAccounts = null;
 		$this->collTicketEventsRelatedByUserId = null;
@@ -5429,6 +5959,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->collWpmodules = null;
 		$this->collStudentSituations = null;
 		$this->collStudentSuggestions = null;
+		$this->collStudentHints = null;
 		$this->collSchoolprojects = null;
 		$this->collProjDeadlines = null;
 		$this->collLanlogs = null;

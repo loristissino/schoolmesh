@@ -35,6 +35,13 @@ propel:
     content:  { type: varchar(255), required: true }
     rank:   integer
 
+  recuperation_hint:
+    id: ~
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: false, onUpdate: cascade, onDelete: cascade, index:true }
+    content:  { type: varchar(255), required: true }
+    rank:  integer
+    
+
   sf_guard_user_profile:
     _attributes:  { phpName: sfGuardUserProfile }
     user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onUpdate: cascade, onDelete: cascade, primaryKey: true }
@@ -272,6 +279,15 @@ propel:
     suggestion_id: ~
     _uniques:
       taus:     [term_id, appointment_id, user_id, suggestion_id]
+
+  student_hint:
+    id:     ~
+    term_id:           { type: varchar(10), foreignTable: term, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    appointment_id:   { type: integer, foreignTable: appointment, foreignReference: id, required: true, onDelete: cascade, onUpdate: cascade, primaryKey: true }
+    user_id:  	{ type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    recuperation_hint_id: ~
+    _uniques:
+      taur:     [term_id, appointment_id, user_id, recuperation_hint_id]
 
   schoolproject:
     id: ~
