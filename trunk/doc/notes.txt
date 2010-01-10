@@ -1,3 +1,7 @@
+# Revision 395:
+
+Added tables about hints
+
 # Revision 391:
 
 Added tables about projects

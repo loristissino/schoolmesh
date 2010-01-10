@@ -1160,6 +1160,12 @@ public function getWorkflowLogs()
 				
 				}
 			}
+			else
+			{
+				$letters->suggestions->suggestionContent('');
+				$letters->suggestions->merge();
+			}
+			
 
 			if (@is_array($selectedStudent_value['hints']))
 			{
@@ -1171,6 +1177,11 @@ public function getWorkflowLogs()
 					$letters->hints->merge();
 				
 				}
+			}
+			else
+			{
+				$letters->hints->hintContent('');
+				$letters->hints->merge();
 			}
 			
 			$pagebreak=($letterNumber<$studentsNumber)?'<pagebreak>':'';
