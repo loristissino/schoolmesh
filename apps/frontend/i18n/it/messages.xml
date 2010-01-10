@@ -1386,6 +1386,14 @@
         <source>Recuperation letters for «%subject%» (class %class%)</source>
         <target>Lettere per il recupero «%subject%» (classe %class%)</target>
       </trans-unit>
+	  <trans-unit id="373">
+        <source>Suggested modalities for recuperation</source>
+        <target>Modalità suggerite per il recupero</target>
+      </trans-unit>
+	  <trans-unit id="374">
+        <source>Add a new hint</source>
+        <target>Aggiungi un nuovo suggerimento</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

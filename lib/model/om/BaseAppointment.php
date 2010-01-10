@@ -150,6 +150,16 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	private $lastStudentSuggestionCriteria = null;
 
 	/**
+	 * @var        array StudentHint[] Collection to store aggregation of StudentHint objects.
+	 */
+	protected $collStudentHints;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collStudentHints.
+	 */
+	private $lastStudentHintCriteria = null;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -766,6 +776,9 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			$this->collStudentSuggestions = null;
 			$this->lastStudentSuggestionCriteria = null;
 
+			$this->collStudentHints = null;
+			$this->lastStudentHintCriteria = null;
+
 		} // if (deep)
 	}
 
@@ -977,6 +990,14 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collStudentHints !== null) {
+				foreach ($this->collStudentHints as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -1112,6 +1133,14 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 
 				if ($this->collStudentSuggestions !== null) {
 					foreach ($this->collStudentSuggestions as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collStudentHints !== null) {
+					foreach ($this->collStudentHints as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1433,6 +1462,12 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			foreach ($this->getStudentSuggestions() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addStudentSuggestion($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getStudentHints() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addStudentHint($relObj->copy($deepCopy));
 				}
 			}
 
@@ -2779,6 +2814,301 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collStudentHints collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addStudentHints()
+	 */
+	public function clearStudentHints()
+	{
+		$this->collStudentHints = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collStudentHints collection (array).
+	 *
+	 * By default this just sets the collStudentHints collection to an empty array (like clearcollStudentHints());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initStudentHints()
+	{
+		$this->collStudentHints = array();
+	}
+
+	/**
+	 * Gets an array of StudentHint objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this Appointment has previously been saved, it will retrieve
+	 * related StudentHints from storage. If this Appointment is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array StudentHint[]
+	 * @throws     PropelException
+	 */
+	public function getStudentHints($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentHints === null) {
+			if ($this->isNew()) {
+			   $this->collStudentHints = array();
+			} else {
+
+				$criteria->add(StudentHintPeer::APPOINTMENT_ID, $this->id);
+
+				StudentHintPeer::addSelectColumns($criteria);
+				$this->collStudentHints = StudentHintPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(StudentHintPeer::APPOINTMENT_ID, $this->id);
+
+				StudentHintPeer::addSelectColumns($criteria);
+				if (!isset($this->lastStudentHintCriteria) || !$this->lastStudentHintCriteria->equals($criteria)) {
+					$this->collStudentHints = StudentHintPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastStudentHintCriteria = $criteria;
+		return $this->collStudentHints;
+	}
+
+	/**
+	 * Returns the number of related StudentHint objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related StudentHint objects.
+	 * @throws     PropelException
+	 */
+	public function countStudentHints(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collStudentHints === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(StudentHintPeer::APPOINTMENT_ID, $this->id);
+
+				$count = StudentHintPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(StudentHintPeer::APPOINTMENT_ID, $this->id);
+
+				if (!isset($this->lastStudentHintCriteria) || !$this->lastStudentHintCriteria->equals($criteria)) {
+					$count = StudentHintPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collStudentHints);
+				}
+			} else {
+				$count = count($this->collStudentHints);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a StudentHint object to this object
+	 * through the StudentHint foreign key attribute.
+	 *
+	 * @param      StudentHint $l StudentHint
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addStudentHint(StudentHint $l)
+	{
+		if ($this->collStudentHints === null) {
+			$this->initStudentHints();
+		}
+		if (!in_array($l, $this->collStudentHints, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collStudentHints, $l);
+			$l->setAppointment($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Appointment is new, it will return
+	 * an empty collection; or if this Appointment has previously
+	 * been saved, it will retrieve related StudentHints from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Appointment.
+	 */
+	public function getStudentHintsJoinTerm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentHints === null) {
+			if ($this->isNew()) {
+				$this->collStudentHints = array();
+			} else {
+
+				$criteria->add(StudentHintPeer::APPOINTMENT_ID, $this->id);
+
+				$this->collStudentHints = StudentHintPeer::doSelectJoinTerm($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentHintPeer::APPOINTMENT_ID, $this->id);
+
+			if (!isset($this->lastStudentHintCriteria) || !$this->lastStudentHintCriteria->equals($criteria)) {
+				$this->collStudentHints = StudentHintPeer::doSelectJoinTerm($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentHintCriteria = $criteria;
+
+		return $this->collStudentHints;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Appointment is new, it will return
+	 * an empty collection; or if this Appointment has previously
+	 * been saved, it will retrieve related StudentHints from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Appointment.
+	 */
+	public function getStudentHintsJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentHints === null) {
+			if ($this->isNew()) {
+				$this->collStudentHints = array();
+			} else {
+
+				$criteria->add(StudentHintPeer::APPOINTMENT_ID, $this->id);
+
+				$this->collStudentHints = StudentHintPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentHintPeer::APPOINTMENT_ID, $this->id);
+
+			if (!isset($this->lastStudentHintCriteria) || !$this->lastStudentHintCriteria->equals($criteria)) {
+				$this->collStudentHints = StudentHintPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentHintCriteria = $criteria;
+
+		return $this->collStudentHints;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Appointment is new, it will return
+	 * an empty collection; or if this Appointment has previously
+	 * been saved, it will retrieve related StudentHints from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Appointment.
+	 */
+	public function getStudentHintsJoinRecuperationHint($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentHints === null) {
+			if ($this->isNew()) {
+				$this->collStudentHints = array();
+			} else {
+
+				$criteria->add(StudentHintPeer::APPOINTMENT_ID, $this->id);
+
+				$this->collStudentHints = StudentHintPeer::doSelectJoinRecuperationHint($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentHintPeer::APPOINTMENT_ID, $this->id);
+
+			if (!isset($this->lastStudentHintCriteria) || !$this->lastStudentHintCriteria->equals($criteria)) {
+				$this->collStudentHints = StudentHintPeer::doSelectJoinRecuperationHint($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentHintCriteria = $criteria;
+
+		return $this->collStudentHints;
+	}
+
+	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -2815,6 +3145,11 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collStudentHints) {
+				foreach ((array) $this->collStudentHints as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} // if ($deep)
 
 		$this->collWpevents = null;
@@ -2822,6 +3157,7 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 		$this->collWptoolAppointments = null;
 		$this->collWpmodules = null;
 		$this->collStudentSuggestions = null;
+		$this->collStudentHints = null;
 			$this->asfGuardUser = null;
 			$this->aSubject = null;
 			$this->aSchoolclass = null;

@@ -63,6 +63,7 @@ class AppointmentTableMap extends TableMap {
     $this->addRelation('WptoolAppointment', 'WptoolAppointment', RelationMap::ONE_TO_MANY, array('id' => 'appointment_id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('Wpmodule', 'Wpmodule', RelationMap::ONE_TO_MANY, array('id' => 'appointment_id', ), null, null);
     $this->addRelation('StudentSuggestion', 'StudentSuggestion', RelationMap::ONE_TO_MANY, array('id' => 'appointment_id', ), 'CASCADE', 'CASCADE');
+    $this->addRelation('StudentHint', 'StudentHint', RelationMap::ONE_TO_MANY, array('id' => 'appointment_id', ), 'CASCADE', 'CASCADE');
 	} // buildRelations()
 
 	/**
