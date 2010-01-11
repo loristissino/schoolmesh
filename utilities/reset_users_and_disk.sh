@@ -18,7 +18,7 @@ sudo service quota stop
 sudo umount "$POSIX_HOMEDIR"
 sudo chmod -v 755 "$POSIX_HOMEDIR"
 sudo chown -v root:root "$POSIX_HOMEDIR"
-sudo mount -v -t ext3 -o loop,acl,usrjquota=aquota.user,jqfmt=vfsv0 /home/discovirtuale "$POSIX_HOMEDIR"
+sudo mount -v -t ext3 -o loop,acl,usrjquota=aquota.user,jqfmt=vfsv0 /home/schoolmesh.disk "$POSIX_HOMEDIR"
 sudo quotacheck -avug
 sudo service quota start
 

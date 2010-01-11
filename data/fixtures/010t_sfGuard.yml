@@ -102,4 +102,7 @@ sfGuardUserPermission:
   juri_login:
     user_id:      juri
     permission_id:  login
+  john.test_filebrowsing:
+    user_id:      john.test
+    permission_id: filebrowsing
   

@@ -58,6 +58,7 @@ workstation
 wpitem_group
 wpitem_type
 wpmodule
+recuperation_hint
 
 appointment
 enrolment
@@ -81,6 +82,7 @@ wptool_item_type
 wpmodule_item
 student_situation
 student_suggestion
+student_hint
 schoolproject
 proj_deadline
 "

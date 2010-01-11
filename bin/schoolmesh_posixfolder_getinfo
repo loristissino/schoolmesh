@@ -1,0 +1,55 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Get info about a posix user's folder's contents
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username* path *directoryname*
+#@ {} *username* list *directoryname*
+#@
+#@ # DESCRIPTION
+#@
+#@ This script generates a list of pairs *key=value* about a posix folder.
+#@ The user must exist.
+#@
+#@ # EXAMPLES
+#@
+#@	{-} john.test path '/'  
+#@	{-} john.test list 'mydocs' 
+
+USERNAME=$1
+COMMAND=$2
+BASEDIRNAME=$3
+DIRECTORYNAME="$POSIX_HOMEDIR_USERS/$USERNAME$BASEDIRNAME"
+
+if [ $BASEDIRNAME = '/' ]; then
+	SUBSTITUTION="$POSIX_HOMEDIR_USERS/$USERNAME$BASEDIRNAME"
+else
+	SUBSTITUTION="$POSIX_HOMEDIR_USERS/$USERNAME$BASEDIRNAME/"
+fi
+
+checkUsername $USERNAME
+checkOneOf $COMMAND path list
+
+sudo /usr/bin/test -d $DIRECTORYNAME
+
+if [[ $? -ne 0 ]]; then
+	msg_failed 'Not a directory'
+	exit 23
+fi
+
+case $COMMAND in
+	path)
+		echo found=1
+		;;
+	list)
+		echo CONTROLLO $DIRECTORYNAME
+		LANG=C sudo /usr/bin/find $DIRECTORYNAME -maxdepth 1 -mindepth 1 -exec stat -c 'FILE%i=%F:%s:%Y:%n' {} \; | sed "s|$SUBSTITUTION||" 
+		;;
+esac
