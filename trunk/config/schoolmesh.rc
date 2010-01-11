@@ -8,7 +8,7 @@ if [ $# -eq 0 ]
 	fi
 
 CONFIG_READ=1
-POSIX_HOMEDIR=/home/testhome
+POSIX_HOMEDIR=/home/homeschoolmesh
 POSIX_HOMEDIR_USERS="$POSIX_HOMEDIR/users"
 POSIX_HOMEDIR_TEAMS="$POSIX_HOMEDIR/teams"
 POSIX_BASEFOLDER=Mattiussi

@@ -17,6 +17,9 @@ sfGuardPermission:
   internet:
     name:           internet
     description:    Gestione accesso a Internet
+  filebrowsing:
+    name:           filebrowsing
+    description:   Possibilità di gestire la propria home directory via web
   quality_pub:
     name:           quality_pub
     description:    Gestione documentazione qualità
