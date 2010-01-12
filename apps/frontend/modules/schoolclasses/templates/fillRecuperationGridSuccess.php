@@ -97,3 +97,15 @@
 	)?>
 	</li>
 </ul>
+<hr />
+
+<h2><?php echo __('Actions') ?></h2>
+<ul class="sf_admin_actions">
+	<li class="sf_admin_action_export">
+	<?php echo link_to(
+		__('Get recuperation letters'),
+		url_for('schoolclasses/batch?id=' . $schoolclass_id . '&appointment=' . $appointment->getId() . '&ids=' . $ids . '&serialized=true&batch_action=get_recuperation_letters&commit=Ok'),
+		array('title'=>__('Get recuperation letters')) 
+	)?>
+	</li>
+</ul>
