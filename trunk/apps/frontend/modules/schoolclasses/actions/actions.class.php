@@ -95,7 +95,6 @@ public function executeGetRecuperationLetters(sfWebRequest $request)
 	if ($request->getParameter('serialized')=='true')
 	{
 		$this->ids = Generic::b64_unserialize($this->ids);
-
 	}
     $this->students = sfGuardUserPeer::retrieveByPks($this->ids);
 	
