@@ -16,4 +16,9 @@ require 'lib/model/om/BaseProjCategory.php';
  */
 class ProjCategory extends BaseProjCategory {
 
+	public function __toString()
+	{
+		return $this->getTitle();
+	}
+
 } // ProjCategory

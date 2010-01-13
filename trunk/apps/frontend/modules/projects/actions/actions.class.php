@@ -28,59 +28,55 @@ class projectsActions extends sfActions
   {
 	$this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPk($request->getParameter('id')));
 	
-//	$deadlinesNumber=$this->project->countProjDeadlines();
-//	$this->form = new ProjectForm(array('deadlines_count'=>$deadlinesNumber));
+	$this->form = new SchoolprojectForm($this->project); 
 
-	$this->form = new ProjectForm(); 
-
-
-
-	
 	if ($request->isMethod('post'))
 		{
-			$this->form->bind($request->getParameter('info'));
+			$this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
+			$this->form->getValidatorSchema()->setOption('filter_extra_fields', false);
+			$this->form->bind($request->getParameter('schoolproject'));
 			if ($this->form->isValid())
 			{
 				$params = $this->form->getValues();
 				
+				$this->project = SchoolprojectPeer::retrieveByPK($params['id']);
+				
 				$this->project
 				->setTitle($params['title'])
 				->save();
+				
+				if (sizeof($params['deadline'])>0)
+				{
+					foreach($params['deadline'] as $deadline_params)
+					{
+						$deadline=ProjDeadlinePeer::retrieveByPK($deadline_params['id']);
+						$deadline
+						->setDescription($deadline_params['description'])
+						->setOriginalDeadlineDate(Generic::date_from_array($deadline_params['original_deadline_date']))
+						->setCurrentDeadlineDate(Generic::date_from_array($deadline_params['current_deadline_date']))
+						->setNotes($deadline_params['notes'])
+						->setCompleted(@$deadline_params['completed']=='on')
+						->save();
+					}
+				}
 
 				$this->getUser()->setFlash('notice',
 					$this->getContext()->getI18N()->__('Project information updated.')
 					);
 					
-				$this->redirect('projects/edit?id='. $this->project->getId());
-
+			return $this->redirect('projects/edit?id='. $this->project->getId());
 			}
 			
 		}
-
-	$this->form->setDefaults(
-		array(
-			'id' => $this->project->getId(),
-			'title' => $this->project->getTitle(),
-			'coordinator'=> $this->project->getsfGuardUser()->getId(),
-		)
-	);
-	$deadlines=$this->project->getProjDeadlines();
-	foreach($deadlines as $deadline)
+		
+	if($this->project)
 	{
-		$this->form->embedForm('deadline' . $deadline->getId(), new DeadlineForm());
-		
-		$this->form->getEmbeddedForm('deadline'. $deadline->getId())->setDefaults(
-			array(
-			'id'=>$deadline->getId(),
-			'project_id'=>$this->project->getId(),
-			'description'=> 'ciao'
-			)
-			
-			);
-		
+		foreach($this->project->getProjDeadlines() as $index=>$deadline)
+		{
+			$deadlineForm=new ProjDeadlineForm($deadline);
+			$this->form->embedForm('deadline[' . $index . ']', $deadlineForm);
+		}
 	}
-
-	
    }  
 	
 }
