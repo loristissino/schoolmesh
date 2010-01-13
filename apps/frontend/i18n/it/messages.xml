@@ -1398,6 +1398,54 @@
         <source>Recuperation suggestions</source>
         <target>Indicazioni per il recupero</target>
       </trans-unit>
+	  <trans-unit id="376">
+        <source>Category</source>
+        <target>Categoria</target>
+      </trans-unit>
+	  <trans-unit id="377">
+        <source>Notes</source>
+        <target>Note</target>
+      </trans-unit>
+	  <trans-unit id="378">
+        <source>Hours approved</source>
+        <target>Ore approvate</target>
+      </trans-unit>
+	  <trans-unit id="379">
+        <source>Deadline</source>
+        <target>Scadenza</target>
+      </trans-unit>
+	  <trans-unit id="380">
+        <source>Completed</source>
+        <target>Completato</target>
+      </trans-unit>
+	  <trans-unit id="381">
+        <source>Task assignee</source>
+        <target>Responsabile del compito</target>
+      </trans-unit>
+	  <trans-unit id="382">
+        <source>Original deadline date</source>
+        <target>Scadenza originale</target>
+      </trans-unit>
+	  <trans-unit id="383">
+        <source>Current deadline date</source>
+        <target>Scadenza attuale</target>
+      </trans-unit>
+	  <trans-unit id="384">
+        <source>Project information updated.</source>
+        <target>Le informazioni sul progetto sono state aggiornate.</target>
+      </trans-unit>
+	  <trans-unit id="385">
+        <source>Coordinator</source>
+        <target>Coordinatore</target>
+      </trans-unit>
+	  <trans-unit id="386">
+        <source>Deadline #%number%</source>
+        <target>Scadenza n. %number%</target>
+      </trans-unit>
+	  <trans-unit id="387">
+        <source>Add deadline</source>
+        <target>Aggiungi scadenza</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

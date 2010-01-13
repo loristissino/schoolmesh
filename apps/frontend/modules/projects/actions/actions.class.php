@@ -34,6 +34,14 @@ class projectsActions extends sfActions
 		{
 			$this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 			$this->form->getValidatorSchema()->setOption('filter_extra_fields', false);
+			
+			ob_start();
+
+print_r($this->form->getValidatorSchema());
+
+$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
+
+			
 			$this->form->bind($request->getParameter('schoolproject'));
 			if ($this->form->isValid())
 			{
@@ -42,7 +50,13 @@ class projectsActions extends sfActions
 				$this->project = SchoolprojectPeer::retrieveByPK($params['id']);
 				
 				$this->project
+				->setProjCategoryId($params['proj_category_id'])
+				->setUserId($params['user_id'])
 				->setTitle($params['title'])
+				->setYearId($params['year_id'])
+				->setDescription($params['description'])
+				->setNotes($params['notes'])
+				->setHoursApproved($params['hours_approved'])
 				->save();
 				
 				if (sizeof($params['deadline'])>0)
@@ -51,6 +65,7 @@ class projectsActions extends sfActions
 					{
 						$deadline=ProjDeadlinePeer::retrieveByPK($deadline_params['id']);
 						$deadline
+						->setUserId($deadline_params['user_id'])
 						->setDescription($deadline_params['description'])
 						->setOriginalDeadlineDate(Generic::date_from_array($deadline_params['original_deadline_date']))
 						->setCurrentDeadlineDate(Generic::date_from_array($deadline_params['current_deadline_date']))
@@ -58,6 +73,17 @@ class projectsActions extends sfActions
 						->setCompleted(@$deadline_params['completed']=='on')
 						->save();
 					}
+				}
+				
+
+				if ($request->hasParameter('add_deadline'))
+				{
+					//FIXME This should be moved in the model
+					$deadline=new ProjDeadline();
+					$deadline
+					->setUserId($this->project->getUserId())
+					->setSchoolprojectId($this->project->getId())
+					->save();
 				}
 
 				$this->getUser()->setFlash('notice',
@@ -74,7 +100,12 @@ class projectsActions extends sfActions
 		foreach($this->project->getProjDeadlines() as $index=>$deadline)
 		{
 			$deadlineForm=new ProjDeadlineForm($deadline);
-			$this->form->embedForm('deadline[' . $index . ']', $deadlineForm);
+			$fieldname='deadline[' . $index . ']';
+			$this->form->embedForm($fieldname, $deadlineForm);
+			$this->form->getWidgetSchema()->setLabel($fieldname, 
+				$this->getContext()->getI18N()->__('Deadline #%number%', array('%number%'=>$index+1))
+				);
+
 		}
 	}
    }  
