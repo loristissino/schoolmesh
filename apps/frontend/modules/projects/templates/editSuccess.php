@@ -8,7 +8,7 @@
 	'TO_DO'
 	)
 	
-	?><h1><?php echo sprintf(__('Edit project %s'), $project->getTitle())?></h1>
+	?><h1><?php echo sprintf(__('Edit project'), $project->getTitle())?></h1>
 
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
@@ -17,7 +17,7 @@
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
 
-<form action="<?php echo url_for('projects/edit?id='. $project->getId()) ?>" method="post">
+<form action="<?php echo url_for('projects/edit?id='. $project->getId()) ?>" method="POST">
 
 <h2><?php echo __('Basic information') ?></h2>
 

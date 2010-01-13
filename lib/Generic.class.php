@@ -76,6 +76,18 @@ class Generic{
 			return floor((time() - mktime(0, 0, 0, substr($string,4,2), substr($string,6,2), substr($string,0,4)))/86400);
 		}
 		
+		public static function date_from_array($array)
+		{
+			if (@checkdate($array['month'], $array['day'], $array['year']))
+				{
+					return mktime(0,0,0, $array['month'], $array['day'], $array['year']);
+				}
+			else
+				{
+					return null;
+				}
+		}
+		
 		static public function transliterate($text)
 		{
 		  foreach(array(

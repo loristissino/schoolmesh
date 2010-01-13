@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../bootstrap/unit.php';
  
-$t = new lime_test(77, new lime_output_color());
+$t = new lime_test(82, new lime_output_color());
 
 $t->diag('::datetime()');
 
@@ -193,3 +193,13 @@ foreach (array(
 {
 	$t->is(Generic::strip_tags_and_attributes($key, $allowable_tags), $value, sprintf('«%s» --> «%s»', $key, $value));
 }
+
+
+$t->diag('::date_from_array()');
+
+$t->is(Generic::date_from_array(''), null, 'returns null for empty string');
+$t->is(Generic::date_from_array(array('foo', 'bar', 'baz')), null, 'returns null for an invalid array');
+$t->is(Generic::date_from_array(array('month'=>'foo', 'day'=>'bar', 'year'=>'baz')), null, 'returns null for an invalid array');
+$t->is(Generic::date_from_array(array('month'=>13, 'day'=>2, 'year'=>2000)), null, 'returns null for an invalid date');
+$t->is(Generic::date_from_array(array('month'=>12, 'day'=>31, 'year'=>2000)), 978217200, 'returns the correct timestamp for a valid date');
+

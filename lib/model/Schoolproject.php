@@ -16,4 +16,9 @@ require 'lib/model/om/BaseSchoolproject.php';
  */
 class Schoolproject extends BaseSchoolproject {
 
+	public function __toString()
+	{
+		return $this->getTitle();
+	}
+
 } // Schoolproject
