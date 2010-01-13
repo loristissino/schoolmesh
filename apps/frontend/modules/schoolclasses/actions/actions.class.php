@@ -29,11 +29,17 @@ class schoolclassesActions extends sfActions
 				$this->forward404Unless($this->appointment->getUserId() == $this->getUser()->getProfile()->getUserId());
 			}
 		$this->enrolments=$this->schoolclass->getCurrentEnrolments();
+		$this->ids = $this->getUser()->getAttribute('ids', array());
+
   }
 
 
 public function executeBatch(sfWebRequest $request)
 {
+	
+	$ids = $request->getParameter('ids');
+	$this->getUser()->setAttribute('ids', $ids);
+
 	$action=$request->getParameter('batch_action');
 	
 	switch ($action)
@@ -70,7 +76,18 @@ public function executeFillRecuperationGrid(sfWebRequest $request)
 	
 	$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
 	$this->hints=RecuperationHintPeer::retrieveAllByRankForTeacher($this->appointment->getUserId());
+	
+	$this->students = sfGuardUserPeer::retrieveByPks($this->getUser()->getAttribute('ids'));
 
+//	$this->ids=Generic::b64_serialize($ids);
+	
+	if (sizeof($this->students)==0)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least a student.'));
+			$this->forward('schoolclasses', 'redirect');
+		}
+
+/*
     $ids = $request->getParameter('ids');
     $this->students = sfGuardUserPeer::retrieveByPks($ids);
 	$this->ids=Generic::b64_serialize($ids);
@@ -80,7 +97,7 @@ public function executeFillRecuperationGrid(sfWebRequest $request)
 			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least a student.'));
 			$this->forward('schoolclasses', 'redirect');
 		}
-
+*/
 }
 
 public function executeGetRecuperationLetters(sfWebRequest $request)
@@ -91,12 +108,8 @@ public function executeGetRecuperationLetters(sfWebRequest $request)
 	$this->forward404Unless($this->schoolclass_id = $request->getParameter('id'));
 	$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
 
-    $this->ids = $request->getParameter('ids');
-	if ($request->getParameter('serialized')=='true')
-	{
-		$this->ids = Generic::b64_unserialize($this->ids);
-	}
-    $this->students = sfGuardUserPeer::retrieveByPks($this->ids);
+	$this->ids = $this->getUser()->getAttribute('ids');
+	$this->students = sfGuardUserPeer::retrieveByPks($this->ids);
 	
 	if (sizeof($this->students)==0)
 		{
@@ -141,8 +154,7 @@ public function executeGetRecuperationLetters(sfWebRequest $request)
 	public function executeTickit(sfWebRequest $request)
 	{
 
-		$ids = Generic::b64_unserialize($request->getParameter('ids'));
-		
+		$ids = $this->getUser()->getAttribute('ids');
 		
 		$this->students = sfGuardUserPeer::retrieveByPks($ids);
 		
@@ -167,14 +179,14 @@ public function executeGetRecuperationLetters(sfWebRequest $request)
 			$wpmodule_item->toggleStudent($student_id, $term_id);
 		}
 
- 	    return $this->renderPartial('wpmoduleitem', array('students'=>$this->students, 'ids'=>Generic::b64_serialize($ids), 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id));
+ 	    return $this->renderPartial('wpmoduleitem', array('students'=>$this->students, 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id));
 
 	}
 	
 public function executeSuggestion(sfWebRequest $request)
 
 {
-		$ids = Generic::b64_unserialize($request->getParameter('ids'));
+		$ids = $this->getUser()->getAttribute('ids');
 		$this->students = sfGuardUserPeer::retrieveByPks($ids);
 		
 		$term_id=sfConfig::get('app_config_current_term');
@@ -208,7 +220,7 @@ public function executeSuggestion(sfWebRequest $request)
 public function executeHint(sfWebRequest $request)
 
 {
-		$ids = Generic::b64_unserialize($request->getParameter('ids'));
+		$ids = $this->getUser()->getAttribute('ids');
 		$this->students = sfGuardUserPeer::retrieveByPks($ids);
 		
 		$term_id=sfConfig::get('app_config_current_term');

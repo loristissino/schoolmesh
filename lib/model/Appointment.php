@@ -1032,7 +1032,7 @@ public function getWorkflowLogs()
 	
 	public function getRecuperationLettersOdf($ids, $doctype, sfContext $sfContext=null, $template='')
 	{
-		
+				
 		if (!$term=TermPeer::retrieveByPK(sfConfig::get('app_config_current_term')))
 		{
 			throw new Exception('term not defined');

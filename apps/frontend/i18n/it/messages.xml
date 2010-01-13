@@ -1327,8 +1327,8 @@
         <target>Tutti gli studenti</target>
       </trans-unit>
       <trans-unit id="358">
-        <source>All selected students</source>
-        <target>Tutti gli studenti</target>
+        <source>Toggle selection for all students</source>
+        <target>Inverti la selezione per tutti gli studenti</target>
       </trans-unit>
       <trans-unit id="359">
         <source>All selected students</source>
@@ -1393,6 +1393,10 @@
 	  <trans-unit id="374">
         <source>Add a new hint</source>
         <target>Aggiungi un nuovo suggerimento</target>
+      </trans-unit>
+	  <trans-unit id="375">
+        <source>Recuperation suggestions</source>
+        <target>Indicazioni per il recupero</target>
       </trans-unit>
     </body>
   </file>

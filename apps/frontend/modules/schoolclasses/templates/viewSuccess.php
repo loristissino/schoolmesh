@@ -10,8 +10,6 @@
 	?>
 	<h1><?php echo sprintf(__('Class %s'), $schoolclass_id) ?></h1>
 
-
-
 <?php if(sizeof($enrolments)>0): ?>
 
 <?php if(isset($appointment)): ?>
@@ -48,7 +46,7 @@
 	
 <?php if(isset($appointment)): ?>
 		<td>
-  <input type="checkbox" name="ids[]" value="<?php echo $enrolment->getsfGuardUser()->getId() ?>" class="sf_admin_batch_checkbox" />
+  <input type="checkbox" name="ids[]" value="<?php echo $enrolment->getsfGuardUser()->getId() ?>" class="sf_admin_batch_checkbox" <?php echo in_array($enrolment->getsfGuardUser()->getId(), $ids->getRawValue()) ? "checked='checked'": '' ?>"/>
 </td>
 <?php endif ?>
 
