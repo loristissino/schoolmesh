@@ -38,7 +38,7 @@
 
 		<?php foreach($wpitem_group->getWpmoduleItems() as $wpmodule_item): ?>
 			<tr id="<?php echo 'ticks_' . $wpmodule_item->getId() ?>">
-				<?php include_partial('wpmoduleitem', array('students'=>$students, 'ids'=>$ids, 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id)) ?>
+				<?php include_partial('wpmoduleitem', array('students'=>$students, 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id)) ?>
 			</tr>
 		<?php endforeach ?>
 
@@ -61,7 +61,7 @@
 
 <?php foreach($suggestions as $suggestion): ?>
 <tr id="suggestion_<?php echo $suggestion->getId()?>">
-	<?php include_partial('suggestion', array('students'=>$students, 'appointment_id'=>$appointment->getId(),'suggestion'=>$suggestion, 'ids'=>$ids, 'term_id'=>$term_id)) ?>
+	<?php include_partial('suggestion', array('students'=>$students, 'appointment_id'=>$appointment->getId(),'suggestion'=>$suggestion,  'term_id'=>$term_id)) ?>
 </tr>
 <?php endforeach ?>
 
@@ -83,7 +83,7 @@
 
 <?php foreach($hints as $hint): ?>
 <tr id="hint_<?php echo $hint->getId()?>">
-	<?php include_partial('hint', array('students'=>$students, 'appointment_id'=>$appointment->getId(),'hint'=>$hint, 'ids'=>$ids, 'term_id'=>$term_id)) ?>
+	<?php include_partial('hint', array('students'=>$students, 'appointment_id'=>$appointment->getId(),'hint'=>$hint, 'term_id'=>$term_id)) ?>
 </tr>
 <?php endforeach ?>
 
@@ -104,7 +104,7 @@
 	<li class="sf_admin_action_export">
 	<?php echo link_to(
 		__('Get recuperation letters'),
-		url_for('schoolclasses/batch?id=' . $schoolclass_id . '&appointment=' . $appointment->getId() . '&ids=' . $ids . '&serialized=true&batch_action=get_recuperation_letters&commit=Ok'),
+		url_for('schoolclasses/getRecuperationLetters?id=' . $schoolclass_id . '&appointment=' . $appointment->getId()),
 		array('title'=>__('Get recuperation letters')) 
 	)?>
 	</li>

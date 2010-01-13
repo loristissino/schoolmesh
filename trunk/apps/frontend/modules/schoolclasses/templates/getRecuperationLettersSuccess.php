@@ -20,7 +20,6 @@
 	$baseurl=
 		'schoolclasses/getRecuperationLetters?id=' . $schoolclass_id
 		. '&appointment=' . $appointment->getId()
-		. '&ids=' . Generic::b64_serialize($ids->getRawValue()) . '&serialized=true'
 		. '&doctype=';
 ?>
 
