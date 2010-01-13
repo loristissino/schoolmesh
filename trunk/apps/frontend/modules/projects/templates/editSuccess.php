@@ -26,6 +26,8 @@
 	<tr>
       <td colspan="2">
          <input type="submit" name="save" value="<?php echo __('Save') ?>">
+         <input type="submit" name="add_deadline" value="<?php echo __('Add deadline') ?>">
       </td>
     </tr>
   </table>
+</form>  
