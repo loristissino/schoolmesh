@@ -24,6 +24,7 @@ test:
     param:
       session_path: %SF_TEST_CACHE_DIR%/sessions
 
+# see http://www.symfony-project.org/advent_calendar/5/en for details
 default:
   mailer:
     class: sfMailer

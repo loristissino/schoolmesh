@@ -35,12 +35,6 @@ class projectsActions extends sfActions
 			$this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
 			$this->form->getValidatorSchema()->setOption('filter_extra_fields', false);
 			
-			ob_start();
-
-print_r($this->form->getValidatorSchema());
-
-$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
-
 			
 			$this->form->bind($request->getParameter('schoolproject'));
 			if ($this->form->isValid())
@@ -110,4 +104,16 @@ $f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_c
 	}
    }  
 	
+
+	public function executeMail(sfWebRequest $request)
+	{
+		$this->getMailer()->composeAndSend(
+		'loris.tissino@gmail.com',
+		'loris@tissino.it',
+		'My Subject',
+		'My Body'
+		);	
+		
+	}
+
 }

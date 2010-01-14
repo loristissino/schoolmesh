@@ -121,7 +121,7 @@ class profileActions extends sfActions
 				if ($old_email!=$params['email'])
 				{
 					$email_warning=$this->getContext()->getI18N()->__('An email was sent to you to verify your email address.');
-					$this->profile->sendEmailVerification();
+					$this->profile->sendEmailVerification($this->getContext());
 				}
 				
 				$this->profile->save();
@@ -130,7 +130,7 @@ class profileActions extends sfActions
 					$this->getContext()->getI18N()->__('User information updated.'). ' ' . $email_warning
 					);
 					
-				$this->redirect('profile/editprofile	');
+//				$this->redirect('profile/editprofile');
 			}
 		}
 

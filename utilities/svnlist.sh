@@ -5,7 +5,11 @@ grep -v 'web/uploads' | \
 grep -v 'web/images/sources' | \
 grep -v 'apps/frontend/config/app.yml' | \
 grep -v 'apps/backend/config/app.yml' | \
+grep -v 'apps/frontend/config/factories.yml' | \
+grep -v 'apps/backend/config/factories.yml' | \
 grep -v 'config/databases.yml' | \
-sed 's/^?      //' #  | xargs svn add 
+grep -v 'config/schoolmesh.rc' | \
+grep -v 'templates/email/email_change_confirmation.txt' | \
+sed 's/^?      //'
 
 
