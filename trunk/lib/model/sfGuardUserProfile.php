@@ -15,10 +15,15 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $this->getUserId();
 		}
 	
-		public function sendEmailVerification()
+		public function sendEmailVerification(sfContext $context)
 		{
 			$this->setEmailVerificationCode(sha1(rand(10000000,99999999)));
-			$this->addSystemAlert('should send email verification');
+//			$this->addSystemAlert('should send email verification');
+
+			$message=new EmailChangeConfirmationMessage($this);
+			$mailer=sfContext::getInstance()->getMailer();
+			$mailer->send($message);
+
 			$this->setEmailState(1);
 		}
 		

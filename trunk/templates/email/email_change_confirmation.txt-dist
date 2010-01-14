@@ -1,0 +1,12 @@
+Conferma indirizzo email
+Ciao, %fullname%,
+
+a quanto pare hai impostato un indirizzo di posta elettronica da usare in abbinamento all'applicazione Schoolmesh.
+
+Per confermare la correttezza dell'indirizzo, segui il seguente link:
+
+http://...../email_confirm?email=%verification_code%
+
+Grazie.
+
+        Loris Tissino
