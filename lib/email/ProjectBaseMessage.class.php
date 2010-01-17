@@ -5,12 +5,22 @@ class ProjectBaseMessage extends Swift_Message
 	
   private $_template_directory;
   
-  public function __construct()
+  public function __construct($from=Array())
   {
     parent::__construct();
+	
+	if (! is_array($from))
+	{
+		throw new Exception ('From field must be an array');
+	}
+	
+	if (sizeof($from)==0)
+	{
+		$from[sfConfig::get('app_mail_bot')]='SchoolMesh App Bot';
+	}
  
 	$this
-      ->setFrom(array(sfConfig::get('app_mail_bot') => 'SchoolMesh App Bot'))
+      ->setFrom($from)
 	  ->setTemplateDirectory(sfConfig::get('app_mail_template_directory'))
 	;  
 	

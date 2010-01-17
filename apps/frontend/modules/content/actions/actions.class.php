@@ -34,7 +34,21 @@ class contentActions extends sfActions
 		
 		$result=OdfDocPeer::startUnoconv();
 		return $this->renderText('scheduled!'. "\n" . $result);
+	}
 
+	public function executeCheckemail(sfWebRequest $request)
+	{
+		$this->forward404Unless($this->user=sfGuardUserProfilePeer::retrieveByUsername($request->getParameter('user')));		
+		
+		$this->forward404Unless($this->user->getProfile()->getEmailVerificationCode()==($request->getParameter('code')));
+		
+		$this->user->getProfile()
+		->setEmailState(2)
+		->setEmailVerificationCode(null)
+		->save();
+		
+//		$this->redirect('content', 'checkemail');
+		
 	}
 
 

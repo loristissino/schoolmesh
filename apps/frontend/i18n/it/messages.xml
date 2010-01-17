@@ -1446,6 +1446,24 @@
         <source>Add deadline</source>
         <target>Aggiungi scadenza</target>
       </trans-unit>
+	  <trans-unit id="388">
+        <source>Dear %femalename%,</source>
+        <target>Cara %femalename%,</target>
+      </trans-unit>
+	  <trans-unit id="389">
+        <source>Dear %malename%,</source>
+        <target>Caro %malename%,</target>
+      </trans-unit>
+	  <trans-unit id="390">
+        <source>User profile information updated.</source>
+        <target>Informazioni del profilo utente aggiornate.</target>
+      </trans-unit>
+	  <trans-unit id="391">
+        <source>An email was sent to you to verify your email address.</source>
+        <target>Ti è stato spedito un messaggio di posta elettronica per verificare la correttezza dell'indirizzo.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
+
+
