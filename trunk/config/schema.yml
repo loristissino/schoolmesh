@@ -54,7 +54,7 @@ propel:
     gender:      varchar(1)
     email:        varchar(50)
     email_state: { type: integer, default: 0 }
-    email_verification_code: varchar(32)
+    email_verification_code: varchar(40)
     birthdate:    date
     birthplace:   varchar(50)
     import_code:  varchar(20)

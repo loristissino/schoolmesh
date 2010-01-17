@@ -1,3 +1,5 @@
+#!/bin/bash
+
 BASEDIR=/var/schoolmesh
 
 sudo find "$BASEDIR" ! -user loris -exec chown loris  {} \;
@@ -14,3 +16,5 @@ chmod +x "$BASEDIR/symfony"
 sudo chmod 755 $BASEDIR/bin/*
 
 sudo cp --preserve=mode $BASEDIR/bin/* /usr/local/bin
+
+~/bin/fixmattiussilab.sh

@@ -15,12 +15,12 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $this->getUserId();
 		}
 	
-		public function sendEmailVerification(sfContext $context)
+		public function sendEmailVerification(sfContext $sfContext)
 		{
 			$this->setEmailVerificationCode(sha1(rand(10000000,99999999)));
 //			$this->addSystemAlert('should send email verification');
 
-			$message=new EmailChangeConfirmationMessage($this);
+			$message=new EmailChangeConfirmationMessage($this, $sfContext);
 			$mailer=sfContext::getInstance()->getMailer();
 			$mailer->send($message);
 
@@ -326,6 +326,22 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 				}
 			return substr($try, 0, $maxLength-1) . '…';
         }
+		
+		public function getSalutation($sfContext=null)
+		{
+			$greeting=$this->getIsMale()?'Dear %malename%,':'Dear %femalename%,';
+
+			if ($sfContext)
+			{
+				$greeting=$sfContext->getI18n()->__($greeting, array('%femalename%'=>$this->getFirstName(), '%malename%'=>$this->getFirstName()));
+			}
+			else
+			{
+				$greeting = str_replace(array('%femalename%', '%malename%'), $this->getFirstName(), $greeting);
+			}
+			
+			return $greeting;
+		}
 		
         public function getUsername()
         {

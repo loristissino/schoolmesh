@@ -127,10 +127,10 @@ class profileActions extends sfActions
 				$this->profile->save();
 				
 				$this->getUser()->setFlash('notice',
-					$this->getContext()->getI18N()->__('User information updated.'). ' ' . $email_warning
+					$this->getContext()->getI18N()->__('User profile information updated.'). ' ' . $email_warning
 					);
 					
-//				$this->redirect('profile/editprofile');
+				$this->redirect('profile/editprofile');
 			}
 		}
 

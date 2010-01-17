@@ -147,7 +147,7 @@ CREATE TABLE `sf_guard_user_profile`
 	`gender` VARCHAR(1),
 	`email` VARCHAR(50),
 	`email_state` INTEGER default 0,
-	`email_verification_code` VARCHAR(32),
+	`email_verification_code` VARCHAR(40),
 	`birthdate` DATE,
 	`birthplace` VARCHAR(50),
 	`import_code` VARCHAR(20),
