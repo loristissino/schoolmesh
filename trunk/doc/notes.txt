@@ -1,3 +1,7 @@
+# Revision 405:
+
+Changed size of field EmailVerificationCode for sfGuardUserProfile table
+
 # Revision 395:
 
 Added tables about hints
