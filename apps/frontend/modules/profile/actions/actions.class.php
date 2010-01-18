@@ -65,13 +65,24 @@ class profileActions extends sfActions
 				$this->account=$profile->getAccountByType($type);
 				$this->forward404unless($this->account);
 				
-				$this->account->changePassword($params['password'], true);
+				/*FIXME This should be done with a specific Account-class method */
 				
-				$this->getUser()->setFlash('notice',
-					$this->getContext()->getI18N()->__('Password successfully changed.')
-					);
+				if (Authentication::checkSambaPassword($user->getUsername(), $params['current_password']))
+				{
+					$this->account->changePassword($params['password'], true);
 					
+					$this->getUser()->setFlash('notice',
+						$this->getContext()->getI18N()->__('Password successfully changed.')
+						);
+				}
+				else
+				{
+					$this->getUser()->setFlash('error',
+						$this->getContext()->getI18N()->__('Password could not be changed, due to authentication failure.')
+						);
+				}
 				$this->redirect('profile/viewaccount?type=' . $type);
+					
 			}
 			else
 			{

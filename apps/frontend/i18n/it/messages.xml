@@ -1511,6 +1511,10 @@
 </source>
         <target>Per convalidare il tuo indirizzo di posta elettronica, devi modificare il tuo account principale SchoolMesh</target>
       </trans-unit>
+	  <trans-unit id="404">
+        <source>Current password</source>
+        <target>Password corrente</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
