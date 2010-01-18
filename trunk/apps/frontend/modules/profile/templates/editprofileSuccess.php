@@ -57,6 +57,14 @@
 		</td>
 	</tr>
     <?php echo $form ?>
+	<?php if($profile->getEmail()!=''): ?>
+	<tr>
+		<th><label><?php echo __('Email validated?') ?></label></th>
+		<td>
+			<?php echo $profile->getEmailState()==sfGuardUserProfilePeer::EMAIL_VERIFIED ? __('Yes') : __('No') ?>
+		</td>
+	</tr>
+	<?php endif ?>
 	<tr>
       <td colspan="2">
          <input type="submit" name="save" value="<?php echo __('Save') ?>">
