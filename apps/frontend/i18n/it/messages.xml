@@ -1460,10 +1460,61 @@
       </trans-unit>
 	  <trans-unit id="391">
         <source>An email was sent to you to verify your email address.</source>
-        <target>Ti è stato spedito un messaggio di posta elettronica per verificare la correttezza dell'indirizzo.</target>
+        <target>Ti è stato spedito un messaggio di posta elettronica per verificare la correttezza dell'indirizzo.			</target>
+      </trans-unit>
+	  <trans-unit id="392">
+        <source>Sorry, the email address could not be validated.</source>
+        <target>La convalida dell'indirizzo di posta elettronica non è potuta avvenire.</target>
+      </trans-unit>
+	  <trans-unit id="393">
+        <source>Problem with email address validation</source>
+        <target>Problema con la convalida dell'indirizzo di posta elettronica</target>
+      </trans-unit>
+	  <trans-unit id="394">
+        <source>Email address validated</source>
+        <target>Indirizzo di posta elettronica convalidato</target>
+      </trans-unit>
+	  <trans-unit id="395">
+        <source>Your email address %emailaddress% has been successfully validated.</source>
+        <target>Il tuo indirizzo di posta elettronica %emailaddress% è stato convalidato.</target>
+      </trans-unit>
+	  <trans-unit id="396">
+        <source>Email validation</source>
+        <target>Convalida indirizzo email</target>
+      </trans-unit>
+	  <trans-unit id="397">
+        <source>Birthdate</source>
+        <target>Data di nascita</target>
+      </trans-unit>
+	  <trans-unit id="398">
+        <source>Birthplace</source>
+        <target>Luogo di nascita</target>
+      </trans-unit>
+	  <trans-unit id="399">
+        <source>Email validated?</source>
+        <target>Email convalidata?</target>
+      </trans-unit>
+	  <trans-unit id="400">
+        <source>Middle name</source>
+        <target>Secondo nome</target>
+      </trans-unit>
+	  <trans-unit id="401">
+        <source>Yes</source>
+        <target>Sì</target>
+      </trans-unit>
+	  <trans-unit id="402">
+        <source>No</source>
+        <target>No</target>
+      </trans-unit>
+	  <trans-unit id="403">
+        <source>To validate your email address, you must edit your SchoolMesh main account.
+</source>
+        <target>Per convalidare il tuo indirizzo di posta elettronica, devi modificare il tuo account principale SchoolMesh</target>
       </trans-unit>
     </body>
   </file>
 </xliff>
+
+
 
 

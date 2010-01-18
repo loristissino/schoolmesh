@@ -9,7 +9,7 @@
  */ 
 class sfGuardUserProfile extends BasesfGuardUserProfile
 {
-	
+		
 		public function getId()
 		{
 			return $this->getUserId();
@@ -24,9 +24,17 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$mailer=sfContext::getInstance()->getMailer();
 			$mailer->send($message);
 
-			$this->setEmailState(1);
+			$this->setEmailState(sfGuardUserProfilePeer::EMAIL_WAITINGVALIDATION);
 		}
 		
+		public function validateEmail()
+		{
+			$this
+			->setEmailState(sfGuardUserProfilePeer::EMAIL_VERIFIED)
+			->setEmailVerificationCode(null)
+			->save();
+		}
+				
 		public function addAccount(Account $account)
 		{
 /*			if (!$account instanceof Account)

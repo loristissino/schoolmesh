@@ -40,14 +40,25 @@ class contentActions extends sfActions
 	{
 		$this->forward404Unless($this->user=sfGuardUserProfilePeer::retrieveByUsername($request->getParameter('user')));		
 		
-		$this->forward404Unless($this->user->getProfile()->getEmailVerificationCode()==($request->getParameter('code')));
+		if ($this->user->getProfile()->getEmailVerificationCode()==($request->getParameter('code')))
+		{
+			$this->user->getProfile()->validateEmail();
+			$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Your email address %emailaddress% has been successfully validated.', array('%emailaddress%'=>$this->user->getProfile()->getEmail())));
+			$this->getUser()->setFlash('title', 'Email address validated');
+		}
+		else
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Sorry, the email address could not be validated.'));
+			$this->getUser()->setFlash('title', 'Problem with email address validation');
+
+		}
 		
-		$this->user->getProfile()
-		->setEmailState(2)
-		->setEmailVerificationCode(null)
-		->save();
+		return $this->redirect('content/emailvalidation');
 		
-//		$this->redirect('content', 'checkemail');
+	}
+
+	public function executeEmailvalidation(sfWebRequest $request)
+	{
 		
 	}
 

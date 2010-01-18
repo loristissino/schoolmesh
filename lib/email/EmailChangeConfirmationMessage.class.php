@@ -6,7 +6,14 @@ class EmailChangeConfirmationMessage extends ProjectBaseMessage
   {
     parent::__construct();
 	
-	$bodylines=file($this->getTemplateDirectory() . '/email_change_confirmation.txt');
+	$filename=$this->getTemplateDirectory() . '/email_change_confirmation.txt';
+	
+	if (!is_readable($filename))
+	{
+		throw new Exception ('File not readable: ' . $filename);
+	}
+	
+	$bodylines=file($filename);
 	
 	$subject=$bodylines[0];
 	
