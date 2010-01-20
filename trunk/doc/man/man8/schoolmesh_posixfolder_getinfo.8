@@ -1,0 +1,29 @@
+.TH SCHOOLMESH_POSIXFOLDER_GETINFO 8 "January 2010" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_posixfolder_getinfo - Get info about a posix user\[aq]s
+folder\[aq]s contents
+.SH SYNOPSIS
+.PP
+schoolmesh_posixfolder_getinfo \f[I]username\f[] path
+\f[I]directoryname\f[] schoolmesh_posixfolder_getinfo
+\f[I]username\f[] list \f[I]directoryname\f[]
+.SH DESCRIPTION
+.PP
+This script generates a list of pairs \f[I]key=value\f[] about a
+posix folder\. The user must exist\.
+.SH EXAMPLES
+.PP
+\f[CR]
+      schoolmesh_posixfolder_getinfo\ john\.test\ path\ \[aq]/\[aq]\ \ 
+      schoolmesh_posixfolder_getinfo\ john\.test\ list\ \[aq]mydocs\[aq]\ 
+\f[]
+.SH BUGS
+.PP
+Probably many\.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>\.
+.SH AUTHOR
+Loris Tissino (loris.tissino@mattiussilab.net)

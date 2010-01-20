@@ -1,0 +1,24 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Executes a symfony SchoolMesh task
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *task* *parameters*
+#@
+#@ # DESCRIPTION
+#@
+#@ This is a wrapper to execute symfony tasks without the need to change directory or specify or environment .
+#@
+#@ # EXAMPLES
+#@
+#@	{-} extract-info appointments --teacher john.doe
+
+cd /var/schoolmesh
+php symfony --application=frontend $@
