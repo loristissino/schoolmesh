@@ -93,6 +93,7 @@ for FILE in *
 		SECTION=${FILE#*.}
 		echo "Producing man page: $FILE (section $SECTION)..."
 		pandoc -s --write man $FILE -o ../man/man$SECTION/$FILE
+		chmod 644 ../man/man$SECTION/$FILE
 	done
 
 for i in 1 8

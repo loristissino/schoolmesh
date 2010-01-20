@@ -16,7 +16,13 @@ class ProjectBaseMessage extends Swift_Message
 	
 	if (sizeof($from)==0)
 	{
-		$from[sfConfig::get('app_mail_bot')]='SchoolMesh App Bot';
+		$appbot_address=sfConfig::get('app_mail_bot');
+		if ($appbot_address=='')
+		{
+			throw new Exception ('Application bot address not specified in your app.yml file');
+		}
+		
+		$from[$appbot_address]='SchoolMesh App Bot';
 	}
  
 	$this

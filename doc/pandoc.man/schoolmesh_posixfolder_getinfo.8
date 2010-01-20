@@ -1,0 +1,31 @@
+% SCHOOLMESH_POSIXFOLDER_GETINFO(8) Schoolmesh User Manuals
+% Loris Tissino (loris.tissino@mattiussilab.net)
+% January 2010
+
+# NAME
+
+schoolmesh\_posixfolder\_getinfo - Get info about a posix user's folder's contents
+
+# SYNOPSIS
+
+schoolmesh\_posixfolder\_getinfo *username* path *directoryname*
+schoolmesh\_posixfolder\_getinfo *username* list *directoryname*
+
+# DESCRIPTION
+
+This script generates a list of pairs *key=value* about a posix folder.
+The user must exist.
+
+# EXAMPLES
+
+	schoolmesh_posixfolder_getinfo john.test path '/'  
+	schoolmesh_posixfolder_getinfo john.test list 'mydocs' 
+
+# BUGS
+
+Probably many.
+
+# SEE ALSO
+
+The SchoolMesh project is described at <http://schoolmesh.mattiussilab.net/>.
+
