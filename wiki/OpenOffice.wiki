@@ -103,21 +103,17 @@ Può essere utile salvare il documento generato e utilizzare l'utility `schoolme
 
 Affinché il convertitore di documenti possa funzionare, è necessario che esso venga attivato da un utente che ha a disposizione una sessione X.
 
-Un possibile escamotage è il seguente:
+Un possibile escamotage (sotto GNOME) è il seguente:
 
-  # creare un account fittizio (es. _schoolmesh_) sul server
+  # creare un account fittizio (es. _unoconv_) sul server
   # effettuare il login con quell'account
-  # verificare che da quell'account sia possibile lanciare il convertitore `unoconv --listener --port 2002 &`
   # deselezionare tutti i programmi di avvio in _Preferenze/Sessioni_ 
-  # aggiungere, come unico programma d'avvio, _unoconv --listener --port 2002 &_
+  # aggiungere, come unico programma d'avvio, `schoolmesh_unoconv_launch` (che lancia _unoconv_ e poi blocca lo schermo, impedendo altre operazioni)
   # in _Amministrazione/Finestra di accesso_ abilitare l'accesso temporizzato (scheda _Sicurezza_) per l'utente fittizio creato
-
-Il server non dovrà essere utilizzato direttamente dopo l'accesso temporizzato.
 
 Alternative:
 
   # trovare un altro convertitore affidabile
   # ospitare il convertitore su un altro host
   # ospitare il convertitore su una macchina virtuale
-
 

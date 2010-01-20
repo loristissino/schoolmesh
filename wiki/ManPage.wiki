@@ -14,8 +14,8 @@ NAME
        application
 
 UTILITY LIST
-       schoolmesh_application_createtables  -  Create  empty  tables  for  the
-       database
+       schoolmesh_application_createtables - Create empty tables for the data
+       base
 
        schoolmesh_application_dumptables  -  Backup  data from the database in
        SQL format
@@ -80,11 +80,14 @@ UTILITY LIST
 
        schoolmesh_posixaccount_unlockuser - Unlock a user
 
-       schoolmesh_posixaccounts_list  - Get a list of posix users belonging to
+       schoolmesh_posixaccounts_list - Get a list of posix users belonging  to
        a specified group
 
-       schoolmesh_posixaccounts_quotachecks - Get a list of  users  specifying
+       schoolmesh_posixaccounts_quotachecks  -	Get a list of users specifying
        who of them exceeds their quota
+
+       schoolmesh_posixfolder_getinfo - Get info about a posix user's folder's
+       contents
 
        schoolmesh_sambaaccount_create - Create a samba account for a user
 
@@ -92,6 +95,10 @@ UTILITY LIST
 
        schoolmesh_sambaaccount_getinfo	-  Get info about the samba (SMB/CIFS)
        account of a user
+
+       schoolmesh_task_execute - Executes a symfony SchoolMesh task
+
+       schoolmesh_unoconv_launch - launch Unoconv and locks the screen at once
 
 DESCRIPTION
        These utilities are really  only  basic	wrapper  scripts  to  be  used
@@ -116,7 +123,7 @@ AUTHOR
 
 
 
-Schoolmesh utilities User ManualsNovember 2009			 SCHOOLMESH(8)
+Schoolmesh utilities User ManualsJanuary 2010			 SCHOOLMESH(8)
 }}}
 
 
@@ -129,8 +136,8 @@ SCHOOLMESH_APPLICATION_CREATETABLES(8)	SCHOOLMESH_APPLICATION_CREATETABLES(8)
 
 
 NAME
-       schoolmesh_application_createtables  -  Create  empty  tables  for  the
-       database
+       schoolmesh_application_createtables - Create empty tables for the data
+       base
 
 SYNOPSIS
        schoolmesh_application_createtables environment
@@ -144,6 +151,7 @@ WARNINGS
        backup before using it.
 
 EXAMPLES
+
 	     schoolmesh_application_createtables prod
 	     schoolmesh_application_createtables dev
 
@@ -159,7 +167,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 OctoberSCHOOLMESH_APPLICATION_CREATETABLES(8)
+Schoolmesh User Manuals 	 DecembeSCHOOLMESH_APPLICATION_CREATETABLES(8)
 }}}
 
 
@@ -185,6 +193,7 @@ DESCRIPTION
        schoolmesh_application_importtables(8).
 
 EXAMPLES
+
 	     schoolmesh_application_dumptables schoolmesh_prod mybackup
        file.sql
 
@@ -200,7 +209,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 October 2SCHOOLMESH_APPLICATION_DUMPTABLES(8)
+Schoolmesh User Manuals 	 January 2SCHOOLMESH_APPLICATION_DUMPTABLES(8)
 }}}
 
 
@@ -229,6 +238,7 @@ WARNINGS
        create the tables with schoolmesh_application_createtables(8).
 
 EXAMPLES
+
 	     schoolmesh_application_importtables schoolmesh myfile.sql
 	     schoolmesh_application_importtables schoolmesh_prod myfile.sql
 
@@ -244,7 +254,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 OctoberSCHOOLMESH_APPLICATION_IMPORTTABLES(8)
+Schoolmesh User Manuals 	 DecembeSCHOOLMESH_APPLICATION_IMPORTTABLES(8)
 }}}
 
 
@@ -270,6 +280,7 @@ WARNINGS
        backup before using it.
 
 EXAMPLES
+
 	     schoolmesh_application_setstate enabled prod
 	     schoolmesh_application_setstate disabled prod
 
@@ -285,7 +296,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 October 200SCHOOLMESH_APPLICATION_SETSTATE(8)
+Schoolmesh User Manuals 	 December 20SCHOOLMESH_APPLICATION_SETSTATE(8)
 }}}
 
 
@@ -318,6 +329,7 @@ WARNINGS
        Run at your own risk. New versions may introduce regressions.
 
 EXAMPLES
+
 	     schoolmesh_application_update~ go
 
 BUGS
@@ -365,6 +377,7 @@ WARNINGS
        Run at your own risk. New versions may introduce regressions.
 
 EXAMPLES
+
 	     schoolmesh_application_update go
 
 BUGS
@@ -379,7 +392,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 October 2009 SCHOOLMESH_APPLICATION_UPDATE(8)
+Schoolmesh User Manuals 	 December 2009SCHOOLMESH_APPLICATION_UPDATE(8)
 }}}
 
 
@@ -403,6 +416,7 @@ DESCRIPTION
        those defined in /etc/shells.
 
 EXAMPLES
+
 	     schoolmesh_loginaccount_changeshell john /bin/bash
 
 BUGS
@@ -417,7 +431,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 OctoberSCHOOLMESH_LOGINACCOUNT_CHANGESHELL(8)
+Schoolmesh User Manuals 	 DecembeSCHOOLMESH_LOGINACCOUNT_CHANGESHELL(8)
 }}}
 
 
@@ -441,6 +455,7 @@ DESCRIPTION
        If the user is not found, returns found=0.
 
 EXAMPLES
+
 	     schoolmesh_loginaccount_getinfo john
 
 BUGS
@@ -455,7 +470,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 October 200SCHOOLMESH_LOGINACCOUNT_GETINFO(8)
+Schoolmesh User Manuals 	 December 20SCHOOLMESH_LOGINACCOUNT_GETINFO(8)
 }}}
 
 
@@ -479,6 +494,7 @@ DESCRIPTION
        able on the system.
 
 EXAMPLES
+
 	     schoolmesh_loginaccount_getshells
 
 BUGS
@@ -516,6 +532,7 @@ DESCRIPTION
        This script changes the password of a user.
 
 EXAMPLES
+
 	     schoolmesh_loginaccount_setpassword john 89jka76_23A
 
 BUGS
@@ -530,7 +547,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 OctoberSCHOOLMESH_LOGINACCOUNT_SETPASSWORD(8)
+Schoolmesh User Manuals 	 DecembeSCHOOLMESH_LOGINACCOUNT_SETPASSWORD(8)
 }}}
 
 
@@ -554,6 +571,7 @@ DESCRIPTION
        able on the system.
 
 EXAMPLES
+
 	     schoolmesh_loginaccounts_getshells
 
 BUGS
@@ -568,7 +586,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 October SCHOOLMESH_LOGINACCOUNTS_GETSHELLS(8)
+Schoolmesh User Manuals 	 DecemberSCHOOLMESH_LOGINACCOUNTS_GETSHELLS(8)
 }}}
 
 
@@ -600,6 +618,7 @@ DESCRIPTION
        fice.org options dialog.
 
 EXAMPLES
+
 	     schoolmesh_odf_check ~/Desktop/myfile.odt 2 5218
 
 BUGS
@@ -614,7 +633,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 November 2009	       SCHOOLMESH_ODF_CHECK(8)
+Schoolmesh User Manuals 	 December 2009	       SCHOOLMESH_ODF_CHECK(8)
 }}}
 
 
@@ -641,6 +660,7 @@ WARNINGS
        tion and little privileges
 
 EXAMPLES
+
 	     schoolmesh_odf_converter start
 	     schoolmesh_odf_converter stop
 
@@ -656,7 +676,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 November 2009	   SCHOOLMESH_ODF_CONVERTER(8)
+Schoolmesh User Manuals 	 December 2009	   SCHOOLMESH_ODF_CONVERTER(8)
 }}}
 
 
@@ -680,6 +700,7 @@ DESCRIPTION
        account.
 
 EXAMPLES
+
 	     schoolmesh_posixaccount_changefullname john
 
 BUGS
@@ -694,7 +715,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	SepteSCHOOLMESH_POSIXACCOUNT_CHANGEFULLNAME(8)
+Schoolmesh User Manuals 	 DeceSCHOOLMESH_POSIXACCOUNT_CHANGEFULLNAME(8)
 }}}
 
 
@@ -717,6 +738,7 @@ DESCRIPTION
        Use this script to change the primary group of a user.
 
 EXAMPLES
+
 	     schoolmesh_posixaccount_changegroup john students
 
 BUGS
@@ -731,7 +753,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 OctoberSCHOOLMESH_POSIXACCOUNT_CHANGEGROUP(8)
+Schoolmesh User Manuals 	 DecembeSCHOOLMESH_POSIXACCOUNT_CHANGEGROUP(8)
 }}}
 
 
@@ -759,6 +781,7 @@ WARNINGS
        one, will be deleted, but not recreated.
 
 EXAMPLES
+
 	     schoolmesh_posixaccount_changeusername johnn john
 
 BUGS
@@ -773,7 +796,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 OctoSCHOOLMESH_POSIXACCOUNT_CHANGEUSERNAME(8)
+Schoolmesh User Manuals 	 DeceSCHOOLMESH_POSIXACCOUNT_CHANGEUSERNAME(8)
 }}}
 
 
@@ -796,6 +819,7 @@ DESCRIPTION
        the creation.
 
 EXAMPLES
+
 	     schoolmesh_posixaccount_create john students 'John Doe'
 
 BUGS
@@ -810,7 +834,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 October 2009SCHOOLMESH_POSIXACCOUNT_CREATE(8)
+Schoolmesh User Manuals 	 December 200SCHOOLMESH_POSIXACCOUNT_CREATE(8)
 }}}
 
 
@@ -835,6 +859,7 @@ DESCRIPTION
        the immutable flag.
 
 EXAMPLES
+
 	     schoolmesh_posixaccount_createbasefolder john
 
 BUGS
@@ -849,7 +874,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 OcSCHOOLMESH_POSIXACCOUNT_CREATEBASEFOLDER(8)
+Schoolmesh User Manuals 	 DeSCHOOLMESH_POSIXACCOUNT_CREATEBASEFOLDER(8)
 }}}
 
 
@@ -875,6 +900,7 @@ DESCRIPTION
        and 711 permissions.
 
 EXAMPLES
+
 	     schoolmesh_posixaccount_createhomedir john
 
 BUGS
@@ -889,7 +915,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 OctobSCHOOLMESH_POSIXACCOUNT_CREATEHOMEDIR(8)
+Schoolmesh User Manuals 	 DecemSCHOOLMESH_POSIXACCOUNT_CREATEHOMEDIR(8)
 }}}
 
 
@@ -913,6 +939,7 @@ DESCRIPTION
        If the user is not found, returns found=0.
 
 EXAMPLES
+
 	     schoolmesh_posixaccount_getinfo john
 
 BUGS
@@ -927,7 +954,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 October 200SCHOOLMESH_POSIXACCOUNT_GETINFO(8)
+Schoolmesh User Manuals 	 December 20SCHOOLMESH_POSIXACCOUNT_GETINFO(8)
 }}}
 
 
@@ -949,6 +976,7 @@ DESCRIPTION
        Use this script to lock a user.
 
 EXAMPLES
+
 	     schoolmesh_posixaccount_lockuser john
 
 BUGS
@@ -963,7 +991,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 October 20SCHOOLMESH_POSIXACCOUNT_LOCKUSER(8)
+Schoolmesh User Manuals 	 December 2SCHOOLMESH_POSIXACCOUNT_LOCKUSER(8)
 }}}
 
 
@@ -988,6 +1016,7 @@ DESCRIPTION
        using administrative privileges).
 
 EXAMPLES
+
 	     schoolmesh_posixaccount_quotausercheck john
 
 BUGS
@@ -1002,7 +1031,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 OctoSCHOOLMESH_POSIXACCOUNT_QUOTAUSERCHECK(8)
+Schoolmesh User Manuals 	 DeceSCHOOLMESH_POSIXACCOUNT_QUOTAUSERCHECK(8)
 }}}
 
 
@@ -1026,6 +1055,7 @@ DESCRIPTION
        the basefolder of a user.
 
 EXAMPLES
+
 	     schoolmesh_posixaccount_repairbasefolder john
 
 BUGS
@@ -1040,7 +1070,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 OcSCHOOLMESH_POSIXACCOUNT_REPAIRBASEFOLDER(8)
+Schoolmesh User Manuals 	 DeSCHOOLMESH_POSIXACCOUNT_REPAIRBASEFOLDER(8)
 }}}
 
 
@@ -1059,17 +1089,18 @@ SYNOPSIS
        schoolmesh_posixaccount_repairhomedir username
 
 DESCRIPTION
-       Use this script to fix the permissions and the extended attributes  for
+       Use  this script to fix the permissions and the extended attributes for
        the home directory of a user.
 
 EXAMPLES
+
 	     schoolmesh_posixaccount_repairhomedir john
 
 BUGS
        Probably many.
 
 SEE ALSO
-       The  SchoolMesh	project  is described at <http://schoolmesh.mattiussi
+       The SchoolMesh project is  described  at  <http://schoolmesh.mattiussi
        lab.net/>.
 
 AUTHOR
@@ -1077,7 +1108,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 OctobSCHOOLMESH_POSIXACCOUNT_REPAIRHOMEDIR(8)
+Schoolmesh User Manuals 	 DecemSCHOOLMESH_POSIXACCOUNT_REPAIRHOMEDIR(8)
 }}}
 
 
@@ -1101,6 +1132,7 @@ DESCRIPTION
        in KiB. The number of files is the number of i-nodes.
 
 EXAMPLES
+
 	     schoolmesh_posixaccount_setquota john 80000 100000 5000 6000
 
 BUGS
@@ -1115,7 +1147,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 October 20SCHOOLMESH_POSIXACCOUNT_SETQUOTA(8)
+Schoolmesh User Manuals 	 December 2SCHOOLMESH_POSIXACCOUNT_SETQUOTA(8)
 }}}
 
 
@@ -1139,6 +1171,7 @@ DESCRIPTION
        You can decide to check only primary groups, only secondary, or both.
 
 EXAMPLES
+
 	     schoolmesh_posixaccounts_list primary students
 	     schoolmesh_posixaccounts_list secondary students
 	     schoolmesh_posixaccounts_list all students
@@ -1155,7 +1188,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 October 2009 SCHOOLMESH_POSIXACCOUNTS_LIST(8)
+Schoolmesh User Manuals 	 January 2010 SCHOOLMESH_POSIXACCOUNTS_LIST(8)
 }}}
 
 
@@ -1180,6 +1213,7 @@ DESCRIPTION
        ondary, or both.
 
 EXAMPLES
+
 	     schoolmesh_posixaccounts_quotachecks primary students
 	     schoolmesh_posixaccounts_quotachecks secondary students
 	     schoolmesh_posixaccounts_quotachecks all students
@@ -1196,7 +1230,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 OctobeSCHOOLMESH_POSIXACCOUNTS_QUOTACHECKS(8)
+Schoolmesh User Manuals 	 DecembSCHOOLMESH_POSIXACCOUNTS_QUOTACHECKS(8)
 }}}
 
 
@@ -1218,6 +1252,7 @@ DESCRIPTION
        Use this script to unlock a user.
 
 EXAMPLES
+
 	     schoolmesh_posixaccount_unlockuser john
 
 BUGS
@@ -1232,7 +1267,48 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 October SCHOOLMESH_POSIXACCOUNT_UNLOCKUSER(8)
+Schoolmesh User Manuals 	 DecemberSCHOOLMESH_POSIXACCOUNT_UNLOCKUSER(8)
+}}}
+
+
+
+== schoolmesh_posixfolder_getinfo ==
+
+{{{
+SCHOOLMESH_POSIXFOLDER_GETINFO(8)	     SCHOOLMESH_POSIXFOLDER_GETINFO(8)
+
+
+
+NAME
+       schoolmesh_posixfolder_getinfo - Get info about a posix user's folder's
+       contents
+
+SYNOPSIS
+       schoolmesh_posixfolder_getinfo	  username     path	 directoryname
+       schoolmesh_posixfolder_getinfo username list directoryname
+
+DESCRIPTION
+       This  script  generates a list of pairs key=value about a posix folder.
+       The user must exist.
+
+EXAMPLES
+
+	     schoolmesh_posixfolder_getinfo john.test path '/'
+	     schoolmesh_posixfolder_getinfo john.test list 'mydocs'
+
+BUGS
+       Probably many.
+
+SEE ALSO
+       The SchoolMesh project is  described  at  <http://schoolmesh.mattiussi
+       lab.net/>.
+
+AUTHOR
+       Loris Tissino (loris.tissino@mattiussilab.net)
+
+
+
+Schoolmesh User Manuals 	 January 2010SCHOOLMESH_POSIXFOLDER_GETINFO(8)
 }}}
 
 
@@ -1255,9 +1331,11 @@ DESCRIPTION
        the creation.
 
 EXAMPLES
+
 	     schoolmesh_sambaaccount_create john 'John Doe' ck33LmrdH_45
 
 TO DO
+
 	     Passwords should not be passed on the com
        mand line. This must be modified,
 
@@ -1275,7 +1353,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 October 2009SCHOOLMESH_SAMBAACCOUNT_CREATE(8)
+Schoolmesh User Manuals 	 December 200SCHOOLMESH_SAMBAACCOUNT_CREATE(8)
 }}}
 
 
@@ -1297,6 +1375,7 @@ DESCRIPTION
        Use this script to delete a samba account.
 
 EXAMPLES
+
 	     schoolmesh_sambaaccount_delete john
 
 BUGS
@@ -1311,7 +1390,7 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 October 2009SCHOOLMESH_SAMBAACCOUNT_DELETE(8)
+Schoolmesh User Manuals 	 December 200SCHOOLMESH_SAMBAACCOUNT_DELETE(8)
 }}}
 
 
@@ -1335,6 +1414,7 @@ DESCRIPTION
        (SMB/CIFS) account. If the user is not found, returns found=0.
 
 EXAMPLES
+
 	     schoolmesh_sambaaccount_getinfo john
 
 BUGS
@@ -1349,7 +1429,89 @@ AUTHOR
 
 
 
-Schoolmesh User Manuals 	 October 200SCHOOLMESH_SAMBAACCOUNT_GETINFO(8)
+Schoolmesh User Manuals 	 December 20SCHOOLMESH_SAMBAACCOUNT_GETINFO(8)
+}}}
+
+
+
+== schoolmesh_task_execute ==
+
+{{{
+SCHOOLMESH_TASK_EXECUTE(8)			    SCHOOLMESH_TASK_EXECUTE(8)
+
+
+
+NAME
+       schoolmesh_task_execute - Executes a symfony SchoolMesh task
+
+SYNOPSIS
+       schoolmesh_task_execute task parameters
+
+DESCRIPTION
+       This  is  a wrapper to execute symfony tasks without the need to change
+       directory or specify or environment .
+
+EXAMPLES
+
+	     schoolmesh_task_execute extract-info appoint
+       ments --teacher john.doe
+
+BUGS
+       Probably many.
+
+SEE ALSO
+       The  SchoolMesh	project  is described at <http://schoolmesh.mattiussi
+       lab.net/>.
+
+AUTHOR
+       Loris Tissino (loris.tissino@mattiussilab.net)
+
+
+
+Schoolmesh User Manuals 	 January 2010	    SCHOOLMESH_TASK_EXECUTE(8)
+}}}
+
+
+
+== schoolmesh_unoconv_launch ==
+
+{{{
+SCHOOLMESH_UNOCONV_LAUNCH(8)			  SCHOOLMESH_UNOCONV_LAUNCH(8)
+
+
+
+NAME
+       schoolmesh_unoconv_launch - launch Unoconv and locks the screen at once
+
+SYNOPSIS
+       schoolmesh_unoconv_launch
+
+DESCRIPTION
+       This  script  should  be  used by an unprivileged user just in order to
+       have a working instance of Unoconv converter running and  listening  to
+       client unoconv calls.
+
+       The  user might have an automatic login, and therefore the script locks
+       the screen immediately after.
+
+       WARNINGS
+
+       This assumes that the user uses GNOME. For other desktop  environments,
+       the command to lock the screen must be found.
+
+BUGS
+       Probably many.
+
+SEE ALSO
+       The  SchoolMesh	project  is described at <http://schoolmesh.mattiussi
+       lab.net/>.
+
+AUTHOR
+       Loris Tissino (loris.tissino@mattiussilab.net)
+
+
+
+Schoolmesh User Manuals 	 December 2009	  SCHOOLMESH_UNOCONV_LAUNCH(8)
 }}}
 
 
