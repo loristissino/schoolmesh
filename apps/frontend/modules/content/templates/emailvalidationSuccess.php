@@ -6,9 +6,3 @@
 <?php if ($sf_user->hasFlash('error')): ?>
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
-
-<?php if(!$sf_user->hasFlash('title')): ?>
-<p><?php echo __('To validate your email address, you must edit your SchoolMesh main account.') ?></p>
-<?php endif ?>
-
-

@@ -98,7 +98,7 @@ for FILE in *
 
 for i in 1 8
 	do
-		sudo cp -v /var/schoolmesh/doc/man/man$i/* /usr/local/share/man/man$i/ 2>/dev/null
+		sudo cp -v --preserve=all /var/schoolmesh/doc/man/man$i/* /usr/local/share/man/man$i/ 2>/dev/null
 	done
 
 rm $FILELIST
