@@ -59,6 +59,8 @@ all:
      secure_module:          sfGuardAuth
      secure_action:          secure
 
+     error_404_module:       content
+     error_404_action:       error404
 
 #all:
 #  .actions:
