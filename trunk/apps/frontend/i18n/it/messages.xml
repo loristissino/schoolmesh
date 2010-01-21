@@ -1521,7 +1521,7 @@
       </trans-unit>
 	  <trans-unit id="406">
         <source>Seems like you requested a resource that is not available, or for which you do not have permissions.</source>
-        <target>A quanto sembra, hai richiesto una risorsa che non è disponibile, o per la quale non godi dei permessi adeguati</target>
+        <target>A quanto sembra, hai richiesto una risorsa che non è disponibile, o per la quale non godi dei permessi adeguati.</target>
       </trans-unit>
     </body>
   </file>
