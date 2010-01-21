@@ -17,7 +17,7 @@ class schoolmeshShowAccountsTask extends sfBaseTask
     ));
 
     $this->namespace        = 'schoolmesh';
-    $this->name             = 'showAccounts';
+    $this->name             = 'show-accounts';
     $this->briefDescription = 'Shows the account of a user';
     $this->detailedDescription = "";
   }

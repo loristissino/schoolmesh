@@ -17,7 +17,7 @@ class schoolmeshAddAccountsTask extends sfBaseTask
     ));
 
     $this->namespace        = 'schoolmesh';
-    $this->name             = 'addAccounts';
+    $this->name             = 'add-accounts';
     $this->briefDescription = 'Adds a pair of account to a user';
     $this->detailedDescription = "";
   }

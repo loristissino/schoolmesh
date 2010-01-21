@@ -17,7 +17,7 @@ class schoolmeshAddPermissionTask extends sfBaseTask
     ));
 
     $this->namespace        = 'schoolmesh';
-    $this->name             = 'addPermission';
+    $this->name             = 'add-permission';
     $this->briefDescription = 'Adds a permission to a user';
     $this->detailedDescription = <<<EOF
 The [schoolmesh:hello|INFO] task does things.

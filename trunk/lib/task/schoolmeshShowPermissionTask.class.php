@@ -17,7 +17,7 @@ class schoolmeshShowPermissionTask extends sfBaseTask
     ));
 
     $this->namespace        = 'schoolmesh';
-    $this->name             = 'showPermission';
+    $this->name             = 'show-permission';
     $this->briefDescription = 'Shows if a user has a permission';
     $this->detailedDescription = <<<EOF
 The [schoolmesh:hello|INFO] task does things.
