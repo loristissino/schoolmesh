@@ -926,7 +926,7 @@ public function getWorkflowLogs()
 	}
 	
 	
-	public function getOdf($doctype, sfContext $sfContext=null, $template='')
+	public function getOdf($doctype, sfContext $sfContext=null, $template='', $complete=true)
 	{
 		
 		if ($template=='')
@@ -968,6 +968,8 @@ public function getWorkflowLogs()
 				$wpinfo->getWpinfoType()->getState()<=$this->getState()
 				&&
 				$wpinfo->getContent()
+				&&
+				(!$wpinfo->getWpinfoType()->getIsReserved() || $complete)
 				)
 			{
 				$infos->infoTitle($wpinfo->getWpinfoType()->getTitle());

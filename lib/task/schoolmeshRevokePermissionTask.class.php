@@ -17,7 +17,7 @@ class schoolmeshRevokePermissionTask extends sfBaseTask
     ));
 
     $this->namespace        = 'schoolmesh';
-    $this->name             = 'revokePermission';
+    $this->name             = 'revoke-permission';
     $this->briefDescription = 'Revokes a permission to a user';
     $this->detailedDescription = "";
   }

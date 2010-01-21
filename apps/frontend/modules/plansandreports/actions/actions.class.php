@@ -83,8 +83,29 @@ public function executeBatch(sfWebRequest $request)
 			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least a document.'));
 			$this->redirect('plansandreports/list');
 		}
-	
+		
 	$number=0;
+		
+	if ($action=='Publish')
+	{
+		foreach ($workplans as $workplan)
+		{
+			$filename = sprintf('/tmp/%s_%s_%s.odt',
+					$workplan->getOwner()->getUsername(),
+					$workplan->getSchoolclassId(),
+					$workplan->getSubject()->getDescription()
+					);
+			$odf=$workplan->getOdf('odt', $this->getContext(), 'workplan.odt', false);
+			$odf->saveFile();
+			copy($odf->getFileName(), $filename);
+			$number++;
+			unset($odf);
+		}
+		$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('The requested documents (%number%) have been published.', array('%number%'=>$number)));
+		return $this->redirect('plansandreports/list');
+
+	}
+	
     foreach ($workplans as $workplan)
     {
 		$result = $workplan->$action($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions());
