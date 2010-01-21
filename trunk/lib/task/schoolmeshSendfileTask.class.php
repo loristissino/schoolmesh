@@ -55,12 +55,12 @@ EOF;
 	}
 	try
 	{
-		$message=ProjectConfiguration::getMailer()
+		$message=$this->getMailer()
 		->compose($from, $to, $subject, '')
 		->attach(Swift_Attachment::fromPath($file))
 		;
 		
-		ProjectConfiguration::getMailer()->send($message);
+		$this->getMailer()->send($message);
 	}
 	catch (Exception $e)
 	{

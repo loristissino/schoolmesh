@@ -21,10 +21,12 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 //			$this->addSystemAlert('should send email verification');
 
 			$message=new EmailChangeConfirmationMessage($this, $sfContext);
-			$mailer=sfContext::getInstance()->getMailer();
+			$mailer=$sfContext->getMailer();
 			$mailer->send($message);
 
 			$this->setEmailState(sfGuardUserProfilePeer::EMAIL_WAITINGVALIDATION);
+			
+			return $this;
 		}
 		
 		public function validateEmail()
@@ -33,6 +35,41 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			->setEmailState(sfGuardUserProfilePeer::EMAIL_VERIFIED)
 			->setEmailVerificationCode(null)
 			->save();
+			
+			return $this;
+		}
+		
+		public function getHasValidatedEmail()
+		{
+			return $this->getEmailState()==sfGuardUserProfilePeer::EMAIL_VERIFIED;
+		}
+		
+		
+		public function sendWorkflowConfirmationMessage($sfContext, $base, $arguments)
+		{
+			// This is used to send different kinds of messages to the user
+			
+
+			
+			if ($this->getHasValidatedEmail())
+			{
+				try
+				{
+					$message=new WorkflowConfirmationMessage($this, $sfContext, $base, $arguments);
+					$sfContext->getMailer()
+					->send($message);
+					return true;
+				}
+				catch (Exception $e)
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
+			
 		}
 				
 		public function addAccount(Account $account)

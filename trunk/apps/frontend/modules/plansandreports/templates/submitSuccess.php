@@ -15,7 +15,11 @@
 <p><strong><?php echo __('Congratulations.') ?></strong>
 <p><?php echo sprintf(__('The document «%s» was successfully submitted.'), $workplan) ?><br />
 <?php echo __('It must now be administratively checked and then approved by the schoolmaster.') ?><br />
-<?php echo sprintf(__('A confirm message has been sent to your email address %s'), $sf_user->getProfile()->getEmail()) ?> <em>(<?php echo __('Not implemented yet') ?>)</em></p>
+
+<?php if($sf_user->hasFlash('mail_sent_to')): ?>
+<?php echo __('A confirmation message has been sent to your address %email%', array('%email%'=>$sf_user->getFlash('mail_sent_to'))) ?>
+<?php endif ?>
+</p>
 
 <h2><?php echo __("Workflow") ?></h2>
 

@@ -10,6 +10,7 @@ grep -v 'apps/backend/config/factories.yml' | \
 grep -v 'config/databases.yml' | \
 grep -v 'config/schoolmesh.rc' | \
 grep -v 'templates/email/email_change_confirmation.txt' | \
+grep -v 'templates/email/document_submission.txt' | \
 sed 's/^?      //'
 
 

@@ -200,13 +200,6 @@ SET `is_editable` = ' . $newstate . '
 WHERE `appointment`.`id` = ' . $this->getId();
 
 
-ob_start();
-
-echo "$sql\n";
-
-$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
-
-
 $con->query($sql);
 		
 		
@@ -614,7 +607,7 @@ $con->query($sql);
 		return WptoolAppointmentPeer::countToolsOfTypeForAppointment($typeId, $this->getId());
 		}
 
-	public function teacherSubmit()
+	public function teacherSubmit(sfContext $sfContext=null)
 	{
 
 	$result=Array();
@@ -637,6 +630,21 @@ $con->query($sql);
 			$result['result']='notice';
 			$result['message']=$steps[$this->getState()]['owner']['submitDoneAction'];
 			$this->addEvent($this->getOwner()->getId(), $steps[$this->getState()]['owner']['submitDoneAction'], $steps[$this->getState()]['owner']['submitNextState']);
+			
+			if ($this->getOwner()->getProfile()->sendWorkflowConfirmationMessage($sfContext, 'document_submission',
+				array(
+					'%document_id%'=>$this->getId(),
+					'%document_state%'=>$sfContext->getI18N()->__($steps[$this->getState()]['stateDescription']),
+					'%document_description%'=>$this->getDescription(),
+				)
+			))
+			{
+				$result['mail_sent_to']=$this->getOwner()->getProfile()->getEmail();
+			}
+			else
+			{
+				$result['mail_sent_to']=false;
+			}
 		}
 	else
 		{

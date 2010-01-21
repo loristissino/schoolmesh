@@ -244,13 +244,17 @@ public function executeBatch(sfWebRequest $request)
 	
 	$this->forward404Unless($this->workplan->isOwnedBy($this->getUser()->getProfile()->getUserId()));
 	
-	$result=$this->workplan->teacherSubmit();
+	$result=$this->workplan->teacherSubmit($this->getContext());
 	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+	if (array_key_exists('mail_sent_to', $result))
+	{
+		$this->getUser()->setFlash('mail_sent_to', $result['mail_sent_to']);
+	}
 	
-	if (isset($result['checkList']))
-		{
-			$this->checkList = $result['checkList'];
-		}
+	if (array_key_exists('checkList', $result))
+	{
+		$this->checkList = $result['checkList'];
+	}
 		
 	$this->steps=Workflow::getWpfrSteps();
 	
