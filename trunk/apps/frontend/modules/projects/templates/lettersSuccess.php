@@ -3,7 +3,7 @@
 	__("Projects")
 	)
 	
-	?><h1>Mail</h1>
+	?><h1><?php echo __("Projects")?></h1>
 
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
@@ -12,3 +12,8 @@
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
 
+<pre>
+<?php echo $text ?>
+</pre>
+
+<p><?php echo __('Produced %number% letters', array('%number%'=>$number)); ?></p>

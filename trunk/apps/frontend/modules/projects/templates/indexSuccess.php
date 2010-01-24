@@ -42,3 +42,15 @@
 <p><?php echo __('No projects defined') ?></p>
 <?php endif ?>
 </div>
+
+
+
+<hr />
+
+<?php echo link_to(
+	__('Get Letters'),
+	url_for('projects/letters')
+	)
+?>
+
+

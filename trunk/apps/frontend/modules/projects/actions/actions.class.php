@@ -22,7 +22,30 @@ class projectsActions extends sfActions
    $this->steps=Array();
 	}
 	
-	
+  public function executeLetters(sfWebRequest $request)
+	{
+		$this->text='';
+		$this->projects=SchoolprojectPeer::retrieveAllForYear(sfConfig::get('app_config_current_year'));
+		
+		$number=0;
+		foreach($this->projects as $project)
+		{
+			$filename = sprintf('/tmp/projects/%s_%d.odt',
+				$project->getsfGuardUser()->getUsername(),
+				$project->getId()
+				);
+			$odf=$project->getOdf('odt', $this->getContext(), 'project_resume.odt', false);
+			$odf->saveFile();
+			copy($odf->getFileName(), $filename);
+			$number++;
+			unset($odf);
+			
+			$this->text.=$filename . "\n";
+			
+		}
+		$this->number=$number;
+		
+	}
 	
   public function executeEdit(sfWebRequest $request)
   {
@@ -104,16 +127,5 @@ class projectsActions extends sfActions
 	}
    }  
 	
-
-	public function executeMail(sfWebRequest $request)
-	{
-		$this->getMailer()->composeAndSend(
-		'loris.tissino@gmail.com',
-		'loris@tissino.it',
-		'My Subject',
-		'My Body'
-		);	
-		
-	}
 
 }
