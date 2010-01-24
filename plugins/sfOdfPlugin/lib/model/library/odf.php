@@ -82,7 +82,9 @@ class Odf
      * @throws OdfException
      * @return odf
      */
-    public function setVars($key, $value, $encode = true, $charset = 'ISO-8859')
+    public function setVars($key, $value, $encode = true, $charset = 'UTF-8')
+	/* Loris' patch -- changed the default, set to UTF-8 */
+
     {
 		// begin Loris' patch --
 		$found=false;
