@@ -25,7 +25,7 @@ abstract class BaseSchoolprojectPeer {
 	const TM_CLASS = 'SchoolprojectTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 7;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -47,9 +47,6 @@ abstract class BaseSchoolprojectPeer {
 
 	/** the column name for the DESCRIPTION field */
 	const DESCRIPTION = 'schoolproject.DESCRIPTION';
-
-	/** the column name for the NOTES field */
-	const NOTES = 'schoolproject.NOTES';
 
 	/** the column name for the HOURS_APPROVED field */
 	const HOURS_APPROVED = 'schoolproject.HOURS_APPROVED';
@@ -77,11 +74,11 @@ abstract class BaseSchoolprojectPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'ProjCategoryId', 'YearId', 'UserId', 'Title', 'Description', 'Notes', 'HoursApproved', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'projCategoryId', 'yearId', 'userId', 'title', 'description', 'notes', 'hoursApproved', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::PROJ_CATEGORY_ID, self::YEAR_ID, self::USER_ID, self::TITLE, self::DESCRIPTION, self::NOTES, self::HOURS_APPROVED, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'proj_category_id', 'year_id', 'user_id', 'title', 'description', 'notes', 'hours_approved', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'ProjCategoryId', 'YearId', 'UserId', 'Title', 'Description', 'HoursApproved', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'projCategoryId', 'yearId', 'userId', 'title', 'description', 'hoursApproved', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::PROJ_CATEGORY_ID, self::YEAR_ID, self::USER_ID, self::TITLE, self::DESCRIPTION, self::HOURS_APPROVED, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'proj_category_id', 'year_id', 'user_id', 'title', 'description', 'hours_approved', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -91,11 +88,11 @@ abstract class BaseSchoolprojectPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProjCategoryId' => 1, 'YearId' => 2, 'UserId' => 3, 'Title' => 4, 'Description' => 5, 'Notes' => 6, 'HoursApproved' => 7, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'projCategoryId' => 1, 'yearId' => 2, 'userId' => 3, 'title' => 4, 'description' => 5, 'notes' => 6, 'hoursApproved' => 7, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PROJ_CATEGORY_ID => 1, self::YEAR_ID => 2, self::USER_ID => 3, self::TITLE => 4, self::DESCRIPTION => 5, self::NOTES => 6, self::HOURS_APPROVED => 7, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'proj_category_id' => 1, 'year_id' => 2, 'user_id' => 3, 'title' => 4, 'description' => 5, 'notes' => 6, 'hours_approved' => 7, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProjCategoryId' => 1, 'YearId' => 2, 'UserId' => 3, 'Title' => 4, 'Description' => 5, 'HoursApproved' => 6, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'projCategoryId' => 1, 'yearId' => 2, 'userId' => 3, 'title' => 4, 'description' => 5, 'hoursApproved' => 6, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PROJ_CATEGORY_ID => 1, self::YEAR_ID => 2, self::USER_ID => 3, self::TITLE => 4, self::DESCRIPTION => 5, self::HOURS_APPROVED => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'proj_category_id' => 1, 'year_id' => 2, 'user_id' => 3, 'title' => 4, 'description' => 5, 'hours_approved' => 6, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -171,7 +168,6 @@ abstract class BaseSchoolprojectPeer {
 		$criteria->addSelectColumn(SchoolprojectPeer::USER_ID);
 		$criteria->addSelectColumn(SchoolprojectPeer::TITLE);
 		$criteria->addSelectColumn(SchoolprojectPeer::DESCRIPTION);
-		$criteria->addSelectColumn(SchoolprojectPeer::NOTES);
 		$criteria->addSelectColumn(SchoolprojectPeer::HOURS_APPROVED);
 	}
 

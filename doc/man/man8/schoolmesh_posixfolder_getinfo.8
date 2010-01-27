@@ -12,6 +12,10 @@ schoolmesh_posixfolder_getinfo \f[I]username\f[] path
 .PP
 This script generates a list of pairs \f[I]key=value\f[] about a
 posix folder\. The user must exist\.
+.SH WARNINGS
+.PP
+The user who runs this (typically, www-data or apache) must be
+allowed to run commands on behalf of other users (through sudo)\.
 .SH EXAMPLES
 .PP
 \f[CR]

@@ -21,7 +21,6 @@ abstract class BaseSchoolprojectForm extends BaseFormPropel
       'user_id'          => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => false)),
       'title'            => new sfWidgetFormInputText(),
       'description'      => new sfWidgetFormInputText(),
-      'notes'            => new sfWidgetFormTextarea(),
       'hours_approved'   => new sfWidgetFormInputText(),
     ));
 
@@ -32,7 +31,6 @@ abstract class BaseSchoolprojectForm extends BaseFormPropel
       'user_id'          => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id')),
       'title'            => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'description'      => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'notes'            => new sfValidatorString(array('required' => false)),
       'hours_approved'   => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
     ));
 
