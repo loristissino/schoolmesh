@@ -214,36 +214,29 @@ class Generic{
 			return ltrim(rtrim($str));
 		}
 		
-		static public function executeCommand($command, $withSudo=false)
+		static public function executeCommand($command, $sudoUser=false)
 		{
 			$info=array();
 			$result=array();
 			$return_var=0;
 			
-			$command='LANG=it_IT.utf-8; ' . ($withSudo? 'sudo ':'') . 'schoolmesh_' . $command;
+			$command='LANG=it_IT.utf-8; ' . ($sudoUser? 'sudo -u ' . $sudoUser . ' ' :'') . 'schoolmesh_' . $command;
 			
-			// FIXME: this is needed, but should be more general than it_IT.utf8
+			// FIXME: this is needed, as it should be more general than it_IT.utf8
 			exec($command, $result, $return_var);
-/*			
-ob_start();
 
-echo "executed: $command\ngot\n";
-print_r($result);
-echo "return var: $return_var\n";
-
-fwrite(fopen('lorislog.txt', 'a'), ob_get_contents());fclose($f);ob_end_clean();
-*/
-
-if ($return_var!=0)
-{
-	throw new Exception('Could not execute command '. $command . ' (got: '. serialize($result) . ')');
-}
+			if ($return_var!=0)
+			{
+				throw new Exception('Could not execute command '. $command . ' (got: '. serialize($result) . ')');
+			}
 
 			foreach($result as $line)
 			{
-				if (strpos($line, '='))
+				$pos=strpos($line, '=');
+				if ($pos)
 				{
-					list($key, $value)=explode('=', $line);
+					$key=substr($line, 0, $pos);
+					$value=substr($line, $pos+1);
 					$info[$key]=$value;
 				}
 			}

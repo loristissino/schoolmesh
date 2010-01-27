@@ -17,6 +17,11 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ This script generates a list of pairs *key=value* about a posix folder.
 #@ The user must exist.
+#@ 
+#@ # WARNINGS
+#@
+#@ The user who runs this (typically, www-data or apache) must be allowed
+#@ to run commands on behalf of other users (through sudo).
 #@
 #@ # EXAMPLES
 #@
@@ -37,19 +42,27 @@ fi
 checkUsername $USERNAME
 checkOneOf $COMMAND path list
 
-sudo /usr/bin/test -d $DIRECTORYNAME
+sudo /usr/bin/test -d "$DIRECTORYNAME"
 
 if [[ $? -ne 0 ]]; then
 	msg_failed 'Not a directory'
 	exit 23
 fi
 
+TEMPFILE=$(mktemp)
+
 case $COMMAND in
 	path)
 		echo found=1
 		;;
 	list)
-		echo CONTROLLO $DIRECTORYNAME
-		LANG=C sudo /usr/bin/find $DIRECTORYNAME -maxdepth 1 -mindepth 1 -exec stat -c 'FILE%i=%F:%s:%Y:%n' {} \; | sed "s|$SUBSTITUTION||" 
+		LANG=C sudo -u $USERNAME /usr/bin/find "$DIRECTORYNAME" -maxdepth 1 -mindepth 1 > $TEMPFILE
+		IFS=$'\n'
+		for FILE in $(cat $TEMPFILE)
+			do
+				LANG=C sudo -u $USERNAME /usr/bin/stat "$FILE" -c 'FILE%i=%F:%s:%Y:%n' | sed "s|$SUBSTITUTION||" 
+			done
 		;;
 esac
+
+rm $TEMPFILE

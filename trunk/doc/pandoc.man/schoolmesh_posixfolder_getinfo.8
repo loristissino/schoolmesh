@@ -16,6 +16,11 @@ schoolmesh\_posixfolder\_getinfo *username* list *directoryname*
 This script generates a list of pairs *key=value* about a posix folder.
 The user must exist.
 
+# WARNINGS
+
+The user who runs this (typically, www-data or apache) must be allowed
+to run commands on behalf of other users (through sudo).
+
 # EXAMPLES
 
 	schoolmesh_posixfolder_getinfo john.test path '/'  
