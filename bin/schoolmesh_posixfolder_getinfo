@@ -60,7 +60,7 @@ case $COMMAND in
 		IFS=$'\n'
 		for FILE in $(cat $TEMPFILE)
 			do
-				LANG=C sudo -u $USERNAME /usr/bin/stat "$FILE" -c 'FILE%i=%F:%s:%Y:%n' | sed "s|$SUBSTITUTION||" 
+				LANG=C sudo -u $USERNAME /usr/bin/stat "$FILE" -c 'FILE%i=%F:%s:%Y:%n:%N' | sed "s|$SUBSTITUTION||" 
 			done
 		;;
 esac
