@@ -26,6 +26,7 @@
     <tr>
       <th class="sf_admin_text" ><?php echo __('Type') ?></th>
       <th class="sf_admin_text"><?php echo __('Name') ?></th>
+      <th class="sf_admin_text"><?php echo __('Quoted File Name') ?></th>
       <th class="sf_admin_text"><?php echo __('Size') ?></th>
       <th class="sf_admin_text"><?php echo __('Date') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
@@ -36,6 +37,7 @@
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <td><?php echo $item->getFiletype() ?></td>
       <td><?php echo $item->getName() ?></td>
+      <td><?php echo $item->getQuotedfilename() ?></td>
       <td><?php echo $item->getSize() ?></td>
       <td><?php echo Generic::datetime($item->getTimestamp(), $sf_context) ?></td>
       <td>

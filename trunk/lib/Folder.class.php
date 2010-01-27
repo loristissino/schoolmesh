@@ -61,8 +61,8 @@ class Folder{
 			
 			foreach ($info as $file)
 			{
-				list($filetype,$size,$timestamp,$filename)=explode(':', $file);
-				$folderItems[]=new FolderItem($filetype, $timestamp, $filename, $size=0, $description='');
+				list($filetype,$size,$timestamp,$filename,$quotedfilename)=explode(':', $file);
+				$folderItems[]=new FolderItem($filetype, $timestamp, $filename, $quotedfilename, $size, $description='');
 			}
 			
 			usort($folderItems, array('FolderItem', 'compare_items'));
@@ -76,17 +76,19 @@ class Folder{
 class FolderItem {
 	
 	private $_name;
+	private $_quotedfilename;
 	private $_filetype;
 	private $_timestamp;
 	private $_size;
 	private $_description;
 
-	public function __construct($filetype, $timestamp, $name, $size=0, $description='')
+	public function __construct($filetype, $timestamp, $name, $quotedfilename, $size=0, $description='')
 	{
 		$this
 		->setFiletype($filetype)
 		->setTimestamp($timestamp)
 		->setName($name)
+		->setQuotedfilename($quotedfilename)
 		->setSize($size)
 		->setDescription($description);
 	}
@@ -97,9 +99,20 @@ class FolderItem {
 		return $this;
 	}
 	
+	public function setQuotedfilename($value)
+	{
+		$this->_quotedfilename=$value;
+		return $this;
+	}
+	
 	public function getName()
 	{
 		return $this->_name;
+	}
+	
+	public function getQuotedfilename()
+	{
+		return $this->_quotedfilename;
 	}
 
 	public function setFiletype($value)
