@@ -270,6 +270,13 @@ white-space:nowrap;
 background:#e00;
 }
 
+.schoolmesh_profile_notices {
+text-align:left;
+color: #e00;
+vertical-align:middle;
+font-weight: bold;
+}
+
 
 .chosen
 {

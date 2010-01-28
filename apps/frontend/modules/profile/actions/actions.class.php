@@ -129,10 +129,21 @@ class profileActions extends sfActions
 				->setEmail($params['email']);
 				
 				$email_warning='';
-				if ($old_email!=$params['email'])
+				
+				if($params['email']=='')
 				{
-					$email_warning=$this->getContext()->getI18N()->__('An email was sent to you to verify your email address.');
-					$this->profile->sendEmailVerification($this->getContext());
+					$email_warning=$this->getContext()->getI18N()->__('No email address was set.');
+					$this->profile
+					->setEmailState(sfGuardUserProfilePeer::EMAIL_UNDEFINED);
+				}
+				else
+				{
+					if (!$params['email']==$old_email)
+					{
+						$email_warning=$this->getContext()->getI18N()->__('An email was sent to you to verify your email address.');
+						$this->profile->sendEmailVerification($this->getContext());
+					}
+					
 				}
 				
 				$this->profile->save();
