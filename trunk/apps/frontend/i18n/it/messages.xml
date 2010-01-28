@@ -1523,10 +1523,28 @@
         <source>Seems like you requested a resource that is not available, or for which you do not have permissions.</source>
         <target>A quanto sembra, hai richiesto una risorsa che non è disponibile, o per la quale non godi dei permessi adeguati.</target>
       </trans-unit>
+	  <trans-unit id="407">
+        <source>[0]Please, set an email address in your profile.|[1]Please, set an email address in your profile.</source>
+        <target>[0]Sei pregata di impostare un indirizzo di posta elettronica nel tuo profilo.|[1]Sei pregato di impostare un indirizzo di posta elettronica nel tuo profilo.</target>
+      </trans-unit>
+	  <trans-unit id="408">
+        <source>[0]It will be easier to keep you informed on updates about the use of this application.|[1]]It will be easier to keep you informed on updates about the use of this application.</source>
+        <target>[0]Sarà più facile tenerti aggiornata sull'uso di questa applicazione.|[1]Sarà più facile tenerti aggiornato sull'uso di questa applicazione.</target>
+      </trans-unit>
+	  <trans-unit id="409">
+        <source>[0]Just edit your SchoolMesh account information.|[1]Just edit your SchoolMesh account information.</source>
+        <target>[0]È sufficiente modificare le informazioni associate al tuo account SchoolMesh.[1]È sufficiente modificare le informazioni associate al tuo account SchoolMesh.</target>
+      </trans-unit>
+	  <trans-unit id="410">
+        <source>Thank you.</source>
+        <target>Grazie.</target>
+      </trans-unit>
+	  <trans-unit id="411">
+        <source>No email address was set.</source>
+        <target>Non è stato impostato nessun indirizzo di posta elettronica.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
-
-
 
 
