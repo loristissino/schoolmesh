@@ -14,8 +14,6 @@
     <ul>
        <li><?php echo link_to(__("Reserved usernames"), "@reserved_username") ?></li>	   
        <li><?php echo link_to(__("Teams"), "@team") ?></li>	   
-       <li><?php echo link_to(__("Appointments"), "@appointment") ?></li>	   
-       <li><?php echo link_to(__("Enrolments"), "@enrolment") ?></li>	   
     </ul>
 
 <h2><?php echo __('Symfony sfGuard') ?></h2>
