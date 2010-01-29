@@ -41,7 +41,15 @@ class filebrowserActions extends sfActions
 		$this->getUser()->setAttribute('path', $current. '/' . $request->getParameter('name'));
 		$this->forward('filebrowser', 'index');
   }
-  public function executeUp(sfWebRequest $request)
+
+  public function executeDownload(sfWebRequest $request)
+  {
+		/*FIXME Complete this */
+  }
+
+
+
+	public function executeUp(sfWebRequest $request)
   {
 		
 		$this->getUser()->setAttribute('path', dirname($this->folder->getPath()));

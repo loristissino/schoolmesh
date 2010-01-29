@@ -1,3 +1,15 @@
+# Revision 421:
+
+Added this in /etc/sudoers:
+
+----
+Cmnd_Alias SCHOOLMESH_USERFOLDER = /usr/bin/find -L /home/homeschoolmesh/users/*, /usr/bin/test -d /home/homeschoolmesh/users/*, /usr/bin/stat /home/homeschoolmesh/users/*, /usr/bin/file /home/homeschoolmesh/users/*
+
+...
+
+WEBSERVER ALL=(ALL)NOPASSWD: SCHOOLMESH_USERFOLDER
+----
+
 # Revision 405:
 
 Changed size of field EmailVerificationCode for sfGuardUserProfile table

@@ -61,8 +61,8 @@ class Folder{
 			
 			foreach ($info as $file)
 			{
-				list($filetype,$size,$timestamp,$filename,$quotedfilename)=explode(':', $file);
-				$folderItems[]=new FolderItem($filetype, $timestamp, $filename, $quotedfilename, $size, $description='');
+				list($filetype,$size,$timestamp,$filename,$mimetype)=explode(':', $file);
+				$folderItems[]=new FolderItem($filetype, $timestamp, $filename, $mimetype, $size, $description='');
 			}
 			
 			usort($folderItems, array('FolderItem', 'compare_items'));
@@ -76,19 +76,19 @@ class Folder{
 class FolderItem {
 	
 	private $_name;
-	private $_quotedfilename;
+	private $_mimetype;
 	private $_filetype;
 	private $_timestamp;
 	private $_size;
 	private $_description;
 
-	public function __construct($filetype, $timestamp, $name, $quotedfilename, $size=0, $description='')
+	public function __construct($filetype, $timestamp, $name, $mimetype, $size=0, $description='')
 	{
 		$this
 		->setFiletype($filetype)
 		->setTimestamp($timestamp)
 		->setName($name)
-		->setQuotedfilename($quotedfilename)
+		->setMimeType($mimetype)
 		->setSize($size)
 		->setDescription($description);
 	}
@@ -99,9 +99,10 @@ class FolderItem {
 		return $this;
 	}
 	
-	public function setQuotedfilename($value)
+	public function setMimeType($value)
 	{
-		$this->_quotedfilename=$value;
+		$this->_mimetype=$value;
+		
 		return $this;
 	}
 	
@@ -110,9 +111,19 @@ class FolderItem {
 		return $this->_name;
 	}
 	
-	public function getQuotedfilename()
+	public function getMimeType()
 	{
-		return $this->_quotedfilename;
+		return $this->_mimetype;
+	}
+	
+	public function getIsReadable()
+	{
+		return strpos($this->getMimeType(), 'no read permission')==0;
+	}
+	
+	public function getIsDownloadable()
+	{
+		return $this->getIsReadable() && $this->getFileType()=='regular file';
 	}
 
 	public function setFiletype($value)
