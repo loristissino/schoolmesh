@@ -56,11 +56,14 @@ case $COMMAND in
 		echo found=1
 		;;
 	list)
-		LANG=C sudo -u $USERNAME /usr/bin/find "$DIRECTORYNAME" -maxdepth 1 -mindepth 1 > $TEMPFILE
+		LANG=C sudo -u $USERNAME /usr/bin/find -L "$DIRECTORYNAME" -maxdepth 1 -mindepth 1 > $TEMPFILE
 		IFS=$'\n'
 		for FILE in $(cat $TEMPFILE)
 			do
-				LANG=C sudo -u $USERNAME /usr/bin/stat "$FILE" -c 'FILE%i=%F:%s:%Y:%n:%N' | sed "s|$SUBSTITUTION||" 
+				INFO=$(LANG=C sudo -u $USERNAME /usr/bin/stat "$FILE" -c 'FILE%i=%F:%s:%Y:%n' -L | sed "s|$SUBSTITUTION||g")
+				FILETYPE=$(LANG=C sudo -u $USERNAME /usr/bin/file "$FILE" --mime-type -L | sed 's/.*: //')
+				
+				echo "$INFO:$FILETYPE"
 			done
 		;;
 esac
