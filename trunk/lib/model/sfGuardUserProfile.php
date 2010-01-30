@@ -24,19 +24,34 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$mailer=$sfContext->getMailer();
 			$mailer->send($message);
 
-			$this->setEmailState(sfGuardUserProfilePeer::EMAIL_WAITINGVALIDATION);
+			$this
+			->setEmailState(sfGuardUserProfilePeer::EMAIL_WAITINGVALIDATION)
+			->save();
 			
 			return $this;
 		}
 		
-		public function validateEmail()
+		public function validateEmail($code)
 		{
-			$this
-			->setEmailState(sfGuardUserProfilePeer::EMAIL_VERIFIED)
-			->setEmailVerificationCode(null)
-			->save();
+			if ($code==$this->getEmailVerificationCode())
+			{
+				if ($this->getHasValidatedEmail())
+				{
+					return 2;
+				}
+				else
+				{
+					$this
+					->setEmailState(sfGuardUserProfilePeer::EMAIL_VERIFIED)
+					->save();
+					return 1;
+				}
+			}
+			else
+			{
+				return 0;
+			}
 			
-			return $this;
 		}
 		
 		public function getHasValidatedEmail()

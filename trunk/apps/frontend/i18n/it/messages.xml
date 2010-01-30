@@ -1543,6 +1543,14 @@
         <source>No email address was set.</source>
         <target>Non è stato impostato nessun indirizzo di posta elettronica.</target>
       </trans-unit>
+	  <trans-unit id="412">
+        <source>Your email address %emailaddress% was already successfully validated.</source>
+        <target>L'indirizzo %emailaddress% è già stato convalidato.</target>
+      </trans-unit>
+	  <trans-unit id="413">
+        <source>Email address already validated</source>
+        <target>Convalida già effettuata</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

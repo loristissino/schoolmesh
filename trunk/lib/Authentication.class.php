@@ -3,9 +3,8 @@
 class Authentication {
 
 /*
-
-This code must be refactored. In particular, it would be nicer to have a sort of PAM-like authentication schema, maybe 
-defining an array of authentication modes.
+FIXME
+This code must be refactored. In particular, it would be nicer to have a sort of PAM-like authentication schema, maybe defining an array of authentication modes.
 */
 
 

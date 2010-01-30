@@ -138,7 +138,7 @@ class profileActions extends sfActions
 				}
 				else
 				{
-					if (!$params['email']==$old_email)
+					if ($params['email']!=$old_email)
 					{
 						$email_warning=$this->getContext()->getI18N()->__('An email was sent to you to verify your email address.');
 						$this->profile->sendEmailVerification($this->getContext());
