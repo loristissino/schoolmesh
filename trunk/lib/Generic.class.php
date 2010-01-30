@@ -222,6 +222,16 @@ class Generic{
 			
 			$command='LANG=it_IT.utf-8; ' . ($sudoUser? 'sudo -u ' . $sudoUser . ' ' :'') . 'schoolmesh_' . $command;
 			
+/*ob_start();
+
+echo "---------\n";
+echo "EXECUTING: \n";
+echo $command . "\n";
+
+
+$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
+*/
+			
 			// FIXME: this is needed, as it should be more general than it_IT.utf8
 			exec($command, $result, $return_var);
 

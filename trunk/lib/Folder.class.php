@@ -4,11 +4,13 @@ class Folder{
 	
 	private $_username;
 	private $_path;
+	private $_folderItems;
 	
 	public function __construct($username, $path)
 		{
 			$this->setUsername($username);
 			$this->setPath($path);
+			$this->_folderItems=Array();
 		}
 
 	public function getPath()
@@ -56,19 +58,74 @@ class Folder{
 			{
 				return false;
 			}
-			
-			$folderItems=Array();
-			
+						
 			foreach ($info as $file)
 			{
 				list($filetype,$size,$timestamp,$filename,$mimetype)=explode(':', $file);
-				$folderItems[]=new FolderItem($filetype, $timestamp, $filename, $mimetype, $size, $description='');
+				$this->_folderItems[]=new FolderItem($filetype, $timestamp, $filename, $mimetype, $size, $description='');
 			}
 			
-			usort($folderItems, array('FolderItem', 'compare_items'));
-			return $folderItems;
+			usort($this->_folderItems, array('FolderItem', 'compare_items'));
+			return $this->_folderItems;
 		}
 		
+	public function serveFile($name, sfWebResponse $response)
+	{
+		
+		if (!$folderItem=$this->_getFileInfo($name))
+		{
+			throw new Exception('file could not be served');
+		}
+		
+		try
+		{
+			$info=Generic::executeCommand(sprintf('posixfolder_copyfile %s "%s"', 
+				$this->getUsername(),
+				str_replace(array('(', ')'), array('\(', '\)'), $this->getPath() . '/' . $name)
+				), 
+				false);
+		}
+		catch (Exception $e)
+		{
+				throw $e;
+		}
+		
+		$response->setHttpHeader('Pragma', '');
+		$response->setHttpHeader('Cache-Control', '');
+		$response->setHttpHeader('Content-Length', $folderItem->getSize());
+		$response->setHttpHeader('Content-Type', $folderItem->getMimeType());
+		$response->setHttpHeader('Content-Disposition', 'attachment; filename="' . $folderItem->getName() . '"');
+		
+		$tmpfile=fopen($info['TMPNAME'], 'r');
+		$response->setContent(fread($tmpfile, $folderItem->getSize()));
+		fclose($tmpfile);
+		$tmpfile=fopen($info['TMPNAME'], 'w');
+		fwrite($tmpfile, '');
+		// we rewrite the file with no data, because we cannot remove it
+				
+	}
+	
+	private function _getFileInfo($name)
+	{
+		/* FIXME: sequential search on all files, this should be avoided */
+		try
+		{
+			foreach($this->getFolderItems() as $folderItem)
+			{
+				if ($folderItem->getName()==$name)
+				{
+					return $folderItem;
+				}
+			}
+		}
+		catch (Exception $e)
+		{
+			return false;
+		}
+		
+		return false;
+		
+	}	
 		
 	};
 

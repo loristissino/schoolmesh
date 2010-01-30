@@ -1,0 +1,31 @@
+.TH SCHOOLMESH_POSIXFOLDER_COPYFILE 8 "January 2010" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_posixfolder_copyfile - Copy a user\[aq]s file in cache,
+applying read permission for webserver
+.SH SYNOPSIS
+.PP
+schoolmesh_posixfolder_copyfile \f[I]username\f[] \f[I]filepath\f[]
+.SH DESCRIPTION
+.PP
+This script copies a file in cache directory, in order to allow the
+webserver to serve it\. The user must exist\. The path is relative
+to user\[aq]s home directory\.
+.SH WARNINGS
+.PP
+The user who runs this (typically, www-data or apache) must be
+allowed to run commands on behalf of other users (through sudo)\.
+.SH EXAMPLES
+.PP
+\f[CR]
+      schoolmesh_posixfolder_copyfile\ john\.test\ \[aq]letter\.doc\[aq]\ \ 
+\f[]
+.SH BUGS
+.PP
+Probably many\.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>\.
+.SH AUTHOR
+Loris Tissino (loris.tissino@mattiussilab.net)

@@ -1,0 +1,51 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Copy a user's file in cache, applying read permission for webserver
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username* *filepath*
+#@
+#@ # DESCRIPTION
+#@
+#@ This script copies a file in cache directory, in order to allow the webserver to serve it.
+#@ The user must exist.
+#@ The path is relative to user's home directory.
+#@ 
+#@ # WARNINGS
+#@
+#@ The user who runs this (typically, www-data or apache) must be allowed
+#@ to run commands on behalf of other users (through sudo).
+#@
+#@ # EXAMPLES
+#@
+#@	{-} john.test 'letter.doc'  
+
+USERNAME=$1
+FILEPATH=$2
+FULLPATH="$POSIX_HOMEDIR_USERS/$USERNAME/$FILEPATH"
+
+echo $FULLPATH
+
+checkUsername $USERNAME
+
+TEMPFILE=$(mktemp)
+rm $TEMPFILE # it will be written by the user with cp
+TEMPFILE="$TEMPFILE.schoolmesh"
+
+sudo -u $USERNAME /bin/cp "$FULLPATH" $TEMPFILE # 2> /dev/null
+
+if [[ $? -eq 0 ]]; then
+	sudo -u $USERNAME /bin/chmod 766 $TEMPFILE
+	echo FOUND=1
+	echo TMPNAME=$TEMPFILE
+	ls -l $TEMPFILE
+else
+	echo FOUND=0
+fi
