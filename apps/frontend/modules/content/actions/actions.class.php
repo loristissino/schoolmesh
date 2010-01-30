@@ -38,21 +38,25 @@ class contentActions extends sfActions
 
 	public function executeCheckemail(sfWebRequest $request)
 	{
-		$this->forward404Unless($this->user=sfGuardUserProfilePeer::retrieveByUsername($request->getParameter('user')));		
+		$this->forward404Unless($this->user=sfGuardUserProfilePeer::retrieveByUsername($request->getParameter('user')));	
 		
-		if ($this->user->getProfile()->getEmailVerificationCode()==($request->getParameter('code')))
-		{
-			$this->user->getProfile()->validateEmail();
-			$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Your email address %emailaddress% has been successfully validated.', array('%emailaddress%'=>$this->user->getProfile()->getEmail())));
-			$this->getUser()->setFlash('title', 'Email address validated');
-		}
-		else
-		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Sorry, the email address could not be validated.'));
-			$this->getUser()->setFlash('title', 'Problem with email address validation');
-
-		}
+		$validation=$this->user->getProfile()->validateEmail($request->getParameter('code'));
 		
+		switch ($validation)
+		{
+			case 2:
+				$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Your email address %emailaddress% was already successfully validated.', array('%emailaddress%'=>$this->user->getProfile()->getEmail())));
+				$this->getUser()->setFlash('title', 'Email address already validated');
+				break;
+			case 1:
+				$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Your email address %emailaddress% has been successfully validated.', array('%emailaddress%'=>$this->user->getProfile()->getEmail())));
+				$this->getUser()->setFlash('title', 'Email address validated');
+				break;
+			case 0:
+				$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Sorry, the email address could not be validated.'));
+				$this->getUser()->setFlash('title', 'Problem with email address validation');
+				break;
+		}
 		return $this->redirect('content/emailvalidation');
 		
 	}
