@@ -15,6 +15,8 @@ chmod +x "$BASEDIR/symfony"
 
 sudo chmod 755 $BASEDIR/bin/*
 
+sudo chmod 1777 /var/schoolmesh/cache/files/tmp
+
 sudo cp --preserve=mode $BASEDIR/bin/* /usr/local/bin
 
 ~/bin/fixmattiussilab.sh

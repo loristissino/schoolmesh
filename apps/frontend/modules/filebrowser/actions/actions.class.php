@@ -16,7 +16,13 @@ class filebrowserActions extends sfActions
 		$this->profile=$this->getUser()->getProfile();
 		$this->path = $this->getUser()->getAttribute('path', '/');
 		$this->folder= new Folder($this->profile->getUsername(), $this->path);
-//		$this->forward404Unless($this->folder->getPathExists());
+		if (!$this->folder->getPathExists())
+		{
+			$this->getUser()->setAttribute('path', $this->getUser()->getAttribute('oldpath', '/'));
+			$this->forward404();
+		}
+		$this->getUser()->setAttribute('oldpath', $this->path);
+
 	}
 	
  /**
@@ -44,7 +50,19 @@ class filebrowserActions extends sfActions
 
   public function executeDownload(sfWebRequest $request)
   {
-		/*FIXME Complete this */
+		$filename=$request->getParameter('name');
+		try
+		{
+			$this->folder->serveFile($filename, $this->getContext()->getResponse());
+			return sfView::NONE;
+
+		}
+		catch (Exception $e)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('The file "%filename%" cannot be downloaded.', array('%filename%'=>$filename)) . $e);
+		}
+		
+		$this->forward('filebrowser', 'index');
   }
 
 
