@@ -9,12 +9,13 @@
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
 
-
+<?php if($path!='/'): ?>
 <p><?php echo link_to(
 	__('Up'),
 	url_for('filebrowser/up')
 	)
 ?></p>
+<?php endif ?>
 
 
 <?php if (sizeof($folder_items)>0): ?>
@@ -24,7 +25,7 @@
 <table cellspacing="0">
   <thead>
     <tr>
-      <th class="sf_admin_text"><?php echo __('File type') ?></th>
+      <th class="sf_admin_text"><?php echo __('Type') ?></th>
       <th class="sf_admin_text"><?php echo __('Name') ?></th>
       <th class="sf_admin_text"><?php echo __('Size') ?></th>
       <th class="sf_admin_text"><?php echo __('Date') ?></th>
@@ -57,5 +58,23 @@
 	</tr>
 	<?php endforeach ?>
   </tbody>
-</table>  
+</table>
+
+<?php else: ?>
+<p><?php echo __('This directory is empty.') ?></p>
 <?php endif ?>
+
+<hr />
+
+<form action="<?php echo url_for('filebrowser/upload') ?>" method="POST" enctype="multipart/form-data">
+
+  <table>
+    <?php echo $form ?>
+	<tr>
+      <td colspan="2">
+         <input type="submit" name="save" value="<?php echo __('Upload') ?>">
+      </td>
+    </tr>
+  </table>
+</form>
+

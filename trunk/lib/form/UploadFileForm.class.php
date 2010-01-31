@@ -1,5 +1,5 @@
 <?php
-        class UploadForm extends BaseForm
+        class UploadFileForm extends BaseForm
         {
           public function configure()
           {
@@ -11,7 +11,7 @@
 			$this->widgetSchema->setNameFormat('info[%s]');
 			
 			$this->setValidators(array(
-				'file' => new sfValidatorFile(array('max_size'=>200000, 'mime_types'=>array('text/plain', 'text/csv')))
+				'file' => new sfValidatorFile(array('max_size'=>600000))
 			));
 		}
 			

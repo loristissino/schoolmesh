@@ -1,3 +1,9 @@
+# Revision 425:
+
+Changed in /etc/sudoers:
+
+Cmnd_Alias SCHOOLMESH_USERFOLDER = /usr/bin/find -L /home/homeschoolmesh/users/*, /usr/bin/test -e /home/homeschoolmesh/users/*, /usr/bin/stat /home/homeschoolmesh/users/*, /usr/bin/file /home/homeschoolmesh/users/*, /bin/cp /home/homeschoolmesh/users/* /tmp/*schoolmesh, /bin/chmod 766 /tmp/*schoolmesh, /bin/cp /tmp/* /home/homeschoolmesh/users/*, /bin/chmod 644 /home/homeschoolmesh/users/*
+
 # Revision 423:
 
 Changed this in /etc/sudoers:

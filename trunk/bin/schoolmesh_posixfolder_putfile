@@ -6,15 +6,15 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 
 #@ # NAME
 #@
-#@ {} - Copy a user's file in cache, applying read permission for webserver
+#@ {} - Copy an uploaded file to a user's home (sub)directory
 #@
 #@ # SYNOPSIS
 #@
-#@ {} *username* *filepath*
+#@ {} *username* *tempname* *destinationpath*
 #@
 #@ # DESCRIPTION
 #@
-#@ This script copies a file in cache directory, in order to allow the webserver to serve it.
+#@ This script copies an uploaded file to a user's directory.
 #@ The user must exist.
 #@ The path is relative to user's home directory.
 #@ 
@@ -25,25 +25,24 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # EXAMPLES
 #@
-#@	{-} john.test '/letter.doc'  
+#@	{-} john.test /tmp.Vm6STjrivF '/mydocs/My report.odt'
 
 USERNAME=$1
-FILEPATH=$2
+TEMPFILE=$2
+FILEPATH=$3
+
 FULLPATH="$POSIX_HOMEDIR_USERS/$USERNAME$FILEPATH"
 
 checkUsername $USERNAME
 
-TEMPFILE=$(mktemp)
-rm $TEMPFILE # it will be written by the user with cp
-TEMPFILE="$TEMPFILE.schoolmesh"
-
-sudo -u $USERNAME /bin/cp "$FULLPATH" $TEMPFILE # 2> /dev/null
+chmod 777 $TEMPFILE >> /tmp/lorislog.txt # we allow the user to copy the file
+sudo -u $USERNAME /bin/cp $TEMPFILE "$FULLPATH" >> /tmp/lorislog.txt
+# we copy the file as the user, in order to see if there are problems with quotas
 
 if [[ $? -eq 0 ]]; then
-	sudo -u $USERNAME /bin/chmod 766 $TEMPFILE
-	echo FOUND=1
-	echo TMPNAME=$TEMPFILE
-	ls -l $TEMPFILE
+	echo MOVED=1
+	sudo -u $USERNAME /bin/chmod 644 "$FULLPATH" >> /tmp/lorislog.txt
 else
-	echo FOUND=0
+	echo MOVED=0
+	exit 1
 fi
