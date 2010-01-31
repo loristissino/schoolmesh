@@ -86,8 +86,14 @@ UTILITY LIST
        schoolmesh_posixaccounts_quotachecks  -	Get a list of users specifying
        who of them exceeds their quota
 
+       schoolmesh_posixfolder_copyfile - Copy a user's file in cache, applying
+       read permission for webserver
+
        schoolmesh_posixfolder_getinfo - Get info about a posix user's folder's
        contents
+
+       schoolmesh_posixfolder_putfile - Copy an uploaded file to a user's home
+       (sub)directory
 
        schoolmesh_sambaaccount_create - Create a samba account for a user
 
@@ -1272,6 +1278,50 @@ Schoolmesh User Manuals 	 DecemberSCHOOLMESH_POSIXACCOUNT_UNLOCKUSER(8)
 
 
 
+== schoolmesh_posixfolder_copyfile ==
+
+{{{
+SCHOOLMESH_POSIXFOLDER_COPYFILE(8)	    SCHOOLMESH_POSIXFOLDER_COPYFILE(8)
+
+
+
+NAME
+       schoolmesh_posixfolder_copyfile - Copy a user's file in cache, applying
+       read permission for webserver
+
+SYNOPSIS
+       schoolmesh_posixfolder_copyfile username filepath
+
+DESCRIPTION
+       This script copies a file in cache directory, in  order	to  allow  the
+       webserver  to  serve  it.  The user must exist. The path is relative to
+       user's home directory.
+
+WARNINGS
+       The user who runs this (typically, www-data or apache) must be  allowed
+       to run commands on behalf of other users (through sudo).
+
+EXAMPLES
+
+	     schoolmesh_posixfolder_copyfile john.test '/letter.doc'
+
+BUGS
+       Probably many.
+
+SEE ALSO
+       The  SchoolMesh	project  is described at <http://schoolmesh.mattiussi
+       lab.net/>.
+
+AUTHOR
+       Loris Tissino (loris.tissino@mattiussilab.net)
+
+
+
+Schoolmesh User Manuals 	 January 201SCHOOLMESH_POSIXFOLDER_COPYFILE(8)
+}}}
+
+
+
 == schoolmesh_posixfolder_getinfo ==
 
 {{{
@@ -1285,16 +1335,23 @@ NAME
 
 SYNOPSIS
        schoolmesh_posixfolder_getinfo	  username     path	 directoryname
-       schoolmesh_posixfolder_getinfo username list directoryname
+       schoolmesh_posixfolder_getinfo	   username	list	 directoryname
+       schoolmesh_posixfolder_getinfo username file directoryname/filename
 
 DESCRIPTION
-       This  script  generates a list of pairs key=value about a posix folder.
+       This script generates a list of pairs key=value about a	posix  folder.
        The user must exist.
+
+WARNINGS
+       The  user who runs this (typically, www-data or apache) must be allowed
+       to run commands on behalf of other users (through sudo).
 
 EXAMPLES
 
 	     schoolmesh_posixfolder_getinfo john.test path '/'
-	     schoolmesh_posixfolder_getinfo john.test list 'mydocs'
+	     schoolmesh_posixfolder_getinfo john.test list '/mydocs'
+
+       schoolmesh_posixfolder_getinfo john.test file '/mydocs/myfile.odt'
 
 BUGS
        Probably many.
@@ -1309,6 +1366,50 @@ AUTHOR
 
 
 Schoolmesh User Manuals 	 January 2010SCHOOLMESH_POSIXFOLDER_GETINFO(8)
+}}}
+
+
+
+== schoolmesh_posixfolder_putfile ==
+
+{{{
+SCHOOLMESH_POSIXFOLDER_PUTFILE(8)	     SCHOOLMESH_POSIXFOLDER_PUTFILE(8)
+
+
+
+NAME
+       schoolmesh_posixfolder_putfile - Copy an uploaded file to a user's home
+       (sub)directory
+
+SYNOPSIS
+       schoolmesh_posixfolder_putfile username tempname destinationpath
+
+DESCRIPTION
+       This script copies an uploaded file to a  user's  directory.  The  user
+       must exist. The path is relative to user's home directory.
+
+WARNINGS
+       The  user who runs this (typically, www-data or apache) must be allowed
+       to run commands on behalf of other users (through sudo).
+
+EXAMPLES
+
+	     schoolmesh_posixfolder_put
+       file john.test /tmp.Vm6STjrivF '/mydocs/My report.odt'
+
+BUGS
+       Probably many.
+
+SEE ALSO
+       The  SchoolMesh	project  is described at <http://schoolmesh.mattiussi
+       lab.net/>.
+
+AUTHOR
+       Loris Tissino (loris.tissino@mattiussilab.net)
+
+
+
+Schoolmesh User Manuals 	 January 2010SCHOOLMESH_POSIXFOLDER_PUTFILE(8)
 }}}
 
 
