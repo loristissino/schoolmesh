@@ -216,21 +216,25 @@ class Generic{
 		
 		static public function executeCommand($command, $sudoUser=false)
 		{
+			$debug=false;
+			
 			$info=array();
 			$result=array();
 			$return_var=0;
 			
 			$command='LANG=it_IT.utf-8; ' . ($sudoUser? 'sudo -u ' . $sudoUser . ' ' :'') . 'schoolmesh_' . $command;
-			
-/*ob_start();
 
-echo "---------\n";
-echo "EXECUTING: \n";
-echo $command . "\n";
+			if($debug)
+			{
+				ob_start();
 
+				echo "---------\n";
+				echo "EXECUTING: \n";
+				echo $command . "\n";
 
-$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
-*/
+				$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
+			}
+
 			
 			// FIXME: this is needed, as it should be more general than it_IT.utf8
 			exec($command, $result, $return_var);
@@ -250,6 +254,18 @@ $f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_c
 					$info[$key]=$value;
 				}
 			}
+			
+			if($debug)
+			{
+				ob_start();
+
+				echo "RESULT: \n";
+				print_r($info);
+
+				$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
+			}
+			
+			
 			return $info;
 		}
 		

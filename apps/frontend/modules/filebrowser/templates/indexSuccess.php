@@ -24,9 +24,8 @@
 <table cellspacing="0">
   <thead>
     <tr>
-      <th class="sf_admin_text" ><?php echo __('Type') ?></th>
+      <th class="sf_admin_text"><?php echo __('File type') ?></th>
       <th class="sf_admin_text"><?php echo __('Name') ?></th>
-      <th class="sf_admin_text"><?php echo __('Mime Type') ?></th>
       <th class="sf_admin_text"><?php echo __('Size') ?></th>
       <th class="sf_admin_text"><?php echo __('Date') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
@@ -35,9 +34,8 @@
   <tbody>
     <?php foreach ($folder_items as $item): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
-      <td><?php echo $item->getFiletype() ?></td>
+      <td><?php include_component('filebrowser', 'mimetype', array('mimetype'=>$item->getMimeType())) ?></td>
       <td><?php echo $item->getName() ?></td>
-      <td><?php echo $item->getMimeType() ?></td>
       <td><?php echo $item->getSize() ?></td>
       <td><?php echo Generic::datetime($item->getTimestamp(), $sf_context) ?></td>
       <td>
@@ -51,7 +49,7 @@
 		<?php if($item->getIsDownloadable()): ?>
 			<?php echo link_to(
 				__('Download'),
-				url_for('filebrowser/download?name='. $item->getName())
+				url_for('filebrowser/download?name='. urlencode($item->getName()))
 				)
 			?>
 		<?php endif ?>

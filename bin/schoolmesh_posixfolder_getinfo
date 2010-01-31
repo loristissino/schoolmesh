@@ -12,6 +12,7 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ {} *username* path *directoryname*
 #@ {} *username* list *directoryname*
+#@ {} *username* file *directoryname/filename*
 #@
 #@ # DESCRIPTION
 #@
@@ -26,23 +27,24 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@ # EXAMPLES
 #@
 #@	{-} john.test path '/'  
-#@	{-} john.test list 'mydocs' 
+#@	{-} john.test list '/mydocs' 
+#@  {-} john.test file '/mydocs/myfile.odt'
 
 USERNAME=$1
 COMMAND=$2
-BASEDIRNAME=$3
-DIRECTORYNAME="$POSIX_HOMEDIR_USERS/$USERNAME$BASEDIRNAME"
+BASENAME=$3
+FULLNAME="$POSIX_HOMEDIR_USERS/$USERNAME$BASENAME"
 
-if [[ "$BASEDIRNAME" = "/" ]]; then
-	SUBSTITUTION="$POSIX_HOMEDIR_USERS/$USERNAME$BASEDIRNAME"
+if [[ "$BASENAME" = "/" ]]; then
+	SUBSTITUTION="$POSIX_HOMEDIR_USERS/$USERNAME$BASENAME"
 else
-	SUBSTITUTION="$POSIX_HOMEDIR_USERS/$USERNAME$BASEDIRNAME/"
+	SUBSTITUTION="$POSIX_HOMEDIR_USERS/$USERNAME$BASENAME/"
 fi
 
 checkUsername $USERNAME
-checkOneOf $COMMAND path list
+checkOneOf $COMMAND path list file
 
-sudo /usr/bin/test -d "$DIRECTORYNAME"
+#sudo /usr/bin/test -d "$FULLNAME"
 
 if [[ $? -ne 0 ]]; then
 	msg_failed 'Not a directory'
@@ -51,19 +53,38 @@ fi
 
 TEMPFILE=$(mktemp)
 
+function printFileInfo()
+{
+	USERNAME=$1
+	FULLNAME="$2"
+	SUBSTITUTION="$3"
+	
+	INFO=$(LANG=C sudo -u $USERNAME /usr/bin/stat "$FULLNAME" -c 'FILE%i=%F:%s:%Y:%n' -L | sed "s|$SUBSTITUTION||g")
+	FILETYPE=$(LANG=C sudo -u $USERNAME /usr/bin/file "$FULLNAME" --mime-type -L | sed 's/.*: //')
+	echo "$INFO:$FILETYPE"
+}
+
+
 case $COMMAND in
 	path)
 		echo found=1
 		;;
+	file)
+		printFileInfo $USERNAME "$FULLNAME" "$SUBSTITUTION"
+#		INFO=$(LANG=C sudo -u $USERNAME /usr/bin/stat "$FULLNAME" -c 'FILE%i=%F:%s:%Y:%n' -L | sed "s|$SUBSTITUTION||g")
+#		FILETYPE=$(LANG=C sudo -u $USERNAME /usr/bin/file "$FULLNAME" --mime-type -L | sed 's/.*: //')
+#		echo "$INFO:$FILETYPE"
+		;;
 	list)
-		LANG=C sudo -u $USERNAME /usr/bin/find -L "$DIRECTORYNAME" -maxdepth 1 -mindepth 1 > $TEMPFILE
+		LANG=C sudo -u $USERNAME /usr/bin/find -L "$FULLNAME" -maxdepth 1 -mindepth 1 > $TEMPFILE
 		IFS=$'\n'
 		for FILE in $(cat $TEMPFILE)
 			do
-				INFO=$(LANG=C sudo -u $USERNAME /usr/bin/stat "$FILE" -c 'FILE%i=%F:%s:%Y:%n' -L | sed "s|$SUBSTITUTION||g")
-				FILETYPE=$(LANG=C sudo -u $USERNAME /usr/bin/file "$FILE" --mime-type -L | sed 's/.*: //')
+#				INFO=$(LANG=C sudo -u $USERNAME /usr/bin/stat "$FILE" -c 'FILE%i=%F:%s:%Y:%n' -L | sed "s|$SUBSTITUTION||g")
+#				FILETYPE=$(LANG=C sudo -u $USERNAME /usr/bin/file "$FILE" --mime-type -L | sed 's/.*: //')
 				
-				echo "$INFO:$FILETYPE"
+#				echo "$INFO:$FILETYPE"
+				printFileInfo $USERNAME "$FILE" "$SUBSTITUTION"
 			done
 		;;
 esac
