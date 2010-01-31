@@ -114,7 +114,24 @@ class Folder
 		// we rewrite the file with no data, because we cannot remove it
 				
 	}
-	
+
+
+	public function acceptFile(sfValidatedFile $file)
+	{
+		try
+		{
+			$info=Generic::executeCommand(sprintf('posixfolder_putfile %s %s "%s"', 
+				$this->getUsername(), 
+				$file->getTempName(),
+				$this->_getFullPathOfFile($file->getOriginalName())
+				));
+		}
+		catch (Exception $e)
+		{
+			throw $e;
+		}
+	}
+
 	private function _getFileInfo($name)
 	{
 			try
@@ -263,17 +280,42 @@ class FolderItem {
 
 	static function compare_items($a, $b)
 	{
-		if ($a->getFileType()==$b->getFiletype())
+		
+		$aname=Generic::strtolower_utf8($a->getName());
+		$bname=Generic::strtolower_utf8($b->getName());
+		
+		if ($a->getFileType()==$b->getFileType())
 		{
-			if($a->getName()<$b->getName())
+			if ($aname==$bname)
 			{
-				return $a->getName()<$b->getName() ? -1: +1;
+				return 0;
 			}
+			else
+			{
+				if ($aname < $bname)
+				{
+					return -1;
+				}
+				else
+				{
+					return +1;
+				}
+			}
+			
 		}
 		else
 		{
-			return $a->getFiletype()<$b->getFiletype() ? -1: +1;
+			if ($a->getFileType()<$b->getFileType())
+			{
+				return -1;
+			}
+			else
+			{
+				return +1;
+			}
+			
 		}
+		
 	}
 
 

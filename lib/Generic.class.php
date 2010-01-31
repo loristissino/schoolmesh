@@ -216,7 +216,7 @@ class Generic{
 		
 		static public function executeCommand($command, $sudoUser=false)
 		{
-			$debug=false;
+			$debug=true;
 			
 			$info=array();
 			$result=array();

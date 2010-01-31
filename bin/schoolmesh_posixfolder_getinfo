@@ -44,7 +44,7 @@ fi
 checkUsername $USERNAME
 checkOneOf $COMMAND path list file
 
-#sudo /usr/bin/test -d "$FULLNAME"
+sudo /usr/bin/test -e "$FULLNAME"
 
 if [[ $? -ne 0 ]]; then
 	msg_failed 'Not a directory'
