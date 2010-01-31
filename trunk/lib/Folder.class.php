@@ -1,6 +1,7 @@
 <?php
 
-class Folder{
+class Folder
+{
 	
 	private $_username;
 	private $_path;
@@ -69,6 +70,15 @@ class Folder{
 			return $this->_folderItems;
 		}
 		
+		
+	private function _getFullPathOfFile($name)
+	{
+		$separator=$this->getPath()=='/' ? '': '/';
+//		return str_replace(array('(', ')'), array('\(', '\)'), $this->getPath() . $separator . $name);
+		return html_entity_decode($this->getPath() . $separator . $name, ENT_QUOTES, 'UTF-8');
+
+	}
+	
 	public function serveFile($name, sfWebResponse $response)
 	{
 		
@@ -81,7 +91,7 @@ class Folder{
 		{
 			$info=Generic::executeCommand(sprintf('posixfolder_copyfile %s "%s"', 
 				$this->getUsername(),
-				str_replace(array('(', ')'), array('\(', '\)'), $this->getPath() . '/' . $name)
+				$this->_getFullPathOfFile($name)
 				), 
 				false);
 		}
@@ -94,7 +104,7 @@ class Folder{
 		$response->setHttpHeader('Cache-Control', '');
 		$response->setHttpHeader('Content-Length', $folderItem->getSize());
 		$response->setHttpHeader('Content-Type', $folderItem->getMimeType());
-		$response->setHttpHeader('Content-Disposition', 'attachment; filename="' . $folderItem->getName() . '"');
+		$response->setHttpHeader('Content-Disposition', 'attachment; filename="' . html_entity_decode($name, ENT_QUOTES, 'UTF-8') . '"');
 		
 		$tmpfile=fopen($info['TMPNAME'], 'r');
 		$response->setContent(fread($tmpfile, $folderItem->getSize()));
@@ -107,27 +117,32 @@ class Folder{
 	
 	private function _getFileInfo($name)
 	{
-		/* FIXME: sequential search on all files, this should be avoided */
-		try
-		{
-			foreach($this->getFolderItems() as $folderItem)
+			try
 			{
-				if ($folderItem->getName()==$name)
-				{
-					return $folderItem;
-				}
+				$info=Generic::executeCommand(sprintf('posixfolder_getinfo %s file "%s"', $this->getUsername(), $this->_getFullPathOfFile($name)), false);
 			}
-		}
-		catch (Exception $e)
-		{
-			return false;
-		}
-		
-		return false;
+			catch (Exception $e)
+			{
+				return false;
+			}
+			
+			if (sizeof($info)==0)
+			{
+				return false;
+			}
+			
+			foreach($info as $file)
+			{
+				// we have only one file, but we don't know the index of the array... thus the loop!
+				list($filetype,$size,$timestamp,$filename,$mimetype)=explode(':', $file);
+			}
+			$item=new FolderItem($filetype, $timestamp, $filename, $mimetype, $size, $description='');
+			
+			return $item;
 		
 	}	
 		
-	};
+};
 
 
 class FolderItem {
@@ -158,6 +173,25 @@ class FolderItem {
 	
 	public function setMimeType($value)
 	{
+		
+		/* we add some helpful guessing to what "file" gives to us */
+		
+		$value=chop($value);
+		
+		switch($value)
+		{
+			case 'application/vnd.ms-office':
+				switch(strtolower(substr($this->getName(), -4)))
+				{
+					case '.doc':
+						$value='application/msword';
+						break;
+					case '.xls':
+						$value='application/msexcel';
+						break;
+				}
+		}
+		
 		$this->_mimetype=$value;
 		
 		return $this;

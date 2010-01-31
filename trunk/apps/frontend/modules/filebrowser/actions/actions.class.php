@@ -45,7 +45,7 @@ class filebrowserActions extends sfActions
 			$current='';
 		}
 		$this->getUser()->setAttribute('path', $current. '/' . $request->getParameter('name'));
-		$this->forward('filebrowser', 'index');
+		$this->redirect('filebrowser/index');
   }
 
   public function executeDownload(sfWebRequest $request)
@@ -53,13 +53,13 @@ class filebrowserActions extends sfActions
 		$filename=$request->getParameter('name');
 		try
 		{
-			$this->folder->serveFile($filename, $this->getContext()->getResponse());
+			$this->folder->serveFile(urldecode($filename), $this->getContext()->getResponse());
 			return sfView::NONE;
 
 		}
 		catch (Exception $e)
 		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('The file "%filename%" cannot be downloaded.', array('%filename%'=>$filename)) . $e);
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('The file "%filename%" cannot be downloaded.', array('%filename%'=>$filename)));
 		}
 		
 		$this->forward('filebrowser', 'index');
@@ -71,6 +71,6 @@ class filebrowserActions extends sfActions
   {
 		
 		$this->getUser()->setAttribute('path', dirname($this->folder->getPath()));
-		$this->forward('filebrowser', 'index');
+		$this->redirect('filebrowser/index');
   }
 }
