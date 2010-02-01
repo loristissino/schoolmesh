@@ -90,6 +90,15 @@
 </ul>
 <?php endif ?>
 
+
+<?php if ($sf_user->hasCredential('filebrowsing')): ?>
+<h2><?php echo __('My files') ?></h2>
+<ul class="sf_admin_actions">
+    <li class="sf_admin_action_items"><?php echo link_to(__('Remote management of files on the server'), url_for('filebrowser/index')) ?></li>
+</ul>
+<?php endif ?>
+
+
 <h2><?php echo __('Accounts') ?></h2>
 
 <ul class="sf_admin_actions">
@@ -109,3 +118,5 @@
 	<li class="sf_admin_action_googleapps"><?php echo link_to(sprintf(__('Ask for a Google Apps account «%s»'), sfConfig::get('app_config_googleapps_domain')), url_for('profile/googleapps')) ?></li><br />
 <?php endif ?>
 */ ?>
+
+

@@ -233,6 +233,11 @@ class FolderItem {
 	{
 		return $this->getIsReadable() && $this->getFileType()=='regular file';
 	}
+	
+	public function getIsRemovable()
+	{
+		return $this->getFileType()=='regular file' || $this->getSize()==0;
+	}
 
 	public function setFiletype($value)
 	{
