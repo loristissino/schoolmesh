@@ -53,6 +53,12 @@ class filebrowserActions extends sfActions
   }
 
 
+  public function executeRemove(sfWebRequest $request)
+  {
+	return $this->renderText('Not yet implemented');	
+  }
+
+
    private function _changeDirectory($newpath)
 	{
 		$this->getUser()->setAttribute('path', $newpath);

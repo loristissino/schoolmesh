@@ -10,6 +10,7 @@ schoolmesh\_posixfolder\_getinfo - Get info about a posix user's folder's conten
 
 schoolmesh\_posixfolder\_getinfo *username* path *directoryname*
 schoolmesh\_posixfolder\_getinfo *username* list *directoryname*
+schoolmesh\_posixfolder\_getinfo *username* file *directoryname/filename*
 
 # DESCRIPTION
 
@@ -24,7 +25,8 @@ to run commands on behalf of other users (through sudo).
 # EXAMPLES
 
 	schoolmesh_posixfolder_getinfo john.test path '/'  
-	schoolmesh_posixfolder_getinfo john.test list 'mydocs' 
+	schoolmesh_posixfolder_getinfo john.test list '/mydocs' 
+ schoolmesh_posixfolder_getinfo john.test file '/mydocs/myfile.odt'
 
 # BUGS
 

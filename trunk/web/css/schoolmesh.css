@@ -228,6 +228,23 @@
   background: url(../images/group.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_download a
+{
+  background: url(../images/download.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_opendir a
+{
+  background: url(../images/opendir.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_updir a
+{
+  background: url(../images/updir.png) no-repeat 0 0;
+}
+
+
+
 #sf_admin_container .alert
 {
   margin: 4px 0;

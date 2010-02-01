@@ -10,11 +10,14 @@
 <?php endif; ?>
 
 <?php if($path!='/'): ?>
-<p><?php echo link_to(
+<ul class="sf_admin_actions">
+<li class="sf_admin_action_updir"><?php echo link_to(
 	__('Up'),
 	url_for('filebrowser/up')
 	)
-?></p>
+?>
+</li>
+</ul>
 <?php endif ?>
 
 
@@ -40,20 +43,33 @@
       <td><?php echo $item->getSize() ?></td>
       <td><?php echo Generic::datetime($item->getTimestamp(), $sf_context) ?></td>
       <td>
+	<ul class="sf_admin_td_actions">  
 		<?php if($item->getFiletype()=='directory'): ?>
-			<?php echo link_to(
+			<li class="sf_admin_action_opendir"><?php echo link_to(
 				__('Open'),
 				url_for('filebrowser/open?name='. $item->getName())
 				)
 			?>
+			</li>
 		<?php endif ?>
 		<?php if($item->getIsDownloadable()): ?>
-			<?php echo link_to(
+			<li class="sf_admin_action_download"><?php echo link_to(
 				__('Download'),
 				url_for('filebrowser/download?name='. urlencode($item->getName()))
 				)
 			?>
+			</li>
 		<?php endif ?>
+		<?php if($item->getIsRemovable()): ?>
+			<li class="sf_admin_action_delete"><?php echo link_to(
+				__('Remove'),
+				url_for('filebrowser/remove?name='. urlencode($item->getName())),
+				array('method' => 'put', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()),
+				))
+			?>
+			</li>
+		<?php endif ?>
+		</ul>
 	  </td>
 	</tr>
 	<?php endforeach ?>
@@ -66,15 +82,6 @@
 
 <hr />
 
-<form action="<?php echo url_for('filebrowser/upload') ?>" method="POST" enctype="multipart/form-data">
+<?php include_partial('fileupload', array('form'=>$form)) ?>
 
-  <table>
-    <?php echo $form ?>
-	<tr>
-      <td colspan="2">
-         <input type="submit" name="save" value="<?php echo __('Upload') ?>">
-      </td>
-    </tr>
-  </table>
-</form>
-
+<p>TO DO: Make directory</p>

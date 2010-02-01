@@ -8,6 +8,8 @@ folder\[aq]s contents
 schoolmesh_posixfolder_getinfo \f[I]username\f[] path
 \f[I]directoryname\f[] schoolmesh_posixfolder_getinfo
 \f[I]username\f[] list \f[I]directoryname\f[]
+schoolmesh_posixfolder_getinfo \f[I]username\f[] file
+\f[I]directoryname/filename\f[]
 .SH DESCRIPTION
 .PP
 This script generates a list of pairs \f[I]key=value\f[] about a
@@ -20,8 +22,11 @@ allowed to run commands on behalf of other users (through sudo)\.
 .PP
 \f[CR]
       schoolmesh_posixfolder_getinfo\ john\.test\ path\ \[aq]/\[aq]\ \ 
-      schoolmesh_posixfolder_getinfo\ john\.test\ list\ \[aq]mydocs\[aq]\ 
+      schoolmesh_posixfolder_getinfo\ john\.test\ list\ \[aq]/mydocs\[aq]\ 
 \f[]
+.PP
+schoolmesh_posixfolder_getinfo john\.test file
+\[aq]/mydocs/myfile\.odt\[aq]
 .SH BUGS
 .PP
 Probably many\.
