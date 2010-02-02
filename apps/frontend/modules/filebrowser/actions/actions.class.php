@@ -36,7 +36,8 @@ class filebrowserActions extends sfActions
 		$this->path=$this->folder->getPath();
 		$this->folder_items=$this->folder->getFolderItems();
 		
-		$this->form = new UploadFileForm();
+		$this->form_uploadfile = new UploadFileForm();
+		$this->form_makedir = new MakeDirForm();
 
 	
   }
@@ -55,9 +56,19 @@ class filebrowserActions extends sfActions
 
   public function executeRemove(sfWebRequest $request)
   {
-	return $this->renderText('Not yet implemented');	
+		$filename=$request->getParameter('name');
+		try
+		{
+			$this->folder->removeFile(urldecode($filename));
+			$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('The file "%filename%" has been removed.', array('%filename%'=>$filename)));
+		}
+		catch (Exception $e)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('The file "%filename%" cannot be removed.', array('%filename%'=>$filename)));
+		}
+		
+		$this->redirect('filebrowser/index');
   }
-
 
    private function _changeDirectory($newpath)
 	{
@@ -122,6 +133,36 @@ class filebrowserActions extends sfActions
 		}
 	}
 
+	public function executeMakedir(sfWebRequest $request)
+	{
+		$this->form = new MakeDirForm();
+		
+		if ($request->isMethod('post'))
+		{
+		  $this->form->bind($request->getParameter('info'), $request->getFiles('info'));
+		  
+		  if ($this->form->isValid())
+		  {
+			$directory = $this->form->getValue('directory');
+			try
+			{
+				$this->folder->makeDirectory($directory);
+				$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Directory created.'));
+			}
+			catch (Exception $e)
+			{
+				$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('The directory could not be created.'));
+			}
+			
+			$this->redirect('filebrowser/index');
+
+		  }
+		}
+		else
+		{
+			$this->forward404();
+		}
+	}
 
 
 }
