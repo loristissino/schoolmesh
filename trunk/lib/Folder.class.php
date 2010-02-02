@@ -114,7 +114,47 @@ class Folder
 		// we rewrite the file with no data, because we cannot remove it
 				
 	}
+	
+	public function removeFile($name)
+	{
+		
+		if (!$folderItem=$this->_getFileInfo($name))
+		{
+			throw new Exception('file does not exist or is unreadable');
+		}
+		
+		try
+		{
+			$info=Generic::executeCommand(sprintf('posixfolder_removefile %s "%s"', 
+				$this->getUsername(),
+				$this->_getFullPathOfFile($name)
+				), 
+				false);
+		}
+		catch (Exception $e)
+		{
+				throw $e;
+		}
+		
+	}
 
+	public function makeDirectory($name)
+	{
+				
+		try
+		{
+			$info=Generic::executeCommand(sprintf('posixfolder_makedir %s "%s"', 
+				$this->getUsername(),
+				$this->_getFullPathOfFile($name)
+				), 
+				false);
+		}
+		catch (Exception $e)
+		{
+				throw $e;
+		}
+		
+	}
 
 	public function acceptFile(sfValidatedFile $file)
 	{
@@ -236,7 +276,10 @@ class FolderItem {
 	
 	public function getIsRemovable()
 	{
-		return $this->getFileType()=='regular file' || $this->getSize()==0;
+		return 
+			in_array($this->getFileType(),
+				array('regular file', 'directory'))
+			|| $this->getSize()==0;
 	}
 
 	public function setFiletype($value)

@@ -6,15 +6,15 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 
 #@ # NAME
 #@
-#@ {} - Copy an uploaded file to a user's home (sub)directory
+#@ {} - Make a directory in a user's home (sub)directory
 #@
 #@ # SYNOPSIS
 #@
-#@ {} *username* *tempname* *destinationpath*
+#@ {} *username* *path*
 #@
 #@ # DESCRIPTION
 #@
-#@ This script copies an uploaded file to a user's directory.
+#@ This script makes a directory in a user's directory.
 #@ The user must exist.
 #@ The path is relative to user's home directory.
 #@ 
@@ -25,24 +25,20 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # EXAMPLES
 #@
-#@	{-} john.test /tmp.Vm6STjrivF '/mydocs/My report.odt'
+#@	{-} john.test '/mydocs/my letters'
 
 USERNAME=$1
-TEMPFILE=$2
-FILEPATH=$3
+FILEPATH=$2
 
 FULLPATH="$POSIX_HOMEDIR_USERS/$USERNAME$FILEPATH"
 
 checkUsername $USERNAME
 
-chmod 777 $TEMPFILE # we allow the user to copy the file
-sudo -u $USERNAME /bin/cp $TEMPFILE "$FULLPATH"
-# we copy the file as the user, in order to see if there are problems with quotas
+sudo -u $USERNAME /bin/mkdir "$FULLPATH"
 
 if [[ $? -eq 0 ]]; then
-	echo MOVED=1
-	sudo -u $USERNAME /bin/chmod 644 "$FULLPATH"
+	echo CREATED=1
 else
-	echo MOVED=0
+	echo CREATED=0
 	exit 1
 fi

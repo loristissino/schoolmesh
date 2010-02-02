@@ -40,7 +40,11 @@
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <td><?php include_component('filebrowser', 'mimetype', array('mimetype'=>$item->getMimeType())) ?></td>
       <td><?php echo $item->getName() ?></td>
-      <td><?php echo $item->getSize() ?></td>
+      <td>
+	<?php if ($item->getFileType()!='directory'): ?>
+		<?php echo $item->getSize() ?>
+	<?php endif ?>
+	</td>
       <td><?php echo Generic::datetime($item->getTimestamp(), $sf_context) ?></td>
       <td>
 	<ul class="sf_admin_td_actions">  
@@ -82,6 +86,5 @@
 
 <hr />
 
-<?php include_partial('fileupload', array('form'=>$form)) ?>
-
-<p>TO DO: Make directory</p>
+<?php include_partial('fileupload', array('form'=>$form_uploadfile)) ?>
+<?php include_partial('makedir', array('form'=>$form_makedir)) ?>
