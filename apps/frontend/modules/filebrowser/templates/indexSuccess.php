@@ -51,7 +51,7 @@
 		<?php if($item->getFiletype()=='directory'): ?>
 			<li class="sf_admin_action_opendir"><?php echo link_to(
 				__('Open'),
-				url_for('filebrowser/open?name='. $item->getName())
+				url_for('filebrowser/open?name='. urlencode($item->getName()))
 				)
 			?>
 			</li>

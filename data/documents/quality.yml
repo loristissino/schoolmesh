@@ -1,0 +1,27 @@
+sections:
+  section1:
+    title: Documenti della qualità
+    links:
+      1:
+        title: Primo documento
+        file: file1.pdf
+        date: 12/31/2009
+      2:
+        title: Secondo documento con \#strani caratteri. e punti.doc
+        file: file2.pdf
+        date: 01/31/2010
+      3:
+        title: Terzo documento
+        file: file3.pdf
+        date: 02/01/2010
+  section2:
+    title: Moduli
+    links:
+      1:
+        title: Modulo 1
+        file: file1.doc
+        date: 12/31/2009
+      2:
+        title: Modulo 2
+        file: file2.doc
+        date: 01/31/2010

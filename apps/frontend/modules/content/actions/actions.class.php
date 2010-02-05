@@ -20,12 +20,20 @@ class contentActions extends sfActions
     $this->forward('show', 'content');
   }
 */
-    public function executeIndex($request)
+    public function executeIndex(sfWebRequest $request)
   {
 	
 //	$this->availableaccounts=sfConfig::get('app_config_accounts');
 
   }
+
+
+	public function executeDocuments(sfWebRequest $request)
+	{
+		$index=$request->getParameter('index', 'main');
+		$indexFile=sprintf('%s/%s.yml', sfConfig::get('app_documents_main_directory'), $index);
+		$this->forward404Unless($this->content=sfYaml::load($indexFile));
+	}
 
 
 	public function executeUnoconv(sfWebRequest $request)
