@@ -32,7 +32,7 @@ class Generic{
 		return html_entity_decode($text);
 	}
 	
-	public static function datetime($date, sfContext $context=null)
+	public static function datetime($date, $context=null)
 		{
 			
 			if ($date===null)
