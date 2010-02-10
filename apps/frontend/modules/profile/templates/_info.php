@@ -45,7 +45,7 @@
 		<?php endif ?>
 
 <?php /*
-		<br /><?php echo sprintf(__('Your last action was at: %s'), Generic::datetime($sf_user->getProfile()->getLastActionAt('U'), $sf_context)) ?>
+		<br /><?php echo sprintf(__('Your last action was at: %s'), Generic::datetime($sf_user->getProfile()->getLastActionAt('U'), $sf_context->getRawValue())) ?>
 */ ?>
   <?php endif; ?>
   </p>
