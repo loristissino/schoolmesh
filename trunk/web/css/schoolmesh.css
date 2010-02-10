@@ -305,3 +305,18 @@ background-color: #e7eef6;
 {
 font-weight: normal;
 }
+
+.deadline_notyetover
+{
+	
+}
+
+.deadline_completed
+{
+	color: green;
+}
+
+.deadline_overdue
+{
+	color: red;
+}

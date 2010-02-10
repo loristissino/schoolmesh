@@ -16,4 +16,21 @@ require 'lib/model/om/BaseProjDeadline.php';
  */
 class ProjDeadline extends BaseProjDeadline {
 
+	public function getState()
+	{
+		if ($this->getCompleted())
+		{
+			return 'completed';
+		}
+		
+		if ($this->getCurrentDeadlineDate('U') < time())
+		{
+			return 'overdue';
+		}
+		
+		return 'not yet over';
+		
+	}
+
+
 } // ProjDeadline

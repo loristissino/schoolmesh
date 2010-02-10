@@ -32,7 +32,7 @@ class Generic{
 		return html_entity_decode($text);
 	}
 	
-	public static function datetime($date, $context=null)
+	public static function datetime($date, sfContext $context=null)
 		{
 			
 			if ($date===null)
@@ -45,7 +45,7 @@ class Generic{
 			$difference = time() - $datebegin; 
 //			return time() . ' - ' . $datebegin;
 			
-			if ($difference<86400)
+			if (($difference<86400) && ($difference>0))
 				{
 					$prefix='Today, ';
 					if ($context)
@@ -55,7 +55,7 @@ class Generic{
 					return $prefix . date('H:i', $date);
 				}
 				
-			if ($difference < 172800)
+			if (($difference < 172800) && ($difference>0))
 				{
 					$prefix='Yesterday, ';
 					if ($context)

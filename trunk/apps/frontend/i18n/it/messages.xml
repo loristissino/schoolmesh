@@ -1551,6 +1551,38 @@
         <source>Email address already validated</source>
         <target>Convalida già effettuata</target>
       </trans-unit>
+	  <trans-unit id="414">
+        <source>overdue</source>
+        <target>scadenza passata</target>
+      </trans-unit>
+	  <trans-unit id="415">
+        <source>completed</source>
+        <target>attività completata</target>
+      </trans-unit>
+	  <trans-unit id="416">
+        <source>not yet over</source>
+        <target>scadenza non ancora passata</target>
+      </trans-unit>
+	  <trans-unit id="417">
+        <source>not yet over</source>
+        <target>scadenza non ancora passata</target>
+      </trans-unit>
+	  <trans-unit id="418">
+        <source>Original deadline</source>
+        <target>Scadenza prevista inizialmente</target>
+      </trans-unit>
+	  <trans-unit id="419">
+        <source>Current deadline</source>
+        <target>Scadenza attuale</target>
+      </trans-unit>
+	  <trans-unit id="420">
+        <source>Projects</source>
+        <target>Progetti</target>
+      </trans-unit>
+	  <trans-unit id="420">
+        <source>No deadline defined.</source>
+        <target>Nessuna scadenza definita.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

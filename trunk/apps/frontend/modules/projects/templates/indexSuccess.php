@@ -14,6 +14,14 @@
 
 <div class="sf_admin_list">
 
+<p><?php echo link_to(
+	__('See as report'),
+	url_for('projects/index?template=report')
+	)
+?>
+</p>
+
+
 <?php if(sizeof($projects)>0): ?>
 
 <table cellspacing="0">

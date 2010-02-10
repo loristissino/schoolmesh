@@ -20,6 +20,10 @@ class projectsActions extends sfActions
 
    $this->projects=SchoolprojectPeer::retrieveAllForYear(sfConfig::get('app_config_current_year'));
    $this->steps=Array();
+
+   $template=$request->getParameter('template', 'index');
+   $this->setTemplate($template);   
+
 	}
 	
   public function executeLetters(sfWebRequest $request)

@@ -315,6 +315,8 @@ propel:
     created_at: ~
     updated_at: ~
 
+# completed should be changed in state: completed, overdue, canceled, etc.
+
   subnet:
     id:
     name:   { type: varchar(40), index: true, unique: true }
