@@ -22,6 +22,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 		$c=new Criteria();
 		$c->add(self::YEAR_ID, $year);
 		$c->addJoin(self::USER_ID, sfGuardUserPeer::ID);
+		$c->addAscendingOrderByColumn(self::PROJ_CATEGORY_ID);
 		return self::doSelectJoinAll($c);
 		
 	}

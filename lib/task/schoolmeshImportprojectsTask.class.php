@@ -193,7 +193,7 @@ EOF;
 
 		print_r($data);
 
-		list($user, $title, $duedate, $description)=$data; 
+		list($user, $title, $duedate, $currentdate, $description, $completed, $notes)=$data; 
 
 		$this->log($this->formatter->format(sprintf('Importing deadline %s', $title), 'COMMENT'));
 		
@@ -214,6 +214,19 @@ EOF;
 		->setUserId($myuser->getId())
 		->setDescription($description)
 		->setOriginalDeadlineDate(Generic::clever_date('it', $duedate))
+		->setCompleted($completed==true)
+		->setNotes($notes);
+		
+		if ($currentdate>0)
+		{
+			$deadline->setCurrentDeadlineDate(Generic::clever_date('it', $currentdate));
+		}
+		else
+		{
+			$deadline->setCurrentDeadlineDate($deadline->getOriginalDeadlineDate());
+		}
+		
+		$deadline
 		->save();
 		
 		$imported++;
