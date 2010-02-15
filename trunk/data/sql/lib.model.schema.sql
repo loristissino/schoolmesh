@@ -835,6 +835,7 @@ CREATE TABLE `schoolproject`
 	`user_id` INTEGER  NOT NULL,
 	`title` VARCHAR(255),
 	`description` VARCHAR(255),
+	`notes` TEXT,
 	`hours_approved` INTEGER,
 	PRIMARY KEY (`id`),
 	INDEX `schoolproject_FI_1` (`proj_category_id`),

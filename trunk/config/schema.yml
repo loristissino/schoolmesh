@@ -296,6 +296,7 @@ propel:
     user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     title:        varchar(255)
     description:       varchar(255)
+    notes:   longvarchar
     hours_approved: integer
 
   proj_category:

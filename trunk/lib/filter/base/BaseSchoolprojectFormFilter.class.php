@@ -18,6 +18,7 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
       'user_id'          => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
       'title'            => new sfWidgetFormFilterInput(),
       'description'      => new sfWidgetFormFilterInput(),
+      'notes'            => new sfWidgetFormFilterInput(),
       'hours_approved'   => new sfWidgetFormFilterInput(),
     ));
 
@@ -27,6 +28,7 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
       'user_id'          => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
       'title'            => new sfValidatorPass(array('required' => false)),
       'description'      => new sfValidatorPass(array('required' => false)),
+      'notes'            => new sfValidatorPass(array('required' => false)),
       'hours_approved'   => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
@@ -51,6 +53,7 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
       'user_id'          => 'ForeignKey',
       'title'            => 'Text',
       'description'      => 'Text',
+      'notes'            => 'Text',
       'hours_approved'   => 'Number',
     );
   }
