@@ -55,6 +55,12 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	protected $description;
 
 	/**
+	 * The value for the notes field.
+	 * @var        string
+	 */
+	protected $notes;
+
+	/**
 	 * The value for the hours_approved field.
 	 * @var        int
 	 */
@@ -161,6 +167,16 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	public function getDescription()
 	{
 		return $this->description;
+	}
+
+	/**
+	 * Get the [notes] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getNotes()
+	{
+		return $this->notes;
 	}
 
 	/**
@@ -306,6 +322,26 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	} // setDescription()
 
 	/**
+	 * Set the value of [notes] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Schoolproject The current object (for fluent API support)
+	 */
+	public function setNotes($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->notes !== $v) {
+			$this->notes = $v;
+			$this->modifiedColumns[] = SchoolprojectPeer::NOTES;
+		}
+
+		return $this;
+	} // setNotes()
+
+	/**
 	 * Set the value of [hours_approved] column.
 	 * 
 	 * @param      int $v new value
@@ -363,7 +399,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$this->user_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->title = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->description = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->hours_approved = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
+			$this->notes = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->hours_approved = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -373,7 +410,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 7; // 7 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 8; // 8 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Schoolproject object", $e);
@@ -765,6 +802,9 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				return $this->getDescription();
 				break;
 			case 6:
+				return $this->getNotes();
+				break;
+			case 7:
 				return $this->getHoursApproved();
 				break;
 			default:
@@ -794,7 +834,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$keys[3] => $this->getUserId(),
 			$keys[4] => $this->getTitle(),
 			$keys[5] => $this->getDescription(),
-			$keys[6] => $this->getHoursApproved(),
+			$keys[6] => $this->getNotes(),
+			$keys[7] => $this->getHoursApproved(),
 		);
 		return $result;
 	}
@@ -845,6 +886,9 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				$this->setDescription($value);
 				break;
 			case 6:
+				$this->setNotes($value);
+				break;
+			case 7:
 				$this->setHoursApproved($value);
 				break;
 		} // switch()
@@ -877,7 +921,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setUserId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setTitle($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setDescription($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setHoursApproved($arr[$keys[6]]);
+		if (array_key_exists($keys[6], $arr)) $this->setNotes($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setHoursApproved($arr[$keys[7]]);
 	}
 
 	/**
@@ -895,6 +940,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SchoolprojectPeer::USER_ID)) $criteria->add(SchoolprojectPeer::USER_ID, $this->user_id);
 		if ($this->isColumnModified(SchoolprojectPeer::TITLE)) $criteria->add(SchoolprojectPeer::TITLE, $this->title);
 		if ($this->isColumnModified(SchoolprojectPeer::DESCRIPTION)) $criteria->add(SchoolprojectPeer::DESCRIPTION, $this->description);
+		if ($this->isColumnModified(SchoolprojectPeer::NOTES)) $criteria->add(SchoolprojectPeer::NOTES, $this->notes);
 		if ($this->isColumnModified(SchoolprojectPeer::HOURS_APPROVED)) $criteria->add(SchoolprojectPeer::HOURS_APPROVED, $this->hours_approved);
 
 		return $criteria;
@@ -959,6 +1005,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		$copyObj->setTitle($this->title);
 
 		$copyObj->setDescription($this->description);
+
+		$copyObj->setNotes($this->notes);
 
 		$copyObj->setHoursApproved($this->hours_approved);
 

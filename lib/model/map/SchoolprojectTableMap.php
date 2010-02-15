@@ -42,6 +42,7 @@ class SchoolprojectTableMap extends TableMap {
 		$this->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
 		$this->addColumn('TITLE', 'Title', 'VARCHAR', false, 255, null);
 		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 255, null);
+		$this->addColumn('NOTES', 'Notes', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('HOURS_APPROVED', 'HoursApproved', 'INTEGER', false, null, null);
 		// validators
 	} // initialize()
