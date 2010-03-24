@@ -27,12 +27,48 @@ class contentActions extends sfActions
 
   }
 
-
 	public function executeDocuments(sfWebRequest $request)
 	{
-		$index=$request->getParameter('index', 'main');
-		$indexFile=sprintf('%s/%s.yml', sfConfig::get('app_documents_main_directory'), $index);
+		$this->index=$request->getParameter('index', 'main');
+		$indexFile=sprintf('%s/%s.yml', sfConfig::get('app_documents_main_directory'), $this->index);
 		$this->forward404Unless($this->content=sfYaml::load($indexFile));
+	}
+
+
+	public function executeServe(sfWebRequest $request)
+	{
+    
+		$this->index=$request->getParameter('index', 'main');
+		$indexFile=sprintf('%s/%s.yml', sfConfig::get('app_documents_main_directory'), $this->index);
+		$this->forward404Unless($this->content=sfYaml::load($indexFile));
+    
+    $basedir=$this->content['basedir'];
+    
+    $this->forward404Unless($filename=$basedir. Generic::b64_unserialize($request->getParameter('file')));
+    
+    
+    $file = new smFileInfo($filename);
+
+    $this->forward404Unless($file->isReadable());
+    
+    //return $this->renderText($file->getSize() . $file->getMimeType());
+
+    $response = $this->getContext()->getResponse();
+    
+		$response->setHttpHeader('Pragma', '');
+		$response->setHttpHeader('Cache-Control', '');
+		$response->setHttpHeader('Content-Length', $file->getSize());
+		$response->setHttpHeader('Content-Type', $file->getMimeType());
+		$response->setHttpHeader('Content-Disposition', 'attachment; filename="' . html_entity_decode($file->getFilename(), ENT_QUOTES, 'UTF-8') . '"');
+
+		$tmpfile=fopen($filename, 'r');
+
+    $response->setContent(fread($tmpfile, $file->getSize()));
+    fclose($tmpfile);
+    
+    return sfView::NONE;
+
+//    $this->redirect('content/documents?index='. $this->index);
 	}
 
 
