@@ -14,9 +14,9 @@
 		<?php if(@$link['file']): ?>
 			<li  class="sf_admin_action_open"><?php echo link_to(
 				str_replace('\#', '#', $link['title']),
-				url_for('content/serve?file=' . urlencode($link['file']))
+				url_for('content/serve?index=' . $index . '&file=' . Generic::b64_serialize($link['file']))
 				)
-			?> <?php echo __('(Date: %date%)', array('%date%'=>$link['date'])) ?>
+			?> <?php //echo __('(%date%)', array('%date%'=>$link['date'])) ?>
 			</li><br />
 		<?php endif ?>
 	<?php endforeach ?>
