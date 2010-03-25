@@ -40,20 +40,24 @@ class contentActions extends sfActions
     
 		$this->index=$request->getParameter('index', 'main');
 		$indexFile=sprintf('%s/%s.yml', sfConfig::get('app_documents_main_directory'), $this->index);
+
+
 		$this->forward404Unless($this->content=sfYaml::load($indexFile));
     
-    $basedir=$this->content['basedir'];
-    
-    $this->forward404Unless($filename=$basedir. Generic::b64_unserialize($request->getParameter('file')));
-    
-    
-    $file = new smFileInfo($filename);
+		$basedir=$this->content['basedir'];
+		$this->forward404Unless($filename=$basedir. Generic::b64_unserialize($request->getParameter('file')));
+		$file = new smFileInfo($filename);
 
-    $this->forward404Unless($file->isReadable());
-    
-    //return $this->renderText($file->getSize() . $file->getMimeType());
 
-    $response = $this->getContext()->getResponse();
+		if (!$file->isReadable())
+		{
+			return $this->renderText($file->getFilename() . ' not readable'); 
+		}
+//		$this->forward404Unless($file->isReadable());
+    
+		
+	
+		$response = $this->getContext()->getResponse();
     
 		$response->setHttpHeader('Pragma', '');
 		$response->setHttpHeader('Cache-Control', '');
@@ -63,12 +67,9 @@ class contentActions extends sfActions
 
 		$tmpfile=fopen($filename, 'r');
 
-    $response->setContent(fread($tmpfile, $file->getSize()));
-    fclose($tmpfile);
-    
-    return sfView::NONE;
-
-//    $this->redirect('content/documents?index='. $this->index);
+		$response->setContent(fread($tmpfile, $file->getSize()));
+    		fclose($tmpfile);
+		return sfView::NONE;
 	}
 
 

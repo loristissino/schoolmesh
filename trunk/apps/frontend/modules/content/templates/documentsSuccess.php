@@ -1,3 +1,5 @@
+<h1><?php echo $content['title'] ?></h1>
+
 <div class="sf_admin_list">
 <?php foreach($content['sections'] as $section): ?>
 	<h2><?php echo $section['title'] ?></h2>
@@ -16,7 +18,7 @@
 				str_replace('\#', '#', $link['title']),
 				url_for('content/serve?index=' . $index . '&file=' . Generic::b64_serialize($link['file']))
 				)
-			?> <?php //echo __('(%date%)', array('%date%'=>$link['date'])) ?>
+			?>
 			</li><br />
 		<?php endif ?>
 	<?php endforeach ?>

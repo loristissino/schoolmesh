@@ -57,6 +57,8 @@
             powered by <a href="http://www.symfony-project.org/">
             <img src="/schoolmesh/images/symfony.gif" alt="symfony framework" /></a>
           </span>
+          <br />
+          <em>released under the <a href="license/gpl.txt">GNU General Public License, version 3</a></em>
 
         </div>
       </div>
