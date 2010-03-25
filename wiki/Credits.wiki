@@ -1,4 +1,4 @@
-#summary Credits
+#summary Credits and Licenses
 #labels Phase-Deploy,Featured
 
 =Credits=
@@ -20,3 +20,13 @@ We will list them here, trying to mention them all:
 2. _Apache_ is registered by the Apache Foundation
 
 (this must be completed) 
+
+=Licenses=
+
+http://www.gnu.org/graphics/gplv3-88x31.png
+
+SchoolMesh itself is released under the [http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v. 3]
+
+Some pieces of software are included as plugins and may have different licenses. See the sources for details.
+
+
