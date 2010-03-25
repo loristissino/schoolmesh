@@ -18,11 +18,11 @@ There is a lot of things to do. Here we'll list them just to keep a reference.
 
 == Configuration ==
 
-  # Mail server (possibly with Google Apps)
-  # DNS server
-  # Apache (SSL)
+  # Mail server (DONE - with SwiftMailer)
+  # DNS server (DONE)
+  # Apache-SSL (DONE)
 
 == Documentation ==
 
   # General user's guide
-  # Teacher's guide
+  # Teacher's guide (DONE -- Italian only)
