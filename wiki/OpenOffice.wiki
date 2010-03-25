@@ -116,4 +116,4 @@ Alternative:
   # trovare un altro convertitore affidabile
   # ospitare il convertitore su un altro host
   # ospitare il convertitore su una macchina virtuale
-
+  # usare un server X dummy, come _xserver-xorg-video-dummy_ 
