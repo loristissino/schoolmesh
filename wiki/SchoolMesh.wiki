@@ -26,9 +26,9 @@ There will also be some place for activities like Teachers' workplans and final 
 
 = Current status =
 
-Alpha testing. 
+Beta testing. 
 
-The work is nearly finished for what concerns teachers' workplans and final reports. There are some [Screenshots].
+The work is nearly finished for what concerns teachers' workplans and final reports. There are some [Screenshots], and some [http://www.mattiussilab.net/help help webpages] that describe how some parts of the application work (Italian only).
 
 = Installation =
 
