@@ -11,6 +11,8 @@ grep -v 'config/databases.yml' | \
 grep -v 'config/schoolmesh.rc' | \
 grep -v 'data/documents/forms.yml' | \
 grep -v 'data/documents/testo.pdf' | \
-grep -v ' utilities/fixauthor.sh' | \
+grep -v 'data/documents/main.yml' | \
+grep -v 'data/documents/quality.yml' | \
+grep -v 'utilities/fixauthor.sh' | \
 grep -v 'templates/email/document_submission.txt' | \
 sed 's/^?      //'
