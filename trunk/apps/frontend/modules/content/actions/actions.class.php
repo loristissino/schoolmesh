@@ -52,23 +52,11 @@ class contentActions extends sfActions
 		if (!$file->isReadable())
 		{
 			return $this->renderText($file->getFilename() . ' not readable'); 
-		}
 //		$this->forward404Unless($file->isReadable());
+		}
     
-		
-	
-		$response = $this->getContext()->getResponse();
+    $file->prepareDelivery($this->getContext()->getResponse());
     
-		$response->setHttpHeader('Pragma', '');
-		$response->setHttpHeader('Cache-Control', '');
-		$response->setHttpHeader('Content-Length', $file->getSize());
-		$response->setHttpHeader('Content-Type', $file->getMimeType());
-		$response->setHttpHeader('Content-Disposition', 'attachment; filename="' . html_entity_decode($file->getFilename(), ENT_QUOTES, 'UTF-8') . '"');
-
-		$tmpfile=fopen($filename, 'r');
-
-		$response->setContent(fread($tmpfile, $file->getSize()));
-    		fclose($tmpfile);
 		return sfView::NONE;
 	}
 
