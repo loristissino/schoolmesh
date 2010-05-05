@@ -1583,6 +1583,10 @@
         <source>No deadline defined.</source>
         <target>Nessuna scadenza definita.</target>
       </trans-unit>
+    <trans-unit id="421">
+        <source>Missing evaluation</source>
+        <target>Manca indicazione di realizzazione</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
