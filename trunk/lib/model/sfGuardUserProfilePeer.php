@@ -41,9 +41,10 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	{
 		$c = new Criteria();
 		$c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
-		$c->add(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_TEMPORARY_PASSWORD, '', Criteria::GREATER_THAN);
-		$c->add(sfGuardUserProfilePeer::GOOGLEAPPS_ACCOUNT_APPROVED_AT, 0, Criteria::GREATER_THAN);
-		$t = self::doSelectJoinsfGuardUser($c);
+		$c->addJoin(sfGuardUserPeer::ID, AccountPeer::USER_ID);
+    $c->addJoin(AccountPeer::ACCOUNT_TYPE_ID, AccountTypePeer::ID);
+    $c->add(AccountTypePeer::NAME, 'googleapps');
+		$t = self::doSelectJoinAll($c);
 		
 		return $t;
 	}

@@ -808,8 +808,10 @@ public function getWorkflowLogs()
 
 	foreach($t as $item)
 		{
-			
-		if ($item->getWptoolItemType()->getState()>$this->getState())
+
+// FIXME we need a limit for the state
+//		if ($item->getWptoolItemType()->getState()>$this->getState())
+		if ($item->getWptoolItemType()->getState()<40)
 			{
 				continue;
 			}
@@ -931,14 +933,18 @@ public function getWorkflowLogs()
 		
 		if ($template=='')
 		{
-			$template='workplan.odt';
+			$template='workplan' . $this->getState() .'.odt';
 		}
 		
 		$teachertitle=$this->getSfGuardUser()->getProfile()->getIsMale()?'Mr. ':'Ms. ';
 
+    $steps = Workflow::getWpfrSteps();
+    $state=$steps[$this->getState()]['stateDescription'];
+
 		if ($sfContext)
 		{
 			$teachertitle=$sfContext->getI18n()->__($teachertitle);
+			$state=$sfContext->getI18n()->__($state);
 		}
 	
 		try
@@ -952,6 +958,7 @@ public function getWorkflowLogs()
 		
 		$odfdoc=$odf->getOdfDocument();
 		
+		$odfdoc->setVars('doctype',  $state);
 		$odfdoc->setVars('year',  $this->getYear()->__toString());
 		$odfdoc->setVars('teacher',  $teachertitle . $this->getSfGuardUser()->getProfile()->getFullName());
 		$odfdoc->setVars('subject', $this->getSubject()->getDescription());
@@ -965,7 +972,10 @@ public function getWorkflowLogs()
 		foreach($wpinfos as $wpinfo)
 		{
 			if (
-				$wpinfo->getWpinfoType()->getState()<=$this->getState()
+//				$wpinfo->getWpinfoType()->getState()<=$this->getState()
+// FIXME: we need to have two limits in the db, upper and lower
+				$wpinfo->getWpinfoType()->getState()>=40
+        
 				&&
 				$wpinfo->getContent()
 				&&
@@ -980,43 +990,107 @@ public function getWorkflowLogs()
 		}
 		
 		$odfdoc->mergeSegment($infos);
+    
+    if ($this->getState()>=40) /* FIXME */
+    
+    {
 		
-		
-		$wpmodules=$this->getWpmodules();
-		
-		$modules=$odfdoc->setSegment('modules');
-		
-		$moduleNumber=0;
-		
-		foreach($wpmodules as $wpmodule)
-		{
-			$modules->moduleTitle($wpmodule->getTitle());
-			$modules->moduleNumber(++$moduleNumber);
-			$modules->modulePeriod($wpmodule->getPeriod());
-			
-			foreach($wpmodule->getWpitemGroups() as $wpitemgroup)
-			{
-				$wpitems=$wpitemgroup->getWpmoduleItems();
-				if (($wpitemgroup->getWpitemType()->getState()<=$this->getState())&&(sizeof($wpitems)>0))
-				{
-					$modules->group->groupTitle($wpitemgroup->getWpitemType()->getTitle());
-					
-					foreach($wpitems as $wpitem)
+      $wpmodules=$this->getWpmodules();
+      
+      $selectedModules=array();
+      
+      foreach($wpmodules as $wpmodule)
+      {
+        foreach($wpmodule->getWpitemGroups() as $wpitemgroup)
+        {
+          $wpitems=$wpitemgroup->getWpmoduleItems();
+          if (($wpitemgroup->getWpitemType()->getState()<=$this->getState())&&(sizeof($wpitems)>0))
+          {					
+            foreach($wpitems as $wpitem)
+            {
+              // evaluation could be null (e.g. for notes, or before report state), 
+              // so first we check if it exists, then we test the value
+              if(!$wpitem->getEvaluation() || $wpitem->getEvaluation()>1)
+              
+              {
+                $text=$wpitem->getContent();
+                if ($wpitem->getEvaluation())
+                {
+                  $text.=' (' . $wpitem->getEvaluation() . ')';
+                }
+                $selectedModules[$wpmodule->getTitle()][$wpitemgroup->getWpitemType()->getTitle()][]=$text;
+              }
+            }
+          }
+        }
+      }
+            
+      $modules=$odfdoc->setSegment('modules');
+      
+      $moduleNumber=0;
+      
+      foreach($selectedModules as $selectedModule_key=>$selectedModule)
+      {
+        $modules->moduleTitle($selectedModule_key);
+        $modules->moduleNumber(++$moduleNumber);
+					foreach($selectedModule as $selectedGroup_key=>$selectedGroup)
 					{
-						$modules->group->item->itemContent($wpitem->getContent());
-						$modules->group->item->merge();
+						$modules->group->groupTitle($selectedGroup_key);
+						foreach($selectedGroup as $selectedItem)
+						{
+							$modules->group->item->itemContent($selectedItem);
+							$modules->group->item->merge();
+						}
+						$modules->group->merge();
 					}
-					$modules->group->merge();
-				}
-			}
-			
-			$pagebreak=($moduleNumber<sizeof($wpmodules))?'<pagebreak>':'';
-			$modules->pagebreak($pagebreak);
+        
+        $pagebreak=($moduleNumber<sizeof($wpmodules))?'<pagebreak>':'';
+        $modules->pagebreak($pagebreak);
 
-			$modules->merge();
-		}
-		
-		$odfdoc->mergeSegment($modules);
+        $modules->merge();
+      }
+      
+      $odfdoc->mergeSegment($modules);
+    }
+    else // state: workplan, not report
+    
+    {
+
+      $modules=$odfdoc->setSegment('modules');
+      
+      $moduleNumber=0;
+      
+      foreach($wpmodules as $wpmodule)
+      {
+        $modules->moduleTitle($wpmodule->getTitle());
+        $modules->moduleNumber(++$moduleNumber);
+        $modules->modulePeriod($wpmodule->getPeriod());
+        
+        foreach($wpmodule->getWpitemGroups() as $wpitemgroup)
+        {
+          $wpitems=$wpitemgroup->getWpmoduleItems();
+          if (($wpitemgroup->getWpitemType()->getState()<=$this->getState())&&(sizeof($wpitems)>0))
+          {
+            $modules->group->groupTitle($wpitemgroup->getWpitemType()->getTitle());
+            
+            foreach($wpitems as $wpitem)
+            {
+              $modules->group->item->itemContent($wpitem->getContent());
+              $modules->group->item->merge();
+            }
+            $modules->group->merge();
+          }
+        }
+        
+        $pagebreak=($moduleNumber<sizeof($wpmodules))?'<pagebreak>':'';
+        $modules->pagebreak($pagebreak);
+
+        $modules->merge();
+      }
+      
+      $odfdoc->mergeSegment($modules);
+
+    }
 
 
 		$tools=$this->getTools(true);

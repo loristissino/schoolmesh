@@ -14,6 +14,7 @@ class RolePeer extends BaseRolePeer
 	{
 		$c=new Criteria();
 		$c->add(RolePeer::MAY_BE_MAIN_ROLE, true);
+    $c->addAscendingOrderByColumn(RolePeer::MALE_DESCRIPTION);
 		return self::doSelect($c);
 	}
 
