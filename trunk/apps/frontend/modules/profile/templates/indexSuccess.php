@@ -6,6 +6,7 @@
 <?php echo sprintf(__('%s\'s profile'), $sf_user->getProfile()->getFullname()) ?>
 <?php end_slot() ?>
 
+
 <h1><?php echo __('%fullname%: my profile', array('%fullname%' => $sf_user->getProfile()->getFullname())) ?></h1>
 <?php /*
 <?php if (sizeof($appointments)>0): ?>
@@ -118,5 +119,4 @@
 	<li class="sf_admin_action_googleapps"><?php echo link_to(sprintf(__('Ask for a Google Apps account «%s»'), sfConfig::get('app_config_googleapps_domain')), url_for('profile/googleapps')) ?></li><br />
 <?php endif ?>
 */ ?>
-
 

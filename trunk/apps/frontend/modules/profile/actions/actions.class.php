@@ -25,6 +25,11 @@ class profileActions extends sfActions
         $this->teams=$this->getUser()->getProfile()->getTeams();
 	
   }
+  
+  public function executePoll(sfWebRequest $request)
+  {
+    
+  }
 
   public function executeViewaccount(sfWebRequest $request)
 	{

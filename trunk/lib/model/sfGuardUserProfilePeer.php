@@ -48,7 +48,17 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		
 		return $t;
 	}
-	
+
+	public static function retrieveUsersForMoodle()
+	{
+		$c = new Criteria();
+		$c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
+		$t = self::doSelectJoinAll($c);
+		return $t;
+	}
+
+
+
 	public static function retrieveUsersOfGuardGroup($guardgroupName)
 	{
 		$c=new Criteria();
