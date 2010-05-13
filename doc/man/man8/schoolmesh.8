@@ -1,4 +1,4 @@
-.TH SCHOOLMESH 8 "January 2010" "Schoolmesh utilities User Manuals"
+.TH SCHOOLMESH 8 "May 2010" "Schoolmesh utilities User Manuals"
 .SH NAME
 .PP
 schoolmesh - command line utilities to be used with SchoolMesh web
@@ -31,6 +31,9 @@ schoolmesh_loginaccount_setpassword -
 .PP
 schoolmesh_loginaccounts_getshells -
 \f[I]Get a list of available shells on the system\f[]
+.PP
+schoolmesh_moodleaccount_create -
+\f[I]Create a moodle account for a user\f[]
 .PP
 schoolmesh_odf_check -
 \f[I]Get a specific portion of an OpenOffice\.org document\[aq]s content\.xml file\f[]
@@ -86,8 +89,14 @@ schoolmesh_posixfolder_copyfile -
 schoolmesh_posixfolder_getinfo -
 \f[I]Get info about a posix user\[aq]s folder\[aq]s contents\f[]
 .PP
+schoolmesh_posixfolder_makedir -
+\f[I]Make a directory in a user\[aq]s home (sub)directory\f[]
+.PP
 schoolmesh_posixfolder_putfile -
 \f[I]Copy an uploaded file to a user\[aq]s home (sub)directory\f[]
+.PP
+schoolmesh_posixfolder_removefile -
+\f[I]Remove a file from a user\[aq]s home (sub)directory\f[]
 .PP
 schoolmesh_sambaaccount_create -
 \f[I]Create a samba account for a user\f[]
