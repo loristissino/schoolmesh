@@ -52,3 +52,10 @@
 	</li><br />
 	</ul>
 
+<h3><?php echo __('Moodle accounts') ?></h3>
+
+	<ul class="sf_admin_actions">
+	<li class="sf_admin_action_export">
+		<?php echo link_to(__('Download CSV file to update Moodle'), url_for('users/moodlefile?sf_format=txt'), array('title'=>__(SentencePeer::getSentence('moodle_csv_download')))) ?>
+	</li><br />
+	</ul>

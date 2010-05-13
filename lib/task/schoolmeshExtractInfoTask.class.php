@@ -122,11 +122,12 @@ estrae tutti gli studenti della classe 1AIG
 			$users=sfGuardUserProfilePeer::doSelect($c);
 			foreach($users as $profile)
 			{
-				echo implode(':', array(
+          echo implode(':', array(
 					$profile->getUsername(), 
 					$profile->getFirstName(), 
 					$profile->getLastName(), 
-					$profile->getRole()->getPosixName()
+					$profile->getRole()->getPosixName(),
+          $profile->getValidatedEmail(),
 					)) . "\n";
 			}
 		

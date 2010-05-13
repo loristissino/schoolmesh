@@ -1587,6 +1587,10 @@
         <source>Missing evaluation</source>
         <target>Manca indicazione di realizzazione</target>
     </trans-unit>
+    <trans-unit id="422">
+        <source>Poll</source>
+        <target>Questionario</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

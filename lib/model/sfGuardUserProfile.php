@@ -58,6 +58,48 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		{
 			return $this->getEmailState()==sfGuardUserProfilePeer::EMAIL_VERIFIED;
 		}
+    
+    public function getValidatedEmail()
+    {
+      if ($this->getHasValidatedEmail())
+      {
+        return $this->getEmail();
+      }
+      else
+      {
+        return '';
+      }
+    }
+    
+    public function getInstitution()
+    {
+      return sfConfig::get('app_school_name');
+    }
+    
+    public function getDepartment()
+    {
+      $dep=$this->getRole();
+      
+      $schoolclass=$this->getCurrentSchoolclassId();
+      if($schoolclass)
+      {
+        $dep.= '_' . $schoolclass;
+      }
+      return $dep;
+    }
+    
+    public function getFakeEmail()
+    {
+      // useful for moodle accounts, that can't go without...
+      return $this->getUsername() . '@example.com';
+    }
+    
+    public function getFakePassword()
+    {
+      // useful for moodle accounts, since we login from within schoolmesh
+      // FIXME this is unsecure, must be fixed!!
+      return 'Pwd:'.substr(md5($this->getUsername()),1,7);
+    }
 		
 		
 		public function sendWorkflowConfirmationMessage($sfContext, $base, $arguments)

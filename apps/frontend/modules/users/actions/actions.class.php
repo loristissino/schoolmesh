@@ -28,6 +28,14 @@ class usersActions extends sfActions
 		$response->setHttpHeader('Content-Type', 'text/csv');
 		$response->setHttpHeader('Content-Disposition', 'attachment; filename="GoogleAppsData_upload_'. date('Ymd') . '.csv"');
   }
+  
+  public function executeMoodlefile(sfWebRequest $request)
+  {
+    $this->userlist=sfGuardUserProfilePeer::retrieveUsersForMoodle();
+		$response = $this->getContext()->getResponse();
+		$response->setHttpHeader('Content-Type', 'text/csv');
+		$response->setHttpHeader('Content-Disposition', 'attachment; filename="MoodleData_upload_'. date('Ymd') . '.csv"');
+  }
 
 	public function executeUpload(sfWebRequest $request)
 	{
