@@ -98,3 +98,4 @@ sudo chmod 755 /usr/local/bin/schoolmesh*
 
 msg_ok "done."
 
+sudo chmod +x /var/schoolmesh/symfony
