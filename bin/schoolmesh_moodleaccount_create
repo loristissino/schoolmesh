@@ -10,7 +10,7 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # SYNOPSIS
 #@
-#@ {} *username* *firstname* *lastname* *password* *email* 
+#@ {} *username* *firstname* *lastname* *password* *institution* *department* *email* 
 #@
 #@ # DESCRIPTION
 #@
@@ -30,29 +30,27 @@ USERNAME=$1
 FIRSTNAME=$2
 LASTNAME=$3
 PASSWORD=$4
-EMAIL=$5
+INSTITUTION=$5
+DEPARTMENT=$6
+EMAIL=$7
 
 checkUsername $USERNAME
 checkString "$FIRSTNAME"
 checkString "$LASTNAME"
 checkString "$PASSWORD"
 
-echo $MOODLE_KEY
+checkString "$MOODLE_KEY"
+checkString "$MOODLE_REMOTE"
 
 MD5PWD=$(echo -n "$PASSWORD" | md5sum | cut -d ' ' -f1)
 
 # FIXME Should encrypt passwords here...
 
-QUERY="username=$USERNAME&firstname=$FIRSTNAME&lastname=$LASTNAME&md5pwd=$MD5PWD&email=$EMAIL"
+QUERY="username=$USERNAME&firstname=$FIRSTNAME&lastname=$LASTNAME&md5pwd=$MD5PWD&email=$EMAIL&institution=$INSTITUTION&department=$DEPARTMENT"
 
 MD5SUM=$(echo -n "$USERNAME$MOODLE_KEY" | md5sum | cut -d ' ' -f1) 
 
 QUERY="$QUERY&md5sum=$MD5SUM"
-
-echo $QUERY
-
-
-echo $MOODLE_REMOTE
 
 curl --data "$QUERY" "$MOODLE_REMOTE?action=createuser"
 
