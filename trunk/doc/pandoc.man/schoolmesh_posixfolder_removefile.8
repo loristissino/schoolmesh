@@ -1,18 +1,18 @@
-% SCHOOLMESH_POSIXFOLDER_PUTFILE(8) Schoolmesh User Manuals
+% SCHOOLMESH_POSIXFOLDER_REMOVEFILE(8) Schoolmesh User Manuals
 % Loris Tissino (loris.tissino@mattiussilab.net)
 % February 2010
 
 # NAME
 
-schoolmesh\_posixfolder\_putfile - Copy an uploaded file to a user's home (sub)directory
+schoolmesh\_posixfolder\_removefile - Remove a file from a user's home (sub)directory
 
 # SYNOPSIS
 
-schoolmesh\_posixfolder\_putfile *username* *tempname* *destinationpath*
+schoolmesh\_posixfolder\_removefile *username* *filepath*
 
 # DESCRIPTION
 
-This script copies an uploaded file to a user's directory.
+This script removes a file from a user's directory.
 The user must exist.
 The path is relative to user's home directory.
 
@@ -23,7 +23,7 @@ to run commands on behalf of other users (through sudo).
 
 # EXAMPLES
 
-	schoolmesh_posixfolder_putfile john.test /tmp.Vm6STjrivF '/mydocs/My report.odt'
+	schoolmesh_posixfolder_removefile john.test '/mydocs/My report.odt'
 
 # BUGS
 
