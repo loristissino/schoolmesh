@@ -98,7 +98,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     {
       // useful for moodle accounts, since we login from within schoolmesh
       // FIXME this is unsecure, must be fixed!!
-      return 'Pwd:'.substr(md5($this->getUsername()),1,7);
+      return 'Mo:'.substr(md5(sfConfig::get('app_config_moodle_key').$this->getUsername()),1,7);
     }
 		
 		
