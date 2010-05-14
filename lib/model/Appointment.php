@@ -958,7 +958,7 @@ public function getWorkflowLogs()
 		
 		$odfdoc=$odf->getOdfDocument();
 		
-		$odfdoc->setVars('doctype',  $state);
+//		$odfdoc->setVars('doctype',  $state);
 		$odfdoc->setVars('year',  $this->getYear()->__toString());
 		$odfdoc->setVars('teacher',  $teachertitle . $this->getSfGuardUser()->getProfile()->getFullName());
 		$odfdoc->setVars('subject', $this->getSubject()->getDescription());
@@ -1013,10 +1013,11 @@ public function getWorkflowLogs()
               if(!$wpitem->getEvaluation() || $wpitem->getEvaluation()>1)
               
               {
-                $text=$wpitem->getContent();
+                $text=array();
+                $text['content']=$wpitem->getContent();
                 if ($wpitem->getEvaluation())
                 {
-                  $text.=' (' . $wpitem->getEvaluation() . ')';
+                  $text['evaluation']=$wpitem->getEvaluation();
                 }
                 $selectedModules[$wpmodule->getTitle()][$wpitemgroup->getWpitemType()->getTitle()][]=$text;
               }
@@ -1038,7 +1039,8 @@ public function getWorkflowLogs()
 						$modules->group->groupTitle($selectedGroup_key);
 						foreach($selectedGroup as $selectedItem)
 						{
-							$modules->group->item->itemContent($selectedItem);
+							$modules->group->item->itemContent($selectedItem['content']);
+							$modules->group->item->itemEvaluation($selectedItem['evaluation']);
 							$modules->group->item->merge();
 						}
 						$modules->group->merge();

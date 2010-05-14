@@ -15,4 +15,6 @@ grep -v 'data/documents/main.yml' | \
 grep -v 'data/documents/quality.yml' | \
 grep -v 'utilities/fixauthor.sh' | \
 grep -v 'templates/email/document_submission.txt' | \
+grep -v 'web/oo/workplan0.odt$' | \
+grep -v 'web/oo/workplan40.odt$' | \
 sed 's/^?      //'
