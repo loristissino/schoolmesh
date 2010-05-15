@@ -100,6 +100,29 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
       // FIXME this is unsecure, must be fixed!!
       return 'Mo:'.substr(md5(sfConfig::get('app_config_moodle_key').$this->getUsername()),1,7);
     }
+    
+    public function getToken($key, sfWebRequest $request=null)
+    {
+      // useful for external authentication (e.g. Moodle)
+      if ($key=='')
+      {
+        throw new Exception('Key is not defined');
+      }
+      
+      if($request)
+      {
+        return md5(
+          $this->getUsername() .
+          date('Yz') .
+          $key
+        );
+      }
+      else
+      {
+        return null;
+      }
+      
+    }
 		
 		
 		public function sendWorkflowConfirmationMessage($sfContext, $base, $arguments)
