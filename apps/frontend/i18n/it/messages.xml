@@ -1591,6 +1591,10 @@
         <source>Poll</source>
         <target>Questionario</target>
     </trans-unit>
+    <trans-unit id="423">
+        <source>Moodle e-learning platform</source>
+        <target>Piattaforma per l'e-learning Moodle</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
