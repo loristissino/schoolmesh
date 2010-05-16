@@ -29,7 +29,15 @@ class profileActions extends sfActions
   public function executePoll(sfWebRequest $request)
   {
     $this->token = $this->getUser()->getProfile()->getToken(sfConfig::get('app_config_moodle_key'), $request);
-    $this->url = sfConfig::get('app_config_moodle_access') .
+    
+    $url=sfConfig::get('app_config_moodle_access');
+    
+    if ($url=='')
+    {
+      throw new Exception('moodle_access setting is missing in your app.yml file');
+    }
+    
+    $this->url = $url .
       '?action=login' .
       '&username=' . $this->getUser()->getUsername() .
       '&token=' . $this->token;
