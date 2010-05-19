@@ -837,6 +837,7 @@ CREATE TABLE `schoolproject`
 	`description` VARCHAR(255),
 	`notes` TEXT,
 	`hours_approved` INTEGER,
+	`state` INTEGER,
 	PRIMARY KEY (`id`),
 	INDEX `schoolproject_FI_1` (`proj_category_id`),
 	CONSTRAINT `schoolproject_FK_1`

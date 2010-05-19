@@ -23,6 +23,7 @@ abstract class BaseSchoolprojectForm extends BaseFormPropel
       'description'      => new sfWidgetFormInputText(),
       'notes'            => new sfWidgetFormTextarea(),
       'hours_approved'   => new sfWidgetFormInputText(),
+      'state'            => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -34,6 +35,7 @@ abstract class BaseSchoolprojectForm extends BaseFormPropel
       'description'      => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'notes'            => new sfValidatorString(array('required' => false)),
       'hours_approved'   => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'state'            => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('schoolproject[%s]');

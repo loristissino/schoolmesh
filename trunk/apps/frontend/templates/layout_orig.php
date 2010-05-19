@@ -13,6 +13,10 @@
 </title>
 
 <link rel="shortcut icon" href="/images/favicon.ico" />
+    <?php use_helper('jQuery') ?>
+    <?php include_javascripts() 
+    /* the book says it could be at the end of the page for performance reasons 
+    but that way it doesn't work with FlowPlayer (which is not unobtrusive) */?>
 
 </head>
 <body>

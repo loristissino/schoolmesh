@@ -20,6 +20,83 @@ class Schoolproject extends BaseSchoolproject {
 	{
 		return $this->getTitle();
 	}
+  
+  public function isEditableBy($user)
+  {
+    return $user->getProfile()->getUserId()===$this->getUserId();
+  }
+  
+  public function isViewableBy($user)
+  {
+    return $user->getProfile()->getUserId()===$this->getUserId() || $user->hasCredential('schoolmaster');
+  }
+  
+  public function deleteDeadline(sfGuardUserProfile $profile, ProjDeadline $deadline)
+  {
+    if($profile->getUserId()!=$this->getUserId())
+    {
+      $result['result']='error';
+      $result['message']='You are not allowed to remove deadlines from this project.';
+      return $result;
+    }
+    
+    try
+    {
+      $deadline->delete();
+      $result['result']='notice';
+      $result['message']='The deadline has been deleted.';
+      return $result;
+    }
+    catch(Exception $e)
+    {
+      $result['result']='error';
+      $result['message']='The deadline could not be deleted.';
+      return $result;
+    }
+    
+  }
+  
+  public function addDeadline(sfGuardUserProfile $profile)
+  {
+    if($profile->getUserId()!=$this->getUserId())
+    {
+      $result['result']='error';
+      $result['message']='You are not allowed to add deadlines to this project.';
+      return $result;
+    }
+    
+    try
+    {
+			$deadline=new ProjDeadline();
+			$deadline
+			->setUserId($this->getUserId())
+      ->setSchoolprojectId($this->getId())
+      ->setOriginalDeadlineDate(mktime(0,0,0, 12, 31, date('Y')+1))
+      ->setCurrentDeadlineDate(mktime(0,0,0, 12, 31, date('Y')+1))
+      ->save();
+      $result['result']='notice';
+      $result['message']='The deadline has been added.';
+      return $result;
+    }
+    catch(Exception $e)
+    {
+      $result['result']='error';
+      $result['message']='The deadline could not be added.';
+      return $result;
+    }
+  }
+  
+  public function updateFromForm($params)
+  {
+    Generic::updateObjectFromForm($this, array(
+      'title',
+      'description',
+      'hours_approved',
+      'notes',
+      'proj_category_id',
+      ), $params);
+  }
+  
 	
 	public function getProjDeadlines($criteria = null, PropelPDO $con = null)
 	{

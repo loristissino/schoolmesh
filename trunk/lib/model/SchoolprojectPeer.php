@@ -17,15 +17,25 @@ require 'lib/model/om/BaseSchoolprojectPeer.php';
 class SchoolprojectPeer extends BaseSchoolprojectPeer {
 
 
-    public static function retrieveAllForYear($year)
+  public static function retrieveAllForYear($year)
 	{
 		$c=new Criteria();
 		$c->add(self::YEAR_ID, $year);
 		$c->addJoin(self::USER_ID, sfGuardUserPeer::ID);
 		$c->addAscendingOrderByColumn(self::PROJ_CATEGORY_ID);
 		return self::doSelectJoinAll($c);
-		
 	}
+
+  public static function retrieveAllForYearAndUser($year, $user_id)
+	{
+		$c=new Criteria();
+		$c->add(self::YEAR_ID, $year);
+    $c->add(self::USER_ID, $user_id);
+		$c->addJoin(self::USER_ID, sfGuardUserPeer::ID);
+		$c->addAscendingOrderByColumn(self::PROJ_CATEGORY_ID);
+		return self::doSelectJoinAll($c);
+	}
+
 
 	public static function retrieveByTitleAndYear($title, $yearId)
 	{

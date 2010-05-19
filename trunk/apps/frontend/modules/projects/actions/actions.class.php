@@ -10,12 +10,36 @@
  */
 class projectsActions extends sfActions
 {
+  
  /**
   * Executes index action
   *
   * @param sfRequest $request A request object
   */
   public function executeIndex(sfWebRequest $request)
+  {
+
+   $this->projects=SchoolprojectPeer::retrieveAllForYearAndUser(sfConfig::get('app_config_current_year'), $this->getUser()->getProfile()->getSfGuardUser()->getId());
+   $this->steps=Array();
+
+   $this->setTemplate('index');   
+
+	}
+  
+  public function executeView(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPK($request->getParameter('id')));
+    
+    $this->projects=Array($this->project);
+    
+   $this->setTemplate('report');   
+    
+    
+  }
+  
+  
+  
+  public function executeMonitor(sfWebRequest $request)
   {
 
    $this->projects=SchoolprojectPeer::retrieveAllForYear(sfConfig::get('app_config_current_year'));
@@ -40,27 +64,97 @@ class projectsActions extends sfActions
 				);
 			$odf=$project->getOdf('odt', $this->getContext(), 'project_resume.odt', false);
 			$odf->saveFile();
-			copy($odf->getFileName(), $filename);
+			@copy($odf->getFileName(), $filename);
 			$number++;
+			$this->text.=$odf->getFileName() . ' >> ' . $filename . "\n";
 			unset($odf);
 			
-			$this->text.=$filename . "\n";
 			
 		}
 		$this->number=$number;
 		
 	}
-	
-  public function executeEdit(sfWebRequest $request)
+  
+  
+  public function executeAdddeadline(sfWebRequest $request)
   {
-	$this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPk($request->getParameter('id')));
-	
-	$this->form = new SchoolprojectForm($this->project); 
+    $this->forward404Unless($request->isMethod('post'));
+    $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPk($request->getParameter('id')));
+    
+    $result=$this->project->addDeadline($this->getUser()->getProfile());
+    
+    $this->getUser()->setFlash($result['result'],
+					$this->getContext()->getI18N()->__($result['message'])
+					);
+					
+    return $this->redirect('projects/edit?id='. $this->project->getId());
+   } 
+   
+   
+  public function executeDeletedeadline(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post'));
+    $this->forward404Unless($this->deadline=ProjDeadlinePeer::retrieveByPk($request->getParameter('id')));
+    
+    $result=$this->deadline->getSchoolproject()->deleteDeadline($this->getUser()->getProfile(), $this->deadline);
+    
+    $this->getUser()->setFlash($result['result'],
+					$this->getContext()->getI18N()->__($result['message'])
+					);
+					
+    return $this->redirect('projects/edit?id='. $this->deadline->getSchoolproject()->getId());
+
+    
+  }
+ 
+  public function executeEditdeadline(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->deadline=ProjDeadlinePeer::retrieveByPk($request->getParameter('id')));
+    $this->forward404Unless($this->getUser()->getProfile()->getUserId()==$this->deadline->getUserId()); // the deadline can be edited only by the owner
+    
+    $this->form = new ProjDeadlineForm($this->deadline);
+    $this->form->addStateDependentConfiguration($this->deadline->getSchoolProject()->getState());
 
 	if ($request->isMethod('post'))
 		{
-			$this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
-			$this->form->getValidatorSchema()->setOption('filter_extra_fields', false);
+			$this->form->bind($request->getParameter('proj_deadline'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				
+				$this->deadline = ProjDeadlinePeer::retrieveByPK($params['id']);
+				
+				$this->deadline->updateFromForm($params);
+				
+				$this->getUser()->setFlash('notice',
+					$this->getContext()->getI18N()->__('Deadline updated.')
+					);
+					
+			return $this->redirect('projects/edit?id='. $this->deadline->getSchoolproject()->getId());
+			}
+			
+		}
+
+
+
+
+  }
+ 
+	
+  public function executeEdit(sfWebRequest $request)
+  {
+    
+	$this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPk($request->getParameter('id')));
+  
+  $this->forward404Unless($this->getUser()->getProfile()->getUserId()==$this->project->getUserId()); // the project can be edited only by the owner
+	
+	$this->form = new SchoolprojectForm($this->project); 
+  $this->form->addStateDependentConfiguration($this->project->getState());
+
+	if ($request->isMethod('post'))
+		{
+//			$this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
+//			$this->form->getValidatorSchema()->setOption('filter_extra_fields', false);
 			
 			
 			$this->form->bind($request->getParameter('schoolproject'));
@@ -70,43 +164,8 @@ class projectsActions extends sfActions
 				
 				$this->project = SchoolprojectPeer::retrieveByPK($params['id']);
 				
-				$this->project
-				->setProjCategoryId($params['proj_category_id'])
-				->setUserId($params['user_id'])
-				->setTitle($params['title'])
-				->setYearId($params['year_id'])
-				->setDescription($params['description'])
-				->setNotes($params['notes'])
-				->setHoursApproved($params['hours_approved'])
-				->save();
+				$this->project->updateFromForm($params);
 				
-				if (sizeof($params['deadline'])>0)
-				{
-					foreach($params['deadline'] as $deadline_params)
-					{
-						$deadline=ProjDeadlinePeer::retrieveByPK($deadline_params['id']);
-						$deadline
-						->setUserId($deadline_params['user_id'])
-						->setDescription($deadline_params['description'])
-						->setOriginalDeadlineDate(Generic::date_from_array($deadline_params['original_deadline_date']))
-						->setCurrentDeadlineDate(Generic::date_from_array($deadline_params['current_deadline_date']))
-						->setNotes($deadline_params['notes'])
-						->setCompleted(@$deadline_params['completed']=='on')
-						->save();
-					}
-				}
-				
-
-				if ($request->hasParameter('add_deadline'))
-				{
-					//FIXME This should be moved in the model
-					$deadline=new ProjDeadline();
-					$deadline
-					->setUserId($this->project->getUserId())
-					->setSchoolprojectId($this->project->getId())
-					->save();
-				}
-
 				$this->getUser()->setFlash('notice',
 					$this->getContext()->getI18N()->__('Project information updated.')
 					);
@@ -115,7 +174,8 @@ class projectsActions extends sfActions
 			}
 			
 		}
-		
+	/* this would be useful if we wanted to embed deadline forms,
+  but there are some problems with validation, so we don't use it 	
 	if($this->project)
 	{
 		foreach($this->project->getProjDeadlines() as $index=>$deadline)
@@ -128,7 +188,16 @@ class projectsActions extends sfActions
 				);
 
 		}
+
 	}
+  */
+  
+  if ($this->project)
+  {
+    $this->deadlines=$this->project->getProjDeadlines();
+  }
+  
+  
    }  
 	
 

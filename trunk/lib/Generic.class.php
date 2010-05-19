@@ -281,5 +281,19 @@ class Generic{
 		$text=base64_decode(str_replace('_', '/', $var));
 		return unserialize(base64_decode(str_replace('_', '/', $var)));
 	}
-	
+  
+  // updates Objects (fields $fields) when in array $params
+  public static function updateObjectFromForm($object, $fields, $params)
+  {
+    // we need to check which fields are present
+    foreach($fields as $field)
+    {
+      if (array_key_exists($field, $params))
+      {
+        $object->setByName($field, $params[$field], BasePeer::TYPE_FIELDNAME);
+      }
+    }
+    $object->save();
+  }
+
 }

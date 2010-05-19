@@ -20,6 +20,7 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
       'description'      => new sfWidgetFormFilterInput(),
       'notes'            => new sfWidgetFormFilterInput(),
       'hours_approved'   => new sfWidgetFormFilterInput(),
+      'state'            => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -30,6 +31,7 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
       'description'      => new sfValidatorPass(array('required' => false)),
       'notes'            => new sfValidatorPass(array('required' => false)),
       'hours_approved'   => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'state'            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('schoolproject_filters[%s]');
@@ -55,6 +57,7 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
       'description'      => 'Text',
       'notes'            => 'Text',
       'hours_approved'   => 'Number',
+      'state'            => 'Number',
     );
   }
 }

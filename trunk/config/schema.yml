@@ -298,6 +298,7 @@ propel:
     description:       varchar(255)
     notes:   longvarchar
     hours_approved: integer
+    state:        { type: integer }
 
   proj_category:
     id: ~

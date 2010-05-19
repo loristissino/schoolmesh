@@ -67,6 +67,12 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	protected $hours_approved;
 
 	/**
+	 * The value for the state field.
+	 * @var        int
+	 */
+	protected $state;
+
+	/**
 	 * @var        ProjCategory
 	 */
 	protected $aProjCategory;
@@ -187,6 +193,16 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	public function getHoursApproved()
 	{
 		return $this->hours_approved;
+	}
+
+	/**
+	 * Get the [state] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getState()
+	{
+		return $this->state;
 	}
 
 	/**
@@ -362,6 +378,26 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	} // setHoursApproved()
 
 	/**
+	 * Set the value of [state] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Schoolproject The current object (for fluent API support)
+	 */
+	public function setState($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->state !== $v) {
+			$this->state = $v;
+			$this->modifiedColumns[] = SchoolprojectPeer::STATE;
+		}
+
+		return $this;
+	} // setState()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -401,6 +437,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$this->description = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->notes = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->hours_approved = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
+			$this->state = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -410,7 +447,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 8; // 8 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 9; // 9 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Schoolproject object", $e);
@@ -807,6 +844,9 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			case 7:
 				return $this->getHoursApproved();
 				break;
+			case 8:
+				return $this->getState();
+				break;
 			default:
 				return null;
 				break;
@@ -836,6 +876,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$keys[5] => $this->getDescription(),
 			$keys[6] => $this->getNotes(),
 			$keys[7] => $this->getHoursApproved(),
+			$keys[8] => $this->getState(),
 		);
 		return $result;
 	}
@@ -891,6 +932,9 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			case 7:
 				$this->setHoursApproved($value);
 				break;
+			case 8:
+				$this->setState($value);
+				break;
 		} // switch()
 	}
 
@@ -923,6 +967,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setDescription($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setNotes($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setHoursApproved($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setState($arr[$keys[8]]);
 	}
 
 	/**
@@ -942,6 +987,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SchoolprojectPeer::DESCRIPTION)) $criteria->add(SchoolprojectPeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(SchoolprojectPeer::NOTES)) $criteria->add(SchoolprojectPeer::NOTES, $this->notes);
 		if ($this->isColumnModified(SchoolprojectPeer::HOURS_APPROVED)) $criteria->add(SchoolprojectPeer::HOURS_APPROVED, $this->hours_approved);
+		if ($this->isColumnModified(SchoolprojectPeer::STATE)) $criteria->add(SchoolprojectPeer::STATE, $this->state);
 
 		return $criteria;
 	}
@@ -1009,6 +1055,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		$copyObj->setNotes($this->notes);
 
 		$copyObj->setHoursApproved($this->hours_approved);
+
+		$copyObj->setState($this->state);
 
 
 		if ($deepCopy) {
