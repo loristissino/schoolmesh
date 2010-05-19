@@ -1635,6 +1635,14 @@
         <source>Remote management of files on the server</source>
         <target>Gestione dei file personali da remoto</target>
     </trans-unit>
+    <trans-unit id="433">
+        <source>Edit deadline</source>
+        <target>Modifica scadenza</target>
+    </trans-unit>
+    <trans-unit id="433">
+        <source>Edit project</source>
+        <target>Modifica progetto</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
