@@ -1103,8 +1103,8 @@
         <target>Incarico non confermato</target>
       </trans-unit>
       <trans-unit id="304">
-        <source>My appointments</source>
-        <target>I miei incarichi di docenza</target>
+        <source>My appointments and my projects</source>
+        <target>Incarichi di docenza e progetti</target>
       </trans-unit>
       <trans-unit id="304">
         <source>Full view of plans and reports</source>
@@ -1594,6 +1594,46 @@
     <trans-unit id="423">
         <source>Moodle e-learning platform</source>
         <target>Piattaforma per l'e-learning Moodle</target>
+    </trans-unit>
+    <trans-unit id="424">
+        <source>Overdue</source>
+        <target>Scadenza passata</target>
+    </trans-unit>
+    <trans-unit id="425">
+        <source>Not yet over</source>
+        <target>Scadenza non ancora passata</target>
+    </trans-unit>
+    <trans-unit id="425">
+        <source>Not yet over</source>
+        <target>Scadenza non ancora passata</target>
+    </trans-unit>
+    <trans-unit id="426">
+        <source>Task completed</source>
+        <target>Attività completata</target>
+    </trans-unit>
+    <trans-unit id="427">
+        <source>See as report</source>
+        <target>Vedi come rapporto</target>
+    </trans-unit>
+    <trans-unit id="428">
+        <source>Deadlines</source>
+        <target>Scadenze</target>
+    </trans-unit>
+    <trans-unit id="429">
+        <source>Manage projects</source>
+        <target>Gestione progetti</target>
+    </trans-unit>
+    <trans-unit id="430">
+        <source>My projects</source>
+        <target>Progetti</target>
+    </trans-unit>
+    <trans-unit id="431">
+        <source>My files</source>
+        <target>File</target>
+    </trans-unit>
+    <trans-unit id="432">
+        <source>Remote management of files on the server</source>
+        <target>Gestione dei file personali da remoto</target>
     </trans-unit>
     </body>
   </file>

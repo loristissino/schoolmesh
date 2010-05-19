@@ -31,6 +31,20 @@ class ProjDeadline extends BaseProjDeadline {
 		return 'not yet over';
 		
 	}
+  
+  
+  public function updateFromForm($params)
+  {
+    // we need to check which ones are present, because it depends on the state
+    Generic::updateObjectFromForm($this, array(
+      'original_deadline_date',
+      'current_deadline_date',
+      'description',
+      'notes',
+      'completed',
+      ), $params);
+  }
 
 
 } // ProjDeadline
+

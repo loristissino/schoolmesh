@@ -44,6 +44,7 @@ class SchoolprojectTableMap extends TableMap {
 		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 255, null);
 		$this->addColumn('NOTES', 'Notes', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('HOURS_APPROVED', 'HoursApproved', 'INTEGER', false, null, null);
+		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
 		// validators
 	} // initialize()
 

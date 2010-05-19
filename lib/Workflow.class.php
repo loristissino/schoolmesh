@@ -10,8 +10,8 @@ class Workflow
 	const 	FR_WADMC = 60;
 	const 	FR_WSMC = 70;
 	const 	FR_ARCHIVED = 80;
-	
-	static private $wpfrSteps=Array(
+  
+  static private $wpfrSteps=Array(
 
 	self::AP_ASSIGNED=>Array(
 		'stateDescription'=>"Appointment not confirmed",
@@ -255,6 +255,35 @@ class Workflow
 		return array(null=>'unverified', 0=>'not existent', 1=>'not activated', 8=>'not recently used', 9=>'recently used');
 	}
 
+
+  const   PROJ_DRAFT = 10;
+  const   PROJ_SUBMITTED = 20;
+  const   PROJ_APPROVED = 30;
+  const   PROJ_FINISHED = 40;
+	
+	static private $projSteps=Array(
+
+	self::PROJ_DRAFT=>Array(
+		'stateDescription'=>"Project draft",
+		),
+    
+	self::PROJ_SUBMITTED=>Array(
+		'stateDescription'=>"Project submitted",
+		),
+
+	self::PROJ_APPROVED=>Array(
+		'stateDescription'=>"Project approved",
+		),
+    
+	self::PROJ_FINISHED=>Array(
+		'stateDescription'=>"Project finished",
+		),
+  );
+  
+  static public function getProjSteps()
+	{
+		return self::$projSteps;
+	}
 
 
 };

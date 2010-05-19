@@ -14,12 +14,14 @@
 
 <div class="sf_admin_list">
 
+<?php if ($sf_user->hasCredential('schoolmaster')): ?>
 <p><?php echo link_to(
 	__('See as report'),
-	url_for('projects/index?template=report')
+	url_for('projects/monitor?template=report')
 	)
 ?>
 </p>
+<?php endif ?>
 
 
 <?php if(sizeof($projects)>0): ?>
@@ -30,6 +32,8 @@
       <th class="sf_admin_text"><?php echo __('Year') ?></th>
       <th class="sf_admin_text"><?php echo __('Title') ?></th>
       <th class="sf_admin_text"><?php echo __('Coordinator') ?></th>
+      <th class="sf_admin_text"><?php echo __('State') ?></th>
+      <th class="sf_admin_text"><?php echo __('Deadlines') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
@@ -40,6 +44,12 @@
       <td><?php echo $project->getYear() ?></td>
       <td><?php echo $project->getTitle() ?></td>
       <td><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></td>
+      <td><?php echo $project->getState() ?></td>
+      <td>
+      <?php if ($project->isViewableBy($sf_user)): ?>
+        <?php include_partial('deadlinesicons', array('project'=>$project)) ?>
+      <?php endif ?>
+      </td>
 	  <td><?php include_partial('action', array('project' => $project, 'steps' => $steps)) ?></td>
 
 	</tr>
@@ -55,10 +65,12 @@
 
 <hr />
 
-<?php echo link_to(
+<?php
+/*echo link_to(
 	__('Get Letters'),
 	url_for('projects/letters')
 	)
+*/
 ?>
 
 
