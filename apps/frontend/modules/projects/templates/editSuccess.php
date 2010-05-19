@@ -5,7 +5,7 @@
 <?php //use_helper('Object') ?>
 <?php use_javascript('jquery-ui-1.8.custom.min.js') ?>
 <?php use_javascript('datepicker') ?>
-<?php use_javascript('jquery.ui.datepicker-' . sfConfig::get('sf_default_culture') . '.js') ?>
+<?php //use_javascript('jquery.ui.datepicker-' . sfConfig::get('sf_default_culture') . '.js') ?>
 
 <?php slot('title', __('Projects')) ?>
 <?php slot('breadcrumbs',
@@ -103,7 +103,9 @@
 <p><?php echo __('No deadlines defined') ?></p>
 <?php endif ?>
 </div>
+<?php if ($project->getState()==Workflow::PROJ_DRAFT): ?>
 <form action="<?php echo url_for('projects/adddeadline?id='. $project->getId()) ?>" method="POST">
 <input type="submit" name="add_deadline" value="<?php echo __('Add deadline') ?>">
-</form>  
+</form>
+<?php endif ?>
 
