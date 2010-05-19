@@ -73,7 +73,7 @@
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <td><?php echo Generic::datetime($deadline->getCurrentDeadlineDate('U'), $sf_context) ?></td>
       <td><?php echo $deadline->getDescription() ?></td>
-      <td><?php include_partial('deadlinestate', array('deadline'=>$deadline)) ?></td>
+      <td><?php include_partial('deadlinestate', array('deadline'=>$deadline, 'with_description'=>false)) ?></td>
       <td><?php include_partial('content/notes', array('notes'=>$deadline->getNotes())) ?></td>
       <td>
       <ul class="sf_admin_td_actions">
