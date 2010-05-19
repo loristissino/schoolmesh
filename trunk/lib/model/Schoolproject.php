@@ -65,6 +65,14 @@ class Schoolproject extends BaseSchoolproject {
       return $result;
     }
     
+    if($this->getState()!=Workflow::PROJ_DRAFT)
+    {
+      $result['result']='error';
+      $result['message']='You are not allowed to add deadlines to a project in this state.';
+      return $result;
+    }
+    
+    
     try
     {
 			$deadline=new ProjDeadline();
