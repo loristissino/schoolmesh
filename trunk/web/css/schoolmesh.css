@@ -243,6 +243,10 @@
   background: url(../images/updir.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_email a
+{
+  background: url(../images/email.png) no-repeat 0 0;
+}
 
 
 #sf_admin_container .alert

@@ -14,5 +14,14 @@
 			array('title'=>__('See the report for this project'))
 		)?>
 		</li>
+  <?php if($project->getsfGuardUser()->getProfile()->getHasValidatedEmail()): ?>
+  <li class="sf_admin_action_email">
+		<?php echo link_to(__('Email'),
+			url_for('projects/email?id=' . $project->getId()),
+			array('title'=>__('Send an email to the coordinator of this project'))
+		)?>
+		</li>
+  <?php endif ?>
+  
     <?php endif ?>
 </ul>
