@@ -23,6 +23,7 @@ abstract class BaseProjDeadlineForm extends BaseFormPropel
       'description'            => new sfWidgetFormInputText(),
       'notes'                  => new sfWidgetFormTextarea(),
       'completed'              => new sfWidgetFormInputCheckbox(),
+      'needs_attachment'       => new sfWidgetFormInputCheckbox(),
       'created_at'             => new sfWidgetFormDateTime(),
       'updated_at'             => new sfWidgetFormDateTime(),
     ));
@@ -36,6 +37,7 @@ abstract class BaseProjDeadlineForm extends BaseFormPropel
       'description'            => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'notes'                  => new sfValidatorString(array('required' => false)),
       'completed'              => new sfValidatorBoolean(array('required' => false)),
+      'needs_attachment'       => new sfValidatorBoolean(array('required' => false)),
       'created_at'             => new sfValidatorDateTime(array('required' => false)),
       'updated_at'             => new sfValidatorDateTime(array('required' => false)),
     ));

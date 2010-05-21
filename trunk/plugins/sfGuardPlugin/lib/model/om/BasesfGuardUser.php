@@ -261,6 +261,16 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	private $lastLanlogCriteria = null;
 
 	/**
+	 * @var        array AttachmentFile[] Collection to store aggregation of AttachmentFile objects.
+	 */
+	protected $collAttachmentFiles;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collAttachmentFiles.
+	 */
+	private $lastAttachmentFileCriteria = null;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -865,6 +875,9 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$this->collLanlogs = null;
 			$this->lastLanlogCriteria = null;
 
+			$this->collAttachmentFiles = null;
+			$this->lastAttachmentFileCriteria = null;
+
 		} // if (deep)
 	}
 
@@ -1149,6 +1162,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collAttachmentFiles !== null) {
+				foreach ($this->collAttachmentFiles as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -1364,6 +1385,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 				if ($this->collLanlogs !== null) {
 					foreach ($this->collLanlogs as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collAttachmentFiles !== null) {
+					foreach ($this->collAttachmentFiles as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1757,6 +1786,12 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			foreach ($this->getLanlogs() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addLanlog($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getAttachmentFiles() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addAttachmentFile($relObj->copy($deepCopy));
 				}
 			}
 
@@ -5838,6 +5873,160 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collAttachmentFiles collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addAttachmentFiles()
+	 */
+	public function clearAttachmentFiles()
+	{
+		$this->collAttachmentFiles = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collAttachmentFiles collection (array).
+	 *
+	 * By default this just sets the collAttachmentFiles collection to an empty array (like clearcollAttachmentFiles());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initAttachmentFiles()
+	{
+		$this->collAttachmentFiles = array();
+	}
+
+	/**
+	 * Gets an array of AttachmentFile objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related AttachmentFiles from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array AttachmentFile[]
+	 * @throws     PropelException
+	 */
+	public function getAttachmentFiles($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAttachmentFiles === null) {
+			if ($this->isNew()) {
+			   $this->collAttachmentFiles = array();
+			} else {
+
+				$criteria->add(AttachmentFilePeer::USER_ID, $this->id);
+
+				AttachmentFilePeer::addSelectColumns($criteria);
+				$this->collAttachmentFiles = AttachmentFilePeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(AttachmentFilePeer::USER_ID, $this->id);
+
+				AttachmentFilePeer::addSelectColumns($criteria);
+				if (!isset($this->lastAttachmentFileCriteria) || !$this->lastAttachmentFileCriteria->equals($criteria)) {
+					$this->collAttachmentFiles = AttachmentFilePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastAttachmentFileCriteria = $criteria;
+		return $this->collAttachmentFiles;
+	}
+
+	/**
+	 * Returns the number of related AttachmentFile objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related AttachmentFile objects.
+	 * @throws     PropelException
+	 */
+	public function countAttachmentFiles(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collAttachmentFiles === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(AttachmentFilePeer::USER_ID, $this->id);
+
+				$count = AttachmentFilePeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(AttachmentFilePeer::USER_ID, $this->id);
+
+				if (!isset($this->lastAttachmentFileCriteria) || !$this->lastAttachmentFileCriteria->equals($criteria)) {
+					$count = AttachmentFilePeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collAttachmentFiles);
+				}
+			} else {
+				$count = count($this->collAttachmentFiles);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a AttachmentFile object to this object
+	 * through the AttachmentFile foreign key attribute.
+	 *
+	 * @param      AttachmentFile $l AttachmentFile
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addAttachmentFile(AttachmentFile $l)
+	{
+		if ($this->collAttachmentFiles === null) {
+			$this->initAttachmentFiles();
+		}
+		if (!in_array($l, $this->collAttachmentFiles, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collAttachmentFiles, $l);
+			$l->setsfGuardUser($this);
+		}
+	}
+
+	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -5942,6 +6131,11 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collAttachmentFiles) {
+				foreach ((array) $this->collAttachmentFiles as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} // if ($deep)
 
 		$this->collsfGuardUserPermissions = null;
@@ -5963,6 +6157,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->collSchoolprojects = null;
 		$this->collProjDeadlines = null;
 		$this->collLanlogs = null;
+		$this->collAttachmentFiles = null;
 	}
 
 } // BasesfGuardUser

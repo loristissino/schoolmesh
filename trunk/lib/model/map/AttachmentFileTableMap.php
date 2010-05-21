@@ -2,7 +2,7 @@
 
 
 /**
- * This class defines the structure of the 'proj_deadline' table.
+ * This class defines the structure of the 'attachment_file' table.
  *
  *
  *
@@ -13,12 +13,12 @@
  *
  * @package    lib.model.map
  */
-class ProjDeadlineTableMap extends TableMap {
+class AttachmentFileTableMap extends TableMap {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.ProjDeadlineTableMap';
+	const CLASS_NAME = 'lib.model.map.AttachmentFileTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators
@@ -30,23 +30,21 @@ class ProjDeadlineTableMap extends TableMap {
 	public function initialize()
 	{
 	  // attributes
-		$this->setName('proj_deadline');
-		$this->setPhpName('ProjDeadline');
-		$this->setClassname('ProjDeadline');
+		$this->setName('attachment_file');
+		$this->setPhpName('AttachmentFile');
+		$this->setClassname('AttachmentFile');
 		$this->setPackage('lib.model');
 		$this->setUseIdGenerator(true);
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
-		$this->addForeignKey('SCHOOLPROJECT_ID', 'SchoolprojectId', 'INTEGER', 'schoolproject', 'ID', false, null, null);
 		$this->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
-		$this->addColumn('ORIGINAL_DEADLINE_DATE', 'OriginalDeadlineDate', 'DATE', false, null, null);
-		$this->addColumn('CURRENT_DEADLINE_DATE', 'CurrentDeadlineDate', 'DATE', false, null, null);
-		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 255, null);
-		$this->addColumn('NOTES', 'Notes', 'LONGVARCHAR', false, null, null);
-		$this->addColumn('COMPLETED', 'Completed', 'BOOLEAN', false, null, null);
-		$this->addColumn('NEEDS_ATTACHMENT', 'NeedsAttachment', 'BOOLEAN', false, null, null);
-		$this->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null, null);
-		$this->addColumn('UPDATED_AT', 'UpdatedAt', 'TIMESTAMP', false, null, null);
+		$this->addColumn('BASE_TABLE', 'BaseTable', 'INTEGER', false, null, null);
+		$this->addColumn('BASE_ID', 'BaseId', 'INTEGER', false, null, null);
+		$this->addColumn('INTERNET_MEDIA_TYPE', 'InternetMediaType', 'VARCHAR', false, 255, null);
+		$this->addColumn('ORIGINAL_FILE_NAME', 'OriginalFileName', 'VARCHAR', false, 255, null);
+		$this->addColumn('UNIQID', 'Uniqid', 'VARCHAR', true, 50, null);
+		$this->addColumn('FILE_SIZE', 'FileSize', 'BIGINT', false, null, null);
+		$this->addColumn('MD5SUM', 'Md5sum', 'VARCHAR', false, 32, null);
 		// validators
 	} // initialize()
 
@@ -55,7 +53,6 @@ class ProjDeadlineTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Schoolproject', 'Schoolproject', RelationMap::MANY_TO_ONE, array('schoolproject_id' => 'id', ), null, null);
     $this->addRelation('sfGuardUser', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
@@ -69,8 +66,7 @@ class ProjDeadlineTableMap extends TableMap {
 	{
 		return array(
 			'symfony' => array('form' => 'true', 'filter' => 'true', ),
-			'symfony_timestampable' => array('create_column' => 'created_at', 'update_column' => 'updated_at', ),
 		);
 	} // getBehaviors()
 
-} // ProjDeadlineTableMap
+} // AttachmentFileTableMap

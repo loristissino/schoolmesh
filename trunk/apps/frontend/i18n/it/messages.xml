@@ -1643,8 +1643,18 @@
         <source>Edit project</source>
         <target>Modifica progetto</target>
     </trans-unit>
+    <trans-unit id="434">
+        <source>For this deadline, the completion of the task needs a file documenting the results.</source>
+        <target>Per questa scadenza, il completamento dell'attività deve essere documentato con un file riportante i risultati.</target>
+    </trans-unit>
+    <trans-unit id="435">
+        <source>Attachment</source>
+        <target>Allegato</target>
+    </trans-unit>
+    <trans-unit id="436">
+        <source>Invalid.</source>
+        <target>Non valido.</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
-
-

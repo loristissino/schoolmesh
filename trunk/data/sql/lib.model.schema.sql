@@ -889,6 +889,7 @@ CREATE TABLE `proj_deadline`
 	`description` VARCHAR(255),
 	`notes` TEXT,
 	`completed` TINYINT,
+	`needs_attachment` TINYINT,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	PRIMARY KEY (`id`),
@@ -1041,6 +1042,35 @@ CREATE TABLE `subnet_service`
 		REFERENCES `service` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- attachment_file
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `attachment_file`;
+
+
+CREATE TABLE `attachment_file`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER  NOT NULL,
+	`base_table` INTEGER,
+	`base_id` INTEGER,
+	`internet_media_type` VARCHAR(255),
+	`original_file_name` VARCHAR(255),
+	`uniqid` VARCHAR(50)  NOT NULL,
+	`file_size` BIGINT,
+	`md5sum` VARCHAR(32),
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `attachment_file_U_1` (`uniqid`),
+	UNIQUE KEY `tim` (`base_table`, `base_id`, `md5sum`),
+	INDEX `attachment_file_FI_1` (`user_id`),
+	CONSTRAINT `attachment_file_FK_1`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

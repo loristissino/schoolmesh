@@ -314,6 +314,7 @@ propel:
     description: varchar(255)
     notes:   longvarchar
     completed: boolean
+    needs_attachment: boolean
     created_at: ~
     updated_at: ~
 
@@ -359,6 +360,18 @@ propel:
     subnet_id: { type: integer, primaryKey: true, required: true, foreignTable: subnet, foreignReference: id, onDelete: cascade, onUpdate: cascade }
     service_id: { type: integer, primaryKey: true, required: true, foreignTable: service, foreignReference: id, onDelete: cascade, onUpdate: cascade }
     
+  attachment_file:
+    id:
+    user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    base_table: integer
+    base_id: integer
+    internet_media_type: varchar
+    original_file_name: varchar
+    uniqid: { type: varchar(50), required: true, index: unique }
+    file_size: bigint
+    md5sum: varchar(32)
+    _uniques:
+      tim: [base_table, base_id, md5sum]
 
   system_message:
     id:
@@ -368,3 +381,4 @@ propel:
 
   system_message_i18n:
     content: varchar(255)  
+

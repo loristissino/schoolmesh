@@ -112,25 +112,39 @@ class projectsActions extends sfActions
     $this->forward404Unless($this->deadline=ProjDeadlinePeer::retrieveByPk($request->getParameter('id')));
     $this->forward404Unless($this->getUser()->getProfile()->getUserId()==$this->deadline->getUserId()); // the deadline can be edited only by the owner
     
+    $this->attachments=$this->deadline->getAttachmentFiles();
+    
     $this->form = new ProjDeadlineForm($this->deadline);
-    $this->form->addStateDependentConfiguration($this->deadline->getSchoolProject()->getState());
+    $this->form->addStateDependentConfiguration(
+      $this->deadline->getSchoolProject()->getState(),
+      array(
+        'needs_attachment'=>$this->deadline->getNeedsAttachment()===true
+        )
+      );
 
 	if ($request->isMethod('post'))
 		{
-			$this->form->bind($request->getParameter('proj_deadline'));
+			$this->form->bind($request->getParameter('proj_deadline'), $request->getFiles('proj_deadline'));
 			if ($this->form->isValid())
 			{
 				$params = $this->form->getValues();
 				
 				$this->deadline = ProjDeadlinePeer::retrieveByPK($params['id']);
 				
-				$this->deadline->updateFromForm($params);
+				$result=$this->deadline->updateFromForm($params, $this->form->getValue('attachment'));
 				
-				$this->getUser()->setFlash('notice',
-					$this->getContext()->getI18N()->__('Deadline updated.')
+				$this->getUser()->setFlash($result['result'],
+					$this->getContext()->getI18N()->__($result['message'])
 					);
-					
-			return $this->redirect('projects/edit?id='. $this->deadline->getSchoolproject()->getId());
+				
+        if($result['result']=='notice')
+        {
+          return $this->redirect('projects/edit?id='. $this->deadline->getSchoolproject()->getId());
+        }
+        else
+        {
+          return $this->redirect('projects/editdeadline?id='. $this->deadline->getId());
+        }
 			}
 			
 		}

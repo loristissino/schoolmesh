@@ -21,7 +21,7 @@
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
 
-<form action="<?php echo url_for('projects/editdeadline?id='. $deadline->getId()) ?>" method="POST">
+<form action="<?php echo url_for('projects/editdeadline?id='. $deadline->getId()) ?>" method="POST" <?php if($form->isMultipart()) echo 'enctype="multipart/form-data"' ?>>
 
 <h2><?php echo __('Basic information') ?></h2>
 
@@ -45,4 +45,31 @@
       </td>
     </tr>
   </table>
-</form>  
+</form>
+
+<h2><?php echo __('Attachments') ?></h2>
+
+<?php if(sizeof($attachments)>0): ?>
+
+<table cellspacing="0">
+  <thead>
+    <tr>
+      <th class="sf_admin_text"><?php echo __('File name') ?></th>
+      <th class="sf_admin_text"><?php echo __('Size') ?></th>
+      <th class="sf_admin_text"><?php echo __('Type') ?></th>
+    </tr>
+  </thead>
+  <tbody>
+	<?php $i=0 ?>
+    <?php foreach ($attachments as $attachment): ?>
+    <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
+      <td><?php echo $attachment->getOriginalFileName() ?></td>
+      <td><?php echo $attachment->getFileSize() ?></td>
+      <td><?php echo $attachment->getInternetMediaType() ?></td>
+    </tr>
+    <?php endforeach ?>
+  </tbody>
+</table>
+<?php else: ?>
+<p><?php echo __('No attachments.') ?></p>
+<?php endif ?>

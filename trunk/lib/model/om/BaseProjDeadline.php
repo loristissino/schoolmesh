@@ -67,6 +67,12 @@ abstract class BaseProjDeadline extends BaseObject  implements Persistent {
 	protected $completed;
 
 	/**
+	 * The value for the needs_attachment field.
+	 * @var        boolean
+	 */
+	protected $needs_attachment;
+
+	/**
 	 * The value for the created_at field.
 	 * @var        string
 	 */
@@ -240,6 +246,16 @@ abstract class BaseProjDeadline extends BaseObject  implements Persistent {
 	public function getCompleted()
 	{
 		return $this->completed;
+	}
+
+	/**
+	 * Get the [needs_attachment] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getNeedsAttachment()
+	{
+		return $this->needs_attachment;
 	}
 
 	/**
@@ -545,6 +561,26 @@ abstract class BaseProjDeadline extends BaseObject  implements Persistent {
 	} // setCompleted()
 
 	/**
+	 * Set the value of [needs_attachment] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     ProjDeadline The current object (for fluent API support)
+	 */
+	public function setNeedsAttachment($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->needs_attachment !== $v) {
+			$this->needs_attachment = $v;
+			$this->modifiedColumns[] = ProjDeadlinePeer::NEEDS_ATTACHMENT;
+		}
+
+		return $this;
+	} // setNeedsAttachment()
+
+	/**
 	 * Sets the value of [created_at] column to a normalized version of the date/time value specified.
 	 * 
 	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
@@ -682,8 +718,9 @@ abstract class BaseProjDeadline extends BaseObject  implements Persistent {
 			$this->description = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->notes = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->completed = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
-			$this->created_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-			$this->updated_at = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->needs_attachment = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
+			$this->created_at = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->updated_at = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -693,7 +730,7 @@ abstract class BaseProjDeadline extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 10; // 10 = ProjDeadlinePeer::NUM_COLUMNS - ProjDeadlinePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 11; // 11 = ProjDeadlinePeer::NUM_COLUMNS - ProjDeadlinePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjDeadline object", $e);
@@ -1067,9 +1104,12 @@ abstract class BaseProjDeadline extends BaseObject  implements Persistent {
 				return $this->getCompleted();
 				break;
 			case 8:
-				return $this->getCreatedAt();
+				return $this->getNeedsAttachment();
 				break;
 			case 9:
+				return $this->getCreatedAt();
+				break;
+			case 10:
 				return $this->getUpdatedAt();
 				break;
 			default:
@@ -1101,8 +1141,9 @@ abstract class BaseProjDeadline extends BaseObject  implements Persistent {
 			$keys[5] => $this->getDescription(),
 			$keys[6] => $this->getNotes(),
 			$keys[7] => $this->getCompleted(),
-			$keys[8] => $this->getCreatedAt(),
-			$keys[9] => $this->getUpdatedAt(),
+			$keys[8] => $this->getNeedsAttachment(),
+			$keys[9] => $this->getCreatedAt(),
+			$keys[10] => $this->getUpdatedAt(),
 		);
 		return $result;
 	}
@@ -1159,9 +1200,12 @@ abstract class BaseProjDeadline extends BaseObject  implements Persistent {
 				$this->setCompleted($value);
 				break;
 			case 8:
-				$this->setCreatedAt($value);
+				$this->setNeedsAttachment($value);
 				break;
 			case 9:
+				$this->setCreatedAt($value);
+				break;
+			case 10:
 				$this->setUpdatedAt($value);
 				break;
 		} // switch()
@@ -1196,8 +1240,9 @@ abstract class BaseProjDeadline extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setDescription($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setNotes($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setCompleted($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setCreatedAt($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setUpdatedAt($arr[$keys[9]]);
+		if (array_key_exists($keys[8], $arr)) $this->setNeedsAttachment($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setUpdatedAt($arr[$keys[10]]);
 	}
 
 	/**
@@ -1217,6 +1262,7 @@ abstract class BaseProjDeadline extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProjDeadlinePeer::DESCRIPTION)) $criteria->add(ProjDeadlinePeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(ProjDeadlinePeer::NOTES)) $criteria->add(ProjDeadlinePeer::NOTES, $this->notes);
 		if ($this->isColumnModified(ProjDeadlinePeer::COMPLETED)) $criteria->add(ProjDeadlinePeer::COMPLETED, $this->completed);
+		if ($this->isColumnModified(ProjDeadlinePeer::NEEDS_ATTACHMENT)) $criteria->add(ProjDeadlinePeer::NEEDS_ATTACHMENT, $this->needs_attachment);
 		if ($this->isColumnModified(ProjDeadlinePeer::CREATED_AT)) $criteria->add(ProjDeadlinePeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(ProjDeadlinePeer::UPDATED_AT)) $criteria->add(ProjDeadlinePeer::UPDATED_AT, $this->updated_at);
 
@@ -1286,6 +1332,8 @@ abstract class BaseProjDeadline extends BaseObject  implements Persistent {
 		$copyObj->setNotes($this->notes);
 
 		$copyObj->setCompleted($this->completed);
+
+		$copyObj->setNeedsAttachment($this->needs_attachment);
 
 		$copyObj->setCreatedAt($this->created_at);
 
