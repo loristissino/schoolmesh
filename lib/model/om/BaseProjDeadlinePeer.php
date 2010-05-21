@@ -25,7 +25,7 @@ abstract class BaseProjDeadlinePeer {
 	const TM_CLASS = 'ProjDeadlineTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 10;
+	const NUM_COLUMNS = 11;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -53,6 +53,9 @@ abstract class BaseProjDeadlinePeer {
 
 	/** the column name for the COMPLETED field */
 	const COMPLETED = 'proj_deadline.COMPLETED';
+
+	/** the column name for the NEEDS_ATTACHMENT field */
+	const NEEDS_ATTACHMENT = 'proj_deadline.NEEDS_ATTACHMENT';
 
 	/** the column name for the CREATED_AT field */
 	const CREATED_AT = 'proj_deadline.CREATED_AT';
@@ -83,11 +86,11 @@ abstract class BaseProjDeadlinePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'SchoolprojectId', 'UserId', 'OriginalDeadlineDate', 'CurrentDeadlineDate', 'Description', 'Notes', 'Completed', 'CreatedAt', 'UpdatedAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'schoolprojectId', 'userId', 'originalDeadlineDate', 'currentDeadlineDate', 'description', 'notes', 'completed', 'createdAt', 'updatedAt', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::SCHOOLPROJECT_ID, self::USER_ID, self::ORIGINAL_DEADLINE_DATE, self::CURRENT_DEADLINE_DATE, self::DESCRIPTION, self::NOTES, self::COMPLETED, self::CREATED_AT, self::UPDATED_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'schoolproject_id', 'user_id', 'original_deadline_date', 'current_deadline_date', 'description', 'notes', 'completed', 'created_at', 'updated_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'SchoolprojectId', 'UserId', 'OriginalDeadlineDate', 'CurrentDeadlineDate', 'Description', 'Notes', 'Completed', 'NeedsAttachment', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'schoolprojectId', 'userId', 'originalDeadlineDate', 'currentDeadlineDate', 'description', 'notes', 'completed', 'needsAttachment', 'createdAt', 'updatedAt', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::SCHOOLPROJECT_ID, self::USER_ID, self::ORIGINAL_DEADLINE_DATE, self::CURRENT_DEADLINE_DATE, self::DESCRIPTION, self::NOTES, self::COMPLETED, self::NEEDS_ATTACHMENT, self::CREATED_AT, self::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'schoolproject_id', 'user_id', 'original_deadline_date', 'current_deadline_date', 'description', 'notes', 'completed', 'needs_attachment', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -97,11 +100,11 @@ abstract class BaseProjDeadlinePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'SchoolprojectId' => 1, 'UserId' => 2, 'OriginalDeadlineDate' => 3, 'CurrentDeadlineDate' => 4, 'Description' => 5, 'Notes' => 6, 'Completed' => 7, 'CreatedAt' => 8, 'UpdatedAt' => 9, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'schoolprojectId' => 1, 'userId' => 2, 'originalDeadlineDate' => 3, 'currentDeadlineDate' => 4, 'description' => 5, 'notes' => 6, 'completed' => 7, 'createdAt' => 8, 'updatedAt' => 9, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SCHOOLPROJECT_ID => 1, self::USER_ID => 2, self::ORIGINAL_DEADLINE_DATE => 3, self::CURRENT_DEADLINE_DATE => 4, self::DESCRIPTION => 5, self::NOTES => 6, self::COMPLETED => 7, self::CREATED_AT => 8, self::UPDATED_AT => 9, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'schoolproject_id' => 1, 'user_id' => 2, 'original_deadline_date' => 3, 'current_deadline_date' => 4, 'description' => 5, 'notes' => 6, 'completed' => 7, 'created_at' => 8, 'updated_at' => 9, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'SchoolprojectId' => 1, 'UserId' => 2, 'OriginalDeadlineDate' => 3, 'CurrentDeadlineDate' => 4, 'Description' => 5, 'Notes' => 6, 'Completed' => 7, 'NeedsAttachment' => 8, 'CreatedAt' => 9, 'UpdatedAt' => 10, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'schoolprojectId' => 1, 'userId' => 2, 'originalDeadlineDate' => 3, 'currentDeadlineDate' => 4, 'description' => 5, 'notes' => 6, 'completed' => 7, 'needsAttachment' => 8, 'createdAt' => 9, 'updatedAt' => 10, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SCHOOLPROJECT_ID => 1, self::USER_ID => 2, self::ORIGINAL_DEADLINE_DATE => 3, self::CURRENT_DEADLINE_DATE => 4, self::DESCRIPTION => 5, self::NOTES => 6, self::COMPLETED => 7, self::NEEDS_ATTACHMENT => 8, self::CREATED_AT => 9, self::UPDATED_AT => 10, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'schoolproject_id' => 1, 'user_id' => 2, 'original_deadline_date' => 3, 'current_deadline_date' => 4, 'description' => 5, 'notes' => 6, 'completed' => 7, 'needs_attachment' => 8, 'created_at' => 9, 'updated_at' => 10, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -179,6 +182,7 @@ abstract class BaseProjDeadlinePeer {
 		$criteria->addSelectColumn(ProjDeadlinePeer::DESCRIPTION);
 		$criteria->addSelectColumn(ProjDeadlinePeer::NOTES);
 		$criteria->addSelectColumn(ProjDeadlinePeer::COMPLETED);
+		$criteria->addSelectColumn(ProjDeadlinePeer::NEEDS_ATTACHMENT);
 		$criteria->addSelectColumn(ProjDeadlinePeer::CREATED_AT);
 		$criteria->addSelectColumn(ProjDeadlinePeer::UPDATED_AT);
 	}

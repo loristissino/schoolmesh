@@ -33,8 +33,9 @@ class ProjDeadline extends BaseProjDeadline {
 	}
   
   
-  public function updateFromForm($params)
+  public function updateFromForm($params, sfValidatedFile $file=null)
   {
+    $con = Propel::getConnection(ProjDeadlinePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
     // we need to check which ones are present, because it depends on the state
     Generic::updateObjectFromForm($this, array(
       'original_deadline_date',
@@ -43,6 +44,59 @@ class ProjDeadline extends BaseProjDeadline {
       'notes',
       'completed',
       ), $params);
+
+
+    $result['result']='notice';
+    $result['message']='Deadline successfully updated.';
+
+    $con->beginTransaction();
+    
+    $this->save($con);
+
+    if(!is_null($file))
+    {
+      $attachment=new AttachmentFile();
+      
+      $attachment
+      ->setUserId($this->getUserId())
+      ->setBaseTable(AttachmentFilePeer::getBaseTableId(get_class($this)))
+      ->setBaseId($this->getId())
+      ;
+      
+      if ($attachment->setFile('deadline', $file))
+      {
+        try
+        {
+          $attachment->save($con);
+          $con->commit();
+        }
+        catch (Exception $e)
+        {
+          $con->rollBack();
+          $result['result']='error';
+          $result['message']='This file was already uploaded.';
+        }
+      }
+      else
+      {
+        $con->rollBack();
+        $result['result']='error';
+        $result['message']='Could not save the uploaded file.';
+      }
+        
+    }
+    else
+    {
+      $con->commit();
+    }
+    
+    return $result;
+  }
+  
+  
+  public function getAttachmentFiles()
+  {
+    return AttachmentFilePeer::retrieveByClassAndId(get_class($this), $this->getId());
   }
 
 

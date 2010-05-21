@@ -293,7 +293,7 @@ class Generic{
         $object->setByName($field, $params[$field], BasePeer::TYPE_FIELDNAME);
       }
     }
-    $object->save();
+//    $object->save();
   }
 
 }

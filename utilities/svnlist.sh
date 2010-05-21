@@ -17,4 +17,5 @@ grep -v 'utilities/fixauthor.sh' | \
 grep -v 'templates/email/document_submission.txt' | \
 grep -v 'web/oo/workplan0.odt$' | \
 grep -v 'web/oo/workplan40.odt$' | \
+grep -v 'data/attachments' | \
 sed 's/^?      //'

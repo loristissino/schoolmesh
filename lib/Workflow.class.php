@@ -255,11 +255,12 @@ class Workflow
 		return array(null=>'unverified', 0=>'not existent', 1=>'not activated', 8=>'not recently used', 9=>'recently used');
 	}
 
-
-  const   PROJ_DRAFT = 10;
-  const   PROJ_SUBMITTED = 20;
-  const   PROJ_APPROVED = 30;
-  const   PROJ_FINISHED = 40;
+  const
+    PROJ_DRAFT = 10,
+    PROJ_SUBMITTED = 20,
+    PROJ_APPROVED = 30,
+    PROJ_FINANCED = 40,
+    PROJ_FINISHED = 50;
 	
 	static private $projSteps=Array(
 
@@ -275,7 +276,11 @@ class Workflow
 		'stateDescription'=>"Project approved",
 		),
     
-	self::PROJ_FINISHED=>Array(
+	self::PROJ_FINANCED=>Array(
+		'stateDescription'=>"Project financed",
+		),
+
+  self::PROJ_FINISHED=>Array(
 		'stateDescription'=>"Project finished",
 		),
   );
