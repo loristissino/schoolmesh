@@ -267,7 +267,7 @@ public function executeBatch(sfWebRequest $request)
 	
 	$result=$this->workplan->teacherSubmit($this->getContext());
 	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
-	if (array_key_exists('mail_sent_to', $result))
+	if ($result['mail_sent_to'])
 	{
 		$this->getUser()->setFlash('mail_sent_to', $result['mail_sent_to']);
 	}

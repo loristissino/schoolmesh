@@ -343,14 +343,7 @@ $con->query($sql);
 								'Content cannot be empty',
 								$wpinfotype->getDescription(),
 								array('link_to'=>'wpinfo/edit?id=' . $wpinfo->getId())));
-								/*
-								
-										$wpinfotype->getTitle(),
-										array(
-											'link_to'=>'wpinfo/edit?id=' . $wpinfo->getId(),
-											'flash'=>$flash)
-											)
-										);*/
+
 								}
 							elseif (!$wpinfo->checkContentAgainstTemplate($wpinfo->getContent(), $wpinfotype->getTemplate()))
 								{
@@ -359,12 +352,7 @@ $con->query($sql);
 										'Content doesn\'t match template',
 										$wpinfotype->getDescription(),
 										array('link_to'=>'wpinfo/edit?id=' . $wpinfo->getId())));
-/*										$wpinfotype->getTitle(),
-										array(
-											'link_to'=>'wpinfo/edit?id=' . $wpinfo->getId(),
-											'flash'=>$flash)
-											)
-										);*/
+
 								}
 							else
 								{
