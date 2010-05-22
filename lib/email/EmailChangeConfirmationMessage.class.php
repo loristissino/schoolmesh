@@ -6,36 +6,15 @@ class EmailChangeConfirmationMessage extends ProjectBaseMessage
   {
     parent::__construct();
 	
-	$filename=$this->getTemplateDirectory() . '/email_change_confirmation.txt';
+	  $replacements=array(
+		  '%verification_code%'=>$user->getEmailVerificationCode(),
+		  '%username%'=>$user->getUsername(),
+		  );
 	
-	if (!is_readable($filename))
-	{
-		throw new Exception ('File not readable: ' . $filename);
-	}
-	
-	$bodylines=file($filename);
-	
-	$subject=$bodylines[0];
-	
-	$body=$user->getSalutation($sfContext);
-	
-	for ($i=1; $i<sizeof($bodylines); $i++)
-	{
-		$body .= $bodylines[$i];
-	}
-	
-	foreach(array(
-		'%verification_code%'=>$user->getEmailVerificationCode(),
-		'%username%'=>$user->getUsername(),
-		) as $key=>$value)
-	{
-		$body=str_replace($key, $value, $body);
-	}
-	
-    $this
-	  ->setSubject($subject)
-	  ->setBody($body)  
-      ->addStandardTagline()
+  	$this
+    ->parseTemplate('email_change_confirmation.yml', $user, $sfContext)
+    ->addStandardTagline()
+    ->makeReplacements($replacements)
 	  ->setTo(array($user->getEmail() => $user->getFullName()))
     ;
   }

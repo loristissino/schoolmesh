@@ -24,7 +24,7 @@
 	<p>
 	<?php echo __('Coordinator') ?>: <strong><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></strong><br />
 	<?php echo __('Category') ?>: <strong><?php echo $project->getProjCategory() ?></strong><br />
-	<?php echo __('Hours approved') ?>: <strong><?php echo $project->getHoursApproved() ?></strong></br />
+	<?php echo __('Hours approved') ?>: <strong><?php echo $project->getHoursApproved() ?></strong><br />
 	</p>
 <?php include_component('projects', 'deadlines', array('project'=>$project)) ?>
 </blockquote>

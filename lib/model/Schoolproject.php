@@ -31,6 +31,49 @@ class Schoolproject extends BaseSchoolproject {
     return $user->getProfile()->getUserId()===$this->getUserId() || $user->hasCredential('schoolmaster');
   }
   
+  
+  public function getProjectAlertMessage(sfGuardUserProfile $sender, sfContext $sfContext=null)
+  {
+    return new SchoolprojectAlertMessage($this->getsfGuardUser()->getProfile(), $sender, $this, $sfContext);
+  }
+  
+  
+  public function sendEmail($params, sfGuardUserProfile $sender, sfContext $sfContext=null)
+  {
+    $to_email=$this->getsfGuardUser()->getProfile()->getValidatedEmail();
+    if ($to_email=='')
+    {
+      $result['result']='error';
+      $result['message']='The coordinator of this project does not have a validated email.';
+      return $result;
+    }
+    
+    $from_email=$sender->getValidatedEmail();
+    if ($from_email=='')
+    {
+      $result['result']='error';
+      $result['message']='Sender must have a validated email.';
+      return $result;
+    }
+
+        
+    $message=new SimpleMessage($sfContext);
+    $message
+    ->setFrom(array($from_email=>$sender->getFullname()))
+    ->setTo(array($to_email=>$this->getsfGuardUser()->getProfile()->getFullname()))
+    ->setBody($params['body'])
+    ->setSubject($params['email_subject'])
+    ->addSchoolMeshHeader($sfContext);
+    
+		$mailer=$sfContext->getMailer();
+		$mailer->send($message);
+      
+    $result['result']='notice';
+    $result['message']='The message has been correctly sent.';
+    return $result;
+
+  }
+  
   public function deleteDeadline(sfGuardUserProfile $profile, ProjDeadline $deadline)
   {
     if($profile->getUserId()!=$this->getUserId())
