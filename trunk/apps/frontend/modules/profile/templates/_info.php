@@ -29,6 +29,7 @@
         <?php endif; ?>
         
         <?php echo link_to(__('You may logout'), '@sf_guard_signout') ?>
+        </p>
 		
 		<?php if (!$sf_user->getProfile()->getHasValidatedEmail()): ?>
 			<p class="schoolmesh_profile_notices">
