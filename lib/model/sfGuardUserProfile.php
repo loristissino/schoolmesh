@@ -129,8 +129,6 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		{
 			// This is used to send different kinds of messages to the user
 			
-
-			
 			if ($this->getHasValidatedEmail())
 			{
 				try
