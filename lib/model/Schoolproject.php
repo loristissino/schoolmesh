@@ -23,18 +23,44 @@ class Schoolproject extends BaseSchoolproject {
   
   public function isEditableBy($user)
   {
-    return $user->getProfile()->getUserId()===$this->getUserId();
+    return 
+      $user->getProfile()->getUserId()===$this->getUserId()
+      || 
+      $user->hasCredential('admin')
+      ;
   }
   
   public function isViewableBy($user)
   {
-    return $user->getProfile()->getUserId()===$this->getUserId() || $user->hasCredential('schoolmaster');
+    return 
+      $user->getProfile()->getUserId()===$this->getUserId() 
+      || 
+      $user->hasCredential('schoolmaster') 
+      || 
+      $user->hasCredential('admin')
+      ;
   }
   
   
   public function getProjectAlertMessage(sfGuardUserProfile $sender, sfContext $sfContext=null)
   {
     return new SchoolprojectAlertMessage($this->getsfGuardUser()->getProfile(), $sender, $this, $sfContext);
+  }
+  
+  
+  public function getOverdueDeadlines($options=array())
+  {
+    $c=new Criteria();
+    $c->add(ProjDeadlinePeer::SCHOOLPROJECT_ID, $this->getId());
+    $c->add(ProjDeadlinePeer::CURRENT_DEADLINE_DATE, time(), Criteria::LESS_THAN);
+    $c->add(ProjDeadlinePeer::COMPLETED, false);
+    $deadlines=ProjDeadlinePeer::doSelect($c);
+    $text='';
+    foreach($deadlines as $deadline)
+    {
+      $text.='* ' . $deadline->getCurrentDeadlineDate('d/m/Y') . ': ' . $deadline->getDescription() . "\n";
+    }
+    return $text;
   }
   
   
@@ -67,11 +93,30 @@ class Schoolproject extends BaseSchoolproject {
     
 		$mailer=$sfContext->getMailer();
 		$mailer->send($message);
+    
+    $this->addEmailAttachment($message);
       
     $result['result']='notice';
     $result['message']='The message has been correctly sent.';
     return $result;
 
+  }
+  
+  public function addEmailAttachment($message)
+  {
+    $attachment=new AttachmentFile();
+    $attachment->setMessage($message);
+    $this->addAttachmentFile($attachment);
+  }
+  
+  public function addAttachmentFile($attachment)
+  {
+    $attachment
+    ->setUserId($this->getUserId())
+    ->setBaseTable(AttachmentFilePeer::getBaseTableId(get_class($this)))
+    ->setBaseId($this->getId())
+    ->save()
+    ;
   }
   
   public function deleteDeadline(sfGuardUserProfile $profile, ProjDeadline $deadline)

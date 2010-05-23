@@ -30,8 +30,15 @@ class ProjectBaseMessage extends Swift_Message
    
     $this
     ->setFrom($from)
-	    ->setTemplateDirectory(sfConfig::get('app_mail_template_directory'))
-    ;  
+    ->setTemplateDirectory(sfConfig::get('app_mail_template_directory'))
+    ;
+    
+    $backup=sfConfig::get('app_mail_backup_address','');
+    
+    if($backup!='')
+    {
+      $this->addBcc($backup);
+    }
 	
   }
 

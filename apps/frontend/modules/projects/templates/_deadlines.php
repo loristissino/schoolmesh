@@ -17,11 +17,18 @@
 		<?php endif ?>
 		<?php if (sizeof($attachments=$deadline->getAttachmentFiles())>0): ?>
 			<li><?php echo __('Attachments') ?>:
-        <ol>
+        <ul class="sf_admin_actions">
           <?php foreach ($attachments as $attachment): ?>
-            <li><?php echo $attachment->getOriginalFileName() ?></li>
+            <li class="sf_admin_action_download"><?php echo link_to(
+              sprintf('«%s» (%d bytes)', $attachment->getOriginalFileName(), $attachment->getFileSize()),
+              url_for('content/attachment?id=' . $attachment->getId()),
+              array('title'=>__('Download file %filename%', 
+                array('%filename%'=>$attachment->getOriginalFileName())
+                ))
+              )
+              ?><br /></li>
           <?php endforeach ?>
-        </ol>
+        </ul>
       </li>
 		<?php endif ?>
 		

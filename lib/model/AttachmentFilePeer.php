@@ -23,6 +23,8 @@ class AttachmentFilePeer extends BaseAttachmentFilePeer {
     {
       case 'ProjDeadline':
         return 1;
+      case 'Schoolproject':
+        return 2;
       default:
         return 0;
     }

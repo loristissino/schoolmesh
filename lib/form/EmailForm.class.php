@@ -6,7 +6,7 @@ class EmailForm extends BaseForm
   {
     $this->setWidgets(array(
       'email_subject' => new sfWidgetFormInputText(array(), array('size'=>70)),
-      'body'          => new sfWidgetFormTextarea(array(), array('cols'=>70, 'rows'=>20)),
+      'body'          => new sfWidgetFormTextarea(array(), array('cols'=>70, 'rows'=>30)),
     ));
     
     $this->widgetSchema->setNameFormat('email[%s]');

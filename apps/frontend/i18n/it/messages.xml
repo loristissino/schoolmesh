@@ -1655,6 +1655,62 @@
         <source>Invalid.</source>
         <target>Non valido.</target>
     </trans-unit>
+    <trans-unit id="437">
+        <source>Attachments</source>
+        <target>Allegati</target>
+    </trans-unit>
+    <trans-unit id="438">
+        <source>Attachments</source>
+        <target>Allegati</target>
+    </trans-unit>
+    <trans-unit id="439">
+        <source>Type</source>
+        <target>Tipo</target>
+    </trans-unit>
+    <trans-unit id="440">
+        <source>File name</source>
+        <target>Nome file</target>
+    </trans-unit>
+    <trans-unit id="441">
+        <source>Size</source>
+        <target>Dimensione</target>
+    </trans-unit>
+    <trans-unit id="442">
+        <source>Fill in information for this project</source>
+        <target>Inserisci informazioni relative a questo progetto</target>
+    </trans-unit>
+    <trans-unit id="443">
+        <source>See the report for this project</source>
+        <target>Vedi il rapporto per questo progetto</target>
+    </trans-unit>
+    <trans-unit id="444">
+        <source>Prepare and send an email to the coordinator of this project</source>
+        <target>Prepara e spedisci un'email al coordinatore di questo progetto</target>
+    </trans-unit>
+    <trans-unit id="445">
+        <source>To</source>
+        <target>A</target>
+    </trans-unit>
+    <trans-unit id="446">
+        <source>Email subject</source>
+        <target>Oggetto</target>
+    </trans-unit>
+    <trans-unit id="447">
+        <source>Body</source>
+        <target>Testo</target>
+    </trans-unit>
+    <trans-unit id="448">
+        <source>Body</source>
+        <target>Testo</target>
+    </trans-unit>
+    <trans-unit id="449">
+        <source>Send</source>
+        <target>Invia</target>
+    </trans-unit>
+    <trans-unit id="449">
+        <source>Send an email to the coordinator of this project</source>
+        <target>Spedisci un'email al coordinatore di questo progetto</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
