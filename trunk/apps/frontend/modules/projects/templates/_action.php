@@ -1,9 +1,9 @@
 <ul class="sf_admin_td_actions">
   <?php if($project->isEditableBy($sf_user)): ?>
-	<li class="sf_admin_action_edit">
-		<?php echo link_to(__('Edit'),
+	<li class="sf_admin_action_fill">
+		<?php echo link_to(__('Fill'),
 			url_for('projects/edit?id=' . $project->getId()),
-			array('title'=>__('Edit this project'))
+			array('title'=>__('Fill in information for this project'))
 		)?>
 		</li>
   <?php endif ?>
@@ -18,7 +18,7 @@
   <li class="sf_admin_action_email">
 		<?php echo link_to(__('Email'),
 			url_for('projects/email?id=' . $project->getId()),
-			array('title'=>__('Send an email to the coordinator of this project'))
+			array('title'=>__('Prepare and send an email to the coordinator of this project'))
 		)?>
 		</li>
   <?php endif ?>

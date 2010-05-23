@@ -59,6 +59,33 @@ class contentActions extends sfActions
     
 		return sfView::NONE;
 	}
+  
+  
+  public function executeAttachment(sfWebRequest $request)
+  {
+    // this should be refactored, in order to share some code with executeServe
+    
+    $this->forward404Unless($attachment=AttachmentFilePeer::retrieveByPK($request->getParameter('id')));
+    
+    $this->forward404Unless($attachment->isViewableBy($this->getUser()));
+    
+		$file = new smFileInfo(sfConfig::get('app_documents_attachments'). '/'. $attachment->getUniqId());
+
+		if (!$file->isReadable())
+		{
+			return $this->renderText($file->getFilename() . ' not readable'); 
+//		$this->forward404Unless($file->isReadable());
+		}
+    
+    $file
+    ->setDeliveryName($attachment->getOriginalFileName())
+    ->prepareDelivery($this->getContext()->getResponse())
+    ;
+    
+		return sfView::NONE;
+    
+    
+  }
 
 
 	public function executeUnoconv(sfWebRequest $request)
