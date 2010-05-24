@@ -39,6 +39,7 @@ class RecuperationHintTableMap extends TableMap {
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
 		$this->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', false, null, null);
 		$this->addColumn('CONTENT', 'Content', 'VARCHAR', true, 255, null);
+		$this->addColumn('IS_SELECTABLE', 'IsSelectable', 'BOOLEAN', false, null, null);
 		$this->addColumn('RANK', 'Rank', 'INTEGER', false, null, null);
 		// validators
 	} // initialize()

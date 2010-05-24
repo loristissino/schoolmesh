@@ -25,6 +25,7 @@ class RecuperationHintPeer extends BaseRecuperationHintPeer {
 		$c1 = $c->getNewCriterion(self::USER_ID, null, Criteria::ISNULL);
 		$c1->addOr($c->getNewCriterion(self::USER_ID, $UserId));
 		$c->add($c1);
+    $c->add(self::IS_SELECTABLE, true);
 		$c->addAscendingOrderByColumn(self::RANK);
 		return self::doSelect($c);
 	}

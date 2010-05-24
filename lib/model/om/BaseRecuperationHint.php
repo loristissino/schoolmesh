@@ -37,6 +37,12 @@ abstract class BaseRecuperationHint extends BaseObject  implements Persistent {
 	protected $content;
 
 	/**
+	 * The value for the is_selectable field.
+	 * @var        boolean
+	 */
+	protected $is_selectable;
+
+	/**
 	 * The value for the rank field.
 	 * @var        int
 	 */
@@ -103,6 +109,16 @@ abstract class BaseRecuperationHint extends BaseObject  implements Persistent {
 	public function getContent()
 	{
 		return $this->content;
+	}
+
+	/**
+	 * Get the [is_selectable] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsSelectable()
+	{
+		return $this->is_selectable;
 	}
 
 	/**
@@ -180,6 +196,26 @@ abstract class BaseRecuperationHint extends BaseObject  implements Persistent {
 	} // setContent()
 
 	/**
+	 * Set the value of [is_selectable] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     RecuperationHint The current object (for fluent API support)
+	 */
+	public function setIsSelectable($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_selectable !== $v) {
+			$this->is_selectable = $v;
+			$this->modifiedColumns[] = RecuperationHintPeer::IS_SELECTABLE;
+		}
+
+		return $this;
+	} // setIsSelectable()
+
+	/**
 	 * Set the value of [rank] column.
 	 * 
 	 * @param      int $v new value
@@ -234,7 +270,8 @@ abstract class BaseRecuperationHint extends BaseObject  implements Persistent {
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->user_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->content = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-			$this->rank = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->is_selectable = ($row[$startcol + 3] !== null) ? (boolean) $row[$startcol + 3] : null;
+			$this->rank = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -244,7 +281,7 @@ abstract class BaseRecuperationHint extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 4; // 4 = RecuperationHintPeer::NUM_COLUMNS - RecuperationHintPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 5; // 5 = RecuperationHintPeer::NUM_COLUMNS - RecuperationHintPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating RecuperationHint object", $e);
@@ -593,6 +630,9 @@ abstract class BaseRecuperationHint extends BaseObject  implements Persistent {
 				return $this->getContent();
 				break;
 			case 3:
+				return $this->getIsSelectable();
+				break;
+			case 4:
 				return $this->getRank();
 				break;
 			default:
@@ -619,7 +659,8 @@ abstract class BaseRecuperationHint extends BaseObject  implements Persistent {
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getUserId(),
 			$keys[2] => $this->getContent(),
-			$keys[3] => $this->getRank(),
+			$keys[3] => $this->getIsSelectable(),
+			$keys[4] => $this->getRank(),
 		);
 		return $result;
 	}
@@ -661,6 +702,9 @@ abstract class BaseRecuperationHint extends BaseObject  implements Persistent {
 				$this->setContent($value);
 				break;
 			case 3:
+				$this->setIsSelectable($value);
+				break;
+			case 4:
 				$this->setRank($value);
 				break;
 		} // switch()
@@ -690,7 +734,8 @@ abstract class BaseRecuperationHint extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setUserId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setContent($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setRank($arr[$keys[3]]);
+		if (array_key_exists($keys[3], $arr)) $this->setIsSelectable($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setRank($arr[$keys[4]]);
 	}
 
 	/**
@@ -705,6 +750,7 @@ abstract class BaseRecuperationHint extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RecuperationHintPeer::ID)) $criteria->add(RecuperationHintPeer::ID, $this->id);
 		if ($this->isColumnModified(RecuperationHintPeer::USER_ID)) $criteria->add(RecuperationHintPeer::USER_ID, $this->user_id);
 		if ($this->isColumnModified(RecuperationHintPeer::CONTENT)) $criteria->add(RecuperationHintPeer::CONTENT, $this->content);
+		if ($this->isColumnModified(RecuperationHintPeer::IS_SELECTABLE)) $criteria->add(RecuperationHintPeer::IS_SELECTABLE, $this->is_selectable);
 		if ($this->isColumnModified(RecuperationHintPeer::RANK)) $criteria->add(RecuperationHintPeer::RANK, $this->rank);
 
 		return $criteria;
@@ -763,6 +809,8 @@ abstract class BaseRecuperationHint extends BaseObject  implements Persistent {
 		$copyObj->setUserId($this->user_id);
 
 		$copyObj->setContent($this->content);
+
+		$copyObj->setIsSelectable($this->is_selectable);
 
 		$copyObj->setRank($this->rank);
 

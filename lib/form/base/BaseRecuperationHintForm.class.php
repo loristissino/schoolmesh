@@ -15,17 +15,19 @@ abstract class BaseRecuperationHintForm extends BaseFormPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'id'      => new sfWidgetFormInputHidden(),
-      'user_id' => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
-      'content' => new sfWidgetFormInputText(),
-      'rank'    => new sfWidgetFormInputText(),
+      'id'            => new sfWidgetFormInputHidden(),
+      'user_id'       => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
+      'content'       => new sfWidgetFormInputText(),
+      'is_selectable' => new sfWidgetFormInputCheckbox(),
+      'rank'          => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
-      'id'      => new sfValidatorPropelChoice(array('model' => 'RecuperationHint', 'column' => 'id', 'required' => false)),
-      'user_id' => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id', 'required' => false)),
-      'content' => new sfValidatorString(array('max_length' => 255)),
-      'rank'    => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'id'            => new sfValidatorPropelChoice(array('model' => 'RecuperationHint', 'column' => 'id', 'required' => false)),
+      'user_id'       => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id', 'required' => false)),
+      'content'       => new sfValidatorString(array('max_length' => 255)),
+      'is_selectable' => new sfValidatorBoolean(array('required' => false)),
+      'rank'          => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('recuperation_hint[%s]');

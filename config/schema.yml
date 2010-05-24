@@ -19,7 +19,7 @@ propel:
 
   term:
     id:           { type: varchar(10), primaryKey: true }
-    description: { type: varchar(30), required: true }
+    description: { type: varchar(100), required: true }
     end_day:  { type: integer, required: true } # the number of days, following the start date of the year, when the term finishes (an approx. value, used for comparison between years if necessary)
     has_formal_evaluation: boolean
 
@@ -33,12 +33,14 @@ propel:
     id: ~
     shortcut:     { type: varchar(20), index: true, required: true, unique: true }
     content:  { type: varchar(255), required: true }
+    is_selectable: boolean
     rank:   integer
 
   recuperation_hint:
     id: ~
     user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: false, onUpdate: cascade, onDelete: cascade, index:true }
     content:  { type: varchar(255), required: true }
+    is_selectable: boolean
     rank:  integer
     
 

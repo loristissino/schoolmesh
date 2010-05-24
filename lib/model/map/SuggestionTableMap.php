@@ -39,6 +39,7 @@ class SuggestionTableMap extends TableMap {
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
 		$this->addColumn('SHORTCUT', 'Shortcut', 'VARCHAR', true, 20, null);
 		$this->addColumn('CONTENT', 'Content', 'VARCHAR', true, 255, null);
+		$this->addColumn('IS_SELECTABLE', 'IsSelectable', 'BOOLEAN', false, null, null);
 		$this->addColumn('RANK', 'Rank', 'INTEGER', false, null, null);
 		// validators
 	} // initialize()

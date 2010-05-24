@@ -19,7 +19,9 @@ class SuggestionPeer extends BaseSuggestionPeer {
 public static function retrieveAllByRank()
 	{
 		$c=new Criteria();
-		$c->addAscendingOrderByColumn(SuggestionPeer::RANK);
+		$c->add(self::IS_SELECTABLE, true);
+    $c->addAscendingOrderByColumn(SuggestionPeer::RANK);
+    
 		return parent::doSelect($c);
 	}
 
