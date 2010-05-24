@@ -25,7 +25,7 @@ abstract class BaseRecuperationHintPeer {
 	const TM_CLASS = 'RecuperationHintTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 5;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -38,6 +38,9 @@ abstract class BaseRecuperationHintPeer {
 
 	/** the column name for the CONTENT field */
 	const CONTENT = 'recuperation_hint.CONTENT';
+
+	/** the column name for the IS_SELECTABLE field */
+	const IS_SELECTABLE = 'recuperation_hint.IS_SELECTABLE';
 
 	/** the column name for the RANK field */
 	const RANK = 'recuperation_hint.RANK';
@@ -65,11 +68,11 @@ abstract class BaseRecuperationHintPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'Content', 'Rank', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'content', 'rank', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::CONTENT, self::RANK, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'content', 'rank', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'Content', 'IsSelectable', 'Rank', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'content', 'isSelectable', 'rank', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::CONTENT, self::IS_SELECTABLE, self::RANK, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'content', 'is_selectable', 'rank', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -79,11 +82,11 @@ abstract class BaseRecuperationHintPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'Content' => 2, 'Rank' => 3, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'content' => 2, 'rank' => 3, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::CONTENT => 2, self::RANK => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'content' => 2, 'rank' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'Content' => 2, 'IsSelectable' => 3, 'Rank' => 4, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'content' => 2, 'isSelectable' => 3, 'rank' => 4, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::CONTENT => 2, self::IS_SELECTABLE => 3, self::RANK => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'content' => 2, 'is_selectable' => 3, 'rank' => 4, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -156,6 +159,7 @@ abstract class BaseRecuperationHintPeer {
 		$criteria->addSelectColumn(RecuperationHintPeer::ID);
 		$criteria->addSelectColumn(RecuperationHintPeer::USER_ID);
 		$criteria->addSelectColumn(RecuperationHintPeer::CONTENT);
+		$criteria->addSelectColumn(RecuperationHintPeer::IS_SELECTABLE);
 		$criteria->addSelectColumn(RecuperationHintPeer::RANK);
 	}
 

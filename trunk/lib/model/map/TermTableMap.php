@@ -37,7 +37,7 @@ class TermTableMap extends TableMap {
 		$this->setUseIdGenerator(false);
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'VARCHAR', true, 10, null);
-		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', true, 30, null);
+		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', true, 100, null);
 		$this->addColumn('END_DAY', 'EndDay', 'INTEGER', true, null, null);
 		$this->addColumn('HAS_FORMAL_EVALUATION', 'HasFormalEvaluation', 'BOOLEAN', false, null, null);
 		// validators

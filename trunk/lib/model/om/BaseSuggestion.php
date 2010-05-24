@@ -37,6 +37,12 @@ abstract class BaseSuggestion extends BaseObject  implements Persistent {
 	protected $content;
 
 	/**
+	 * The value for the is_selectable field.
+	 * @var        boolean
+	 */
+	protected $is_selectable;
+
+	/**
 	 * The value for the rank field.
 	 * @var        int
 	 */
@@ -98,6 +104,16 @@ abstract class BaseSuggestion extends BaseObject  implements Persistent {
 	public function getContent()
 	{
 		return $this->content;
+	}
+
+	/**
+	 * Get the [is_selectable] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsSelectable()
+	{
+		return $this->is_selectable;
 	}
 
 	/**
@@ -171,6 +187,26 @@ abstract class BaseSuggestion extends BaseObject  implements Persistent {
 	} // setContent()
 
 	/**
+	 * Set the value of [is_selectable] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     Suggestion The current object (for fluent API support)
+	 */
+	public function setIsSelectable($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_selectable !== $v) {
+			$this->is_selectable = $v;
+			$this->modifiedColumns[] = SuggestionPeer::IS_SELECTABLE;
+		}
+
+		return $this;
+	} // setIsSelectable()
+
+	/**
 	 * Set the value of [rank] column.
 	 * 
 	 * @param      int $v new value
@@ -225,7 +261,8 @@ abstract class BaseSuggestion extends BaseObject  implements Persistent {
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->shortcut = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->content = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-			$this->rank = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->is_selectable = ($row[$startcol + 3] !== null) ? (boolean) $row[$startcol + 3] : null;
+			$this->rank = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -235,7 +272,7 @@ abstract class BaseSuggestion extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 4; // 4 = SuggestionPeer::NUM_COLUMNS - SuggestionPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 5; // 5 = SuggestionPeer::NUM_COLUMNS - SuggestionPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Suggestion object", $e);
@@ -556,6 +593,9 @@ abstract class BaseSuggestion extends BaseObject  implements Persistent {
 				return $this->getContent();
 				break;
 			case 3:
+				return $this->getIsSelectable();
+				break;
+			case 4:
 				return $this->getRank();
 				break;
 			default:
@@ -582,7 +622,8 @@ abstract class BaseSuggestion extends BaseObject  implements Persistent {
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getShortcut(),
 			$keys[2] => $this->getContent(),
-			$keys[3] => $this->getRank(),
+			$keys[3] => $this->getIsSelectable(),
+			$keys[4] => $this->getRank(),
 		);
 		return $result;
 	}
@@ -624,6 +665,9 @@ abstract class BaseSuggestion extends BaseObject  implements Persistent {
 				$this->setContent($value);
 				break;
 			case 3:
+				$this->setIsSelectable($value);
+				break;
+			case 4:
 				$this->setRank($value);
 				break;
 		} // switch()
@@ -653,7 +697,8 @@ abstract class BaseSuggestion extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setShortcut($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setContent($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setRank($arr[$keys[3]]);
+		if (array_key_exists($keys[3], $arr)) $this->setIsSelectable($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setRank($arr[$keys[4]]);
 	}
 
 	/**
@@ -668,6 +713,7 @@ abstract class BaseSuggestion extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SuggestionPeer::ID)) $criteria->add(SuggestionPeer::ID, $this->id);
 		if ($this->isColumnModified(SuggestionPeer::SHORTCUT)) $criteria->add(SuggestionPeer::SHORTCUT, $this->shortcut);
 		if ($this->isColumnModified(SuggestionPeer::CONTENT)) $criteria->add(SuggestionPeer::CONTENT, $this->content);
+		if ($this->isColumnModified(SuggestionPeer::IS_SELECTABLE)) $criteria->add(SuggestionPeer::IS_SELECTABLE, $this->is_selectable);
 		if ($this->isColumnModified(SuggestionPeer::RANK)) $criteria->add(SuggestionPeer::RANK, $this->rank);
 
 		return $criteria;
@@ -726,6 +772,8 @@ abstract class BaseSuggestion extends BaseObject  implements Persistent {
 		$copyObj->setShortcut($this->shortcut);
 
 		$copyObj->setContent($this->content);
+
+		$copyObj->setIsSelectable($this->is_selectable);
 
 		$copyObj->setRank($this->rank);
 

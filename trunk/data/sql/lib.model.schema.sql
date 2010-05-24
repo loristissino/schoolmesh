@@ -66,7 +66,7 @@ DROP TABLE IF EXISTS `term`;
 CREATE TABLE `term`
 (
 	`id` VARCHAR(10)  NOT NULL,
-	`description` VARCHAR(30)  NOT NULL,
+	`description` VARCHAR(100)  NOT NULL,
 	`end_day` INTEGER  NOT NULL,
 	`has_formal_evaluation` TINYINT,
 	PRIMARY KEY (`id`)
@@ -101,6 +101,7 @@ CREATE TABLE `suggestion`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`shortcut` VARCHAR(20)  NOT NULL,
 	`content` VARCHAR(255)  NOT NULL,
+	`is_selectable` TINYINT,
 	`rank` INTEGER,
 	PRIMARY KEY (`id`),
 	KEY `suggestion_I_1`(`shortcut`)
@@ -118,6 +119,7 @@ CREATE TABLE `recuperation_hint`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`user_id` INTEGER,
 	`content` VARCHAR(255)  NOT NULL,
+	`is_selectable` TINYINT,
 	`rank` INTEGER,
 	PRIMARY KEY (`id`),
 	KEY `recuperation_hint_I_1`(`user_id`),
