@@ -1,11 +1,19 @@
+# REMEMBER TO CLEAR YOUR CACHE AFTER EDITING THIS FILE!
+# Run: 
+# symfony cc
+
 all:
   school:
-    name:           ITC Mattiussi
-    town:           Pordenone
-    website:        'http://www.itcmattiussi.it'
+    name:           Example High School
+    town:           Nowhere
+    website:        'http://www.example.com'
 
   mail:
-    webmaster:      loris.tissino@mattiussilab.net
+    webmaster:      web@example.com
+    bot_address:    schoolmesh@example.com
+    bot_name:       SchoolMesh App Bot
+    backup_address: backup@example.com
+    template_directory: /var/schoolmesh/templates/email
     
   config:
     current_year:   2009 # only the first of the two years of a scholastic/academic year
@@ -15,14 +23,17 @@ all:
     users_max_per_page: 100
     appointments_max_per_page: 30
     posix_homedir: /home/testhome 
-    posix_basefolder: Mattiussi  # this folder contains symbolic links and other stuff; should be present in each homedir
-    teachers_default_posix_group: docenti
+    posix_basefolder: MySchool  # this folder contains symbolic links and other stuff; should be present in each homedir
+    teachers_default_posix_group: teachers
     default_teams_role: member
-    students_default_posix_group: allievi
+    students_default_posix_group: students
     class_teachersteam_prefix: cdc  # for the new team of teachers automatically created, and the name will be prefixed with this
-    class_teachersteam_name: Consiglio di classe
-    googleapps_domain: mattiussilab.net
-    googleapps_url: http://webmail.mattiussilab.net
+    class_teachersteam_name: Class Council
+    googleapps_domain: example.com
+    googleapps_url: http://webmail.example.com
+    moodle_key: aSekRetTokEnShAred # used for quasi-SSO with Moodle
+    moodle_url: http://www.mattiussilab.net/moodle/
+    moodle_access: http://www.mattiussilab.net/intranet/moodle_schoolmesh.php
     accounts: [ posix, login, samba, googleapps ]
 
 
@@ -51,3 +62,4 @@ all:
 
   opendocument:
     template_directory: /var/schoolmesh/web/oo  
+    attachments: /var/schoolmesh/data/attachments

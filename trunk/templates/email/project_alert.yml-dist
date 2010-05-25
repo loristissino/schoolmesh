@@ -3,8 +3,9 @@ message:
   salutation: true
   body: |
   
-    una o più scadenze per il monitoraggio del progetto «%project_title%» sono passate.
-
+    una o più scadenze per il monitoraggio del progetto «%project_title%» sono passate:
+    
+    %deadlines_list%
     Nel sito intranet dell'Istituto potrai:
     
     * inserire le informazioni riguardanti le attività svolte
@@ -14,7 +15,7 @@ message:
 
     L'indirizzo della pagina web per farlo è:
 
-    http://www.mattiussilab.net/intranet/index.php/projects/edit/id/%id%
+    http://www..../index.php/projects/edit/id/%id%
 
     Cordiali saluti,
 
