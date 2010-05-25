@@ -19,7 +19,8 @@ class ProjDeadlineForm extends BaseProjDeadlineForm
 	
 	$this->validatorSchema['original_deadline_date'] = new sfValidatorDate(array('required'=>true));
 	
-	$this['description']->getWidget()->setAttribute('size', '80');
+	$this['description']->getWidget()->setAttribute('size', '120');
+	$this['notes']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
 /*
 	$this['user_id']->getWidget()->setOption('model', 'sfGuardUserProfile');
 	$this['user_id']->getWidget()->setOption('peer_method', 'retrieveAllButStudents');
