@@ -27,7 +27,7 @@ class schoolmeshSendfileTask extends sfBaseTask
     $this->name             = 'send-file';
     $this->briefDescription = 'Send a file by email';
     $this->detailedDescription = <<<EOF
-The [schoolmesh:send-file|INFO] task does things.
+The [schoolmesh:send-file|INFO] task sends a file by email.
 Call it with:
 
   [php symfony schoolmesh:send-file|INFO]
@@ -43,7 +43,7 @@ EOF;
     // add your code here
 
 	$to=$options['to'];
-	$from=$options['from']=='' ? array(sfConfig::get('app_mail_bot')=>'SchoolMesh App Bot') :  $options['from'];
+	$from=$options['from']=='' ? array(sfConfig::get('app_mail_bot_address')=>sfConfig::get('app_mail_bot_name')) :  $options['from'];
 	$subject=$options['subject']=='' ? 'Attachment sent' : $options['subject'];
 
 	$file=$arguments['filename'];

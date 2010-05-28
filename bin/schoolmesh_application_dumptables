@@ -24,6 +24,7 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 
 USERNAME=$(cat /var/schoolmesh/config/databases.yml | grep username | gawk '{print $2}')
 PASSWORD=$(cat /var/schoolmesh/config/databases.yml | grep password | gawk '{print $2}')
+# This is awful, we should load the file and parse it in the right way...
 
 DATABASE=$1
 OUTFILE=$2
@@ -85,6 +86,7 @@ student_suggestion
 student_hint
 schoolproject
 proj_deadline
+attachment_file
 "
 
 TEMPFILE0=$(mktemp)
