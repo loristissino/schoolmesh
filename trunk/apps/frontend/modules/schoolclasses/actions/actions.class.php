@@ -269,22 +269,22 @@ public function executeEditHintInLine(sfWebRequest $request)
 
 public function executeAddhint(sfWebRequest $request)
 {
-		$this->forward404Unless($request->getMethod()=="POST");
+               $this->forward404Unless($request->getMethod()=="POST");
 
-		$hint=new RecuperationHint();
-		$hint
-		->setContent('...')
-		->setRank(100)
-		->setUserId($this->getUser()->getProfile()->getSfGuardUser()->getId())
-		->save();
-		// FIXME Rank is set to 100, just to have first general hints
+               $hint=new RecuperationHint();
+               $hint
+               ->setContent('...')
+               ->setRank(100)
+               ->setUserId($this->getUser()->getProfile()->getSfGuardUser()->getId())
+               ->setIsSelectable(true)
+               ->save();
+               // FIXME Rank is set to 100, just to have first general hints
 
-		$this->getUser()->setFlash('notice_hints', $this->getContext()->getI18N()->__('A new item was inserted'));
+               $this->getUser()->setFlash('notice_hints',
+$this->getContext()->getI18N()->__('A new item was inserted'));
 
-		$this->redirect($request->getReferer().'#hints');
+               $this->redirect($request->getReferer().'#hints');
 
 }
-
-
 
 }

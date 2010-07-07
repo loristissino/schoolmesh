@@ -208,6 +208,7 @@ estrae tutti gli studenti della classe 1AIG
 					$enrolment->getSfGuardUser()->getProfile()->getFirstName(),
 					$enrolment->getSfGuardUser()->getProfile()->getLastName(),
 					$enrolment->getSfGuardUser()->getProfile()->getBirthdate(),
+					$enrolment->getSfGuardUser()->getProfile()->getValidatedEmail(),
 					)) . "\n";
 			}
 			
