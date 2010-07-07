@@ -61,6 +61,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     
     public function getValidatedEmail()
     {
+		
       if ($this->getHasValidatedEmail())
       {
         return $this->getEmail();
