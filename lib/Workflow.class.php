@@ -1,15 +1,15 @@
 <?php 
 class Workflow
 {
-	const 	AP_ASSIGNED = 0;
-	const 	WP_DRAFT = 10;
-	const 	WP_WADMC = 20;
-	const 	WP_WSMC = 30;
-	const 	IR_DRAFT = 40;
-	const 	IR_WSMC = 50;
-	const 	FR_WADMC = 60;
-	const 	FR_WSMC = 70;
-	const 	FR_ARCHIVED = 80;
+	const 	AP_ASSIGNED = 10;
+	const 	WP_DRAFT = 20;
+	const 	WP_WADMC = 30;
+	const 	WP_WSMC = 40;
+	const 	IR_DRAFT = 50;
+	const 	IR_WSMC = 60;
+	const 	FR_WADMC = 70;
+	const 	FR_WSMC = 80;
+	const 	FR_ARCHIVED = 90;
   
   static private $wpfrSteps=Array(
 
