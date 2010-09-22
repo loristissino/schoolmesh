@@ -494,6 +494,8 @@ switch ($sortby)
 				$sfUser->getProfile()->addToTeam($team, $role);
 			}
 			
+      unset($appointment);
+      
 			$imported++;
 			$checkList->addCheck(new Check(Check::PASSED, sprintf('   Appointment %s (%s, %s) imported', $username, $schoolclass, $subject),$groupName));
 
