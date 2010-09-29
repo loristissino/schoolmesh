@@ -480,7 +480,7 @@ switch ($sortby)
 			->setSchoolclass($myclass)
 			->setHours($hours)
 			->setYear($myyear)
-			->setState(0)
+			->setState(Workflow::AP_ASSIGNED)
 			->save();
 			
 			$appointment->getChecks();
