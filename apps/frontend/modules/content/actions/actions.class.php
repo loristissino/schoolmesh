@@ -46,15 +46,14 @@ class contentActions extends sfActions
     
 		$basedir=$this->content['basedir'];
 		$this->forward404Unless($filename=$basedir. Generic::b64_unserialize($request->getParameter('file')));
+    
 		$file = new smFileInfo($filename);
-
 
 		if (!$file->isReadable())
 		{
 			return $this->renderText($file->getFilename() . ' not readable'); 
 //		$this->forward404Unless($file->isReadable());
 		}
-    
     $file->prepareDelivery($this->getContext()->getResponse());
     
 		return sfView::NONE;
