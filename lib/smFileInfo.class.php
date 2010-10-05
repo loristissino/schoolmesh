@@ -23,6 +23,28 @@ class smFileInfo extends SPLFileInfo
     return $result[0];
   }
   
+  public function getCorrectedPathname()
+  {
+    $name =  str_replace(
+      array("&#039;", ' ', "&quot;"), 
+      array("\\'", '\ ', '\"'), 
+      $this->getPathname()
+    );
+    
+    return $name;
+  }
+  
+  public function getPathnameToOpen()
+  {
+    $name =  str_replace(
+      array("&#039;", "&quot;"), 
+      array("'", '"'), 
+      $this->getPathname()
+    );
+    
+    return $name;
+  }
+  
   public function getStats()
   {
     if ($this->_stat)
@@ -32,7 +54,7 @@ class smFileInfo extends SPLFileInfo
     else
     {
       $result = array();
-      $command='stat -c "%s:%a" ' . str_replace(array("&#039;", " ", "&quot;"), array("\\'", "\\ ", '\"') , $this->getPathname());
+      $command='stat -c "%s:%a" ' . $this->getCorrectedPathname();
       
       // the replacements are needed because of filenames having quotes inside...
       
@@ -50,7 +72,10 @@ class smFileInfo extends SPLFileInfo
 		$response->setHttpHeader('Content-Type', $this->getMimeType());
 		$response->setHttpHeader('Content-Disposition', 'attachment; filename="' . html_entity_decode($this->getDeliveryName(), ENT_QUOTES, 'UTF-8') . '"');
 
-		$tmpfile=fopen($this->getPathName(), 'r');
+
+    $filename=$this->getPathnameToOpen();
+    
+		$tmpfile=fopen($filename, 'r');
 
 		$response->setContent(fread($tmpfile, $this->getSize()));
     fclose($tmpfile);
