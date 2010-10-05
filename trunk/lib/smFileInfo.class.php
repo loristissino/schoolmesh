@@ -7,6 +7,10 @@ class smFileInfo extends SPLFileInfo
   
   private $_deliveryName = '';
   
+  private $_stat;
+  private $_size;
+  private $_perms;
+  
   public function getMimeType()
   {
     $info=array();
@@ -17,6 +21,24 @@ class smFileInfo extends SPLFileInfo
     exec($command, $result, $return_var);
 
     return $result[0];
+  }
+  
+  public function getStats()
+  {
+    if ($this->_stat)
+    {
+      return; //they are cached
+    }
+    else
+    {
+      $result = array();
+      $command='stat -c "%s:%a" ' . str_replace(array("&#039;", " ", "&quot;"), array("\\'", "\\ ", '\"') , $this->getPathname());
+      
+      // the replacements are needed because of filenames having quotes inside...
+      
+      exec($command, $result, $return_var);
+      list($this->_size, $this->_perms) = explode(':', $result[0]);
+    }
   }
   
   
@@ -42,10 +64,38 @@ class smFileInfo extends SPLFileInfo
     return $this;
   }
   
+  
   public function getDeliveryName()
   {
-    return $this->_deliveryName=='' ? $this->getFilename() : $this->_deliveryName;
+    
+    $name=$this->_deliveryName=='' ? $this->getFilename() : $this->_deliveryName;
+    
+    return str_replace('&quot;', '', $name);
     
   }
+  
+  public function getSize()
+  {
+    /* the implementation in the SPLFileInfo class is buggy, because it does not
+    support file names with quotes, on which cannot run stat
+    */
+    
+    $this->getStats();
+    return $this->_size;
+ }
+ 
+ 
+  public function isReadable()
+  {
+    /* the implementation in the SPLFileInfo class is buggy, because it does not
+    support file names with quotes, on which cannot run stat
+    */
+    $this->getStats();
+    if($this->_perms=='644') //FIXME: this test should be much more accurate...
+    {
+      return true;
+    }
+ }
+  
   
 }

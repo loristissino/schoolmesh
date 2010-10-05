@@ -63,3 +63,7 @@ all:
   opendocument:
     template_directory: /var/schoolmesh/web/oo  
     attachments: /var/schoolmesh/data/attachments
+
+  documents:
+    main_directory: /var/schoolmesh/data/documents
+    attachments:    /var/schoolmesh/data/attachments
