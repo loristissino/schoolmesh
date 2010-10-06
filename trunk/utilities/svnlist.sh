@@ -17,7 +17,13 @@ grep -v 'utilities/fixauthor.sh' | \
 grep -v 'templates/email/document_submission.yml' | \
 grep -v 'templates/email/email_change_confirmation.yml' | \
 grep -v 'templates/email/project_alert.yml' | \
-grep -v 'web/oo/workplan0.odt$' | \
+grep -v 'web/oo/workplan20.odt$' | \
+grep -v 'web/oo/workplan30.odt$' | \
 grep -v 'web/oo/workplan40.odt$' | \
+grep -v 'web/oo/workplan50.odt$' | \
+grep -v 'web/oo/workplan60.odt$' | \
+grep -v 'web/oo/workplan70.odt$' | \
+grep -v 'web/oo/workplan80.odt$' | \
+grep -v 'web/oo/workplan90.odt$' | \
 grep -v 'data/attachments' | \
 sed 's/^?      //'

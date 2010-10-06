@@ -799,7 +799,7 @@ public function getWorkflowLogs()
 
 // FIXME we need a limit for the state
 //		if ($item->getWptoolItemType()->getState()>$this->getState())
-		if ($item->getWptoolItemType()->getState()<40)
+		if ($item->getWptoolItemType()->getState() > $this->getState())//Workflow::WP_DRAFT)
 			{
 				continue;
 			}
@@ -962,7 +962,7 @@ public function getWorkflowLogs()
 			if (
 //				$wpinfo->getWpinfoType()->getState()<=$this->getState()
 // FIXME: we need to have two limits in the db, upper and lower
-				$wpinfo->getWpinfoType()->getState()>=40
+				$wpinfo->getWpinfoType()->getState()<=$this->getState()
         
 				&&
 				$wpinfo->getContent()
@@ -979,7 +979,7 @@ public function getWorkflowLogs()
 		
 		$odfdoc->mergeSegment($infos);
     
-    if ($this->getState()>=40) /* FIXME */
+    if ($this->getState()>=Workflow::WP_DRAFT)
     
     {
 		
@@ -1028,7 +1028,10 @@ public function getWorkflowLogs()
 						foreach($selectedGroup as $selectedItem)
 						{
 							$modules->group->item->itemContent($selectedItem['content']);
-							$modules->group->item->itemEvaluation($selectedItem['evaluation']);
+              if($this->getState()>=Workflow::IR_DRAFT)
+              {
+                $modules->group->item->itemEvaluation($selectedItem['evaluation']);
+              }
 							$modules->group->item->merge();
 						}
 						$modules->group->merge();
