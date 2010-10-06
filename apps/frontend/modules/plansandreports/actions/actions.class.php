@@ -574,7 +574,12 @@ public function executeAddwpevent(sfWebRequest $request)
 				->setComment($params['comment'])
 				->setState($params['state'])
 				->save();
-				
+        
+        if($params['update_state'])
+        {
+          $this->appointment->updateStateRecursively($params['state']);
+				}
+        
 				$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('New event saved.'));
 				
 				$this->redirect('plansandreports/viewwpevents?id='. $this->appointment->getId());
