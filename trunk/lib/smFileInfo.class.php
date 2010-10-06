@@ -115,11 +115,20 @@ class smFileInfo extends SPLFileInfo
     /* the implementation in the SPLFileInfo class is buggy, because it does not
     support file names with quotes, on which cannot run stat
     */
-    $this->getStats();
-    if($this->_perms=='644') //FIXME: this test should be much more accurate...
+    
+		try
     {
-      return true;
+      $tmpfile=@fopen($this->getPathnameToOpen(), 'r');
+      if($tmpfile)
+      {
+        return true;
+      }
     }
+    catch(Exception $e)
+    {
+      return false;
+    }
+    
  }
   
   
