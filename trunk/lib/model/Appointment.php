@@ -1552,7 +1552,29 @@ public function getWpevents($criteria = null, PropelPDO $con = null)
 			
 		}
 
+
+
 		
 	}
+
+  public function updateStateRecursively($state)
+  {
+    $this->setState($state)->save();
+				
+    if ($state==Workflow::WP_DRAFT)
+    {
+      $this->markSubItems('true');
+    }
+    if ($state==Workflow::WP_DRAFT)
+    {
+      $this->markSubItems('true');
+    }
+    if ($state==Workflow::IR_DRAFT)
+    {
+      $this->markSubItems('false');
+    }
+
+  }
+
 
 }
