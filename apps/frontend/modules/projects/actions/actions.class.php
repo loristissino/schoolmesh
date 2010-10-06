@@ -145,7 +145,7 @@ class projectsActions extends sfActions
   public function executeEditdeadline(sfWebRequest $request)
   {
     $this->forward404Unless($this->deadline=ProjDeadlinePeer::retrieveByPk($request->getParameter('id')));
-    $this->forward404Unless($this->getUser()->getProfile()->getUserId()==$this->deadline->getUserId()); // the deadline can be edited only by the owner
+    $this->forward404Unless($this->deadline->isEditableBy($this->getUser())); // the deadline can be edited only by the owner or admins...
     
     $this->attachments=$this->deadline->getAttachmentFiles();
     
@@ -195,7 +195,7 @@ class projectsActions extends sfActions
     
 	$this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPk($request->getParameter('id')));
   
-  $this->forward404Unless($this->getUser()->getProfile()->getUserId()==$this->project->getUserId()); // the project can be edited only by the owner
+  $this->forward404Unless($this->project->isEditableBy($this->getUser())); // the project can be edited only by the owner  or by admins...
 	
 	$this->form = new SchoolprojectForm($this->project); 
   $this->form->addStateDependentConfiguration($this->project->getState());

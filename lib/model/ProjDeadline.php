@@ -100,5 +100,16 @@ class ProjDeadline extends BaseProjDeadline {
   }
 
 
+  public function isEditableBy($user)
+  {
+    return 
+      $user->getProfile()->getUserId()===$this->getUserId()
+      || 
+      $user->hasCredential('admin')
+      ;
+  }
+
+
+
 } // ProjDeadline
 
