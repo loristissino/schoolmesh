@@ -35,6 +35,10 @@ all:
     moodle_url: http://www.mattiussilab.net/moodle/
     moodle_access: http://www.mattiussilab.net/intranet/moodle_schoolmesh.php
     accounts: [ posix, login, samba, googleapps ]
+    googleapps_key: aNoThErSuPeRsEkReTkEy
+    googleapps_domain: mattiussilab.net
+    major_age: 18
+
 
 
   sf_guard_plugin:
@@ -61,7 +65,7 @@ all:
     token: sekretToken  
 
   opendocument:
-    template_directory: /var/schoolmesh/web/oo  
+    template_directory: /var/schoolmesh/templates/oo  
     attachments: /var/schoolmesh/data/attachments
 
   documents:
