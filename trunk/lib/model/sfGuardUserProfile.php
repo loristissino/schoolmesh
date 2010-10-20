@@ -14,7 +14,40 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		{
 			return $this->getUserId();
 		}
-	
+    
+    public function getAgeStatus()
+    {
+      
+      if (!($bd=$this->getBirthdate('U')))
+      {
+        return null;
+      }
+      else
+      {
+        $today=getdate();
+        $ubd=getdate($bd);
+        
+//        var_dump($ubd);
+//        die();
+        if($ubd['year'] < ($today['year']-18)) // FIXME: this 18 should be read in config file
+        {
+          return 'major' . $ubd['year'];
+        }
+        if($ubd['year'] > ($today['year']-18))
+        {
+          return 'minor';
+        }
+        if($ubd['yday'] > $today['yday'])
+        {
+          return 'minor';
+        }
+        else
+        {
+          return 'major';
+        }
+      }
+    }
+    
 		public function sendEmailVerification(sfContext $sfContext)
 		{
 			$this->setEmailVerificationCode(sha1(rand(10000000,99999999)));
@@ -100,6 +133,12 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
       // useful for moodle accounts, since we login from within schoolmesh
       // FIXME this is unsecure, must be fixed!!
       return 'Mo:'.substr(md5(sfConfig::get('app_config_moodle_key').$this->getUsername()),1,7);
+    }
+    
+    public function getTempGooglePassword()
+    {
+      // FIXME this is unsecure, must be fixed!!
+      return 'G' .substr(md5(sfConfig::get('app_config_googleapps_key').$this->getUsername()),1,7);
     }
     
     public function getToken($key, sfWebRequest $request=null)

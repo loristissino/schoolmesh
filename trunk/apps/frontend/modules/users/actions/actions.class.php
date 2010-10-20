@@ -20,15 +20,12 @@ class usersActions extends sfActions
   {
 	$this->user = $this->getUser();
   }
-
+/*
 	public function executeGoogleappsfile(sfWebRequest $request)
   {
 		$this->userlist=sfGuardUserProfilePeer::retrieveUsersForGoogleApps();
-		$response = $this->getContext()->getResponse();
-		$response->setHttpHeader('Content-Type', 'text/csv');
-		$response->setHttpHeader('Content-Disposition', 'attachment; filename="GoogleAppsData_upload_'. date('Ymd') . '.csv"');
   }
-  
+  */
   public function executeMoodlefile(sfWebRequest $request)
   {
     $this->userlist=sfGuardUserProfilePeer::retrieveUsersForMoodle();
@@ -196,6 +193,8 @@ class usersActions extends sfActions
   public function executeBatch(sfWebRequest $request)
 {
 	
+  $ids = $request->getParameter('ids');
+	$this->getUser()->setAttribute('ids', $ids);
 	
 	$action=$request->getParameter('batch_action');
 
@@ -211,16 +210,18 @@ class usersActions extends sfActions
 			$this->forward('users', 'runuserchecks');
 		case 'getletter':
 			$this->forward('users', 'getletter');
+		case 'getgoogleappsletter':
+			$this->forward('users', 'getgoogleappsletter');
+    case 'getgoogleappsdata':
+      $this->forward('users', 'getgoogleappsdata');
+    case 'getlist':
+      $this->forward('users', 'getlist');
 	}
-	
-	
 }  
 
-  public function executeGetletter(sfWebRequest $request)
+
+  protected function _getIds(sfWebRequest $request)
   {
-
-		set_time_limit(0);
-
 		if($request->hasParameter('id'))
 		{
 			$this->id=$request->getParameter('id');
@@ -237,7 +238,16 @@ class usersActions extends sfActions
 				$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select some users.'));
 				$this->redirect('users/list');
 		}
-		
+    
+    return $this->userlist;
+    
+  }
+
+  public function executeGetletter(sfWebRequest $request)
+  {
+
+		set_time_limit(0);
+
 		$result=sfGuardUserProfilePeer::getWelcomeLetter($ids, 'pdf', $this->getContext());
 		
 		if ($result['result']=='error')
@@ -264,6 +274,103 @@ class usersActions extends sfActions
   }
 
 
+  public function executeGetgoogleappsletter(sfWebRequest $request)
+  {
+
+		set_time_limit(0);
+
+    $ids=$this->_getIds($request);
+		
+		$result=sfGuardUserProfilePeer::getGoogleAppsLetter($ids, 'odt', $this->getContext());
+		
+		if ($result['result']=='error')
+		{
+			$this->getUser()->setFlash('error', $result['message']);
+			$this->redirect('users/list');
+		}
+		
+		$odfdoc=$result['content'];
+		if (is_object($odfdoc))
+		{
+			$odfdoc
+			->saveFile()
+			->setResponse($this->getContext()->getResponse());
+			return sfView::NONE;
+
+		}
+		else
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.'));
+			$this->redirect('users/list');
+		}
+
+  }
+
+
+  public function executeGetgoogleappsdata(sfWebRequest $request)
+  {
+		set_time_limit(0);
+
+    $ids=$this->_getIds($request);
+    
+		$this->userlist=sfGuardUserProfilePeer::retrieveByPKs($ids);
+	
+    $this->domain=sfConfig::get('app_config_googleapps_domain');
+		$response = $this->getContext()->getResponse();
+		$response->setHttpHeader('Content-Type', 'text/csv');
+		$response->setHttpHeader('Content-Disposition', 'attachment; filename="GoogleAppsData_upload_'. date('Ymd') . '.csv"');
+    
+    $this->setLayout(false);
+    
+  }
+  
+  public function executeGetlist(sfWebRequest $request)
+  {
+		set_time_limit(0);
+
+    $ids=	$this->getUser()->getAttribute('ids');
+		
+		$this->userlist=sfGuardUserProfilePeer::retrieveByPKs($ids);
+    
+    $this->template = $request->getParameter('template', null);
+    
+    if(!$this->template)
+    {
+      
+      //FIXME this should be in the model
+      $templates = scandir(sfConfig::get('app_opendocument_template_directory'));
+      
+      $this->templates=array();
+      
+      foreach($templates as $template)
+      {
+        if (strpos($template, 'userlist')!==false)
+        {
+          $this->templates[]=$template;
+        }
+      }
+      return;
+      // the user must choose a template
+    }
+    
+    $result=sfGuardUserProfilePeer::getUserlistDocument($this->template, $ids, 'odt', $this->getContext());
+    
+    
+    $odfdoc=$result['content'];
+		if (is_object($odfdoc))
+		{
+			$odfdoc
+			->saveFile()
+			->setResponse($this->getContext()->getResponse());
+			return sfView::NONE;
+		}
+		else
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.'));
+			$this->redirect('users/list');
+		}
+
+  }
 
 
   public function executeRunuserchecks(sfWebRequest $request)
