@@ -18,10 +18,13 @@ class SchoolclassPeer extends BaseSchoolclassPeer
 		
 		$c=new Criteria();
 		$c->addJoin(SchoolclassPeer::TRACK_ID, TrackPeer::ID);
-		$c->addAscendingOrderByColumn(TrackPeer::DESCRIPTION);
+    $c->addJoin(SchoolclassPeer::ID, EnrolmentPeer::SCHOOLCLASS_ID);
+    $c->add(EnrolmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
+//		$c->addAscendingOrderByColumn(TrackPeer::DESCRIPTION);
 		$c->addAscendingOrderByColumn(SchoolclassPeer::ID);
+    $c->setDistinct();
 
-		return self::doSelectJoinAll($c);
+		return self::doSelect($c);
 	}
 
 	public static function importFromCSVFile($file)

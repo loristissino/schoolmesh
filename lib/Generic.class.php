@@ -296,4 +296,16 @@ class Generic{
 //    $object->save();
   }
 
+  public static function correctString($s)
+  {
+    return str_replace(
+      array(
+        '&#039;',
+      ),
+      array(
+        "'",
+      ),
+      $s);
+  }
+
 }

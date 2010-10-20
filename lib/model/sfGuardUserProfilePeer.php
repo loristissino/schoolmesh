@@ -39,20 +39,28 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
 	public static function retrieveUsersForGoogleApps()
 	{
+    /* FIXME this must be re-implemented taking accounts in consideration...
 		$c = new Criteria();
 		$c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
 		$c->addJoin(sfGuardUserPeer::ID, AccountPeer::USER_ID);
     $c->addJoin(AccountPeer::ACCOUNT_TYPE_ID, AccountTypePeer::ID);
     $c->add(AccountTypePeer::NAME, 'googleapps');
 		$t = self::doSelectJoinAll($c);
-		
 		return $t;
+		*/
+    
+    return self::retrieveUsersForMoodle();
+    // for now, it's not different...
+    
+    
 	}
 
 	public static function retrieveUsersForMoodle()
 	{
 		$c = new Criteria();
 		$c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
+    $c->add(sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION, false);
+    $c->add(sfGuardUserPeer::IS_ACTIVE, true);
 		$t = self::doSelectJoinAll($c);
 		return $t;
 	}
@@ -126,6 +134,19 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		return parent::doSelect($c);
 	}
 
+	public static function retrieveStudents()
+	
+	{
+		$c = new Criteria();
+		$c->addJoin(sfGuardUserProfilePeer::ROLE_ID, RolePeer::ID);
+		$c->add(RolePeer::POSIX_NAME, sfConfig::get('app_config_students_default_posix_group'), Criteria::EQUAL);
+		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
+    $c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
+    $c->add(sfGuardUserPeer::IS_ACTIVE, true);
+		
+		return parent::doSelect($c);
+	}
 
 
 	public static function retrieveTeachers()
@@ -144,6 +165,8 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		$c->add(RolePeer::POSIX_NAME, sfConfig::get('app_config_teachers_default_posix_group'));
 		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
 		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
+    $c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
+    $c->add(sfGuardUserPeer::IS_ACTIVE, true);
 		
 		return parent::doSelect($c);
 
@@ -520,6 +543,188 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
 	}
 	
+	public static function getGoogleAppsLetter($ids, $filetype='odt', $context=null)
+	{
+		$result=Array();
+
+		$usertypes=Array();
+		
+		$users=self::retrieveByPks($ids);
+		foreach($users as $user)
+		{
+			@$usertypes[$user->getRoleId()]++;
+		}
+		
+		if (sizeof($usertypes)!=1)
+		{
+			$result['result']='error';
+			$result['message']='It is not possible to get welcome letters for users with different roles.';
+			return $result;
+		}
+		
+		
+		try
+		{
+			$templatename='googleappsletter_' . $users[0]->getRole()->getPosixName() .'.odt';
+			$odf=new OdfDoc($templatename, 'Google Apps letter', $filetype);
+		}
+		catch (Exception $e)
+		{
+			if ($e InstanceOf OdfDocTemplateException)
+			{
+				$result['result']='error';
+				$result['message']='Template not found or not readable: '. $templatename;
+				return $result;
+			}
+			
+			if ($e InstanceOf OdfException)
+			{
+				$result['result']='error';
+				$result['message']='Template not valid: '. $templatename;
+				return $result;
+			}
+			
+			throw $e;
+		}
+		
+		$odfdoc=$odf->getOdfDocument();
+		$letters=$odfdoc->setSegment('letters');
+		$count=0;
+		foreach($users as $user)
+		{
+			$count++;
+			
+			if($context)
+			{
+				if ($user->getIsMale())
+				{
+					$salutation=$context->getI18n()->__('Dear %malename%', array('%malename%'=>$user->getFirstName()));
+				}
+				else
+				{
+					$salutation=$context->getI18n()->__('Dear %femalename%', array('%femalename%'=>$user->getFirstName()));
+				}
+			}
+			else
+			{
+				$salutation='Dear '. $user->getFirstName();
+			}
+
+      $useragestatus = $user->getAgeStatus();
+      if($useragestatus=='major')
+      {
+        $useragestatus='';
+      }
+      if($context)
+      {
+        $useragestatus=$context->getI18n()->__($useragestatus);
+      }
+      if($useragestatus)
+      {
+        $useragestatus='('. $useragestatus . ')';
+      }
+      
+      // we want the notice for minor aged only...
+
+			$letters->userSalutation($salutation);
+			$letters->userAgeStatus($useragestatus);
+			$letters->userUsername($user->getUsername());
+			$letters->userFullName($user->getFullName());
+			$letters->userBirthdate($user->getBirthdate('d/m/Y'));
+      
+			
+			
+      $letters->userGoogleAppsPassword($user->getTempGooglePassword());
+			
+			$letters->letterDate(date('d/m/Y'));
+			$pagebreak=($count<sizeof($users))?'<pagebreak>':'';
+			$letters->pagebreak($pagebreak);
+			$letters->merge();
+		}
+		
+		$odfdoc->mergeSegment($letters);
+
+		$result['content']=$odf;
+		$result['result']='notice';
+		return $result;
+
+	}
+  
+	public static function getUserlistDocument($template, $ids, $filetype='odt', $context=null)
+	{
+    
+		$result=Array();
+
+		$users=self::retrieveByPks($ids);
+
+		try
+		{
+			$templatename=$template;
+			$odf=new OdfDoc($templatename, 'Userlist Document', $filetype);
+		}
+		catch (Exception $e)
+		{
+			if ($e InstanceOf OdfDocTemplateException)
+			{
+				$result['result']='error';
+				$result['message']='Template not found or not readable: '. $templatename;
+				return $result;
+			}
+			
+			if ($e InstanceOf OdfException)
+			{
+				$result['result']='error';
+				$result['message']='Template not valid: '. $templatename;
+				return $result;
+			}
+			
+			throw $e;
+		}
+		
+		$odfdoc=$odf->getOdfDocument();
+		$profiles=$odfdoc->setSegment('profiles');
+		$count=0;
+		foreach($users as $user)
+		{
+			$count++;
+			
+      $useragestatus = $user->getAgeStatus();
+      if($useragestatus=='major')
+      {
+        $useragestatus='';
+      }
+      if($context)
+      {
+        $useragestatus=$context->getI18n()->__($useragestatus);
+      }
+      if($useragestatus)
+      {
+        $useragestatus='('. $useragestatus . ')';
+      }
+      
+      // we want the notice for minor aged only...
+
+			$profiles->userUsername($user->getUsername());
+//      $profiles->userAgeStatus($useragestatus);
+
+			$profiles->userFullName($user->getFullName());
+			$profiles->userFirstname($user->getFirstName());
+			$profiles->userLastname($user->getLastName());
+			$profiles->userBirthplace($user->getBirthplace());
+			$profiles->userBirthdate($user->getBirthdate('d/m/Y'));
+      
+			$profiles->merge();
+		}
+		
+		$odfdoc->mergeSegment($profiles);
+
+		$result['content']=$odf;
+		$result['result']='notice';
+		return $result;
+
+	}
+  
+  
 
 	public static function registerLogin(sfEvent $event)
 	{

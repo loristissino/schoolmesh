@@ -1711,6 +1711,14 @@
         <source>Send an email to the coordinator of this project</source>
         <target>Spedisci un'email al coordinatore di questo progetto</target>
     </trans-unit>
+    <trans-unit id="450">
+        <source>minor</source>
+        <target>minorenne</target>
+    </trans-unit>
+    <trans-unit id="451">
+        <source>major</source>
+        <target>maggiorenne</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

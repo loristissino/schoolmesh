@@ -129,9 +129,9 @@ userchecks:
   requirements:
     sf_format: (?:html|txt)
 
-googleappsfile:
-  url: /users/googleappsfile/:sf_format
-  param: { module: users, action: googleappsfile, sf_format:txt }
+googleappsdata:
+  url: /users/getgoogleappsdata/:sf_format
+  param: { module: users, action: getgoogleappsdata, sf_format:txt }
   requirements:
     sf_format: (?:txt)
 
