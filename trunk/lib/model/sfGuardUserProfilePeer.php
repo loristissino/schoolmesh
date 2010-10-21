@@ -454,11 +454,12 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		{
 			@$usertypes[$user->getRoleId()]++;
 		}
+        
 		
 		if (sizeof($usertypes)!=1)
 		{
 			$result['result']='error';
-			$result['message']='It is not possible to get welcome letters for users with different roles.';
+			$result['message']='It is not possible to get welcome letters for users with different roles.'. serialize($usertypes);
 			return $result;
 		}
 		

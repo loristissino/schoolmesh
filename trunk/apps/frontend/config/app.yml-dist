@@ -39,6 +39,8 @@ all:
     googleapps_domain: mattiussilab.net
     major_age: 18
 
+    
+    default_format: odt
 
 
   sf_guard_plugin:
