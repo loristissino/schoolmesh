@@ -247,8 +247,9 @@ class usersActions extends sfActions
   {
 
 		set_time_limit(0);
+    $ids=$this->_getIds($request);
 
-		$result=sfGuardUserProfilePeer::getWelcomeLetter($ids, 'pdf', $this->getContext());
+		$result=sfGuardUserProfilePeer::getWelcomeLetter($ids, sfConfig::get('app_config_default_format', 'odt'), $this->getContext());
 		
 		if ($result['result']=='error')
 		{
