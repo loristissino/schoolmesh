@@ -44,7 +44,7 @@ class Appointment extends BaseAppointment
 		$c=new Criteria();
 		$c->add(AppointmentPeer::USER_ID, $this->getUserId());  // the same teacher
 		$c->add(AppointmentPeer::ID, $this->getId(), Criteria::NOT_EQUAL);          // not the same Workplan / Appointment
-		$c->add(AppointmentPeer::SUBJECT_ID, $this->getSubjectId());                 // the same subject
+//		$c->add(AppointmentPeer::SUBJECT_ID, $this->getSubjectId());                 // the same subject
 		$c->addJoin(AppointmentPeer::SCHOOLCLASS_ID, SchoolclassPeer::ID);
 		$c->add(SchoolclassPeer::GRADE, $this->getSchoolclass()->getGrade());   // the same grade
 		$c->addDescendingOrderByColumn(AppointmentPeer::YEAR_ID);   // order by year
@@ -611,7 +611,8 @@ $con->query($sql);
 		}
 
 	$checkList=$this->getChecks();
-	
+	$result['mail_sent_to']=false;
+  
 	if ($checkList->getTotalResults(Check::FAILED)==0)
 		{
 			$this->markSubItems('false');
@@ -628,10 +629,6 @@ $con->query($sql);
 			))
 			{
 				$result['mail_sent_to']=$this->getOwner()->getProfile()->getEmail();
-			}
-			else
-			{
-				$result['mail_sent_to']=false;
 			}
 		}
 	else
