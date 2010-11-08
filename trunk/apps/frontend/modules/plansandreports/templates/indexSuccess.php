@@ -33,7 +33,7 @@
 	<?php $i=0 ?>
     <?php foreach ($workplans as $workplan): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
-      <td><?php echo $workplan->getYear() ?></td>
+      <?php include_partial('content/td_year', array('year'=>$workplan->getYear())) ?>
       <td><?php echo $workplan->getSchoolclass() ?></td>
       <td><?php echo $workplan->getSubject() ?></td>
 	  <td><?php echo $workplan->countWpmodules() ?></td>
