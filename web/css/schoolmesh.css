@@ -324,3 +324,8 @@ font-weight: normal;
 {
 	color: red;
 }
+
+.notcurrent
+{
+	background-color: gray;
+}

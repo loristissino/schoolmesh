@@ -53,7 +53,7 @@
 </td>
 
       <td><?php include_partial('gender', array('gender'=>$user->getGender())) ?></td>
-      <td<?php if(!$user->getSfGuardUser()->getIsActive()) echo ' style="background-color: yellow"' ?>><?php echo $user->getUsername() ?></td>
+      <td<?php if(!$user->getSfGuardUser()->getIsActive()) echo ' class="notcurrent"' ?>><?php echo $user->getUsername() ?></td>
       <td><?php echo $user->getImportCode() ?></td>
       <td><?php echo $user->getRoleDescription() ?></td>
       <td><?php echo $user->getFirstName() ?></td>
