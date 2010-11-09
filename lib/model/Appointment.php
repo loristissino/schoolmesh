@@ -81,7 +81,7 @@ class Appointment extends BaseAppointment
 
 }
 
-	public function retrieveImportableModulesOfColleagues()
+	public function retrieveImportableModulesOfColleagues($grade=0, $subject_id=0)
 	
 	{
 
@@ -89,14 +89,16 @@ class Appointment extends BaseAppointment
 
 	$userId = $this->getUserId();
 
-	$sql = 'SELECT wpmodule.id as id, title, period, UNIX_TIMESTAMP(wpmodule.updated_at) as last_update , appointment_id, ' . SfGuardUserProfilePeer::LAST_NAME . ' as teacher FROM ' . WpmodulePeer::TABLE_NAME .
+	$sql = 'SELECT wpmodule.id as id, title, period, UNIX_TIMESTAMP(wpmodule.updated_at) as last_update , appointment_id, ' . SfGuardUserProfilePeer::LAST_NAME . ' as teacher, ' . SchoolclassPeer::ID . ' as schoolclass, ' . SchoolclassPeer::GRADE . ' as grade FROM ' . WpmodulePeer::TABLE_NAME .
 	' JOIN ' . SfGuardUserProfilePeer::TABLE_NAME . ' ON ' . WpmodulePeer::USER_ID . ' = ' . SfGuardUserProfilePeer::USER_ID . 
 	' LEFT JOIN ' . AppointmentPeer::TABLE_NAME . ' ON ' . WpmodulePeer::APPOINTMENT_ID . ' = ' . AppointmentPeer::ID .
     ' LEFT JOIN ' . SchoolclassPeer::TABLE_NAME . ' ON ' . AppointmentPeer::SCHOOLCLASS_ID . ' = ' . SchoolclassPeer::ID . 
     ' LEFT JOIN ' . YearPeer::TABLE_NAME . ' ON ' . AppointmentPeer::YEAR_ID . ' = ' . YearPeer::ID .
     ' WHERE ' . WpmodulePeer::IS_PUBLIC . ' = TRUE ' .
 	' AND ' . WpmodulePeer::USER_ID . ' <> %d ' .
-    ' ORDER BY ' . WpmodulePeer::UPDATED_AT . ' DESC';
+  ' AND grade= ' . $grade .
+  ' AND ' . AppointmentPeer::SUBJECT_ID . ' = ' . $subject_id . 
+    ' ORDER BY schoolclass, teacher, ' . WpmodulePeer::UPDATED_AT . ' DESC';
 
 
 	$sql = sprintf($sql, $userId);

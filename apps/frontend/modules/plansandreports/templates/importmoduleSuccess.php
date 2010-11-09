@@ -51,6 +51,7 @@
       <th class="sf_admin_text"><?php echo __('Title') ?></th>
       <th class="sf_admin_text"><?php echo __('Last update') ?></th>
       <th class="sf_admin_text"><?php echo __('Teacher') ?></th>
+      <th class="sf_admin_text"><?php echo __('Class') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
@@ -63,6 +64,7 @@
       <td><?php  echo $wpmodule->title ?></td>
       <td><?php  echo Generic::datetime($wpmodule->last_update, $sf_context) ?></td>
       <td><?php  echo $wpmodule->teacher ?></td>
+      <td><?php  echo $wpmodule->schoolclass ?></td>
 	  <td><?php include_partial('actionmoduleimport', array('wpmodule'=>$wpmodule, 'workplan'=>$workplan))?></td>
 	</td>
     </tr>
