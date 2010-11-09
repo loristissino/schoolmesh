@@ -975,13 +975,11 @@ public function getWorkflowLogs()
 		}
 		
 		$odfdoc->mergeSegment($infos);
-    
-    if ($this->getState()>=Workflow::WP_DRAFT)
+    $wpmodules=$this->getWpmodules();
+    if ($this->getState()>=Workflow::WP_WSMC)
     
     {
 		
-      $wpmodules=$this->getWpmodules();
-      
       $selectedModules=array();
       
       foreach($wpmodules as $wpmodule)
@@ -1027,7 +1025,7 @@ public function getWorkflowLogs()
 							$modules->group->item->itemContent($selectedItem['content']);
               if($this->getState()>=Workflow::IR_DRAFT)
               {
-                $modules->group->item->itemEvaluation($selectedItem['evaluation']);
+                //$modules->group->item->itemEvaluation($selectedItem['evaluation']);
               }
 							$modules->group->item->merge();
 						}
