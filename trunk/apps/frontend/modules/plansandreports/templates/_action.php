@@ -19,7 +19,7 @@
 	)?>
 	</li>
 <?php endif ?>
-<?php if ($workplan->getState()>Workflow::AP_ASSIGNED): ?>
+<?php if ($workplan->getYearId() == sfConfig::get('app_config_current_year') && $workplan->getState()>Workflow::AP_ASSIGNED): ?>
 	<li class="sf_admin_action_users">
 		<?php echo link_to(
 	__('View class'),
