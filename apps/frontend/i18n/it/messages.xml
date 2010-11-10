@@ -1719,6 +1719,22 @@
         <source>major</source>
         <target>maggiorenne</target>
     </trans-unit>
+    <trans-unit id="452">
+        <source>Show all subjects</source>
+        <target>Mostra tutte le materie</target>
+    </trans-unit>
+    <trans-unit id="453">
+        <source>Show only my subject</source>
+        <target>Mostra solo la mia materia</target>
+    </trans-unit>
+    <trans-unit id="454">
+        <source>You can import one of the following public modules.</source>
+        <target>Puoi importare uno dei seguenti moduli pubblici.</target>
+    </trans-unit>
+    <trans-unit id="455">
+        <source>Modules are considered public when: a) they belong to a workplan already approved; or b) when they are explicitly published by the owner before workplan submission.</source>
+        <target>I moduli sono considerati pubblici quando: a) appartengono ad un piano di lavoro già consegnato ed approvato; oppure b) quando sono stati esplicitamente resi pubblici dall'autore.</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

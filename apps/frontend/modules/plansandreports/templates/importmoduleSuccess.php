@@ -42,6 +42,31 @@
 
 <h3><?php echo __('Import a module of a colleague') ?></h3>
 
+<p>
+<?php echo __('You can import one of the following public modules.') ?>
+</p>
+<p>
+<?php echo __('Modules are considered public when: a) they belong to a workplan already approved; or b) when they are explicitly published by the owner before workplan submission.') ?>
+</p>
+
+<ul class="sf_admin_actions">
+<?php if(!$allsubjects): ?>
+  <li class="sf_admin_action_all">
+  <?php echo link_to(
+    __('Show all subjects'),
+    'plansandreports/importmodule?id=' . $workplan->getId() . '&allsubjects=true'
+    )
+  ?>
+<?php else: ?>
+  <li class="sf_admin_action_restrict">
+  <?php echo link_to(
+    __('Show only my subject'),
+    'plansandreports/importmodule?id=' . $workplan->getId() . '&allsubjects=false'
+    )
+  ?>
+<?php endif ?>
+</ul>
+
 <div class="sf_admin_list">
 
 <table cellspacing="0">

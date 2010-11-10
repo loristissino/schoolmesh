@@ -230,12 +230,15 @@ public function executeBatch(sfWebRequest $request)
     $this->forward404Unless($this->workplan->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId()));
 
 	$this->steps = Workflow::getWpfrSteps();
+  
+  $this->allsubjects=$request->getParameter('allsubjects')=='true';
 	
 	$this->c_modules = $this->workplan->retrieveImportableModulesOfColleagues(
     $this->workplan->getSchoolclass()->getGrade(),
-    $this->workplan->getSubjectId()
+    $this->allsubjects?null:$this->workplan->getSubjectId()
     );
 	$this->s_modules = $this->workplan->retrieveOtherModulesOfSameTeacher();
+  
 
 	}
 

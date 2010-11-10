@@ -81,13 +81,17 @@ class Appointment extends BaseAppointment
 
 }
 
-	public function retrieveImportableModulesOfColleagues($grade=0, $subject_id=0)
+	public function retrieveImportableModulesOfColleagues($grade=0, $subject_id=null)
 	
 	{
 
 	$connection = Propel::getConnection();
 
 	$userId = $this->getUserId();
+  
+  $restrict=$subject_id!=null ?
+    ' AND ' . AppointmentPeer::SUBJECT_ID . ' = ' . $subject_id:
+    '';
 
 	$sql = 'SELECT wpmodule.id as id, title, period, UNIX_TIMESTAMP(wpmodule.updated_at) as last_update , appointment_id, ' . SfGuardUserProfilePeer::LAST_NAME . ' as teacher, ' . SchoolclassPeer::ID . ' as schoolclass, ' . SchoolclassPeer::GRADE . ' as grade FROM ' . WpmodulePeer::TABLE_NAME .
 	' JOIN ' . SfGuardUserProfilePeer::TABLE_NAME . ' ON ' . WpmodulePeer::USER_ID . ' = ' . SfGuardUserProfilePeer::USER_ID . 
@@ -97,7 +101,7 @@ class Appointment extends BaseAppointment
     ' WHERE ' . WpmodulePeer::IS_PUBLIC . ' = TRUE ' .
 	' AND ' . WpmodulePeer::USER_ID . ' <> %d ' .
   ' AND grade= ' . $grade .
-  ' AND ' . AppointmentPeer::SUBJECT_ID . ' = ' . $subject_id . 
+  $restrict . 
     ' ORDER BY schoolclass, teacher, ' . WpmodulePeer::UPDATED_AT . ' DESC';
 
 
