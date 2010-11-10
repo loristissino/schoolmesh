@@ -248,6 +248,14 @@
   background: url(../images/email.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_all a
+{
+  background: url(../images/all.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_restrict a
+{
+  background: url(../images/restrict.png) no-repeat 0 0;
+}
 
 #sf_admin_container .alert
 {
