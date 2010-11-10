@@ -30,7 +30,7 @@
 	<?php $i=0 ?>
 	<?php foreach($s_workplans as $iworkplan): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
-      <td><?php echo $iworkplan->getYear() ?></td>
+      <?php include_partial('content/td_year', array('year'=>$iworkplan->getYear())) ?>
       <td><?php echo $iworkplan->getSchoolclass() ?></td>
 	  <td><?php echo $iworkplan->countWpmodules() ?></td>
 	  <td><?php include_partial('state', array('state' => $iworkplan->getState(), 'steps' => $steps, 'size'=>'r')) ?></td>
@@ -68,7 +68,7 @@
 	<?php $i=0 ?>
 	<?php foreach($c_workplans as $iworkplan): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
-      <td><?php echo $iworkplan->getYear() ?></td>
+      <?php include_partial('content/td_year', array('year'=>$iworkplan->getYear())) ?>
       <td><?php echo $iworkplan->getSchoolclass() ?></td>
       <td><?php echo $iworkplan->getFullName() ?></td>
 	  <td><?php echo $iworkplan->countWpmodules() ?></td>

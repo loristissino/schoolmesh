@@ -67,6 +67,8 @@
 <?php endif ?>
 </ul>
 
+<?php if (sizeof($c_modules)>0): ?>
+
 <div class="sf_admin_list">
 
 <table cellspacing="0">
@@ -98,3 +100,6 @@
 </table>
 
 </div>
+<?php else: ?>
+<?php echo __('No module found.') ?>
+<?php endif ?>
