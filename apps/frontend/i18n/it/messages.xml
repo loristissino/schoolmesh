@@ -1735,6 +1735,20 @@
         <source>Modules are considered public when: a) they belong to a workplan already approved; or b) when they are explicitly published by the owner before workplan submission.</source>
         <target>I moduli sono considerati pubblici quando: a) appartengono ad un piano di lavoro già consegnato ed approvato; oppure b) quando sono stati esplicitamente resi pubblici dall'autore.</target>
     </trans-unit>
+    <trans-unit id="456">
+        <source>No workplan found.</source>
+        <target>Non è stato trovato nessun piano di lavoro.</target>
+    </trans-unit>
+    <trans-unit id="457">
+        <source>No module found.</source>
+        <target>Non è stato trovato nessun modulo.</target>
+    </trans-unit>
+    <trans-unit id="458">
+        <source>Documents</source>
+        <target>Documenti</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
+
