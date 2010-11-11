@@ -13,10 +13,8 @@
 <tbody>
 <?php foreach($current_user->getWorkplans() as $appointment): ?>
 	<tr>
-		<th>
-			<?php echo $appointment->getYear() ?>
-		</th>
-		<td>
+    <?php include_partial('content/td_year', array('year'=>$appointment->getYear())) ?>
+    <td>
 			<?php echo $appointment->getSchoolclass()->getId() ?>
 		</td>
 		<td>
@@ -48,6 +46,16 @@
 				?>
 				</li>
 				<?php endif ?>
+				<?php  if ($sf_user->hasCredential('backadmin')): ?>
+				<li class="sf_admin_action_log">
+				<?php echo link_to(
+					__('View events'),
+					url_for('plansandreports/viewwpevents?id='.$appointment->getId())
+					)
+				?>
+				</li>
+				<?php endif ?>
+        
 				<?php /*
 				<?php  if ($sf_user->hasCredential('backadmin')): ?>
 				<li class="sf_admin_action_upload">
