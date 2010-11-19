@@ -77,12 +77,15 @@ class projectsActions extends sfActions
   
   public function executeMonitor(sfWebRequest $request)
   {
+   $this->year=$this->getUser()->getAttribute('year', sfConfig::get('app_config_current_year'));
+   $this->years = YearPeer::retrieveAll();
 
-   $this->projects=SchoolprojectPeer::retrieveAllForYear(sfConfig::get('app_config_current_year'));
+   $this->projects=SchoolprojectPeer::retrieveAllForYear($this->year);
    $this->steps=Array();
 
    $template=$request->getParameter('template', 'index');
-   $this->setTemplate($template);   
+   $this->setTemplate($template);
+   $this->action='monitor';
 
 	}
 	

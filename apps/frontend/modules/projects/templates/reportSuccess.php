@@ -31,10 +31,12 @@
 <?php endforeach ?>
 
 <?php else: ?>
-<p><?php echo __('No projects defined') ?></p>
+<p><?php echo __('No projects defined.') ?></p>
 <?php endif ?>
 </div>
 
-<hr />
+<?php include_partial('content/year', array('year'=>$year, 'years'=>$years, 'back'=>'projects/index')) ?>
+
+
 
 

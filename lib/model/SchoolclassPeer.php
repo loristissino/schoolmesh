@@ -10,16 +10,21 @@
 class SchoolclassPeer extends BaseSchoolclassPeer
 {
 		
-	public static function retrieveCurrentSchoolclasses()
+	public static function retrieveCurrentSchoolclasses($year=0)
 	{
 		/* FIXME
 			this should return only classes with students currently enrolled...
 		*/
 		
+    if ($year==0)
+    {
+      $year=sfConfig::get('app_config_current_year');
+    }
+    
 		$c=new Criteria();
 		$c->addJoin(SchoolclassPeer::TRACK_ID, TrackPeer::ID);
     $c->addJoin(SchoolclassPeer::ID, EnrolmentPeer::SCHOOLCLASS_ID);
-    $c->add(EnrolmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
+    $c->add(EnrolmentPeer::YEAR_ID, $year);
 //		$c->addAscendingOrderByColumn(TrackPeer::DESCRIPTION);
 		$c->addAscendingOrderByColumn(SchoolclassPeer::ID);
     $c->setDistinct();

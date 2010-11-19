@@ -185,13 +185,16 @@ public function executeBatch(sfWebRequest $request)
 		$sortby=$this->getUser()->getAttribute('sortby', 'class');
 		$filter=$this->getUser()->getAttribute('filter', '');
 		$filter_id=$this->getUser()->getAttribute('filter_id', -1);
+    
+    $this->year=$this->getUser()->getAttribute('year', sfConfig::get('app_config_current_year'));
 		
-		$this->pager = AppointmentPeer::listWorkplans($max_per_page, $this->page, sfConfig::get('app_config_current_year'), $sortby, $filter, $filter_id);
+		$this->pager = AppointmentPeer::listWorkplans($max_per_page, $this->page, $this->year, $sortby, $filter, $filter_id);
 		$this->steps = Workflow::getWpfrSteps();
-		$this->schoolclasses = SchoolclassPeer::retrieveCurrentSchoolclasses();
+		$this->schoolclasses = SchoolclassPeer::retrieveCurrentSchoolclasses($this->year);
 		$this->subjects = SubjectPeer::retrieveAllByRank();
 		$this->states = Workflow::getWpfrStates(true);
-		$this->teachers = sfGuardUserProfilePeer::retrieveTeachers();
+		$this->teachers = sfGuardUserProfilePeer::retrieveTeachers($this->year);
+    $this->years = YearPeer::retrieveAll();
 	}
 	
   public function executeIndex(sfWebRequest $request)
