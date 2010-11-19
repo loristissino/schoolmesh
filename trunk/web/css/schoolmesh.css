@@ -299,6 +299,15 @@ white-space:nowrap;
 background:#e00;
 }
 
+#general_alerts {
+text-align:left;
+vertical-align:middle;
+font-size:14px;
+font-weight: bold;
+white-space:nowrap;
+background:#e00;
+}
+
 .schoolmesh_profile_notices {
 text-align:left;
 color: #e00;

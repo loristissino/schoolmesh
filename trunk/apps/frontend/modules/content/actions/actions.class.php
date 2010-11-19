@@ -166,6 +166,16 @@ class contentActions extends sfActions
 		return $this->renderText($response);
 		
 	}
+  
+  public function executeSetyear(sfWebRequest $request)
+  {
+    $this->forward404Unless($year=YearPeer::retrieveByPK($request->getParameter('id')));
+    
+    $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Year set to %year%.', array('%year%'=>$year->__toString())));
+    $this->getUser()->setAttribute('year', $year->getId());
+    
+    $this->redirect(Generic::b64_unserialize($request->getParameter('back')));
+  }
 
 	public function executeError404(sfWebRequest $request)
 	{

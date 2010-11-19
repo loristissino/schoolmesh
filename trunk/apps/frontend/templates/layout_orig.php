@@ -31,6 +31,11 @@
 			<p><?php echo __('Where am I? ') . link_to(__("Home"), "@homepage") ?> » <?php include_slot('breadcrumbs') ?></p>
 		</div>
 	<?php endif ?>
+	<?php if (has_slot('general_alerts')): ?>
+    <div id="general_alerts">
+    <?php include_slot('general_alerts'); ?>
+    </div>
+	<?php endif; ?>
 <div id="sf_admin_container">
 <?php echo $sf_content ?>
 </div>

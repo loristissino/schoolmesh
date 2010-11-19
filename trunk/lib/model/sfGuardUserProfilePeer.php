@@ -149,26 +149,33 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	}
 
 
-	public static function retrieveTeachers()
+	public static function retrieveTeachers($year=0)
 	{
-/*	$c = new Criteria();
-	$c->addJoin(AppointmentPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
-	$c->add(AppointmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
-	$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
-	$t = self::doSelect($c);
-	return $t;
 
-*/
+    if ($year==0)
+    {
+      $c = new Criteria();
+      $c->addJoin(sfGuardUserProfilePeer::ROLE_ID, RolePeer::ID);
+      $c->add(RolePeer::POSIX_NAME, sfConfig::get('app_config_teachers_default_posix_group'));
+      $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+      $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
+      $c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
+      $c->add(sfGuardUserPeer::IS_ACTIVE, true);
+      
+      return parent::doSelect($c);
+    }
+    else
+    {
+    	$c = new Criteria();
+      $c->setDistinct();
+      $c->addJoin(AppointmentPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
+      $c->add(AppointmentPeer::YEAR_ID, $year);
+      $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+      $t = self::doSelect($c);
+      return $t;
 
-		$c = new Criteria();
-		$c->addJoin(sfGuardUserProfilePeer::ROLE_ID, RolePeer::ID);
-		$c->add(RolePeer::POSIX_NAME, sfConfig::get('app_config_teachers_default_posix_group'));
-		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
-		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
-    $c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
-    $c->add(sfGuardUserPeer::IS_ACTIVE, true);
-		
-		return parent::doSelect($c);
+    }
+
 
 	}
 

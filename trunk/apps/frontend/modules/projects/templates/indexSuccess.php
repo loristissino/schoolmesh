@@ -41,7 +41,7 @@
 	<?php $i=0 ?>
     <?php foreach ($projects as $project): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
-      <td><?php echo $project->getYear() ?></td>
+      <?php include_partial('content/td_year', array('year'=>$project->getYear())) ?>
       <td><?php echo $project->getTitle() ?></td>
       <td><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></td>
       <td><?php echo $project->getState() ?></td>
@@ -61,16 +61,6 @@
 <?php endif ?>
 </div>
 
-
-
-<hr />
-
-<?php
-/*echo link_to(
-	__('Get Letters'),
-	url_for('projects/letters')
-	)
-*/
-?>
-
-
+<?php if(isset($action) && ($action=='monitor')): ?>
+<?php include_partial('content/year', array('year'=>$year, 'years'=>$years, 'back'=>'projects/monitor')) ?>
+<?php endif ?>

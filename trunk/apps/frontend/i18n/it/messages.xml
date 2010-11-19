@@ -1747,8 +1747,14 @@
         <source>Documents</source>
         <target>Documenti</target>
     </trans-unit>
+    <trans-unit id="459">
+        <source>You are currently working on year %set_year%, not on current year.</source>
+        <target>Stai lavorando sull'anno %set_year%, non su quello corrente.</target>
+    </trans-unit>
+    <trans-unit id="460">
+        <source>No projects defined.</source>
+        <target>Nessun progetto definito.</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
-
-
