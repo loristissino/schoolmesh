@@ -1576,6 +1576,18 @@ public function getWpevents($criteria = null, PropelPDO $con = null)
     }
 
   }
+  
+  public function getAttachmentFiles()
+  {
+    return AttachmentFilePeer::retrieveByClassAndId(get_class($this), $this->getId());
+  }
+  
+  public function addAttachment(sfValidatedFile $file=null)
+  {
+    $con = Propel::getConnection(AppointmentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+    return AttachmentFilePeer::addAttachment($con, $this, 'appointment', $this->getUserId(), $file);
+  }
+
 
 
 }

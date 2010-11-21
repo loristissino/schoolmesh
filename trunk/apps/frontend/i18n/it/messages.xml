@@ -1569,7 +1569,7 @@
       </trans-unit>
 	  <trans-unit id="418">
         <source>Original deadline</source>
-        <target>Scadenza prevista inizialmente</target>
+        <target>Scadenza originale</target>
       </trans-unit>
 	  <trans-unit id="419">
         <source>Current deadline</source>
@@ -1754,6 +1754,22 @@
     <trans-unit id="460">
         <source>No projects defined.</source>
         <target>Nessun progetto definito.</target>
+    </trans-unit>
+    <trans-unit id="461">
+        <source>Needs attachment</source>
+        <target>Documentata?</target>
+    </trans-unit>
+    <trans-unit id="462">
+        <source>New project</source>
+        <target>Nuovo progetto</target>
+    </trans-unit>
+    <trans-unit id="463">
+        <source>Prepare a new project</source>
+        <target>Prepara un nuovo progetto</target>
+    </trans-unit>
+    <trans-unit id="464">
+        <source>Year set to %year%.</source>
+        <target>Anno impostato a %year%.</target>
     </trans-unit>
     </body>
   </file>

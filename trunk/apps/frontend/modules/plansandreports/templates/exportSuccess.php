@@ -36,3 +36,5 @@
 </p>
 
 <?php endif ?>
+
+<?php include_partial('content/attachments', array('attachments'=>$attachments, 'description'=>'Documents concerning this appointment.')) ?>

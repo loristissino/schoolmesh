@@ -167,8 +167,8 @@ class Schoolproject extends BaseSchoolproject {
 			$deadline
 			->setUserId($this->getUserId())
       ->setSchoolprojectId($this->getId())
-      ->setOriginalDeadlineDate(mktime(0,0,0, 12, 31, date('Y')+1))
-      ->setCurrentDeadlineDate(mktime(0,0,0, 12, 31, date('Y')+1))
+      ->setOriginalDeadlineDate(Generic::currentDate())
+      ->setCurrentDeadlineDate(Generic::currentDate())
       ->save();
       $result['result']='notice';
       $result['message']='The deadline has been added.';
@@ -191,6 +191,8 @@ class Schoolproject extends BaseSchoolproject {
       'notes',
       'proj_category_id',
       ), $params);
+      
+    return $this;
   }
   
 	

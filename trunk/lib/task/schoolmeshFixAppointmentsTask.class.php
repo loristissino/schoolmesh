@@ -41,32 +41,36 @@ EOF;
 
     $c=new Criteria();
     $c->add(AppointmentPeer::YEAR_ID, $year);
-    $c->add(AppointmentPeer::STATE, Workflow::WP_WSMC, Criteria::GREATER_THAN);
+//    $c->add(AppointmentPeer::STATE, Workflow::WP_WSMC, Criteria::GREATER_THAN);
 
 
     $appointments=AppointmentPeer::doSelect($c);
     foreach($appointments as $appointment)
     {
-      $count=0;
-      foreach($appointment->getWpmodules() as $wpmodule)
+      if($appointment->getState()>Workflow::WP_WSMC)
       {
-        if(!$wpmodule->getIsPublic())
+        $count=0;
+        foreach($appointment->getWpmodules() as $wpmodule)
         {
-          $date=$wpmodule->getUpdatedAt();
-          $wpmodule
-          ->setIsPublic(true)
-          ->save();
-          $wpmodule
-          ->setUpdatedAt($date)
-          ->save()
-          ;
-          $count++;
+          if(!$wpmodule->getIsPublic())
+          {
+            $date=$wpmodule->getUpdatedAt();
+            $wpmodule
+            ->setIsPublic(true)
+            ->save();
+            $wpmodule
+            ->setUpdatedAt($date)
+            ->save()
+            ;
+            $count++;
+          }
+        }
+        if($count>0)
+        {
+          $this->logSection('appoint.', sprintf('%d: fixed %d module(s)', $appointment->getId(), $count), null, 'COMMENT');
         }
       }
-      if($count>0)
-      {
-        $this->logSection('appoint.', sprintf('%d: fixed %d module(s)', $appointment->getId(), $count), null, 'COMMENT');
-      }
+      
     }
 		
 
