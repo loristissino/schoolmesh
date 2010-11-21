@@ -36,6 +36,7 @@ class ProjDeadlineForm extends BaseProjDeadlineForm
     {
       case Workflow::PROJ_DRAFT:
         unset($this['current_deadline_date'], $this['completed']);
+        $this['original_deadline_date']->getWidget()->setLabel('Deadline');
         break;
       case Workflow::PROJ_SUBMITTED:
         unset($this['original_deadline_date'], $this['description'], $this['notes'], $this['current_deadline_date'], $this['completed']);

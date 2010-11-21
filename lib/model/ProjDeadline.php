@@ -45,51 +45,23 @@ class ProjDeadline extends BaseProjDeadline {
       'completed',
       ), $params);
 
+    if ($this->getCurrentDeadlineDate()<$this->getOriginalDeadlineDate())
+    {
+      $this->setCurrentDeadlineDate($this->getOriginalDeadlineDate());
+    }
 
     $result['result']='notice';
     $result['message']='Deadline successfully updated.';
-
-    $con->beginTransaction();
     
-    $this->save($con);
-
-    if(!is_null($file))
+    if($file)
     {
-      $attachment=new AttachmentFile();
-      
-      $attachment
-      ->setUserId($this->getUserId())
-      ->setBaseTable(AttachmentFilePeer::getBaseTableId(get_class($this)))
-      ->setBaseId($this->getId())
-      ;
-      
-      if ($attachment->setFile('deadline', $file))
-      {
-        try
-        {
-          $attachment->save($con);
-          $con->commit();
-        }
-        catch (Exception $e)
-        {
-          $con->rollBack();
-          $result['result']='error';
-          $result['message']='This file was already uploaded.';
-        }
-      }
-      else
-      {
-        $con->rollBack();
-        $result['result']='error';
-        $result['message']='Could not save the uploaded file.';
-      }
-        
+      $result=AttachmentFilePeer::addAttachment($con, $this, 'deadline', $this->getUserId(), $file, $result);
     }
     else
     {
-      $con->commit();
+      $this->save();
     }
-    
+        
     return $result;
   }
   

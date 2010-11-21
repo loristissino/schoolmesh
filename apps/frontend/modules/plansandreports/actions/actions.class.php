@@ -503,11 +503,13 @@ public function executeBatch(sfWebRequest $request)
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->workplan);
 	
-	$whoIsViewing = $this->getUser()->getProfile()->getSfGuardUser()->getId();
+    $whoIsViewing = $this->getUser()->getProfile()->getSfGuardUser()->getId();
 	
     $this->forward404Unless($this->workplan->isViewableBy($whoIsViewing));
+    
+    $this->attachments=$this->workplan->getAttachmentFiles();
 
-	$this->unoconv_active=OdfDocPeer::getIsUnoconvActive();
+    $this->unoconv_active=OdfDocPeer::getIsUnoconvActive();
 
   }
 

@@ -217,7 +217,9 @@ class projectsActions extends sfActions
 				
 				$this->project = SchoolprojectPeer::retrieveByPK($params['id']);
 				
-				$this->project->updateFromForm($params);
+				$this->project
+        ->updateFromForm($params)
+        ->save();
 				
 				$this->getUser()->setFlash('notice',
 					$this->getContext()->getI18N()->__('Project information updated.')
@@ -253,5 +255,43 @@ class projectsActions extends sfActions
   
    }  
 	
+  
+  public function executeNew(sfWebRequest $request)
+  {
+    
+	$this->form = new SchoolprojectForm($this->project);
+  $this->deadlines=array();
+
+	if ($request->isMethod('post'))
+		{
+			
+			$this->form->bind($request->getParameter('schoolproject'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				
+				$this->project = new Schoolproject();
+				
+				$this->project
+        ->updateFromForm($params)
+        ->setYearId(sfConfig::get('app_config_current_year'))
+        ->setUserId($this->getUser()->getProfile()->getUserId())
+        ->setState(Workflow::PROJ_DRAFT)
+        ->save();
+				
+        
+				$this->getUser()->setFlash('notice',
+					$this->getContext()->getI18N()->__('Project information saved.')
+					);
+					
+			return $this->redirect('projects/edit?id='. $this->project->getId());
+			}
+			
+		}
+  
+  
+   }  
+	
+  
 
 }

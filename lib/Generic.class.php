@@ -25,7 +25,25 @@ class Generic{
     return ($x - ($x % $y)) / $y;
 	}
 	
-	public static function decode($text)
+  public static function getHumanReadableSize($bytes) 
+  {
+    if ($bytes < 1024)
+    {
+      return $bytes . ' B';
+    }
+    
+    $bytes=(float)$bytes;
+    $suffixes=array('B','KiB','MiB','GiB','TiB');
+    $index=0;
+    while($bytes>1024)
+    {
+      $index++;
+      $bytes=$bytes/1024;
+    }
+    return number_format($bytes, 2) . ' '. $suffixes[$index];
+  }
+
+  public static function decode($text)
 	
 	{
 		$text=str_replace('&#039;', "'", $text);
@@ -306,6 +324,11 @@ class Generic{
         "'",
       ),
       $s);
+  }
+  
+  public static function currentDate()
+  {
+    return mktime(18,0,0, date('n'), date('j')+1, date('Y'));
   }
 
 }

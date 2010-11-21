@@ -57,9 +57,19 @@
   </tbody>
 </table>
 <?php else: ?>
-<p><?php echo __('No projects defined') ?></p>
+<p><?php echo __('No projects defined.') ?></p>
 <?php endif ?>
 </div>
+
+<ul class="sf_admin_actions">
+
+  <li class="sf_admin_action_new">
+    <?php echo link_to(
+		__('New project'),
+		'projects/new',
+		array('title'=>__('Prepare a new project'))
+		)?>
+		</li>
 
 <?php if(isset($action) && ($action=='monitor')): ?>
 <?php include_partial('content/year', array('year'=>$year, 'years'=>$years, 'back'=>'projects/monitor')) ?>

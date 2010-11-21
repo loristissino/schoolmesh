@@ -55,12 +55,17 @@
   </table>
 </form>  
 
+<h2><?php echo __('Deadlines') ?></h2>
+
 <?php if(sizeof($deadlines)>0): ?>
 
 <table cellspacing="0">
   <thead>
     <tr>
+      <th class="sf_admin_text"><?php echo $project->getState()==Workflow::PROJ_DRAFT ? __('Deadline') : __('Original deadline') ?></th>
+      <?php if($project->getState()>Workflow::PROJ_DRAFT): ?>
       <th class="sf_admin_text"><?php echo __('Current deadline') ?></th>
+      <?php endif ?>
       <th class="sf_admin_text"><?php echo __('Description') ?></th>
       <th class="sf_admin_text"><?php echo __('State') ?></th>
       <th class="sf_admin_text"><?php echo __('Notes') ?></th>
@@ -71,7 +76,10 @@
 	<?php $i=0 ?>
     <?php foreach ($deadlines as $deadline): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
+      <td><?php echo Generic::datetime($deadline->getOriginalDeadlineDate('U'), $sf_context) ?></td>
+      <?php if($project->getState()>Workflow::PROJ_DRAFT): ?>
       <td><?php echo Generic::datetime($deadline->getCurrentDeadlineDate('U'), $sf_context) ?></td>
+      <?php endif ?>
       <td><?php echo $deadline->getDescription() ?></td>
       <td><?php include_partial('deadlinestate', array('deadline'=>$deadline, 'with_description'=>false)) ?></td>
       <td><?php include_partial('content/notes', array('notes'=>$deadline->getNotes())) ?></td>
@@ -100,7 +108,7 @@
   </tbody>
 </table>
 <?php else: ?>
-<p><?php echo __('No deadlines defined') ?></p>
+<p><?php echo __('No deadlines defined.') ?></p>
 <?php endif ?>
 </div>
 <?php if ($project->getState()==Workflow::PROJ_DRAFT): ?>
