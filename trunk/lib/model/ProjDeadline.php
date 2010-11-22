@@ -43,6 +43,7 @@ class ProjDeadline extends BaseProjDeadline {
       'description',
       'notes',
       'completed',
+      'needs_attachment',
       ), $params);
 
     if ($this->getCurrentDeadlineDate()<$this->getOriginalDeadlineDate())
