@@ -67,7 +67,9 @@
       <th class="sf_admin_text"><?php echo __('Current deadline') ?></th>
       <?php endif ?>
       <th class="sf_admin_text"><?php echo __('Description') ?></th>
+      <?php if($project->getState()>Workflow::PROJ_DRAFT): ?>
       <th class="sf_admin_text"><?php echo __('State') ?></th>
+      <?php endif ?>
       <th class="sf_admin_text"><?php echo __('Notes') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
@@ -81,7 +83,9 @@
       <td><?php echo Generic::datetime($deadline->getCurrentDeadlineDate('U'), $sf_context) ?></td>
       <?php endif ?>
       <td><?php echo $deadline->getDescription() ?></td>
+      <?php if($project->getState()>Workflow::PROJ_DRAFT): ?>
       <td><?php include_partial('deadlinestate', array('deadline'=>$deadline, 'with_description'=>false)) ?></td>
+      <?php endif ?>
       <td><?php include_partial('content/notes', array('notes'=>$deadline->getNotes())) ?></td>
       <td>
       <ul class="sf_admin_td_actions">
