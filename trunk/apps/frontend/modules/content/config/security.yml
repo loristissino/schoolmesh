@@ -1,2 +1,7 @@
-default:
+documents:
   is_secure: true
+  
+all:
+  is_secure: false
+  
+

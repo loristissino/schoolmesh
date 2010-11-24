@@ -77,7 +77,6 @@
 <?php echo options_for_select(array(
   '' => __('Choose an action'),
   'Approve' => __('Approve selected documents'),
-  'Publish' => __('Publish selected documents'),
 ), 0) ?>
   </select>
 
