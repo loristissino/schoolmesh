@@ -211,7 +211,7 @@ $con->query($sql);
 		
 	}
 
-	public function Approve($user_id, $permissions, $culture='it')
+	public function Approve($user_id, $permissions, $culture='it', sfContext $context=null)
 	{
 		
 	$result=Array();
@@ -235,6 +235,22 @@ $con->query($sql);
 	$con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
 	  try
 	  {
+      
+    if($steps[$this->getState()]['actions']['approve']['makeAttachments']==true)
+    {
+      foreach (array(true, false) as $complete)
+      {
+        try
+        {
+          $this->createAttachment($complete, $context);
+        }
+        catch (Exception $e)
+        {
+          throw new Exception('Could not create attachment. ' . $e);
+        }
+      }
+    }
+    
 		$con->beginTransaction();
 
 		if($steps[$this->getState()]['actions']['approve']['submitExtraAction']!='')
@@ -965,7 +981,7 @@ public function getWorkflowLogs()
 			if (
 //				$wpinfo->getWpinfoType()->getState()<=$this->getState()
 // FIXME: we need to have two limits in the db, upper and lower
-				$wpinfo->getWpinfoType()->getState()<=$this->getState()
+				$wpinfo->getWpinfoType()->getState()<$this->getState()
         
 				&&
 				$wpinfo->getContent()
@@ -982,7 +998,8 @@ public function getWorkflowLogs()
 		
 		$odfdoc->mergeSegment($infos);
     $wpmodules=$this->getWpmodules();
-    if ($this->getState()>=Workflow::WP_WSMC)
+    if ($this->getState()>=Workflow::IR_DRAFT)
+    /* report, not workplan: only selected items must be listed */
     
     {
 		
@@ -1046,7 +1063,7 @@ public function getWorkflowLogs()
       
       $odfdoc->mergeSegment($modules);
     }
-    else // state: workplan, not report
+    else // state: workplan, not report (all items must be listed)
     
     {
 
@@ -1588,6 +1605,53 @@ public function getWpevents($criteria = null, PropelPDO $con = null)
     return AttachmentFilePeer::addAttachment($con, $this, 'appointment', $this->getUserId(), $file);
   }
 
+
+  public function createAttachment($complete=false, sfContext $context=null, $format='odt')
+  {
+
+    if($format=='')
+    {
+      $format=sfConfig::get('app_config_default_format', 'odt');
+    }
+    
+    try 
+		{
+
+    $odfdoc=$this->getOdf($format, $context, '', $complete);
+
+		}
+		catch (Exception $e)
+		{
+      throw $e;
+		}
+		
+		try
+		{
+			$odfdoc->saveFile();
+      $vfile=Generic::getValidatedFile($odfdoc->getFilename(), $this->getFileTitle($complete, $context) . '.'. $format);
+      $this->addAttachment($vfile);
+      unset($odfdoc);
+      unset($vfile);
+      return true;
+		}
+		catch (Exception $e)
+		{
+      throw $e;
+		}
+
+  }
+  
+  public function getFileTitle($complete, sfContext $context=null)
+  {
+    $s=$complete? 'complete': 'reduced';
+    if($context)
+    {
+      $s=$context->getI18N()->__($s);
+    }
+    
+    return sprintf('%s_%s_%s (%s)', $this->getFullname(), $this->getSchoolclass()->getId(), $this->getSubject()->getShortcut(), $s);
+    
+  }
 
 
 }

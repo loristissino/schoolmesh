@@ -85,7 +85,7 @@ public function executeBatch(sfWebRequest $request)
 		}
 		
 	$number=0;
-		
+/*		
 	if ($action=='Publish')
 	{
 		foreach ($workplans as $workplan)
@@ -105,10 +105,10 @@ public function executeBatch(sfWebRequest $request)
 		return $this->redirect('plansandreports/list');
 
 	}
-	
+	*/
     foreach ($workplans as $workplan)
     {
-		$result = $workplan->$action($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions());
+		$result = $workplan->$action($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions(), $this->getUser()->getCulture(), $this->getContext());
 		if ($result['result']=='notice')
 			{
 				$number++;
@@ -131,16 +131,16 @@ public function executeBatch(sfWebRequest $request)
   public function executeApprove(sfWebRequest $request)
   {
     $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
-	$page=$request->getParameter('page', 1);
+    $page=$request->getParameter('page', 1);
 	
-	$this->content='approving workplan ' . $workplan->getId();
+    //$this->content='approving workplan ' . $workplan->getId();
 	
     $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
     $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
 
-	$result = $workplan->Approve($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions());
+	$result = $workplan->Approve($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions(), $this->getUser()->getCulture(), $this->getContext());
 
-	$this->getUser()->setFlash($result['result'], $result['message']);
+	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 
 	$this->redirect('plansandreports/list?page='.$page);
 
@@ -442,28 +442,30 @@ public function executeBatch(sfWebRequest $request)
 		
 	}
 
-/*  public function executeDoc(sfWebRequest $request)
-	{
-	
-		$document = new Opendocument('mattiussirq', $this->workplan, 'doc');
-		$document->setHeader($this->getController()->getPresentationFor('headers', 'workplan'));
-		$document->setContent($this->getController()->getPresentationFor('plansandreports', 'xml'));
-		$document->setResponse($this->getContext()->getResponse());
-		return sfView::NONE;
-		
-	}
+  public function executeArchive(sfWebRequest $request)
+  {
+		$this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+		$this->forward404Unless($this->workplan);
 
-  public function executePdf(sfWebRequest $request)
-	{
-	
-		$document = new Opendocument('mattiussirq', $this->workplan, 'pdf');
-		$document->setHeader($this->getController()->getPresentationFor('headers', 'workplan'));
-		$document->setContent($this->getController()->getPresentationFor('plansandreports', 'xml'));
-		$document->setResponse($this->getContext()->getResponse());
-		return sfView::NONE;
+		$this->doctype=$request->getParameter('doctype');
+		$this->forward404Unless(in_array($this->doctype, array('odt', 'doc', 'pdf', 'rtf')));
 		
-	}
-*/
+		//if ($this->workplan->
+    
+    try
+    {
+      $this->workplan->createAttachment($request->getParameter('complete', 'false')=='true', $this->getContext()); 
+    }
+		catch (Exception $e)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.') . $e->getMessage());
+      $this->redirect('plansandreports/export?id='. $this->workplan->getId());
+
+		}
+		
+    $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Archiviation done.'));
+    $this->redirect('plansandreports/export?id='. $this->workplan->getId());
+  }
 
   public function executeView(sfWebRequest $request)
   {

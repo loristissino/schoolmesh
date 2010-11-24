@@ -331,4 +331,27 @@ class Generic{
     return mktime(18,0,0, date('n'), date('j')+1, date('Y'));
   }
 
+
+  public static function getValidatedFile($filepath, $name='')
+  {
+    $file=new smFileInfo($filepath);
+    
+    $original_name= $name=='' ? $file->getFileName(): $name;
+    
+    $mimetype=$file->getMimeType();
+    if (strpos($mimetype, ';')>0)
+    {
+      list($mimetype, $extra)=explode(';', $mimetype);
+    }
+
+    $vfile = new sfValidatedFile(
+      $original_name,
+      $mimetype,
+      $file->getPathName(), 
+      $file->getSize(), 
+      $file->getPathName());
+
+    return $vfile;
+  }
+
 }

@@ -50,14 +50,7 @@ EOF;
       return;
     }
 
-    $file=new smFileInfo($options['file']);
-
-    $vfile = new sfValidatedFile(
-      $file->getFileName(),
-      $file->getMimeType(),
-      $file->getPathName(), 
-      $file->getSize(), 
-      $file->getPathName());
+    $vfile=Generic::getValidatedFile($options['file']);
 
     $table_id=AttachmentFilePeer::getBaseTableId($options['object-type']);
     if(!$table_id)

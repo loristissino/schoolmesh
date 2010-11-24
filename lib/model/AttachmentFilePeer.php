@@ -65,7 +65,7 @@ class AttachmentFilePeer extends BaseAttachmentFilePeer {
   public static function addAttachmentRoughly($con, $object_id, $class_id, $prefix, $user_id, sfValidatedFile $file=null, $object=null, $result=array())
 
   {
-    if(sizeof($array)==0)
+    if(sizeof($result)==0)
     {
       $result['result']='notice';
       $result['message']='Attachment successfully saved.';

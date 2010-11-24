@@ -1771,6 +1771,40 @@
         <source>Year set to %year%.</source>
         <target>Anno impostato a %year%.</target>
     </trans-unit>
+    <trans-unit id="465">
+        <source>complete</source>
+        <target>completo</target>
+    </trans-unit>
+    <trans-unit id="466">
+        <source>reduced</source>
+        <target>ridotto</target>
+    </trans-unit>
+    <trans-unit id="467">
+        <source>Approve selected documents</source>
+        <target>Approva i documenti selezionati</target>
+    </trans-unit>
+    <trans-unit id="468">
+        <source>Workplan approved.</source>
+        <target>Piano di lavoro approvato.</target>
+    </trans-unit>
+    <trans-unit id="469">
+        <source>Workplan rejected.</source>
+        <target>Piano di lavoro respinto.</target>
+    </trans-unit>
+    <trans-unit id="470">
+        <source>Documents concerning this appointment.</source>
+        <target>Documenti riguardanti questo incarico di insegnamento.</target>
+    </trans-unit>
+    <trans-unit id="471">
+        <source>Data are exported using current template and settings.</source>
+        <target>I dati vengono esportati usando il modello e le impostazioni correnti.</target>
+    </trans-unit>
+    <trans-unit id="472">
+        <source>If you need the original versione, please use the attachments below.</source>
+        <target>Se necessiti della versione originale, usa gli allegati elencati qui sotto.</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
+

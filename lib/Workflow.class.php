@@ -25,6 +25,7 @@ class Workflow
 				'submitExtraParameters'=>'',
 				'logMessageCode'=>'AP_CONFIRMED',
 				'submitNextState'=>self::WP_DRAFT,
+        'makeAttachments'=>false,
 				)
 			)
 		),
@@ -63,6 +64,7 @@ class Workflow
 				'submitExtraParameters'=>'',
 				'logMessageCode'=>'WP_ADCHECKED',
 				'submitNextState'=>self::WP_WSMC,
+        'makeAttachments'=>false,
 				),
 			'reject' => Array(
 				'permission'=>'office',
@@ -72,6 +74,7 @@ class Workflow
 				'submitExtraParameters'=>'true',
 				'logMessageCode'=>'WP_ADREJECTED',
 				'submitNextState'=>self::WP_DRAFT,
+        'makeAttachments'=>false,
 				),
 			)
 		),
@@ -96,6 +99,7 @@ class Workflow
 				'submitExtraParameters'=>'false',
 				'logMessageCode'=>'WP_APPROVED',
 				'submitNextState'=>self::IR_DRAFT,
+        'makeAttachments'=>true,
 				),
 			'reject' => Array(
 				'permission'=>"schoolmaster",
@@ -105,6 +109,7 @@ class Workflow
 				'submitExtraParameters'=>'true',
 				'logMessageCode'=>'WP_REJECTED',
 				'submitNextState'=>self::WP_DRAFT,
+        'makeAttachments'=>false,
 				),
 		),
 	),
@@ -156,6 +161,7 @@ class Workflow
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
 				'submitNextState'=>self::FR_WSMC,
+        'makeAttachments'=>false,
 				),
 			'reject' => Array(
 				'permission'=>'fr_adm_no',
@@ -164,6 +170,7 @@ class Workflow
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
 				'submitNextState'=>self::IR_DRAFT,
+        'makeAttachments'=>false,
 				),
 		)
 	),
@@ -187,6 +194,7 @@ class Workflow
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
 				'submitNextState'=>self::FR_ARCHIVED,
+        'makeAttachments'=>true,
 				),
 			'reject' => Array(
 				'permission'=>'fr_sm_no',
@@ -195,6 +203,7 @@ class Workflow
 				'submitExtraAction'=>'',
 				'submitExtraParameters'=>'',
 				'submitNextState'=>self::IR_DRAFT,
+        'makeAttachments'=>false,
 				),
 		)
 	),
