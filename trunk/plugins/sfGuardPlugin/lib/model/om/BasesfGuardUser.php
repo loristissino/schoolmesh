@@ -76,36 +76,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	protected $is_super_admin;
 
 	/**
-	 * @var        array sfGuardUserPermission[] Collection to store aggregation of sfGuardUserPermission objects.
-	 */
-	protected $collsfGuardUserPermissions;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collsfGuardUserPermissions.
-	 */
-	private $lastsfGuardUserPermissionCriteria = null;
-
-	/**
-	 * @var        array sfGuardUserGroup[] Collection to store aggregation of sfGuardUserGroup objects.
-	 */
-	protected $collsfGuardUserGroups;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collsfGuardUserGroups.
-	 */
-	private $lastsfGuardUserGroupCriteria = null;
-
-	/**
-	 * @var        array sfGuardRememberKey[] Collection to store aggregation of sfGuardRememberKey objects.
-	 */
-	protected $collsfGuardRememberKeys;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collsfGuardRememberKeys.
-	 */
-	private $lastsfGuardRememberKeyCriteria = null;
-
-	/**
 	 * @var        array RecuperationHint[] Collection to store aggregation of RecuperationHint objects.
 	 */
 	protected $collRecuperationHints;
@@ -269,6 +239,36 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	 * @var        Criteria The criteria used to select the current contents of collAttachmentFiles.
 	 */
 	private $lastAttachmentFileCriteria = null;
+
+	/**
+	 * @var        array sfGuardUserPermission[] Collection to store aggregation of sfGuardUserPermission objects.
+	 */
+	protected $collsfGuardUserPermissions;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collsfGuardUserPermissions.
+	 */
+	private $lastsfGuardUserPermissionCriteria = null;
+
+	/**
+	 * @var        array sfGuardUserGroup[] Collection to store aggregation of sfGuardUserGroup objects.
+	 */
+	protected $collsfGuardUserGroups;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collsfGuardUserGroups.
+	 */
+	private $lastsfGuardUserGroupCriteria = null;
+
+	/**
+	 * @var        array sfGuardRememberKey[] Collection to store aggregation of sfGuardRememberKey objects.
+	 */
+	protected $collsfGuardRememberKeys;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collsfGuardRememberKeys.
+	 */
+	private $lastsfGuardRememberKeyCriteria = null;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -819,15 +819,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
-			$this->collsfGuardUserPermissions = null;
-			$this->lastsfGuardUserPermissionCriteria = null;
-
-			$this->collsfGuardUserGroups = null;
-			$this->lastsfGuardUserGroupCriteria = null;
-
-			$this->collsfGuardRememberKeys = null;
-			$this->lastsfGuardRememberKeyCriteria = null;
-
 			$this->collRecuperationHints = null;
 			$this->lastRecuperationHintCriteria = null;
 
@@ -877,6 +868,15 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 			$this->collAttachmentFiles = null;
 			$this->lastAttachmentFileCriteria = null;
+
+			$this->collsfGuardUserPermissions = null;
+			$this->lastsfGuardUserPermissionCriteria = null;
+
+			$this->collsfGuardUserGroups = null;
+			$this->lastsfGuardUserGroupCriteria = null;
+
+			$this->collsfGuardRememberKeys = null;
+			$this->lastsfGuardRememberKeyCriteria = null;
 
 		} // if (deep)
 	}
@@ -1010,30 +1010,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
-			}
-
-			if ($this->collsfGuardUserPermissions !== null) {
-				foreach ($this->collsfGuardUserPermissions as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collsfGuardUserGroups !== null) {
-				foreach ($this->collsfGuardUserGroups as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collsfGuardRememberKeys !== null) {
-				foreach ($this->collsfGuardRememberKeys as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
 			}
 
 			if ($this->collRecuperationHints !== null) {
@@ -1170,6 +1146,30 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collsfGuardUserPermissions !== null) {
+				foreach ($this->collsfGuardUserPermissions as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collsfGuardUserGroups !== null) {
+				foreach ($this->collsfGuardUserGroups as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collsfGuardRememberKeys !== null) {
+				foreach ($this->collsfGuardRememberKeys as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -1240,30 +1240,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
-
-				if ($this->collsfGuardUserPermissions !== null) {
-					foreach ($this->collsfGuardUserPermissions as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collsfGuardUserGroups !== null) {
-					foreach ($this->collsfGuardUserGroups as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collsfGuardRememberKeys !== null) {
-					foreach ($this->collsfGuardRememberKeys as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
 
 				if ($this->collRecuperationHints !== null) {
 					foreach ($this->collRecuperationHints as $referrerFK) {
@@ -1393,6 +1369,30 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 				if ($this->collAttachmentFiles !== null) {
 					foreach ($this->collAttachmentFiles as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collsfGuardUserPermissions !== null) {
+					foreach ($this->collsfGuardUserPermissions as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collsfGuardUserGroups !== null) {
+					foreach ($this->collsfGuardUserGroups as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collsfGuardRememberKeys !== null) {
+					foreach ($this->collsfGuardRememberKeys as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1676,24 +1676,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			// the getter/setter methods for fkey referrer objects.
 			$copyObj->setNew(false);
 
-			foreach ($this->getsfGuardUserPermissions() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addsfGuardUserPermission($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getsfGuardUserGroups() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addsfGuardUserGroup($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getsfGuardRememberKeys() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addsfGuardRememberKey($relObj->copy($deepCopy));
-				}
-			}
-
 			foreach ($this->getRecuperationHints() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addRecuperationHint($relObj->copy($deepCopy));
@@ -1795,6 +1777,24 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			foreach ($this->getsfGuardUserPermissions() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addsfGuardUserPermission($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getsfGuardUserGroups() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addsfGuardUserGroup($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getsfGuardRememberKeys() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addsfGuardRememberKey($relObj->copy($deepCopy));
+				}
+			}
+
 		} // if ($deepCopy)
 
 
@@ -1840,562 +1840,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			self::$peer = new sfGuardUserPeer();
 		}
 		return self::$peer;
-	}
-
-	/**
-	 * Clears out the collsfGuardUserPermissions collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addsfGuardUserPermissions()
-	 */
-	public function clearsfGuardUserPermissions()
-	{
-		$this->collsfGuardUserPermissions = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collsfGuardUserPermissions collection (array).
-	 *
-	 * By default this just sets the collsfGuardUserPermissions collection to an empty array (like clearcollsfGuardUserPermissions());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initsfGuardUserPermissions()
-	{
-		$this->collsfGuardUserPermissions = array();
-	}
-
-	/**
-	 * Gets an array of sfGuardUserPermission objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
-	 * related sfGuardUserPermissions from storage. If this sfGuardUser is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array sfGuardUserPermission[]
-	 * @throws     PropelException
-	 */
-	public function getsfGuardUserPermissions($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collsfGuardUserPermissions === null) {
-			if ($this->isNew()) {
-			   $this->collsfGuardUserPermissions = array();
-			} else {
-
-				$criteria->add(sfGuardUserPermissionPeer::USER_ID, $this->id);
-
-				sfGuardUserPermissionPeer::addSelectColumns($criteria);
-				$this->collsfGuardUserPermissions = sfGuardUserPermissionPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(sfGuardUserPermissionPeer::USER_ID, $this->id);
-
-				sfGuardUserPermissionPeer::addSelectColumns($criteria);
-				if (!isset($this->lastsfGuardUserPermissionCriteria) || !$this->lastsfGuardUserPermissionCriteria->equals($criteria)) {
-					$this->collsfGuardUserPermissions = sfGuardUserPermissionPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastsfGuardUserPermissionCriteria = $criteria;
-		return $this->collsfGuardUserPermissions;
-	}
-
-	/**
-	 * Returns the number of related sfGuardUserPermission objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related sfGuardUserPermission objects.
-	 * @throws     PropelException
-	 */
-	public function countsfGuardUserPermissions(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collsfGuardUserPermissions === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(sfGuardUserPermissionPeer::USER_ID, $this->id);
-
-				$count = sfGuardUserPermissionPeer::doCount($criteria, false, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(sfGuardUserPermissionPeer::USER_ID, $this->id);
-
-				if (!isset($this->lastsfGuardUserPermissionCriteria) || !$this->lastsfGuardUserPermissionCriteria->equals($criteria)) {
-					$count = sfGuardUserPermissionPeer::doCount($criteria, false, $con);
-				} else {
-					$count = count($this->collsfGuardUserPermissions);
-				}
-			} else {
-				$count = count($this->collsfGuardUserPermissions);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a sfGuardUserPermission object to this object
-	 * through the sfGuardUserPermission foreign key attribute.
-	 *
-	 * @param      sfGuardUserPermission $l sfGuardUserPermission
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addsfGuardUserPermission(sfGuardUserPermission $l)
-	{
-		if ($this->collsfGuardUserPermissions === null) {
-			$this->initsfGuardUserPermissions();
-		}
-		if (!in_array($l, $this->collsfGuardUserPermissions, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collsfGuardUserPermissions, $l);
-			$l->setsfGuardUser($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this sfGuardUser is new, it will return
-	 * an empty collection; or if this sfGuardUser has previously
-	 * been saved, it will retrieve related sfGuardUserPermissions from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in sfGuardUser.
-	 */
-	public function getsfGuardUserPermissionsJoinsfGuardPermission($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collsfGuardUserPermissions === null) {
-			if ($this->isNew()) {
-				$this->collsfGuardUserPermissions = array();
-			} else {
-
-				$criteria->add(sfGuardUserPermissionPeer::USER_ID, $this->id);
-
-				$this->collsfGuardUserPermissions = sfGuardUserPermissionPeer::doSelectJoinsfGuardPermission($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(sfGuardUserPermissionPeer::USER_ID, $this->id);
-
-			if (!isset($this->lastsfGuardUserPermissionCriteria) || !$this->lastsfGuardUserPermissionCriteria->equals($criteria)) {
-				$this->collsfGuardUserPermissions = sfGuardUserPermissionPeer::doSelectJoinsfGuardPermission($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastsfGuardUserPermissionCriteria = $criteria;
-
-		return $this->collsfGuardUserPermissions;
-	}
-
-	/**
-	 * Clears out the collsfGuardUserGroups collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addsfGuardUserGroups()
-	 */
-	public function clearsfGuardUserGroups()
-	{
-		$this->collsfGuardUserGroups = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collsfGuardUserGroups collection (array).
-	 *
-	 * By default this just sets the collsfGuardUserGroups collection to an empty array (like clearcollsfGuardUserGroups());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initsfGuardUserGroups()
-	{
-		$this->collsfGuardUserGroups = array();
-	}
-
-	/**
-	 * Gets an array of sfGuardUserGroup objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
-	 * related sfGuardUserGroups from storage. If this sfGuardUser is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array sfGuardUserGroup[]
-	 * @throws     PropelException
-	 */
-	public function getsfGuardUserGroups($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collsfGuardUserGroups === null) {
-			if ($this->isNew()) {
-			   $this->collsfGuardUserGroups = array();
-			} else {
-
-				$criteria->add(sfGuardUserGroupPeer::USER_ID, $this->id);
-
-				sfGuardUserGroupPeer::addSelectColumns($criteria);
-				$this->collsfGuardUserGroups = sfGuardUserGroupPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(sfGuardUserGroupPeer::USER_ID, $this->id);
-
-				sfGuardUserGroupPeer::addSelectColumns($criteria);
-				if (!isset($this->lastsfGuardUserGroupCriteria) || !$this->lastsfGuardUserGroupCriteria->equals($criteria)) {
-					$this->collsfGuardUserGroups = sfGuardUserGroupPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastsfGuardUserGroupCriteria = $criteria;
-		return $this->collsfGuardUserGroups;
-	}
-
-	/**
-	 * Returns the number of related sfGuardUserGroup objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related sfGuardUserGroup objects.
-	 * @throws     PropelException
-	 */
-	public function countsfGuardUserGroups(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collsfGuardUserGroups === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(sfGuardUserGroupPeer::USER_ID, $this->id);
-
-				$count = sfGuardUserGroupPeer::doCount($criteria, false, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(sfGuardUserGroupPeer::USER_ID, $this->id);
-
-				if (!isset($this->lastsfGuardUserGroupCriteria) || !$this->lastsfGuardUserGroupCriteria->equals($criteria)) {
-					$count = sfGuardUserGroupPeer::doCount($criteria, false, $con);
-				} else {
-					$count = count($this->collsfGuardUserGroups);
-				}
-			} else {
-				$count = count($this->collsfGuardUserGroups);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a sfGuardUserGroup object to this object
-	 * through the sfGuardUserGroup foreign key attribute.
-	 *
-	 * @param      sfGuardUserGroup $l sfGuardUserGroup
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addsfGuardUserGroup(sfGuardUserGroup $l)
-	{
-		if ($this->collsfGuardUserGroups === null) {
-			$this->initsfGuardUserGroups();
-		}
-		if (!in_array($l, $this->collsfGuardUserGroups, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collsfGuardUserGroups, $l);
-			$l->setsfGuardUser($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this sfGuardUser is new, it will return
-	 * an empty collection; or if this sfGuardUser has previously
-	 * been saved, it will retrieve related sfGuardUserGroups from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in sfGuardUser.
-	 */
-	public function getsfGuardUserGroupsJoinsfGuardGroup($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collsfGuardUserGroups === null) {
-			if ($this->isNew()) {
-				$this->collsfGuardUserGroups = array();
-			} else {
-
-				$criteria->add(sfGuardUserGroupPeer::USER_ID, $this->id);
-
-				$this->collsfGuardUserGroups = sfGuardUserGroupPeer::doSelectJoinsfGuardGroup($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(sfGuardUserGroupPeer::USER_ID, $this->id);
-
-			if (!isset($this->lastsfGuardUserGroupCriteria) || !$this->lastsfGuardUserGroupCriteria->equals($criteria)) {
-				$this->collsfGuardUserGroups = sfGuardUserGroupPeer::doSelectJoinsfGuardGroup($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastsfGuardUserGroupCriteria = $criteria;
-
-		return $this->collsfGuardUserGroups;
-	}
-
-	/**
-	 * Clears out the collsfGuardRememberKeys collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addsfGuardRememberKeys()
-	 */
-	public function clearsfGuardRememberKeys()
-	{
-		$this->collsfGuardRememberKeys = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collsfGuardRememberKeys collection (array).
-	 *
-	 * By default this just sets the collsfGuardRememberKeys collection to an empty array (like clearcollsfGuardRememberKeys());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initsfGuardRememberKeys()
-	{
-		$this->collsfGuardRememberKeys = array();
-	}
-
-	/**
-	 * Gets an array of sfGuardRememberKey objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
-	 * related sfGuardRememberKeys from storage. If this sfGuardUser is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array sfGuardRememberKey[]
-	 * @throws     PropelException
-	 */
-	public function getsfGuardRememberKeys($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collsfGuardRememberKeys === null) {
-			if ($this->isNew()) {
-			   $this->collsfGuardRememberKeys = array();
-			} else {
-
-				$criteria->add(sfGuardRememberKeyPeer::USER_ID, $this->id);
-
-				sfGuardRememberKeyPeer::addSelectColumns($criteria);
-				$this->collsfGuardRememberKeys = sfGuardRememberKeyPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(sfGuardRememberKeyPeer::USER_ID, $this->id);
-
-				sfGuardRememberKeyPeer::addSelectColumns($criteria);
-				if (!isset($this->lastsfGuardRememberKeyCriteria) || !$this->lastsfGuardRememberKeyCriteria->equals($criteria)) {
-					$this->collsfGuardRememberKeys = sfGuardRememberKeyPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastsfGuardRememberKeyCriteria = $criteria;
-		return $this->collsfGuardRememberKeys;
-	}
-
-	/**
-	 * Returns the number of related sfGuardRememberKey objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related sfGuardRememberKey objects.
-	 * @throws     PropelException
-	 */
-	public function countsfGuardRememberKeys(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collsfGuardRememberKeys === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(sfGuardRememberKeyPeer::USER_ID, $this->id);
-
-				$count = sfGuardRememberKeyPeer::doCount($criteria, false, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(sfGuardRememberKeyPeer::USER_ID, $this->id);
-
-				if (!isset($this->lastsfGuardRememberKeyCriteria) || !$this->lastsfGuardRememberKeyCriteria->equals($criteria)) {
-					$count = sfGuardRememberKeyPeer::doCount($criteria, false, $con);
-				} else {
-					$count = count($this->collsfGuardRememberKeys);
-				}
-			} else {
-				$count = count($this->collsfGuardRememberKeys);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a sfGuardRememberKey object to this object
-	 * through the sfGuardRememberKey foreign key attribute.
-	 *
-	 * @param      sfGuardRememberKey $l sfGuardRememberKey
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addsfGuardRememberKey(sfGuardRememberKey $l)
-	{
-		if ($this->collsfGuardRememberKeys === null) {
-			$this->initsfGuardRememberKeys();
-		}
-		if (!in_array($l, $this->collsfGuardRememberKeys, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collsfGuardRememberKeys, $l);
-			$l->setsfGuardUser($this);
-		}
 	}
 
 	/**
@@ -6027,6 +5471,562 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collsfGuardUserPermissions collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addsfGuardUserPermissions()
+	 */
+	public function clearsfGuardUserPermissions()
+	{
+		$this->collsfGuardUserPermissions = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collsfGuardUserPermissions collection (array).
+	 *
+	 * By default this just sets the collsfGuardUserPermissions collection to an empty array (like clearcollsfGuardUserPermissions());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initsfGuardUserPermissions()
+	{
+		$this->collsfGuardUserPermissions = array();
+	}
+
+	/**
+	 * Gets an array of sfGuardUserPermission objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related sfGuardUserPermissions from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array sfGuardUserPermission[]
+	 * @throws     PropelException
+	 */
+	public function getsfGuardUserPermissions($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collsfGuardUserPermissions === null) {
+			if ($this->isNew()) {
+			   $this->collsfGuardUserPermissions = array();
+			} else {
+
+				$criteria->add(sfGuardUserPermissionPeer::USER_ID, $this->id);
+
+				sfGuardUserPermissionPeer::addSelectColumns($criteria);
+				$this->collsfGuardUserPermissions = sfGuardUserPermissionPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(sfGuardUserPermissionPeer::USER_ID, $this->id);
+
+				sfGuardUserPermissionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastsfGuardUserPermissionCriteria) || !$this->lastsfGuardUserPermissionCriteria->equals($criteria)) {
+					$this->collsfGuardUserPermissions = sfGuardUserPermissionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastsfGuardUserPermissionCriteria = $criteria;
+		return $this->collsfGuardUserPermissions;
+	}
+
+	/**
+	 * Returns the number of related sfGuardUserPermission objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related sfGuardUserPermission objects.
+	 * @throws     PropelException
+	 */
+	public function countsfGuardUserPermissions(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collsfGuardUserPermissions === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(sfGuardUserPermissionPeer::USER_ID, $this->id);
+
+				$count = sfGuardUserPermissionPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(sfGuardUserPermissionPeer::USER_ID, $this->id);
+
+				if (!isset($this->lastsfGuardUserPermissionCriteria) || !$this->lastsfGuardUserPermissionCriteria->equals($criteria)) {
+					$count = sfGuardUserPermissionPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collsfGuardUserPermissions);
+				}
+			} else {
+				$count = count($this->collsfGuardUserPermissions);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a sfGuardUserPermission object to this object
+	 * through the sfGuardUserPermission foreign key attribute.
+	 *
+	 * @param      sfGuardUserPermission $l sfGuardUserPermission
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addsfGuardUserPermission(sfGuardUserPermission $l)
+	{
+		if ($this->collsfGuardUserPermissions === null) {
+			$this->initsfGuardUserPermissions();
+		}
+		if (!in_array($l, $this->collsfGuardUserPermissions, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collsfGuardUserPermissions, $l);
+			$l->setsfGuardUser($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related sfGuardUserPermissions from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getsfGuardUserPermissionsJoinsfGuardPermission($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collsfGuardUserPermissions === null) {
+			if ($this->isNew()) {
+				$this->collsfGuardUserPermissions = array();
+			} else {
+
+				$criteria->add(sfGuardUserPermissionPeer::USER_ID, $this->id);
+
+				$this->collsfGuardUserPermissions = sfGuardUserPermissionPeer::doSelectJoinsfGuardPermission($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(sfGuardUserPermissionPeer::USER_ID, $this->id);
+
+			if (!isset($this->lastsfGuardUserPermissionCriteria) || !$this->lastsfGuardUserPermissionCriteria->equals($criteria)) {
+				$this->collsfGuardUserPermissions = sfGuardUserPermissionPeer::doSelectJoinsfGuardPermission($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastsfGuardUserPermissionCriteria = $criteria;
+
+		return $this->collsfGuardUserPermissions;
+	}
+
+	/**
+	 * Clears out the collsfGuardUserGroups collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addsfGuardUserGroups()
+	 */
+	public function clearsfGuardUserGroups()
+	{
+		$this->collsfGuardUserGroups = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collsfGuardUserGroups collection (array).
+	 *
+	 * By default this just sets the collsfGuardUserGroups collection to an empty array (like clearcollsfGuardUserGroups());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initsfGuardUserGroups()
+	{
+		$this->collsfGuardUserGroups = array();
+	}
+
+	/**
+	 * Gets an array of sfGuardUserGroup objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related sfGuardUserGroups from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array sfGuardUserGroup[]
+	 * @throws     PropelException
+	 */
+	public function getsfGuardUserGroups($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collsfGuardUserGroups === null) {
+			if ($this->isNew()) {
+			   $this->collsfGuardUserGroups = array();
+			} else {
+
+				$criteria->add(sfGuardUserGroupPeer::USER_ID, $this->id);
+
+				sfGuardUserGroupPeer::addSelectColumns($criteria);
+				$this->collsfGuardUserGroups = sfGuardUserGroupPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(sfGuardUserGroupPeer::USER_ID, $this->id);
+
+				sfGuardUserGroupPeer::addSelectColumns($criteria);
+				if (!isset($this->lastsfGuardUserGroupCriteria) || !$this->lastsfGuardUserGroupCriteria->equals($criteria)) {
+					$this->collsfGuardUserGroups = sfGuardUserGroupPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastsfGuardUserGroupCriteria = $criteria;
+		return $this->collsfGuardUserGroups;
+	}
+
+	/**
+	 * Returns the number of related sfGuardUserGroup objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related sfGuardUserGroup objects.
+	 * @throws     PropelException
+	 */
+	public function countsfGuardUserGroups(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collsfGuardUserGroups === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(sfGuardUserGroupPeer::USER_ID, $this->id);
+
+				$count = sfGuardUserGroupPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(sfGuardUserGroupPeer::USER_ID, $this->id);
+
+				if (!isset($this->lastsfGuardUserGroupCriteria) || !$this->lastsfGuardUserGroupCriteria->equals($criteria)) {
+					$count = sfGuardUserGroupPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collsfGuardUserGroups);
+				}
+			} else {
+				$count = count($this->collsfGuardUserGroups);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a sfGuardUserGroup object to this object
+	 * through the sfGuardUserGroup foreign key attribute.
+	 *
+	 * @param      sfGuardUserGroup $l sfGuardUserGroup
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addsfGuardUserGroup(sfGuardUserGroup $l)
+	{
+		if ($this->collsfGuardUserGroups === null) {
+			$this->initsfGuardUserGroups();
+		}
+		if (!in_array($l, $this->collsfGuardUserGroups, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collsfGuardUserGroups, $l);
+			$l->setsfGuardUser($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related sfGuardUserGroups from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getsfGuardUserGroupsJoinsfGuardGroup($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collsfGuardUserGroups === null) {
+			if ($this->isNew()) {
+				$this->collsfGuardUserGroups = array();
+			} else {
+
+				$criteria->add(sfGuardUserGroupPeer::USER_ID, $this->id);
+
+				$this->collsfGuardUserGroups = sfGuardUserGroupPeer::doSelectJoinsfGuardGroup($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(sfGuardUserGroupPeer::USER_ID, $this->id);
+
+			if (!isset($this->lastsfGuardUserGroupCriteria) || !$this->lastsfGuardUserGroupCriteria->equals($criteria)) {
+				$this->collsfGuardUserGroups = sfGuardUserGroupPeer::doSelectJoinsfGuardGroup($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastsfGuardUserGroupCriteria = $criteria;
+
+		return $this->collsfGuardUserGroups;
+	}
+
+	/**
+	 * Clears out the collsfGuardRememberKeys collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addsfGuardRememberKeys()
+	 */
+	public function clearsfGuardRememberKeys()
+	{
+		$this->collsfGuardRememberKeys = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collsfGuardRememberKeys collection (array).
+	 *
+	 * By default this just sets the collsfGuardRememberKeys collection to an empty array (like clearcollsfGuardRememberKeys());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initsfGuardRememberKeys()
+	{
+		$this->collsfGuardRememberKeys = array();
+	}
+
+	/**
+	 * Gets an array of sfGuardRememberKey objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related sfGuardRememberKeys from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array sfGuardRememberKey[]
+	 * @throws     PropelException
+	 */
+	public function getsfGuardRememberKeys($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collsfGuardRememberKeys === null) {
+			if ($this->isNew()) {
+			   $this->collsfGuardRememberKeys = array();
+			} else {
+
+				$criteria->add(sfGuardRememberKeyPeer::USER_ID, $this->id);
+
+				sfGuardRememberKeyPeer::addSelectColumns($criteria);
+				$this->collsfGuardRememberKeys = sfGuardRememberKeyPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(sfGuardRememberKeyPeer::USER_ID, $this->id);
+
+				sfGuardRememberKeyPeer::addSelectColumns($criteria);
+				if (!isset($this->lastsfGuardRememberKeyCriteria) || !$this->lastsfGuardRememberKeyCriteria->equals($criteria)) {
+					$this->collsfGuardRememberKeys = sfGuardRememberKeyPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastsfGuardRememberKeyCriteria = $criteria;
+		return $this->collsfGuardRememberKeys;
+	}
+
+	/**
+	 * Returns the number of related sfGuardRememberKey objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related sfGuardRememberKey objects.
+	 * @throws     PropelException
+	 */
+	public function countsfGuardRememberKeys(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collsfGuardRememberKeys === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(sfGuardRememberKeyPeer::USER_ID, $this->id);
+
+				$count = sfGuardRememberKeyPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(sfGuardRememberKeyPeer::USER_ID, $this->id);
+
+				if (!isset($this->lastsfGuardRememberKeyCriteria) || !$this->lastsfGuardRememberKeyCriteria->equals($criteria)) {
+					$count = sfGuardRememberKeyPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collsfGuardRememberKeys);
+				}
+			} else {
+				$count = count($this->collsfGuardRememberKeys);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a sfGuardRememberKey object to this object
+	 * through the sfGuardRememberKey foreign key attribute.
+	 *
+	 * @param      sfGuardRememberKey $l sfGuardRememberKey
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addsfGuardRememberKey(sfGuardRememberKey $l)
+	{
+		if ($this->collsfGuardRememberKeys === null) {
+			$this->initsfGuardRememberKeys();
+		}
+		if (!in_array($l, $this->collsfGuardRememberKeys, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collsfGuardRememberKeys, $l);
+			$l->setsfGuardUser($this);
+		}
+	}
+
+	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -6038,21 +6038,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
-			if ($this->collsfGuardUserPermissions) {
-				foreach ((array) $this->collsfGuardUserPermissions as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
-			if ($this->collsfGuardUserGroups) {
-				foreach ((array) $this->collsfGuardUserGroups as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
-			if ($this->collsfGuardRememberKeys) {
-				foreach ((array) $this->collsfGuardRememberKeys as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 			if ($this->collRecuperationHints) {
 				foreach ((array) $this->collRecuperationHints as $o) {
 					$o->clearAllReferences($deep);
@@ -6136,11 +6121,23 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collsfGuardUserPermissions) {
+				foreach ((array) $this->collsfGuardUserPermissions as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
+			if ($this->collsfGuardUserGroups) {
+				foreach ((array) $this->collsfGuardUserGroups as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
+			if ($this->collsfGuardRememberKeys) {
+				foreach ((array) $this->collsfGuardRememberKeys as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} // if ($deep)
 
-		$this->collsfGuardUserPermissions = null;
-		$this->collsfGuardUserGroups = null;
-		$this->collsfGuardRememberKeys = null;
 		$this->collRecuperationHints = null;
 		$this->singlesfGuardUserProfile = null;
 		$this->collAccounts = null;
@@ -6158,6 +6155,9 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->collProjDeadlines = null;
 		$this->collLanlogs = null;
 		$this->collAttachmentFiles = null;
+		$this->collsfGuardUserPermissions = null;
+		$this->collsfGuardUserGroups = null;
+		$this->collsfGuardRememberKeys = null;
 	}
 
 } // BasesfGuardUser

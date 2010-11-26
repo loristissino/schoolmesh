@@ -138,11 +138,11 @@ public function executeBatch(sfWebRequest $request)
     $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
     $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
 
-	$result = $workplan->Approve($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions(), $this->getUser()->getCulture(), $this->getContext());
+    $result = $workplan->Approve($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions(), $this->getUser()->getCulture(), $this->getContext());
 
-	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+    $this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 
-	$this->redirect('plansandreports/list?page='.$page);
+    $this->redirect('plansandreports/list?page='.$page);
 
   }
 
@@ -419,7 +419,7 @@ public function executeBatch(sfWebRequest $request)
 		
 		try 
 		{
-			$odfdoc=$this->workplan->getOdf($this->doctype, $this->getContext(), $request->getParameter('template', ''));
+			$odfdoc=$this->workplan->getOdf($this->doctype, $this->getContext(), $request->getParameter('template', ''), true);
 		}
 		catch (Exception $e)
 		{
@@ -436,7 +436,7 @@ public function executeBatch(sfWebRequest $request)
 		}
 		catch (Exception $e)
 		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Conversion failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the contents.'));
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Conversion failed.'));
 			$this->redirect('plansandreports/export?id='. $this->workplan->getId());
 		}
 		

@@ -1,3 +1,8 @@
+# Revision xx:
+Changed is_reserved to is_confidential in wpinfo
+Added is_public in attachment_file
+
+
 # Revision 429:
 
 Cmnd_Alias SCHOOLMESH_USERFOLDER = /usr/bin/find -L /home/homeschoolmesh/users/*, /usr/bin/test -e /home/homeschoolmesh/users/*, /usr/bin/stat /home/homeschoolmesh/users/*, /usr/bin/file /home/homeschoolmesh/users/*, /bin/cp /home/homeschoolmesh/users/* /tmp/*schoolmesh, /bin/chmod 766 /tmp/*schoolmesh, /bin/cp /tmp/* /home/homeschoolmesh/users/*, /bin/chmod 644 /home/homeschoolmesh/users/*, /bin/rm /home/homeschoolmesh/users/*, /bin/mkdir /home/homeschoolmesh/users/*, /bin/rmdir /home/homeschoolmesh/users/*

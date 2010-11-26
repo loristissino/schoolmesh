@@ -1,5 +1,8 @@
 documents:
   is_secure: true
+
+serve:
+  is_secure: true
   
 all:
   is_secure: false

@@ -511,7 +511,7 @@ CREATE TABLE `wpinfo_type`
 	`template` TEXT,
 	`example` TEXT,
 	`is_required` TINYINT,
-	`is_reserved` TINYINT,
+	`is_confidential` TINYINT,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
@@ -1063,6 +1063,7 @@ CREATE TABLE `attachment_file`
 	`original_file_name` VARCHAR(255),
 	`uniqid` VARCHAR(50)  NOT NULL,
 	`file_size` BIGINT,
+	`is_public` TINYINT default 0,
 	`md5sum` VARCHAR(32),
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `attachment_file_U_1` (`uniqid`),

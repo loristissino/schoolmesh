@@ -191,9 +191,9 @@ propel:
     template:     longvarchar
     example:     longvarchar
     is_required:  boolean
-    is_reserved: boolean
+    is_confidential: boolean
 # state indicates in which of workplan's state this item type should be shown
-# is_reserved indicates that this field should not be published and should be seen only by the schoolmaster 
+# is_confidential indicates that this field should not be published and should be seen only by the schoolmaster 
 
   wpinfo:
     id: ~
@@ -341,15 +341,15 @@ propel:
     workstation_id:  { type: integer, foreignTable: workstation, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true}
     created_at: 
     updated_at:
-    is_online: { type: boolean, required: true, default: 0 }
+    is_online: { type: boolean, required: true, default: false }
     os_used: varchar(100)
 
   service:
     id:
     name: { type: varchar(40), index: true, unique: true }
-    is_enabled_by_default: { type: boolean, default: 0 }
+    is_enabled_by_default: { type: boolean, default: false }
     port:   { type: integer, required: true }
-    is_udp:  { type: boolean, default: 0 }
+    is_udp:  { type: boolean, default: false }
     _uniques:
       port_is_udp:  [port, is_udp]
 
@@ -371,6 +371,7 @@ propel:
     original_file_name: varchar
     uniqid: { type: varchar(50), required: true, index: unique }
     file_size: bigint
+    is_public: { type: boolean, default: false }
     md5sum: varchar(32)
     _uniques:
       tim: [base_table, base_id, md5sum]

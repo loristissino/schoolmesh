@@ -67,10 +67,10 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	protected $is_required;
 
 	/**
-	 * The value for the is_reserved field.
+	 * The value for the is_confidential field.
 	 * @var        boolean
 	 */
-	protected $is_reserved;
+	protected $is_confidential;
 
 	/**
 	 * @var        array Wpinfo[] Collection to store aggregation of Wpinfo objects.
@@ -181,13 +181,13 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [is_reserved] column value.
+	 * Get the [is_confidential] column value.
 	 * 
 	 * @return     boolean
 	 */
-	public function getIsReserved()
+	public function getIsConfidential()
 	{
-		return $this->is_reserved;
+		return $this->is_confidential;
 	}
 
 	/**
@@ -351,24 +351,24 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	} // setIsRequired()
 
 	/**
-	 * Set the value of [is_reserved] column.
+	 * Set the value of [is_confidential] column.
 	 * 
 	 * @param      boolean $v new value
 	 * @return     WpinfoType The current object (for fluent API support)
 	 */
-	public function setIsReserved($v)
+	public function setIsConfidential($v)
 	{
 		if ($v !== null) {
 			$v = (boolean) $v;
 		}
 
-		if ($this->is_reserved !== $v) {
-			$this->is_reserved = $v;
-			$this->modifiedColumns[] = WpinfoTypePeer::IS_RESERVED;
+		if ($this->is_confidential !== $v) {
+			$this->is_confidential = $v;
+			$this->modifiedColumns[] = WpinfoTypePeer::IS_CONFIDENTIAL;
 		}
 
 		return $this;
-	} // setIsReserved()
+	} // setIsConfidential()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -410,7 +410,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$this->template = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->example = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->is_required = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
-			$this->is_reserved = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
+			$this->is_confidential = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -756,7 +756,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 				return $this->getIsRequired();
 				break;
 			case 8:
-				return $this->getIsReserved();
+				return $this->getIsConfidential();
 				break;
 			default:
 				return null;
@@ -787,7 +787,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$keys[5] => $this->getTemplate(),
 			$keys[6] => $this->getExample(),
 			$keys[7] => $this->getIsRequired(),
-			$keys[8] => $this->getIsReserved(),
+			$keys[8] => $this->getIsConfidential(),
 		);
 		return $result;
 	}
@@ -844,7 +844,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 				$this->setIsRequired($value);
 				break;
 			case 8:
-				$this->setIsReserved($value);
+				$this->setIsConfidential($value);
 				break;
 		} // switch()
 	}
@@ -878,7 +878,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setTemplate($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setExample($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setIsRequired($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setIsReserved($arr[$keys[8]]);
+		if (array_key_exists($keys[8], $arr)) $this->setIsConfidential($arr[$keys[8]]);
 	}
 
 	/**
@@ -898,7 +898,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpinfoTypePeer::TEMPLATE)) $criteria->add(WpinfoTypePeer::TEMPLATE, $this->template);
 		if ($this->isColumnModified(WpinfoTypePeer::EXAMPLE)) $criteria->add(WpinfoTypePeer::EXAMPLE, $this->example);
 		if ($this->isColumnModified(WpinfoTypePeer::IS_REQUIRED)) $criteria->add(WpinfoTypePeer::IS_REQUIRED, $this->is_required);
-		if ($this->isColumnModified(WpinfoTypePeer::IS_RESERVED)) $criteria->add(WpinfoTypePeer::IS_RESERVED, $this->is_reserved);
+		if ($this->isColumnModified(WpinfoTypePeer::IS_CONFIDENTIAL)) $criteria->add(WpinfoTypePeer::IS_CONFIDENTIAL, $this->is_confidential);
 
 		return $criteria;
 	}
@@ -967,7 +967,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 
 		$copyObj->setIsRequired($this->is_required);
 
-		$copyObj->setIsReserved($this->is_reserved);
+		$copyObj->setIsConfidential($this->is_confidential);
 
 
 		if ($deepCopy) {

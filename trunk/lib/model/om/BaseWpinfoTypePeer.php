@@ -54,8 +54,8 @@ abstract class BaseWpinfoTypePeer {
 	/** the column name for the IS_REQUIRED field */
 	const IS_REQUIRED = 'wpinfo_type.IS_REQUIRED';
 
-	/** the column name for the IS_RESERVED field */
-	const IS_RESERVED = 'wpinfo_type.IS_RESERVED';
+	/** the column name for the IS_CONFIDENTIAL field */
+	const IS_CONFIDENTIAL = 'wpinfo_type.IS_CONFIDENTIAL';
 
 	/**
 	 * An identiy map to hold any loaded instances of WpinfoType objects.
@@ -80,10 +80,10 @@ abstract class BaseWpinfoTypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Description', 'Rank', 'State', 'Template', 'Example', 'IsRequired', 'IsReserved', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'description', 'rank', 'state', 'template', 'example', 'isRequired', 'isReserved', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::DESCRIPTION, self::RANK, self::STATE, self::TEMPLATE, self::EXAMPLE, self::IS_REQUIRED, self::IS_RESERVED, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'description', 'rank', 'state', 'template', 'example', 'is_required', 'is_reserved', ),
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Description', 'Rank', 'State', 'Template', 'Example', 'IsRequired', 'IsConfidential', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'description', 'rank', 'state', 'template', 'example', 'isRequired', 'isConfidential', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::DESCRIPTION, self::RANK, self::STATE, self::TEMPLATE, self::EXAMPLE, self::IS_REQUIRED, self::IS_CONFIDENTIAL, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'description', 'rank', 'state', 'template', 'example', 'is_required', 'is_confidential', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
@@ -94,10 +94,10 @@ abstract class BaseWpinfoTypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Description' => 2, 'Rank' => 3, 'State' => 4, 'Template' => 5, 'Example' => 6, 'IsRequired' => 7, 'IsReserved' => 8, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'state' => 4, 'template' => 5, 'example' => 6, 'isRequired' => 7, 'isReserved' => 8, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::DESCRIPTION => 2, self::RANK => 3, self::STATE => 4, self::TEMPLATE => 5, self::EXAMPLE => 6, self::IS_REQUIRED => 7, self::IS_RESERVED => 8, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'state' => 4, 'template' => 5, 'example' => 6, 'is_required' => 7, 'is_reserved' => 8, ),
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Description' => 2, 'Rank' => 3, 'State' => 4, 'Template' => 5, 'Example' => 6, 'IsRequired' => 7, 'IsConfidential' => 8, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'state' => 4, 'template' => 5, 'example' => 6, 'isRequired' => 7, 'isConfidential' => 8, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::DESCRIPTION => 2, self::RANK => 3, self::STATE => 4, self::TEMPLATE => 5, self::EXAMPLE => 6, self::IS_REQUIRED => 7, self::IS_CONFIDENTIAL => 8, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'state' => 4, 'template' => 5, 'example' => 6, 'is_required' => 7, 'is_confidential' => 8, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
@@ -176,7 +176,7 @@ abstract class BaseWpinfoTypePeer {
 		$criteria->addSelectColumn(WpinfoTypePeer::TEMPLATE);
 		$criteria->addSelectColumn(WpinfoTypePeer::EXAMPLE);
 		$criteria->addSelectColumn(WpinfoTypePeer::IS_REQUIRED);
-		$criteria->addSelectColumn(WpinfoTypePeer::IS_RESERVED);
+		$criteria->addSelectColumn(WpinfoTypePeer::IS_CONFIDENTIAL);
 	}
 
 	/**
