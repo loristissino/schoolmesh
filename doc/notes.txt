@@ -1,4 +1,4 @@
-# Revision xx:
+# Revision 498:
 Changed is_reserved to is_confidential in wpinfo
 Added is_public in attachment_file
 

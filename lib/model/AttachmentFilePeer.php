@@ -46,7 +46,7 @@ class AttachmentFilePeer extends BaseAttachmentFilePeer {
   }
 
 
-  public static function addAttachment($con, $object, $prefix, $user_id, sfValidatedFile $file=null, $result=array())
+  public static function addAttachment($con, $object, $prefix, $user_id, sfValidatedFile $file=null, $result=array(), $public=false)
   {
     
     return self::addAttachmentRoughly(
@@ -57,12 +57,13 @@ class AttachmentFilePeer extends BaseAttachmentFilePeer {
       $user_id,
       $file,
       $object,
-      $result
+      $result,
+      $public
       );
     
   }
   
-  public static function addAttachmentRoughly($con, $object_id, $class_id, $prefix, $user_id, sfValidatedFile $file=null, $object=null, $result=array())
+  public static function addAttachmentRoughly($con, $object_id, $class_id, $prefix, $user_id, sfValidatedFile $file=null, $object=null, $result=array(), $public=false)
 
   {
     if(sizeof($result)==0)
@@ -86,6 +87,7 @@ class AttachmentFilePeer extends BaseAttachmentFilePeer {
       ->setUserId($user_id)
       ->setBaseTable($class_id)
       ->setBaseId($object_id)
+      ->setIsPublic($public)
       ;
       
       if ($attachment->setFile($prefix, $file))

@@ -10,6 +10,7 @@
       <th class="sf_admin_text"><?php echo __('Type') ?></th>
       <th class="sf_admin_text"><?php echo __('File name') ?></th>
       <th class="sf_admin_text"><?php echo __('Size') ?></th>
+      <th class="sf_admin_text"><?php echo __('Public?') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
@@ -20,6 +21,7 @@
       <td><?php include_component('filebrowser', 'mimetype', array('mimetype'=>$attachment->getInternetMediaType())) ?></td>
       <td><?php echo $attachment->getOriginalFileName() ?></td>
       <td style="text-align: right"><?php echo Generic::getHumanReadableSize($attachment->getFileSize()) ?></td>
+  <?php include_partial('content/td_public', array('object'=>$attachment, 'owner'=>null)) ?>
       <td>
       <ul class="sf_admin_td_actions">
       <li class="sf_admin_action_download"><?php echo link_to(

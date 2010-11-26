@@ -49,18 +49,9 @@
 	  <?php endif ?>
 	</td>
       <td><?php  echo Generic::datetime($wpmodule->getUpdatedAt('U'), $sf_context) ?></td>
-      <td>
-	  <?php if ($wpmodule->getIsPublic()): ?>
-		<?php echo image_tag('public', 'title=' . __('public')) ?>
-	  <?php else: ?>
-		<?php if ($wpmodule->getOwner()->getIsMale()): ?>
-			<?php echo image_tag('male', 'title=' . __('private')) ?>
-		<?php else: ?>
-			<?php echo image_tag('female', 'title=' . __('private')) ?>
-		<?php endif ?>
-	  <?php endif ?>
-	</td>
-	  <?php if ($workplan->getState()>Workflow::WP_DRAFT): ?>
+  <?php include_partial('content/td_public', array('object'=>$wpmodule, 'owner'=>$wpmodule->getOwner())) ?>
+  
+<?php if ($workplan->getState()>Workflow::WP_DRAFT): ?>
 		<td><?php $missing=$wpmodule->getUnevaluated() ?>
 		<?php if ($missing>0): ?>
 			<?php echo image_tag('notdone') ?>

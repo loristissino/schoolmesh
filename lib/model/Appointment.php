@@ -1599,10 +1599,10 @@ public function getWpevents($criteria = null, PropelPDO $con = null)
     return AttachmentFilePeer::retrieveByClassAndId(get_class($this), $this->getId());
   }
   
-  public function addAttachment(sfValidatedFile $file=null)
+  public function addAttachment(sfValidatedFile $file=null, $public=false)
   {
     $con = Propel::getConnection(AppointmentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
-    return AttachmentFilePeer::addAttachment($con, $this, 'appointment', $this->getUserId(), $file);
+    return AttachmentFilePeer::addAttachment($con, $this, 'appointment', $this->getUserId(), $file, array(), $public);
   }
 
 
@@ -1631,7 +1631,8 @@ public function getWpevents($criteria = null, PropelPDO $con = null)
 		{
 			$odfdoc->saveFile();
       $vfile=Generic::getValidatedFile($odfdoc->getFilename(), $this->getFileTitle($complete, $context) . '.'. $format);
-      $this->addAttachment($vfile);
+      $this->addAttachment($vfile, !$complete);
+      //if the workplan is complete, we don't want it to be public...
       unset($odfdoc);
       unset($vfile);
       return true;
