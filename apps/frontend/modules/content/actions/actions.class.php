@@ -33,7 +33,7 @@ class contentActions extends sfActions
 		$indexFile=sprintf('%s/%s.yml', sfConfig::get('app_documents_main_directory'), $this->index);
 		$this->forward404Unless($this->content=sfYaml::load($indexFile));
 	}
-
+  
 
 	public function executeServe(sfWebRequest $request)
 	{

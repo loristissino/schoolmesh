@@ -67,6 +67,13 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 	protected $file_size;
 
 	/**
+	 * The value for the is_public field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $is_public;
+
+	/**
 	 * The value for the md5sum field.
 	 * @var        string
 	 */
@@ -94,6 +101,27 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 	// symfony behavior
 	
 	const PEER = 'AttachmentFilePeer';
+
+	/**
+	 * Applies default values to this object.
+	 * This method should be called from the object's constructor (or
+	 * equivalent initialization method).
+	 * @see        __construct()
+	 */
+	public function applyDefaultValues()
+	{
+		$this->is_public = false;
+	}
+
+	/**
+	 * Initializes internal state of BaseAttachmentFile object.
+	 * @see        applyDefaults()
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
 
 	/**
 	 * Get the [id] column value.
@@ -173,6 +201,16 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 	public function getFileSize()
 	{
 		return $this->file_size;
+	}
+
+	/**
+	 * Get the [is_public] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsPublic()
+	{
+		return $this->is_public;
 	}
 
 	/**
@@ -350,6 +388,26 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 	} // setFileSize()
 
 	/**
+	 * Set the value of [is_public] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     AttachmentFile The current object (for fluent API support)
+	 */
+	public function setIsPublic($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_public !== $v || $this->isNew()) {
+			$this->is_public = $v;
+			$this->modifiedColumns[] = AttachmentFilePeer::IS_PUBLIC;
+		}
+
+		return $this;
+	} // setIsPublic()
+
+	/**
 	 * Set the value of [md5sum] column.
 	 * 
 	 * @param      string $v new value
@@ -379,6 +437,10 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->is_public !== false) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -409,7 +471,8 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 			$this->original_file_name = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->uniqid = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->file_size = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->md5sum = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->is_public = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
+			$this->md5sum = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -419,7 +482,7 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 9; // 9 = AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 10; // 10 = AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating AttachmentFile object", $e);
@@ -764,6 +827,9 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 				return $this->getFileSize();
 				break;
 			case 8:
+				return $this->getIsPublic();
+				break;
+			case 9:
 				return $this->getMd5sum();
 				break;
 			default:
@@ -795,7 +861,8 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 			$keys[5] => $this->getOriginalFileName(),
 			$keys[6] => $this->getUniqid(),
 			$keys[7] => $this->getFileSize(),
-			$keys[8] => $this->getMd5sum(),
+			$keys[8] => $this->getIsPublic(),
+			$keys[9] => $this->getMd5sum(),
 		);
 		return $result;
 	}
@@ -852,6 +919,9 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 				$this->setFileSize($value);
 				break;
 			case 8:
+				$this->setIsPublic($value);
+				break;
+			case 9:
 				$this->setMd5sum($value);
 				break;
 		} // switch()
@@ -886,7 +956,8 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setOriginalFileName($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setUniqid($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setFileSize($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setMd5sum($arr[$keys[8]]);
+		if (array_key_exists($keys[8], $arr)) $this->setIsPublic($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setMd5sum($arr[$keys[9]]);
 	}
 
 	/**
@@ -906,6 +977,7 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(AttachmentFilePeer::ORIGINAL_FILE_NAME)) $criteria->add(AttachmentFilePeer::ORIGINAL_FILE_NAME, $this->original_file_name);
 		if ($this->isColumnModified(AttachmentFilePeer::UNIQID)) $criteria->add(AttachmentFilePeer::UNIQID, $this->uniqid);
 		if ($this->isColumnModified(AttachmentFilePeer::FILE_SIZE)) $criteria->add(AttachmentFilePeer::FILE_SIZE, $this->file_size);
+		if ($this->isColumnModified(AttachmentFilePeer::IS_PUBLIC)) $criteria->add(AttachmentFilePeer::IS_PUBLIC, $this->is_public);
 		if ($this->isColumnModified(AttachmentFilePeer::MD5SUM)) $criteria->add(AttachmentFilePeer::MD5SUM, $this->md5sum);
 
 		return $criteria;
@@ -974,6 +1046,8 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 		$copyObj->setUniqid($this->uniqid);
 
 		$copyObj->setFileSize($this->file_size);
+
+		$copyObj->setIsPublic($this->is_public);
 
 		$copyObj->setMd5sum($this->md5sum);
 

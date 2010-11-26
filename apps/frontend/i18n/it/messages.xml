@@ -440,7 +440,7 @@
       </trans-unit>
       <trans-unit id="138">
         <source>Intermediate / final report</source>
-        <target>Relazione finale</target>
+        <target>Relazione intermedia o finale in fase di redazione</target>
       </trans-unit>
       <trans-unit id="139">
         <source>Help</source>
@@ -468,7 +468,7 @@
       </trans-unit>
       <trans-unit id="145">
         <source>Final report waiting for schoolmaster`s evaluation</source>
-        <target>Relazione finale di approvazione dal parte del DS</target>
+        <target>Relazione finale in attesa di approvazione dal parte del DS</target>
       </trans-unit>
       <trans-unit id="146">
         <source>Final report approved and archived</source>
@@ -1802,6 +1802,18 @@
     <trans-unit id="472">
         <source>If you need the original versione, please use the attachments below.</source>
         <target>Se necessiti della versione originale, usa gli allegati elencati qui sotto.</target>
+    </trans-unit>
+    <trans-unit id="473">
+        <source>Operation failed.</source>
+        <target>Operazione fallita.</target>
+    </trans-unit>
+    <trans-unit id="474">
+        <source>Please ask the administrator to check the template.</source>
+        <target>Chiedi all'amministratore di controllare il template .</target>
+    </trans-unit>
+    <trans-unit id="475">
+        <source>Conversion failed.</source>
+        <target>Conversione fallita.</target>
     </trans-unit>
     </body>
   </file>

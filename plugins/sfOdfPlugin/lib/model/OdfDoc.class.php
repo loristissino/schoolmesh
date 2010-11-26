@@ -7,6 +7,7 @@ class OdfDoc
 	
 	private $_file2serve;
 	private $_type;
+  private $_mimetype;
 	private $_filename;
 	private $_template;
 	
@@ -38,7 +39,7 @@ class OdfDoc
 			);
 
 			$this->_odf = new Odf($this->_template, $this->_config);
-
+      
 		}
 		
 		
@@ -51,7 +52,7 @@ class OdfDoc
 		{
 		// We export the file
 		$this->_odf->saveToDisk($this->_file2serve);
-				
+		$this->_convert();
 		return $this;
 		
 		}
@@ -78,6 +79,7 @@ class OdfDoc
 				$filetype, $this->_file2serve, $converted);
 
 			OdfDocPeer::executeCommand($command);
+            
 		}
 		catch (Exception $e)
 		{
@@ -89,28 +91,35 @@ class OdfDoc
 		unlink($this->_file2serve);
 
 		$this->_file2serve = $converted;
+    
 	}
 	
+  private function _convert()
+  {
+
+    switch($this->_type)
+    {
+      case('doc'):
+        $this->_convertTo('doc');
+        $this->_mimetype="application/msword";
+        break;
+      case('pdf'):
+        $this->_convertTo('pdf');
+        $this->_mimetype="application/pdf";
+        break;
+      case('rtf'):
+        $this->_convertTo('rtf');
+        $this->_mimetype="text/rtf";
+        break;
+      default:
+        $this->_mimetype='application/vnd.oasis.opendocument.text';
+    }
+    
+  }
+  
 	public function setResponse($response)
 		{
-			switch($this->_type)
-			{
-				case('doc'):
-					$this->_convertTo('doc');
-					$mimetype="application/msword";
-					break;
-				case('pdf'):
-					$this->_convertTo('pdf');
-					$mimetype="application/pdf";
-					break;
-				case('rtf'):
-					$this->_convertTo('rtf');
-					$mimetype="text/rtf";
-					break;
-				default:
-					$mimetype='application/vnd.oasis.opendocument.text';
-			}
-			
+      
 			$filesize=filesize($this->_file2serve);
 			
 			if ($filesize==0)
@@ -121,7 +130,7 @@ class OdfDoc
 			$response->setHttpHeader('Pragma', '');
 			$response->setHttpHeader('Cache-Control', '');
 			$response->setHttpHeader('Content-Length', $filesize);
-			$response->setHttpHeader('Content-Type', $mimetype);
+			$response->setHttpHeader('Content-Type', $this->_mimetype);
 			$response->setHttpHeader('Content-Disposition', 'attachment; filename="' . $this->_filename . '"');
 			$response->setContent(fread(fopen($this->_file2serve, 'r'), $filesize));
 			unlink($this->_file2serve);

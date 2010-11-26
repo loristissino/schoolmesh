@@ -44,6 +44,7 @@ class AttachmentFileTableMap extends TableMap {
 		$this->addColumn('ORIGINAL_FILE_NAME', 'OriginalFileName', 'VARCHAR', false, 255, null);
 		$this->addColumn('UNIQID', 'Uniqid', 'VARCHAR', true, 50, null);
 		$this->addColumn('FILE_SIZE', 'FileSize', 'BIGINT', false, null, null);
+		$this->addColumn('IS_PUBLIC', 'IsPublic', 'BOOLEAN', false, null, false);
 		$this->addColumn('MD5SUM', 'Md5sum', 'VARCHAR', false, 32, null);
 		// validators
 	} // initialize()

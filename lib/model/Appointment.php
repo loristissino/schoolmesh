@@ -165,7 +165,7 @@ class Appointment extends BaseAppointment
 	return $state;
 
 	}
-	
+  
 	
 	public function getWpinfo($id)
 	{
@@ -986,7 +986,7 @@ public function getWorkflowLogs()
 				&&
 				$wpinfo->getContent()
 				&&
-				(!$wpinfo->getWpinfoType()->getIsReserved() || $complete)
+				(!$wpinfo->getWpinfoType()->getIsConfidential() || $complete)
 				)
 			{
 				$infos->infoTitle($wpinfo->getWpinfoType()->getTitle());
@@ -1606,13 +1606,15 @@ public function getWpevents($criteria = null, PropelPDO $con = null)
   }
 
 
-  public function createAttachment($complete=false, sfContext $context=null, $format='odt')
+  public function createAttachment($complete=false, sfContext $context=null, $format='')
   {
 
     if($format=='')
     {
-      $format=sfConfig::get('app_config_default_format', 'odt');
+      $format=sfConfig::get('app_config_default_format', 'pdf');
     }
+    
+    $format='pdf';
     
     try 
 		{
@@ -1649,7 +1651,7 @@ public function getWpevents($criteria = null, PropelPDO $con = null)
       $s=$context->getI18N()->__($s);
     }
     
-    return sprintf('%s_%s_%s (%s)', $this->getFullname(), $this->getSchoolclass()->getId(), $this->getSubject()->getShortcut(), $s);
+    return sprintf('%s_%s_%s (%s)%d', $this->getFullname(), $this->getSchoolclass()->getId(), $this->getSubject()->getShortcut(), $s, $this->getState());
     
   }
 

@@ -369,15 +369,6 @@ abstract class BasesfGuardUserPeer {
 	 */
 	public static function clearRelatedInstancePool()
 	{
-		// invalidate objects in sfGuardUserPermissionPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		sfGuardUserPermissionPeer::clearInstancePool();
-
-		// invalidate objects in sfGuardUserGroupPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		sfGuardUserGroupPeer::clearInstancePool();
-
-		// invalidate objects in sfGuardRememberKeyPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		sfGuardRememberKeyPeer::clearInstancePool();
-
 		// invalidate objects in RecuperationHintPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 		RecuperationHintPeer::clearInstancePool();
 
@@ -389,6 +380,15 @@ abstract class BasesfGuardUserPeer {
 
 		// invalidate objects in WpmodulePeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 		WpmodulePeer::clearInstancePool();
+
+		// invalidate objects in sfGuardUserPermissionPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
+		sfGuardUserPermissionPeer::clearInstancePool();
+
+		// invalidate objects in sfGuardUserGroupPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
+		sfGuardUserGroupPeer::clearInstancePool();
+
+		// invalidate objects in sfGuardRememberKeyPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
+		sfGuardRememberKeyPeer::clearInstancePool();
 
 	}
 
