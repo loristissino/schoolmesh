@@ -252,6 +252,9 @@ $con->query($sql);
     }
     
 		$con->beginTransaction();
+    
+    $email_needed=$steps[$this->getState()]['actions']['approve']['sendEmail'];
+    // we save the value before changing the state...
 
 		if($steps[$this->getState()]['actions']['approve']['submitExtraAction']!='')
 			$this->$steps[$this->getState()]['actions']['approve']['submitExtraAction']($steps[$this->getState()]['actions']['approve']['submitExtraParameters'], $con);
@@ -269,6 +272,17 @@ $con->query($sql);
 		
 		$result['result']='notice';
 		$result['message']=$message;
+    
+    if($email_needed && $this->getOwner()->getProfile()->sendWorkflowConfirmationMessage($context, 'document_approval',
+        array(
+          '%document_id%'=>$this->getId(),
+          '%document_state%'=>$context->getI18N()->__($steps[$this->getState()]['stateDescription']),
+          '%document_description%'=>$this->getDescription(),
+          )
+      ))
+    {
+      $result['mail_sent_to']=$this->getOwner()->getProfile()->getEmail();
+    }
 
 		return $result;
 	  }
@@ -280,7 +294,7 @@ $con->query($sql);
 
 	}
 
-	public function Reject($user_id, $permissions, $comment='')
+	public function Reject($user_id, $permissions, $comment='', $culture='it', sfContext $context=null)
 	{
 		
 	$result=Array();
@@ -305,6 +319,9 @@ $con->query($sql);
 	  {
 		$con->beginTransaction();
 
+    $email_needed=$steps[$this->getState()]['actions']['reject']['sendEmail'];
+    // we save this before updating the state...
+
 		if($steps[$this->getState()]['actions']['reject']['submitExtraAction']!='')
 			$this->$steps[$this->getState()]['actions']['reject']['submitExtraAction']($steps[$this->getState()]['actions']['reject']['submitExtraParameters'], $con);
 		
@@ -324,6 +341,19 @@ $con->query($sql);
 		
 		$result['result']='notice';
 		$result['message']=$message;
+    
+    
+    if($email_needed && $this->getOwner()->getProfile()->sendWorkflowConfirmationMessage($context, 'document_rejection',
+        array(
+          '%document_id%'=>$this->getId(),
+          '%document_state%'=>$context->getI18N()->__($steps[$this->getState()]['stateDescription']),
+          '%document_description%'=>$this->getDescription(),
+          '%message%'=>$message,
+          )
+      ))
+    {
+      $result['mail_sent_to']=$this->getOwner()->getProfile()->getEmail();
+    }
 
 		return $result;
 	  }

@@ -29,7 +29,7 @@ class plansandreportsActions extends sfActions
 			{
 				$params = $this->form->getValues();
 				
-				$result=$this->workplan->Reject($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions(), $params['comment']);
+				$result=$this->workplan->Reject($this->getUser()->getProfile()->getSfGuardUser()->getId(), $this->getUser()->getAllPermissions(), $params['comment'], $this->getUser()->getCulture(), $this->getContext());
 				
 				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 				

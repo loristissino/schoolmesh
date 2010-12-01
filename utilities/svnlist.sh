@@ -14,8 +14,10 @@ grep -v 'data/documents/testo.pdf' | \
 grep -v 'data/documents/main.yml' | \
 grep -v 'data/documents/quality.yml' | \
 grep -v 'utilities/fixauthor.sh' | \
-grep -v 'templates/email/document_submission.yml' | \
-grep -v 'templates/email/email_change_confirmation.yml' | \
+grep -v 'templates/email/document_submission.yml$' | \
+grep -v 'templates/email/document_approval.yml$' | \
+grep -v 'templates/email/document_rejection.yml$' | \
+grep -v 'templates/email/email_change_confirmation.yml$' | \
 grep -v 'templates/email/project_alert.yml' | \
 grep -v 'templates/oo/workplan20.odt$' | \
 grep -v 'templates/oo/workplan30.odt$' | \
