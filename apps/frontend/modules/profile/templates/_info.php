@@ -1,5 +1,5 @@
 <div class="info">
-  <h3><?php echo __("Who, when, where, what, why...") ?></h3>
+  <h3><?php echo __("Dashboard") ?></h3>
    <p>
   <?php if(!$sf_user->isAuthenticated()): ?>
         <?php echo __("Soft authentication: ") ?>
