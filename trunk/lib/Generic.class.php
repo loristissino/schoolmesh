@@ -353,5 +353,14 @@ class Generic{
 
     return $vfile;
   }
+  
+  
+  public static function timefromdate($date)
+  {
+    $year=substr($date,0,4);
+    $month=substr($date,4,2);
+    $day=substr($date,6,2);
+    return mktime(0,0,0,$month, $day, $year);
+  }
 
 }

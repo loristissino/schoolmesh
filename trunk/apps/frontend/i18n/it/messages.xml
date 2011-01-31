@@ -91,8 +91,8 @@
         <target>Puoi&amp;nbsp;fare&amp;nbsp;il&amp;nbsp;logout</target>
       </trans-unit>
       <trans-unit id="42">
-        <source>Who, when, where, what, why...</source>
-        <target>Chi, quando, dove, cosa, perch&#xE9;...</target>
+        <source>Dashboard</source>
+        <target>Bacheca</target>
       </trans-unit>
       <trans-unit id="43">
         <source>you were recognized as user &lt;b&gt;%username%&lt;/b&gt;  (%fullname%) by means of network logs. &lt;!--male--&gt;</source>
