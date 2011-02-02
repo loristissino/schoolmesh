@@ -67,7 +67,16 @@ class GoogleappsAccount extends Account
 	{
 		return $this;
 	}
-  
+
+	public function saveSettings($params)
+	{
+		$this
+		->setAccountSetting('request_date', str_replace('-', '', $params['request_date']))
+		->save();
+		return $this;
+	}
+
+
 	public function setFormDefaults(&$form)
 	{
 		if (! $form instanceof GoogleappsAccountForm)
@@ -75,16 +84,10 @@ class GoogleappsAccount extends Account
 			throw new Exception('The form must be a GoogleappsAccountForm instance');
 		}
 
-
 	$form->setDefaults(
 		array(
-			'id' => $this->getId(),
-			'used_files' => $this->getAccountInfo('used_files'),
-			'used_blocks' => $this->getAccountInfo('used_blocks'),
-			'soft_blocks_quota' => $this->getAccountSetting('soft_blocks_quota'),
-			'hard_blocks_quota' => $this->getAccountSetting('hard_blocks_quota'),
-			'soft_files_quota' => $this->getAccountSetting('soft_files_quota'),
-			'hard_files_quota' => $this->getAccountSetting('hard_files_quota'),
+    	'id' => $this->getId(),
+			'request_date' => Generic::timefromdate($this->getAccountSetting('request_date'))
 			)
 		);
 	}

@@ -1,9 +1,15 @@
 <?php
 	$raw_account=$sf_data->getRaw('account');
 ?>
-<?php use_helper('Javascript') ?>
 <?php use_helper('Form') ?>
 <?php use_helper('Object') ?>
+
+<?php use_stylesheet('ui-lightness/jquery-ui-1.8.custom.css') ?>
+<?php use_helper('Javascript') ?>
+<?php use_javascripts_for_form($form) ?>
+<?php use_javascript('jquery-ui-1.8.custom.min.js') ?>
+<?php use_javascript('datepicker') ?>
+<?php use_javascript('jquery.ui.datepicker-' . sfConfig::get('sf_default_culture') . '.js') ?>
 
 <?php slot('title', __('User management')) ?>
 <?php slot('breadcrumbs',
