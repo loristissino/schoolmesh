@@ -79,29 +79,40 @@ EOF;
     
     $username = substr($account_name, 0, strlen($account_name)-strlen($domain )-1);
     
-    echo $row . ": ", $username . ":";
+    //echo $row . ": ", $username . ":";
     
     $user=sfGuardUserProfilePeer::retrieveByUsername($username);
     
     if($user)
     {
-      echo $user->getProfile()->getFullName();
+//      echo $user->getProfile()->getFullName();
       $account=$user->getProfile()->getAccountByType('googleapps');
       if (!$account)
       {
         $account= new GoogleappsAccount();
         $account
         ->setUserId($user->getId());
+        $added=true;
+      }
+      else
+      {
+        $added=false;
       }
       
       $account
       ->updateInfoFromDataLine($data)
       ->save();
       
+      $this->logSection('account'.($added?'+':''), $user->getProfile()->getFullName(), null, $added?'INFO':'COMMENT');
+    
+      unset($user);
+      
+    }
+    else
+    {
+      $this->logSection('*unknown', $username, null, 'COMMENT');
     }
     
-    echo "\n";
-    unset($user);
     
     
     
