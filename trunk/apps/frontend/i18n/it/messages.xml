@@ -1323,8 +1323,8 @@
         <target>Griglia di osservazione per «%subject%» (classe %class%)</target>
       </trans-unit>
       <trans-unit id="357">
-        <source>All selected students</source>
-        <target>Tutti gli studenti</target>
+        <source>Selected students</source>
+        <target>Studenti selezionati</target>
       </trans-unit>
       <trans-unit id="358">
         <source>Toggle selection for all students</source>
@@ -1332,7 +1332,7 @@
       </trans-unit>
       <trans-unit id="359">
         <source>All selected students</source>
-        <target>Tutti gli studenti</target>
+        <target>Tutti gli studenti selezionati</target>
       </trans-unit>
       <trans-unit id="360">
         <source>[0]currently selected|[1]currently selected</source>

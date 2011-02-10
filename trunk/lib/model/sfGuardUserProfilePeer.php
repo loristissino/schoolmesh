@@ -850,4 +850,29 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	}
 
 */
+
+  public static function compareUsersByLastFirst($a, $b)
+  {
+    $a=$a->getProfile();
+    $b=$b->getProfile();
+    if ($a->getLastName()==$b->getLastName())
+    {
+      if ($a->getFirstName()==$b->getFirstName())
+      {
+        return 0;
+      }
+      return $a->getFirstName()<$b->getFirstName() ? -1: 1;
+    }
+    return $a->getLastName()<$b->getLastName() ? -1: 1;
+  }
+  
+  public static function retrieveByPksSortedByLastnames($ids)
+  {
+    $users=sfGuardUserPeer::retrieveByPks($ids);
+    @usort($users, 'self::compareUsersByLastFirst');
+    // if I don't put the silence operator here above, I getallheaders
+    // Warning: usort(): Array was modified by the user comparison function
+    return $users;
+  }
+
 }
