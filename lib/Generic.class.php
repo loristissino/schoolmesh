@@ -363,5 +363,26 @@ class Generic{
     
     return mktime(0,0,0,$month, $day, $year);
   }
+  
+  public static function getBaseUrl()
+  {
+    // return the URL depending on the fact that the request is coming from inside
+    // or outside the LAN
+    if (self::netMatch(sfConfig::get('app_config_local_addresses'), $_SERVER['REMOTE_ADDR']))
+    {
+      return sfConfig::get('app_config_lan_url');
+    }
+    else
+    {
+      return sfConfig::get('app_config_wan_url');
+    }
+  }
+
+  public static function netMatch ($CIDR,$IP)
+  {
+    // from http://php.net/manual/en/function.ip2long.php
+    list ($net, $mask) = explode ('/', $CIDR);
+    return (ip2long ($IP) & ~((1 << (32 - $mask)) - 1) ) == ip2long ($net);
+  }
 
 }

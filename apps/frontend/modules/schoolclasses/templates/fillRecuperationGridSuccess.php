@@ -98,7 +98,9 @@
 	</li>
 </ul>
 <hr />
+<?php //echo $form // this was put here for assessment date - never used actually?>
 
+<hr />
 <h2><?php echo __('Actions') ?></h2>
 <ul class="sf_admin_actions">
 	<li class="sf_admin_action_export">

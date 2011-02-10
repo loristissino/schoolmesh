@@ -19,7 +19,11 @@ all:
     current_year:   2009 # only the first of the two years of a scholastic/academic year
     current_term:   Term1
     culture: it
-    base_url: 'http://www.schoolmesh.mattiussilab.localhost'
+    base_url: 'http://www.schoolmesh.example.com'
+    lan_url: 'http://192.168.0.1/schoolmesh'
+    wan_url: 'https://intranet.mattiussilab.net/schoolmesh'
+    local_addresses: '192.168.0.0/16'
+
     users_max_per_page: 100
     appointments_max_per_page: 30
     posix_homedir: /home/testhome 

@@ -77,7 +77,7 @@ public function executeFillRecuperationGrid(sfWebRequest $request)
 	$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
 	$this->hints=RecuperationHintPeer::retrieveAllByRankForTeacher($this->appointment->getUserId());
 	
-	$this->students = sfGuardUserPeer::retrieveByPks($this->getUser()->getAttribute('ids'));
+	$this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($this->getUser()->getAttribute('ids'));
 
 //	$this->ids=Generic::b64_serialize($ids);
 	
@@ -87,6 +87,14 @@ public function executeFillRecuperationGrid(sfWebRequest $request)
 			$this->forward('schoolclasses', 'redirect');
 		}
 
+  /*
+  $this->form=new AssessmentDateForm();
+  $this->form->setDefaults(array(
+    'id'=>$this->appointment->getId(),
+    'assessment_date'=>$this->getUser()->getAttribute('assessment_date')
+  ));
+  */
+  
 /*
     $ids = $request->getParameter('ids');
     $this->students = sfGuardUserPeer::retrieveByPks($ids);
@@ -156,7 +164,7 @@ public function executeGetRecuperationLetters(sfWebRequest $request)
 
 		$ids = $this->getUser()->getAttribute('ids');
 		
-		$this->students = sfGuardUserPeer::retrieveByPks($ids);
+		$this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($ids);
 		
 		$term_id=sfConfig::get('app_config_current_term');
 	

@@ -61,6 +61,7 @@ EOF;
 	$row = 0;
 	$synchronized=0;
 	$skipped=0;
+  $unknown_usernames=array();
 	
 	$handle = fopen($file, "r");
 	while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
@@ -76,6 +77,7 @@ EOF;
 			}
 
     $account_name = $data[2];
+    $date=$data[0];
     
     $username = substr($account_name, 0, strlen($account_name)-strlen($domain )-1);
     
@@ -99,79 +101,29 @@ EOF;
         $added=false;
       }
       
-      $account
-      ->updateInfoFromDataLine($data)
-      ->save();
-      
-      $this->logSection('account'.($added?'+':''), $user->getProfile()->getFullName(), null, $added?'INFO':'COMMENT');
+      if($date<$account->getAccountInfo('date'))
+      {
+        $account
+        ->updateInfoFromDataLine($data)
+        ->save();
+        $this->logSection('account'.($added?'+':''), $user->getProfile()->getFullName(), null, 'INFO');
+        $synchronized++;
+      }
+      else
+      {
+        $this->logSection('account'.($added?'+':''), $user->getProfile()->getFullName() . ' (already up to date)', null, 'COMMENT');
+        $skipped++;
+      }
     
       unset($user);
       
     }
     else
     {
-      $this->logSection('*unknown', $username, null, 'COMMENT');
+      $unknown_usernames[]=$username;
     }
     
     
-    
-    
-//		list($username, $schoolclass, $subject, $year)=$data; 
-
-/*		$sfUser= sfGuardUserProfilePeer::retrieveByUsername($username);
-		if(!$sfUser)
-			{
-				$this->log($this->formatter->format(sprintf('   Username %s does not exist, skipping', $username), 'ERROR'));
-				$skipped++;
-				continue;
-			}
-			
-		$mysubject = SubjectPeer::retrieveByShortcut($subject);
-		if(!$mysubject)
-			{
-				$this->log($this->formatter->format(sprintf('   Subject %s does not exist', $subject), 'ERROR'));
-				$skipped++;
-				continue;
-			}
-
-		$myclass= SchoolclassPeer::retrieveByPK($schoolclass);
-		if(!$myclass)
-			{
-				$this->log($this->formatter->format(sprintf('   Class %s does not exist, skipping', $schoolclass), 'ERROR'));
-				$skipped++;
-				continue;
-			}
-
-		$myyear= YearPeer::retrieveByPK($year);
-		if(!$myyear)
-			{
-				$this->log($this->formatter->format(sprintf('   Year %s does not exist, skipping', $year), 'ERROR'));
-				$skipped++;
-				continue;
-			}
-
-		$appointment=AppointmentPeer::retrieveByUsernameSchoolclassSubjectYear($username,$schoolclass, $subject, $year);
-		if($appointment)
-			{
-				$this->log($this->formatter->format('   Appointment already exists, skipping', 'ERROR'));
-				$skipped++;
-				continue;
-			}
-		
-		$appointment=new Appointment();
-		
-		$appointment->setUserId($sfUser->getId());
-		$appointment->setSubject($mysubject);
-		$appointment->setSchoolclass($myclass);
-		$appointment->setYear($myyear);
-		$appointment->setState(0);
-		$appointment->save();
-		$appointment->getChecks();
-
-		
-		$imported++;
-		$this->log($this->formatter->format(sprintf('   Appointment %s (%s, %s) imported', $username, $schoolclass, $subject), 'INFO'));
-*/
 	}
 
 
@@ -179,7 +131,10 @@ EOF;
 
 	$this->log($this->formatter->format(sprintf('Synchronized %d accounts, skipped %d', $synchronized, $skipped), 'COMMENT'));
 
-	
+  foreach ($unknown_usernames as $username)
+  {
+    $this->logSection('unknown', $username, null, 'COMMENT');
+  }
 	
   }
 }
