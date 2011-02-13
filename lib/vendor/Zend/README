@@ -1,0 +1,7 @@
+# Since it is not possible to add single files via svn, when they need to be got
+# from a different repo, you'll need to download the files directly:
+
+wget http://framework.zend.com/svn/framework/standard/trunk/library/Zend/Loader.php
+wget http://framework.zend.com/svn/framework/standard/trunk/library/Zend/Exception.php
+wget http://framework.zend.com/svn/framework/standard/trunk/library/Zend/Gdata.php
+
