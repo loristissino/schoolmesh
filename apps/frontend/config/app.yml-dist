@@ -40,7 +40,9 @@ all:
     moodle_access: http://www.mattiussilab.net/intranet/moodle_schoolmesh.php
     accounts: [ posix, login, samba, googleapps ]
     googleapps_key: aNoThErSuPeRsEkReTkEy
-    googleapps_domain: mattiussilab.net
+    googleapps_domain: example.com
+    googleapps_policy_url: http://www.google.com/apps/intl/it/terms/use_policy.html
+
     major_age: 18
 
     

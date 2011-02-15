@@ -207,6 +207,12 @@ class Account extends BaseAccount
 	{
 		return false;
 	}
+  
+  public function getPasswordIsSynchronizable()
+	{
+		return false;
+	}
+  
 
 	protected function makeComparisons(&$checkList, $checks, $checkGroup)
 	{
