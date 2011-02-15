@@ -122,6 +122,77 @@ class profileActions extends sfActions
 	
 	}  
 
+  public function executeSyncaccountpassword(sfWebRequest $request)
+	{
+		$availableAccounts=sfConfig::get('app_config_accounts');
+		$type=$request->getParameter('type');
+		
+		$user=$this->getUser();
+		$profile=$user->getProfile();
+		
+		$this->form=new SyncPasswordForm();
+
+		$this->account=$profile->getAccountByType($type);
+
+		if ($request->isMethod('post'))
+		{
+			$this->form->bind($request->getParameter('userinfo'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				$type=$params['type'];
+				
+				$this->account=$profile->getAccountByType($type);
+				$this->forward404unless($this->account);
+				
+				/*FIXME This should be done with a specific Account-class method */
+				
+        if (!$params['accept_terms'])
+        {
+					$this->getUser()->setFlash('error',
+						$this->getContext()->getI18N()->__('You must accept service terms to proceed.')
+						);
+          $this->redirect('profile/syncaccountpassword?type=' . $type);
+
+        }
+        
+				if (Authentication::checkSambaPassword($user->getUsername(), $params['current_password']))
+				{
+					$this->account->changePassword($params['current_password'], true);
+					
+					$this->getUser()->setFlash('notice',
+						$this->getContext()->getI18N()->__('Password successfully synchronized.')
+						);
+				}
+				else
+				{
+					$this->getUser()->setFlash('error',
+						$this->getContext()->getI18N()->__('The password could not be synchronized, due to authentication failure.')
+						);
+				}
+				$this->redirect('profile/viewaccount?type=' . $type);
+					
+			}
+			else
+			{
+				$params=$request->getParameter('userinfo');
+				$type=$params['type'];
+				$this->account=$profile->getAccountByType($type);
+			}
+			
+		}
+
+		
+		$this->forward404unless($this->account);
+		
+		$this->form->setDefaults(
+			array(
+				'type'=>$this->account->getAccountType(),
+			)
+		);
+
+	
+	}  
 
 
   public function executeEditprofile(sfWebRequest $request)

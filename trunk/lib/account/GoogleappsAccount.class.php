@@ -92,5 +92,18 @@ class GoogleappsAccount extends Account
 		);
 	}
 
+  public function getPasswordIsSynchronizable()
+	{
+		return true;
+	}
+  
+  public function getBasicInfo()
+	{
+		$info=array(
+			'Quota in MiB'=>$this->getAccountInfo('quota_in_mb'),
+			'Status'=>$this->getAccountInfo('status'),
+		);
+		return $info;
+	}
 
 }

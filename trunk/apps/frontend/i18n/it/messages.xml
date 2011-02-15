@@ -1815,6 +1815,34 @@
         <source>Conversion failed.</source>
         <target>Conversione fallita.</target>
     </trans-unit>
+    <trans-unit id="476">
+        <source>By using this account, you agree to follow the policy defined in the document available online at %url%.</source>
+        <target>Con l'uso di questo account, dichiari di accettare le condizioni definite nel documento disponibile online all'indirizzo %url%.</target>
+    </trans-unit>
+    <trans-unit id="477">
+        <source>Terms of Service</source>
+        <target>Condizioni di fornitura</target>
+    </trans-unit>
+    <trans-unit id="478">
+        <source>Synchronize password</source>
+        <target>Sincronizza la password</target>
+    </trans-unit>
+    <trans-unit id="479">
+        <source>Accept terms</source>
+        <target>Accetto le condizioni</target>
+    </trans-unit>
+    <trans-unit id="480">
+        <source>You must accept service terms to proceed.</source>
+        <target>Devi accettare le condizioni di fornitura per procedere.</target>
+    </trans-unit>
+    <trans-unit id="481">
+        <source>The password could not be synchronized, due to authentication failure.</source>
+        <target>Non è stato possibile sincronizzare la password, a causa di problemi nell'autenticazione.</target>
+    </trans-unit>
+    <trans-unit id="482">
+        <source>Password successfully synchronized.</source>
+        <target>Password correttamente sincronizzata.</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
