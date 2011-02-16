@@ -1843,6 +1843,22 @@
         <source>Password successfully synchronized.</source>
         <target>Password correttamente sincronizzata.</target>
     </trans-unit>
+    <trans-unit id="483">
+        <source>Activate account</source>
+        <target>Attiva l'account</target>
+    </trans-unit>
+    <trans-unit id="484">
+        <source>Request date</source>
+        <target>Data richiesta</target>
+    </trans-unit>
+    <trans-unit id="485">
+        <source>Accept terms date</source>
+        <target>Accett. condizioni</target>
+    </trans-unit>
+    <trans-unit id="486">
+        <source>Go to login page</source>
+        <target>Vai alla pagina di login</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

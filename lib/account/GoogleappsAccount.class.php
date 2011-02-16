@@ -94,16 +94,92 @@ class GoogleappsAccount extends Account
 
   public function getPasswordIsSynchronizable()
 	{
-		return true;
+		return $this->getAccountInfo('status')=='ACTIVE';
 	}
+  
+  public function getLoginUrl()
+  {
+    return sfConfig::get('app_config_' . $this->getAccountType() . '_url','');
+  }
   
   public function getBasicInfo()
 	{
 		$info=array(
 			'Quota in MiB'=>$this->getAccountInfo('quota_in_mb'),
-			'Status'=>$this->getAccountInfo('status'),
+			'Request date'=>$this->getAccountSetting('request_date'),
+      'Accept terms date'=>$this->getAccountSetting('accept_terms_date'),
 		);
 		return $info;
 	}
+
+  public function changePassword($password, $is_reset=false)
+	{
+      if (!$this->client=self::authenticate())
+      {
+        throw new Exception('Could not authenticate to Google Apps Server.');
+      }
+      
+      $gdata = new Zend_Gdata_Gapps($this->client, sfConfig::get('app_config_googleapps_domain'));
+      
+      $user = $gdata->retrieveUser($this->getUsername());
+      
+      if (!$user)
+      {
+        throw new Exception('User not found.');
+      }
+      
+      if ($user->login->suspended)
+      {
+        throw new Exception('User suspended.');
+      }
+      
+      // see http://framework.zend.com/manual/en/zend.gdata.gapps.html
+
+      $user->login->password = $password;
+      $user->save();
+      
+      if ($this->getAccountSetting('accept_terms_date')=='')
+      {
+        $this
+        ->setAccountSetting('accept_terms_date', date('Ymd'))
+        ->save();
+      }
+  
+      return $this;
+	}
+
+
+  static public function authenticate()
+  {
+    
+    ProjectConfiguration::registerZend();
+
+    $credentials=sfConfig::get('app_config_googleapps_admin_credentials');
+    $email = $credentials[0];
+    $passwd = $credentials[1];
+    try 
+    {
+      $client = Zend_Gdata_ClientLogin::getHttpClient($email, $passwd, Zend_Gdata_Gapps::AUTH_SERVICE_NAME);
+    } 
+    catch (Zend_Gdata_App_CaptchaRequiredException $cre) 
+    {
+      /*
+      echo 'URL of CAPTCHA image: ' . $cre->getCaptchaUrl() . "\n";
+      echo 'Token ID: ' . $cre->getCaptchaToken() . "\n";
+      */
+      // FIXME This should be reported in a log file...
+      return null;
+    } 
+    catch (Zend_Gdata_App_AuthException $ae) 
+    {
+      /*
+      echo 'Problem authenticating: ' . $ae->exception() . "\n";
+      */
+      // FIXME This should be reported in a log file...
+      return null;
+    }
+    return $client;
+  }
+
 
 }
