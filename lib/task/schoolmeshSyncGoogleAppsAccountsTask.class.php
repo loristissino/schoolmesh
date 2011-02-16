@@ -72,7 +72,36 @@ EOF;
 
 		if ($row==1)
 			{
-				// We could check whether the field names are correct...
+				// We check whether the field names are correct...
+        if (sizeof(array_diff(
+          array(  
+          'date',
+          'account_id',
+          'account_name',
+          'status',
+          'quota_in_mb',
+          'usage_in_bytes',
+          'primary_account_id',
+          'primary_account_name',
+          'creation_date',
+          'last_login_date',
+          'last_web_mail_date',
+          'surname',
+          'given_name',
+          'service_tier',
+          'channel',
+          'suspension_reason',
+          'last_pop_date',
+          'creation_time',
+          'last_login_time',
+          'last_web_mail_time',
+          'last_pop_time'
+          ), $data))!=0)
+          {
+            $this->log($this->formatter->format(sprintf('Headers do not match', $file), 'ERROR'));
+            return 2;
+          }
+        
 			continue;  // we skip the first line
 			}
 
@@ -101,7 +130,7 @@ EOF;
         $added=false;
       }
       
-      if($date<$account->getAccountInfo('date'))
+      if($date>$account->getAccountInfo('date'))
       {
         $account
         ->updateInfoFromDataLine($data)
