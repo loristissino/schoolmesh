@@ -156,13 +156,25 @@ class profileActions extends sfActions
 
         }
         
-				if (Authentication::checkSambaPassword($user->getUsername(), $params['current_password']))
+        $function=sfConfig::get('app_sf_guard_plugin_check_password_callable');
+        $function=$function[0].'::'.$function[1];
+        
+				if (call_user_func($function, $user->getUsername(), $params['current_password']))
 				{
-					$this->account->changePassword($params['current_password'], true);
-					
-					$this->getUser()->setFlash('notice',
+          try
+          {
+            $this->account->changePassword($params['current_password'], true);
+            $this->getUser()->setFlash('notice',
 						$this->getContext()->getI18N()->__('Password successfully synchronized.')
 						);
+
+					}
+          catch (Exception $e)
+          {
+            $this->getUser()->setFlash('error',
+              $this->getContext()->getI18N()->__('The password could not be synchronized at this time, due to technical reasons.') . ' ' . $this->getContext()->getI18N()->__($e->getMessage())
+              );
+          }
 				}
 				else
 				{

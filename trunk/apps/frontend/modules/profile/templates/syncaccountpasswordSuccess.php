@@ -30,7 +30,8 @@
     <?php echo $form ?>
 	<tr>
       <td colspan="2">
-         <input type="submit" name="save" value="<?php echo __('Synchronize password') ?>">
+         <input type="submit" name="save" value="<?php echo 
+         ($account->getAccountSetting('accept_terms_date')!=''? __('Synchronize password'): __('Activate account'))?>">
       </td>
     </tr>
   </table>

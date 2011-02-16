@@ -213,6 +213,10 @@ class Account extends BaseAccount
 		return false;
 	}
   
+  public function getLoginUrl()
+  {
+    return false;
+  }
 
 	protected function makeComparisons(&$checkList, $checks, $checkGroup)
 	{

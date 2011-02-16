@@ -37,14 +37,6 @@ EOF;
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
 
     // add your code here
-	
-	
-  ProjectConfiguration::registerZend();
-
-  
-  $t=new testgapp();
-  $t->doquery();
-  return;
   
   
 //	$this->logSection(sfContext::getInstance()->getI18N()->__('Workplan'), 'COMMENT');

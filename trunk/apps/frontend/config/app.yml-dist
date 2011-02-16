@@ -33,8 +33,6 @@ all:
     students_default_posix_group: students
     class_teachersteam_prefix: cdc  # for the new team of teachers automatically created, and the name will be prefixed with this
     class_teachersteam_name: Class Council
-    googleapps_domain: example.com
-    googleapps_url: http://webmail.example.com
     moodle_key: aSekRetTokEnShAred # used for quasi-SSO with Moodle
     moodle_url: http://www.mattiussilab.net/moodle/
     moodle_access: http://www.mattiussilab.net/intranet/moodle_schoolmesh.php
@@ -42,6 +40,9 @@ all:
     googleapps_key: aNoThErSuPeRsEkReTkEy
     googleapps_domain: example.com
     googleapps_policy_url: http://www.google.com/apps/intl/it/terms/use_policy.html
+    googleapps_admin_credentials: [ schoolmeshadmin@example.com, NoReAsOnToTeLlYoU ]
+    googleapps_url: http://webmail.example.com
+
 
     major_age: 18
 
