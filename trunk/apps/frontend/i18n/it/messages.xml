@@ -1859,6 +1859,10 @@
         <source>Go to login page</source>
         <target>Vai alla pagina di login</target>
     </trans-unit>
+    <trans-unit id="487">
+        <source>Required.</source>
+        <target>Richiesto.</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

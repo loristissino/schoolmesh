@@ -42,7 +42,6 @@ class GoogleappsAccount extends Account
       ) as $fieldname)
       {
         if(!in_array($fieldname, array(
-          'date',
           'account_name',
           'surname',
           'given_name',
@@ -55,6 +54,11 @@ class GoogleappsAccount extends Account
       }
     
     $this->setInfoUpdatedAt(Generic::timefromdate($data[0]));
+    
+    if ($this->getAccountSetting('request_date'))
+    {
+      $this->setAccountSetting('accept_terms_date', $this->getAccountSetting('request_date'));
+    }
     return $this;
   }
   
