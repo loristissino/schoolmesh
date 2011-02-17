@@ -7,14 +7,14 @@
 		)?>
 		</li>
   <?php endif ?>
-  <?php if ($sf_user->hasCredential('schoolmaster')): ?>
+  <?php if ($sf_user->hasCredential('schoolmaster') or $sf_user->hasCredential('project')): ?>
 	<li class="sf_admin_action_view">
 		<?php echo link_to(__('View'),
 			url_for('projects/view?id=' . $project->getId()),
 			array('title'=>__('See the report for this project'))
 		)?>
 		</li>
-  <?php if($project->getsfGuardUser()->getProfile()->getHasValidatedEmail()): ?>
+  <?php if($project->isReadyForEmail()): ?>
   <li class="sf_admin_action_email">
 		<?php echo link_to(__('Email'),
 			url_for('projects/email?id=' . $project->getId()),

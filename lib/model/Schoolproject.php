@@ -23,11 +23,25 @@ class Schoolproject extends BaseSchoolproject {
   
   public function isEditableBy($user)
   {
-    return 
+    return
+      (
       $user->getProfile()->getUserId()===$this->getUserId()
       || 
       $user->hasCredential('admin')
-      ;
+      )
+      &&
+      $this->getState()<Workflow::PROJ_FINISHED;
+      
+  }
+  
+  public function isReadyForEmail()
+  {
+    return
+      (
+      $this->getsfGuardUser()->getProfile()->getHasValidatedEmail()
+      &&
+      $this->getState()<Workflow::PROJ_FINISHED
+      );
   }
   
   public function isViewableBy($user)

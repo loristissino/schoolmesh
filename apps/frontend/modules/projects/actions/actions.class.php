@@ -29,6 +29,9 @@ class projectsActions extends sfActions
   
   public function executeView(sfWebRequest $request)
   {
+    
+   $this->year=$this->getUser()->getAttribute('year', sfConfig::get('app_config_current_year'));
+   $this->years = YearPeer::retrieveAll();
     $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPK($request->getParameter('id')));
     
     $this->projects=Array($this->project);

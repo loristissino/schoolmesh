@@ -55,22 +55,17 @@
 
 */ ?>
 
-
-<?php if ($sf_user->hasCredential('office')): ?>
-<h2><?php echo __('Office actions') ?></h2>
+<h2><?php echo __('Activities') ?></h2>
 <ul class="sf_admin_actions">
-    <li class="sf_admin_action_items"><?php echo link_to(__('Manage appointments'), 'plansandreports/list') ?></li>
-</ul>
-<?php endif ?>
-
-<?php if ($sf_user->hasCredential('schoolmaster')): ?>
-<h2><?php echo __("Schoolmaster's actions") ?></h2>
-<ul class="sf_admin_actions">
+<?php if ($sf_user->hasCredential('office') or $sf_user->hasCredential('schoolmaster')): ?>
     <li class="sf_admin_action_items"><?php echo link_to(__('Manage appointments'), 'plansandreports/list') ?></li><br />
-    <li class="sf_admin_action_items"><?php echo link_to(__('Manage projects'), 'projects/monitor') ?></li>
-</ul>
 <?php endif ?>
 
+
+<?php if ($sf_user->hasCredential('project') or $sf_user->hasCredential('schoolmaster')): ?>
+    <li class="sf_admin_action_items"><?php echo link_to(__('Manage projects'), 'projects/monitor') ?></li><br />
+<?php endif ?>
+</ul>
 <?php /* Since we don't really use this, we keep it secret 
 <?php if (sizeof($teams)>0): ?>
 

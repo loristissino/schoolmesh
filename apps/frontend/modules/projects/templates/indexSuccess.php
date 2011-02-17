@@ -14,7 +14,7 @@
 
 <div class="sf_admin_list">
 
-<?php if ($sf_user->hasCredential('schoolmaster')): ?>
+<?php if ($sf_user->hasCredential('schoolmaster') or $sf_user->hasCredential('project')): ?>
 <p><?php echo link_to(
 	__('See as report'),
 	url_for('projects/monitor?template=report')
