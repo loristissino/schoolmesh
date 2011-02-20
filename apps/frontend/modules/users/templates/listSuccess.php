@@ -12,7 +12,7 @@
 ?><h1><?php echo __("User management")?></h1>
 
 <?php //include_partial('filter', array('filtered_role_id'=>$filtered_role_id, 'filtered_schoolclass_id'=>$filtered_schoolclass_id)) ?>
-<?php include_partial('filter2', array('roles'=>$roles, 'filtered_role_id'=>$filtered_role_id, 'filtered_schoolclass_id'=>$filtered_schoolclass_id, 'schoolclasses'=>$schoolclasses)) ?>
+<?php //include_partial('filter2', array('roles'=>$roles, 'filtered_role_id'=>$filtered_role_id, 'filtered_schoolclass_id'=>$filtered_schoolclass_id, 'schoolclasses'=>$schoolclasses)) ?>
 
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
@@ -21,24 +21,29 @@
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
 
+<?php include_partial('content/searchbox', array('query'=>$query)) ?>
+
 <?php include_partial('content/pagerhead', array('pager'=>$pager)) ?>
 
-<?php include_partial('content/pager', array('pager'=>$pager, 'link'=>'users/list')) ?>
+<?php include_partial('content/pager', array('pager'=>$pager, 'link'=>'users/list', 'query'=>$query)) ?>
 
+
+<?php if($pager->getNbResults()>0): ?>
+  
 <form action="<?php echo url_for('users/batch') ?>" method="post">
 
 <table cellspacing="0">
   <thead>
     <tr>
 	  <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
-
-      <th class="sf_admin_text"><?php echo link_to(__('G'), url_for( 'users/setsortlistpreference?sortby=gender')) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('Username'), url_for( 'users/setsortlistpreference?sortby=username')) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('Import Code'), url_for( 'users/setsortlistpreference?sortby=importcode')) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('Role'), url_for( 'users/setsortlistpreference?sortby=role')) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('First name'), url_for('users/setsortlistpreference?sortby=firstname')) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('Last name'), url_for( 'users/setsortlistpreference?sortby=lastname')) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('Alerts'), url_for('users/setsortlistpreference?sortby=alerts')) ?></th>
+      <th class="sf_admin_text" style="text-align: right"><?php echo __('#') ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('G'), url_for( 'users/setsortlistpreference?sortby=gender&query='.$query)) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Username'), url_for( 'users/setsortlistpreference?sortby=username&query='.$query)) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Import Code'), url_for( 'users/setsortlistpreference?sortby=importcode&query='.$query)) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Role'), url_for( 'users/setsortlistpreference?sortby=role&query='.$query)) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('First name'), url_for('users/setsortlistpreference?sortby=firstname&query='.$query)) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Last name'), url_for( 'users/setsortlistpreference?sortby=lastname&query='.$query)) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Alerts'), url_for('users/setsortlistpreference?sortby=alerts&query='.$query)) ?></th>
       <th class="sf_admin_text"><?php echo __('Accounts') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
@@ -51,9 +56,18 @@
 	<td>
   <input type="checkbox" name="ids[]" value="<?php echo $user->getUserId() ?>" class="sf_admin_batch_checkbox" />
 </td>
-
+      <td style="text-align: right"><?php echo $i ?></td>
       <td><?php include_partial('gender', array('gender'=>$user->getGender())) ?></td>
-      <td<?php if(!$user->getSfGuardUser()->getIsActive()) echo ' class="notcurrent"' ?>><?php echo $user->getUsername() ?></td>
+      <td<?php if(!$user->getSfGuardUser()->getIsActive()) echo ' class="notcurrent"' ?>>
+      
+      <?php echo link_to(
+				 $user->getUsername(),
+				'users/edit?id='.$user->getSfGuardUser()->getId(),
+				array('title'=>__('Edit information about %user%', array('%user%'=>$user->getFullName())))
+				)
+      ?>
+      
+      </td>
       <td><?php echo $user->getImportCode() ?></td>
       <td><?php echo $user->getRoleDescription() ?></td>
       <td><?php echo $user->getFirstName() ?></td>
@@ -65,7 +79,16 @@
 	  </td>
 	  <td>
 		<?php foreach ($user->getAccounts() as $account): ?>
-			<?php echo image_tag($account->getAccountType(), 'title=' .$account->getAccountType()) ?>
+			<?php echo link_to(
+        image_tag($account->getAccountType()),
+        url_for('users/editaccount?id='. $account->getId()),
+        array('title'=>
+        __('Edit account «%accounttype%» of %user%', 
+          array(
+            '%accounttype%'=>$account->getAccountType(),
+            '%user%'=>$user->getFullname()
+            )))
+        ) ?>
 		<?php endforeach ?>
 	 </td>
 	<td><?php include_partial('actions', array('user'=>$user)) ?></td>
@@ -76,7 +99,7 @@
   </tbody>
 </table>
 
-<?php include_partial('content/pager', array('pager'=>$pager, 'link'=>'users/list')) ?>
+<?php include_partial('content/pager', array('pager'=>$pager, 'link'=>'users/list', 'query'=>$query)) ?>
 
 <?php include_partial('plansandreports/checkalljs') ?>
  <ul class="sf_admin_actions">
@@ -91,11 +114,11 @@
   'getgoogleappsletter' => __('Get GoogleApps letter'),
   'getgoogleappsdata' => __('Get GoogleApps data'),
   'getlist' => __('Get list choosing a template'),
+  'email' => __('Write an email'),
 ), 0) ?>
   </select>
 
 <?php echo submit_tag(_('Ok')) ?>
-
 </li>
 <li class="sf_admin_action_new">
 <?php
@@ -107,7 +130,8 @@ url_for('users/new')
 
 </ul>
 
-
-</ul>
-
 </form>
+<?php endif ?>
+
+<?php use_javascript('searchfocus.js') ?>
+

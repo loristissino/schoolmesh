@@ -31,31 +31,9 @@
 		<?php echo link_to(__('Upload appointments'), url_for('users/upload?what=appointments'), array('title'=>__(SentencePeer::getSentence('users_bulk_upload_appointments'))))?>
 	</li><br />
 	<li class="sf_admin_action_userchecks">
-		<?php echo link_to(__('Run user checks'), 'users/runuserchecks', array('title'=>__(SentencePeer::getSentence('run_user_checks')))) ?>
-		(<?php echo __('deprecated') ?>)
-	</li><br />
-	<li class="sf_admin_action_userchecks">
 		<?php echo link_to(__('Run team checks'), 'users/runteamchecks', array('title'=>__(SentencePeer::getSentence('run_team_checks')))) ?>
 	</li><br />
 	</ul>
 
 <p><?php echo image_tag('star') ?> <?php echo __('Years, Roles, Subjects, Reserved usernames, and Tracks can be managed only in the backend application.') ?></p>
 
-<h3><?php echo __('Google Apps accounts') ?></h3>
-
-	<ul class="sf_admin_actions">
-	<li class="sf_admin_action_upload">
-		<?php echo link_to(__('Upload Google Apps data'), 'users/uploadgoogleappsdata', array('title'=>__(SentencePeer::getSentence('ga_csv_upload')))) ?>
-	</li><br />
-	<li class="sf_admin_action_export">
-		<?php echo link_to(__('Download CSV file to update Google Apps'), url_for('users/googleappsfile?sf_format=txt'), array('title'=>__(SentencePeer::getSentence('ga_csv_download')))) ?>
-	</li><br />
-	</ul>
-
-<h3><?php echo __('Moodle accounts') ?></h3>
-
-	<ul class="sf_admin_actions">
-	<li class="sf_admin_action_export">
-		<?php echo link_to(__('Download CSV file to update Moodle'), url_for('users/moodlefile?sf_format=txt'), array('title'=>__(SentencePeer::getSentence('moodle_csv_download')))) ?>
-	</li><br />
-	</ul>

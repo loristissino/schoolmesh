@@ -96,7 +96,7 @@ class Account extends BaseAccount
     public function getAccountSetting($key)
 	{
 		$this->_settings=unserialize($this->getSettings());
-		if (array_key_exists($key, $this->_settings))
+		if (is_array($this->_settings) and array_key_exists($key, $this->_settings))
 		{
 			return $this->_settings[$key];
 		}

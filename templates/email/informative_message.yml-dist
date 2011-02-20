@@ -1,0 +1,15 @@
+message:
+  subject: Informazioni
+  salutation: true
+  body: |
+  
+
+    Cordiali saluti,
+
+        %sender_fullname%
+        %sender_email%
+
+  tagline: |
+    Attenzione:
+    Questo messaggio è stato generato automaticamente.
+

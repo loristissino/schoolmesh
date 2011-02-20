@@ -96,6 +96,20 @@ EOF
     if ($sfContext)
     {
       $this->getHeaders()->addTextHeader('X-SchooMesh-RealSender', $sfContext->getUser()->getProfile()->getUsername());
+
+      
+      if ($sfContext->getUser()->getProfile()->getHasValidatedEmail())
+      {
+
+        $this->getHeaders()->addTextHeader('Reply-To', 
+          sprintf('%s <%s>', 
+            $sfContext->getUser()->getProfile()->getUsername(),
+            $sfContext->getUser()->getProfile()->getValidatedEmail()
+            )
+          );
+      }
+      
+      
     }
     
     return $this;
@@ -114,7 +128,7 @@ EOF
     
   }
   
-  public function parseTemplate($template, sfGuardUserProfile $addressee, sfContext $sfContext=null)
+  public function parseTemplate($template, $addressee, sfContext $sfContext=null)
   {
     $filename=$this->getTemplateDirectory() . '/' . $template;
     if (!is_readable($filename))
@@ -125,15 +139,18 @@ EOF
     $config=sfYaml::load($filename);
         
     $subject=$config['message']['subject'];
-    
-    if ($config['message']['salutation'])
+
+    $body='';
+
+    if ($addressee instanceof sfGuardUserProfile)
     {
-      $body = $addressee->getSalutation($sfContext) . "\n";
-    } 
-    else
-    {
-      $body = '';
+      if ($config['message']['salutation'])
+      {
+        $body = $addressee->getSalutation($sfContext) . "\n";
+      } 
+
     }
+    
   
     $body .= $config['message']['body'];
 

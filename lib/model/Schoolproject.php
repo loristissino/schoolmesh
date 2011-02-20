@@ -69,12 +69,17 @@ class Schoolproject extends BaseSchoolproject {
     $c->add(ProjDeadlinePeer::CURRENT_DEADLINE_DATE, time(), Criteria::LESS_THAN);
     $c->add(ProjDeadlinePeer::COMPLETED, false);
     $deadlines=ProjDeadlinePeer::doSelect($c);
-    $text='';
-    foreach($deadlines as $deadline)
+    
+    if(array_key_exists('astext', $options) and $options['astext'])
     {
-      $text.='* ' . $deadline->getCurrentDeadlineDate('d/m/Y') . ': ' . $deadline->getDescription() . "\n";
+      $text='';
+      foreach($deadlines as $deadline)
+      {
+        $text.='* ' . $deadline->getCurrentDeadlineDate('d/m/Y') . ': ' . $deadline->getDescription() . "\n";
+      }
+      return $text;
     }
-    return $text;
+    return $deadlines;
   }
   
   
