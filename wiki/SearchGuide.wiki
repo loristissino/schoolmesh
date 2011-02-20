@@ -1,0 +1,143 @@
+#summary Guida alle funzioni di ricerca - Breve introduzione all'uso del motore di ricerca Lucene in SchoolMesh
+
+= Come effettuare le ricerche in SchoolMesh =
+
+== Introduzione ==
+
+I dati di SchoolMesh vengono archiviati in una base di dati relazionale e vengono periodicamente indicizzati tramite Zend Lucene.
+
+Attualmente (febbraio 2011) vengono indicizzati solo i dati relativi agli utenti.
+
+Il linguaggio per le interrogazioni è sia potente sia semplice da usare. Quella che segue è solo una breve introduzione. Ulteriori informazioni possono essere trovate nella guida in linea nel [http://zendframework.com/manual/en/zend.search.lucene.query-language.html sito web dedicato a Zend Lucene].
+
+== Terminologia ==
+
+I *termini* sono le cose di cui si compone un'interrogazione. Possono essere parole semplici, frasi (gruppi di parole racchiuse tra virgolette doppie) oppure sottointerrogazioni (interrogazioni racchiuse tra parentesi tonde).
+
+{{{
+Il mio cane Pluto
+}}}
+
+cercerà tutti i documenti che hanno le parole _il_ oppure _mio_ oppure _cane_ oppure _pluto_ nel titolo, nelle note, ecc.
+
+{{{
+"Il mio cane Pluto"
+}}}
+
+cercherà invece tutti i documenti che contengono esattamente la frase _il mio cane pluto_.
+
+I *campi* sono modi per essere più specifici nell'effettuare una ricerca, indicando dove guardare esattamente. Ad esempio, è possibile cercare una parola solo nel cognome di una persona, oppure solo nel nome.
+
+{{{
+firstname:Giorgio
+}}}
+
+Gli *intervalli* servono a specificare dei limiti al cui interno cercare qualcosa.
+
+{{{
+birthdate:[19920101 TO 19931231]
+}}}
+
+cercherà tutti la cui data di nascita è compresa tra il 1 gennaio 1992 e il 31 dicembre 1993, estremi inclusi (usando le parentesi graffe si sarebbero esclusi gli estremi).
+
+== Operatori booleani ==
+
+Gli *operatori booleani* consentono di combinare i termini di ricerca.
+
+{{{
+firstname:Andrea AND role:docenti
+}}}
+
+cercherà i documenti con _Andrea_ nel campo nome *e* _docenti_ nel campo ruolo, mentre
+
+{{{
+firstname:Andrea OR role:docenti
+}}}
+
+cercherà quelli con una delle due corrispondenze (o entrambe).
+
+È possibile anche specificare l'operatore NOT, come in
+
+{{{
+allievi AND NOT accounts:googleapps
+}}}
+
+Gli operatori booleani possono essere espressi anche in minuscolo, oppure sostituiti da `&&` (and) `||` (or) e '!` (not).
+
+È possibile anche usare `+` e `-`, come in
+
+{{{
++docenti -email:none
+}}}
+
+= Ricerche comuni (utenti) =
+
+Qui di seguito vengono presentate alcune ricerche comuni, con il relativo significato.
+
+{{{
+docenti
+}}}
+
+Tutti i docenti.
+
+{{{
+docenti AND active:true
+}}}
+
+Tutti i docenti in servizio (attivi).
+
+{{{
+docenti AND active:true AND email:none
+}}}
+
+Tutti i docenti in servizio che *non hanno* un indirizzo di posta elettronica convalidato.
+
+{{{
+(docenti and active:true) -email:none
+}}}
+
+Tutti i docenti in servizio che *hanno* un indirizzo di posta elettronica convalidato.
+
+{{{
+allievi
+}}}
+
+Tutti gli allievi.
+
+{{{
+4AIG
+}}}
+
+Tutti gli allievi della classe 4AIG.
+
+{{{
+4AIG and gender:M
+}}}
+
+Tutti gli allievi *maschi* della classe 4AIG.
+
+{{{
+4AIG and gender:F
+}}}
+
+Tutti le allieve della classe 4AIG.
+
+{{{
+allievi and birthday:[0701 TO 0731]
+}}}
+
+Allievi che compiono gli anni in luglio.
+
+{{{
+googleapps
+}}}
+
+Utenti con un account googleapps.
+
+{{{
+posix
+}}}
+
+Utenti con un account posix.
+
+
