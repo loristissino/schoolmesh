@@ -148,6 +148,16 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		return parent::doSelect($c);
 	}
 
+	public static function retrieveAllSortedByLastName()
+	{
+		$c = new Criteria();
+		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
+    $c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
+		
+		return parent::doSelect($c);
+	}
+
 
 	public static function retrieveTeachers($year=0)
 	{
@@ -874,5 +884,64 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
     // Warning: usort(): Array was modified by the user comparison function
     return $users;
   }
+
+  public static function getLuceneIndex()
+  {
+    return Generic::getLuceneIndex('users');
+  }
+
+  static public function getForLuceneQuery($query, $max_results, $page, $sortby='lastname')
+  {
+    try
+    {
+      // Lucene outputs a notice if the query is malformed... 
+      $hits = @self::getLuceneIndex()->find($query);
+    }
+    catch (Exception $e)
+    {
+      return new sfPropelPager('sfGuardUserProfile');
+    }
+
+    $pks = array();
+    foreach ($hits as $hit)
+    {
+      $pks[] = $hit->pk;
+    }
+   
+    $c = new Criteria();
+    $c->add(self::USER_ID, $pks, Criteria::IN);
+    $c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
+    $c->addJoin(sfGuardUserProfilePeer::ROLE_ID, RolePeer::ID, Criteria::LEFT_JOIN);
+
+    switch($sortby)
+    {
+      case 'gender': 	$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::GENDER); break;
+      case 'username': 	$c->addAscendingOrderByColumn(sfGuardUserPeer::USERNAME); break;
+      case 'importcode': 	$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::IMPORT_CODE); break;
+      case 'firstname': 	$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME); break;
+      case 'lastname': 	$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME); break;
+      case 'role': 	$c->addAscendingOrderByColumn(RolePeer::MALE_DESCRIPTION); break;
+      case 'blocks': 	$c->addDescendingOrderByColumn(sfGuardUserProfilePeer::DISK_USED_BLOCKS); break;
+      case 'files': 	$c->addDescendingOrderByColumn(sfGuardUserProfilePeer::DISK_USED_FILES); break;
+      case 'alerts': 	$c->addDescendingOrderByColumn(sfGuardUserProfilePeer::SYSTEM_ALERTS); break;
+
+      default: $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+    }
+
+
+
+    $pager = new sfPropelPager(
+      'sfGuardUserProfile',
+      $max_results
+    );
+    
+    $pager->setCriteria($c);
+    $pager->setPage($page);
+    $pager->init();
+    
+    return $pager;
+  }
+
+
 
 }

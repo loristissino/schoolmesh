@@ -385,4 +385,52 @@ class Generic{
     return (ip2long ($IP) & ~((1 << (32 - $mask)) - 1) ) == ip2long ($net);
   }
 
+  static public function getLuceneIndex($name)
+  {
+    ProjectConfiguration::registerZend();
+   
+    if (file_exists($index = self::getLuceneIndexFile($name)))
+    {
+      return Zend_Search_Lucene::open($index);
+    }
+   
+    return Zend_Search_Lucene::create($index);
+  }
+  
+  static public function getLuceneIndexFile($name)
+  {
+    return sprintf('%s/%s.%s.index',
+      sfConfig::get('app_lucene_directory'),
+      $name,
+      sfConfig::get('sf_environment')
+      );
+  }
+
+  static public function logMessage($section, $content, $file='', $line='')
+  {
+   
+    ob_start();
+    echo "\n--------- " . $section;
+    if($line || $file)
+    {
+      echo "\n > " . $file . ' (line '. $line . ')';
+    }
+    echo "\n > " . date('H:i:s') . "\n";
+    if($content)
+    {
+      print_r($content);
+    }
+    else
+    {
+      echo "[no content]";
+    }
+    
+    echo "\n";
+    $f=fopen('/var/schoolmesh/web/schoolmeshlog.txt', 'a');
+    fwrite($f, ob_get_contents());
+    fclose($f);
+    ob_end_clean();
+  }
+
+
 }

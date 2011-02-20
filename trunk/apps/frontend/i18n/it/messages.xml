@@ -1863,8 +1863,95 @@
         <source>Required.</source>
         <target>Richiesto.</target>
     </trans-unit>
+    <trans-unit id="488">
+        <source>Role</source>
+        <target>Ruolo</target>
+    </trans-unit>
+    <trans-unit id="488">
+        <source>Import Code</source>
+        <target>Codice imp.</target>
+    </trans-unit>
+    <trans-unit id="489">
+        <source>On line help</source>
+        <target>Guida in linea</target>
+    </trans-unit>
+    <trans-unit id="489">
+        <source>Search</source>
+        <target>Cerca</target>
+    </trans-unit>
+    <trans-unit id="490">
+        <source>Show help page about search queries</source>
+        <target>Mostra pagina di aiuto sulle ricerche</target>
+    </trans-unit>
+    <trans-unit id="491">
+        <source>opens in a popup window</source>
+        <target>si apre in una finestra popup</target>
+    </trans-unit>
+    <trans-unit id="492">
+        <source>Insert some keywords</source>
+        <target>Inserisci qualche parola chiave</target>
+    </trans-unit>
+    <trans-unit id="493">
+        <source>Edit account «%accounttype%» of %user%</source>
+        <target>Modifica account «%accounttype%» di %user%</target>
+    </trans-unit>
+    <trans-unit id="494">
+        <source>Edit information about %user%</source>
+        <target>Modifica informazioni relative a %user%</target>
+    </trans-unit>
+    <trans-unit id="495">
+        <source>Undelete %user%</source>
+        <target>Ripristina %user%</target>
+    </trans-unit>
+    <trans-unit id="495">
+        <source>Undelete</source>
+        <target>Ripristina</target>
+    </trans-unit>
+    <trans-unit id="496">
+        <source>male</source>
+        <target>M</target>
+    </trans-unit>
+    <trans-unit id="497">
+        <source>female</source>
+        <target>F</target>
+    </trans-unit>
+    <trans-unit id="498">
+        <source>Activities</source>
+        <target>Attività</target>
+    </trans-unit>
+    <trans-unit id="499">
+        <source>Manage users</source>
+        <target>Gestione utenti</target>
+    </trans-unit>
+    <trans-unit id="500">
+        <source>Administration</source>
+        <target>Amministrazione</target>
+    </trans-unit>
+    <trans-unit id="501">
+        <source>G</source><!-- gender -->
+        <target>S</target>
+    </trans-unit>
+    <trans-unit id="502">
+        <source>#</source>
+        <target>N.</target>
+    </trans-unit>
+    <trans-unit id="503">
+        <source>Alerts</source>
+        <target>Avvertimenti</target>
+    </trans-unit>
+    <trans-unit id="504">
+        <source>No message could be sent.</source>
+        <target>Non è stato possibile spedire alcun messaggio.</target>
+    </trans-unit>
+    <trans-unit id="505">
+        <source>Number of messages correctly sent: %number%.</source>
+        <target>Numero di messaggi correttamente spediti: %number%,</target>
+    </trans-unit>
+    <trans-unit id="506">
+        <source>The message has been correctly sent.</source>
+        <target>Il messaggio è stato correttamente spedito.</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
-
 

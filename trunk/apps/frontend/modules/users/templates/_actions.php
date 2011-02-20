@@ -3,7 +3,7 @@
 					<?php echo link_to(
 				__('Edit'),
 				'users/edit?id='.$user->getSfGuardUser()->getId(),
-				array('title'=>__('Edit information about this user'))
+				array('title'=>__('Edit information about %user%', array('%user%'=>$user->getFullName())))
 				)?>
 				</li>
 				<?php if($user->getIsScheduledForDeletion()): ?>
@@ -11,7 +11,7 @@
 					<?php echo link_to(
 				__('Undelete'),
 				'users/undelete?id='.$user->getUserId(),
-				array('title'=>__('Undelete this user'), 'method'=>'POST')
+				array('title'=>__('Undelete %user%', array('%user%'=>$user->getFullName())), 'method'=>'POST')
 				)?>
 				</li>
 				<?php endif ?>

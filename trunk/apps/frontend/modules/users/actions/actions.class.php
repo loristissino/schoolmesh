@@ -192,7 +192,6 @@ class usersActions extends sfActions
 
   public function executeBatch(sfWebRequest $request)
 {
-	
   $ids = $request->getParameter('ids');
 	$this->getUser()->setAttribute('ids', $ids);
 	
@@ -216,6 +215,8 @@ class usersActions extends sfActions
       $this->forward('users', 'getgoogleappsdata');
     case 'getlist':
       $this->forward('users', 'getlist');
+    case 'email':
+      $this->forward('users', 'email');
 	}
 }  
 
@@ -241,6 +242,16 @@ class usersActions extends sfActions
     
     return $this->userlist;
     
+  }
+  
+  protected function _getPKs($ids)
+  {
+    $s='';
+    foreach($ids as $id)
+    {
+      $s.='pk:'.$id.' ';
+    }
+    return $s;
   }
 
   public function executeGetletter(sfWebRequest $request)
@@ -322,6 +333,60 @@ class usersActions extends sfActions
 		$response->setHttpHeader('Content-Disposition', 'attachment; filename="GoogleAppsData_upload_'. date('Ymd') . '.csv"');
     
     $this->setLayout(false);
+    
+  }
+  
+  public function executeEmail(sfWebRequest $request)
+  {
+
+    $this->ids=$this->_getIds($request);
+    $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
+    
+    $this->message=new InformativeMessage($this->userlist, $this->getUser()->getProfile(), $this->getContext());
+    
+    $this->form = new EmailForm();
+    if ($request->hasParameter('email[send]'))
+		{
+      
+			$this->form->bind($request->getParameter('email'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				
+        $this->message
+        ->setBody($params['body'])
+        ->setSubject($params['email_subject'])
+        ->addSchoolMeshHeader($this->getContext());
+        
+        $mailer=$this->getContext()->getMailer();
+        $numSent = $mailer->batchSend($this->message);
+        
+        if($numSent==0)
+        {
+          $result['result']='error';
+          $result['message']=$this->getContext()->getI18N()->__('No message could be sent.');
+        }
+        else
+        {
+          $result['result']='notice';
+          $result['message']=$this->getContext()->getI18N()->__('Number of messages correctly sent: %number%.', $numSent);
+        }
+				
+				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+        return $this->redirect('users/list?query='.urlencode($this->_getPks($this->ids)));
+      }
+						
+		}
+
+
+    
+    
+    $this->form
+    ->setDefault('email_subject', $this->message->getSubject())
+    ->setDefault('body', $this->message->getBody())
+    ->setDefault('send', true)
+    ;
+
     
   }
   
@@ -538,9 +603,10 @@ class usersActions extends sfActions
 		$sortby = $request->getParameter('sortby');
 		$this->forward404Unless(in_array($sortby, array('', 'gender', 'username', 'importcode', 'role', 'firstname', 'lastname', 'blocks', 'files', 'alerts')));
 		$this->getUser()->setAttribute('sortby', $sortby);
-		$this->redirect('users/list');
+		$this->redirect('users/list?query=' . $request->getParameter('query',''));
 	}
-
+/*
+//This is not useful anymore, since we use Lucene index now...
 	public function executeSetfilterlistpreference(sfWebRequest $request)
 	{
 
@@ -578,10 +644,20 @@ class usersActions extends sfActions
 		return $this->redirect('users/list');
 	}
 
+*/
   public function executeList(sfWebRequest $request)
   {
 	$this->user = $this->getUser();
-	
+  $this->query = $request->getParameter('query', '');
+
+  $this->pager = sfGuardUserProfilePeer::getForLuceneQuery(
+    $this->query,
+    sfConfig::get('app_config_users_max_per_page', 10),
+    $request->getParameter('page', 1),
+    $this->getUser()->getAttribute('sortby')
+  );
+
+/*
 	$page=$request->getParameter('page', 1);
 	
 	$sortby=$this->getUser()->getAttribute('sortby');
@@ -605,8 +681,7 @@ class usersActions extends sfActions
 	
 //	$this->userlist = sfGuardUserProfilePeer::retrieveAllUsers($sortby, $filter, $this->filtered_role_id, $this->filtered_schoolclass_id);
 	$this->pager = sfGuardUserProfilePeer::retrieveAllUsers(sfConfig::get('app_config_users_max_per_page'), $page, $sortby, $filter, $this->filtered_role_id, $this->filtered_schoolclass_id);
-
-
+*/
 	}
 
   public function executeNew(sfWebRequest $request)

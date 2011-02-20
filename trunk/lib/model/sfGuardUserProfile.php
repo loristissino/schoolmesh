@@ -290,8 +290,13 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
 
 
-		public function getWebPermissions()
+		public function getWebPermissions($options=array())
 		{
+      
+      if(array_key_exists('astext', $options) and $options['astext'])
+      {
+        return implode(',', $this->getsfGuardUser()->getAllPermissionNames());
+      }
 			return $this->getsfGuardUser()->getAllPermissionNames();
 		}
 		
@@ -562,26 +567,37 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 		}
 
-        public function getAccounts()
-        {
-	        $c = new Criteria();
+    public function getAccounts($options=array())
+    {
+      $c = new Criteria();
 			$c->add(AccountPeer::USER_ID, $this->getUserId());
 			$c->addJoin(AccountPeer::ACCOUNT_TYPE_ID, AccountTypePeer::ID);
 			$c->addAscendingOrderByColumn(AccountTypePeer::RANK);
 			$t = AccountPeer::doSelect($c);
-			
+
 			$r=array();
-			
+
+      if(array_key_exists('astext', $options) and $options['astext'])
+      {
+        foreach($t as $account)
+        {
+          $r[]=$account->getRealAccount()->getAccountType();
+        }
+        return implode(',', $r);
+      }
+
 			foreach($t as $account)
 			{
 				$r[]=$account->getRealAccount();
 			}
+      
 			return $r;
-        }
+    }
+    
 		
 		public function hasAccountOfType($type)
 		{
-	        $c = new Criteria();
+      $c = new Criteria();
 			$c->add(AccountPeer::USER_ID, $this->getUserId());
 			$c->addJoin(AccountPeer::ACCOUNT_TYPE_ID, AccountTypePeer::ID);
 			$c->add(AccountTypePeer::NAME, $type);
@@ -590,7 +606,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
 		public function getAccountByType($type)
 		{
-	        $c = new Criteria();
+      $c = new Criteria();
 			$c->add(AccountPeer::USER_ID, $this->getUserId());
 			$c->addJoin(AccountPeer::ACCOUNT_TYPE_ID, AccountTypePeer::ID);
 			$c->add(AccountTypePeer::NAME, $type);
@@ -1549,5 +1565,39 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $checks;
 		}
 
+
+  public function updateLuceneIndex()
+  {
+    $index = sfGuardUserProfilePeer::getLuceneIndex();
+ 
+    // remove existing entries
+    foreach ($index->find('pk:'.$this->getId()) as $hit)
+    {
+      $index->delete($hit->id);
+    }
+  
+    $doc = new Zend_Search_Lucene_Document();
+   
+    $doc->addField(Zend_Search_Lucene_Field::Keyword('pk', $this->getUserId()));
+   
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('username', $this->getUsername(), 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('firstname', $this->getFirstName(), 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('lastname', $this->getLastName(), 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('roster', $this->getCurrentSchoolclassId(), 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('role', $this->getRole()->getPosixName(), 'utf-8'));    
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('birthdate', $this->getBirthdate('%Y%m%d'), 'utf-8'));    
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('birthday', $this->getBirthdate('%m%d'), 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('active', $this->getsfGuardUser()->getIsActive()?'true':'false', 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('gender', $this->getGender(), 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('email', $this->getHasValidatedEmail() ? $this->getValidatedEmail(): 'none', 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('importcode', $this->getImportCode(), 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('accounts', $this->getAccounts(array('astext'=>true)), 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('permissions', $this->getWebPermissions(array('astext'=>true)), 'utf-8'));
+    
+ 
+    $index->addDocument($doc);
+    $index->commit();
+
+  }
 
 }

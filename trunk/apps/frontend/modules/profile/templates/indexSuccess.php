@@ -81,7 +81,7 @@
 */ ?>
 
 <?php if ($sf_user->hasCredential('admin')): ?>
-<h2><?php echo __('Actions') ?></h2>
+<h2><?php echo __('Administration') ?></h2>
 <ul class="sf_admin_actions">
 	<li class="sf_admin_action_users"><?php echo link_to(__('Manage users'), url_for('users')) ?></li><br />
 </ul>

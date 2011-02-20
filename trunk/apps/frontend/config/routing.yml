@@ -4,6 +4,10 @@
 #  requirements:
 #    order: (class|teacher|subject|state)
 
+users_search:
+  url: /users/list
+  param: { module: users, action: list }
+
 help:
   url: help
   param: { module: help, action: index } 
