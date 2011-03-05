@@ -28,6 +28,24 @@
 <?php endforeach ?>
   </table>
 
+<?php if($account->getAccountType()=='posix'): ?>
+<h2><?php echo __('Blocks usage') ?></h2>
+<?php include_partial('users/blocksquotachart', array(
+  'bpp'=>$stats[$sf_user->getUsername()]['hard_blocks_quota']/800,
+  'user'=>$sf_user,
+  'stats'=>$stats,
+  )
+)?>
+<h2><?php echo __('Files usage') ?></h2>
+<?php include_partial('users/filesquotachart', array(
+  'fpp'=>$stats[$sf_user->getUsername()]['hard_files_quota']/800,
+  'user'=>$sf_user,
+  'stats'=>$stats,
+  )
+)?>
+<?php endif ?>
+
+
 <h2><?php echo __('Actions') ?></h2>
 <ul class="sf_admin_actions">
 <?php if($account->getPasswordIsResettable()): ?>
