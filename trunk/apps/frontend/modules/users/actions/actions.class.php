@@ -337,18 +337,7 @@ class usersActions extends sfActions
     foreach ($this->userlist as $user)
     {
       $account=$user->getProfile()->getAccountByType('posix');
-      $info=array();
-      foreach(array(
-        'used_blocks',
-        'used_files',
-        'soft_blocks_quota',
-        'hard_blocks_quota',
-        'soft_files_quota',
-        'hard_files_quota',
-        ) as $key)
-      {
-        $info[$key]=$account->getAccountInfo($key);
-      }
+      $info=$account->getQuotaInfo();
       $this->stats[$user->getUsername()]=$info;
       $this->max_blocks=max($this->max_blocks, $info['hard_blocks_quota']);
       $this->max_files=max($this->max_files, $info['hard_files_quota']);

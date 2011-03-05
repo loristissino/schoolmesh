@@ -1951,7 +1951,24 @@
         <source>Undelete</source>
         <target>Ripristina</target>
     </trans-unit>
+    <trans-unit id="508">
+        <source>Disk quota statistics</source>
+        <target>Statistiche sulle quote disco</target>
+    </trans-unit>
+    <trans-unit id="509">
+        <source>Blocks usage</source>
+        <target>Uso di blocchi</target>
+    </trans-unit>
+    <trans-unit id="509">
+        <source>Files usage</source>
+        <target>Uso di file (i-node)</target>
+    </trans-unit>
+    <trans-unit id="510">
+        <source>using %usedspace% out of %availablespace% available</source>
+        <target>sta usando %usedspace% su %availablespace% disponibili</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
 

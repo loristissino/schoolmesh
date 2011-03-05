@@ -56,6 +56,10 @@ class profileActions extends sfActions
 	$this->forward404unless($this->account);
 	
 	$this->info=$this->account->getBasicInfo();
+  if($this->account->getAccountType()=='posix')
+  {
+    $this->stats=array($user->getProfile()->getUsername()=>$this->account->getQuotaInfo());
+  }
 	
 	}  
 

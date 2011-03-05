@@ -260,5 +260,23 @@ class PosixAccount extends Account
 		return $info;
 	}
 
+  public function getQuotaInfo()
+  {
+    $info=array();
+      foreach(array(
+        'used_blocks',
+        'used_files',
+        'soft_blocks_quota',
+        'hard_blocks_quota',
+        'soft_files_quota',
+        'hard_files_quota',
+        ) as $key)
+      {
+        $info[$key]=$this->getAccountInfo($key);
+      }
+      $info['id']=$this->getId();
+    return $info;
+  }
+
 
 }
