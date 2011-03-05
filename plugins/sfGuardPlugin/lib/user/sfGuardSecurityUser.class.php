@@ -13,7 +13,7 @@
  * @package    symfony
  * @subpackage plugin
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfGuardSecurityUser.class.php 15777 2009-02-25 15:38:34Z hartym $
+ * @version    SVN: $Id: sfGuardSecurityUser.class.php 30260 2010-07-16 13:55:09Z fabien $
  */
 class sfGuardSecurityUser extends sfBasicSecurityUser
 {
@@ -94,12 +94,12 @@ class sfGuardSecurityUser extends sfBasicSecurityUser
       $c = new Criteria();
       $expiration_age = sfConfig::get('app_sf_guard_plugin_remember_key_expiration_age', 15 * 24 * 3600);
       $c->add(sfGuardRememberKeyPeer::CREATED_AT, time() - $expiration_age, Criteria::LESS_THAN);
-      sfGuardRememberKeyPeer::doDelete($c);
+      sfGuardRememberKeyPeer::doDelete($c, $con);
 
       // remove other keys from this user
       $c = new Criteria();
       $c->add(sfGuardRememberKeyPeer::USER_ID, $user->getId());
-      sfGuardRememberKeyPeer::doDelete($c);
+      sfGuardRememberKeyPeer::doDelete($c, $con);
 
       // generate new keys
       $key = $this->generateRandomKey();
@@ -119,14 +119,7 @@ class sfGuardSecurityUser extends sfBasicSecurityUser
 
   protected function generateRandomKey($len = 20)
   {
-    $string = '';
-    $pool   = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    for ($i = 1; $i <= $len; $i++)
-    {
-      $string .= substr($pool, rand(0, 61), 1);
-    }
-
-    return md5($string);
+    return base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
   }
 
   public function signOut()

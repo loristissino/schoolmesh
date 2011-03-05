@@ -115,6 +115,7 @@
   'getgoogleappsdata' => __('Get GoogleApps data'),
   'getlist' => __('Get list choosing a template'),
   'email' => __('Write an email'),
+  'showquotastats' => __('Show quota statistics'),
 ), 0) ?>
   </select>
 

@@ -203,21 +203,10 @@ class usersActions extends sfActions
 			$this->redirect('users/list');
 		}
 		
-	switch($action)
-	{
-		case 'runuserchecks':
-			$this->forward('users', 'runuserchecks');
-		case 'getletter':
-			$this->forward('users', 'getletter');
-		case 'getgoogleappsletter':
-			$this->forward('users', 'getgoogleappsletter');
-    case 'getgoogleappsdata':
-      $this->forward('users', 'getgoogleappsdata');
-    case 'getlist':
-      $this->forward('users', 'getlist');
-    case 'email':
-      $this->forward('users', 'email');
-	}
+  $this->forward('users', $action);
+  // if an action is not valid, we get an error anyway, because there is no
+  // template BatchSuccess.php
+  
 }  
 
 
@@ -333,6 +322,38 @@ class usersActions extends sfActions
 		$response->setHttpHeader('Content-Disposition', 'attachment; filename="GoogleAppsData_upload_'. date('Ymd') . '.csv"');
     
     $this->setLayout(false);
+    
+  }
+  
+  public function executeShowquotastats(sfWebRequest $request)
+  {
+    $this->ids=$this->_getIds($request);
+    $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
+
+    $this->max_blocks=0;
+    $this->max_files=0;
+
+    $this->stats=array();
+    foreach ($this->userlist as $user)
+    {
+      $account=$user->getProfile()->getAccountByType('posix');
+      $info=array();
+      foreach(array(
+        'used_blocks',
+        'used_files',
+        'soft_blocks_quota',
+        'hard_blocks_quota',
+        'soft_files_quota',
+        'hard_files_quota',
+        ) as $key)
+      {
+        $info[$key]=$account->getAccountInfo($key);
+      }
+      $this->stats[$user->getUsername()]=$info;
+      $this->max_blocks=max($this->max_blocks, $info['hard_blocks_quota']);
+      $this->max_files=max($this->max_files, $info['hard_files_quota']);
+      unset($info);
+    }
     
   }
   
