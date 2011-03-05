@@ -14,7 +14,7 @@
  * @package    symfony
  * @subpackage plugin
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
- * @version    SVN: $Id: sfGuardValidatorUser.class.php 15779 2009-02-25 17:37:38Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfGuardValidatorUser.class.php 30261 2010-07-16 14:06:36Z fabien $
  */
 class sfGuardValidatorUser extends sfValidatorBase
 {
@@ -53,7 +53,7 @@ class sfGuardValidatorUser extends sfValidatorBase
       if ($user = sfGuardUserPeer::retrieveByUsername($username))
       {
         // password is ok?
-        if ($user->checkPassword($password))
+        if ($user->getIsActive() && $user->checkPassword($password))
         {
           return array_merge($values, array('user' => $user));
         }

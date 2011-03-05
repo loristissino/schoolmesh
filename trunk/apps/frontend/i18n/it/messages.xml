@@ -1903,10 +1903,6 @@
         <source>Undelete %user%</source>
         <target>Ripristina %user%</target>
     </trans-unit>
-    <trans-unit id="495">
-        <source>Undelete</source>
-        <target>Ripristina</target>
-    </trans-unit>
     <trans-unit id="496">
         <source>male</source>
         <target>M</target>
@@ -1950,6 +1946,10 @@
     <trans-unit id="506">
         <source>The message has been correctly sent.</source>
         <target>Il messaggio è stato correttamente spedito.</target>
+    </trans-unit>
+    <trans-unit id="507">
+        <source>Undelete</source>
+        <target>Ripristina</target>
     </trans-unit>
     </body>
   </file>
