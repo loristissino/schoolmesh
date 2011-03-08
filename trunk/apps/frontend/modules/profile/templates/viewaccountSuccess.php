@@ -30,17 +30,23 @@
 
 <?php if($account->getAccountType()=='posix'): ?>
 <h2><?php echo __('Blocks usage') ?></h2>
-<?php include_partial('users/blocksquotachart', array(
-  'bpp'=>$stats[$sf_user->getUsername()]['hard_blocks_quota']/800,
+<?php include_partial('users/quotachart', array(
+  'bpp'=>$stats[$sf_user->getUsername()]['info_hard_blocks_quota']/800,
+  'chart'=>'blocks',
   'user'=>$sf_user,
   'stats'=>$stats,
+  'quota_warning'=>sfConfig::get('app_config_posix_quotawarning', .75),
+  'personal_profile'=>true,
   )
 )?>
 <h2><?php echo __('Files usage') ?></h2>
-<?php include_partial('users/filesquotachart', array(
-  'fpp'=>$stats[$sf_user->getUsername()]['hard_files_quota']/800,
+<?php include_partial('users/quotachart', array(
+  'bpp'=>$stats[$sf_user->getUsername()]['info_hard_files_quota']/800,
+  'chart'=>'files',
   'user'=>$sf_user,
   'stats'=>$stats,
+  'quota_warning'=>sfConfig::get('app_config_posix_quotawarning', .75),
+  'personal_profile'=>true,
   )
 )?>
 <?php endif ?>

@@ -212,24 +212,29 @@ class usersActions extends sfActions
 
   protected function _getIds(sfWebRequest $request)
   {
-		if($request->hasParameter('id'))
-		{
-			$this->id=$request->getParameter('id');
-			$this->forward404Unless($this->current_user=sfGuardUserProfilePeer::retrieveByPk($this->id));
-			$this->userlist=array($this->id);
-		}
-		elseif ($request->hasParameter('ids'))
-		{
-			$ids = $request->getParameter('ids');
-			$this->userlist = $ids;
-		}
-		else
+    $this->ids=null;
+    if($request->hasParameter('id'))
+    {
+      $this->ids=array($request->getParameter('id'));
+    }
+    elseif ($request->hasParameter('ids'))
+    {
+      if(!is_array($request->getParameter('ids')))
+      {
+        $this->ids = explode(',', $request->getParameter('ids'));
+      }
+      else
+      {
+        $this->ids = $request->getParameter('ids');
+      }
+    }
+    if (!$this->ids)
 		{
 				$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select some users.'));
 				$this->redirect('users/list');
 		}
     
-    return $this->userlist;
+    return $this->ids; // we could avoid returning it, since it's avaailable anyway
     
   }
   
@@ -242,6 +247,27 @@ class usersActions extends sfActions
     }
     return $s;
   }
+
+  protected function _changePostToGet(sfWebRequest $request, $action)
+  {
+    if ($request->isMethod('POST'))
+    {
+      if($request->hasParameter('id'))
+      {
+        $this->id=$request->getParameter('id');
+        $this->userlist=array($this->id);
+      }
+      elseif ($request->hasParameter('ids'))
+      {
+        $ids = $request->getParameter('ids');
+        $this->userlist = $ids;
+      }
+
+      $this->redirect('users/' . $action . '?ids=' . implode(',', $this->userlist));
+    }
+
+  }
+
 
   public function executeGetletter(sfWebRequest $request)
   {
@@ -325,25 +351,39 @@ class usersActions extends sfActions
     
   }
   
+  
   public function executeShowquotastats(sfWebRequest $request)
   {
+    $this->_changePostToGet($request, 'showquotastats');
+    $this->chart_width=$request->getParameter('chartwidth', sfConfig::get('app_config_posix_chartwidth', 400));
+    $this->quota_warning=sfConfig::get('app_config_posix_quotawarning', .8);
     $this->ids=$this->_getIds($request);
     $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
 
-    $this->max_blocks=0;
-    $this->max_files=0;
+    $result=AccountPeer::RetrieveAccountInfo('posix', $this->userlist);
+    $this->max_blocks=$result['max_blocks'];
+    $this->max_files=$result['max_files'];
+    $this->max_used_blocks=$result['max_used_blocks'];
+    $this->max_used_files=$result['max_used_files'];
+    $this->sum_used_blocks=$result['sum_used_blocks'];
+    $this->sum_used_files=$result['sum_used_files'];
+    $this->accounts = $result['accounts'];
 
-    $this->stats=array();
-    foreach ($this->userlist as $user)
-    {
-      $account=$user->getProfile()->getAccountByType('posix');
-      $info=$account->getQuotaInfo();
-      $this->stats[$user->getUsername()]=$info;
-      $this->max_blocks=max($this->max_blocks, $info['hard_blocks_quota']);
-      $this->max_files=max($this->max_files, $info['hard_files_quota']);
-      unset($info);
-    }
+    $this->stats=$result['stats'];
+  }
+  
+  
+  public function executeCopyaccountsettings(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('POST'));
     
+    $this->forward404Unless($account=AccountPeer::retrieveByPK($request->getParameter('from')));
+    $account=$account->getRealAccount();
+    
+    $result=$account->copySettings($request->getParameter('settings'), $request->getParameter('to'));
+    
+		$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+    return $this->redirect('users/showquotastats?ids='.$result['back']);
   }
   
   public function executeEmail(sfWebRequest $request)
@@ -453,7 +493,7 @@ class usersActions extends sfActions
   {
 	$this->user = $this->getUser();
 	$this->referer= $request->getReferer();
-	
+/*	
 	if($request->hasParameter('id'))
 	{
 		$this->id=$request->getParameter('id');
@@ -470,8 +510,10 @@ class usersActions extends sfActions
 			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select some users.'));
 			$this->redirect('users/list');
 	}
-	
-	set_time_limit(0);
+	*/
+  set_time_limit(0);
+  $this->ids=$this->_getIds($request);
+  $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
 	
 	$this->checkList = new CheckList();
 	
@@ -479,7 +521,7 @@ class usersActions extends sfActions
 	
 	foreach($this->userlist as $current_user)
 	{
-		$current_user->checkAccounts($availableAccounts, $this->checkList);
+		$current_user->getProfile()->checkAccounts($availableAccounts, $this->checkList);
 	}
 	
 	if($request->hasParameter('execute'))

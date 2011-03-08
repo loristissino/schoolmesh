@@ -181,7 +181,7 @@
 
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_userchecks">
-		<?php echo link_to(__('Run user checks'), url_for('users/runuserchecks?id=' . $current_user->getUserId())) ?>
+		<?php echo link_to(__('Run user checks for %user%'), url_for('users/runuserchecks?id=' . $current_user->getUserId())) ?>
 	</li><br />
 	</ul>
 

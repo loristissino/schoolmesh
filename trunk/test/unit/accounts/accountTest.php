@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../../bootstrap/Propel.php';
 
-$t = new lime_test(21, new lime_output_color());
+$t = new lime_test(26, new lime_output_color());
 
 $t->comment('Sample user');
 
@@ -98,3 +98,23 @@ $t->isa_ok($loginAccount, LoginAccount, '::retrieveByUserIdAndType() retrieves t
 $t->comment('Account');
 $loginAccount=$posixAccount->getSiblingAccountByType('login');
 $t->isa_ok($loginAccount, LoginAccount, '->getSiblingAccountByType() retrieves the correct account');
+
+$t->comment('Settings');
+$posixAccount->setAccountSetting('hard_blocks_quota', 3000);
+$posixAccount->setAccountInfo('used_files', 100);
+$t->is($posixAccount->getAccountSetting('hard_blocks_quota'), 3000, 'settings are correctly stored');
+$posixAccount->setAccountSetting('hard_files_quota', 1000);
+$t->is($posixAccount->getAccountSetting('hard_blocks_quota'), 3000, 'settings are correctly stored');
+$t->is($posixAccount->getAccountInfo('used_files'), 100, 'settings are correctly stored');
+
+unset($posixAccount);
+
+$posixAccount=$profile->getAccountByType('posix');
+$posixAccount=$posixAccount->getRealAccount();
+
+$t->is($posixAccount->getAccountSetting('hard_blocks_quota'), 3000, 'settings are correctly stored');
+$t->is($posixAccount->getAccountInfo('used_files'), 100, 'settings are correctly stored');
+
+
+
+

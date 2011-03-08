@@ -46,5 +46,12 @@
 <?php endforeach ?>
 
 <h2><?php echo __('Actions') ?></h2>
-
-<p><a href="<?php echo $sf_request->getReferer() ?>">Back</a></p>
+	<ul class="sf_admin_actions">
+	<li class="sf_admin_action_back">
+    <?php echo link_to(
+      __('Back'),
+      $sf_request->getReferer()
+      )?>
+  </li>
+  </ul>
+  
