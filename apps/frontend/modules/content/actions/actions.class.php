@@ -41,50 +41,99 @@ class contentActions extends sfActions
 		$this->index=$request->getParameter('index', 'main');
 		$indexFile=sprintf('%s/%s.yml', sfConfig::get('app_documents_main_directory'), $this->index);
 
-
 		$this->forward404Unless($this->content=sfYaml::load($indexFile));
     
 		$basedir=$this->content['basedir'];
-		$this->forward404Unless($filename=$basedir. Generic::b64_unserialize($request->getParameter('file')));
+		$this->forward404Unless($filepath=$basedir. Generic::b64_unserialize($request->getParameter('file')));
     
-		$file = new smFileInfo($filename);
+    return $this->_doServe($filepath);
+	}
+  
+  
+  public function executeScript(sfWebRequest $request)
+  {
+    $this->_validateScript($request);
+    return $this->_doServe($this->filepath, 'command' . date('Ymd-hms').'.sh');
+  }
+  
+  
+  public function executeExecute(sfWebRequest $request)
+  {
+    $this->_validateScript($request);
+    
+    $this->report=array();
+
+    $result=array();
+    $return_var=0;
+    
+    $lines=file($this->filepath);
+    foreach($lines as $line)
+    {
+      if(strlen(chop($line))>0 and substr($line, 0, 1)!="#")
+      {
+        $execution['command']='LANG=it_IT.utf-8; sudo ' . chop($line);
+        exec($execution['command'], $result, $return_var);
+        $execution['result']=$result;
+        $execution['return_var']=$return_var;
+      }
+      else
+      {
+        $execution['command']=$line;
+        $execution['result']=array();
+        $execution['return_var']=0;
+      }
+      $this->report[]=$execution;
+      unset($execution);
+      unset($result);
+    }
+			
+
+  }
+
+
+  protected function _validateScript(sfWebRequest $request)
+  {
+    $this->filepath=sys_get_temp_dir() . '/' . $request->getParameter('file');
+    $script= new smFileInfo($this->filepath);
+		if ($script->isStale())
+		{
+			return $this->renderText('This script is not usable anymore'); 
+		}
+    
+  }
+
+  protected function _doServe($filepath, $deliveryname='')
+  {
+		$file = new smFileInfo($filepath);
 
 		if (!$file->isReadable())
 		{
 			return $this->renderText($file->getFilename() . ' not readable'); 
 //		$this->forward404Unless($file->isReadable());
 		}
+    if($deliveryname)
+    {
+      $file->setDeliveryName($deliveryname);
+    }
+    
     $file->prepareDelivery($this->getContext()->getResponse());
     
 		return sfView::NONE;
-	}
-  
+  }
   
   public function executeAttachment(sfWebRequest $request)
   {
-    // this should be refactored, in order to share some code with executeServe
-    
     $this->forward404Unless($attachment=AttachmentFilePeer::retrieveByPK($request->getParameter('id')));
     
     $this->forward404Unless($attachment->isViewableBy($this->getUser()));
     
-		$file = new smFileInfo(sfConfig::get('app_documents_attachments'). '/'. $attachment->getUniqId());
+		$filepath = sfConfig::get('app_documents_attachments'). '/'. $attachment->getUniqId();
+    
+    return $this->_doServe($filepath, $attachment->getOriginalFileName());
 
-		if (!$file->isReadable())
-		{
-			return $this->renderText($file->getFilename() . ' not readable'); 
-//		$this->forward404Unless($file->isReadable());
-		}
-    
-    $file
-    ->setDeliveryName($attachment->getOriginalFileName())
-    ->prepareDelivery($this->getContext()->getResponse())
-    ;
-    
-		return sfView::NONE;
-    
-    
   }
+  
+  
 
 
 	public function executeUnoconv(sfWebRequest $request)

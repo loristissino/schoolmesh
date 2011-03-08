@@ -130,6 +130,12 @@ class smFileInfo extends SPLFileInfo
     }
     
  }
+ 
+ public function isStale()
+ /* a file is considered stale if older than 2 minutes... */
+ {
+   return ((time() - $this->getCTime()) > 120);
+  }
   
   
 }
