@@ -29,7 +29,13 @@
 	<ul class="sf_admin_actions">
 	<?php if (sfConfig::get('app_system_commands_apply')): ?>
 	<li class="sf_admin_action_execute">
-		<?php echo link_to(__('Execute'), url_for('content/execute?file=' . basename($filename)) ) ?>
+		<?php echo link_to(
+      __('Execute'), 
+      url_for('content/execute?file=' . basename($filename)),
+      array(
+        'method'=>'POST'
+        )
+      ) ?>
   </li><br />
 	<?php endif ?>
 	<li class="sf_admin_action_export">

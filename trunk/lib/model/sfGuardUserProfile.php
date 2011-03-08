@@ -1043,7 +1043,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 		}
 
-
+/*
 		public function getQuotaInfo()
 		{
 		
@@ -1096,7 +1096,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 		}
 
-
+*/
 		public function getUsernameIsAlreadyUsed($username, $ignoreself=true)
 		
 		{
@@ -1593,7 +1593,11 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     $doc->addField(Zend_Search_Lucene_Field::UnStored('importcode', $this->getImportCode(), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('accounts', $this->getAccounts(array('astext'=>true)), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('permissions', $this->getWebPermissions(array('astext'=>true)), 'utf-8'));
-    
+    if($posixAccount=$this->getAccountByType('posix'))
+    {
+      $doc->addField(Zend_Search_Lucene_Field::Text('blocksquota', $posixAccount->getBlocksQuotaPercentage(), 'utf-8'));
+      $doc->addField(Zend_Search_Lucene_Field::Text('filesquota', $posixAccount->getFilesQuotaPercentage(), 'utf-8'));
+    }
  
     $index->addDocument($doc);
     $index->commit();

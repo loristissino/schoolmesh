@@ -59,6 +59,8 @@ class contentActions extends sfActions
   
   public function executeExecute(sfWebRequest $request)
   {
+    
+    $this->forward404Unless($request->isMethod('POST'));
     $this->_validateScript($request);
     
     $this->report=array();
