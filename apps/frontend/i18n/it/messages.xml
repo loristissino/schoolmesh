@@ -2099,6 +2099,42 @@
         <source>User checks</source>
         <target>Controlli sugli utenti</target>
     </trans-unit>
+    <trans-unit id="544">
+        <source>Delete selected users</source>
+        <target>Elimina gli utenti selezionati</target>
+    </trans-unit>
+    <trans-unit id="545">
+        <source>Write an email</source>
+        <target>Scrivi un'email</target>
+    </trans-unit>
+    <trans-unit id="546">
+        <source>Show quota statistics</source>
+        <target>Mostra statistiche sulle quote</target>
+    </trans-unit>
+    <trans-unit id="547">
+        <source>New user</source>
+        <target>Nuovo utente</target>
+    </trans-unit>
+    <trans-unit id="548">
+        <source>Get welcome letter</source>
+        <target>Scarica lettera di benvenuto</target>
+    </trans-unit>
+    <trans-unit id="549">
+        <source>Get list choosing a template</source>
+        <target>Scarica lista scegliendo un modello</target>
+    </trans-unit>
+    <trans-unit id="550">
+        <source>Get GoogleApps letter</source>
+        <target>Scarica lettera GoogleApps</target>
+    </trans-unit>
+    <trans-unit id="551">
+        <source>Get GoogleApps data</source>
+        <target>Scarica dati GoogleApps</target>
+    </trans-unit>
+    <trans-unit id="552">
+        <source>sign in</source>
+        <target>entra</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

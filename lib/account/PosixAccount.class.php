@@ -301,6 +301,23 @@ class PosixAccount extends Account
     return $info;
   }
   
+  public function getBlocksQuotaPercentage()
+  {
+    if ($this->getAccountInfo('soft_blocks_quota')==0)
+    {
+      return -1;
+    }
+    return sprintf('%04d', round(100*$this->getAccountInfo('used_blocks')/$this->getAccountInfo('soft_blocks_quota')));
+  }
+
+  public function getFilesQuotaPercentage()
+  {
+    if ($this->getAccountInfo('soft_files_quota')==0)
+    {
+      return -1;
+    }
+    return sprintf('%04d', round(100*$this->getAccountInfo('used_files')/$this->getAccountInfo('soft_files_quota')));
+  }
 
 
 }

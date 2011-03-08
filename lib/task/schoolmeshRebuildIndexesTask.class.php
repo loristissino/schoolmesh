@@ -33,7 +33,6 @@ EOF;
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
 
     // add your code here
-    $this->logSection('users', 'indexing started', null, 'INFO');
 
     $profiles=sfGuardUserProfilePeer::retrieveAllSortedByLastName();
     
@@ -42,7 +41,7 @@ EOF;
     
     foreach($profiles as $profile)
     {
-      $this->logSection($profile->getUsername(), sprintf('indexed (%3.2f%%)', 100*(++$count/$size)), null, 'INFO');
+      $this->logSection('user', sprintf('%s indexed (%3.2f%%)', $profile->getUsername(), 100*(++$count/$size)), null, 'INFO');
       $profile->updateLuceneIndex();
     }
 
