@@ -5,14 +5,14 @@ WpinfoType:
     rank:   1
     state:  10
     is_required: true
-    is_reserved: true
+    is_confidential: true
     example: La classe, composta da 20 allievi, si presenta omogenea dal punto di vista delle capacità e degli interessi verso la disciplina.
   wppa:
     title:        Area di progetto
     description:  Eventuali proposte e contributi per l'Area di Progetto (solo Triennio)
     rank:   2
     state:  10
-    is_required: false
+    is_confidential: false
   wpextra:
     title:        Attività extracurricolari
     description:  Attività integrative ed extracurricolari previste

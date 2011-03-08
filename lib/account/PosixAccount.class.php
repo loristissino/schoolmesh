@@ -7,8 +7,8 @@ class PosixAccount extends Account
 	
 	function __construct()
 	{
+    parent::__construct();
 		$this->setAccountType(AccountTypePeer::retrieveByName('posix'));
-		
 	}
 	
 /**
@@ -263,20 +263,44 @@ class PosixAccount extends Account
   public function getQuotaInfo()
   {
     $info=array();
-      foreach(array(
+    foreach(array(
         'used_blocks',
         'used_files',
+        ) as $key)
+      {
+        $info[$key]=$this->getAccountInfo($key);
+      }
+    foreach(array(
         'soft_blocks_quota',
         'hard_blocks_quota',
         'soft_files_quota',
         'hard_files_quota',
         ) as $key)
       {
-        $info[$key]=$this->getAccountInfo($key);
+        $info['info_' . $key]=$this->getAccountInfo($key);
       }
-      $info['id']=$this->getId();
+    foreach(array(
+        'soft_blocks_quota',
+        'hard_blocks_quota',
+        'soft_files_quota',
+        'hard_files_quota',
+        ) as $key)
+      {
+        $info['setting_' . $key]=$this->getAccountSetting($key);
+      }
+      
+    $info['id']=$this->getId();
+    
+    $info['blocks_settings_changed']=
+      ($info['setting_soft_blocks_quota']!=$info['info_soft_blocks_quota']) ||
+      ($info['setting_hard_blocks_quota']!=$info['info_hard_blocks_quota']);
+    $info['files_settings_changed']=
+      ($info['setting_soft_files_quota']!=$info['info_soft_files_quota']) ||
+      ($info['setting_hard_files_quota']!=$info['info_hard_files_quota']);
+    
     return $info;
   }
+  
 
 
 }

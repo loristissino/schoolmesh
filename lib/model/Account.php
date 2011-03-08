@@ -9,7 +9,7 @@ class Account extends BaseAccount
 	public function __construct()
 	{
 		parent::__construct();
-		$this->_info=unserialize($this->getInfo());
+		//$this->_info=unserialize($this->getInfo());
 		if ($this->getInfo())
 		{
 			$this->_info=unserialize($this->getInfo());
@@ -277,6 +277,46 @@ class Account extends BaseAccount
 			}
 		}
 
+  public function copySettings($settings, $to)
+  {
+    Generic::logMessage('copysettings', $to);
+    $ids=explode(',', $to);
+    $back=array();
+    
+    $accounts=AccountPeer::retrieveByPKs($ids);
+    
+    try
+    {
+      foreach($accounts as $account)
+      {
+        $account=$account->getRealAccount();
+        $back[]=$account->getsfGuardUser()->getId();
+        
+        switch($settings)
+        {
+          case 'blocks':
+            $keys=array('soft_blocks_quota', 'hard_blocks_quota',); break;
+          case 'files':
+            $keys=array('soft_files_quota', 'hard_files_quota',); break;
+        }
+        foreach($keys as $key)
+        {
+          $account->setAccountSetting($key, $this->getAccountSetting($key));
+        }
+        $result['result']='notice';
+        $result['message']='Settings successfully copied.';
+
+      }
+    }
+    catch(Exception $e)
+    {
+      $result['result']='error';
+      $result['message']='Something got wrong: ' . $e->getMessage();
+    }
+    
+    $result['back']=implode(',', $back);
+    return $result;
+  }
 
 	
 }

@@ -1964,11 +1964,120 @@
         <target>Uso di file (i-node)</target>
     </trans-unit>
     <trans-unit id="510">
-        <source>using %usedspace% out of %availablespace% available</source>
-        <target>sta usando %usedspace% su %availablespace% disponibili</target>
+        <source>%name% is using %usedspace% out of %availablespace% available.</source>
+        <target>%name% sta usando %usedspace% su %availablespace% disponibili.</target>
+    </trans-unit>
+    <trans-unit id="511">
+        <source>You are using %usedspace% out of %availablespace% available.</source>
+        <target>Stai usando %usedspace% su %availablespace% disponibili.</target>
+    </trans-unit>
+    <trans-unit id="512">
+        <source>Run user checks for %user%</source>
+        <target>Esegui controlli relativi all'utente %user%</target>
+    </trans-unit>
+    <trans-unit id="513">
+        <source>Run user checks</source>
+        <target>Esegui controlli</target>
+    </trans-unit>
+    <trans-unit id="514">
+        <source>Edit posix account of %user%</source>
+        <target>Modifica account posix di %user%</target>
+    </trans-unit>
+    <trans-unit id="515">
+        <source>Actual soft blocks quota: %quota%</source>
+        <target>Quota superabile di blocchi in essere: %quota%</target>
+    </trans-unit>
+    <trans-unit id="516">
+        <source>Actual hard blocks quota: %quota%</source>
+        <target>Quota non superabile di blocchi in essere: %quota%</target>
+    </trans-unit>
+    <trans-unit id="517">
+        <source>Set soft blocks quota: %quota%</source>
+        <target>Quota superabile di blocchi impostata: %quota%</target>
+    </trans-unit>
+    <trans-unit id="518">
+        <source>Set hard blocks quota: %quota%</source>
+        <target>Quota non superabile di blocchi impostata: %quota%</target>
+    </trans-unit>
+    <trans-unit id="519">
+        <source>Back</source>
+        <target>Indietro</target>
+    </trans-unit>
+    <trans-unit id="520">
+        <source>Run user checks for all the users listed in this page</source>
+        <target>Esegui i controlli per tutti gli utenti elencati in questa pagina</target>
+    </trans-unit>
+    <trans-unit id="521">
+        <source>You are using %usedfiles% files out of %availablefiles% available.</source>
+        <target>Stai usando %usedfiles% file su %availablefiles% disponibili.</target>
+    </trans-unit>
+    <trans-unit id="522">
+        <source>%name% is using %usedfiles% files out of %availablefiles% available.</source>
+        <target>%name% sta usando %usedfiles% file su %availablefiles% disponibili.</target>
+    </trans-unit>
+    <trans-unit id="523">
+        <source>Apply to all</source>
+        <target>Applica a tutti</target>
+    </trans-unit>
+    <trans-unit id="524">
+        <source>Apply these settings to all selected users' accounts</source>
+        <target>Applica queste impostazioni a tutti gli account degli utenti selezionati</target>
+    </trans-unit>
+    <trans-unit id="525">
+        <source>Actual soft files quota: %quota%</source>
+        <target>Quota superabile di file in essere: %quota%</target>
+    </trans-unit>
+    <trans-unit id="526">
+        <source>Actual hard files quota: %quota%</source>
+        <target>Quota non superabile di file in essere: %quota%</target>
+    </trans-unit>
+    <trans-unit id="527">
+        <source>Set soft files quota: %quota%</source>
+        <target>Quota superabile di file impostata: %quota%</target>
+    </trans-unit>
+    <trans-unit id="528">
+        <source>Set hard files quota: %quota%</source>
+        <target>Quota non superabile di file impostata: %quota%</target>
+    </trans-unit>
+    <trans-unit id="529">
+        <source>Settings successfully copied.</source>
+        <target>Impostazioni copiate correttamente.</target>
+    </trans-unit>
+    <trans-unit id="530">
+        <source>User</source>
+        <target>Utente</target>
+    </trans-unit>
+    <trans-unit id="531">
+        <source>Used blocks</source>
+        <target>Blocchi usati</target>
+    </trans-unit>
+    <trans-unit id="532">
+        <source>Used files</source>
+        <target>File usati</target>
+    </trans-unit>
+    <trans-unit id="533">
+        <source>Chart</source>
+        <target>Rappresentazione grafica</target>
+    </trans-unit>
+    <trans-unit id="534">
+        <source>Sum</source>
+        <target>Totale</target>
+    </trans-unit>
+    <trans-unit id="535">
+        <source>Blocks quota</source>
+        <target>Quota blocchi</target>
+    </trans-unit>
+    <trans-unit id="536">
+        <source>Files quota</source>
+        <target>Quota file</target>
     </trans-unit>
     </body>
   </file>
 </xliff>
+
+
+
+
+
 
 
