@@ -52,6 +52,7 @@ all:
 
   sf_guard_plugin:
     check_password_callable: [Authentication, testOnly]
+    success_signout_url: /index.php
 
 # Choose one of the following functions:
 # testOnly: all users are authenticated whatever password (but null) they provide
