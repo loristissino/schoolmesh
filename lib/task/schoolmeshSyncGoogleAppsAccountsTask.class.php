@@ -143,7 +143,16 @@ EOF;
         $this->logSection('account'.($added?'+':''), $user->getProfile()->getFullName() . ' (already up to date)', null, 'COMMENT');
         $skipped++;
       }
-    
+      
+      $atd=$account->getAccountSetting('accept_terms_date');
+      $status=$account->getAccountInfo('status');
+      $used=$account->getAccountInfo('last_login_date')!='19691231';
+      echo $status . " --- " . $atd . " --- " . ($used?'yes':'no') . "\n";
+      if ($used && (!$atd))
+      {
+        echo "ALERT!  " . $account->getAccountInfo('last_login_date') . "\n";
+      }
+      
       unset($user);
       
     }

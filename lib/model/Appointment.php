@@ -262,7 +262,7 @@ $con->query($sql);
 		$message=$steps[$this->getState()]['actions']['approve']['submitDoneAction'];
 		// we need to save the message before adding a line in the log...
 
-	    $logmessage=SystemMessagePeer::retrieveByKey($steps[$this->getState()]['actions']['approve']['logMessageCode']);
+    $logmessage=SystemMessagePeer::retrieveByKey($steps[$this->getState()]['actions']['approve']['logMessageCode']);
 		$text = $logmessage->getContent($culture);
 
 		$this->addEvent($user_id, $text, $steps[$this->getState()]['actions']['approve']['submitNextState']);
@@ -849,9 +849,13 @@ public function getWorkflowLogs()
 // FIXME we need a limit for the state
 //		if ($item->getWptoolItemType()->getState()>$this->getState())
 		if ($item->getWptoolItemType()->getState() > $this->getState())//Workflow::WP_DRAFT)
-			{
-				continue;
-			}
+    {
+      continue;
+    }
+    if (!$this->isWorkplan() && $item->getWptoolItemType()->getState() < Workflow::IR_DRAFT)
+    {
+      continue;
+    }
 			
 		$group[$item->getWptoolItemTypeId()]['description']=$item->getWptoolItemType()->getDescription();
 		$group[$item->getWptoolItemTypeId()]['min_selected']=$item->getWptoolItemType()->getMinSelected();
@@ -964,7 +968,12 @@ public function getWorkflowLogs()
 		
 	}
 	
-	
+  public function isWorkplan()
+  {
+    return $this->getState() <= Workflow::IR_DRAFT;
+  }
+
+
 	public function getOdf($doctype, sfContext $sfContext=null, $template='', $complete=true)
 	{
 		
@@ -1008,11 +1017,18 @@ public function getWorkflowLogs()
 		$infos=$odfdoc->setSegment('infos');
 		foreach($wpinfos as $wpinfo)
 		{
+      $include=$this->isWorkplan() ? 
+         $wpinfo->getWpinfoType()->getState() <= $this->getState()
+         :
+         $wpinfo->getWpinfoType()->getState() >= Workflow::IR_DRAFT
+         ;
+         
 			if (
 //				$wpinfo->getWpinfoType()->getState()<=$this->getState()
 // FIXME: we need to have two limits in the db, upper and lower
-				$wpinfo->getWpinfoType()->getState()<$this->getState()
+				//$wpinfo->getWpinfoType()->getState() < $this->getState()
         
+        $include
 				&&
 				$wpinfo->getContent()
 				&&
