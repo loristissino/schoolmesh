@@ -41,8 +41,9 @@ EOF;
     
     foreach($profiles as $profile)
     {
-      $this->logSection('user', sprintf('%s indexed (%3.2f%%)', $profile->getUsername(), 100*(++$count/$size)), null, 'INFO');
+      
       $profile->updateLuceneIndex();
+      $this->logSection('user', sprintf('%s indexed (%3.2f%%)', $profile->getUsername(), 100*(++$count/$size)), null, 'INFO');
     }
 
   }

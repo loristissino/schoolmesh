@@ -26,10 +26,9 @@
 <?php if ($current_user->hasPermission($credential->getName())): ?>
 	<strong><?php echo $credential->getName() ?></strong>
 <?php else: ?>
-	<?php echo checkbox_tag('id[]', $credential->getId(), false) ?>&nbsp;<?php echo $credential->getName() ?>
+	<em><?php echo checkbox_tag('id[]', $credential->getId(), false) ?>&nbsp;<?php echo $credential->getName() ?></em>
 <?php endif ?>
-
-<br />
+&nbsp;(<?php echo $credential->getDescription() ?>)<br />
 <?php endforeach ?>
 </p>
 
