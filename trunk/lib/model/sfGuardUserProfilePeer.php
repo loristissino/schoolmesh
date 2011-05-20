@@ -186,8 +186,22 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
     }
 
-
 	}
+
+	public static function retrieveAllActiveByRole($role)
+	{
+      $c = new Criteria();
+      $c->addJoin(sfGuardUserProfilePeer::ROLE_ID, RolePeer::ID);
+      $c->add(RolePeer::POSIX_NAME, $role);
+      $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+      $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
+      $c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
+      $c->add(sfGuardUserPeer::IS_ACTIVE, true);
+      
+      return parent::doSelect($c);
+	}
+
+
 
 	public static function resetGoogleAppsAccountInfoForAll()
 	{

@@ -433,4 +433,24 @@ class Generic{
   }
 
 
+  public static function generateUniqueToken($seed, $length)
+  {
+    static $generated;
+    if (!isset($generated))
+    {
+      $generated=array();
+    }
+    
+    $done=false;
+    while(!$done)
+    {
+      $token=substr(md5($seed. rand(0, 1000000)), 0, $length);
+      $done=!in_array($token, $generated);
+    }
+
+    $generated[]=$token;
+    
+    return $token;
+  }
+
 }
