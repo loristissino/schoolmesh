@@ -18,6 +18,9 @@ class schoolmeshGenerateLimesurveyTokensTask extends sfBaseTask
       new sfCommandOption('valid-from', null, sfCommandOption::PARAMETER_OPTIONAL, 'Start validity date'),
       new sfCommandOption('valid-until', null, sfCommandOption::PARAMETER_OPTIONAL, 'End validity date'),
       new sfCommandOption('url', null, sfCommandOption::PARAMETER_REQUIRED, 'URL for the survey'),
+      
+      new sfCommandOption('booklet', null, sfCommandOption::PARAMETER_NONE, 'whether the labels will be grouped vertically'),
+
             
     ));
 
@@ -107,14 +110,69 @@ class schoolmeshGenerateLimesurveyTokensTask extends sfBaseTask
   $pdf->AddPage();
   
   $pdf->setCellMargins(1, 1, 1, 1);
-  
-  foreach($tokens as $token=>$lastname)
+
+
+  if($options['booklet'])
   {
-    $pdf->AddLabel(
-      $lastname . "\n\n" .
-      "token: " . $token . "\n" .
-      $options['url']
-      );
+    $t=array();
+    $max=0;
+    foreach($tokens as $token=>$lastname)
+    {
+      $t[$lastname][]=$token;
+      $max=max($max, sizeof($t[$lastname]));
+    }
+    //print_r($t);
+    
+    for($i=sizeof($t);$i<32;$i++)
+    {
+      $t[$i]=array(); //we fill the missing positions (32 is 8x4 labels)
+    }
+    
+    $nt=array();
+    for($i=0;$i<$max;$i++)
+    {
+      foreach($t as $key=>$value)
+      {
+        if(array_key_exists($i, $value))
+        {
+          $nt[]=array('token'=>$value[$i], 'lastname'=>$key);
+        }
+        else
+        {
+          $nt[]=array('token'=>'', 'lastname'=>'');
+        }
+      }
+    }
+
+    foreach($nt as $v)
+    {
+      if($v['token']!='')
+      {
+        $pdf->AddLabel(
+          $v['lastname'] . "\n\n" .
+          $options['url'] . "\n" . 
+          $this->context->getI18N()->__("token") .": " . $v['token']
+          );
+      }
+      else
+      {
+        $pdf->AddLabel('');        
+      }
+    }
+    
+  }
+  
+  else
+  {
+
+    foreach($tokens as $token=>$lastname)
+    {
+      $pdf->AddLabel(
+        $lastname . "\n\n" .
+        $options['url'] . "\n" .
+        $this->context->getI18N()->__("token") .": " . $token
+        );
+    }
   }
  
   // output

@@ -2135,6 +2135,10 @@
         <source>sign in</source>
         <target>entra</target>
     </trans-unit>
+    <trans-unit id="553">
+        <source>token</source>
+        <target>identificativo</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
