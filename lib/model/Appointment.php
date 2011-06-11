@@ -970,7 +970,7 @@ public function getWorkflowLogs()
 	
   public function isWorkplan()
   {
-    return $this->getState() <= Workflow::IR_DRAFT;
+    return $this->getState() < Workflow::IR_DRAFT;
   }
 
 
