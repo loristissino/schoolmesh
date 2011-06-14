@@ -64,6 +64,13 @@ class schoolmeshGenerateLimesurveyTokensTask extends sfBaseTask
     echo sizeof($profiles) . "\n";
     
     $f = fopen($filename, 'w');
+    
+    if (!$f)
+    {
+      $this->logSection('file', 'File ' . $filename . ' not writeable', null, 'ERROR');
+      return 2;
+    }
+    
     fwrite($f, implode(',', array(
       'firstname',
       'lastname',
@@ -105,9 +112,15 @@ class schoolmeshGenerateLimesurveyTokensTask extends sfBaseTask
     
   $config = sfTCPDFPluginConfigHandler::loadConfig('pdf_configs');
   
-  $pdf = new sfTCPDFLabel();
+  $pdf = new sfTCPDFLabel(4, 8, 50, 35);
+  /*
+  number of labels (x),
+  number of labels (y),
+  width of labels (mm),
+  height of labels (mm)
+  */ 
+  $pdf->SetFont("FreeSerif", "", 9);
   $pdf->AliasNbPages();
-  $pdf->AddPage();
   
   $pdf->setCellMargins(1, 1, 1, 1);
 
@@ -164,7 +177,6 @@ class schoolmeshGenerateLimesurveyTokensTask extends sfBaseTask
   
   else
   {
-
     foreach($tokens as $token=>$lastname)
     {
       $pdf->AddLabel(
