@@ -5,8 +5,8 @@
           {
 			
             $this->setWidgets(array(
-				'year'  => new sfWidgetFormPropelSelect(array('model'=>'Year', 'add_empty'=>'Choose a year')),
-				'class' => new sfWidgetFormPropelSelect(array('model'=>'Schoolclass', 'add_empty'=>'Choose a class'))
+				'year'  => new sfWidgetFormPropelChoice(array('model'=>'Year', 'add_empty'=>'Choose a year')),
+				'class' => new sfWidgetFormPropelChoice(array('model'=>'Schoolclass', 'add_empty'=>'Choose a class'))
 				));
 
 			$this->widgetSchema->setNameFormat('info[%s]');

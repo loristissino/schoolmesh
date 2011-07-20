@@ -27,38 +27,25 @@ class wpmoduleitemActions extends sfActions
 
   public function executeEvaluate(sfWebRequest $request)
   {
-	
+
     $this->wpmoduleitem = WpmoduleItemPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->wpmoduleitem);
 	
-	// controllare proprietario e valore
+	// FIXME We should check the owner and the value here...
 	
-	$type=$this->wpmoduleitem->getWpitemGroup()->getWpitemType();
+    $type=$this->wpmoduleitem->getWpitemGroup()->getWpitemType();
 
-	$min=$type->getEvaluationMin();
-	$max=$type->getEvaluationMax();
-	
-	$evaluation=$request->getParameter('evaluation');
-	$dbvalue=$evaluation==''? NULL: $evaluation;
-	$this->wpmoduleitem->setEvaluation($dbvalue);
-	$this->wpmoduleitem->save();
-//	$this->redirect('wpmodule/view?id='.$this->wpmoduleitem->getWpitemGroup()->getWpmoduleId());
-//	return $this->renderText('<span class="notice">'.$text.'</span>');
-    return $this->renderPartial('wpmodule/evaluation2', array('id'=>$this->wpmoduleitem->getId(), 'dbvalue'=>$dbvalue, 'textvalue'=>$this->wpmoduleitem->getEvaluationText(), 'min'=>$min, 'max'=>$max));
+    $min=$type->getEvaluationMin();
+    $max=$type->getEvaluationMax();
+    
+    $evaluation=$request->getParameter('evaluation');
+    $dbvalue=$evaluation==''? NULL: $evaluation;
+    $this->wpmoduleitem->setEvaluation($dbvalue);
+    $this->wpmoduleitem->save();
+    return $this->renderPartial('wpmodule/evaluation', array('id'=>$this->wpmoduleitem->getId(), 'dbvalue'=>$dbvalue, 'textvalue'=>$this->wpmoduleitem->getEvaluationText(), 'min'=>$min, 'max'=>$max));
 	}
 
 
-/*  public function executeIndex(sfWebRequest $request)
-  {
-    $this->wpmodule_item_list = WpmoduleItemPeer::doSelect(new Criteria());
-  }
-
-  public function executeShow(sfWebRequest $request)
-  {
-    $this->wpmodule_item = WpmoduleItemPeer::retrieveByPk($request->getParameter('id'));
-    $this->forward404Unless($this->wpmodule_item);
-  }
-*/
   public function executeNew(sfWebRequest $request)
   {
 
@@ -75,18 +62,7 @@ class wpmoduleitemActions extends sfActions
 	$this->redirect('wpmodule/view?id='.$group->getWpmoduleId().'#'.$group->getId());
 
    }
-/*
-  public function executeCreate(sfWebRequest $request)
-  {
-    $this->forward404Unless($request->isMethod('post'));
 
-    $this->form = new WpmoduleItemForm();
-
-    $this->processForm($request, $this->form);
-
-    $this->setTemplate('new');
-  }
-*/
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($wpmodule_item = WpmoduleItemPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpmodule_item does not exist (%s).', $request->getParameter('id')));
@@ -153,13 +129,15 @@ class wpmoduleitemActions extends sfActions
   protected function checkedValue($givenValue='')
 	{
 		$newvalue=chop(html_entity_decode(strip_tags($givenValue, '<br><em><sup><sub>')));
+    if (substr($newvalue, 0, 3)=='---') $newvalue=substr($newvalue, 3);
+
 		if ($newvalue=='') $newvalue='---';
 		return $newvalue;
 	}
 
 	protected function isUpdateble(sfWebRequest $request, $item)
 	{
-		return true;  // va sistemato
+		return true;  // FIXME Should be fixed somehow
 	}
 
 

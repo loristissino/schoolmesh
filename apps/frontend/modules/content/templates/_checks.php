@@ -1,4 +1,5 @@
 <?php use_helper('Javascript') ?>
+<?php use_helper('jQuery') ?>
 
 <h2><?php echo __('Checks') ?></h2>
 
@@ -20,9 +21,9 @@
 <?php foreach($checkList->getGroupNames() as $groupname): ?>
 	<p>
 	<strong>
-	<?php echo link_to_function(
+	<?php echo jq_link_to_function(
 	image_tag($checkList->getResultsByGroupName($groupname, Check::FAILED)>0? 'stop': 'go'),
-  visual_effect('toggle_blind', $groupname)
+  jq_visual_effect('slideToggle', '#' .$groupname)
 ) ?> &nbsp;<?php echo $groupname ?></strong>  (<?php foreach(array(Check::PASSED=>'green', Check::WARNING=>'orange', Check::FAILED=>'red') as $key=>$value): ?>
 <?php if($checkList->getResultsByGroupName($groupname, $key)>0): ?>
 	<span style="color: <?php echo $value ?>">

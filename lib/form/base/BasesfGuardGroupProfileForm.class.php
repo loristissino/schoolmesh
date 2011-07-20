@@ -13,7 +13,7 @@ class BasesfGuardGroupProfileForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'         => new sfWidgetFormInputHidden(),
-      'group_id'   => new sfWidgetFormPropelSelect(array('model' => 'sfGuardGroup', 'add_empty' => false)),
+      'group_id'   => new sfWidgetFormPropelChoice(array('model' => 'sfGuardGroup', 'add_empty' => false)),
       'posix_name' => new sfWidgetFormInputText(),
       'priority'   => new sfWidgetFormInputText(),
     ));

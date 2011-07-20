@@ -43,9 +43,9 @@
 		<?php //echo link_to(__('Download script'), '@userchecks?sf_format=txt') ?>
 	</li><br />
 	<li class="sf_admin_action_toggle">
-		<?php echo link_to_function(
+		<?php echo jq_link_to_function(
       __('Preview script'),
-      visual_effect('toggle_blind', 'generatedscript')
+      jq_visual_effect('slideToggle', '#generatedscript')
       ) ?>
 	</li>
 	</ul>

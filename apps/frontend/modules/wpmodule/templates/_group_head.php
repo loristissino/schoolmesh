@@ -9,9 +9,9 @@
 <div id="sf_admin_container">
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
-<?php echo link_to_function(
+<?php echo jq_link_to_function(
   __('Toggle'),
-  visual_effect('toggle_blind', 'group'.$item_group->getId())
+  jq_visual_effect('slideToggle', '#group'.$item_group->getId())
 ) ?>
 </li>
 </ul>

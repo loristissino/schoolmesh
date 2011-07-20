@@ -1,4 +1,6 @@
 <?php use_helper('Javascript') ?>
+<?php use_helper('jQuery') ?>
+
 <?php $s=$suggestion->getStudentIdsForAppointmentAndTerm($appointment_id, $term_id)->getRawValue() ?>
 <td><?php echo $suggestion->getContent() ?></td>
 
@@ -7,7 +9,7 @@
 <?php foreach ($students as $student): ?>
 <td>
 		<?php $link='▢'; if(in_array($student->getId(), $s)) {$link='▣'; $count++; } ?>
-		<?php echo link_to_remote($link, array(
+		<?php echo jq_link_to_remote($link, array(
 					'update'   => 'suggestion_' . $suggestion->getId(),
 					'url'      => url_for('schoolclasses/suggestion?student=' . $student->getId() . '&suggestion=' . $suggestion->getId() .'&appointment=' . $appointment_id ),
 					'loading'=>'$(\'loader_s'. $suggestion->getId() . '\').show();'),
@@ -37,7 +39,7 @@
 			}
 		?>
 
-		<?php echo link_to_remote($link, array(
+		<?php echo jq_link_to_remote($link, array(
 					'update'   =>'suggestion_' . $suggestion->getId(),
 					'url'      => url_for('schoolclasses/suggestion?student=all&suggestion=' . $suggestion->getId() . '&appointment=' . $appointment_id),
 					'loading'=>'$(\'loader_s'.$suggestion->getId() . '\').show();'),

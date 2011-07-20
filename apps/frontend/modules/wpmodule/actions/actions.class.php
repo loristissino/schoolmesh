@@ -54,12 +54,12 @@ class wpmoduleActions extends sfActions
 
 	public function executeEditInLine(sfWebRequest $request)
 	{
-
+    
 		$this->forward404Unless($request->getMethod()=="POST");
 		
 		$module=WpmodulePeer::retrieveByPk($request->getParameter('id'));
 
-// qui va aggiunto il controllo sulla fattibilità o meno della richiesta...
+    // FIXME we should add, here, a check about the permissions of the user...
 
 		$property=$request->getParameter('property');
 		$set_func= 'set'.$property;

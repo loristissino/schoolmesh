@@ -1,5 +1,5 @@
 <?php use_helper('Javascript') ?>
-<?php use_helper('Form') ?>
+<?php use_helper('Schoolmesh') ?>
 <?php use_helper('Object') ?>
 <?php slot('title', $schoolclass_id) ?>
 <?php slot('breadcrumbs',
@@ -67,14 +67,14 @@
       <li class="sf_admin_batch_actions_choice">
   <select name="batch_action">
 
-<?php echo options_for_select(array(
+<?php echo optionsforselect(array(
   '' => __('Choose an action'),
   'fill_recuperation_grid' => __('Fill recuperation grid'),
   'get_recuperation_letters' => __('Get recuperation letters'),
 ), 0) ?>
   </select>
 
-<?php echo submit_tag(_('Ok')) ?>
+<?php echo submittag(_('Ok')) ?>
 
 </li>
 

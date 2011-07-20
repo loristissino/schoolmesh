@@ -35,3 +35,7 @@
     <?php endforeach; ?>
   </tbody>  
 </table>  
+
+<hr />
+<?php include_partial('dacancellare') ?>
+

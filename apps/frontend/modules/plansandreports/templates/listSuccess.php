@@ -1,6 +1,7 @@
 <?php use_helper('Javascript') ?>
-<?php use_helper('Form') ?>
+<?php //use_helper('Form') ?>
 <?php use_helper('Object') ?>
+<?php use_helper('Schoolmesh') ?>
 
 
 <?php slot('title', __("Workplans and reports' monitoring")) ?>
@@ -74,16 +75,15 @@
       <li class="sf_admin_batch_actions_choice">
   <select name="batch_action">
 
-<?php echo options_for_select(array(
+<?php echo optionsforselect(array(
   '' => __('Choose an action'),
   'Approve' => __('Approve selected documents'),
-), 0) ?>
+), null) ?>
   </select>
 
-<?php echo submit_tag(_('Ok')) ?>
+<?php echo submittag(_('Ok')) ?>
 
-</li>
-</ul>
+
 
 </form>
 

@@ -14,13 +14,13 @@ class BaseGroupForm extends BaseFormPropel
     $this->setWidgets(array(
       'id'                => new sfWidgetFormInputHidden(),
       'name'              => new sfWidgetFormInputText(),
-      'person_group_list' => new sfWidgetFormPropelSelectMany(array('model' => 'Person')),
+      'person_group_list' => new sfWidgetFormPropelChoice(array('model' => 'Person', 'multiple'=>true)),
     ));
 
     $this->setValidators(array(
       'id'                => new sfValidatorPropelChoice(array('model' => 'Group', 'column' => 'id', 'required' => false)),
       'name'              => new sfValidatorString(array('max_length' => 30, 'required' => false)),
-      'person_group_list' => new sfValidatorPropelChoiceMany(array('model' => 'Person', 'required' => false)),
+      'person_group_list' => new sfValidatorPropelChoice(array('model' => 'Person', 'required' => false, 'multiple'=>true)),
     ));
 
     $this->widgetSchema->setNameFormat('group[%s]');

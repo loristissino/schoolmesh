@@ -23,6 +23,7 @@ abstract class BaseAttachmentFileForm extends BaseFormPropel
       'original_file_name'  => new sfWidgetFormInputText(),
       'uniqid'              => new sfWidgetFormInputText(),
       'file_size'           => new sfWidgetFormInputText(),
+      'is_public'           => new sfWidgetFormInputCheckbox(),
       'md5sum'              => new sfWidgetFormInputText(),
     ));
 
@@ -34,7 +35,8 @@ abstract class BaseAttachmentFileForm extends BaseFormPropel
       'internet_media_type' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'original_file_name'  => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'uniqid'              => new sfValidatorString(array('max_length' => 50)),
-      'file_size'           => new sfValidatorInteger(array('min' => -9.22337203685E+18, 'max' => 9.22337203685E+18, 'required' => false)),
+      'file_size'           => new sfValidatorInteger(array('min' => -9.2233720368548E+18, 'max' => 9.2233720368548E+18, 'required' => false)),
+      'is_public'           => new sfValidatorBoolean(array('required' => false)),
       'md5sum'              => new sfValidatorString(array('max_length' => 32, 'required' => false)),
     ));
 

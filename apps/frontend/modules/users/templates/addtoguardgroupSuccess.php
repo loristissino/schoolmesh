@@ -1,5 +1,5 @@
 <?php use_helper('Javascript') ?>
-<?php use_helper('Form') ?>
+<?php use_helper('Schoolmesh') ?>
 <?php use_helper('Object') ?>
 
 <?php slot('title', __('User management')) ?>
@@ -26,7 +26,7 @@
 <?php if ($current_user->getBelongsToGuardGroupByName($guardgroup->getName())): ?>
 	<strong><?php echo $guardgroup->getName() ?></strong>
 <?php else: ?>
-	<?php echo checkbox_tag('id[]', $guardgroup->getId(), false) ?>&nbsp;<?php echo $guardgroup->getName() ?>
+	<?php echo checkboxtag('id[]', $guardgroup->getId(), false) ?>&nbsp;<?php echo $guardgroup->getName() ?>
 <?php endif ?>
 <br />
 <?php endforeach ?>

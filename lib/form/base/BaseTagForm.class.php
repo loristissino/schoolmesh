@@ -14,13 +14,13 @@ class BaseTagForm extends BaseFormPropel
     $this->setWidgets(array(
       'id'               => new sfWidgetFormInputHidden(),
       'name'             => new sfWidgetFormInputText(),
-      'article_tag_list' => new sfWidgetFormPropelSelectMany(array('model' => 'Article')),
+      'article_tag_list' => new sfWidgetFormPropelChoice(array('model' => 'Article', 'multiple'=>true)),
     ));
 
     $this->setValidators(array(
       'id'               => new sfValidatorPropelChoice(array('model' => 'Tag', 'column' => 'id', 'required' => false)),
       'name'             => new sfValidatorString(array('max_length' => 255)),
-      'article_tag_list' => new sfValidatorPropelChoiceMany(array('model' => 'Article', 'required' => false)),
+      'article_tag_list' => new sfValidatorPropelChoice(array('model' => 'Article', 'required' => false. 'multiple'=>true)),
     ));
 
     $this->widgetSchema->setNameFormat('tag[%s]');

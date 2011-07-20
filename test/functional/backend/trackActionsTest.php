@@ -18,14 +18,19 @@ $browser-> info('1. Basic Authentication')->
     isParameter('module', 'track')->
     isParameter('action', 'index')->
    end()->
-  checkResponseElement('body', '/Restricted Area/')->
-  info('1.1. Admin is user is authorized')->
+   with('response')->
+   begin()->
+    checkElement('body', '/Restricted Area/')->
+    info('1.1. Admin is user is authorized')->
+   end()->
   setField('signin[username]', 'loris.tissino')->
   setField('signin[password]', 'lorisp')->
   click('sign in')->
   isRedirected()->
   followRedirect()->
-  checkResponseElement('body', '/Track List/')->
+  with('response')->
+   checkElement('body', '/Track List/')->
+  end()->
    get('/logout')->
    get('/track')->
    with('request')->
@@ -33,12 +38,17 @@ $browser-> info('1. Basic Authentication')->
     isParameter('module', 'track')->
     isParameter('action', 'index')->
    end()->
-  checkResponseElement('body', '/Restricted Area/')->
+   with('response')->
+    checkElement('body', '/Restricted Area/')->
+   end()->
   info('1.2. Not admin user is not authorized')->
   setField('signin[username]', 'helen.abram')->
   setField('signin[password]', 'helenp')->
   click('sign in')->
   isRedirected()->
   followRedirect()->
-  checkResponseElement('body', "/You don't have the required permission/");
+  with('response')->
+    checkElement('body', "/You don't have the required permission/")->
+  end()
+  ;
   

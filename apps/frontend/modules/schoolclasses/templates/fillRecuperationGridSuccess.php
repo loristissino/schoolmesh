@@ -1,6 +1,8 @@
 <?php use_helper('Javascript') ?>
 <?php use_helper('Form') ?>
 <?php use_helper('Object') ?>
+<?php use_javascript('jquery.jeditable.mini.js') ?>
+
 <?php slot('title', $schoolclass_id) ?>
 <?php slot('breadcrumbs',
 	link_to(__('Classes'), 'schoolclasses/index') . ' » ' . 
