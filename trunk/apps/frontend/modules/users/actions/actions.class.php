@@ -395,7 +395,8 @@ class usersActions extends sfActions
     $this->message=new InformativeMessage($this->userlist, $this->getUser()->getProfile(), $this->getContext());
     
     $this->form = new EmailForm();
-    if ($request->hasParameter('email[send]'))
+    $params=$request->getParameter('email');
+    if (array_key_exists('send', $params))
 		{
       
 			$this->form->bind($request->getParameter('email'));
@@ -1056,7 +1057,7 @@ public function executeAddappointment(sfWebRequest $request)
 
 		$this->forward404Unless($role=RolePeer::retrieveByPK($request->getParameter('role')));
 
-		$ids=$request->getParameter('id[]');
+		$ids=$request->getParameter('id');
 		
 		foreach($ids as $id)
 		{
@@ -1089,7 +1090,7 @@ public function executeAddappointment(sfWebRequest $request)
 	
 	if ($request->isMethod('post'))
 	{
-		$ids=$request->getParameter('id[]');
+		$ids=$request->getParameter('id');
 		
 		foreach($ids as $id)
 		{
@@ -1114,7 +1115,7 @@ public function executeAddappointment(sfWebRequest $request)
 	
 	if ($request->isMethod('post'))
 	{
-		$ids=$request->getParameter('id[]');
+		$ids=$request->getParameter('id');
 		
 		foreach($ids as $id)
 		{

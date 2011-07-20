@@ -1,5 +1,5 @@
 <?php use_helper('Javascript') ?>
-<?php use_helper('Form') ?>
+<?php use_helper('Schoolmesh') ?>
 <?php use_helper('Object') ?>
 
 <?php slot('title', __('User management')) ?>
@@ -27,15 +27,15 @@
 <?php if ($current_user->getBelongsToTeam($team->getPosixName())): ?>
 	<strong><?php echo $team->getDescription() ?></strong>
 <?php else: ?>
-	<?php echo checkbox_tag('id[]', $team->getId(), false) ?>&nbsp;<?php echo $team->getDescription() ?>
+	<?php echo checkboxtag('id[]', $team->getId(), false) ?>&nbsp;<?php echo $team->getDescription() ?>
 <?php endif ?>
 <br />
 <?php endforeach ?>
 </p>
 
-<?php echo select_tag('role', options_for_select($roles, 0)) ?>
+<?php echo selecttag('role', optionsforselect($roles, null)) ?>
 
-<input type="submit" name="save" value="<?php echo __('Add') ?>">
+<?php echo submittag(__('Add'), 'save') ?>
   
 </form>
 

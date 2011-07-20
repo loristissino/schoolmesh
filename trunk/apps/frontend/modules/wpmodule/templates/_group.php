@@ -1,3 +1,5 @@
+<?php use_helper('Javascript') ?>
+<?php use_helper('jQuery') ?>
 <?php use_helper('Form'); ?>
 <?php use_helper('Object'); ?>
 
@@ -10,9 +12,9 @@
 <div id="sf_admin_container">
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
-<?php echo link_to_function(
+<?php echo jq_link_to_function(
   __('Toggle'),
-  visual_effect('toggle_blind', 'group'.$item_group->getId())
+  jq_visual_effect('toggle_blind', '#group'.$item_group->getId())
 ) ?>
 </li>
 </ul>
@@ -75,7 +77,7 @@
 <?php endif ?><span id="moduleitem_<?php echo $wpmodule_item->getId()?>" class="editText"><?php echo html_entity_decode($wpmodule_item->getContent())?></span>
 
 	<?php if($wpmodule_item->getIsEditable()): ?>
-		<?php echo input_in_place_editor_tag('moduleitem_'.$wpmodule_item->getId(), 'wpmoduleitem/editInLine?property=Content&id='.$wpmodule_item->getId(), array('cols'=>'90', 'rows'=>1)) ?>
+		<?php echo inputinplaceeditortag('moduleitem_'.$wpmodule_item->getId(), 'wpmoduleitem/editInLine?property=Content&id='.$wpmodule_item->getId(), array('cols'=>'90', 'rows'=>1)) ?>
 	<?php endif ?>
 	</td>
 	<?php if(($wpstate==30) && ($item_group->getWpitemType()->getEvaluationMax()>=0)): ?>
@@ -113,17 +115,6 @@
     <?php endforeach; ?>
   </tbody>
 </table>
-
-<?php /*
-<ul>
-<?php foreach($item_group->getWpmoduleItems() as $wpmodule_item): ?>
-	<li>
-	<span id="moduleitem_<?php echo $wpmodule_item->getId()?>" class="editText"><?php echo $wpmodule_item->getContent() ?></span>
-	<?php echo input_in_place_editor_tag('moduleitem_'.$wpmodule_item->getId(), 'wpmoduleitem/editInLine?property=Content&id='.$wpmodule_item->getId(), array('cols'=>'50', 'rows'=>1)) ?>
-	&nbsp;<?php echo link_to(__('rich text edit'), 'wpmoduleitem/edit?id='.$wpmodule_item->getId()) ?></li>
-<?php endforeach ?>
-</ul>
-*/ ?>
 
 
 <div id="sf_admin_container">

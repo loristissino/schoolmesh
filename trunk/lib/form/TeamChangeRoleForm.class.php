@@ -7,7 +7,7 @@
             $this->setWidgets(array(
 				'id'  => new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
 				'team'  => new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
-				'role' => new sfWidgetFormPropelSelect(array('model'=>'role', 'add_empty'=>'Choose a role'))
+				'role' => new sfWidgetFormPropelChoice(array('model'=>'role', 'add_empty'=>'Choose a role'))
 				));
 
 			$this->widgetSchema->setNameFormat('info[%s]');

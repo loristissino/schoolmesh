@@ -1,4 +1,5 @@
 <?php use_helper('Javascript') ?>
+<?php use_helper('jQuery') ?>
 <div id='quotas_update'>
 <table>
 	<tr>
@@ -17,7 +18,7 @@
 		<th><label><?php echo __('Actions') ?></label></th>
 		<td>
 		<?php
-			echo link_to_remote(
+			echo jq_link_to_remote(
 				__('Check now'),
 				array(
 					'update'=>'quotas_update',

@@ -26,7 +26,7 @@
 Workflow::getEmailVerificationStates())),  
 			  'birthdate' => new sfWidgetFormI18nDate(array('culture'=>'it', 'years'=>$years)),  
 			  'birthplace' => new sfWidgetFormInputText(array(), array('size'=>50)),  
-			  'main_role' => new sfWidgetFormPropelSelect(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
+			  'main_role' => new sfWidgetFormPropelChoice(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
 /*			  'soft_blocks_quota' => new sfWidgetFormInputText(array(), array('size'=>8)),
 			  'hard_blocks_quota' => new sfWidgetFormInputText(array(), array('size'=>8)),
 			  'soft_files_quota' => new sfWidgetFormInputText(array(), array('size'=>8)),
@@ -37,7 +37,7 @@ Workflow::getEmailVerificationStates())),
 			{
             $this->setWidgets(array(
 			  'username' => new sfWidgetFormInputText(array(), array('size'=>25)),
-			  'main_role' => new sfWidgetFormPropelSelect(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
+			  'main_role' => new sfWidgetFormPropelChoice(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
             ));
 			}
 			$this->widgetSchema->setNameFormat('userinfo[%s]');

@@ -83,10 +83,9 @@ class passwordresetActions extends sfActions
 		}
 				
 
-		
-	
-		$this->account=$request->getParameter('info[account]');
-		$this->username=$request->getParameter('info[username]');
+	  $params=$request->getParameter('info');
+		$this->account=$params['account'];
+		$this->username=$params['username'];
 		
 		if(!($this->getUser()->hasCredential($this->account.'_resetpwd')||($this->getUser()->hasCredential('admin'))))
 		{

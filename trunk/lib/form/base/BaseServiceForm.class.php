@@ -20,8 +20,8 @@ abstract class BaseServiceForm extends BaseFormPropel
       'is_enabled_by_default'    => new sfWidgetFormInputCheckbox(),
       'port'                     => new sfWidgetFormInputText(),
       'is_udp'                   => new sfWidgetFormInputCheckbox(),
-      'subnet_service_list'      => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => 'Subnet')),
       'workstation_service_list' => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => 'Workstation')),
+      'subnet_service_list'      => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => 'Subnet')),
     ));
 
     $this->setValidators(array(
@@ -30,8 +30,8 @@ abstract class BaseServiceForm extends BaseFormPropel
       'is_enabled_by_default'    => new sfValidatorBoolean(array('required' => false)),
       'port'                     => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647)),
       'is_udp'                   => new sfValidatorBoolean(array('required' => false)),
-      'subnet_service_list'      => new sfValidatorPropelChoice(array('multiple' => true, 'model' => 'Subnet', 'required' => false)),
       'workstation_service_list' => new sfValidatorPropelChoice(array('multiple' => true, 'model' => 'Workstation', 'required' => false)),
+      'subnet_service_list'      => new sfValidatorPropelChoice(array('multiple' => true, 'model' => 'Subnet', 'required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(
@@ -55,17 +55,6 @@ abstract class BaseServiceForm extends BaseFormPropel
   {
     parent::updateDefaultsFromObject();
 
-    if (isset($this->widgetSchema['subnet_service_list']))
-    {
-      $values = array();
-      foreach ($this->object->getSubnetServices() as $obj)
-      {
-        $values[] = $obj->getSubnetId();
-      }
-
-      $this->setDefault('subnet_service_list', $values);
-    }
-
     if (isset($this->widgetSchema['workstation_service_list']))
     {
       $values = array();
@@ -77,49 +66,25 @@ abstract class BaseServiceForm extends BaseFormPropel
       $this->setDefault('workstation_service_list', $values);
     }
 
+    if (isset($this->widgetSchema['subnet_service_list']))
+    {
+      $values = array();
+      foreach ($this->object->getSubnetServices() as $obj)
+      {
+        $values[] = $obj->getSubnetId();
+      }
+
+      $this->setDefault('subnet_service_list', $values);
+    }
+
   }
 
   protected function doSave($con = null)
   {
     parent::doSave($con);
 
-    $this->saveSubnetServiceList($con);
     $this->saveWorkstationServiceList($con);
-  }
-
-  public function saveSubnetServiceList($con = null)
-  {
-    if (!$this->isValid())
-    {
-      throw $this->getErrorSchema();
-    }
-
-    if (!isset($this->widgetSchema['subnet_service_list']))
-    {
-      // somebody has unset this widget
-      return;
-    }
-
-    if (null === $con)
-    {
-      $con = $this->getConnection();
-    }
-
-    $c = new Criteria();
-    $c->add(SubnetServicePeer::SERVICE_ID, $this->object->getPrimaryKey());
-    SubnetServicePeer::doDelete($c, $con);
-
-    $values = $this->getValue('subnet_service_list');
-    if (is_array($values))
-    {
-      foreach ($values as $value)
-      {
-        $obj = new SubnetService();
-        $obj->setServiceId($this->object->getPrimaryKey());
-        $obj->setSubnetId($value);
-        $obj->save();
-      }
-    }
+    $this->saveSubnetServiceList($con);
   }
 
   public function saveWorkstationServiceList($con = null)
@@ -152,6 +117,41 @@ abstract class BaseServiceForm extends BaseFormPropel
         $obj = new WorkstationService();
         $obj->setServiceId($this->object->getPrimaryKey());
         $obj->setWorkstationId($value);
+        $obj->save();
+      }
+    }
+  }
+
+  public function saveSubnetServiceList($con = null)
+  {
+    if (!$this->isValid())
+    {
+      throw $this->getErrorSchema();
+    }
+
+    if (!isset($this->widgetSchema['subnet_service_list']))
+    {
+      // somebody has unset this widget
+      return;
+    }
+
+    if (null === $con)
+    {
+      $con = $this->getConnection();
+    }
+
+    $c = new Criteria();
+    $c->add(SubnetServicePeer::SERVICE_ID, $this->object->getPrimaryKey());
+    SubnetServicePeer::doDelete($c, $con);
+
+    $values = $this->getValue('subnet_service_list');
+    if (is_array($values))
+    {
+      foreach ($values as $value)
+      {
+        $obj = new SubnetService();
+        $obj->setServiceId($this->object->getPrimaryKey());
+        $obj->setSubnetId($value);
         $obj->save();
       }
     }

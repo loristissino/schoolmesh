@@ -9,9 +9,9 @@
 <h3><?php echo $item_group->getWpitemType()->getTitle() ?></h3>
 <ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
-<?php echo link_to_function(
+<?php echo jq_link_to_function(
   __('Hide'),
-  visual_effect('toggle_blind', 'group'.$item_group->getId()), array(__('Hide'))
+  jq_visual_effect('slideToggle', '#group'.$item_group->getId()), array(__('Hide'))
 ) ?>
 </li>
 </ul>
@@ -71,13 +71,12 @@
 <?php endif ?><span id="moduleitem_<?php echo $wpmodule_item->getId()?>" class="editText"><?php echo html_entity_decode($wpmodule_item->getContent())?></span>
 
 	<?php if($wpmodule_item->getIsEditable() || $sf_user->hasCredential('backadmin')): ?>
-		<?php echo input_in_place_editor_tag('moduleitem_'.$wpmodule_item->getId(), 'wpmoduleitem/editInLine?property=Content&id='.$wpmodule_item->getId(), array('cols'=>'90', 'rows'=>1)) ?>
+		<?php echo inputinplaceeditortag('#moduleitem_'.$wpmodule_item->getId(), url_for('wpmoduleitem/editInLine?property=Content&id='.$wpmodule_item->getId(), false), array('tooltip'=>__('Click here to edit this text'), 'hover'=>'yellow')) ?>
 	<?php endif ?>
 	</td>
 	<?php if(($wpstate==Workflow::IR_DRAFT) && ($item_group->getWpitemType()->getEvaluationMax()>=0)): ?>
 	<td>
-		<?php //include_partial('evaluation', array('wpmodule_item' => $wpmodule_item, 'item_group'=>$item_group)) ?>
-		<?php include_partial('evaluation2', array(
+		<?php include_partial('evaluation', array(
 			'id'=>$wpmodule_item->getId(), 
 			'dbvalue'=>$wpmodule_item->getEvaluation(), 
 			'textvalue'=>$wpmodule_item->getEvaluationText(), 
@@ -110,16 +109,7 @@
   </tbody>
 </table>
 
-<?php /*
-<ul>
-<?php foreach($item_group->getWpmoduleItems() as $wpmodule_item): ?>
-	<li>
-	<span id="moduleitem_<?php echo $wpmodule_item->getId()?>" class="editText"><?php echo $wpmodule_item->getContent() ?></span>
-	<?php echo input_in_place_editor_tag('moduleitem_'.$wpmodule_item->getId(), 'wpmoduleitem/editInLine?property=Content&id='.$wpmodule_item->getId(), array('cols'=>'50', 'rows'=>1)) ?>
-	&nbsp;<?php echo link_to(__('rich text edit'), 'wpmoduleitem/edit?id='.$wpmodule_item->getId()) ?></li>
-<?php endforeach ?>
-</ul>
-*/ ?>
+
 
 
 <div id="sf_admin_container">

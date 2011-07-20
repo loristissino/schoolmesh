@@ -1,4 +1,5 @@
 <?php use_helper('Javascript') ?>
+<?php use_helper('jQuery') ?>
 <?php use_helper('Form') ?>
 <?php use_javascript('tiny_mce/tiny_mce.js') ?>
 <?php slot('breadcrumbs',
@@ -94,9 +95,9 @@ editor_selector : \"mceAdvanced\"
 <h3><?php echo __('Hints') ?></h3>
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
-<?php echo link_to_function(
+<?php echo jq_link_to_function(
   __('Toggle'),
-  visual_effect('toggle_blind', 'hints')
+  jq_visual_effect('slideToggle', '#hints')
 ) ?>
 </li>
 </ul>
@@ -154,9 +155,9 @@ editor_selector : \"mceAdvanced\"
 <h3><?php echo __('Example') ?></h3>
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
-<?php echo link_to_function(
+<?php echo jq_link_to_function(
   __('Toggle'),
-  visual_effect('toggle_blind', 'example')
+  jq_visual_effect('slideToggle', '#example')
 ) ?>
 </li>
 </ul>

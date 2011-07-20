@@ -1,5 +1,5 @@
 <?php use_helper('Javascript') ?>
-<?php use_helper('Form') ?>
+<?php use_helper('Schoolmesh') ?>
 <?php use_helper('Object') ?>
 
 <?php slot('title', __('User management')) ?>
@@ -26,7 +26,7 @@
 <?php if ($current_user->hasPermission($credential->getName())): ?>
 	<strong><?php echo $credential->getName() ?></strong>
 <?php else: ?>
-	<em><?php echo checkbox_tag('id[]', $credential->getId(), false) ?>&nbsp;<?php echo $credential->getName() ?></em>
+	<em><?php echo checkboxtag('id[]', $credential->getId(), false) ?>&nbsp;<?php echo $credential->getName() ?></em>
 <?php endif ?>
 &nbsp;(<?php echo $credential->getDescription() ?>)<br />
 <?php endforeach ?>

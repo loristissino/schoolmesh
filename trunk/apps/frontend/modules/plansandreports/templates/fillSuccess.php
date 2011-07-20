@@ -1,4 +1,6 @@
 <?php use_helper('Javascript') ?>
+<?php use_helper('jQuery') ?>
+
 <?php slot('title', sprintf('%s --  %s', $workplan->__toString(),$workplan->getsfGuardUser()->getProfile()->getFullName() )) ?>
 <?php slot('breadcrumbs',
 	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
@@ -21,16 +23,19 @@
 <!--<div id="sf_admin_container">-->
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
-<?php echo link_to_function(
+<?php echo jq_link_to_function(
   __('Toggle'),
-  visual_effect('toggle_blind', 'infos')
+  jq_visual_effect('slideToggle', '#infos')
 ) ?>
+
+
 </li>
 </ul>
 <!--</div>-->
 <div id="infos" style="display:<?php echo $sf_user->hasFlash('notice_info') || $sf_user->hasFlash('error_info')? 'visible': 'none' ?>">
 <?php include_partial('infos', array('wpinfos' => $wpinfos, 'state' => $state)) ?>
 </div>
+
 <hr />
 
 <a name="wpmodules"></a>
@@ -38,9 +43,9 @@
 <!--<div id="sf_admin_container">-->
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
-<?php echo link_to_function(
+<?php echo jq_link_to_function(
   __('Toggle'),
-  visual_effect('toggle_blind', 'modules')
+  jq_visual_effect('slideToggle', '#modules')
 ) ?>
 </li>
 </ul>
@@ -73,9 +78,9 @@
 <h2><?php echo __("Aux") ?></h2>
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_toggle">
-<?php echo link_to_function(
+<?php echo jq_link_to_function(
   __('Toggle'),
-  visual_effect('toggle_blind', 'aux')
+  jq_visual_effect('slideToggle', '#aux')
 ) ?>
 </li>
 </ul>

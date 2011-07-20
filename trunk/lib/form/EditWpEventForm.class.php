@@ -5,7 +5,7 @@
           {
 			
             $this->setWidgets(array(
-				'user'  => new sfWidgetFormPropelSelect(array('model'=>'sfGuardUserProfile', 'peer_method'=>'retrieveAllButStudents', 'add_empty'=>'Choose a user')),
+				'user'  => new sfWidgetFormPropelChoice(array('model'=>'sfGuardUserProfile', 'peer_method'=>'retrieveAllButStudents', 'add_empty'=>'Choose a user')),
 				'date' => new sfWidgetFormI18nDateTime(array('culture'=>'it')),
 				'comment' => new sfWidgetFormInputText(array(), array('size'=>100)),
 				'state' => new sfWidgetFormSelect(array('choices' =>Workflow::getWpfrStates())),

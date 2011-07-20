@@ -1,4 +1,5 @@
 <?php use_helper('Javascript') ?>
+<?php use_helper('jQuery') ?>
 <?php $sits=$wpmodule_item->getStudentsSituationsAsArray($sf_user->getAttribute('ids')->getRawValue(), $term_id)->getRawValue() ?>
 <td width="10">&nbsp;</td>
 <td><?php echo html_entity_decode($wpmodule_item->getContent()) ?></td>
@@ -8,7 +9,7 @@
 <?php foreach ($students as $student): ?>
 <td>
 		<?php $link='▢'; if(in_array($student->getId(), $sits)) {$link='▣'; $count++; } ?>
-		<?php echo link_to_remote(in_array($student->getId(), $sits)? '▣': '▢', array(
+		<?php echo jq_link_to_remote(in_array($student->getId(), $sits)? '▣': '▢', array(
 					'update'   => 'ticks_' . $wpmodule_item->getId(),
 					'url'      => url_for('schoolclasses/tickit?student=' . $student->getId() . '&item=' . $wpmodule_item->getId()),
 					'loading'=>'$(\'loader'. $wpmodule_item->getId() . '\').show();'),
@@ -35,7 +36,7 @@
 				default: $link='▨';
 			}
 		?>
-		<?php echo link_to_remote($link, array(
+		<?php echo jq_link_to_remote($link, array(
 					'update'   =>'ticks_' . $wpmodule_item->getId(),
 					'url'      => url_for('schoolclasses/tickit?student=all&item=' . $wpmodule_item->getId() ),
 					'loading'=>'$(\'loader'.$wpmodule_item->getId() . '\').show();'),

@@ -1,4 +1,10 @@
 <?php use_helper('Javascript') ?>
+<?php use_helper('jQuery') ?>
+<?php use_helper('Schoolmesh') ?>
+<?php use_helper('Form') ?>
+<?php use_helper('Object') ?>
+<?php use_javascript('jquery.jeditable.mini.js') ?>
+
 <?php slot('title', sprintf('%s -- %s --  %s', $wpmodule->getTitle(), $workplan->__toString(), $owner->getFullName())) ?>
 <?php slot('breadcrumbs',
 	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
@@ -7,12 +13,12 @@
 	)
 	
 	?>
-
+  
 <h1><?php echo __('Module: ') ?>
 <?php if ($wpmodule->getTitle()=='---'): ?>
 			<?php echo image_tag('notdone', 'title=' . __('this content is required and is currently missing')). ' ' ?>
 <?php endif ?>
-<span id="moduletitle" class="editText"><?php echo $wpmodule->getTitle() ?></span><?php echo input_in_place_editor_tag('moduletitle', 'wpmodule/editInLine?property=Title&id='.$wpmodule->getId(), array('cols'=>'50', 'rows'=>1)) ?></h1>
+<span id="moduletitle" class="editText"><?php echo $wpmodule->getTitle() ?></span><?php echo inputinplaceeditortag('#moduletitle', url_for('wpmodule/editInLine?property=Title&id='.$wpmodule->getId()), array('tooltip'=>__('Click here to edit the title'), 'hover'=>'yellow')) ?></h1>
 
 
 <ul>
@@ -22,11 +28,11 @@
 <?php if ($wpmodule->getPeriod()=='---'): ?>
 			<?php echo image_tag('notdone', 'title=' . __('this content is required and is currently missing')). ' ' ?>
 <?php endif ?>
-<strong><span id="moduleperiod" class="editText"><?php echo $wpmodule->getPeriod() ?></span></strong></li>
-<?php echo input_in_place_editor_tag('moduleperiod', 'wpmodule/editInLine?property=Period&id='.$wpmodule->getId(), array('cols'=>'50', 'rows'=>1)) ?>
+<strong><span id="moduleperiod" class="editText"><?php echo $wpmodule->getPeriod() ?></span></strong>
+<?php echo inputinplaceeditortag('moduleperiod', 'wpmodule/editInLine?property=Period&id='.$wpmodule->getId(), array('cols'=>'50', 'rows'=>1)) ?></li>
 <li><?php echo __('Hours estimated: ') ?>
-<strong><span id="modulehours_estimated" class="editText"><?php echo $wpmodule->getHoursEstimated() ?></span></strong></li>
-<?php echo input_in_place_editor_tag('modulehours_estimated', 'wpmodule/editInLine?property=HoursEstimated&id='.$wpmodule->getId(), array('cols'=>'5', 'rows'=>1)) ?>
+<strong><span id="modulehours_estimated" class="editText"><?php echo $wpmodule->getHoursEstimated() ?></span></strong>
+<?php echo inputinplaceeditortag('modulehours_estimated', 'wpmodule/editInLine?property=HoursEstimated&id='.$wpmodule->getId(), array('cols'=>'5', 'rows'=>1)) ?></li>
 </ul>
 
 

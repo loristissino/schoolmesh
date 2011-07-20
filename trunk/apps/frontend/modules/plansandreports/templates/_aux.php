@@ -1,4 +1,5 @@
 <?php use_helper('Javascript') ?>
+<?php use_helper('jQuery') ?>
 <div id="aux_update">
 <?php if ($sf_user->hasFlash('error_aux')): ?>
   <div class="error"><?php echo __($sf_user->getFlash('error_aux')) ?></div>
@@ -28,7 +29,7 @@
 				<?php if ($tool['chosen']): ?>
 					&nbsp;&nbsp;<strong>
 					<?php if ($group['state']==$workplan->getState()): ?>
-						<?php echo link_to_remote(
+						<?php echo jq_link_to_remote(
 						sprintf(__('▣ %s'), $tool['description']), array(
 							'update'=>'aux_update',
 							'url' => 'plansandreports/removetool?id='. $workplan->getId() . '&tool='.$tool_id,
@@ -42,7 +43,7 @@
 				<?php else: ?>
 					&nbsp;&nbsp;
 					<?php if ($group['state']==$workplan->getState()): ?>
-						<?php echo link_to_remote(
+						<?php echo jq_link_to_remote(
 							sprintf(__('▢ %s'), $tool['description']), array(
 								'update'=>'aux_update',
 								'url' => 'plansandreports/addtool?id='. $workplan->getId() . '&tool='.$tool_id,
