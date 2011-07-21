@@ -1,4 +1,3 @@
-<?php use_helper('Javascript') ?>
 <?php slot('title', sprintf('%s --  %s', $workplan->__toString(),$workplan->getsfGuardUser()->getProfile()->getFullName() )) ?>
 <?php slot('breadcrumbs',
 	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 

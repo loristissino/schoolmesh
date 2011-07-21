@@ -1,4 +1,3 @@
-<?php use_helper('Javascript') ?>
 <?php use_helper('jQuery') ?>
 <div id='quotas_update'>
 <table>

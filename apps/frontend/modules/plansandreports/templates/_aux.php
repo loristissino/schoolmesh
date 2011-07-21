@@ -1,4 +1,3 @@
-<?php use_helper('Javascript') ?>
 <?php use_helper('jQuery') ?>
 <div id="aux_update">
 <?php if ($sf_user->hasFlash('error_aux')): ?>

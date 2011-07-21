@@ -1,4 +1,3 @@
-<?php use_helper('Javascript') ?>
 <?php use_helper('jQuery') ?>
 
 <?php slot('title', sprintf('%s --  %s', $workplan->__toString(),$workplan->getsfGuardUser()->getProfile()->getFullName() )) ?>

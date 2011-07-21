@@ -1,7 +1,3 @@
-<?php use_helper('Javascript') ?>
-<?php use_helper('Form') ?>
-<?php use_helper('Object') ?>
-
 <?php slot('title', __('Disk quota statistics')) ?>
 	
 <?php slot('breadcrumbs',

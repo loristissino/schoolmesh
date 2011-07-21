@@ -1,4 +1,3 @@
-<?php use_helper('Javascript') ?>
 <?php use_helper('jQuery') ?>
 <?php $sits=$wpmodule_item->getStudentsSituationsAsArray($sf_user->getAttribute('ids')->getRawValue(), $term_id)->getRawValue() ?>
 <td width="10">&nbsp;</td>

@@ -1,6 +1,3 @@
-<?php use_helper('Form'); ?>
-<?php use_helper('Object'); ?>
-
 <td width="<?php echo (100/$size) ?>%">
 <?php // for the icon associated to the style I should use the CSS, I know... ?>
 <?php echo image_tag($item_group->getWpitemType()->getStyle()) ?>
