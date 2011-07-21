@@ -1,4 +1,3 @@
-<?php use_helper('Javascript') ?>
 <?php use_helper('jQuery') ?>
 
 <?php $s=$suggestion->getStudentIdsForAppointmentAndTerm($appointment_id, $term_id)->getRawValue() ?>

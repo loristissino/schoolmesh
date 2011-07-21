@@ -48,7 +48,7 @@ all:
 
     i18n:                   true
     default_culture:        it
-    standard_helpers:       [Partial, Cache, Form, I18N, Debug, Date, Number]
+    standard_helpers:       [Partial, Cache, I18N, Debug, Date, Number]
 #    prototype_web_dir:      /sf/web/prototype
 
 

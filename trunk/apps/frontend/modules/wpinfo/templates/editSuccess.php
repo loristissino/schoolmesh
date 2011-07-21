@@ -1,6 +1,4 @@
-<?php use_helper('Javascript') ?>
 <?php use_helper('jQuery') ?>
-<?php use_helper('Form') ?>
 <?php use_javascript('tiny_mce/tiny_mce.js') ?>
 <?php slot('breadcrumbs',
 	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 

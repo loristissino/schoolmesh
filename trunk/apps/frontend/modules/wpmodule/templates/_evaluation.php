@@ -1,4 +1,3 @@
-<?php use_helper('Javascript') ?>
 <?php use_helper('jQuery') ?>
 <div id="item_evaluation_<?php echo $id ?>">
 <!-- <strong>Current value: <?php echo $textvalue ?>

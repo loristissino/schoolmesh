@@ -1,4 +1,3 @@
-<?php use_helper('Javascript') ?>
 <?php slot('title', __("Who's on line")) ?>
 <?php slot('breadcrumbs',
 	__("Who's on line")

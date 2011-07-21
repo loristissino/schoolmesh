@@ -33,4 +33,5 @@ grep -v 'templates/oo/workplan90.odt$' | \
 grep -v 'data/attachments' | \
 grep -v 'templates/oo/welcomeletter_allievi.odt$' | \
 grep -v 'templates/oo/recuperation.odt$' | \
+grep -v 'lib/vendor/symfony' | \
 sed 's/^?      //'

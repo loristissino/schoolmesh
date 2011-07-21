@@ -1,8 +1,5 @@
-<?php use_helper('Javascript') ?>
 <?php use_helper('jQuery') ?>
 <?php use_helper('Schoolmesh') ?>
-<?php use_helper('Form') ?>
-<?php use_helper('Object') ?>
 <?php use_javascript('jquery.jeditable.mini.js') ?>
 
 <?php slot('title', sprintf('%s -- %s --  %s', $wpmodule->getTitle(), $workplan->__toString(), $owner->getFullName())) ?>

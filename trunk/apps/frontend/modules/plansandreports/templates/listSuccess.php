@@ -1,6 +1,3 @@
-<?php use_helper('Javascript') ?>
-<?php //use_helper('Form') ?>
-<?php use_helper('Object') ?>
 <?php use_helper('Schoolmesh') ?>
 
 

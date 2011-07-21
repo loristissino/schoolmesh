@@ -1,6 +1,3 @@
-<?php use_helper('Form'); ?>
-<?php use_helper('Object'); ?>
-
 <div id="group<?php echo $item_group->getId() ?>" style="display:<?php echo ($sf_user->hasFlash('notice'.$item_group->getId())||$sf_user->hasFlash('evaluation'.$item_group->getId()) || $sf_user->hasFlash('error'.$item_group->getId()))? 'visible': 'none' ?>">
 
 <?php $i=0 ?>

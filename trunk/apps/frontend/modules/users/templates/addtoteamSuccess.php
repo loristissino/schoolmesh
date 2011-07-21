@@ -1,6 +1,4 @@
-<?php use_helper('Javascript') ?>
 <?php use_helper('Schoolmesh') ?>
-<?php use_helper('Object') ?>
 
 <?php slot('title', __('User management')) ?>
 <?php slot('breadcrumbs',

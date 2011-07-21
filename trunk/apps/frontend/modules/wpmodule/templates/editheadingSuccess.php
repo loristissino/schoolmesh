@@ -1,4 +1,3 @@
-<?php use_helper('Javascript') ?>
 <?php slot('title', sprintf('%s -- %s --  %s', $wpmodule->getTitle(), $workplan->__toString(), $owner->getFullName())) ?>
 <?php slot('breadcrumbs',
 	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 

@@ -1,7 +1,4 @@
-<?php use_helper('Javascript') ?>
 <?php use_helper('jQuery') ?>
-<?php use_helper('Form'); ?>
-<?php use_helper('Object'); ?>
 
 <hr />
 <a name="<?php echo $item_group->getId() ?>"></a>
