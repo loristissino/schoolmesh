@@ -17,12 +17,13 @@ class profileActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-		$this->profile = $this->getUser()->getProfile();
-        $this->name = $this->profile->getFullName();
-		
-//        $this->appointments = $this->getUser()->getProfile()->getCurrentAppointments();
-
-        $this->teams=$this->getUser()->getProfile()->getTeams();
+		/*if ($this->profile = $this->getUser()->getProfile())
+    {
+      $this->name = $this->profile->getFullName();
+      //$this->appointments = $this->getUser()->getProfile()->getCurrentAppointments();
+      $this->teams=$this->getUser()->getProfile()->getTeams();
+    }
+    */
 	
   }
   
