@@ -1,16 +1,16 @@
 <?php use_helper('jQuery') ?>
-<?php use_helper('Schoolmesh') ?>
 <?php use_javascript('jquery.jeditable.mini.js') ?>
 
-<?php slot('title', sprintf('%s -- %s --  %s', $wpmodule->getTitle(), $workplan->__toString(), $owner->getFullName())) ?>
-<?php slot('breadcrumbs',
-	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
-	link_to($workplan, 'plansandreports/fill?id='.$workplan->getId()) . ' » ' . 
-	$wpmodule->getTitle()
-	)
-	
-	?>
-  
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    '@plansandreports' => "Plans and Reports",
+    'plansandreports/fill?id='.$workplan->getId() => $workplan
+    ),
+  'current'=>$wpmodule->getTitle(),
+  'title'=>$workplan . ' -- ' . $wpmodule->getTitle(),
+  ))
+?>    
+
 <h1><?php echo __('Module: ') ?>
 <?php if ($wpmodule->getTitle()=='---'): ?>
 			<?php echo image_tag('notdone', 'title=' . __('this content is required and is currently missing')). ' ' ?>

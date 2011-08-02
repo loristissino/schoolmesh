@@ -1,16 +1,9 @@
-<?php slot('title', sprintf('%s --  %s', __("Plans and Reports"),$user->getProfile()->getFullName() )) ?>
-<?php slot('breadcrumbs',
-	__("Plans and Reports")
-	)
-	
-	?><h1><?php echo __("Workplans and Reports")?></h1>
+<?php include_partial('content/breadcrumps', array(
+  'current'=>__("Plans and Reports")
+  ))
+?>
 
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
 
 <div class="sf_admin_list">
 

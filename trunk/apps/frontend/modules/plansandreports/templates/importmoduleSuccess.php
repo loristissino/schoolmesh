@@ -1,13 +1,14 @@
-<?php slot('title', sprintf('%s --  %s', $workplan->__toString(),$workplan->getsfGuardUser()->getProfile()->getFullName() )) ?>
-<?php slot('breadcrumbs',
-	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
-	link_to($workplan, 'plansandreports/fill?id=' . $workplan->getId()) . ' » ' .
-	__('Workplan module import')
-	)
-	
-	?><h1><?php echo __('Workplan module import') ?> - <?php echo $workplan ?></h1>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    '@plansandreports' => "Plans and Reports",
+    'plansandreports/fill?id=' . $workplan->getId() => $workplan,
+    ),
+  'current'=>__('Workplan module import'),
+  'title' => __('Workplan module import') . ' - ' . $workplan
+  ))
+?>
 
-<h3><?php echo __('Import one of your modules') ?></h3>
+<h2><?php echo __('Import one of your modules') ?></h2>
 
 <div class="sf_admin_list">
 
@@ -39,7 +40,7 @@
 
 </div>
 
-<h3><?php echo __('Import a module of a colleague') ?></h3>
+<h2><?php echo __('Import a module of a colleague') ?></h2>
 
 <p>
 <?php echo __('You can import one of the following public modules.') ?>

@@ -727,8 +727,8 @@
         <target>Mostra questo documento in una singola pagina</target>
       </trans-unit>
       <trans-unit id="210">
-        <source>Item # %d</source>
-        <target>Elemento # %d</target>
+        <source>Item # %itemnumber%</source>
+        <target>Elemento %itemnumber%</target>
       </trans-unit>
       <trans-unit id="211">
         <source>Here you can manage all the items of this group as a list of paragraphs (this could be useful for copy&amp;paste operations from legacy documents).</source>
@@ -2139,9 +2139,30 @@
         <source>token</source>
         <target>identificativo</target>
     </trans-unit>
+    <trans-unit id="554">
+        <source>Edit event</source>
+        <target>Modifica evento</target>
+    </trans-unit>
+    <trans-unit id="555">
+        <source>Edit events</source>
+        <target>Modifica eventi</target>
+    </trans-unit>
+    <trans-unit id="556">
+        <source>Event %event_id%</source>
+        <target>Evento %event_id%</target>
+    </trans-unit>
+    <trans-unit id="557">
+        <source>Events</source>
+        <target>Eventi</target>
+    </trans-unit>
+    <trans-unit id="558">
+        <source>Add event</source>
+        <target>Aggiungi evento</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
 
 
 

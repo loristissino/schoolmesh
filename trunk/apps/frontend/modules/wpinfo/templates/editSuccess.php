@@ -1,10 +1,13 @@
 <?php use_helper('jQuery') ?>
 <?php use_javascript('tiny_mce/tiny_mce.js') ?>
-<?php slot('breadcrumbs',
-	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
-	link_to($wpinfo->getAppointment()->__toString(), 'plansandreports/fill?id='.$wpinfo->getAppointment()->getId()) . ' » ' . 
-	$type->getTitle())
-	?>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    '@plansandreports' => "Plans and Reports",
+    'plansandreports/fill?id='.$wpinfo->getAppointment()->getId() => $wpinfo->getAppointment()
+    ),
+  'current'=>$type->getTitle()
+  ))
+?>
 
 <h1><?php echo __('Edit Wpinfo') ?></h1>
 

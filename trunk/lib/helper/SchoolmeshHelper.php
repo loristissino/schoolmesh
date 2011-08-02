@@ -82,9 +82,7 @@ function inputinplaceeditortag($name, $url, $options=array())
     }
   }
 
-  return "<script type=\"text/javascript\">
-//<![CDATA[
-$(document).ready(function() {
+  return javascripttag("$(document).ready(function() {
      $('" . $name . "').editable('" . $url . "', {\n" .
          "'indicator' : '" . $options['indicator'] . "',\n" .
          "'tooltip' : '" . $options['tooltip'] . "',\n" .
@@ -99,14 +97,35 @@ $(document).ready(function() {
       function() {\$(this).css({'background-color' : '" . $options['bgcolor'] . "'})}
       );
 
- });
-//]]>
-</script>";
-
+ });");
 
 }
 
+function javascripttag($jscode)
+{
+  return "<script type=\"text/javascript\">
+//<![CDATA[
+" . $jscode . 
+"//]]>
+</script>";
+}
 
+function breadcrumps_to_html($crumps=array(), $current='')
+{
+  $text='';
+  foreach($crumps as $key=>$value)
+  {
+    if (substr($key, 0, 1) != '_')
+    {
+      $text .= link_to(__($value), $key) . ' »&nbsp;';
+    }
+    else
+    { 
+      $text .= __($value) . ' »&nbsp;';
+    }
+  }
+  return $text . $current;
+}
 
 
 
