@@ -1,11 +1,13 @@
-<?php slot('title', sprintf('%s --  %s', $workplan->__toString(),$workplan->getsfGuardUser()->getProfile()->getFullName() )) ?>
-<?php slot('breadcrumbs',
-	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
-	link_to($workplan, 'plansandreports/fill?id='.$workplan->getId()) . ' » ' .
-	__('Document submission')
-	)
-	
-	?><h1><?php echo __('Document submission') ?></h1>
+<?php $title=__($steps[$state]['stateDescription']) . ': ' . $workplan ?>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    '@plansandreports' => "Plans and Reports",
+    ),
+  'current'=>$workplan,
+  'title'=>__('Document submission'),
+  ))
+?>
+
 
 <?php include_partial('basicinfo', array('workplan' => $workplan, 'steps' =>$steps)) ?>
 

@@ -1,20 +1,23 @@
 <?php use_javascript('tiny_mce/tiny_mce.js') ?>
-<?php slot('breadcrumbs',
-	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
-	link_to($wp->__toString(), 'plansandreports/fill?id='.$wp->getId()) . ' » ' . 
-	link_to($wpmodule->getTitle(), 'wpmodule/view?id='.$wpmodule->getId()) . ' » ' .
-	$wpitemType->getTitle() . ' » ' .
-	sprintf(__('Item # %d'), $wpmodule_item->getRank())
-	)
-	
-	?>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    '@plansandreports' => "Plans and Reports",
+    'plansandreports/fill?id='.$wp->getId() => $wp,
+    'wpmodule/view?id='.$wpmodule->getId() => $wpmodule->getTitle(),
+    '_1' => $wpitemType->getTitle()
+    ),
+  'current'=>__('Item # %itemnumber%', array('%itemnumber%' => $wpmodule_item->getRank())),
+  'title'=>$wp . ' -- ' . $wpmodule->getTitle(),
+  ))
+?>    
+
 
 <h1><?php echo $wpmodule->getTitle() ?></h1>
 <h2><?php echo $wpitemType->getTitle() ?></h2>
 
 <form action="<?php echo url_for('wpmoduleitem/update?id='.$wpmodule_item->getId()) ?>" method="POST" id="editform">
 
-<?php echo javascript_tag("
+<?php echo javascripttag("
 tinyMCE.init({
 
 mode : \"textareas\",

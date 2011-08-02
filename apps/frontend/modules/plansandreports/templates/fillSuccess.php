@@ -1,15 +1,14 @@
 <?php use_helper('jQuery') ?>
-
-<?php slot('title', sprintf('%s --  %s', $workplan->__toString(),$workplan->getsfGuardUser()->getProfile()->getFullName() )) ?>
-<?php slot('breadcrumbs',
-	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
-	$workplan
-	)
-	
-	?>
-	<?php $state=$workplan->getState() ?>
-	<h1><?php echo __($steps[$state]['stateDescription']) . ': ' . $workplan ?></h1>
-
+<?php $state=$workplan->getState() ?>
+<?php $title=__($steps[$state]['stateDescription']) . ': ' . $workplan ?>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    '@plansandreports' => "Plans and Reports",
+    ),
+  'current'=>$workplan,
+  'title'=>$title,
+  ))
+?>
 
 <?php include_partial('basicinfo', array('workplan'=>$workplan,  'steps'=>$steps)) ?>
 

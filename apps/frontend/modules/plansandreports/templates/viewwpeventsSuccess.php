@@ -1,11 +1,13 @@
-<?php slot('title', sprintf('%s --  %s', $workplan->__toString(),$workplan->getsfGuardUser()->getProfile()->getFullName() )) ?>
-<?php slot('breadcrumbs',
-	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
-	link_to($workplan, 'plansandreports/fill?id='.$workplan->getId()) . ' » ' .
-	__('View events')
-	)
-	
-	?><h1><?php echo __("Workplan: ") . $workplan ?></h1>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'plansandreports/list' => "Manage appointments",
+    '_workplan' => $workplan,
+    ),
+  'current'=> __('View events'),
+  ))
+?>  
+  
+<h1><?php echo __("Workplan: ") . $workplan ?></h1>
 
 <h2><?php echo __("General information") ?></h2>
 <ul>
@@ -17,12 +19,7 @@
 
 <h2><?php echo __('Events') ?></h2>
 
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
 
 <?php if (sizeof($events)>0): ?>
 

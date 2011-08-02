@@ -1,8 +1,11 @@
-<?php slot('title', __('User management')) ?>
-<?php slot('breadcrumbs', 'TODO'
-	)
-	
-	?><h1><?php echo __('Add event')?></h1>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'plansandreports/list' => "Manage appointments",
+    '_workplan' => $appointment,
+    ),
+  'current'=> __('Add event'),
+  ))
+?> 
 
 <?php include_partial('content/flashes'); ?>
 

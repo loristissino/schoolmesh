@@ -2,14 +2,19 @@
 <?php slot('breadcrumbs', 'TODO'
 	)
 	
-	?><h1><?php echo __('Edit event')?></h1>
+	?>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'plansandreports/list' => "Manage appointments",
+    '_workplan' => $event->getAppointment(),
+    '_event' => __('Event %event_id%', array('%event_id%'=>$event->getId()))
+    ),
+  'current'=> __('Edit event'),
+  ))
+?>    
+<h1><?php echo __('Edit event')?></h1>
 
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
 
 <form action="<?php echo url_for('plansandreports/editwpevent?id='. $event->getId()) ?>" method="post">
 

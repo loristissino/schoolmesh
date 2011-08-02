@@ -1,11 +1,12 @@
-<?php slot('title', sprintf('%s --  %s', $workplan->__toString(),$workplan->getsfGuardUser()->getProfile()->getFullName() )) ?>
-<?php slot('breadcrumbs',
-	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
-	link_to($workplan, 'plansandreports/fill?id=' . $workplan->getId()) . ' » ' .
-	__('Workplan import')
-	)
-	
-	?><h1><?php echo __('Workplan import') ?> - <?php echo $workplan ?></h1>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    '@plansandreports' => "Plans and Reports",
+    'plansandreports/fill?id=' . $workplan->getId() => $workplan
+    ),
+  'current'=>__('Workplan import'),
+  'title' =>__('Workplan import')  . ' - ' . $workplan ?>
+  ))
+?>
 
 <?php include_partial('basicinfo', array('workplan'=>$workplan, 'steps'=>$steps)) ?>
 

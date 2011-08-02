@@ -1,11 +1,8 @@
-<?php slot('breadcrumbs',
-	__('My profile')
-	)	
-	?>
-<?php slot('title') ?>
-<?php echo sprintf(__('%s\'s profile'), $sf_user->getProfile()->getFullname()) ?>
-<?php end_slot() ?>
-
+<?php include_partial('content/breadcrumps', array(
+  'current'=>__('My profile'),
+  'title'=>__('%user%\'s profile', array('%user%'=>$sf_user->getProfile()->getFullname()))
+  ))
+?>
 
 <h1><?php echo __('%fullname%: my profile', array('%fullname%' => $sf_user->getProfile()->getFullname())) ?></h1>
 <?php /*
