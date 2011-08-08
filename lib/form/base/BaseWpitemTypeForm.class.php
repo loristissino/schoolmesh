@@ -8,7 +8,6 @@
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
 abstract class BaseWpitemTypeForm extends BaseFormPropel
 {
@@ -23,6 +22,7 @@ abstract class BaseWpitemTypeForm extends BaseFormPropel
       'rank'                       => new sfWidgetFormInputText(),
       'state'                      => new sfWidgetFormInputText(),
       'is_required'                => new sfWidgetFormInputCheckbox(),
+      'syllabus_id'                => new sfWidgetFormPropelChoice(array('model' => 'Syllabus', 'add_empty' => true)),
       'evaluation_min'             => new sfWidgetFormInputText(),
       'evaluation_max'             => new sfWidgetFormInputText(),
       'evaluation_min_description' => new sfWidgetFormInputText(),
@@ -30,7 +30,7 @@ abstract class BaseWpitemTypeForm extends BaseFormPropel
     ));
 
     $this->setValidators(array(
-      'id'                         => new sfValidatorPropelChoice(array('model' => 'WpitemType', 'column' => 'id', 'required' => false)),
+      'id'                         => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
       'title'                      => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'singular'                   => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'description'                => new sfValidatorString(array('max_length' => 200, 'required' => false)),
@@ -38,6 +38,7 @@ abstract class BaseWpitemTypeForm extends BaseFormPropel
       'rank'                       => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647)),
       'state'                      => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'is_required'                => new sfValidatorBoolean(array('required' => false)),
+      'syllabus_id'                => new sfValidatorPropelChoice(array('model' => 'Syllabus', 'column' => 'id', 'required' => false)),
       'evaluation_min'             => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'evaluation_max'             => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'evaluation_min_description' => new sfValidatorString(array('max_length' => 50, 'required' => false)),

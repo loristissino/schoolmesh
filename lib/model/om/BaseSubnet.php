@@ -306,6 +306,8 @@ abstract class BaseSubnet extends BaseObject  implements Persistent {
 				$this->postDelete($con);
 				$this->setDeleted(true);
 				$con->commit();
+			} else {
+				$con->commit();
 			}
 		} catch (PropelException $e) {
 			$con->rollBack();
@@ -353,10 +355,12 @@ abstract class BaseSubnet extends BaseObject  implements Persistent {
 					$this->postUpdate($con);
 				}
 				$this->postSave($con);
-				$con->commit();
 				SubnetPeer::addInstanceToPool($this);
-				return $affectedRows;
+			} else {
+				$affectedRows = 0;
 			}
+			$con->commit();
+			return $affectedRows;
 		} catch (PropelException $e) {
 			$con->rollBack();
 			throw $e;

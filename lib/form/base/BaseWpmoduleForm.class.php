@@ -8,7 +8,6 @@
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
 abstract class BaseWpmoduleForm extends BaseFormPropel
 {
@@ -29,7 +28,7 @@ abstract class BaseWpmoduleForm extends BaseFormPropel
     ));
 
     $this->setValidators(array(
-      'id'              => new sfValidatorPropelChoice(array('model' => 'Wpmodule', 'column' => 'id', 'required' => false)),
+      'id'              => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
       'user_id'         => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id', 'required' => false)),
       'title'           => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'period'          => new sfValidatorString(array('max_length' => 255, 'required' => false)),

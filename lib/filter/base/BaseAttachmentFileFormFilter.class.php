@@ -6,7 +6,6 @@
  * @package    schoolmesh
  * @subpackage filter
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
 abstract class BaseAttachmentFileFormFilter extends BaseFormFilterPropel
 {
@@ -20,6 +19,7 @@ abstract class BaseAttachmentFileFormFilter extends BaseFormFilterPropel
       'original_file_name'  => new sfWidgetFormFilterInput(),
       'uniqid'              => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'file_size'           => new sfWidgetFormFilterInput(),
+      'is_public'           => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'md5sum'              => new sfWidgetFormFilterInput(),
     ));
 
@@ -31,6 +31,7 @@ abstract class BaseAttachmentFileFormFilter extends BaseFormFilterPropel
       'original_file_name'  => new sfValidatorPass(array('required' => false)),
       'uniqid'              => new sfValidatorPass(array('required' => false)),
       'file_size'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'is_public'           => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'md5sum'              => new sfValidatorPass(array('required' => false)),
     ));
 
@@ -57,6 +58,7 @@ abstract class BaseAttachmentFileFormFilter extends BaseFormFilterPropel
       'original_file_name'  => 'Text',
       'uniqid'              => 'Text',
       'file_size'           => 'Number',
+      'is_public'           => 'Boolean',
       'md5sum'              => 'Text',
     );
   }

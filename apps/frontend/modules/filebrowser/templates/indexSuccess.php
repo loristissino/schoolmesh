@@ -1,13 +1,16 @@
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    '_users' => __("User's settings"),
+    ),
+  'current'=>__("File browser"),
+  'hide_title' => true,
+  ))
+?>
 <h1><?php echo $profile->getFullName() ?></h1>
 
 <h2><?php echo $path ?></h2>
 
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
 
 <?php if($path!='/'): ?>
 <ul class="sf_admin_actions">

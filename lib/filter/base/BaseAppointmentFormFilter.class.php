@@ -6,7 +6,6 @@
  * @package    schoolmesh
  * @subpackage filter
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
 abstract class BaseAppointmentFormFilter extends BaseFormFilterPropel
 {
@@ -19,6 +18,7 @@ abstract class BaseAppointmentFormFilter extends BaseFormFilterPropel
       'year_id'                 => new sfWidgetFormPropelChoice(array('model' => 'Year', 'add_empty' => true)),
       'state'                   => new sfWidgetFormFilterInput(),
       'hours'                   => new sfWidgetFormFilterInput(),
+      'syllabus_id'             => new sfWidgetFormPropelChoice(array('model' => 'Syllabus', 'add_empty' => true)),
       'created_at'              => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'updated_at'              => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'import_code'             => new sfWidgetFormFilterInput(),
@@ -32,6 +32,7 @@ abstract class BaseAppointmentFormFilter extends BaseFormFilterPropel
       'year_id'                 => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Year', 'column' => 'id')),
       'state'                   => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'hours'                   => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'syllabus_id'             => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Syllabus', 'column' => 'id')),
       'created_at'              => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'updated_at'              => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'import_code'             => new sfValidatorPass(array('required' => false)),
@@ -85,6 +86,7 @@ abstract class BaseAppointmentFormFilter extends BaseFormFilterPropel
       'year_id'                 => 'ForeignKey',
       'state'                   => 'Number',
       'hours'                   => 'Number',
+      'syllabus_id'             => 'ForeignKey',
       'created_at'              => 'Date',
       'updated_at'              => 'Date',
       'import_code'             => 'Text',

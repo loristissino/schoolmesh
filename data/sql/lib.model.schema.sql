@@ -312,6 +312,50 @@ CREATE TABLE `ticket_event`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- syllabus
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `syllabus`;
+
+
+CREATE TABLE `syllabus`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(50),
+	`version` VARCHAR(20),
+	`author` VARCHAR(50),
+	`href` VARCHAR(255),
+	PRIMARY KEY (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- syllabus_item
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `syllabus_item`;
+
+
+CREATE TABLE `syllabus_item`
+(
+	`syllabus_id` INTEGER,
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`level` INTEGER,
+	`parent_id` INTEGER,
+	`content` VARCHAR(255),
+	PRIMARY KEY (`id`),
+	KEY `syllabus_item_I_1`(`parent_id`),
+	INDEX `syllabus_item_FI_1` (`syllabus_id`),
+	CONSTRAINT `syllabus_item_FK_1`
+		FOREIGN KEY (`syllabus_id`)
+		REFERENCES `syllabus` (`id`),
+	CONSTRAINT `syllabus_item_FK_2`
+		FOREIGN KEY (`parent_id`)
+		REFERENCES `syllabus_item` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- appointment
 #-----------------------------------------------------------------------------
 
@@ -327,6 +371,7 @@ CREATE TABLE `appointment`
 	`year_id` INTEGER  NOT NULL,
 	`state` INTEGER,
 	`hours` INTEGER default 0,
+	`syllabus_id` INTEGER,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	`import_code` VARCHAR(20),
@@ -354,7 +399,11 @@ CREATE TABLE `appointment`
 		FOREIGN KEY (`year_id`)
 		REFERENCES `year` (`id`)
 		ON UPDATE CASCADE
-		ON DELETE RESTRICT
+		ON DELETE RESTRICT,
+	INDEX `appointment_FI_5` (`syllabus_id`),
+	CONSTRAINT `appointment_FK_5`
+		FOREIGN KEY (`syllabus_id`)
+		REFERENCES `syllabus` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -652,11 +701,16 @@ CREATE TABLE `wpitem_type`
 	`rank` INTEGER  NOT NULL,
 	`state` INTEGER,
 	`is_required` TINYINT,
+	`syllabus_id` INTEGER,
 	`evaluation_min` INTEGER,
 	`evaluation_max` INTEGER,
 	`evaluation_min_description` VARCHAR(50),
 	`evaluation_max_description` VARCHAR(50),
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	INDEX `wpitem_type_FI_1` (`syllabus_id`),
+	CONSTRAINT `wpitem_type_FK_1`
+		FOREIGN KEY (`syllabus_id`)
+		REFERENCES `syllabus` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

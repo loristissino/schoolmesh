@@ -509,7 +509,7 @@ abstract class BaseSchoolclassPeer {
 					$obj2->hydrate($row, $startcol);
 					TrackPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (Schoolclass) to $obj2 (Track)
 				$obj2->addSchoolclass($obj1);
 
@@ -803,24 +803,18 @@ abstract class BaseSchoolclassPeer {
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
 			SchoolclassPeer::clearInstancePool();
-
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof Schoolclass) {
+		} elseif ($values instanceof Schoolclass) { // it's a model object
 			// invalidate the cache for this single object
 			SchoolclassPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
-		} else {
-			// it must be the primary key
-
-
-
+		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
 			$criteria->add(SchoolclassPeer::ID, (array) $values, Criteria::IN);
-
+			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				// we can invalidate the cache for this single object
 				SchoolclassPeer::removeInstanceFromPool($singleval);
 			}
 		}

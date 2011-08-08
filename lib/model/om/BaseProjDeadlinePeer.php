@@ -583,7 +583,7 @@ abstract class BaseProjDeadlinePeer {
 					$obj2->hydrate($row, $startcol);
 					SchoolprojectPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (ProjDeadline) to $obj2 (Schoolproject)
 				$obj2->addProjDeadline($obj1);
 
@@ -649,7 +649,7 @@ abstract class BaseProjDeadlinePeer {
 					$obj2->hydrate($row, $startcol);
 					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (ProjDeadline) to $obj2 (sfGuardUser)
 				$obj2->addProjDeadline($obj1);
 
@@ -1218,24 +1218,18 @@ abstract class BaseProjDeadlinePeer {
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
 			ProjDeadlinePeer::clearInstancePool();
-
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof ProjDeadline) {
+		} elseif ($values instanceof ProjDeadline) { // it's a model object
 			// invalidate the cache for this single object
 			ProjDeadlinePeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
-		} else {
-			// it must be the primary key
-
-
-
+		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
 			$criteria->add(ProjDeadlinePeer::ID, (array) $values, Criteria::IN);
-
+			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				// we can invalidate the cache for this single object
 				ProjDeadlinePeer::removeInstanceFromPool($singleval);
 			}
 		}

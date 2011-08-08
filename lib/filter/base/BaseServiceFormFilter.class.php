@@ -6,7 +6,6 @@
  * @package    schoolmesh
  * @subpackage filter
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
 abstract class BaseServiceFormFilter extends BaseFormFilterPropel
 {
@@ -17,8 +16,8 @@ abstract class BaseServiceFormFilter extends BaseFormFilterPropel
       'is_enabled_by_default'    => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'port'                     => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'is_udp'                   => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
-      'subnet_service_list'      => new sfWidgetFormPropelChoice(array('model' => 'Subnet', 'add_empty' => true)),
       'workstation_service_list' => new sfWidgetFormPropelChoice(array('model' => 'Workstation', 'add_empty' => true)),
+      'subnet_service_list'      => new sfWidgetFormPropelChoice(array('model' => 'Subnet', 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -26,8 +25,8 @@ abstract class BaseServiceFormFilter extends BaseFormFilterPropel
       'is_enabled_by_default'    => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'port'                     => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'is_udp'                   => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
-      'subnet_service_list'      => new sfValidatorPropelChoice(array('model' => 'Subnet', 'required' => false)),
       'workstation_service_list' => new sfValidatorPropelChoice(array('model' => 'Workstation', 'required' => false)),
+      'subnet_service_list'      => new sfValidatorPropelChoice(array('model' => 'Subnet', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('service_filters[%s]');
@@ -35,31 +34,6 @@ abstract class BaseServiceFormFilter extends BaseFormFilterPropel
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
     parent::setup();
-  }
-
-  public function addSubnetServiceListColumnCriteria(Criteria $criteria, $field, $values)
-  {
-    if (!is_array($values))
-    {
-      $values = array($values);
-    }
-
-    if (!count($values))
-    {
-      return;
-    }
-
-    $criteria->addJoin(SubnetServicePeer::SERVICE_ID, ServicePeer::ID);
-
-    $value = array_pop($values);
-    $criterion = $criteria->getNewCriterion(SubnetServicePeer::SUBNET_ID, $value);
-
-    foreach ($values as $value)
-    {
-      $criterion->addOr($criteria->getNewCriterion(SubnetServicePeer::SUBNET_ID, $value));
-    }
-
-    $criteria->add($criterion);
   }
 
   public function addWorkstationServiceListColumnCriteria(Criteria $criteria, $field, $values)
@@ -87,6 +61,31 @@ abstract class BaseServiceFormFilter extends BaseFormFilterPropel
     $criteria->add($criterion);
   }
 
+  public function addSubnetServiceListColumnCriteria(Criteria $criteria, $field, $values)
+  {
+    if (!is_array($values))
+    {
+      $values = array($values);
+    }
+
+    if (!count($values))
+    {
+      return;
+    }
+
+    $criteria->addJoin(SubnetServicePeer::SERVICE_ID, ServicePeer::ID);
+
+    $value = array_pop($values);
+    $criterion = $criteria->getNewCriterion(SubnetServicePeer::SUBNET_ID, $value);
+
+    foreach ($values as $value)
+    {
+      $criterion->addOr($criteria->getNewCriterion(SubnetServicePeer::SUBNET_ID, $value));
+    }
+
+    $criteria->add($criterion);
+  }
+
   public function getModelName()
   {
     return 'Service';
@@ -100,8 +99,8 @@ abstract class BaseServiceFormFilter extends BaseFormFilterPropel
       'is_enabled_by_default'    => 'Boolean',
       'port'                     => 'Number',
       'is_udp'                   => 'Boolean',
-      'subnet_service_list'      => 'ManyKey',
       'workstation_service_list' => 'ManyKey',
+      'subnet_service_list'      => 'ManyKey',
     );
   }
 }

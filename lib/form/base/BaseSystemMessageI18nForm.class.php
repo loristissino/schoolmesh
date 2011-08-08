@@ -8,7 +8,6 @@
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
 abstract class BaseSystemMessageI18nForm extends BaseFormPropel
 {
@@ -23,7 +22,7 @@ abstract class BaseSystemMessageI18nForm extends BaseFormPropel
     $this->setValidators(array(
       'content' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'id'      => new sfValidatorPropelChoice(array('model' => 'SystemMessage', 'column' => 'id', 'required' => false)),
-      'culture' => new sfValidatorPropelChoice(array('model' => 'SystemMessageI18n', 'column' => 'culture', 'required' => false)),
+      'culture' => new sfValidatorChoice(array('choices' => array($this->getObject()->getCulture()), 'empty_value' => $this->getObject()->getCulture(), 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('system_message_i18n[%s]');

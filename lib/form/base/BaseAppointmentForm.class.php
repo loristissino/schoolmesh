@@ -8,7 +8,6 @@
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
 abstract class BaseAppointmentForm extends BaseFormPropel
 {
@@ -22,6 +21,7 @@ abstract class BaseAppointmentForm extends BaseFormPropel
       'year_id'                 => new sfWidgetFormPropelChoice(array('model' => 'Year', 'add_empty' => false)),
       'state'                   => new sfWidgetFormInputText(),
       'hours'                   => new sfWidgetFormInputText(),
+      'syllabus_id'             => new sfWidgetFormPropelChoice(array('model' => 'Syllabus', 'add_empty' => true)),
       'created_at'              => new sfWidgetFormDateTime(),
       'updated_at'              => new sfWidgetFormDateTime(),
       'import_code'             => new sfWidgetFormInputText(),
@@ -29,13 +29,14 @@ abstract class BaseAppointmentForm extends BaseFormPropel
     ));
 
     $this->setValidators(array(
-      'id'                      => new sfValidatorPropelChoice(array('model' => 'Appointment', 'column' => 'id', 'required' => false)),
+      'id'                      => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
       'user_id'                 => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id')),
       'subject_id'              => new sfValidatorPropelChoice(array('model' => 'Subject', 'column' => 'id')),
       'schoolclass_id'          => new sfValidatorPropelChoice(array('model' => 'Schoolclass', 'column' => 'id')),
       'year_id'                 => new sfValidatorPropelChoice(array('model' => 'Year', 'column' => 'id')),
       'state'                   => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'hours'                   => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'syllabus_id'             => new sfValidatorPropelChoice(array('model' => 'Syllabus', 'column' => 'id', 'required' => false)),
       'created_at'              => new sfValidatorDateTime(array('required' => false)),
       'updated_at'              => new sfValidatorDateTime(array('required' => false)),
       'import_code'             => new sfValidatorString(array('max_length' => 20, 'required' => false)),

@@ -1,19 +1,15 @@
-<?php slot('title', __('Password reset')) ?>
-<?php slot('breadcrumbs',
-	__("Password reset")
-	)
-	
-	?><h1><?php echo __("Password reset")?></h1>
-	
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    '_users' => __("User's settings"),
+    ),
+  'current'=>__("Password reset")
+  ))
+?>
+
 <p><?php echo __('This page is for resetting the password of the students that might have forgot it.') ?></p>
 <p><?php echo __('Teachers\'s and staff\'s passwords can be reset only by an administrator.') ?></p>
 
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
 
 <form action="<?php echo url_for('passwordreset/confirm') ?>" method="get">
 

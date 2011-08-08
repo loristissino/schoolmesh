@@ -44,6 +44,7 @@ class WpitemTypeTableMap extends TableMap {
 		$this->addColumn('RANK', 'Rank', 'INTEGER', true, null, null);
 		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
 		$this->addColumn('IS_REQUIRED', 'IsRequired', 'BOOLEAN', false, null, null);
+		$this->addForeignKey('SYLLABUS_ID', 'SyllabusId', 'INTEGER', 'syllabus', 'ID', false, null, null);
 		$this->addColumn('EVALUATION_MIN', 'EvaluationMin', 'INTEGER', false, null, null);
 		$this->addColumn('EVALUATION_MAX', 'EvaluationMax', 'INTEGER', false, null, null);
 		$this->addColumn('EVALUATION_MIN_DESCRIPTION', 'EvaluationMinDescription', 'VARCHAR', false, 50, null);
@@ -56,6 +57,7 @@ class WpitemTypeTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
+    $this->addRelation('Syllabus', 'Syllabus', RelationMap::MANY_TO_ONE, array('syllabus_id' => 'id', ), null, null);
     $this->addRelation('WpitemGroup', 'WpitemGroup', RelationMap::ONE_TO_MANY, array('id' => 'wpitem_type_id', ), null, null);
 	} // buildRelations()
 
