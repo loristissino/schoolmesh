@@ -121,6 +121,20 @@ propel:
     state: integer
     assignee_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: false, onDelete: restrict, onUpdate: cascade, index:true }
 
+  syllabus:
+    id: ~
+    name: varchar(50)
+    version: varchar(20)
+    author: varchar(50)
+    href: varchar(255)
+    
+  syllabus_item:
+    syllabus_id: ~
+    id: ~
+    level: integer
+    parent_id: { type: integer, foreignTable: syllabus_item, foreignReference: id, required: false, onDelete: restrict, onUpdate: cascade, index:true }
+    content: varchar(255)
+    
   appointment:
     id: ~
     user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
@@ -129,6 +143,7 @@ propel:
     year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     state:             { type: integer }
     hours:            { type: integer, default: 0 }
+    syllabus_id: ~
     created_at:   
     updated_at:
     import_code:  varchar(20)
@@ -172,7 +187,6 @@ propel:
     role_id:       { type: integer, foreignTable: role, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     _uniques:
       utr: [user_id, team_id]
-
 
   wpevent:
     id:  ~
@@ -241,6 +255,7 @@ propel:
     rank:    { type: integer, required: true }
     state:  integer
     is_required: boolean
+    syllabus_id: ~
     evaluation_min:  integer
     evaluation_max:  integer
     evaluation_min_description: varchar(50)

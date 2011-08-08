@@ -25,7 +25,7 @@ abstract class BaseWpitemTypePeer {
 	const TM_CLASS = 'WpitemTypeTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 12;
+	const NUM_COLUMNS = 13;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -53,6 +53,9 @@ abstract class BaseWpitemTypePeer {
 
 	/** the column name for the IS_REQUIRED field */
 	const IS_REQUIRED = 'wpitem_type.IS_REQUIRED';
+
+	/** the column name for the SYLLABUS_ID field */
+	const SYLLABUS_ID = 'wpitem_type.SYLLABUS_ID';
 
 	/** the column name for the EVALUATION_MIN field */
 	const EVALUATION_MIN = 'wpitem_type.EVALUATION_MIN';
@@ -89,11 +92,11 @@ abstract class BaseWpitemTypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Singular', 'Description', 'Style', 'Rank', 'State', 'IsRequired', 'EvaluationMin', 'EvaluationMax', 'EvaluationMinDescription', 'EvaluationMaxDescription', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'singular', 'description', 'style', 'rank', 'state', 'isRequired', 'evaluationMin', 'evaluationMax', 'evaluationMinDescription', 'evaluationMaxDescription', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::SINGULAR, self::DESCRIPTION, self::STYLE, self::RANK, self::STATE, self::IS_REQUIRED, self::EVALUATION_MIN, self::EVALUATION_MAX, self::EVALUATION_MIN_DESCRIPTION, self::EVALUATION_MAX_DESCRIPTION, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'singular', 'description', 'style', 'rank', 'state', 'is_required', 'evaluation_min', 'evaluation_max', 'evaluation_min_description', 'evaluation_max_description', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Singular', 'Description', 'Style', 'Rank', 'State', 'IsRequired', 'SyllabusId', 'EvaluationMin', 'EvaluationMax', 'EvaluationMinDescription', 'EvaluationMaxDescription', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'singular', 'description', 'style', 'rank', 'state', 'isRequired', 'syllabusId', 'evaluationMin', 'evaluationMax', 'evaluationMinDescription', 'evaluationMaxDescription', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::SINGULAR, self::DESCRIPTION, self::STYLE, self::RANK, self::STATE, self::IS_REQUIRED, self::SYLLABUS_ID, self::EVALUATION_MIN, self::EVALUATION_MAX, self::EVALUATION_MIN_DESCRIPTION, self::EVALUATION_MAX_DESCRIPTION, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'singular', 'description', 'style', 'rank', 'state', 'is_required', 'syllabus_id', 'evaluation_min', 'evaluation_max', 'evaluation_min_description', 'evaluation_max_description', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	/**
@@ -103,11 +106,11 @@ abstract class BaseWpitemTypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Singular' => 2, 'Description' => 3, 'Style' => 4, 'Rank' => 5, 'State' => 6, 'IsRequired' => 7, 'EvaluationMin' => 8, 'EvaluationMax' => 9, 'EvaluationMinDescription' => 10, 'EvaluationMaxDescription' => 11, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'singular' => 2, 'description' => 3, 'style' => 4, 'rank' => 5, 'state' => 6, 'isRequired' => 7, 'evaluationMin' => 8, 'evaluationMax' => 9, 'evaluationMinDescription' => 10, 'evaluationMaxDescription' => 11, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::SINGULAR => 2, self::DESCRIPTION => 3, self::STYLE => 4, self::RANK => 5, self::STATE => 6, self::IS_REQUIRED => 7, self::EVALUATION_MIN => 8, self::EVALUATION_MAX => 9, self::EVALUATION_MIN_DESCRIPTION => 10, self::EVALUATION_MAX_DESCRIPTION => 11, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'singular' => 2, 'description' => 3, 'style' => 4, 'rank' => 5, 'state' => 6, 'is_required' => 7, 'evaluation_min' => 8, 'evaluation_max' => 9, 'evaluation_min_description' => 10, 'evaluation_max_description' => 11, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Singular' => 2, 'Description' => 3, 'Style' => 4, 'Rank' => 5, 'State' => 6, 'IsRequired' => 7, 'SyllabusId' => 8, 'EvaluationMin' => 9, 'EvaluationMax' => 10, 'EvaluationMinDescription' => 11, 'EvaluationMaxDescription' => 12, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'singular' => 2, 'description' => 3, 'style' => 4, 'rank' => 5, 'state' => 6, 'isRequired' => 7, 'syllabusId' => 8, 'evaluationMin' => 9, 'evaluationMax' => 10, 'evaluationMinDescription' => 11, 'evaluationMaxDescription' => 12, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::SINGULAR => 2, self::DESCRIPTION => 3, self::STYLE => 4, self::RANK => 5, self::STATE => 6, self::IS_REQUIRED => 7, self::SYLLABUS_ID => 8, self::EVALUATION_MIN => 9, self::EVALUATION_MAX => 10, self::EVALUATION_MIN_DESCRIPTION => 11, self::EVALUATION_MAX_DESCRIPTION => 12, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'singular' => 2, 'description' => 3, 'style' => 4, 'rank' => 5, 'state' => 6, 'is_required' => 7, 'syllabus_id' => 8, 'evaluation_min' => 9, 'evaluation_max' => 10, 'evaluation_min_description' => 11, 'evaluation_max_description' => 12, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	/**
@@ -185,6 +188,7 @@ abstract class BaseWpitemTypePeer {
 		$criteria->addSelectColumn(WpitemTypePeer::RANK);
 		$criteria->addSelectColumn(WpitemTypePeer::STATE);
 		$criteria->addSelectColumn(WpitemTypePeer::IS_REQUIRED);
+		$criteria->addSelectColumn(WpitemTypePeer::SYLLABUS_ID);
 		$criteria->addSelectColumn(WpitemTypePeer::EVALUATION_MIN);
 		$criteria->addSelectColumn(WpitemTypePeer::EVALUATION_MAX);
 		$criteria->addSelectColumn(WpitemTypePeer::EVALUATION_MIN_DESCRIPTION);
@@ -433,6 +437,240 @@ abstract class BaseWpitemTypePeer {
 		$stmt->closeCursor();
 		return $results;
 	}
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related Syllabus table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinSyllabus(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(WpitemTypePeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			WpitemTypePeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(WpitemTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(WpitemTypePeer::SYLLABUS_ID, SyllabusPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Selects a collection of WpitemType objects pre-filled with their Syllabus objects.
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of WpitemType objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinSyllabus(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		WpitemTypePeer::addSelectColumns($criteria);
+		$startcol = (WpitemTypePeer::NUM_COLUMNS - WpitemTypePeer::NUM_LAZY_LOAD_COLUMNS);
+		SyllabusPeer::addSelectColumns($criteria);
+
+		$criteria->addJoin(WpitemTypePeer::SYLLABUS_ID, SyllabusPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = WpitemTypePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WpitemTypePeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+
+				$cls = WpitemTypePeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				WpitemTypePeer::addInstanceToPool($obj1, $key1);
+			} // if $obj1 already loaded
+
+			$key2 = SyllabusPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			if ($key2 !== null) {
+				$obj2 = SyllabusPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = SyllabusPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol);
+					SyllabusPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 already loaded
+				
+				// Add the $obj1 (WpitemType) to $obj2 (Syllabus)
+				$obj2->addWpitemType($obj1);
+
+			} // if joined row was not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining all related tables
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAll(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(WpitemTypePeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			WpitemTypePeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(WpitemTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(WpitemTypePeer::SYLLABUS_ID, SyllabusPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+	/**
+	 * Selects a collection of WpitemType objects pre-filled with all related objects.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of WpitemType objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAll(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		WpitemTypePeer::addSelectColumns($criteria);
+		$startcol2 = (WpitemTypePeer::NUM_COLUMNS - WpitemTypePeer::NUM_LAZY_LOAD_COLUMNS);
+
+		SyllabusPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (SyllabusPeer::NUM_COLUMNS - SyllabusPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(WpitemTypePeer::SYLLABUS_ID, SyllabusPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = WpitemTypePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WpitemTypePeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = WpitemTypePeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				WpitemTypePeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+			// Add objects for joined Syllabus rows
+
+			$key2 = SyllabusPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			if ($key2 !== null) {
+				$obj2 = SyllabusPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = SyllabusPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					SyllabusPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 loaded
+
+				// Add the $obj1 (WpitemType) to the collection in $obj2 (Syllabus)
+				$obj2->addWpitemType($obj1);
+			} // if joined row not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
 	/**
 	 * Returns the TableMap related to this peer.
 	 * This method is not needed for general use but a specific application could have a need.
@@ -601,24 +839,18 @@ abstract class BaseWpitemTypePeer {
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
 			WpitemTypePeer::clearInstancePool();
-
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof WpitemType) {
+		} elseif ($values instanceof WpitemType) { // it's a model object
 			// invalidate the cache for this single object
 			WpitemTypePeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
-		} else {
-			// it must be the primary key
-
-
-
+		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
 			$criteria->add(WpitemTypePeer::ID, (array) $values, Criteria::IN);
-
+			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				// we can invalidate the cache for this single object
 				WpitemTypePeer::removeInstanceFromPool($singleval);
 			}
 		}

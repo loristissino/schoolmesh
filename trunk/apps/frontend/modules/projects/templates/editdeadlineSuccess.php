@@ -4,21 +4,16 @@
 <?php use_javascript('datepicker') ?>
 <?php use_javascript('jquery.ui.datepicker-' . sfConfig::get('sf_default_culture') . '.js') ?>
 
-<?php slot('title', __('Projects')) ?>
-<?php slot('breadcrumbs',
-	link_to(__('Projects'), 'projects/index') . ' » ' .
-	'TO_DO' . ' » ' .
-  'TO_DO'
-	)
-	
-	?><h1><?php echo sprintf(__('Edit deadline'), $deadline->getDescription())?></h1>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'projects/index' => __("Projects"),
+    'projects/edit?id=' . $deadline->getProject()->getId() => $deadline->getProject()
+    ),
+  'current'=>__("Edit deadline")
+  ))
+?>
 
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
 
 <form action="<?php echo url_for('projects/editdeadline?id='. $deadline->getId()) ?>" method="POST" <?php if($form->isMultipart()) echo 'enctype="multipart/form-data"' ?>>
 

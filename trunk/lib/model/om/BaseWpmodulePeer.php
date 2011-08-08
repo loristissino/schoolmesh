@@ -586,7 +586,7 @@ abstract class BaseWpmodulePeer {
 					$obj2->hydrate($row, $startcol);
 					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (Wpmodule) to $obj2 (sfGuardUser)
 				$obj2->addWpmodule($obj1);
 
@@ -652,7 +652,7 @@ abstract class BaseWpmodulePeer {
 					$obj2->hydrate($row, $startcol);
 					AppointmentPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (Wpmodule) to $obj2 (Appointment)
 				$obj2->addWpmodule($obj1);
 
@@ -1221,24 +1221,18 @@ abstract class BaseWpmodulePeer {
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
 			WpmodulePeer::clearInstancePool();
-
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof Wpmodule) {
+		} elseif ($values instanceof Wpmodule) { // it's a model object
 			// invalidate the cache for this single object
 			WpmodulePeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
-		} else {
-			// it must be the primary key
-
-
-
+		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
 			$criteria->add(WpmodulePeer::ID, (array) $values, Criteria::IN);
-
+			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				// we can invalidate the cache for this single object
 				WpmodulePeer::removeInstanceFromPool($singleval);
 			}
 		}

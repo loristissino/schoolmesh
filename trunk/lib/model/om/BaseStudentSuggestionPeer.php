@@ -659,7 +659,7 @@ abstract class BaseStudentSuggestionPeer {
 					$obj2->hydrate($row, $startcol);
 					TermPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (StudentSuggestion) to $obj2 (Term)
 				$obj2->addStudentSuggestion($obj1);
 
@@ -725,7 +725,7 @@ abstract class BaseStudentSuggestionPeer {
 					$obj2->hydrate($row, $startcol);
 					AppointmentPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (StudentSuggestion) to $obj2 (Appointment)
 				$obj2->addStudentSuggestion($obj1);
 
@@ -791,7 +791,7 @@ abstract class BaseStudentSuggestionPeer {
 					$obj2->hydrate($row, $startcol);
 					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (StudentSuggestion) to $obj2 (sfGuardUser)
 				$obj2->addStudentSuggestion($obj1);
 
@@ -857,7 +857,7 @@ abstract class BaseStudentSuggestionPeer {
 					$obj2->hydrate($row, $startcol);
 					SuggestionPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (StudentSuggestion) to $obj2 (Suggestion)
 				$obj2->addStudentSuggestion($obj1);
 
@@ -1933,34 +1933,25 @@ abstract class BaseStudentSuggestionPeer {
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
 			StudentSuggestionPeer::clearInstancePool();
-
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof StudentSuggestion) {
+		} elseif ($values instanceof StudentSuggestion) { // it's a model object
 			// invalidate the cache for this single object
 			StudentSuggestionPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
-		} else {
-			// it must be the primary key
-
-
-
+		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
 			// primary key is composite; we therefore, expect
-			// the primary key passed to be an array of pkey
-			// values
+			// the primary key passed to be an array of pkey values
 			if (count($values) == count($values, COUNT_RECURSIVE)) {
 				// array is not multi-dimensional
 				$values = array($values);
 			}
-
 			foreach ($values as $value) {
-
 				$criterion = $criteria->getNewCriterion(StudentSuggestionPeer::ID, $value[0]);
 				$criterion->addAnd($criteria->getNewCriterion(StudentSuggestionPeer::APPOINTMENT_ID, $value[1]));
 				$criteria->addOr($criterion);
-
 				// we can invalidate the cache for this single PK
 				StudentSuggestionPeer::removeInstanceFromPool($value);
 			}

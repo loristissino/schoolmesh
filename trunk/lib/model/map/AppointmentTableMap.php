@@ -43,6 +43,7 @@ class AppointmentTableMap extends TableMap {
 		$this->addForeignKey('YEAR_ID', 'YearId', 'INTEGER', 'year', 'ID', true, null, null);
 		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
 		$this->addColumn('HOURS', 'Hours', 'INTEGER', false, null, 0);
+		$this->addForeignKey('SYLLABUS_ID', 'SyllabusId', 'INTEGER', 'syllabus', 'ID', false, null, null);
 		$this->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null, null);
 		$this->addColumn('UPDATED_AT', 'UpdatedAt', 'TIMESTAMP', false, null, null);
 		$this->addColumn('IMPORT_CODE', 'ImportCode', 'VARCHAR', false, 20, null);
@@ -58,6 +59,7 @@ class AppointmentTableMap extends TableMap {
     $this->addRelation('Subject', 'Subject', RelationMap::MANY_TO_ONE, array('subject_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Schoolclass', 'Schoolclass', RelationMap::MANY_TO_ONE, array('schoolclass_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Year', 'Year', RelationMap::MANY_TO_ONE, array('year_id' => 'id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('Syllabus', 'Syllabus', RelationMap::MANY_TO_ONE, array('syllabus_id' => 'id', ), null, null);
     $this->addRelation('Wpevent', 'Wpevent', RelationMap::ONE_TO_MANY, array('id' => 'appointment_id', ), null, null);
     $this->addRelation('Wpinfo', 'Wpinfo', RelationMap::ONE_TO_MANY, array('id' => 'appointment_id', ), null, null);
     $this->addRelation('WptoolAppointment', 'WptoolAppointment', RelationMap::ONE_TO_MANY, array('id' => 'appointment_id', ), 'CASCADE', 'CASCADE');

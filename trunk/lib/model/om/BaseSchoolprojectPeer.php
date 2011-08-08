@@ -625,7 +625,7 @@ abstract class BaseSchoolprojectPeer {
 					$obj2->hydrate($row, $startcol);
 					ProjCategoryPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (Schoolproject) to $obj2 (ProjCategory)
 				$obj2->addSchoolproject($obj1);
 
@@ -691,7 +691,7 @@ abstract class BaseSchoolprojectPeer {
 					$obj2->hydrate($row, $startcol);
 					YearPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (Schoolproject) to $obj2 (Year)
 				$obj2->addSchoolproject($obj1);
 
@@ -757,7 +757,7 @@ abstract class BaseSchoolprojectPeer {
 					$obj2->hydrate($row, $startcol);
 					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (Schoolproject) to $obj2 (sfGuardUser)
 				$obj2->addSchoolproject($obj1);
 
@@ -1552,24 +1552,18 @@ abstract class BaseSchoolprojectPeer {
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
 			SchoolprojectPeer::clearInstancePool();
-
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof Schoolproject) {
+		} elseif ($values instanceof Schoolproject) { // it's a model object
 			// invalidate the cache for this single object
 			SchoolprojectPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
-		} else {
-			// it must be the primary key
-
-
-
+		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
 			$criteria->add(SchoolprojectPeer::ID, (array) $values, Criteria::IN);
-
+			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				// we can invalidate the cache for this single object
 				SchoolprojectPeer::removeInstanceFromPool($singleval);
 			}
 		}

@@ -330,6 +330,8 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 				$this->postDelete($con);
 				$this->setDeleted(true);
 				$con->commit();
+			} else {
+				$con->commit();
 			}
 		} catch (PropelException $e) {
 			$con->rollBack();
@@ -377,10 +379,12 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 					$this->postUpdate($con);
 				}
 				$this->postSave($con);
-				$con->commit();
 				SubjectPeer::addInstanceToPool($this);
-				return $affectedRows;
+			} else {
+				$affectedRows = 0;
 			}
+			$con->commit();
+			return $affectedRows;
 		} catch (PropelException $e) {
 			$con->rollBack();
 			throw $e;
@@ -1076,6 +1080,53 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 
 			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
 				$this->collAppointments = AppointmentPeer::doSelectJoinYear($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastAppointmentCriteria = $criteria;
+
+		return $this->collAppointments;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Subject is new, it will return
+	 * an empty collection; or if this Subject has previously
+	 * been saved, it will retrieve related Appointments from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Subject.
+	 */
+	public function getAppointmentsJoinSyllabus($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SubjectPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAppointments === null) {
+			if ($this->isNew()) {
+				$this->collAppointments = array();
+			} else {
+
+				$criteria->add(AppointmentPeer::SUBJECT_ID, $this->id);
+
+				$this->collAppointments = AppointmentPeer::doSelectJoinSyllabus($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(AppointmentPeer::SUBJECT_ID, $this->id);
+
+			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
+				$this->collAppointments = AppointmentPeer::doSelectJoinSyllabus($criteria, $con, $join_behavior);
 			}
 		}
 		$this->lastAppointmentCriteria = $criteria;

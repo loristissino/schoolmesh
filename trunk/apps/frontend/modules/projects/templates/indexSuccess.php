@@ -1,16 +1,9 @@
-<?php slot('title', __('Projects')) ?>
-<?php slot('breadcrumbs',
-	__("Projects")
-	)
-	
-	?><h1><?php echo __("Projects")?></h1>
+<?php include_partial('content/breadcrumps', array(
+  'current'=>__("Projects")
+  ))
+?>
 
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
 
 <div class="sf_admin_list">
 

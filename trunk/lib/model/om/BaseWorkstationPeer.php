@@ -516,7 +516,7 @@ abstract class BaseWorkstationPeer {
 					$obj2->hydrate($row, $startcol);
 					SubnetPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (Workstation) to $obj2 (Subnet)
 				$obj2->addWorkstation($obj1);
 
@@ -814,24 +814,18 @@ abstract class BaseWorkstationPeer {
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
 			WorkstationPeer::clearInstancePool();
-
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof Workstation) {
+		} elseif ($values instanceof Workstation) { // it's a model object
 			// invalidate the cache for this single object
 			WorkstationPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
-		} else {
-			// it must be the primary key
-
-
-
+		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
 			$criteria->add(WorkstationPeer::ID, (array) $values, Criteria::IN);
-
+			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				// we can invalidate the cache for this single object
 				WorkstationPeer::removeInstanceFromPool($singleval);
 			}
 		}

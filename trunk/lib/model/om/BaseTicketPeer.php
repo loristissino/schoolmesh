@@ -509,7 +509,7 @@ abstract class BaseTicketPeer {
 					$obj2->hydrate($row, $startcol);
 					TicketTypePeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (Ticket) to $obj2 (TicketType)
 				$obj2->addTicket($obj1);
 
@@ -807,24 +807,18 @@ abstract class BaseTicketPeer {
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
 			TicketPeer::clearInstancePool();
-
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof Ticket) {
+		} elseif ($values instanceof Ticket) { // it's a model object
 			// invalidate the cache for this single object
 			TicketPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
-		} else {
-			// it must be the primary key
-
-
-
+		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
 			$criteria->add(TicketPeer::ID, (array) $values, Criteria::IN);
-
+			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				// we can invalidate the cache for this single object
 				TicketPeer::removeInstanceFromPool($singleval);
 			}
 		}

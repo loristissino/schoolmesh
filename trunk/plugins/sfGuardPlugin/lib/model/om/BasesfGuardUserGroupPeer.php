@@ -547,7 +547,7 @@ abstract class BasesfGuardUserGroupPeer {
 					$obj2->hydrate($row, $startcol);
 					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (sfGuardUserGroup) to $obj2 (sfGuardUser)
 				$obj2->addsfGuardUserGroup($obj1);
 
@@ -613,7 +613,7 @@ abstract class BasesfGuardUserGroupPeer {
 					$obj2->hydrate($row, $startcol);
 					sfGuardGroupPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (sfGuardUserGroup) to $obj2 (sfGuardGroup)
 				$obj2->addsfGuardUserGroup($obj1);
 
@@ -1181,34 +1181,25 @@ abstract class BasesfGuardUserGroupPeer {
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
 			sfGuardUserGroupPeer::clearInstancePool();
-
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof sfGuardUserGroup) {
+		} elseif ($values instanceof sfGuardUserGroup) { // it's a model object
 			// invalidate the cache for this single object
 			sfGuardUserGroupPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
-		} else {
-			// it must be the primary key
-
-
-
+		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
 			// primary key is composite; we therefore, expect
-			// the primary key passed to be an array of pkey
-			// values
+			// the primary key passed to be an array of pkey values
 			if (count($values) == count($values, COUNT_RECURSIVE)) {
 				// array is not multi-dimensional
 				$values = array($values);
 			}
-
 			foreach ($values as $value) {
-
 				$criterion = $criteria->getNewCriterion(sfGuardUserGroupPeer::USER_ID, $value[0]);
 				$criterion->addAnd($criteria->getNewCriterion(sfGuardUserGroupPeer::GROUP_ID, $value[1]));
 				$criteria->addOr($criterion);
-
 				// we can invalidate the cache for this single PK
 				sfGuardUserGroupPeer::removeInstanceFromPool($value);
 			}

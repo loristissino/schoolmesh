@@ -617,7 +617,7 @@ abstract class BaseTicketEventPeer {
 					$obj2->hydrate($row, $startcol);
 					TicketPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (TicketEvent) to $obj2 (Ticket)
 				$obj2->addTicketEvent($obj1);
 
@@ -683,7 +683,7 @@ abstract class BaseTicketEventPeer {
 					$obj2->hydrate($row, $startcol);
 					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (TicketEvent) to $obj2 (sfGuardUser)
 				$obj2->addTicketEventRelatedByUserId($obj1);
 
@@ -749,7 +749,7 @@ abstract class BaseTicketEventPeer {
 					$obj2->hydrate($row, $startcol);
 					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (TicketEvent) to $obj2 (sfGuardUser)
 				$obj2->addTicketEventRelatedByAssigneeId($obj1);
 
@@ -1492,24 +1492,18 @@ abstract class BaseTicketEventPeer {
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
 			TicketEventPeer::clearInstancePool();
-
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof TicketEvent) {
+		} elseif ($values instanceof TicketEvent) { // it's a model object
 			// invalidate the cache for this single object
 			TicketEventPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
-		} else {
-			// it must be the primary key
-
-
-
+		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
 			$criteria->add(TicketEventPeer::ID, (array) $values, Criteria::IN);
-
+			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				// we can invalidate the cache for this single object
 				TicketEventPeer::removeInstanceFromPool($singleval);
 			}
 		}

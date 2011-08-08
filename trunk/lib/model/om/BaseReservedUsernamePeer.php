@@ -565,24 +565,18 @@ abstract class BaseReservedUsernamePeer {
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
 			ReservedUsernamePeer::clearInstancePool();
-
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof ReservedUsername) {
+		} elseif ($values instanceof ReservedUsername) { // it's a model object
 			// invalidate the cache for this single object
 			ReservedUsernamePeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
-		} else {
-			// it must be the primary key
-
-
-
+		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
 			$criteria->add(ReservedUsernamePeer::ID, (array) $values, Criteria::IN);
-
+			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				// we can invalidate the cache for this single object
 				ReservedUsernamePeer::removeInstanceFromPool($singleval);
 			}
 		}

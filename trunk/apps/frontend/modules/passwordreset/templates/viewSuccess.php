@@ -1,17 +1,13 @@
-<?php slot('title', __('Password reset confirmation')) ?>
-<?php slot('breadcrumbs',
-	__("Password reset") . ' » ' .
-	__("Password reset confirmation")
-	)
-	
-	?><h1><?php echo __("Password reset confirmation")?></h1>
-	
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    '_users' => __("User's settings"),
+    '_passwordreset' => __("Password reset")
+    ),
+  'current'=>__("Password reset confirmation")
+  ))
+?>
+
+<?php include_partial('content/flashes'); ?>
 
   <table>
 	<tr>

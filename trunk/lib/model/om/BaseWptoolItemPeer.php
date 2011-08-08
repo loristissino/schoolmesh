@@ -501,7 +501,7 @@ abstract class BaseWptoolItemPeer {
 					$obj2->hydrate($row, $startcol);
 					WptoolItemTypePeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
-
+				
 				// Add the $obj1 (WptoolItem) to $obj2 (WptoolItemType)
 				$obj2->addWptoolItem($obj1);
 
@@ -799,24 +799,18 @@ abstract class BaseWptoolItemPeer {
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
 			WptoolItemPeer::clearInstancePool();
-
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof WptoolItem) {
+		} elseif ($values instanceof WptoolItem) { // it's a model object
 			// invalidate the cache for this single object
 			WptoolItemPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
-		} else {
-			// it must be the primary key
-
-
-
+		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
 			$criteria->add(WptoolItemPeer::ID, (array) $values, Criteria::IN);
-
+			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				// we can invalidate the cache for this single object
 				WptoolItemPeer::removeInstanceFromPool($singleval);
 			}
 		}

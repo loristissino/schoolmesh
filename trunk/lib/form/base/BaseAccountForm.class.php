@@ -8,7 +8,6 @@
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
 abstract class BaseAccountForm extends BaseFormPropel
 {
@@ -31,7 +30,7 @@ abstract class BaseAccountForm extends BaseFormPropel
     ));
 
     $this->setValidators(array(
-      'id'                  => new sfValidatorPropelChoice(array('model' => 'Account', 'column' => 'id', 'required' => false)),
+      'id'                  => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
       'user_id'             => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id')),
       'account_type_id'     => new sfValidatorPropelChoice(array('model' => 'AccountType', 'column' => 'id')),
       'info'                => new sfValidatorString(array('required' => false)),
