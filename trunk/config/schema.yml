@@ -307,6 +307,14 @@ propel:
     recuperation_hint_id: ~
     _uniques:
       taur:     [term_id, appointment_id, user_id, recuperation_hint_id]
+      
+  wpmodule_syllabus_item:
+    id: ~
+    wpmodule_id: ~
+    syllabus_item_id: ~
+    contribution: integer  # 1 for partial contribution, 2 for focussed contribution
+    _uniques:
+      ws: [wpmodule_id, syllabus_item_id]
 
   schoolproject:
     id: ~

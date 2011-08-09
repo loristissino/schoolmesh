@@ -58,6 +58,7 @@ class WpmoduleTableMap extends TableMap {
     $this->addRelation('sfGuardUser', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('Appointment', 'Appointment', RelationMap::MANY_TO_ONE, array('appointment_id' => 'id', ), null, null);
     $this->addRelation('WpitemGroup', 'WpitemGroup', RelationMap::ONE_TO_MANY, array('id' => 'wpmodule_id', ), 'CASCADE', 'CASCADE');
+    $this->addRelation('WpmoduleSyllabusItem', 'WpmoduleSyllabusItem', RelationMap::ONE_TO_MANY, array('id' => 'wpmodule_id', ), null, null);
 	} // buildRelations()
 
 	/**

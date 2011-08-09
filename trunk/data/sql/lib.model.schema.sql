@@ -879,6 +879,30 @@ CREATE TABLE `student_hint`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- wpmodule_syllabus_item
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `wpmodule_syllabus_item`;
+
+
+CREATE TABLE `wpmodule_syllabus_item`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`wpmodule_id` INTEGER,
+	`syllabus_item_id` INTEGER,
+	`contribution` INTEGER,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `ws` (`wpmodule_id`, `syllabus_item_id`),
+	CONSTRAINT `wpmodule_syllabus_item_FK_1`
+		FOREIGN KEY (`wpmodule_id`)
+		REFERENCES `wpmodule` (`id`),
+	INDEX `wpmodule_syllabus_item_FI_2` (`syllabus_item_id`),
+	CONSTRAINT `wpmodule_syllabus_item_FK_2`
+		FOREIGN KEY (`syllabus_item_id`)
+		REFERENCES `syllabus_item` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- schoolproject
 #-----------------------------------------------------------------------------
 

@@ -198,7 +198,7 @@ $number=$resultset->number;
 */
 	public function getOwner()
 	{
-	    $c = new Criteria();
+	  $c = new Criteria();
 		$c->add(sfGuardUserProfilePeer::USER_ID, $this->getUserId());
 		$t = sfGuardUserProfilePeer::doSelectOne($c);
 		return $t;
@@ -293,6 +293,49 @@ $number=$resultset->number;
 					}
 			}
 	}
+  
+  public function getSyllabusContributionsAsArray()
+  {
+	  $c = new Criteria();
+		$c->add(WpmodulePeer::ID, $this->getId());
+		$t = WpmoduleSyllabusItemPeer::doSelect($c);
+    $r = array();
+    foreach($t as $item)
+    {
+      $r[$item->getSyllabusItemId()]=$item->getContribution();
+    }
+		return $r;
+  }
+  
+  public function manageSyllabusItem($syllabus_item, $value=0)
+  {
+    $c = new Criteria();
+    $c->add(WpmoduleSyllabusItemPeer::WPMODULE_ID, $this->getId());
+    $c->add(WpmoduleSyllabusItemPeer::SYLLABUS_ITEM_ID, $syllabus_item);
+    $t = WpmoduleSyllabusItemPeer::doSelectOne($c);
+    if($t)
+    {
+      if ($value==0)
+      {
+        $t->delete();
+      }
+      elseif($value!=$t->getContribution())
+      {
+        $t->setContribution($value)->save();
+      }
+    }
+    else
+    {
+      $t=new WpmoduleSyllabusItem();
+      $t
+      ->setWpmoduleId($this->getId())
+      ->setSyllabusItemId($syllabus_item)
+      ->setContribution($value)
+      ->save()
+      ;
+    }
+    
+  }
 
 	public function delete(PropelPDO $con = null)
 	{  

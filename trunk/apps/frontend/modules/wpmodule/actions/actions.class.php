@@ -210,6 +210,8 @@ class wpmoduleActions extends sfActions
 	  $this->wpstate = $this->workplan->getState();
 	  $this->ownerId=$this->wpmodule->getUserId();
 	  $this->item_groups=$this->wpmodule->getWpitemGroups();
+    
+    $this->syllabus_contributions = $this->wpmodule->getSyllabusContributionsAsArray();
 	
   	if ($this->workplan->getState() > Workflow::WP_DRAFT)
 		{
@@ -230,7 +232,30 @@ class wpmoduleActions extends sfActions
 		$this->steps=Workflow::getWpfrSteps();
 	}
 
+  public function executeSyllabus(sfWebRequest $request)
+  {
+    $this->wpmodule = WpmodulePeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($this->wpmodule);
+	  $this->user=$this->getUser();
 
+
+	  $this->owner=$this->wpmodule->getOwner();;
+		
+    $this->forward404Unless($this->owner->getUserId()==$this->getUser()->getProfile()->getSfGuardUser()->getId()
+		|| $this->user->hasCredential('backadmin'));
+    
+    $syllabus_item=SyllabusItemPeer::retrieveByPK($request->getParameter('syllabus'));
+
+    $this->wpmodule->manageSyllabusItem($syllabus_item->getId(), $request->getParameter('value', 0));
+
+    Generic::logMessage('syllabus', $syllabus_item->getId());
+    
+    return $this->renderPartial('syllabi/link', array(
+      'syllabus_item'=>$syllabus_item, 
+      'wpmodule'=>$this->wpmodule,
+      'syllabus_contributions'=>$this->wpmodule->getSyllabusContributionsAsArray()
+      ));
+  }
 
   public function executeNew(sfWebRequest $request)
   {
