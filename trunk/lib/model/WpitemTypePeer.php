@@ -18,9 +18,10 @@ static function retrieveByRank($rank = 1)
   return self::doSelectOne($c); 
 }
  
-static function getAllByRank()
+static function getAllByRank($syllabus_id)
 {
   $c = new Criteria;
+  $c->add(self::SYLLABUS_ID, $syllabus_id);
   $c->addAscendingOrderByColumn(self::RANK);
   return self::doSelect($c); 
 }

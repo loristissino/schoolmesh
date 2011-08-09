@@ -127,6 +127,7 @@ propel:
     version: varchar(20)
     author: varchar(50)
     href: varchar(255)
+    is_active:  { type: boolean, default: true }
     
   syllabus_item:
     syllabus_id: ~
@@ -134,6 +135,7 @@ propel:
     level: integer
     parent_id: { type: integer, foreignTable: syllabus_item, foreignReference: id, required: false, onDelete: restrict, onUpdate: cascade, index:true }
     content: varchar(255)
+    is_selectable: { type: boolean, default: false }
     
   appointment:
     id: ~

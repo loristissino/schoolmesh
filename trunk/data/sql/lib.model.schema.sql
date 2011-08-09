@@ -325,6 +325,7 @@ CREATE TABLE `syllabus`
 	`version` VARCHAR(20),
 	`author` VARCHAR(50),
 	`href` VARCHAR(255),
+	`is_active` TINYINT default 1,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
@@ -342,6 +343,7 @@ CREATE TABLE `syllabus_item`
 	`level` INTEGER,
 	`parent_id` INTEGER,
 	`content` VARCHAR(255),
+	`is_selectable` TINYINT default 0,
 	PRIMARY KEY (`id`),
 	KEY `syllabus_item_I_1`(`parent_id`),
 	INDEX `syllabus_item_FI_1` (`syllabus_id`),

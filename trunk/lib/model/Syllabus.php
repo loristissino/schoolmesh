@@ -17,6 +17,11 @@ require 'lib/model/om/BaseSyllabus.php';
 class Syllabus extends BaseSyllabus {
 
   private $_parents;
+  
+  public function __toString()
+  {
+    return $this->getName();
+  }
 
   public function saveItems($items=array())
   {
@@ -55,7 +60,8 @@ class Syllabus extends BaseSyllabus {
         $this->getId(),
         $item,
         $level,
-        $level>0 ? $this->_parents[$level-1]: 0
+        $level>0 ? $this->_parents[$level-1]: 0,
+        true
         )
       ->save();
       

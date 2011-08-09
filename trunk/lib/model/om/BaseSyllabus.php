@@ -49,6 +49,13 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 	protected $href;
 
 	/**
+	 * The value for the is_active field.
+	 * Note: this column has a database default value of: true
+	 * @var        boolean
+	 */
+	protected $is_active;
+
+	/**
 	 * @var        array SyllabusItem[] Collection to store aggregation of SyllabusItem objects.
 	 */
 	protected $collSyllabusItems;
@@ -95,6 +102,27 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 	// symfony behavior
 	
 	const PEER = 'SyllabusPeer';
+
+	/**
+	 * Applies default values to this object.
+	 * This method should be called from the object's constructor (or
+	 * equivalent initialization method).
+	 * @see        __construct()
+	 */
+	public function applyDefaultValues()
+	{
+		$this->is_active = true;
+	}
+
+	/**
+	 * Initializes internal state of BaseSyllabus object.
+	 * @see        applyDefaults()
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
 
 	/**
 	 * Get the [id] column value.
@@ -144,6 +172,16 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 	public function getHref()
 	{
 		return $this->href;
+	}
+
+	/**
+	 * Get the [is_active] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsActive()
+	{
+		return $this->is_active;
 	}
 
 	/**
@@ -247,6 +285,26 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 	} // setHref()
 
 	/**
+	 * Set the value of [is_active] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     Syllabus The current object (for fluent API support)
+	 */
+	public function setIsActive($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_active !== $v || $this->isNew()) {
+			$this->is_active = $v;
+			$this->modifiedColumns[] = SyllabusPeer::IS_ACTIVE;
+		}
+
+		return $this;
+	} // setIsActive()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -256,6 +314,10 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->is_active !== true) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -283,6 +345,7 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 			$this->version = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->author = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->href = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->is_active = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -292,7 +355,7 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 5; // 5 = SyllabusPeer::NUM_COLUMNS - SyllabusPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 6; // 6 = SyllabusPeer::NUM_COLUMNS - SyllabusPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Syllabus object", $e);
@@ -660,6 +723,9 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 			case 4:
 				return $this->getHref();
 				break;
+			case 5:
+				return $this->getIsActive();
+				break;
 			default:
 				return null;
 				break;
@@ -686,6 +752,7 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 			$keys[2] => $this->getVersion(),
 			$keys[3] => $this->getAuthor(),
 			$keys[4] => $this->getHref(),
+			$keys[5] => $this->getIsActive(),
 		);
 		return $result;
 	}
@@ -732,6 +799,9 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 			case 4:
 				$this->setHref($value);
 				break;
+			case 5:
+				$this->setIsActive($value);
+				break;
 		} // switch()
 	}
 
@@ -761,6 +831,7 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setVersion($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setAuthor($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setHref($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setIsActive($arr[$keys[5]]);
 	}
 
 	/**
@@ -777,6 +848,7 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SyllabusPeer::VERSION)) $criteria->add(SyllabusPeer::VERSION, $this->version);
 		if ($this->isColumnModified(SyllabusPeer::AUTHOR)) $criteria->add(SyllabusPeer::AUTHOR, $this->author);
 		if ($this->isColumnModified(SyllabusPeer::HREF)) $criteria->add(SyllabusPeer::HREF, $this->href);
+		if ($this->isColumnModified(SyllabusPeer::IS_ACTIVE)) $criteria->add(SyllabusPeer::IS_ACTIVE, $this->is_active);
 
 		return $criteria;
 	}
@@ -838,6 +910,8 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 		$copyObj->setAuthor($this->author);
 
 		$copyObj->setHref($this->href);
+
+		$copyObj->setIsActive($this->is_active);
 
 
 		if ($deepCopy) {

@@ -49,6 +49,13 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 	protected $content;
 
 	/**
+	 * The value for the is_selectable field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $is_selectable;
+
+	/**
 	 * @var        Syllabus
 	 */
 	protected $aSyllabus;
@@ -85,6 +92,27 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 	// symfony behavior
 	
 	const PEER = 'SyllabusItemPeer';
+
+	/**
+	 * Applies default values to this object.
+	 * This method should be called from the object's constructor (or
+	 * equivalent initialization method).
+	 * @see        __construct()
+	 */
+	public function applyDefaultValues()
+	{
+		$this->is_selectable = false;
+	}
+
+	/**
+	 * Initializes internal state of BaseSyllabusItem object.
+	 * @see        applyDefaults()
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
 
 	/**
 	 * Get the [syllabus_id] column value.
@@ -134,6 +162,16 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 	public function getContent()
 	{
 		return $this->content;
+	}
+
+	/**
+	 * Get the [is_selectable] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsSelectable()
+	{
+		return $this->is_selectable;
 	}
 
 	/**
@@ -245,6 +283,26 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 	} // setContent()
 
 	/**
+	 * Set the value of [is_selectable] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     SyllabusItem The current object (for fluent API support)
+	 */
+	public function setIsSelectable($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_selectable !== $v || $this->isNew()) {
+			$this->is_selectable = $v;
+			$this->modifiedColumns[] = SyllabusItemPeer::IS_SELECTABLE;
+		}
+
+		return $this;
+	} // setIsSelectable()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -254,6 +312,10 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->is_selectable !== false) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -281,6 +343,7 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 			$this->level = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->parent_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->content = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->is_selectable = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -290,7 +353,7 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 5; // 5 = SyllabusItemPeer::NUM_COLUMNS - SyllabusItemPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 6; // 6 = SyllabusItemPeer::NUM_COLUMNS - SyllabusItemPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating SyllabusItem object", $e);
@@ -665,6 +728,9 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 			case 4:
 				return $this->getContent();
 				break;
+			case 5:
+				return $this->getIsSelectable();
+				break;
 			default:
 				return null;
 				break;
@@ -691,6 +757,7 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 			$keys[2] => $this->getLevel(),
 			$keys[3] => $this->getParentId(),
 			$keys[4] => $this->getContent(),
+			$keys[5] => $this->getIsSelectable(),
 		);
 		return $result;
 	}
@@ -737,6 +804,9 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 			case 4:
 				$this->setContent($value);
 				break;
+			case 5:
+				$this->setIsSelectable($value);
+				break;
 		} // switch()
 	}
 
@@ -766,6 +836,7 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setLevel($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setParentId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setContent($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setIsSelectable($arr[$keys[5]]);
 	}
 
 	/**
@@ -782,6 +853,7 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SyllabusItemPeer::LEVEL)) $criteria->add(SyllabusItemPeer::LEVEL, $this->level);
 		if ($this->isColumnModified(SyllabusItemPeer::PARENT_ID)) $criteria->add(SyllabusItemPeer::PARENT_ID, $this->parent_id);
 		if ($this->isColumnModified(SyllabusItemPeer::CONTENT)) $criteria->add(SyllabusItemPeer::CONTENT, $this->content);
+		if ($this->isColumnModified(SyllabusItemPeer::IS_SELECTABLE)) $criteria->add(SyllabusItemPeer::IS_SELECTABLE, $this->is_selectable);
 
 		return $criteria;
 	}
@@ -843,6 +915,8 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 		$copyObj->setParentId($this->parent_id);
 
 		$copyObj->setContent($this->content);
+
+		$copyObj->setIsSelectable($this->is_selectable);
 
 
 		if ($deepCopy) {

@@ -28,6 +28,9 @@
 <pre>
 <?php foreach($syllabus->getSyllabusItems() as $syllabus_item): ?>
   <?php echo str_repeat(' ', $syllabus_item->getLevel()*2) ?>
+  <?php if ($syllabus_item->getIsSelectable()): ?>
+    <?php echo '[*]' ?>
+  <?php endif ?>
   <?php echo $syllabus_item->getContent() . "\n" ?>
 <?php endforeach ?>
 </pre>

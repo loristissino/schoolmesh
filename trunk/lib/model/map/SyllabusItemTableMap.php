@@ -41,6 +41,7 @@ class SyllabusItemTableMap extends TableMap {
 		$this->addColumn('LEVEL', 'Level', 'INTEGER', false, null, null);
 		$this->addForeignKey('PARENT_ID', 'ParentId', 'INTEGER', 'syllabus_item', 'ID', false, null, null);
 		$this->addColumn('CONTENT', 'Content', 'VARCHAR', false, 255, null);
+		$this->addColumn('IS_SELECTABLE', 'IsSelectable', 'BOOLEAN', false, null, false);
 		// validators
 	} // initialize()
 
