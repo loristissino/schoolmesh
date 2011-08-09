@@ -198,20 +198,20 @@ class wpmoduleActions extends sfActions
   {
     $this->wpmodule = WpmodulePeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->wpmodule);
-	$this->user=$this->getUser();
+	  $this->user=$this->getUser();
 
 
-	$this->owner=$this->wpmodule->getOwner();;
+	  $this->owner=$this->wpmodule->getOwner();;
 		
     $this->forward404Unless($this->owner->getUserId()==$this->getUser()->getProfile()->getSfGuardUser()->getId()
 		|| $this->user->hasCredential('backadmin'));
 
-	$this->workplan = $this->wpmodule->getAppointment();
-	$this->wpstate = $this->workplan->getState();
-	$this->ownerId=$this->wpmodule->getUserId();
-	$this->item_groups=$this->wpmodule->getWpitemGroups();
+	  $this->workplan = $this->wpmodule->getAppointment();
+	  $this->wpstate = $this->workplan->getState();
+	  $this->ownerId=$this->wpmodule->getUserId();
+	  $this->item_groups=$this->wpmodule->getWpitemGroups();
 	
-	if ($this->workplan->getState() > Workflow::WP_DRAFT)
+  	if ($this->workplan->getState() > Workflow::WP_DRAFT)
 		{
 			foreach($this->item_groups as $item_group)
 			{

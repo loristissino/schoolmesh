@@ -41,6 +41,7 @@ class SyllabusTableMap extends TableMap {
 		$this->addColumn('VERSION', 'Version', 'VARCHAR', false, 20, null);
 		$this->addColumn('AUTHOR', 'Author', 'VARCHAR', false, 50, null);
 		$this->addColumn('HREF', 'Href', 'VARCHAR', false, 255, null);
+		$this->addColumn('IS_ACTIVE', 'IsActive', 'BOOLEAN', false, null, true);
 		// validators
 	} // initialize()
 

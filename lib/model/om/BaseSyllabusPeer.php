@@ -25,7 +25,7 @@ abstract class BaseSyllabusPeer {
 	const TM_CLASS = 'SyllabusTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 6;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -44,6 +44,9 @@ abstract class BaseSyllabusPeer {
 
 	/** the column name for the HREF field */
 	const HREF = 'syllabus.HREF';
+
+	/** the column name for the IS_ACTIVE field */
+	const IS_ACTIVE = 'syllabus.IS_ACTIVE';
 
 	/**
 	 * An identiy map to hold any loaded instances of Syllabus objects.
@@ -68,11 +71,11 @@ abstract class BaseSyllabusPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'Version', 'Author', 'Href', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'version', 'author', 'href', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::NAME, self::VERSION, self::AUTHOR, self::HREF, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'version', 'author', 'href', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'Version', 'Author', 'Href', 'IsActive', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'version', 'author', 'href', 'isActive', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::NAME, self::VERSION, self::AUTHOR, self::HREF, self::IS_ACTIVE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'version', 'author', 'href', 'is_active', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -82,11 +85,11 @@ abstract class BaseSyllabusPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'Version' => 2, 'Author' => 3, 'Href' => 4, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'version' => 2, 'author' => 3, 'href' => 4, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NAME => 1, self::VERSION => 2, self::AUTHOR => 3, self::HREF => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'version' => 2, 'author' => 3, 'href' => 4, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'Version' => 2, 'Author' => 3, 'Href' => 4, 'IsActive' => 5, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'version' => 2, 'author' => 3, 'href' => 4, 'isActive' => 5, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NAME => 1, self::VERSION => 2, self::AUTHOR => 3, self::HREF => 4, self::IS_ACTIVE => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'version' => 2, 'author' => 3, 'href' => 4, 'is_active' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -161,6 +164,7 @@ abstract class BaseSyllabusPeer {
 		$criteria->addSelectColumn(SyllabusPeer::VERSION);
 		$criteria->addSelectColumn(SyllabusPeer::AUTHOR);
 		$criteria->addSelectColumn(SyllabusPeer::HREF);
+		$criteria->addSelectColumn(SyllabusPeer::IS_ACTIVE);
 	}
 
 	/**

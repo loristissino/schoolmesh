@@ -16,14 +16,17 @@ require 'lib/model/om/BaseSyllabusItem.php';
  */
 class SyllabusItem extends BaseSyllabusItem {
 
-  public function setValues($syllabus_id, $content, $level, $parent_id)
+  public function setValues($syllabus_id, $content, $level, $parent_id, $is_selectable=false)
   {
     $this
     ->setSyllabusId($syllabus_id)
     ->setContent($content)
     ->setLevel($level)
     ->setParentId($parent_id)
+    ->setIsSelectable($is_selectable)
     ;
+    
+    return $this;
     
   }
 

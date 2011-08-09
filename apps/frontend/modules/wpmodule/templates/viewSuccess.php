@@ -50,6 +50,11 @@
 	<?php endif ?>
 <?php endforeach ?>
 
+<?php if($workplan->getSyllabus()->getIsActive()): ?>
+<h2><?php echo __('Syllabus links') ?></h2>
+<?php include_partial('syllabi/links', array('syllabus'=>$workplan->getSyllabus(), 'wpmodule'=>$wpmodule)) ?>
+<?php endif ?>
+
 
 <h2><?php echo __('Actions') ?></h2>
 			<ul class="sf_admin_td_actions">
