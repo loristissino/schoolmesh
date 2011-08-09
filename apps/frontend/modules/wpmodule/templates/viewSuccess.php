@@ -52,7 +52,7 @@
 
 <?php if($workplan->getSyllabus()->getIsActive()): ?>
 <h2><?php echo __('Syllabus links') ?></h2>
-<?php include_partial('syllabi/links', array('syllabus'=>$workplan->getSyllabus(), 'wpmodule'=>$wpmodule)) ?>
+<?php include_partial('syllabi/links', array('syllabus'=>$workplan->getSyllabus(), 'wpmodule'=>$wpmodule, 'syllabus_contributions'=>$syllabus_contributions)) ?>
 <?php endif ?>
 
 

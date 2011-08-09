@@ -53,6 +53,7 @@ class SyllabusItemTableMap extends TableMap {
     $this->addRelation('Syllabus', 'Syllabus', RelationMap::MANY_TO_ONE, array('syllabus_id' => 'id', ), null, null);
     $this->addRelation('SyllabusItemRelatedByParentId', 'SyllabusItem', RelationMap::MANY_TO_ONE, array('parent_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('SyllabusItemRelatedByParentId', 'SyllabusItem', RelationMap::ONE_TO_MANY, array('id' => 'parent_id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('WpmoduleSyllabusItem', 'WpmoduleSyllabusItem', RelationMap::ONE_TO_MANY, array('id' => 'syllabus_item_id', ), null, null);
 	} // buildRelations()
 
 	/**

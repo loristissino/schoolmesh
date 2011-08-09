@@ -8,7 +8,7 @@ $workflow=$_SERVER["argv"][1];
 $width=32;
 $height=32;
 
-$sources=Array("0"=>false, "10"=>true, "20"=>false, "30"=>false, "40"=>true, "50"=>false, "60"=>false, "70"=>false, "80"=>false);
+$sources=Array("10"=>false, "20"=>true, "25"=>true, "30"=>false, "40"=>false, "50"=>true, "60"=>false, "70"=>false, "80"=>false, "90"=>false);
 
 $ne=0;
 
