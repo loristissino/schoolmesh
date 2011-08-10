@@ -2,10 +2,12 @@
 
 $font_path="./Arial.ttf";
 
-header ("Content-type: image/png"); 
+header ("Content-type: image/png");
+
+$ywidth=array_key_exists('ywidth', $_GET) ? $_GET['ywidth']: 130;
 
 // imagecreate (x width, y width)
-$img_handle = @imagecreatetruecolor (20, 130) or die ("Cannot create image"); 
+$img_handle = @imagecreatetruecolor (20, $ywidth) or die ("Cannot create image"); 
 
 // ImageColorAllocate (image, red, green, blue)
 
@@ -27,7 +29,7 @@ imagefill($img_handle, 0, 0, $back_color);
 
 $text=$_GET['text'];
 
-imagettftext($img_handle, 10, 90, 15, 127, $txt_color, $font_path, $text);
+imagettftext($img_handle, 10, 90, 15, $ywidth-3, $txt_color, $font_path, $text);
 
 ImagePng ($img_handle); 
 ImageDestroy($img_handle);

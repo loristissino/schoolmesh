@@ -275,24 +275,49 @@ public function executeEditHintInLine(sfWebRequest $request)
 
 }
 
-public function executeAddhint(sfWebRequest $request)
-{
-               $this->forward404Unless($request->getMethod()=="POST");
+  public function executeAddhint(sfWebRequest $request)
+  {
+   $this->forward404Unless($request->getMethod()=="POST");
 
-               $hint=new RecuperationHint();
-               $hint
-               ->setContent('...')
-               ->setRank(100)
-               ->setUserId($this->getUser()->getProfile()->getSfGuardUser()->getId())
-               ->setIsSelectable(true)
-               ->save();
-               // FIXME Rank is set to 100, just to have first general hints
+   $hint=new RecuperationHint();
+   $hint
+   ->setContent('...')
+   ->setRank(100)
+   ->setUserId($this->getUser()->getProfile()->getSfGuardUser()->getId())
+   ->setIsSelectable(true)
+   ->save();
+   // FIXME Rank is set to 100, just to have first general hints
 
-               $this->getUser()->setFlash('notice_hints',
+   $this->getUser()->setFlash('notice_hints',
 $this->getContext()->getI18N()->__('A new item was inserted'));
 
-               $this->redirect($request->getReferer().'#hints');
+   $this->redirect($request->getReferer().'#hints');
 
-}
+  }
+
+  public function executeSyllabus(sfWebRequest $request)
+  {
+		$this->forward404Unless($this->schoolclass = SchoolclassPeer::retrieveByPK($request->getParameter('id')));
+
+    $this->appointments=$this->schoolclass->getCurrentAppointments();
+    $this->contributions=$this->schoolclass->getSyllabusContributions();
+
+    // we need to check that all appointments share the same syllabus...
+    $syllabus_ids=array();
+    foreach($this->appointments as $appointment)
+    {
+      $syllabus_ids[$appointment->getSyllabusId()]=1;
+    }
+    
+    if(sizeof($syllabus_ids)!=1)
+    {
+      return sfView::ERROR;
+    }
+    
+    list($this->syllabus_id)=array_keys($syllabus_ids);
+    
+    $this->syllabus_items=SyllabusPeer::retrieveByPK($this->syllabus_id)->getSyllabusItems();
+    
+  }
 
 }

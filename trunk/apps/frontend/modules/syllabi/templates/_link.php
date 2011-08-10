@@ -23,7 +23,7 @@
             'url'      => url_for('wpmodule/syllabus?id=' . $wpmodule->getId() . '&syllabus=' . $syllabus_item->getId() . '&value=0'),
             'loading'=>'$(\'#loader_s'. $syllabus_item->getId() . '\').show();'),
             array(
-            'title'=>__('Remove contribution to this item')
+            'title'=>__('Unset current module contribution to this goal\'s achievement')
               )
             ) ?>
     <?php endif ?>
@@ -36,7 +36,7 @@
             'url'      => url_for('wpmodule/syllabus?id=' . $wpmodule->getId() . '&syllabus=' . $syllabus_item->getId() . '&value='. WpmoduleSyllabusItemPeer::PARTIAL_CONTRIBUTION),
             'loading'=>'$(\'#loader_s'. $syllabus_item->getId() . '\').show();'),
             array(
-            'title'=>__('Add partial contribution to this item')
+            'title'=>__('Set current module partial contribution to this goal\'s achievement')
               )
             ) ?>
     <?php endif ?>
@@ -49,7 +49,7 @@
             'url'      => url_for('wpmodule/syllabus?id=' . $wpmodule->getId() . '&syllabus=' . $syllabus_item->getId() . '&value='. WpmoduleSyllabusItemPeer::FOCUSSED_CONTRIBUTION),
             'loading'=>'$(\'#loader_s'. $syllabus_item->getId() . '\').show();'),
             array(
-            'title'=>__('Add focussed contribution to this item')
+            'title'=>__('Set current module specific contribution to this goal\'s achievement')
               )
             ) ?>
     <?php endif ?>

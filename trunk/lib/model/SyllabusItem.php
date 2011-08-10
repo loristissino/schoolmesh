@@ -18,8 +18,19 @@ class SyllabusItem extends BaseSyllabusItem {
 
   public function setValues($syllabus_id, $content, $level, $parent_id, $is_selectable=false)
   {
+    
+    if(strpos($content,'§')>0)
+    {
+      list($ref,$content)=explode('§', $content);
+    }
+    else
+    {
+      $ref='';
+    }
+    
     $this
     ->setSyllabusId($syllabus_id)
+    ->setRef($ref)
     ->setContent($content)
     ->setLevel($level)
     ->setParentId($parent_id)

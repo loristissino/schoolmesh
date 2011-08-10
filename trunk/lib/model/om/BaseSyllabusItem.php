@@ -31,6 +31,12 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 	protected $id;
 
 	/**
+	 * The value for the ref field.
+	 * @var        string
+	 */
+	protected $ref;
+
+	/**
 	 * The value for the level field.
 	 * @var        int
 	 */
@@ -145,6 +151,16 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Get the [ref] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getRef()
+	{
+		return $this->ref;
+	}
+
+	/**
 	 * Get the [level] column value.
 	 * 
 	 * @return     int
@@ -227,6 +243,26 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setId()
+
+	/**
+	 * Set the value of [ref] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     SyllabusItem The current object (for fluent API support)
+	 */
+	public function setRef($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->ref !== $v) {
+			$this->ref = $v;
+			$this->modifiedColumns[] = SyllabusItemPeer::REF;
+		}
+
+		return $this;
+	} // setRef()
 
 	/**
 	 * Set the value of [level] column.
@@ -350,10 +386,11 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 
 			$this->syllabus_id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->level = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->parent_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
-			$this->content = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->is_selectable = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
+			$this->ref = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->level = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->parent_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+			$this->content = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->is_selectable = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -363,7 +400,7 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 6; // 6 = SyllabusItemPeer::NUM_COLUMNS - SyllabusItemPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 7; // 7 = SyllabusItemPeer::NUM_COLUMNS - SyllabusItemPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating SyllabusItem object", $e);
@@ -749,15 +786,18 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 2:
-				return $this->getLevel();
+				return $this->getRef();
 				break;
 			case 3:
-				return $this->getParentId();
+				return $this->getLevel();
 				break;
 			case 4:
-				return $this->getContent();
+				return $this->getParentId();
 				break;
 			case 5:
+				return $this->getContent();
+				break;
+			case 6:
 				return $this->getIsSelectable();
 				break;
 			default:
@@ -783,10 +823,11 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getSyllabusId(),
 			$keys[1] => $this->getId(),
-			$keys[2] => $this->getLevel(),
-			$keys[3] => $this->getParentId(),
-			$keys[4] => $this->getContent(),
-			$keys[5] => $this->getIsSelectable(),
+			$keys[2] => $this->getRef(),
+			$keys[3] => $this->getLevel(),
+			$keys[4] => $this->getParentId(),
+			$keys[5] => $this->getContent(),
+			$keys[6] => $this->getIsSelectable(),
 		);
 		return $result;
 	}
@@ -825,15 +866,18 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 2:
-				$this->setLevel($value);
+				$this->setRef($value);
 				break;
 			case 3:
-				$this->setParentId($value);
+				$this->setLevel($value);
 				break;
 			case 4:
-				$this->setContent($value);
+				$this->setParentId($value);
 				break;
 			case 5:
+				$this->setContent($value);
+				break;
+			case 6:
 				$this->setIsSelectable($value);
 				break;
 		} // switch()
@@ -862,10 +906,11 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setSyllabusId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setLevel($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setParentId($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setContent($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setIsSelectable($arr[$keys[5]]);
+		if (array_key_exists($keys[2], $arr)) $this->setRef($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setLevel($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setParentId($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setContent($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setIsSelectable($arr[$keys[6]]);
 	}
 
 	/**
@@ -879,6 +924,7 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(SyllabusItemPeer::SYLLABUS_ID)) $criteria->add(SyllabusItemPeer::SYLLABUS_ID, $this->syllabus_id);
 		if ($this->isColumnModified(SyllabusItemPeer::ID)) $criteria->add(SyllabusItemPeer::ID, $this->id);
+		if ($this->isColumnModified(SyllabusItemPeer::REF)) $criteria->add(SyllabusItemPeer::REF, $this->ref);
 		if ($this->isColumnModified(SyllabusItemPeer::LEVEL)) $criteria->add(SyllabusItemPeer::LEVEL, $this->level);
 		if ($this->isColumnModified(SyllabusItemPeer::PARENT_ID)) $criteria->add(SyllabusItemPeer::PARENT_ID, $this->parent_id);
 		if ($this->isColumnModified(SyllabusItemPeer::CONTENT)) $criteria->add(SyllabusItemPeer::CONTENT, $this->content);
@@ -938,6 +984,8 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setSyllabusId($this->syllabus_id);
+
+		$copyObj->setRef($this->ref);
 
 		$copyObj->setLevel($this->level);
 

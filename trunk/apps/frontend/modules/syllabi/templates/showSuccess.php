@@ -25,17 +25,6 @@
 
 <hr />
 
-<pre>
-<?php foreach($syllabus->getSyllabusItems() as $syllabus_item): ?>
-  <?php echo str_repeat(' ', $syllabus_item->getLevel()*2) ?>
-  <?php if ($syllabus_item->getIsSelectable()): ?>
-    <?php echo '[*]' ?>
-  <?php endif ?>
-  <?php echo $syllabus_item->getContent() . "\n" ?>
-<?php endforeach ?>
-</pre>
+<?php include_partial('syllabi/items', array('syllabus'=>$syllabus)) ?>
 
-
-<a href="<?php echo url_for('syllabi/edit?id='.$syllabus->getId()) ?>">Edit</a>
-&nbsp;
 <a href="<?php echo url_for('syllabi/index') ?>">List</a>
