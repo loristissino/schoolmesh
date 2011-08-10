@@ -21,12 +21,19 @@
       <td><?php echo $schoolclass->getId() ?></td>
       <td><?php echo $schoolclass->getDescription() ?></td>
 	<td>
-				<ul class="sf_admin_td_actions">
+      <ul class="sf_admin_td_actions">
 				<li class="sf_admin_action_view">
 					<?php echo link_to(
 				__('View'),
 				'schoolclasses/view?id='.$schoolclass->getId(),
 				array('title'=>__('View the composition of this class'))
+				)?>
+				</li>
+				<li class="sf_admin_action_syllabus">
+					<?php echo link_to(
+				__('Syllabus'),
+				'schoolclasses/syllabus?id='.$schoolclass->getId(),
+				array('title'=>__('View the syllabus for this class'))
 				)?>
 				</li>
 			</ul>
@@ -36,6 +43,4 @@
   </tbody>  
 </table>  
 
-<hr />
-<?php include_partial('dacancellare') ?>
 

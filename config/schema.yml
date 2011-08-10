@@ -132,6 +132,7 @@ propel:
   syllabus_item:
     syllabus_id: ~
     id: ~
+    ref: varchar(20)
     level: integer
     parent_id: { type: integer, foreignTable: syllabus_item, foreignReference: id, required: false, onDelete: restrict, onUpdate: cascade, index:true }
     content: varchar(255)

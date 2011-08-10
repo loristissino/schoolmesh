@@ -26,7 +26,7 @@
 			<?php echo image_tag('notdone', 'title=' . __('this content is required and is currently missing')). ' ' ?>
 <?php endif ?>
 <strong><span id="moduleperiod" class="editText"><?php echo $wpmodule->getPeriod() ?></span></strong>
-<?php echo inputinplaceeditortag('moduleperiod', 'wpmodule/editInLine?property=Period&id='.$wpmodule->getId(), array('cols'=>'50', 'rows'=>1)) ?></li>
+<?php echo inputinplaceeditortag('#moduleperiod', url_for('wpmodule/editInLine?property=Period&id='.$wpmodule->getId()),array('tooltip'=>__('Click here to edit the period'), 'hover'=>'yellow')) ?></li>
 <li><?php echo __('Hours estimated: ') ?>
 <strong><span id="modulehours_estimated" class="editText"><?php echo $wpmodule->getHoursEstimated() ?></span></strong>
 <?php echo inputinplaceeditortag('modulehours_estimated', 'wpmodule/editInLine?property=HoursEstimated&id='.$wpmodule->getId(), array('cols'=>'5', 'rows'=>1)) ?></li>

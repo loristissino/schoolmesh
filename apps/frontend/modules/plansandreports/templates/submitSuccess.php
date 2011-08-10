@@ -1,4 +1,4 @@
-<?php $title=__($steps[$state]['stateDescription']) . ': ' . $workplan ?>
+<?php $title=__($steps[$workplan->getState()]['stateDescription']) . ': ' . $workplan ?>
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     '@plansandreports' => "Plans and Reports",

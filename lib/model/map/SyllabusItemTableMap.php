@@ -38,6 +38,7 @@ class SyllabusItemTableMap extends TableMap {
 		// columns
 		$this->addForeignKey('SYLLABUS_ID', 'SyllabusId', 'INTEGER', 'syllabus', 'ID', false, null, null);
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
+		$this->addColumn('REF', 'Ref', 'VARCHAR', false, 20, null);
 		$this->addColumn('LEVEL', 'Level', 'INTEGER', false, null, null);
 		$this->addForeignKey('PARENT_ID', 'ParentId', 'INTEGER', 'syllabus_item', 'ID', false, null, null);
 		$this->addColumn('CONTENT', 'Content', 'VARCHAR', false, 255, null);

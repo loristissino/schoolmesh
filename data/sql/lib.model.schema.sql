@@ -340,6 +340,7 @@ CREATE TABLE `syllabus_item`
 (
 	`syllabus_id` INTEGER,
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`ref` VARCHAR(20),
 	`level` INTEGER,
 	`parent_id` INTEGER,
 	`content` VARCHAR(255),

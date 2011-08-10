@@ -297,7 +297,7 @@ $number=$resultset->number;
   public function getSyllabusContributionsAsArray()
   {
 	  $c = new Criteria();
-		$c->add(WpmodulePeer::ID, $this->getId());
+		$c->add(WpmoduleSyllabusItemPeer::WPMODULE_ID, $this->getId());
 		$t = WpmoduleSyllabusItemPeer::doSelect($c);
     $r = array();
     foreach($t as $item)
