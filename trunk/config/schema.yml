@@ -314,6 +314,7 @@ propel:
     wpmodule_id: ~
     syllabus_item_id: ~
     contribution: integer  # 1 for partial contribution, 2 for focussed contribution
+    evalutation: { type: integer, required: false } 
     _uniques:
       ws: [wpmodule_id, syllabus_item_id]
 

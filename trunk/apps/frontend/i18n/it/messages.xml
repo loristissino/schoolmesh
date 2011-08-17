@@ -2159,14 +2159,58 @@
         <source>Add event</source>
         <target>Aggiungi evento</target>
     </trans-unit>
+    <trans-unit id="559">
+        <source>Ref.</source>
+        <target>Rif.</target>
+    </trans-unit>
+    <trans-unit id="560">
+        <source>Item</source>
+        <target>Elemento</target>
+    </trans-unit>
+    <trans-unit id="561">
+        <source>Contribution</source>
+        <target>Contributo</target>
+    </trans-unit>
+    <trans-unit id="562">
+        <source>Syllabus links</source>
+        <target>Collegamenti con il syllabus</target>
+    </trans-unit>
+    <trans-unit id="563">
+        <source>Unset current module contribution to this goal's achievement</source>
+        <target>Elimina il contributo del modulo corrente al raggiungimento di questo obiettivo</target>
+    </trans-unit>
+    <trans-unit id="564">
+        <source>Set current module partial contribution to this goal's achievement</source>
+        <target>Imposta per il modulo corrente un contributo parziale al raggiungimento di questo obiettivo</target>
+    </trans-unit>
+    <trans-unit id="565">
+        <source>Set current module focussed contribution to this goal's achievement</source>
+        <target>Imposta per il modulo corrente un contributo specifico al raggiungimento di questo obiettivo</target>
+    </trans-unit>
+    <trans-unit id="566">
+        <source>Click here to edit the title</source>
+        <target>Fai clic qui per modificare il titolo</target>
+    </trans-unit>
+    <trans-unit id="567">
+        <source>Click here to edit the period</source>
+        <target>Fai clic qui per modificare il periodo</target>
+    </trans-unit>
+    <trans-unit id="568">
+        <source>Click here to edit the estimation of the hours needed</source>
+        <target>Fai clic qui per modificare la stima delle ore necessarie</target>
+    </trans-unit>
+    <trans-unit id="569">
+        <source>At least one module is focussed on this goal</source>
+        <target>Almeno un modulo è centrato su questo obiettivo</target>
+    </trans-unit>
+    <trans-unit id="570">
+        <source>No module is focussed on this goal</source>
+        <target>Nessun modulo è centrato su questo obiettivo</target>
+    </trans-unit>
+    <trans-unit id="571">
+        <source>No module deals with this goal</source>
+        <target>Nessun modulo ha a che fare con questo obiettivo</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
-
-
-
-
-
-
-
-

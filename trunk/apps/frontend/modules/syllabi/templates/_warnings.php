@@ -20,7 +20,7 @@
   <?php echo image_tag(
     'flag_red',
     array(
-      'title'=>__('No module is about this goal'),
+      'title'=>__('No module deals with this goal'),
       'size'=>'16x16',
       )
     )

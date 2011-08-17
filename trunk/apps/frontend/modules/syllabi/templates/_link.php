@@ -1,11 +1,13 @@
 <?php use_helper('jQuery') ?>
 <?php $link='▢'; if(array_key_exists($syllabus_item->getId(), $syllabus_contributions->getRawValue())) $link=$syllabus_contributions[$syllabus_item->getId()]==WpmoduleSyllabusItemPeer::PARTIAL_CONTRIBUTION ? '◪': '▣' ?>
 <td>
+<?php echo $syllabus_item->getRef() ?>
+</td>
+<td>
 <div style="margin-left: <?php echo ($syllabus_item->getLevel()-1)*10 ?>px;">
 <?php if ($syllabus_item->getIsSelectable()): ?>
   <?php echo $link ?>
   <?php echo $syllabus_item->getContent() ?>
-  (<?php echo $syllabus_item->getId() ?>)
 <?php else: ?>
   <strong><?php echo $syllabus_item->getContent()?></strong>
 <?php endif ?>
@@ -49,7 +51,7 @@
             'url'      => url_for('wpmodule/syllabus?id=' . $wpmodule->getId() . '&syllabus=' . $syllabus_item->getId() . '&value='. WpmoduleSyllabusItemPeer::FOCUSSED_CONTRIBUTION),
             'loading'=>'$(\'#loader_s'. $syllabus_item->getId() . '\').show();'),
             array(
-            'title'=>__('Set current module specific contribution to this goal\'s achievement')
+            'title'=>__('Set current module focussed contribution to this goal\'s achievement')
               )
             ) ?>
     <?php endif ?>

@@ -40,6 +40,7 @@ class WpmoduleSyllabusItemTableMap extends TableMap {
 		$this->addForeignKey('WPMODULE_ID', 'WpmoduleId', 'INTEGER', 'wpmodule', 'ID', false, null, null);
 		$this->addForeignKey('SYLLABUS_ITEM_ID', 'SyllabusItemId', 'INTEGER', 'syllabus_item', 'ID', false, null, null);
 		$this->addColumn('CONTRIBUTION', 'Contribution', 'INTEGER', false, null, null);
+		$this->addColumn('EVALUTATION', 'Evalutation', 'INTEGER', false, null, null);
 		// validators
 	} // initialize()
 
