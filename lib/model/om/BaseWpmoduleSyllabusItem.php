@@ -43,6 +43,12 @@ abstract class BaseWpmoduleSyllabusItem extends BaseObject  implements Persisten
 	protected $contribution;
 
 	/**
+	 * The value for the evalutation field.
+	 * @var        int
+	 */
+	protected $evalutation;
+
+	/**
 	 * @var        Wpmodule
 	 */
 	protected $aWpmodule;
@@ -108,6 +114,16 @@ abstract class BaseWpmoduleSyllabusItem extends BaseObject  implements Persisten
 	public function getContribution()
 	{
 		return $this->contribution;
+	}
+
+	/**
+	 * Get the [evalutation] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getEvalutation()
+	{
+		return $this->evalutation;
 	}
 
 	/**
@@ -199,6 +215,26 @@ abstract class BaseWpmoduleSyllabusItem extends BaseObject  implements Persisten
 	} // setContribution()
 
 	/**
+	 * Set the value of [evalutation] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     WpmoduleSyllabusItem The current object (for fluent API support)
+	 */
+	public function setEvalutation($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->evalutation !== $v) {
+			$this->evalutation = $v;
+			$this->modifiedColumns[] = WpmoduleSyllabusItemPeer::EVALUTATION;
+		}
+
+		return $this;
+	} // setEvalutation()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -234,6 +270,7 @@ abstract class BaseWpmoduleSyllabusItem extends BaseObject  implements Persisten
 			$this->wpmodule_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->syllabus_item_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->contribution = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->evalutation = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -243,7 +280,7 @@ abstract class BaseWpmoduleSyllabusItem extends BaseObject  implements Persisten
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 4; // 4 = WpmoduleSyllabusItemPeer::NUM_COLUMNS - WpmoduleSyllabusItemPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 5; // 5 = WpmoduleSyllabusItemPeer::NUM_COLUMNS - WpmoduleSyllabusItemPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WpmoduleSyllabusItem object", $e);
@@ -596,6 +633,9 @@ abstract class BaseWpmoduleSyllabusItem extends BaseObject  implements Persisten
 			case 3:
 				return $this->getContribution();
 				break;
+			case 4:
+				return $this->getEvalutation();
+				break;
 			default:
 				return null;
 				break;
@@ -621,6 +661,7 @@ abstract class BaseWpmoduleSyllabusItem extends BaseObject  implements Persisten
 			$keys[1] => $this->getWpmoduleId(),
 			$keys[2] => $this->getSyllabusItemId(),
 			$keys[3] => $this->getContribution(),
+			$keys[4] => $this->getEvalutation(),
 		);
 		return $result;
 	}
@@ -664,6 +705,9 @@ abstract class BaseWpmoduleSyllabusItem extends BaseObject  implements Persisten
 			case 3:
 				$this->setContribution($value);
 				break;
+			case 4:
+				$this->setEvalutation($value);
+				break;
 		} // switch()
 	}
 
@@ -692,6 +736,7 @@ abstract class BaseWpmoduleSyllabusItem extends BaseObject  implements Persisten
 		if (array_key_exists($keys[1], $arr)) $this->setWpmoduleId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setSyllabusItemId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setContribution($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setEvalutation($arr[$keys[4]]);
 	}
 
 	/**
@@ -707,6 +752,7 @@ abstract class BaseWpmoduleSyllabusItem extends BaseObject  implements Persisten
 		if ($this->isColumnModified(WpmoduleSyllabusItemPeer::WPMODULE_ID)) $criteria->add(WpmoduleSyllabusItemPeer::WPMODULE_ID, $this->wpmodule_id);
 		if ($this->isColumnModified(WpmoduleSyllabusItemPeer::SYLLABUS_ITEM_ID)) $criteria->add(WpmoduleSyllabusItemPeer::SYLLABUS_ITEM_ID, $this->syllabus_item_id);
 		if ($this->isColumnModified(WpmoduleSyllabusItemPeer::CONTRIBUTION)) $criteria->add(WpmoduleSyllabusItemPeer::CONTRIBUTION, $this->contribution);
+		if ($this->isColumnModified(WpmoduleSyllabusItemPeer::EVALUTATION)) $criteria->add(WpmoduleSyllabusItemPeer::EVALUTATION, $this->evalutation);
 
 		return $criteria;
 	}
@@ -766,6 +812,8 @@ abstract class BaseWpmoduleSyllabusItem extends BaseObject  implements Persisten
 		$copyObj->setSyllabusItemId($this->syllabus_item_id);
 
 		$copyObj->setContribution($this->contribution);
+
+		$copyObj->setEvalutation($this->evalutation);
 
 
 		$copyObj->setNew(true);

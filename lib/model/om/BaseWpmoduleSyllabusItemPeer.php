@@ -25,7 +25,7 @@ abstract class BaseWpmoduleSyllabusItemPeer {
 	const TM_CLASS = 'WpmoduleSyllabusItemTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 5;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -41,6 +41,9 @@ abstract class BaseWpmoduleSyllabusItemPeer {
 
 	/** the column name for the CONTRIBUTION field */
 	const CONTRIBUTION = 'wpmodule_syllabus_item.CONTRIBUTION';
+
+	/** the column name for the EVALUTATION field */
+	const EVALUTATION = 'wpmodule_syllabus_item.EVALUTATION';
 
 	/**
 	 * An identiy map to hold any loaded instances of WpmoduleSyllabusItem objects.
@@ -65,11 +68,11 @@ abstract class BaseWpmoduleSyllabusItemPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'WpmoduleId', 'SyllabusItemId', 'Contribution', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'wpmoduleId', 'syllabusItemId', 'contribution', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::WPMODULE_ID, self::SYLLABUS_ITEM_ID, self::CONTRIBUTION, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'wpmodule_id', 'syllabus_item_id', 'contribution', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'WpmoduleId', 'SyllabusItemId', 'Contribution', 'Evalutation', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'wpmoduleId', 'syllabusItemId', 'contribution', 'evalutation', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::WPMODULE_ID, self::SYLLABUS_ITEM_ID, self::CONTRIBUTION, self::EVALUTATION, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'wpmodule_id', 'syllabus_item_id', 'contribution', 'evalutation', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -79,11 +82,11 @@ abstract class BaseWpmoduleSyllabusItemPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'WpmoduleId' => 1, 'SyllabusItemId' => 2, 'Contribution' => 3, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'wpmoduleId' => 1, 'syllabusItemId' => 2, 'contribution' => 3, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::WPMODULE_ID => 1, self::SYLLABUS_ITEM_ID => 2, self::CONTRIBUTION => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'wpmodule_id' => 1, 'syllabus_item_id' => 2, 'contribution' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'WpmoduleId' => 1, 'SyllabusItemId' => 2, 'Contribution' => 3, 'Evalutation' => 4, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'wpmoduleId' => 1, 'syllabusItemId' => 2, 'contribution' => 3, 'evalutation' => 4, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::WPMODULE_ID => 1, self::SYLLABUS_ITEM_ID => 2, self::CONTRIBUTION => 3, self::EVALUTATION => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'wpmodule_id' => 1, 'syllabus_item_id' => 2, 'contribution' => 3, 'evalutation' => 4, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -157,6 +160,7 @@ abstract class BaseWpmoduleSyllabusItemPeer {
 		$criteria->addSelectColumn(WpmoduleSyllabusItemPeer::WPMODULE_ID);
 		$criteria->addSelectColumn(WpmoduleSyllabusItemPeer::SYLLABUS_ITEM_ID);
 		$criteria->addSelectColumn(WpmoduleSyllabusItemPeer::CONTRIBUTION);
+		$criteria->addSelectColumn(WpmoduleSyllabusItemPeer::EVALUTATION);
 	}
 
 	/**

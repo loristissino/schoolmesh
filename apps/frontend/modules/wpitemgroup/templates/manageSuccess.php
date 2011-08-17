@@ -1,15 +1,16 @@
 <?php use_javascript('tiny_mce/tiny_mce.js') ?>
-<?php slot('breadcrumbs',
-	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
-	link_to($wp->__toString(), 'plansandreports/fill?id='.$wp->getId()) . ' » ' . 
-	link_to($wpmodule->getTitle(), 'wpmodule/view?id='.$wpmodule->getId()) . ' » ' .
-	$wpitemType->getTitle()
-	)
-	
-	?>
+  
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    '@plansandreports' => "Plans and Reports",
+    'plansandreports/fill?id='.$wp->getId() => $wp->__toString(),
+    'wpmodule/view?id='.$wpmodule->getId() => $wpmodule->getTitle()
+    ),
+  'current'=>$wpitemType->getTitle(),
+  
+  ))
+?>
 
-<h1><?php echo $wpmodule->getTitle() ?></h1>
-<h2><?php echo $wpitemType->getTitle() ?></h2>
 <div id="sf_admin_container">
 <?php if ($sf_user->hasFlash('error_info')): ?>
   <div class="error"><?php echo $sf_user->getFlash('error_info')?></div>
@@ -20,7 +21,7 @@
 <p><?php echo __('Here you can manage all the items of this group as a list of paragraphs (this could be useful for copy&paste operations from legacy documents).') ?>
 <form action="<?php echo url_for('wpitemgroup/update?id='.$wpitemGroup->getId()) ?>" method="POST" id="editform">
 
-<?php echo javascript_tag("
+<?php echo javascripttag("
 tinyMCE.init({
 
 mode : \"textareas\",

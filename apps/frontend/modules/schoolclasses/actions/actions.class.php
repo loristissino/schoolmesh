@@ -318,6 +318,10 @@ $this->getContext()->getI18N()->__('A new item was inserted'));
     
     $this->syllabus_items=SyllabusPeer::retrieveByPK($this->syllabus_id)->getSyllabusItems();
     
+    if($request->hasParameter('template'))
+    {
+      $this->setTemplate($request->getParameter('template'));
+    }
+    
   }
-
 }

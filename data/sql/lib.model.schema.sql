@@ -892,6 +892,7 @@ CREATE TABLE `wpmodule_syllabus_item`
 	`wpmodule_id` INTEGER,
 	`syllabus_item_id` INTEGER,
 	`contribution` INTEGER,
+	`evalutation` INTEGER,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `ws` (`wpmodule_id`, `syllabus_item_id`),
 	CONSTRAINT `wpmodule_syllabus_item_FK_1`
