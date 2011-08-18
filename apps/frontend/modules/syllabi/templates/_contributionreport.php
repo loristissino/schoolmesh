@@ -1,13 +1,7 @@
-<li><?php echo $subject ?>: 
 <?php if($contribution==WpmoduleSyllabusItemPeer::FOCUSSED_CONTRIBUTION): ?>
-<strong>
-<?php else: ?>
-<em>
+  ▣&nbsp;<?php echo $subject ?>: <strong><?php echo $title ?></strong><br />
 <?php endif ?>
-<?php echo $title ?>
-<?php if($contribution==WpmoduleSyllabusItemPeer::FOCUSSED_CONTRIBUTION): ?>
-</strong>
-<?php else: ?>
-</em>
+<?php if($contribution==WpmoduleSyllabusItemPeer::PARTIAL_CONTRIBUTION): ?>
+  ◪&nbsp;<?php echo $subject ?>: <em><?php echo $title ?></em><br />
 <?php endif ?>
-</li>
+

@@ -17,7 +17,6 @@
 <td>
 <?php include_partial('syllabi/itemdiv', array('syllabus_item'=>$syllabus_item)) ?>
 <div style="margin-left: <?php echo ($syllabus_item->getLevel()-1)*10 +10 ?>px;">
-<ul>
 <?php foreach($appointments as $appointment): ?>
   <?php if(array_key_exists($syllabus_item->getId(), $contributions) && array_key_exists($appointment->getId(), $contributions[$syllabus_item->getId()])): ?>
     <?php foreach($contributions[$syllabus_item->getId()][$appointment->getId()] as $contribution): ?>
@@ -31,7 +30,6 @@
     <?php endforeach ?>
   <?php endif ?>
 <?php endforeach ?>
-</ul>
 </div>
 </td>
 <td>
