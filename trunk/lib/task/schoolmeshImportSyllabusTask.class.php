@@ -43,16 +43,32 @@ class schoolmeshImportSyllabusTask extends sfBaseTask
         
     $document = sfYaml::load($filename);
     
-    $syllabus = new Syllabus();
-    $syllabus
-    ->setName($document['syllabus']['name'])
-    ->setVersion($document['syllabus']['version'])
-    ->setAuthor($document['syllabus']['author'])
-    ->setHref($document['syllabus']['href'])
-    ->save()
-    ;
+    $con = Propel::getConnection(SyllabusPeer::DATABASE_NAME);
+
+    try
+    {
+      $con->beginTransaction();
+
+      $syllabus = new Syllabus();
+      $syllabus
+      ->setName($document['syllabus']['name'])
+      ->setVersion($document['syllabus']['version'])
+      ->setAuthor($document['syllabus']['author'])
+      ->setHref($document['syllabus']['href'])
+      ->save($con)
+      ;
     
-    $syllabus->saveItems($document['syllabus']['items']);
+      $syllabus->saveItems($document['syllabus']['items'], $con);
+      $con->commit();
+      $this->logSection('syllabus+', 'Syllabus imported', null, 'NOTICE');
+
+    }
+    catch (PropelException $e)
+    {
+      $con->rollback();
+      $this->logSection('syllabus', $e->getCause()->getMessage(), null, 'ERROR');
+      $this->logSection('syllabus', 'Syllabus not imported', null, 'ERROR');
+    }
 
   }
   

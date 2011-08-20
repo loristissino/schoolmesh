@@ -16,6 +16,12 @@ require 'lib/model/om/BaseSyllabusItem.php';
  */
 class SyllabusItem extends BaseSyllabusItem {
 
+  public function getRef()
+  {
+    $ref=parent::getRef();
+    return substr($ref,0,1)=='~' ? '': $ref;
+  }
+
   public function setValues($syllabus_id, $content, $level, $parent_id, $is_selectable=false)
   {
     
@@ -25,7 +31,7 @@ class SyllabusItem extends BaseSyllabusItem {
     }
     else
     {
-      $ref='';
+      $ref=uniqid('~', true);
     }
     
     $this

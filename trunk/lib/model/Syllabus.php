@@ -22,13 +22,22 @@ class Syllabus extends BaseSyllabus {
   {
     return $this->getName();
   }
-
-  public function saveItems($items=array())
+  
+  public function getSyllabusItems($criteria = null, PropelPDO $con = null)
   {
-    $this->_saveItem($items, 1);
+    // we need to redefine this in order to have the order by id
+    $c=new Criteria();
+    $c->add(SyllabusItemPeer::SYLLABUS_ID, $this->getId());
+    $c->addAscendingOrderByColumn(SyllabusItemPeer::ID);
+    return SyllabusItemPeer::doSelect($c);
+  }
+
+  public function saveItems($items=array(), $con=null)
+  {
+    $this->_saveItem($items, 1, $con=null);
   }
   
-  private function _saveItem($item, $level)
+  private function _saveItem($item, $level, $con)
   {
     if (is_array($item))
     {
@@ -37,7 +46,6 @@ class Syllabus extends BaseSyllabus {
         $newlevel=$level;
         if (!is_numeric($key))
         {
-          //echo $level . " NONFIN: " . $key . "\n";
           $syllabusItem = new SyllabusItem();
           $syllabusItem->setValues(
             $this->getId(),
@@ -45,25 +53,32 @@ class Syllabus extends BaseSyllabus {
             $level,
             $level>1 ? $this->_parents[$level-1]: null
             )
-          ->save();
+          ->save($con);
           $this->_parents[$level]=$syllabusItem->getId();
           $newlevel = $level +1;
         }
-        $this->_saveItem($value, $newlevel);
+        $this->_saveItem($value, $newlevel, $con);
       }
     }
     else
     {
-      //echo $level . " FINALE: " . $item . "\n";
-      $syllabusItem = new SyllabusItem();
-      $syllabusItem->setValues(
-        $this->getId(),
-        $item,
-        $level,
-        $level>0 ? $this->_parents[$level-1]: 0,
-        true
-        )
-      ->save();
+      try
+      {
+        $syllabusItem = new SyllabusItem();
+        $syllabusItem->setValues(
+          $this->getId(),
+          $item,
+          $level,
+          $level>0 ? $this->_parents[$level-1]: 0,
+          true
+          )
+        ->save($con);
+      }
+      catch (PropelException $e)
+      {
+        throw $e;
+        
+      }
       
     }
   }
