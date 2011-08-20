@@ -340,14 +340,14 @@ CREATE TABLE `syllabus_item`
 (
 	`syllabus_id` INTEGER,
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`ref` VARCHAR(20),
+	`ref` VARCHAR(24),
 	`level` INTEGER,
 	`parent_id` INTEGER,
-	`content` VARCHAR(255),
+	`content` TEXT,
 	`is_selectable` TINYINT default 0,
 	PRIMARY KEY (`id`),
+	UNIQUE KEY `ir` (`syllabus_id`, `ref`),
 	KEY `syllabus_item_I_1`(`parent_id`),
-	INDEX `syllabus_item_FI_1` (`syllabus_id`),
 	CONSTRAINT `syllabus_item_FK_1`
 		FOREIGN KEY (`syllabus_id`)
 		REFERENCES `syllabus` (`id`),
@@ -557,7 +557,7 @@ CREATE TABLE `wpinfo_type`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`title` VARCHAR(50),
-	`description` VARCHAR(200),
+	`description` VARCHAR(255),
 	`rank` INTEGER  NOT NULL,
 	`state` INTEGER,
 	`template` TEXT,

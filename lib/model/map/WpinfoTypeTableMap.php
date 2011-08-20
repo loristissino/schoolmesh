@@ -38,7 +38,7 @@ class WpinfoTypeTableMap extends TableMap {
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
 		$this->addColumn('TITLE', 'Title', 'VARCHAR', false, 50, null);
-		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 200, null);
+		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 255, null);
 		$this->addColumn('RANK', 'Rank', 'INTEGER', true, null, null);
 		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
 		$this->addColumn('TEMPLATE', 'Template', 'LONGVARCHAR', false, null, null);

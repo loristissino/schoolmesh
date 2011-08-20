@@ -132,12 +132,13 @@ propel:
   syllabus_item:
     syllabus_id: ~
     id: ~
-    ref: varchar(20)
+    ref: varchar(24)
     level: integer
     parent_id: { type: integer, foreignTable: syllabus_item, foreignReference: id, required: false, onDelete: restrict, onUpdate: cascade, index:true }
-    content: varchar(255)
+    content: longvarchar
     is_selectable: { type: boolean, default: false }
-    
+    _uniques:
+      ir: [syllabus_id, ref]
   appointment:
     id: ~
     user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
@@ -202,7 +203,7 @@ propel:
   wpinfo_type:
     id:          ~
     title:        varchar(50)
-    description:  varchar(200)
+    description:  varchar(255)
     rank:    { type: integer, required: true }
     state:  integer
     template:     longvarchar

@@ -1168,7 +1168,7 @@ abstract class BaseSyllabusItemPeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return array(array('syllabus_id', 'ref'));
 	}
 
 } // BaseSyllabusItemPeer
