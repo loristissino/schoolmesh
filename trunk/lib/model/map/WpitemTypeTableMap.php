@@ -45,6 +45,7 @@ class WpitemTypeTableMap extends TableMap {
 		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
 		$this->addColumn('IS_REQUIRED', 'IsRequired', 'BOOLEAN', false, null, null);
 		$this->addForeignKey('SYLLABUS_ID', 'SyllabusId', 'INTEGER', 'syllabus', 'ID', false, null, null);
+		$this->addColumn('CODE', 'Code', 'VARCHAR', false, 20, null);
 		$this->addColumn('EVALUATION_MIN', 'EvaluationMin', 'INTEGER', false, null, null);
 		$this->addColumn('EVALUATION_MAX', 'EvaluationMax', 'INTEGER', false, null, null);
 		$this->addColumn('EVALUATION_MIN_DESCRIPTION', 'EvaluationMinDescription', 'VARCHAR', false, 50, null);

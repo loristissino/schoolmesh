@@ -22,7 +22,7 @@ class SyllabusItem extends BaseSyllabusItem {
     return substr($ref,0,1)=='~' ? '': $ref;
   }
 
-  public function setValues($syllabus_id, $content, $level, $parent_id, $is_selectable=false)
+  public function setValues($syllabus_id, $content, $level, $parent_id, $is_selectable=false, $rank=0)
   {
     
     if(strpos($content,'§')>0)
@@ -41,6 +41,7 @@ class SyllabusItem extends BaseSyllabusItem {
     ->setLevel($level)
     ->setParentId($parent_id)
     ->setIsSelectable($is_selectable)
+    ->setRank($rank)
     ;
     
     return $this;

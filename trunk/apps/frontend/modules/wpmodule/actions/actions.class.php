@@ -67,6 +67,7 @@ class wpmoduleActions extends sfActions
 
 		$newvalue=$request->getParameter('value');
 		if ($newvalue=='') $newvalue='---';
+    if (strlen($newvalue)>3 and substr($newvalue, 0, 3)=='---') $newvalue=substr($newvalue, 3);
 		$module->$set_func($newvalue);
 		$module->save();
 		

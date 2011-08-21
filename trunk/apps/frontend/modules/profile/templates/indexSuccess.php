@@ -4,7 +4,6 @@
   ))
 ?>
 
-<h1><?php echo __('%fullname%: my profile', array('%fullname%' => $sf_user->getProfile()->getFullname())) ?></h1>
 <?php /*
 <?php if (sizeof($appointments)>0): ?>
 <h2><?php echo __('What I teach') ?></h2>

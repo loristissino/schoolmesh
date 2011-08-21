@@ -6,7 +6,15 @@
 <td>
 <div style="margin-left: <?php echo ($syllabus_item->getLevel()-1)*10 ?>px;">
 <?php if ($syllabus_item->getIsSelectable()): ?>
-  <?php echo $link ?>
+  <?php echo jq_link_to_remote($link,
+    array(
+      'update' => 'syllabus_' . $syllabus_item->getId(),
+            'url'      => url_for('wpmodule/syllabus?id=' . $wpmodule->getId() . '&syllabus=' . $syllabus_item->getId() . '&value=R'),
+            'loading'=>'$(\'#loader_s'. $syllabus_item->getId() . '\').show();'),
+            array(
+            'title'=>__('Toggle current module contribution to this goal\'s achievement')
+              )
+            ) ?>
   <?php echo $syllabus_item->getContent() ?>
 <?php else: ?>
   <strong><?php echo $syllabus_item->getContent()?></strong>

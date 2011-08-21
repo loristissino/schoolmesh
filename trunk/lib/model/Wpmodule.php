@@ -315,6 +315,17 @@ $number=$resultset->number;
     $t = WpmoduleSyllabusItemPeer::doSelectOne($c);
     if($t)
     {
+      if ($value=='R')
+      {
+        if($t->getContribution()==1)
+        {
+          $value=2;
+        }
+        if($t->getContribution()==2)
+        {
+          $value=0;
+        }
+      }
       if ($value==0)
       {
         $t->delete();
@@ -327,6 +338,10 @@ $number=$resultset->number;
     else
     {
       $t=new WpmoduleSyllabusItem();
+      if($value=='R')
+      {
+        $value=1;
+      }
       $t
       ->setWpmoduleId($this->getId())
       ->setSyllabusItemId($syllabus_item)
@@ -356,6 +371,11 @@ $number=$resultset->number;
 		// decrease all the ranks of the page records of the same category with higher rank 
 		$sql = 'UPDATE '.WpmodulePeer::TABLE_NAME.' SET '.WpmodulePeer::RANK.' = '.WpmodulePeer::RANK.' - 1 WHERE '.WpmodulePeer::RANK.' > '.$this->getRank() . ' AND ' . WpmodulePeer::APPOINTMENT_ID .'='. $this->getAppointmentId();
 		$con->query($sql);
+    
+    // delete all references to syllabus
+    $sql = 'DELETE FROM ' . WpmoduleSyllabusItemPeer::TABLE_NAME . ' WHERE ' . WpmoduleSyllabusItemPeer::WPMODULE_ID . ' = ' . $this->getId(); 
+		$con->query($sql);
+    
 		// delete the item
 		parent::delete();
 //		echo "DELETED!\n";

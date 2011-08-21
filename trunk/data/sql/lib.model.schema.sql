@@ -340,6 +340,7 @@ CREATE TABLE `syllabus_item`
 (
 	`syllabus_id` INTEGER,
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`rank` INTEGER,
 	`ref` VARCHAR(24),
 	`level` INTEGER,
 	`parent_id` INTEGER,
@@ -705,11 +706,13 @@ CREATE TABLE `wpitem_type`
 	`state` INTEGER,
 	`is_required` TINYINT,
 	`syllabus_id` INTEGER,
+	`code` VARCHAR(20),
 	`evaluation_min` INTEGER,
 	`evaluation_max` INTEGER,
 	`evaluation_min_description` VARCHAR(50),
 	`evaluation_max_description` VARCHAR(50),
 	PRIMARY KEY (`id`),
+	KEY `wpitem_type_I_1`(`code`),
 	INDEX `wpitem_type_FI_1` (`syllabus_id`),
 	CONSTRAINT `wpitem_type_FK_1`
 		FOREIGN KEY (`syllabus_id`)
@@ -892,7 +895,7 @@ CREATE TABLE `wpmodule_syllabus_item`
 	`wpmodule_id` INTEGER,
 	`syllabus_item_id` INTEGER,
 	`contribution` INTEGER,
-	`evalutation` INTEGER,
+	`evaluation` INTEGER,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `ws` (`wpmodule_id`, `syllabus_item_id`),
 	CONSTRAINT `wpmodule_syllabus_item_FK_1`

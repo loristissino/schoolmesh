@@ -73,6 +73,12 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 	protected $syllabus_id;
 
 	/**
+	 * The value for the code field.
+	 * @var        string
+	 */
+	protected $code;
+
+	/**
 	 * The value for the evaluation_min field.
 	 * @var        int
 	 */
@@ -217,6 +223,16 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 	public function getSyllabusId()
 	{
 		return $this->syllabus_id;
+	}
+
+	/**
+	 * Get the [code] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getCode()
+	{
+		return $this->code;
 	}
 
 	/**
@@ -444,6 +460,26 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 	} // setSyllabusId()
 
 	/**
+	 * Set the value of [code] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     WpitemType The current object (for fluent API support)
+	 */
+	public function setCode($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->code !== $v) {
+			$this->code = $v;
+			$this->modifiedColumns[] = WpitemTypePeer::CODE;
+		}
+
+		return $this;
+	} // setCode()
+
+	/**
 	 * Set the value of [evaluation_min] column.
 	 * 
 	 * @param      int $v new value
@@ -564,10 +600,11 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			$this->state = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
 			$this->is_required = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
 			$this->syllabus_id = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
-			$this->evaluation_min = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
-			$this->evaluation_max = ($row[$startcol + 10] !== null) ? (int) $row[$startcol + 10] : null;
-			$this->evaluation_min_description = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
-			$this->evaluation_max_description = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
+			$this->code = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->evaluation_min = ($row[$startcol + 10] !== null) ? (int) $row[$startcol + 10] : null;
+			$this->evaluation_max = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
+			$this->evaluation_min_description = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
+			$this->evaluation_max_description = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -577,7 +614,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 13; // 13 = WpitemTypePeer::NUM_COLUMNS - WpitemTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 14; // 14 = WpitemTypePeer::NUM_COLUMNS - WpitemTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WpitemType object", $e);
@@ -948,15 +985,18 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 				return $this->getSyllabusId();
 				break;
 			case 9:
-				return $this->getEvaluationMin();
+				return $this->getCode();
 				break;
 			case 10:
-				return $this->getEvaluationMax();
+				return $this->getEvaluationMin();
 				break;
 			case 11:
-				return $this->getEvaluationMinDescription();
+				return $this->getEvaluationMax();
 				break;
 			case 12:
+				return $this->getEvaluationMinDescription();
+				break;
+			case 13:
 				return $this->getEvaluationMaxDescription();
 				break;
 			default:
@@ -989,10 +1029,11 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			$keys[6] => $this->getState(),
 			$keys[7] => $this->getIsRequired(),
 			$keys[8] => $this->getSyllabusId(),
-			$keys[9] => $this->getEvaluationMin(),
-			$keys[10] => $this->getEvaluationMax(),
-			$keys[11] => $this->getEvaluationMinDescription(),
-			$keys[12] => $this->getEvaluationMaxDescription(),
+			$keys[9] => $this->getCode(),
+			$keys[10] => $this->getEvaluationMin(),
+			$keys[11] => $this->getEvaluationMax(),
+			$keys[12] => $this->getEvaluationMinDescription(),
+			$keys[13] => $this->getEvaluationMaxDescription(),
 		);
 		return $result;
 	}
@@ -1052,15 +1093,18 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 				$this->setSyllabusId($value);
 				break;
 			case 9:
-				$this->setEvaluationMin($value);
+				$this->setCode($value);
 				break;
 			case 10:
-				$this->setEvaluationMax($value);
+				$this->setEvaluationMin($value);
 				break;
 			case 11:
-				$this->setEvaluationMinDescription($value);
+				$this->setEvaluationMax($value);
 				break;
 			case 12:
+				$this->setEvaluationMinDescription($value);
+				break;
+			case 13:
 				$this->setEvaluationMaxDescription($value);
 				break;
 		} // switch()
@@ -1096,10 +1140,11 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setState($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setIsRequired($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setSyllabusId($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setEvaluationMin($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setEvaluationMax($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setEvaluationMinDescription($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setEvaluationMaxDescription($arr[$keys[12]]);
+		if (array_key_exists($keys[9], $arr)) $this->setCode($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setEvaluationMin($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setEvaluationMax($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setEvaluationMinDescription($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setEvaluationMaxDescription($arr[$keys[13]]);
 	}
 
 	/**
@@ -1120,6 +1165,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpitemTypePeer::STATE)) $criteria->add(WpitemTypePeer::STATE, $this->state);
 		if ($this->isColumnModified(WpitemTypePeer::IS_REQUIRED)) $criteria->add(WpitemTypePeer::IS_REQUIRED, $this->is_required);
 		if ($this->isColumnModified(WpitemTypePeer::SYLLABUS_ID)) $criteria->add(WpitemTypePeer::SYLLABUS_ID, $this->syllabus_id);
+		if ($this->isColumnModified(WpitemTypePeer::CODE)) $criteria->add(WpitemTypePeer::CODE, $this->code);
 		if ($this->isColumnModified(WpitemTypePeer::EVALUATION_MIN)) $criteria->add(WpitemTypePeer::EVALUATION_MIN, $this->evaluation_min);
 		if ($this->isColumnModified(WpitemTypePeer::EVALUATION_MAX)) $criteria->add(WpitemTypePeer::EVALUATION_MAX, $this->evaluation_max);
 		if ($this->isColumnModified(WpitemTypePeer::EVALUATION_MIN_DESCRIPTION)) $criteria->add(WpitemTypePeer::EVALUATION_MIN_DESCRIPTION, $this->evaluation_min_description);
@@ -1193,6 +1239,8 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		$copyObj->setIsRequired($this->is_required);
 
 		$copyObj->setSyllabusId($this->syllabus_id);
+
+		$copyObj->setCode($this->code);
 
 		$copyObj->setEvaluationMin($this->evaluation_min);
 

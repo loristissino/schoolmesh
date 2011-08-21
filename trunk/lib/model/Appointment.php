@@ -1481,7 +1481,17 @@ public function getWpevents($criteria = null, PropelPDO $con = null)
 								$newitem->setIsEditable(true);
 								$newitem->save();
 							}
-					}			
+					}
+        foreach($wpmodule->getWpmoduleSyllabusItems() as $syllabus_item)
+        {
+          $newitem = new WpmoduleSyllabusItem();
+          $newitem
+          ->setWpmoduleId($newwpmodule->getId())
+          ->setSyllabusItemId($syllabus_item->getSyllabusItemId())
+          ->setContribution($syllabus_item->getContribution())
+          ->setEvaluation(null)
+          ->save();
+        }
 		
 	}
 

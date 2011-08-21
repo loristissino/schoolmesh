@@ -25,7 +25,7 @@ abstract class BaseSyllabusItemPeer {
 	const TM_CLASS = 'SyllabusItemTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 7;
+	const NUM_COLUMNS = 8;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -35,6 +35,9 @@ abstract class BaseSyllabusItemPeer {
 
 	/** the column name for the ID field */
 	const ID = 'syllabus_item.ID';
+
+	/** the column name for the RANK field */
+	const RANK = 'syllabus_item.RANK';
 
 	/** the column name for the REF field */
 	const REF = 'syllabus_item.REF';
@@ -74,11 +77,11 @@ abstract class BaseSyllabusItemPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('SyllabusId', 'Id', 'Ref', 'Level', 'ParentId', 'Content', 'IsSelectable', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('syllabusId', 'id', 'ref', 'level', 'parentId', 'content', 'isSelectable', ),
-		BasePeer::TYPE_COLNAME => array (self::SYLLABUS_ID, self::ID, self::REF, self::LEVEL, self::PARENT_ID, self::CONTENT, self::IS_SELECTABLE, ),
-		BasePeer::TYPE_FIELDNAME => array ('syllabus_id', 'id', 'ref', 'level', 'parent_id', 'content', 'is_selectable', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('SyllabusId', 'Id', 'Rank', 'Ref', 'Level', 'ParentId', 'Content', 'IsSelectable', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('syllabusId', 'id', 'rank', 'ref', 'level', 'parentId', 'content', 'isSelectable', ),
+		BasePeer::TYPE_COLNAME => array (self::SYLLABUS_ID, self::ID, self::RANK, self::REF, self::LEVEL, self::PARENT_ID, self::CONTENT, self::IS_SELECTABLE, ),
+		BasePeer::TYPE_FIELDNAME => array ('syllabus_id', 'id', 'rank', 'ref', 'level', 'parent_id', 'content', 'is_selectable', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	/**
@@ -88,11 +91,11 @@ abstract class BaseSyllabusItemPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('SyllabusId' => 0, 'Id' => 1, 'Ref' => 2, 'Level' => 3, 'ParentId' => 4, 'Content' => 5, 'IsSelectable' => 6, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('syllabusId' => 0, 'id' => 1, 'ref' => 2, 'level' => 3, 'parentId' => 4, 'content' => 5, 'isSelectable' => 6, ),
-		BasePeer::TYPE_COLNAME => array (self::SYLLABUS_ID => 0, self::ID => 1, self::REF => 2, self::LEVEL => 3, self::PARENT_ID => 4, self::CONTENT => 5, self::IS_SELECTABLE => 6, ),
-		BasePeer::TYPE_FIELDNAME => array ('syllabus_id' => 0, 'id' => 1, 'ref' => 2, 'level' => 3, 'parent_id' => 4, 'content' => 5, 'is_selectable' => 6, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('SyllabusId' => 0, 'Id' => 1, 'Rank' => 2, 'Ref' => 3, 'Level' => 4, 'ParentId' => 5, 'Content' => 6, 'IsSelectable' => 7, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('syllabusId' => 0, 'id' => 1, 'rank' => 2, 'ref' => 3, 'level' => 4, 'parentId' => 5, 'content' => 6, 'isSelectable' => 7, ),
+		BasePeer::TYPE_COLNAME => array (self::SYLLABUS_ID => 0, self::ID => 1, self::RANK => 2, self::REF => 3, self::LEVEL => 4, self::PARENT_ID => 5, self::CONTENT => 6, self::IS_SELECTABLE => 7, ),
+		BasePeer::TYPE_FIELDNAME => array ('syllabus_id' => 0, 'id' => 1, 'rank' => 2, 'ref' => 3, 'level' => 4, 'parent_id' => 5, 'content' => 6, 'is_selectable' => 7, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	/**
@@ -164,6 +167,7 @@ abstract class BaseSyllabusItemPeer {
 	{
 		$criteria->addSelectColumn(SyllabusItemPeer::SYLLABUS_ID);
 		$criteria->addSelectColumn(SyllabusItemPeer::ID);
+		$criteria->addSelectColumn(SyllabusItemPeer::RANK);
 		$criteria->addSelectColumn(SyllabusItemPeer::REF);
 		$criteria->addSelectColumn(SyllabusItemPeer::LEVEL);
 		$criteria->addSelectColumn(SyllabusItemPeer::PARENT_ID);

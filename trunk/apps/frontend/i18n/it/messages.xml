@@ -2211,6 +2211,16 @@
         <source>No module deals with this goal</source>
         <target>Nessun modulo ha a che fare con questo obiettivo</target>
     </trans-unit>
+    <trans-unit id="572">
+        <source>%user%'s profile</source>
+        <target>Profilo di %user%</target>
+    </trans-unit>
+    <trans-unit id="573">
+        <source>Toggle current module contribution to this goal's achievement</source>
+        <target>Cambia il contributo del modulo corrente al raggiungimento di questo obiettivo</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
+
