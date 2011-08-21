@@ -132,6 +132,7 @@ propel:
   syllabus_item:
     syllabus_id: ~
     id: ~
+    rank: integer
     ref: varchar(24)
     level: integer
     parent_id: { type: integer, foreignTable: syllabus_item, foreignReference: id, required: false, onDelete: restrict, onUpdate: cascade, index:true }
@@ -260,11 +261,13 @@ propel:
     state:  integer
     is_required: boolean
     syllabus_id: ~
+    code: { type: varchar(20), index: true }
     evaluation_min:  integer
     evaluation_max:  integer
     evaluation_min_description: varchar(50)
     evaluation_max_description: varchar(50)
 # state indicates in which of workplan's state this item type should be shown
+# code is needed to make it possible copying similar items where the syllabus is not the same
 
   wpitem_group:
     id:           ~
@@ -315,7 +318,7 @@ propel:
     wpmodule_id: ~
     syllabus_item_id: ~
     contribution: integer  # 1 for partial contribution, 2 for focussed contribution
-    evalutation: { type: integer, required: false } 
+    evaluation: { type: integer, required: false } 
     _uniques:
       ws: [wpmodule_id, syllabus_item_id]
 

@@ -671,22 +671,19 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 		}
 		
-		public function modifyAppointment($appointmentId, $schoolclassId, $yearId, $subjectId, $hours)
+		public function modifyAppointment($appointmentId, $schoolclassId, $yearId, $subjectId, $syllabusId, $hours)
 		{
 			
 			$result=array();
 			
 			$appointment=AppointmentPeer::retrieveByPK($appointmentId);
-/*			$year=YearPeer::retrieveByPk($yearId);
-			$schoolclass=SchoolclassPeer::retrieveByPk($schoolclassId);
-			$subject=SchoolclassPeer::retrieveByPk($schoolclassId);
-*/
 			try
 			{
 				$appointment
 				->setSchoolclassId($schoolclassId)
 				->setYearId($yearId)
 				->setSubjectId($subjectId)
+        ->setSyllabusId($syllabusId)
 				->setHours($hours)
 				->save();
 				

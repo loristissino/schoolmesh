@@ -18,7 +18,7 @@ abstract class BaseWpmoduleSyllabusItemForm extends BaseFormPropel
       'wpmodule_id'      => new sfWidgetFormPropelChoice(array('model' => 'Wpmodule', 'add_empty' => true)),
       'syllabus_item_id' => new sfWidgetFormPropelChoice(array('model' => 'SyllabusItem', 'add_empty' => true)),
       'contribution'     => new sfWidgetFormInputText(),
-      'evalutation'      => new sfWidgetFormInputText(),
+      'evaluation'       => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -26,7 +26,7 @@ abstract class BaseWpmoduleSyllabusItemForm extends BaseFormPropel
       'wpmodule_id'      => new sfValidatorPropelChoice(array('model' => 'Wpmodule', 'column' => 'id', 'required' => false)),
       'syllabus_item_id' => new sfValidatorPropelChoice(array('model' => 'SyllabusItem', 'column' => 'id', 'required' => false)),
       'contribution'     => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
-      'evalutation'      => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'evaluation'       => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(

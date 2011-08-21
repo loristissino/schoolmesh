@@ -941,7 +941,7 @@ public function executeEditappointment(sfWebRequest $request)
 				$params = $this->form->getValues();
 				$current_user=$this->appointment->getsfGuardUser()->getProfile();
 				
-				$result=$current_user->modifyAppointment($this->appointment->getId(), $params['class'], $params['year'], $params['subject'], $params['hours']);
+				$result=$current_user->modifyAppointment($this->appointment->getId(), $params['class'], $params['year'], $params['subject'], $params['syllabus'], $params['hours']);
 				
 				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 				
@@ -962,6 +962,7 @@ public function executeEditappointment(sfWebRequest $request)
 			'year' => $this->appointment->getYear()->getId(),
 			'class'=> $this->appointment->getSchoolclass(),
 			'subject'=> $this->appointment->getSubject()->getId(),
+      'syllabus' => $this->appointment->getSyllabusId(),
 			'hours'=>$this->appointment->getHours()
 		)
 	);
