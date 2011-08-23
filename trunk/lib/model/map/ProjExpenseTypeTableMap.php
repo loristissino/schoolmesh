@@ -2,7 +2,7 @@
 
 
 /**
- * This class defines the structure of the 'role' table.
+ * This class defines the structure of the 'proj_expense_type' table.
  *
  *
  *
@@ -13,12 +13,12 @@
  *
  * @package    lib.model.map
  */
-class RoleTableMap extends TableMap {
+class ProjExpenseTypeTableMap extends TableMap {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.RoleTableMap';
+	const CLASS_NAME = 'lib.model.map.ProjExpenseTypeTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators
@@ -30,19 +30,15 @@ class RoleTableMap extends TableMap {
 	public function initialize()
 	{
 	  // attributes
-		$this->setName('role');
-		$this->setPhpName('Role');
-		$this->setClassname('Role');
+		$this->setName('proj_expense_type');
+		$this->setPhpName('ProjExpenseType');
+		$this->setClassname('ProjExpenseType');
 		$this->setPackage('lib.model');
 		$this->setUseIdGenerator(true);
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
-		$this->addColumn('MALE_DESCRIPTION', 'MaleDescription', 'VARCHAR', false, 100, null);
-		$this->addColumn('FEMALE_DESCRIPTION', 'FemaleDescription', 'VARCHAR', false, 100, null);
-		$this->addColumn('QUALITY_CODE', 'QualityCode', 'VARCHAR', false, 10, null);
-		$this->addColumn('POSIX_NAME', 'PosixName', 'VARCHAR', false, 20, null);
-		$this->addColumn('MAY_BE_MAIN_ROLE', 'MayBeMainRole', 'BOOLEAN', false, null, null);
-		$this->addColumn('DEFAULT_GUARDGROUP', 'DefaultGuardgroup', 'VARCHAR', false, 20, null);
+		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 255, null);
+		$this->addForeignKey('ROLE_ID', 'RoleId', 'INTEGER', 'role', 'ID', false, null, null);
 		// validators
 	} // initialize()
 
@@ -51,9 +47,8 @@ class RoleTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('sfGuardUserProfile', 'sfGuardUserProfile', RelationMap::ONE_TO_MANY, array('id' => 'role_id', ), null, null);
-    $this->addRelation('UserTeam', 'UserTeam', RelationMap::ONE_TO_MANY, array('id' => 'role_id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('ProjExpenseType', 'ProjExpenseType', RelationMap::ONE_TO_MANY, array('id' => 'role_id', ), null, null);
+    $this->addRelation('Role', 'Role', RelationMap::MANY_TO_ONE, array('role_id' => 'id', ), null, null);
+    $this->addRelation('ProjExpense', 'ProjExpense', RelationMap::ONE_TO_MANY, array('id' => 'proj_expense_type_id', ), null, null);
 	} // buildRelations()
 
 	/**
@@ -69,4 +64,4 @@ class RoleTableMap extends TableMap {
 		);
 	} // getBehaviors()
 
-} // RoleTableMap
+} // ProjExpenseTypeTableMap

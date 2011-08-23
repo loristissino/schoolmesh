@@ -918,6 +918,7 @@ CREATE TABLE `schoolproject`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`proj_category_id` INTEGER,
+	`proj_financing_id` INTEGER,
 	`year_id` INTEGER  NOT NULL,
 	`user_id` INTEGER  NOT NULL,
 	`title` VARCHAR(255),
@@ -925,19 +926,26 @@ CREATE TABLE `schoolproject`
 	`notes` TEXT,
 	`hours_approved` INTEGER,
 	`state` INTEGER,
+	`submission_date` DATE,
+	`teaching_body_approval_date` DATE,
+	`administration_board_approval_date` DATE,
 	PRIMARY KEY (`id`),
 	INDEX `schoolproject_FI_1` (`proj_category_id`),
 	CONSTRAINT `schoolproject_FK_1`
 		FOREIGN KEY (`proj_category_id`)
 		REFERENCES `proj_category` (`id`),
-	INDEX `schoolproject_FI_2` (`year_id`),
+	INDEX `schoolproject_FI_2` (`proj_financing_id`),
 	CONSTRAINT `schoolproject_FK_2`
+		FOREIGN KEY (`proj_financing_id`)
+		REFERENCES `proj_financing` (`id`),
+	INDEX `schoolproject_FI_3` (`year_id`),
+	CONSTRAINT `schoolproject_FK_3`
 		FOREIGN KEY (`year_id`)
 		REFERENCES `year` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
-	INDEX `schoolproject_FI_3` (`user_id`),
-	CONSTRAINT `schoolproject_FK_3`
+	INDEX `schoolproject_FI_4` (`user_id`),
+	CONSTRAINT `schoolproject_FK_4`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
@@ -986,6 +994,97 @@ CREATE TABLE `proj_deadline`
 		REFERENCES `schoolproject` (`id`),
 	INDEX `proj_deadline_FI_2` (`user_id`),
 	CONSTRAINT `proj_deadline_FK_2`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- proj_financing
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `proj_financing`;
+
+
+CREATE TABLE `proj_financing`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`description` VARCHAR(255),
+	`rank` INTEGER  NOT NULL,
+	PRIMARY KEY (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- proj_expense_type
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `proj_expense_type`;
+
+
+CREATE TABLE `proj_expense_type`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`description` VARCHAR(255),
+	`role_id` INTEGER,
+	PRIMARY KEY (`id`),
+	INDEX `proj_expense_type_FI_1` (`role_id`),
+	CONSTRAINT `proj_expense_type_FK_1`
+		FOREIGN KEY (`role_id`)
+		REFERENCES `role` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- proj_expense
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `proj_expense`;
+
+
+CREATE TABLE `proj_expense`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`schoolproject_id` INTEGER,
+	`proj_expense_type_id` INTEGER,
+	`hours_estimated` INTEGER,
+	`hours_approved` INTEGER,
+	`amount_estimated` DECIMAL,
+	`amount_approved` DECIMAL,
+	PRIMARY KEY (`id`),
+	INDEX `proj_expense_FI_1` (`schoolproject_id`),
+	CONSTRAINT `proj_expense_FK_1`
+		FOREIGN KEY (`schoolproject_id`)
+		REFERENCES `schoolproject` (`id`),
+	INDEX `proj_expense_FI_2` (`proj_expense_type_id`),
+	CONSTRAINT `proj_expense_FK_2`
+		FOREIGN KEY (`proj_expense_type_id`)
+		REFERENCES `proj_expense_type` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- proj_activity
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `proj_activity`;
+
+
+CREATE TABLE `proj_activity`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`schoolproject_id` INTEGER,
+	`user_id` INTEGER  NOT NULL,
+	`beginning` DATETIME,
+	`ending` DATETIME,
+	`amount` DECIMAL,
+	`notes` TEXT,
+	`created_at` DATETIME,
+	PRIMARY KEY (`id`),
+	INDEX `proj_activity_FI_1` (`schoolproject_id`),
+	CONSTRAINT `proj_activity_FK_1`
+		FOREIGN KEY (`schoolproject_id`)
+		REFERENCES `schoolproject` (`id`),
+	INDEX `proj_activity_FI_2` (`user_id`),
+	CONSTRAINT `proj_activity_FK_2`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE

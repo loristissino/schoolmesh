@@ -2,7 +2,7 @@
 
 
 /**
- * This class defines the structure of the 'role' table.
+ * This class defines the structure of the 'proj_activity' table.
  *
  *
  *
@@ -13,12 +13,12 @@
  *
  * @package    lib.model.map
  */
-class RoleTableMap extends TableMap {
+class ProjActivityTableMap extends TableMap {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.RoleTableMap';
+	const CLASS_NAME = 'lib.model.map.ProjActivityTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators
@@ -30,19 +30,20 @@ class RoleTableMap extends TableMap {
 	public function initialize()
 	{
 	  // attributes
-		$this->setName('role');
-		$this->setPhpName('Role');
-		$this->setClassname('Role');
+		$this->setName('proj_activity');
+		$this->setPhpName('ProjActivity');
+		$this->setClassname('ProjActivity');
 		$this->setPackage('lib.model');
 		$this->setUseIdGenerator(true);
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
-		$this->addColumn('MALE_DESCRIPTION', 'MaleDescription', 'VARCHAR', false, 100, null);
-		$this->addColumn('FEMALE_DESCRIPTION', 'FemaleDescription', 'VARCHAR', false, 100, null);
-		$this->addColumn('QUALITY_CODE', 'QualityCode', 'VARCHAR', false, 10, null);
-		$this->addColumn('POSIX_NAME', 'PosixName', 'VARCHAR', false, 20, null);
-		$this->addColumn('MAY_BE_MAIN_ROLE', 'MayBeMainRole', 'BOOLEAN', false, null, null);
-		$this->addColumn('DEFAULT_GUARDGROUP', 'DefaultGuardgroup', 'VARCHAR', false, 20, null);
+		$this->addForeignKey('SCHOOLPROJECT_ID', 'SchoolprojectId', 'INTEGER', 'schoolproject', 'ID', false, null, null);
+		$this->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
+		$this->addColumn('BEGINNING', 'Beginning', 'TIMESTAMP', false, null, null);
+		$this->addColumn('ENDING', 'Ending', 'TIMESTAMP', false, null, null);
+		$this->addColumn('AMOUNT', 'Amount', 'DECIMAL', false, null, null);
+		$this->addColumn('NOTES', 'Notes', 'LONGVARCHAR', false, null, null);
+		$this->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null, null);
 		// validators
 	} // initialize()
 
@@ -51,9 +52,8 @@ class RoleTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('sfGuardUserProfile', 'sfGuardUserProfile', RelationMap::ONE_TO_MANY, array('id' => 'role_id', ), null, null);
-    $this->addRelation('UserTeam', 'UserTeam', RelationMap::ONE_TO_MANY, array('id' => 'role_id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('ProjExpenseType', 'ProjExpenseType', RelationMap::ONE_TO_MANY, array('id' => 'role_id', ), null, null);
+    $this->addRelation('Schoolproject', 'Schoolproject', RelationMap::MANY_TO_ONE, array('schoolproject_id' => 'id', ), null, null);
+    $this->addRelation('sfGuardUser', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
 	/**
@@ -66,7 +66,8 @@ class RoleTableMap extends TableMap {
 	{
 		return array(
 			'symfony' => array('form' => 'true', 'filter' => 'true', ),
+			'symfony_timestampable' => array('create_column' => 'created_at', ),
 		);
 	} // getBehaviors()
 
-} // RoleTableMap
+} // ProjActivityTableMap

@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Base class that represents a row from the 'proj_category' table.
+ * Base class that represents a row from the 'proj_expense' table.
  *
  * 
  *
  * @package    lib.model.om
  */
-abstract class BaseProjCategory extends BaseObject  implements Persistent {
+abstract class BaseProjExpense extends BaseObject  implements Persistent {
 
 
 	/**
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        ProjCategoryPeer
+	 * @var        ProjExpensePeer
 	 */
 	protected static $peer;
 
@@ -25,26 +25,50 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	protected $id;
 
 	/**
-	 * The value for the title field.
-	 * @var        string
-	 */
-	protected $title;
-
-	/**
-	 * The value for the rank field.
+	 * The value for the schoolproject_id field.
 	 * @var        int
 	 */
-	protected $rank;
+	protected $schoolproject_id;
 
 	/**
-	 * @var        array Schoolproject[] Collection to store aggregation of Schoolproject objects.
+	 * The value for the proj_expense_type_id field.
+	 * @var        int
 	 */
-	protected $collSchoolprojects;
+	protected $proj_expense_type_id;
 
 	/**
-	 * @var        Criteria The criteria used to select the current contents of collSchoolprojects.
+	 * The value for the hours_estimated field.
+	 * @var        int
 	 */
-	private $lastSchoolprojectCriteria = null;
+	protected $hours_estimated;
+
+	/**
+	 * The value for the hours_approved field.
+	 * @var        int
+	 */
+	protected $hours_approved;
+
+	/**
+	 * The value for the amount_estimated field.
+	 * @var        string
+	 */
+	protected $amount_estimated;
+
+	/**
+	 * The value for the amount_approved field.
+	 * @var        string
+	 */
+	protected $amount_approved;
+
+	/**
+	 * @var        Schoolproject
+	 */
+	protected $aSchoolproject;
+
+	/**
+	 * @var        ProjExpenseType
+	 */
+	protected $aProjExpenseType;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -62,7 +86,7 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 
 	// symfony behavior
 	
-	const PEER = 'ProjCategoryPeer';
+	const PEER = 'ProjExpensePeer';
 
 	/**
 	 * Get the [id] column value.
@@ -75,30 +99,70 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [title] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getTitle()
-	{
-		return $this->title;
-	}
-
-	/**
-	 * Get the [rank] column value.
+	 * Get the [schoolproject_id] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getRank()
+	public function getSchoolprojectId()
 	{
-		return $this->rank;
+		return $this->schoolproject_id;
+	}
+
+	/**
+	 * Get the [proj_expense_type_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getProjExpenseTypeId()
+	{
+		return $this->proj_expense_type_id;
+	}
+
+	/**
+	 * Get the [hours_estimated] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getHoursEstimated()
+	{
+		return $this->hours_estimated;
+	}
+
+	/**
+	 * Get the [hours_approved] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getHoursApproved()
+	{
+		return $this->hours_approved;
+	}
+
+	/**
+	 * Get the [amount_estimated] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getAmountEstimated()
+	{
+		return $this->amount_estimated;
+	}
+
+	/**
+	 * Get the [amount_approved] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getAmountApproved()
+	{
+		return $this->amount_approved;
 	}
 
 	/**
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     ProjCategory The current object (for fluent API support)
+	 * @return     ProjExpense The current object (for fluent API support)
 	 */
 	public function setId($v)
 	{
@@ -108,51 +172,139 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = ProjCategoryPeer::ID;
+			$this->modifiedColumns[] = ProjExpensePeer::ID;
 		}
 
 		return $this;
 	} // setId()
 
 	/**
-	 * Set the value of [title] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     ProjCategory The current object (for fluent API support)
-	 */
-	public function setTitle($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->title !== $v) {
-			$this->title = $v;
-			$this->modifiedColumns[] = ProjCategoryPeer::TITLE;
-		}
-
-		return $this;
-	} // setTitle()
-
-	/**
-	 * Set the value of [rank] column.
+	 * Set the value of [schoolproject_id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     ProjCategory The current object (for fluent API support)
+	 * @return     ProjExpense The current object (for fluent API support)
 	 */
-	public function setRank($v)
+	public function setSchoolprojectId($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
 		}
 
-		if ($this->rank !== $v) {
-			$this->rank = $v;
-			$this->modifiedColumns[] = ProjCategoryPeer::RANK;
+		if ($this->schoolproject_id !== $v) {
+			$this->schoolproject_id = $v;
+			$this->modifiedColumns[] = ProjExpensePeer::SCHOOLPROJECT_ID;
+		}
+
+		if ($this->aSchoolproject !== null && $this->aSchoolproject->getId() !== $v) {
+			$this->aSchoolproject = null;
 		}
 
 		return $this;
-	} // setRank()
+	} // setSchoolprojectId()
+
+	/**
+	 * Set the value of [proj_expense_type_id] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     ProjExpense The current object (for fluent API support)
+	 */
+	public function setProjExpenseTypeId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->proj_expense_type_id !== $v) {
+			$this->proj_expense_type_id = $v;
+			$this->modifiedColumns[] = ProjExpensePeer::PROJ_EXPENSE_TYPE_ID;
+		}
+
+		if ($this->aProjExpenseType !== null && $this->aProjExpenseType->getId() !== $v) {
+			$this->aProjExpenseType = null;
+		}
+
+		return $this;
+	} // setProjExpenseTypeId()
+
+	/**
+	 * Set the value of [hours_estimated] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     ProjExpense The current object (for fluent API support)
+	 */
+	public function setHoursEstimated($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->hours_estimated !== $v) {
+			$this->hours_estimated = $v;
+			$this->modifiedColumns[] = ProjExpensePeer::HOURS_ESTIMATED;
+		}
+
+		return $this;
+	} // setHoursEstimated()
+
+	/**
+	 * Set the value of [hours_approved] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     ProjExpense The current object (for fluent API support)
+	 */
+	public function setHoursApproved($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->hours_approved !== $v) {
+			$this->hours_approved = $v;
+			$this->modifiedColumns[] = ProjExpensePeer::HOURS_APPROVED;
+		}
+
+		return $this;
+	} // setHoursApproved()
+
+	/**
+	 * Set the value of [amount_estimated] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     ProjExpense The current object (for fluent API support)
+	 */
+	public function setAmountEstimated($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->amount_estimated !== $v) {
+			$this->amount_estimated = $v;
+			$this->modifiedColumns[] = ProjExpensePeer::AMOUNT_ESTIMATED;
+		}
+
+		return $this;
+	} // setAmountEstimated()
+
+	/**
+	 * Set the value of [amount_approved] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     ProjExpense The current object (for fluent API support)
+	 */
+	public function setAmountApproved($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->amount_approved !== $v) {
+			$this->amount_approved = $v;
+			$this->modifiedColumns[] = ProjExpensePeer::AMOUNT_APPROVED;
+		}
+
+		return $this;
+	} // setAmountApproved()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -187,8 +339,12 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 		try {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->title = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-			$this->rank = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->schoolproject_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+			$this->proj_expense_type_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->hours_estimated = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->hours_approved = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+			$this->amount_estimated = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->amount_approved = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -198,10 +354,10 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 3; // 3 = ProjCategoryPeer::NUM_COLUMNS - ProjCategoryPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 7; // 7 = ProjExpensePeer::NUM_COLUMNS - ProjExpensePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating ProjCategory object", $e);
+			throw new PropelException("Error populating ProjExpense object", $e);
 		}
 	}
 
@@ -221,6 +377,12 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
+		if ($this->aSchoolproject !== null && $this->schoolproject_id !== $this->aSchoolproject->getId()) {
+			$this->aSchoolproject = null;
+		}
+		if ($this->aProjExpenseType !== null && $this->proj_expense_type_id !== $this->aProjExpenseType->getId()) {
+			$this->aProjExpenseType = null;
+		}
 	} // ensureConsistency
 
 	/**
@@ -244,13 +406,13 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(ProjCategoryPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ProjExpensePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		// We don't need to alter the object instance pool; we're just modifying this instance
 		// already in the pool.
 
-		$stmt = ProjCategoryPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+		$stmt = ProjExpensePeer::doSelectStmt($this->buildPkeyCriteria(), $con);
 		$row = $stmt->fetch(PDO::FETCH_NUM);
 		$stmt->closeCursor();
 		if (!$row) {
@@ -260,9 +422,8 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
-			$this->collSchoolprojects = null;
-			$this->lastSchoolprojectCriteria = null;
-
+			$this->aSchoolproject = null;
+			$this->aProjExpenseType = null;
 		} // if (deep)
 	}
 
@@ -282,14 +443,14 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(ProjCategoryPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ProjExpensePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
 		try {
 			$ret = $this->preDelete($con);
 			if ($ret) {
-				ProjCategoryPeer::doDelete($this, $con);
+				ProjExpensePeer::doDelete($this, $con);
 				$this->postDelete($con);
 				$this->setDeleted(true);
 				$con->commit();
@@ -322,7 +483,7 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(ProjCategoryPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ProjExpensePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
@@ -342,7 +503,7 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 					$this->postUpdate($con);
 				}
 				$this->postSave($con);
-				ProjCategoryPeer::addInstanceToPool($this);
+				ProjExpensePeer::addInstanceToPool($this);
 			} else {
 				$affectedRows = 0;
 			}
@@ -371,14 +532,33 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 		if (!$this->alreadyInSave) {
 			$this->alreadyInSave = true;
 
+			// We call the save method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aSchoolproject !== null) {
+				if ($this->aSchoolproject->isModified() || $this->aSchoolproject->isNew()) {
+					$affectedRows += $this->aSchoolproject->save($con);
+				}
+				$this->setSchoolproject($this->aSchoolproject);
+			}
+
+			if ($this->aProjExpenseType !== null) {
+				if ($this->aProjExpenseType->isModified() || $this->aProjExpenseType->isNew()) {
+					$affectedRows += $this->aProjExpenseType->save($con);
+				}
+				$this->setProjExpenseType($this->aProjExpenseType);
+			}
+
 			if ($this->isNew() ) {
-				$this->modifiedColumns[] = ProjCategoryPeer::ID;
+				$this->modifiedColumns[] = ProjExpensePeer::ID;
 			}
 
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = ProjCategoryPeer::doInsert($this, $con);
+					$pk = ProjExpensePeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
@@ -387,18 +567,10 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 
 					$this->setNew(false);
 				} else {
-					$affectedRows += ProjCategoryPeer::doUpdate($this, $con);
+					$affectedRows += ProjExpensePeer::doUpdate($this, $con);
 				}
 
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
-			}
-
-			if ($this->collSchoolprojects !== null) {
-				foreach ($this->collSchoolprojects as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
 			}
 
 			$this->alreadyInSave = false;
@@ -467,18 +639,28 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 			$failureMap = array();
 
 
-			if (($retval = ProjCategoryPeer::doValidate($this, $columns)) !== true) {
-				$failureMap = array_merge($failureMap, $retval);
+			// We call the validate method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aSchoolproject !== null) {
+				if (!$this->aSchoolproject->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aSchoolproject->getValidationFailures());
+				}
+			}
+
+			if ($this->aProjExpenseType !== null) {
+				if (!$this->aProjExpenseType->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aProjExpenseType->getValidationFailures());
+				}
 			}
 
 
-				if ($this->collSchoolprojects !== null) {
-					foreach ($this->collSchoolprojects as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
+			if (($retval = ProjExpensePeer::doValidate($this, $columns)) !== true) {
+				$failureMap = array_merge($failureMap, $retval);
+			}
+
 
 
 			$this->alreadyInValidation = false;
@@ -498,7 +680,7 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = ProjCategoryPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = ProjExpensePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		$field = $this->getByPosition($pos);
 		return $field;
 	}
@@ -517,10 +699,22 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getTitle();
+				return $this->getSchoolprojectId();
 				break;
 			case 2:
-				return $this->getRank();
+				return $this->getProjExpenseTypeId();
+				break;
+			case 3:
+				return $this->getHoursEstimated();
+				break;
+			case 4:
+				return $this->getHoursApproved();
+				break;
+			case 5:
+				return $this->getAmountEstimated();
+				break;
+			case 6:
+				return $this->getAmountApproved();
 				break;
 			default:
 				return null;
@@ -541,11 +735,15 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
 	{
-		$keys = ProjCategoryPeer::getFieldNames($keyType);
+		$keys = ProjExpensePeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getTitle(),
-			$keys[2] => $this->getRank(),
+			$keys[1] => $this->getSchoolprojectId(),
+			$keys[2] => $this->getProjExpenseTypeId(),
+			$keys[3] => $this->getHoursEstimated(),
+			$keys[4] => $this->getHoursApproved(),
+			$keys[5] => $this->getAmountEstimated(),
+			$keys[6] => $this->getAmountApproved(),
 		);
 		return $result;
 	}
@@ -562,7 +760,7 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = ProjCategoryPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = ProjExpensePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -581,10 +779,22 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setTitle($value);
+				$this->setSchoolprojectId($value);
 				break;
 			case 2:
-				$this->setRank($value);
+				$this->setProjExpenseTypeId($value);
+				break;
+			case 3:
+				$this->setHoursEstimated($value);
+				break;
+			case 4:
+				$this->setHoursApproved($value);
+				break;
+			case 5:
+				$this->setAmountEstimated($value);
+				break;
+			case 6:
+				$this->setAmountApproved($value);
 				break;
 		} // switch()
 	}
@@ -608,11 +818,15 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = ProjCategoryPeer::getFieldNames($keyType);
+		$keys = ProjExpensePeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setTitle($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setRank($arr[$keys[2]]);
+		if (array_key_exists($keys[1], $arr)) $this->setSchoolprojectId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setProjExpenseTypeId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setHoursEstimated($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setHoursApproved($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setAmountEstimated($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setAmountApproved($arr[$keys[6]]);
 	}
 
 	/**
@@ -622,11 +836,15 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(ProjCategoryPeer::DATABASE_NAME);
+		$criteria = new Criteria(ProjExpensePeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(ProjCategoryPeer::ID)) $criteria->add(ProjCategoryPeer::ID, $this->id);
-		if ($this->isColumnModified(ProjCategoryPeer::TITLE)) $criteria->add(ProjCategoryPeer::TITLE, $this->title);
-		if ($this->isColumnModified(ProjCategoryPeer::RANK)) $criteria->add(ProjCategoryPeer::RANK, $this->rank);
+		if ($this->isColumnModified(ProjExpensePeer::ID)) $criteria->add(ProjExpensePeer::ID, $this->id);
+		if ($this->isColumnModified(ProjExpensePeer::SCHOOLPROJECT_ID)) $criteria->add(ProjExpensePeer::SCHOOLPROJECT_ID, $this->schoolproject_id);
+		if ($this->isColumnModified(ProjExpensePeer::PROJ_EXPENSE_TYPE_ID)) $criteria->add(ProjExpensePeer::PROJ_EXPENSE_TYPE_ID, $this->proj_expense_type_id);
+		if ($this->isColumnModified(ProjExpensePeer::HOURS_ESTIMATED)) $criteria->add(ProjExpensePeer::HOURS_ESTIMATED, $this->hours_estimated);
+		if ($this->isColumnModified(ProjExpensePeer::HOURS_APPROVED)) $criteria->add(ProjExpensePeer::HOURS_APPROVED, $this->hours_approved);
+		if ($this->isColumnModified(ProjExpensePeer::AMOUNT_ESTIMATED)) $criteria->add(ProjExpensePeer::AMOUNT_ESTIMATED, $this->amount_estimated);
+		if ($this->isColumnModified(ProjExpensePeer::AMOUNT_APPROVED)) $criteria->add(ProjExpensePeer::AMOUNT_APPROVED, $this->amount_approved);
 
 		return $criteria;
 	}
@@ -641,9 +859,9 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(ProjCategoryPeer::DATABASE_NAME);
+		$criteria = new Criteria(ProjExpensePeer::DATABASE_NAME);
 
-		$criteria->add(ProjCategoryPeer::ID, $this->id);
+		$criteria->add(ProjExpensePeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -674,30 +892,24 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of ProjCategory (or compatible) type.
+	 * @param      object $copyObj An object of ProjExpense (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setTitle($this->title);
+		$copyObj->setSchoolprojectId($this->schoolproject_id);
 
-		$copyObj->setRank($this->rank);
+		$copyObj->setProjExpenseTypeId($this->proj_expense_type_id);
 
+		$copyObj->setHoursEstimated($this->hours_estimated);
 
-		if ($deepCopy) {
-			// important: temporarily setNew(false) because this affects the behavior of
-			// the getter/setter methods for fkey referrer objects.
-			$copyObj->setNew(false);
+		$copyObj->setHoursApproved($this->hours_approved);
 
-			foreach ($this->getSchoolprojects() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addSchoolproject($relObj->copy($deepCopy));
-				}
-			}
+		$copyObj->setAmountEstimated($this->amount_estimated);
 
-		} // if ($deepCopy)
+		$copyObj->setAmountApproved($this->amount_approved);
 
 
 		$copyObj->setNew(true);
@@ -715,7 +927,7 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     ProjCategory Clone of current object.
+	 * @return     ProjExpense Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -734,309 +946,112 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     ProjCategoryPeer
+	 * @return     ProjExpensePeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new ProjCategoryPeer();
+			self::$peer = new ProjExpensePeer();
 		}
 		return self::$peer;
 	}
 
 	/**
-	 * Clears out the collSchoolprojects collection (array).
+	 * Declares an association between this object and a Schoolproject object.
 	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addSchoolprojects()
-	 */
-	public function clearSchoolprojects()
-	{
-		$this->collSchoolprojects = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collSchoolprojects collection (array).
-	 *
-	 * By default this just sets the collSchoolprojects collection to an empty array (like clearcollSchoolprojects());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initSchoolprojects()
-	{
-		$this->collSchoolprojects = array();
-	}
-
-	/**
-	 * Gets an array of Schoolproject objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this ProjCategory has previously been saved, it will retrieve
-	 * related Schoolprojects from storage. If this ProjCategory is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array Schoolproject[]
+	 * @param      Schoolproject $v
+	 * @return     ProjExpense The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function getSchoolprojects($criteria = null, PropelPDO $con = null)
+	public function setSchoolproject(Schoolproject $v = null)
 	{
-		if ($criteria === null) {
-			$criteria = new Criteria(ProjCategoryPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collSchoolprojects === null) {
-			if ($this->isNew()) {
-			   $this->collSchoolprojects = array();
-			} else {
-
-				$criteria->add(SchoolprojectPeer::PROJ_CATEGORY_ID, $this->id);
-
-				SchoolprojectPeer::addSelectColumns($criteria);
-				$this->collSchoolprojects = SchoolprojectPeer::doSelect($criteria, $con);
-			}
+		if ($v === null) {
+			$this->setSchoolprojectId(NULL);
 		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(SchoolprojectPeer::PROJ_CATEGORY_ID, $this->id);
-
-				SchoolprojectPeer::addSelectColumns($criteria);
-				if (!isset($this->lastSchoolprojectCriteria) || !$this->lastSchoolprojectCriteria->equals($criteria)) {
-					$this->collSchoolprojects = SchoolprojectPeer::doSelect($criteria, $con);
-				}
-			}
+			$this->setSchoolprojectId($v->getId());
 		}
-		$this->lastSchoolprojectCriteria = $criteria;
-		return $this->collSchoolprojects;
+
+		$this->aSchoolproject = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the Schoolproject object, it will not be re-added.
+		if ($v !== null) {
+			$v->addProjExpense($this);
+		}
+
+		return $this;
 	}
 
+
 	/**
-	 * Returns the number of related Schoolproject objects.
+	 * Get the associated Schoolproject object
 	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related Schoolproject objects.
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     Schoolproject The associated Schoolproject object.
 	 * @throws     PropelException
 	 */
-	public function countSchoolprojects(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	public function getSchoolproject(PropelPDO $con = null)
 	{
-		if ($criteria === null) {
-			$criteria = new Criteria(ProjCategoryPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
+		if ($this->aSchoolproject === null && ($this->schoolproject_id !== null)) {
+			$this->aSchoolproject = SchoolprojectPeer::retrieveByPk($this->schoolproject_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aSchoolproject->addProjExpenses($this);
+			 */
 		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collSchoolprojects === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(SchoolprojectPeer::PROJ_CATEGORY_ID, $this->id);
-
-				$count = SchoolprojectPeer::doCount($criteria, false, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(SchoolprojectPeer::PROJ_CATEGORY_ID, $this->id);
-
-				if (!isset($this->lastSchoolprojectCriteria) || !$this->lastSchoolprojectCriteria->equals($criteria)) {
-					$count = SchoolprojectPeer::doCount($criteria, false, $con);
-				} else {
-					$count = count($this->collSchoolprojects);
-				}
-			} else {
-				$count = count($this->collSchoolprojects);
-			}
-		}
-		return $count;
+		return $this->aSchoolproject;
 	}
 
 	/**
-	 * Method called to associate a Schoolproject object to this object
-	 * through the Schoolproject foreign key attribute.
+	 * Declares an association between this object and a ProjExpenseType object.
 	 *
-	 * @param      Schoolproject $l Schoolproject
-	 * @return     void
+	 * @param      ProjExpenseType $v
+	 * @return     ProjExpense The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function addSchoolproject(Schoolproject $l)
+	public function setProjExpenseType(ProjExpenseType $v = null)
 	{
-		if ($this->collSchoolprojects === null) {
-			$this->initSchoolprojects();
+		if ($v === null) {
+			$this->setProjExpenseTypeId(NULL);
+		} else {
+			$this->setProjExpenseTypeId($v->getId());
 		}
-		if (!in_array($l, $this->collSchoolprojects, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collSchoolprojects, $l);
-			$l->setProjCategory($this);
+
+		$this->aProjExpenseType = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the ProjExpenseType object, it will not be re-added.
+		if ($v !== null) {
+			$v->addProjExpense($this);
 		}
+
+		return $this;
 	}
 
 
 	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this ProjCategory is new, it will return
-	 * an empty collection; or if this ProjCategory has previously
-	 * been saved, it will retrieve related Schoolprojects from storage.
+	 * Get the associated ProjExpenseType object
 	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in ProjCategory.
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     ProjExpenseType The associated ProjExpenseType object.
+	 * @throws     PropelException
 	 */
-	public function getSchoolprojectsJoinProjFinancing($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getProjExpenseType(PropelPDO $con = null)
 	{
-		if ($criteria === null) {
-			$criteria = new Criteria(ProjCategoryPeer::DATABASE_NAME);
+		if ($this->aProjExpenseType === null && ($this->proj_expense_type_id !== null)) {
+			$this->aProjExpenseType = ProjExpenseTypePeer::retrieveByPk($this->proj_expense_type_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aProjExpenseType->addProjExpenses($this);
+			 */
 		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collSchoolprojects === null) {
-			if ($this->isNew()) {
-				$this->collSchoolprojects = array();
-			} else {
-
-				$criteria->add(SchoolprojectPeer::PROJ_CATEGORY_ID, $this->id);
-
-				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinProjFinancing($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(SchoolprojectPeer::PROJ_CATEGORY_ID, $this->id);
-
-			if (!isset($this->lastSchoolprojectCriteria) || !$this->lastSchoolprojectCriteria->equals($criteria)) {
-				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinProjFinancing($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastSchoolprojectCriteria = $criteria;
-
-		return $this->collSchoolprojects;
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this ProjCategory is new, it will return
-	 * an empty collection; or if this ProjCategory has previously
-	 * been saved, it will retrieve related Schoolprojects from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in ProjCategory.
-	 */
-	public function getSchoolprojectsJoinYear($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(ProjCategoryPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collSchoolprojects === null) {
-			if ($this->isNew()) {
-				$this->collSchoolprojects = array();
-			} else {
-
-				$criteria->add(SchoolprojectPeer::PROJ_CATEGORY_ID, $this->id);
-
-				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinYear($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(SchoolprojectPeer::PROJ_CATEGORY_ID, $this->id);
-
-			if (!isset($this->lastSchoolprojectCriteria) || !$this->lastSchoolprojectCriteria->equals($criteria)) {
-				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinYear($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastSchoolprojectCriteria = $criteria;
-
-		return $this->collSchoolprojects;
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this ProjCategory is new, it will return
-	 * an empty collection; or if this ProjCategory has previously
-	 * been saved, it will retrieve related Schoolprojects from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in ProjCategory.
-	 */
-	public function getSchoolprojectsJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(ProjCategoryPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collSchoolprojects === null) {
-			if ($this->isNew()) {
-				$this->collSchoolprojects = array();
-			} else {
-
-				$criteria->add(SchoolprojectPeer::PROJ_CATEGORY_ID, $this->id);
-
-				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(SchoolprojectPeer::PROJ_CATEGORY_ID, $this->id);
-
-			if (!isset($this->lastSchoolprojectCriteria) || !$this->lastSchoolprojectCriteria->equals($criteria)) {
-				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastSchoolprojectCriteria = $criteria;
-
-		return $this->collSchoolprojects;
+		return $this->aProjExpenseType;
 	}
 
 	/**
@@ -1051,14 +1066,10 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
-			if ($this->collSchoolprojects) {
-				foreach ((array) $this->collSchoolprojects as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 		} // if ($deep)
 
-		$this->collSchoolprojects = null;
+			$this->aSchoolproject = null;
+			$this->aProjExpenseType = null;
 	}
 
-} // BaseProjCategory
+} // BaseProjExpense

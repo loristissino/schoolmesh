@@ -162,7 +162,33 @@ class Schoolproject extends BaseSchoolproject {
     }
     
   }
-  
+
+  public function deleteExpense(sfGuardUserProfile $profile, ProjExpense $expense)
+  {
+    if($profile->getUserId()!=$this->getUserId())
+    {
+      $result['result']='error';
+      $result['message']='You are not allowed to remove expenses from this project.';
+      return $result;
+    }
+    
+    try
+    {
+      $expense->delete();
+      $result['result']='notice';
+      $result['message']='The expense has been deleted.';
+      return $result;
+    }
+    catch(Exception $e)
+    {
+      $result['result']='error';
+      $result['message']='The expense could not be deleted.';
+      return $result;
+    }
+    
+  }
+
+
   public function addDeadline(sfGuardUserProfile $profile)
   {
     if($profile->getUserId()!=$this->getUserId())
@@ -200,7 +226,44 @@ class Schoolproject extends BaseSchoolproject {
       return $result;
     }
   }
-  
+
+  public function addExpense(sfGuardUserProfile $profile)
+  {
+    if($profile->getUserId()!=$this->getUserId())
+    {
+      $result['result']='error';
+      $result['message']='You are not allowed to add expenses to this project.';
+      return $result;
+    }
+    
+    if($this->getState()!=Workflow::PROJ_DRAFT)
+    {
+      $result['result']='error';
+      $result['message']='You are not allowed to add expensed to a project in this state.';
+      return $result;
+    }
+    
+    
+    try
+    {
+			$expense=new ProjExpense();
+			$expense
+      ->setSchoolprojectId($this->getId())
+      ->save();
+      $result['result']='notice';
+      $result['message']='The expense has been added.';
+      return $result;
+    }
+    catch(Exception $e)
+    {
+      $result['result']='error';
+      $result['message']='The expense could not be added.';
+      return $result;
+    }
+  }
+
+
+
   public function updateFromForm($params)
   {
     Generic::updateObjectFromForm($this, array(

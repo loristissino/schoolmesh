@@ -132,7 +132,22 @@ class projectsActions extends sfActions
     return $this->redirect('projects/edit?id='. $this->project->getId());
    } 
    
-   
+  public function executeAddexpense(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post'));
+    $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPk($request->getParameter('id')));
+    
+    $result=$this->project->addExpense($this->getUser()->getProfile());
+    
+    $this->getUser()->setFlash($result['result'],
+					$this->getContext()->getI18N()->__($result['message'])
+					);
+					
+    return $this->redirect('projects/edit?id='. $this->project->getId());
+   } 
+
+
+
   public function executeDeletedeadline(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post'));
@@ -148,7 +163,25 @@ class projectsActions extends sfActions
 
     
   }
- 
+
+  public function executeDeleteexpense(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post'));
+    $this->forward404Unless($this->expense=ProjExpensePeer::retrieveByPk($request->getParameter('id')));
+    
+    $result=$this->expense->getSchoolproject()->deleteExpense($this->getUser()->getProfile(), $this->expense);
+    
+    $this->getUser()->setFlash($result['result'],
+					$this->getContext()->getI18N()->__($result['message'])
+					);
+					
+    return $this->redirect('projects/edit?id='. $this->expense->getSchoolproject()->getId());
+
+    
+  }
+
+
+
   public function executeEditdeadline(sfWebRequest $request)
   {
     $this->forward404Unless($this->deadline=ProjDeadlinePeer::retrieveByPk($request->getParameter('id')));
@@ -204,7 +237,7 @@ class projectsActions extends sfActions
   
   $this->forward404Unless($this->project->isEditableBy($this->getUser())); // the project can be edited only by the owner  or by admins...
 	
-	$this->form = new SchoolprojectForm($this->project); 
+	$this->form = new SchoolprojectForm($this->project);
   $this->form->addStateDependentConfiguration($this->project->getState());
 
 	if ($request->isMethod('post'))
@@ -253,6 +286,7 @@ class projectsActions extends sfActions
   if ($this->project)
   {
     $this->deadlines=$this->project->getProjDeadlines();
+    $this->expenses=$this->project->getProjExpenses();
   }
   
   
@@ -262,7 +296,9 @@ class projectsActions extends sfActions
   public function executeNew(sfWebRequest $request)
   {
     
-	$this->form = new SchoolprojectForm($this->project);
+	$this->form = new SchoolprojectForm(new Schoolproject());
+  $this->form->addStateDependentConfiguration(Workflow::PROJ_DRAFT);
+
   $this->deadlines=array();
 
 	if ($request->isMethod('post'))
