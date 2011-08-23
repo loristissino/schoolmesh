@@ -73,7 +73,8 @@ function inputinplaceeditortag($name, $url, $options=array())
     'submit'   =>'OK',
     'onblur'   =>'ignore',  /*possible values: cancel, submit, ignore */
     'bgcolor'  =>'white',
-    'hover'    =>'yellow'
+    'hover'    =>'yellow',
+    'width'    => 400,
     ) as $key=>$defaultvalue)
   {
     if (!array_key_exists($key, $options))
@@ -89,6 +90,7 @@ function inputinplaceeditortag($name, $url, $options=array())
          "'cancel' : '" . $options['cancel'] . "',\n" .
          "'submit' : '" . $options['submit'] . "',\n" .
          "'onblur' : '" . $options['onblur'] . "',\n" .
+         "'width' : '" . $options['width'] . "',\n" .
          "'id' : 'itemid'\n" .
          
      "});

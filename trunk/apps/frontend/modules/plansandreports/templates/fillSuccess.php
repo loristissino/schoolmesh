@@ -68,6 +68,17 @@
 				)?>
 	
 	</li>
+  
+  <?php if ($workplan->countWpmodules() and $workplan->getSyllabus()->getIsActive()): ?>
+	<li class="sf_admin_action_syllabus">
+	<?php echo link_to(
+				__('Syllabus'),
+				'plansandreports/syllabus?id='.$workplan->getId(),
+				array('title'=>'Set syllabus links for this workplan')
+				)?>
+	</li>
+  <?php endif ?>
+  
 	</ul>
 </div>
 <hr />

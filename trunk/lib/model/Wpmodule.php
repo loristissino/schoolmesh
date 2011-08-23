@@ -309,6 +309,10 @@ $number=$resultset->number;
   
   public function manageSyllabusItem($syllabus_item, $value=0)
   {
+    if($this->getAppointment()->getState()>Workflow::WP_DRAFT)
+    {
+      return;
+    }
     $c = new Criteria();
     $c->add(WpmoduleSyllabusItemPeer::WPMODULE_ID, $this->getId());
     $c->add(WpmoduleSyllabusItemPeer::SYLLABUS_ITEM_ID, $syllabus_item);
