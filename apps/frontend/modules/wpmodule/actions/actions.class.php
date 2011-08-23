@@ -248,8 +248,15 @@ class wpmoduleActions extends sfActions
     $syllabus_item=SyllabusItemPeer::retrieveByPK($request->getParameter('syllabus'));
 
     $this->wpmodule->manageSyllabusItem($syllabus_item->getId(), $request->getParameter('value', 0));
-
-    Generic::logMessage('syllabus', $syllabus_item->getId());
+    
+    if($request->getParameter('partial')=='workplanlinks')
+    {
+      return $this->renderPartial('syllabi/workplanlinks', array(
+        'syllabus_item'=>$syllabus_item,
+        'workplan'=>$this->wpmodule->getAppointment(),
+        )
+      );
+    };
     
     return $this->renderPartial('syllabi/link', array(
       'syllabus_item'=>$syllabus_item, 

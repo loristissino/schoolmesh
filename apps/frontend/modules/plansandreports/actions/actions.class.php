@@ -521,7 +521,7 @@ public function executeBatch(sfWebRequest $request)
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->workplan);
 	
-	$this->events=$this->workplan->getWpevents();
+	  $this->events=$this->workplan->getWpevents();
 
   }
 
@@ -625,12 +625,19 @@ public function executeRemovewpevent(sfWebRequest $request)
 
 
 
-  public function executeNew(sfWebRequest $request)
+  public function executeSyllabus(sfWebRequest $request)
   {
-//    $this->form = new AppointmentForm();
-
+    $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($this->workplan);
+    $whoIsViewing = $this->getUser()->getProfile()->getSfGuardUser()->getId();
+    $this->forward404Unless($this->workplan->isViewableBy($whoIsViewing));
+    
+    $this->syllabus=$this->workplan->getSyllabus();
+    //$this->syllabus_contributions=array();
 
   }
+  
+  
 
   public function executeCreate(sfWebRequest $request)
   {

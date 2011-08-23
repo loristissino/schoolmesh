@@ -2219,6 +2219,22 @@
         <source>Toggle current module contribution to this goal's achievement</source>
         <target>Cambia il contributo del modulo corrente al raggiungimento di questo obiettivo</target>
     </trans-unit>
+    <trans-unit id="574">
+        <source>Toggle module «%moduletitle%» contribution to this goal's achievement</source>
+        <target>Cambia il contributo del modulo «%moduletitle%» al raggiungimento di questo obiettivo</target>
+    </trans-unit>
+    <trans-unit id="575">
+        <source>Syllabus view</source>
+        <target>Visualizzazione syllabus</target>
+    </trans-unit>
+    <trans-unit id="576">
+        <source>View as report</source>
+        <target>Visualizza come rapporto</target>
+    </trans-unit>
+    <trans-unit id="577">
+        <source>View as table</source>
+        <target>Visualizza come tabella</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

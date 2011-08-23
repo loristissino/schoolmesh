@@ -1,6 +1,13 @@
 <?php $contributions=$contributions->getRawValue() ?>
-
-<h1><?php echo __('Syllabus') ?></h1>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'schoolclasses/index' => "Classes",
+    '_schoolclasses' => $schoolclass->getId()
+    ),
+  'current'=>__('Syllabus view'),
+  'title'=>$schoolclass->getId() . ': '. __('Syllabus view')
+  ))
+?>    
 
 <table>
 <tr>

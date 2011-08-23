@@ -435,7 +435,7 @@ $con->query($sql);
 		else
 		{
 			
-			$neededItemTypes=WpitemTypePeer::getAllByRank();
+			$neededItemTypes=WpitemTypePeer::getAllByRank($this->getSyllabusId());
 			
 			$titles=Array('---', '');
 			$count=0;

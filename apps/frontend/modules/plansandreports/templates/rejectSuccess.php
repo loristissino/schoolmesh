@@ -1,7 +1,7 @@
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     'plansandreports/list' => "Manage appointments",
-    '_workplan' => $appointment,
+    '_workplan' => $workplan,
     ),
   'current'=> __('Reject document'),
   ))
