@@ -23,6 +23,7 @@ class SchoolprojectForm extends BaseSchoolprojectForm
 	$this['user_id']->getWidget()->setOption('add_empty', 'Choose a user');
 */	
 	$this->widgetSchema->setLabel('proj_category_id', 'Category');
+	$this->widgetSchema->setLabel('proj_financing_id', 'Financing');
   $this['notes']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
 /*
   $this->widgetSchema->setLabel('user_id', 'Coordinator');
@@ -34,6 +35,7 @@ class SchoolprojectForm extends BaseSchoolprojectForm
     switch($state)
     {
       case Workflow::PROJ_DRAFT:
+        unset($this['hours_approved'], $this['submission_date'], $this['teaching_body_approval_date'], $this['administration_board_approval_date']);
         break;
       case Workflow::PROJ_SUBMITTED:
         unset($this['title'], $this['description'], $this['notes']);

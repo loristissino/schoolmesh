@@ -31,12 +31,6 @@
     <td><?php echo $project->getDescription() ?></td>
   </tr>
   <?php endif ?>
-  <?php if(!isset($form['hours_approved'])): ?>
-  <tr>
-    <th><label for="schoolproject_hours_approved"><?php echo __('Hours approved') ?></label></th>
-    <td><?php echo $project->getHoursApproved() ?></td>
-  </tr>
-  <?php endif ?>
 
     <?php echo $form ?>
 	<tr>

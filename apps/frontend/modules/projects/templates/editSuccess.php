@@ -8,7 +8,7 @@
   'breadcrumps'=>array(
     'projects/index' => __("Projects"),
     ),
-  'current'=>$deadline->getProject()
+  'current'=>$project->getTitle()
   ))
 ?>
 
@@ -106,10 +106,84 @@
 <?php else: ?>
 <p><?php echo __('No deadlines defined.') ?></p>
 <?php endif ?>
-</div>
+
 <?php if ($project->getState()==Workflow::PROJ_DRAFT): ?>
 <form action="<?php echo url_for('projects/adddeadline?id='. $project->getId()) ?>" method="POST">
 <input type="submit" name="add_deadline" value="<?php echo __('Add deadline') ?>">
 </form>
 <?php endif ?>
 
+<h2><?php echo __('Expenses') ?></h2>
+
+<?php if(sizeof($expenses)>0): ?>
+
+<table cellspacing="0">
+  <thead>
+    <tr>
+      <th class="sf_admin_text"><?php echo __('Type') ?></th>
+      <th class="sf_admin_text"><?php echo __('Description') ?></th>
+      <th class="sf_admin_text">
+      <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
+        <?php echo __('Estimated hours') ?>
+      <?php else: ?>
+        <?php echo __('Approved hours') ?>
+      <?php endif ?>
+      </th>
+      <th class="sf_admin_text">
+      <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
+        <?php echo __('Estimated amount') ?>
+      <?php else: ?>
+        <?php echo __('Approved amount') ?>
+      <?php endif ?>
+      </th>
+      <th class="sf_admin_text"><?php echo __('Actions') ?></th>
+    </tr>
+  </thead>
+  <tbody>
+	<?php $i=0 ?>
+    <?php foreach ($expenses as $expense): ?>
+    <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
+      <td>
+        <?php if ($expense->getProjExpenseType()): ?>
+          <?php echo $expense->getProjExpenseType()->getDescription() ?>
+        <?php endif ?>
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+      <ul class="sf_admin_td_actions">
+        <li class="sf_admin_action_edit">
+        <?php echo link_to(
+            __('Edit'),
+            url_for('projects/editexpense?id='. $expense->getId())
+            )
+             ?></li>
+        <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
+        <li class="sf_admin_action_delete">
+        <?php echo link_to(
+            __('Delete'),
+            url_for('projects/deleteexpense?id='. $expense->getId()),
+            array('method'=>'post', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))
+            )
+             ?></li>
+        <?php endif ?>
+          
+      </ul>
+      </td>
+    </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>
+<?php else: ?>
+<p><?php echo __('No expenses defined.') ?></p>
+<?php endif ?>
+</div>
+<?php if ($project->getState()==Workflow::PROJ_DRAFT): ?>
+<form action="<?php echo url_for('projects/addexpense?id='. $project->getId()) ?>" method="POST">
+<input type="submit" name="add_expense" value="<?php echo __('Add expense') ?>">
+</form>
+<?php endif ?>
+
+
+</div>

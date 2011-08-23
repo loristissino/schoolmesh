@@ -325,6 +325,7 @@ propel:
   schoolproject:
     id: ~
     proj_category_id: ~
+    proj_financing_id: ~ 
     year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     title:        varchar(255)
@@ -332,6 +333,9 @@ propel:
     notes:   longvarchar
     hours_approved: integer
     state:        { type: integer }
+    submission_date: date
+    teaching_body_approval_date: date
+    administration_board_approval_date: date    
 
   proj_category:
     id: ~
@@ -352,6 +356,36 @@ propel:
     updated_at: ~
 
 # completed should be changed in state: completed, overdue, canceled, etc.
+
+  proj_financing:
+    id: ~
+    description: varchar(255)
+    rank: { type: integer, required: true }
+
+  proj_expense_type:
+    id: ~
+    description: varchar(255)
+    role_id: ~
+
+  proj_expense:
+    id: ~
+    schoolproject_id: ~
+    proj_expense_type_id: ~
+    description: varchar(255)
+    hours_estimated: integer
+    hours_approved: integer
+    amount_estimated: decimal
+    amount_approved: decimal
+    
+  proj_activity:
+    id: ~
+    schoolproject_id: ~
+    user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    beginning: timestamp
+    ending: timestamp
+    amount: decimal
+    notes: longvarchar
+    created_at: ~
 
   subnet:
     id:

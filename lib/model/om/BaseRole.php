@@ -81,6 +81,16 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	private $lastUserTeamCriteria = null;
 
 	/**
+	 * @var        array ProjExpenseType[] Collection to store aggregation of ProjExpenseType objects.
+	 */
+	protected $collProjExpenseTypes;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collProjExpenseTypes.
+	 */
+	private $lastProjExpenseTypeCriteria = null;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -424,6 +434,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			$this->collUserTeams = null;
 			$this->lastUserTeamCriteria = null;
 
+			$this->collProjExpenseTypes = null;
+			$this->lastProjExpenseTypeCriteria = null;
+
 		} // if (deep)
 	}
 
@@ -570,6 +583,14 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collProjExpenseTypes !== null) {
+				foreach ($this->collProjExpenseTypes as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -651,6 +672,14 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 
 				if ($this->collUserTeams !== null) {
 					foreach ($this->collUserTeams as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collProjExpenseTypes !== null) {
+					foreach ($this->collProjExpenseTypes as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -921,6 +950,12 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			foreach ($this->getUserTeams() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addUserTeam($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getProjExpenseTypes() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addProjExpenseType($relObj->copy($deepCopy));
 				}
 			}
 
@@ -1421,6 +1456,160 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collProjExpenseTypes collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addProjExpenseTypes()
+	 */
+	public function clearProjExpenseTypes()
+	{
+		$this->collProjExpenseTypes = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collProjExpenseTypes collection (array).
+	 *
+	 * By default this just sets the collProjExpenseTypes collection to an empty array (like clearcollProjExpenseTypes());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initProjExpenseTypes()
+	{
+		$this->collProjExpenseTypes = array();
+	}
+
+	/**
+	 * Gets an array of ProjExpenseType objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this Role has previously been saved, it will retrieve
+	 * related ProjExpenseTypes from storage. If this Role is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array ProjExpenseType[]
+	 * @throws     PropelException
+	 */
+	public function getProjExpenseTypes($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(RolePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collProjExpenseTypes === null) {
+			if ($this->isNew()) {
+			   $this->collProjExpenseTypes = array();
+			} else {
+
+				$criteria->add(ProjExpenseTypePeer::ROLE_ID, $this->id);
+
+				ProjExpenseTypePeer::addSelectColumns($criteria);
+				$this->collProjExpenseTypes = ProjExpenseTypePeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(ProjExpenseTypePeer::ROLE_ID, $this->id);
+
+				ProjExpenseTypePeer::addSelectColumns($criteria);
+				if (!isset($this->lastProjExpenseTypeCriteria) || !$this->lastProjExpenseTypeCriteria->equals($criteria)) {
+					$this->collProjExpenseTypes = ProjExpenseTypePeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastProjExpenseTypeCriteria = $criteria;
+		return $this->collProjExpenseTypes;
+	}
+
+	/**
+	 * Returns the number of related ProjExpenseType objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related ProjExpenseType objects.
+	 * @throws     PropelException
+	 */
+	public function countProjExpenseTypes(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(RolePeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collProjExpenseTypes === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(ProjExpenseTypePeer::ROLE_ID, $this->id);
+
+				$count = ProjExpenseTypePeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(ProjExpenseTypePeer::ROLE_ID, $this->id);
+
+				if (!isset($this->lastProjExpenseTypeCriteria) || !$this->lastProjExpenseTypeCriteria->equals($criteria)) {
+					$count = ProjExpenseTypePeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collProjExpenseTypes);
+				}
+			} else {
+				$count = count($this->collProjExpenseTypes);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a ProjExpenseType object to this object
+	 * through the ProjExpenseType foreign key attribute.
+	 *
+	 * @param      ProjExpenseType $l ProjExpenseType
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addProjExpenseType(ProjExpenseType $l)
+	{
+		if ($this->collProjExpenseTypes === null) {
+			$this->initProjExpenseTypes();
+		}
+		if (!in_array($l, $this->collProjExpenseTypes, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collProjExpenseTypes, $l);
+			$l->setRole($this);
+		}
+	}
+
+	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -1442,10 +1631,16 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collProjExpenseTypes) {
+				foreach ((array) $this->collProjExpenseTypes as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} // if ($deep)
 
 		$this->collsfGuardUserProfiles = null;
 		$this->collUserTeams = null;
+		$this->collProjExpenseTypes = null;
 	}
 
 } // BaseRole
