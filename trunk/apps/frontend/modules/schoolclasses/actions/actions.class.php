@@ -306,7 +306,10 @@ $this->getContext()->getI18N()->__('A new item was inserted'));
     $syllabus_ids=array();
     foreach($this->appointments as $appointment)
     {
-      $syllabus_ids[$appointment->getSyllabusId()]=1;
+      if($appointment->getSyllabusId())
+      {
+        $syllabus_ids[$appointment->getSyllabusId()]=1;
+      }
     }
     
     if(sizeof($syllabus_ids)!=1)
@@ -315,7 +318,7 @@ $this->getContext()->getI18N()->__('A new item was inserted'));
     }
     
     list($this->syllabus_id)=array_keys($syllabus_ids);
-    
+        
     $this->syllabus_items=SyllabusPeer::retrieveByPK($this->syllabus_id)->getSyllabusItems();
     
     if($request->hasParameter('template'))
