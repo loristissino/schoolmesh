@@ -67,6 +67,18 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	protected $created_at;
 
 	/**
+	 * The value for the approved_at field.
+	 * @var        string
+	 */
+	protected $approved_at;
+
+	/**
+	 * The value for the approver_user_id field.
+	 * @var        int
+	 */
+	protected $approver_user_id;
+
+	/**
 	 * @var        Schoolproject
 	 */
 	protected $aSchoolproject;
@@ -74,7 +86,12 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	/**
 	 * @var        sfGuardUser
 	 */
-	protected $asfGuardUser;
+	protected $asfGuardUserRelatedByUserId;
+
+	/**
+	 * @var        sfGuardUser
+	 */
+	protected $asfGuardUserRelatedByApproverUserId;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -259,6 +276,54 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Get the [optionally formatted] temporal [approved_at] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getApprovedAt($format = 'Y-m-d H:i:s')
+	{
+		if ($this->approved_at === null) {
+			return null;
+		}
+
+
+		if ($this->approved_at === '0000-00-00 00:00:00') {
+			// while technically this is not a default value of NULL,
+			// this seems to be closest in meaning.
+			return null;
+		} else {
+			try {
+				$dt = new DateTime($this->approved_at);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->approved_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
+	}
+
+	/**
+	 * Get the [approver_user_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getApproverUserId()
+	{
+		return $this->approver_user_id;
+	}
+
+	/**
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
@@ -319,8 +384,8 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			$this->modifiedColumns[] = ProjActivityPeer::USER_ID;
 		}
 
-		if ($this->asfGuardUser !== null && $this->asfGuardUser->getId() !== $v) {
-			$this->asfGuardUser = null;
+		if ($this->asfGuardUserRelatedByUserId !== null && $this->asfGuardUserRelatedByUserId->getId() !== $v) {
+			$this->asfGuardUserRelatedByUserId = null;
 		}
 
 		return $this;
@@ -514,6 +579,79 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	} // setCreatedAt()
 
 	/**
+	 * Sets the value of [approved_at] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     ProjActivity The current object (for fluent API support)
+	 */
+	public function setApprovedAt($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->approved_at !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->approved_at !== null && $tmpDt = new DateTime($this->approved_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->approved_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = ProjActivityPeer::APPROVED_AT;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setApprovedAt()
+
+	/**
+	 * Set the value of [approver_user_id] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     ProjActivity The current object (for fluent API support)
+	 */
+	public function setApproverUserId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->approver_user_id !== $v) {
+			$this->approver_user_id = $v;
+			$this->modifiedColumns[] = ProjActivityPeer::APPROVER_USER_ID;
+		}
+
+		if ($this->asfGuardUserRelatedByApproverUserId !== null && $this->asfGuardUserRelatedByApproverUserId->getId() !== $v) {
+			$this->asfGuardUserRelatedByApproverUserId = null;
+		}
+
+		return $this;
+	} // setApproverUserId()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -553,6 +691,8 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			$this->amount = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->notes = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->created_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->approved_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->approver_user_id = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -562,7 +702,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 8; // 8 = ProjActivityPeer::NUM_COLUMNS - ProjActivityPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 10; // 10 = ProjActivityPeer::NUM_COLUMNS - ProjActivityPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjActivity object", $e);
@@ -588,8 +728,11 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		if ($this->aSchoolproject !== null && $this->schoolproject_id !== $this->aSchoolproject->getId()) {
 			$this->aSchoolproject = null;
 		}
-		if ($this->asfGuardUser !== null && $this->user_id !== $this->asfGuardUser->getId()) {
-			$this->asfGuardUser = null;
+		if ($this->asfGuardUserRelatedByUserId !== null && $this->user_id !== $this->asfGuardUserRelatedByUserId->getId()) {
+			$this->asfGuardUserRelatedByUserId = null;
+		}
+		if ($this->asfGuardUserRelatedByApproverUserId !== null && $this->approver_user_id !== $this->asfGuardUserRelatedByApproverUserId->getId()) {
+			$this->asfGuardUserRelatedByApproverUserId = null;
 		}
 	} // ensureConsistency
 
@@ -631,7 +774,8 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		if ($deep) {  // also de-associate any related objects?
 
 			$this->aSchoolproject = null;
-			$this->asfGuardUser = null;
+			$this->asfGuardUserRelatedByUserId = null;
+			$this->asfGuardUserRelatedByApproverUserId = null;
 		} // if (deep)
 	}
 
@@ -760,11 +904,18 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 				$this->setSchoolproject($this->aSchoolproject);
 			}
 
-			if ($this->asfGuardUser !== null) {
-				if ($this->asfGuardUser->isModified() || $this->asfGuardUser->isNew()) {
-					$affectedRows += $this->asfGuardUser->save($con);
+			if ($this->asfGuardUserRelatedByUserId !== null) {
+				if ($this->asfGuardUserRelatedByUserId->isModified() || $this->asfGuardUserRelatedByUserId->isNew()) {
+					$affectedRows += $this->asfGuardUserRelatedByUserId->save($con);
 				}
-				$this->setsfGuardUser($this->asfGuardUser);
+				$this->setsfGuardUserRelatedByUserId($this->asfGuardUserRelatedByUserId);
+			}
+
+			if ($this->asfGuardUserRelatedByApproverUserId !== null) {
+				if ($this->asfGuardUserRelatedByApproverUserId->isModified() || $this->asfGuardUserRelatedByApproverUserId->isNew()) {
+					$affectedRows += $this->asfGuardUserRelatedByApproverUserId->save($con);
+				}
+				$this->setsfGuardUserRelatedByApproverUserId($this->asfGuardUserRelatedByApproverUserId);
 			}
 
 			if ($this->isNew() ) {
@@ -866,9 +1017,15 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->asfGuardUser !== null) {
-				if (!$this->asfGuardUser->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->asfGuardUser->getValidationFailures());
+			if ($this->asfGuardUserRelatedByUserId !== null) {
+				if (!$this->asfGuardUserRelatedByUserId->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->asfGuardUserRelatedByUserId->getValidationFailures());
+				}
+			}
+
+			if ($this->asfGuardUserRelatedByApproverUserId !== null) {
+				if (!$this->asfGuardUserRelatedByApproverUserId->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->asfGuardUserRelatedByApproverUserId->getValidationFailures());
 				}
 			}
 
@@ -935,6 +1092,12 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			case 7:
 				return $this->getCreatedAt();
 				break;
+			case 8:
+				return $this->getApprovedAt();
+				break;
+			case 9:
+				return $this->getApproverUserId();
+				break;
 			default:
 				return null;
 				break;
@@ -964,6 +1127,8 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			$keys[5] => $this->getAmount(),
 			$keys[6] => $this->getNotes(),
 			$keys[7] => $this->getCreatedAt(),
+			$keys[8] => $this->getApprovedAt(),
+			$keys[9] => $this->getApproverUserId(),
 		);
 		return $result;
 	}
@@ -1019,6 +1184,12 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			case 7:
 				$this->setCreatedAt($value);
 				break;
+			case 8:
+				$this->setApprovedAt($value);
+				break;
+			case 9:
+				$this->setApproverUserId($value);
+				break;
 		} // switch()
 	}
 
@@ -1051,6 +1222,8 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setAmount($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setNotes($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setApprovedAt($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setApproverUserId($arr[$keys[9]]);
 	}
 
 	/**
@@ -1070,6 +1243,8 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProjActivityPeer::AMOUNT)) $criteria->add(ProjActivityPeer::AMOUNT, $this->amount);
 		if ($this->isColumnModified(ProjActivityPeer::NOTES)) $criteria->add(ProjActivityPeer::NOTES, $this->notes);
 		if ($this->isColumnModified(ProjActivityPeer::CREATED_AT)) $criteria->add(ProjActivityPeer::CREATED_AT, $this->created_at);
+		if ($this->isColumnModified(ProjActivityPeer::APPROVED_AT)) $criteria->add(ProjActivityPeer::APPROVED_AT, $this->approved_at);
+		if ($this->isColumnModified(ProjActivityPeer::APPROVER_USER_ID)) $criteria->add(ProjActivityPeer::APPROVER_USER_ID, $this->approver_user_id);
 
 		return $criteria;
 	}
@@ -1137,6 +1312,10 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		$copyObj->setNotes($this->notes);
 
 		$copyObj->setCreatedAt($this->created_at);
+
+		$copyObj->setApprovedAt($this->approved_at);
+
+		$copyObj->setApproverUserId($this->approver_user_id);
 
 
 		$copyObj->setNew(true);
@@ -1239,7 +1418,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	 * @return     ProjActivity The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function setsfGuardUser(sfGuardUser $v = null)
+	public function setsfGuardUserRelatedByUserId(sfGuardUser $v = null)
 	{
 		if ($v === null) {
 			$this->setUserId(NULL);
@@ -1247,12 +1426,12 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			$this->setUserId($v->getId());
 		}
 
-		$this->asfGuardUser = $v;
+		$this->asfGuardUserRelatedByUserId = $v;
 
 		// Add binding for other direction of this n:n relationship.
 		// If this object has already been added to the sfGuardUser object, it will not be re-added.
 		if ($v !== null) {
-			$v->addProjActivity($this);
+			$v->addProjActivityRelatedByUserId($this);
 		}
 
 		return $this;
@@ -1266,19 +1445,68 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	 * @return     sfGuardUser The associated sfGuardUser object.
 	 * @throws     PropelException
 	 */
-	public function getsfGuardUser(PropelPDO $con = null)
+	public function getsfGuardUserRelatedByUserId(PropelPDO $con = null)
 	{
-		if ($this->asfGuardUser === null && ($this->user_id !== null)) {
-			$this->asfGuardUser = sfGuardUserPeer::retrieveByPk($this->user_id);
+		if ($this->asfGuardUserRelatedByUserId === null && ($this->user_id !== null)) {
+			$this->asfGuardUserRelatedByUserId = sfGuardUserPeer::retrieveByPk($this->user_id);
 			/* The following can be used additionally to
 			   guarantee the related object contains a reference
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->asfGuardUser->addProjActivitys($this);
+			   $this->asfGuardUserRelatedByUserId->addProjActivitysRelatedByUserId($this);
 			 */
 		}
-		return $this->asfGuardUser;
+		return $this->asfGuardUserRelatedByUserId;
+	}
+
+	/**
+	 * Declares an association between this object and a sfGuardUser object.
+	 *
+	 * @param      sfGuardUser $v
+	 * @return     ProjActivity The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setsfGuardUserRelatedByApproverUserId(sfGuardUser $v = null)
+	{
+		if ($v === null) {
+			$this->setApproverUserId(NULL);
+		} else {
+			$this->setApproverUserId($v->getId());
+		}
+
+		$this->asfGuardUserRelatedByApproverUserId = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the sfGuardUser object, it will not be re-added.
+		if ($v !== null) {
+			$v->addProjActivityRelatedByApproverUserId($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated sfGuardUser object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     sfGuardUser The associated sfGuardUser object.
+	 * @throws     PropelException
+	 */
+	public function getsfGuardUserRelatedByApproverUserId(PropelPDO $con = null)
+	{
+		if ($this->asfGuardUserRelatedByApproverUserId === null && ($this->approver_user_id !== null)) {
+			$this->asfGuardUserRelatedByApproverUserId = sfGuardUserPeer::retrieveByPk($this->approver_user_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->asfGuardUserRelatedByApproverUserId->addProjActivitysRelatedByApproverUserId($this);
+			 */
+		}
+		return $this->asfGuardUserRelatedByApproverUserId;
 	}
 
 	/**
@@ -1296,7 +1524,8 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		} // if ($deep)
 
 			$this->aSchoolproject = null;
-			$this->asfGuardUser = null;
+			$this->asfGuardUserRelatedByUserId = null;
+			$this->asfGuardUserRelatedByApproverUserId = null;
 	}
 
 } // BaseProjActivity

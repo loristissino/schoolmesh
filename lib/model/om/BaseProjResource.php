@@ -55,36 +55,6 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	protected $quantity_approved;
 
 	/**
-	 * The value for the hours_estimated field.
-	 * @var        int
-	 */
-	protected $hours_estimated;
-
-	/**
-	 * The value for the hours_approved field.
-	 * @var        int
-	 */
-	protected $hours_approved;
-
-	/**
-	 * The value for the amount_estimated field.
-	 * @var        string
-	 */
-	protected $amount_estimated;
-
-	/**
-	 * The value for the amount_approved field.
-	 * @var        string
-	 */
-	protected $amount_approved;
-
-	/**
-	 * The value for the total_amount_computed field.
-	 * @var        string
-	 */
-	protected $total_amount_computed;
-
-	/**
 	 * @var        Schoolproject
 	 */
 	protected $aSchoolproject;
@@ -170,56 +140,6 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	public function getQuantityApproved()
 	{
 		return $this->quantity_approved;
-	}
-
-	/**
-	 * Get the [hours_estimated] column value.
-	 * 
-	 * @return     int
-	 */
-	public function getHoursEstimated()
-	{
-		return $this->hours_estimated;
-	}
-
-	/**
-	 * Get the [hours_approved] column value.
-	 * 
-	 * @return     int
-	 */
-	public function getHoursApproved()
-	{
-		return $this->hours_approved;
-	}
-
-	/**
-	 * Get the [amount_estimated] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getAmountEstimated()
-	{
-		return $this->amount_estimated;
-	}
-
-	/**
-	 * Get the [amount_approved] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getAmountApproved()
-	{
-		return $this->amount_approved;
-	}
-
-	/**
-	 * Get the [total_amount_computed] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getTotalAmountComputed()
-	{
-		return $this->total_amount_computed;
 	}
 
 	/**
@@ -351,106 +271,6 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	} // setQuantityApproved()
 
 	/**
-	 * Set the value of [hours_estimated] column.
-	 * 
-	 * @param      int $v new value
-	 * @return     ProjResource The current object (for fluent API support)
-	 */
-	public function setHoursEstimated($v)
-	{
-		if ($v !== null) {
-			$v = (int) $v;
-		}
-
-		if ($this->hours_estimated !== $v) {
-			$this->hours_estimated = $v;
-			$this->modifiedColumns[] = ProjResourcePeer::HOURS_ESTIMATED;
-		}
-
-		return $this;
-	} // setHoursEstimated()
-
-	/**
-	 * Set the value of [hours_approved] column.
-	 * 
-	 * @param      int $v new value
-	 * @return     ProjResource The current object (for fluent API support)
-	 */
-	public function setHoursApproved($v)
-	{
-		if ($v !== null) {
-			$v = (int) $v;
-		}
-
-		if ($this->hours_approved !== $v) {
-			$this->hours_approved = $v;
-			$this->modifiedColumns[] = ProjResourcePeer::HOURS_APPROVED;
-		}
-
-		return $this;
-	} // setHoursApproved()
-
-	/**
-	 * Set the value of [amount_estimated] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     ProjResource The current object (for fluent API support)
-	 */
-	public function setAmountEstimated($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->amount_estimated !== $v) {
-			$this->amount_estimated = $v;
-			$this->modifiedColumns[] = ProjResourcePeer::AMOUNT_ESTIMATED;
-		}
-
-		return $this;
-	} // setAmountEstimated()
-
-	/**
-	 * Set the value of [amount_approved] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     ProjResource The current object (for fluent API support)
-	 */
-	public function setAmountApproved($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->amount_approved !== $v) {
-			$this->amount_approved = $v;
-			$this->modifiedColumns[] = ProjResourcePeer::AMOUNT_APPROVED;
-		}
-
-		return $this;
-	} // setAmountApproved()
-
-	/**
-	 * Set the value of [total_amount_computed] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     ProjResource The current object (for fluent API support)
-	 */
-	public function setTotalAmountComputed($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->total_amount_computed !== $v) {
-			$this->total_amount_computed = $v;
-			$this->modifiedColumns[] = ProjResourcePeer::TOTAL_AMOUNT_COMPUTED;
-		}
-
-		return $this;
-	} // setTotalAmountComputed()
-
-	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -488,11 +308,6 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			$this->description = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->quantity_estimated = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->quantity_approved = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->hours_estimated = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
-			$this->hours_approved = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
-			$this->amount_estimated = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-			$this->amount_approved = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
-			$this->total_amount_computed = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -502,7 +317,7 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 11; // 11 = ProjResourcePeer::NUM_COLUMNS - ProjResourcePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 6; // 6 = ProjResourcePeer::NUM_COLUMNS - ProjResourcePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjResource object", $e);
@@ -861,21 +676,6 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			case 5:
 				return $this->getQuantityApproved();
 				break;
-			case 6:
-				return $this->getHoursEstimated();
-				break;
-			case 7:
-				return $this->getHoursApproved();
-				break;
-			case 8:
-				return $this->getAmountEstimated();
-				break;
-			case 9:
-				return $this->getAmountApproved();
-				break;
-			case 10:
-				return $this->getTotalAmountComputed();
-				break;
 			default:
 				return null;
 				break;
@@ -903,11 +703,6 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			$keys[3] => $this->getDescription(),
 			$keys[4] => $this->getQuantityEstimated(),
 			$keys[5] => $this->getQuantityApproved(),
-			$keys[6] => $this->getHoursEstimated(),
-			$keys[7] => $this->getHoursApproved(),
-			$keys[8] => $this->getAmountEstimated(),
-			$keys[9] => $this->getAmountApproved(),
-			$keys[10] => $this->getTotalAmountComputed(),
 		);
 		return $result;
 	}
@@ -957,21 +752,6 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			case 5:
 				$this->setQuantityApproved($value);
 				break;
-			case 6:
-				$this->setHoursEstimated($value);
-				break;
-			case 7:
-				$this->setHoursApproved($value);
-				break;
-			case 8:
-				$this->setAmountEstimated($value);
-				break;
-			case 9:
-				$this->setAmountApproved($value);
-				break;
-			case 10:
-				$this->setTotalAmountComputed($value);
-				break;
 		} // switch()
 	}
 
@@ -1002,11 +782,6 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setDescription($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setQuantityEstimated($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setQuantityApproved($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setHoursEstimated($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setHoursApproved($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setAmountEstimated($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setAmountApproved($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setTotalAmountComputed($arr[$keys[10]]);
 	}
 
 	/**
@@ -1024,11 +799,6 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProjResourcePeer::DESCRIPTION)) $criteria->add(ProjResourcePeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(ProjResourcePeer::QUANTITY_ESTIMATED)) $criteria->add(ProjResourcePeer::QUANTITY_ESTIMATED, $this->quantity_estimated);
 		if ($this->isColumnModified(ProjResourcePeer::QUANTITY_APPROVED)) $criteria->add(ProjResourcePeer::QUANTITY_APPROVED, $this->quantity_approved);
-		if ($this->isColumnModified(ProjResourcePeer::HOURS_ESTIMATED)) $criteria->add(ProjResourcePeer::HOURS_ESTIMATED, $this->hours_estimated);
-		if ($this->isColumnModified(ProjResourcePeer::HOURS_APPROVED)) $criteria->add(ProjResourcePeer::HOURS_APPROVED, $this->hours_approved);
-		if ($this->isColumnModified(ProjResourcePeer::AMOUNT_ESTIMATED)) $criteria->add(ProjResourcePeer::AMOUNT_ESTIMATED, $this->amount_estimated);
-		if ($this->isColumnModified(ProjResourcePeer::AMOUNT_APPROVED)) $criteria->add(ProjResourcePeer::AMOUNT_APPROVED, $this->amount_approved);
-		if ($this->isColumnModified(ProjResourcePeer::TOTAL_AMOUNT_COMPUTED)) $criteria->add(ProjResourcePeer::TOTAL_AMOUNT_COMPUTED, $this->total_amount_computed);
 
 		return $criteria;
 	}
@@ -1092,16 +862,6 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 		$copyObj->setQuantityEstimated($this->quantity_estimated);
 
 		$copyObj->setQuantityApproved($this->quantity_approved);
-
-		$copyObj->setHoursEstimated($this->hours_estimated);
-
-		$copyObj->setHoursApproved($this->hours_approved);
-
-		$copyObj->setAmountEstimated($this->amount_estimated);
-
-		$copyObj->setAmountApproved($this->amount_approved);
-
-		$copyObj->setTotalAmountComputed($this->total_amount_computed);
 
 
 		$copyObj->setNew(true);

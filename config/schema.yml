@@ -368,6 +368,7 @@ propel:
     resource_type: integer
     role_id: ~
     standard_cost: decimal
+    measurement_unit: varchar(10)
 
   proj_resource:
     id: ~
@@ -376,11 +377,6 @@ propel:
     description: varchar(255)
     quantity_estimated: decimal
     quantity_approved: decimal
-    hours_estimated: integer
-    hours_approved: integer
-    amount_estimated: decimal
-    amount_approved: decimal
-    total_amount_computed: decimal
     
   proj_activity:
     id: ~
@@ -391,6 +387,8 @@ propel:
     amount: decimal
     notes: longvarchar
     created_at: ~
+    approved_at: timestamp
+    approver_user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true } 
 
   subnet:
     id:

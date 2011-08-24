@@ -31,12 +31,10 @@
     <td><?php echo $project->getDescription() ?></td>
   </tr>
   <?php endif ?>
-  <?php if(!isset($form['hours_approved'])): ?>
   <tr>
-    <th><label for="schoolproject_hours_approved"><?php echo __('Hours approved') ?></label></th>
-    <td><?php echo $project->getHoursApproved() ?></td>
+    <th><label for="schoolproject_state"><?php echo __('State') ?></label></th>
+    <td><?php echo $project->getState() ?></td>
   </tr>
-  <?php endif ?>
 
     <?php echo $form ?>
 	<tr>
@@ -130,18 +128,12 @@
     <tr>
       <th class="sf_admin_text"><?php echo __('Type') ?></th>
       <th class="sf_admin_text"><?php echo __('Description') ?></th>
+      <th class="sf_admin_text"><?php echo __('M.U.') ?></th>
       <th class="sf_admin_text">
       <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
-        <?php echo __('Estimated hours') ?>
+        <?php echo __('Estimation') ?>
       <?php else: ?>
-        <?php echo __('Approved hours') ?>
-      <?php endif ?>
-      </th>
-      <th class="sf_admin_text">
-      <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
-        <?php echo __('Estimated amount') ?>
-      <?php else: ?>
-        <?php echo __('Approved amount') ?>
+        <?php echo __('Financing') ?>
       <?php endif ?>
       </th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
@@ -156,9 +148,19 @@
           <?php echo $resource->getProjResourceType()->getDescription() ?>
         <?php endif ?>
       </td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td><?php echo $resource->getDescription() ?></td>
+      <td>
+        <?php if ($resource->getProjResourceType()): ?>
+          <?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>
+        <?php endif ?>
+      </td>
+      <td style="text-align: right">
+      <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
+        <?php echo $resource->getQuantityEstimated() ?>
+      <?php else: ?>
+        <?php echo $resource->getQuantityApproved() ?>
+      <?php endif ?>
+      </td>
       <td>
       <ul class="sf_admin_td_actions">
         <li class="sf_admin_action_edit">
@@ -199,7 +201,22 @@
 </ul>
 
 <?php endif ?>
-</div>
+
+<h2><?php echo __('Actions') ?></h2>
+<ul class="sf_admin_actions">
+  <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
+	<li class="sf_admin_action_submit">
+	<?php echo link_to(
+				__('Submit project'),
+				'projects/submit?id='. $project->getId(),
+				array(
+          'method' => 'post', 
+          'title'=>__('Submit the project for approval'),
+          'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()) . ' ' . __('Documents submitted cannot be modified anymore.')
+          ) 
+				) ?>
+  </li>
+  <?php endif ?>
+</ul>
 
 
-</div>

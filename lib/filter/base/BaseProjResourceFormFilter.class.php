@@ -17,11 +17,6 @@ abstract class BaseProjResourceFormFilter extends BaseFormFilterPropel
       'description'           => new sfWidgetFormFilterInput(),
       'quantity_estimated'    => new sfWidgetFormFilterInput(),
       'quantity_approved'     => new sfWidgetFormFilterInput(),
-      'hours_estimated'       => new sfWidgetFormFilterInput(),
-      'hours_approved'        => new sfWidgetFormFilterInput(),
-      'amount_estimated'      => new sfWidgetFormFilterInput(),
-      'amount_approved'       => new sfWidgetFormFilterInput(),
-      'total_amount_computed' => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -30,11 +25,6 @@ abstract class BaseProjResourceFormFilter extends BaseFormFilterPropel
       'description'           => new sfValidatorPass(array('required' => false)),
       'quantity_estimated'    => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'quantity_approved'     => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
-      'hours_estimated'       => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'hours_approved'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'amount_estimated'      => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
-      'amount_approved'       => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
-      'total_amount_computed' => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('proj_resource_filters[%s]');
@@ -58,11 +48,6 @@ abstract class BaseProjResourceFormFilter extends BaseFormFilterPropel
       'description'           => 'Text',
       'quantity_estimated'    => 'Number',
       'quantity_approved'     => 'Number',
-      'hours_estimated'       => 'Number',
-      'hours_approved'        => 'Number',
-      'amount_estimated'      => 'Number',
-      'amount_approved'       => 'Number',
-      'total_amount_computed' => 'Number',
     );
   }
 }

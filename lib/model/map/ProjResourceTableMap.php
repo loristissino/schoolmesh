@@ -42,11 +42,6 @@ class ProjResourceTableMap extends TableMap {
 		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 255, null);
 		$this->addColumn('QUANTITY_ESTIMATED', 'QuantityEstimated', 'DECIMAL', false, null, null);
 		$this->addColumn('QUANTITY_APPROVED', 'QuantityApproved', 'DECIMAL', false, null, null);
-		$this->addColumn('HOURS_ESTIMATED', 'HoursEstimated', 'INTEGER', false, null, null);
-		$this->addColumn('HOURS_APPROVED', 'HoursApproved', 'INTEGER', false, null, null);
-		$this->addColumn('AMOUNT_ESTIMATED', 'AmountEstimated', 'DECIMAL', false, null, null);
-		$this->addColumn('AMOUNT_APPROVED', 'AmountApproved', 'DECIMAL', false, null, null);
-		$this->addColumn('TOTAL_AMOUNT_COMPUTED', 'TotalAmountComputed', 'DECIMAL', false, null, null);
 		// validators
 	} // initialize()
 

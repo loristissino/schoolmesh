@@ -25,7 +25,7 @@ abstract class BaseProjActivityPeer {
 	const TM_CLASS = 'ProjActivityTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 10;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -54,6 +54,12 @@ abstract class BaseProjActivityPeer {
 	/** the column name for the CREATED_AT field */
 	const CREATED_AT = 'proj_activity.CREATED_AT';
 
+	/** the column name for the APPROVED_AT field */
+	const APPROVED_AT = 'proj_activity.APPROVED_AT';
+
+	/** the column name for the APPROVER_USER_ID field */
+	const APPROVER_USER_ID = 'proj_activity.APPROVER_USER_ID';
+
 	/**
 	 * An identiy map to hold any loaded instances of ProjActivity objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
@@ -77,11 +83,11 @@ abstract class BaseProjActivityPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'SchoolprojectId', 'UserId', 'Beginning', 'Ending', 'Amount', 'Notes', 'CreatedAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'schoolprojectId', 'userId', 'beginning', 'ending', 'amount', 'notes', 'createdAt', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::SCHOOLPROJECT_ID, self::USER_ID, self::BEGINNING, self::ENDING, self::AMOUNT, self::NOTES, self::CREATED_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'schoolproject_id', 'user_id', 'beginning', 'ending', 'amount', 'notes', 'created_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'SchoolprojectId', 'UserId', 'Beginning', 'Ending', 'Amount', 'Notes', 'CreatedAt', 'ApprovedAt', 'ApproverUserId', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'schoolprojectId', 'userId', 'beginning', 'ending', 'amount', 'notes', 'createdAt', 'approvedAt', 'approverUserId', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::SCHOOLPROJECT_ID, self::USER_ID, self::BEGINNING, self::ENDING, self::AMOUNT, self::NOTES, self::CREATED_AT, self::APPROVED_AT, self::APPROVER_USER_ID, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'schoolproject_id', 'user_id', 'beginning', 'ending', 'amount', 'notes', 'created_at', 'approved_at', 'approver_user_id', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	/**
@@ -91,11 +97,11 @@ abstract class BaseProjActivityPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'SchoolprojectId' => 1, 'UserId' => 2, 'Beginning' => 3, 'Ending' => 4, 'Amount' => 5, 'Notes' => 6, 'CreatedAt' => 7, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'schoolprojectId' => 1, 'userId' => 2, 'beginning' => 3, 'ending' => 4, 'amount' => 5, 'notes' => 6, 'createdAt' => 7, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SCHOOLPROJECT_ID => 1, self::USER_ID => 2, self::BEGINNING => 3, self::ENDING => 4, self::AMOUNT => 5, self::NOTES => 6, self::CREATED_AT => 7, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'schoolproject_id' => 1, 'user_id' => 2, 'beginning' => 3, 'ending' => 4, 'amount' => 5, 'notes' => 6, 'created_at' => 7, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'SchoolprojectId' => 1, 'UserId' => 2, 'Beginning' => 3, 'Ending' => 4, 'Amount' => 5, 'Notes' => 6, 'CreatedAt' => 7, 'ApprovedAt' => 8, 'ApproverUserId' => 9, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'schoolprojectId' => 1, 'userId' => 2, 'beginning' => 3, 'ending' => 4, 'amount' => 5, 'notes' => 6, 'createdAt' => 7, 'approvedAt' => 8, 'approverUserId' => 9, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SCHOOLPROJECT_ID => 1, self::USER_ID => 2, self::BEGINNING => 3, self::ENDING => 4, self::AMOUNT => 5, self::NOTES => 6, self::CREATED_AT => 7, self::APPROVED_AT => 8, self::APPROVER_USER_ID => 9, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'schoolproject_id' => 1, 'user_id' => 2, 'beginning' => 3, 'ending' => 4, 'amount' => 5, 'notes' => 6, 'created_at' => 7, 'approved_at' => 8, 'approver_user_id' => 9, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	/**
@@ -173,6 +179,8 @@ abstract class BaseProjActivityPeer {
 		$criteria->addSelectColumn(ProjActivityPeer::AMOUNT);
 		$criteria->addSelectColumn(ProjActivityPeer::NOTES);
 		$criteria->addSelectColumn(ProjActivityPeer::CREATED_AT);
+		$criteria->addSelectColumn(ProjActivityPeer::APPROVED_AT);
+		$criteria->addSelectColumn(ProjActivityPeer::APPROVER_USER_ID);
 	}
 
 	/**
@@ -469,7 +477,7 @@ abstract class BaseProjActivityPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related sfGuardUser table
+	 * Returns the number of rows matching criteria, joining the related sfGuardUserRelatedByUserId table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -477,7 +485,7 @@ abstract class BaseProjActivityPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinsfGuardUser(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinsfGuardUserRelatedByUserId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -505,6 +513,56 @@ abstract class BaseProjActivityPeer {
 		}
 
 		$criteria->addJoin(ProjActivityPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related sfGuardUserRelatedByApproverUserId table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinsfGuardUserRelatedByApproverUserId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(ProjActivityPeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			ProjActivityPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(ProjActivityPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(ProjActivityPeer::APPROVER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -593,7 +651,7 @@ abstract class BaseProjActivityPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinsfGuardUser(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinsfGuardUserRelatedByUserId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -639,7 +697,73 @@ abstract class BaseProjActivityPeer {
 				} // if obj2 already loaded
 				
 				// Add the $obj1 (ProjActivity) to $obj2 (sfGuardUser)
-				$obj2->addProjActivity($obj1);
+				$obj2->addProjActivityRelatedByUserId($obj1);
+
+			} // if joined row was not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Selects a collection of ProjActivity objects pre-filled with their sfGuardUser objects.
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of ProjActivity objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinsfGuardUserRelatedByApproverUserId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		ProjActivityPeer::addSelectColumns($criteria);
+		$startcol = (ProjActivityPeer::NUM_COLUMNS - ProjActivityPeer::NUM_LAZY_LOAD_COLUMNS);
+		sfGuardUserPeer::addSelectColumns($criteria);
+
+		$criteria->addJoin(ProjActivityPeer::APPROVER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = ProjActivityPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ProjActivityPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+
+				$cls = ProjActivityPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				ProjActivityPeer::addInstanceToPool($obj1, $key1);
+			} // if $obj1 already loaded
+
+			$key2 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			if ($key2 !== null) {
+				$obj2 = sfGuardUserPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol);
+					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 already loaded
+				
+				// Add the $obj1 (ProjActivity) to $obj2 (sfGuardUser)
+				$obj2->addProjActivityRelatedByApproverUserId($obj1);
 
 			} // if joined row was not null
 
@@ -690,6 +814,8 @@ abstract class BaseProjActivityPeer {
 
 		$criteria->addJoin(ProjActivityPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
+		$criteria->addJoin(ProjActivityPeer::APPROVER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
+
 		$stmt = BasePeer::doCount($criteria, $con);
 
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -729,9 +855,14 @@ abstract class BaseProjActivityPeer {
 		sfGuardUserPeer::addSelectColumns($criteria);
 		$startcol4 = $startcol3 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
 
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol5 = $startcol4 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
 		$criteria->addJoin(ProjActivityPeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(ProjActivityPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$criteria->addJoin(ProjActivityPeer::APPROVER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
@@ -783,7 +914,25 @@ abstract class BaseProjActivityPeer {
 				} // if obj3 loaded
 
 				// Add the $obj1 (ProjActivity) to the collection in $obj3 (sfGuardUser)
-				$obj3->addProjActivity($obj1);
+				$obj3->addProjActivityRelatedByUserId($obj1);
+			} // if joined row not null
+
+			// Add objects for joined sfGuardUser rows
+
+			$key4 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol4);
+			if ($key4 !== null) {
+				$obj4 = sfGuardUserPeer::getInstanceFromPool($key4);
+				if (!$obj4) {
+
+					$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj4 = new $cls();
+					$obj4->hydrate($row, $startcol4);
+					sfGuardUserPeer::addInstanceToPool($obj4, $key4);
+				} // if obj4 loaded
+
+				// Add the $obj1 (ProjActivity) to the collection in $obj4 (sfGuardUser)
+				$obj4->addProjActivityRelatedByApproverUserId($obj1);
 			} // if joined row not null
 
 			$results[] = $obj1;
@@ -831,6 +980,8 @@ abstract class BaseProjActivityPeer {
 	
 		$criteria->addJoin(ProjActivityPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
+		$criteria->addJoin(ProjActivityPeer::APPROVER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
+
 		$stmt = BasePeer::doCount($criteria, $con);
 
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -844,7 +995,7 @@ abstract class BaseProjActivityPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related sfGuardUser table
+	 * Returns the number of rows matching criteria, joining the related sfGuardUserRelatedByUserId table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -852,7 +1003,57 @@ abstract class BaseProjActivityPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinAllExceptsfGuardUser(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinAllExceptsfGuardUserRelatedByUserId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(ProjActivityPeer::TABLE_NAME);
+		
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			ProjActivityPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY should not affect count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(ProjActivityPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+	
+		$criteria->addJoin(ProjActivityPeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related sfGuardUserRelatedByApproverUserId table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAllExceptsfGuardUserRelatedByApproverUserId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -920,7 +1121,12 @@ abstract class BaseProjActivityPeer {
 		sfGuardUserPeer::addSelectColumns($criteria);
 		$startcol3 = $startcol2 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
 
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
 		$criteria->addJoin(ProjActivityPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$criteria->addJoin(ProjActivityPeer::APPROVER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 
 		$stmt = BasePeer::doSelect($criteria, $con);
@@ -955,6 +1161,98 @@ abstract class BaseProjActivityPeer {
 				} // if $obj2 already loaded
 
 				// Add the $obj1 (ProjActivity) to the collection in $obj2 (sfGuardUser)
+				$obj2->addProjActivityRelatedByUserId($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined sfGuardUser rows
+
+				$key3 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+				if ($key3 !== null) {
+					$obj3 = sfGuardUserPeer::getInstanceFromPool($key3);
+					if (!$obj3) {
+	
+						$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj3 = new $cls();
+					$obj3->hydrate($row, $startcol3);
+					sfGuardUserPeer::addInstanceToPool($obj3, $key3);
+				} // if $obj3 already loaded
+
+				// Add the $obj1 (ProjActivity) to the collection in $obj3 (sfGuardUser)
+				$obj3->addProjActivityRelatedByApproverUserId($obj1);
+
+			} // if joined row is not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Selects a collection of ProjActivity objects pre-filled with all related objects except sfGuardUserRelatedByUserId.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of ProjActivity objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAllExceptsfGuardUserRelatedByUserId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		// $criteria->getDbName() will return the same object if not set to another value
+		// so == check is okay and faster
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		ProjActivityPeer::addSelectColumns($criteria);
+		$startcol2 = (ProjActivityPeer::NUM_COLUMNS - ProjActivityPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		SchoolprojectPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(ProjActivityPeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
+
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = ProjActivityPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ProjActivityPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = ProjActivityPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				ProjActivityPeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+				// Add objects for joined Schoolproject rows
+
+				$key2 = SchoolprojectPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				if ($key2 !== null) {
+					$obj2 = SchoolprojectPeer::getInstanceFromPool($key2);
+					if (!$obj2) {
+	
+						$cls = SchoolprojectPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					SchoolprojectPeer::addInstanceToPool($obj2, $key2);
+				} // if $obj2 already loaded
+
+				// Add the $obj1 (ProjActivity) to the collection in $obj2 (Schoolproject)
 				$obj2->addProjActivity($obj1);
 
 			} // if joined row is not null
@@ -967,7 +1265,7 @@ abstract class BaseProjActivityPeer {
 
 
 	/**
-	 * Selects a collection of ProjActivity objects pre-filled with all related objects except sfGuardUser.
+	 * Selects a collection of ProjActivity objects pre-filled with all related objects except sfGuardUserRelatedByApproverUserId.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
@@ -976,7 +1274,7 @@ abstract class BaseProjActivityPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinAllExceptsfGuardUser(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinAllExceptsfGuardUserRelatedByApproverUserId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
