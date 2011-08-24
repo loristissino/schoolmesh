@@ -2235,8 +2235,11 @@
         <source>View as table</source>
         <target>Visualizza come tabella</target>
     </trans-unit>
+    <trans-unit id="578">
+        <source>Deadline of %date%</source>
+        <target>Scadenza del giorno %date%</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
-
 

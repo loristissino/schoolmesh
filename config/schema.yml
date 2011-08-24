@@ -362,20 +362,25 @@ propel:
     description: varchar(255)
     rank: { type: integer, required: true }
 
-  proj_expense_type:
+  proj_resource_type:
     id: ~
     description: varchar(255)
+    resource_type: integer
     role_id: ~
+    standard_cost: decimal
 
-  proj_expense:
+  proj_resource:
     id: ~
     schoolproject_id: ~
-    proj_expense_type_id: ~
+    proj_resource_type_id: ~
     description: varchar(255)
+    quantity_estimated: decimal
+    quantity_approved: decimal
     hours_estimated: integer
     hours_approved: integer
     amount_estimated: decimal
     amount_approved: decimal
+    total_amount_computed: decimal
     
   proj_activity:
     id: ~

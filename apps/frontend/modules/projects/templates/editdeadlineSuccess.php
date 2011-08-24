@@ -7,10 +7,11 @@
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     'projects/index' => __("Projects"),
-    'projects/edit?id=' . $deadline->getProject()->getId() => $deadline->getProject()
+    'projects/edit?id=' . $deadline->getSchoolproject()->getId() => $deadline->getSchoolproject(),
     ),
-  'current'=>__("Edit deadline")
-  ))
+  'current'=>__('Deadline of %date%', array('%date%'=>Generic::datetime($deadline->getCurrentDeadlineDate('U'))))
+    )
+  )
 ?>
 
 <?php include_partial('content/flashes'); ?>

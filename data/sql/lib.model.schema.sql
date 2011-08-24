@@ -1016,49 +1016,55 @@ CREATE TABLE `proj_financing`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- proj_expense_type
+#-- proj_resource_type
 #-----------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `proj_expense_type`;
+DROP TABLE IF EXISTS `proj_resource_type`;
 
 
-CREATE TABLE `proj_expense_type`
+CREATE TABLE `proj_resource_type`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`description` VARCHAR(255),
+	`resource_type` INTEGER,
 	`role_id` INTEGER,
+	`standard_cost` DECIMAL,
 	PRIMARY KEY (`id`),
-	INDEX `proj_expense_type_FI_1` (`role_id`),
-	CONSTRAINT `proj_expense_type_FK_1`
+	INDEX `proj_resource_type_FI_1` (`role_id`),
+	CONSTRAINT `proj_resource_type_FK_1`
 		FOREIGN KEY (`role_id`)
 		REFERENCES `role` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- proj_expense
+#-- proj_resource
 #-----------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `proj_expense`;
+DROP TABLE IF EXISTS `proj_resource`;
 
 
-CREATE TABLE `proj_expense`
+CREATE TABLE `proj_resource`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`schoolproject_id` INTEGER,
-	`proj_expense_type_id` INTEGER,
+	`proj_resource_type_id` INTEGER,
+	`description` VARCHAR(255),
+	`quantity_estimated` DECIMAL,
+	`quantity_approved` DECIMAL,
 	`hours_estimated` INTEGER,
 	`hours_approved` INTEGER,
 	`amount_estimated` DECIMAL,
 	`amount_approved` DECIMAL,
+	`total_amount_computed` DECIMAL,
 	PRIMARY KEY (`id`),
-	INDEX `proj_expense_FI_1` (`schoolproject_id`),
-	CONSTRAINT `proj_expense_FK_1`
+	INDEX `proj_resource_FI_1` (`schoolproject_id`),
+	CONSTRAINT `proj_resource_FK_1`
 		FOREIGN KEY (`schoolproject_id`)
 		REFERENCES `schoolproject` (`id`),
-	INDEX `proj_expense_FI_2` (`proj_expense_type_id`),
-	CONSTRAINT `proj_expense_FK_2`
-		FOREIGN KEY (`proj_expense_type_id`)
-		REFERENCES `proj_expense_type` (`id`)
+	INDEX `proj_resource_FI_2` (`proj_resource_type_id`),
+	CONSTRAINT `proj_resource_FK_2`
+		FOREIGN KEY (`proj_resource_type_id`)
+		REFERENCES `proj_resource_type` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

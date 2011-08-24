@@ -108,14 +108,22 @@
 <?php endif ?>
 
 <?php if ($project->getState()==Workflow::PROJ_DRAFT): ?>
-<form action="<?php echo url_for('projects/adddeadline?id='. $project->getId()) ?>" method="POST">
-<input type="submit" name="add_deadline" value="<?php echo __('Add deadline') ?>">
-</form>
+<ul class="sf_admin_actions">
+	<li class="sf_admin_action_new">
+	<?php echo link_to(
+				__('Add deadline'),
+				'projects/adddeadline?id='. $project->getId(),
+				array('method' => 'post', 'title'=>__('Add a new deadline to this project')) 
+				)?>
+</li>
+</ul>
+
+
 <?php endif ?>
 
-<h2><?php echo __('Expenses') ?></h2>
+<h2><?php echo __('Resources') ?></h2>
 
-<?php if(sizeof($expenses)>0): ?>
+<?php if(sizeof($resources)>0): ?>
 
 <table cellspacing="0">
   <thead>
@@ -141,11 +149,11 @@
   </thead>
   <tbody>
 	<?php $i=0 ?>
-    <?php foreach ($expenses as $expense): ?>
+    <?php foreach ($resources as $resource): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <td>
-        <?php if ($expense->getProjExpenseType()): ?>
-          <?php echo $expense->getProjExpenseType()->getDescription() ?>
+        <?php if ($resource->getProjResourceType()): ?>
+          <?php echo $resource->getProjResourceType()->getDescription() ?>
         <?php endif ?>
       </td>
       <td></td>
@@ -156,14 +164,14 @@
         <li class="sf_admin_action_edit">
         <?php echo link_to(
             __('Edit'),
-            url_for('projects/editexpense?id='. $expense->getId())
+            url_for('projects/editresource?id='. $resource->getId())
             )
              ?></li>
         <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
         <li class="sf_admin_action_delete">
         <?php echo link_to(
             __('Delete'),
-            url_for('projects/deleteexpense?id='. $expense->getId()),
+            url_for('projects/deleteresource?id='. $resource->getId()),
             array('method'=>'post', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))
             )
              ?></li>
@@ -176,14 +184,22 @@
   </tbody>
 </table>
 <?php else: ?>
-<p><?php echo __('No expenses defined.') ?></p>
+<p><?php echo __('No resources defined.') ?></p>
+<?php endif ?>
+<?php if ($project->getState()==Workflow::PROJ_DRAFT): ?>
+
+<ul class="sf_admin_actions">
+	<li class="sf_admin_action_new">
+	<?php echo link_to(
+				__('Add resource'),
+				'projects/addresource?id='. $project->getId(),
+				array('method' => 'post', 'title'=>__('Add a new resource to this project')) 
+				)?>
+</li>
+</ul>
+
 <?php endif ?>
 </div>
-<?php if ($project->getState()==Workflow::PROJ_DRAFT): ?>
-<form action="<?php echo url_for('projects/addexpense?id='. $project->getId()) ?>" method="POST">
-<input type="submit" name="add_expense" value="<?php echo __('Add expense') ?>">
-</form>
-<?php endif ?>
 
 
 </div>

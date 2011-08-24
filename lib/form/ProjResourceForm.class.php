@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ProjExpense form.
+ * ProjResource form.
  *
  * @package    schoolmesh
  * @subpackage form
  * @author     Your name here
  */
-class ProjExpenseForm extends BaseProjExpenseForm
+class ProjResourceForm extends BaseProjResourceForm
 {
   public function configure()
   {

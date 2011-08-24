@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Base class that represents a row from the 'proj_expense' table.
+ * Base class that represents a row from the 'proj_resource' table.
  *
  * 
  *
  * @package    lib.model.om
  */
-abstract class BaseProjExpense extends BaseObject  implements Persistent {
+abstract class BaseProjResource extends BaseObject  implements Persistent {
 
 
 	/**
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        ProjExpensePeer
+	 * @var        ProjResourcePeer
 	 */
 	protected static $peer;
 
@@ -31,10 +31,28 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	protected $schoolproject_id;
 
 	/**
-	 * The value for the proj_expense_type_id field.
+	 * The value for the proj_resource_type_id field.
 	 * @var        int
 	 */
-	protected $proj_expense_type_id;
+	protected $proj_resource_type_id;
+
+	/**
+	 * The value for the description field.
+	 * @var        string
+	 */
+	protected $description;
+
+	/**
+	 * The value for the quantity_estimated field.
+	 * @var        string
+	 */
+	protected $quantity_estimated;
+
+	/**
+	 * The value for the quantity_approved field.
+	 * @var        string
+	 */
+	protected $quantity_approved;
 
 	/**
 	 * The value for the hours_estimated field.
@@ -61,14 +79,20 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	protected $amount_approved;
 
 	/**
+	 * The value for the total_amount_computed field.
+	 * @var        string
+	 */
+	protected $total_amount_computed;
+
+	/**
 	 * @var        Schoolproject
 	 */
 	protected $aSchoolproject;
 
 	/**
-	 * @var        ProjExpenseType
+	 * @var        ProjResourceType
 	 */
-	protected $aProjExpenseType;
+	protected $aProjResourceType;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -86,7 +110,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 
 	// symfony behavior
 	
-	const PEER = 'ProjExpensePeer';
+	const PEER = 'ProjResourcePeer';
 
 	/**
 	 * Get the [id] column value.
@@ -109,13 +133,43 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [proj_expense_type_id] column value.
+	 * Get the [proj_resource_type_id] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getProjExpenseTypeId()
+	public function getProjResourceTypeId()
 	{
-		return $this->proj_expense_type_id;
+		return $this->proj_resource_type_id;
+	}
+
+	/**
+	 * Get the [description] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getDescription()
+	{
+		return $this->description;
+	}
+
+	/**
+	 * Get the [quantity_estimated] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getQuantityEstimated()
+	{
+		return $this->quantity_estimated;
+	}
+
+	/**
+	 * Get the [quantity_approved] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getQuantityApproved()
+	{
+		return $this->quantity_approved;
 	}
 
 	/**
@@ -159,10 +213,20 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Get the [total_amount_computed] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getTotalAmountComputed()
+	{
+		return $this->total_amount_computed;
+	}
+
+	/**
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     ProjExpense The current object (for fluent API support)
+	 * @return     ProjResource The current object (for fluent API support)
 	 */
 	public function setId($v)
 	{
@@ -172,7 +236,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = ProjExpensePeer::ID;
+			$this->modifiedColumns[] = ProjResourcePeer::ID;
 		}
 
 		return $this;
@@ -182,7 +246,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	 * Set the value of [schoolproject_id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     ProjExpense The current object (for fluent API support)
+	 * @return     ProjResource The current object (for fluent API support)
 	 */
 	public function setSchoolprojectId($v)
 	{
@@ -192,7 +256,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 
 		if ($this->schoolproject_id !== $v) {
 			$this->schoolproject_id = $v;
-			$this->modifiedColumns[] = ProjExpensePeer::SCHOOLPROJECT_ID;
+			$this->modifiedColumns[] = ProjResourcePeer::SCHOOLPROJECT_ID;
 		}
 
 		if ($this->aSchoolproject !== null && $this->aSchoolproject->getId() !== $v) {
@@ -203,34 +267,94 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	} // setSchoolprojectId()
 
 	/**
-	 * Set the value of [proj_expense_type_id] column.
+	 * Set the value of [proj_resource_type_id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     ProjExpense The current object (for fluent API support)
+	 * @return     ProjResource The current object (for fluent API support)
 	 */
-	public function setProjExpenseTypeId($v)
+	public function setProjResourceTypeId($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
 		}
 
-		if ($this->proj_expense_type_id !== $v) {
-			$this->proj_expense_type_id = $v;
-			$this->modifiedColumns[] = ProjExpensePeer::PROJ_EXPENSE_TYPE_ID;
+		if ($this->proj_resource_type_id !== $v) {
+			$this->proj_resource_type_id = $v;
+			$this->modifiedColumns[] = ProjResourcePeer::PROJ_RESOURCE_TYPE_ID;
 		}
 
-		if ($this->aProjExpenseType !== null && $this->aProjExpenseType->getId() !== $v) {
-			$this->aProjExpenseType = null;
+		if ($this->aProjResourceType !== null && $this->aProjResourceType->getId() !== $v) {
+			$this->aProjResourceType = null;
 		}
 
 		return $this;
-	} // setProjExpenseTypeId()
+	} // setProjResourceTypeId()
+
+	/**
+	 * Set the value of [description] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     ProjResource The current object (for fluent API support)
+	 */
+	public function setDescription($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->description !== $v) {
+			$this->description = $v;
+			$this->modifiedColumns[] = ProjResourcePeer::DESCRIPTION;
+		}
+
+		return $this;
+	} // setDescription()
+
+	/**
+	 * Set the value of [quantity_estimated] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     ProjResource The current object (for fluent API support)
+	 */
+	public function setQuantityEstimated($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->quantity_estimated !== $v) {
+			$this->quantity_estimated = $v;
+			$this->modifiedColumns[] = ProjResourcePeer::QUANTITY_ESTIMATED;
+		}
+
+		return $this;
+	} // setQuantityEstimated()
+
+	/**
+	 * Set the value of [quantity_approved] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     ProjResource The current object (for fluent API support)
+	 */
+	public function setQuantityApproved($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->quantity_approved !== $v) {
+			$this->quantity_approved = $v;
+			$this->modifiedColumns[] = ProjResourcePeer::QUANTITY_APPROVED;
+		}
+
+		return $this;
+	} // setQuantityApproved()
 
 	/**
 	 * Set the value of [hours_estimated] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     ProjExpense The current object (for fluent API support)
+	 * @return     ProjResource The current object (for fluent API support)
 	 */
 	public function setHoursEstimated($v)
 	{
@@ -240,7 +364,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 
 		if ($this->hours_estimated !== $v) {
 			$this->hours_estimated = $v;
-			$this->modifiedColumns[] = ProjExpensePeer::HOURS_ESTIMATED;
+			$this->modifiedColumns[] = ProjResourcePeer::HOURS_ESTIMATED;
 		}
 
 		return $this;
@@ -250,7 +374,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	 * Set the value of [hours_approved] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     ProjExpense The current object (for fluent API support)
+	 * @return     ProjResource The current object (for fluent API support)
 	 */
 	public function setHoursApproved($v)
 	{
@@ -260,7 +384,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 
 		if ($this->hours_approved !== $v) {
 			$this->hours_approved = $v;
-			$this->modifiedColumns[] = ProjExpensePeer::HOURS_APPROVED;
+			$this->modifiedColumns[] = ProjResourcePeer::HOURS_APPROVED;
 		}
 
 		return $this;
@@ -270,7 +394,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	 * Set the value of [amount_estimated] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     ProjExpense The current object (for fluent API support)
+	 * @return     ProjResource The current object (for fluent API support)
 	 */
 	public function setAmountEstimated($v)
 	{
@@ -280,7 +404,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 
 		if ($this->amount_estimated !== $v) {
 			$this->amount_estimated = $v;
-			$this->modifiedColumns[] = ProjExpensePeer::AMOUNT_ESTIMATED;
+			$this->modifiedColumns[] = ProjResourcePeer::AMOUNT_ESTIMATED;
 		}
 
 		return $this;
@@ -290,7 +414,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	 * Set the value of [amount_approved] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     ProjExpense The current object (for fluent API support)
+	 * @return     ProjResource The current object (for fluent API support)
 	 */
 	public function setAmountApproved($v)
 	{
@@ -300,11 +424,31 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 
 		if ($this->amount_approved !== $v) {
 			$this->amount_approved = $v;
-			$this->modifiedColumns[] = ProjExpensePeer::AMOUNT_APPROVED;
+			$this->modifiedColumns[] = ProjResourcePeer::AMOUNT_APPROVED;
 		}
 
 		return $this;
 	} // setAmountApproved()
+
+	/**
+	 * Set the value of [total_amount_computed] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     ProjResource The current object (for fluent API support)
+	 */
+	public function setTotalAmountComputed($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->total_amount_computed !== $v) {
+			$this->total_amount_computed = $v;
+			$this->modifiedColumns[] = ProjResourcePeer::TOTAL_AMOUNT_COMPUTED;
+		}
+
+		return $this;
+	} // setTotalAmountComputed()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -340,11 +484,15 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->schoolproject_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->proj_expense_type_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->hours_estimated = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
-			$this->hours_approved = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
-			$this->amount_estimated = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->amount_approved = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->proj_resource_type_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->description = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->quantity_estimated = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->quantity_approved = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->hours_estimated = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
+			$this->hours_approved = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
+			$this->amount_estimated = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->amount_approved = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->total_amount_computed = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -354,10 +502,10 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 7; // 7 = ProjExpensePeer::NUM_COLUMNS - ProjExpensePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 11; // 11 = ProjResourcePeer::NUM_COLUMNS - ProjResourcePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating ProjExpense object", $e);
+			throw new PropelException("Error populating ProjResource object", $e);
 		}
 	}
 
@@ -380,8 +528,8 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 		if ($this->aSchoolproject !== null && $this->schoolproject_id !== $this->aSchoolproject->getId()) {
 			$this->aSchoolproject = null;
 		}
-		if ($this->aProjExpenseType !== null && $this->proj_expense_type_id !== $this->aProjExpenseType->getId()) {
-			$this->aProjExpenseType = null;
+		if ($this->aProjResourceType !== null && $this->proj_resource_type_id !== $this->aProjResourceType->getId()) {
+			$this->aProjResourceType = null;
 		}
 	} // ensureConsistency
 
@@ -406,13 +554,13 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(ProjExpensePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ProjResourcePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		// We don't need to alter the object instance pool; we're just modifying this instance
 		// already in the pool.
 
-		$stmt = ProjExpensePeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+		$stmt = ProjResourcePeer::doSelectStmt($this->buildPkeyCriteria(), $con);
 		$row = $stmt->fetch(PDO::FETCH_NUM);
 		$stmt->closeCursor();
 		if (!$row) {
@@ -423,7 +571,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 		if ($deep) {  // also de-associate any related objects?
 
 			$this->aSchoolproject = null;
-			$this->aProjExpenseType = null;
+			$this->aProjResourceType = null;
 		} // if (deep)
 	}
 
@@ -443,14 +591,14 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(ProjExpensePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ProjResourcePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
 		try {
 			$ret = $this->preDelete($con);
 			if ($ret) {
-				ProjExpensePeer::doDelete($this, $con);
+				ProjResourcePeer::doDelete($this, $con);
 				$this->postDelete($con);
 				$this->setDeleted(true);
 				$con->commit();
@@ -483,7 +631,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(ProjExpensePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ProjResourcePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
@@ -503,7 +651,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 					$this->postUpdate($con);
 				}
 				$this->postSave($con);
-				ProjExpensePeer::addInstanceToPool($this);
+				ProjResourcePeer::addInstanceToPool($this);
 			} else {
 				$affectedRows = 0;
 			}
@@ -544,21 +692,21 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 				$this->setSchoolproject($this->aSchoolproject);
 			}
 
-			if ($this->aProjExpenseType !== null) {
-				if ($this->aProjExpenseType->isModified() || $this->aProjExpenseType->isNew()) {
-					$affectedRows += $this->aProjExpenseType->save($con);
+			if ($this->aProjResourceType !== null) {
+				if ($this->aProjResourceType->isModified() || $this->aProjResourceType->isNew()) {
+					$affectedRows += $this->aProjResourceType->save($con);
 				}
-				$this->setProjExpenseType($this->aProjExpenseType);
+				$this->setProjResourceType($this->aProjResourceType);
 			}
 
 			if ($this->isNew() ) {
-				$this->modifiedColumns[] = ProjExpensePeer::ID;
+				$this->modifiedColumns[] = ProjResourcePeer::ID;
 			}
 
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = ProjExpensePeer::doInsert($this, $con);
+					$pk = ProjResourcePeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
@@ -567,7 +715,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 
 					$this->setNew(false);
 				} else {
-					$affectedRows += ProjExpensePeer::doUpdate($this, $con);
+					$affectedRows += ProjResourcePeer::doUpdate($this, $con);
 				}
 
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
@@ -650,14 +798,14 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->aProjExpenseType !== null) {
-				if (!$this->aProjExpenseType->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aProjExpenseType->getValidationFailures());
+			if ($this->aProjResourceType !== null) {
+				if (!$this->aProjResourceType->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aProjResourceType->getValidationFailures());
 				}
 			}
 
 
-			if (($retval = ProjExpensePeer::doValidate($this, $columns)) !== true) {
+			if (($retval = ProjResourcePeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
@@ -680,7 +828,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = ProjExpensePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = ProjResourcePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		$field = $this->getByPosition($pos);
 		return $field;
 	}
@@ -702,19 +850,31 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 				return $this->getSchoolprojectId();
 				break;
 			case 2:
-				return $this->getProjExpenseTypeId();
+				return $this->getProjResourceTypeId();
 				break;
 			case 3:
-				return $this->getHoursEstimated();
+				return $this->getDescription();
 				break;
 			case 4:
-				return $this->getHoursApproved();
+				return $this->getQuantityEstimated();
 				break;
 			case 5:
-				return $this->getAmountEstimated();
+				return $this->getQuantityApproved();
 				break;
 			case 6:
+				return $this->getHoursEstimated();
+				break;
+			case 7:
+				return $this->getHoursApproved();
+				break;
+			case 8:
+				return $this->getAmountEstimated();
+				break;
+			case 9:
 				return $this->getAmountApproved();
+				break;
+			case 10:
+				return $this->getTotalAmountComputed();
 				break;
 			default:
 				return null;
@@ -735,15 +895,19 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
 	{
-		$keys = ProjExpensePeer::getFieldNames($keyType);
+		$keys = ProjResourcePeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getSchoolprojectId(),
-			$keys[2] => $this->getProjExpenseTypeId(),
-			$keys[3] => $this->getHoursEstimated(),
-			$keys[4] => $this->getHoursApproved(),
-			$keys[5] => $this->getAmountEstimated(),
-			$keys[6] => $this->getAmountApproved(),
+			$keys[2] => $this->getProjResourceTypeId(),
+			$keys[3] => $this->getDescription(),
+			$keys[4] => $this->getQuantityEstimated(),
+			$keys[5] => $this->getQuantityApproved(),
+			$keys[6] => $this->getHoursEstimated(),
+			$keys[7] => $this->getHoursApproved(),
+			$keys[8] => $this->getAmountEstimated(),
+			$keys[9] => $this->getAmountApproved(),
+			$keys[10] => $this->getTotalAmountComputed(),
 		);
 		return $result;
 	}
@@ -760,7 +924,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = ProjExpensePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = ProjResourcePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -782,19 +946,31 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 				$this->setSchoolprojectId($value);
 				break;
 			case 2:
-				$this->setProjExpenseTypeId($value);
+				$this->setProjResourceTypeId($value);
 				break;
 			case 3:
-				$this->setHoursEstimated($value);
+				$this->setDescription($value);
 				break;
 			case 4:
-				$this->setHoursApproved($value);
+				$this->setQuantityEstimated($value);
 				break;
 			case 5:
-				$this->setAmountEstimated($value);
+				$this->setQuantityApproved($value);
 				break;
 			case 6:
+				$this->setHoursEstimated($value);
+				break;
+			case 7:
+				$this->setHoursApproved($value);
+				break;
+			case 8:
+				$this->setAmountEstimated($value);
+				break;
+			case 9:
 				$this->setAmountApproved($value);
+				break;
+			case 10:
+				$this->setTotalAmountComputed($value);
 				break;
 		} // switch()
 	}
@@ -818,15 +994,19 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = ProjExpensePeer::getFieldNames($keyType);
+		$keys = ProjResourcePeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setSchoolprojectId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setProjExpenseTypeId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setHoursEstimated($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setHoursApproved($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setAmountEstimated($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setAmountApproved($arr[$keys[6]]);
+		if (array_key_exists($keys[2], $arr)) $this->setProjResourceTypeId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setDescription($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setQuantityEstimated($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setQuantityApproved($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setHoursEstimated($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setHoursApproved($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setAmountEstimated($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setAmountApproved($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setTotalAmountComputed($arr[$keys[10]]);
 	}
 
 	/**
@@ -836,15 +1016,19 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(ProjExpensePeer::DATABASE_NAME);
+		$criteria = new Criteria(ProjResourcePeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(ProjExpensePeer::ID)) $criteria->add(ProjExpensePeer::ID, $this->id);
-		if ($this->isColumnModified(ProjExpensePeer::SCHOOLPROJECT_ID)) $criteria->add(ProjExpensePeer::SCHOOLPROJECT_ID, $this->schoolproject_id);
-		if ($this->isColumnModified(ProjExpensePeer::PROJ_EXPENSE_TYPE_ID)) $criteria->add(ProjExpensePeer::PROJ_EXPENSE_TYPE_ID, $this->proj_expense_type_id);
-		if ($this->isColumnModified(ProjExpensePeer::HOURS_ESTIMATED)) $criteria->add(ProjExpensePeer::HOURS_ESTIMATED, $this->hours_estimated);
-		if ($this->isColumnModified(ProjExpensePeer::HOURS_APPROVED)) $criteria->add(ProjExpensePeer::HOURS_APPROVED, $this->hours_approved);
-		if ($this->isColumnModified(ProjExpensePeer::AMOUNT_ESTIMATED)) $criteria->add(ProjExpensePeer::AMOUNT_ESTIMATED, $this->amount_estimated);
-		if ($this->isColumnModified(ProjExpensePeer::AMOUNT_APPROVED)) $criteria->add(ProjExpensePeer::AMOUNT_APPROVED, $this->amount_approved);
+		if ($this->isColumnModified(ProjResourcePeer::ID)) $criteria->add(ProjResourcePeer::ID, $this->id);
+		if ($this->isColumnModified(ProjResourcePeer::SCHOOLPROJECT_ID)) $criteria->add(ProjResourcePeer::SCHOOLPROJECT_ID, $this->schoolproject_id);
+		if ($this->isColumnModified(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID)) $criteria->add(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID, $this->proj_resource_type_id);
+		if ($this->isColumnModified(ProjResourcePeer::DESCRIPTION)) $criteria->add(ProjResourcePeer::DESCRIPTION, $this->description);
+		if ($this->isColumnModified(ProjResourcePeer::QUANTITY_ESTIMATED)) $criteria->add(ProjResourcePeer::QUANTITY_ESTIMATED, $this->quantity_estimated);
+		if ($this->isColumnModified(ProjResourcePeer::QUANTITY_APPROVED)) $criteria->add(ProjResourcePeer::QUANTITY_APPROVED, $this->quantity_approved);
+		if ($this->isColumnModified(ProjResourcePeer::HOURS_ESTIMATED)) $criteria->add(ProjResourcePeer::HOURS_ESTIMATED, $this->hours_estimated);
+		if ($this->isColumnModified(ProjResourcePeer::HOURS_APPROVED)) $criteria->add(ProjResourcePeer::HOURS_APPROVED, $this->hours_approved);
+		if ($this->isColumnModified(ProjResourcePeer::AMOUNT_ESTIMATED)) $criteria->add(ProjResourcePeer::AMOUNT_ESTIMATED, $this->amount_estimated);
+		if ($this->isColumnModified(ProjResourcePeer::AMOUNT_APPROVED)) $criteria->add(ProjResourcePeer::AMOUNT_APPROVED, $this->amount_approved);
+		if ($this->isColumnModified(ProjResourcePeer::TOTAL_AMOUNT_COMPUTED)) $criteria->add(ProjResourcePeer::TOTAL_AMOUNT_COMPUTED, $this->total_amount_computed);
 
 		return $criteria;
 	}
@@ -859,9 +1043,9 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(ProjExpensePeer::DATABASE_NAME);
+		$criteria = new Criteria(ProjResourcePeer::DATABASE_NAME);
 
-		$criteria->add(ProjExpensePeer::ID, $this->id);
+		$criteria->add(ProjResourcePeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -892,7 +1076,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of ProjExpense (or compatible) type.
+	 * @param      object $copyObj An object of ProjResource (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
@@ -901,7 +1085,13 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 
 		$copyObj->setSchoolprojectId($this->schoolproject_id);
 
-		$copyObj->setProjExpenseTypeId($this->proj_expense_type_id);
+		$copyObj->setProjResourceTypeId($this->proj_resource_type_id);
+
+		$copyObj->setDescription($this->description);
+
+		$copyObj->setQuantityEstimated($this->quantity_estimated);
+
+		$copyObj->setQuantityApproved($this->quantity_approved);
 
 		$copyObj->setHoursEstimated($this->hours_estimated);
 
@@ -910,6 +1100,8 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 		$copyObj->setAmountEstimated($this->amount_estimated);
 
 		$copyObj->setAmountApproved($this->amount_approved);
+
+		$copyObj->setTotalAmountComputed($this->total_amount_computed);
 
 
 		$copyObj->setNew(true);
@@ -927,7 +1119,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     ProjExpense Clone of current object.
+	 * @return     ProjResource Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -946,12 +1138,12 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     ProjExpensePeer
+	 * @return     ProjResourcePeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new ProjExpensePeer();
+			self::$peer = new ProjResourcePeer();
 		}
 		return self::$peer;
 	}
@@ -960,7 +1152,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 	 * Declares an association between this object and a Schoolproject object.
 	 *
 	 * @param      Schoolproject $v
-	 * @return     ProjExpense The current object (for fluent API support)
+	 * @return     ProjResource The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
 	public function setSchoolproject(Schoolproject $v = null)
@@ -976,7 +1168,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 		// Add binding for other direction of this n:n relationship.
 		// If this object has already been added to the Schoolproject object, it will not be re-added.
 		if ($v !== null) {
-			$v->addProjExpense($this);
+			$v->addProjResource($this);
 		}
 
 		return $this;
@@ -999,33 +1191,33 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->aSchoolproject->addProjExpenses($this);
+			   $this->aSchoolproject->addProjResources($this);
 			 */
 		}
 		return $this->aSchoolproject;
 	}
 
 	/**
-	 * Declares an association between this object and a ProjExpenseType object.
+	 * Declares an association between this object and a ProjResourceType object.
 	 *
-	 * @param      ProjExpenseType $v
-	 * @return     ProjExpense The current object (for fluent API support)
+	 * @param      ProjResourceType $v
+	 * @return     ProjResource The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function setProjExpenseType(ProjExpenseType $v = null)
+	public function setProjResourceType(ProjResourceType $v = null)
 	{
 		if ($v === null) {
-			$this->setProjExpenseTypeId(NULL);
+			$this->setProjResourceTypeId(NULL);
 		} else {
-			$this->setProjExpenseTypeId($v->getId());
+			$this->setProjResourceTypeId($v->getId());
 		}
 
-		$this->aProjExpenseType = $v;
+		$this->aProjResourceType = $v;
 
 		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the ProjExpenseType object, it will not be re-added.
+		// If this object has already been added to the ProjResourceType object, it will not be re-added.
 		if ($v !== null) {
-			$v->addProjExpense($this);
+			$v->addProjResource($this);
 		}
 
 		return $this;
@@ -1033,25 +1225,25 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 
 
 	/**
-	 * Get the associated ProjExpenseType object
+	 * Get the associated ProjResourceType object
 	 *
 	 * @param      PropelPDO Optional Connection object.
-	 * @return     ProjExpenseType The associated ProjExpenseType object.
+	 * @return     ProjResourceType The associated ProjResourceType object.
 	 * @throws     PropelException
 	 */
-	public function getProjExpenseType(PropelPDO $con = null)
+	public function getProjResourceType(PropelPDO $con = null)
 	{
-		if ($this->aProjExpenseType === null && ($this->proj_expense_type_id !== null)) {
-			$this->aProjExpenseType = ProjExpenseTypePeer::retrieveByPk($this->proj_expense_type_id);
+		if ($this->aProjResourceType === null && ($this->proj_resource_type_id !== null)) {
+			$this->aProjResourceType = ProjResourceTypePeer::retrieveByPk($this->proj_resource_type_id);
 			/* The following can be used additionally to
 			   guarantee the related object contains a reference
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->aProjExpenseType->addProjExpenses($this);
+			   $this->aProjResourceType->addProjResources($this);
 			 */
 		}
-		return $this->aProjExpenseType;
+		return $this->aProjResourceType;
 	}
 
 	/**
@@ -1069,7 +1261,7 @@ abstract class BaseProjExpense extends BaseObject  implements Persistent {
 		} // if ($deep)
 
 			$this->aSchoolproject = null;
-			$this->aProjExpenseType = null;
+			$this->aProjResourceType = null;
 	}
 
-} // BaseProjExpense
+} // BaseProjResource

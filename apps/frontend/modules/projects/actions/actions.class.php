@@ -132,12 +132,12 @@ class projectsActions extends sfActions
     return $this->redirect('projects/edit?id='. $this->project->getId());
    } 
    
-  public function executeAddexpense(sfWebRequest $request)
+  public function executeAddresource(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post'));
     $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPk($request->getParameter('id')));
     
-    $result=$this->project->addExpense($this->getUser()->getProfile());
+    $result=$this->project->addresource($this->getUser()->getProfile());
     
     $this->getUser()->setFlash($result['result'],
 					$this->getContext()->getI18N()->__($result['message'])
@@ -164,18 +164,18 @@ class projectsActions extends sfActions
     
   }
 
-  public function executeDeleteexpense(sfWebRequest $request)
+  public function executeDeleteresource(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post'));
-    $this->forward404Unless($this->expense=ProjExpensePeer::retrieveByPk($request->getParameter('id')));
+    $this->forward404Unless($this->resource=ProjResourcePeer::retrieveByPk($request->getParameter('id')));
     
-    $result=$this->expense->getSchoolproject()->deleteExpense($this->getUser()->getProfile(), $this->expense);
+    $result=$this->resource->getSchoolproject()->deleteResource($this->getUser()->getProfile(), $this->resource);
     
     $this->getUser()->setFlash($result['result'],
 					$this->getContext()->getI18N()->__($result['message'])
 					);
 					
-    return $this->redirect('projects/edit?id='. $this->expense->getSchoolproject()->getId());
+    return $this->redirect('projects/edit?id='. $this->resource->getSchoolproject()->getId());
 
     
   }
@@ -286,7 +286,7 @@ class projectsActions extends sfActions
   if ($this->project)
   {
     $this->deadlines=$this->project->getProjDeadlines();
-    $this->expenses=$this->project->getProjExpenses();
+    $this->resources=$this->project->getProjResources();
   }
   
   

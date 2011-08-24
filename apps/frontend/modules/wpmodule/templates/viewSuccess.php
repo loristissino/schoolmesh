@@ -52,7 +52,19 @@
 
 <?php if($workplan->getSyllabus()->getIsActive()): ?>
 <h2><?php echo __('Syllabus links') ?></h2>
+
+<ul class="sf_admin_actions">
+	<li class="sf_admin_action_toggle">
+<?php echo jq_link_to_function(
+  __('Toggle'),
+  jq_visual_effect('slideToggle', '#syllabus'), array(__('Hide'))
+) ?>
+</li>
+</ul>
+
+<div id="syllabus" style="display: none">
 <?php include_partial('syllabi/links', array('syllabus'=>$workplan->getSyllabus(), 'wpmodule'=>$wpmodule, 'syllabus_contributions'=>$syllabus_contributions)) ?>
+</div>
 <?php endif ?>
 
 

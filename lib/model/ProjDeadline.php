@@ -32,6 +32,12 @@ class ProjDeadline extends BaseProjDeadline {
 		
 	}
   
+  public function getDeadlineDate($format)
+  {
+    return $this->getCurrentDeadlineDate() ? $this->getCurrentDeadlineDate($format) : $this->getOriginalDeadlineDate($format);
+  }
+  
+  
   
   public function updateFromForm($params, sfValidatedFile $file=null)
   {
