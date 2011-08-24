@@ -819,8 +819,8 @@
         <target>Selezione degli strumenti mancante</target>
       </trans-unit>
       <trans-unit id="233">
-        <source>Some errors prevented the submission of the document</source>
-        <target>Alcuni errori hanno impedito la consegna del documento</target>
+        <source>Some errors prevented the submission of the document.</source>
+        <target>Alcuni errori hanno impedito la consegna del documento.</target>
       </trans-unit>
       <trans-unit id="233">
         <source>The items have been replaced.</source>

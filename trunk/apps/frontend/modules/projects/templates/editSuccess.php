@@ -35,13 +35,27 @@
     <th><label for="schoolproject_state"><?php echo __('State') ?></label></th>
     <td><?php echo $project->getState() ?></td>
   </tr>
+  <?php if(!isset($form['proj_category_id'])): ?>
+  <tr>
+    <th><label for="schoolproject_category"><?php echo __('Category') ?></label></th>
+    <td><?php echo $project->getProjCategory() ?></td>
+  </tr>
+  <?php endif ?>
+  <?php if(!isset($form['proj_financing_id'])): ?>
+  <tr>
+    <th><label for="schoolproject_financing"><?php echo __('Financing') ?></label></th>
+    <td><?php echo $project->getProjFinancing() ?></td>
+  </tr>
+  <?php endif ?>
 
     <?php echo $form ?>
-	<tr>
+  <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
+    <tr>
       <td colspan="2">
          <input type="submit" name="save" value="<?php echo __('Save') ?>">
       </td>
     </tr>
+  <?php endif ?>
   </table>
 </form>  
 
@@ -79,13 +93,13 @@
       <td><?php include_partial('content/notes', array('notes'=>$deadline->getNotes())) ?></td>
       <td>
       <ul class="sf_admin_td_actions">
+        <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
         <li class="sf_admin_action_edit">
         <?php echo link_to(
             __('Edit'),
             url_for('projects/editdeadline?id='. $deadline->getId())
             )
              ?></li>
-        <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
         <li class="sf_admin_action_delete">
         <?php echo link_to(
             __('Delete'),
@@ -130,7 +144,7 @@
       <th class="sf_admin_text"><?php echo __('Description') ?></th>
       <th class="sf_admin_text"><?php echo __('M.U.') ?></th>
       <th class="sf_admin_text">
-      <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
+      <?php if($project->getState()<Workflow::PROJ_APPROVED): ?>
         <?php echo __('Estimation') ?>
       <?php else: ?>
         <?php echo __('Financing') ?>
@@ -155,7 +169,7 @@
         <?php endif ?>
       </td>
       <td style="text-align: right">
-      <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
+      <?php if($project->getState()<Workflow::PROJ_APPROVED): ?>
         <?php echo $resource->getQuantityEstimated() ?>
       <?php else: ?>
         <?php echo $resource->getQuantityApproved() ?>
@@ -163,13 +177,13 @@
       </td>
       <td>
       <ul class="sf_admin_td_actions">
+        <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
         <li class="sf_admin_action_edit">
         <?php echo link_to(
             __('Edit'),
             url_for('projects/editresource?id='. $resource->getId())
             )
              ?></li>
-        <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
         <li class="sf_admin_action_delete">
         <?php echo link_to(
             __('Delete'),

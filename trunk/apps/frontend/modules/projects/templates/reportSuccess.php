@@ -20,6 +20,7 @@
 	<?php echo __('Hours approved') ?>: <strong><?php echo $project->getHoursApproved() ?></strong><br />
 	</p>
 <?php include_component('projects', 'deadlines', array('project'=>$project)) ?>
+<?php include_component('projects', 'resources', array('project'=>$project)) ?>
 </blockquote>
 <?php endforeach ?>
 
@@ -29,7 +30,3 @@
 </div>
 
 <?php // include_partial('content/year', array('year'=>$year, 'years'=>$years, 'back'=>'projects/index')) ?>
-
-
-
-

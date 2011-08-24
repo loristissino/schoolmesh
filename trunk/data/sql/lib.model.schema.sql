@@ -927,8 +927,8 @@ CREATE TABLE `schoolproject`
 	`hours_approved` INTEGER,
 	`state` INTEGER,
 	`submission_date` DATE,
-	`teaching_body_approval_date` DATE,
-	`administration_board_approval_date` DATE,
+	`approval_date` DATE,
+	`financing_date` DATE,
 	PRIMARY KEY (`id`),
 	INDEX `schoolproject_FI_1` (`proj_category_id`),
 	CONSTRAINT `schoolproject_FK_1`

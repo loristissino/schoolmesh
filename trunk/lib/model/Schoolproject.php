@@ -334,21 +334,153 @@ class Schoolproject extends BaseSchoolproject {
   
   public function submit()
   {
-    try
+    $checkList=$this->getChecks();
+
+    if ($checkList->getTotalResults(Check::FAILED)==0)
     {
-      $this
-      ->setState(Workflow::PROJ_SUBMITTED)
-      ->setSubmissionDate(date())
-      ->save();
-      $result['result']='notice';
-      $result['message']='The project has been submitted.';
+      try
+      {
+        $this
+        ->setState(Workflow::PROJ_SUBMITTED)
+        ->setSubmissionDate(date())
+        ->save();
+        $result['result']='notice';
+        $result['message']='The project has been submitted.';
+      }
+      catch(Exception $e)
+      {
+        $result['result']='error';
+        $result['message']='The project could not be submitted for an unkwnow reason.';
+      }
+      return $result;
     }
-    catch(Exception $e)
+    else
     {
       $result['result']='error';
-      $result['message']='The project could not be submitted.';
+      $result['message']='Some errors prevented the submission of the document.';
+      $result['checkList']=$checkList;
+      return $result;
     }
-    return $result;
+  }
+  
+  public function getChecks()
+  {
+    $checkList=new CheckList();
+    
+    if(!$this->getProjCategoryId())
+    {
+      $checkList->addCheck(new Check(
+				Check::FAILED,
+				'No category set',
+				'project',
+        array(
+          'link_to'=>'projects/edit?id=' . $this->getId()
+          )
+        ));
+    }
+
+    if(!$this->getProjFinancingId())
+    {
+      $checkList->addCheck(new Check(
+				Check::FAILED,
+				'No financing set',
+				'project',
+        array(
+          'link_to'=>'projects/edit?id=' . $this->getId()
+          )
+        ));
+    }
+
+    if(!$this->getTitle())
+    {
+      $checkList->addCheck(new Check(
+				Check::FAILED,
+				'No title set',
+				'project',
+        array(
+          'link_to'=>'projects/edit?id=' . $this->getId()
+          )
+        ));
+    }
+
+    if(!$this->getDescription())
+    {
+      $checkList->addCheck(new Check(
+				Check::FAILED,
+				'No description set',
+				'project',
+        array(
+          'link_to'=>'projects/edit?id=' . $this->getId()
+          )
+        ));
+    }
+
+    $resources=$this->getProjResources();
+    if(sizeof($resources)==0)
+    {
+      $checkList->addCheck(new Check(
+				Check::FAILED,
+				'No resource defined',
+				'resources')
+        );
+    }
+    else
+    {
+      foreach($resources as $resource)
+      {
+        if($resource->getQuantityEstimated()<=0)
+        {
+          $checkList->addCheck(new Check(
+            Check::FAILED,
+            'No quantity defined for resource',
+            'resources',
+            array(
+              'link_to'=>'projects/editresource?id=' . $resource->getId(),
+              )
+            ));
+        }
+      }
+    }
+    $deadlines=$this->getProjDeadlines();
+    if(sizeof($deadlines)==0)
+    {
+      $checkList->addCheck(new Check(
+				Check::FAILED,
+				'No deadline defined',
+				'deadlines')
+        );
+    }
+    else
+    {
+      foreach($deadlines as $deadline)
+      {
+        if(!$deadline->getOriginalDeadlineDate())
+        {
+          $checkList->addCheck(new Check(
+            Check::FAILED,
+            'No date defined for deadline',
+            'deadlines',
+            array(
+              'link_to'=>'projects/editdeadline?id=' . $deadline->getId(),
+              )
+            ));
+        }
+        if(!$deadline->getDescription())
+        {
+          $checkList->addCheck(new Check(
+            Check::FAILED,
+            'No description defined for deadline',
+            'deadlines',
+            array(
+              'link_to'=>'projects/editdeadline?id=' . $deadline->getId(),
+              )
+            ));
+        }
+      }
+    }
+    
+    return $checkList;
+    
   }
 
 	

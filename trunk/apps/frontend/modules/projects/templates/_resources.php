@@ -1,0 +1,23 @@
+<?php if (sizeof($resources)>0): ?>
+
+<h3><?php echo __('Resources') ?></h3>
+
+<ol>
+<?php foreach($resources as $resource): ?>
+
+	<li><?php echo $resource->getDescription() ?>
+	<ul>
+		<li><?php echo __('Resource type') ?>: <strong><?php echo $resource->getProjResourceType() ?></strong></li>
+    <?php if ($resource->getProjResourceTypeId()): ?>
+      <li><?php echo __('Estimation') ?>: <strong><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getQuantityEstimated() ?></strong></li>
+      <li><?php echo __('Approved') ?>: <strong><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getQuantityApproved() ?></strong></li>
+    <?php endif ?>
+	</ul>
+  </li>
+
+<?php endforeach ?>
+</ol>
+<?php else: ?>
+<p><?php echo __('No resource defined.') ?></p>
+<?php endif ?>
+
