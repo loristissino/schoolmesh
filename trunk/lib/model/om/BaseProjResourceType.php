@@ -49,6 +49,12 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	protected $standard_cost;
 
 	/**
+	 * The value for the measurement_unit field.
+	 * @var        string
+	 */
+	protected $measurement_unit;
+
+	/**
 	 * @var        Role
 	 */
 	protected $aRole;
@@ -129,6 +135,16 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	public function getStandardCost()
 	{
 		return $this->standard_cost;
+	}
+
+	/**
+	 * Get the [measurement_unit] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getMeasurementUnit()
+	{
+		return $this->measurement_unit;
 	}
 
 	/**
@@ -236,6 +252,26 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	} // setStandardCost()
 
 	/**
+	 * Set the value of [measurement_unit] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     ProjResourceType The current object (for fluent API support)
+	 */
+	public function setMeasurementUnit($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->measurement_unit !== $v) {
+			$this->measurement_unit = $v;
+			$this->modifiedColumns[] = ProjResourceTypePeer::MEASUREMENT_UNIT;
+		}
+
+		return $this;
+	} // setMeasurementUnit()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -272,6 +308,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			$this->resource_type = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->role_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->standard_cost = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->measurement_unit = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -281,7 +318,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 5; // 5 = ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 6; // 6 = ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjResourceType object", $e);
@@ -639,6 +676,9 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			case 4:
 				return $this->getStandardCost();
 				break;
+			case 5:
+				return $this->getMeasurementUnit();
+				break;
 			default:
 				return null;
 				break;
@@ -665,6 +705,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			$keys[2] => $this->getResourceType(),
 			$keys[3] => $this->getRoleId(),
 			$keys[4] => $this->getStandardCost(),
+			$keys[5] => $this->getMeasurementUnit(),
 		);
 		return $result;
 	}
@@ -711,6 +752,9 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			case 4:
 				$this->setStandardCost($value);
 				break;
+			case 5:
+				$this->setMeasurementUnit($value);
+				break;
 		} // switch()
 	}
 
@@ -740,6 +784,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setResourceType($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setRoleId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setStandardCost($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setMeasurementUnit($arr[$keys[5]]);
 	}
 
 	/**
@@ -756,6 +801,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProjResourceTypePeer::RESOURCE_TYPE)) $criteria->add(ProjResourceTypePeer::RESOURCE_TYPE, $this->resource_type);
 		if ($this->isColumnModified(ProjResourceTypePeer::ROLE_ID)) $criteria->add(ProjResourceTypePeer::ROLE_ID, $this->role_id);
 		if ($this->isColumnModified(ProjResourceTypePeer::STANDARD_COST)) $criteria->add(ProjResourceTypePeer::STANDARD_COST, $this->standard_cost);
+		if ($this->isColumnModified(ProjResourceTypePeer::MEASUREMENT_UNIT)) $criteria->add(ProjResourceTypePeer::MEASUREMENT_UNIT, $this->measurement_unit);
 
 		return $criteria;
 	}
@@ -817,6 +863,8 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 		$copyObj->setRoleId($this->role_id);
 
 		$copyObj->setStandardCost($this->standard_cost);
+
+		$copyObj->setMeasurementUnit($this->measurement_unit);
 
 
 		if ($deepCopy) {

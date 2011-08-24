@@ -22,6 +22,8 @@ abstract class BaseProjActivityForm extends BaseFormPropel
       'amount'           => new sfWidgetFormInputText(),
       'notes'            => new sfWidgetFormTextarea(),
       'created_at'       => new sfWidgetFormDateTime(),
+      'approved_at'      => new sfWidgetFormDateTime(),
+      'approver_user_id' => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => false)),
     ));
 
     $this->setValidators(array(
@@ -33,6 +35,8 @@ abstract class BaseProjActivityForm extends BaseFormPropel
       'amount'           => new sfValidatorNumber(array('required' => false)),
       'notes'            => new sfValidatorString(array('required' => false)),
       'created_at'       => new sfValidatorDateTime(array('required' => false)),
+      'approved_at'      => new sfValidatorDateTime(array('required' => false)),
+      'approver_user_id' => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('proj_activity[%s]');

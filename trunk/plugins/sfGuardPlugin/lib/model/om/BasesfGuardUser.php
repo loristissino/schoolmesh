@@ -223,12 +223,22 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	/**
 	 * @var        array ProjActivity[] Collection to store aggregation of ProjActivity objects.
 	 */
-	protected $collProjActivitys;
+	protected $collProjActivitysRelatedByUserId;
 
 	/**
-	 * @var        Criteria The criteria used to select the current contents of collProjActivitys.
+	 * @var        Criteria The criteria used to select the current contents of collProjActivitysRelatedByUserId.
 	 */
-	private $lastProjActivityCriteria = null;
+	private $lastProjActivityRelatedByUserIdCriteria = null;
+
+	/**
+	 * @var        array ProjActivity[] Collection to store aggregation of ProjActivity objects.
+	 */
+	protected $collProjActivitysRelatedByApproverUserId;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collProjActivitysRelatedByApproverUserId.
+	 */
+	private $lastProjActivityRelatedByApproverUserIdCriteria = null;
 
 	/**
 	 * @var        array Lanlog[] Collection to store aggregation of Lanlog objects.
@@ -873,8 +883,11 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$this->collProjDeadlines = null;
 			$this->lastProjDeadlineCriteria = null;
 
-			$this->collProjActivitys = null;
-			$this->lastProjActivityCriteria = null;
+			$this->collProjActivitysRelatedByUserId = null;
+			$this->lastProjActivityRelatedByUserIdCriteria = null;
+
+			$this->collProjActivitysRelatedByApproverUserId = null;
+			$this->lastProjActivityRelatedByApproverUserIdCriteria = null;
 
 			$this->collLanlogs = null;
 			$this->lastLanlogCriteria = null;
@@ -1147,8 +1160,16 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collProjActivitys !== null) {
-				foreach ($this->collProjActivitys as $referrerFK) {
+			if ($this->collProjActivitysRelatedByUserId !== null) {
+				foreach ($this->collProjActivitysRelatedByUserId as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collProjActivitysRelatedByApproverUserId !== null) {
+				foreach ($this->collProjActivitysRelatedByApproverUserId as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -1384,8 +1405,16 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collProjActivitys !== null) {
-					foreach ($this->collProjActivitys as $referrerFK) {
+				if ($this->collProjActivitysRelatedByUserId !== null) {
+					foreach ($this->collProjActivitysRelatedByUserId as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collProjActivitysRelatedByApproverUserId !== null) {
+					foreach ($this->collProjActivitysRelatedByApproverUserId as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1798,9 +1827,15 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			foreach ($this->getProjActivitys() as $relObj) {
+			foreach ($this->getProjActivitysRelatedByUserId() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addProjActivity($relObj->copy($deepCopy));
+					$copyObj->addProjActivityRelatedByUserId($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getProjActivitysRelatedByApproverUserId() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addProjActivityRelatedByApproverUserId($relObj->copy($deepCopy));
 				}
 			}
 
@@ -5249,31 +5284,31 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Clears out the collProjActivitys collection (array).
+	 * Clears out the collProjActivitysRelatedByUserId collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
 	 * them to be refetched by subsequent calls to accessor method.
 	 *
 	 * @return     void
-	 * @see        addProjActivitys()
+	 * @see        addProjActivitysRelatedByUserId()
 	 */
-	public function clearProjActivitys()
+	public function clearProjActivitysRelatedByUserId()
 	{
-		$this->collProjActivitys = null; // important to set this to NULL since that means it is uninitialized
+		$this->collProjActivitysRelatedByUserId = null; // important to set this to NULL since that means it is uninitialized
 	}
 
 	/**
-	 * Initializes the collProjActivitys collection (array).
+	 * Initializes the collProjActivitysRelatedByUserId collection (array).
 	 *
-	 * By default this just sets the collProjActivitys collection to an empty array (like clearcollProjActivitys());
+	 * By default this just sets the collProjActivitysRelatedByUserId collection to an empty array (like clearcollProjActivitysRelatedByUserId());
 	 * however, you may wish to override this method in your stub class to provide setting appropriate
 	 * to your application -- for example, setting the initial array to the values stored in database.
 	 *
 	 * @return     void
 	 */
-	public function initProjActivitys()
+	public function initProjActivitysRelatedByUserId()
 	{
-		$this->collProjActivitys = array();
+		$this->collProjActivitysRelatedByUserId = array();
 	}
 
 	/**
@@ -5281,7 +5316,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	 *
 	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
 	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
-	 * related ProjActivitys from storage. If this sfGuardUser is new, it will return
+	 * related ProjActivitysRelatedByUserId from storage. If this sfGuardUser is new, it will return
 	 * an empty collection or the current collection, the criteria is ignored on a new object.
 	 *
 	 * @param      PropelPDO $con
@@ -5289,7 +5324,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	 * @return     array ProjActivity[]
 	 * @throws     PropelException
 	 */
-	public function getProjActivitys($criteria = null, PropelPDO $con = null)
+	public function getProjActivitysRelatedByUserId($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
@@ -5299,15 +5334,15 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collProjActivitys === null) {
+		if ($this->collProjActivitysRelatedByUserId === null) {
 			if ($this->isNew()) {
-			   $this->collProjActivitys = array();
+			   $this->collProjActivitysRelatedByUserId = array();
 			} else {
 
 				$criteria->add(ProjActivityPeer::USER_ID, $this->id);
 
 				ProjActivityPeer::addSelectColumns($criteria);
-				$this->collProjActivitys = ProjActivityPeer::doSelect($criteria, $con);
+				$this->collProjActivitysRelatedByUserId = ProjActivityPeer::doSelect($criteria, $con);
 			}
 		} else {
 			// criteria has no effect for a new object
@@ -5320,13 +5355,13 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				$criteria->add(ProjActivityPeer::USER_ID, $this->id);
 
 				ProjActivityPeer::addSelectColumns($criteria);
-				if (!isset($this->lastProjActivityCriteria) || !$this->lastProjActivityCriteria->equals($criteria)) {
-					$this->collProjActivitys = ProjActivityPeer::doSelect($criteria, $con);
+				if (!isset($this->lastProjActivityRelatedByUserIdCriteria) || !$this->lastProjActivityRelatedByUserIdCriteria->equals($criteria)) {
+					$this->collProjActivitysRelatedByUserId = ProjActivityPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastProjActivityCriteria = $criteria;
-		return $this->collProjActivitys;
+		$this->lastProjActivityRelatedByUserIdCriteria = $criteria;
+		return $this->collProjActivitysRelatedByUserId;
 	}
 
 	/**
@@ -5338,7 +5373,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	 * @return     int Count of related ProjActivity objects.
 	 * @throws     PropelException
 	 */
-	public function countProjActivitys(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	public function countProjActivitysRelatedByUserId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
@@ -5352,7 +5387,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 		$count = null;
 
-		if ($this->collProjActivitys === null) {
+		if ($this->collProjActivitysRelatedByUserId === null) {
 			if ($this->isNew()) {
 				$count = 0;
 			} else {
@@ -5371,13 +5406,13 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 				$criteria->add(ProjActivityPeer::USER_ID, $this->id);
 
-				if (!isset($this->lastProjActivityCriteria) || !$this->lastProjActivityCriteria->equals($criteria)) {
+				if (!isset($this->lastProjActivityRelatedByUserIdCriteria) || !$this->lastProjActivityRelatedByUserIdCriteria->equals($criteria)) {
 					$count = ProjActivityPeer::doCount($criteria, false, $con);
 				} else {
-					$count = count($this->collProjActivitys);
+					$count = count($this->collProjActivitysRelatedByUserId);
 				}
 			} else {
-				$count = count($this->collProjActivitys);
+				$count = count($this->collProjActivitysRelatedByUserId);
 			}
 		}
 		return $count;
@@ -5391,14 +5426,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	 * @return     void
 	 * @throws     PropelException
 	 */
-	public function addProjActivity(ProjActivity $l)
+	public function addProjActivityRelatedByUserId(ProjActivity $l)
 	{
-		if ($this->collProjActivitys === null) {
-			$this->initProjActivitys();
+		if ($this->collProjActivitysRelatedByUserId === null) {
+			$this->initProjActivitysRelatedByUserId();
 		}
-		if (!in_array($l, $this->collProjActivitys, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collProjActivitys, $l);
-			$l->setsfGuardUser($this);
+		if (!in_array($l, $this->collProjActivitysRelatedByUserId, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collProjActivitysRelatedByUserId, $l);
+			$l->setsfGuardUserRelatedByUserId($this);
 		}
 	}
 
@@ -5408,13 +5443,13 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	 * an identical criteria, it returns the collection.
 	 * Otherwise if this sfGuardUser is new, it will return
 	 * an empty collection; or if this sfGuardUser has previously
-	 * been saved, it will retrieve related ProjActivitys from storage.
+	 * been saved, it will retrieve related ProjActivitysRelatedByUserId from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
 	 * actually need in sfGuardUser.
 	 */
-	public function getProjActivitysJoinSchoolproject($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getProjActivitysRelatedByUserIdJoinSchoolproject($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
@@ -5424,14 +5459,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collProjActivitys === null) {
+		if ($this->collProjActivitysRelatedByUserId === null) {
 			if ($this->isNew()) {
-				$this->collProjActivitys = array();
+				$this->collProjActivitysRelatedByUserId = array();
 			} else {
 
 				$criteria->add(ProjActivityPeer::USER_ID, $this->id);
 
-				$this->collProjActivitys = ProjActivityPeer::doSelectJoinSchoolproject($criteria, $con, $join_behavior);
+				$this->collProjActivitysRelatedByUserId = ProjActivityPeer::doSelectJoinSchoolproject($criteria, $con, $join_behavior);
 			}
 		} else {
 			// the following code is to determine if a new query is
@@ -5440,13 +5475,214 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 			$criteria->add(ProjActivityPeer::USER_ID, $this->id);
 
-			if (!isset($this->lastProjActivityCriteria) || !$this->lastProjActivityCriteria->equals($criteria)) {
-				$this->collProjActivitys = ProjActivityPeer::doSelectJoinSchoolproject($criteria, $con, $join_behavior);
+			if (!isset($this->lastProjActivityRelatedByUserIdCriteria) || !$this->lastProjActivityRelatedByUserIdCriteria->equals($criteria)) {
+				$this->collProjActivitysRelatedByUserId = ProjActivityPeer::doSelectJoinSchoolproject($criteria, $con, $join_behavior);
 			}
 		}
-		$this->lastProjActivityCriteria = $criteria;
+		$this->lastProjActivityRelatedByUserIdCriteria = $criteria;
 
-		return $this->collProjActivitys;
+		return $this->collProjActivitysRelatedByUserId;
+	}
+
+	/**
+	 * Clears out the collProjActivitysRelatedByApproverUserId collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addProjActivitysRelatedByApproverUserId()
+	 */
+	public function clearProjActivitysRelatedByApproverUserId()
+	{
+		$this->collProjActivitysRelatedByApproverUserId = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collProjActivitysRelatedByApproverUserId collection (array).
+	 *
+	 * By default this just sets the collProjActivitysRelatedByApproverUserId collection to an empty array (like clearcollProjActivitysRelatedByApproverUserId());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initProjActivitysRelatedByApproverUserId()
+	{
+		$this->collProjActivitysRelatedByApproverUserId = array();
+	}
+
+	/**
+	 * Gets an array of ProjActivity objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related ProjActivitysRelatedByApproverUserId from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array ProjActivity[]
+	 * @throws     PropelException
+	 */
+	public function getProjActivitysRelatedByApproverUserId($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collProjActivitysRelatedByApproverUserId === null) {
+			if ($this->isNew()) {
+			   $this->collProjActivitysRelatedByApproverUserId = array();
+			} else {
+
+				$criteria->add(ProjActivityPeer::APPROVER_USER_ID, $this->id);
+
+				ProjActivityPeer::addSelectColumns($criteria);
+				$this->collProjActivitysRelatedByApproverUserId = ProjActivityPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(ProjActivityPeer::APPROVER_USER_ID, $this->id);
+
+				ProjActivityPeer::addSelectColumns($criteria);
+				if (!isset($this->lastProjActivityRelatedByApproverUserIdCriteria) || !$this->lastProjActivityRelatedByApproverUserIdCriteria->equals($criteria)) {
+					$this->collProjActivitysRelatedByApproverUserId = ProjActivityPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastProjActivityRelatedByApproverUserIdCriteria = $criteria;
+		return $this->collProjActivitysRelatedByApproverUserId;
+	}
+
+	/**
+	 * Returns the number of related ProjActivity objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related ProjActivity objects.
+	 * @throws     PropelException
+	 */
+	public function countProjActivitysRelatedByApproverUserId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collProjActivitysRelatedByApproverUserId === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(ProjActivityPeer::APPROVER_USER_ID, $this->id);
+
+				$count = ProjActivityPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(ProjActivityPeer::APPROVER_USER_ID, $this->id);
+
+				if (!isset($this->lastProjActivityRelatedByApproverUserIdCriteria) || !$this->lastProjActivityRelatedByApproverUserIdCriteria->equals($criteria)) {
+					$count = ProjActivityPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collProjActivitysRelatedByApproverUserId);
+				}
+			} else {
+				$count = count($this->collProjActivitysRelatedByApproverUserId);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a ProjActivity object to this object
+	 * through the ProjActivity foreign key attribute.
+	 *
+	 * @param      ProjActivity $l ProjActivity
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addProjActivityRelatedByApproverUserId(ProjActivity $l)
+	{
+		if ($this->collProjActivitysRelatedByApproverUserId === null) {
+			$this->initProjActivitysRelatedByApproverUserId();
+		}
+		if (!in_array($l, $this->collProjActivitysRelatedByApproverUserId, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collProjActivitysRelatedByApproverUserId, $l);
+			$l->setsfGuardUserRelatedByApproverUserId($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related ProjActivitysRelatedByApproverUserId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getProjActivitysRelatedByApproverUserIdJoinSchoolproject($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collProjActivitysRelatedByApproverUserId === null) {
+			if ($this->isNew()) {
+				$this->collProjActivitysRelatedByApproverUserId = array();
+			} else {
+
+				$criteria->add(ProjActivityPeer::APPROVER_USER_ID, $this->id);
+
+				$this->collProjActivitysRelatedByApproverUserId = ProjActivityPeer::doSelectJoinSchoolproject($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(ProjActivityPeer::APPROVER_USER_ID, $this->id);
+
+			if (!isset($this->lastProjActivityRelatedByApproverUserIdCriteria) || !$this->lastProjActivityRelatedByApproverUserIdCriteria->equals($criteria)) {
+				$this->collProjActivitysRelatedByApproverUserId = ProjActivityPeer::doSelectJoinSchoolproject($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastProjActivityRelatedByApproverUserIdCriteria = $criteria;
+
+		return $this->collProjActivitysRelatedByApproverUserId;
 	}
 
 	/**
@@ -6445,8 +6681,13 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collProjActivitys) {
-				foreach ((array) $this->collProjActivitys as $o) {
+			if ($this->collProjActivitysRelatedByUserId) {
+				foreach ((array) $this->collProjActivitysRelatedByUserId as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
+			if ($this->collProjActivitysRelatedByApproverUserId) {
+				foreach ((array) $this->collProjActivitysRelatedByApproverUserId as $o) {
 					$o->clearAllReferences($deep);
 				}
 			}
@@ -6492,7 +6733,8 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->collStudentHints = null;
 		$this->collSchoolprojects = null;
 		$this->collProjDeadlines = null;
-		$this->collProjActivitys = null;
+		$this->collProjActivitysRelatedByUserId = null;
+		$this->collProjActivitysRelatedByApproverUserId = null;
 		$this->collLanlogs = null;
 		$this->collAttachmentFiles = null;
 		$this->collsfGuardUserPermissions = null;

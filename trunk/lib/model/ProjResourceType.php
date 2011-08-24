@@ -16,4 +16,9 @@ require 'lib/model/om/BaseProjResourceType.php';
  */
 class ProjResourceType extends BaseProjResourceType {
 
+  public function __toString()
+  {
+    return $this->getDescription();
+  }
+
 } // ProjResourceType

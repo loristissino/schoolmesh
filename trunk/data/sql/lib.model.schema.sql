@@ -1029,6 +1029,7 @@ CREATE TABLE `proj_resource_type`
 	`resource_type` INTEGER,
 	`role_id` INTEGER,
 	`standard_cost` DECIMAL,
+	`measurement_unit` VARCHAR(10),
 	PRIMARY KEY (`id`),
 	INDEX `proj_resource_type_FI_1` (`role_id`),
 	CONSTRAINT `proj_resource_type_FK_1`
@@ -1051,11 +1052,6 @@ CREATE TABLE `proj_resource`
 	`description` VARCHAR(255),
 	`quantity_estimated` DECIMAL,
 	`quantity_approved` DECIMAL,
-	`hours_estimated` INTEGER,
-	`hours_approved` INTEGER,
-	`amount_estimated` DECIMAL,
-	`amount_approved` DECIMAL,
-	`total_amount_computed` DECIMAL,
 	PRIMARY KEY (`id`),
 	INDEX `proj_resource_FI_1` (`schoolproject_id`),
 	CONSTRAINT `proj_resource_FK_1`
@@ -1084,6 +1080,8 @@ CREATE TABLE `proj_activity`
 	`amount` DECIMAL,
 	`notes` TEXT,
 	`created_at` DATETIME,
+	`approved_at` DATETIME,
+	`approver_user_id` INTEGER  NOT NULL,
 	PRIMARY KEY (`id`),
 	INDEX `proj_activity_FI_1` (`schoolproject_id`),
 	CONSTRAINT `proj_activity_FK_1`
@@ -1092,6 +1090,12 @@ CREATE TABLE `proj_activity`
 	INDEX `proj_activity_FI_2` (`user_id`),
 	CONSTRAINT `proj_activity_FK_2`
 		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `proj_activity_FI_3` (`approver_user_id`),
+	CONSTRAINT `proj_activity_FK_3`
+		FOREIGN KEY (`approver_user_id`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT

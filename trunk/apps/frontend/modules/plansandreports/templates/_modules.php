@@ -43,7 +43,7 @@
       <td><?php echo $wpmodule->getPeriod() ?></td>
       <td><?php echo $wpmodule ?></td>
 
-	  <td>
+	  <td style="text-align: right">
 	  <?php if ($wpmodule->getHoursEstimated()>0): ?>
 			<?php echo $wpmodule->getHoursEstimated(); $hours_sum+=$wpmodule->getHoursEstimated(); ?>
 	  <?php endif ?>
@@ -114,9 +114,6 @@
 		<td>
 			<?php if ($hours_sum>0): ?>
 				<?php echo $hours_sum ?>
-			<?php endif ?>
-			<?php if ($workplan->getHours()>0): ?>
-				(<?php echo $workplan->getHours() ?>)
 			<?php endif ?>
 		</td>
 		<td colspan="3"></td>

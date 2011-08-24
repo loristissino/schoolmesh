@@ -2239,6 +2239,34 @@
         <source>Deadline of %date%</source>
         <target>Scadenza del giorno %date%</target>
     </trans-unit>
+    <trans-unit id="579">
+        <source>Financing</source>
+        <target>Finanziamento</target>
+    </trans-unit>
+    <trans-unit id="580"><!-- Measurement Unit -->
+        <source>M.U.</source>
+        <target>U.M.</target>
+    </trans-unit>
+    <trans-unit id="581">
+        <source>Qty estimated (€)</source>
+        <target>Importo previsto (€)</target>
+    </trans-unit>
+    <trans-unit id="582">
+        <source>Qty approved (€)</source>
+        <target>Importo approvato (€)</target>
+    </trans-unit>
+    <trans-unit id="583">
+        <source>Qty estimated (h)</source>
+        <target>Ore previste</target>
+    </trans-unit>
+    <trans-unit id="584">
+        <source>Qty approved (h)</source>
+        <target>Ore approvate</target>
+    </trans-unit>
+    <trans-unit id="585">
+        <source>Estimation</source>
+        <target>Previsione</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

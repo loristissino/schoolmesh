@@ -229,7 +229,46 @@ class projectsActions extends sfActions
 
   }
  
-	
+
+  public function executeEditresource(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->resource=ProjResourcePeer::retrieveByPk($request->getParameter('id')));
+    $this->forward404Unless($this->resource->isEditableBy($this->getUser())); // the resource can be edited only by the owner or admins...
+    
+    $this->form = new ProjResourceForm($this->resource);
+/*    $this->form->addStateDependentConfiguration(
+      $this->deadline->getSchoolProject()->getState(),
+      array(
+        'needs_attachment'=>$this->deadline->getNeedsAttachment()===true
+        )
+      );
+*/
+	if ($request->isMethod('post'))
+		{
+			$this->form->bind($request->getParameter('proj_resource'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				
+				$this->resource = ProjResourcePeer::retrieveByPK($params['id']);
+				
+				$result=$this->resource->updateFromForm($params);
+				
+				$this->getUser()->setFlash($result['result'],
+					$this->getContext()->getI18N()->__($result['message'])
+					);
+				
+        return $this->redirect('projects/editresource?id='. $this->resource->getId());
+			}
+			
+		}
+
+
+
+
+  }
+
+
   public function executeEdit(sfWebRequest $request)
   {
     
@@ -292,7 +331,27 @@ class projectsActions extends sfActions
   
    }  
 	
+
+  public function executeSubmit(sfWebRequest $request)
+  {
+    
+    $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPk($request->getParameter('id')));
   
+    $this->forward404Unless($this->project->isEditableBy($this->getUser())); // the project can be edited only by the owner  or by admins...
+
+    $this->forward404Unless($request->isMethod('post'));
+
+    $result=$this->project->submit();
+    
+    $this->getUser()->setFlash($result['result'],
+      $this->getContext()->getI18N()->__($result['message'])
+      );
+
+    return $this->redirect('projects/index');
+
+   }  
+
+
   public function executeNew(sfWebRequest $request)
   {
     

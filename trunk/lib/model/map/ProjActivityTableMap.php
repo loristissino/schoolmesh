@@ -44,6 +44,8 @@ class ProjActivityTableMap extends TableMap {
 		$this->addColumn('AMOUNT', 'Amount', 'DECIMAL', false, null, null);
 		$this->addColumn('NOTES', 'Notes', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null, null);
+		$this->addColumn('APPROVED_AT', 'ApprovedAt', 'TIMESTAMP', false, null, null);
+		$this->addForeignKey('APPROVER_USER_ID', 'ApproverUserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
 		// validators
 	} // initialize()
 
@@ -53,7 +55,8 @@ class ProjActivityTableMap extends TableMap {
 	public function buildRelations()
 	{
     $this->addRelation('Schoolproject', 'Schoolproject', RelationMap::MANY_TO_ONE, array('schoolproject_id' => 'id', ), null, null);
-    $this->addRelation('sfGuardUser', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('sfGuardUserRelatedByUserId', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('sfGuardUserRelatedByApproverUserId', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('approver_user_id' => 'id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
 	/**

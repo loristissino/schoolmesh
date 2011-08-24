@@ -269,6 +269,7 @@ class Schoolproject extends BaseSchoolproject {
     Generic::updateObjectFromForm($this, array(
       'title',
       'description',
+      'proj_financing_id',
       'hours_approved',
       'notes',
       'proj_category_id',
@@ -330,6 +331,25 @@ class Schoolproject extends BaseSchoolproject {
 		
 		return $odf;
 	}
+  
+  public function submit()
+  {
+    try
+    {
+      $this
+      ->setState(Workflow::PROJ_SUBMITTED)
+      ->setSubmissionDate(date())
+      ->save();
+      $result['result']='notice';
+      $result['message']='The project has been submitted.';
+    }
+    catch(Exception $e)
+    {
+      $result['result']='error';
+      $result['message']='The project could not be submitted.';
+    }
+    return $result;
+  }
 
 	
 

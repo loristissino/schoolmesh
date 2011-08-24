@@ -2344,7 +2344,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	 * api reasonable.  You can provide public methods for those you
 	 * actually need in Schoolproject.
 	 */
-	public function getProjActivitysJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getProjActivitysJoinsfGuardUserRelatedByUserId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(SchoolprojectPeer::DATABASE_NAME);
@@ -2361,7 +2361,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 
 				$criteria->add(ProjActivityPeer::SCHOOLPROJECT_ID, $this->id);
 
-				$this->collProjActivitys = ProjActivityPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+				$this->collProjActivitys = ProjActivityPeer::doSelectJoinsfGuardUserRelatedByUserId($criteria, $con, $join_behavior);
 			}
 		} else {
 			// the following code is to determine if a new query is
@@ -2371,7 +2371,54 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$criteria->add(ProjActivityPeer::SCHOOLPROJECT_ID, $this->id);
 
 			if (!isset($this->lastProjActivityCriteria) || !$this->lastProjActivityCriteria->equals($criteria)) {
-				$this->collProjActivitys = ProjActivityPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+				$this->collProjActivitys = ProjActivityPeer::doSelectJoinsfGuardUserRelatedByUserId($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastProjActivityCriteria = $criteria;
+
+		return $this->collProjActivitys;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Schoolproject is new, it will return
+	 * an empty collection; or if this Schoolproject has previously
+	 * been saved, it will retrieve related ProjActivitys from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Schoolproject.
+	 */
+	public function getProjActivitysJoinsfGuardUserRelatedByApproverUserId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SchoolprojectPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collProjActivitys === null) {
+			if ($this->isNew()) {
+				$this->collProjActivitys = array();
+			} else {
+
+				$criteria->add(ProjActivityPeer::SCHOOLPROJECT_ID, $this->id);
+
+				$this->collProjActivitys = ProjActivityPeer::doSelectJoinsfGuardUserRelatedByApproverUserId($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(ProjActivityPeer::SCHOOLPROJECT_ID, $this->id);
+
+			if (!isset($this->lastProjActivityCriteria) || !$this->lastProjActivityCriteria->equals($criteria)) {
+				$this->collProjActivitys = ProjActivityPeer::doSelectJoinsfGuardUserRelatedByApproverUserId($criteria, $con, $join_behavior);
 			}
 		}
 		$this->lastProjActivityCriteria = $criteria;

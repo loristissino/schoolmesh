@@ -20,11 +20,6 @@ abstract class BaseProjResourceForm extends BaseFormPropel
       'description'           => new sfWidgetFormInputText(),
       'quantity_estimated'    => new sfWidgetFormInputText(),
       'quantity_approved'     => new sfWidgetFormInputText(),
-      'hours_estimated'       => new sfWidgetFormInputText(),
-      'hours_approved'        => new sfWidgetFormInputText(),
-      'amount_estimated'      => new sfWidgetFormInputText(),
-      'amount_approved'       => new sfWidgetFormInputText(),
-      'total_amount_computed' => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -34,11 +29,6 @@ abstract class BaseProjResourceForm extends BaseFormPropel
       'description'           => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'quantity_estimated'    => new sfValidatorNumber(array('required' => false)),
       'quantity_approved'     => new sfValidatorNumber(array('required' => false)),
-      'hours_estimated'       => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
-      'hours_approved'        => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
-      'amount_estimated'      => new sfValidatorNumber(array('required' => false)),
-      'amount_approved'       => new sfValidatorNumber(array('required' => false)),
-      'total_amount_computed' => new sfValidatorNumber(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('proj_resource[%s]');

@@ -78,11 +78,10 @@ class ProjDeadline extends BaseProjDeadline {
     return AttachmentFilePeer::retrieveByClassAndId(get_class($this), $this->getId());
   }
 
-
   public function isEditableBy($user)
   {
     return 
-      $user->getProfile()->getUserId()===$this->getUserId()
+      $user->getProfile()->getUserId()===$this->getSchoolproject()->getUserId()
       || 
       $user->hasCredential('admin')
       ;

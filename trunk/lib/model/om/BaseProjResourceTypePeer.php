@@ -25,7 +25,7 @@ abstract class BaseProjResourceTypePeer {
 	const TM_CLASS = 'ProjResourceTypeTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 6;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -44,6 +44,9 @@ abstract class BaseProjResourceTypePeer {
 
 	/** the column name for the STANDARD_COST field */
 	const STANDARD_COST = 'proj_resource_type.STANDARD_COST';
+
+	/** the column name for the MEASUREMENT_UNIT field */
+	const MEASUREMENT_UNIT = 'proj_resource_type.MEASUREMENT_UNIT';
 
 	/**
 	 * An identiy map to hold any loaded instances of ProjResourceType objects.
@@ -68,11 +71,11 @@ abstract class BaseProjResourceTypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'ResourceType', 'RoleId', 'StandardCost', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'resourceType', 'roleId', 'standardCost', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::RESOURCE_TYPE, self::ROLE_ID, self::STANDARD_COST, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'resource_type', 'role_id', 'standard_cost', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'ResourceType', 'RoleId', 'StandardCost', 'MeasurementUnit', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'resourceType', 'roleId', 'standardCost', 'measurementUnit', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::RESOURCE_TYPE, self::ROLE_ID, self::STANDARD_COST, self::MEASUREMENT_UNIT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'resource_type', 'role_id', 'standard_cost', 'measurement_unit', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -82,11 +85,11 @@ abstract class BaseProjResourceTypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'ResourceType' => 2, 'RoleId' => 3, 'StandardCost' => 4, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'resourceType' => 2, 'roleId' => 3, 'standardCost' => 4, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::RESOURCE_TYPE => 2, self::ROLE_ID => 3, self::STANDARD_COST => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'resource_type' => 2, 'role_id' => 3, 'standard_cost' => 4, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'ResourceType' => 2, 'RoleId' => 3, 'StandardCost' => 4, 'MeasurementUnit' => 5, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'resourceType' => 2, 'roleId' => 3, 'standardCost' => 4, 'measurementUnit' => 5, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::RESOURCE_TYPE => 2, self::ROLE_ID => 3, self::STANDARD_COST => 4, self::MEASUREMENT_UNIT => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'resource_type' => 2, 'role_id' => 3, 'standard_cost' => 4, 'measurement_unit' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -161,6 +164,7 @@ abstract class BaseProjResourceTypePeer {
 		$criteria->addSelectColumn(ProjResourceTypePeer::RESOURCE_TYPE);
 		$criteria->addSelectColumn(ProjResourceTypePeer::ROLE_ID);
 		$criteria->addSelectColumn(ProjResourceTypePeer::STANDARD_COST);
+		$criteria->addSelectColumn(ProjResourceTypePeer::MEASUREMENT_UNIT);
 	}
 
 	/**
