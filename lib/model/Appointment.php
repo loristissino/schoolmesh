@@ -686,7 +686,7 @@ $con->query($sql);
 	else
 		{
 			$result['result']='error';
-			$result['message']='Some errors prevented the submission of the document';
+			$result['message']='Some errors prevented the submission of the document.';
 			$result['checkList']=$checkList;
 		}
 

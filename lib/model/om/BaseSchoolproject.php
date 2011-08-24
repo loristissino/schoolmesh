@@ -85,16 +85,16 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	protected $submission_date;
 
 	/**
-	 * The value for the teaching_body_approval_date field.
+	 * The value for the approval_date field.
 	 * @var        string
 	 */
-	protected $teaching_body_approval_date;
+	protected $approval_date;
 
 	/**
-	 * The value for the administration_board_approval_date field.
+	 * The value for the financing_date field.
 	 * @var        string
 	 */
-	protected $administration_board_approval_date;
+	protected $financing_date;
 
 	/**
 	 * @var        ProjCategory
@@ -303,7 +303,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [optionally formatted] temporal [teaching_body_approval_date] column value.
+	 * Get the [optionally formatted] temporal [approval_date] column value.
 	 * 
 	 *
 	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
@@ -311,22 +311,22 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
 	 * @throws     PropelException - if unable to parse/validate the date/time value.
 	 */
-	public function getTeachingBodyApprovalDate($format = 'Y-m-d')
+	public function getApprovalDate($format = 'Y-m-d')
 	{
-		if ($this->teaching_body_approval_date === null) {
+		if ($this->approval_date === null) {
 			return null;
 		}
 
 
-		if ($this->teaching_body_approval_date === '0000-00-00') {
+		if ($this->approval_date === '0000-00-00') {
 			// while technically this is not a default value of NULL,
 			// this seems to be closest in meaning.
 			return null;
 		} else {
 			try {
-				$dt = new DateTime($this->teaching_body_approval_date);
+				$dt = new DateTime($this->approval_date);
 			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->teaching_body_approval_date, true), $x);
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->approval_date, true), $x);
 			}
 		}
 
@@ -341,7 +341,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [optionally formatted] temporal [administration_board_approval_date] column value.
+	 * Get the [optionally formatted] temporal [financing_date] column value.
 	 * 
 	 *
 	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
@@ -349,22 +349,22 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
 	 * @throws     PropelException - if unable to parse/validate the date/time value.
 	 */
-	public function getAdministrationBoardApprovalDate($format = 'Y-m-d')
+	public function getFinancingDate($format = 'Y-m-d')
 	{
-		if ($this->administration_board_approval_date === null) {
+		if ($this->financing_date === null) {
 			return null;
 		}
 
 
-		if ($this->administration_board_approval_date === '0000-00-00') {
+		if ($this->financing_date === '0000-00-00') {
 			// while technically this is not a default value of NULL,
 			// this seems to be closest in meaning.
 			return null;
 		} else {
 			try {
-				$dt = new DateTime($this->administration_board_approval_date);
+				$dt = new DateTime($this->financing_date);
 			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->administration_board_approval_date, true), $x);
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->financing_date, true), $x);
 			}
 		}
 
@@ -644,13 +644,13 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	} // setSubmissionDate()
 
 	/**
-	 * Sets the value of [teaching_body_approval_date] column to a normalized version of the date/time value specified.
+	 * Sets the value of [approval_date] column to a normalized version of the date/time value specified.
 	 * 
 	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
 	 *						be treated as NULL for temporal objects.
 	 * @return     Schoolproject The current object (for fluent API support)
 	 */
-	public function setTeachingBodyApprovalDate($v)
+	public function setApprovalDate($v)
 	{
 		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
 		// -- which is unexpected, to say the least.
@@ -675,31 +675,31 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			}
 		}
 
-		if ( $this->teaching_body_approval_date !== null || $dt !== null ) {
+		if ( $this->approval_date !== null || $dt !== null ) {
 			// (nested ifs are a little easier to read in this case)
 
-			$currNorm = ($this->teaching_body_approval_date !== null && $tmpDt = new DateTime($this->teaching_body_approval_date)) ? $tmpDt->format('Y-m-d') : null;
+			$currNorm = ($this->approval_date !== null && $tmpDt = new DateTime($this->approval_date)) ? $tmpDt->format('Y-m-d') : null;
 			$newNorm = ($dt !== null) ? $dt->format('Y-m-d') : null;
 
 			if ( ($currNorm !== $newNorm) // normalized values don't match 
 					)
 			{
-				$this->teaching_body_approval_date = ($dt ? $dt->format('Y-m-d') : null);
-				$this->modifiedColumns[] = SchoolprojectPeer::TEACHING_BODY_APPROVAL_DATE;
+				$this->approval_date = ($dt ? $dt->format('Y-m-d') : null);
+				$this->modifiedColumns[] = SchoolprojectPeer::APPROVAL_DATE;
 			}
 		} // if either are not null
 
 		return $this;
-	} // setTeachingBodyApprovalDate()
+	} // setApprovalDate()
 
 	/**
-	 * Sets the value of [administration_board_approval_date] column to a normalized version of the date/time value specified.
+	 * Sets the value of [financing_date] column to a normalized version of the date/time value specified.
 	 * 
 	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
 	 *						be treated as NULL for temporal objects.
 	 * @return     Schoolproject The current object (for fluent API support)
 	 */
-	public function setAdministrationBoardApprovalDate($v)
+	public function setFinancingDate($v)
 	{
 		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
 		// -- which is unexpected, to say the least.
@@ -724,22 +724,22 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			}
 		}
 
-		if ( $this->administration_board_approval_date !== null || $dt !== null ) {
+		if ( $this->financing_date !== null || $dt !== null ) {
 			// (nested ifs are a little easier to read in this case)
 
-			$currNorm = ($this->administration_board_approval_date !== null && $tmpDt = new DateTime($this->administration_board_approval_date)) ? $tmpDt->format('Y-m-d') : null;
+			$currNorm = ($this->financing_date !== null && $tmpDt = new DateTime($this->financing_date)) ? $tmpDt->format('Y-m-d') : null;
 			$newNorm = ($dt !== null) ? $dt->format('Y-m-d') : null;
 
 			if ( ($currNorm !== $newNorm) // normalized values don't match 
 					)
 			{
-				$this->administration_board_approval_date = ($dt ? $dt->format('Y-m-d') : null);
-				$this->modifiedColumns[] = SchoolprojectPeer::ADMINISTRATION_BOARD_APPROVAL_DATE;
+				$this->financing_date = ($dt ? $dt->format('Y-m-d') : null);
+				$this->modifiedColumns[] = SchoolprojectPeer::FINANCING_DATE;
 			}
 		} // if either are not null
 
 		return $this;
-	} // setAdministrationBoardApprovalDate()
+	} // setFinancingDate()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -784,8 +784,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$this->hours_approved = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
 			$this->state = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
 			$this->submission_date = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
-			$this->teaching_body_approval_date = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
-			$this->administration_board_approval_date = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
+			$this->approval_date = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->financing_date = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1261,10 +1261,10 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				return $this->getSubmissionDate();
 				break;
 			case 11:
-				return $this->getTeachingBodyApprovalDate();
+				return $this->getApprovalDate();
 				break;
 			case 12:
-				return $this->getAdministrationBoardApprovalDate();
+				return $this->getFinancingDate();
 				break;
 			default:
 				return null;
@@ -1298,8 +1298,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$keys[8] => $this->getHoursApproved(),
 			$keys[9] => $this->getState(),
 			$keys[10] => $this->getSubmissionDate(),
-			$keys[11] => $this->getTeachingBodyApprovalDate(),
-			$keys[12] => $this->getAdministrationBoardApprovalDate(),
+			$keys[11] => $this->getApprovalDate(),
+			$keys[12] => $this->getFinancingDate(),
 		);
 		return $result;
 	}
@@ -1365,10 +1365,10 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				$this->setSubmissionDate($value);
 				break;
 			case 11:
-				$this->setTeachingBodyApprovalDate($value);
+				$this->setApprovalDate($value);
 				break;
 			case 12:
-				$this->setAdministrationBoardApprovalDate($value);
+				$this->setFinancingDate($value);
 				break;
 		} // switch()
 	}
@@ -1405,8 +1405,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[8], $arr)) $this->setHoursApproved($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setState($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setSubmissionDate($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setTeachingBodyApprovalDate($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setAdministrationBoardApprovalDate($arr[$keys[12]]);
+		if (array_key_exists($keys[11], $arr)) $this->setApprovalDate($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setFinancingDate($arr[$keys[12]]);
 	}
 
 	/**
@@ -1429,8 +1429,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SchoolprojectPeer::HOURS_APPROVED)) $criteria->add(SchoolprojectPeer::HOURS_APPROVED, $this->hours_approved);
 		if ($this->isColumnModified(SchoolprojectPeer::STATE)) $criteria->add(SchoolprojectPeer::STATE, $this->state);
 		if ($this->isColumnModified(SchoolprojectPeer::SUBMISSION_DATE)) $criteria->add(SchoolprojectPeer::SUBMISSION_DATE, $this->submission_date);
-		if ($this->isColumnModified(SchoolprojectPeer::TEACHING_BODY_APPROVAL_DATE)) $criteria->add(SchoolprojectPeer::TEACHING_BODY_APPROVAL_DATE, $this->teaching_body_approval_date);
-		if ($this->isColumnModified(SchoolprojectPeer::ADMINISTRATION_BOARD_APPROVAL_DATE)) $criteria->add(SchoolprojectPeer::ADMINISTRATION_BOARD_APPROVAL_DATE, $this->administration_board_approval_date);
+		if ($this->isColumnModified(SchoolprojectPeer::APPROVAL_DATE)) $criteria->add(SchoolprojectPeer::APPROVAL_DATE, $this->approval_date);
+		if ($this->isColumnModified(SchoolprojectPeer::FINANCING_DATE)) $criteria->add(SchoolprojectPeer::FINANCING_DATE, $this->financing_date);
 
 		return $criteria;
 	}
@@ -1505,9 +1505,9 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 
 		$copyObj->setSubmissionDate($this->submission_date);
 
-		$copyObj->setTeachingBodyApprovalDate($this->teaching_body_approval_date);
+		$copyObj->setApprovalDate($this->approval_date);
 
-		$copyObj->setAdministrationBoardApprovalDate($this->administration_board_approval_date);
+		$copyObj->setFinancingDate($this->financing_date);
 
 
 		if ($deepCopy) {

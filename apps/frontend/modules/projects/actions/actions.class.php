@@ -347,7 +347,16 @@ class projectsActions extends sfActions
       $this->getContext()->getI18N()->__($result['message'])
       );
 
-    return $this->redirect('projects/index');
+    if($result['result']=='notice')
+    {
+      return $this->redirect('projects/index');
+    }
+    
+    if (array_key_exists('checkList', $result))
+    {
+      $this->checkList = $result['checkList'];
+    }
+
 
    }  
 

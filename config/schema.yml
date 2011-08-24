@@ -334,8 +334,8 @@ propel:
     hours_approved: integer
     state:        { type: integer }
     submission_date: date
-    teaching_body_approval_date: date
-    administration_board_approval_date: date    
+    approval_date: date
+    financing_date: date    
 
   proj_category:
     id: ~

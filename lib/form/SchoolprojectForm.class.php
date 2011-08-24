@@ -35,19 +35,48 @@ class SchoolprojectForm extends BaseSchoolprojectForm
     switch($state)
     {
       case Workflow::PROJ_DRAFT:
-        unset($this['hours_approved'], $this['submission_date'], $this['teaching_body_approval_date'], $this['administration_board_approval_date']);
+        unset(
+          $this['hours_approved'],
+          $this['submission_date'],
+          $this['approval_date'], 
+          $this['financing_date']
+          );
         break;
       case Workflow::PROJ_SUBMITTED:
-        unset($this['title'], $this['description'], $this['notes']);
+        unset(
+          $this['hours_approved'],
+          $this['title'],
+          $this['description'],
+          $this['notes'],
+          $this['proj_category_id'],
+          $this['proj_financing_id'],
+          $this['submission_date'],
+          $this['approval_date'],
+          $this['financing_date']
+          );
         break;
       case Workflow::PROJ_APPROVED:
-        unset($this['title'], $this['description'], $this['proj_category_id'], $this['hours_approved']);
+        unset(
+          $this['title'],
+          $this['description'],
+          $this['proj_category_id'],
+          $this['hours_approved']
+          );
         break;
       case Workflow::PROJ_FINANCED:
-        unset($this['title'], $this['description'], $this['proj_category_id'], $this['hours_approved']);
+        unset(
+          $this['title'],
+          $this['description'],
+          $this['proj_category_id'],
+          $this['hours_approved']
+          );
         break;
       case Workflow::PROJ_FINISHED:
-        unset($this['title'], $this['description'], $this['notes']);
+        unset(
+          $this['title'], 
+          $this['description'], 
+          $this['notes']
+          );
         break;
     }
   }
