@@ -127,14 +127,14 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	private $lastProjDeadlineCriteria = null;
 
 	/**
-	 * @var        array ProjExpense[] Collection to store aggregation of ProjExpense objects.
+	 * @var        array ProjResource[] Collection to store aggregation of ProjResource objects.
 	 */
-	protected $collProjExpenses;
+	protected $collProjResources;
 
 	/**
-	 * @var        Criteria The criteria used to select the current contents of collProjExpenses.
+	 * @var        Criteria The criteria used to select the current contents of collProjResources.
 	 */
-	private $lastProjExpenseCriteria = null;
+	private $lastProjResourceCriteria = null;
 
 	/**
 	 * @var        array ProjActivity[] Collection to store aggregation of ProjActivity objects.
@@ -876,8 +876,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$this->collProjDeadlines = null;
 			$this->lastProjDeadlineCriteria = null;
 
-			$this->collProjExpenses = null;
-			$this->lastProjExpenseCriteria = null;
+			$this->collProjResources = null;
+			$this->lastProjResourceCriteria = null;
 
 			$this->collProjActivitys = null;
 			$this->lastProjActivityCriteria = null;
@@ -1053,8 +1053,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collProjExpenses !== null) {
-				foreach ($this->collProjExpenses as $referrerFK) {
+			if ($this->collProjResources !== null) {
+				foreach ($this->collProjResources as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -1178,8 +1178,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collProjExpenses !== null) {
-					foreach ($this->collProjExpenses as $referrerFK) {
+				if ($this->collProjResources !== null) {
+					foreach ($this->collProjResources as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1521,9 +1521,9 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				}
 			}
 
-			foreach ($this->getProjExpenses() as $relObj) {
+			foreach ($this->getProjResources() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addProjExpense($relObj->copy($deepCopy));
+					$copyObj->addProjResource($relObj->copy($deepCopy));
 				}
 			}
 
@@ -1978,47 +1978,47 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Clears out the collProjExpenses collection (array).
+	 * Clears out the collProjResources collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
 	 * them to be refetched by subsequent calls to accessor method.
 	 *
 	 * @return     void
-	 * @see        addProjExpenses()
+	 * @see        addProjResources()
 	 */
-	public function clearProjExpenses()
+	public function clearProjResources()
 	{
-		$this->collProjExpenses = null; // important to set this to NULL since that means it is uninitialized
+		$this->collProjResources = null; // important to set this to NULL since that means it is uninitialized
 	}
 
 	/**
-	 * Initializes the collProjExpenses collection (array).
+	 * Initializes the collProjResources collection (array).
 	 *
-	 * By default this just sets the collProjExpenses collection to an empty array (like clearcollProjExpenses());
+	 * By default this just sets the collProjResources collection to an empty array (like clearcollProjResources());
 	 * however, you may wish to override this method in your stub class to provide setting appropriate
 	 * to your application -- for example, setting the initial array to the values stored in database.
 	 *
 	 * @return     void
 	 */
-	public function initProjExpenses()
+	public function initProjResources()
 	{
-		$this->collProjExpenses = array();
+		$this->collProjResources = array();
 	}
 
 	/**
-	 * Gets an array of ProjExpense objects which contain a foreign key that references this object.
+	 * Gets an array of ProjResource objects which contain a foreign key that references this object.
 	 *
 	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
 	 * Otherwise if this Schoolproject has previously been saved, it will retrieve
-	 * related ProjExpenses from storage. If this Schoolproject is new, it will return
+	 * related ProjResources from storage. If this Schoolproject is new, it will return
 	 * an empty collection or the current collection, the criteria is ignored on a new object.
 	 *
 	 * @param      PropelPDO $con
 	 * @param      Criteria $criteria
-	 * @return     array ProjExpense[]
+	 * @return     array ProjResource[]
 	 * @throws     PropelException
 	 */
-	public function getProjExpenses($criteria = null, PropelPDO $con = null)
+	public function getProjResources($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(SchoolprojectPeer::DATABASE_NAME);
@@ -2028,15 +2028,15 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collProjExpenses === null) {
+		if ($this->collProjResources === null) {
 			if ($this->isNew()) {
-			   $this->collProjExpenses = array();
+			   $this->collProjResources = array();
 			} else {
 
-				$criteria->add(ProjExpensePeer::SCHOOLPROJECT_ID, $this->id);
+				$criteria->add(ProjResourcePeer::SCHOOLPROJECT_ID, $this->id);
 
-				ProjExpensePeer::addSelectColumns($criteria);
-				$this->collProjExpenses = ProjExpensePeer::doSelect($criteria, $con);
+				ProjResourcePeer::addSelectColumns($criteria);
+				$this->collProjResources = ProjResourcePeer::doSelect($criteria, $con);
 			}
 		} else {
 			// criteria has no effect for a new object
@@ -2046,28 +2046,28 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				// one, just return the collection.
 
 
-				$criteria->add(ProjExpensePeer::SCHOOLPROJECT_ID, $this->id);
+				$criteria->add(ProjResourcePeer::SCHOOLPROJECT_ID, $this->id);
 
-				ProjExpensePeer::addSelectColumns($criteria);
-				if (!isset($this->lastProjExpenseCriteria) || !$this->lastProjExpenseCriteria->equals($criteria)) {
-					$this->collProjExpenses = ProjExpensePeer::doSelect($criteria, $con);
+				ProjResourcePeer::addSelectColumns($criteria);
+				if (!isset($this->lastProjResourceCriteria) || !$this->lastProjResourceCriteria->equals($criteria)) {
+					$this->collProjResources = ProjResourcePeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastProjExpenseCriteria = $criteria;
-		return $this->collProjExpenses;
+		$this->lastProjResourceCriteria = $criteria;
+		return $this->collProjResources;
 	}
 
 	/**
-	 * Returns the number of related ProjExpense objects.
+	 * Returns the number of related ProjResource objects.
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct
 	 * @param      PropelPDO $con
-	 * @return     int Count of related ProjExpense objects.
+	 * @return     int Count of related ProjResource objects.
 	 * @throws     PropelException
 	 */
-	public function countProjExpenses(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	public function countProjResources(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(SchoolprojectPeer::DATABASE_NAME);
@@ -2081,14 +2081,14 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 
 		$count = null;
 
-		if ($this->collProjExpenses === null) {
+		if ($this->collProjResources === null) {
 			if ($this->isNew()) {
 				$count = 0;
 			} else {
 
-				$criteria->add(ProjExpensePeer::SCHOOLPROJECT_ID, $this->id);
+				$criteria->add(ProjResourcePeer::SCHOOLPROJECT_ID, $this->id);
 
-				$count = ProjExpensePeer::doCount($criteria, false, $con);
+				$count = ProjResourcePeer::doCount($criteria, false, $con);
 			}
 		} else {
 			// criteria has no effect for a new object
@@ -2098,35 +2098,35 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				// one, just return count of the collection.
 
 
-				$criteria->add(ProjExpensePeer::SCHOOLPROJECT_ID, $this->id);
+				$criteria->add(ProjResourcePeer::SCHOOLPROJECT_ID, $this->id);
 
-				if (!isset($this->lastProjExpenseCriteria) || !$this->lastProjExpenseCriteria->equals($criteria)) {
-					$count = ProjExpensePeer::doCount($criteria, false, $con);
+				if (!isset($this->lastProjResourceCriteria) || !$this->lastProjResourceCriteria->equals($criteria)) {
+					$count = ProjResourcePeer::doCount($criteria, false, $con);
 				} else {
-					$count = count($this->collProjExpenses);
+					$count = count($this->collProjResources);
 				}
 			} else {
-				$count = count($this->collProjExpenses);
+				$count = count($this->collProjResources);
 			}
 		}
 		return $count;
 	}
 
 	/**
-	 * Method called to associate a ProjExpense object to this object
-	 * through the ProjExpense foreign key attribute.
+	 * Method called to associate a ProjResource object to this object
+	 * through the ProjResource foreign key attribute.
 	 *
-	 * @param      ProjExpense $l ProjExpense
+	 * @param      ProjResource $l ProjResource
 	 * @return     void
 	 * @throws     PropelException
 	 */
-	public function addProjExpense(ProjExpense $l)
+	public function addProjResource(ProjResource $l)
 	{
-		if ($this->collProjExpenses === null) {
-			$this->initProjExpenses();
+		if ($this->collProjResources === null) {
+			$this->initProjResources();
 		}
-		if (!in_array($l, $this->collProjExpenses, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collProjExpenses, $l);
+		if (!in_array($l, $this->collProjResources, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collProjResources, $l);
 			$l->setSchoolproject($this);
 		}
 	}
@@ -2137,13 +2137,13 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	 * an identical criteria, it returns the collection.
 	 * Otherwise if this Schoolproject is new, it will return
 	 * an empty collection; or if this Schoolproject has previously
-	 * been saved, it will retrieve related ProjExpenses from storage.
+	 * been saved, it will retrieve related ProjResources from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
 	 * actually need in Schoolproject.
 	 */
-	public function getProjExpensesJoinProjExpenseType($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getProjResourcesJoinProjResourceType($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(SchoolprojectPeer::DATABASE_NAME);
@@ -2153,29 +2153,29 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collProjExpenses === null) {
+		if ($this->collProjResources === null) {
 			if ($this->isNew()) {
-				$this->collProjExpenses = array();
+				$this->collProjResources = array();
 			} else {
 
-				$criteria->add(ProjExpensePeer::SCHOOLPROJECT_ID, $this->id);
+				$criteria->add(ProjResourcePeer::SCHOOLPROJECT_ID, $this->id);
 
-				$this->collProjExpenses = ProjExpensePeer::doSelectJoinProjExpenseType($criteria, $con, $join_behavior);
+				$this->collProjResources = ProjResourcePeer::doSelectJoinProjResourceType($criteria, $con, $join_behavior);
 			}
 		} else {
 			// the following code is to determine if a new query is
 			// called for.  If the criteria is the same as the last
 			// one, just return the collection.
 
-			$criteria->add(ProjExpensePeer::SCHOOLPROJECT_ID, $this->id);
+			$criteria->add(ProjResourcePeer::SCHOOLPROJECT_ID, $this->id);
 
-			if (!isset($this->lastProjExpenseCriteria) || !$this->lastProjExpenseCriteria->equals($criteria)) {
-				$this->collProjExpenses = ProjExpensePeer::doSelectJoinProjExpenseType($criteria, $con, $join_behavior);
+			if (!isset($this->lastProjResourceCriteria) || !$this->lastProjResourceCriteria->equals($criteria)) {
+				$this->collProjResources = ProjResourcePeer::doSelectJoinProjResourceType($criteria, $con, $join_behavior);
 			}
 		}
-		$this->lastProjExpenseCriteria = $criteria;
+		$this->lastProjResourceCriteria = $criteria;
 
-		return $this->collProjExpenses;
+		return $this->collProjResources;
 	}
 
 	/**
@@ -2396,8 +2396,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collProjExpenses) {
-				foreach ((array) $this->collProjExpenses as $o) {
+			if ($this->collProjResources) {
+				foreach ((array) $this->collProjResources as $o) {
 					$o->clearAllReferences($deep);
 				}
 			}
@@ -2409,7 +2409,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		} // if ($deep)
 
 		$this->collProjDeadlines = null;
-		$this->collProjExpenses = null;
+		$this->collProjResources = null;
 		$this->collProjActivitys = null;
 			$this->aProjCategory = null;
 			$this->aProjFinancing = null;

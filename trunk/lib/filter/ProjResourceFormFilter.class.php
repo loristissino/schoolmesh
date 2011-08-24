@@ -1,13 +1,13 @@
 <?php
 
 /**
- * ProjExpenseType form.
+ * ProjResource filter form.
  *
  * @package    schoolmesh
- * @subpackage form
+ * @subpackage filter
  * @author     Your name here
  */
-class ProjExpenseTypeForm extends BaseProjExpenseTypeForm
+class ProjResourceFormFilter extends BaseProjResourceFormFilter
 {
   public function configure()
   {

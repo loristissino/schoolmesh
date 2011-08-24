@@ -1,49 +1,55 @@
 <?php
 
 /**
- * Base static class for performing query and update operations on the 'proj_expense_type' table.
+ * Base static class for performing query and update operations on the 'proj_resource_type' table.
  *
  * 
  *
  * @package    lib.model.om
  */
-abstract class BaseProjExpenseTypePeer {
+abstract class BaseProjResourceTypePeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'proj_expense_type';
+	const TABLE_NAME = 'proj_resource_type';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'ProjExpenseType';
+	const OM_CLASS = 'ProjResourceType';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.ProjExpenseType';
+	const CLASS_DEFAULT = 'lib.model.ProjResourceType';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'ProjExpenseTypeTableMap';
+	const TM_CLASS = 'ProjResourceTypeTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 3;
+	const NUM_COLUMNS = 5;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'proj_expense_type.ID';
+	const ID = 'proj_resource_type.ID';
 
 	/** the column name for the DESCRIPTION field */
-	const DESCRIPTION = 'proj_expense_type.DESCRIPTION';
+	const DESCRIPTION = 'proj_resource_type.DESCRIPTION';
+
+	/** the column name for the RESOURCE_TYPE field */
+	const RESOURCE_TYPE = 'proj_resource_type.RESOURCE_TYPE';
 
 	/** the column name for the ROLE_ID field */
-	const ROLE_ID = 'proj_expense_type.ROLE_ID';
+	const ROLE_ID = 'proj_resource_type.ROLE_ID';
+
+	/** the column name for the STANDARD_COST field */
+	const STANDARD_COST = 'proj_resource_type.STANDARD_COST';
 
 	/**
-	 * An identiy map to hold any loaded instances of ProjExpenseType objects.
+	 * An identiy map to hold any loaded instances of ProjResourceType objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array ProjExpenseType[]
+	 * @var        array ProjResourceType[]
 	 */
 	public static $instances = array();
 
@@ -62,11 +68,11 @@ abstract class BaseProjExpenseTypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'RoleId', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'roleId', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::ROLE_ID, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'role_id', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'ResourceType', 'RoleId', 'StandardCost', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'resourceType', 'roleId', 'standardCost', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::RESOURCE_TYPE, self::ROLE_ID, self::STANDARD_COST, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'resource_type', 'role_id', 'standard_cost', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -76,11 +82,11 @@ abstract class BaseProjExpenseTypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'RoleId' => 2, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'roleId' => 2, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::ROLE_ID => 2, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'role_id' => 2, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'ResourceType' => 2, 'RoleId' => 3, 'StandardCost' => 4, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'resourceType' => 2, 'roleId' => 3, 'standardCost' => 4, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::RESOURCE_TYPE => 2, self::ROLE_ID => 3, self::STANDARD_COST => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'resource_type' => 2, 'role_id' => 3, 'standard_cost' => 4, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -129,12 +135,12 @@ abstract class BaseProjExpenseTypePeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. ProjExpenseTypePeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. ProjResourceTypePeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(ProjExpenseTypePeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(ProjResourceTypePeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -150,9 +156,11 @@ abstract class BaseProjExpenseTypePeer {
 	 */
 	public static function addSelectColumns(Criteria $criteria)
 	{
-		$criteria->addSelectColumn(ProjExpenseTypePeer::ID);
-		$criteria->addSelectColumn(ProjExpenseTypePeer::DESCRIPTION);
-		$criteria->addSelectColumn(ProjExpenseTypePeer::ROLE_ID);
+		$criteria->addSelectColumn(ProjResourceTypePeer::ID);
+		$criteria->addSelectColumn(ProjResourceTypePeer::DESCRIPTION);
+		$criteria->addSelectColumn(ProjResourceTypePeer::RESOURCE_TYPE);
+		$criteria->addSelectColumn(ProjResourceTypePeer::ROLE_ID);
+		$criteria->addSelectColumn(ProjResourceTypePeer::STANDARD_COST);
 	}
 
 	/**
@@ -171,21 +179,21 @@ abstract class BaseProjExpenseTypePeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(ProjExpenseTypePeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ProjResourceTypePeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			ProjExpenseTypePeer::addSelectColumns($criteria);
+			ProjResourceTypePeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 		$criteria->setDbName(self::DATABASE_NAME); // Set the correct dbName
 
 		if ($con === null) {
-			$con = Propel::getConnection(ProjExpenseTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ProjResourceTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 		// BasePeer returns a PDOStatement
 		$stmt = BasePeer::doCount($criteria, $con);
@@ -203,7 +211,7 @@ abstract class BaseProjExpenseTypePeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PropelPDO $con
-	 * @return     ProjExpenseType
+	 * @return     ProjResourceType
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -211,7 +219,7 @@ abstract class BaseProjExpenseTypePeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = ProjExpenseTypePeer::doSelect($critcopy, $con);
+		$objects = ProjResourceTypePeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -228,7 +236,7 @@ abstract class BaseProjExpenseTypePeer {
 	 */
 	public static function doSelect(Criteria $criteria, PropelPDO $con = null)
 	{
-		return ProjExpenseTypePeer::populateObjects(ProjExpenseTypePeer::doSelectStmt($criteria, $con));
+		return ProjResourceTypePeer::populateObjects(ProjResourceTypePeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -246,12 +254,12 @@ abstract class BaseProjExpenseTypePeer {
 	public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(ProjExpenseTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ProjResourceTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		if (!$criteria->hasSelectClause()) {
 			$criteria = clone $criteria;
-			ProjExpenseTypePeer::addSelectColumns($criteria);
+			ProjResourceTypePeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -269,10 +277,10 @@ abstract class BaseProjExpenseTypePeer {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      ProjExpenseType $value A ProjExpenseType object.
+	 * @param      ProjResourceType $value A ProjResourceType object.
 	 * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
 	 */
-	public static function addInstanceToPool(ProjExpenseType $obj, $key = null)
+	public static function addInstanceToPool(ProjResourceType $obj, $key = null)
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
@@ -290,18 +298,18 @@ abstract class BaseProjExpenseTypePeer {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A ProjExpenseType object or a primary key value.
+	 * @param      mixed $value A ProjResourceType object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
-			if (is_object($value) && $value instanceof ProjExpenseType) {
+			if (is_object($value) && $value instanceof ProjResourceType) {
 				$key = (string) $value->getId();
 			} elseif (is_scalar($value)) {
 				// assume we've been passed a primary key
 				$key = (string) $value;
 			} else {
-				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or ProjExpenseType object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or ProjResourceType object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
 				throw $e;
 			}
 
@@ -316,7 +324,7 @@ abstract class BaseProjExpenseTypePeer {
 	 * a multi-column primary key, a serialize()d version of the primary key will be returned.
 	 *
 	 * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-	 * @return     ProjExpenseType Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+	 * @return     ProjResourceType Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
 	 * @see        getPrimaryKeyHash()
 	 */
 	public static function getInstanceFromPool($key)
@@ -340,7 +348,7 @@ abstract class BaseProjExpenseTypePeer {
 	}
 	
 	/**
-	 * Method to invalidate the instance pool of all tables related to proj_expense_type
+	 * Method to invalidate the instance pool of all tables related to proj_resource_type
 	 * by a foreign key with ON DELETE CASCADE
 	 */
 	public static function clearRelatedInstancePool()
@@ -378,11 +386,11 @@ abstract class BaseProjExpenseTypePeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = ProjExpenseTypePeer::getOMClass(false);
+		$cls = ProjResourceTypePeer::getOMClass(false);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = ProjExpenseTypePeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj = ProjExpenseTypePeer::getInstanceFromPool($key))) {
+			$key = ProjResourceTypePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj = ProjResourceTypePeer::getInstanceFromPool($key))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj->hydrate($row, 0, true); // rehydrate
@@ -391,7 +399,7 @@ abstract class BaseProjExpenseTypePeer {
 				$obj = new $cls();
 				$obj->hydrate($row);
 				$results[] = $obj;
-				ProjExpenseTypePeer::addInstanceToPool($obj, $key);
+				ProjResourceTypePeer::addInstanceToPool($obj, $key);
 			} // if key exists
 		}
 		$stmt->closeCursor();
@@ -415,14 +423,14 @@ abstract class BaseProjExpenseTypePeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(ProjExpenseTypePeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ProjResourceTypePeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			ProjExpenseTypePeer::addSelectColumns($criteria);
+			ProjResourceTypePeer::addSelectColumns($criteria);
 		}
 		
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -431,10 +439,10 @@ abstract class BaseProjExpenseTypePeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(ProjExpenseTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ProjResourceTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(ProjExpenseTypePeer::ROLE_ID, RolePeer::ID, $join_behavior);
+		$criteria->addJoin(ProjResourceTypePeer::ROLE_ID, RolePeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -449,11 +457,11 @@ abstract class BaseProjExpenseTypePeer {
 
 
 	/**
-	 * Selects a collection of ProjExpenseType objects pre-filled with their Role objects.
+	 * Selects a collection of ProjResourceType objects pre-filled with their Role objects.
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of ProjExpenseType objects.
+	 * @return     array Array of ProjResourceType objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -466,28 +474,28 @@ abstract class BaseProjExpenseTypePeer {
 			$criteria->setDbName(self::DATABASE_NAME);
 		}
 
-		ProjExpenseTypePeer::addSelectColumns($criteria);
-		$startcol = (ProjExpenseTypePeer::NUM_COLUMNS - ProjExpenseTypePeer::NUM_LAZY_LOAD_COLUMNS);
+		ProjResourceTypePeer::addSelectColumns($criteria);
+		$startcol = (ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS);
 		RolePeer::addSelectColumns($criteria);
 
-		$criteria->addJoin(ProjExpenseTypePeer::ROLE_ID, RolePeer::ID, $join_behavior);
+		$criteria->addJoin(ProjResourceTypePeer::ROLE_ID, RolePeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = ProjExpenseTypePeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = ProjExpenseTypePeer::getInstanceFromPool($key1))) {
+			$key1 = ProjResourceTypePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ProjResourceTypePeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
 
-				$cls = ProjExpenseTypePeer::getOMClass(false);
+				$cls = ProjResourceTypePeer::getOMClass(false);
 
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				ProjExpenseTypePeer::addInstanceToPool($obj1, $key1);
+				ProjResourceTypePeer::addInstanceToPool($obj1, $key1);
 			} // if $obj1 already loaded
 
 			$key2 = RolePeer::getPrimaryKeyHashFromRow($row, $startcol);
@@ -502,8 +510,8 @@ abstract class BaseProjExpenseTypePeer {
 					RolePeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
 				
-				// Add the $obj1 (ProjExpenseType) to $obj2 (Role)
-				$obj2->addProjExpenseType($obj1);
+				// Add the $obj1 (ProjResourceType) to $obj2 (Role)
+				$obj2->addProjResourceType($obj1);
 
 			} // if joined row was not null
 
@@ -531,14 +539,14 @@ abstract class BaseProjExpenseTypePeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(ProjExpenseTypePeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ProjResourceTypePeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			ProjExpenseTypePeer::addSelectColumns($criteria);
+			ProjResourceTypePeer::addSelectColumns($criteria);
 		}
 		
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -547,10 +555,10 @@ abstract class BaseProjExpenseTypePeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(ProjExpenseTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ProjResourceTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(ProjExpenseTypePeer::ROLE_ID, RolePeer::ID, $join_behavior);
+		$criteria->addJoin(ProjResourceTypePeer::ROLE_ID, RolePeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -564,12 +572,12 @@ abstract class BaseProjExpenseTypePeer {
 	}
 
 	/**
-	 * Selects a collection of ProjExpenseType objects pre-filled with all related objects.
+	 * Selects a collection of ProjResourceType objects pre-filled with all related objects.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of ProjExpenseType objects.
+	 * @return     array Array of ProjResourceType objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -582,29 +590,29 @@ abstract class BaseProjExpenseTypePeer {
 			$criteria->setDbName(self::DATABASE_NAME);
 		}
 
-		ProjExpenseTypePeer::addSelectColumns($criteria);
-		$startcol2 = (ProjExpenseTypePeer::NUM_COLUMNS - ProjExpenseTypePeer::NUM_LAZY_LOAD_COLUMNS);
+		ProjResourceTypePeer::addSelectColumns($criteria);
+		$startcol2 = (ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS);
 
 		RolePeer::addSelectColumns($criteria);
 		$startcol3 = $startcol2 + (RolePeer::NUM_COLUMNS - RolePeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$criteria->addJoin(ProjExpenseTypePeer::ROLE_ID, RolePeer::ID, $join_behavior);
+		$criteria->addJoin(ProjResourceTypePeer::ROLE_ID, RolePeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = ProjExpenseTypePeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = ProjExpenseTypePeer::getInstanceFromPool($key1))) {
+			$key1 = ProjResourceTypePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ProjResourceTypePeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
-				$cls = ProjExpenseTypePeer::getOMClass(false);
+				$cls = ProjResourceTypePeer::getOMClass(false);
 
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				ProjExpenseTypePeer::addInstanceToPool($obj1, $key1);
+				ProjResourceTypePeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
 			// Add objects for joined Role rows
@@ -621,8 +629,8 @@ abstract class BaseProjExpenseTypePeer {
 					RolePeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 loaded
 
-				// Add the $obj1 (ProjExpenseType) to the collection in $obj2 (Role)
-				$obj2->addProjExpenseType($obj1);
+				// Add the $obj1 (ProjResourceType) to the collection in $obj2 (Role)
+				$obj2->addProjResourceType($obj1);
 			} // if joined row not null
 
 			$results[] = $obj1;
@@ -648,10 +656,10 @@ abstract class BaseProjExpenseTypePeer {
 	 */
 	public static function buildTableMap()
 	{
-	  $dbMap = Propel::getDatabaseMap(BaseProjExpenseTypePeer::DATABASE_NAME);
-	  if (!$dbMap->hasTable(BaseProjExpenseTypePeer::TABLE_NAME))
+	  $dbMap = Propel::getDatabaseMap(BaseProjResourceTypePeer::DATABASE_NAME);
+	  if (!$dbMap->hasTable(BaseProjResourceTypePeer::TABLE_NAME))
 	  {
-	    $dbMap->addTableObject(new ProjExpenseTypeTableMap());
+	    $dbMap->addTableObject(new ProjResourceTypeTableMap());
 	  }
 	}
 
@@ -668,13 +676,13 @@ abstract class BaseProjExpenseTypePeer {
 	 */
 	public static function getOMClass($withPrefix = true)
 	{
-		return $withPrefix ? ProjExpenseTypePeer::CLASS_DEFAULT : ProjExpenseTypePeer::OM_CLASS;
+		return $withPrefix ? ProjResourceTypePeer::CLASS_DEFAULT : ProjResourceTypePeer::OM_CLASS;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a ProjExpenseType or Criteria object.
+	 * Method perform an INSERT on the database, given a ProjResourceType or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or ProjExpenseType object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or ProjResourceType object containing data that is used to create the INSERT statement.
 	 * @param      PropelPDO $con the PropelPDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -683,17 +691,17 @@ abstract class BaseProjExpenseTypePeer {
 	public static function doInsert($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(ProjExpenseTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ProjResourceTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from ProjExpenseType object
+			$criteria = $values->buildCriteria(); // build Criteria from ProjResourceType object
 		}
 
-		if ($criteria->containsKey(ProjExpenseTypePeer::ID) && $criteria->keyContainsValue(ProjExpenseTypePeer::ID) ) {
-			throw new PropelException('Cannot insert a value for auto-increment primary key ('.ProjExpenseTypePeer::ID.')');
+		if ($criteria->containsKey(ProjResourceTypePeer::ID) && $criteria->keyContainsValue(ProjResourceTypePeer::ID) ) {
+			throw new PropelException('Cannot insert a value for auto-increment primary key ('.ProjResourceTypePeer::ID.')');
 		}
 
 
@@ -715,9 +723,9 @@ abstract class BaseProjExpenseTypePeer {
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a ProjExpenseType or Criteria object.
+	 * Method perform an UPDATE on the database, given a ProjResourceType or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or ProjExpenseType object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or ProjResourceType object containing data that is used to create the UPDATE statement.
 	 * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -726,7 +734,7 @@ abstract class BaseProjExpenseTypePeer {
 	public static function doUpdate($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(ProjExpenseTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ProjResourceTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		$selectCriteria = new Criteria(self::DATABASE_NAME);
@@ -734,10 +742,10 @@ abstract class BaseProjExpenseTypePeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(ProjExpenseTypePeer::ID);
-			$selectCriteria->add(ProjExpenseTypePeer::ID, $criteria->remove(ProjExpenseTypePeer::ID), $comparison);
+			$comparison = $criteria->getComparison(ProjResourceTypePeer::ID);
+			$selectCriteria->add(ProjResourceTypePeer::ID, $criteria->remove(ProjResourceTypePeer::ID), $comparison);
 
-		} else { // $values is ProjExpenseType object
+		} else { // $values is ProjResourceType object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -749,26 +757,26 @@ abstract class BaseProjExpenseTypePeer {
 	}
 
 	/**
-	 * Method to DELETE all rows from the proj_expense_type table.
+	 * Method to DELETE all rows from the proj_resource_type table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
 	public static function doDeleteAll($con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(ProjExpenseTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ProjResourceTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		$affectedRows = 0; // initialize var to track total num of affected rows
 		try {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(ProjExpenseTypePeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(ProjResourceTypePeer::TABLE_NAME, $con);
 			// Because this db requires some delete cascade/set null emulation, we have to
 			// clear the cached instance *after* the emulation has happened (since
 			// instances get re-added by the select statement contained therein).
-			ProjExpenseTypePeer::clearInstancePool();
-			ProjExpenseTypePeer::clearRelatedInstancePool();
+			ProjResourceTypePeer::clearInstancePool();
+			ProjResourceTypePeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -778,9 +786,9 @@ abstract class BaseProjExpenseTypePeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a ProjExpenseType or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a ProjResourceType or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or ProjExpenseType object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or ProjResourceType object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PropelPDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -791,27 +799,27 @@ abstract class BaseProjExpenseTypePeer {
 	 public static function doDelete($values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(ProjExpenseTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ProjResourceTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			ProjExpenseTypePeer::clearInstancePool();
+			ProjResourceTypePeer::clearInstancePool();
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof ProjExpenseType) { // it's a model object
+		} elseif ($values instanceof ProjResourceType) { // it's a model object
 			// invalidate the cache for this single object
-			ProjExpenseTypePeer::removeInstanceFromPool($values);
+			ProjResourceTypePeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(ProjExpenseTypePeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(ProjResourceTypePeer::ID, (array) $values, Criteria::IN);
 			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				ProjExpenseTypePeer::removeInstanceFromPool($singleval);
+				ProjResourceTypePeer::removeInstanceFromPool($singleval);
 			}
 		}
 
@@ -826,7 +834,7 @@ abstract class BaseProjExpenseTypePeer {
 			$con->beginTransaction();
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
-			ProjExpenseTypePeer::clearRelatedInstancePool();
+			ProjResourceTypePeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -836,24 +844,24 @@ abstract class BaseProjExpenseTypePeer {
 	}
 
 	/**
-	 * Validates all modified columns of given ProjExpenseType object.
+	 * Validates all modified columns of given ProjResourceType object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      ProjExpenseType $obj The object to validate.
+	 * @param      ProjResourceType $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(ProjExpenseType $obj, $cols = null)
+	public static function doValidate(ProjResourceType $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(ProjExpenseTypePeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(ProjExpenseTypePeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(ProjResourceTypePeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(ProjResourceTypePeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -869,7 +877,7 @@ abstract class BaseProjExpenseTypePeer {
 
 		}
 
-		return BasePeer::doValidate(ProjExpenseTypePeer::DATABASE_NAME, ProjExpenseTypePeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(ProjResourceTypePeer::DATABASE_NAME, ProjResourceTypePeer::TABLE_NAME, $columns);
 	}
 
 	/**
@@ -877,23 +885,23 @@ abstract class BaseProjExpenseTypePeer {
 	 *
 	 * @param      int $pk the primary key.
 	 * @param      PropelPDO $con the connection to use
-	 * @return     ProjExpenseType
+	 * @return     ProjResourceType
 	 */
 	public static function retrieveByPK($pk, PropelPDO $con = null)
 	{
 
-		if (null !== ($obj = ProjExpenseTypePeer::getInstanceFromPool((string) $pk))) {
+		if (null !== ($obj = ProjResourceTypePeer::getInstanceFromPool((string) $pk))) {
 			return $obj;
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(ProjExpenseTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ProjResourceTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria = new Criteria(ProjExpenseTypePeer::DATABASE_NAME);
-		$criteria->add(ProjExpenseTypePeer::ID, $pk);
+		$criteria = new Criteria(ProjResourceTypePeer::DATABASE_NAME);
+		$criteria->add(ProjResourceTypePeer::ID, $pk);
 
-		$v = ProjExpenseTypePeer::doSelect($criteria, $con);
+		$v = ProjResourceTypePeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -909,16 +917,16 @@ abstract class BaseProjExpenseTypePeer {
 	public static function retrieveByPKs($pks, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(ProjExpenseTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ProjResourceTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		$objs = null;
 		if (empty($pks)) {
 			$objs = array();
 		} else {
-			$criteria = new Criteria(ProjExpenseTypePeer::DATABASE_NAME);
-			$criteria->add(ProjExpenseTypePeer::ID, $pks, Criteria::IN);
-			$objs = ProjExpenseTypePeer::doSelect($criteria, $con);
+			$criteria = new Criteria(ProjResourceTypePeer::DATABASE_NAME);
+			$criteria->add(ProjResourceTypePeer::ID, $pks, Criteria::IN);
+			$objs = ProjResourceTypePeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
@@ -935,9 +943,9 @@ abstract class BaseProjExpenseTypePeer {
 	  return array();
 	}
 
-} // BaseProjExpenseTypePeer
+} // BaseProjResourceTypePeer
 
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BaseProjExpenseTypePeer::buildTableMap();
+BaseProjResourceTypePeer::buildTableMap();
 

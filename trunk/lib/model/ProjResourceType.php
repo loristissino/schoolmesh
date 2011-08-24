@@ -1,10 +1,10 @@
 <?php
 
-require 'lib/model/om/BaseProjExpense.php';
+require 'lib/model/om/BaseProjResourceType.php';
 
 
 /**
- * Skeleton subclass for representing a row from the 'proj_expense' table.
+ * Skeleton subclass for representing a row from the 'proj_resource_type' table.
  *
  * 
  *
@@ -14,6 +14,6 @@ require 'lib/model/om/BaseProjExpense.php';
  *
  * @package    lib.model
  */
-class ProjExpense extends BaseProjExpense {
+class ProjResourceType extends BaseProjResourceType {
 
-} // ProjExpense
+} // ProjResourceType

@@ -1,10 +1,10 @@
 <?php
 
-require 'lib/model/om/BaseProjExpensePeer.php';
+require 'lib/model/om/BaseProjResourcePeer.php';
 
 
 /**
- * Skeleton subclass for performing query and update operations on the 'proj_expense' table.
+ * Skeleton subclass for performing query and update operations on the 'proj_resource' table.
  *
  * 
  *
@@ -14,6 +14,6 @@ require 'lib/model/om/BaseProjExpensePeer.php';
  *
  * @package    lib.model
  */
-class ProjExpensePeer extends BaseProjExpensePeer {
+class ProjResourcePeer extends BaseProjResourcePeer {
 
-} // ProjExpensePeer
+} // ProjResourcePeer
