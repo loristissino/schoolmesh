@@ -93,7 +93,7 @@
       <td><?php include_partial('content/notes', array('notes'=>$deadline->getNotes())) ?></td>
       <td>
       <ul class="sf_admin_td_actions">
-        <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
+        <?php if($project->getState()>=Workflow::PROJ_DRAFT): ?>
         <li class="sf_admin_action_edit">
         <?php echo link_to(
             __('Edit'),

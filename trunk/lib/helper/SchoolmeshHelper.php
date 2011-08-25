@@ -27,7 +27,7 @@ function optionsforselect($options = array(), $selected = '')
   foreach($options as $key=>$value)
   {
     $html .= '<option value="' . $key .'"';
-    if ($key==$selected)
+    if ($key===$selected)
     {
       $html .= ' selected="selected"';
     }
@@ -129,5 +129,14 @@ function breadcrumps_to_html($crumps=array(), $current='')
   return $text . $current;
 }
 
-
+function currencyvalue($value)
+{
+  return 
+    sfConfig::get('app_config_currency_symbol', '€') . ' ' .
+    number_format($value, 
+      sfConfig::get('app_config_currency_decimals', 2), 
+      sfConfig::get('app_config_currency_decpoint', ','),
+      sfConfig::get('app_config_currency_thousandssep', '.')
+      );
+}
 

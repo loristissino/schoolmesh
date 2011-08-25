@@ -7,16 +7,6 @@
 
 <div class="sf_admin_list">
 
-<?php if ($sf_user->hasCredential('schoolmaster') or $sf_user->hasCredential('project')): ?>
-<p><?php echo link_to(
-	__('See as report'),
-	url_for('projects/monitor?template=report')
-	)
-?>
-</p>
-<?php endif ?>
-
-
 <?php if(sizeof($projects)>0): ?>
 
 <table cellspacing="0">
@@ -64,6 +54,4 @@
 		)?>
 		</li>
 
-<?php if(isset($action) && ($action=='monitor')): ?>
-<?php include_partial('content/year', array('year'=>$year, 'years'=>$years, 'back'=>'projects/monitor')) ?>
-<?php endif ?>
+</ul>

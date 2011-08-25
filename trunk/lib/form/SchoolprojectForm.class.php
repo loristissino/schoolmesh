@@ -39,7 +39,9 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['hours_approved'],
           $this['submission_date'],
           $this['approval_date'], 
-          $this['financing_date']
+          $this['financing_date'],
+          $this['approval_notes'], 
+          $this['financing_notes']
           );
         break;
       case Workflow::PROJ_SUBMITTED:
@@ -52,30 +54,54 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['proj_financing_id'],
           $this['submission_date'],
           $this['approval_date'],
-          $this['financing_date']
+          $this['financing_date'],
+          $this['approval_notes'], 
+          $this['financing_notes']
           );
         break;
       case Workflow::PROJ_APPROVED:
         unset(
+          $this['hours_approved'],
           $this['title'],
           $this['description'],
+          $this['notes'],
           $this['proj_category_id'],
-          $this['hours_approved']
+          $this['proj_financing_id'],
+          $this['submission_date'],
+          $this['approval_date'],
+          $this['financing_date'],
+          $this['approval_notes'], 
+          $this['financing_notes']
           );
         break;
       case Workflow::PROJ_FINANCED:
         unset(
+          $this['hours_approved'],
           $this['title'],
           $this['description'],
+          $this['notes'],
           $this['proj_category_id'],
-          $this['hours_approved']
+          $this['proj_financing_id'],
+          $this['submission_date'],
+          $this['approval_date'],
+          $this['financing_date'],
+          $this['approval_notes'], 
+          $this['financing_notes']
           );
         break;
       case Workflow::PROJ_FINISHED:
         unset(
-          $this['title'], 
-          $this['description'], 
-          $this['notes']
+          $this['hours_approved'],
+          $this['title'],
+          $this['description'],
+          $this['notes'],
+          $this['proj_category_id'],
+          $this['proj_financing_id'],
+          $this['submission_date'],
+          $this['approval_date'],
+          $this['financing_date'],
+          $this['approval_notes'], 
+          $this['financing_notes']
           );
         break;
     }

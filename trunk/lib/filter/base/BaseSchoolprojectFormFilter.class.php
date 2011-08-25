@@ -23,7 +23,9 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
       'state'             => new sfWidgetFormFilterInput(),
       'submission_date'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'approval_date'     => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'approval_notes'    => new sfWidgetFormFilterInput(),
       'financing_date'    => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'financing_notes'   => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -38,7 +40,9 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
       'state'             => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'submission_date'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'approval_date'     => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'approval_notes'    => new sfValidatorPass(array('required' => false)),
       'financing_date'    => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'financing_notes'   => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('schoolproject_filters[%s]');
@@ -68,7 +72,9 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
       'state'             => 'Number',
       'submission_date'   => 'Date',
       'approval_date'     => 'Date',
+      'approval_notes'    => 'Text',
       'financing_date'    => 'Date',
+      'financing_notes'   => 'Text',
     );
   }
 }

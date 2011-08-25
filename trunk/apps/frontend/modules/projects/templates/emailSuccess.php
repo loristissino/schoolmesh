@@ -1,7 +1,7 @@
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     'projects/index' => __("Projects"),
-    'projects/edit?id=' . $deadline->getProject()->getId() => $deadline->getProject()
+    'projects/edit?id=' . $project->getId() => $project
     ),
   'current'=>__("Send an email"),
   'title'=>__('Send an email to the coordinator of this project'),

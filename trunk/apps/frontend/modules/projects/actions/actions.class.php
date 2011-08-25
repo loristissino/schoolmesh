@@ -27,6 +27,138 @@ class projectsActions extends sfActions
 
 	}
   
+  public function executeBatch(sfWebRequest $request)
+  {
+    $ids = $request->getParameter('ids');
+    $this->getUser()->setAttribute('ids', $ids);
+    
+    $action=$request->getParameter('batch_action');
+
+    if ($action==='0')
+      {
+        $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must specify an action.'));
+        $this->redirect('projects/monitor');
+      }
+      
+    $this->forward('projects', $action);
+    // if an action is not valid, we get an error anyway, because there is no
+    // template BatchSuccess.php
+  }  
+
+  protected function _getIds(sfWebRequest $request)
+  {
+    $this->ids=null;
+    if($request->hasParameter('id'))
+    {
+      $this->ids=array($request->getParameter('id'));
+    }
+    elseif ($request->hasParameter('ids'))
+    {
+      if(!is_array($request->getParameter('ids')))
+      {
+        $this->ids = explode(',', $request->getParameter('ids'));
+      }
+      else
+      {
+        $this->ids = $request->getParameter('ids');
+      }
+    }
+    if (!$this->ids)
+		{
+				$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select some projects.'));
+				$this->redirect('projects/monitor');
+		}
+    
+    return $this->ids; // we could avoid returning it, since it's avaailable anyway
+    
+  }
+
+
+  public function executeSetapprovaldate(sfWebRequest $request)
+  {
+
+    $this->form = new ProjectDateForm();
+    
+    $this->form->setLabels(array(
+      'date'=>$this->getContext()->getI18N()->__('Approval date'),
+      'notes'=>$this->getContext()->getI18N()->__('Approval notes')
+      ));
+    
+    $this->action='setapprovaldate';
+    $this->setTemplate('projdate');
+    
+		if ($request->isMethod('post'))
+    {
+			$this->form->bind($request->getParameter('projectinfo'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				$result=SchoolprojectPeer::setApprovalDate($this->getUser()->getAttribute('ids'), $params);
+        
+				$this->getUser()->setFlash($result['result'],
+					$this->getContext()->getI18N()->__($result['message'])
+					);
+				
+        return $this->redirect('projects/monitor');
+			}
+			
+		}
+
+    $this->ids=$this->_getIds($request);
+    $projects=SchoolprojectPeer::retrieveByPks($this->ids);
+    $date=$projects[0]->getApprovalDate('U');
+    if(!$date) $date=time();
+    $this->form->setDefault('date', $date);
+
+  }
+
+
+  public function executeSetfinancingdate(sfWebRequest $request)
+  {
+
+    $this->form = new ProjectDateForm();
+    
+    $this->form->setLabels(array(
+      'date'=>$this->getContext()->getI18N()->__('Financing date'),
+      'notes'=>$this->getContext()->getI18N()->__('Financing notes')
+      ));
+    
+    $this->action='setfinancingdate';
+    $this->setTemplate('projdate');
+    
+		if ($request->isMethod('post'))
+    {
+			$this->form->bind($request->getParameter('projectinfo'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				$result=SchoolprojectPeer::setFinancingDate($this->getUser()->getAttribute('ids'), $params);
+        
+				$this->getUser()->setFlash($result['result'],
+					$this->getContext()->getI18N()->__($result['message'])
+					);
+				
+        return $this->redirect('projects/monitor');
+			}
+			
+		}
+
+    $this->ids=$this->_getIds($request);
+    $projects=SchoolprojectPeer::retrieveByPks($this->ids);
+    $date=$projects[0]->getFinancingDate('U');
+    if(!$date) $date=time();
+    $this->form->setDefault('date', $date);
+
+  }
+  
+  public function executeComputebudget(sfWebRequest $request)
+  {
+    $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
+    $this->projects=SchoolprojectPeer::retrieveByPks($this->ids);
+    $this->total = 0;
+    $this->getUser()->setAttribute('back', 'budget');
+  }
+  
   public function executeView(sfWebRequest $request)
   {
     
@@ -86,9 +218,8 @@ class projectsActions extends sfActions
    $this->projects=SchoolprojectPeer::retrieveAllForYear($this->year);
    $this->steps=Array();
 
-   $template=$request->getParameter('template', 'index');
+   $template=$request->getParameter('template', 'monitor');
    $this->setTemplate($template);
-   $this->action='monitor';
 
 	}
 	
@@ -129,6 +260,10 @@ class projectsActions extends sfActions
 					$this->getContext()->getI18N()->__($result['message'])
 					);
 					
+    if(array_key_exists('redirect', $result))
+    {
+      return $this->redirect($result['redirect']);
+    }
     return $this->redirect('projects/edit?id='. $this->project->getId());
    } 
    
@@ -142,7 +277,11 @@ class projectsActions extends sfActions
     $this->getUser()->setFlash($result['result'],
 					$this->getContext()->getI18N()->__($result['message'])
 					);
-					
+		
+    if(array_key_exists('redirect', $result))
+    {
+      return $this->redirect($result['redirect']);
+    }
     return $this->redirect('projects/edit?id='. $this->project->getId());
    } 
 
@@ -236,6 +375,7 @@ class projectsActions extends sfActions
     $this->forward404Unless($this->resource->isEditableBy($this->getUser())); // the resource can be edited only by the owner or admins...
     
     $this->form = new ProjResourceForm($this->resource);
+
 /*    $this->form->addStateDependentConfiguration(
       $this->deadline->getSchoolProject()->getState(),
       array(
@@ -257,6 +397,11 @@ class projectsActions extends sfActions
 				$this->getUser()->setFlash($result['result'],
 					$this->getContext()->getI18N()->__($result['message'])
 					);
+          
+        if($this->getUser()->getAttribute('back', '')=='budget')
+        {
+          return $this->redirect('projects/computebudget');
+        }
 				
         return $this->redirect('projects/editresource?id='. $this->resource->getId());
 			}

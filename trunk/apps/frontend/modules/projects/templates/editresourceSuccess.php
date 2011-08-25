@@ -21,6 +21,25 @@
 <h2><?php echo __('Basic information') ?></h2>
 
   <table>
+  <?php if(!isset($form['description'])): ?>
+  <tr>
+    <th><label for="resource_description"><?php echo __('Description') ?></label></th>
+    <td><?php echo $resource->getDescription() ?></td>
+  </tr>
+  <?php endif ?>
+  <?php if(!isset($form['proj_resource_type_id'])): ?>
+  <tr>
+    <th><label for="resource_type"><?php echo __('Resource type') ?></label></th>
+    <td><?php echo $resource->getProjResourceType()->getDescription() ?></td>
+  </tr>
+  <?php endif ?>
+  <?php if(!isset($form['proj_quantity_estimated'])): ?>
+  <tr>
+    <th><label for="resource_quantity"><?php echo __('Qty estimated ('. $resource->getProjResourceType()->getMeasurementUnit() .')') ?></label></th>
+    <td><?php echo $resource->getQuantityEstimated() ?></td>
+  </tr>
+  <?php endif ?>
+
     <?php echo $form ?>
 	<tr>
       <td colspan="2">
@@ -29,6 +48,8 @@
     </tr>
   </table>
 </form>
+
+<?php if(!$sf_user->getAttribute('back')=='budget'): ?>
 
 <h2><?php echo __('Actions') ?></h2>
 <ul class="sf_admin_actions">
@@ -40,4 +61,6 @@
 				)?>
 </li>
 </ul>
+
+<?php endif ?>
 

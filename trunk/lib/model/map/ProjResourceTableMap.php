@@ -40,8 +40,9 @@ class ProjResourceTableMap extends TableMap {
 		$this->addForeignKey('SCHOOLPROJECT_ID', 'SchoolprojectId', 'INTEGER', 'schoolproject', 'ID', false, null, null);
 		$this->addForeignKey('PROJ_RESOURCE_TYPE_ID', 'ProjResourceTypeId', 'INTEGER', 'proj_resource_type', 'ID', false, null, null);
 		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 255, null);
-		$this->addColumn('QUANTITY_ESTIMATED', 'QuantityEstimated', 'DECIMAL', false, null, null);
-		$this->addColumn('QUANTITY_APPROVED', 'QuantityApproved', 'DECIMAL', false, null, null);
+		$this->addColumn('QUANTITY_ESTIMATED', 'QuantityEstimated', 'DECIMAL', false, 10, null);
+		$this->addColumn('QUANTITY_APPROVED', 'QuantityApproved', 'DECIMAL', false, 10, null);
+		$this->addColumn('QUANTITY_FINAL', 'QuantityFinal', 'DECIMAL', false, 10, null);
 		// validators
 	} // initialize()
 

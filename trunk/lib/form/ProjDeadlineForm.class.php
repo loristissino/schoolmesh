@@ -39,29 +39,13 @@ class ProjDeadlineForm extends BaseProjDeadlineForm
         $this['original_deadline_date']->getWidget()->setLabel('Deadline');
         break;
       case Workflow::PROJ_SUBMITTED:
-        unset($this['original_deadline_date'], $this['description'], $this['notes'], $this['current_deadline_date'], $this['completed']);
+        unset($this['original_deadline_date'], $this['description'], $this['notes'], $this['current_deadline_date'], $this['completed'], $this['needs_attachment']);
         break;
       case Workflow::PROJ_APPROVED:
-        unset($this['original_deadline_date'], $this['description']);
+        unset($this['original_deadline_date'], $this['description'], $this['needs_attachment']);
         break;
       case Workflow::PROJ_FINANCED:
         unset($this['original_deadline_date'], $this['description'], $this['needs_attachment']);
-        $this->widgetSchema['attachment'] = new sfWidgetFormInputFile();
-        $this->validatorSchema['attachment'] = new sfValidatorFile(array('required'=>false));
-        
-        if($options['needs_attachment']==true)
-        {
-          $this->validatorSchema->setPostValidator(new sfValidatorOr(array(
-            new sfValidatorSchemaFilter('completed',
-              new sfValidatorRegex(
-                array('pattern' => '/1/', 'must_match'=>false),
-                array('invalid' => 'For this deadline, the completion of the task needs a file documenting the results.'))
-              ),
-            new sfValidatorCallback(array('callback' => array($this,
-'containsValidatedFile'))),
-          )));
-        }
-        
         break;
       case Workflow::PROJ_FINISHED:
         unset($this['original_deadline_date'], $this['description'], $this['notes'], $this['current_deadline_date'], $this['completed']);
@@ -69,7 +53,25 @@ class ProjDeadlineForm extends BaseProjDeadlineForm
       default:
         throw new Exception('The state ' . $state . ' is not defined');
     }
-    
+
+    if ($state>Workflow::PROJ_DRAFT)
+    {
+      if($options['needs_attachment']==true)
+      {
+        $this->widgetSchema['attachment'] = new sfWidgetFormInputFile();
+        $this->validatorSchema['attachment'] = new sfValidatorFile(array('required'=>false));
+        $this->validatorSchema->setPostValidator(new sfValidatorOr(array(
+          new sfValidatorSchemaFilter('completed',
+            new sfValidatorRegex(
+              array('pattern' => '/1/', 'must_match'=>false),
+              array('invalid' => 'For this deadline, the completion of the task needs a file documenting the results.'))
+            ),
+          new sfValidatorCallback(array('callback' => array($this,
+'containsValidatedFile'))),
+        )));
+      }
+    }
+
   }
   
   
