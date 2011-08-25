@@ -26,7 +26,9 @@ abstract class BaseSchoolprojectForm extends BaseFormPropel
       'state'             => new sfWidgetFormInputText(),
       'submission_date'   => new sfWidgetFormDate(),
       'approval_date'     => new sfWidgetFormDate(),
+      'approval_notes'    => new sfWidgetFormTextarea(),
       'financing_date'    => new sfWidgetFormDate(),
+      'financing_notes'   => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -42,7 +44,9 @@ abstract class BaseSchoolprojectForm extends BaseFormPropel
       'state'             => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'submission_date'   => new sfValidatorDate(array('required' => false)),
       'approval_date'     => new sfValidatorDate(array('required' => false)),
+      'approval_notes'    => new sfValidatorString(array('required' => false)),
       'financing_date'    => new sfValidatorDate(array('required' => false)),
+      'financing_notes'   => new sfValidatorString(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('schoolproject[%s]');

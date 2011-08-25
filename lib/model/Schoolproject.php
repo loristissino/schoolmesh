@@ -217,6 +217,8 @@ class Schoolproject extends BaseSchoolproject {
       ->save();
       $result['result']='notice';
       $result['message']='The deadline has been added.';
+      $result['redirect']='projects/editdeadline?id=' . $deadline->getId();
+
       return $result;
     }
     catch(Exception $e)
@@ -246,12 +248,13 @@ class Schoolproject extends BaseSchoolproject {
     
     try
     {
-			$expense=new ProjResource();
-			$expense
+			$resource=new ProjResource();
+			$resource
       ->setSchoolprojectId($this->getId())
       ->save();
       $result['result']='notice';
       $result['message']='The resource has been added.';
+      $result['redirect']='projects/editresource?id=' . $resource->getId();
       return $result;
     }
     catch(Exception $e)
@@ -367,12 +370,24 @@ class Schoolproject extends BaseSchoolproject {
   {
     $checkList=new CheckList();
     
+    if(!$this->getsfGuardUser()->getProfile()->getHasValidatedEmail())
+    {
+      $checkList->addCheck(new Check(
+				Check::FAILED,
+				'The coordinator does not have a validated email address',
+				'Project',
+        array(
+          'link_to'=>'profile/editprofile'
+          )
+        ));
+    }
+    
     if(!$this->getProjCategoryId())
     {
       $checkList->addCheck(new Check(
 				Check::FAILED,
 				'No category set',
-				'project',
+				'Project',
         array(
           'link_to'=>'projects/edit?id=' . $this->getId()
           )
@@ -384,7 +399,7 @@ class Schoolproject extends BaseSchoolproject {
       $checkList->addCheck(new Check(
 				Check::FAILED,
 				'No financing set',
-				'project',
+				'Project',
         array(
           'link_to'=>'projects/edit?id=' . $this->getId()
           )
@@ -396,7 +411,7 @@ class Schoolproject extends BaseSchoolproject {
       $checkList->addCheck(new Check(
 				Check::FAILED,
 				'No title set',
-				'project',
+				'Project',
         array(
           'link_to'=>'projects/edit?id=' . $this->getId()
           )
@@ -408,7 +423,7 @@ class Schoolproject extends BaseSchoolproject {
       $checkList->addCheck(new Check(
 				Check::FAILED,
 				'No description set',
-				'project',
+				'Project',
         array(
           'link_to'=>'projects/edit?id=' . $this->getId()
           )
@@ -421,8 +436,11 @@ class Schoolproject extends BaseSchoolproject {
       $checkList->addCheck(new Check(
 				Check::FAILED,
 				'No resource defined',
-				'resources')
-        );
+				'Resources',
+        array(
+          'link_to'=>'projects/edit?id=' . $this->getId()
+          )
+        )) ;
     }
     else
     {
@@ -433,7 +451,7 @@ class Schoolproject extends BaseSchoolproject {
           $checkList->addCheck(new Check(
             Check::FAILED,
             'No quantity defined for resource',
-            'resources',
+            'Resources',
             array(
               'link_to'=>'projects/editresource?id=' . $resource->getId(),
               )
@@ -447,8 +465,11 @@ class Schoolproject extends BaseSchoolproject {
       $checkList->addCheck(new Check(
 				Check::FAILED,
 				'No deadline defined',
-				'deadlines')
-        );
+				'Deadlines',
+        array(
+          'link_to'=>'projects/edit?id=' . $this->getId()
+          )
+        ));
     }
     else
     {
@@ -459,7 +480,7 @@ class Schoolproject extends BaseSchoolproject {
           $checkList->addCheck(new Check(
             Check::FAILED,
             'No date defined for deadline',
-            'deadlines',
+            'Deadlines',
             array(
               'link_to'=>'projects/editdeadline?id=' . $deadline->getId(),
               )
@@ -470,7 +491,7 @@ class Schoolproject extends BaseSchoolproject {
           $checkList->addCheck(new Check(
             Check::FAILED,
             'No description defined for deadline',
-            'deadlines',
+            'Deadlines',
             array(
               'link_to'=>'projects/editdeadline?id=' . $deadline->getId(),
               )

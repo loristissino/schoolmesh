@@ -21,6 +21,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 	{
 		$c=new Criteria();
 		$c->add(self::YEAR_ID, $year);
+    $c->add(self::STATE, Workflow::PROJ_DRAFT, Criteria::GREATER_THAN);
 		$c->addJoin(self::USER_ID, sfGuardUserPeer::ID);
 		$c->addAscendingOrderByColumn(self::PROJ_CATEGORY_ID);
 		return self::doSelectJoinAll($c);
@@ -54,6 +55,56 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 		$c->add(self::YEAR_ID, $yearId);
 		return self::doSelectOne($c);
 	}
+
+
+  public static function setApprovalDate($ids, $params)
+  {
+    $projects = SchoolprojectPeer::retrieveByPKs($ids);
+    foreach($projects as $project)
+    {
+      $project
+      ->setApprovalDate($params['date'])
+      ->setApprovalNotes($params['notes'])
+      ;
+      if ($project->getState()<Workflow::PROJ_APPROVED)
+      {
+        $project->setState(Workflow::PROJ_APPROVED);
+        foreach($project->getProjResources() as $resource)
+        {
+          // we copy the values
+          $resource
+          ->setQuantityApproved($resource->getQuantityEstimated())
+          ->save();
+        }
+      }
+      $project->save();
+    }
+    $result['result']='notice';
+    $result['message']='Projects information have been updated';
+    return $result;
+
+  }
+
+  public static function setFinancingDate($ids, $params)
+  {
+    $projects = SchoolprojectPeer::retrieveByPKs($ids);
+    foreach($projects as $project)
+    {
+      $project
+      ->setFinancingDate($params['date'])
+      ->setFinancingNotes($params['notes'])
+      ;
+      if ($project->getState()<Workflow::PROJ_FINANCED)
+      {
+        $project->setState(Workflow::PROJ_FINANCED);
+      }
+      $project->save();
+    }
+    $result['result']='notice';
+    $result['message']='Projects information have been updated';
+    return $result;
+
+  }
 
 
 } // SchoolprojectPeer

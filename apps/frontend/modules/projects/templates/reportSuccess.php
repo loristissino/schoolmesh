@@ -1,5 +1,5 @@
 <?php include_partial('content/breadcrumps', array(
-  'current'=>__('Projects')
+  'current'=>__('Projects monitoring')
   ))
 ?>
 
@@ -17,7 +17,12 @@
 	<p>
 	<?php echo __('Coordinator') ?>: <strong><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></strong><br />
 	<?php echo __('Category') ?>: <strong><?php echo $project->getProjCategory() ?></strong><br />
-	<?php echo __('Hours approved') ?>: <strong><?php echo $project->getHoursApproved() ?></strong><br />
+  <?php if($project->getApprovalDate()):?>
+  <?php echo __('Approval') ?>: <strong><?php echo $project->getApprovalDate('d/m/Y') ?> (<?php echo $project->getApprovalNotes() ?>)</strong></br />
+  <?php endif ?>
+  <?php if($project->getFinancingDate()):?>
+  <?php echo __('Financing') ?>: <strong><?php echo $project->getFinancingDate('d/m/Y') ?> (<?php echo $project->getFinancingNotes() ?>)</strong></br />
+  <?php endif ?>
 	</p>
 <?php include_component('projects', 'deadlines', array('project'=>$project)) ?>
 <?php include_component('projects', 'resources', array('project'=>$project)) ?>

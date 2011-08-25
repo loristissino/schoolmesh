@@ -335,7 +335,9 @@ propel:
     state:        { type: integer }
     submission_date: date
     approval_date: date
+    approval_notes: longvarchar
     financing_date: date    
+    financing_notes: longvarchar
 
   proj_category:
     id: ~
@@ -367,7 +369,7 @@ propel:
     description: varchar(255)
     resource_type: integer
     role_id: ~
-    standard_cost: decimal
+    standard_cost: { type: decimal, size: 10, scale: 2 }
     measurement_unit: varchar(10)
 
   proj_resource:
@@ -375,8 +377,9 @@ propel:
     schoolproject_id: ~
     proj_resource_type_id: ~
     description: varchar(255)
-    quantity_estimated: decimal
-    quantity_approved: decimal
+    quantity_estimated:  { type: decimal, size: 10, scale: 2 }
+    quantity_approved:  { type: decimal, size: 10, scale: 2 }
+    quantity_final:  { type: decimal, size: 10, scale: 2 }
     
   proj_activity:
     id: ~

@@ -191,23 +191,22 @@ class usersActions extends sfActions
 
 
   public function executeBatch(sfWebRequest $request)
-{
-  $ids = $request->getParameter('ids');
-	$this->getUser()->setAttribute('ids', $ids);
-	
-	$action=$request->getParameter('batch_action');
+  {
+    $ids = $request->getParameter('ids');
+    $this->getUser()->setAttribute('ids', $ids);
+    
+    $action=$request->getParameter('batch_action');
 
-	if ($action=='')
-		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must specify an action.'));
-			$this->redirect('users/list');
-		}
-		
-  $this->forward('users', $action);
-  // if an action is not valid, we get an error anyway, because there is no
-  // template BatchSuccess.php
-  
-}  
+    if ($action=='')
+      {
+        $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must specify an action.'));
+        $this->redirect('users/list');
+      }
+      
+    $this->forward('users', $action);
+    // if an action is not valid, we get an error anyway, because there is no
+    // template BatchSuccess.php
+  }  
 
 
   protected function _getIds(sfWebRequest $request)

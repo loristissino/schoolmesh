@@ -46,7 +46,11 @@ all:
 
     major_age: 18
 
-    
+    currency_symbol: €
+    currency_decimals: 2
+    currency_decpoint: ','
+    currency_thousandssep: '.'
+
     default_format: odt
 
 

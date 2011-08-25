@@ -25,7 +25,7 @@ abstract class BaseProjResourcePeer {
 	const TM_CLASS = 'ProjResourceTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 6;
+	const NUM_COLUMNS = 7;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -47,6 +47,9 @@ abstract class BaseProjResourcePeer {
 
 	/** the column name for the QUANTITY_APPROVED field */
 	const QUANTITY_APPROVED = 'proj_resource.QUANTITY_APPROVED';
+
+	/** the column name for the QUANTITY_FINAL field */
+	const QUANTITY_FINAL = 'proj_resource.QUANTITY_FINAL';
 
 	/**
 	 * An identiy map to hold any loaded instances of ProjResource objects.
@@ -71,11 +74,11 @@ abstract class BaseProjResourcePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'SchoolprojectId', 'ProjResourceTypeId', 'Description', 'QuantityEstimated', 'QuantityApproved', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'schoolprojectId', 'projResourceTypeId', 'description', 'quantityEstimated', 'quantityApproved', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::SCHOOLPROJECT_ID, self::PROJ_RESOURCE_TYPE_ID, self::DESCRIPTION, self::QUANTITY_ESTIMATED, self::QUANTITY_APPROVED, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'schoolproject_id', 'proj_resource_type_id', 'description', 'quantity_estimated', 'quantity_approved', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'SchoolprojectId', 'ProjResourceTypeId', 'Description', 'QuantityEstimated', 'QuantityApproved', 'QuantityFinal', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'schoolprojectId', 'projResourceTypeId', 'description', 'quantityEstimated', 'quantityApproved', 'quantityFinal', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::SCHOOLPROJECT_ID, self::PROJ_RESOURCE_TYPE_ID, self::DESCRIPTION, self::QUANTITY_ESTIMATED, self::QUANTITY_APPROVED, self::QUANTITY_FINAL, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'schoolproject_id', 'proj_resource_type_id', 'description', 'quantity_estimated', 'quantity_approved', 'quantity_final', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -85,11 +88,11 @@ abstract class BaseProjResourcePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'SchoolprojectId' => 1, 'ProjResourceTypeId' => 2, 'Description' => 3, 'QuantityEstimated' => 4, 'QuantityApproved' => 5, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'schoolprojectId' => 1, 'projResourceTypeId' => 2, 'description' => 3, 'quantityEstimated' => 4, 'quantityApproved' => 5, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SCHOOLPROJECT_ID => 1, self::PROJ_RESOURCE_TYPE_ID => 2, self::DESCRIPTION => 3, self::QUANTITY_ESTIMATED => 4, self::QUANTITY_APPROVED => 5, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'schoolproject_id' => 1, 'proj_resource_type_id' => 2, 'description' => 3, 'quantity_estimated' => 4, 'quantity_approved' => 5, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'SchoolprojectId' => 1, 'ProjResourceTypeId' => 2, 'Description' => 3, 'QuantityEstimated' => 4, 'QuantityApproved' => 5, 'QuantityFinal' => 6, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'schoolprojectId' => 1, 'projResourceTypeId' => 2, 'description' => 3, 'quantityEstimated' => 4, 'quantityApproved' => 5, 'quantityFinal' => 6, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SCHOOLPROJECT_ID => 1, self::PROJ_RESOURCE_TYPE_ID => 2, self::DESCRIPTION => 3, self::QUANTITY_ESTIMATED => 4, self::QUANTITY_APPROVED => 5, self::QUANTITY_FINAL => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'schoolproject_id' => 1, 'proj_resource_type_id' => 2, 'description' => 3, 'quantity_estimated' => 4, 'quantity_approved' => 5, 'quantity_final' => 6, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -165,6 +168,7 @@ abstract class BaseProjResourcePeer {
 		$criteria->addSelectColumn(ProjResourcePeer::DESCRIPTION);
 		$criteria->addSelectColumn(ProjResourcePeer::QUANTITY_ESTIMATED);
 		$criteria->addSelectColumn(ProjResourcePeer::QUANTITY_APPROVED);
+		$criteria->addSelectColumn(ProjResourcePeer::QUANTITY_FINAL);
 	}
 
 	/**

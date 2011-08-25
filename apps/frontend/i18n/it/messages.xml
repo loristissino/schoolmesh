@@ -2265,7 +2265,83 @@
     </trans-unit>
     <trans-unit id="585">
         <source>Estimation</source>
-        <target>Previsione</target>
+        <target>Richiesta</target>
+    </trans-unit>
+    <trans-unit id="586">
+        <source>Qty final (€)</source>
+        <target>Importo a consuntivo (€)</target>
+    </trans-unit>
+    <trans-unit id="587">
+        <source>Qty final (h)</source>
+        <target>Ore a consuntivo</target>
+    </trans-unit>
+    <trans-unit id="588">
+        <source>Resources</source>
+        <target>Risorse</target>
+    </trans-unit>
+    <trans-unit id="589">
+        <source>Project</source>
+        <target>Progetto</target>
+    </trans-unit>
+    <trans-unit id="590">
+        <source>Approval</source>
+        <target>Approvazione</target>
+    </trans-unit>
+    <trans-unit id="591">
+        <source>Projects monitoring</source>
+        <target>Monitoraggio progetti</target>
+    </trans-unit>
+    <trans-unit id="592">
+        <source>Submit project</source>
+        <target>Consegna il progetto per la richiesta di approvazione</target>
+    </trans-unit>
+    <trans-unit id="593">
+        <source>Add resource</source>
+        <target>Aggiungi risorsa</target>
+    </trans-unit>
+    <trans-unit id="594">
+        <source>Set approval date</source>
+        <target>Imposta data di approvazione</target>
+    </trans-unit>
+    <trans-unit id="595">
+        <source>Set financing date</source>
+        <target>Imposta data di finanziamento</target>
+    </trans-unit>
+    <trans-unit id="596">
+        <source>Compute budget</source>
+        <target>Calcola budget</target>
+    </trans-unit>
+    <trans-unit id="597">
+        <source>Cost</source>
+        <target>Costo</target>
+    </trans-unit>
+    <trans-unit id="598">
+        <source>Amount</source>
+        <target>Importo</target>
+    </trans-unit>
+    <trans-unit id="599">
+        <source>Total for the project</source>
+        <target>Totale progetto</target>
+    </trans-unit>
+    <trans-unit id="600">
+        <source>[1]Grand total for the project selected|[1,+Inf]Grand total for the %number% projects selected</source>
+        <target>[1]Totale generale per il progetto selezionato|[1,+Inf]Totale generale (progetti selezionati: %number%)</target>
+    </trans-unit>
+    <trans-unit id="601">
+        <source>Budget computation</source>
+        <target>Calcolo del budget</target>
+    </trans-unit>
+    <trans-unit id="602">
+        <source>Resource type</source>
+        <target>Tipo di risorsa</target>
+    </trans-unit>
+    <trans-unit id="603">
+        <source>Back to the project</source>
+        <target>Torna al progetto</target>
+    </trans-unit>
+    <trans-unit id="604">
+        <source>Resource #%id%</source>
+        <target>Risorsa %id%</target>
     </trans-unit>
     </body>
   </file>

@@ -40,7 +40,7 @@ class ProjResourceTypeTableMap extends TableMap {
 		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 255, null);
 		$this->addColumn('RESOURCE_TYPE', 'ResourceType', 'INTEGER', false, null, null);
 		$this->addForeignKey('ROLE_ID', 'RoleId', 'INTEGER', 'role', 'ID', false, null, null);
-		$this->addColumn('STANDARD_COST', 'StandardCost', 'DECIMAL', false, null, null);
+		$this->addColumn('STANDARD_COST', 'StandardCost', 'DECIMAL', false, 10, null);
 		$this->addColumn('MEASUREMENT_UNIT', 'MeasurementUnit', 'VARCHAR', false, 10, null);
 		// validators
 	} // initialize()
