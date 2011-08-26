@@ -1,3 +1,30 @@
+proj_resource_type:
+  class: sfPropelRouteCollection
+  options:
+    model:                ProjResourceType
+    module:               proj_resource_type
+    prefix_path:          /proj_resource_type
+    column:               id
+    with_wildcard_routes: true
+
+proj_financing:
+  class: sfPropelRouteCollection
+  options:
+    model:                ProjFinancing
+    module:               proj_financing
+    prefix_path:          /proj_financing
+    column:               id
+    with_wildcard_routes: true
+
+proj_category:
+  class: sfPropelRouteCollection
+  options:
+    model:                ProjCategory
+    module:               proj_category
+    prefix_path:          /proj_category
+    column:               id
+    with_wildcard_routes: true
+
 wptool_item:
   class: sfPropelRouteCollection
   options:

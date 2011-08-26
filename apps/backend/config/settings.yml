@@ -21,7 +21,7 @@ all:
   .settings:
     i18n:                   true
     default_culture:        it
-    standard_helpers:       [Partial, Cache, Form, I18N, Debug]
+    standard_helpers:       [Partial, Cache, I18N, Debug]
 
 
 #all:
@@ -72,7 +72,7 @@ all:
 #    calendar_web_dir:       /sf/calendar
 #
 #    # Helpers included in all templates by default
-#    standard_helpers:       [Partial, Cache, Form]
+#    standard_helpers:       [Partial, Cache]
 #
 #    # Activated modules from plugins or from the symfony core
 #    enabled_modules:        [default]

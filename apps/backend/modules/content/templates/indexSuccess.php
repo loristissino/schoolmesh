@@ -34,6 +34,15 @@
        <li><?php echo link_to(__("Item types"), "@wpitem_type") ?></li>	   
     </ul>
 
+<h2><?php echo __('Projects') ?></h2>
+
+    <ul>
+       <li><?php echo link_to(__("Project categories"), "@proj_category") ?></li>	   
+       <li><?php echo link_to(__("Project financing"), "@proj_financing") ?></li>	   
+       <li><?php echo link_to(__("Project resource types"), "@proj_resource_type") ?></li>	   
+    </ul>
+
+
 <h2><?php echo __('Network') ?></h2>
 
     <ul>
