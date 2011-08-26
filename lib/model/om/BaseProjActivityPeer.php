@@ -25,7 +25,7 @@ abstract class BaseProjActivityPeer {
 	const TM_CLASS = 'ProjActivityTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 10;
+	const NUM_COLUMNS = 9;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -33,8 +33,8 @@ abstract class BaseProjActivityPeer {
 	/** the column name for the ID field */
 	const ID = 'proj_activity.ID';
 
-	/** the column name for the SCHOOLPROJECT_ID field */
-	const SCHOOLPROJECT_ID = 'proj_activity.SCHOOLPROJECT_ID';
+	/** the column name for the PROJ_RESOURCE_ID field */
+	const PROJ_RESOURCE_ID = 'proj_activity.PROJ_RESOURCE_ID';
 
 	/** the column name for the USER_ID field */
 	const USER_ID = 'proj_activity.USER_ID';
@@ -42,11 +42,8 @@ abstract class BaseProjActivityPeer {
 	/** the column name for the BEGINNING field */
 	const BEGINNING = 'proj_activity.BEGINNING';
 
-	/** the column name for the ENDING field */
-	const ENDING = 'proj_activity.ENDING';
-
-	/** the column name for the AMOUNT field */
-	const AMOUNT = 'proj_activity.AMOUNT';
+	/** the column name for the QUANTITY field */
+	const QUANTITY = 'proj_activity.QUANTITY';
 
 	/** the column name for the NOTES field */
 	const NOTES = 'proj_activity.NOTES';
@@ -54,11 +51,11 @@ abstract class BaseProjActivityPeer {
 	/** the column name for the CREATED_AT field */
 	const CREATED_AT = 'proj_activity.CREATED_AT';
 
-	/** the column name for the APPROVED_AT field */
-	const APPROVED_AT = 'proj_activity.APPROVED_AT';
+	/** the column name for the ACKNOWLEDGED_AT field */
+	const ACKNOWLEDGED_AT = 'proj_activity.ACKNOWLEDGED_AT';
 
-	/** the column name for the APPROVER_USER_ID field */
-	const APPROVER_USER_ID = 'proj_activity.APPROVER_USER_ID';
+	/** the column name for the ACKNOWLEDGER_USER_ID field */
+	const ACKNOWLEDGER_USER_ID = 'proj_activity.ACKNOWLEDGER_USER_ID';
 
 	/**
 	 * An identiy map to hold any loaded instances of ProjActivity objects.
@@ -83,11 +80,11 @@ abstract class BaseProjActivityPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'SchoolprojectId', 'UserId', 'Beginning', 'Ending', 'Amount', 'Notes', 'CreatedAt', 'ApprovedAt', 'ApproverUserId', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'schoolprojectId', 'userId', 'beginning', 'ending', 'amount', 'notes', 'createdAt', 'approvedAt', 'approverUserId', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::SCHOOLPROJECT_ID, self::USER_ID, self::BEGINNING, self::ENDING, self::AMOUNT, self::NOTES, self::CREATED_AT, self::APPROVED_AT, self::APPROVER_USER_ID, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'schoolproject_id', 'user_id', 'beginning', 'ending', 'amount', 'notes', 'created_at', 'approved_at', 'approver_user_id', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'ProjResourceId', 'UserId', 'Beginning', 'Quantity', 'Notes', 'CreatedAt', 'AcknowledgedAt', 'AcknowledgerUserId', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'projResourceId', 'userId', 'beginning', 'quantity', 'notes', 'createdAt', 'acknowledgedAt', 'acknowledgerUserId', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::PROJ_RESOURCE_ID, self::USER_ID, self::BEGINNING, self::QUANTITY, self::NOTES, self::CREATED_AT, self::ACKNOWLEDGED_AT, self::ACKNOWLEDGER_USER_ID, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'proj_resource_id', 'user_id', 'beginning', 'quantity', 'notes', 'created_at', 'acknowledged_at', 'acknowledger_user_id', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	/**
@@ -97,11 +94,11 @@ abstract class BaseProjActivityPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'SchoolprojectId' => 1, 'UserId' => 2, 'Beginning' => 3, 'Ending' => 4, 'Amount' => 5, 'Notes' => 6, 'CreatedAt' => 7, 'ApprovedAt' => 8, 'ApproverUserId' => 9, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'schoolprojectId' => 1, 'userId' => 2, 'beginning' => 3, 'ending' => 4, 'amount' => 5, 'notes' => 6, 'createdAt' => 7, 'approvedAt' => 8, 'approverUserId' => 9, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SCHOOLPROJECT_ID => 1, self::USER_ID => 2, self::BEGINNING => 3, self::ENDING => 4, self::AMOUNT => 5, self::NOTES => 6, self::CREATED_AT => 7, self::APPROVED_AT => 8, self::APPROVER_USER_ID => 9, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'schoolproject_id' => 1, 'user_id' => 2, 'beginning' => 3, 'ending' => 4, 'amount' => 5, 'notes' => 6, 'created_at' => 7, 'approved_at' => 8, 'approver_user_id' => 9, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProjResourceId' => 1, 'UserId' => 2, 'Beginning' => 3, 'Quantity' => 4, 'Notes' => 5, 'CreatedAt' => 6, 'AcknowledgedAt' => 7, 'AcknowledgerUserId' => 8, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'projResourceId' => 1, 'userId' => 2, 'beginning' => 3, 'quantity' => 4, 'notes' => 5, 'createdAt' => 6, 'acknowledgedAt' => 7, 'acknowledgerUserId' => 8, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PROJ_RESOURCE_ID => 1, self::USER_ID => 2, self::BEGINNING => 3, self::QUANTITY => 4, self::NOTES => 5, self::CREATED_AT => 6, self::ACKNOWLEDGED_AT => 7, self::ACKNOWLEDGER_USER_ID => 8, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'proj_resource_id' => 1, 'user_id' => 2, 'beginning' => 3, 'quantity' => 4, 'notes' => 5, 'created_at' => 6, 'acknowledged_at' => 7, 'acknowledger_user_id' => 8, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	/**
@@ -172,15 +169,14 @@ abstract class BaseProjActivityPeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 		$criteria->addSelectColumn(ProjActivityPeer::ID);
-		$criteria->addSelectColumn(ProjActivityPeer::SCHOOLPROJECT_ID);
+		$criteria->addSelectColumn(ProjActivityPeer::PROJ_RESOURCE_ID);
 		$criteria->addSelectColumn(ProjActivityPeer::USER_ID);
 		$criteria->addSelectColumn(ProjActivityPeer::BEGINNING);
-		$criteria->addSelectColumn(ProjActivityPeer::ENDING);
-		$criteria->addSelectColumn(ProjActivityPeer::AMOUNT);
+		$criteria->addSelectColumn(ProjActivityPeer::QUANTITY);
 		$criteria->addSelectColumn(ProjActivityPeer::NOTES);
 		$criteria->addSelectColumn(ProjActivityPeer::CREATED_AT);
-		$criteria->addSelectColumn(ProjActivityPeer::APPROVED_AT);
-		$criteria->addSelectColumn(ProjActivityPeer::APPROVER_USER_ID);
+		$criteria->addSelectColumn(ProjActivityPeer::ACKNOWLEDGED_AT);
+		$criteria->addSelectColumn(ProjActivityPeer::ACKNOWLEDGER_USER_ID);
 	}
 
 	/**
@@ -427,7 +423,7 @@ abstract class BaseProjActivityPeer {
 	}
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Schoolproject table
+	 * Returns the number of rows matching criteria, joining the related ProjResource table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -435,7 +431,7 @@ abstract class BaseProjActivityPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinSchoolproject(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinProjResource(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -462,7 +458,7 @@ abstract class BaseProjActivityPeer {
 			$con = Propel::getConnection(ProjActivityPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(ProjActivityPeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
+		$criteria->addJoin(ProjActivityPeer::PROJ_RESOURCE_ID, ProjResourcePeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -527,7 +523,7 @@ abstract class BaseProjActivityPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related sfGuardUserRelatedByApproverUserId table
+	 * Returns the number of rows matching criteria, joining the related sfGuardUserRelatedByAcknowledgerUserId table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -535,7 +531,7 @@ abstract class BaseProjActivityPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinsfGuardUserRelatedByApproverUserId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinsfGuardUserRelatedByAcknowledgerUserId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -562,7 +558,7 @@ abstract class BaseProjActivityPeer {
 			$con = Propel::getConnection(ProjActivityPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(ProjActivityPeer::APPROVER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
+		$criteria->addJoin(ProjActivityPeer::ACKNOWLEDGER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -577,7 +573,7 @@ abstract class BaseProjActivityPeer {
 
 
 	/**
-	 * Selects a collection of ProjActivity objects pre-filled with their Schoolproject objects.
+	 * Selects a collection of ProjActivity objects pre-filled with their ProjResource objects.
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
@@ -585,7 +581,7 @@ abstract class BaseProjActivityPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinSchoolproject(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinProjResource(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -596,9 +592,9 @@ abstract class BaseProjActivityPeer {
 
 		ProjActivityPeer::addSelectColumns($criteria);
 		$startcol = (ProjActivityPeer::NUM_COLUMNS - ProjActivityPeer::NUM_LAZY_LOAD_COLUMNS);
-		SchoolprojectPeer::addSelectColumns($criteria);
+		ProjResourcePeer::addSelectColumns($criteria);
 
-		$criteria->addJoin(ProjActivityPeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
+		$criteria->addJoin(ProjActivityPeer::PROJ_RESOURCE_ID, ProjResourcePeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
@@ -618,19 +614,19 @@ abstract class BaseProjActivityPeer {
 				ProjActivityPeer::addInstanceToPool($obj1, $key1);
 			} // if $obj1 already loaded
 
-			$key2 = SchoolprojectPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			$key2 = ProjResourcePeer::getPrimaryKeyHashFromRow($row, $startcol);
 			if ($key2 !== null) {
-				$obj2 = SchoolprojectPeer::getInstanceFromPool($key2);
+				$obj2 = ProjResourcePeer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$cls = SchoolprojectPeer::getOMClass(false);
+					$cls = ProjResourcePeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol);
-					SchoolprojectPeer::addInstanceToPool($obj2, $key2);
+					ProjResourcePeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
 				
-				// Add the $obj1 (ProjActivity) to $obj2 (Schoolproject)
+				// Add the $obj1 (ProjActivity) to $obj2 (ProjResource)
 				$obj2->addProjActivity($obj1);
 
 			} // if joined row was not null
@@ -717,7 +713,7 @@ abstract class BaseProjActivityPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinsfGuardUserRelatedByApproverUserId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinsfGuardUserRelatedByAcknowledgerUserId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -730,7 +726,7 @@ abstract class BaseProjActivityPeer {
 		$startcol = (ProjActivityPeer::NUM_COLUMNS - ProjActivityPeer::NUM_LAZY_LOAD_COLUMNS);
 		sfGuardUserPeer::addSelectColumns($criteria);
 
-		$criteria->addJoin(ProjActivityPeer::APPROVER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
+		$criteria->addJoin(ProjActivityPeer::ACKNOWLEDGER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
@@ -763,7 +759,7 @@ abstract class BaseProjActivityPeer {
 				} // if obj2 already loaded
 				
 				// Add the $obj1 (ProjActivity) to $obj2 (sfGuardUser)
-				$obj2->addProjActivityRelatedByApproverUserId($obj1);
+				$obj2->addProjActivityRelatedByAcknowledgerUserId($obj1);
 
 			} // if joined row was not null
 
@@ -810,11 +806,11 @@ abstract class BaseProjActivityPeer {
 			$con = Propel::getConnection(ProjActivityPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(ProjActivityPeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
+		$criteria->addJoin(ProjActivityPeer::PROJ_RESOURCE_ID, ProjResourcePeer::ID, $join_behavior);
 
 		$criteria->addJoin(ProjActivityPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
-		$criteria->addJoin(ProjActivityPeer::APPROVER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
+		$criteria->addJoin(ProjActivityPeer::ACKNOWLEDGER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -849,8 +845,8 @@ abstract class BaseProjActivityPeer {
 		ProjActivityPeer::addSelectColumns($criteria);
 		$startcol2 = (ProjActivityPeer::NUM_COLUMNS - ProjActivityPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		SchoolprojectPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS);
+		ProjResourcePeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (ProjResourcePeer::NUM_COLUMNS - ProjResourcePeer::NUM_LAZY_LOAD_COLUMNS);
 
 		sfGuardUserPeer::addSelectColumns($criteria);
 		$startcol4 = $startcol3 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
@@ -858,11 +854,11 @@ abstract class BaseProjActivityPeer {
 		sfGuardUserPeer::addSelectColumns($criteria);
 		$startcol5 = $startcol4 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$criteria->addJoin(ProjActivityPeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
+		$criteria->addJoin(ProjActivityPeer::PROJ_RESOURCE_ID, ProjResourcePeer::ID, $join_behavior);
 
 		$criteria->addJoin(ProjActivityPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
-		$criteria->addJoin(ProjActivityPeer::APPROVER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
+		$criteria->addJoin(ProjActivityPeer::ACKNOWLEDGER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
@@ -881,21 +877,21 @@ abstract class BaseProjActivityPeer {
 				ProjActivityPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-			// Add objects for joined Schoolproject rows
+			// Add objects for joined ProjResource rows
 
-			$key2 = SchoolprojectPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			$key2 = ProjResourcePeer::getPrimaryKeyHashFromRow($row, $startcol2);
 			if ($key2 !== null) {
-				$obj2 = SchoolprojectPeer::getInstanceFromPool($key2);
+				$obj2 = ProjResourcePeer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$cls = SchoolprojectPeer::getOMClass(false);
+					$cls = ProjResourcePeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					SchoolprojectPeer::addInstanceToPool($obj2, $key2);
+					ProjResourcePeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 loaded
 
-				// Add the $obj1 (ProjActivity) to the collection in $obj2 (Schoolproject)
+				// Add the $obj1 (ProjActivity) to the collection in $obj2 (ProjResource)
 				$obj2->addProjActivity($obj1);
 			} // if joined row not null
 
@@ -932,7 +928,7 @@ abstract class BaseProjActivityPeer {
 				} // if obj4 loaded
 
 				// Add the $obj1 (ProjActivity) to the collection in $obj4 (sfGuardUser)
-				$obj4->addProjActivityRelatedByApproverUserId($obj1);
+				$obj4->addProjActivityRelatedByAcknowledgerUserId($obj1);
 			} // if joined row not null
 
 			$results[] = $obj1;
@@ -943,7 +939,7 @@ abstract class BaseProjActivityPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Schoolproject table
+	 * Returns the number of rows matching criteria, joining the related ProjResource table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -951,7 +947,7 @@ abstract class BaseProjActivityPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinAllExceptSchoolproject(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinAllExceptProjResource(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -980,7 +976,7 @@ abstract class BaseProjActivityPeer {
 	
 		$criteria->addJoin(ProjActivityPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
-		$criteria->addJoin(ProjActivityPeer::APPROVER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
+		$criteria->addJoin(ProjActivityPeer::ACKNOWLEDGER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -1030,7 +1026,7 @@ abstract class BaseProjActivityPeer {
 			$con = Propel::getConnection(ProjActivityPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-		$criteria->addJoin(ProjActivityPeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
+		$criteria->addJoin(ProjActivityPeer::PROJ_RESOURCE_ID, ProjResourcePeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -1045,7 +1041,7 @@ abstract class BaseProjActivityPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related sfGuardUserRelatedByApproverUserId table
+	 * Returns the number of rows matching criteria, joining the related sfGuardUserRelatedByAcknowledgerUserId table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -1053,7 +1049,7 @@ abstract class BaseProjActivityPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinAllExceptsfGuardUserRelatedByApproverUserId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinAllExceptsfGuardUserRelatedByAcknowledgerUserId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -1080,7 +1076,7 @@ abstract class BaseProjActivityPeer {
 			$con = Propel::getConnection(ProjActivityPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-		$criteria->addJoin(ProjActivityPeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
+		$criteria->addJoin(ProjActivityPeer::PROJ_RESOURCE_ID, ProjResourcePeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -1095,7 +1091,7 @@ abstract class BaseProjActivityPeer {
 
 
 	/**
-	 * Selects a collection of ProjActivity objects pre-filled with all related objects except Schoolproject.
+	 * Selects a collection of ProjActivity objects pre-filled with all related objects except ProjResource.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
@@ -1104,7 +1100,7 @@ abstract class BaseProjActivityPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinAllExceptSchoolproject(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinAllExceptProjResource(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -1126,7 +1122,7 @@ abstract class BaseProjActivityPeer {
 
 		$criteria->addJoin(ProjActivityPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
-		$criteria->addJoin(ProjActivityPeer::APPROVER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
+		$criteria->addJoin(ProjActivityPeer::ACKNOWLEDGER_USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 
 		$stmt = BasePeer::doSelect($criteria, $con);
@@ -1180,7 +1176,7 @@ abstract class BaseProjActivityPeer {
 				} // if $obj3 already loaded
 
 				// Add the $obj1 (ProjActivity) to the collection in $obj3 (sfGuardUser)
-				$obj3->addProjActivityRelatedByApproverUserId($obj1);
+				$obj3->addProjActivityRelatedByAcknowledgerUserId($obj1);
 
 			} // if joined row is not null
 
@@ -1215,10 +1211,10 @@ abstract class BaseProjActivityPeer {
 		ProjActivityPeer::addSelectColumns($criteria);
 		$startcol2 = (ProjActivityPeer::NUM_COLUMNS - ProjActivityPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		SchoolprojectPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS);
+		ProjResourcePeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (ProjResourcePeer::NUM_COLUMNS - ProjResourcePeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$criteria->addJoin(ProjActivityPeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
+		$criteria->addJoin(ProjActivityPeer::PROJ_RESOURCE_ID, ProjResourcePeer::ID, $join_behavior);
 
 
 		$stmt = BasePeer::doSelect($criteria, $con);
@@ -1238,21 +1234,21 @@ abstract class BaseProjActivityPeer {
 				ProjActivityPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-				// Add objects for joined Schoolproject rows
+				// Add objects for joined ProjResource rows
 
-				$key2 = SchoolprojectPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				$key2 = ProjResourcePeer::getPrimaryKeyHashFromRow($row, $startcol2);
 				if ($key2 !== null) {
-					$obj2 = SchoolprojectPeer::getInstanceFromPool($key2);
+					$obj2 = ProjResourcePeer::getInstanceFromPool($key2);
 					if (!$obj2) {
 	
-						$cls = SchoolprojectPeer::getOMClass(false);
+						$cls = ProjResourcePeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					SchoolprojectPeer::addInstanceToPool($obj2, $key2);
+					ProjResourcePeer::addInstanceToPool($obj2, $key2);
 				} // if $obj2 already loaded
 
-				// Add the $obj1 (ProjActivity) to the collection in $obj2 (Schoolproject)
+				// Add the $obj1 (ProjActivity) to the collection in $obj2 (ProjResource)
 				$obj2->addProjActivity($obj1);
 
 			} // if joined row is not null
@@ -1265,7 +1261,7 @@ abstract class BaseProjActivityPeer {
 
 
 	/**
-	 * Selects a collection of ProjActivity objects pre-filled with all related objects except sfGuardUserRelatedByApproverUserId.
+	 * Selects a collection of ProjActivity objects pre-filled with all related objects except sfGuardUserRelatedByAcknowledgerUserId.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
@@ -1274,7 +1270,7 @@ abstract class BaseProjActivityPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinAllExceptsfGuardUserRelatedByApproverUserId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinAllExceptsfGuardUserRelatedByAcknowledgerUserId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -1288,10 +1284,10 @@ abstract class BaseProjActivityPeer {
 		ProjActivityPeer::addSelectColumns($criteria);
 		$startcol2 = (ProjActivityPeer::NUM_COLUMNS - ProjActivityPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		SchoolprojectPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS);
+		ProjResourcePeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (ProjResourcePeer::NUM_COLUMNS - ProjResourcePeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$criteria->addJoin(ProjActivityPeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
+		$criteria->addJoin(ProjActivityPeer::PROJ_RESOURCE_ID, ProjResourcePeer::ID, $join_behavior);
 
 
 		$stmt = BasePeer::doSelect($criteria, $con);
@@ -1311,21 +1307,21 @@ abstract class BaseProjActivityPeer {
 				ProjActivityPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-				// Add objects for joined Schoolproject rows
+				// Add objects for joined ProjResource rows
 
-				$key2 = SchoolprojectPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				$key2 = ProjResourcePeer::getPrimaryKeyHashFromRow($row, $startcol2);
 				if ($key2 !== null) {
-					$obj2 = SchoolprojectPeer::getInstanceFromPool($key2);
+					$obj2 = ProjResourcePeer::getInstanceFromPool($key2);
 					if (!$obj2) {
 	
-						$cls = SchoolprojectPeer::getOMClass(false);
+						$cls = ProjResourcePeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					SchoolprojectPeer::addInstanceToPool($obj2, $key2);
+					ProjResourcePeer::addInstanceToPool($obj2, $key2);
 				} // if $obj2 already loaded
 
-				// Add the $obj1 (ProjActivity) to the collection in $obj2 (Schoolproject)
+				// Add the $obj1 (ProjActivity) to the collection in $obj2 (ProjResource)
 				$obj2->addProjActivity($obj1);
 
 			} // if joined row is not null

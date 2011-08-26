@@ -12,27 +12,25 @@ abstract class BaseProjActivityFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'schoolproject_id' => new sfWidgetFormPropelChoice(array('model' => 'Schoolproject', 'add_empty' => true)),
-      'user_id'          => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
-      'beginning'        => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
-      'ending'           => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
-      'amount'           => new sfWidgetFormFilterInput(),
-      'notes'            => new sfWidgetFormFilterInput(),
-      'created_at'       => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
-      'approved_at'      => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
-      'approver_user_id' => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
+      'proj_resource_id'     => new sfWidgetFormPropelChoice(array('model' => 'ProjResource', 'add_empty' => true)),
+      'user_id'              => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
+      'beginning'            => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'quantity'             => new sfWidgetFormFilterInput(),
+      'notes'                => new sfWidgetFormFilterInput(),
+      'created_at'           => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'acknowledged_at'      => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'acknowledger_user_id' => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
-      'schoolproject_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Schoolproject', 'column' => 'id')),
-      'user_id'          => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
-      'beginning'        => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
-      'ending'           => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
-      'amount'           => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
-      'notes'            => new sfValidatorPass(array('required' => false)),
-      'created_at'       => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
-      'approved_at'      => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
-      'approver_user_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
+      'proj_resource_id'     => new sfValidatorPropelChoice(array('required' => false, 'model' => 'ProjResource', 'column' => 'id')),
+      'user_id'              => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
+      'beginning'            => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'quantity'             => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'notes'                => new sfValidatorPass(array('required' => false)),
+      'created_at'           => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'acknowledged_at'      => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'acknowledger_user_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('proj_activity_filters[%s]');
@@ -50,16 +48,15 @@ abstract class BaseProjActivityFormFilter extends BaseFormFilterPropel
   public function getFields()
   {
     return array(
-      'id'               => 'Number',
-      'schoolproject_id' => 'ForeignKey',
-      'user_id'          => 'ForeignKey',
-      'beginning'        => 'Date',
-      'ending'           => 'Date',
-      'amount'           => 'Number',
-      'notes'            => 'Text',
-      'created_at'       => 'Date',
-      'approved_at'      => 'Date',
-      'approver_user_id' => 'ForeignKey',
+      'id'                   => 'Number',
+      'proj_resource_id'     => 'ForeignKey',
+      'user_id'              => 'ForeignKey',
+      'beginning'            => 'Date',
+      'quantity'             => 'Number',
+      'notes'                => 'Text',
+      'created_at'           => 'Date',
+      'acknowledged_at'      => 'Date',
+      'acknowledger_user_id' => 'ForeignKey',
     );
   }
 }

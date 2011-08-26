@@ -9,7 +9,7 @@
     'projects/index' => __("Projects"),
     'projects/edit?id=' . $deadline->getSchoolproject()->getId() => $deadline->getSchoolproject(),
     ),
-  'current'=>__('Deadline of %date%', array('%date%'=>Generic::datetime($deadline->getCurrentDeadlineDate('U'))))
+  'current'=>__('Deadline of %date%', array('%date%'=>$deadline->getCurrentDeadlineDate('d/m/Y')))
     )
   )
 ?>

@@ -54,6 +54,7 @@ class ProjResourceTableMap extends TableMap {
 	{
     $this->addRelation('Schoolproject', 'Schoolproject', RelationMap::MANY_TO_ONE, array('schoolproject_id' => 'id', ), null, null);
     $this->addRelation('ProjResourceType', 'ProjResourceType', RelationMap::MANY_TO_ONE, array('proj_resource_type_id' => 'id', ), null, null);
+    $this->addRelation('ProjActivity', 'ProjActivity', RelationMap::ONE_TO_MANY, array('id' => 'proj_resource_id', ), null, null);
 	} // buildRelations()
 
 	/**
