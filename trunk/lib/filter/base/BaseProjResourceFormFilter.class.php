@@ -18,6 +18,7 @@ abstract class BaseProjResourceFormFilter extends BaseFormFilterPropel
       'quantity_estimated'    => new sfWidgetFormFilterInput(),
       'quantity_approved'     => new sfWidgetFormFilterInput(),
       'quantity_final'        => new sfWidgetFormFilterInput(),
+      'standard_cost'         => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -27,6 +28,7 @@ abstract class BaseProjResourceFormFilter extends BaseFormFilterPropel
       'quantity_estimated'    => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'quantity_approved'     => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'quantity_final'        => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'standard_cost'         => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('proj_resource_filters[%s]');
@@ -51,6 +53,7 @@ abstract class BaseProjResourceFormFilter extends BaseFormFilterPropel
       'quantity_estimated'    => 'Number',
       'quantity_approved'     => 'Number',
       'quantity_final'        => 'Number',
+      'standard_cost'         => 'Number',
     );
   }
 }

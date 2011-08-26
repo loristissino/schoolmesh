@@ -1055,6 +1055,7 @@ CREATE TABLE `proj_resource`
 	`quantity_estimated` DECIMAL(10,2),
 	`quantity_approved` DECIMAL(10,2),
 	`quantity_final` DECIMAL(10,2),
+	`standard_cost` DECIMAL(10,2),
 	PRIMARY KEY (`id`),
 	INDEX `proj_resource_FI_1` (`schoolproject_id`),
 	CONSTRAINT `proj_resource_FK_1`

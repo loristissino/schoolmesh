@@ -61,6 +61,12 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	protected $quantity_final;
 
 	/**
+	 * The value for the standard_cost field.
+	 * @var        string
+	 */
+	protected $standard_cost;
+
+	/**
 	 * @var        Schoolproject
 	 */
 	protected $aSchoolproject;
@@ -156,6 +162,16 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	public function getQuantityFinal()
 	{
 		return $this->quantity_final;
+	}
+
+	/**
+	 * Get the [standard_cost] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getStandardCost()
+	{
+		return $this->standard_cost;
 	}
 
 	/**
@@ -307,6 +323,26 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	} // setQuantityFinal()
 
 	/**
+	 * Set the value of [standard_cost] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     ProjResource The current object (for fluent API support)
+	 */
+	public function setStandardCost($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->standard_cost !== $v) {
+			$this->standard_cost = $v;
+			$this->modifiedColumns[] = ProjResourcePeer::STANDARD_COST;
+		}
+
+		return $this;
+	} // setStandardCost()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -345,6 +381,7 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			$this->quantity_estimated = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->quantity_approved = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->quantity_final = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->standard_cost = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -354,7 +391,7 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 7; // 7 = ProjResourcePeer::NUM_COLUMNS - ProjResourcePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 8; // 8 = ProjResourcePeer::NUM_COLUMNS - ProjResourcePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjResource object", $e);
@@ -716,6 +753,9 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			case 6:
 				return $this->getQuantityFinal();
 				break;
+			case 7:
+				return $this->getStandardCost();
+				break;
 			default:
 				return null;
 				break;
@@ -744,6 +784,7 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			$keys[4] => $this->getQuantityEstimated(),
 			$keys[5] => $this->getQuantityApproved(),
 			$keys[6] => $this->getQuantityFinal(),
+			$keys[7] => $this->getStandardCost(),
 		);
 		return $result;
 	}
@@ -796,6 +837,9 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			case 6:
 				$this->setQuantityFinal($value);
 				break;
+			case 7:
+				$this->setStandardCost($value);
+				break;
 		} // switch()
 	}
 
@@ -827,6 +871,7 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[4], $arr)) $this->setQuantityEstimated($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setQuantityApproved($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setQuantityFinal($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setStandardCost($arr[$keys[7]]);
 	}
 
 	/**
@@ -845,6 +890,7 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProjResourcePeer::QUANTITY_ESTIMATED)) $criteria->add(ProjResourcePeer::QUANTITY_ESTIMATED, $this->quantity_estimated);
 		if ($this->isColumnModified(ProjResourcePeer::QUANTITY_APPROVED)) $criteria->add(ProjResourcePeer::QUANTITY_APPROVED, $this->quantity_approved);
 		if ($this->isColumnModified(ProjResourcePeer::QUANTITY_FINAL)) $criteria->add(ProjResourcePeer::QUANTITY_FINAL, $this->quantity_final);
+		if ($this->isColumnModified(ProjResourcePeer::STANDARD_COST)) $criteria->add(ProjResourcePeer::STANDARD_COST, $this->standard_cost);
 
 		return $criteria;
 	}
@@ -910,6 +956,8 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 		$copyObj->setQuantityApproved($this->quantity_approved);
 
 		$copyObj->setQuantityFinal($this->quantity_final);
+
+		$copyObj->setStandardCost($this->standard_cost);
 
 
 		$copyObj->setNew(true);

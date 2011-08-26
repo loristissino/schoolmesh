@@ -21,6 +21,7 @@ abstract class BaseProjResourceForm extends BaseFormPropel
       'quantity_estimated'    => new sfWidgetFormInputText(),
       'quantity_approved'     => new sfWidgetFormInputText(),
       'quantity_final'        => new sfWidgetFormInputText(),
+      'standard_cost'         => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -31,6 +32,7 @@ abstract class BaseProjResourceForm extends BaseFormPropel
       'quantity_estimated'    => new sfValidatorNumber(array('required' => false)),
       'quantity_approved'     => new sfValidatorNumber(array('required' => false)),
       'quantity_final'        => new sfValidatorNumber(array('required' => false)),
+      'standard_cost'         => new sfValidatorNumber(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('proj_resource[%s]');

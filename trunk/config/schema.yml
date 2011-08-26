@@ -380,6 +380,7 @@ propel:
     quantity_estimated:  { type: decimal, size: 10, scale: 2 }
     quantity_approved:  { type: decimal, size: 10, scale: 2 }
     quantity_final:  { type: decimal, size: 10, scale: 2 }
+    standard_cost:  { type: decimal, size: 10, scale: 2 }
     
   proj_activity:
     id: ~

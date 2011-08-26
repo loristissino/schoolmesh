@@ -46,24 +46,36 @@ class ProjResourceForm extends BaseProjResourceForm
     switch ($project->getState())
     {
       case Workflow::PROJ_DRAFT:
-        unset($this['quantity_approved']);
-        unset($this['quantity_final']);
+        unset(
+          $this['quantity_approved'],
+          $this['quantity_final'],
+          $this['standard_cost']
+          );
         break;
       case Workflow::PROJ_SUBMITTED:
-        unset($this['description']);
-        unset($this['proj_resource_type_id']);
-        unset($this['quantity_estimated']);
-        unset($this['quantity_final']);
+        unset(
+          $this['description'],
+          $this['proj_resource_type_id'],
+          $this['quantity_estimated'],
+          $this['quantity_final'],
+          $this['standard_cost']
+          );
         break;
       case Workflow::PROJ_APPROVED:
-        unset($this['description']);
-        unset($this['proj_resource_type_id']);
-        unset($this['quantity_estimated']);
+        unset(
+          $this['description'],
+          $this['proj_resource_type_id'],
+          $this['quantity_estimated'],
+          $this['standard_cost']
+          );
         break;
       case Workflow::PROJ_FINANCED:
-        unset($this['description']);
-        unset($this['proj_resource_type_id']);
-        unset($this['quantity_estimated']);
+        unset(
+          $this['description'],
+          $this['proj_resource_type_id'],
+          $this['quantity_estimated'],
+          $this['standard_cost']
+          );
         break;
         
     }
