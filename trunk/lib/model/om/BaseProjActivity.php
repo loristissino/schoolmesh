@@ -25,10 +25,10 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	protected $id;
 
 	/**
-	 * The value for the schoolproject_id field.
+	 * The value for the proj_resource_id field.
 	 * @var        int
 	 */
-	protected $schoolproject_id;
+	protected $proj_resource_id;
 
 	/**
 	 * The value for the user_id field.
@@ -43,16 +43,10 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	protected $beginning;
 
 	/**
-	 * The value for the ending field.
+	 * The value for the quantity field.
 	 * @var        string
 	 */
-	protected $ending;
-
-	/**
-	 * The value for the amount field.
-	 * @var        string
-	 */
-	protected $amount;
+	protected $quantity;
 
 	/**
 	 * The value for the notes field.
@@ -67,21 +61,21 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	protected $created_at;
 
 	/**
-	 * The value for the approved_at field.
+	 * The value for the acknowledged_at field.
 	 * @var        string
 	 */
-	protected $approved_at;
+	protected $acknowledged_at;
 
 	/**
-	 * The value for the approver_user_id field.
+	 * The value for the acknowledger_user_id field.
 	 * @var        int
 	 */
-	protected $approver_user_id;
+	protected $acknowledger_user_id;
 
 	/**
-	 * @var        Schoolproject
+	 * @var        ProjResource
 	 */
-	protected $aSchoolproject;
+	protected $aProjResource;
 
 	/**
 	 * @var        sfGuardUser
@@ -91,7 +85,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	/**
 	 * @var        sfGuardUser
 	 */
-	protected $asfGuardUserRelatedByApproverUserId;
+	protected $asfGuardUserRelatedByAcknowledgerUserId;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -122,13 +116,13 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [schoolproject_id] column value.
+	 * Get the [proj_resource_id] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getSchoolprojectId()
+	public function getProjResourceId()
 	{
-		return $this->schoolproject_id;
+		return $this->proj_resource_id;
 	}
 
 	/**
@@ -180,51 +174,13 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [optionally formatted] temporal [ending] column value.
-	 * 
-	 *
-	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
-	 *							If format is NULL, then the raw DateTime object will be returned.
-	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
-	 * @throws     PropelException - if unable to parse/validate the date/time value.
-	 */
-	public function getEnding($format = 'Y-m-d H:i:s')
-	{
-		if ($this->ending === null) {
-			return null;
-		}
-
-
-		if ($this->ending === '0000-00-00 00:00:00') {
-			// while technically this is not a default value of NULL,
-			// this seems to be closest in meaning.
-			return null;
-		} else {
-			try {
-				$dt = new DateTime($this->ending);
-			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->ending, true), $x);
-			}
-		}
-
-		if ($format === null) {
-			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
-			return $dt;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $dt->format('U'));
-		} else {
-			return $dt->format($format);
-		}
-	}
-
-	/**
-	 * Get the [amount] column value.
+	 * Get the [quantity] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getAmount()
+	public function getQuantity()
 	{
-		return $this->amount;
+		return $this->quantity;
 	}
 
 	/**
@@ -276,7 +232,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [optionally formatted] temporal [approved_at] column value.
+	 * Get the [optionally formatted] temporal [acknowledged_at] column value.
 	 * 
 	 *
 	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
@@ -284,22 +240,22 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
 	 * @throws     PropelException - if unable to parse/validate the date/time value.
 	 */
-	public function getApprovedAt($format = 'Y-m-d H:i:s')
+	public function getAcknowledgedAt($format = 'Y-m-d H:i:s')
 	{
-		if ($this->approved_at === null) {
+		if ($this->acknowledged_at === null) {
 			return null;
 		}
 
 
-		if ($this->approved_at === '0000-00-00 00:00:00') {
+		if ($this->acknowledged_at === '0000-00-00 00:00:00') {
 			// while technically this is not a default value of NULL,
 			// this seems to be closest in meaning.
 			return null;
 		} else {
 			try {
-				$dt = new DateTime($this->approved_at);
+				$dt = new DateTime($this->acknowledged_at);
 			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->approved_at, true), $x);
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->acknowledged_at, true), $x);
 			}
 		}
 
@@ -314,13 +270,13 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [approver_user_id] column value.
+	 * Get the [acknowledger_user_id] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getApproverUserId()
+	public function getAcknowledgerUserId()
 	{
-		return $this->approver_user_id;
+		return $this->acknowledger_user_id;
 	}
 
 	/**
@@ -344,28 +300,28 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	} // setId()
 
 	/**
-	 * Set the value of [schoolproject_id] column.
+	 * Set the value of [proj_resource_id] column.
 	 * 
 	 * @param      int $v new value
 	 * @return     ProjActivity The current object (for fluent API support)
 	 */
-	public function setSchoolprojectId($v)
+	public function setProjResourceId($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
 		}
 
-		if ($this->schoolproject_id !== $v) {
-			$this->schoolproject_id = $v;
-			$this->modifiedColumns[] = ProjActivityPeer::SCHOOLPROJECT_ID;
+		if ($this->proj_resource_id !== $v) {
+			$this->proj_resource_id = $v;
+			$this->modifiedColumns[] = ProjActivityPeer::PROJ_RESOURCE_ID;
 		}
 
-		if ($this->aSchoolproject !== null && $this->aSchoolproject->getId() !== $v) {
-			$this->aSchoolproject = null;
+		if ($this->aProjResource !== null && $this->aProjResource->getId() !== $v) {
+			$this->aProjResource = null;
 		}
 
 		return $this;
-	} // setSchoolprojectId()
+	} // setProjResourceId()
 
 	/**
 	 * Set the value of [user_id] column.
@@ -441,73 +397,24 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	} // setBeginning()
 
 	/**
-	 * Sets the value of [ending] column to a normalized version of the date/time value specified.
-	 * 
-	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
-	 *						be treated as NULL for temporal objects.
-	 * @return     ProjActivity The current object (for fluent API support)
-	 */
-	public function setEnding($v)
-	{
-		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
-		// -- which is unexpected, to say the least.
-		if ($v === null || $v === '') {
-			$dt = null;
-		} elseif ($v instanceof DateTime) {
-			$dt = $v;
-		} else {
-			// some string/numeric value passed; we normalize that so that we can
-			// validate it.
-			try {
-				if (is_numeric($v)) { // if it's a unix timestamp
-					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
-					// We have to explicitly specify and then change the time zone because of a
-					// DateTime bug: http://bugs.php.net/bug.php?id=43003
-					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
-				} else {
-					$dt = new DateTime($v);
-				}
-			} catch (Exception $x) {
-				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
-			}
-		}
-
-		if ( $this->ending !== null || $dt !== null ) {
-			// (nested ifs are a little easier to read in this case)
-
-			$currNorm = ($this->ending !== null && $tmpDt = new DateTime($this->ending)) ? $tmpDt->format('Y-m-d H:i:s') : null;
-			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
-
-			if ( ($currNorm !== $newNorm) // normalized values don't match 
-					)
-			{
-				$this->ending = ($dt ? $dt->format('Y-m-d H:i:s') : null);
-				$this->modifiedColumns[] = ProjActivityPeer::ENDING;
-			}
-		} // if either are not null
-
-		return $this;
-	} // setEnding()
-
-	/**
-	 * Set the value of [amount] column.
+	 * Set the value of [quantity] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     ProjActivity The current object (for fluent API support)
 	 */
-	public function setAmount($v)
+	public function setQuantity($v)
 	{
 		if ($v !== null) {
 			$v = (string) $v;
 		}
 
-		if ($this->amount !== $v) {
-			$this->amount = $v;
-			$this->modifiedColumns[] = ProjActivityPeer::AMOUNT;
+		if ($this->quantity !== $v) {
+			$this->quantity = $v;
+			$this->modifiedColumns[] = ProjActivityPeer::QUANTITY;
 		}
 
 		return $this;
-	} // setAmount()
+	} // setQuantity()
 
 	/**
 	 * Set the value of [notes] column.
@@ -579,13 +486,13 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	} // setCreatedAt()
 
 	/**
-	 * Sets the value of [approved_at] column to a normalized version of the date/time value specified.
+	 * Sets the value of [acknowledged_at] column to a normalized version of the date/time value specified.
 	 * 
 	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
 	 *						be treated as NULL for temporal objects.
 	 * @return     ProjActivity The current object (for fluent API support)
 	 */
-	public function setApprovedAt($v)
+	public function setAcknowledgedAt($v)
 	{
 		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
 		// -- which is unexpected, to say the least.
@@ -610,46 +517,46 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			}
 		}
 
-		if ( $this->approved_at !== null || $dt !== null ) {
+		if ( $this->acknowledged_at !== null || $dt !== null ) {
 			// (nested ifs are a little easier to read in this case)
 
-			$currNorm = ($this->approved_at !== null && $tmpDt = new DateTime($this->approved_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$currNorm = ($this->acknowledged_at !== null && $tmpDt = new DateTime($this->acknowledged_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
 			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
 
 			if ( ($currNorm !== $newNorm) // normalized values don't match 
 					)
 			{
-				$this->approved_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
-				$this->modifiedColumns[] = ProjActivityPeer::APPROVED_AT;
+				$this->acknowledged_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = ProjActivityPeer::ACKNOWLEDGED_AT;
 			}
 		} // if either are not null
 
 		return $this;
-	} // setApprovedAt()
+	} // setAcknowledgedAt()
 
 	/**
-	 * Set the value of [approver_user_id] column.
+	 * Set the value of [acknowledger_user_id] column.
 	 * 
 	 * @param      int $v new value
 	 * @return     ProjActivity The current object (for fluent API support)
 	 */
-	public function setApproverUserId($v)
+	public function setAcknowledgerUserId($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
 		}
 
-		if ($this->approver_user_id !== $v) {
-			$this->approver_user_id = $v;
-			$this->modifiedColumns[] = ProjActivityPeer::APPROVER_USER_ID;
+		if ($this->acknowledger_user_id !== $v) {
+			$this->acknowledger_user_id = $v;
+			$this->modifiedColumns[] = ProjActivityPeer::ACKNOWLEDGER_USER_ID;
 		}
 
-		if ($this->asfGuardUserRelatedByApproverUserId !== null && $this->asfGuardUserRelatedByApproverUserId->getId() !== $v) {
-			$this->asfGuardUserRelatedByApproverUserId = null;
+		if ($this->asfGuardUserRelatedByAcknowledgerUserId !== null && $this->asfGuardUserRelatedByAcknowledgerUserId->getId() !== $v) {
+			$this->asfGuardUserRelatedByAcknowledgerUserId = null;
 		}
 
 		return $this;
-	} // setApproverUserId()
+	} // setAcknowledgerUserId()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -684,15 +591,14 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		try {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->schoolproject_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+			$this->proj_resource_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->user_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->beginning = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->ending = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->amount = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->notes = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->created_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->approved_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-			$this->approver_user_id = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
+			$this->quantity = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->notes = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->created_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->acknowledged_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->acknowledger_user_id = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -702,7 +608,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 10; // 10 = ProjActivityPeer::NUM_COLUMNS - ProjActivityPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 9; // 9 = ProjActivityPeer::NUM_COLUMNS - ProjActivityPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjActivity object", $e);
@@ -725,14 +631,14 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
-		if ($this->aSchoolproject !== null && $this->schoolproject_id !== $this->aSchoolproject->getId()) {
-			$this->aSchoolproject = null;
+		if ($this->aProjResource !== null && $this->proj_resource_id !== $this->aProjResource->getId()) {
+			$this->aProjResource = null;
 		}
 		if ($this->asfGuardUserRelatedByUserId !== null && $this->user_id !== $this->asfGuardUserRelatedByUserId->getId()) {
 			$this->asfGuardUserRelatedByUserId = null;
 		}
-		if ($this->asfGuardUserRelatedByApproverUserId !== null && $this->approver_user_id !== $this->asfGuardUserRelatedByApproverUserId->getId()) {
-			$this->asfGuardUserRelatedByApproverUserId = null;
+		if ($this->asfGuardUserRelatedByAcknowledgerUserId !== null && $this->acknowledger_user_id !== $this->asfGuardUserRelatedByAcknowledgerUserId->getId()) {
+			$this->asfGuardUserRelatedByAcknowledgerUserId = null;
 		}
 	} // ensureConsistency
 
@@ -773,9 +679,9 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
-			$this->aSchoolproject = null;
+			$this->aProjResource = null;
 			$this->asfGuardUserRelatedByUserId = null;
-			$this->asfGuardUserRelatedByApproverUserId = null;
+			$this->asfGuardUserRelatedByAcknowledgerUserId = null;
 		} // if (deep)
 	}
 
@@ -897,11 +803,11 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
-			if ($this->aSchoolproject !== null) {
-				if ($this->aSchoolproject->isModified() || $this->aSchoolproject->isNew()) {
-					$affectedRows += $this->aSchoolproject->save($con);
+			if ($this->aProjResource !== null) {
+				if ($this->aProjResource->isModified() || $this->aProjResource->isNew()) {
+					$affectedRows += $this->aProjResource->save($con);
 				}
-				$this->setSchoolproject($this->aSchoolproject);
+				$this->setProjResource($this->aProjResource);
 			}
 
 			if ($this->asfGuardUserRelatedByUserId !== null) {
@@ -911,11 +817,11 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 				$this->setsfGuardUserRelatedByUserId($this->asfGuardUserRelatedByUserId);
 			}
 
-			if ($this->asfGuardUserRelatedByApproverUserId !== null) {
-				if ($this->asfGuardUserRelatedByApproverUserId->isModified() || $this->asfGuardUserRelatedByApproverUserId->isNew()) {
-					$affectedRows += $this->asfGuardUserRelatedByApproverUserId->save($con);
+			if ($this->asfGuardUserRelatedByAcknowledgerUserId !== null) {
+				if ($this->asfGuardUserRelatedByAcknowledgerUserId->isModified() || $this->asfGuardUserRelatedByAcknowledgerUserId->isNew()) {
+					$affectedRows += $this->asfGuardUserRelatedByAcknowledgerUserId->save($con);
 				}
-				$this->setsfGuardUserRelatedByApproverUserId($this->asfGuardUserRelatedByApproverUserId);
+				$this->setsfGuardUserRelatedByAcknowledgerUserId($this->asfGuardUserRelatedByAcknowledgerUserId);
 			}
 
 			if ($this->isNew() ) {
@@ -1011,9 +917,9 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
-			if ($this->aSchoolproject !== null) {
-				if (!$this->aSchoolproject->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aSchoolproject->getValidationFailures());
+			if ($this->aProjResource !== null) {
+				if (!$this->aProjResource->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aProjResource->getValidationFailures());
 				}
 			}
 
@@ -1023,9 +929,9 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->asfGuardUserRelatedByApproverUserId !== null) {
-				if (!$this->asfGuardUserRelatedByApproverUserId->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->asfGuardUserRelatedByApproverUserId->getValidationFailures());
+			if ($this->asfGuardUserRelatedByAcknowledgerUserId !== null) {
+				if (!$this->asfGuardUserRelatedByAcknowledgerUserId->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->asfGuardUserRelatedByAcknowledgerUserId->getValidationFailures());
 				}
 			}
 
@@ -1072,7 +978,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getSchoolprojectId();
+				return $this->getProjResourceId();
 				break;
 			case 2:
 				return $this->getUserId();
@@ -1081,22 +987,19 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 				return $this->getBeginning();
 				break;
 			case 4:
-				return $this->getEnding();
+				return $this->getQuantity();
 				break;
 			case 5:
-				return $this->getAmount();
-				break;
-			case 6:
 				return $this->getNotes();
 				break;
-			case 7:
+			case 6:
 				return $this->getCreatedAt();
 				break;
-			case 8:
-				return $this->getApprovedAt();
+			case 7:
+				return $this->getAcknowledgedAt();
 				break;
-			case 9:
-				return $this->getApproverUserId();
+			case 8:
+				return $this->getAcknowledgerUserId();
 				break;
 			default:
 				return null;
@@ -1120,15 +1023,14 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		$keys = ProjActivityPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getSchoolprojectId(),
+			$keys[1] => $this->getProjResourceId(),
 			$keys[2] => $this->getUserId(),
 			$keys[3] => $this->getBeginning(),
-			$keys[4] => $this->getEnding(),
-			$keys[5] => $this->getAmount(),
-			$keys[6] => $this->getNotes(),
-			$keys[7] => $this->getCreatedAt(),
-			$keys[8] => $this->getApprovedAt(),
-			$keys[9] => $this->getApproverUserId(),
+			$keys[4] => $this->getQuantity(),
+			$keys[5] => $this->getNotes(),
+			$keys[6] => $this->getCreatedAt(),
+			$keys[7] => $this->getAcknowledgedAt(),
+			$keys[8] => $this->getAcknowledgerUserId(),
 		);
 		return $result;
 	}
@@ -1164,7 +1066,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setSchoolprojectId($value);
+				$this->setProjResourceId($value);
 				break;
 			case 2:
 				$this->setUserId($value);
@@ -1173,22 +1075,19 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 				$this->setBeginning($value);
 				break;
 			case 4:
-				$this->setEnding($value);
+				$this->setQuantity($value);
 				break;
 			case 5:
-				$this->setAmount($value);
-				break;
-			case 6:
 				$this->setNotes($value);
 				break;
-			case 7:
+			case 6:
 				$this->setCreatedAt($value);
 				break;
-			case 8:
-				$this->setApprovedAt($value);
+			case 7:
+				$this->setAcknowledgedAt($value);
 				break;
-			case 9:
-				$this->setApproverUserId($value);
+			case 8:
+				$this->setAcknowledgerUserId($value);
 				break;
 		} // switch()
 	}
@@ -1215,15 +1114,14 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		$keys = ProjActivityPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setSchoolprojectId($arr[$keys[1]]);
+		if (array_key_exists($keys[1], $arr)) $this->setProjResourceId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setUserId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setBeginning($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setEnding($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setAmount($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setNotes($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setApprovedAt($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setApproverUserId($arr[$keys[9]]);
+		if (array_key_exists($keys[4], $arr)) $this->setQuantity($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setNotes($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setAcknowledgedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setAcknowledgerUserId($arr[$keys[8]]);
 	}
 
 	/**
@@ -1236,15 +1134,14 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		$criteria = new Criteria(ProjActivityPeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(ProjActivityPeer::ID)) $criteria->add(ProjActivityPeer::ID, $this->id);
-		if ($this->isColumnModified(ProjActivityPeer::SCHOOLPROJECT_ID)) $criteria->add(ProjActivityPeer::SCHOOLPROJECT_ID, $this->schoolproject_id);
+		if ($this->isColumnModified(ProjActivityPeer::PROJ_RESOURCE_ID)) $criteria->add(ProjActivityPeer::PROJ_RESOURCE_ID, $this->proj_resource_id);
 		if ($this->isColumnModified(ProjActivityPeer::USER_ID)) $criteria->add(ProjActivityPeer::USER_ID, $this->user_id);
 		if ($this->isColumnModified(ProjActivityPeer::BEGINNING)) $criteria->add(ProjActivityPeer::BEGINNING, $this->beginning);
-		if ($this->isColumnModified(ProjActivityPeer::ENDING)) $criteria->add(ProjActivityPeer::ENDING, $this->ending);
-		if ($this->isColumnModified(ProjActivityPeer::AMOUNT)) $criteria->add(ProjActivityPeer::AMOUNT, $this->amount);
+		if ($this->isColumnModified(ProjActivityPeer::QUANTITY)) $criteria->add(ProjActivityPeer::QUANTITY, $this->quantity);
 		if ($this->isColumnModified(ProjActivityPeer::NOTES)) $criteria->add(ProjActivityPeer::NOTES, $this->notes);
 		if ($this->isColumnModified(ProjActivityPeer::CREATED_AT)) $criteria->add(ProjActivityPeer::CREATED_AT, $this->created_at);
-		if ($this->isColumnModified(ProjActivityPeer::APPROVED_AT)) $criteria->add(ProjActivityPeer::APPROVED_AT, $this->approved_at);
-		if ($this->isColumnModified(ProjActivityPeer::APPROVER_USER_ID)) $criteria->add(ProjActivityPeer::APPROVER_USER_ID, $this->approver_user_id);
+		if ($this->isColumnModified(ProjActivityPeer::ACKNOWLEDGED_AT)) $criteria->add(ProjActivityPeer::ACKNOWLEDGED_AT, $this->acknowledged_at);
+		if ($this->isColumnModified(ProjActivityPeer::ACKNOWLEDGER_USER_ID)) $criteria->add(ProjActivityPeer::ACKNOWLEDGER_USER_ID, $this->acknowledger_user_id);
 
 		return $criteria;
 	}
@@ -1299,23 +1196,21 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setSchoolprojectId($this->schoolproject_id);
+		$copyObj->setProjResourceId($this->proj_resource_id);
 
 		$copyObj->setUserId($this->user_id);
 
 		$copyObj->setBeginning($this->beginning);
 
-		$copyObj->setEnding($this->ending);
-
-		$copyObj->setAmount($this->amount);
+		$copyObj->setQuantity($this->quantity);
 
 		$copyObj->setNotes($this->notes);
 
 		$copyObj->setCreatedAt($this->created_at);
 
-		$copyObj->setApprovedAt($this->approved_at);
+		$copyObj->setAcknowledgedAt($this->acknowledged_at);
 
-		$copyObj->setApproverUserId($this->approver_user_id);
+		$copyObj->setAcknowledgerUserId($this->acknowledger_user_id);
 
 
 		$copyObj->setNew(true);
@@ -1363,24 +1258,24 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Declares an association between this object and a Schoolproject object.
+	 * Declares an association between this object and a ProjResource object.
 	 *
-	 * @param      Schoolproject $v
+	 * @param      ProjResource $v
 	 * @return     ProjActivity The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function setSchoolproject(Schoolproject $v = null)
+	public function setProjResource(ProjResource $v = null)
 	{
 		if ($v === null) {
-			$this->setSchoolprojectId(NULL);
+			$this->setProjResourceId(NULL);
 		} else {
-			$this->setSchoolprojectId($v->getId());
+			$this->setProjResourceId($v->getId());
 		}
 
-		$this->aSchoolproject = $v;
+		$this->aProjResource = $v;
 
 		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the Schoolproject object, it will not be re-added.
+		// If this object has already been added to the ProjResource object, it will not be re-added.
 		if ($v !== null) {
 			$v->addProjActivity($this);
 		}
@@ -1390,25 +1285,25 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 
 
 	/**
-	 * Get the associated Schoolproject object
+	 * Get the associated ProjResource object
 	 *
 	 * @param      PropelPDO Optional Connection object.
-	 * @return     Schoolproject The associated Schoolproject object.
+	 * @return     ProjResource The associated ProjResource object.
 	 * @throws     PropelException
 	 */
-	public function getSchoolproject(PropelPDO $con = null)
+	public function getProjResource(PropelPDO $con = null)
 	{
-		if ($this->aSchoolproject === null && ($this->schoolproject_id !== null)) {
-			$this->aSchoolproject = SchoolprojectPeer::retrieveByPk($this->schoolproject_id);
+		if ($this->aProjResource === null && ($this->proj_resource_id !== null)) {
+			$this->aProjResource = ProjResourcePeer::retrieveByPk($this->proj_resource_id);
 			/* The following can be used additionally to
 			   guarantee the related object contains a reference
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->aSchoolproject->addProjActivitys($this);
+			   $this->aProjResource->addProjActivitys($this);
 			 */
 		}
-		return $this->aSchoolproject;
+		return $this->aProjResource;
 	}
 
 	/**
@@ -1467,20 +1362,20 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	 * @return     ProjActivity The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function setsfGuardUserRelatedByApproverUserId(sfGuardUser $v = null)
+	public function setsfGuardUserRelatedByAcknowledgerUserId(sfGuardUser $v = null)
 	{
 		if ($v === null) {
-			$this->setApproverUserId(NULL);
+			$this->setAcknowledgerUserId(NULL);
 		} else {
-			$this->setApproverUserId($v->getId());
+			$this->setAcknowledgerUserId($v->getId());
 		}
 
-		$this->asfGuardUserRelatedByApproverUserId = $v;
+		$this->asfGuardUserRelatedByAcknowledgerUserId = $v;
 
 		// Add binding for other direction of this n:n relationship.
 		// If this object has already been added to the sfGuardUser object, it will not be re-added.
 		if ($v !== null) {
-			$v->addProjActivityRelatedByApproverUserId($this);
+			$v->addProjActivityRelatedByAcknowledgerUserId($this);
 		}
 
 		return $this;
@@ -1494,19 +1389,19 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	 * @return     sfGuardUser The associated sfGuardUser object.
 	 * @throws     PropelException
 	 */
-	public function getsfGuardUserRelatedByApproverUserId(PropelPDO $con = null)
+	public function getsfGuardUserRelatedByAcknowledgerUserId(PropelPDO $con = null)
 	{
-		if ($this->asfGuardUserRelatedByApproverUserId === null && ($this->approver_user_id !== null)) {
-			$this->asfGuardUserRelatedByApproverUserId = sfGuardUserPeer::retrieveByPk($this->approver_user_id);
+		if ($this->asfGuardUserRelatedByAcknowledgerUserId === null && ($this->acknowledger_user_id !== null)) {
+			$this->asfGuardUserRelatedByAcknowledgerUserId = sfGuardUserPeer::retrieveByPk($this->acknowledger_user_id);
 			/* The following can be used additionally to
 			   guarantee the related object contains a reference
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->asfGuardUserRelatedByApproverUserId->addProjActivitysRelatedByApproverUserId($this);
+			   $this->asfGuardUserRelatedByAcknowledgerUserId->addProjActivitysRelatedByAcknowledgerUserId($this);
 			 */
 		}
-		return $this->asfGuardUserRelatedByApproverUserId;
+		return $this->asfGuardUserRelatedByAcknowledgerUserId;
 	}
 
 	/**
@@ -1523,9 +1418,9 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		if ($deep) {
 		} // if ($deep)
 
-			$this->aSchoolproject = null;
+			$this->aProjResource = null;
 			$this->asfGuardUserRelatedByUserId = null;
-			$this->asfGuardUserRelatedByApproverUserId = null;
+			$this->asfGuardUserRelatedByAcknowledgerUserId = null;
 	}
 
 } // BaseProjActivity

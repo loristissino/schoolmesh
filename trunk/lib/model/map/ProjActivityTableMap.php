@@ -37,15 +37,14 @@ class ProjActivityTableMap extends TableMap {
 		$this->setUseIdGenerator(true);
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
-		$this->addForeignKey('SCHOOLPROJECT_ID', 'SchoolprojectId', 'INTEGER', 'schoolproject', 'ID', false, null, null);
+		$this->addForeignKey('PROJ_RESOURCE_ID', 'ProjResourceId', 'INTEGER', 'proj_resource', 'ID', false, null, null);
 		$this->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
 		$this->addColumn('BEGINNING', 'Beginning', 'TIMESTAMP', false, null, null);
-		$this->addColumn('ENDING', 'Ending', 'TIMESTAMP', false, null, null);
-		$this->addColumn('AMOUNT', 'Amount', 'DECIMAL', false, null, null);
+		$this->addColumn('QUANTITY', 'Quantity', 'DECIMAL', false, 10, null);
 		$this->addColumn('NOTES', 'Notes', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null, null);
-		$this->addColumn('APPROVED_AT', 'ApprovedAt', 'TIMESTAMP', false, null, null);
-		$this->addForeignKey('APPROVER_USER_ID', 'ApproverUserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
+		$this->addColumn('ACKNOWLEDGED_AT', 'AcknowledgedAt', 'TIMESTAMP', false, null, null);
+		$this->addForeignKey('ACKNOWLEDGER_USER_ID', 'AcknowledgerUserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
 		// validators
 	} // initialize()
 
@@ -54,9 +53,9 @@ class ProjActivityTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Schoolproject', 'Schoolproject', RelationMap::MANY_TO_ONE, array('schoolproject_id' => 'id', ), null, null);
+    $this->addRelation('ProjResource', 'ProjResource', RelationMap::MANY_TO_ONE, array('proj_resource_id' => 'id', ), null, null);
     $this->addRelation('sfGuardUserRelatedByUserId', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('sfGuardUserRelatedByApproverUserId', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('approver_user_id' => 'id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('sfGuardUserRelatedByAcknowledgerUserId', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('acknowledger_user_id' => 'id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
 	/**

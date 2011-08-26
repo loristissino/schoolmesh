@@ -1,5 +1,8 @@
 <?php include_partial('content/breadcrumps', array(
-  'current'=>__('Projects monitoring')
+  'breadcrumps'=>array(
+    'projects/monitor' =>__("Projects monitoring")
+    ),
+  'current'=>__('Projects report')
   ))
 ?>
 

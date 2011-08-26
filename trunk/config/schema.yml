@@ -384,15 +384,14 @@ propel:
     
   proj_activity:
     id: ~
-    schoolproject_id: ~
+    proj_resource_id: ~
     user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     beginning: timestamp
-    ending: timestamp
-    amount: decimal
+    quantity:  { type: decimal, size: 10, scale: 2 }
     notes: longvarchar
     created_at: ~
-    approved_at: timestamp
-    approver_user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true } 
+    acknowledged_at: timestamp
+    acknowledger_user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true } 
 
   subnet:
     id:

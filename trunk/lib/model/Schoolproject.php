@@ -388,6 +388,14 @@ class Schoolproject extends BaseSchoolproject {
           )
         ));
     }
+    else
+    {
+      $checkList->addCheck(new Check(
+				Check::PASSED,
+				'The coordinator has a validated email address',
+				'Project'
+        ));
+    }
     
     if(!$this->getProjCategoryId())
     {
@@ -398,6 +406,14 @@ class Schoolproject extends BaseSchoolproject {
         array(
           'link_to'=>'projects/edit?id=' . $this->getId()
           )
+        ));
+    }
+    else
+    {
+      $checkList->addCheck(new Check(
+				Check::PASSED,
+				'The category is set',
+				'Project'
         ));
     }
 
@@ -412,6 +428,14 @@ class Schoolproject extends BaseSchoolproject {
           )
         ));
     }
+    else
+    {
+      $checkList->addCheck(new Check(
+				Check::PASSED,
+				'Financing set',
+				'Project'
+        ));
+    }
 
     if(!$this->getTitle())
     {
@@ -422,6 +446,14 @@ class Schoolproject extends BaseSchoolproject {
         array(
           'link_to'=>'projects/edit?id=' . $this->getId()
           )
+        ));
+    }
+    else
+    {
+      $checkList->addCheck(new Check(
+				Check::PASSED,
+				'Title set',
+				'Project'
         ));
     }
 
@@ -436,36 +468,16 @@ class Schoolproject extends BaseSchoolproject {
           )
         ));
     }
-
-    $resources=$this->getProjResources();
-    if(sizeof($resources)==0)
-    {
-      $checkList->addCheck(new Check(
-				Check::FAILED,
-				'No resource defined',
-				'Resources',
-        array(
-          'link_to'=>'projects/edit?id=' . $this->getId()
-          )
-        )) ;
-    }
     else
     {
-      foreach($resources as $resource)
-      {
-        if($resource->getQuantityEstimated()<=0)
-        {
-          $checkList->addCheck(new Check(
-            Check::FAILED,
-            'No quantity defined for resource',
-            'Resources',
-            array(
-              'link_to'=>'projects/editresource?id=' . $resource->getId(),
-              )
-            ));
-        }
-      }
+      $checkList->addCheck(new Check(
+				Check::PASSED,
+				'Description set',
+				'Project'
+        ));
     }
+    
+    
     $deadlines=$this->getProjDeadlines();
     if(sizeof($deadlines)==0)
     {
@@ -505,6 +517,48 @@ class Schoolproject extends BaseSchoolproject {
             ));
         }
       }
+      $checkList->addCheck(new Check(
+				Check::PASSED,
+				'At least a deadline is defined',
+				'Deadlines'
+        )) ;
+
+    }
+
+    $resources=$this->getProjResources();
+    if(sizeof($resources)==0)
+    {
+      $checkList->addCheck(new Check(
+				Check::FAILED,
+				'No resource defined',
+				'Resources',
+        array(
+          'link_to'=>'projects/edit?id=' . $this->getId()
+          )
+        )) ;
+    }
+    else
+    {
+      foreach($resources as $resource)
+      {
+        if($resource->getQuantityEstimated()<=0)
+        {
+          $checkList->addCheck(new Check(
+            Check::FAILED,
+            'No quantity defined for resource',
+            'Resources',
+            array(
+              'link_to'=>'projects/editresource?id=' . $resource->getId(),
+              )
+            ));
+        }
+      }
+      $checkList->addCheck(new Check(
+				Check::PASSED,
+				'At least a resource is defined',
+				'Resources'
+        )) ;
+ 
     }
     
     return $checkList;

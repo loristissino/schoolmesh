@@ -1077,29 +1077,28 @@ DROP TABLE IF EXISTS `proj_activity`;
 CREATE TABLE `proj_activity`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`schoolproject_id` INTEGER,
+	`proj_resource_id` INTEGER,
 	`user_id` INTEGER  NOT NULL,
 	`beginning` DATETIME,
-	`ending` DATETIME,
-	`amount` DECIMAL,
+	`quantity` DECIMAL(10,2),
 	`notes` TEXT,
 	`created_at` DATETIME,
-	`approved_at` DATETIME,
-	`approver_user_id` INTEGER  NOT NULL,
+	`acknowledged_at` DATETIME,
+	`acknowledger_user_id` INTEGER  NOT NULL,
 	PRIMARY KEY (`id`),
-	INDEX `proj_activity_FI_1` (`schoolproject_id`),
+	INDEX `proj_activity_FI_1` (`proj_resource_id`),
 	CONSTRAINT `proj_activity_FK_1`
-		FOREIGN KEY (`schoolproject_id`)
-		REFERENCES `schoolproject` (`id`),
+		FOREIGN KEY (`proj_resource_id`)
+		REFERENCES `proj_resource` (`id`),
 	INDEX `proj_activity_FI_2` (`user_id`),
 	CONSTRAINT `proj_activity_FK_2`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
-	INDEX `proj_activity_FI_3` (`approver_user_id`),
+	INDEX `proj_activity_FI_3` (`acknowledger_user_id`),
 	CONSTRAINT `proj_activity_FK_3`
-		FOREIGN KEY (`approver_user_id`)
+		FOREIGN KEY (`acknowledger_user_id`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT

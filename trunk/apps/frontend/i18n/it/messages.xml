@@ -1103,12 +1103,12 @@
         <target>Incarico non confermato</target>
       </trans-unit>
       <trans-unit id="304">
-        <source>My appointments and my projects</source>
+        <source>Appointments and projects</source>
         <target>Incarichi di docenza e progetti</target>
       </trans-unit>
       <trans-unit id="304">
-        <source>Full view of plans and reports</source>
-        <target>Elenco completo di piani di lavoro e relazioni</target>
+        <source>My appointments</source>
+        <target>Incarichi di docenza</target>
       </trans-unit>
       <trans-unit id="305">
         <source>My classes</source>
@@ -1443,8 +1443,8 @@
         <target>Scadenza n. %number%</target>
       </trans-unit>
 	  <trans-unit id="387">
-        <source>Add deadline</source>
-        <target>Aggiungi scadenza</target>
+        <source>Add monitoring deadline</source>
+        <target>Aggiungi scadenza di monitoraggio</target>
       </trans-unit>
 	  <trans-unit id="388">
         <source>Dear %femalename%,</source>
@@ -1616,8 +1616,8 @@
         <target>Vedi come rapporto</target>
     </trans-unit>
     <trans-unit id="428">
-        <source>Deadlines</source>
-        <target>Scadenze</target>
+        <source>Monitoring deadlines</source>
+        <target>Scadenze di monitoraggio</target>
     </trans-unit>
     <trans-unit id="429">
         <source>Manage projects</source>
@@ -1916,7 +1916,7 @@
         <target>Attività</target>
     </trans-unit>
     <trans-unit id="499">
-        <source>Manage users</source>
+        <source>Users management</source>
         <target>Gestione utenti</target>
     </trans-unit>
     <trans-unit id="500">
@@ -2399,8 +2399,114 @@
         <source>Projects information have been updated.</source>
         <target>Informazioni sui progetti aggiornate.</target>
     </trans-unit>
+    <trans-unit id="619">
+        <source>The deadline has been deleted.</source>
+        <target>La scadenza è stata eliminata.</target>
+    </trans-unit>
+    <trans-unit id="620">
+        <source>The resource has been deleted.</source>
+        <target>La risorsa è stata eliminata.</target>
+    </trans-unit>
+    <trans-unit id="621">
+        <source>Deadlines</source>
+        <target>Scadenze</target>
+    </trans-unit>
+    <trans-unit id="622">
+        <source>No description set</source>
+        <target>Nessuna descrizione impostata</target>
+    </trans-unit>
+    <trans-unit id="623">
+        <source>No deadline defined</source>
+        <target>Nessuna scadenza definita</target>
+    </trans-unit>
+    <trans-unit id="624">
+        <source>No resource defined</source>
+        <target>Nessuna risorsa definita</target>
+    </trans-unit>
+    <trans-unit id="625">
+        <source>The coordinator does not have a validated email address</source>
+        <target>Il coordinatore non ha un indirizzo email convalidato</target>
+    </trans-unit>
+    <trans-unit id="626">
+        <source>The coordinator has a validated email address</source>
+        <target>Il coordinatore ha un indirizzo email convalidato</target>
+    </trans-unit>
+    <trans-unit id="627">
+        <source>No category set</source>
+        <target>Nessuna categoria impostata</target>
+    </trans-unit>
+    <trans-unit id="628">
+        <source>The category is set</source>
+        <target>Categoria impostata</target>
+    </trans-unit>
+    <trans-unit id="629">
+        <source>No financing set</source>
+        <target>Nessun finanziamento impostato</target>
+    </trans-unit>
+    <trans-unit id="630">
+        <source>No title set</source>
+        <target>Titolo non impostato</target>
+    </trans-unit>
+    <trans-unit id="631">
+        <source>Title set</source>
+        <target>Titolo impostato</target>
+    </trans-unit>
+    <trans-unit id="632">
+        <source>No description set</source>
+        <target>Descrizione non impostata</target>
+    </trans-unit>
+    <trans-unit id="633">
+        <source>Description set</source>
+        <target>Descrizione impostata</target>
+    </trans-unit>
+    <trans-unit id="634">
+        <source>No quantity defined for resource</source>
+        <target>Quantità non definita per la risorsa</target>
+    </trans-unit>
+    <trans-unit id="635">
+        <source>At least a resource is defined</source>
+        <target>Almeno una risorsa è definita</target>
+    </trans-unit>
+    <trans-unit id="636">
+        <source>No deadline defined</source>
+        <target>Nessuna scadenza definita</target>
+    </trans-unit>
+    <trans-unit id="637">
+        <source>No date defined for deadline</source>
+        <target>Data non definita per la scadenza</target>
+    </trans-unit>
+    <trans-unit id="638">
+        <source>No description defined for deadline</source>
+        <target>Descrizione non definita per la scadenza</target>
+    </trans-unit>
+    <trans-unit id="639">
+        <source>At least a deadline is defined</source>
+        <target>Almeno una scadenza è definita</target>
+    </trans-unit>
+    <trans-unit id="640">
+        <source>Approved</source>
+        <target>Approvata</target>
+    </trans-unit>
+    <trans-unit id="641">
+        <source>Projects report</source>
+        <target>Rapporto progetti</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

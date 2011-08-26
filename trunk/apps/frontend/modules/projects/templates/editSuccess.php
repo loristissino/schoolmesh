@@ -59,7 +59,7 @@
   </table>
 </form>  
 
-<h2><?php echo __('Deadlines') ?></h2>
+<h2><?php echo __('Monitoring deadlines') ?></h2>
 
 <?php if(sizeof($deadlines)>0): ?>
 
@@ -123,7 +123,7 @@
 <ul class="sf_admin_actions">
 	<li class="sf_admin_action_new">
 	<?php echo link_to(
-				__('Add deadline'),
+				__('Add monitoring deadline'),
 				'projects/adddeadline?id='. $project->getId(),
 				array('method' => 'post', 'title'=>__('Add a new deadline to this project')) 
 				)?>

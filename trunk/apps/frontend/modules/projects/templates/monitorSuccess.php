@@ -60,6 +60,7 @@
   0 => __('Choose an action'),
   'setapprovaldate' => __('Set approval date'),
   'setfinancingdate' => __('Set financing date'),
+  'viewasreport' => __('View as report'),
   'computebudget' => __('Compute budget'),
 ), 0) ?>
   </select>
@@ -73,18 +74,6 @@
 <p><?php echo __('No projects defined.') ?></p>
 <?php endif ?>
 </div>
-
-<ul class="sf_admin_actions">
-
-  <li class="sf_admin_action_view">
-    <?php echo link_to(
-		__('View as report'),
-		'projects/monitor?template=report',
-		array('title'=>__('View the projects in a complete report'))
-		)?>
-		</li>
-
-</ul>
 
 <?php include_partial('content/year', array('year'=>$year, 'years'=>$years, 'back'=>'projects/monitor')) ?>
 
