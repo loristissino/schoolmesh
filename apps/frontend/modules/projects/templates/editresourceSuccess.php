@@ -33,7 +33,7 @@
     <td><?php echo $resource->getProjResourceType()->getDescription() ?></td>
   </tr>
   <?php endif ?>
-  <?php if(!isset($form['proj_quantity_estimated'])): ?>
+  <?php if(false): // FIXME !isset($form['proj_resource_quantity_estimated'])): ?>
   <tr>
     <th><label for="resource_quantity"><?php echo __('Qty estimated ('. $resource->getProjResourceType()->getMeasurementUnit() .')') ?></label></th>
     <td><?php echo $resource->getQuantityEstimated() ?></td>

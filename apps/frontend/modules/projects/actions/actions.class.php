@@ -109,6 +109,7 @@ class projectsActions extends sfActions
     $date=$projects[0]->getApprovalDate('U');
     if(!$date) $date=time();
     $this->form->setDefault('date', $date);
+    $this->form->setDefault('notes', $projects[0]->getApprovalNotes());
 
   }
 
@@ -148,7 +149,7 @@ class projectsActions extends sfActions
     $date=$projects[0]->getFinancingDate('U');
     if(!$date) $date=time();
     $this->form->setDefault('date', $date);
-
+    $this->form->setDefault('notes', $projects[0]->getFinancingNotes());
   }
   
   public function executeComputebudget(sfWebRequest $request)

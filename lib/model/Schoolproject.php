@@ -345,8 +345,15 @@ class Schoolproject extends BaseSchoolproject {
       {
         $this
         ->setState(Workflow::PROJ_SUBMITTED)
-        ->setSubmissionDate(date())
+        ->setSubmissionDate(time())
         ->save();
+        foreach($this->getProjResources() as $resource)
+        {
+          $resource
+          ->setQuantityApproved($resource->getQuantityEstimated())
+          ->setStandardCost($resource->getProjResourceType()->getStandardCost())
+          ->save();
+        }
         $result['result']='notice';
         $result['message']='The project has been submitted.';
       }

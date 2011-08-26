@@ -2,7 +2,7 @@
 <td style="text-align: right"><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?></td>
 <td style="text-align: right"><?php echo $resource->getQuantityEstimated() ?></td>
 <td style="text-align: right"><?php echo $resource->getQuantityApproved() ?></td>
-<td style="text-align: right"><?php echo $resource->getProjResourceType()->getStandardCost() ?></td>
+<td style="text-align: right"><?php echo $resource->getStandardCost() ?></td>
 <td style="text-align: right; font-style: italic"><?php echo currencyvalue($value) ?></td>
 <td>
 <ul class="sf_admin_td_actions">

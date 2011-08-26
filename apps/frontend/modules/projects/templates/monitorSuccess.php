@@ -20,8 +20,8 @@
       <th class="sf_admin_text"><?php echo __('Title') ?></th>
       <th class="sf_admin_text"><?php echo __('Coordinator') ?></th>
       <th class="sf_admin_text"><?php echo __('State') ?></th>
-      <th class="sf_admin_text"><?php echo __('Approval') ?></th>
-      <th class="sf_admin_text"><?php echo __('Financing') ?></th>
+      <th class="sf_admin_text"><?php echo __('Approval date') ?></th>
+      <th class="sf_admin_text"><?php echo __('Financing date') ?></th>
       <th class="sf_admin_text"><?php echo __('Deadlines') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>

@@ -43,6 +43,7 @@ class ProjResourceTableMap extends TableMap {
 		$this->addColumn('QUANTITY_ESTIMATED', 'QuantityEstimated', 'DECIMAL', false, 10, null);
 		$this->addColumn('QUANTITY_APPROVED', 'QuantityApproved', 'DECIMAL', false, 10, null);
 		$this->addColumn('QUANTITY_FINAL', 'QuantityFinal', 'DECIMAL', false, 10, null);
+		$this->addColumn('STANDARD_COST', 'StandardCost', 'DECIMAL', false, 10, null);
 		// validators
 	} // initialize()
 

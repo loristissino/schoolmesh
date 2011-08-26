@@ -2320,8 +2320,8 @@
         <target>Importo</target>
     </trans-unit>
     <trans-unit id="599">
-        <source>Total for the project</source>
-        <target>Totale progetto</target>
+        <source>Total for the project «%title%»</source>
+        <target>Totale progetto «%title%»</target>
     </trans-unit>
     <trans-unit id="600">
         <source>[1]Grand total for the project selected|[1,+Inf]Grand total for the %number% projects selected</source>
@@ -2343,7 +2343,64 @@
         <source>Resource #%id%</source>
         <target>Risorsa %id%</target>
     </trans-unit>
+    <trans-unit id="605">
+        <source>Resource successfully updated.</source>
+        <target>Risorsa aggiornata correttamente.</target>
+    </trans-unit>
+    <trans-unit id="606">
+        <source>Project information saved.</source>
+        <target>Informazioni sul progetto salvate.</target>
+    </trans-unit>
+    <trans-unit id="607">
+        <source>No deadlines defined.</source>
+        <target>Nessuna scadenza definita.</target>
+    </trans-unit>
+    <trans-unit id="608">
+        <source>No resources defined.</source>
+        <target>Nessuna risorsa definita.</target>
+    </trans-unit>
+    <trans-unit id="609">
+        <source>The deadline has been added.</source>
+        <target>La scadenza è stata aggiunta.</target>
+    </trans-unit>
+    <trans-unit id="610">
+        <source>The resource has been added.</source>
+        <target>La risorsa è stata aggiunta.</target>
+    </trans-unit>
+    <trans-unit id="611">
+        <source>Deadline successfully updated.</source>
+        <target>Informazioni sulla scadenza correttamente aggiornate.</target>
+    </trans-unit>
+    <trans-unit id="612">
+        <source>Resource successfully updated.</source>
+        <target>Informazioni sulla risorsa correttamente aggiornate.</target>
+    </trans-unit>
+    <trans-unit id="613">
+        <source>The project has been submitted.</source>
+        <target>Il progetto è stato consegnato.</target>
+    </trans-unit>
+    <trans-unit id="614">
+        <source>Approval date</source>
+        <target>Data di approvazione</target>
+    </trans-unit>
+    <trans-unit id="615">
+        <source>Financing date</source>
+        <target>Data di finanziamento</target>
+    </trans-unit>
+    <trans-unit id="616">
+        <source>Approval notes</source>
+        <target>Note sull'approvazione</target>
+    </trans-unit>
+    <trans-unit id="617">
+        <source>Financing notes</source>
+        <target>Note sul finanziamento</target>
+    </trans-unit>
+    <trans-unit id="618">
+        <source>Projects information have been updated.</source>
+        <target>Informazioni sui progetti aggiornate.</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
 

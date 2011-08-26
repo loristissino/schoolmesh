@@ -69,18 +69,11 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       if ($project->getState()<Workflow::PROJ_APPROVED)
       {
         $project->setState(Workflow::PROJ_APPROVED);
-        foreach($project->getProjResources() as $resource)
-        {
-          // we copy the values
-          $resource
-          ->setQuantityApproved($resource->getQuantityEstimated())
-          ->save();
-        }
       }
       $project->save();
     }
     $result['result']='notice';
-    $result['message']='Projects information have been updated';
+    $result['message']='Projects information have been updated.';
     return $result;
 
   }
@@ -101,7 +94,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       $project->save();
     }
     $result['result']='notice';
-    $result['message']='Projects information have been updated';
+    $result['message']='Projects information have been updated.';
     return $result;
 
   }

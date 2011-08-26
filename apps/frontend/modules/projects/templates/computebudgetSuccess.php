@@ -33,21 +33,21 @@
       <td rowspan="<?php echo sizeof($resources)+1 ?>"><?php echo $project->getProjCategory() ?></td>
       <td rowspan="<?php echo sizeof($resources)+1 ?>"><?php echo $project->getTitle() ?></td>
       <td rowspan="<?php echo sizeof($resources)+1 ?>"><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></td>
-      <?php $value=$resources[0]->getQuantityApproved()*$resources[0]->getProjResourceType()->getStandardCost() ?>
+      <?php $value=$resources[0]->getQuantityApproved()*$resources[0]->getStandardCost() ?>
       <?php $total+=$value ?>
       <?php include_partial('resourcebudget', array('resource'=>$resources[0], 'value'=>$value)) ?>
     </tr>
     <?php for($i=1; $i<sizeof($resources); $i++): ?>
     <tr>
-      <?php $value=$resources[$i]->getQuantityApproved()*$resources[$i]->getProjResourceType()->getStandardCost() ?>
+      <?php $value=$resources[$i]->getQuantityApproved()*$resources[$i]->getStandardCost() ?>
       <?php $total+=$value ?>
       <?php include_partial('resourcebudget', array('resource'=>$resources[$i], 'value'=>$value)) ?>
     </tr>
     <?php endfor ?>
     <tr>
-    <th colspan="5"><?php echo __('Total for the project') ?></th>
+    <th colspan="5"><?php echo __('Total for the project «%title%»', array('%title%'=>$project->getTitle())) ?></th>
     <?php $grandtotal+=$total ?>
-    <td style="text-align: right; font-weight: bold<?php if($project->getState()<Workflow::PROJ_APPROVED):?>; background: red"<?php endif ?>"><?php echo currencyvalue($total) ?></td>
+    <td style="text-align: right; font-weight: bold"><?php echo currencyvalue($total) ?></td>
     <th></th>
     </tr>
     <?php endforeach; ?>
