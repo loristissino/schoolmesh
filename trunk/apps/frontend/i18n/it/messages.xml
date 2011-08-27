@@ -2491,12 +2491,53 @@
         <source>Projects report</source>
         <target>Rapporto progetti</target>
     </trans-unit>
+    <trans-unit id="642">
+        <source>Qty used (h)</source>
+        <target>Ore impiegate</target>
+    </trans-unit>
+    <trans-unit id="643">
+        <source>Resource</source>
+        <target>Risorsa</target>
+    </trans-unit>
+    <trans-unit id="644">
+        <source>New activity</source>
+        <target>Nuova attività</target>
+    </trans-unit>
+    <trans-unit id="644">
+        <source>New activity within the project «%project%»</source>
+        <target>Nuova attività nell'ambito del progetto «%project%»</target>
+    </trans-unit>
+    <trans-unit id="645">
+        <source>Beginning</source>
+        <target>Inizio</target>
+    </trans-unit>
+    <trans-unit id="646">
+        <source>Choose the project (and resource) you performed your activity for:</source>
+        <target>Scegli il progetto (e la risorsa) per il quale hai svolto l'attività</target>
+    </trans-unit>
+    <trans-unit id="647">
+        <source>Quantity</source>
+        <target>Quantità</target>
+    </trans-unit>
+    <trans-unit id="648">
+        <source>Acknowledgement</source>
+        <target>Riconoscimento</target>
+    </trans-unit>
+    <trans-unit id="649">
+        <source>Not yet acknowledged</source>
+        <target>Non ancora riconosciuta</target>
+    </trans-unit>
+    <trans-unit id="650">
+        <source>This activity has been acknoweledged</source>
+        <target>Questa attività è stata riconosciuta</target>
+    </trans-unit>
+    <trans-unit id="651">
+        <source>This activity has not been yet acknoweledged</source>
+        <target>Questa attività non è stata ancora riconosciuta</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
-
-
-
 
 
 

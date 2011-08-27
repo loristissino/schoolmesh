@@ -1,3 +1,10 @@
+#sf_admin_container div.sf_admin_action_activity a
+{
+	margin-left: 40px;
+	padding-left: 20px;
+  background: url(../images/activity.png) no-repeat 0 0;
+}
+
 #sf_admin_container ul li.sf_admin_action_view a
 {
   background: url(../images/view.png) no-repeat 0 0;
@@ -264,6 +271,10 @@
 #sf_admin_container ul li.sf_admin_action_syllabus a
 {
   background: url(../images/syllabus.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_activity a
+{
+  background: url(../images/activity.png) no-repeat 0 0;
 }
 
 #sf_admin_container .alert

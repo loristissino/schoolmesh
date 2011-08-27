@@ -26,7 +26,8 @@
 <h2><?php echo __('Appointments and projects') ?></h2>
 <ul class="sf_admin_actions">
     <li class="sf_admin_action_items"><?php echo link_to(__('My appointments'), '@plansandreports') ?></li><br />
-    <li class="sf_admin_action_items"><?php echo link_to(__('My projects'), 'projects/index') ?></li>
+    <li class="sf_admin_action_items"><?php echo link_to(__('My projects'), 'projects/index') ?></li><br />
+    <li class="sf_admin_action_items"><?php echo link_to(__('My activities'), 'projects/activities') ?></li><br />
 </ul>
 <?php endif ?>
 
