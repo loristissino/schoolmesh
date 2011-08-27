@@ -57,5 +57,52 @@ class ProjResource extends BaseProjResource {
   }
 
 
+  public function countActivities($acknowledged=false)
+  {
+    $comparison=$acknowledged? Criteria::ISNOTNULL : Criteria::ISNULL;
+    $c=new Criteria();
+    $c->addJoin(ProjResourcePeer::ID, ProjActivityPeer::PROJ_RESOURCE_ID);
+    $c->add(ProjResourcePeer::ID, $this->getId());
+    $c->add(ProjActivityPeer::ACKNOWLEDGED_AT, null, $comparison);
+    return ProjResourcePeer::doCount($c);
+  }
+  
+  public function countProjActivities(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+  {
+    return self::countProjActivitys($criteria, $distinct, $con);
+  }
+  public function getProjActivities($criteria = null, PropelPDO $con = null)
+  {
+    return self::getProjActivitys($criteria, $con);
+  }
+
+  public function acknowledgeActivity($user_id, ProjActivity $activity)
+  {
+    if($activity->getAcknowledgedAt())
+    {
+      $result['result']='error';
+      $result['message']='The activity was already acknowledged.';
+      return $result;
+    }
+    
+    try
+    {
+      $activity
+      ->setAcknowledgerUserId($user_id)
+      ->setAcknowledgedAt(time())
+      ->save();
+      
+      $result['result']='notice';
+      $result['message']='The activity has been acknowledged.';
+      return $result;
+    }
+    catch (PropelException $e)
+    {
+      $result['result']='error';
+      $result['message']='The activity could not be acknowledged.';
+      return $result;
+    }
+    
+  }
 
 } // ProjResource

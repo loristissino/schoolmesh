@@ -2535,10 +2535,69 @@
         <source>This activity has not been yet acknoweledged</source>
         <target>Questa attività non è stata ancora riconosciuta</target>
     </trans-unit>
+    <trans-unit id="652">
+        <source>[0]There are no activities to acknowledge|[1]There is one activity to acknowledge|(1,+Inf]There are %number% activities to acknowledge</source>
+        <target>[0]Non ci sono attività da riconoscere|[1]C'è un'attività da riconoscere|(1,+Inf]Ci sono %number% attività da riconoscere</target>
+    </trans-unit>
+    <trans-unit id="653">
+        <source>Activities view</source>
+        <target>Vista attività</target>
+    </trans-unit>
+    <trans-unit id="653">
+        <source>Project «%project%»</source>
+        <target>Progetto «%project%»</target>
+    </trans-unit>
+    <trans-unit id="653">
+        <source>Activities within the resource «%resource%»</source>
+        <target>Attività per «%resource%»</target>
+    </trans-unit>
+    <trans-unit id="654">
+        <source>Acknowledge</source>
+        <target>Riconosci</target>
+    </trans-unit>
+    <trans-unit id="655">
+        <source>Total quantity acknowledged</source>
+        <target>Quantità totale riconosciuta</target>
+    </trans-unit>
+    <trans-unit id="656">
+        <source>The activity has been acknowledged.</source>
+        <target>L'attività è stata riconosciuta</target>
+    </trans-unit>
+    <trans-unit id="657">
+        <source>The activity was already acknowledged.</source>
+        <target>L'attività è già stata riconosciuta</target>
+    </trans-unit>
+    <trans-unit id="658">
+        <source>The activity could not be acknowledged.</source>
+        <target>Non è stato possibile riconoscere l'attività</target>
+    </trans-unit>
+    <trans-unit id="659">
+        <source>The activity has been saved.</source>
+        <target>L'attività è stata salvata.</target>
+    </trans-unit>
+    <trans-unit id="660">
+        <source>Activity information updated.</source>
+        <target>Le informazioni sull'attività sono state aggiornate.</target>
+    </trans-unit>
+    <trans-unit id="661">
+        <source>The activity has been deleted.</source>
+        <target>L'attività è stata eliminata.</target>
+    </trans-unit>
+    <trans-unit id="662">
+        <source>Edit activity</source>
+        <target>Modifica attività</target>
+    </trans-unit>
+    <trans-unit id="663">
+        <source>Edit activity within the project «%project%»</source>
+        <target>Modifica di attività per «%project%»</target>
+    </trans-unit>
+    <trans-unit id="664">
+        <source>This activity overlaps the previous one</source>
+        <target>Questa attività inizia prima della conclusione della precedente</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
-
 
 
 

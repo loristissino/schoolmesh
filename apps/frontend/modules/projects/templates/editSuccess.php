@@ -150,10 +150,12 @@
         <?php echo __('Financing') ?>
       <?php endif ?>
       </th>
+      <th><?php echo __('Activities') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
   <tbody>
+  <?php $t=array() ?>
 	<?php $i=0 ?>
     <?php foreach ($resources as $resource): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
@@ -175,6 +177,21 @@
         <?php echo $resource->getQuantityApproved() ?>
       <?php endif ?>
       </td>
+      <td style="text-align: right">
+      <?php if($resource->getProjResourceType()->getRoleId()): ?>
+        <?php if($resource->countActivities(false)): ?>
+          <?php echo image_tag(
+            'notdone',
+            array(
+              'title'=>format_number_choice(__('[0]There are no activities to acknowledge|[1]There is one activity to acknowledge|(1,+Inf]There are %number% activities to acknowledge', array('%number%'=>$resource->countActivities(false))), null, $resource->countActivities(false))
+              )
+            );
+            
+            ?>
+        <?php endif ?>
+        <?php echo $resource->countProjActivities() ?>
+      <?php endif ?>
+      </td>
       <td>
       <ul class="sf_admin_td_actions">
         <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
@@ -189,6 +206,14 @@
             __('Delete'),
             url_for('projects/deleteresource?id='. $resource->getId()),
             array('method'=>'post', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))
+            )
+             ?></li>
+        <?php endif ?>
+        <?php if($resource->countProjActivities()): ?>
+        <li class="sf_admin_action_view">
+        <?php echo link_to(
+            __('View'),
+            url_for('projects/viewresourceactivities?id='. $resource->getId())
             )
              ?></li>
         <?php endif ?>
@@ -216,9 +241,10 @@
 
 <?php endif ?>
 
+<?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
+
 <h2><?php echo __('Actions') ?></h2>
 <ul class="sf_admin_actions">
-  <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
 	<li class="sf_admin_action_submit">
 	<?php echo link_to(
 				__('Submit project'),
@@ -230,7 +256,6 @@
           ) 
 				) ?>
   </li>
-  <?php endif ?>
 </ul>
-
+<?php endif ?>
 
