@@ -27,6 +27,48 @@ class projectsActions extends sfActions
 
 	}
   
+  public function executeActivities(sfWebRequest $request)
+  {
+    $this->activities=ProjActivityPeer::retrieveAllForYearAndUser(sfConfig::get('app_config_current_year'), $this->getUser()->getProfile()->getSfGuardUser()->getId());
+	}
+  
+  public function executeNewactivity(sfWebRequest $request)
+  {
+    if($request->hasParameter('id'))
+    {
+      $this->forward404Unless($this->resource=ProjResourcePeer::retrieveByPK($request->getParameter('id')));
+      $this->form=new ProjActivityForm();
+      $this->form->setDefault('beginning', time());
+      $this->form->setDefault('proj_resource_id', $this->resource->getId());
+      $this->project=$this->resource->getSchoolproject();
+      $this->form->addConfiguration($this->resource);
+      $this->setTemplate('newactivityform');
+
+      if ($request->isMethod('post'))
+      {
+        $this->form->bind($request->getParameter('info'));
+        if ($this->form->isValid())
+        {
+          $params = $this->form->getValues();
+          $result=ProjActivityPeer::addActivity($this->getUser()->getProfile()->getId(), $params);
+          
+          $this->getUser()->setFlash($result['result'],
+            $this->getContext()->getI18N()->__($result['message'])
+            );
+          
+          if($result['result']=='notice')
+          {
+            return $this->redirect('projects/activities');
+          }
+        }
+      }
+      
+    }
+    
+    $this->resources=ProjResourcePeer::retrieveAllForYearAndRole(sfConfig::get('app_config_current_year'), $this->getUser()->getProfile()->getRoleId());
+	}
+
+
   public function executeBatch(sfWebRequest $request)
   {
     $ids = $request->getParameter('ids');

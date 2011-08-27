@@ -1084,7 +1084,7 @@ CREATE TABLE `proj_activity`
 	`notes` TEXT,
 	`created_at` DATETIME,
 	`acknowledged_at` DATETIME,
-	`acknowledger_user_id` INTEGER  NOT NULL,
+	`acknowledger_user_id` INTEGER,
 	PRIMARY KEY (`id`),
 	INDEX `proj_activity_FI_1` (`proj_resource_id`),
 	CONSTRAINT `proj_activity_FK_1`

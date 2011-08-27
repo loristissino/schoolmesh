@@ -16,6 +16,11 @@ require 'lib/model/om/BaseProjResource.php';
  */
 class ProjResource extends BaseProjResource {
   
+  public function __toString()
+  {
+    return $this->getDescription();
+  }
+  
   public function isEditableBy($user)
   {
     return 
