@@ -68,6 +68,60 @@ class projectsActions extends sfActions
     $this->resources=ProjResourcePeer::retrieveAllForYearAndRole(sfConfig::get('app_config_current_year'), $this->getUser()->getProfile()->getRoleId());
 	}
 
+  public function executeEditactivity(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->activity=ProjActivityPeer::retrieveByPK($request->getParameter('id')));
+    $this->forward404Unless($this->activity->getUserId()==$this->getUser()->getProfile()->getId());
+    $this->forward404Unless(!$this->activity->getAcknowledgedAt());
+    
+    $this->form=new ProjActivityForm($this->activity);
+    $this->form->addConfiguration($this->activity->getProjResource());
+
+    $this->setTemplate('editactivityform');
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('info'));
+      if ($this->form->isValid())
+      {
+        $params = $this->form->getValues();
+        $result=$this->activity->saveChanges($params);
+        
+        $this->getUser()->setFlash($result['result'],
+          $this->getContext()->getI18N()->__($result['message'])
+          );
+        
+        if($result['result']=='notice')
+        {
+          return $this->redirect('projects/activities');
+        }
+      }
+    }
+    
+    $this->resource=$this->activity->getProjResource();
+    $this->project=$this->resource->getSchoolproject();
+    
+	}
+
+  public function executeDeleteactivity(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->activity=ProjActivityPeer::retrieveByPK($request->getParameter('id')));
+    $this->forward404Unless($this->activity->getUserId()==$this->getUser()->getProfile()->getId());
+    $this->forward404Unless(!$this->activity->getAcknowledgedAt());
+    $this->forward404Unless($request->isMethod('post') or $request->isMethod('delete'));
+    
+    $this->activity->delete();
+    $result['result']='notice';
+    $result['message']='The activity has been deleted.';
+
+    $this->getUser()->setFlash($result['result'],
+      $this->getContext()->getI18N()->__($result['message'])
+      );
+
+    return $this->redirect('projects/activities');
+	}
+
+
 
   public function executeBatch(sfWebRequest $request)
   {
@@ -461,6 +515,33 @@ class projectsActions extends sfActions
 
   }
 
+  public function executeViewresourceactivities(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->resource=ProjResourcePeer::retrieveByPk($request->getParameter('id')));
+    $this->forward404Unless($this->resource->isEditableBy($this->getUser())); // the resource can be edited only by the owner or admins...
+    
+    $this->activities=$this->resource->getProjActivities();
+    $this->project=$this->resource->getSchoolproject();
+
+  }
+
+
+  public function executeAcknowledgeactivity(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post'));
+    $this->forward404Unless($this->activity=ProjActivityPeer::retrieveByPk($request->getParameter('id')));
+    $this->resource=$this->activity->getProjResource();
+    $this->project=$this->resource->getSchoolproject();
+    $this->forward404Unless($this->project->isEditableBy($this->getUser())); // the project can be edited only by the owner  or by admins...
+
+    $result=$this->resource->acknowledgeActivity($this->getUser()->getProfile()->getId(), $this->activity);
+    
+    $this->getUser()->setFlash($result['result'],
+      $this->getContext()->getI18N()->__($result['message'])
+      );
+    return $this->redirect('projects/viewresourceactivities?id=' . $this->resource->getId());
+   }  
+
 
   public function executeEdit(sfWebRequest $request)
   {
@@ -518,7 +599,7 @@ class projectsActions extends sfActions
   if ($this->project)
   {
     $this->deadlines=$this->project->getProjDeadlines();
-    $this->resources=$this->project->getProjResources();
+    $this->resources=$this->project->getProjResources(); //WithActivityCount();
   }
   
   

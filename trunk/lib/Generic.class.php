@@ -453,4 +453,32 @@ class Generic{
     return $token;
   }
 
+  public static function addtime($timestamp, $mu, $quantity)
+  {
+    switch($mu)
+    {
+      case 'h':
+      case 'hours':
+      case 'hrs':
+      case 'H':
+        $seconds=$quantity*60*60;
+        break;
+      case 'm':
+      case 'minutes':
+      case 'mins':
+      case 'M':
+        $seconds=$quantity*60;
+        break;
+      case 's':
+      case 'seconds':
+      case 'secs':
+      case 'S':
+        $seconds=$quantity;
+        break;
+      default:
+        $seconds=0;
+    }
+    return $timestamp+$seconds;
+  }
+
 }

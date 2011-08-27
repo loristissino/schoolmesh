@@ -565,6 +565,42 @@ class Schoolproject extends BaseSchoolproject {
     
   }
 
-	
+/*
+  public function getProjResourcesWithActivityCount()
+  {
+    $c=new Criteria();
+    $c->addJoin(ProjResourcePeer::ID, ProjActivityPeer::PROJ_RESOURCE_ID);
+    $c->add(ProjResourcePeer::SCHOOLPROJECT_ID, $this->getId());
+    $c->addGroupByColumn(ProjResourcePeer::ID);
+    $c->addSelectColumn('COUNT(' . ProjActivityPeer::ID . ') AS ac');
+    return ProjResourcePeer::doSelectJoinAll($c);
+    
+    
+    //$c->addSelectColumn('COUNT(' . ProjectMemberPeer::ID . ')')
+    ///
+  }
+
+	/*
+  proj_resource:
+    id: ~
+    schoolproject_id: ~
+    proj_resource_type_id: ~
+    description: varchar(255)
+    quantity_estimated:  { type: decimal, size: 10, scale: 2 }
+    quantity_approved:  { type: decimal, size: 10, scale: 2 }
+    quantity_final:  { type: decimal, size: 10, scale: 2 }
+    standard_cost:  { type: decimal, size: 10, scale: 2 }
+    
+  proj_activity:
+    id: ~
+    proj_resource_id: ~
+    user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    beginning: timestamp
+    quantity:  { type: decimal, size: 10, scale: 2 }
+    notes: longvarchar
+    created_at: ~
+    acknowledged_at: timestamp
+    acknowledger_user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }   
+  */
 
 } // Schoolproject
