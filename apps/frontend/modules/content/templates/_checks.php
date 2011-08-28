@@ -23,14 +23,7 @@
 	<?php echo jq_link_to_function(
 	image_tag($checkList->getResultsByGroupName($groupname, Check::FAILED)>0? 'stop': 'go'),
   jq_visual_effect('slideToggle', '#' .$groupname)
-) ?> &nbsp;<?php echo __($groupname) ?></strong>  (<?php foreach(array(Check::PASSED=>'green', Check::WARNING=>'orange', Check::FAILED=>'red') as $key=>$value): ?>
-<?php if($checkList->getResultsByGroupName($groupname, $key)>0): ?>
-	<span style="color: <?php echo $value ?>">
-		<?php echo format_number_choice($checkList->getShortMessage($key), array('%1'=>$checkList->getResultsByGroupName($groupname, $key)), $checkList->getResultsByGroupName($groupname, $key)) ?> 
-	</span>
-<?php endif ?>
-<?php endforeach ?>)
-</p>
+) ?> &nbsp;<?php echo __($groupname) ?></strong>  (<?php echo check_count($checkList, $groupname) ?>)</p>
 
 		<div class='check_results' id="<?php echo $groupname ?>" style="display:<?php  echo (!$start_closed and $checkList->getResultsByGroupName($groupname, Check::FAILED)>0)? 'visible': 'none' ?>">
 		<?php foreach($checkList->getChecksByGroupName($groupname) as $check): ?>

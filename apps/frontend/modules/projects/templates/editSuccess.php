@@ -33,7 +33,7 @@
   <?php endif ?>
   <tr>
     <th><label for="schoolproject_state"><?php echo __('State') ?></label></th>
-    <td><?php echo $project->getState() ?></td>
+    <td><?php include_partial('state', array('project'=>$project)) ?></td>
   </tr>
   <?php if(!isset($form['proj_category_id'])): ?>
   <tr>

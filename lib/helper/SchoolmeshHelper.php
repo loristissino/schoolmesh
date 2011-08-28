@@ -140,3 +140,24 @@ function currencyvalue($value)
       );
 }
 
+function check_count($checkList, $groupname)
+{
+  $rows=array();
+  foreach(array(
+    Check::PASSED=>'green',
+    Check::WARNING=>'orange',
+    Check::FAILED=>'red'
+    ) as $key=>$value)
+    {
+      if($checkList->getResultsByGroupName($groupname, $key)>0)
+      {
+        $rows[]='<span style="color: ' . $value . '">' .
+          format_number_choice($checkList->getShortMessage($key), array('%1'=>$checkList->getResultsByGroupName($groupname, $key)), $checkList->getResultsByGroupName($groupname, $key)) . 
+          '</span>';
+      }
+    }
+  return implode(', ', $rows);
+}
+
+
+
