@@ -2360,12 +2360,12 @@
         <target>Nessuna risorsa definita.</target>
     </trans-unit>
     <trans-unit id="609">
-        <source>The deadline has been added.</source>
-        <target>La scadenza è stata aggiunta.</target>
+        <source>The deadline has been added. Please proceed with filling in the necessary information.</source>
+        <target>La scadenza è stata aggiunta. Procedi con il completamento dell'inserimento dati.</target>
     </trans-unit>
     <trans-unit id="610">
-        <source>The resource has been added.</source>
-        <target>La risorsa è stata aggiunta.</target>
+        <source>The resource has been added. Please proceed with filling in the necessary information.</source>
+        <target>La risorsa è stata aggiunta. Procedi con il completamento dell'inserimento dati.</target>
     </trans-unit>
     <trans-unit id="611">
         <source>Deadline successfully updated.</source>
@@ -2561,11 +2561,11 @@
     </trans-unit>
     <trans-unit id="656">
         <source>The activity has been acknowledged.</source>
-        <target>L'attività è stata riconosciuta</target>
+        <target>L'attività è stata riconosciuta.</target>
     </trans-unit>
     <trans-unit id="657">
         <source>The activity was already acknowledged.</source>
-        <target>L'attività è già stata riconosciuta</target>
+        <target>L'attività è già stata riconosciuta.</target>
     </trans-unit>
     <trans-unit id="658">
         <source>The activity could not be acknowledged.</source>
@@ -2594,6 +2594,46 @@
     <trans-unit id="664">
         <source>This activity overlaps the previous one</source>
         <target>Questa attività inizia prima della conclusione della precedente</target>
+    </trans-unit>
+    <trans-unit id="665">
+        <source>The quantity acknowledged is greater than the one financed</source>
+        <target>La quantità riconosciuta è maggiore di quella finanziata</target>
+    </trans-unit>
+    <trans-unit id="666">
+        <source>Total quantity financed</source>
+        <target>Quantità totale finanziata</target>
+    </trans-unit>
+    <trans-unit id="667">
+        <source>Acknowledge the performing of this activity</source>
+        <target>Riconosci lo svolgimento di questa attività</target>
+    </trans-unit>
+    <trans-unit id="668">
+        <source>My activities</source>
+        <target>Attività</target>
+    </trans-unit>
+    <trans-unit id="669">
+        <source>Use</source>
+        <target>Uso</target>
+    </trans-unit>
+    <trans-unit id="670">
+        <source>You must specify an action.</source>
+        <target>Devi specificare un'azione.</target>
+    </trans-unit>
+    <trans-unit id="671">
+        <source>You must select at least one project.</source>
+        <target>Devi selezionare almeno un progetto.</target>
+    </trans-unit>
+    <trans-unit id="672">
+        <source>You are setting the approval date for the following projects:</source>
+        <target>Stai impostando la data di approvazione per i seguenti progetti:</target>
+    </trans-unit>
+    <trans-unit id="673">
+        <source>You are setting the financing date for the following projects:</source>
+        <target>Stai impostando la data di finanziamento per i seguenti progetti:</target>
+    </trans-unit>
+    <trans-unit id="674">
+        <source>No activity declared.</source>
+        <target>Nessuna attività dichiarata.</target>
     </trans-unit>
     </body>
   </file>

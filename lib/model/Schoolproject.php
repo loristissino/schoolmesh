@@ -216,7 +216,7 @@ class Schoolproject extends BaseSchoolproject {
       ->setCurrentDeadlineDate(Generic::currentDate())
       ->save();
       $result['result']='notice';
-      $result['message']='The deadline has been added.';
+      $result['message']='The deadline has been added. Please proceed with filling in the necessary information.';
       $result['redirect']='projects/editdeadline?id=' . $deadline->getId();
 
       return $result;
@@ -253,7 +253,7 @@ class Schoolproject extends BaseSchoolproject {
       ->setSchoolprojectId($this->getId())
       ->save();
       $result['result']='notice';
-      $result['message']='The resource has been added.';
+      $result['message']='The resource has been added. Please proceed with filling in the necessary information.';
       $result['redirect']='projects/editresource?id=' . $resource->getId();
       return $result;
     }

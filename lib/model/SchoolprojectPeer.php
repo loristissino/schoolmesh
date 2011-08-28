@@ -59,6 +59,20 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 
   public static function setApprovalDate($ids, $params)
   {
+    if($params['date']>date('Y-m-d', time()))
+    {
+      $result['result']='error';
+      $result['message']='The date cannot be set in the future.';
+      return $result;
+    }
+
+    if($params['notes']=='')
+    {
+      $result['result']='error';
+      $result['message']='The notes field cannot be left blank.';
+      return $result;
+    }
+
     $projects = SchoolprojectPeer::retrieveByPKs($ids);
     foreach($projects as $project)
     {

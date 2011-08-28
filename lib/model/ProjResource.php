@@ -67,6 +67,19 @@ class ProjResource extends BaseProjResource {
     return ProjResourcePeer::doCount($c);
   }
   
+  public function getTotalQuantityForAcknowledgedActivities()
+  {
+    $c=new Criteria();
+    $c->addJoin(ProjResourcePeer::ID, ProjActivityPeer::PROJ_RESOURCE_ID);
+    $c->add(ProjResourcePeer::ID, $this->getId());
+    $c->add(ProjActivityPeer::ACKNOWLEDGED_AT, null, Criteria::ISNOTNULL);
+    $c->clearSelectColumns();
+    $c->addAsColumn('TOTALQUANTITY', 'SUM(' . ProjActivityPeer::QUANTITY . ')');
+    $stmt=SyllabusItemPeer::doSelectStmt($c);
+    $row = $stmt->fetch(PDO::FETCH_OBJ);
+    return $row->TOTALQUANTITY;
+  }
+  
   public function countProjActivities(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
   {
     return self::countProjActivitys($criteria, $distinct, $con);

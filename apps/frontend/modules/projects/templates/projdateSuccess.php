@@ -13,6 +13,19 @@
 
 <div class="sf_admin_list">
 
+<p>
+<?php if($action=='setapprovaldate'): ?>
+<?php echo __('You are setting the approval date for the following projects:') ?>
+<?php elseif($action=='setfinancingdate'): ?>
+<?php echo __('You are setting the financing date for the following projects:') ?>
+<?php endif ?>
+</p>
+<ul>
+<?php foreach($projects as $project): ?>
+  <li><?php echo $project ?></li>
+<?php endforeach ?>
+</ul>
+
 <form action="<?php echo url_for('projects/'. $action) ?>" method="post">
 
   <table>

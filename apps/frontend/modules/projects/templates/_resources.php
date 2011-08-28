@@ -11,6 +11,9 @@
     <?php if ($resource->getProjResourceTypeId()): ?>
       <li><?php echo __('Estimation') ?>: <strong><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getQuantityEstimated() ?></strong></li>
       <li><?php echo __('Approved') ?>: <strong><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getQuantityApproved() ?></strong></li>
+      <?php if($resource->getTotalQuantityForAcknowledgedActivities()>0): ?>
+      <li><?php echo __('Used') ?>: <strong><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getTotalQuantityForAcknowledgedActivities() ?></strong></li>
+      <?php endif ?>
     <?php endif ?>
 	</ul>
   </li>

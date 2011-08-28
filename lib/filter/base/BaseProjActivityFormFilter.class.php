@@ -20,6 +20,7 @@ abstract class BaseProjActivityFormFilter extends BaseFormFilterPropel
       'created_at'           => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'acknowledged_at'      => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'acknowledger_user_id' => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
+      'added_by_coordinator' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
@@ -31,6 +32,7 @@ abstract class BaseProjActivityFormFilter extends BaseFormFilterPropel
       'created_at'           => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'acknowledged_at'      => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'acknowledger_user_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
+      'added_by_coordinator' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
     $this->widgetSchema->setNameFormat('proj_activity_filters[%s]');
@@ -57,6 +59,7 @@ abstract class BaseProjActivityFormFilter extends BaseFormFilterPropel
       'created_at'           => 'Date',
       'acknowledged_at'      => 'Date',
       'acknowledger_user_id' => 'ForeignKey',
+      'added_by_coordinator' => 'Boolean',
     );
   }
 }

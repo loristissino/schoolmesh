@@ -73,6 +73,13 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	protected $acknowledger_user_id;
 
 	/**
+	 * The value for the added_by_coordinator field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $added_by_coordinator;
+
+	/**
 	 * @var        ProjResource
 	 */
 	protected $aProjResource;
@@ -104,6 +111,27 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	// symfony behavior
 	
 	const PEER = 'ProjActivityPeer';
+
+	/**
+	 * Applies default values to this object.
+	 * This method should be called from the object's constructor (or
+	 * equivalent initialization method).
+	 * @see        __construct()
+	 */
+	public function applyDefaultValues()
+	{
+		$this->added_by_coordinator = false;
+	}
+
+	/**
+	 * Initializes internal state of BaseProjActivity object.
+	 * @see        applyDefaults()
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
 
 	/**
 	 * Get the [id] column value.
@@ -277,6 +305,16 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	public function getAcknowledgerUserId()
 	{
 		return $this->acknowledger_user_id;
+	}
+
+	/**
+	 * Get the [added_by_coordinator] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getAddedByCoordinator()
+	{
+		return $this->added_by_coordinator;
 	}
 
 	/**
@@ -559,6 +597,26 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	} // setAcknowledgerUserId()
 
 	/**
+	 * Set the value of [added_by_coordinator] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     ProjActivity The current object (for fluent API support)
+	 */
+	public function setAddedByCoordinator($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->added_by_coordinator !== $v || $this->isNew()) {
+			$this->added_by_coordinator = $v;
+			$this->modifiedColumns[] = ProjActivityPeer::ADDED_BY_COORDINATOR;
+		}
+
+		return $this;
+	} // setAddedByCoordinator()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -568,6 +626,10 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->added_by_coordinator !== false) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -599,6 +661,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			$this->created_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->acknowledged_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
 			$this->acknowledger_user_id = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
+			$this->added_by_coordinator = ($row[$startcol + 9] !== null) ? (boolean) $row[$startcol + 9] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -608,7 +671,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 9; // 9 = ProjActivityPeer::NUM_COLUMNS - ProjActivityPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 10; // 10 = ProjActivityPeer::NUM_COLUMNS - ProjActivityPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjActivity object", $e);
@@ -1001,6 +1064,9 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			case 8:
 				return $this->getAcknowledgerUserId();
 				break;
+			case 9:
+				return $this->getAddedByCoordinator();
+				break;
 			default:
 				return null;
 				break;
@@ -1031,6 +1097,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			$keys[6] => $this->getCreatedAt(),
 			$keys[7] => $this->getAcknowledgedAt(),
 			$keys[8] => $this->getAcknowledgerUserId(),
+			$keys[9] => $this->getAddedByCoordinator(),
 		);
 		return $result;
 	}
@@ -1089,6 +1156,9 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			case 8:
 				$this->setAcknowledgerUserId($value);
 				break;
+			case 9:
+				$this->setAddedByCoordinator($value);
+				break;
 		} // switch()
 	}
 
@@ -1122,6 +1192,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setAcknowledgedAt($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setAcknowledgerUserId($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setAddedByCoordinator($arr[$keys[9]]);
 	}
 
 	/**
@@ -1142,6 +1213,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProjActivityPeer::CREATED_AT)) $criteria->add(ProjActivityPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(ProjActivityPeer::ACKNOWLEDGED_AT)) $criteria->add(ProjActivityPeer::ACKNOWLEDGED_AT, $this->acknowledged_at);
 		if ($this->isColumnModified(ProjActivityPeer::ACKNOWLEDGER_USER_ID)) $criteria->add(ProjActivityPeer::ACKNOWLEDGER_USER_ID, $this->acknowledger_user_id);
+		if ($this->isColumnModified(ProjActivityPeer::ADDED_BY_COORDINATOR)) $criteria->add(ProjActivityPeer::ADDED_BY_COORDINATOR, $this->added_by_coordinator);
 
 		return $criteria;
 	}
@@ -1211,6 +1283,8 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		$copyObj->setAcknowledgedAt($this->acknowledged_at);
 
 		$copyObj->setAcknowledgerUserId($this->acknowledger_user_id);
+
+		$copyObj->setAddedByCoordinator($this->added_by_coordinator);
 
 
 		$copyObj->setNew(true);

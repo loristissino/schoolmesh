@@ -391,7 +391,8 @@ propel:
     notes: longvarchar
     created_at: ~
     acknowledged_at: timestamp
-    acknowledger_user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false } 
+    acknowledger_user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
+    added_by_coordinator: { type: boolean, default: false }
 
   subnet:
     id:

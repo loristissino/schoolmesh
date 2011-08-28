@@ -74,7 +74,26 @@
     <tr>
     <th colspan="2"><?php echo __('Total quantity acknowledged') ?></th>
     <td style="font-weight: bold"><?php echo $mu ?></td>
-    <td style="text-align: right; font-weight: bold"><?php printf('%01.2f', $total) ?></td>
+    <td style="text-align: right; font-weight: bold">
+      <?php if($total>$resource->getQuantityApproved()): ?>
+        <?php echo image_tag(
+          'dubious',
+          array(
+            'title'=>__('The quantity acknowledged is greater than the one financed'),
+            'size'=>'16x16',
+            )
+          )
+        ?>
+      <?php endif ?>
+
+      <?php printf('%01.2f', $total) ?>
+    </td>
+    <td colspan="3"></td>
+    </tr>
+    <tr>
+    <th colspan="2"><?php echo __('Total quantity financed') ?></th>
+    <td><?php echo $mu ?></td>
+    <td style="font-style: italic; text-align: right"><?php printf('%01.2f', $resource->getQuantityApproved()) ?></td>
     <td colspan="3"></td>
     </tr>
   </tbody>

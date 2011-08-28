@@ -150,7 +150,10 @@
         <?php echo __('Financing') ?>
       <?php endif ?>
       </th>
+      <?php if($project->getState()>Workflow::PROJ_DRAFT): ?>
+      <th class="sf_admin_text"><?php echo __('Use') ?></th>
       <th><?php echo __('Activities') ?></th>
+      <?php endif ?>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
@@ -177,6 +180,20 @@
         <?php echo $resource->getQuantityApproved() ?>
       <?php endif ?>
       </td>
+      <?php if($project->getState()>Workflow::PROJ_DRAFT): ?>
+      <td style="text-align: right">
+      <?php if($resource->getTotalQuantityForAcknowledgedActivities()>$resource->getQuantityApproved()): ?>
+        <?php echo image_tag(
+          'dubious',
+          array(
+            'title'=>__('The quantity acknowledged is greater than the one financed'),
+            'size'=>'16x16',
+            )
+          )
+        ?>
+      <?php endif ?>
+      <?php echo $resource->getTotalQuantityForAcknowledgedActivities() ?>
+      </td>
       <td style="text-align: right">
       <?php if($resource->getProjResourceType()->getRoleId()): ?>
         <?php if($resource->countActivities(false)): ?>
@@ -192,6 +209,7 @@
         <?php echo $resource->countProjActivities() ?>
       <?php endif ?>
       </td>
+      <?php endif ?>
       <td>
       <ul class="sf_admin_td_actions">
         <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
