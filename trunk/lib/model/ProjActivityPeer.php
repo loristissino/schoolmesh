@@ -28,9 +28,9 @@ class ProjActivityPeer extends BaseProjActivityPeer {
 		return self::doSelectJoinAllExceptsfGuardUserRelatedByUserId($c);
 	}
   
-  public static function addActivity($user_id, $params=array())
+  public static function addActivity($user_id, $params=array(), $added_by_coordinator=false)
   {
-    
+        
     try
     {
       $activity= new ProjActivity();
@@ -41,17 +41,20 @@ class ProjActivityPeer extends BaseProjActivityPeer {
       ->setQuantity($params['quantity'])
       ->setNotes($params['notes'])
       ->setAcknowledgerUserId($user_id)
-      ->setAcknowledgedAt(null)
+      ->setAcknowledgedAt($added_by_coordinator? time() : null)
+      ->setAddedByCoordinator($added_by_coordinator)
       ->save();
       
       $result['result']='notice';
       $result['message']='The activity has been saved.';
+      
     }
+    
     catch (PropelException $e)
     {
+
       $result['result']='error';
       $result['message']='The activity could not be saved.' . $e->getCause()->getMessage();
-      var_dump($params);
     }
     
     return $result;

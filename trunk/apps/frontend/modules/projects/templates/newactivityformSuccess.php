@@ -16,7 +16,7 @@
 
 <?php include_partial('content/flashes'); ?>
 
-<form action="<?php echo url_for('projects/newactivity?id=' . $resource->getId()) ?>" method="post">
+<form action="<?php echo url_for('projects/' . $action . '?id=' . $resource->getId()) ?>" method="post">
 
   <table>
   <tr>
