@@ -49,7 +49,6 @@
 		<br /><?php echo sprintf(__('Your last action was at: %s'), Generic::datetime($sf_user->getProfile()->getLastActionAt('U'), $sf_context->getRawValue())) ?>
 */ ?>
   <?php endif; ?>
-  </p>
   <?php /*
    <?php if(isset($current_user)): ?>
         <?php if ($current_user->getProfile()->getDiskSetHardBlocksQuota()>0): ?>

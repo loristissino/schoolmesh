@@ -161,7 +161,7 @@ class projectsActions extends sfActions
     }
     if (!$this->ids)
 		{
-				$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select some projects.'));
+				$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least one project.'));
 				$this->redirect('projects/monitor');
 		}
     
@@ -197,15 +197,21 @@ class projectsActions extends sfActions
 				
         return $this->redirect('projects/monitor');
 			}
-			
 		}
 
-    $this->ids=$this->_getIds($request);
-    $projects=SchoolprojectPeer::retrieveByPks($this->ids);
-    $date=$projects[0]->getApprovalDate('U');
+    if($this->getUser()->hasAttribute('ids'))
+    {
+      $this->ids=$this->getUser()->getAttribute('ids');
+    }
+    else
+    {
+      $this->ids=$this->_getIds($request);
+    }
+    $this->projects=SchoolprojectPeer::retrieveByPks($this->ids);
+    $date=$this->projects[0]->getApprovalDate('U');
     if(!$date) $date=time();
     $this->form->setDefault('date', $date);
-    $this->form->setDefault('notes', $projects[0]->getApprovalNotes());
+    $this->form->setDefault('notes', $this->projects[0]->getApprovalNotes());
 
   }
 
@@ -240,12 +246,19 @@ class projectsActions extends sfActions
 			
 		}
 
-    $this->ids=$this->_getIds($request);
-    $projects=SchoolprojectPeer::retrieveByPks($this->ids);
-    $date=$projects[0]->getFinancingDate('U');
+    if($this->getUser()->hasAttribute('ids'))
+    {
+      $this->ids=$this->getUser()->getAttribute('ids');
+    }
+    else
+    {
+      $this->ids=$this->_getIds($request);
+    }
+    $this->projects=SchoolprojectPeer::retrieveByPks($this->ids);
+    $date=$this->projects[0]->getFinancingDate('U');
     if(!$date) $date=time();
     $this->form->setDefault('date', $date);
-    $this->form->setDefault('notes', $projects[0]->getFinancingNotes());
+    $this->form->setDefault('notes', $this->projects[0]->getFinancingNotes());
   }
   
   public function executeComputebudget(sfWebRequest $request)

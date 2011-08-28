@@ -1,7 +1,8 @@
-<?php slot('breadcrumbs', breadcrumps_to_html(isset($breadcrumps)? $breadcrumps: array(), $current)) ?>
-<?php slot('title', isset($title) ? $title : $current) ?>
+<?php slot('breadcrumbs', breadcrumps_to_html(isset($breadcrumps)? $breadcrumps->getRawValue(): array(), $current)) ?>
+
+<?php slot('title', html_entity_decode(isset($title) ? $title : $current)) ?>
 <?php if(@!$hide_title): ?>
-<h1><?php echo isset($title) ? $title : $current ?></h1>
+<h1><?php echo html_entity_decode(isset($title) ? $title : $current) ?></h1>
 <?php endif ?>
 <?php /*
 

@@ -1085,6 +1085,7 @@ CREATE TABLE `proj_activity`
 	`created_at` DATETIME,
 	`acknowledged_at` DATETIME,
 	`acknowledger_user_id` INTEGER,
+	`added_by_coordinator` TINYINT default 0,
 	PRIMARY KEY (`id`),
 	INDEX `proj_activity_FI_1` (`proj_resource_id`),
 	CONSTRAINT `proj_activity_FK_1`

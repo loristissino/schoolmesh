@@ -45,6 +45,7 @@ class ProjActivityTableMap extends TableMap {
 		$this->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null, null);
 		$this->addColumn('ACKNOWLEDGED_AT', 'AcknowledgedAt', 'TIMESTAMP', false, null, null);
 		$this->addForeignKey('ACKNOWLEDGER_USER_ID', 'AcknowledgerUserId', 'INTEGER', 'sf_guard_user', 'ID', false, null, null);
+		$this->addColumn('ADDED_BY_COORDINATOR', 'AddedByCoordinator', 'BOOLEAN', false, null, false);
 		// validators
 	} // initialize()
 

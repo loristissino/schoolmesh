@@ -126,7 +126,7 @@ function breadcrumps_to_html($crumps=array(), $current='')
       $text .= __($value) . ' »&nbsp;';
     }
   }
-  return $text . $current;
+  return $text . html_entity_decode($current);
 }
 
 function currencyvalue($value)

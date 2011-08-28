@@ -17,7 +17,8 @@ class ProjActivityForm extends BaseProjActivityForm
       $this['user_id'],
       $this['created_at'],
       $this['acknowledged_at'],
-      $this['acknowledger_user_id']
+      $this['acknowledger_user_id'],
+      $this['added_by_coordinator']
       );
       
     $this->setWidget('beginning', new sfWidgetFormI18nDateTime(array('culture'=>'it')));
