@@ -2635,15 +2635,25 @@
         <source>No activity declared.</source>
         <target>Nessuna attività dichiarata.</target>
     </trans-unit>
+    <trans-unit id="675">
+        <source>Choose a user</source>
+        <target>Scegli un utente</target>
+    </trans-unit>
+    <trans-unit id="676">
+        <source>Add acknowledged activity</source>
+        <target>Aggiungi un'attività riconosciuta</target>
+    </trans-unit>
+    <trans-unit id="677">
+        <source>Add an acknowledged activity of another user within this resource</source>
+        <target>Aggiungi un'attività riconosciuta di un altro utente per questa risorsa</target>
+    </trans-unit>
+    <trans-unit id="678">
+        <source>This activity has been added directly by the coordinator</source>
+        <target>Questa attività è stata aggiunta direttamente dal coordinatore</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
-
-
-
-
-
-
 
 
 

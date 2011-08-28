@@ -101,3 +101,16 @@
 <?php else: ?>
 <p><?php echo __('No activities defined.') ?></p>
 <?php endif ?>
+
+<ul class="sf_admin_actions">
+	<li class="sf_admin_action_new">
+	<?php echo link_to(
+				__('Add acknowledged activity'),
+				'projects/addacknowledgedactivity?id='. $resource->getId(),
+				array(
+          'title'=>__('Add an acknowledged activity of another user within this resource'),
+          ) 
+				) ?>
+  </li>
+</ul>
+

@@ -42,6 +42,8 @@ class projectsActions extends sfActions
       $this->form->setDefault('proj_resource_id', $this->resource->getId());
       $this->project=$this->resource->getSchoolproject();
       $this->form->addConfiguration($this->resource);
+      $this->form->unsetUserId();
+      $this->action='newactivity';
       $this->setTemplate('newactivityform');
 
       if ($request->isMethod('post'))
@@ -67,6 +69,42 @@ class projectsActions extends sfActions
     
     $this->resources=ProjResourcePeer::retrieveAllForYearAndRole(sfConfig::get('app_config_current_year'), $this->getUser()->getProfile()->getRoleId());
 	}
+
+  public function executeAddacknowledgedactivity(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->resource=ProjResourcePeer::retrieveByPK($request->getParameter('id')));
+    $this->form=new ProjActivityForm();
+    $this->form->setDefault('beginning', time());
+    $this->form->setDefault('proj_resource_id', $this->resource->getId());
+    $this->project=$this->resource->getSchoolproject();
+    $this->forward404Unless($this->project->isEditableBy($this->getUser()));
+    $this->form->addConfiguration($this->resource);
+    $this->action='addacknowledgedactivity';
+    $this->setTemplate('newactivityform');
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('info'));
+      if ($this->form->isValid())
+      {
+        $params = $this->form->getValues();
+        $result=ProjActivityPeer::addActivity($params['user_id'], $params, true);
+        
+        $this->getUser()->setFlash($result['result'],
+          $this->getContext()->getI18N()->__($result['message'])
+          );
+        
+        if($result['result']=='notice')
+        {
+          return $this->redirect('projects/viewresourceactivities?id='.$this->resource->getId());
+        }
+      }
+    }
+      
+	}
+
+
+
 
   public function executeEditactivity(sfWebRequest $request)
   {

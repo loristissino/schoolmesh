@@ -202,7 +202,6 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	}
 
 
-
 	public static function resetGoogleAppsAccountInfoForAll()
 	{
 		$connection = Propel::getConnection();

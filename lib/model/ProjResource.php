@@ -117,5 +117,19 @@ class ProjResource extends BaseProjResource {
     }
     
   }
+  
+  public function getCriteriaForUserSelection()
+	{
+      $c = new Criteria();
+      $c->addJoin(sfGuardUserProfilePeer::ROLE_ID, RolePeer::ID);
+      $c->add(RolePeer::ID, $this->getProjResourceType()->getRoleId());
+      $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+      $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
+      $c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
+      $c->add(sfGuardUserPeer::IS_ACTIVE, true);
+      
+      return $c;
+	}
+
 
 } // ProjResource
