@@ -2651,6 +2651,30 @@
         <source>This activity has been added directly by the coordinator</source>
         <target>Questa attività è stata aggiunta direttamente dal coordinatore</target>
     </trans-unit>
+    <trans-unit id="679">
+        <source>Project draft</source>
+        <target>Progetto in bozza</target>
+    </trans-unit>
+    <trans-unit id="680">
+        <source>Project submitted</source>
+        <target>Progetto consegnato</target>
+    </trans-unit>
+    <trans-unit id="681">
+        <source>Project approved</source>
+        <target>Progetto approvato dal Collegio Docenti</target>
+    </trans-unit>
+    <trans-unit id="682">
+        <source>Project financed</source>
+        <target>Progetto approvato dal Consiglio di Istituto</target>
+    </trans-unit>
+    <trans-unit id="683">
+        <source>Project finished</source>
+        <target>Progetto concluso</target>
+    </trans-unit>
+    <trans-unit id="684">
+        <source>Financing set</source>
+        <target>Tipo di finanziamento impostato</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
