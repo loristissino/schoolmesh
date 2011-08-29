@@ -2356,7 +2356,7 @@
         <target>Nessuna scadenza definita.</target>
     </trans-unit>
     <trans-unit id="608">
-        <source>No resources defined.</source>
+        <source>No resource defined.</source>
         <target>Nessuna risorsa definita.</target>
     </trans-unit>
     <trans-unit id="609">
@@ -2679,9 +2679,58 @@
         <source>With the acknowledgment of this activity, there will be a cost overrun</source>
         <target>Con il riconoscimento di questa attività, ci sarà uno sforamento dei costi</target>
     </trans-unit>
+    <trans-unit id="686">
+        <source>Event date</source>
+        <target>Data evento</target>
+    </trans-unit>
+    <trans-unit id="687">
+        <source>Update state</source>
+        <target>Aggiorna stato</target>
+    </trans-unit>
+    <trans-unit id="688">
+        <source>The event was successfully saved.</source>
+        <target>L'evento è stato salvato.</target>
+    </trans-unit>
+    <trans-unit id="689">
+        <source>New event saved.</source>
+        <target>Nuovo evento salvato.</target>
+    </trans-unit>
+    <trans-unit id="690">
+        <source>State: </source>
+        <target>Stato: </target>
+    </trans-unit>
+    <trans-unit id="691">
+        <source>Event successfully deleted.</source>
+        <target>Evento correttamente cancellato.</target>
+    </trans-unit>
+    <trans-unit id="692">
+        <source>Project created</source>
+        <target>Progetto creato</target>
+    </trans-unit>
+    <trans-unit id="693">
+        <source>State set to «approved»</source>
+        <target>Stato impostato a «approvato»</target>
+    </trans-unit>
+    <trans-unit id="694">
+        <source>State set to «financed»</source>
+        <target>Stato impostato a «finanziato»</target>
+    </trans-unit>
+    <trans-unit id="695">
+        <source>Approval date set to %date% (%comment%)</source>
+        <target>Data di approvazione impostata a %date% (%comment%)</target>
+    </trans-unit>
+    <trans-unit id="696">
+        <source>Financing date set to %date% (%comment%)</source>
+        <target>Data di finanziamento impostata a %date% (%comment%)</target>
+    </trans-unit>
+    <trans-unit id="697">
+        <source>Updated quantity approved for resource «%resource%», set to %quantity_approved%</source>
+        <target>Aggiornata la quantità approvata per la risorsa «%resource%», impostata a %quantity_approved%</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
 
 
 

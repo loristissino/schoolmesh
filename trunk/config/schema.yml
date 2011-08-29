@@ -193,10 +193,22 @@ propel:
     _uniques:
       utr: [user_id, team_id]
 
+#This is deprecated, it will be replaced by wfevent, more general, in future.
   wpevent:
     id:  ~
     created_at: ~
     appointment_id: ~
+    user_id:    { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade }
+    comment:   { type: varchar(255) }
+    state:  integer
+
+
+#Workflow event, it works like attachments, it will replace wpevent in the future
+  wfevent:
+    id:  ~
+    base_table: integer
+    base_id: integer
+    created_at: ~
     user_id:  	{ type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade }
     comment:   { type: varchar(255) }
     state:  integer

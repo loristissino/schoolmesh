@@ -161,6 +161,16 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	private $lastWpeventCriteria = null;
 
 	/**
+	 * @var        array Wfevent[] Collection to store aggregation of Wfevent objects.
+	 */
+	protected $collWfevents;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collWfevents.
+	 */
+	private $lastWfeventCriteria = null;
+
+	/**
 	 * @var        array Wpmodule[] Collection to store aggregation of Wpmodule objects.
 	 */
 	protected $collWpmodules;
@@ -865,6 +875,9 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$this->collWpevents = null;
 			$this->lastWpeventCriteria = null;
 
+			$this->collWfevents = null;
+			$this->lastWfeventCriteria = null;
+
 			$this->collWpmodules = null;
 			$this->lastWpmoduleCriteria = null;
 
@@ -1112,6 +1125,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collWfevents !== null) {
+				foreach ($this->collWfevents as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collWpmodules !== null) {
 				foreach ($this->collWpmodules as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -1351,6 +1372,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 				if ($this->collWpevents !== null) {
 					foreach ($this->collWpevents as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collWfevents !== null) {
+					foreach ($this->collWfevents as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1788,6 +1817,12 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			foreach ($this->getWpevents() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addWpevent($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getWfevents() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addWfevent($relObj->copy($deepCopy));
 				}
 			}
 
@@ -3746,6 +3781,160 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->lastWpeventCriteria = $criteria;
 
 		return $this->collWpevents;
+	}
+
+	/**
+	 * Clears out the collWfevents collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addWfevents()
+	 */
+	public function clearWfevents()
+	{
+		$this->collWfevents = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collWfevents collection (array).
+	 *
+	 * By default this just sets the collWfevents collection to an empty array (like clearcollWfevents());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initWfevents()
+	{
+		$this->collWfevents = array();
+	}
+
+	/**
+	 * Gets an array of Wfevent objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related Wfevents from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array Wfevent[]
+	 * @throws     PropelException
+	 */
+	public function getWfevents($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collWfevents === null) {
+			if ($this->isNew()) {
+			   $this->collWfevents = array();
+			} else {
+
+				$criteria->add(WfeventPeer::USER_ID, $this->id);
+
+				WfeventPeer::addSelectColumns($criteria);
+				$this->collWfevents = WfeventPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(WfeventPeer::USER_ID, $this->id);
+
+				WfeventPeer::addSelectColumns($criteria);
+				if (!isset($this->lastWfeventCriteria) || !$this->lastWfeventCriteria->equals($criteria)) {
+					$this->collWfevents = WfeventPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastWfeventCriteria = $criteria;
+		return $this->collWfevents;
+	}
+
+	/**
+	 * Returns the number of related Wfevent objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Wfevent objects.
+	 * @throws     PropelException
+	 */
+	public function countWfevents(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collWfevents === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(WfeventPeer::USER_ID, $this->id);
+
+				$count = WfeventPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(WfeventPeer::USER_ID, $this->id);
+
+				if (!isset($this->lastWfeventCriteria) || !$this->lastWfeventCriteria->equals($criteria)) {
+					$count = WfeventPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collWfevents);
+				}
+			} else {
+				$count = count($this->collWfevents);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a Wfevent object to this object
+	 * through the Wfevent foreign key attribute.
+	 *
+	 * @param      Wfevent $l Wfevent
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addWfevent(Wfevent $l)
+	{
+		if ($this->collWfevents === null) {
+			$this->initWfevents();
+		}
+		if (!in_array($l, $this->collWfevents, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collWfevents, $l);
+			$l->setsfGuardUser($this);
+		}
 	}
 
 	/**
@@ -6651,6 +6840,11 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collWfevents) {
+				foreach ((array) $this->collWfevents as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->collWpmodules) {
 				foreach ((array) $this->collWpmodules as $o) {
 					$o->clearAllReferences($deep);
@@ -6727,6 +6921,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->collEnrolments = null;
 		$this->collUserTeams = null;
 		$this->collWpevents = null;
+		$this->collWfevents = null;
 		$this->collWpmodules = null;
 		$this->collStudentSituations = null;
 		$this->collStudentSuggestions = null;

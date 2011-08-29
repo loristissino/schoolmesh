@@ -27,13 +27,15 @@ class ProjResource extends BaseProjResource {
       $user->getProfile()->getUserId()===$this->getSchoolproject()->getUserId()
       || 
       $user->hasCredential('admin')
+      ||
+      $user->hasCredential('project') 
       ;
   }
   
-  public function updateFromForm($params)
+  public function updateFromForm($params, $user=null, $sf_context=null)
   {
     $con = Propel::getConnection(ProjResourcePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
-    // we need to check which ones are present, because it depends on the state
+    // we need to check which ones are present, because they depend on the state
     Generic::updateObjectFromForm($this, array(
       'proj_resource_type_id',
       'description',
@@ -46,6 +48,17 @@ class ProjResource extends BaseProjResource {
       $this->save();
       $result['result']='notice';
       $result['message']='Resource successfully updated.';
+      
+      if($user)
+      {
+      $this->getSchoolproject()->addWfevent(
+        $user->getProfile()->getId(),
+        'Updated quantity approved for resource «%resource%», set to %quantity_approved%',
+        array('%resource%'=>$this->getDescription(), '%quantity_approved%'=>$params['quantity_approved']),
+        null,
+        $sf_context
+        );
+      }
     }
     catch (Exception $e)
     {

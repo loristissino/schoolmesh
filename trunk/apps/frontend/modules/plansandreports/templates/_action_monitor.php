@@ -40,7 +40,7 @@
 				<li class="sf_admin_action_log">
 					<?php echo link_to(
 				__('View events'),
-				'plansandreports/viewwpevents?id=' . $workplan->getId() . '&page=' . $page)
+				'plansandreports/viewwfevents?id=' . $workplan->getId() . '&page=' . $page)
 				?>
 				</li>
 				<li class="sf_admin_action_edit">

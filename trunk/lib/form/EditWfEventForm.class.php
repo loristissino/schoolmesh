@@ -1,5 +1,6 @@
 <?php
-        class EditWpeventForm extends BaseForm
+/* deprecated
+        class EditWfeventForm extends BaseForm
         {
           public function configure()
           {
@@ -23,5 +24,5 @@
 			));
 			
 			}
-
+*/
 	}

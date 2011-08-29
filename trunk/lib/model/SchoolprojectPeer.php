@@ -57,8 +57,11 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 	}
 
 
-  public static function setApprovalDate($ids, $params)
+  public static function setApprovalDate($user, $params, $sf_context=null)
   {
+    $ids=$user->getAttribute('ids');
+    $user_id=$user->getProfile()->getId();
+    
     if($params['date']>date('Y-m-d', time()))
     {
       $result['result']='error';
@@ -80,9 +83,25 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       ->setApprovalDate($params['date'])
       ->setApprovalNotes($params['notes'])
       ;
+      $project->addWfevent(
+          $user_id,
+          'Approval date set to %date% (%comment%)',
+          array('%date%'=>$params['date'], '%comment%'=>$params['notes']),
+          null,
+          $sf_context
+        );
+
       if ($project->getState()<Workflow::PROJ_APPROVED)
       {
         $project->setState(Workflow::PROJ_APPROVED);
+        $project->addWfevent(
+          $user_id,
+          'State set to «approved»',
+          null,
+          Workflow::PROJ_APPROVED,
+          $sf_context
+        );
+
       }
       $project->save();
     }
@@ -92,8 +111,11 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 
   }
 
-  public static function setFinancingDate($ids, $params)
+  public static function setFinancingDate($user, $params, $sf_context=null)
   {
+    $ids=$user->getAttribute('ids');
+    $user_id=$user->getProfile()->getId();
+    
     $projects = SchoolprojectPeer::retrieveByPKs($ids);
     foreach($projects as $project)
     {
@@ -101,9 +123,23 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       ->setFinancingDate($params['date'])
       ->setFinancingNotes($params['notes'])
       ;
+      $project->addWfevent(
+          $user_id,
+          'Financing date set to %date% (%comment%)',
+          array('%date%'=>$params['date'], '%comment%'=>$params['notes']),
+          null,
+          $sf_context
+        );
       if ($project->getState()<Workflow::PROJ_FINANCED)
       {
         $project->setState(Workflow::PROJ_FINANCED);
+        $project->addWfevent(
+          $user_id,
+          'State set to «financed»',
+          null,
+          Workflow::PROJ_APPROVED,
+          $sf_context
+        );
       }
       $project->save();
     }

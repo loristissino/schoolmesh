@@ -227,12 +227,12 @@ class projectsActions extends sfActions
 			if ($this->form->isValid())
 			{
 				$params = $this->form->getValues();
-				$result=SchoolprojectPeer::setApprovalDate($this->getUser()->getAttribute('ids'), $params);
+				$result=SchoolprojectPeer::setApprovalDate($this->getUser(), $params, $this->getContext());
         
 				$this->getUser()->setFlash($result['result'],
 					$this->getContext()->getI18N()->__($result['message'])
 					);
-				
+        
         return $this->redirect('projects/monitor');
 			}
 		}
@@ -273,12 +273,12 @@ class projectsActions extends sfActions
 			if ($this->form->isValid())
 			{
 				$params = $this->form->getValues();
-				$result=SchoolprojectPeer::setFinancingDate($this->getUser()->getAttribute('ids'), $params);
+				$result=SchoolprojectPeer::setFinancingDate($this->getUser(), $params, $this->getContext());
         
 				$this->getUser()->setFlash($result['result'],
 					$this->getContext()->getI18N()->__($result['message'])
 					);
-				
+          
         return $this->redirect('projects/monitor');
 			}
 			
@@ -545,7 +545,7 @@ class projectsActions extends sfActions
 				
 				$this->resource = ProjResourcePeer::retrieveByPK($params['id']);
 				
-				$result=$this->resource->updateFromForm($params);
+				$result=$this->resource->updateFromForm($params, $this->getUser(), $this->getContext());
 				
 				$this->getUser()->setFlash($result['result'],
 					$this->getContext()->getI18N()->__($result['message'])
@@ -666,11 +666,12 @@ class projectsActions extends sfActions
 
     $this->forward404Unless($request->isMethod('post'));
 
-    $result=$this->project->submit();
+    $result=$this->project->submit($this->getUser()->getProfile()->getId(), $this->getContext());
     
     $this->getUser()->setFlash($result['result'],
       $this->getContext()->getI18N()->__($result['message'])
       );
+
 
     if($result['result']=='notice')
     {
@@ -710,7 +711,12 @@ class projectsActions extends sfActions
         ->setUserId($this->getUser()->getProfile()->getUserId())
         ->setState(Workflow::PROJ_DRAFT)
         ->save();
-				
+        $this->project->addWfEvent(
+          $this->getUser()->getProfile()->getUserId(),
+          'Project created',
+          Workflow::PROJ_DRAFT,
+          $this->getContext()
+          );
         
 				$this->getUser()->setFlash('notice',
 					$this->getContext()->getI18N()->__('Project information saved.')

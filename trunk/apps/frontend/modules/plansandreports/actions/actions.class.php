@@ -492,7 +492,7 @@ public function executeBatch(sfWebRequest $request)
 					
 		}
 
-	$this->workflow_logs = $this->workplan->getWorkflowLogs();
+	$this->wfevents = $this->workplan->getWorkflowLogs();
 	$this->wpinfos = $this->workplan->getWpinfos();
 	$this->wpitemTypes=WpitemTypePeer::getAllByRank($this->workplan->getSyllabusId());
 	$this->tools = $this->workplan->getTools(true);
@@ -516,21 +516,21 @@ public function executeBatch(sfWebRequest $request)
   }
 
 
-  public function executeViewwpevents(sfWebRequest $request)
+  public function executeViewwfevents(sfWebRequest $request)
   {
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->workplan);
 	
-	  $this->events=$this->workplan->getWpevents();
+	  $this->events=$this->workplan->getWfevents();
 
   }
 
 
-public function executeEditwpevent(sfWebRequest $request)
+public function executeEditwfevent(sfWebRequest $request)
   {
-	$this->event=WpeventPeer::retrieveByPK($request->getParameter('id'));
+	$this->forward404Unless($this->event=WfeventPeer::retrieveByPK($request->getParameter('id')));
 	
-	$this->form = new EditWpeventForm();
+	$this->form = new WfeventForm($this->event);
 	
 	if ($request->isMethod('post'))
 		{
@@ -539,13 +539,13 @@ public function executeEditwpevent(sfWebRequest $request)
 			{
 				$params = $this->form->getValues();
 				
-				$result=$this->event->modifyWpevent($params['user'], $params['date'], $params['comment'], $params['state'], $params['update_state']);
+				$result=$this->event->modifyWfevent($params['user_id'], $params['created_at'], $params['comment'], $params['state'], $params['update_state']);
 				
 				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 				
 				if ($result['result']=='notice')
 				{
-					$this->redirect('plansandreports/viewwpevents?id='. $this->event->getAppointmentId());
+					$this->redirect('plansandreports/viewwfevents?id='. $this->event->getBaseId());
 				}
 				else
 				{
@@ -554,23 +554,15 @@ public function executeEditwpevent(sfWebRequest $request)
 
 			}
 		}
+ }
 
-	$this->form->setDefaults(
-		array(
-			'date' => $this->event->getCreatedAt(),
-			'user'=> $this->event->getUserId(),
-			'comment' => $this->event->getComment(),
-			'state' => $this->event->getState()
-		)
-	);
-		
-	}
-
-public function executeAddwpevent(sfWebRequest $request)
+public function executeAddwfevent(sfWebRequest $request)
   {
-	$this->form = new EditWpeventForm();
 	$this->appointment=AppointmentPeer::retrieveByPK($request->getParameter('appointment'));
 	$this->forward404Unless($this->appointment);
+  $wfevent=new Wfevent();
+  $wfevent->setBaseTable(WfeventPeer::APPOINTMENT);
+	$this->form = new WfeventForm($wfevent);
 	
 	if ($request->isMethod('post'))
 		{
@@ -579,11 +571,10 @@ public function executeAddwpevent(sfWebRequest $request)
 			{
 				$params = $this->form->getValues();
 				
-				$wpevent = new Wpevent();
-				$wpevent
-				->setAppointmentId($this->appointment->getId())
-				->setUserId($params['user'])
-				->setCreatedAt($params['date'])
+				$wfevent
+				->setBaseId($this->appointment->getId())
+				->setUserId($params['user_id'])
+				->setCreatedAt($params['created_at'])
 				->setComment($params['comment'])
 				->setState($params['state'])
 				->save();
@@ -595,31 +586,26 @@ public function executeAddwpevent(sfWebRequest $request)
         
 				$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('New event saved.'));
 				
-				$this->redirect('plansandreports/viewwpevents?id='. $this->appointment->getId());
+				$this->redirect('plansandreports/viewwfevents?id='. $this->appointment->getId());
 				
 			}
 		}
 
-	$this->form->setDefaults(
-		array(
-			'date' => date('U'),
-		)
-	);
-		
+
 	}
 
-public function executeRemovewpevent(sfWebRequest $request)
+public function executeRemovewfevent(sfWebRequest $request)
   {
-	$this->event=WpeventPeer::retrieveByPK($request->getParameter('id'));
+	$this->event=WfeventPeer::retrieveByPK($request->getParameter('id'));
 	$this->forward404Unless($request->isMethod('delete'));
 	
-	$this->appointmentId=$this->event->getAppointmentId();
+	$this->appointmentId=$this->event->getBaseId();
 
 	$this->event->delete();
 
 	$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Event successfully deleted.'));
 				
-	$this->redirect('plansandreports/viewwpevents?id='. $this->appointmentId);
+	$this->redirect('plansandreports/viewwfevents?id='. $this->appointmentId);
 		
 	}
 
