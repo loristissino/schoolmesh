@@ -780,29 +780,16 @@ $con->query($sql);
 	
 	}
 
-public function addEvent($userId, $comment='', $state=0)
-{
-		$wpevent = new Wpevent();
-		$wpevent->setUserId($userId);
-		$wpevent->setAppointmentId($this->getId());
-		if (sfContext::hasInstance())
-			{
-				$comment=sfContext::getInstance()->getI18N()->__($comment);
-			}
-
-		$wpevent->setComment($comment);
-		$wpevent->setState($state);
-		$wpevent->save();
-		$this->setState($state);
-		$this->save();
-}
+public static function addWfevent($userId, $comment='', $i18n_subs=array(), $state=0, $sf_context=null)
+  {
+    Generic::addWfevent($this, $comment, $i18n_subs, $state, $sf_context);
+    return $this;
+  }
 
 public function getWorkflowLogs()
 	{
-		$c = new Criteria();
-		$c->add(WpeventPeer::APPOINTMENT_ID, $this->getId());
-		$c->addDescendingOrderByColumn(WpeventPeer::CREATED_AT);
-		$t = WpeventPeer::doSelectJoinAll($c);
+
+		$t = WfeventPeer::retrieveByClassAndId('Appointment', $this->getId(), false);
 		if ($t)
 			return $t;
 		else
@@ -1338,6 +1325,7 @@ public function getWorkflowLogs()
 	return $odf;
 	}
 
+/* deprecated, we will use getWfevents since now on
 public function getWpevents($criteria = null, PropelPDO $con = null)
 
 	{
@@ -1346,7 +1334,12 @@ public function getWpevents($criteria = null, PropelPDO $con = null)
 		$criteria->addJoin(WpeventPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
 		return parent::getWpevents($criteria);
 	}
+*/
 	
+public function getWfevents($criteria = null, PropelPDO $con = null)
+	{
+    return WfeventPeer::retrieveByClassAndId('Appointment', $this->getId(), true);
+	}
 	
 
 	public function removeEverything()

@@ -335,8 +335,11 @@ class Schoolproject extends BaseSchoolproject {
 		return $odf;
 	}
   
-  public function submit()
+  public function submit($user_id, $sf_context=null)
   {
+    // we need the user_id because the project could be started by someone
+    // and submitted by someone else
+    
     $checkList=$this->getChecks();
 
     if ($checkList->getTotalResults(Check::FAILED)==0)
@@ -356,6 +359,14 @@ class Schoolproject extends BaseSchoolproject {
         }
         $result['result']='notice';
         $result['message']='The project has been submitted.';
+        
+        $this->addWfevent(
+          $user_id,
+          'Project submitted',
+          null,
+          Workflow::PROJ_SUBMITTED,
+          $sf_context
+        );
       }
       catch(Exception $e)
       {
@@ -564,43 +575,20 @@ class Schoolproject extends BaseSchoolproject {
     return $checkList;
     
   }
-
-/*
-  public function getProjResourcesWithActivityCount()
+  
+  public function addWfevent($userId, $comment='', $i18n_subs, $state=0, $sf_context=null)
   {
-    $c=new Criteria();
-    $c->addJoin(ProjResourcePeer::ID, ProjActivityPeer::PROJ_RESOURCE_ID);
-    $c->add(ProjResourcePeer::SCHOOLPROJECT_ID, $this->getId());
-    $c->addGroupByColumn(ProjResourcePeer::ID);
-    $c->addSelectColumn('COUNT(' . ProjActivityPeer::ID . ') AS ac');
-    return ProjResourcePeer::doSelectJoinAll($c);
-    
-    
-    //$c->addSelectColumn('COUNT(' . ProjectMemberPeer::ID . ')')
-    ///
+    Generic::addWfevent($this, $userId, $comment, $i18n_subs, $state, $sf_context);
+    return $this;
   }
-
-	/*
-  proj_resource:
-    id: ~
-    schoolproject_id: ~
-    proj_resource_type_id: ~
-    description: varchar(255)
-    quantity_estimated:  { type: decimal, size: 10, scale: 2 }
-    quantity_approved:  { type: decimal, size: 10, scale: 2 }
-    quantity_final:  { type: decimal, size: 10, scale: 2 }
-    standard_cost:  { type: decimal, size: 10, scale: 2 }
-    
-  proj_activity:
-    id: ~
-    proj_resource_id: ~
-    user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
-    beginning: timestamp
-    quantity:  { type: decimal, size: 10, scale: 2 }
-    notes: longvarchar
-    created_at: ~
-    acknowledged_at: timestamp
-    acknowledger_user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }   
-  */
+  
+  public function getWorkflowLogs()
+	{
+		$t = WfeventPeer::retrieveByClassAndId('Schoolproject', $this->getId(), false);
+		if ($t)
+			return $t;
+		else
+			return NULL;
+	}
 
 } // Schoolproject

@@ -10,5 +10,8 @@ class projectsComponents extends sfComponents
   {
     $this->resources=$this->project->getProjResources();
   }
-
+  public function executeWorkflow()
+  {
+    $this->wfevents=$this->project->getWorkflowLogs();
+  }
 }

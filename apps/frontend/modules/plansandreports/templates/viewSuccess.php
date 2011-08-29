@@ -30,6 +30,6 @@
 
 <h2><?php echo __("Workflow") ?></h2>
 
-<?php include_partial('workflow', array('workflow_logs' => $workflow_logs)) ?>
+<?php include_partial('content/workflow', array('wfevents' => $wfevents)) ?>
 
 <?php endif ?>

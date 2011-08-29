@@ -548,6 +548,31 @@ CREATE TABLE `wpevent`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- wfevent
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `wfevent`;
+
+
+CREATE TABLE `wfevent`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`base_table` INTEGER,
+	`base_id` INTEGER,
+	`created_at` DATETIME,
+	`user_id` INTEGER,
+	`comment` VARCHAR(255),
+	`state` INTEGER,
+	PRIMARY KEY (`id`),
+	INDEX `wfevent_FI_1` (`user_id`),
+	CONSTRAINT `wfevent_FK_1`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- wpinfo_type
 #-----------------------------------------------------------------------------
 

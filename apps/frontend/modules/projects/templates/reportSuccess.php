@@ -29,6 +29,7 @@
 	</p>
 <?php include_component('projects', 'deadlines', array('project'=>$project)) ?>
 <?php include_component('projects', 'resources', array('project'=>$project)) ?>
+<?php include_component('projects', 'workflow', array('project'=>$project)) ?>
 </blockquote>
 <?php endforeach ?>
 

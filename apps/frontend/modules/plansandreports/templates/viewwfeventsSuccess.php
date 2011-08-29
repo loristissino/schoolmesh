@@ -45,13 +45,13 @@
 				<li class="sf_admin_action_edit">
 					<?php echo link_to(
 				__('Edit'),
-				'plansandreports/editwpevent?id=' . $event->getId()
+				'plansandreports/editwfevent?id=' . $event->getId()
 				)?>
 				</li>
 				<li class="sf_admin_action_delete">
 				<?php echo link_to(
 					sprintf(__('Delete'), $event->getId()),
-					url_for('plansandreports/removewpevent?id='.$event->getId()),
+					url_for('plansandreports/removewfevent?id='.$event->getId()),
 					array('method' => 'delete', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))
 					)
 				?>
@@ -73,7 +73,7 @@
 <?php
 echo link_to(
 __('Add event'),
-url_for('plansandreports/addwpevent?appointment='.$workplan->getId())
+url_for('plansandreports/addwfevent?appointment='.$workplan->getId())
 ) ?>
 </li>
 </ul>

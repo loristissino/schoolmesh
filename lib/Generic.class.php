@@ -314,6 +314,27 @@ class Generic{
 //    $object->save();
   }
 
+
+  public static function addWfevent($object, $userId, $comment='', $i18n_subs=array(), $state=0, $sf_context=null)
+  {
+		$wfevent = new Wfevent();
+		$wfevent
+    ->setUserId($userId)
+    ->setBaseId($object->getId())
+    ->setBaseTable(WfeventPeer::getBaseTableId(get_class($object)))
+    ;
+		if ($sf_context)
+    {
+      $comment=$sf_context->getI18N()->__($comment, $i18n_subs);
+    }
+		$wfevent->setComment($comment);
+    if($state!=null)
+    {
+      $wfevent->setState($object->getState()); //if it is not specified, we keep the same
+    }
+    $wfevent->save();
+  }
+
   public static function correctString($s)
   {
     return str_replace(

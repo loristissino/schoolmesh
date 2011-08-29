@@ -1,22 +1,22 @@
-<?php slot('title', __('User management')) ?>
-<?php slot('breadcrumbs', 'TODO'
-	)
-	
-	?>
+<?php use_stylesheet('ui-lightness/jquery-ui-1.8.custom.css') ?>
+<?php use_javascripts_for_form($form) ?>
+<?php use_javascript('jquery-ui-1.8.custom.min.js') ?>
+<?php use_javascript('datepicker') ?>
+<?php use_javascript('jquery.ui.datepicker-' . sfConfig::get('sf_default_culture') . '.js') ?>
+
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     'plansandreports/list' => "Manage appointments",
-    '_workplan' => $event->getAppointment(),
+    '_workplan' => $event->getBaseObject(),
     '_event' => __('Event %event_id%', array('%event_id%'=>$event->getId()))
     ),
   'current'=> __('Edit event'),
   ))
 ?>    
-<h1><?php echo __('Edit event')?></h1>
 
 <?php include_partial('content/flashes'); ?>
 
-<form action="<?php echo url_for('plansandreports/editwpevent?id='. $event->getId()) ?>" method="post">
+<form action="<?php echo url_for('plansandreports/editwfevent?id='. $event->getId()) ?>" method="post">
 
   <table>
     <?php echo $form ?>
