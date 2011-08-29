@@ -4,7 +4,7 @@
     'plansandreports/fill?id=' . $workplan->getId() => $workplan
     ),
   'current'=>__('Workplan import'),
-  'title' =>__('Workplan import')  . ' - ' . $workplan ?>
+  'title' =>__('Workplan import')  . ' - ' . $workplan
   ))
 ?>
 
