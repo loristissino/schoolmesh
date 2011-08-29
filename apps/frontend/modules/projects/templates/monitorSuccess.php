@@ -36,7 +36,7 @@
       <?php include_partial('content/td_year', array('year'=>$project->getYear())) ?>
       <td><?php echo $project->getTitle() ?></td>
       <td><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></td>
-      <td><?php echo $project->getState() ?></td>
+      <td><?php include_partial('state', array('project'=>$project)) ?></td>
       <td><?php echo Generic::datetime($project->getApprovalDate('U'), $sf_context) ?></td>
       <td><?php echo Generic::datetime($project->getFinancingDate('U'), $sf_context) ?></td>
       <td>

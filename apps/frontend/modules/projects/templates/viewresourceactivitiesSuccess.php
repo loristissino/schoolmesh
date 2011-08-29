@@ -28,7 +28,7 @@
     </tr>
   </thead>
   <tbody>
-	<?php $i=0; $total=0 ?>
+	<?php $i=0 ?>
     <?php foreach ($activities as $activity): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <td>
@@ -41,8 +41,17 @@
       <?php echo $mu=$resource->getProjResourceType()->getMeasurementUnit() ?>
       </td>
       <td style="text-align: right">
-      <?php echo $activity->getQuantity() ?>
-      <?php if($activity->getAcknowledgedAt()) $total+=$activity->getQuantity() ?>
+      <?php if(!$activity->getAcknowledgedAt() && $resource->getTotalQuantityForAcknowledgedActivities()+$activity->getQuantity()>$resource->getQuantityApproved()): ?>
+        <?php echo image_tag(
+          'dubious',
+          array(
+            'title'=>__('With the acknowledgment of this activity, there will be a cost overrun'),
+            'size'=>'16x16',
+            )
+          )
+        ?>
+      <?php endif ?>
+     <?php echo $activity->getQuantity() ?>
       </td>
       <td>
       <?php echo $activity->getNotes() ?>
@@ -60,7 +69,10 @@
             array(
               'method' => 'post', 
               'title'=>__('Acknowledge the performing of this activity'),
-              'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale())
+              'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()) .
+                ($resource->getTotalQuantityForAcknowledgedActivities()+$activity->getQuantity()>$resource->getQuantityApproved() ?
+                  ' '. __('With the acknowledgment of this activity, there will be a cost overrun'). '.'
+                  : '')
               ) 
 
             )
@@ -75,7 +87,7 @@
     <th colspan="2"><?php echo __('Total quantity acknowledged') ?></th>
     <td style="font-weight: bold"><?php echo $mu ?></td>
     <td style="text-align: right; font-weight: bold">
-      <?php if($total>$resource->getQuantityApproved()): ?>
+      <?php if($resource->getTotalQuantityForAcknowledgedActivities()>$resource->getQuantityApproved()): ?>
         <?php echo image_tag(
           'dubious',
           array(
@@ -86,7 +98,7 @@
         ?>
       <?php endif ?>
 
-      <?php printf('%01.2f', $total) ?>
+      <?php printf('%01.2f', $resource->getTotalQuantityForAcknowledgedActivities()) ?>
     </td>
     <td colspan="3"></td>
     </tr>
