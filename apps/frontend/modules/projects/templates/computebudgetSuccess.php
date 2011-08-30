@@ -14,9 +14,7 @@
 <table cellspacing="0">
   <thead>
     <tr>
-      <th class="sf_admin_text"><?php echo __('Category') ?></th>
       <th class="sf_admin_text"><?php echo __('Project') ?></th>
-      <th class="sf_admin_text"><?php echo __('Coordinator') ?></th>
       <th class="sf_admin_text"><?php echo __('Description') ?></th>
       <th class="sf_admin_text"><?php echo __('M.U.') ?></th>
       <th class="sf_admin_text"><?php echo __('Estimation') ?></th>
@@ -30,9 +28,11 @@
 	<?php $i=0; $grandtotal=0 ?>
     <?php foreach ($projects as $project): $resources=$project->getProjResources(); $total=0 ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
-      <td rowspan="<?php echo sizeof($resources)+1 ?>"><?php echo $project->getProjCategory() ?></td>
-      <td rowspan="<?php echo sizeof($resources)+1 ?>"><?php echo $project->getTitle() ?></td>
-      <td rowspan="<?php echo sizeof($resources)+1 ?>"><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></td>
+      <td rowspan="<?php echo sizeof($resources)+1 ?>">
+        <strong><?php echo $project->getTitle() ?></strong><br />
+        (<?php echo $project->getProjCategory() ?>)<br />
+        <em><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></em>
+      </td>
       <?php $value=$resources[0]->getQuantityApproved()*$resources[0]->getStandardCost() ?>
       <?php $total+=$value ?>
       <?php include_partial('resourcebudget', array('resource'=>$resources[0], 'value'=>$value)) ?>
@@ -52,7 +52,7 @@
     </tr>
     <?php endforeach; ?>
     <tr>
-    <th colspan="8"><?php echo format_number_choice(__('[1]Grand total for the project selected|[1,+Inf]Grand total for the %number% projects selected'), array('%number%'=>sizeof($projects)), sizeof($projects)) ?></th>
+    <th colspan="6"><?php echo format_number_choice(__('[1]Grand total for the project selected|[1,+Inf]Grand total for the %number% projects selected'), array('%number%'=>sizeof($projects)), sizeof($projects)) ?></th>
     <td style="text-align: right; font-weight: bold; color:blue"><?php echo currencyvalue($grandtotal) ?></td>
     <th></th>
     </tr>
