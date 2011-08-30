@@ -330,38 +330,55 @@ class projectsActions extends sfActions
   public function executeEmail(sfWebRequest $request)
   {
     $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPK($request->getParameter('id')));
-    
     $this->message=$this->project->getProjectAlertMessage($this->getUser()->getProfile(), $this->getContext());
-    
     $this->form = new EmailForm();
-
 	if ($request->isMethod('post'))
 		{
 			$this->form->bind($request->getParameter('email'));
 			if ($this->form->isValid())
 			{
 				$params = $this->form->getValues();
-				
 				$this->project = SchoolprojectPeer::retrieveByPK($request->getParameter('id'));
-				
 				$result=$this->project->sendEmail($params, $this->getUser()->getProfile(), $this->getContext());
-				
 				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
         return $this->redirect('projects/index');
       }
-			
-			
 		}
-
     $this->form
     ->setDefault('email_subject', $this->message->getSubject())
     ->setDefault('body', $this->message->getBody())
     ;
-
-
+    $this->breadcrumpstype='projects/monitoring/emailtocoordinator';
 
   }
-  
+
+  public function executeActivityemail(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->activity=ProjActivityPeer::retrieveByPK($request->getParameter('id')));
+    $this->message=$this->activity->getProjectActivityMessage($this->getUser()->getProfile(), $this->getContext());
+    $this->form = new EmailForm();
+    if ($request->isMethod('post'))
+		{
+			$this->form->bind($request->getParameter('email'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				$result=$this->activity->sendEmail($params, $this->getUser()->getProfile(), $this->getContext());
+				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+        return $this->redirect('projects/viewresourceactivity?id=' . $this->activity->getId());
+      }
+		}
+    $this->form
+    ->setDefault('email_subject', $this->message->getSubject())
+    ->setDefault('body', $this->message->getBody())
+    ;
+    
+    $this->resource=$this->activity->getProjResource();
+    $this->project=$this->resource->getSchoolproject();
+    $this->breadcrumpstype='projects/project/resource/emailtoactivityperformer';
+    $this->setTemplate('email');
+  }
+
   
   public function executeMonitor(sfWebRequest $request)
   {

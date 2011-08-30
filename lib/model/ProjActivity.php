@@ -25,6 +25,12 @@ class ProjActivity extends BaseProjActivity {
     return sfGuardUserProfilePeer::retrieveByPk($this->getUserId());
   }
   
+  public function getProjectActivityMessage(sfGuardUserProfile $sender, sfContext $sfContext=null)
+  {
+    return new ProjectActivityMessage($this->getPerformerProfile(), $sender, $this, $sfContext);
+  }
+
+  
   public function saveChanges($params=array())
   {
     Generic::updateObjectFromForm($this, array('beginning', 'quantity', 'notes'), $params);

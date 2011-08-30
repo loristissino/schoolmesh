@@ -1,3 +1,4 @@
+<?php if($breadcrumpstype=='projects/monitoring/emailtocoordinator'): ?>
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     'projects/index' => __("Projects"),
@@ -7,6 +8,20 @@
   'title'=>__('Send an email to the coordinator of this project'),
   ))
 ?>
+<?php endif ?>
+<?php if($breadcrumpstype=='projects/project/resource/emailtoactivityperformer'): ?>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'projects/index' => __("Projects"),
+    'projects/edit?id=' . $project->getId() => $project,
+    'projects/viewresourceactivities?id= ' . $resource->getId() => $resource
+    ),
+  'current'=>__("Send an email"),
+  'title'=>__('Send an email to the person who performed this activity'),
+  ))
+?>
+<?php endif ?>
+
 
 <?php include_partial('content/flashes'); ?>
 
