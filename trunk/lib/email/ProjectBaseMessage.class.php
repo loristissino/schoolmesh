@@ -1,5 +1,7 @@
 <?php
 
+/* A base class for the SchoolMesh project, nothing to do with Schoolproject class itself */
+
 class ProjectBaseMessage extends Swift_Message
 {
 	

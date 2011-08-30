@@ -22,6 +22,7 @@ grep -v 'templates/email/document_approval.yml$' | \
 grep -v 'templates/email/document_rejection.yml$' | \
 grep -v 'templates/email/email_change_confirmation.yml$' | \
 grep -v 'templates/email/project_alert.yml' | \
+grep -v 'templates/email/project_activity.yml' | \
 grep -v 'templates/oo/workplan20.odt$' | \
 grep -v 'templates/oo/workplan30.odt$' | \
 grep -v 'templates/oo/workplan40.odt$' | \

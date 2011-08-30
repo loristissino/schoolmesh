@@ -78,6 +78,17 @@
             )
              ?></li>
         <?php endif ?>
+        <?php if($activity->getPerformerProfile()->getHasValidatedEmail()): ?>
+        <li class="sf_admin_action_email">
+        <?php echo link_to(
+            __('Email'),
+            url_for('projects/activityemail?id='. $activity->getId()),
+            array(
+              'title'=>__('Prepare an email to the person who performed this activity')
+              ) 
+            )
+             ?></li>
+        <?php endif ?>
           
       </ul>
       </td>
