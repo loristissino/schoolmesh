@@ -46,11 +46,11 @@ class WfeventPeer extends BaseWfeventPeer {
     $c->add(self::BASE_ID, $id);
     if($ascending)
     {
-      $c->addAscendingOrderByColumn(WpeventPeer::CREATED_AT);
+      $c->addAscendingOrderByColumn(WfeventPeer::CREATED_AT);
     }
     else
     {
-      $c->addDescendingOrderByColumn(WpeventPeer::CREATED_AT);
+      $c->addDescendingOrderByColumn(WfeventPeer::CREATED_AT);
     }
 		$c->addJoin(WpeventPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
     $c->setDistinct();

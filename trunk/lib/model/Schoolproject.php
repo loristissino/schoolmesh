@@ -584,7 +584,7 @@ class Schoolproject extends BaseSchoolproject {
   
   public function getWorkflowLogs()
 	{
-		$t = WfeventPeer::retrieveByClassAndId('Schoolproject', $this->getId(), false);
+		$t = WfeventPeer::retrieveByClassAndId('Schoolproject', $this->getId(), true);
 		if ($t)
 			return $t;
 		else

@@ -731,6 +731,7 @@ class projectsActions extends sfActions
         $this->project->addWfEvent(
           $this->getUser()->getProfile()->getUserId(),
           'Project created',
+          null,
           Workflow::PROJ_DRAFT,
           $this->getContext()
           );

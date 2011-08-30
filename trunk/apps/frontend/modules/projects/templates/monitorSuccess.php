@@ -34,7 +34,7 @@
       <input type="checkbox" name="ids[]" value="<?php echo $project->getId() ?>" class="sf_admin_batch_checkbox" />
       </td>
       <?php include_partial('content/td_year', array('year'=>$project->getYear())) ?>
-      <td><?php echo $project->getTitle() ?></td>
+      <td><strong><?php echo $project->getTitle() ?></strong></td>
       <td><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></td>
       <td><?php include_partial('state', array('project'=>$project)) ?></td>
       <td><?php echo Generic::datetime($project->getApprovalDate('U'), $sf_context) ?></td>
