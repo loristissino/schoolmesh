@@ -29,7 +29,10 @@
     <?php foreach ($projects as $project): $resources=$project->getProjResources(); $total=0 ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <td rowspan="<?php echo sizeof($resources)+1 ?>">
-        <strong><?php echo $project->getTitle() ?></strong><br />
+        <strong><?php echo link_to(
+          $project->getTitle(),
+          'projects/view?id=' . $project->getId()
+          )?></strong><br />
         (<?php echo $project->getProjCategory() ?>)<br />
         <em><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></em>
       </td>

@@ -51,13 +51,17 @@ class ProjResource extends BaseProjResource {
       
       if($user)
       {
-      $this->getSchoolproject()->addWfevent(
-        $user->getProfile()->getId(),
-        'Updated quantity approved for resource «%resource%», set to %quantity_approved%',
-        array('%resource%'=>$this->getDescription(), '%quantity_approved%'=>$params['quantity_approved']),
-        null,
-        $sf_context
-        );
+        $project=$this->getSchoolproject();
+        if($project->getState()>PROJ_DRAFT)
+        {
+          $this->getSchoolproject()->addWfevent(
+            $user->getProfile()->getId(),
+            'Updated quantity approved for resource «%resource%», set to %quantity_approved%',
+            array('%resource%'=>$this->getDescription(), '%quantity_approved%'=>$params['quantity_approved']),
+            null,
+            $sf_context
+          );
+        }
       }
     }
     catch (Exception $e)
