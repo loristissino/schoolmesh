@@ -2301,11 +2301,11 @@
     </trans-unit>
     <trans-unit id="594">
         <source>Set approval date</source>
-        <target>Imposta data di approvazione</target>
+        <target>Imposta data di approvazione Collegio Docenti</target><!-- in Italy, the project is first approved by the Teachers' Board, "Collegio docenti" --> 
     </trans-unit>
     <trans-unit id="595">
         <source>Set financing date</source>
-        <target>Imposta data di finanziamento</target>
+        <target>Imposta data di approvazione Consiglio di Istituto</target><!-- in Italy, the financial part of the project is approved by the Administration Board, "Consiglio di Istituto" -->
     </trans-unit>
     <trans-unit id="596">
         <source>Compute budget</source>
@@ -2381,19 +2381,19 @@
     </trans-unit>
     <trans-unit id="614">
         <source>Approval date</source>
-        <target>Data di approvazione</target>
+        <target>Approv. C.D.</target><!-- in Italy, the project is first approved by the Teachers' Board, "Collegio docenti" --> 
     </trans-unit>
     <trans-unit id="615">
         <source>Financing date</source>
-        <target>Data di finanziamento</target>
+        <target>Approv. C.I.</target><!-- in Italy, the financial part of the project is approved by the Administration Board, "Consiglio di Istituto" -->
     </trans-unit>
     <trans-unit id="616">
         <source>Approval notes</source>
-        <target>Note sull'approvazione</target>
+        <target>Note</target>
     </trans-unit>
     <trans-unit id="617">
         <source>Financing notes</source>
-        <target>Note sul finanziamento</target>
+        <target>Note</target>
     </trans-unit>
     <trans-unit id="618">
         <source>Projects information have been updated.</source>
@@ -2625,11 +2625,11 @@
     </trans-unit>
     <trans-unit id="672">
         <source>You are setting the approval date for the following projects:</source>
-        <target>Stai impostando la data di approvazione per i seguenti progetti:</target>
+        <target>Stai impostando la data di approvazione in Collegio Docenti per i seguenti progetti:</target>
     </trans-unit>
     <trans-unit id="673">
         <source>You are setting the financing date for the following projects:</source>
-        <target>Stai impostando la data di finanziamento per i seguenti progetti:</target>
+        <target>Stai impostando la data di approvazione in Consiglio di Istituto per i seguenti progetti:</target>
     </trans-unit>
     <trans-unit id="674">
         <source>No activity declared.</source>
@@ -2734,6 +2734,14 @@
     <trans-unit id="699">
         <source>Project view</source>
         <target>Visualizzazione progetto</target>
+    </trans-unit>
+    <trans-unit id="700">
+        <source>Set date</source>
+        <target>Imposta data</target>
+    </trans-unit>
+    <trans-unit id="701">
+        <source>Date setting</source>
+        <target>Impostazione data</target>
     </trans-unit>
     </body>
   </file>
