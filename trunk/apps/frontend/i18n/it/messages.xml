@@ -2717,11 +2717,11 @@
     </trans-unit>
     <trans-unit id="695">
         <source>Approval date set to %date% (%comment%)</source>
-        <target>Data di approvazione impostata a %date% (%comment%)</target>
+        <target>Data di approvazione C.D. impostata a %date% (%comment%)</target>
     </trans-unit>
     <trans-unit id="696">
         <source>Financing date set to %date% (%comment%)</source>
-        <target>Data di finanziamento impostata a %date% (%comment%)</target>
+        <target>Data di approvazione C.I. impostata a %date% (%comment%)</target>
     </trans-unit>
     <trans-unit id="697">
         <source>Updated quantity approved for resource «%resource%», set to %quantity_approved%</source>
