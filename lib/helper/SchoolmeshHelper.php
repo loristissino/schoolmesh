@@ -140,6 +140,16 @@ function currencyvalue($value)
       );
 }
 
+function quantityvalue($value)
+{
+  return 
+    number_format($value, 
+      sfConfig::get('app_config_currency_decimals', 2), 
+      sfConfig::get('app_config_currency_decpoint', ','),
+      sfConfig::get('app_config_currency_thousandssep', '.')
+      );
+}
+
 function check_count($checkList, $groupname)
 {
   $rows=array();
