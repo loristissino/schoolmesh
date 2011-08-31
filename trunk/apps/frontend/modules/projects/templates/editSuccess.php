@@ -243,7 +243,7 @@
   </tbody>
 </table>
 <?php else: ?>
-<p><?php echo __('No resources defined.') ?></p>
+<p><?php echo __('No resource defined.') ?></p>
 <?php endif ?>
 <?php if ($project->getState()==Workflow::PROJ_DRAFT): ?>
 

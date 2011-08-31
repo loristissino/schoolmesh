@@ -2727,6 +2727,14 @@
         <source>Updated quantity approved for resource «%resource%», set to %quantity_approved%</source>
         <target>Aggiornata la quantità approvata per la risorsa «%resource%», impostata a %quantity_approved%</target>
     </trans-unit>
+    <trans-unit id="698">
+        <source>Project «%title%»</source>
+        <target>Progetto «%title%»</target>
+    </trans-unit>
+    <trans-unit id="699">
+        <source>Project view</source>
+        <target>Visualizzazione progetto</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

@@ -311,21 +311,24 @@ class projectsActions extends sfActions
     $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
     $this->projects=SchoolprojectPeer::retrieveByPks($this->ids);
     $this->setTemplate('report');   
+    $this->breadcrumpstype='projects/monitoring/viewasreport';
   }
   
   public function executeView(sfWebRequest $request)
   {
-
-   $this->year=$this->getUser()->getAttribute('year', sfConfig::get('app_config_current_year'));
-   $this->years = YearPeer::retrieveAll();
    $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPK($request->getParameter('id')));
-    
    $this->projects=Array($this->project);
-    
    $this->setTemplate('report');   
-    
+    $this->breadcrumpstype='projects/project/view';
   }
   
+  public function executeMonitorview(sfWebRequest $request)
+  {
+   $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPK($request->getParameter('id')));
+   $this->projects=Array($this->project);
+   $this->setTemplate('report');   
+   $this->breadcrumpstype='projects/monitoring/project/view';
+  }
   
   public function executeEmail(sfWebRequest $request)
   {

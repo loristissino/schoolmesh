@@ -34,6 +34,7 @@ class ProjResource extends BaseProjResource {
   
   public function updateFromForm($params, $user=null, $sf_context=null)
   {
+    $old_quantity_approved=$this->getQuantityApproved();
     $con = Propel::getConnection(ProjResourcePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
     // we need to check which ones are present, because they depend on the state
     Generic::updateObjectFromForm($this, array(
@@ -52,7 +53,7 @@ class ProjResource extends BaseProjResource {
       if($user)
       {
         $project=$this->getSchoolproject();
-        if($project->getState()>PROJ_DRAFT)
+        if($project->getState()>PROJ_DRAFT && $this->getQuantityApproved()!=$old_quantity_approved)
         {
           $this->getSchoolproject()->addWfevent(
             $user->getProfile()->getId(),

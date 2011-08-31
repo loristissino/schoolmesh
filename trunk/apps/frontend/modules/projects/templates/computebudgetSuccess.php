@@ -31,7 +31,7 @@
       <td rowspan="<?php echo sizeof($resources)+1 ?>">
         <strong><?php echo link_to(
           $project->getTitle(),
-          'projects/view?id=' . $project->getId()
+          'projects/monitorview?id=' . $project->getId()
           )?></strong><br />
         (<?php echo $project->getProjCategory() ?>)<br />
         <em><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></em>

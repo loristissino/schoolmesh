@@ -1,3 +1,4 @@
+<?php if($breadcrumpstype=='projects/monitoring/viewasreport'): ?>
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     'projects/monitor' =>__("Projects monitoring")
@@ -5,6 +6,26 @@
   'current'=>__('Projects report')
   ))
 ?>
+<?php endif ?>
+<?php if($breadcrumpstype=='projects/monitoring/project/view'): ?>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'projects/monitor' =>__("Projects monitoring"),
+    '_project' => __('Project «%title%»', array('%title%'=>$projects[0]))
+    ),
+  'current'=>__('Project view')
+  ))
+?>
+<?php endif ?>
+<?php if($breadcrumpstype=='projects/project/view'): ?>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'projects/index' =>__("My projects")
+    ),
+  'current'=>__('Project %title%', array('%title%'=>$projects[0]))
+  ))
+?>
+<?php endif ?>
 
 <?php include_partial('content/flashes'); ?>
 
