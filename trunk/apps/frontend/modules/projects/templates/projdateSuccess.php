@@ -5,7 +5,11 @@
 <?php use_javascript('jquery.ui.datepicker-' . sfConfig::get('sf_default_culture') . '.js') ?>
 
 <?php include_partial('content/breadcrumps', array(
-  'current'=>__("Projects monitoring")
+  'breadcrumps'=>array(
+    'projects/monitor' => __("Projects monitoring"),
+    ),
+  'current'=>__("Set date"),
+  'title'=>__("Date setting")
   ))
 ?>
 
