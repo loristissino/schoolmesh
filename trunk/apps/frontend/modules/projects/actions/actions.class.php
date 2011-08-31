@@ -305,7 +305,18 @@ class projectsActions extends sfActions
     $this->projects=SchoolprojectPeer::retrieveByPks($this->ids);
     $this->getUser()->setAttribute('back', 'budget');
   }
-  
+
+  public function executeSpreadsheet(sfWebRequest $request)
+  {
+    $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
+    $this->projects=SchoolprojectPeer::retrieveByPks($this->ids);
+    $response = $this->getContext()->getResponse();
+		$response->setHttpHeader('Content-Type', 'text/csv');
+		$response->setHttpHeader('Content-Disposition', 'attachment; filename="'. $this->getContext()->getI18N()->__('Projects') . '_'. date('Ymd') . '.csv"');
+    $this->setLayout(false);
+
+  }
+
   public function executeViewasreport(sfWebRequest $request)
   {
     $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);

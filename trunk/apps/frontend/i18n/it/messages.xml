@@ -2743,6 +2743,10 @@
         <source>Date setting</source>
         <target>Impostazione data</target>
     </trans-unit>
+    <trans-unit id="702">
+        <source>Export as spreadsheet</source>
+        <target>Esporta come foglio elettronico</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
