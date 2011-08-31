@@ -36,13 +36,13 @@
         (<?php echo $project->getProjCategory() ?>)<br />
         <em><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></em>
       </td>
-      <?php $value=$resources[0]->getQuantityApproved()*$resources[0]->getStandardCost() ?>
+      <?php $value=$resources[0]->getQuantityMultipliedByCost() ?>
       <?php $total+=$value ?>
       <?php include_partial('resourcebudget', array('resource'=>$resources[0], 'value'=>$value)) ?>
     </tr>
     <?php for($i=1; $i<sizeof($resources); $i++): ?>
     <tr>
-      <?php $value=$resources[$i]->getQuantityApproved()*$resources[$i]->getStandardCost() ?>
+      <?php $value=$resources[$i]->getQuantityMultipliedByCost() ?>
       <?php $total+=$value ?>
       <?php include_partial('resourcebudget', array('resource'=>$resources[$i], 'value'=>$value)) ?>
     </tr>
