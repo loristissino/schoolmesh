@@ -336,13 +336,13 @@ public function executeBatch(sfWebRequest $request)
   public function executeFill(sfWebRequest $request)
   {
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
-	$this->user=$this->getUser();
+	  $this->user=$this->getUser();
     $this->forward404Unless($this->workplan);
     $this->forward404Unless(
-		$this->workplan->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId())
-		|| $this->user->hasCredential('backadmin')
-	);
-
+		   $this->workplan->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId())
+       ||
+       $this->user->hasCredential('backadmin')
+       );
 
 	if ($request->getParameter('ref')=='wpmodule')
 	{
@@ -367,14 +367,12 @@ public function executeBatch(sfWebRequest $request)
 	$this->tools = $this->workplan->getTools();
 	
 	$this->workflow_logs = $this->workplan->getWorkflowLogs();
-
+  
 	if($request->getParameter('flash'))
 		{
 			$this->getUser()->setFlash($request->getParameter('flash'), $this->getContext()->getI18N()->__('This item is not correctly filled.'));
 			$this->getUser()->setAttribute('aux', 1);
 		}
-
-
 
   }
 

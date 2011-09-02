@@ -306,6 +306,30 @@ $number=$resultset->number;
     }
 		return $r;
   }
+
+  public function getSyllabusContributionsWithRefs()
+  {
+    $c = new Criteria();
+    $c->addJoin(WpmodulePeer::ID, WpmoduleSyllabusItemPeer::WPMODULE_ID);
+    $c->addJoin(WpmoduleSyllabusItemPeer::ID, SyllabusItemPeer::ID);
+    $c->add(WpmodulePeer::ID, $this->getId());
+    $c->clearSelectColumns();
+    $c->addSelectColumn(SyllabusItemPeer::REF);
+    $c->addSelectColumn(WpmoduleSyllabusItemPeer::CONTRIBUTION);
+    $c->setDistinct();
+    
+    $stmt=SyllabusItemPeer::doSelectStmt($c);
+
+    $contributions=array();
+    while($row = $stmt->fetch(PDO::FETCH_OBJ))
+    {
+        $contributions[$row->REF]=$row->CONTRIBUTION;
+    };
+
+    return $contributions;
+
+  }
+
   
   public function manageSyllabusItem($syllabus_item, $value=0)
   {
