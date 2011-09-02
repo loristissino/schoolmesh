@@ -26,4 +26,8 @@
 				<?php endif /* modules present*/ ?>
 		<?php endif ?>
 	<?php endforeach; ?>
+  
+  <h4><?php echo __('Syllabus links') ?></h4>
+  <?php include_partial('syllabus', array('syllabus_contributions'=>$wpmodule->getSyllabusContributionsWithRefs())) ?>
+
 </div>
