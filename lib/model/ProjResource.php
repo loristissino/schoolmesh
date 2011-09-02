@@ -151,8 +151,7 @@ class ProjResource extends BaseProjResource {
   
   public function getQuantityMultipliedByCost()
   {
-    $cost = $this->getStandardCost() ? $this->getStandardCost() : 1;
-    return $this->getQuantityApproved() * $cost;
+    return $this->getStandardCost() ? $this->getQuantityApproved() * $this->getStandardCost() : $this->getQuantityApproved();
   }
 
 

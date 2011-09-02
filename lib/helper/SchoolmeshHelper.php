@@ -132,7 +132,7 @@ function breadcrumps_to_html($crumps=array(), $current='')
 function currencyvalue($value)
 {
   return 
-    sfConfig::get('app_config_currency_symbol', '€') . ' ' .
+    sfConfig::get('app_config_currency_symbol', '€') . '&nbsp;' .
     number_format($value, 
       sfConfig::get('app_config_currency_decimals', 2), 
       sfConfig::get('app_config_currency_decpoint', ','),
@@ -142,12 +142,19 @@ function currencyvalue($value)
 
 function quantityvalue($value)
 {
+  if ($value)
+  {
   return 
     number_format($value, 
       sfConfig::get('app_config_currency_decimals', 2), 
       sfConfig::get('app_config_currency_decpoint', ','),
       sfConfig::get('app_config_currency_thousandssep', '.')
       );
+  }
+  else
+  {
+    return '';
+  }
 }
 
 function check_count($checkList, $groupname)
