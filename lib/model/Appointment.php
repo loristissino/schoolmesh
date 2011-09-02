@@ -1704,6 +1704,7 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
     return sprintf('%s_%s_%s (%s)%d', $this->getFullname(), $this->getSchoolclass()->getId(), $this->getSubject()->getShortcut(), $s, $this->getState());
     
   }
+  
 
 
 }
