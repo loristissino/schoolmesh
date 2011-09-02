@@ -265,7 +265,7 @@ $con->query($sql);
     $logmessage=SystemMessagePeer::retrieveByKey($steps[$this->getState()]['actions']['approve']['logMessageCode']);
 		$text = $logmessage->getContent($culture);
 
-		$this->addEvent($user_id, $text, $steps[$this->getState()]['actions']['approve']['submitNextState']);
+		$this->addWfevent($user_id, $text, null, $steps[$this->getState()]['actions']['approve']['submitNextState']);
 				
 		$this->getChecks(); // needed to create children objects for the new state...
 		$con->commit();
@@ -335,7 +335,7 @@ $con->query($sql);
 		}
 		// we need to save the message before adding a line in the log...
 		
-		$this->addEvent($user_id, $message, $steps[$this->getState()]['actions']['reject']['submitNextState']);
+		$this->addWfevent($user_id, $message, null, $steps[$this->getState()]['actions']['reject']['submitNextState']);
 
 		$con->commit();
 		
@@ -670,7 +670,8 @@ $con->query($sql);
 			$this->markSubItems('false');
 			$result['result']='notice';
 			$result['message']=$steps[$this->getState()]['owner']['submitDoneAction'];
-			$this->addEvent($this->getOwner()->getId(), $steps[$this->getState()]['owner']['submitDoneAction'], $steps[$this->getState()]['owner']['submitNextState']);
+      Generic::logMessage('wfevent_insert', $this->getUserId());
+			$this->addWfevent($this->getUserId(), $steps[$this->getState()]['owner']['submitDoneAction'], null, $steps[$this->getState()]['owner']['submitNextState'], $sfContext);
 			
 			if ($this->getOwner()->getProfile()->sendWorkflowConfirmationMessage($sfContext, 'document_submission',
 				array(
@@ -780,11 +781,16 @@ $con->query($sql);
 	
 	}
 
-public static function addWfevent($userId, $comment='', $i18n_subs=array(), $state=0, $sf_context=null)
+public function addWfevent($userId, $comment='', $i18n_subs=array(), $state=0, $sf_context=null)
   {
-    Generic::addWfevent($this, $comment, $i18n_subs, $state, $sf_context);
+    Generic::addWfevent($this, $userId, $comment, $i18n_subs, $state, $sf_context);
+    $this
+    ->setState($state)
+    ->save();
+
     return $this;
   }
+
 
 public function getWorkflowLogs()
 	{
