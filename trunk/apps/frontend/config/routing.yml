@@ -1,3 +1,11 @@
+proj_resource_type:
+  class: sfPropelRouteCollection
+  options:
+    model:                ProjResourceType
+    module:               projectresourcetypes
+    column:               id
+    with_wildcard_routes: true
+
 #workplan_list:
 #  url:     /plansandreports/list/sortby:typ
 #  param:   { module: plansandreports, action: list }

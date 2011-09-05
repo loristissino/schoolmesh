@@ -316,6 +316,18 @@ class projectsActions extends sfActions
     $this->setLayout(false);
 
   }
+  
+  public function executeUpdatestandardcosts()
+  {
+    $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
+		$result=SchoolprojectPeer::updateStandardCosts($this->getUser(), $this->getContext());
+        
+    $this->getUser()->setFlash($result['result'],
+      $this->getContext()->getI18N()->__($result['message'])
+      );
+      
+    return $this->redirect('projects/monitor');
+  }
 
   public function executeViewasreport(sfWebRequest $request)
   {
