@@ -2779,6 +2779,14 @@
         <source>Projects resource types definitions</source>
         <target>Definizioni dei tipi di risorsa per i progetti</target>
     </trans-unit>
+    <trans-unit id="711">
+        <source>partial</source>
+        <target>parziale</target>
+    </trans-unit>
+    <trans-unit id="712">
+        <source>focussed</source>
+        <target>specifico</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

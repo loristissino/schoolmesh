@@ -310,13 +310,14 @@ $number=$resultset->number;
   public function getSyllabusContributionsWithRefs()
   {
     $c = new Criteria();
-    $c->addJoin(WpmodulePeer::ID, WpmoduleSyllabusItemPeer::WPMODULE_ID);
-    $c->addJoin(WpmoduleSyllabusItemPeer::ID, SyllabusItemPeer::ID);
+    $c->addJoin(WpmoduleSyllabusItemPeer::WPMODULE_ID, WpmodulePeer::ID);
+    $c->addJoin(WpmoduleSyllabusItemPeer::SYLLABUS_ITEM_ID, SyllabusItemPeer::ID);
     $c->add(WpmodulePeer::ID, $this->getId());
     $c->clearSelectColumns();
     $c->addSelectColumn(SyllabusItemPeer::REF);
     $c->addSelectColumn(SyllabusItemPeer::CONTENT);
     $c->addSelectColumn(WpmoduleSyllabusItemPeer::CONTRIBUTION);
+    $c->addSelectColumn(WpmoduleSyllabusItemPeer::ID);
     $c->setDistinct();
     
     $stmt=SyllabusItemPeer::doSelectStmt($c);
@@ -324,7 +325,7 @@ $number=$resultset->number;
     $contributions=array();
     while($row = $stmt->fetch(PDO::FETCH_OBJ))
     {
-        $contributions[$row->REF]=array('contribution'=>$row->CONTRIBUTION, 'content'=>$row->CONTENT);
+        $contributions[$row->REF]=array('contribution'=>$row->CONTRIBUTION, 'content'=>$row->CONTENT, 'id'=>$row->ID);
     };
 
     return $contributions;

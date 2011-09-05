@@ -980,10 +980,19 @@ public function getWorkflowLogs()
     $steps = Workflow::getWpfrSteps();
     $state=$steps[$this->getState()]['stateDescription'];
 
+    $contrib_descriptions=array(
+        WpmoduleSyllabusItemPeer::PARTIAL_CONTRIBUTION => 'partial',
+        WpmoduleSyllabusItemPeer::FOCUSSED_CONTRIBUTION => 'focussed',
+      );
+
 		if ($sfContext)
 		{
 			$teachertitle=$sfContext->getI18n()->__($teachertitle);
 			$state=$sfContext->getI18n()->__($state);
+      foreach($contrib_descriptions as $key=>$description)
+      {
+        $contrib_descriptions[$key]=$sfContext->getI18n()->__($description);
+      }
 		}
 	
 		try
@@ -1003,8 +1012,7 @@ public function getWorkflowLogs()
 		$odfdoc->setVars('subject', $this->getSubject()->getDescription());
 		$odfdoc->setVars('year',  $this->getYear()->__toString());
 		$odfdoc->setVars('schoolclass',  $this->getSchoolclassId());
-		
-		
+				
 		$wpinfos=$this->getWpinfos();
 		
 		$infos=$odfdoc->setSegment('infos');
@@ -1130,6 +1138,12 @@ public function getWorkflowLogs()
             }
             $modules->group->merge();
           }
+        }
+        foreach($wpmodule->getSyllabusContributionsWithRefs() as $ref=>$contribution)
+        {
+          $modules->syllabus->syllabusRef($ref);
+          $modules->syllabus->syllabusContent($contribution['content'] . ' (' . $contrib_descriptions[$contribution['contribution']] . ')');
+          $modules->syllabus->merge();
         }
         
         $pagebreak=($moduleNumber<sizeof($wpmodules))?'<pagebreak>':'';
