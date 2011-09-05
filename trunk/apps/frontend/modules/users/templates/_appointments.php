@@ -50,7 +50,7 @@
 				<li class="sf_admin_action_log">
 				<?php echo link_to(
 					__('View events'),
-					url_for('plansandreports/viewwpevents?id='.$appointment->getId())
+					url_for('plansandreports/viewwfevents?id='.$appointment->getId())
 					)
 				?>
 				</li>

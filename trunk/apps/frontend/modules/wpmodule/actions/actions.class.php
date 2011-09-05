@@ -246,6 +246,7 @@ class wpmoduleActions extends sfActions
 		|| $this->user->hasCredential('backadmin'));
     
     $syllabus_item=SyllabusItemPeer::retrieveByPK($request->getParameter('syllabus'));
+    $this->forward404Unless($syllabus_item->getIsSelectable());
 
     $this->wpmodule->manageSyllabusItem($syllabus_item->getId(), $request->getParameter('value', 0));
     
