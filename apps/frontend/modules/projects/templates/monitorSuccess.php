@@ -62,6 +62,7 @@
   'setfinancingdate' => __('Set financing date'),
   'viewasreport' => __('View as report'),
   'computebudget' => __('Compute budget'),
+  'updatestandardcosts' => __('Update standard costs'),
   'spreadsheet' => __('Export as spreadsheet'),
 ), 0) ?>
   </select>

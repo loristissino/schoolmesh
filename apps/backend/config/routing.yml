@@ -1,12 +1,3 @@
-proj_resource_type:
-  class: sfPropelRouteCollection
-  options:
-    model:                ProjResourceType
-    module:               proj_resource_type
-    prefix_path:          /proj_resource_type
-    column:               id
-    with_wildcard_routes: true
-
 proj_financing:
   class: sfPropelRouteCollection
   options:

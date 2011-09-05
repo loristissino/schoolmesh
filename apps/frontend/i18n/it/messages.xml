@@ -2751,11 +2751,36 @@
         <source>No syllabus link defined.</source>
         <target>Nessun collegamento con il syllabus definito.</target>
     </trans-unit>
+    <trans-unit id="704">
+        <source>Standard cost</source>
+        <target>Costo standard</target>
+    </trans-unit>
+    <trans-unit id="705">
+        <source>Measurement unit</source>
+        <target>Unità di misura</target>
+    </trans-unit>
+    <trans-unit id="706">
+        <source>Standard costs updated.</source>
+        <target>Costi standard aggiornati.</target>
+    </trans-unit>
+    <trans-unit id="707">
+        <source>No standard cost update needed.</source>
+        <target>Nessuna necessità di aggiornamento dei costi standard.</target>
+    </trans-unit>
+    <trans-unit id="708">
+        <source>Update standard costs</source>
+        <target>Aggiorna i costi standard</target>
+    </trans-unit>
+    <trans-unit id="709">
+        <source>Updated standard cost of resource «%resource%», set to %amount%</source>
+        <target>Aggiornato il costo standard della risorsa «%resource%», impostato a %amount%</target>
+    </trans-unit>
+    <trans-unit id="710">
+        <source>Projects resource types definitions</source>
+        <target>Definizioni dei tipi di risorsa per i progetti</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
-
-
-
 
 

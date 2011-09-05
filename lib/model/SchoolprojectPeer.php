@@ -149,5 +149,64 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 
   }
 
+  public static function updateStandardCosts($user, $sf_context=null)
+  {
+    $ids=$user->getAttribute('ids');
+    $user_id=$user->getProfile()->getId();
+    
+    $projectsNo = 0;
+    $resourcesNo = 0;
+    
+    $costscache=array();
+    
+    $projects = SchoolprojectPeer::retrieveByPKs($ids);
+    foreach($projects as $project)
+    {
+      if($project->getState()<Workflow::PROJ_FINISHED)
+      {
+        $resources=$project->getProjResources();
+        $projdirty=false;
+        foreach($resources as $resource)
+        {
+          if(!array_key_exists($resource->getProjResourceTypeId(), $costscache))
+          {
+            // we cache the results...
+            $costscache[$resource->getProjResourceTypeId()]=$resource->getProjResourceType()->getStandardCost();
+          }
+          if($costscache[$resource->getProjResourceTypeId()]!=$resource->getStandardCost())
+          {
+            $resource
+            ->setStandardCost($costscache[$resource->getProjResourceTypeId()])
+            ->save();
+            $projdirty=true;
+            $resourcesNo++;
+            $project->addWfevent(
+              $user_id,
+              'Updated standard cost of resource «%resource%», set to %amount%',
+              array('%resource%'=>$resource->getDescription(), '%amount%'=>$resource->getStandardCost()),
+              null,
+              $sf_context
+            );
+          }
+        }
+        if($projdirty)
+        {
+          $projectsNo++;
+        }
+        
+      }
+    }
+    $result['result']='notice';
+    if($projectsNo)
+    {
+      $result['message']='Standard costs updated.';
+    }
+    else
+    {
+      $result['message']='No standard cost update needed.';
+    }
+    return $result;
+
+  }
 
 } // SchoolprojectPeer

@@ -78,6 +78,7 @@
 
 <?php if ($sf_user->hasCredential('project') or $sf_user->hasCredential('schoolmaster')): ?>
     <li class="sf_admin_action_items"><?php echo link_to(__('Projects monitoring'), 'projects/monitor') ?></li><br />
+    <li class="sf_admin_action_items"><?php echo link_to(__('Projects resource types definitions'), '@proj_resource_type') ?></li><br />
 <?php endif ?>
 	<li class="sf_admin_action_users"><?php echo link_to(__('Users management'), url_for('users')) ?></li><br />
 </ul>
