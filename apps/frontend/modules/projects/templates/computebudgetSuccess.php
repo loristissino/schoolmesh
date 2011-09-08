@@ -16,6 +16,7 @@
     <tr>
       <th class="sf_admin_text"><?php echo __('Project') ?></th>
       <th class="sf_admin_text"><?php echo __('Description') ?></th>
+      <th class="sf_admin_text"><?php echo __('Charged user') ?></th>
       <th class="sf_admin_text"><?php echo __('M.U.') ?></th>
       <th class="sf_admin_text"><?php echo __('Estimation') ?></th>
       <th class="sf_admin_text"><?php echo __('Approval') ?></th>
@@ -48,14 +49,14 @@
     </tr>
     <?php endfor ?>
     <tr>
-    <th colspan="5"><?php echo __('Total for the project «%title%»', array('%title%'=>$project->getTitle())) ?></th>
+    <th colspan="6"><?php echo __('Total for the project «%title%»', array('%title%'=>$project->getTitle())) ?></th>
     <?php $grandtotal+=$total ?>
     <td style="text-align: right; font-weight: bold"><?php echo currencyvalue($total) ?></td>
     <th></th>
     </tr>
     <?php endforeach; ?>
     <tr>
-    <th colspan="6"><?php echo format_number_choice(__('[1]Grand total for the project selected|[1,+Inf]Grand total for the %number% projects selected'), array('%number%'=>sizeof($projects)), sizeof($projects)) ?></th>
+    <th colspan="7"><?php echo format_number_choice(__('[1]Grand total for the project selected|[1,+Inf]Grand total for the %number% projects selected'), array('%number%'=>sizeof($projects)), sizeof($projects)) ?></th>
     <td style="text-align: right; font-weight: bold; color:blue"><?php echo currencyvalue($grandtotal) ?></td>
     <th></th>
     </tr>

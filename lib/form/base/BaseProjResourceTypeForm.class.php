@@ -16,7 +16,6 @@ abstract class BaseProjResourceTypeForm extends BaseFormPropel
     $this->setWidgets(array(
       'id'               => new sfWidgetFormInputHidden(),
       'description'      => new sfWidgetFormInputText(),
-      'resource_type'    => new sfWidgetFormInputText(),
       'role_id'          => new sfWidgetFormPropelChoice(array('model' => 'Role', 'add_empty' => true)),
       'standard_cost'    => new sfWidgetFormInputText(),
       'measurement_unit' => new sfWidgetFormInputText(),
@@ -25,7 +24,6 @@ abstract class BaseProjResourceTypeForm extends BaseFormPropel
     $this->setValidators(array(
       'id'               => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
       'description'      => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'resource_type'    => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'role_id'          => new sfValidatorPropelChoice(array('model' => 'Role', 'column' => 'id', 'required' => false)),
       'standard_cost'    => new sfValidatorNumber(array('required' => false)),
       'measurement_unit' => new sfValidatorString(array('max_length' => 10, 'required' => false)),

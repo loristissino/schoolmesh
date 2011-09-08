@@ -25,7 +25,7 @@ abstract class BaseSchoolprojectPeer {
 	const TM_CLASS = 'SchoolprojectTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 15;
+	const NUM_COLUMNS = 21;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -54,6 +54,18 @@ abstract class BaseSchoolprojectPeer {
 	/** the column name for the NOTES field */
 	const NOTES = 'schoolproject.NOTES';
 
+	/** the column name for the ADDRESSEES field */
+	const ADDRESSEES = 'schoolproject.ADDRESSEES';
+
+	/** the column name for the PURPOSES field */
+	const PURPOSES = 'schoolproject.PURPOSES';
+
+	/** the column name for the GOALS field */
+	const GOALS = 'schoolproject.GOALS';
+
+	/** the column name for the FINAL_REPORT field */
+	const FINAL_REPORT = 'schoolproject.FINAL_REPORT';
+
 	/** the column name for the HOURS_APPROVED field */
 	const HOURS_APPROVED = 'schoolproject.HOURS_APPROVED';
 
@@ -74,6 +86,12 @@ abstract class BaseSchoolprojectPeer {
 
 	/** the column name for the FINANCING_NOTES field */
 	const FINANCING_NOTES = 'schoolproject.FINANCING_NOTES';
+
+	/** the column name for the EVALUATION_MIN field */
+	const EVALUATION_MIN = 'schoolproject.EVALUATION_MIN';
+
+	/** the column name for the EVALUATION_MAX field */
+	const EVALUATION_MAX = 'schoolproject.EVALUATION_MAX';
 
 	/**
 	 * An identiy map to hold any loaded instances of Schoolproject objects.
@@ -98,11 +116,11 @@ abstract class BaseSchoolprojectPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'ProjCategoryId', 'ProjFinancingId', 'YearId', 'UserId', 'Title', 'Description', 'Notes', 'HoursApproved', 'State', 'SubmissionDate', 'ApprovalDate', 'ApprovalNotes', 'FinancingDate', 'FinancingNotes', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'projCategoryId', 'projFinancingId', 'yearId', 'userId', 'title', 'description', 'notes', 'hoursApproved', 'state', 'submissionDate', 'approvalDate', 'approvalNotes', 'financingDate', 'financingNotes', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::PROJ_CATEGORY_ID, self::PROJ_FINANCING_ID, self::YEAR_ID, self::USER_ID, self::TITLE, self::DESCRIPTION, self::NOTES, self::HOURS_APPROVED, self::STATE, self::SUBMISSION_DATE, self::APPROVAL_DATE, self::APPROVAL_NOTES, self::FINANCING_DATE, self::FINANCING_NOTES, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'proj_category_id', 'proj_financing_id', 'year_id', 'user_id', 'title', 'description', 'notes', 'hours_approved', 'state', 'submission_date', 'approval_date', 'approval_notes', 'financing_date', 'financing_notes', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'ProjCategoryId', 'ProjFinancingId', 'YearId', 'UserId', 'Title', 'Description', 'Notes', 'Addressees', 'Purposes', 'Goals', 'FinalReport', 'HoursApproved', 'State', 'SubmissionDate', 'ApprovalDate', 'ApprovalNotes', 'FinancingDate', 'FinancingNotes', 'EvaluationMin', 'EvaluationMax', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'projCategoryId', 'projFinancingId', 'yearId', 'userId', 'title', 'description', 'notes', 'addressees', 'purposes', 'goals', 'finalReport', 'hoursApproved', 'state', 'submissionDate', 'approvalDate', 'approvalNotes', 'financingDate', 'financingNotes', 'evaluationMin', 'evaluationMax', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::PROJ_CATEGORY_ID, self::PROJ_FINANCING_ID, self::YEAR_ID, self::USER_ID, self::TITLE, self::DESCRIPTION, self::NOTES, self::ADDRESSEES, self::PURPOSES, self::GOALS, self::FINAL_REPORT, self::HOURS_APPROVED, self::STATE, self::SUBMISSION_DATE, self::APPROVAL_DATE, self::APPROVAL_NOTES, self::FINANCING_DATE, self::FINANCING_NOTES, self::EVALUATION_MIN, self::EVALUATION_MAX, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'proj_category_id', 'proj_financing_id', 'year_id', 'user_id', 'title', 'description', 'notes', 'addressees', 'purposes', 'goals', 'final_report', 'hours_approved', 'state', 'submission_date', 'approval_date', 'approval_notes', 'financing_date', 'financing_notes', 'evaluation_min', 'evaluation_max', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, )
 	);
 
 	/**
@@ -112,11 +130,11 @@ abstract class BaseSchoolprojectPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProjCategoryId' => 1, 'ProjFinancingId' => 2, 'YearId' => 3, 'UserId' => 4, 'Title' => 5, 'Description' => 6, 'Notes' => 7, 'HoursApproved' => 8, 'State' => 9, 'SubmissionDate' => 10, 'ApprovalDate' => 11, 'ApprovalNotes' => 12, 'FinancingDate' => 13, 'FinancingNotes' => 14, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'projCategoryId' => 1, 'projFinancingId' => 2, 'yearId' => 3, 'userId' => 4, 'title' => 5, 'description' => 6, 'notes' => 7, 'hoursApproved' => 8, 'state' => 9, 'submissionDate' => 10, 'approvalDate' => 11, 'approvalNotes' => 12, 'financingDate' => 13, 'financingNotes' => 14, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PROJ_CATEGORY_ID => 1, self::PROJ_FINANCING_ID => 2, self::YEAR_ID => 3, self::USER_ID => 4, self::TITLE => 5, self::DESCRIPTION => 6, self::NOTES => 7, self::HOURS_APPROVED => 8, self::STATE => 9, self::SUBMISSION_DATE => 10, self::APPROVAL_DATE => 11, self::APPROVAL_NOTES => 12, self::FINANCING_DATE => 13, self::FINANCING_NOTES => 14, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'proj_category_id' => 1, 'proj_financing_id' => 2, 'year_id' => 3, 'user_id' => 4, 'title' => 5, 'description' => 6, 'notes' => 7, 'hours_approved' => 8, 'state' => 9, 'submission_date' => 10, 'approval_date' => 11, 'approval_notes' => 12, 'financing_date' => 13, 'financing_notes' => 14, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProjCategoryId' => 1, 'ProjFinancingId' => 2, 'YearId' => 3, 'UserId' => 4, 'Title' => 5, 'Description' => 6, 'Notes' => 7, 'Addressees' => 8, 'Purposes' => 9, 'Goals' => 10, 'FinalReport' => 11, 'HoursApproved' => 12, 'State' => 13, 'SubmissionDate' => 14, 'ApprovalDate' => 15, 'ApprovalNotes' => 16, 'FinancingDate' => 17, 'FinancingNotes' => 18, 'EvaluationMin' => 19, 'EvaluationMax' => 20, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'projCategoryId' => 1, 'projFinancingId' => 2, 'yearId' => 3, 'userId' => 4, 'title' => 5, 'description' => 6, 'notes' => 7, 'addressees' => 8, 'purposes' => 9, 'goals' => 10, 'finalReport' => 11, 'hoursApproved' => 12, 'state' => 13, 'submissionDate' => 14, 'approvalDate' => 15, 'approvalNotes' => 16, 'financingDate' => 17, 'financingNotes' => 18, 'evaluationMin' => 19, 'evaluationMax' => 20, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PROJ_CATEGORY_ID => 1, self::PROJ_FINANCING_ID => 2, self::YEAR_ID => 3, self::USER_ID => 4, self::TITLE => 5, self::DESCRIPTION => 6, self::NOTES => 7, self::ADDRESSEES => 8, self::PURPOSES => 9, self::GOALS => 10, self::FINAL_REPORT => 11, self::HOURS_APPROVED => 12, self::STATE => 13, self::SUBMISSION_DATE => 14, self::APPROVAL_DATE => 15, self::APPROVAL_NOTES => 16, self::FINANCING_DATE => 17, self::FINANCING_NOTES => 18, self::EVALUATION_MIN => 19, self::EVALUATION_MAX => 20, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'proj_category_id' => 1, 'proj_financing_id' => 2, 'year_id' => 3, 'user_id' => 4, 'title' => 5, 'description' => 6, 'notes' => 7, 'addressees' => 8, 'purposes' => 9, 'goals' => 10, 'final_report' => 11, 'hours_approved' => 12, 'state' => 13, 'submission_date' => 14, 'approval_date' => 15, 'approval_notes' => 16, 'financing_date' => 17, 'financing_notes' => 18, 'evaluation_min' => 19, 'evaluation_max' => 20, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, )
 	);
 
 	/**
@@ -194,6 +212,10 @@ abstract class BaseSchoolprojectPeer {
 		$criteria->addSelectColumn(SchoolprojectPeer::TITLE);
 		$criteria->addSelectColumn(SchoolprojectPeer::DESCRIPTION);
 		$criteria->addSelectColumn(SchoolprojectPeer::NOTES);
+		$criteria->addSelectColumn(SchoolprojectPeer::ADDRESSEES);
+		$criteria->addSelectColumn(SchoolprojectPeer::PURPOSES);
+		$criteria->addSelectColumn(SchoolprojectPeer::GOALS);
+		$criteria->addSelectColumn(SchoolprojectPeer::FINAL_REPORT);
 		$criteria->addSelectColumn(SchoolprojectPeer::HOURS_APPROVED);
 		$criteria->addSelectColumn(SchoolprojectPeer::STATE);
 		$criteria->addSelectColumn(SchoolprojectPeer::SUBMISSION_DATE);
@@ -201,6 +223,8 @@ abstract class BaseSchoolprojectPeer {
 		$criteria->addSelectColumn(SchoolprojectPeer::APPROVAL_NOTES);
 		$criteria->addSelectColumn(SchoolprojectPeer::FINANCING_DATE);
 		$criteria->addSelectColumn(SchoolprojectPeer::FINANCING_NOTES);
+		$criteria->addSelectColumn(SchoolprojectPeer::EVALUATION_MIN);
+		$criteria->addSelectColumn(SchoolprojectPeer::EVALUATION_MAX);
 	}
 
 	/**

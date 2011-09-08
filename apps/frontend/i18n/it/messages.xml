@@ -2276,8 +2276,8 @@
         <target>Ore a consuntivo</target>
     </trans-unit>
     <trans-unit id="588">
-        <source>Resources</source>
-        <target>Risorse</target>
+        <source>Resources and schedule</source>
+        <target>Risorse e pianificazione temporale</target>
     </trans-unit>
     <trans-unit id="589">
         <source>Project</source>
@@ -2787,6 +2787,75 @@
         <source>focussed</source>
         <target>specifico</target>
     </trans-unit>
+    <trans-unit id="713">
+        <source>Addressees</source>
+        <target>Destinatari</target>
+    </trans-unit>
+    <trans-unit id="714">
+        <source>Purposes</source>
+        <target>Finalità</target>
+    </trans-unit>
+    <trans-unit id="715">
+        <source>Goals</source>
+        <target>Obiettivi</target>
+    </trans-unit>
+    <trans-unit id="716">
+        <source>Charged user</source>
+        <target>Incaricato</target>
+    </trans-unit>
+    <trans-unit id="717">
+        <source>Scheduled deadline</source>
+        <target>Scadenza prevista</target>
+    </trans-unit>
+    <trans-unit id="718">
+        <source>Final report</source>
+        <target>Relazione finale</target>
+    </trans-unit>
+    <trans-unit id="719">
+        <source>This activity has not been declared by the charged user</source>
+        <target>Questa attività non è stata dichiarata dalla persona incaricata</target>
+    </trans-unit>
+    <trans-unit id="720">
+        <source>Expected upshots</source>
+        <target>Esiti attesi</target>
+    </trans-unit>
+    <trans-unit id="721">
+        <source>Indicator</source>
+        <target>Indicatore</target>
+    </trans-unit>
+    <trans-unit id="722">
+        <source>Upshot</source>
+        <target>Esito</target>
+    </trans-unit>
+    <trans-unit id="723">
+        <source>Add upshot</source>
+        <target>Aggiungi esito</target>
+    </trans-unit>
+    <trans-unit id="724">
+        <source>Add a new expected upshot to this project</source>
+        <target>Aggiungi un nuovo esito atteso a questo progetto</target>
+    </trans-unit>
+    <trans-unit id="725">
+        <source>No upshots defined.</source>
+        <target>Nessun esito definito.</target>
+    </trans-unit>
+    <trans-unit id="726">
+        <source>Scheduled date</source>
+        <target>Data prevista</target>
+    </trans-unit>
+    <trans-unit id="726">
+        <source>Upshot #%id%</source>
+        <target>Esito n. %id%</target>
+    </trans-unit>
+    <trans-unit id="727">
+        <source>The upshot has been added. Please proceed with filling in the necessary information.</source>
+        <target>L'esito è stato aggiunto. Puoi procedere con la compilazione delle informazioni necessarie.</target>
+    </trans-unit>
+    <trans-unit id="728">
+        <source>Obtained upshots</source>
+        <target>Esiti ottenuti</target>
+    </trans-unit>
+
     </body>
   </file>
 </xliff>

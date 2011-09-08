@@ -947,8 +947,12 @@ CREATE TABLE `schoolproject`
 	`year_id` INTEGER  NOT NULL,
 	`user_id` INTEGER  NOT NULL,
 	`title` VARCHAR(255),
-	`description` VARCHAR(255),
+	`description` TEXT,
 	`notes` TEXT,
+	`addressees` TEXT,
+	`purposes` TEXT,
+	`goals` TEXT,
+	`final_report` TEXT,
 	`hours_approved` INTEGER,
 	`state` INTEGER,
 	`submission_date` DATE,
@@ -956,6 +960,8 @@ CREATE TABLE `schoolproject`
 	`approval_notes` TEXT,
 	`financing_date` DATE,
 	`financing_notes` TEXT,
+	`evaluation_min` INTEGER,
+	`evaluation_max` INTEGER,
 	PRIMARY KEY (`id`),
 	INDEX `schoolproject_FI_1` (`proj_category_id`),
 	CONSTRAINT `schoolproject_FK_1`
@@ -991,6 +997,7 @@ CREATE TABLE `proj_category`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`title` VARCHAR(255),
 	`rank` INTEGER  NOT NULL,
+	`resources` INTEGER,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
@@ -1053,7 +1060,6 @@ CREATE TABLE `proj_resource_type`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`description` VARCHAR(255),
-	`resource_type` INTEGER,
 	`role_id` INTEGER,
 	`standard_cost` DECIMAL(10,2),
 	`measurement_unit` VARCHAR(10),
@@ -1077,10 +1083,12 @@ CREATE TABLE `proj_resource`
 	`schoolproject_id` INTEGER,
 	`proj_resource_type_id` INTEGER,
 	`description` VARCHAR(255),
+	`charged_user_id` INTEGER,
 	`quantity_estimated` DECIMAL(10,2),
 	`quantity_approved` DECIMAL(10,2),
 	`quantity_final` DECIMAL(10,2),
 	`standard_cost` DECIMAL(10,2),
+	`scheduled_deadline` DATE,
 	PRIMARY KEY (`id`),
 	INDEX `proj_resource_FI_1` (`schoolproject_id`),
 	CONSTRAINT `proj_resource_FK_1`
@@ -1089,7 +1097,13 @@ CREATE TABLE `proj_resource`
 	INDEX `proj_resource_FI_2` (`proj_resource_type_id`),
 	CONSTRAINT `proj_resource_FK_2`
 		FOREIGN KEY (`proj_resource_type_id`)
-		REFERENCES `proj_resource_type` (`id`)
+		REFERENCES `proj_resource_type` (`id`),
+	INDEX `proj_resource_FI_3` (`charged_user_id`),
+	CONSTRAINT `proj_resource_FK_3`
+		FOREIGN KEY (`charged_user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -1128,6 +1142,29 @@ CREATE TABLE `proj_activity`
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- proj_upshot
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `proj_upshot`;
+
+
+CREATE TABLE `proj_upshot`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`schoolproject_id` INTEGER,
+	`description` VARCHAR(255),
+	`indicator` VARCHAR(255),
+	`upshot` VARCHAR(255),
+	`evaluation` INTEGER,
+	`scheduled_date` DATE,
+	PRIMARY KEY (`id`),
+	INDEX `proj_upshot_FI_1` (`schoolproject_id`),
+	CONSTRAINT `proj_upshot_FK_1`
+		FOREIGN KEY (`schoolproject_id`)
+		REFERENCES `schoolproject` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

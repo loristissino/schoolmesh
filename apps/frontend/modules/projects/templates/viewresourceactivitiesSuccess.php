@@ -13,6 +13,8 @@
 
 <h2><?php echo __('Activities within the resource «%resource%»', array('%resource%'=>$resource->__toString())) ?></h2>
 
+<p><?php echo __('Charged user') ?>: <?php echo $resource->getChargedUserProfile() ?></p>
+
 <?php if(sizeof($activities)>0): ?>
 
 <table cellspacing="0">
@@ -32,7 +34,17 @@
     <?php foreach ($activities as $activity): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <td>
-      <?php echo $activity->getPerformerProfile()->getFullname() ?>
+      <?php echo $activity->getPerformerProfile() ?>
+      <?php if(!$activity->getAcknowledgedAt() && $activity->getUserId()!=$resource->getChargedUserId()): ?>
+        <?php echo image_tag(
+          'dubious',
+          array(
+            'title'=>__('This activity has not been declared by the charged user'),
+            'size'=>'16x16',
+            )
+          )
+        ?>
+      <?php endif ?>
       </td>
       <td>
       <?php echo $activity->getBeginning('d/m/Y h:i') ?>

@@ -188,6 +188,32 @@ class Schoolproject extends BaseSchoolproject {
     
   }
 
+  public function deleteUpshot(sfGuardUserProfile $profile, ProjUpshot $upshot)
+  {
+    if($profile->getUserId()!=$this->getUserId())
+    {
+      $result['result']='error';
+      $result['message']='You are not allowed to remove upshots from this project.';
+      return $result;
+    }
+    
+    try
+    {
+      $upshot->delete();
+      $result['result']='notice';
+      $result['message']='The upshot has been deleted.';
+      return $result;
+    }
+    catch(Exception $e)
+    {
+      $result['result']='error';
+      $result['message']='The upshot could not be deleted.';
+      return $result;
+    }
+    
+  }
+
+
 
   public function addDeadline(sfGuardUserProfile $profile)
   {
@@ -265,6 +291,41 @@ class Schoolproject extends BaseSchoolproject {
     }
   }
 
+  public function addUpshot(sfGuardUserProfile $profile)
+  {
+    if($profile->getUserId()!=$this->getUserId())
+    {
+      $result['result']='error';
+      $result['message']='You are not allowed to add upshots to this project.';
+      return $result;
+    }
+    
+    if($this->getState()!=Workflow::PROJ_DRAFT)
+    {
+      $result['result']='error';
+      $result['message']='You are not allowed to add upshots to a project in this state.';
+      return $result;
+    }
+    
+    
+    try
+    {
+			$upshot=new ProjUpshot();
+			$upshot
+      ->setSchoolprojectId($this->getId())
+      ->save();
+      $result['result']='notice';
+      $result['message']='The upshot has been added. Please proceed with filling in the necessary information.';
+      $result['redirect']='projects/editupshot?id=' . $upshot->getId();
+      return $result;
+    }
+    catch(Exception $e)
+    {
+      $result['result']='error';
+      $result['message']='The upshot could not be added.';
+      return $result;
+    }
+  }
 
 
   public function updateFromForm($params)
@@ -276,6 +337,10 @@ class Schoolproject extends BaseSchoolproject {
       'hours_approved',
       'notes',
       'proj_category_id',
+      'purposes',
+      'addressees',
+      'goals',
+      'final_report',
       ), $params);
       
     return $this;
@@ -487,8 +552,116 @@ class Schoolproject extends BaseSchoolproject {
 				'Project'
         ));
     }
-    
-    
+
+    if(!$this->getAddressees())
+    {
+      $checkList->addCheck(new Check(
+				Check::FAILED,
+				'No addressees set',
+				'Project',
+        array(
+          'link_to'=>'projects/edit?id=' . $this->getId()
+          )
+        ));
+    }
+    else
+    {
+      $checkList->addCheck(new Check(
+				Check::PASSED,
+				'Addressees set',
+				'Project'
+        ));
+    }
+
+
+    if(!$this->getPurposes())
+    {
+      $checkList->addCheck(new Check(
+				Check::FAILED,
+				'No purposes set',
+				'Project',
+        array(
+          'link_to'=>'projects/edit?id=' . $this->getId()
+          )
+        ));
+    }
+    else
+    {
+      $checkList->addCheck(new Check(
+				Check::PASSED,
+				'Purposes set',
+				'Project'
+        ));
+    }
+
+    if(!$this->getGoals())
+    {
+      $checkList->addCheck(new Check(
+				Check::FAILED,
+				'No goals set',
+				'Project',
+        array(
+          'link_to'=>'projects/edit?id=' . $this->getId()
+          )
+        ));
+    }
+    else
+    {
+      $checkList->addCheck(new Check(
+				Check::PASSED,
+				'Goals set',
+				'Project'
+        ));
+    }
+
+    $upshots=$this->getProjUpshots();
+    if(sizeof($upshots)==0)
+    {
+      $checkList->addCheck(new Check(
+				Check::FAILED,
+				'No upshots defined',
+				'Expected pshots',
+        array(
+          'link_to'=>'projects/edit?id=' . $this->getId()
+          )
+        ));
+    }
+    else
+    {
+      foreach($upshots as $upshot)
+      {
+        if(!$upshot->getDescription())
+        {
+          $checkList->addCheck(new Check(
+            Check::FAILED,
+            'No description defined for upshot',
+            'Expected upshots',
+            array(
+              'link_to'=>'projects/editupshot?id=' . $upshot->getId(),
+              )
+            ));
+        }
+        if(!$upshot->getIndicator())
+        {
+          $checkList->addCheck(new Check(
+            Check::FAILED,
+            'No indicator defined for upshot',
+            'Expected upshots',
+            array(
+              'link_to'=>'projects/editupshot?id=' . $upshot->getId(),
+              )
+            ));
+        }
+      }
+      $checkList->addCheck(new Check(
+				Check::PASSED,
+				'At least an upshot is defined',
+				'Expected upshots'
+        )) ;
+
+    }
+
+
     $deadlines=$this->getProjDeadlines();
     if(sizeof($deadlines)==0)
     {
@@ -536,17 +709,23 @@ class Schoolproject extends BaseSchoolproject {
 
     }
 
+
+
+
     $resources=$this->getProjResources();
     if(sizeof($resources)==0)
     {
+      if($this->mustHaveResources())
+      {
       $checkList->addCheck(new Check(
 				Check::FAILED,
 				'No resource defined',
-				'Resources',
+				'Resources and schedule',
         array(
           'link_to'=>'projects/edit?id=' . $this->getId()
           )
         )) ;
+      }
     }
     else
     {
@@ -590,5 +769,16 @@ class Schoolproject extends BaseSchoolproject {
 		else
 			return NULL;
 	}
+
+  public function mayHaveResources()
+  {
+    return $this->getProjCategory()->getResources()>0;
+  }
+
+  public function mustHaveResources()
+  {
+    return $this->getProjCategory()->getResources()==2;
+  }
+
 
 } // Schoolproject

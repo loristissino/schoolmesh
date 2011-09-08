@@ -16,7 +16,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
   unset($this['user_id'], $this['year_id'], $this['state']);
     
 	$this['title']->getWidget()->setAttribute('size', '80');
-	$this['description']->getWidget()->setAttribute('size', '100');
 
 /*	$this['user_id']->getWidget()->setOption('model', 'sfGuardUserProfile');
 	$this['user_id']->getWidget()->setOption('peer_method', 'retrieveAllButStudents');
@@ -25,6 +24,12 @@ class SchoolprojectForm extends BaseSchoolprojectForm
 	$this->widgetSchema->setLabel('proj_category_id', 'Category');
 	$this->widgetSchema->setLabel('proj_financing_id', 'Financing');
   $this['notes']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
+  $this['addressees']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
+  $this['purposes']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
+  $this['goals']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
+  $this['description']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
+  $this['final_report']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
+  
 /*
   $this->widgetSchema->setLabel('user_id', 'Coordinator');
 */	
@@ -32,6 +37,11 @@ class SchoolprojectForm extends BaseSchoolprojectForm
   
   public function addStateDependentConfiguration($state)
   {
+    unset(
+      $this['evaluation_min'],
+      $this['evaluation_max']
+      );
+    
     switch($state)
     {
       case Workflow::PROJ_DRAFT:
@@ -41,7 +51,9 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_date'], 
           $this['financing_date'],
           $this['approval_notes'], 
-          $this['financing_notes']
+          $this['financing_notes'],
+          $this['notes'],
+          $this['final_report']
           );
         break;
       case Workflow::PROJ_SUBMITTED:
@@ -56,7 +68,10 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_date'],
           $this['financing_date'],
           $this['approval_notes'], 
-          $this['financing_notes']
+          $this['financing_notes'],
+          $this['addressees'],
+          $this['purposes'],
+          $this['goals']
           );
         break;
       case Workflow::PROJ_APPROVED:
@@ -71,7 +86,10 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_date'],
           $this['financing_date'],
           $this['approval_notes'], 
-          $this['financing_notes']
+          $this['financing_notes'],
+          $this['addressees'],
+          $this['purposes'],
+          $this['goals']
           );
         break;
       case Workflow::PROJ_FINANCED:
@@ -86,7 +104,11 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_date'],
           $this['financing_date'],
           $this['approval_notes'], 
-          $this['financing_notes']
+          $this['financing_notes'],
+          $this['addressees'],
+          $this['purposes'],
+          $this['goals']
+
           );
         break;
       case Workflow::PROJ_FINISHED:

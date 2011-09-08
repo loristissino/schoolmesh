@@ -23,6 +23,19 @@
     <th><label for="schoolproject_resource"><?php echo __('Resource') ?></label></th>
     <td><?php echo $resource->getDescription() ?></td>
   </tr>
+  <tr>
+    <th><label for="schoolproject_charged_user"><?php echo __('Charged user') ?></label></th>
+    <td><?php echo $resource->getChargedUserProfile() ?>
+    <?php if($resource->getChargedUserId()!=$sf_user->getProfile()->getId()): ?>
+    <?php echo image_tag(
+      'dubious',
+      array(
+        'title'=>__('You are not in charge for this resource')
+        )
+      ) ?>
+    <?php endif ?>
+    </td>
+  </tr>
     <?php echo $form ?>
 	<tr>
       <td colspan="2">

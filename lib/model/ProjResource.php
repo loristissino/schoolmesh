@@ -32,6 +32,11 @@ class ProjResource extends BaseProjResource {
       ;
   }
   
+  public function getChargedUserProfile()
+  {
+    return sfGuardUserProfilePeer::retrieveByPK($this->getChargedUserId());
+  }
+  
   public function updateFromForm($params, $user=null, $sf_context=null)
   {
     $old_quantity_approved=$this->getQuantityApproved();
@@ -42,7 +47,14 @@ class ProjResource extends BaseProjResource {
       'description',
       'quantity_estimated',
       'quantity_approved',
+      'charged_user_id',
+      'scheduled_deadline',
       ), $params);
+      
+    if(!$this->getProjResourceType()->getRoleId())
+    {
+      $this->setChargedUserId(null);
+    }
       
     try
     {
@@ -104,7 +116,10 @@ class ProjResource extends BaseProjResource {
   }
   public function getProjActivities($criteria = null, PropelPDO $con = null)
   {
-    return self::getProjActivitys($criteria, $con);
+    $c=new Criteria();
+    $c->addAscendingOrderByColumn(ProjActivityPeer::BEGINNING);
+    $c->add(ProjActivityPeer::PROJ_RESOURCE_ID, $this->getId());
+    return self::getProjActivitys($c, $con);
   }
 
   public function acknowledgeActivity($user_id, ProjActivity $activity)

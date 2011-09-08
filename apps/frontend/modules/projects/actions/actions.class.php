@@ -481,6 +481,24 @@ class projectsActions extends sfActions
     return $this->redirect('projects/edit?id='. $this->project->getId());
    } 
 
+  public function executeAddupshot(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post'));
+    $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPk($request->getParameter('id')));
+    
+    $result=$this->project->addupshot($this->getUser()->getProfile());
+    
+    $this->getUser()->setFlash($result['result'],
+					$this->getContext()->getI18N()->__($result['message'])
+					);
+		
+    if(array_key_exists('redirect', $result))
+    {
+      return $this->redirect($result['redirect']);
+    }
+    return $this->redirect('projects/edit?id='. $this->project->getId());
+   } 
+
 
 
   public function executeDeletedeadline(sfWebRequest $request)
@@ -488,14 +506,15 @@ class projectsActions extends sfActions
     $this->forward404Unless($request->isMethod('post'));
     $this->forward404Unless($this->deadline=ProjDeadlinePeer::retrieveByPk($request->getParameter('id')));
     
+    $id=$this->deadline->getSchoolprojectId();
+    
     $result=$this->deadline->getSchoolproject()->deleteDeadline($this->getUser()->getProfile(), $this->deadline);
     
     $this->getUser()->setFlash($result['result'],
 					$this->getContext()->getI18N()->__($result['message'])
 					);
 					
-    return $this->redirect('projects/edit?id='. $this->deadline->getSchoolproject()->getId());
-
+    return $this->redirect('projects/edit?id='. $id);
     
   }
 
@@ -503,18 +522,35 @@ class projectsActions extends sfActions
   {
     $this->forward404Unless($request->isMethod('post'));
     $this->forward404Unless($this->resource=ProjResourcePeer::retrieveByPk($request->getParameter('id')));
-    
+
+    $id=$this->resource->getSchoolprojectId();
+
     $result=$this->resource->getSchoolproject()->deleteResource($this->getUser()->getProfile(), $this->resource);
     
     $this->getUser()->setFlash($result['result'],
 					$this->getContext()->getI18N()->__($result['message'])
 					);
 					
-    return $this->redirect('projects/edit?id='. $this->resource->getSchoolproject()->getId());
+    return $this->redirect('projects/edit?id='. $id);
 
     
   }
 
+  public function executeDeleteupshot(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post'));
+    $this->forward404Unless($this->upshot=ProjUpshotPeer::retrieveByPk($request->getParameter('id')));
+    
+    $id=$this->upshot->getSchoolprojectId();
+    
+    $result=$this->upshot->getSchoolproject()->deleteUpshot($this->getUser()->getProfile(), $this->upshot);
+    
+    $this->getUser()->setFlash($result['result'],
+					$this->getContext()->getI18N()->__($result['message'])
+					);
+					
+    return $this->redirect('projects/edit?id='. $id);
+  }
 
 
   public function executeEditdeadline(sfWebRequest $request)
@@ -571,15 +607,15 @@ class projectsActions extends sfActions
     $this->forward404Unless($this->resource->isEditableBy($this->getUser())); // the resource can be edited only by the owner or admins...
     
     $this->form = new ProjResourceForm($this->resource);
+    
+    if(!$this->resource->getScheduledDeadline())
+    {
+      $this->form->setDefault('scheduled_deadline', time());
+    }
 
-/*    $this->form->addStateDependentConfiguration(
-      $this->deadline->getSchoolProject()->getState(),
-      array(
-        'needs_attachment'=>$this->deadline->getNeedsAttachment()===true
-        )
-      );
-*/
-	if ($request->isMethod('post'))
+    $this->form->setDefault('charged_user_id', $this->resource->getChargedUserId());
+
+    if ($request->isMethod('post'))
 		{
 			$this->form->bind($request->getParameter('proj_resource'));
 			if ($this->form->isValid())
@@ -607,6 +643,43 @@ class projectsActions extends sfActions
 
 
 
+  }
+
+  public function executeEditupshot(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->upshot=ProjUpshotPeer::retrieveByPk($request->getParameter('id')));
+    $this->forward404Unless($this->upshot->isEditableBy($this->getUser())); // the resource can be edited only by the owner or admins...
+    
+    $this->form = new ProjUpshotForm($this->upshot);
+    
+    if(!$this->upshot->getScheduledDate())
+    {
+      $this->form->setDefault('scheduled_date', time());
+    }
+    
+    if ($request->isMethod('post'))
+		{
+			$this->form->bind($request->getParameter('proj_upshot'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+				
+				$this->upshot = ProjUpshotPeer::retrieveByPK($params['id']);
+				
+				$result=$this->upshot->updateFromForm($params, $this->getUser(), $this->getContext());
+				
+				$this->getUser()->setFlash($result['result'],
+					$this->getContext()->getI18N()->__($result['message'])
+					);
+        
+        if($result['result']=='notice')
+        {
+          return $this->redirect('projects/edit?id='. $this->upshot->getSchoolprojectId());
+        }
+        return $this->redirect('projects/editupshot?id='. $this->upshot->getId());
+			}
+			
+		}
   }
 
   public function executeViewresourceactivities(sfWebRequest $request)
@@ -693,7 +766,8 @@ class projectsActions extends sfActions
   if ($this->project)
   {
     $this->deadlines=$this->project->getProjDeadlines();
-    $this->resources=$this->project->getProjResources(); //WithActivityCount();
+    $this->resources=$this->project->getProjResources();
+    $this->upshots  =$this->project->getProjUpshots();
   }
   
   
@@ -753,6 +827,8 @@ class projectsActions extends sfActions
         ->setYearId(sfConfig::get('app_config_current_year'))
         ->setUserId($this->getUser()->getProfile()->getUserId())
         ->setState(Workflow::PROJ_DRAFT)
+        ->setEvaluationMin(sfConfig::get('app_config_projects_evaluation_min', 1))
+        ->setEvaluationMax(sfConfig::get('app_config_projects_evaluation_max', 4))
         ->save();
         $this->project->addWfEvent(
           $this->getUser()->getProfile()->getUserId(),

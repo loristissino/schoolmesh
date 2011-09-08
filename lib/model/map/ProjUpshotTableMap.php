@@ -2,7 +2,7 @@
 
 
 /**
- * This class defines the structure of the 'proj_resource' table.
+ * This class defines the structure of the 'proj_upshot' table.
  *
  *
  *
@@ -13,12 +13,12 @@
  *
  * @package    lib.model.map
  */
-class ProjResourceTableMap extends TableMap {
+class ProjUpshotTableMap extends TableMap {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.ProjResourceTableMap';
+	const CLASS_NAME = 'lib.model.map.ProjUpshotTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators
@@ -30,22 +30,19 @@ class ProjResourceTableMap extends TableMap {
 	public function initialize()
 	{
 	  // attributes
-		$this->setName('proj_resource');
-		$this->setPhpName('ProjResource');
-		$this->setClassname('ProjResource');
+		$this->setName('proj_upshot');
+		$this->setPhpName('ProjUpshot');
+		$this->setClassname('ProjUpshot');
 		$this->setPackage('lib.model');
 		$this->setUseIdGenerator(true);
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
 		$this->addForeignKey('SCHOOLPROJECT_ID', 'SchoolprojectId', 'INTEGER', 'schoolproject', 'ID', false, null, null);
-		$this->addForeignKey('PROJ_RESOURCE_TYPE_ID', 'ProjResourceTypeId', 'INTEGER', 'proj_resource_type', 'ID', false, null, null);
 		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 255, null);
-		$this->addForeignKey('CHARGED_USER_ID', 'ChargedUserId', 'INTEGER', 'sf_guard_user', 'ID', false, null, null);
-		$this->addColumn('QUANTITY_ESTIMATED', 'QuantityEstimated', 'DECIMAL', false, 10, null);
-		$this->addColumn('QUANTITY_APPROVED', 'QuantityApproved', 'DECIMAL', false, 10, null);
-		$this->addColumn('QUANTITY_FINAL', 'QuantityFinal', 'DECIMAL', false, 10, null);
-		$this->addColumn('STANDARD_COST', 'StandardCost', 'DECIMAL', false, 10, null);
-		$this->addColumn('SCHEDULED_DEADLINE', 'ScheduledDeadline', 'DATE', false, null, null);
+		$this->addColumn('INDICATOR', 'Indicator', 'VARCHAR', false, 255, null);
+		$this->addColumn('UPSHOT', 'Upshot', 'VARCHAR', false, 255, null);
+		$this->addColumn('EVALUATION', 'Evaluation', 'INTEGER', false, null, null);
+		$this->addColumn('SCHEDULED_DATE', 'ScheduledDate', 'DATE', false, null, null);
 		// validators
 	} // initialize()
 
@@ -55,9 +52,6 @@ class ProjResourceTableMap extends TableMap {
 	public function buildRelations()
 	{
     $this->addRelation('Schoolproject', 'Schoolproject', RelationMap::MANY_TO_ONE, array('schoolproject_id' => 'id', ), null, null);
-    $this->addRelation('ProjResourceType', 'ProjResourceType', RelationMap::MANY_TO_ONE, array('proj_resource_type_id' => 'id', ), null, null);
-    $this->addRelation('sfGuardUser', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('charged_user_id' => 'id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('ProjActivity', 'ProjActivity', RelationMap::ONE_TO_MANY, array('id' => 'proj_resource_id', ), null, null);
 	} // buildRelations()
 
 	/**
@@ -73,4 +67,4 @@ class ProjResourceTableMap extends TableMap {
 		);
 	} // getBehaviors()
 
-} // ProjResourceTableMap
+} // ProjUpshotTableMap

@@ -25,7 +25,7 @@ abstract class BaseProjResourcePeer {
 	const TM_CLASS = 'ProjResourceTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 10;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -42,6 +42,9 @@ abstract class BaseProjResourcePeer {
 	/** the column name for the DESCRIPTION field */
 	const DESCRIPTION = 'proj_resource.DESCRIPTION';
 
+	/** the column name for the CHARGED_USER_ID field */
+	const CHARGED_USER_ID = 'proj_resource.CHARGED_USER_ID';
+
 	/** the column name for the QUANTITY_ESTIMATED field */
 	const QUANTITY_ESTIMATED = 'proj_resource.QUANTITY_ESTIMATED';
 
@@ -53,6 +56,9 @@ abstract class BaseProjResourcePeer {
 
 	/** the column name for the STANDARD_COST field */
 	const STANDARD_COST = 'proj_resource.STANDARD_COST';
+
+	/** the column name for the SCHEDULED_DEADLINE field */
+	const SCHEDULED_DEADLINE = 'proj_resource.SCHEDULED_DEADLINE';
 
 	/**
 	 * An identiy map to hold any loaded instances of ProjResource objects.
@@ -77,11 +83,11 @@ abstract class BaseProjResourcePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'SchoolprojectId', 'ProjResourceTypeId', 'Description', 'QuantityEstimated', 'QuantityApproved', 'QuantityFinal', 'StandardCost', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'schoolprojectId', 'projResourceTypeId', 'description', 'quantityEstimated', 'quantityApproved', 'quantityFinal', 'standardCost', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::SCHOOLPROJECT_ID, self::PROJ_RESOURCE_TYPE_ID, self::DESCRIPTION, self::QUANTITY_ESTIMATED, self::QUANTITY_APPROVED, self::QUANTITY_FINAL, self::STANDARD_COST, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'schoolproject_id', 'proj_resource_type_id', 'description', 'quantity_estimated', 'quantity_approved', 'quantity_final', 'standard_cost', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'SchoolprojectId', 'ProjResourceTypeId', 'Description', 'ChargedUserId', 'QuantityEstimated', 'QuantityApproved', 'QuantityFinal', 'StandardCost', 'ScheduledDeadline', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'schoolprojectId', 'projResourceTypeId', 'description', 'chargedUserId', 'quantityEstimated', 'quantityApproved', 'quantityFinal', 'standardCost', 'scheduledDeadline', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::SCHOOLPROJECT_ID, self::PROJ_RESOURCE_TYPE_ID, self::DESCRIPTION, self::CHARGED_USER_ID, self::QUANTITY_ESTIMATED, self::QUANTITY_APPROVED, self::QUANTITY_FINAL, self::STANDARD_COST, self::SCHEDULED_DEADLINE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'schoolproject_id', 'proj_resource_type_id', 'description', 'charged_user_id', 'quantity_estimated', 'quantity_approved', 'quantity_final', 'standard_cost', 'scheduled_deadline', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	/**
@@ -91,11 +97,11 @@ abstract class BaseProjResourcePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'SchoolprojectId' => 1, 'ProjResourceTypeId' => 2, 'Description' => 3, 'QuantityEstimated' => 4, 'QuantityApproved' => 5, 'QuantityFinal' => 6, 'StandardCost' => 7, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'schoolprojectId' => 1, 'projResourceTypeId' => 2, 'description' => 3, 'quantityEstimated' => 4, 'quantityApproved' => 5, 'quantityFinal' => 6, 'standardCost' => 7, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SCHOOLPROJECT_ID => 1, self::PROJ_RESOURCE_TYPE_ID => 2, self::DESCRIPTION => 3, self::QUANTITY_ESTIMATED => 4, self::QUANTITY_APPROVED => 5, self::QUANTITY_FINAL => 6, self::STANDARD_COST => 7, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'schoolproject_id' => 1, 'proj_resource_type_id' => 2, 'description' => 3, 'quantity_estimated' => 4, 'quantity_approved' => 5, 'quantity_final' => 6, 'standard_cost' => 7, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'SchoolprojectId' => 1, 'ProjResourceTypeId' => 2, 'Description' => 3, 'ChargedUserId' => 4, 'QuantityEstimated' => 5, 'QuantityApproved' => 6, 'QuantityFinal' => 7, 'StandardCost' => 8, 'ScheduledDeadline' => 9, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'schoolprojectId' => 1, 'projResourceTypeId' => 2, 'description' => 3, 'chargedUserId' => 4, 'quantityEstimated' => 5, 'quantityApproved' => 6, 'quantityFinal' => 7, 'standardCost' => 8, 'scheduledDeadline' => 9, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SCHOOLPROJECT_ID => 1, self::PROJ_RESOURCE_TYPE_ID => 2, self::DESCRIPTION => 3, self::CHARGED_USER_ID => 4, self::QUANTITY_ESTIMATED => 5, self::QUANTITY_APPROVED => 6, self::QUANTITY_FINAL => 7, self::STANDARD_COST => 8, self::SCHEDULED_DEADLINE => 9, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'schoolproject_id' => 1, 'proj_resource_type_id' => 2, 'description' => 3, 'charged_user_id' => 4, 'quantity_estimated' => 5, 'quantity_approved' => 6, 'quantity_final' => 7, 'standard_cost' => 8, 'scheduled_deadline' => 9, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	/**
@@ -169,10 +175,12 @@ abstract class BaseProjResourcePeer {
 		$criteria->addSelectColumn(ProjResourcePeer::SCHOOLPROJECT_ID);
 		$criteria->addSelectColumn(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID);
 		$criteria->addSelectColumn(ProjResourcePeer::DESCRIPTION);
+		$criteria->addSelectColumn(ProjResourcePeer::CHARGED_USER_ID);
 		$criteria->addSelectColumn(ProjResourcePeer::QUANTITY_ESTIMATED);
 		$criteria->addSelectColumn(ProjResourcePeer::QUANTITY_APPROVED);
 		$criteria->addSelectColumn(ProjResourcePeer::QUANTITY_FINAL);
 		$criteria->addSelectColumn(ProjResourcePeer::STANDARD_COST);
+		$criteria->addSelectColumn(ProjResourcePeer::SCHEDULED_DEADLINE);
 	}
 
 	/**
@@ -519,6 +527,56 @@ abstract class BaseProjResourcePeer {
 
 
 	/**
+	 * Returns the number of rows matching criteria, joining the related sfGuardUser table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinsfGuardUser(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(ProjResourcePeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			ProjResourcePeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(ProjResourcePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(ProjResourcePeer::CHARGED_USER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
 	 * Selects a collection of ProjResource objects pre-filled with their Schoolproject objects.
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
@@ -651,6 +709,72 @@ abstract class BaseProjResourcePeer {
 
 
 	/**
+	 * Selects a collection of ProjResource objects pre-filled with their sfGuardUser objects.
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of ProjResource objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinsfGuardUser(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		ProjResourcePeer::addSelectColumns($criteria);
+		$startcol = (ProjResourcePeer::NUM_COLUMNS - ProjResourcePeer::NUM_LAZY_LOAD_COLUMNS);
+		sfGuardUserPeer::addSelectColumns($criteria);
+
+		$criteria->addJoin(ProjResourcePeer::CHARGED_USER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = ProjResourcePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ProjResourcePeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+
+				$cls = ProjResourcePeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				ProjResourcePeer::addInstanceToPool($obj1, $key1);
+			} // if $obj1 already loaded
+
+			$key2 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			if ($key2 !== null) {
+				$obj2 = sfGuardUserPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol);
+					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 already loaded
+				
+				// Add the $obj1 (ProjResource) to $obj2 (sfGuardUser)
+				$obj2->addProjResource($obj1);
+
+			} // if joined row was not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
 	 * Returns the number of rows matching criteria, joining all related tables
 	 *
 	 * @param      Criteria $criteria
@@ -689,6 +813,8 @@ abstract class BaseProjResourcePeer {
 		$criteria->addJoin(ProjResourcePeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID, ProjResourceTypePeer::ID, $join_behavior);
+
+		$criteria->addJoin(ProjResourcePeer::CHARGED_USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -729,9 +855,14 @@ abstract class BaseProjResourcePeer {
 		ProjResourceTypePeer::addSelectColumns($criteria);
 		$startcol4 = $startcol3 + (ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS);
 
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol5 = $startcol4 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
 		$criteria->addJoin(ProjResourcePeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
 
 		$criteria->addJoin(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID, ProjResourceTypePeer::ID, $join_behavior);
+
+		$criteria->addJoin(ProjResourcePeer::CHARGED_USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
@@ -786,6 +917,24 @@ abstract class BaseProjResourcePeer {
 				$obj3->addProjResource($obj1);
 			} // if joined row not null
 
+			// Add objects for joined sfGuardUser rows
+
+			$key4 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol4);
+			if ($key4 !== null) {
+				$obj4 = sfGuardUserPeer::getInstanceFromPool($key4);
+				if (!$obj4) {
+
+					$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj4 = new $cls();
+					$obj4->hydrate($row, $startcol4);
+					sfGuardUserPeer::addInstanceToPool($obj4, $key4);
+				} // if obj4 loaded
+
+				// Add the $obj1 (ProjResource) to the collection in $obj4 (sfGuardUser)
+				$obj4->addProjResource($obj1);
+			} // if joined row not null
+
 			$results[] = $obj1;
 		}
 		$stmt->closeCursor();
@@ -830,6 +979,8 @@ abstract class BaseProjResourcePeer {
 		}
 	
 		$criteria->addJoin(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID, ProjResourceTypePeer::ID, $join_behavior);
+
+		$criteria->addJoin(ProjResourcePeer::CHARGED_USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -881,6 +1032,60 @@ abstract class BaseProjResourcePeer {
 	
 		$criteria->addJoin(ProjResourcePeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
 
+		$criteria->addJoin(ProjResourcePeer::CHARGED_USER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related sfGuardUser table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAllExceptsfGuardUser(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(ProjResourcePeer::TABLE_NAME);
+		
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			ProjResourcePeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY should not affect count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(ProjResourcePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+	
+		$criteria->addJoin(ProjResourcePeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
+
+		$criteria->addJoin(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID, ProjResourceTypePeer::ID, $join_behavior);
+
 		$stmt = BasePeer::doCount($criteria, $con);
 
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -920,7 +1125,12 @@ abstract class BaseProjResourcePeer {
 		ProjResourceTypePeer::addSelectColumns($criteria);
 		$startcol3 = $startcol2 + (ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS);
 
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
 		$criteria->addJoin(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID, ProjResourceTypePeer::ID, $join_behavior);
+
+		$criteria->addJoin(ProjResourcePeer::CHARGED_USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 
 		$stmt = BasePeer::doSelect($criteria, $con);
@@ -959,6 +1169,25 @@ abstract class BaseProjResourcePeer {
 
 			} // if joined row is not null
 
+				// Add objects for joined sfGuardUser rows
+
+				$key3 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+				if ($key3 !== null) {
+					$obj3 = sfGuardUserPeer::getInstanceFromPool($key3);
+					if (!$obj3) {
+	
+						$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj3 = new $cls();
+					$obj3->hydrate($row, $startcol3);
+					sfGuardUserPeer::addInstanceToPool($obj3, $key3);
+				} // if $obj3 already loaded
+
+				// Add the $obj1 (ProjResource) to the collection in $obj3 (sfGuardUser)
+				$obj3->addProjResource($obj1);
+
+			} // if joined row is not null
+
 			$results[] = $obj1;
 		}
 		$stmt->closeCursor();
@@ -993,7 +1222,12 @@ abstract class BaseProjResourcePeer {
 		SchoolprojectPeer::addSelectColumns($criteria);
 		$startcol3 = $startcol2 + (SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS);
 
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
 		$criteria->addJoin(ProjResourcePeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
+
+		$criteria->addJoin(ProjResourcePeer::CHARGED_USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 
 		$stmt = BasePeer::doSelect($criteria, $con);
@@ -1029,6 +1263,122 @@ abstract class BaseProjResourcePeer {
 
 				// Add the $obj1 (ProjResource) to the collection in $obj2 (Schoolproject)
 				$obj2->addProjResource($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined sfGuardUser rows
+
+				$key3 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+				if ($key3 !== null) {
+					$obj3 = sfGuardUserPeer::getInstanceFromPool($key3);
+					if (!$obj3) {
+	
+						$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj3 = new $cls();
+					$obj3->hydrate($row, $startcol3);
+					sfGuardUserPeer::addInstanceToPool($obj3, $key3);
+				} // if $obj3 already loaded
+
+				// Add the $obj1 (ProjResource) to the collection in $obj3 (sfGuardUser)
+				$obj3->addProjResource($obj1);
+
+			} // if joined row is not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Selects a collection of ProjResource objects pre-filled with all related objects except sfGuardUser.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of ProjResource objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAllExceptsfGuardUser(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		// $criteria->getDbName() will return the same object if not set to another value
+		// so == check is okay and faster
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		ProjResourcePeer::addSelectColumns($criteria);
+		$startcol2 = (ProjResourcePeer::NUM_COLUMNS - ProjResourcePeer::NUM_LAZY_LOAD_COLUMNS);
+
+		SchoolprojectPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		ProjResourceTypePeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(ProjResourcePeer::SCHOOLPROJECT_ID, SchoolprojectPeer::ID, $join_behavior);
+
+		$criteria->addJoin(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID, ProjResourceTypePeer::ID, $join_behavior);
+
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = ProjResourcePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ProjResourcePeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = ProjResourcePeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				ProjResourcePeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+				// Add objects for joined Schoolproject rows
+
+				$key2 = SchoolprojectPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				if ($key2 !== null) {
+					$obj2 = SchoolprojectPeer::getInstanceFromPool($key2);
+					if (!$obj2) {
+	
+						$cls = SchoolprojectPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					SchoolprojectPeer::addInstanceToPool($obj2, $key2);
+				} // if $obj2 already loaded
+
+				// Add the $obj1 (ProjResource) to the collection in $obj2 (Schoolproject)
+				$obj2->addProjResource($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined ProjResourceType rows
+
+				$key3 = ProjResourceTypePeer::getPrimaryKeyHashFromRow($row, $startcol3);
+				if ($key3 !== null) {
+					$obj3 = ProjResourceTypePeer::getInstanceFromPool($key3);
+					if (!$obj3) {
+	
+						$cls = ProjResourceTypePeer::getOMClass(false);
+
+					$obj3 = new $cls();
+					$obj3->hydrate($row, $startcol3);
+					ProjResourceTypePeer::addInstanceToPool($obj3, $key3);
+				} // if $obj3 already loaded
+
+				// Add the $obj1 (ProjResource) to the collection in $obj3 (ProjResourceType)
+				$obj3->addProjResource($obj1);
 
 			} // if joined row is not null
 

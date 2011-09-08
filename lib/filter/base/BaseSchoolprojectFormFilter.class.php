@@ -19,6 +19,10 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
       'title'             => new sfWidgetFormFilterInput(),
       'description'       => new sfWidgetFormFilterInput(),
       'notes'             => new sfWidgetFormFilterInput(),
+      'addressees'        => new sfWidgetFormFilterInput(),
+      'purposes'          => new sfWidgetFormFilterInput(),
+      'goals'             => new sfWidgetFormFilterInput(),
+      'final_report'      => new sfWidgetFormFilterInput(),
       'hours_approved'    => new sfWidgetFormFilterInput(),
       'state'             => new sfWidgetFormFilterInput(),
       'submission_date'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
@@ -26,6 +30,8 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
       'approval_notes'    => new sfWidgetFormFilterInput(),
       'financing_date'    => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'financing_notes'   => new sfWidgetFormFilterInput(),
+      'evaluation_min'    => new sfWidgetFormFilterInput(),
+      'evaluation_max'    => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -36,6 +42,10 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
       'title'             => new sfValidatorPass(array('required' => false)),
       'description'       => new sfValidatorPass(array('required' => false)),
       'notes'             => new sfValidatorPass(array('required' => false)),
+      'addressees'        => new sfValidatorPass(array('required' => false)),
+      'purposes'          => new sfValidatorPass(array('required' => false)),
+      'goals'             => new sfValidatorPass(array('required' => false)),
+      'final_report'      => new sfValidatorPass(array('required' => false)),
       'hours_approved'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'state'             => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'submission_date'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
@@ -43,6 +53,8 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
       'approval_notes'    => new sfValidatorPass(array('required' => false)),
       'financing_date'    => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'financing_notes'   => new sfValidatorPass(array('required' => false)),
+      'evaluation_min'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'evaluation_max'    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('schoolproject_filters[%s]');
@@ -68,6 +80,10 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
       'title'             => 'Text',
       'description'       => 'Text',
       'notes'             => 'Text',
+      'addressees'        => 'Text',
+      'purposes'          => 'Text',
+      'goals'             => 'Text',
+      'final_report'      => 'Text',
       'hours_approved'    => 'Number',
       'state'             => 'Number',
       'submission_date'   => 'Date',
@@ -75,6 +91,8 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
       'approval_notes'    => 'Text',
       'financing_date'    => 'Date',
       'financing_notes'   => 'Text',
+      'evaluation_min'    => 'Number',
+      'evaluation_max'    => 'Number',
     );
   }
 }

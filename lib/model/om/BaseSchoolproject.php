@@ -67,6 +67,30 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	protected $notes;
 
 	/**
+	 * The value for the addressees field.
+	 * @var        string
+	 */
+	protected $addressees;
+
+	/**
+	 * The value for the purposes field.
+	 * @var        string
+	 */
+	protected $purposes;
+
+	/**
+	 * The value for the goals field.
+	 * @var        string
+	 */
+	protected $goals;
+
+	/**
+	 * The value for the final_report field.
+	 * @var        string
+	 */
+	protected $final_report;
+
+	/**
 	 * The value for the hours_approved field.
 	 * @var        int
 	 */
@@ -109,6 +133,18 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	protected $financing_notes;
 
 	/**
+	 * The value for the evaluation_min field.
+	 * @var        int
+	 */
+	protected $evaluation_min;
+
+	/**
+	 * The value for the evaluation_max field.
+	 * @var        int
+	 */
+	protected $evaluation_max;
+
+	/**
 	 * @var        ProjCategory
 	 */
 	protected $aProjCategory;
@@ -147,6 +183,16 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	 * @var        Criteria The criteria used to select the current contents of collProjResources.
 	 */
 	private $lastProjResourceCriteria = null;
+
+	/**
+	 * @var        array ProjUpshot[] Collection to store aggregation of ProjUpshot objects.
+	 */
+	protected $collProjUpshots;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collProjUpshots.
+	 */
+	private $lastProjUpshotCriteria = null;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -244,6 +290,46 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	public function getNotes()
 	{
 		return $this->notes;
+	}
+
+	/**
+	 * Get the [addressees] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getAddressees()
+	{
+		return $this->addressees;
+	}
+
+	/**
+	 * Get the [purposes] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getPurposes()
+	{
+		return $this->purposes;
+	}
+
+	/**
+	 * Get the [goals] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getGoals()
+	{
+		return $this->goals;
+	}
+
+	/**
+	 * Get the [final_report] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getFinalReport()
+	{
+		return $this->final_report;
 	}
 
 	/**
@@ -398,6 +484,26 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	public function getFinancingNotes()
 	{
 		return $this->financing_notes;
+	}
+
+	/**
+	 * Get the [evaluation_min] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getEvaluationMin()
+	{
+		return $this->evaluation_min;
+	}
+
+	/**
+	 * Get the [evaluation_max] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getEvaluationMax()
+	{
+		return $this->evaluation_max;
 	}
 
 	/**
@@ -575,6 +681,86 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setNotes()
+
+	/**
+	 * Set the value of [addressees] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Schoolproject The current object (for fluent API support)
+	 */
+	public function setAddressees($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->addressees !== $v) {
+			$this->addressees = $v;
+			$this->modifiedColumns[] = SchoolprojectPeer::ADDRESSEES;
+		}
+
+		return $this;
+	} // setAddressees()
+
+	/**
+	 * Set the value of [purposes] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Schoolproject The current object (for fluent API support)
+	 */
+	public function setPurposes($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->purposes !== $v) {
+			$this->purposes = $v;
+			$this->modifiedColumns[] = SchoolprojectPeer::PURPOSES;
+		}
+
+		return $this;
+	} // setPurposes()
+
+	/**
+	 * Set the value of [goals] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Schoolproject The current object (for fluent API support)
+	 */
+	public function setGoals($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->goals !== $v) {
+			$this->goals = $v;
+			$this->modifiedColumns[] = SchoolprojectPeer::GOALS;
+		}
+
+		return $this;
+	} // setGoals()
+
+	/**
+	 * Set the value of [final_report] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Schoolproject The current object (for fluent API support)
+	 */
+	public function setFinalReport($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->final_report !== $v) {
+			$this->final_report = $v;
+			$this->modifiedColumns[] = SchoolprojectPeer::FINAL_REPORT;
+		}
+
+		return $this;
+	} // setFinalReport()
 
 	/**
 	 * Set the value of [hours_approved] column.
@@ -804,6 +990,46 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	} // setFinancingNotes()
 
 	/**
+	 * Set the value of [evaluation_min] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Schoolproject The current object (for fluent API support)
+	 */
+	public function setEvaluationMin($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->evaluation_min !== $v) {
+			$this->evaluation_min = $v;
+			$this->modifiedColumns[] = SchoolprojectPeer::EVALUATION_MIN;
+		}
+
+		return $this;
+	} // setEvaluationMin()
+
+	/**
+	 * Set the value of [evaluation_max] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Schoolproject The current object (for fluent API support)
+	 */
+	public function setEvaluationMax($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->evaluation_max !== $v) {
+			$this->evaluation_max = $v;
+			$this->modifiedColumns[] = SchoolprojectPeer::EVALUATION_MAX;
+		}
+
+		return $this;
+	} // setEvaluationMax()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -843,13 +1069,19 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$this->title = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->description = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->notes = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->hours_approved = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
-			$this->state = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
-			$this->submission_date = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
-			$this->approval_date = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
-			$this->approval_notes = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
-			$this->financing_date = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
-			$this->financing_notes = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
+			$this->addressees = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->purposes = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->goals = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
+			$this->final_report = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->hours_approved = ($row[$startcol + 12] !== null) ? (int) $row[$startcol + 12] : null;
+			$this->state = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
+			$this->submission_date = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
+			$this->approval_date = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
+			$this->approval_notes = ($row[$startcol + 16] !== null) ? (string) $row[$startcol + 16] : null;
+			$this->financing_date = ($row[$startcol + 17] !== null) ? (string) $row[$startcol + 17] : null;
+			$this->financing_notes = ($row[$startcol + 18] !== null) ? (string) $row[$startcol + 18] : null;
+			$this->evaluation_min = ($row[$startcol + 19] !== null) ? (int) $row[$startcol + 19] : null;
+			$this->evaluation_max = ($row[$startcol + 20] !== null) ? (int) $row[$startcol + 20] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -859,7 +1091,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 15; // 15 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 21; // 21 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Schoolproject object", $e);
@@ -942,6 +1174,9 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 
 			$this->collProjResources = null;
 			$this->lastProjResourceCriteria = null;
+
+			$this->collProjUpshots = null;
+			$this->lastProjUpshotCriteria = null;
 
 		} // if (deep)
 	}
@@ -1122,6 +1357,14 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collProjUpshots !== null) {
+				foreach ($this->collProjUpshots as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -1239,6 +1482,14 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 					}
 				}
 
+				if ($this->collProjUpshots !== null) {
+					foreach ($this->collProjUpshots as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
 
 			$this->alreadyInValidation = false;
 		}
@@ -1297,25 +1548,43 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				return $this->getNotes();
 				break;
 			case 8:
-				return $this->getHoursApproved();
+				return $this->getAddressees();
 				break;
 			case 9:
-				return $this->getState();
+				return $this->getPurposes();
 				break;
 			case 10:
-				return $this->getSubmissionDate();
+				return $this->getGoals();
 				break;
 			case 11:
-				return $this->getApprovalDate();
+				return $this->getFinalReport();
 				break;
 			case 12:
-				return $this->getApprovalNotes();
+				return $this->getHoursApproved();
 				break;
 			case 13:
-				return $this->getFinancingDate();
+				return $this->getState();
 				break;
 			case 14:
+				return $this->getSubmissionDate();
+				break;
+			case 15:
+				return $this->getApprovalDate();
+				break;
+			case 16:
+				return $this->getApprovalNotes();
+				break;
+			case 17:
+				return $this->getFinancingDate();
+				break;
+			case 18:
 				return $this->getFinancingNotes();
+				break;
+			case 19:
+				return $this->getEvaluationMin();
+				break;
+			case 20:
+				return $this->getEvaluationMax();
 				break;
 			default:
 				return null;
@@ -1346,13 +1615,19 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$keys[5] => $this->getTitle(),
 			$keys[6] => $this->getDescription(),
 			$keys[7] => $this->getNotes(),
-			$keys[8] => $this->getHoursApproved(),
-			$keys[9] => $this->getState(),
-			$keys[10] => $this->getSubmissionDate(),
-			$keys[11] => $this->getApprovalDate(),
-			$keys[12] => $this->getApprovalNotes(),
-			$keys[13] => $this->getFinancingDate(),
-			$keys[14] => $this->getFinancingNotes(),
+			$keys[8] => $this->getAddressees(),
+			$keys[9] => $this->getPurposes(),
+			$keys[10] => $this->getGoals(),
+			$keys[11] => $this->getFinalReport(),
+			$keys[12] => $this->getHoursApproved(),
+			$keys[13] => $this->getState(),
+			$keys[14] => $this->getSubmissionDate(),
+			$keys[15] => $this->getApprovalDate(),
+			$keys[16] => $this->getApprovalNotes(),
+			$keys[17] => $this->getFinancingDate(),
+			$keys[18] => $this->getFinancingNotes(),
+			$keys[19] => $this->getEvaluationMin(),
+			$keys[20] => $this->getEvaluationMax(),
 		);
 		return $result;
 	}
@@ -1409,25 +1684,43 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				$this->setNotes($value);
 				break;
 			case 8:
-				$this->setHoursApproved($value);
+				$this->setAddressees($value);
 				break;
 			case 9:
-				$this->setState($value);
+				$this->setPurposes($value);
 				break;
 			case 10:
-				$this->setSubmissionDate($value);
+				$this->setGoals($value);
 				break;
 			case 11:
-				$this->setApprovalDate($value);
+				$this->setFinalReport($value);
 				break;
 			case 12:
-				$this->setApprovalNotes($value);
+				$this->setHoursApproved($value);
 				break;
 			case 13:
-				$this->setFinancingDate($value);
+				$this->setState($value);
 				break;
 			case 14:
+				$this->setSubmissionDate($value);
+				break;
+			case 15:
+				$this->setApprovalDate($value);
+				break;
+			case 16:
+				$this->setApprovalNotes($value);
+				break;
+			case 17:
+				$this->setFinancingDate($value);
+				break;
+			case 18:
 				$this->setFinancingNotes($value);
+				break;
+			case 19:
+				$this->setEvaluationMin($value);
+				break;
+			case 20:
+				$this->setEvaluationMax($value);
 				break;
 		} // switch()
 	}
@@ -1461,13 +1754,19 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setTitle($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setDescription($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setNotes($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setHoursApproved($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setState($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setSubmissionDate($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setApprovalDate($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setApprovalNotes($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setFinancingDate($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setFinancingNotes($arr[$keys[14]]);
+		if (array_key_exists($keys[8], $arr)) $this->setAddressees($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setPurposes($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setGoals($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setFinalReport($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setHoursApproved($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setState($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setSubmissionDate($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setApprovalDate($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setApprovalNotes($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setFinancingDate($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setFinancingNotes($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setEvaluationMin($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setEvaluationMax($arr[$keys[20]]);
 	}
 
 	/**
@@ -1487,6 +1786,10 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SchoolprojectPeer::TITLE)) $criteria->add(SchoolprojectPeer::TITLE, $this->title);
 		if ($this->isColumnModified(SchoolprojectPeer::DESCRIPTION)) $criteria->add(SchoolprojectPeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(SchoolprojectPeer::NOTES)) $criteria->add(SchoolprojectPeer::NOTES, $this->notes);
+		if ($this->isColumnModified(SchoolprojectPeer::ADDRESSEES)) $criteria->add(SchoolprojectPeer::ADDRESSEES, $this->addressees);
+		if ($this->isColumnModified(SchoolprojectPeer::PURPOSES)) $criteria->add(SchoolprojectPeer::PURPOSES, $this->purposes);
+		if ($this->isColumnModified(SchoolprojectPeer::GOALS)) $criteria->add(SchoolprojectPeer::GOALS, $this->goals);
+		if ($this->isColumnModified(SchoolprojectPeer::FINAL_REPORT)) $criteria->add(SchoolprojectPeer::FINAL_REPORT, $this->final_report);
 		if ($this->isColumnModified(SchoolprojectPeer::HOURS_APPROVED)) $criteria->add(SchoolprojectPeer::HOURS_APPROVED, $this->hours_approved);
 		if ($this->isColumnModified(SchoolprojectPeer::STATE)) $criteria->add(SchoolprojectPeer::STATE, $this->state);
 		if ($this->isColumnModified(SchoolprojectPeer::SUBMISSION_DATE)) $criteria->add(SchoolprojectPeer::SUBMISSION_DATE, $this->submission_date);
@@ -1494,6 +1797,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SchoolprojectPeer::APPROVAL_NOTES)) $criteria->add(SchoolprojectPeer::APPROVAL_NOTES, $this->approval_notes);
 		if ($this->isColumnModified(SchoolprojectPeer::FINANCING_DATE)) $criteria->add(SchoolprojectPeer::FINANCING_DATE, $this->financing_date);
 		if ($this->isColumnModified(SchoolprojectPeer::FINANCING_NOTES)) $criteria->add(SchoolprojectPeer::FINANCING_NOTES, $this->financing_notes);
+		if ($this->isColumnModified(SchoolprojectPeer::EVALUATION_MIN)) $criteria->add(SchoolprojectPeer::EVALUATION_MIN, $this->evaluation_min);
+		if ($this->isColumnModified(SchoolprojectPeer::EVALUATION_MAX)) $criteria->add(SchoolprojectPeer::EVALUATION_MAX, $this->evaluation_max);
 
 		return $criteria;
 	}
@@ -1562,6 +1867,14 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 
 		$copyObj->setNotes($this->notes);
 
+		$copyObj->setAddressees($this->addressees);
+
+		$copyObj->setPurposes($this->purposes);
+
+		$copyObj->setGoals($this->goals);
+
+		$copyObj->setFinalReport($this->final_report);
+
 		$copyObj->setHoursApproved($this->hours_approved);
 
 		$copyObj->setState($this->state);
@@ -1575,6 +1888,10 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		$copyObj->setFinancingDate($this->financing_date);
 
 		$copyObj->setFinancingNotes($this->financing_notes);
+
+		$copyObj->setEvaluationMin($this->evaluation_min);
+
+		$copyObj->setEvaluationMax($this->evaluation_max);
 
 
 		if ($deepCopy) {
@@ -1591,6 +1908,12 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			foreach ($this->getProjResources() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addProjResource($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getProjUpshots() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addProjUpshot($relObj->copy($deepCopy));
 				}
 			}
 
@@ -2239,6 +2562,207 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		return $this->collProjResources;
 	}
 
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Schoolproject is new, it will return
+	 * an empty collection; or if this Schoolproject has previously
+	 * been saved, it will retrieve related ProjResources from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Schoolproject.
+	 */
+	public function getProjResourcesJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SchoolprojectPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collProjResources === null) {
+			if ($this->isNew()) {
+				$this->collProjResources = array();
+			} else {
+
+				$criteria->add(ProjResourcePeer::SCHOOLPROJECT_ID, $this->id);
+
+				$this->collProjResources = ProjResourcePeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(ProjResourcePeer::SCHOOLPROJECT_ID, $this->id);
+
+			if (!isset($this->lastProjResourceCriteria) || !$this->lastProjResourceCriteria->equals($criteria)) {
+				$this->collProjResources = ProjResourcePeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastProjResourceCriteria = $criteria;
+
+		return $this->collProjResources;
+	}
+
+	/**
+	 * Clears out the collProjUpshots collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addProjUpshots()
+	 */
+	public function clearProjUpshots()
+	{
+		$this->collProjUpshots = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collProjUpshots collection (array).
+	 *
+	 * By default this just sets the collProjUpshots collection to an empty array (like clearcollProjUpshots());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initProjUpshots()
+	{
+		$this->collProjUpshots = array();
+	}
+
+	/**
+	 * Gets an array of ProjUpshot objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this Schoolproject has previously been saved, it will retrieve
+	 * related ProjUpshots from storage. If this Schoolproject is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array ProjUpshot[]
+	 * @throws     PropelException
+	 */
+	public function getProjUpshots($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SchoolprojectPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collProjUpshots === null) {
+			if ($this->isNew()) {
+			   $this->collProjUpshots = array();
+			} else {
+
+				$criteria->add(ProjUpshotPeer::SCHOOLPROJECT_ID, $this->id);
+
+				ProjUpshotPeer::addSelectColumns($criteria);
+				$this->collProjUpshots = ProjUpshotPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(ProjUpshotPeer::SCHOOLPROJECT_ID, $this->id);
+
+				ProjUpshotPeer::addSelectColumns($criteria);
+				if (!isset($this->lastProjUpshotCriteria) || !$this->lastProjUpshotCriteria->equals($criteria)) {
+					$this->collProjUpshots = ProjUpshotPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastProjUpshotCriteria = $criteria;
+		return $this->collProjUpshots;
+	}
+
+	/**
+	 * Returns the number of related ProjUpshot objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related ProjUpshot objects.
+	 * @throws     PropelException
+	 */
+	public function countProjUpshots(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SchoolprojectPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collProjUpshots === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(ProjUpshotPeer::SCHOOLPROJECT_ID, $this->id);
+
+				$count = ProjUpshotPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(ProjUpshotPeer::SCHOOLPROJECT_ID, $this->id);
+
+				if (!isset($this->lastProjUpshotCriteria) || !$this->lastProjUpshotCriteria->equals($criteria)) {
+					$count = ProjUpshotPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collProjUpshots);
+				}
+			} else {
+				$count = count($this->collProjUpshots);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a ProjUpshot object to this object
+	 * through the ProjUpshot foreign key attribute.
+	 *
+	 * @param      ProjUpshot $l ProjUpshot
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addProjUpshot(ProjUpshot $l)
+	{
+		if ($this->collProjUpshots === null) {
+			$this->initProjUpshots();
+		}
+		if (!in_array($l, $this->collProjUpshots, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collProjUpshots, $l);
+			$l->setSchoolproject($this);
+		}
+	}
+
 	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
@@ -2261,10 +2785,16 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collProjUpshots) {
+				foreach ((array) $this->collProjUpshots as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} // if ($deep)
 
 		$this->collProjDeadlines = null;
 		$this->collProjResources = null;
+		$this->collProjUpshots = null;
 			$this->aProjCategory = null;
 			$this->aProjFinancing = null;
 			$this->aYear = null;
