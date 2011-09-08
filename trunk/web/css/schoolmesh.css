@@ -367,3 +367,12 @@ font-weight: normal;
 	background-color: gray;
 }
 
+#mytree ul
+{	
+	list-style-type: none;	
+}
+
+#mytreediv ul li
+{	
+	list-style-type: none;	
+}
