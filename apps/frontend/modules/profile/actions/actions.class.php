@@ -27,6 +27,11 @@ class profileActions extends sfActions
 	
   }
   
+  public function executeTreeview(sfWebRequest $request)
+  {
+    
+  }
+  
   public function executePoll(sfWebRequest $request)
   {
     $this->token = $this->getUser()->getProfile()->getToken(sfConfig::get('app_config_moodle_key'), $request);
