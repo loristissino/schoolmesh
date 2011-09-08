@@ -31,12 +31,6 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	protected $description;
 
 	/**
-	 * The value for the resource_type field.
-	 * @var        int
-	 */
-	protected $resource_type;
-
-	/**
 	 * The value for the role_id field.
 	 * @var        int
 	 */
@@ -108,16 +102,6 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [resource_type] column value.
-	 * 
-	 * @return     int
-	 */
-	public function getResourceType()
-	{
-		return $this->resource_type;
-	}
-
-	/**
 	 * Get the [role_id] column value.
 	 * 
 	 * @return     int
@@ -186,26 +170,6 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setDescription()
-
-	/**
-	 * Set the value of [resource_type] column.
-	 * 
-	 * @param      int $v new value
-	 * @return     ProjResourceType The current object (for fluent API support)
-	 */
-	public function setResourceType($v)
-	{
-		if ($v !== null) {
-			$v = (int) $v;
-		}
-
-		if ($this->resource_type !== $v) {
-			$this->resource_type = $v;
-			$this->modifiedColumns[] = ProjResourceTypePeer::RESOURCE_TYPE;
-		}
-
-		return $this;
-	} // setResourceType()
 
 	/**
 	 * Set the value of [role_id] column.
@@ -305,10 +269,9 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->description = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-			$this->resource_type = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->role_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
-			$this->standard_cost = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->measurement_unit = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->role_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->standard_cost = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->measurement_unit = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -318,7 +281,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 6; // 6 = ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 5; // 5 = ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjResourceType object", $e);
@@ -668,15 +631,12 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 				return $this->getDescription();
 				break;
 			case 2:
-				return $this->getResourceType();
-				break;
-			case 3:
 				return $this->getRoleId();
 				break;
-			case 4:
+			case 3:
 				return $this->getStandardCost();
 				break;
-			case 5:
+			case 4:
 				return $this->getMeasurementUnit();
 				break;
 			default:
@@ -702,10 +662,9 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getDescription(),
-			$keys[2] => $this->getResourceType(),
-			$keys[3] => $this->getRoleId(),
-			$keys[4] => $this->getStandardCost(),
-			$keys[5] => $this->getMeasurementUnit(),
+			$keys[2] => $this->getRoleId(),
+			$keys[3] => $this->getStandardCost(),
+			$keys[4] => $this->getMeasurementUnit(),
 		);
 		return $result;
 	}
@@ -744,15 +703,12 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 				$this->setDescription($value);
 				break;
 			case 2:
-				$this->setResourceType($value);
-				break;
-			case 3:
 				$this->setRoleId($value);
 				break;
-			case 4:
+			case 3:
 				$this->setStandardCost($value);
 				break;
-			case 5:
+			case 4:
 				$this->setMeasurementUnit($value);
 				break;
 		} // switch()
@@ -781,10 +737,9 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setDescription($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setResourceType($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setRoleId($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setStandardCost($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setMeasurementUnit($arr[$keys[5]]);
+		if (array_key_exists($keys[2], $arr)) $this->setRoleId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setStandardCost($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setMeasurementUnit($arr[$keys[4]]);
 	}
 
 	/**
@@ -798,7 +753,6 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(ProjResourceTypePeer::ID)) $criteria->add(ProjResourceTypePeer::ID, $this->id);
 		if ($this->isColumnModified(ProjResourceTypePeer::DESCRIPTION)) $criteria->add(ProjResourceTypePeer::DESCRIPTION, $this->description);
-		if ($this->isColumnModified(ProjResourceTypePeer::RESOURCE_TYPE)) $criteria->add(ProjResourceTypePeer::RESOURCE_TYPE, $this->resource_type);
 		if ($this->isColumnModified(ProjResourceTypePeer::ROLE_ID)) $criteria->add(ProjResourceTypePeer::ROLE_ID, $this->role_id);
 		if ($this->isColumnModified(ProjResourceTypePeer::STANDARD_COST)) $criteria->add(ProjResourceTypePeer::STANDARD_COST, $this->standard_cost);
 		if ($this->isColumnModified(ProjResourceTypePeer::MEASUREMENT_UNIT)) $criteria->add(ProjResourceTypePeer::MEASUREMENT_UNIT, $this->measurement_unit);
@@ -857,8 +811,6 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setDescription($this->description);
-
-		$copyObj->setResourceType($this->resource_type);
 
 		$copyObj->setRoleId($this->role_id);
 
@@ -1168,6 +1120,53 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 
 			if (!isset($this->lastProjResourceCriteria) || !$this->lastProjResourceCriteria->equals($criteria)) {
 				$this->collProjResources = ProjResourcePeer::doSelectJoinSchoolproject($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastProjResourceCriteria = $criteria;
+
+		return $this->collProjResources;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this ProjResourceType is new, it will return
+	 * an empty collection; or if this ProjResourceType has previously
+	 * been saved, it will retrieve related ProjResources from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in ProjResourceType.
+	 */
+	public function getProjResourcesJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(ProjResourceTypePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collProjResources === null) {
+			if ($this->isNew()) {
+				$this->collProjResources = array();
+			} else {
+
+				$criteria->add(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID, $this->id);
+
+				$this->collProjResources = ProjResourcePeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID, $this->id);
+
+			if (!isset($this->lastProjResourceCriteria) || !$this->lastProjResourceCriteria->equals($criteria)) {
+				$this->collProjResources = ProjResourcePeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
 			}
 		}
 		$this->lastProjResourceCriteria = $criteria;

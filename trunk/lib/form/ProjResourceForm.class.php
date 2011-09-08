@@ -11,6 +11,9 @@ class ProjResourceForm extends BaseProjResourceForm
 {
   public function configure()
   {
+    
+    $this->setWidget('scheduled_deadline', new sfWidgetFormI18nDate(array('culture'=>'it')));
+    
     unset($this['schoolproject_id']);
     
     $this['description']->getWidget()
@@ -21,11 +24,17 @@ class ProjResourceForm extends BaseProjResourceForm
     $project=$resource->getSchoolproject();
     $resourceType=$resource->getProjResourceType();
     
+    
     $this['proj_resource_type_id']->getWidget()->setLabel('Resource type');
     
     if(!$resourceType)
     {
-      unset($this['quantity_estimated'], $this['quantity_approved'], $this['quantity_final']);
+      unset(
+        $this['quantity_estimated'],
+        $this['quantity_approved'],
+        $this['quantity_final'],
+        $this['charged_user_id']
+        );
     }
     else
     {
@@ -41,6 +50,19 @@ class ProjResourceForm extends BaseProjResourceForm
         ->setLabel('Qty final (' . $resourceType->getMeasurementUnit() . ')')
         ->setAttributes(array('size'=>'5', 'style'=>'text-align: right'))
         ;
+        
+      if($resourceType->getRoleId())
+      {
+        $this->setWidget('charged_user_id', new sfWidgetFormPropelChoice(array('model'=>'sfGuardUserProfile', 'add_empty'=>'Choose a user', 'peer_method'=>'doSelect', 'criteria'=>$resource->getCriteriaForUserSelection())));
+        $this->setDefault('charged_user_id', $resource->getChargedUserId());
+      }
+      else
+      {
+        unset(
+        $this['charged_user_id']
+        );
+      }
+
     }
     
     switch ($project->getState())
@@ -58,7 +80,8 @@ class ProjResourceForm extends BaseProjResourceForm
           $this['proj_resource_type_id'],
           $this['quantity_estimated'],
           $this['quantity_final'],
-          $this['standard_cost']
+          $this['standard_cost'],
+          $this['scheduled_deadline']
           );
         break;
       case Workflow::PROJ_APPROVED:
@@ -66,7 +89,8 @@ class ProjResourceForm extends BaseProjResourceForm
           $this['description'],
           $this['proj_resource_type_id'],
           $this['quantity_estimated'],
-          $this['standard_cost']
+          $this['standard_cost'],
+          $this['scheduled_deadline']
           );
         break;
       case Workflow::PROJ_FINANCED:
@@ -74,7 +98,8 @@ class ProjResourceForm extends BaseProjResourceForm
           $this['description'],
           $this['proj_resource_type_id'],
           $this['quantity_estimated'],
-          $this['standard_cost']
+          $this['standard_cost'],
+          $this['scheduled_deadline']
           );
         break;
         

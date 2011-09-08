@@ -43,6 +43,12 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	protected $description;
 
 	/**
+	 * The value for the charged_user_id field.
+	 * @var        int
+	 */
+	protected $charged_user_id;
+
+	/**
 	 * The value for the quantity_estimated field.
 	 * @var        string
 	 */
@@ -67,6 +73,12 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	protected $standard_cost;
 
 	/**
+	 * The value for the scheduled_deadline field.
+	 * @var        string
+	 */
+	protected $scheduled_deadline;
+
+	/**
 	 * @var        Schoolproject
 	 */
 	protected $aSchoolproject;
@@ -75,6 +87,11 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	 * @var        ProjResourceType
 	 */
 	protected $aProjResourceType;
+
+	/**
+	 * @var        sfGuardUser
+	 */
+	protected $asfGuardUser;
 
 	/**
 	 * @var        array ProjActivity[] Collection to store aggregation of ProjActivity objects.
@@ -145,6 +162,16 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Get the [charged_user_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getChargedUserId()
+	{
+		return $this->charged_user_id;
+	}
+
+	/**
 	 * Get the [quantity_estimated] column value.
 	 * 
 	 * @return     string
@@ -182,6 +209,44 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	public function getStandardCost()
 	{
 		return $this->standard_cost;
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [scheduled_deadline] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getScheduledDeadline($format = 'Y-m-d')
+	{
+		if ($this->scheduled_deadline === null) {
+			return null;
+		}
+
+
+		if ($this->scheduled_deadline === '0000-00-00') {
+			// while technically this is not a default value of NULL,
+			// this seems to be closest in meaning.
+			return null;
+		} else {
+			try {
+				$dt = new DateTime($this->scheduled_deadline);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->scheduled_deadline, true), $x);
+			}
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
 	}
 
 	/**
@@ -273,6 +338,30 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	} // setDescription()
 
 	/**
+	 * Set the value of [charged_user_id] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     ProjResource The current object (for fluent API support)
+	 */
+	public function setChargedUserId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->charged_user_id !== $v) {
+			$this->charged_user_id = $v;
+			$this->modifiedColumns[] = ProjResourcePeer::CHARGED_USER_ID;
+		}
+
+		if ($this->asfGuardUser !== null && $this->asfGuardUser->getId() !== $v) {
+			$this->asfGuardUser = null;
+		}
+
+		return $this;
+	} // setChargedUserId()
+
+	/**
 	 * Set the value of [quantity_estimated] column.
 	 * 
 	 * @param      string $v new value
@@ -353,6 +442,55 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	} // setStandardCost()
 
 	/**
+	 * Sets the value of [scheduled_deadline] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     ProjResource The current object (for fluent API support)
+	 */
+	public function setScheduledDeadline($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->scheduled_deadline !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->scheduled_deadline !== null && $tmpDt = new DateTime($this->scheduled_deadline)) ? $tmpDt->format('Y-m-d') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->scheduled_deadline = ($dt ? $dt->format('Y-m-d') : null);
+				$this->modifiedColumns[] = ProjResourcePeer::SCHEDULED_DEADLINE;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setScheduledDeadline()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -388,10 +526,12 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			$this->schoolproject_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->proj_resource_type_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->description = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->quantity_estimated = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->quantity_approved = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->quantity_final = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->standard_cost = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->charged_user_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+			$this->quantity_estimated = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->quantity_approved = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->quantity_final = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->standard_cost = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->scheduled_deadline = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -401,7 +541,7 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 8; // 8 = ProjResourcePeer::NUM_COLUMNS - ProjResourcePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 10; // 10 = ProjResourcePeer::NUM_COLUMNS - ProjResourcePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjResource object", $e);
@@ -429,6 +569,9 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 		}
 		if ($this->aProjResourceType !== null && $this->proj_resource_type_id !== $this->aProjResourceType->getId()) {
 			$this->aProjResourceType = null;
+		}
+		if ($this->asfGuardUser !== null && $this->charged_user_id !== $this->asfGuardUser->getId()) {
+			$this->asfGuardUser = null;
 		}
 	} // ensureConsistency
 
@@ -471,6 +614,7 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 
 			$this->aSchoolproject = null;
 			$this->aProjResourceType = null;
+			$this->asfGuardUser = null;
 			$this->collProjActivitys = null;
 			$this->lastProjActivityCriteria = null;
 
@@ -601,6 +745,13 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 				$this->setProjResourceType($this->aProjResourceType);
 			}
 
+			if ($this->asfGuardUser !== null) {
+				if ($this->asfGuardUser->isModified() || $this->asfGuardUser->isNew()) {
+					$affectedRows += $this->asfGuardUser->save($con);
+				}
+				$this->setsfGuardUser($this->asfGuardUser);
+			}
+
 			if ($this->isNew() ) {
 				$this->modifiedColumns[] = ProjResourcePeer::ID;
 			}
@@ -714,6 +865,12 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->asfGuardUser !== null) {
+				if (!$this->asfGuardUser->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->asfGuardUser->getValidationFailures());
+				}
+			}
+
 
 			if (($retval = ProjResourcePeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
@@ -774,16 +931,22 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 				return $this->getDescription();
 				break;
 			case 4:
-				return $this->getQuantityEstimated();
+				return $this->getChargedUserId();
 				break;
 			case 5:
-				return $this->getQuantityApproved();
+				return $this->getQuantityEstimated();
 				break;
 			case 6:
-				return $this->getQuantityFinal();
+				return $this->getQuantityApproved();
 				break;
 			case 7:
+				return $this->getQuantityFinal();
+				break;
+			case 8:
 				return $this->getStandardCost();
+				break;
+			case 9:
+				return $this->getScheduledDeadline();
 				break;
 			default:
 				return null;
@@ -810,10 +973,12 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			$keys[1] => $this->getSchoolprojectId(),
 			$keys[2] => $this->getProjResourceTypeId(),
 			$keys[3] => $this->getDescription(),
-			$keys[4] => $this->getQuantityEstimated(),
-			$keys[5] => $this->getQuantityApproved(),
-			$keys[6] => $this->getQuantityFinal(),
-			$keys[7] => $this->getStandardCost(),
+			$keys[4] => $this->getChargedUserId(),
+			$keys[5] => $this->getQuantityEstimated(),
+			$keys[6] => $this->getQuantityApproved(),
+			$keys[7] => $this->getQuantityFinal(),
+			$keys[8] => $this->getStandardCost(),
+			$keys[9] => $this->getScheduledDeadline(),
 		);
 		return $result;
 	}
@@ -858,16 +1023,22 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 				$this->setDescription($value);
 				break;
 			case 4:
-				$this->setQuantityEstimated($value);
+				$this->setChargedUserId($value);
 				break;
 			case 5:
-				$this->setQuantityApproved($value);
+				$this->setQuantityEstimated($value);
 				break;
 			case 6:
-				$this->setQuantityFinal($value);
+				$this->setQuantityApproved($value);
 				break;
 			case 7:
+				$this->setQuantityFinal($value);
+				break;
+			case 8:
 				$this->setStandardCost($value);
+				break;
+			case 9:
+				$this->setScheduledDeadline($value);
 				break;
 		} // switch()
 	}
@@ -897,10 +1068,12 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setSchoolprojectId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setProjResourceTypeId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setDescription($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setQuantityEstimated($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setQuantityApproved($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setQuantityFinal($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setStandardCost($arr[$keys[7]]);
+		if (array_key_exists($keys[4], $arr)) $this->setChargedUserId($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setQuantityEstimated($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setQuantityApproved($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setQuantityFinal($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setStandardCost($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setScheduledDeadline($arr[$keys[9]]);
 	}
 
 	/**
@@ -916,10 +1089,12 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProjResourcePeer::SCHOOLPROJECT_ID)) $criteria->add(ProjResourcePeer::SCHOOLPROJECT_ID, $this->schoolproject_id);
 		if ($this->isColumnModified(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID)) $criteria->add(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID, $this->proj_resource_type_id);
 		if ($this->isColumnModified(ProjResourcePeer::DESCRIPTION)) $criteria->add(ProjResourcePeer::DESCRIPTION, $this->description);
+		if ($this->isColumnModified(ProjResourcePeer::CHARGED_USER_ID)) $criteria->add(ProjResourcePeer::CHARGED_USER_ID, $this->charged_user_id);
 		if ($this->isColumnModified(ProjResourcePeer::QUANTITY_ESTIMATED)) $criteria->add(ProjResourcePeer::QUANTITY_ESTIMATED, $this->quantity_estimated);
 		if ($this->isColumnModified(ProjResourcePeer::QUANTITY_APPROVED)) $criteria->add(ProjResourcePeer::QUANTITY_APPROVED, $this->quantity_approved);
 		if ($this->isColumnModified(ProjResourcePeer::QUANTITY_FINAL)) $criteria->add(ProjResourcePeer::QUANTITY_FINAL, $this->quantity_final);
 		if ($this->isColumnModified(ProjResourcePeer::STANDARD_COST)) $criteria->add(ProjResourcePeer::STANDARD_COST, $this->standard_cost);
+		if ($this->isColumnModified(ProjResourcePeer::SCHEDULED_DEADLINE)) $criteria->add(ProjResourcePeer::SCHEDULED_DEADLINE, $this->scheduled_deadline);
 
 		return $criteria;
 	}
@@ -980,6 +1155,8 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 
 		$copyObj->setDescription($this->description);
 
+		$copyObj->setChargedUserId($this->charged_user_id);
+
 		$copyObj->setQuantityEstimated($this->quantity_estimated);
 
 		$copyObj->setQuantityApproved($this->quantity_approved);
@@ -987,6 +1164,8 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 		$copyObj->setQuantityFinal($this->quantity_final);
 
 		$copyObj->setStandardCost($this->standard_cost);
+
+		$copyObj->setScheduledDeadline($this->scheduled_deadline);
 
 
 		if ($deepCopy) {
@@ -1143,6 +1322,55 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			 */
 		}
 		return $this->aProjResourceType;
+	}
+
+	/**
+	 * Declares an association between this object and a sfGuardUser object.
+	 *
+	 * @param      sfGuardUser $v
+	 * @return     ProjResource The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setsfGuardUser(sfGuardUser $v = null)
+	{
+		if ($v === null) {
+			$this->setChargedUserId(NULL);
+		} else {
+			$this->setChargedUserId($v->getId());
+		}
+
+		$this->asfGuardUser = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the sfGuardUser object, it will not be re-added.
+		if ($v !== null) {
+			$v->addProjResource($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated sfGuardUser object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     sfGuardUser The associated sfGuardUser object.
+	 * @throws     PropelException
+	 */
+	public function getsfGuardUser(PropelPDO $con = null)
+	{
+		if ($this->asfGuardUser === null && ($this->charged_user_id !== null)) {
+			$this->asfGuardUser = sfGuardUserPeer::retrieveByPk($this->charged_user_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->asfGuardUser->addProjResources($this);
+			 */
+		}
+		return $this->asfGuardUser;
 	}
 
 	/**
@@ -1415,6 +1643,7 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 		$this->collProjActivitys = null;
 			$this->aSchoolproject = null;
 			$this->aProjResourceType = null;
+			$this->asfGuardUser = null;
 	}
 
 } // BaseProjResource

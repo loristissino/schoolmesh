@@ -25,7 +25,7 @@ abstract class BaseProjCategoryPeer {
 	const TM_CLASS = 'ProjCategoryTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 3;
+	const NUM_COLUMNS = 4;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -38,6 +38,9 @@ abstract class BaseProjCategoryPeer {
 
 	/** the column name for the RANK field */
 	const RANK = 'proj_category.RANK';
+
+	/** the column name for the RESOURCES field */
+	const RESOURCES = 'proj_category.RESOURCES';
 
 	/**
 	 * An identiy map to hold any loaded instances of ProjCategory objects.
@@ -62,11 +65,11 @@ abstract class BaseProjCategoryPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Rank', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'rank', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::RANK, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'rank', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Rank', 'Resources', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'rank', 'resources', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::RANK, self::RESOURCES, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'rank', 'resources', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
 	/**
@@ -76,11 +79,11 @@ abstract class BaseProjCategoryPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Rank' => 2, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'rank' => 2, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::RANK => 2, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'rank' => 2, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Rank' => 2, 'Resources' => 3, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'rank' => 2, 'resources' => 3, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::RANK => 2, self::RESOURCES => 3, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'rank' => 2, 'resources' => 3, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
 	/**
@@ -153,6 +156,7 @@ abstract class BaseProjCategoryPeer {
 		$criteria->addSelectColumn(ProjCategoryPeer::ID);
 		$criteria->addSelectColumn(ProjCategoryPeer::TITLE);
 		$criteria->addSelectColumn(ProjCategoryPeer::RANK);
+		$criteria->addSelectColumn(ProjCategoryPeer::RESOURCES);
 	}
 
 	/**

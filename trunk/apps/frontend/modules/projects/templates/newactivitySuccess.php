@@ -18,7 +18,7 @@
 <?php if($resource->getSchoolproject()->getTitle()!=$project): ?>
   <p style="margin-left: 20px; font-style: italic"><?php echo __('Project') ?>: <?php echo $project=$resource->getSchoolproject()->getTitle() ?></p>
 <?php endif ?>
-<div class="sf_admin_action_activity"><?php echo link_to(
+<div class="sf_admin_action_activity"> <?php echo link_to(
   $resource->getDescription(),
   url_for('projects/newactivity?id=' . $resource->getId()),
   array(
@@ -26,5 +26,12 @@
     )
   )
   ?>
+  <?php if($resource->getChargedUserId()==$sf_user->getProfile()->getUserId()): ?>
+  <?php echo image_tag(
+    $sf_user->getProfile()->getIsMale()? 'male': 'female',
+    array(
+    'title'=>__('This is a resource you are in charge of')
+    ))?>
+  <?php endif ?>
 </div>
 <?php endforeach ?>

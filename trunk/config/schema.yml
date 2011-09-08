@@ -341,8 +341,12 @@ propel:
     year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     title:        varchar(255)
-    description:       varchar(255)
-    notes:   longvarchar
+    description:  longvarchar # what has to be done and how
+    notes:        longvarchar
+    addressees:   longvarchar
+    purposes:     longvarchar
+    goals:        longvarchar
+    final_report: longvarchar
     hours_approved: integer
     state:        { type: integer }
     submission_date: date
@@ -350,11 +354,14 @@ propel:
     approval_notes: longvarchar
     financing_date: date    
     financing_notes: longvarchar
+    evaluation_min: integer  # the minimum value for evaluations of upshots of this project
+    evaluation_max: integer  # the minimum value for evaluations of upshots of this project
 
   proj_category:
     id: ~
     title: varchar(255)
     rank: { type: integer, required: true }
+    resources: integer  # 0: cannot have resources; 1: may have resources; 2: must have resources 
 
   proj_deadline:
     id:  ~
@@ -379,7 +386,6 @@ propel:
   proj_resource_type:
     id: ~
     description: varchar(255)
-    resource_type: integer
     role_id: ~
     standard_cost: { type: decimal, size: 10, scale: 2 }
     measurement_unit: varchar(10)
@@ -389,10 +395,12 @@ propel:
     schoolproject_id: ~
     proj_resource_type_id: ~
     description: varchar(255)
+    charged_user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
     quantity_estimated:  { type: decimal, size: 10, scale: 2 }
     quantity_approved:  { type: decimal, size: 10, scale: 2 }
     quantity_final:  { type: decimal, size: 10, scale: 2 }
     standard_cost:  { type: decimal, size: 10, scale: 2 }
+    scheduled_deadline: date
     
   proj_activity:
     id: ~
@@ -405,6 +413,15 @@ propel:
     acknowledged_at: timestamp
     acknowledger_user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
     added_by_coordinator: { type: boolean, default: false }
+
+  proj_upshot:
+    id: ~
+    schoolproject_id: ~
+    description: varchar(255)
+    indicator: varchar(255)  # expectation
+    upshot: varchar(255)
+    evaluation: integer  # the minimum and the maximum are set in schoolproject table
+    scheduled_date: date    
 
   subnet:
     id:

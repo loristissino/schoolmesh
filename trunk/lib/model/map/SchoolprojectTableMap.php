@@ -42,8 +42,12 @@ class SchoolprojectTableMap extends TableMap {
 		$this->addForeignKey('YEAR_ID', 'YearId', 'INTEGER', 'year', 'ID', true, null, null);
 		$this->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
 		$this->addColumn('TITLE', 'Title', 'VARCHAR', false, 255, null);
-		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 255, null);
+		$this->addColumn('DESCRIPTION', 'Description', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('NOTES', 'Notes', 'LONGVARCHAR', false, null, null);
+		$this->addColumn('ADDRESSEES', 'Addressees', 'LONGVARCHAR', false, null, null);
+		$this->addColumn('PURPOSES', 'Purposes', 'LONGVARCHAR', false, null, null);
+		$this->addColumn('GOALS', 'Goals', 'LONGVARCHAR', false, null, null);
+		$this->addColumn('FINAL_REPORT', 'FinalReport', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('HOURS_APPROVED', 'HoursApproved', 'INTEGER', false, null, null);
 		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
 		$this->addColumn('SUBMISSION_DATE', 'SubmissionDate', 'DATE', false, null, null);
@@ -51,6 +55,8 @@ class SchoolprojectTableMap extends TableMap {
 		$this->addColumn('APPROVAL_NOTES', 'ApprovalNotes', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('FINANCING_DATE', 'FinancingDate', 'DATE', false, null, null);
 		$this->addColumn('FINANCING_NOTES', 'FinancingNotes', 'LONGVARCHAR', false, null, null);
+		$this->addColumn('EVALUATION_MIN', 'EvaluationMin', 'INTEGER', false, null, null);
+		$this->addColumn('EVALUATION_MAX', 'EvaluationMax', 'INTEGER', false, null, null);
 		// validators
 	} // initialize()
 
@@ -65,6 +71,7 @@ class SchoolprojectTableMap extends TableMap {
     $this->addRelation('sfGuardUser', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('ProjDeadline', 'ProjDeadline', RelationMap::ONE_TO_MANY, array('id' => 'schoolproject_id', ), null, null);
     $this->addRelation('ProjResource', 'ProjResource', RelationMap::ONE_TO_MANY, array('id' => 'schoolproject_id', ), null, null);
+    $this->addRelation('ProjUpshot', 'ProjUpshot', RelationMap::ONE_TO_MANY, array('id' => 'schoolproject_id', ), null, null);
 	} // buildRelations()
 
 	/**
