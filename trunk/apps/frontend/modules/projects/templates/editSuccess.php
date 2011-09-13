@@ -78,7 +78,7 @@
 
 <?php if($project->mayHaveResources()): ?>
 
-<h2><?php echo __('Resources and schedule') ?></h2>
+<h2><?php echo __('Tasks, resources, schedule') ?></h2>
 
 <?php if(sizeof($resources)>0): ?>
 
@@ -196,16 +196,16 @@
   </tbody>
 </table>
 <?php else: ?>
-<p><?php echo __('No resource defined.') ?></p>
+<p><?php echo __('No resource/task defined.') ?></p>
 <?php endif ?>
 <?php if ($project->getState()==Workflow::PROJ_DRAFT): ?>
 
 <ul class="sf_admin_actions">
 	<li class="sf_admin_action_new">
 	<?php echo link_to(
-				__('Add resource'),
+				__('Add resource/task'),
 				'projects/addresource?id='. $project->getId(),
-				array('method' => 'post', 'title'=>__('Add a new resource to this project')) 
+				array('method' => 'post', 'title'=>__('Add a new resource/task to this project')) 
 				)?>
 </li>
 </ul>

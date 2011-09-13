@@ -176,7 +176,7 @@ class Schoolproject extends BaseSchoolproject {
     {
       $resource->delete();
       $result['result']='notice';
-      $result['message']='The resource has been deleted.';
+      $result['message']='The resource/task has been deleted.';
       return $result;
     }
     catch(Exception $e)
@@ -260,7 +260,7 @@ class Schoolproject extends BaseSchoolproject {
     if($profile->getUserId()!=$this->getUserId())
     {
       $result['result']='error';
-      $result['message']='You are not allowed to add resource to this project.';
+      $result['message']='You are not allowed to add resources to this project.';
       return $result;
     }
     
@@ -279,14 +279,14 @@ class Schoolproject extends BaseSchoolproject {
       ->setSchoolprojectId($this->getId())
       ->save();
       $result['result']='notice';
-      $result['message']='The resource has been added. Please proceed with filling in the necessary information.';
+      $result['message']='The resource/task has been added. Please proceed with filling in the necessary information.';
       $result['redirect']='projects/editresource?id=' . $resource->getId();
       return $result;
     }
     catch(Exception $e)
     {
       $result['result']='error';
-      $result['message']='The resource could not be added.';
+      $result['message']='The resource/task could not be added.';
       return $result;
     }
   }
@@ -620,7 +620,7 @@ class Schoolproject extends BaseSchoolproject {
       $checkList->addCheck(new Check(
 				Check::FAILED,
 				'No upshots defined',
-				'Expected pshots',
+				'Expected upshots',
         array(
           'link_to'=>'projects/edit?id=' . $this->getId()
           )
@@ -719,8 +719,8 @@ class Schoolproject extends BaseSchoolproject {
       {
       $checkList->addCheck(new Check(
 				Check::FAILED,
-				'No resource defined',
-				'Resources and schedule',
+				'No resource/task defined',
+				'Resources, tasks, schedule',
         array(
           'link_to'=>'projects/edit?id=' . $this->getId()
           )
@@ -745,7 +745,7 @@ class Schoolproject extends BaseSchoolproject {
       }
       $checkList->addCheck(new Check(
 				Check::PASSED,
-				'At least a resource is defined',
+				'At least a resource/task is defined',
 				'Resources'
         )) ;
  
@@ -772,12 +772,12 @@ class Schoolproject extends BaseSchoolproject {
 
   public function mayHaveResources()
   {
-    return $this->getProjCategory()->getResources()>0;
+    return $this->getProjCategoryId() ? $this->getProjCategory()->getResources()>0 : false;
   }
 
   public function mustHaveResources()
   {
-    return $this->getProjCategory()->getResources()==2;
+    return $this->getProjCategoryId() ? $this->getProjCategory()->getResources()==2 : false;
   }
 
 

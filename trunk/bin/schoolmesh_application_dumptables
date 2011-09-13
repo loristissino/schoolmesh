@@ -45,6 +45,8 @@ sf_guard_permission
 subnet
 account_type
 proj_category
+proj_financing
+syllabus
 
 role
 account
@@ -60,6 +62,8 @@ wpitem_group
 wpitem_type
 wpmodule
 recuperation_hint
+proj_resource_type
+proj_resource
 
 appointment
 enrolment
@@ -86,7 +90,13 @@ student_suggestion
 student_hint
 schoolproject
 proj_deadline
+proj_activity
+proj_upshot
 attachment_file
+syllabus_item
+wpmodule_syllabus_item
+
+wfevent
 "
 
 TEMPFILE0=$(mktemp)
