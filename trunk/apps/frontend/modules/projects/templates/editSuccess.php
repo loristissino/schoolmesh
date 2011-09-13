@@ -188,6 +188,19 @@
             )
              ?></li>
         <?php endif ?>
+        <?php if($resource->getProjResourceType()->getRoleId() and $project->getState()>Workflow::PROJ_SUBMITTED): ?> 
+        <li class="sf_admin_action_new">
+        <?php echo link_to(
+              __('Add'),
+              'projects/addacknowledgedactivity?id='. $resource->getId(),
+              array(
+                'title'=>__('Add an acknowledged activity of another user for this task'),
+                ) 
+              ) ?>
+        </li>
+        <?php endif ?>
+
+        
           
       </ul>
       </td>

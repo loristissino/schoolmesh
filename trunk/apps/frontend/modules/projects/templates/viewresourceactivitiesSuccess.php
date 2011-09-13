@@ -11,7 +11,7 @@
 
 <?php include_partial('content/flashes'); ?>
 
-<h2><?php echo __('Activities within the resource «%resource%»', array('%resource%'=>$resource->__toString())) ?></h2>
+<h2><?php echo __('Activities for the task «%resource%»', array('%resource%'=>$resource->__toString())) ?></h2>
 
 <p><?php echo __('Charged user') ?>: <?php echo $resource->getChargedUserProfile() ?></p>
 
@@ -143,7 +143,7 @@
 				__('Add acknowledged activity'),
 				'projects/addacknowledgedactivity?id='. $resource->getId(),
 				array(
-          'title'=>__('Add an acknowledged activity of another user within this resource'),
+          'title'=>__('Add an acknowledged activity of another user for this task'),
           ) 
 				) ?>
   </li>

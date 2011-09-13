@@ -8,7 +8,7 @@
 
 <?php include_partial('content/flashes'); ?>
 
-<p><?php echo __('Choose the project (and resource) you performed your activity for:') ?></p>
+<p><?php echo __('Choose the project (and task) you performed your activity for:') ?></p>
 
 <?php $category=''; $project='' ?>
 <?php foreach($resources as $resource): ?>
