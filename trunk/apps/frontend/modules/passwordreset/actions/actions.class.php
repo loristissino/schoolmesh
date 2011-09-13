@@ -44,8 +44,7 @@ class passwordresetActions extends sfActions
 		$this->available_accounts=sfConfig::get('app_config_accounts');
 		$this->form = new ConfirmUserForm();
 		$this->referer=$request->getReferer();
-		
-		
+				
 		if ($request->isMethod('post'))
 		{
 			$this->form->bind($request->getParameter('info'));
@@ -82,14 +81,21 @@ class passwordresetActions extends sfActions
 			}
 		}
 				
-
 	  $params=$request->getParameter('info');
-		$this->account=$params['account'];
-		$this->username=$params['username'];
+    if($request->hasParameter('username'))
+    {
+      $this->username=$request->getParameter('username');
+      $this->account=$request->getParameter('account');
+    }
+    else
+    {
+      $this->account=$params['account'];
+      $this->username=$params['username'];
+    }
 		
 		if(!($this->getUser()->hasCredential($this->account.'_resetpwd')||($this->getUser()->hasCredential('admin'))))
 		{
-			$this->getUser()->setFlash('error', sprintf('Yyyyou don\'t have the required creential to reset passwords of type %s', $this->account));
+			$this->getUser()->setFlash('error', sprintf('You don\'t have the required creential to reset passwords of type %s', $this->account));
 			$this->redirect('passwordreset/index');
 		}
 		

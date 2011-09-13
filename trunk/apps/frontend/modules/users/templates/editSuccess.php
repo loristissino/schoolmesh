@@ -131,7 +131,7 @@
 						<li class="sf_admin_action_passwordreset">
 							<?php echo link_to(
 						__('Password reset'),
-						'passwordreset/confirm?info[username]=' . $current_user->getUsername() . '&info[account]=' . $account->getAccountType() . '&choose=Choose',
+						'passwordreset/confirm?username=' . $current_user->getUsername() . '&account=' . $account->getAccountType() . '&choose=Choose',
 						array('title'=>__('Reset the password for this account'))
 						)?>
 						</li>
