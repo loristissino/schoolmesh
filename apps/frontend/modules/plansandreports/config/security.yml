@@ -1,17 +1,17 @@
 default:
-  credentials: [[ planning, schoolmaster, office ]]
+  credentials: [[ wpfr_submission ]]
 
 list:
-  credentials: [[ schoolmaster, office, backadmin ]]
+  credentials: [[ wp_adm_ok, wp_adm_no, fr_adm_ok, fr_adm_no, wp_sm_ok, wp_sm_no, fr_sm_ok, fr_sm_no, backadmin ]]
 
-viewwpevents:
+viewwfevents:
   credentials: [[ backadmin ]]
 
-addwpevent:
+addwfevent:
   credentials: [[ backadmin ]]
 
-editwpevent:
+editwfevent:
   credentials: [[ backadmin ]]
 
-removewpevent:
+removewfevent:
   credentials: [[ backadmin ]]
