@@ -62,9 +62,37 @@
 </li>
 </ul>
 
-<div id="syllabus" style="display: none">
-<?php include_partial('syllabi/links', array('syllabus'=>$workplan->getSyllabus(), 'wpmodule'=>$wpmodule, 'syllabus_contributions'=>$syllabus_contributions)) ?>
+<div id="syllabus" style="display: <?php echo $syllabusview=='tree'? 'visible': 'none' ?>">
+
+<?php include_partial('syllabi/links_' . $syllabusview, array('syllabus'=>$workplan->getSyllabus(), 'wpmodule'=>$wpmodule, 'syllabus_contributions'=>$syllabus_contributions, 'syllabusview'=>$syllabusview)) ?>
+
+<ul class="sf_admin_actions">
+<?php if($syllabusview=='table'): ?>
+	<li class="sf_admin_action_treeview">
+<?php echo link_to(
+  __('Tree view'),
+  url_for('wpmodule/view?id=' . $wpmodule->getId() . '&syllabusview=tree'),
+  array('title'=>__('Show syllabus links in a tree'))
+  )
+ ?>
+</li>
+<?php endif ?>
+<?php if($syllabusview=='tree'): ?>
+	<li class="sf_admin_action_tableview">
+<?php echo link_to(
+  __('Table view'),
+  url_for('wpmodule/view?id=' . $wpmodule->getId() . '&syllabusview=table'),
+  array('title'=>__('Show syllabus links in a table'))
+
+  )
+ ?>
+</li>
+<?php endif ?>
+</ul>
+
 </div>
+
+
 <?php endif ?>
 
 

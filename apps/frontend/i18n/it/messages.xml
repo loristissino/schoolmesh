@@ -2855,9 +2855,26 @@
         <source>Obtained upshots</source>
         <target>Esiti ottenuti</target>
     </trans-unit>
+    <trans-unit id="729">
+        <source>Table view</source>
+        <target>Visualizzazione in tabella</target>
+    </trans-unit>
+    <trans-unit id="730">
+        <source>Tree view</source>
+        <target>Visualizzazione ad albero</target>
+    </trans-unit>
+    <trans-unit id="731">
+        <source>Show syllabus links in a tree</source>
+        <target>Mostra i collegamenti al syllabus in forma di albero</target>
+    </trans-unit>
+    <trans-unit id="732">
+        <source>Show syllabus links in a table</source>
+        <target>Mostra i collegamenti al syllabus in forma tabellare</target>
+    </trans-unit>
 
     </body>
   </file>
 </xliff>
+
 
 

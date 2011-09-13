@@ -359,10 +359,12 @@ $number=$resultset->number;
       if ($value==0)
       {
         $t->delete();
+        $link='▢';
       }
       elseif($value!=$t->getContribution())
       {
         $t->setContribution($value)->save();
+        $link=$t->getContribution()==WpmoduleSyllabusItemPeer::PARTIAL_CONTRIBUTION ? '◪': '▣';
       }
     }
     else
@@ -378,7 +380,10 @@ $number=$resultset->number;
       ->setContribution($value)
       ->save()
       ;
+      $link=$t->getContribution()==WpmoduleSyllabusItemPeer::PARTIAL_CONTRIBUTION ? '◪': '▣';
     }
+    
+    return $link;
     
   }
 

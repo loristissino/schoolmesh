@@ -276,6 +276,16 @@
 {
   background: url(../images/activity.png) no-repeat 0 0;
 }
+#sf_admin_container ul li.sf_admin_action_treeview a
+{
+  background: url(../images/treeview.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_tableview a
+{
+  background: url(../images/tableview.png) no-repeat 0 0;
+}
+
+
 
 #sf_admin_container .alert
 {
@@ -373,6 +383,11 @@ font-weight: normal;
 }
 
 #mytreediv ul li
+{	
+	list-style-type: none;	
+}
+
+#syllabus_tree ul li
 {	
 	list-style-type: none;	
 }
