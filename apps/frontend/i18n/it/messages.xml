@@ -2512,8 +2512,8 @@
         <target>Inizio</target>
     </trans-unit>
     <trans-unit id="646">
-        <source>Choose the project (and resource) you performed your activity for:</source>
-        <target>Scegli il progetto (e la risorsa) per il quale hai svolto l'attività</target>
+        <source>Choose the project (and task) you performed your activity for:</source>
+        <target>Scegli il progetto (e il compito) per il quale hai svolto l'attività</target>
     </trans-unit>
     <trans-unit id="647">
         <source>Quantity</source>
@@ -2644,8 +2644,8 @@
         <target>Aggiungi un'attività riconosciuta</target>
     </trans-unit>
     <trans-unit id="677">
-        <source>Add an acknowledged activity of another user within this resource</source>
-        <target>Aggiungi un'attività riconosciuta di un altro utente per questa risorsa</target>
+        <source>Add an acknowledged activity of another user for this task</source>
+        <target>Aggiungi un'attività riconosciuta di un altro utente per questo compito</target>
     </trans-unit>
     <trans-unit id="678">
         <source>This activity has been added directly by the coordinator</source>
@@ -2886,6 +2886,18 @@
     <trans-unit id="736">
         <source>Grand totals</source>
         <target>Totali generali</target>
+    </trans-unit>
+    <trans-unit id="737">
+        <source>You are not in charge for this task</source>
+        <target>Non sei incaricato per lo svolgimento di questo compito</target>
+    </trans-unit>
+    <trans-unit id="738">
+        <source>Activities for the task «%resource%»</source>
+        <target>Attività per il compito «%resource%»</target>
+    </trans-unit>
+    <trans-unit id="739">
+        <source>Add</source>
+        <target>Aggiungi</target>
     </trans-unit>
     </body>
   </file>

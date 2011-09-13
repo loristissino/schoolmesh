@@ -26,11 +26,11 @@
   <tr>
     <th><label for="schoolproject_charged_user"><?php echo __('Charged user') ?></label></th>
     <td><?php echo $resource->getChargedUserProfile() ?>
-    <?php if($resource->getChargedUserId()!=$sf_user->getProfile()->getId()): ?>
+    <?php if($action!='addacknowledgedactivity' and $resource->getChargedUserId()!=$sf_user->getProfile()->getId()): ?>
     <?php echo image_tag(
       'dubious',
       array(
-        'title'=>__('You are not in charge for this resource')
+        'title'=>__('You are not in charge for this task')
         )
       ) ?>
     <?php endif ?>
