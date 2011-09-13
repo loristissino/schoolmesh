@@ -208,5 +208,35 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     return $result;
 
   }
+  
+  
+  public static function computeDataSynthesis($ids)
+  {
+    $projResourceTypes=ProjResourceTypePeer::doSelect(new Criteria());
+    
+    $types=array();
+ 
+    $result=array();
+
+    $projects=self::retrieveByPKs($ids);
+    
+    foreach($projects as $project)
+    {
+      $result['projects'][$project->getId()]['title']=$project->getTitle();
+      $result['projects'][$project->getId()]['resources']=array();
+      foreach($project->getProjResources() as $resource)
+      {
+        @$result['projects'][$project->getId()]['resources'][$resource->getProjResourceTypeId()]+=$resource->getQuantityMultipliedByCost();
+        if(!array_key_exists($resource->getProjResourceTypeId(), $types))
+        {
+          $types[$resource->getProjResourceTypeId()]=1;
+        }
+      }
+    }
+    
+    $result['types']=ProjResourceTypePeer::retrieveByPKs(array_keys($types));
+    
+    return $result;
+  }
 
 } // SchoolprojectPeer

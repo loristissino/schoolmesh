@@ -23,7 +23,9 @@ class projectsActions extends sfActions
    $this->projects=SchoolprojectPeer::retrieveAllForUser($this->getUser()->getProfile()->getSfGuardUser()->getId());
    $this->steps=Array();
 
-   $this->setTemplate('index');   
+   $this->setTemplate('index');
+   $this->getUser()->setAttribute('back', null);
+
 
 	}
   
@@ -304,6 +306,14 @@ class projectsActions extends sfActions
     $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
     $this->projects=SchoolprojectPeer::retrieveByPks($this->ids);
     $this->getUser()->setAttribute('back', 'budget');
+  }
+
+  public function executeComputesynthesis(sfWebRequest $request)
+  {
+    $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
+    $this->result=SchoolprojectPeer::computeDataSynthesis($this->ids);
+    $this->projects=$this->result['projects'];
+    $this->types=$this->result['types'];
   }
 
   public function executeSpreadsheet(sfWebRequest $request)
