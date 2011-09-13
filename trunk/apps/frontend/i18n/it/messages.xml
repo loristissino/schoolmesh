@@ -2871,7 +2871,22 @@
         <source>Show syllabus links in a table</source>
         <target>Mostra i collegamenti al syllabus in forma tabellare</target>
     </trans-unit>
-
+    <trans-unit id="733">
+        <source>Compute data synthesis</source>
+        <target>Calcola dati di sintesi</target>
+    </trans-unit>
+    <trans-unit id="734">
+        <source>Projects data synthesis computation</source>
+        <target>Calcolo dei dati di sintesi relativi ai progetti</target>
+    </trans-unit>
+    <trans-unit id="735">
+        <source>Total amount</source>
+        <target>Importo totale</target>
+    </trans-unit>
+    <trans-unit id="736">
+        <source>Grand totals</source>
+        <target>Totali generali</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

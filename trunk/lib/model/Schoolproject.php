@@ -355,7 +355,21 @@ class Schoolproject extends BaseSchoolproject {
 		return parent::getProjDeadlines($criteria);
 	}
 	
-	
+	public function getProjResources($criteria = null, PropelPDO $con = null)
+	{
+		$criteria=new Criteria();
+		$criteria->addAscendingOrderByColumn(ProjResourcePeer::SCHEDULED_DEADLINE);
+		return parent::getProjResources($criteria);
+	}
+
+	public function getProjUpshots($criteria = null, PropelPDO $con = null)
+	{
+		$criteria=new Criteria();
+		$criteria->addAscendingOrderByColumn(ProjUpshotPeer::SCHEDULED_DATE);
+		return parent::getProjUpshots($criteria);
+	}
+
+
 	public function getOdf($doctype, sfContext $sfContext=null, $template='', $complete=true)
 	{
 		
