@@ -2276,8 +2276,8 @@
         <target>Ore a consuntivo</target>
     </trans-unit>
     <trans-unit id="588">
-        <source>Resources and schedule</source>
-        <target>Risorse e pianificazione temporale</target>
+        <source>Tasks, resources, schedule</source>
+        <target>Compiti, risorse, pianificazione temporale</target>
     </trans-unit>
     <trans-unit id="589">
         <source>Project</source>
@@ -2296,8 +2296,8 @@
         <target>Consegna il progetto per la richiesta di approvazione</target>
     </trans-unit>
     <trans-unit id="593">
-        <source>Add resource</source>
-        <target>Aggiungi risorsa</target>
+        <source>Add resource/task</source>
+        <target>Aggiungi risorsa/compito</target>
     </trans-unit>
     <trans-unit id="594">
         <source>Set approval date</source>
@@ -2356,24 +2356,24 @@
         <target>Nessuna scadenza definita.</target>
     </trans-unit>
     <trans-unit id="608">
-        <source>No resource defined.</source>
-        <target>Nessuna risorsa definita.</target>
+        <source>No resource/task defined.</source>
+        <target>Nessun elemento di tipo risorsa/compito definito.</target>
     </trans-unit>
     <trans-unit id="609">
         <source>The deadline has been added. Please proceed with filling in the necessary information.</source>
         <target>La scadenza è stata aggiunta. Procedi con il completamento dell'inserimento dati.</target>
     </trans-unit>
     <trans-unit id="610">
-        <source>The resource has been added. Please proceed with filling in the necessary information.</source>
-        <target>La risorsa è stata aggiunta. Procedi con il completamento dell'inserimento dati.</target>
+        <source>The resource/task has been added. Please proceed with filling in the necessary information.</source>
+        <target>L'elemento di tipo risorsa/compito è stata aggiunto. Procedi con il completamento dell'inserimento dati.</target>
     </trans-unit>
     <trans-unit id="611">
         <source>Deadline successfully updated.</source>
         <target>Informazioni sulla scadenza correttamente aggiornate.</target>
     </trans-unit>
     <trans-unit id="612">
-        <source>Resource successfully updated.</source>
-        <target>Informazioni sulla risorsa correttamente aggiornate.</target>
+        <source>Resource/task successfully updated.</source>
+        <target>Informazioni sull'elemento di tipo risorsa/compito correttamente aggiornate.</target>
     </trans-unit>
     <trans-unit id="613">
         <source>The project has been submitted.</source>
@@ -2404,8 +2404,8 @@
         <target>La scadenza è stata eliminata.</target>
     </trans-unit>
     <trans-unit id="620">
-        <source>The resource has been deleted.</source>
-        <target>La risorsa è stata eliminata.</target>
+        <source>The resource/task has been deleted.</source>
+        <target>L'elemento di tipo risorsa/compito è stata eliminato.</target>
     </trans-unit>
     <trans-unit id="621">
         <source>Deadlines</source>
@@ -2420,8 +2420,8 @@
         <target>Nessuna scadenza definita</target>
     </trans-unit>
     <trans-unit id="624">
-        <source>No resource defined</source>
-        <target>Nessuna risorsa definita</target>
+        <source>No resource/task defined</source>
+        <target>Nessun elemento di tipo risorsa/compito definito</target>
     </trans-unit>
     <trans-unit id="625">
         <source>The coordinator does not have a validated email address</source>
@@ -2464,8 +2464,8 @@
         <target>Quantità non definita per la risorsa</target>
     </trans-unit>
     <trans-unit id="635">
-        <source>At least a resource is defined</source>
-        <target>Almeno una risorsa è definita</target>
+        <source>At least a resource/task is defined</source>
+        <target>Almeno un elemento di tipo risorsa/compito è definito</target>
     </trans-unit>
     <trans-unit id="636">
         <source>No deadline defined</source>
@@ -2496,8 +2496,8 @@
         <target>Ore impiegate</target>
     </trans-unit>
     <trans-unit id="643">
-        <source>Resource</source>
-        <target>Risorsa</target>
+        <source>Resource/task</source>
+        <target>Risorsa/compito</target>
     </trans-unit>
     <trans-unit id="644">
         <source>New activity</source>
@@ -2548,8 +2548,8 @@
         <target>Progetto «%project%»</target>
     </trans-unit>
     <trans-unit id="653">
-        <source>Activities within the resource «%resource%»</source>
-        <target>Attività per «%resource%»</target>
+        <source>Activities within the resource/task «%resource%»</source>
+        <target>Attività nell'ambito della risorsa/compito «%resource%»</target>
     </trans-unit>
     <trans-unit id="654">
         <source>Acknowledge</source>
