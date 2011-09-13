@@ -4,85 +4,45 @@
   ))
 ?>
 
-<?php /*
-<?php if (sizeof($appointments)>0): ?>
-<h2><?php echo __('What I teach') ?></h2>
-<ul class="sf_admin_actions">
-<?php foreach ($appointments as $appointment): ?>
-    <li class="sf_admin_action_fill"><?php echo link_to(
-		$appointment->getSubject()->getDescription() . ' -> '. $appointment->getSchoolclass() . ' (' . $appointment->getYear() . ')',
-		url_for('plansandreports/fill?id=' . $appointment->getId())
-		)
-		?><br />
-		</li>
-<?php endforeach ?>
-</ul>
-<?php endif ?>
-
-*/ ?>
-
-
-<?php if ($sf_user->hasCredential('planning')): ?>
+<?php if ($sf_user->hasCredential('wpfr_submission') or $sf_user->hasCredential('proj_coordination') or $sf_user->hasCredential('proj_activity')): ?>
 <h2><?php echo __('Appointments and projects') ?></h2>
 <ul class="sf_admin_actions">
-    <li class="sf_admin_action_items"><?php echo link_to(__('My appointments'), '@plansandreports') ?></li><br />
-    <li class="sf_admin_action_items"><?php echo link_to(__('My projects'), 'projects/index') ?></li><br />
-    <li class="sf_admin_action_items"><?php echo link_to(__('My activities'), 'projects/activities') ?></li><br />
+    <?php if ($sf_user->hasCredential('wpfr_submission')): ?>
+      <li class="sf_admin_action_items"><?php echo link_to(__('My appointments'), '@plansandreports') ?></li><br />
+    <?php endif ?>
+    <?php if ($sf_user->hasCredential('proj_coordination')): ?>
+      <li class="sf_admin_action_items"><?php echo link_to(__('My projects'), 'projects/index') ?></li><br />
+    <?php endif ?>
+    <?php if ($sf_user->hasCredential('proj_activity')): ?>
+      <li class="sf_admin_action_items"><?php echo link_to(__('My activities'), 'projects/activities') ?></li><br />
+    <?php endif ?>
 </ul>
 <?php endif ?>
 
-<?php /*
-<?php if (sizeof($schoolclasses)>0): ?>
-<h2><?php echo __('My classes') ?></h2>
-<ul class="sf_admin_actions">
-<?php foreach ($schoolclasses as $schoolclass_id => $schoolclass_subjectsnb): ?>
-    <li class="sf_admin_action_users"><?php echo link_to(
-		$schoolclass_id,
-		url_for('schoolclasses/view?id=' . $schoolclass_id)
-		)
-		?>
-		<?php if ($schoolclass_subjectsnb>1): ?>
-			(<strong><?php echo format_number_choice('[0]no subjects|[1]one subject|(1,+Inf]%1% subjects', array('%1%'=>$schoolclass_subjectsnb), $schoolclass_subjectsnb) ?></strong>)
-		<?php endif ?>
-			<br />
-		</li>
-<?php endforeach ?>
-</ul>
-<?php endif ?>
 
-*/ ?>
-
-<?php /*
-<h2><?php echo __('Activities') ?></h2>
-*?>
-<?php /* Since we don't really use this, we keep it secret 
-<?php if (sizeof($teams)>0): ?>
-
-<h2><?php echo __('Which groups I belong to') ?></h2>
-<ul>
-<?php for($i=0; $i<sizeof($teams); $i++): ?>
-    <li><?php echo $teams[$i]->getTeam()->getDescription(); ?> (<?php echo $profile->getIsMale()? $teams[$i]->getRole()->getMaleDescription(): $teams[$i]->getRole()->getFemaleDescription(); ?>)</li>    
-<?php endfor ?>
-
-</ul>
-<?php endif ?>
-
-*/ ?>
-
-<?php if ($sf_user->hasCredential('admin')  or $sf_user->hasCredential('schoolmaster') or $sf_user->hasCredential('project')): ?>
+<?php if (
+  $sf_user->hasCredential('admin') or 
+  $sf_user->hasCredential('proj_monitoring') or 
+  $sf_user->hasCredential('wpfr_monitor')
+  ): ?>
 <h2><?php echo __('Administration') ?></h2>
 <ul class="sf_admin_actions">
-<?php if ($sf_user->hasCredential('office') or $sf_user->hasCredential('schoolmaster')): ?>
+<?php if ($sf_user->hasCredential('wpfr_monitor')): ?>
     <li class="sf_admin_action_items"><?php echo link_to(__('Manage appointments'), 'plansandreports/list') ?></li><br />
 <?php endif ?>
-
-<?php if ($sf_user->hasCredential('project') or $sf_user->hasCredential('schoolmaster')): ?>
+<?php if ($sf_user->hasCredential('proj_monitoring')): ?>
     <li class="sf_admin_action_items"><?php echo link_to(__('Projects monitoring'), 'projects/monitor') ?></li><br />
+<?php endif ?>
+<?php if ($sf_user->hasCredential('proj_adm_ok')): ?>
     <li class="sf_admin_action_items"><?php echo link_to(__('Projects resource types definitions'), '@proj_resource_type') ?></li><br />
 <?php endif ?>
+<?php if ($sf_user->hasCredential('admin')): ?>
 	<li class="sf_admin_action_users"><?php echo link_to(__('Users management'), url_for('users')) ?></li><br />
+<?php endif ?>
 </ul>
 <?php endif ?>
+
+
 
 <?php if ($sf_user->hasCredential('filebrowsing')): ?>
 <h2><?php echo __('My files') ?></h2>
@@ -103,6 +63,15 @@
 <?php endif ?>
 </ul>
 
+<?php /* better to keep this secret for users... */ /* 
+<h2><?php echo __('Credentials') ?></h2>
+
+<pre>
+<?php foreach($sf_user->getProfile()->getWebpermissions() as $permission): ?>
+<?php echo $permission . "\n"?>
+<?php endforeach ?>
+</pre>
+*/ ?>
 
 <?php /*
 <?php if ($sf_user->getProfile()->getGoogleappsAccountApprovedAt()): ?>
