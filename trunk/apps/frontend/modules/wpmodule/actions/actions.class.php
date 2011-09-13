@@ -201,7 +201,8 @@ class wpmoduleActions extends sfActions
     $this->forward404Unless($this->wpmodule);
 	  $this->user=$this->getUser();
 
-
+    $this->syllabusview=$request->getParameter('syllabusview', 'table');
+    
 	  $this->owner=$this->wpmodule->getOwner();;
 		
     $this->forward404Unless($this->owner->getUserId()==$this->getUser()->getProfile()->getSfGuardUser()->getId()
@@ -248,7 +249,7 @@ class wpmoduleActions extends sfActions
     $syllabus_item=SyllabusItemPeer::retrieveByPK($request->getParameter('syllabus'));
     $this->forward404Unless($syllabus_item->getIsSelectable());
 
-    $this->wpmodule->manageSyllabusItem($syllabus_item->getId(), $request->getParameter('value', 0));
+    $link=$this->wpmodule->manageSyllabusItem($syllabus_item->getId(), $request->getParameter('value', 0));
     
     if($request->getParameter('partial')=='workplanlinks')
     {
@@ -259,11 +260,29 @@ class wpmoduleActions extends sfActions
       );
     };
     
-    return $this->renderPartial('syllabi/link', array(
-      'syllabus_item'=>$syllabus_item, 
-      'wpmodule'=>$this->wpmodule,
-      'syllabus_contributions'=>$this->wpmodule->getSyllabusContributionsAsArray()
-      ));
+    if($request->getParameter('partial', 'table')=='table')
+    {
+      return $this->renderPartial('syllabi/link_table', array(
+        'syllabus_item'=>$syllabus_item, 
+        'wpmodule'=>$this->wpmodule,
+        'syllabus_contributions'=>$this->wpmodule->getSyllabusContributionsAsArray(),
+        'syllabusview'=>$request->getParameter('partial'),
+        ));
+    }
+    
+    if($request->getParameter('partial')=='tree')
+    {
+      return $this->renderPartial('syllabi/link', array(
+        'syllabus_item'=>$syllabus_item, 
+        'wpmodule'=>$this->wpmodule,
+        'syllabus_contributions'=>$this->wpmodule->getSyllabusContributionsAsArray(),
+        'syllabusview'=>$request->getParameter('partial'),
+        'link'=>$link,
+        'showref'=>true,
+        ));
+    }
+    
+    
   }
 
   public function executeNew(sfWebRequest $request)

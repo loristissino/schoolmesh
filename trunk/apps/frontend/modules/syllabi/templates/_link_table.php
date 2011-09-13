@@ -5,20 +5,7 @@
 </td>
 <td>
 <div style="margin-left: <?php echo ($syllabus_item->getLevel()-1)*10 ?>px;">
-<?php if ($syllabus_item->getIsSelectable()): ?>
-  <?php echo jq_link_to_remote($link,
-    array(
-      'update' => 'syllabus_' . $syllabus_item->getId(),
-            'url'      => url_for('wpmodule/syllabus?id=' . $wpmodule->getId() . '&syllabus=' . $syllabus_item->getId() . '&value=R'),
-            'loading'=>'$(\'#loader_s'. $syllabus_item->getId() . '\').show();'),
-            array(
-            'title'=>__('Toggle current module contribution to this goal\'s achievement')
-              )
-            ) ?>
-  <?php echo $syllabus_item->getContent() ?>
-<?php else: ?>
-  <strong><?php echo $syllabus_item->getContent()?></strong>
-<?php endif ?>
+<?php include_partial('syllabi/link', array('syllabus_item'=>$syllabus_item, 'wpmodule'=>$wpmodule, 'syllabusview'=>'table', 'link'=>$link, 'showref'=>false)) ?>
 </div>
 </td>
 <td>
@@ -30,7 +17,7 @@
       <?php echo jq_link_to_remote('▢',
          array(
             'update'   => 'syllabus_' . $syllabus_item->getId(),
-            'url'      => url_for('wpmodule/syllabus?id=' . $wpmodule->getId() . '&syllabus=' . $syllabus_item->getId() . '&value=0'),
+            'url'      => url_for('wpmodule/syllabus?id=' . $wpmodule->getId() . '&syllabus=' . $syllabus_item->getId() . '&value=0&partial=table'),
             'loading'=>'$(\'#loader_s'. $syllabus_item->getId() . '\').show();'),
             array(
             'title'=>__('Unset current module contribution to this goal\'s achievement')
@@ -43,7 +30,7 @@
       <?php echo jq_link_to_remote('◪',
          array(
             'update'   => 'syllabus_' . $syllabus_item->getId(),
-            'url'      => url_for('wpmodule/syllabus?id=' . $wpmodule->getId() . '&syllabus=' . $syllabus_item->getId() . '&value='. WpmoduleSyllabusItemPeer::PARTIAL_CONTRIBUTION),
+            'url'      => url_for('wpmodule/syllabus?id=' . $wpmodule->getId() . '&syllabus=' . $syllabus_item->getId() . '&value='. WpmoduleSyllabusItemPeer::PARTIAL_CONTRIBUTION . '&partial=table'),
             'loading'=>'$(\'#loader_s'. $syllabus_item->getId() . '\').show();'),
             array(
             'title'=>__('Set current module partial contribution to this goal\'s achievement')
@@ -56,7 +43,7 @@
       <?php echo jq_link_to_remote('▣',
          array(
             'update'   => 'syllabus_' . $syllabus_item->getId(),
-            'url'      => url_for('wpmodule/syllabus?id=' . $wpmodule->getId() . '&syllabus=' . $syllabus_item->getId() . '&value='. WpmoduleSyllabusItemPeer::FOCUSSED_CONTRIBUTION),
+            'url'      => url_for('wpmodule/syllabus?id=' . $wpmodule->getId() . '&syllabus=' . $syllabus_item->getId() . '&value='. WpmoduleSyllabusItemPeer::FOCUSSED_CONTRIBUTION . '&partial=table'),
             'loading'=>'$(\'#loader_s'. $syllabus_item->getId() . '\').show();'),
             array(
             'title'=>__('Set current module focussed contribution to this goal\'s achievement')
