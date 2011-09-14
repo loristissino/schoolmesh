@@ -18,7 +18,7 @@ class Workflow
 		'owner' => Array(),
 		'actions' => Array(
 			'approve' => Array(
-				'permission'=>'office',
+				'permission'=>'wp_adm_ok',
 				'submitDisplayedAction'=>'Confirm appointment',
 				'submitDoneAction'=>'Appointment confirmed.',
 				'submitExtraAction'=>'',
@@ -58,7 +58,7 @@ class Workflow
 			),
 		'actions' => Array(
 			'approve' => Array(
-				'permission'=>'office',
+				'permission'=>'wp_adm_ok',
 				'submitDisplayedAction'=>'Approve workplan',
 				'submitDoneAction'=>'Workplan administratively checked.',
 				'submitExtraAction'=>'',
@@ -69,7 +69,7 @@ class Workflow
         'sendEmail'=>false,
 				),
 			'reject' => Array(
-				'permission'=>'office',
+				'permission'=>'wp_adm_no',
 				'submitDisplayedAction'=>'Reject workplan',
 				'submitDoneAction'=>'Workplan administratively rejected.',
 				'submitExtraAction'=>'markSubItems',
@@ -95,7 +95,7 @@ class Workflow
 			),
 		'actions' => Array(
 			'approve' => Array(
-				'permission'=>"schoolmaster",
+				'permission'=>"wp_sm_ok",
 				'submitDisplayedAction'=>'Approve workplan',
 				'submitDoneAction'=>'Workplan approved.',
 				'submitExtraAction'=>'markSubItems',
@@ -106,7 +106,7 @@ class Workflow
         'sendEmail'=>true,
 				),
 			'reject' => Array(
-				'permission'=>"schoolmaster",
+				'permission'=>"wp_sm_no",
 				'submitDisplayedAction'=>'Reject workplan',
 				'submitDoneAction'=>'Workplan rejected.',
 				'submitExtraAction'=>'markSubItems',

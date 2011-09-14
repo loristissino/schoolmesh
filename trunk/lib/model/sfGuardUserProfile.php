@@ -731,7 +731,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $result;
 			
 		}
-	public function addAppointment($schoolclassId, $yearId, $subjectId, $hours)
+	public function addAppointment($schoolclassId, $yearId, $subjectId, $hours, $syllabus_id)
 		{
 			
 			$result=array();
@@ -750,6 +750,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 				->setSubjectId($subjectId)
 				->setHours($hours)
 				->setState(Workflow::AP_ASSIGNED)
+        ->setSyllabusId($syllabus_id)
 				->save();
 				
 				$result['result']='notice';

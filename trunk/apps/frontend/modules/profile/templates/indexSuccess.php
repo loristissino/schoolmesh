@@ -23,11 +23,11 @@
 <?php if (
   $sf_user->hasCredential('admin') or 
   $sf_user->hasCredential('proj_monitoring') or 
-  $sf_user->hasCredential('wpfr_monitor')
+  $sf_user->hasCredential('wpfr_monitoring')
   ): ?>
 <h2><?php echo __('Administration') ?></h2>
 <ul class="sf_admin_actions">
-<?php if ($sf_user->hasCredential('wpfr_monitor')): ?>
+<?php if ($sf_user->hasCredential('wpfr_monitoring')): ?>
     <li class="sf_admin_action_items"><?php echo link_to(__('Manage appointments'), 'plansandreports/list') ?></li><br />
 <?php endif ?>
 <?php if ($sf_user->hasCredential('proj_monitoring')): ?>
