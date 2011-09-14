@@ -1016,7 +1016,7 @@ public function executeAddappointment(sfWebRequest $request)
 			if ($this->form->isValid())
 			{
 				$params = $this->form->getValues();
-				$result=$this->current_user->addAppointment($params['class'], $params['year'], $params['subject'], $params['hours']);
+				$result=$this->current_user->addAppointment($params['class'], $params['year'], $params['subject'], $params['hours'], $params['syllabus']);
 				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 				
 				if ($result['result']=='notice')
