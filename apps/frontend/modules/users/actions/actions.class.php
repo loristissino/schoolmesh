@@ -189,6 +189,16 @@ class usersActions extends sfActions
 
   }
 
+  public function executeUnlock(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('put') or $request->isMethod('post'));
+    $this->forward404Unless($user=sfGuardUserProfilePeer::retrieveByUsername($request->getParameter('username')));
+    $this->forward404Unless($account=AccountPeer::retrieveByUserIdAndType($user->getId(), $request->getParameter('account')));
+    $result=$account->unlock();
+    $this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+    $this->redirect('users/edit?id=' . $user->getId());
+  }
+
 
   public function executeBatch(sfWebRequest $request)
   {

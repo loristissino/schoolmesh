@@ -2,7 +2,7 @@
   'Category',
   'Coordinator',
   'Title',
-  'Resource',
+  'Resource/task',
   'M.U.',
   'Estimation',
   'Approval',

@@ -149,9 +149,8 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 
   }
 
-  public static function updateStandardCosts($user, $sf_context=null)
+  public static function updateStandardCosts($user, $ids, $sf_context=null)
   {
-    $ids=$user->getAttribute('ids');
     $user_id=$user->getProfile()->getId();
     
     $projectsNo = 0;
@@ -209,6 +208,30 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 
   }
   
+  public static function resetToDraft($user, $projects, $sf_context=null)
+  {
+    $user_id=$user->getProfile()->getId();
+    
+    foreach($projects as $project)
+    {
+      $project
+      ->setState(Workflow::PROJ_DRAFT)
+      ->addWfevent(
+        $user_id,
+        'Project reset to draft',
+        null,
+        null,
+        $sf_context
+      )
+      ->save()
+      ;
+    }
+    
+    $result['result']='notice';
+    $result['message']='All selected projects have been correctly reset to draft state.';
+    return $result;
+
+  }
   
   public static function computeDataSynthesis($ids)
   {

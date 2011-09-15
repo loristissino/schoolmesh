@@ -130,9 +130,21 @@
 					<?php if ($account->getExists()&&$account->getPasswordIsResettable()): ?>
 						<li class="sf_admin_action_passwordreset">
 							<?php echo link_to(
-						__('Password reset'),
+						__('Reset password'),
 						'passwordreset/confirm?username=' . $current_user->getUsername() . '&account=' . $account->getAccountType() . '&choose=Choose',
 						array('title'=>__('Reset the password for this account'))
+						)?>
+						</li>
+					<?php endif ?>
+					<?php if ($account->getExists()&&$account->getIsLocked()&&($account->getIsUnlockable())): ?>
+						<li class="sf_admin_action_unlock">
+							<?php echo link_to(
+						__('Unlock account'),
+						'users/unlock?username=' . $current_user->getUsername() . '&account=' . $account->getAccountType(),
+						array(
+              'method' => 'put',
+              'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()),
+              'title'=>__('Unlock this account'))
 						)?>
 						</li>
 					<?php endif ?>
