@@ -136,7 +136,7 @@
 						)?>
 						</li>
 					<?php endif ?>
-					<?php if ($account->getExists()&&$account->getIsLocked()&&($account->getIsUnlockable())): ?>
+					<?php if ($account->getExists()&&$account->getIsLocked()&&($account->getAccountIsUnlockable())): ?>
 						<li class="sf_admin_action_unlock">
 							<?php echo link_to(
 						__('Unlock account'),
