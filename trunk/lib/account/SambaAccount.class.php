@@ -17,10 +17,20 @@ class SambaAccount extends Account
   
   public function unlock()
   {
-		$info=Generic::executeCommand(sprintf('sambaaccount_unlock %s', $this->getUsername()), false);
-    $result['result']='notice';
-    $result['message']='The account has been successfully unlocked.';
-    return $result;
+    try
+    {
+       Generic::executeCommand(sprintf('sambaaccount_unlock %s',
+$this->getUsername()), false);
+       $result['result']='notice';
+       $result['message']='The account has been successfully unlocked.';
+       return $result;
+    }
+   catch(Exception $e)
+    {
+       $result['result']='error';
+       $result['message']='The account could not be unlocked.';
+       return $result;
+    }
   }
 
 	public function updateInfoFromRealWorld()
