@@ -14,6 +14,15 @@ class SambaAccount extends Account
 		return 'samba';
 	}
 	
+  
+  public function unlock()
+  {
+		$info=Generic::executeCommand(sprintf('sambaaccount_unlock %s', $this->getUsername()), false);
+    $result['result']='notice';
+    $result['message']='The account has been successfully unlocked.';
+    return $result;
+  }
+
 	public function updateInfoFromRealWorld()
 	{
 		$this->resetInfo();
@@ -27,7 +36,7 @@ class SambaAccount extends Account
 		$this->setInfoUpdatedAt(time());
 
 		$this->setExists($this->getAccountInfo('found')==1);
-		$this->setIsLocked(strpos($this->getAccountInfo('account_flags'), 'D')!=0);
+		$this->setIsLocked((strpos($this->getAccountInfo('account_flags'), 'D')!=0) or (strpos($this->getAccountInfo('account_flags'), 'L')!=0));
 		
 		// second, we copy them in the settings if they are empty (but only editable ones)
 		foreach(array(
@@ -119,6 +128,11 @@ class SambaAccount extends Account
 	
   
   public function getPasswordIsResettable()
+	{
+		return true;
+	}
+  
+  public function getAccountIsUnlockable()
 	{
 		return true;
 	}

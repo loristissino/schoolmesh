@@ -1,8 +1,8 @@
-.TH SCHOOLMESH_POSIXFOLDER_GETINFO 8 "January 2010" "Schoolmesh User Manuals"
+.TH SCHOOLMESH_POSIXFOLDER_GETINFO 8 "July 2010" "Schoolmesh User Manuals"
 .SH NAME
 .PP
-schoolmesh_posixfolder_getinfo - Get info about a posix user\[aq]s
-folder\[aq]s contents
+schoolmesh_posixfolder_getinfo - Get info about a posix user's
+folder's contents
 .SH SYNOPSIS
 .PP
 schoolmesh_posixfolder_getinfo \f[I]username\f[] path
@@ -13,26 +13,27 @@ schoolmesh_posixfolder_getinfo \f[I]username\f[] file
 .SH DESCRIPTION
 .PP
 This script generates a list of pairs \f[I]key=value\f[] about a
-posix folder\. The user must exist\.
+posix folder.
+The user must exist.
 .SH WARNINGS
 .PP
 The user who runs this (typically, www-data or apache) must be
-allowed to run commands on behalf of other users (through sudo)\.
+allowed to run commands on behalf of other users (through sudo).
 .SH EXAMPLES
 .PP
 \f[CR]
-      schoolmesh_posixfolder_getinfo\ john\.test\ path\ \[aq]/\[aq]\ \ 
-      schoolmesh_posixfolder_getinfo\ john\.test\ list\ \[aq]/mydocs\[aq]\ 
+      schoolmesh_posixfolder_getinfo\ john.test\ path\ \[aq]/\[aq]\ \ 
+      schoolmesh_posixfolder_getinfo\ john.test\ list\ \[aq]/mydocs\[aq]\ 
 \f[]
 .PP
-schoolmesh_posixfolder_getinfo john\.test file
-\[aq]/mydocs/myfile\.odt\[aq]
+schoolmesh_posixfolder_getinfo john.test file `/mydocs/myfile.odt'
 .SH BUGS
 .PP
-Probably many\.
+Probably many.
 .SH SEE ALSO
 .PP
 The SchoolMesh project is described at
-<http://schoolmesh.mattiussilab.net/>\.
-.SH AUTHOR
-Loris Tissino (loris.tissino@mattiussilab.net)
+<http://schoolmesh.mattiussilab.net/>.
+.SH AUTHORS
+Loris Tissino (loris.tissino\@mattiussilab.net).
+

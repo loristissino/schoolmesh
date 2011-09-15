@@ -66,7 +66,7 @@ class Schoolproject extends BaseSchoolproject {
   {
     $c=new Criteria();
     $c->add(ProjDeadlinePeer::SCHOOLPROJECT_ID, $this->getId());
-    $c->add(ProjDeadlinePeer::CURRENT_DEADLINE_DATE, time(), Criteria::LESS_THAN);
+    $c->add(ProjDeadlinePeer::CURRENT_DEADLINE_DATE, time(), Criteria::LESS_EQUAL);
     $c->add(ProjDeadlinePeer::COMPLETED, false);
     $deadlines=ProjDeadlinePeer::doSelect($c);
     
@@ -240,6 +240,7 @@ class Schoolproject extends BaseSchoolproject {
       ->setSchoolprojectId($this->getId())
       ->setOriginalDeadlineDate(Generic::currentDate())
       ->setCurrentDeadlineDate(Generic::currentDate())
+      ->setCompleted(false)
       ->save();
       $result['result']='notice';
       $result['message']='The deadline has been added. Please proceed with filling in the necessary information.';

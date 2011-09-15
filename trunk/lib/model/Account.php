@@ -48,6 +48,19 @@ class Account extends BaseAccount
 		$t=sfGuardUserProfilePeer::doSelectOne($c);
 		return $t;
 	}
+  
+  public function unlock()
+  {
+    /* this has to be reimplemented in subclasses... */
+    $result['result']='error';
+    $result['message']='This account cannot be unlocked.';
+    return $result;
+  }
+  
+  public function getAccountIsUnlockable()
+	{
+		return false;
+	}
 	
 	public function getSiblingAccountByType($type)
 	{

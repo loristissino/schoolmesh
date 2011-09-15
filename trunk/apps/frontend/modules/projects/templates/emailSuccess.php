@@ -22,7 +22,6 @@
 ?>
 <?php endif ?>
 
-
 <?php include_partial('content/flashes'); ?>
 
 <form action="<?php echo url_for('projects/email?id='. $project->getId()) ?>" method="POST">

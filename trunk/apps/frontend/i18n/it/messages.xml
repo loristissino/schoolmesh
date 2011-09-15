@@ -2899,9 +2899,24 @@
         <source>Add</source>
         <target>Aggiungi</target>
     </trans-unit>
+    <trans-unit id="740">
+        <source>Reset to draft</source>
+        <target>Reimposta a bozza</target>
+    </trans-unit>
+    <trans-unit id="741">
+        <source>All selected projects have been correctly reset to draft state.</source>
+        <target>Tutti i progetti selezionati sono stati correttamente reimpostati a bozza.</target>
+    </trans-unit>
+    <trans-unit id="742">
+        <source>You cannot reset to draft projects already financed.</source>
+        <target>Non è possibile reimpostare a bozza progetti già approvati dal Consiglio di Istituto.</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
+
+
 
 
 

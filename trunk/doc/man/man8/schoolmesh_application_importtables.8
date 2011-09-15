@@ -1,4 +1,4 @@
-.TH SCHOOLMESH_APPLICATION_IMPORTTABLES 8 "December 2009" "Schoolmesh User Manuals"
+.TH SCHOOLMESH_APPLICATION_IMPORTTABLES 8 "July 2010" "Schoolmesh User Manuals"
 .SH NAME
 .PP
 schoolmesh_application_importtables - Import data from a backup sql
@@ -9,26 +9,28 @@ schoolmesh_application_importtables \f[I]database\f[]
 \f[I]inputfile\f[]
 .SH DESCRIPTION
 .PP
-Use this script to import data into the database\. The input file
-must be in SQL format\. The output of
-\f[I]schoolmesh_application_dumptables(8)\f[] should be adequate\.
+Use this script to import data into the database.
+The input file must be in SQL format.
+The output of \f[I]schoolmesh_application_dumptables(8)\f[] should
+be adequate.
 .SH WARNINGS
 .PP
-The database should have the tables, but empty\. It\[aq]s possible
-to re-create the tables with
-\f[I]schoolmesh_application_createtables(8)\f[]\.
+The database should have the tables, but empty.
+It's possible to re-create the tables with
+\f[I]schoolmesh_application_createtables(8)\f[].
 .SH EXAMPLES
 .PP
 \f[CR]
-      schoolmesh_application_importtables\ schoolmesh\ myfile\.sql\ \ 
-      schoolmesh_application_importtables\ schoolmesh_prod\ myfile\.sql
+      schoolmesh_application_importtables\ schoolmesh\ myfile.sql\ \ 
+      schoolmesh_application_importtables\ schoolmesh_prod\ myfile.sql
 \f[]
 .SH BUGS
 .PP
-Probably many\.
+Probably many.
 .SH SEE ALSO
 .PP
 The SchoolMesh project is described at
-<http://schoolmesh.mattiussilab.net/>\.
-.SH AUTHOR
-Loris Tissino (loris.tissino@mattiussilab.net)
+<http://schoolmesh.mattiussilab.net/>.
+.SH AUTHORS
+Loris Tissino (loris.tissino\@mattiussilab.net).
+

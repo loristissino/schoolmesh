@@ -78,6 +78,7 @@
 
 <?php if($project->mayHaveResources()): ?>
 
+<a name="resources"></a>
 <h2><?php echo __('Tasks, resources, schedule') ?></h2>
 
 <?php if(sizeof($resources)>0): ?>
@@ -188,7 +189,7 @@
             )
              ?></li>
         <?php endif ?>
-        <?php if($resource->getProjResourceType()->getRoleId() and $project->getState()>Workflow::PROJ_SUBMITTED): ?> 
+        <?php if($resource->getProjResourceType() and $resource->getProjResourceType()->getRoleId() and $project->getState()>Workflow::PROJ_SUBMITTED): ?> 
         <li class="sf_admin_action_new">
         <?php echo link_to(
               __('Add'),
@@ -227,6 +228,7 @@
 
 <?php endif // mayhaveresources? ?>
 
+<a name="upshots"></a>
 <?php if ($project->getState()<=Workflow::PROJ_SUBMITTED): ?>
 <h2><?php echo __('Expected upshots') ?></h2>
 <?php else: ?>
@@ -238,7 +240,7 @@
 <table cellspacing="0">
   <thead>
     <tr>
-      <th class="sf_admin_text"><?php echo __('Date') ?></th>
+      <th class="sf_admin_text"><?php echo __('Deadline') ?></th>
       <th class="sf_admin_text"><?php echo __('Description') ?></th>
       <th class="sf_admin_text"><?php echo __('Indicator') ?></th>
       <?php if($project->getState()>Workflow::PROJ_SUBMITTED): ?>
@@ -299,7 +301,7 @@
 </ul>
 <?php endif ?>
 
-
+<a name="deadlines"></a>
 <h2><?php echo __('Monitoring deadlines') ?></h2>
 
 <?php if(sizeof($deadlines)>0): ?>

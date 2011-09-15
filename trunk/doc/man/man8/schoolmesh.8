@@ -1,4 +1,4 @@
-.TH SCHOOLMESH 8 "May 2010" "Schoolmesh utilities User Manuals"
+.TH SCHOOLMESH 8 "September 2011" "Schoolmesh utilities User Manuals"
 .SH NAME
 .PP
 schoolmesh - command line utilities to be used with SchoolMesh web
@@ -36,7 +36,7 @@ schoolmesh_moodleaccount_create -
 \f[I]Create a moodle account for a user\f[]
 .PP
 schoolmesh_odf_check -
-\f[I]Get a specific portion of an OpenOffice\.org document\[aq]s content\.xml file\f[]
+\f[I]Get a specific portion of an OpenOffice.org document's content.xml file\f[]
 .PP
 schoolmesh_odf_converter -
 \f[I]start, stop or show the status of Unoconv Odf converter\f[]
@@ -84,19 +84,19 @@ schoolmesh_posixaccounts_quotachecks -
 \f[I]Get a list of users specifying who of them exceeds their quota\f[]
 .PP
 schoolmesh_posixfolder_copyfile -
-\f[I]Copy a user\[aq]s file in cache, applying read permission for webserver\f[]
+\f[I]Copy a user's file in cache, applying read permission for webserver\f[]
 .PP
 schoolmesh_posixfolder_getinfo -
-\f[I]Get info about a posix user\[aq]s folder\[aq]s contents\f[]
+\f[I]Get info about a posix user's folder's contents\f[]
 .PP
 schoolmesh_posixfolder_makedir -
-\f[I]Make a directory in a user\[aq]s home (sub)directory\f[]
+\f[I]Make a directory in a user's home (sub)directory\f[]
 .PP
 schoolmesh_posixfolder_putfile -
-\f[I]Copy an uploaded file to a user\[aq]s home (sub)directory\f[]
+\f[I]Copy an uploaded file to a user's home (sub)directory\f[]
 .PP
 schoolmesh_posixfolder_removefile -
-\f[I]Remove a file from a user\[aq]s home (sub)directory\f[]
+\f[I]Remove a file from a user's home (sub)directory\f[]
 .PP
 schoolmesh_sambaaccount_create -
 \f[I]Create a samba account for a user\f[]
@@ -107,6 +107,9 @@ schoolmesh_sambaaccount_delete -
 schoolmesh_sambaaccount_getinfo -
 \f[I]Get info about the samba (SMB/CIFS) account of a user\f[]
 .PP
+schoolmesh_sambaaccount_unlock -
+\f[I]Unlock the samba (SMB/CIFS) account of a user\f[]
+.PP
 schoolmesh_task_execute -
 \f[I]Executes a symfony SchoolMesh task\f[]
 .PP
@@ -115,20 +118,22 @@ schoolmesh_unoconv_launch -
 .SH DESCRIPTION
 .PP
 These utilities are really only basic wrapper scripts to be used
-together with SchoolMesh\. The idea is to provide flexibility\. For
-instance, instead of calling directly \f[B]useradd\f[], we call
-\f[B]schoolmesh_posixaccount_create\f[]\. This way, if one day we
-need to change the behaviour needed to add a system user (for
-instance, using \f[I]ldap\f[], or contacting a different server),
-we just need to change the wrapper scripts\.
+together with SchoolMesh.
+The idea is to provide flexibility.
+For instance, instead of calling directly \f[B]useradd\f[], we call
+\f[B]schoolmesh_posixaccount_create\f[].
+This way, if one day we need to change the behaviour needed to add
+a system user (for instance, using \f[I]ldap\f[], or contacting a
+different server), we just need to change the wrapper scripts.
 .PP
-Each utility should have its own man page (work in progress)\.
+Each utility should have its own man page (work in progress).
 .SH BUGS
 .PP
-Probably many\.
+Probably many.
 .SH SEE ALSO
 .PP
 The SchoolMesh project is described at
-<http://schoolmesh.mattiussilab.net/>\.
-.SH AUTHOR
-Loris Tissino
+<http://schoolmesh.mattiussilab.net/>.
+.SH AUTHORS
+Loris Tissino.
+

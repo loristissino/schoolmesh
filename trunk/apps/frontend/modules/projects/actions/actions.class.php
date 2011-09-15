@@ -327,10 +327,10 @@ class projectsActions extends sfActions
 
   }
   
-  public function executeUpdatestandardcosts()
+  public function executeUpdatestandardcosts(sfWebRequest $request)
   {
     $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
-		$result=SchoolprojectPeer::updateStandardCosts($this->getUser(), $this->getContext());
+		$result=SchoolprojectPeer::updateStandardCosts($this->getUser(), $this->ids, $this->getContext());
         
     $this->getUser()->setFlash($result['result'],
       $this->getContext()->getI18N()->__($result['message'])
@@ -338,6 +338,37 @@ class projectsActions extends sfActions
       
     return $this->redirect('projects/monitor');
   }
+  
+  public function executeResettodraft(sfWebRequest $request)
+  {
+    $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
+    
+    $projects=SchoolprojectPeer::retrieveByPKs($this->ids);
+    
+    $possible=true;
+    
+    foreach($projects as $project)
+    {
+      $possible = $possible && ($project->getState()<Workflow::PROJ_FINANCED);
+    }
+    
+    if ($possible)
+    {
+      $result=SchoolprojectPeer::resetToDraft($this->getUser(), $projects, $this->getContext());
+    }
+    else
+    {
+      $result['result']='error';
+      $result['message']='You cannot reset to draft projects already financed.';
+    }
+        
+    $this->getUser()->setFlash($result['result'],
+      $this->getContext()->getI18N()->__($result['message'])
+      );
+      
+    return $this->redirect('projects/monitor');
+  }
+  
 
   public function executeViewasreport(sfWebRequest $request)
   {
@@ -595,7 +626,7 @@ class projectsActions extends sfActions
 				
         if($result['result']=='notice')
         {
-          return $this->redirect('projects/edit?id='. $this->deadline->getSchoolproject()->getId());
+          return $this->redirect('projects/edit?id='. $this->deadline->getSchoolproject()->getId() . '#deadlines');
         }
         else
         {
@@ -684,7 +715,7 @@ class projectsActions extends sfActions
         
         if($result['result']=='notice')
         {
-          return $this->redirect('projects/edit?id='. $this->upshot->getSchoolprojectId());
+          return $this->redirect('projects/edit?id='. $this->upshot->getSchoolprojectId() . '#upshots');
         }
         return $this->redirect('projects/editupshot?id='. $this->upshot->getId());
 			}

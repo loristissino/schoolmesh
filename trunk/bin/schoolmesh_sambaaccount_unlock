@@ -1,0 +1,30 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Unlock the samba (SMB/CIFS) account of a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username*
+#@
+#@ # DESCRIPTION
+#@
+#@ This script unlocks a samba (SMB/CIFS) account.
+#@
+#@ # EXAMPLES
+#@
+#@	{-} john
+
+
+USERNAME=$1
+
+checkString $USERNAME
+
+sudo pdbedit -c '[]' -u $USERNAME && msg_ok "account unlocked: $USERNAME" && exit 0
+
+unexpectedError $@
