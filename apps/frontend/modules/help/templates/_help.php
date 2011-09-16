@@ -1,14 +1,14 @@
 <div id="help">
-<?php echo link_to(
-  image_tag('help', array(
-    'title'=>__('Help on action «%module%/%action%»', array('%module%'=>$module, '%action%'=>$action)),
-    'size='=>'16x16'
-    )) . '&nbsp;',
-  $helplink
-) ?>
-<?php echo link_to(
+<ul>
+<li><?php echo link_to(
   __('Help'),
-  $helplink 
+  $helplink,
+  array(
+    'title'=>__('Online help on action «%module%/%action%»', array('%module%'=>$module, '%action%'=>$action)) . ' ' . __('(opens in a new window)'),
+    'popup' => array('popupWindow', 'width=600,height=300,left=250,top=0,scrollbars=yes')
+    )
   )
 ?>
+</li>
+</ul>
 </div>

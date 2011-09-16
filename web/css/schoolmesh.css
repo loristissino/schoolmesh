@@ -395,3 +395,37 @@ font-weight: normal;
 {	
 	list-style-type: none;	
 }
+
+#help
+{
+  margin-right: 0;
+	background-color: #eff7f9;
+}
+
+#help ul
+{
+  margin-left: 0;
+	/*list-style-type: none;	
+  #list-style: none;*/
+  padding-left: 0;
+}
+
+#help ul li
+{
+	/*list-style-type: none;	
+  list-style: none;*/
+  display: inline;
+	font-weight: bold;
+	background: url(../images/help.png) no-repeat 0 0;
+	
+}
+#help ul li a
+{
+  text-decoration: none;
+  padding-left: 20px;
+}
+
+#help ul li a:hover
+{
+  text-decoration: underline;	
+}
