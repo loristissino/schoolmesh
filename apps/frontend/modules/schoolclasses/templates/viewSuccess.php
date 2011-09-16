@@ -66,9 +66,10 @@
   <select name="batch_action">
 
 <?php echo optionsforselect(array(
-  '' => __('Choose an action'),
-  'fill_recuperation_grid' => __('Fill recuperation grid'),
-  'get_recuperation_letters' => __('Get recuperation letters'),
+  '0' => __('Choose an action'),
+  'fillrecuperationgrid' => __('Fill recuperation grid'),
+  'getrecuperationletters' => __('Get recuperation letters'),
+  'getschoolregisterheading' => __('Get teacher\'s school register headings'),
 ), 0) ?>
   </select>
 

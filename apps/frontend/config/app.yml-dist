@@ -52,6 +52,11 @@ all:
     currency_thousandssep: '.'
 
     default_format: odt
+    
+    projects_evaluation_min: 1
+    projects_evaluation_max: 4
+    
+    help_index: /etc/schoolmesh/help.yml
 
 
   sf_guard_plugin:

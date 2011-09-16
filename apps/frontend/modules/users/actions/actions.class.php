@@ -243,7 +243,7 @@ class usersActions extends sfActions
 				$this->redirect('users/list');
 		}
     
-    return $this->ids; // we could avoid returning it, since it's avaailable anyway
+    return $this->ids; // we could avoid returning it, since it's available anyway
     
   }
   
@@ -282,7 +282,9 @@ class usersActions extends sfActions
   {
 
 		set_time_limit(0);
-    $ids=$this->_getIds($request);
+    //$ids=$this->_getIds($request);
+    $ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
+
 
 		$result=sfGuardUserProfilePeer::getWelcomeLetter($ids, sfConfig::get('app_config_default_format', 'odt'), $this->getContext());
 		
@@ -308,6 +310,7 @@ class usersActions extends sfActions
 		}
 
   }
+
 
 
   public function executeGetgoogleappsletter(sfWebRequest $request)
@@ -454,11 +457,11 @@ class usersActions extends sfActions
   {
 		set_time_limit(0);
 
-    $ids=	$this->getUser()->getAttribute('ids');
+    $ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
 		
 		$this->userlist=sfGuardUserProfilePeer::retrieveByPKs($ids);
     
-    $this->template = $request->getParameter('template', null);
+    $this->template = $this->getUser()->getAttribute('template', $request->getParameter('template', null));
     
     if(!$this->template)
     {
@@ -492,8 +495,9 @@ class usersActions extends sfActions
 		}
 		else
 		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.'));
-			$this->redirect('users/list');
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.' . $this->template));
+      $this->getUser()->setAttribute('template', null);
+			$this->redirect($this->getRequest()->getReferer());
 		}
 
   }

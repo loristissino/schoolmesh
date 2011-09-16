@@ -3003,6 +3003,10 @@
         <source>Online help on action «%module%/%action%»</source>
         <target>Guida in linea relativa all'azione «%module%/%action%»</target>
     </trans-unit>
+    <trans-unit id="766">
+        <source>Get teacher's school register headings</source>
+        <target>Scarica intestazioni per il registro docente</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
