@@ -16,18 +16,18 @@
 <?php $count=0 ?>
 <?php foreach ($students as $student): ?>
 <td>
-		<?php $link='▢'; if(in_array($student->getId(), $s)) {$link='▣'; $count++; } ?>
-		<?php echo jq_link_to_remote(in_array($student->getId(), $s)? '▣': '▢', array(
+		<?php $link='▢'; if(in_array($student->getUserId(), $s)) {$link='▣'; $count++; } ?>
+		<?php echo jq_link_to_remote(in_array($student->getUserId(), $s)? '▣': '▢', array(
 					'update'   => 'hint_' . $hint->getId(),
-					'url'      => url_for('schoolclasses/hint?student=' . $student->getId() . '&hint=' . $hint->getId() .'&appointment=' . $appointment_id),
+					'url'      => url_for('schoolclasses/hint?student=' . $student->getUserId() . '&hint=' . $hint->getId() .'&appointment=' . $appointment_id),
 					'loading'=>'$(\'loader_h'. $hint->getId() . '\').show();'),
 					array(
-					'title'=>$student->getProfile()->getFullName() . ' - ' . 
+					'title'=>$student->getFullName() . ' - ' . 
 						(
 						in_array($student->getId(), $s)? 
-							format_number_choice(__('[0]currently selected|[1]currently selected'), null, $student->getProfile()->getIsMale())
+							format_number_choice(__('[0]currently selected|[1]currently selected'), null, $student->getIsMale())
 							:
-							format_number_choice(__('[0]currently not selected|[1]currently not selected'), null, $student->getProfile()->getIsMale())
+							format_number_choice(__('[0]currently not selected|[1]currently not selected'), null, $student->getIsMale())
 						)
 					)
 				) ?>

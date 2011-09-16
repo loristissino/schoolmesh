@@ -7,18 +7,18 @@
 <?php $count=0 ?>
 <?php foreach ($students as $student): ?>
 <td>
-		<?php $link='▢'; if(in_array($student->getId(), $sits)) {$link='▣'; $count++; } ?>
-		<?php echo jq_link_to_remote(in_array($student->getId(), $sits)? '▣': '▢', array(
+		<?php $link='▢'; if(in_array($student->getUserId(), $sits)) {$link='▣'; $count++; } ?>
+		<?php echo jq_link_to_remote(in_array($student->getUserId(), $sits)? '▣': '▢', array(
 					'update'   => 'ticks_' . $wpmodule_item->getId(),
-					'url'      => url_for('schoolclasses/tickit?student=' . $student->getId() . '&item=' . $wpmodule_item->getId()),
+					'url'      => url_for('schoolclasses/tickit?student=' . $student->getUserId() . '&item=' . $wpmodule_item->getId()),
 					'loading'=>'$(\'loader'. $wpmodule_item->getId() . '\').show();'),
 					array(
-					'title'=>$student->getProfile()->getFullName() . ' - ' . 
+					'title'=>$student->getFullName() . ' - ' . 
 						(
 						$link=='▣' ? 
-							format_number_choice(__('[0]currently selected|[1]currently selected'), null, $student->getProfile()->getIsMale())
+							format_number_choice(__('[0]currently selected|[1]currently selected'), null, $student->getIsMale())
 							:
-							format_number_choice(__('[0]currently not selected|[1]currently not selected'), null, $student->getProfile()->getIsMale())
+							format_number_choice(__('[0]currently not selected|[1]currently not selected'), null, $student->getIsMale())
 						)
 					)
 				) ?>

@@ -1215,7 +1215,7 @@ public function getWorkflowLogs()
 		
 		$wpmodules=$this->getWpmodules();
 
-		$students=sfGuardUserProfilePeer::retrieveByPKs($ids);
+		$students=sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($ids);
 		
 		$suggestions=SuggestionPeer::retrieveAllByRank();
 		$hints=RecuperationHintPeer::retrieveAllByRankForTeacher($this->getUserId());

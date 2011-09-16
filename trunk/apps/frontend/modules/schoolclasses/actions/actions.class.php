@@ -199,7 +199,7 @@ public function executeSuggestion(sfWebRequest $request)
 
 {
 		$ids = $this->getUser()->getAttribute('ids');
-		$this->students = sfGuardUserPeer::retrieveByPks($ids);
+		$this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($ids);
 		
 		$term_id=sfConfig::get('app_config_current_term');
 		
@@ -233,7 +233,7 @@ public function executeHint(sfWebRequest $request)
 
 {
 		$ids = $this->getUser()->getAttribute('ids');
-		$this->students = sfGuardUserPeer::retrieveByPks($ids);
+		$this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($ids);
 		
 		$term_id=sfConfig::get('app_config_current_term');
 		
