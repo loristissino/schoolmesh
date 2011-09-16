@@ -1725,6 +1725,16 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
     
   }
   
-
+  
+  public function getCurrentAppointmentsWhichShareSameSyllabus()
+	{
+		$c=new Criteria();
+		$c->add(AppointmentPeer::SCHOOLCLASS_ID, $this->getSchoolclassId());
+		$c->add(AppointmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
+		$c->add(AppointmentPeer::SYLLABUS_ID, $this->getSyllabusId());
+		$c->addAscendingOrderByColumn(SubjectPeer::RANK);
+		$c->addJoin(AppointmentPeer::SUBJECT_ID, SubjectPeer::ID);
+		return AppointmentPeer::doSelectJoinAll($c);
+	}
 
 }

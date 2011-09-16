@@ -22,7 +22,7 @@
   $resource->getDescription(),
   url_for('projects/newactivity?id=' . $resource->getId()),
   array(
-    'title'=>__('Declare an activity performed within this resource')
+    'title'=>__('Declare an activity performed for this task')
     )
   )
   ?>
@@ -30,7 +30,7 @@
   <?php echo image_tag(
     $sf_user->getProfile()->getIsMale()? 'male': 'female',
     array(
-    'title'=>__('This is a resource you are in charge of')
+    'title'=>format_number_choice(__('[0]This is a task you are in charge of|[1]This is a task you are in charge of'), null, $sf_user->getProfile()->getIsMale())
     ))?>
   <?php endif ?>
 </div>

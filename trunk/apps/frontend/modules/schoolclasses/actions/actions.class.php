@@ -297,29 +297,15 @@ $this->getContext()->getI18N()->__('A new item was inserted'));
 
   public function executeSyllabus(sfWebRequest $request)
   {
-		$this->forward404Unless($this->schoolclass = SchoolclassPeer::retrieveByPK($request->getParameter('id')));
+		$this->forward404Unless($this->appointment = AppointmentPeer::retrieveByPK($request->getParameter('id')));
 
-    $this->appointments=$this->schoolclass->getCurrentAppointments();
+    $this->schoolclass=$this->appointment->getSchoolclass();
+    $this->appointments=$this->appointment->getCurrentAppointmentsWhichShareSameSyllabus();
     $this->contributions=$this->schoolclass->getSyllabusContributions();
 
-    // we need to check that all appointments share the same syllabus...
-    $syllabus_ids=array();
-    foreach($this->appointments as $appointment)
-    {
-      if($appointment->getSyllabusId())
-      {
-        $syllabus_ids[$appointment->getSyllabusId()]=1;
-      }
-    }
-    
-    if(sizeof($syllabus_ids)!=1)
-    {
-      return sfView::ERROR;
-    }
-    
-    list($this->syllabus_id)=array_keys($syllabus_ids);
+    $this->syllabus=$this->appointment->getSyllabus();
         
-    $this->syllabus_items=SyllabusPeer::retrieveByPK($this->syllabus_id)->getSyllabusItems();
+    $this->syllabus_items=$this->syllabus->getSyllabusItems();
     
     if($request->hasParameter('template'))
     {

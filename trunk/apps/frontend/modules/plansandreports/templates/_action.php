@@ -30,8 +30,8 @@
 	<li class="sf_admin_action_syllabus">
 		<?php echo link_to(
 	__('Syllabus'),
-	'schoolclasses/syllabus?id='.$workplan->getSchoolclassId(),
-	array('title'=>__('View contributions to the syllabus for this class'))
+	'schoolclasses/syllabus?id='.$workplan->getId(),
+	array('title'=>__('View other contributions to this syllabus for this class'))
 	)?>
 	</li>
 <?php endif ?>
