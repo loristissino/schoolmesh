@@ -4,6 +4,7 @@ class helpComponents extends sfComponents
 {
   public function executeHelp()
   {
+    
     $this->config=sfYaml::load(sfConfig::get('app_config_help_index', false));
     if(array_key_exists($this->module, $this->config))
     {
@@ -19,6 +20,10 @@ class helpComponents extends sfComponents
       {
         return sfView::NONE;
       }
+    }
+    else
+    {
+      return sfView::NONE;
     }
   }
 }

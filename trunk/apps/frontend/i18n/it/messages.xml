@@ -2999,6 +2999,10 @@
         <source>[0]This is a task you are in charge of|[1]This is a task you are in charge of</source>
         <target>[0]Questo è un compito di cui sei direttamente incaricata|[1]Questo è un compito di cui sei direttamente incaricato</target>
     </trans-unit>
+    <trans-unit id="765">
+        <source>Online help on action «%module%/%action%»</source>
+        <target>Guida in linea relativa all'azione «%module%/%action%»</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
