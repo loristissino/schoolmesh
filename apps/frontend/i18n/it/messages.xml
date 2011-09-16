@@ -2911,9 +2911,99 @@
         <source>You cannot reset to draft projects already financed.</source>
         <target>Non è possibile reimpostare a bozza progetti già approvati dal Consiglio di Istituto.</target>
     </trans-unit>
+    <trans-unit id="743">
+        <source>View the list of students enrolled in this class</source>
+        <target>Vedi l'elenco degli studenti iscritti a questa classe</target>
+    </trans-unit>
+    <trans-unit id="744">
+        <source>View other contributions to this syllabus for this class</source>
+        <target>Vedi gli altri contributi a questo sillabus per questa classe</target>
+    </trans-unit>
+    <trans-unit id="745">
+        <source>Name</source>
+        <target>Nome</target>
+    </trans-unit>
+    <trans-unit id="746">
+        <source>Credential</source>
+        <target>Credenziale</target>
+    </trans-unit>
+    <trans-unit id="747">
+        <source>Account</source>
+        <target>Account</target>
+    </trans-unit>
+    <trans-unit id="748">
+        <source>Really exists?</source>
+        <target>Esiste realmente?</target>
+    </trans-unit>
+    <trans-unit id="749">
+        <source>Is locked?</source>
+        <target>Bloccato?</target>
+    </trans-unit>
+    <trans-unit id="750">
+        <source>Last sync</source>
+        <target>Ultima sincr.</target>
+    </trans-unit>
+    <trans-unit id="751">
+        <source>Last known login</source>
+        <target>Ultimo login noto</target>
+    </trans-unit>
+    <trans-unit id="752">
+        <source>Quota</source>
+        <target>Quota</target>
+    </trans-unit>
+    <trans-unit id="753">
+        <source>Reset password</source>
+        <target>Reimposta password</target>
+    </trans-unit>
+    <trans-unit id="754">
+        <source>Reset the password for this account</source>
+        <target>Reimposta la password per questo account</target>
+    </trans-unit>
+    <trans-unit id="755">
+        <source>Unlock this account</source>
+        <target>Sblocca questo account</target>
+    </trans-unit>
+    <trans-unit id="756">
+        <source>Unlock account</source>
+        <target>Sblocca account</target>
+    </trans-unit>
+    <trans-unit id="757">
+        <source>Edit information about this account</source>
+        <target>Modifica le informazioni su questo account</target>
+    </trans-unit>
+    <trans-unit id="758">
+        <source>yes</source>
+        <target>sì</target>
+    </trans-unit>
+    <trans-unit id="759">
+        <source>no</source>
+        <target>no</target>
+    </trans-unit>
+    <trans-unit id="760">
+        <source>enabled</source>
+        <target>abilitato</target>
+    </trans-unit>
+    <trans-unit id="761">
+        <source>disabled</source>
+        <target>disabilitato</target>
+    </trans-unit>
+    <trans-unit id="762">
+        <source>Needs attachment?</source>
+        <target>Va documentata?</target>
+    </trans-unit>
+    <trans-unit id="763">
+        <source>Declare an activity performed for this task</source>
+        <target>Dichiara un'attività svolta per la realizzazione di questo compito</target>
+    </trans-unit>
+    <trans-unit id="764">
+        <source>[0]This is a task you are in charge of|[1]This is a task you are in charge of</source>
+        <target>[0]Questo è un compito di cui sei direttamente incaricata|[1]Questo è un compito di cui sei direttamente incaricato</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
+
 
 
 

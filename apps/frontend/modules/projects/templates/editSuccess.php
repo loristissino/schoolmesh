@@ -314,6 +314,7 @@
       <th class="sf_admin_text"><?php echo __('Current deadline') ?></th>
       <?php endif ?>
       <th class="sf_admin_text"><?php echo __('Description') ?></th>
+      <th class="sf_admin_text"><?php echo __('Needs attachment?') ?></th>
       <?php if($project->getState()>Workflow::PROJ_DRAFT): ?>
       <th class="sf_admin_text"><?php echo __('State') ?></th>
       <?php endif ?>
@@ -330,6 +331,7 @@
       <td><?php echo Generic::datetime($deadline->getCurrentDeadlineDate('U'), $sf_context) ?></td>
       <?php endif ?>
       <td><?php echo $deadline->getDescription() ?></td>
+      <td><?php echo $deadline->getNeedsAttachment()? __('yes'): __('no') ?></td>
       <?php if($project->getState()>Workflow::PROJ_DRAFT): ?>
       <td><?php include_partial('deadlinestate', array('deadline'=>$deadline, 'with_description'=>false)) ?></td>
       <?php endif ?>
