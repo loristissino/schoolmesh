@@ -27,6 +27,12 @@
     <td><?php echo $upshot->getDescription() ?></td>
   </tr>
   <?php endif ?>
+  <?php if(!isset($form['indicator'])): ?>
+  <tr>
+    <th><label for="upshot_description"><?php echo __('Indicator') ?></label></th>
+    <td><?php echo $upshot->getIndicator() ?></td>
+  </tr>
+  <?php endif ?>
 
     <?php echo $form ?>
 	<tr>

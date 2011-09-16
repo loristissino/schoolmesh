@@ -472,7 +472,89 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		return parent::doSelect($c);
 		
 	}
-	
+	/*
+	public static function getListdocument($ids, $filetype='odt', $templatename, $context=null)
+  {
+		$result=Array();
+		try
+		{
+			$odf=new OdfDoc($templatename, 'Users list', $filetype);
+		}
+		catch (Exception $e)
+		{
+			if ($e InstanceOf OdfDocTemplateException)
+			{
+				$result['result']='error';
+				$result['message']='Template not found or not readable: '. $templatename;
+				return $result;
+			}
+			
+			if ($e InstanceOf OdfException)
+			{
+				$result['result']='error';
+				$result['message']='Template not valid: '. $templatename;
+				return $result;
+			}
+			
+			throw $e;
+		}
+		
+		$odfdoc=$odf->getOdfDocument();
+/*		$letters=$odfdoc->setSegment('letters');
+		$count=0;
+		foreach($users as $user)
+		{
+			$count++;
+			
+			if($context)
+			{
+				if ($user->getIsMale())
+				{
+					$salutation=$context->getI18n()->__('Dear %malename%', array('%malename%'=>$user->getFirstName()));
+				}
+				else
+				{
+					$salutation=$context->getI18n()->__('Dear %femalename%', array('%femalename%'=>$user->getFirstName()));
+				}
+			}
+			else
+			{
+				$salutation='Dear '. $user->getFirstName();
+			}
+			
+			$letters->userSalutation($salutation);
+			$letters->userUsername($user->getUsername());
+			$letters->userFullName($user->getFullName());
+			$letters->userSchoolclass($user->getCurrentSchoolclassId());
+			$letters->userBirthdate($user->getBirthdate('d/m/Y'));
+			$letters->userImportCode($user->getImportCode());
+			
+			
+			$sambaAccount=$user->getAccountByType('samba');
+			if (is_object($sambaAccount))
+			{
+				$letters->userSambaPassword($sambaAccount->getTemporaryPassword());
+			}
+			else
+			{
+				$letters->userSambaPassword('ERROR');
+			}
+			
+			
+			$letters->letterDate(date('d/m/Y'));
+			$pagebreak=($count<sizeof($users))?'<pagebreak>':'';
+			$letters->pagebreak($pagebreak);
+			$letters->merge();
+		}
+		
+		$odfdoc->mergeSegment($letters);
+
+		$result['content']=$odf;
+		$result['result']='notice';
+		return $result;
+    
+  }
+*/  
 	public static function getWelcomeLetter($ids, $filetype='odt', $context=null)
 	{
 		$result=Array();
@@ -737,6 +819,8 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
 			$profiles->userUsername($user->getUsername());
 //      $profiles->userAgeStatus($useragestatus);
+
+			$profiles->userPosition($count);
 
 			$profiles->userFullName($user->getFullName());
 			$profiles->userFirstname($user->getFirstName());

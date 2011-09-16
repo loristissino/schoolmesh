@@ -105,7 +105,7 @@
 	<li class="sf_admin_action_export">
 	<?php echo link_to(
 		__('Get recuperation letters'),
-		url_for('schoolclasses/getRecuperationLetters?id=' . $schoolclass_id . '&appointment=' . $appointment->getId()),
+		url_for('schoolclasses/getrecuperationletters?id=' . $schoolclass_id . '&appointment=' . $appointment->getId()),
 		array('title'=>__('Get recuperation letters')) 
 	)?>
 	</li>

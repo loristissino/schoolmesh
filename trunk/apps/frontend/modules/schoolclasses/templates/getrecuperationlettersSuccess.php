@@ -15,7 +15,7 @@
 	'doc'=>__('Microsoft Word document'),
 	);
 	$baseurl=
-		'schoolclasses/getRecuperationLetters?id=' . $schoolclass_id
+		'schoolclasses/getrecuperationletters?id=' . $schoolclass_id
 		. '&appointment=' . $appointment->getId()
 		. '&doctype=';
 ?>

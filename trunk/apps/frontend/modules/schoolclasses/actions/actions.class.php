@@ -37,21 +37,20 @@ class schoolclassesActions extends sfActions
 public function executeBatch(sfWebRequest $request)
 {
 	
-	$ids = $request->getParameter('ids');
-	$this->getUser()->setAttribute('ids', $ids);
+    $ids = $request->getParameter('ids');
+    $this->getUser()->setAttribute('ids', $ids);
+    
+    $action=$request->getParameter('batch_action');
 
-	$action=$request->getParameter('batch_action');
-	
-	switch ($action)
-	{
-		case ('fill_recuperation_grid'):
-			$this->forward('schoolclasses', 'fillRecuperationGrid');
-		case ('get_recuperation_letters'):
-			$this->forward('schoolclasses', 'getRecuperationLetters');
-		default:
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select an action.'));
-			$this->forward('schoolclasses', 'redirect');
-	}
+    if ($action==='0')
+      {
+        $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must specify an action.'));
+        $this->redirect('schoolclasses/view?id='. $request->getParameter('id') . '&appointment=' . $request->getParameter('appointment'));
+      }
+      
+    $this->forward('schoolclasses', $action);
+    // if an action is not valid, we get an error anyway, because there is no
+    // template BatchSuccess.php
 
 }
 
@@ -64,7 +63,7 @@ public function executeBatch(sfWebRequest $request)
 		$this->redirect($redirectURL);
 	}
 
-public function executeFillRecuperationGrid(sfWebRequest $request)
+public function executeFillrecuperationgrid(sfWebRequest $request)
 {
 	
 	$this->term_id=sfConfig::get('app_config_current_term');
@@ -108,7 +107,7 @@ public function executeFillRecuperationGrid(sfWebRequest $request)
 */
 }
 
-public function executeGetRecuperationLetters(sfWebRequest $request)
+public function executeGetrecuperationletters(sfWebRequest $request)
 {
 	$this->term_id=sfConfig::get('app_config_current_term');
 	$this->forward404Unless($this->term=TermPeer::retrieveByPK($this->term_id));
@@ -158,6 +157,11 @@ public function executeGetRecuperationLetters(sfWebRequest $request)
 	
 }
 
+public function executeGetschoolregisterheading(sfWebRequest $request)
+{
+  $this->getUser()->setAttribute('template', 'teachersregisterheading.odt'); 
+  $this->forward('users', 'getlist');
+}
 
 	public function executeTickit(sfWebRequest $request)
 	{
