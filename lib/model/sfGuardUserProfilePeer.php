@@ -768,7 +768,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
     
 		$result=Array();
 
-		$users=self::retrieveByPks($ids);
+		$users=self::retrieveByPksSortedByLastnames($ids);
 
 		try
 		{
@@ -975,6 +975,14 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
   
   public static function retrieveByPksSortedByLastnames($ids)
   {
+    
+    $c=new Criteria();
+    $c->add(sfGuardUserPeer::ID, $ids, Criteria::IN);
+    $c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
+    $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+    $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
+    return self::doSelect($c);
+    
     $users=sfGuardUserPeer::retrieveByPks($ids);
     @usort($users, 'self::compareUsersByLastFirst');
     // if I don't put the silence operator here above, I getallheaders

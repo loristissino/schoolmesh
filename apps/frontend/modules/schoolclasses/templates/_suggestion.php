@@ -7,18 +7,18 @@
 <?php $count=0 ?>
 <?php foreach ($students as $student): ?>
 <td>
-		<?php $link='▢'; if(in_array($student->getId(), $s)) {$link='▣'; $count++; } ?>
+		<?php $link='▢'; if(in_array($student->getUserId(), $s)) {$link='▣'; $count++; } ?>
 		<?php echo jq_link_to_remote($link, array(
 					'update'   => 'suggestion_' . $suggestion->getId(),
-					'url'      => url_for('schoolclasses/suggestion?student=' . $student->getId() . '&suggestion=' . $suggestion->getId() .'&appointment=' . $appointment_id ),
+					'url'      => url_for('schoolclasses/suggestion?student=' . $student->getUserId() . '&suggestion=' . $suggestion->getId() .'&appointment=' . $appointment_id ),
 					'loading'=>'$(\'loader_s'. $suggestion->getId() . '\').show();'),
 					array(
-					'title'=>$student->getProfile()->getFullName() . ' - ' . 
+					'title'=>$student->getFullName() . ' - ' . 
 						(
 						in_array($student->getId(), $s)? 
-							format_number_choice(__('[0]currently selected|[1]currently selected'), null, $student->getProfile()->getIsMale())
+							format_number_choice(__('[0]currently selected|[1]currently selected'), null, $student->getIsMale())
 							:
-							format_number_choice(__('[0]currently not selected|[1]currently not selected'), null, $student->getProfile()->getIsMale())
+							format_number_choice(__('[0]currently not selected|[1]currently not selected'), null, $student->getIsMale())
 						)
 					)
 				) ?>
