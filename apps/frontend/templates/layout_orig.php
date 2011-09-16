@@ -36,6 +36,7 @@
     <?php include_slot('general_alerts'); ?>
     </div>
 	<?php endif; ?>
+  <?php include_component('help', 'help', array('module'=>$sf_params->get('module'), 'action'=>$sf_params->get('action'))) ?>
 <div id="sf_admin_container">
 <?php echo $sf_content ?>
 </div>
@@ -44,9 +45,7 @@
        <li><?php echo link_to(__("Home"), "@homepage") ?></li>
        <li><?php echo link_to(__("Who's on line"), "@whosonline") ?></li>
        <li><?php echo link_to(__("My profile"), "@profile")  ?></li>
-       <li><?php echo link_to(__("Poll"), url_for('profile/poll')) ?></li>
        <li><?php echo link_to(__("Documents"), url_for('content/documents'))  ?></li>
-       <li><?php //echo link_to(__("Plans and Reports"), "@plansandreports")  ?></li>	   
     </ul>
 </div>
 

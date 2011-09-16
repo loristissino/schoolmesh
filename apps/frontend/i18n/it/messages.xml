@@ -444,7 +444,7 @@
       </trans-unit>
       <trans-unit id="139">
         <source>Help</source>
-        <target>Guida</target>
+        <target>Aiuto</target>
       </trans-unit>
       <trans-unit id="140">
         <source>The possible states of workplans/reports are as follows:</source>
