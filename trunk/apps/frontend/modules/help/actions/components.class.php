@@ -4,7 +4,8 @@ class helpComponents extends sfComponents
 {
   public function executeHelp()
   {
-    
+    $this->module=$this->sf_user->getFlash('helpmodule', $this->module);
+    $this->action=$this->sf_user->getFlash('helpaction', $this->action);
     $this->config=sfYaml::load(sfConfig::get('app_config_help_index', false));
     if(array_key_exists($this->module, $this->config))
     {

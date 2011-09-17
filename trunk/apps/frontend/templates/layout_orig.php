@@ -36,7 +36,7 @@
     <?php include_slot('general_alerts'); ?>
     </div>
 	<?php endif; ?>
-  <?php include_component('help', 'help', array('module'=>$sf_params->get('module'), 'action'=>$sf_params->get('action'))) ?>
+  <?php include_component('help', 'help', array('sf_user'=>$sf_user, 'module'=>$sf_params->get('module'), 'action'=>$sf_params->get('action'))) ?>
 <div id="sf_admin_container">
 <?php echo $sf_content ?>
 </div>
