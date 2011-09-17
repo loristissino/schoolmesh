@@ -78,6 +78,8 @@ public function executeFillrecuperationgrid(sfWebRequest $request)
 	
 	$this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($this->getUser()->getAttribute('ids'));
 
+  $this->getUser()->setFlash('helpaction', 'fillrecuperationgrid');
+
 //	$this->ids=Generic::b64_serialize($ids);
 	
 	if (sizeof($this->students)==0)
@@ -123,6 +125,8 @@ public function executeGetrecuperationletters(sfWebRequest $request)
 			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least one student.'));
 			$this->forward('schoolclasses', 'redirect');
 		}
+
+  $this->getUser()->setFlash('helpaction', 'getrecuperationletters');
 
 	$this->doctype=$request->getParameter('doctype');
 	if (!in_array($this->doctype, array('odt', 'doc', 'pdf', 'rtf')))
