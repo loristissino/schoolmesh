@@ -12,8 +12,8 @@ class SentencePeer{
 	'users_bulk_upload_users_example'=>"T,Francesco,Pietro,Genova,M,19651230,Valvasone(PN),francesco.genova@istruzione.it,GNVFRN,dipinfo,\nO,Pasquale,,De Rolandis,M,,,DRLPSQ,,\nS,Alice,,Alessandrini,F,,,LSSLCA,4AP,IRC\n...",
 	
 	'users_bulk_upload_appointments'=>'Upload a file in CSV format containing updated information about appointments.',
-	'users_bulk_upload_appointments_format'=>'username,class,subject_id,hours,year_id',
-	'users_bulk_upload_appointments_example'=>"bruna.bagala,3AP,ING,99,2008_09\nmarco.defilippis,4AP,INF,165,2008_09\n...",
+	'users_bulk_upload_appointments_format'=>'username,class,subject_id,hours,year_id,syllabus_id',
+	'users_bulk_upload_appointments_example'=>"bruna.bagala,3AP,ING,99,2008_09,3\nmarco.defilippis,4AP,INF,165,2008_09,3\n...",
 
 	'users_bulk_upload_classes'=>'Upload a file in CSV format containing updated information about classes.',
 	'users_bulk_upload_classes_format'=>'id,grade,section,track,description',

@@ -152,7 +152,7 @@ class wpmoduleActions extends sfActions
 	  $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('workplan'));
 	  $this->forward404Unless($this->workplan);
 
-	  $result=$this->workplan->importWpmodule($item);
+	  $result=$this->workplan->importWpmodule($item, $this->workplan->getSyllabusId());
 
 	  $this->getUser()->setFlash('notice_modules', $this->getContext()->getI18N()->__('The item was imported'));
 	  $this->redirect('plansandreports/fill?id='.$this->workplan->getId() . '#wpmodules'); 
@@ -232,6 +232,13 @@ class wpmoduleActions extends sfActions
 
 
 		$this->steps=Workflow::getWpfrSteps();
+
+  	if ($this->workplan->getState() >= Workflow::IR_DRAFT)
+		{
+      $this->getUser()->setFlash('helpaction', 'wpmodule_report');
+		}
+
+
 	}
 
   public function executeSyllabus(sfWebRequest $request)

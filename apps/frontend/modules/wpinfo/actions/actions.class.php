@@ -55,6 +55,11 @@ class wpinfoActions extends sfActions
 	$this->next_item = $this->wpinfo->getNext();
 	$this->hints = $this->wpinfo->getHints();
 	$this->example = $this->wpinfo->getExample();
+  
+  if($this->wpinfo->getAppointment()->getState()>=Workflow::IR_DRAFT)
+  {
+    $this->getUser()->setFlash('helpaction', 'wpinfo_report');
+  }
   }
 
   public function executeUpdate(sfWebRequest $request)

@@ -423,14 +423,14 @@ switch ($sortby)
 				continue;  // we skip the first line
 				}
 				
-			if (sizeof($data)!=5)
+			if (sizeof($data)!=6)
 			{
 				$checkList->addCheck(new Check(Check::FAILED, 'Invalid data', $groupName));
 				continue;
 			}
 	
 
-			list($username, $schoolclass, $subject, $hours, $year)=$data; 
+			list($username, $schoolclass, $subject, $hours, $year, $syllabus)=$data; 
 
 			$sfUser= sfGuardUserProfilePeer::retrieveByUsername($username);
 			if(!$sfUser)
@@ -463,6 +463,14 @@ switch ($sortby)
 					$skipped++;
 					continue;
 				}
+        
+      $mysyllabus=SyllabusPeer::retrieveByPK($syllabus);
+      if(!$mysyllabus)
+        {
+					$checkList->addCheck(new Check(Check::FAILED, sprintf('Not a syllabus: %s', $syllabus), $groupName));
+					$skipped++;
+					continue;
+        }
 
 			$appointment=AppointmentPeer::retrieveByUsernameSchoolclassSubjectYear($username,$schoolclass, $subject, $year);
 			if($appointment)
@@ -480,6 +488,7 @@ switch ($sortby)
 			->setSchoolclass($myclass)
 			->setHours($hours)
 			->setYear($myyear)
+      ->setSyllabus($mysyllabus)
 			->setState(Workflow::AP_ASSIGNED)
 			->save();
 			
