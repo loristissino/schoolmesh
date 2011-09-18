@@ -36,4 +36,17 @@ static function getMaxRank()
   $row = $stmt->fetch();
   return $row['max'];
 }
+
+static function retrieveByCodeAndSyllabus($code, $syllabus_id)
+{
+  $c = new Criteria;
+  $c->add(self::CODE, $code);
+  $c->add(self::SYLLABUS_ID, $syllabus_id);
+  $c->addAscendingOrderByColumn(self::RANK);
+  return self::doSelectOne($c); 
+}
+
+
+
+
 }

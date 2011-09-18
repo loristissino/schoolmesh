@@ -280,6 +280,9 @@ propel:
     evaluation_max_description: varchar(50)
 # state indicates in which of workplan's state this item type should be shown
 # code is needed to make it possible copying similar items where the syllabus is not the same
+    _uniques:
+      sc: [syllabus_id, code]
+
 
   wpitem_group:
     id:           ~

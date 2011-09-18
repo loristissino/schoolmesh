@@ -518,8 +518,8 @@ class usersActions extends sfActions
     
     foreach($this->userlist as $current_user)
     {
-      $current_user->getProfile()->checkAccounts($availableAccounts, $this->checkList);
-      $current_user->getProfile()->updateLuceneIndex();
+      $current_user->checkAccounts($availableAccounts, $this->checkList);
+      $current_user->updateLuceneIndex();
     }
     
     $this->filename=$this->checkList->generateScript();

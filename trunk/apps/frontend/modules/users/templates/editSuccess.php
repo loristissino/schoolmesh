@@ -107,6 +107,11 @@
 		</td>
 		<td>
 			<?php echo Generic::datetime($account->getInfoUpdatedAt('U'), $sf_context) ?>
+      <?php if (time() - $account->getInfoUpdatedAt('U')>86400): ?>
+        <?php echo image_tag('dubious', array(
+          'title'=>__('Last sync was done more than one day ago')
+          )) ?>
+      <?php endif ?>
 		</td>
 		<td>
 			<?php echo Generic::datetime($account->getLastKnownLoginAt('U'), $sf_context) ?>

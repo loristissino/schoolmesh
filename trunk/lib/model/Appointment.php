@@ -1403,14 +1403,43 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 
 	}
 
+  public function deleteSyllabusContributions(PropelPDO $con = null)
+  {
+    
+    $c=new Criteria();
+    $c->addJoin(WpmoduleSyllabusItemPeer::WPMODULE_ID, WpmodulePeer::ID);
+    $c->add(WpmodulePeer::APPOINTMENT_ID, $this->getId());
+    $c->setDistinct();
+    $c->clearSelectColumns();
+    $c->addAsColumn('ID', WpmoduleSyllabusItemPeer::ID);
+    $stmt=WpmoduleSyllabusItemPeer::doSelectStmt($c, $con);
+
+    $ids=array();
+
+    while($row = $stmt->fetch(PDO::FETCH_OBJ))
+    {
+      $ids[]=$row->ID;
+    };
+    
+    if (sizeof($ids)>0)
+    {
+      $sql = 'DELETE FROM '.WpmoduleSyllabusItemPeer::TABLE_NAME.' WHERE '.WpmoduleSyllabusItemPeer::ID.' IN (' . implode(', ', $ids) . ')';
+      $con->query($sql);
+    }
+    
+  }
+
+
 	public function removeAllModules(PropelPDO $con = null)
 	{  
 	  $con = Propel::getConnection(WpmodulePeer::DATABASE_NAME);
-	  try
+    
+    try
 	  {
 		$con->beginTransaction();
-	 
-		// decrease all the ranks of the page records of the same category with higher rank 
+
+    $this->deleteSyllabusContributions($con);
+
 		$sql = 'DELETE FROM '.WpmodulePeer::TABLE_NAME.' WHERE '.WpmodulePeer::APPOINTMENT_ID.' = '.$this->getId();
 
 		$con->query($sql);
@@ -1459,12 +1488,12 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 		$wpmodules = $iworkplan->getWpmodules();
 		foreach($wpmodules as $wpmodule)
 			{
-				$this->importWpmodule($wpmodule);
+				$this->importWpmodule($wpmodule, $this->getSyllabusId());
 			}
 	}
 
 
-   public function importWpmodule($wpmodule)
+   public function importWpmodule($wpmodule, $syllabusId)
 
 	{
 		
@@ -1480,7 +1509,14 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 					{
 						$newgroup = new WpitemGroup();
 						$newgroup->setWpmoduleId($newwpmodule->getId());
-						$newgroup->setWpitemTypeId($group->getWpitemTypeId());
+            
+            $WpitemType=WpitemTypePeer::retrieveByCodeAndSyllabus($group->getWpitemType()->getCode(), $syllabusId);
+            if (!$WpitemType)
+            {
+              throw new Exception('No correspondence for syllabus and wpitemtype');
+            }
+            
+						$newgroup->setWpitemTypeId($WpitemType->getId());
 						$newgroup->save();
 						
 						$items = $group->getWpmoduleItems();

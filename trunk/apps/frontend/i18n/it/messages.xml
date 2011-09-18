@@ -3007,6 +3007,30 @@
         <source>Get teacher's school register headings</source>
         <target>Scarica intestazioni per il registro docente</target>
     </trans-unit>
+    <trans-unit id="767">
+        <source>Disable Internet access for workstation %name%</source>
+        <target>Disabilita l'accesso ad Internet per il calcolatore %name%</target>
+    </trans-unit>
+    <trans-unit id="768">
+        <source>Enable Internet access for workstation %name%</source>
+        <target>Abilita l'accesso ad Internet per il calcolatore %name%</target>
+    </trans-unit>
+    <trans-unit id="769">
+        <source>Enable Internet access</source>
+        <target>Abilita accesso Internet</target>
+    </trans-unit>
+    <trans-unit id="770">
+        <source>Disable Internet access</source>
+        <target>Disabilita accesso Internet</target>
+    </trans-unit>
+    <trans-unit id="771">
+        <source>Workstations</source>
+        <target>Calcolatori</target>
+    </trans-unit>
+    <trans-unit id="772">
+        <source>Enabled?</source>
+        <target>Abilitato?</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
