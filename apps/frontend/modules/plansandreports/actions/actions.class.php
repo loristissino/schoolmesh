@@ -249,7 +249,7 @@ public function executeBatch(sfWebRequest $request)
 	{
     $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
-	$this->user=$this->getUser();
+	  $this->user=$this->getUser();
     $this->forward404Unless($this->workplan);
     $this->forward404Unless($this->workplan->getState()==Workflow::WP_DRAFT);
     $this->forward404Unless($this->workplan->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId()));

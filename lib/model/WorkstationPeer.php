@@ -12,5 +12,15 @@ class WorkstationPeer extends BaseWorkstationPeer
 		$t = WorkstationPeer::doSelectOne($c);
 		return $t;
 	}
+  
+	public static function retrieveAllWorkstations()
+	{
+		$c = new Criteria();
+    $c->addJoin(WorkstationPeer::SUBNET_ID, SubnetPeer::ID);
+    $c->addAscendingOrderByColumn(WorkstationPeer::SUBNET_ID);
+		$t = WorkstationPeer::doSelectJoinAll($c);
+		return $t;
+	}
+  
 
 }

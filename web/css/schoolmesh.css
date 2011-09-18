@@ -290,6 +290,15 @@
   background: url(../images/unlock.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_internetaccesson a
+{
+  background: url(../images/internetaccesson.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_internetaccessoff a
+{
+  background: url(../images/internetaccessoff.png) no-repeat 0 0;
+}
 
 #sf_admin_container .alert
 {
