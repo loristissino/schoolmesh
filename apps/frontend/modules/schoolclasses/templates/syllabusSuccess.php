@@ -53,7 +53,7 @@
 <ul class="sf_admin_actions">
 <li class="sf_admin_action_report"><?php echo link_to(
   __('View as report'),
-  'schoolclasses/syllabus?id=' . $schoolclass->getId() . '&template=syllabusreport'
+  'schoolclasses/syllabus?id=' . $appointment->getId() . '&template=syllabusreport'
   )
 ?></li>
 </ul>
