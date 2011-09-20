@@ -22,7 +22,7 @@
   'breadcrumps'=>array(
     'projects/index' =>__("My projects")
     ),
-  'current'=>__('Project %title%', array('%title%'=>$projects[0]))
+  'current'=>__('Project «%title%»', array('%title%'=>$projects[0]))
   ))
 ?>
 <?php endif ?>
@@ -41,6 +41,11 @@
 	<p>
 	<?php echo __('Coordinator') ?>: <strong><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></strong><br />
 	<?php echo __('Category') ?>: <strong><?php echo $project->getProjCategory() ?></strong><br />
+	<?php echo __('Description') ?>: <?php echo $project->getDescription() ?><br />
+	<?php echo __('Addressees') ?>: <?php echo $project->getAddressees() ?><br />
+	<?php echo __('Purposes') ?>: <?php echo $project->getPurposes() ?><br />
+	<?php echo __('Goals') ?>: <?php echo $project->getGoals() ?><br />
+  
   <?php if($project->getApprovalDate()):?>
   <?php echo __('Approval date') ?>: <strong><?php echo $project->getApprovalDate('d/m/Y') ?> (<?php echo $project->getApprovalNotes() ?>)</strong><br />
   <?php endif ?>

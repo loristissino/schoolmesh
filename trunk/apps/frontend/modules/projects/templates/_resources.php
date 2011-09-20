@@ -1,6 +1,6 @@
 <?php if (sizeof($resources)>0): ?>
 
-<h3><?php echo __('Resources and schedule') ?></h3>
+<h3><?php echo __('Tasks, resources, schedule') ?></h3>
 
 <ol>
 <?php foreach($resources as $resource): ?>

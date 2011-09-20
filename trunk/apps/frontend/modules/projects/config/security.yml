@@ -38,10 +38,10 @@ updatestandardcosts:
   credentials: proj_adm_ok
 
 viewasreport:
-  credentials: [[ proj_view, proj_adm_ok, proj_monitoring ]]
+  credentials: [[ proj_view, proj_adm_ok, proj_monitoring, proj_coordination ]]
 
 view:
-  credentials: [[ proj_view, proj_adm_ok, proj_monitoring ]]
+  credentials: [[ proj_view, proj_adm_ok, proj_monitoring, proj_coordination ]]
 
 monitorview:
   credentials: [[ proj_view, proj_adm_ok, proj_monitoring ]]
