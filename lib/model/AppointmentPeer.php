@@ -408,6 +408,9 @@ switch ($sortby)
 
 		$role=RolePeer::retrieveByPosixName(sfConfig::get('app_config_default_teams_role'));
 
+		$year= sfConfig::get('app_config_current_year');
+    $myyear=YearPeer::retrieveByPK($year);
+
 		$handle = fopen($file, "r");
 		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 			//$num = count($data);
@@ -423,15 +426,14 @@ switch ($sortby)
 				continue;  // we skip the first line
 				}
 				
-			if (sizeof($data)!=6)
+			if (sizeof($data)!=5)
 			{
 				$checkList->addCheck(new Check(Check::FAILED, 'Invalid data', $groupName));
 				continue;
 			}
 	
-
-			list($username, $schoolclass, $subject, $hours, $year, $syllabus)=$data; 
-
+			list($username, $schoolclass, $subject, $hours, $syllabus)=$data;
+      
 			$sfUser= sfGuardUserProfilePeer::retrieveByUsername($username);
 			if(!$sfUser)
 				{
@@ -456,13 +458,6 @@ switch ($sortby)
 					continue;
 				}
 
-			$myyear= YearPeer::retrieveByPK($year);
-			if(!$myyear)
-				{
-					$checkList->addCheck(new Check(Check::FAILED, sprintf('Not a year: %s', $myyear), $groupName));
-					$skipped++;
-					continue;
-				}
         
       $mysyllabus=SyllabusPeer::retrieveByPK($syllabus);
       if(!$mysyllabus)

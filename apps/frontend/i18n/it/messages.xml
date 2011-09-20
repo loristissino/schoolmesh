@@ -3031,6 +3031,14 @@
         <source>Enabled?</source>
         <target>Abilitato?</target>
     </trans-unit>
+    <trans-unit id="773">
+        <source>Project «%title%»</source>
+        <target>Progetto «%title%»</target>
+    </trans-unit>
+    <trans-unit id="774">
+        <source>Project reset to draft</source>
+        <target>Progetto reimpostato a bozza</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
@@ -3040,5 +3048,5 @@
 
 
 
-
+ 
 
