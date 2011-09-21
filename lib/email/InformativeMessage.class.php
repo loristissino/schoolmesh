@@ -14,9 +14,9 @@ class InformativeMessage extends ProjectBaseMessage
     $to=array();
     foreach($addressees as $addressee)
     {
-      if($addressee->getProfile()->getHasValidatedEmail())
+      if($addressee->getHasValidatedEmail())
       {
-        $to[$addressee->getProfile()->getValidatedEmail()]=$addressee->getProfile()->getValidatedEmail();
+        $to[$addressee->getValidatedEmail()]=$addressee->getValidatedEmail();
       }
     }
   
