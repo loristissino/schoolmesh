@@ -67,7 +67,7 @@ Gli operatori booleani possono essere espressi anche in minuscolo, oppure sostit
 È possibile anche usare `+` e `-`, come in
 
 {{{
-+docenti -email:none
++docenti -validatedemail:none
 }}}
 
 = Ricerche comuni (utenti) =
@@ -87,13 +87,13 @@ docenti AND active:true
 Tutti i docenti in servizio (attivi).
 
 {{{
-docenti AND active:true AND email:none
+docenti AND active:true AND -emailstatus:verified
 }}}
 
 Tutti i docenti in servizio che *non hanno* un indirizzo di posta elettronica convalidato.
 
 {{{
-(docenti and active:true) -email:none
+(docenti and active:true) AND -emailstatus:verified
 }}}
 
 Tutti i docenti in servizio che *hanno* un indirizzo di posta elettronica convalidato.
@@ -127,6 +127,13 @@ allievi and birthday:[0701 TO 0731]
 }}}
 
 Allievi che compiono gli anni in luglio.
+
+{{{
+allievi AND grade:1
+}}}
+
+Tutti gli allievi di classe prima, di tutte le sezioni.
+
 
 {{{
 googleapps
