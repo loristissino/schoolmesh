@@ -1,0 +1,36 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Disable Internet access for a workstation, and remove all its scheduled jobs 
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *ipaddress*
+#@
+#@ # DESCRIPTION
+#@
+#@ This script disable Internet access for a workstation, and removes all its
+#@ scheduled jobs. It is used before applying new rules, in order to reset the
+#@ original "blank" conditions.
+#@
+#@ # EXAMPLES
+#@
+#@	{-} 192.168.1.3
+
+IPADDRESS=$1
+
+checkString $IPADDRESS
+
+COMMAND="iptables -D $FIREWALL_CHAIN -s $IPADDRESS -j ACCEPT -m comment --comment $FIREWALL_COMMENT"
+
+ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS "$COMMAND"
+
+ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS "$FIREWALL_JOBSRMCOMMAND $IPADDRESS"
+
+
+exit 0

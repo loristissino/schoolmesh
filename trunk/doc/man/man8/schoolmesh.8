@@ -115,6 +115,18 @@ schoolmesh_task_execute -
 .PP
 schoolmesh_unoconv_launch -
 \f[I]launch Unoconv and locks the screen at once\f[]
+.PP
+schoolmesh_workstation_disableinternetaccess -
+\f[I]Disable Internet access for a workstation, and remove all its scheduled jobs\f[]
+.PP
+schoolmesh_workstation_enableinternetaccess -
+\f[I]Enable internet access for a workstation\f[]
+.PP
+schoolmesh_workstations_getinternetenabled -
+\f[I]Get the list of workstations for which Internet access is enabled\f[]
+.PP
+schoolmesh_workstations_getjobs -
+\f[I]Get the list of jobs scheduled for all the workstations\f[]
 .SH DESCRIPTION
 .PP
 These utilities are really only basic wrapper scripts to be used

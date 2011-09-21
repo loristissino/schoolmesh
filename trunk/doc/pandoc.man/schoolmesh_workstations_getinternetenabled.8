@@ -1,0 +1,31 @@
+% SCHOOLMESH_WORKSTATIONS_GETINTERNETENABLED(8) Schoolmesh User Manuals
+% Loris Tissino (loris.tissino@mattiussilab.net)
+% September 2011
+
+# NAME
+
+schoolmesh\_workstations\_getinternetenabled - Get the list of workstations for which Internet access is enabled 
+
+# SYNOPSIS
+
+schoolmesh\_workstations\_getinternetenabled go
+
+# DESCRIPTION
+
+This script outputs a list of IP addresses of workstations for which
+Internet access is enabled. It assumes that the firewall machine uses
+a special chain and a special command for rules that must be matched.
+The names of the chain and of the comment are in `schoolmesh.rc` file.
+
+# EXAMPLES
+
+	schoolmesh_workstations_getinternetenabled 
+
+# BUGS
+
+Probably many.
+
+# SEE ALSO
+
+The SchoolMesh project is described at <http://schoolmesh.mattiussilab.net/>.
+

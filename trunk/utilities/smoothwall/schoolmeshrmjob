@@ -1,0 +1,5 @@
+#!/bin/bash
+# /root/bin/schoolmeshjobs on smoothwall machine
+IPADDRESS=$1
+/root/bin/schoolmeshjobs | grep ",$IPADDRESS," | cut -d ',' -f1 | xargs -i atrm {}
+

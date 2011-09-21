@@ -1,0 +1,62 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Enable internet access for a workstation 
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *ipaddress* *from* *to* *user*
+#@
+#@ # DESCRIPTION
+#@
+#@ This script enables internet access for a workstation. It may schedule jobs
+#@ for the future.
+#@
+#@ # EXAMPLES
+#@
+#@	{-} 192.168.1.3 9:10 11:10 john.doe
+
+IPADDRESS=$1
+FROM=$2
+TO=$3
+REQUESTER=$4
+
+checkString $IPADDRESS
+checkTime $FROM
+checkTime $TO
+checkString $REQUESTER
+
+FROM=$(date -d "$FROM" +'%H:%M')
+TO=$(date -d "$TO" +'%H:%M')
+
+echo $FROM
+echo $TO
+
+FROMS=$(date -d "$FROM" +'%s')
+TOS=$(date -d "$TO" +'%s')
+NOWS=$(date +'%s')
+
+if [ $FROMS -gt $TOS ]; then
+	msg_failed "Begin time cannot be after end time"
+	exit 90
+fi
+
+if [ $TOS -lt $NOWS ]; then
+	msg_failed "End time is in the past"
+	exit 91
+fi
+
+COMMAND="iptables -I $FIREWALL_CHAIN 1 -s $IPADDRESS -j ACCEPT -m comment --comment $FIREWALL_COMMENT"
+
+if [ $FROMS -lt $NOWS ]; then
+  ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS "$COMMAND"
+else
+  COMMAND="$COMMAND\n#schoolmesh,$IPADDRESS,$FROM,$TO,$REQUESTER"
+  echo -e "$COMMAND" | ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS at $FROM
+fi
+exit

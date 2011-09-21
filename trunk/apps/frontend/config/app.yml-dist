@@ -57,7 +57,7 @@ all:
     projects_evaluation_max: 4
     
     help_index: /etc/schoolmesh/help.yml
-
+    timeslotsfile: /etc/schoolmesh/timeslots.yml
 
   sf_guard_plugin:
     check_password_callable: [Authentication, testOnly]

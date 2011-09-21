@@ -1,0 +1,39 @@
+% SCHOOLMESH_WORKSTATIONS_GETJOBS(8) Schoolmesh User Manuals
+% Loris Tissino (loris.tissino@mattiussilab.net)
+% September 2011
+
+# NAME
+
+schoolmesh\_workstations\_getjobs - Get the list of jobs scheduled for all the workstations
+
+# SYNOPSIS
+
+schoolmesh\_workstations\_getjobs go
+
+# DESCRIPTION
+
+This script outputs a list of events, separated by commas, scheduled for the 
+workstations.
+
+It is assumed that a script on the firewall machine exists, with the following
+content:
+
+------
+#!/bin/bash
+for JOB in $(atq -q a| cut -f1); do
+ echo $JOB,$(at -c $JOB | grep ^#schoolmesh | sed -e 's/^#schoolmesh,//')
+done
+------
+
+# EXAMPLES
+
+	schoolmesh_workstations_getjobs go
+
+# BUGS
+
+Probably many.
+
+# SEE ALSO
+
+The SchoolMesh project is described at <http://schoolmesh.mattiussilab.net/>.
+
