@@ -10,7 +10,7 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # SYNOPSIS
 #@
-#@ {} go
+#@ {} prod | dev | test
 #@
 #@ # DESCRIPTION
 #@
@@ -27,9 +27,26 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # EXAMPLES
 #@
-#@	{-} go  
+#@	{-} prod
+
+ENVIR=$1
+
+checkOneOf $ENVIR dev prod test
 
 SCHOOLMESHDIR=/var/schoolmesh
+SCHOOLMESHDIRSVN=/var/schoolmeshsvn
+
+cd $SCHOOLMESHDIRSVN
+
+echo -n "Starting svn update... "
+
+svn update --accept theirs-full --non-interactive
+
+msg_ok "done."
+
+schoolmesh_application_setstate disabled $ENVIR
+
+sudo rsync -avz --exclude '.svn' --progress $SCHOOLMESHDIRSVN/* $SCHOOLMESHDIR
 
 cd $SCHOOLMESHDIR
 
@@ -52,11 +69,7 @@ for FILE in $FILELIST
 
 msg_ok "done."
 
-echo -n "Starting svn update... "
 
-svn update --accept theirs-full --non-interactive
-
-msg_ok "done."
 
 echo -n "Restoring configuration files... "
 for FILE in $FILELIST
@@ -99,3 +112,6 @@ sudo chmod 755 /usr/local/bin/schoolmesh*
 msg_ok "done."
 
 sudo chmod +x /var/schoolmesh/symfony
+
+schoolmesh_application_setstate enabled $ENVIR
+
