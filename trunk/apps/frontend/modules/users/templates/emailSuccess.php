@@ -21,14 +21,14 @@
     <td>
     
       <?php foreach($userlist as $user): ?>
-          <?php echo $user->getProfile()->getFullname() ?>
-          <?php if (!$user->getProfile()->getHasValidatedEmail()): ?>
+          <?php echo $user->getFullname() ?>
+          <?php if (!$user->getHasValidatedEmail()): ?>
             <span style='color: red'>
             <?php echo __(' (does not have a validated email address)') ?>
             </span>
           <?php else: ?>
             <span style='color: green'>
-            <?php echo __('&lt;%email%&gt;', array('%email%'=>$user->getProfile()->getValidatedEmail())) ?>
+            <?php echo __('&lt;%email%&gt;', array('%email%'=>$user->getValidatedEmail())) ?>
             </span>
           <?php endif ?>
           <br />

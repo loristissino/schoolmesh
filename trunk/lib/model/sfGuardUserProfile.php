@@ -105,6 +105,21 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
       }
     }
     
+    public function getEmailStateDescription()
+    {
+      switch($this->getEmailState())
+      {
+        case sfGuardUserProfilePeer::EMAIL_UNDEFINED:
+          return 'undefined';
+        case sfGuardUserProfilePeer::EMAIL_WAITINGVALIDATION:
+          return 'waitingvalidation';
+        case sfGuardUserProfilePeer::EMAIL_VERIFIED:
+          return 'verified';
+        default:
+          return 'unknown';
+      }
+    }
+    
     public function getInstitution()
     {
       return sfConfig::get('app_school_name');
@@ -551,7 +566,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
 		public function getCurrentSchoolclassId()
 		{
-	        $c = new Criteria();
+      $c = new Criteria();
 			$c->add(EnrolmentPeer::USER_ID, $this->getUserId());
 			$c->add(EnrolmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
 			$t = EnrolmentPeer::doSelectOne($c);
@@ -564,8 +579,27 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			{
 				return false;
 			}
-			
 		}
+    
+		public function getCurrentGrade()
+		{
+      $s=$this->getCurrentSchoolclassId();
+      if(!$s)
+      {
+        return false;
+      }
+      
+      if($cl=SchoolclassPeer::retrieveByPK($s))
+      {
+        return $cl->getGrade();
+      }
+      else
+      {
+        return false;
+      }
+      
+		}
+    
 
     public function getAccounts($options=array())
     {
@@ -1582,12 +1616,15 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     $doc->addField(Zend_Search_Lucene_Field::UnStored('firstname', $this->getFirstName(), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('lastname', $this->getLastName(), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('roster', $this->getCurrentSchoolclassId(), 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('grade', $this->getCurrentGrade(), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('role', $this->getRole()->getPosixName(), 'utf-8'));    
     $doc->addField(Zend_Search_Lucene_Field::UnStored('birthdate', $this->getBirthdate('%Y%m%d'), 'utf-8'));    
     $doc->addField(Zend_Search_Lucene_Field::UnStored('birthday', $this->getBirthdate('%m%d'), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('active', $this->getsfGuardUser()->getIsActive()?'true':'false', 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('gender', $this->getGender(), 'utf-8'));
-    $doc->addField(Zend_Search_Lucene_Field::UnStored('email', $this->getHasValidatedEmail() ? $this->getValidatedEmail(): 'none', 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('validatedemail', $this->getHasValidatedEmail()? $this->getValidatedEmail() : 'none', 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('email', $this->getHasValidatedEmail()? $this->getValidatedEmail() : '@' . $this->getEmail(), 'utf-8'));  // if it's not validated, we add a @ just to be sure it's clear it's not
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('emailstatus', $this->getEmailStateDescription(), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('importcode', $this->getImportCode(), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('accounts', $this->getAccounts(array('astext'=>true)), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('permissions', $this->getWebPermissions(array('astext'=>true)), 'utf-8'));

@@ -1,0 +1,34 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Get information about a workstation status 
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *ipaddress*
+#@
+#@ # DESCRIPTION
+#@
+#@ This script outputs information about the state of a workstation.
+#@ At the moment, it just outputs whether it may or not access the Internet
+#@ (querying the firewall)
+#@
+#@ # EXAMPLES
+#@
+#@	{-} 192.168.1.3
+
+IPADDRESS=$1
+
+checkString $IPADDRESS
+
+echo $IPADDRESS
+
+exit
+
+
+unexpectedError $@

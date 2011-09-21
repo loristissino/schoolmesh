@@ -821,7 +821,8 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 //      $profiles->userAgeStatus($useragestatus);
 
 			$profiles->userPosition($count);
-
+      $profiles->userEmail($user->getEmail());
+      $profiles->userEmailStateDescription($user->getEmailStateDescription());
 			$profiles->userFullName($user->getFullName());
 			$profiles->userFirstname($user->getFirstName());
 			$profiles->userLastname($user->getLastName());

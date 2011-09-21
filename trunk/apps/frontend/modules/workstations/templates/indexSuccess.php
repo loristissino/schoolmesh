@@ -80,7 +80,7 @@
 
 
 <?php else: ?>
-<p><?php echo __('No workstationss defined.') ?></p>
+<p><?php echo __('No workstations defined.') ?></p>
 <?php endif ?>
 </div>
 
