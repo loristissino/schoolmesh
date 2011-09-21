@@ -7,7 +7,7 @@
  * @subpackage workstations
  * @author     Your name here
  */
-class workstationsActions extends sfActions
+class lanActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
