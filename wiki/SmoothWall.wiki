@@ -1,0 +1,37 @@
+#summary Integrazione con SmoothWall
+#labels Phase-Deploy
+
+= Integrazione con SmoothWall =
+
+Per l'abilitazione/disabilitazione dell'accesso a Internet SchoolMesh si basa su dei comandi da dare ad una macchina Linux che funziona da firewall e proxy server.
+
+La documentazione che segue riguarda SmoothWall, ma dovrebbe essere facilmente adattabile anche ad altri tipi di distribuzioni Linux, visto che si basa su semplici comandi iptables.
+
+== Creazione di una catena personalizzata ==
+
+Creare, sulla macchina SmoothWall, uno script simile al seguente, che crea una catena personalizzata e aggiunge all'inizio della catena INPUT un rimando ad essa:
+
+{{{
+#/bin/bash
+
+ALWAYS_ACCEPTED="192.168.0.121 192.168.1.105 192.168.0.122 192.168.0.123"
+iptables -N schoolmesh
+
+for ADDRESS in $ALWAYS_ACCEPTED; do
+        iptables -A schoolmesh -s $ADDRESS -j ACCEPT
+done
+
+iptables -A schoolmesh -s 192.168.0.0/16 -j DROP   # default rule
+iptables -I INPUT  1 -j schoolmesh
+}}}
+
+== Esecuzione automatica dello script all'avvio della macchina ==
+
+Per fare in modo che il comando descritto precedentemente venga eseguito all'avvio della macchina SmoothWall, aggiungere la riga
+
+{{{
+/root/bin/smoothwall_schoolmesh
+}}}
+
+alla fine del file `/etc/rc.d/rc.sysinit` (ovviamente il percorso da indicare dovrà corrispondere a quello dello script predisposto).
+
