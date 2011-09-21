@@ -1,0 +1,29 @@
+.TH SCHOOLMESH_WORKSTATION_DISABLEINTERNETACCESS 8 "September 2011" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_workstation_disableinternetaccess - Disable Internet
+access for a workstation, and remove all its scheduled jobs
+.SH SYNOPSIS
+.PP
+schoolmesh_workstation_disableinternetaccess \f[I]ipaddress\f[]
+.SH DESCRIPTION
+.PP
+This script disable Internet access for a workstation, and removes
+all its scheduled jobs.
+It is used before applying new rules, in order to reset the
+original \[lq]blank\[rq] conditions.
+.SH EXAMPLES
+.PP
+\f[CR]
+      schoolmesh_workstation_disableinternetaccess\ 192.168.1.3
+\f[]
+.SH BUGS
+.PP
+Probably many.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>.
+.SH AUTHORS
+Loris Tissino (loris.tissino\@mattiussilab.net).
+

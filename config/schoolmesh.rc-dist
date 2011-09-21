@@ -18,6 +18,13 @@ POSIX_DEFAULT_QUOTA_HBQ=3000
 POSIX_DEFAULT_QUOTA_SFQ=1000
 POSIX_DEFAULT_QUOTA_HFQ=1500
 
+FIREWALL_ADDRESS=127.0.0.1
+FIREWALL_SSH_PORT=222   # default for SmoothWall 
+FIREWALL_SSH_USER=root
+# password is not stored; use ssh-keygen to guarantee your access to the 
+# firewall machine for www-data (or other users that may need it)
+FIREWALL_CHAIN=schoolmesh
+
 # DO NET EDIT PASS THIS LINE
 
 source /var/schoolmesh/config/schoolmesh.bashfunctions
