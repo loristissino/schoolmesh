@@ -317,7 +317,7 @@ class Generic{
 
   public static function addWfevent($object, $userId, $comment='', $i18n_subs=array(), $state=0, $sf_context=null)
   {
-    Generic::logMessage('saving wfevent1', $userId);
+    Generic::logMessage('saving wfevent1', $state);
 		$wfevent = new Wfevent();
 		$wfevent
     ->setUserId($userId)
@@ -329,12 +329,7 @@ class Generic{
       $comment=$sf_context->getI18N()->__($comment, $i18n_subs);
     }
 		$wfevent->setComment($comment);
-    if($state!=null)
-    {
-      $wfevent->setState($object->getState()); //if it is not specified, we keep the same
-    }
-    
-    Generic::logMessage('saving wfevent2', $wfevent);
+    $wfevent->setState($state==null ? $object->getState(): $state); //if it is not specified, we keep the same
     
     $wfevent->save();
   }

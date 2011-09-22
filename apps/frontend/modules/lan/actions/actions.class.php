@@ -12,10 +12,10 @@ class lanActions extends sfActions
   
   public function preExecute()
   {
-    $this->timeslots=sfYaml::load(sfConfig::get('app_config_timeslotsfile'));
-    if(!is_array($this->timeslots))
+    $this->timeslotsContainer=new TimeslotsContainer(sfConfig::get('app_config_timeslotsfile'));
+    if(!$this->timeslotsContainer)
     {
-      throw new Exception('Could not read timeslots configuration file');
+      throw new Exception('Could not read initialize timeslots manager');
     }
   }
   public function executeIndex(sfWebRequest $request)
@@ -45,16 +45,23 @@ class lanActions extends sfActions
 
   public function executeEnableinternetaccess(sfWebRequest $request)
   {
+    /*
     $this->forward404Unless($this->Workstation=WorkstationPeer::retrieveByPk($request->getParameter('id')));
     $this->form= new ToggleInternetAccessForm(null, array('timetable'=>sfConfig::get('app_config_timetablefile', '')));
     $this->form->setDefault('when', array('1', '2', '4', 'p'));
+    */
+    $this->forward404Unless($request->isMethod('POST'));
+    $this->forward404Unless($this->Workstation=WorkstationPeer::retrieveByPk($request->getParameter('id')));
+    $result=$this->Workstation->enableInternetAccess($this->getUser()->getProfile()->getUserId(), date('H:i', time()-60), $this->timeslotsContainer->getEleventhHour(), $this->getUser()->getProfile()->getUsername(), $this->getContext());
+    $this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+    return $this->redirect('lan/index');
   }
 
   public function executeDisableinternetaccess(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('POST'));
     $this->forward404Unless($this->Workstation=WorkstationPeer::retrieveByPk($request->getParameter('id')));
-    $result=$this->Workstation->disableInternetAccess();
+    $result=$this->Workstation->disableInternetAccess($this->getUser()->getProfile()->getUserId(), $this->getContext());
     $this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
     return $this->redirect('lan/index');
   }
