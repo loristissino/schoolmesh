@@ -23,4 +23,4 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@	{-} 
 
-ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS iptables -nL $FIREWALL_CHAIN | grep "^ACCEPT.* $FIREWALL_COMMENT" | gawk '{ print $4 }'
+ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS iptables -nL $FIREWALL_CHAIN | grep "^ACCEPT.* $FIREWALL_COMMENT" | gawk '{ printf "%s=on\n", $4 }'

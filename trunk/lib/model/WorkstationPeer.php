@@ -25,8 +25,9 @@ class WorkstationPeer extends BaseWorkstationPeer
 		$t = WorkstationPeer::doSelectJoinAll($c);
     
     $jobs=Generic::executeCommand(sprintf('workstations_getjobs go'), false);
-    
     Generic::logMessage('jobs', $jobs);
+    $active=Generic::executeCommand(sprintf('workstations_getinternetenabled go'), false);
+    Generic::logMessage('active', $active);
     
 		return $t;
 	}
