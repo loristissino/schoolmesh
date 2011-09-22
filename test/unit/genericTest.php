@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../bootstrap/unit.php';
  
-$t = new lime_test(82, new lime_output_color());
+$t = new lime_test(87, new lime_output_color());
 
 $t->diag('::datetime()');
 
@@ -203,3 +203,21 @@ $t->is(Generic::date_from_array(array('month'=>'foo', 'day'=>'bar', 'year'=>'baz
 $t->is(Generic::date_from_array(array('month'=>13, 'day'=>2, 'year'=>2000)), null, 'returns null for an invalid date');
 $t->is(Generic::date_from_array(array('month'=>12, 'day'=>31, 'year'=>2000)), 978217200, 'returns the correct timestamp for a valid date');
 
+
+$t->diag('::netMatch()');
+foreach(array(
+  '192.168.1.1'=>true,
+  '192.168.2.3'=>true,
+  '192.170.1.1'=>false,
+  ) as $value=>$upshot)
+{
+  $t->is(Generic::netMatch('192.168.0.0/16', $value), $upshot, '::netMatch() works for ' . $value);
+}
+
+foreach(array(
+  '192.168.1.3'=>true,
+  '192.168.2.1'=>false,
+  ) as $value=>$upshot)
+{
+  $t->is(Generic::netMatch('192.168.1.0/24', $value), $upshot, '::netMatch() works for ' . $value);
+}

@@ -13,12 +13,21 @@ class WorkstationPeer extends BaseWorkstationPeer
 		return $t;
 	}
   
-	public static function retrieveAllWorkstations()
+	public static function retrieveAllWorkstations(Subnet $Subnet=null)
 	{
 		$c = new Criteria();
     $c->addJoin(WorkstationPeer::SUBNET_ID, SubnetPeer::ID);
     $c->addAscendingOrderByColumn(WorkstationPeer::SUBNET_ID);
+    if($Subnet)
+    {
+      $c->add(WorkstationPeer::SUBNET_ID, $Subnet->getId());
+    }
 		$t = WorkstationPeer::doSelectJoinAll($c);
+    
+    $jobs=Generic::executeCommand(sprintf('workstations_getjobs go'), false);
+    
+    Generic::logMessage('jobs', $jobs);
+    
 		return $t;
 	}
   

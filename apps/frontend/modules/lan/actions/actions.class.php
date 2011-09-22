@@ -9,9 +9,38 @@
  */
 class lanActions extends sfActions
 {
+  
+  public function preExecute()
+  {
+    $this->timeslots=sfYaml::load(sfConfig::get('app_config_timeslotsfile'));
+    if(!is_array($this->timeslots))
+    {
+      throw new Exception('Could not read timeslots configuration file');
+    }
+  }
   public function executeIndex(sfWebRequest $request)
   {
-    $this->Workstations = WorkstationPeer::retrieveAllWorkstations();
+    $this->Subnets = SubnetPeer::doSelect(new Criteria());
+    $this->mysubnet=SubnetPeer::findSubnetFromIP($this->Subnets, '192.168.1.3');//$_SERVER['REMOTE_ADDR']);
+
+    if($this->getUser()->hasAttribute('subnet'))
+    {
+      $this->currentsubnet=SubnetPeer::retrieveByPK($this->getUser()->getAttribute('subnet'));
+    }
+    else
+    {
+      $this->currentsubnet=$this->mysubnet;
+    }
+    
+    $this->Workstations = WorkstationPeer::retrieveAllWorkstations($this->currentsubnet);
+    
+  }
+  
+  public function executeSelectsubnet(sfWebRequest $request)
+  {
+    $this->getUser()->setAttribute('subnet', $request->getParameter('id'));
+    $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Switched subnet.'));
+    return $this->redirect('lan/index');
   }
 
   public function executeToggleinternetaccess(sfWebRequest $request)
