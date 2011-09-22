@@ -30,7 +30,7 @@
       </td>
       <td><?php echo $Workstation->getName() ?></td>
       <td><?php echo $Workstation->getIsEnabled() ? __('Yes'): __('No') ?></td>
-      <td><?php include_partial('queue', array('Workstation'=>$Workstation)) ?></td>
+      <td><?php include_partial('queue', array('Workstation'=>$Workstation, 'tsc'=>$timeslotsContainer)) ?></td>
       <td><?php echo $Workstation->getSubnet() ?></td>
       <td>
       <ul class="sf_admin_td_actions">
@@ -52,6 +52,7 @@
 				__('Enable Internet access'),
 				'lan/enableinternetaccess?id='. $Workstation->getId(),
 				array(
+          'method'=>'post',
           'title'=>__('Enable Internet access for workstation %name%', array('%name%'=>$Workstation->getName())),
           ) 
 				) ?>

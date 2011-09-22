@@ -19,13 +19,15 @@ class WfeventPeer extends BaseWfeventPeer {
   const
     PROJ_DEADLINE=1,
     SCHOOLPROJECT=2,
-    APPOINTMENT=3
+    APPOINTMENT=3,
+    WORKSTATION=4
     ;
   
   static private $basenames=Array(
     self::PROJ_DEADLINE=>'ProjDeadline',
     self::SCHOOLPROJECT=>'Schoolproject',
     self::APPOINTMENT=>'Appointment',
+    self::WORKSTATION=>'Workstation',
     );
 
   public static function getBaseTableId($classname)
