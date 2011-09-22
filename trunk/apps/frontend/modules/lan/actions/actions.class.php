@@ -21,7 +21,7 @@ class lanActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->Subnets = SubnetPeer::doSelect(new Criteria());
-    $this->mysubnet=SubnetPeer::findSubnetFromIP($this->Subnets, '192.168.1.3');//$_SERVER['REMOTE_ADDR']);
+    $this->mysubnet=SubnetPeer::findSubnetFromIP($this->Subnets, $_SERVER['REMOTE_ADDR']);
 
     if($this->getUser()->hasAttribute('subnet'))
     {
