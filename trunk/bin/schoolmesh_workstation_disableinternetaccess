@@ -30,6 +30,6 @@ COMMAND="iptables -D $FIREWALL_CHAIN -s $IPADDRESS -j ACCEPT -m comment --commen
 
 ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS "$COMMAND" 2>/dev/null
 
-schoolmesh_workstations_getjobs go | grep ",$IPADDRESS," | cut -d ',' -f1 | xargs -i atrm {}
+schoolmesh_workstations_getjobs go | grep "=$IPADDRESS," | cut -d '=' -f1 | xargs -i atrm {}
 
 exit 0

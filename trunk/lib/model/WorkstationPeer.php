@@ -24,10 +24,24 @@ class WorkstationPeer extends BaseWorkstationPeer
     }
 		$t = WorkstationPeer::doSelectJoinAll($c);
     
-    $jobs=Generic::executeCommand(sprintf('workstations_getjobs go'), false);
-    Generic::logMessage('jobs', $jobs);
     $active=Generic::executeCommand(sprintf('workstations_getinternetenabled go'), false);
-    Generic::logMessage('active', $active);
+    $jobs=Generic::executeCommand(sprintf('workstations_getjobs go'), false);
+
+    $queue=array();
+    foreach($jobs as $job)
+    {
+      list($ip, $time, $status, $user)=explode(',', $job);
+      $queue[$ip][$time]=array(
+        'status'=>$status,
+        'user'=>$user,
+        );
+    }
+
+    foreach($t as $Workstation)
+    {
+      $Workstation->setIsEnabled(array_key_exists($Workstation->getIpCidr(), $active));
+      $Workstation->setJobs(array_key_exists($Workstation->getIpCidr(), $queue) ? $queue[$Workstation->getIpCidr()] : null);
+    }
     
 		return $t;
 	}
