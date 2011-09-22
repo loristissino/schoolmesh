@@ -1,8 +1,0 @@
-#!/bin/bash
-
-#/root/schoolmesh/schoolmesh_jobs
-
-for JOB in $(atq -q a| cut -f1); do
-  echo $JOB,$(at -c $JOB | grep ^#schoolmesh | sed -e 's/^#schoolmesh,//')
-done
-

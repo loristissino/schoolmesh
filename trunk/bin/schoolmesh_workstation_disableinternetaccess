@@ -28,9 +28,8 @@ checkString $IPADDRESS
 
 COMMAND="iptables -D $FIREWALL_CHAIN -s $IPADDRESS -j ACCEPT -m comment --comment $FIREWALL_COMMENT"
 
-ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS "$COMMAND"
+ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS "$COMMAND" 2>/dev/null
 
-ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS "$FIREWALL_JOBSRMCOMMAND $IPADDRESS"
-
+schoolmesh_workstations_getjobs go | grep ",$IPADDRESS," | cut -d ',' -f1 | xargs -i atrm {}
 
 exit 0

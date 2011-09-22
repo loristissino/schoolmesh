@@ -1,7 +1,0 @@
-#!/bin/bash
-
-#/root/schoolmesh/schoolmesh_rmjob
-
-IPADDRESS=$1
-/root/bin/schoolmeshjobs | grep ",$IPADDRESS," | cut -d ',' -f1 | xargs -i atrm {}
-
