@@ -7,22 +7,34 @@ Per l'abilitazione/disabilitazione dell'accesso a Internet SchoolMesh si basa su
 
 La documentazione che segue riguarda SmoothWall, ma dovrebbe essere facilmente adattabile anche ad altri tipi di distribuzioni Linux, visto che si basa su semplici comandi iptables.
 
-== Creazione di una catena personalizzata ==
+== Aggiunta delle chiavi di autorizzazione ==
 
-Creare, sulla macchina SmoothWall, uno script simile al seguente, che crea una catena personalizzata e aggiunge all'inizio della catena INPUT un rimando ad essa:
+Fare in modo che l'utente www-data (server web sotto cui funziona l'applicazione SchoolMesh) possa eseguire i comandi dell'utente `root` della macchina SmoothWall, attraverso l'aggiunta delle chiavi di autorizzazione, agendo sul file `/root/.ssh/authorized_keys`. 
+
+== Personalizzazione di SmoothWall ==
+
+Creare, sulla macchina SmoothWall, due directory per contenere gli script e i file personalizzati di SchoolMesh:
+
+{{{
+mkdir /etc/schoolmesh /root/schoolmesh
+}}}
+
+Copiare via scp dalla directory `utilities/smoothwall` di SchoolMesh, il file dello script da eseguire all'avvio e quello di configurazione nelle apposite directory, appena create.
+
+Modificare il file di configurazione `/etc/schoolmesh/schoolmesh_iptables.rc` indicando gli indirizzi IP da cui accettare sempre le connessioni, nonché la regola di default da seguire per i casi di connessione bloccata.
 
 {{{
 #/bin/bash
 
+#/etc/schoolmesh/schoolmesh_iptables
+
 ALWAYS_ACCEPTED="192.168.0.121 192.168.1.105 192.168.0.122 192.168.0.123"
-iptables -N schoolmesh
 
-for ADDRESS in $ALWAYS_ACCEPTED; do
-        iptables -A schoolmesh -s $ADDRESS -j ACCEPT
-done
+DEFAULT_RULE=ACCEPT
+# This should be normally set to REJECT or DROP; 
+# set to ACCEPT to make experiments
 
-iptables -A schoolmesh -s 192.168.0.0/16 -j DROP   # default rule
-iptables -I INPUT  1 -j schoolmesh
+CHAIN=schoolmesh
 }}}
 
 == Esecuzione automatica dello script all'avvio della macchina ==
@@ -30,7 +42,7 @@ iptables -I INPUT  1 -j schoolmesh
 Per fare in modo che il comando descritto precedentemente venga eseguito all'avvio della macchina SmoothWall, aggiungere la riga
 
 {{{
-/root/bin/smoothwall_schoolmesh
+/root/schoolmesh/schoolmesh_iptables
 }}}
 
 alla fine del file `/etc/rc.d/rc.sysinit` (ovviamente il percorso da indicare dovrà corrispondere a quello dello script predisposto).
