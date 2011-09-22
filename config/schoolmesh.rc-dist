@@ -24,6 +24,7 @@ FIREWALL_SSH_USER=root
 # password is not stored; use ssh-keygen to guarantee your access to the 
 # firewall machine for www-data (or other users that may need it)
 FIREWALL_CHAIN=schoolmesh
+FIREWALL_COMMENT=schoolmeshrule
 
 # DO NET EDIT PASS THIS LINE
 

@@ -17,21 +17,11 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@ This script outputs a list of events, separated by commas, scheduled for the 
 #@ workstations.
 #@ 
-#@ It is assumed that a script on the firewall machine exists, with the following
-#@ content:
-#@
-#@ ------
-#@ #!/bin/bash
-#@ for JOB in $(atq -q a| cut -f1); do
-#@  echo $JOB,$(at -c $JOB | grep ^#schoolmesh | sed -e 's/^#schoolmesh,//')
-#@ done
-#@ ------
-#@
 #@ # EXAMPLES
 #@
 #@	{-} go
 
-ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS "$FIREWALL_JOBSLISTCOMMAND"
-
-
+for JOB in $(atq -q a| cut -f1); do
+	echo $JOB,$(at -c $JOB | grep "#schoolmesh" | sed -e 's/^.*#schoolmesh,//')
+done
 
