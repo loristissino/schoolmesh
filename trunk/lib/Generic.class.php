@@ -403,11 +403,21 @@ class Generic{
     }
   }
 
+
   public static function netMatch ($CIDR,$IP)
   {
-    // from http://php.net/manual/en/function.ip2long.php
     list ($net, $mask) = explode ('/', $CIDR);
-    return (ip2long ($IP) & ~((1 << (32 - $mask)) - 1) ) == ip2long ($net);
+    $net=ip2long($net);
+    $IP=ip2long($IP);
+    $masked=$IP >> (32 - $mask) << (32 - $mask);
+    /*
+    print_r(array(
+      'net'=>long2ip($net),
+      'ip'=>long2ip($IP),
+      'masked'=>long2ip($masked),
+      ));
+    */
+    return ($net==$masked);
   }
 
   static public function getLuceneIndex($name)

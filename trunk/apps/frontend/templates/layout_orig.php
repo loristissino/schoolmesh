@@ -31,12 +31,12 @@
 			<p><?php echo __('Where am I? ') . link_to(__("Home"), "@homepage") ?> » <?php include_slot('breadcrumbs') ?></p>
 		</div>
 	<?php endif ?>
+  <?php include_component('help', 'help', array('sf_user'=>$sf_user, 'module'=>$sf_params->get('module'), 'action'=>$sf_params->get('action'))) ?>
 	<?php if (has_slot('general_alerts')): ?>
     <div id="general_alerts">
     <?php include_slot('general_alerts'); ?>
     </div>
 	<?php endif; ?>
-  <?php include_component('help', 'help', array('sf_user'=>$sf_user, 'module'=>$sf_params->get('module'), 'action'=>$sf_params->get('action'))) ?>
 <div id="sf_admin_container">
 <?php echo $sf_content ?>
 </div>

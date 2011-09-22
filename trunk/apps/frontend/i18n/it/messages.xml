@@ -3039,6 +3039,10 @@
         <source>Project reset to draft</source>
         <target>Progetto reimpostato a bozza</target>
     </trans-unit>
+    <trans-unit id="775">
+        <source>Workstations of subnet «%subnet%»</source>
+        <target>Calcolatori della sottorete «%subnet%»</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
