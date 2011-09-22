@@ -15,13 +15,13 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@ # DESCRIPTION
 #@
 #@ This script outputs a list of events, separated by commas, scheduled for the 
-#@ workstations.
+#@ workstations. The jobs are in time order.
 #@ 
 #@ # EXAMPLES
 #@
 #@	{-} go
 
-for JOB in $(atq -q a| cut -f1); do
+(for JOB in $(atq -q a| cut -f1); do
 	echo $JOB=$(at -c $JOB | grep "#schoolmesh" | sed -e 's/^.*#schoolmesh,//')
-done
+done) | sort -k 2 -t ','
 

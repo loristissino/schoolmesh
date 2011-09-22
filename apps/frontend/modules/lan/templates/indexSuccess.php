@@ -17,7 +17,7 @@
       <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
       <th><?php echo __('Name') ?></th>
       <th><?php echo __('Enabled?') ?></th>
-      <th><?php echo __('Queue') ?></th>
+      <th><?php echo __('Time slots') ?></th>
       <th><?php echo __('Subnet') ?></th>
       <th><?php echo __('Actions') ?></th>
     </tr>
@@ -28,7 +28,13 @@
       <td>
       <input type="checkbox" name="ids[]" value="<?php echo $Workstation->getId() ?>" class="sf_admin_batch_checkbox" />
       </td>
-      <td><?php echo $Workstation->getName() ?></td>
+      <td><?php echo $Workstation->getName() ?>
+      <?php if($Workstation->getIpCidr()==$_SERVER['REMOTE_ADDR']): ?>
+      <?php echo image_tag('star', array(
+        'title'=>__('This is the workstation you are currently using')
+        )
+      ) ?>
+      <?php endif ?></td>
       <td><?php echo $Workstation->getIsEnabled() ? __('Yes'): __('No') ?></td>
       <td><?php include_partial('queue', array('Workstation'=>$Workstation, 'tsc'=>$timeslotsContainer)) ?></td>
       <td><?php echo $Workstation->getSubnet() ?></td>

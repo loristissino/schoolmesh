@@ -16,7 +16,6 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ This script enables internet access for a workstation. It may schedule jobs
 #@ for the future.
-#@ It always resets internet access before doing anything.
 #@
 #@ # EXAMPLES
 #@
@@ -51,8 +50,6 @@ if [ $TOS -lt $NOWS ]; then
 	msg_failed "End time is in the past"
 	exit 91
 fi
-
-schoolmesh_workstation_disableinternetaccess $IPADDRESS
 
 # "end timeslot" command
 
