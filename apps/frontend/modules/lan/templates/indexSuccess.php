@@ -16,8 +16,8 @@
     <tr>
       <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
       <th><?php echo __('Name') ?></th>
-      <th><?php echo __('Mac address') ?></th>
       <th><?php echo __('Enabled?') ?></th>
+      <th><?php echo __('Queue') ?></th>
       <th><?php echo __('Subnet') ?></th>
       <th><?php echo __('Actions') ?></th>
     </tr>
@@ -29,8 +29,8 @@
       <input type="checkbox" name="ids[]" value="<?php echo $Workstation->getId() ?>" class="sf_admin_batch_checkbox" />
       </td>
       <td><?php echo $Workstation->getName() ?></td>
-      <td><?php echo $Workstation->getMacAddress() ?></td>
       <td><?php echo $Workstation->getIsEnabled() ? __('Yes'): __('No') ?></td>
+      <td><?php include_partial('queue', array('Workstation'=>$Workstation)) ?></td>
       <td><?php echo $Workstation->getSubnet() ?></td>
       <td>
       <ul class="sf_admin_td_actions">
@@ -38,8 +38,10 @@
 	<li class="sf_admin_action_internetaccessoff">
 	<?php echo link_to(
 				__('Disable Internet access'),
-				'workstations/toggleinternetaccess?id='. $Workstation->getId(),
+				'lan/disableinternetaccess?id='. $Workstation->getId(),
 				array(
+          'method'=>'post',
+          'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()),
           'title'=>__('Disable Internet access for workstation %name%', array('%name%'=>$Workstation->getName()))
           ) 
 				) ?>
@@ -48,7 +50,7 @@
 	<li class="sf_admin_action_internetaccesson">
 	<?php echo link_to(
 				__('Enable Internet access'),
-				'workstations/toggleinternetaccess?id='. $Workstation->getId(),
+				'lan/enableinternetaccess?id='. $Workstation->getId(),
 				array(
           'title'=>__('Enable Internet access for workstation %name%', array('%name%'=>$Workstation->getName())),
           ) 

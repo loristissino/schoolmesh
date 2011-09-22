@@ -25,5 +25,22 @@ class Workstation extends BaseWorkstation
     {
       return $this->_jobs;
     }
+    
+    public function disableInternetAccess()
+    {
+      try
+      {
+        Generic::executeCommand(sprintf('workstation_disableinternetaccess %s', $this->getIpCidr()), false);
+        $result['result']='notice';
+        $result['message']='Internet access disabled for the workstation.';
+      }
+      catch (Exception $e)
+      {
+        $result['result']='error';
+        $result['message']='Internet access could not be disabled for the workstation.';
+      }
+      return $result;
+      
+    }
 
 }
