@@ -24,6 +24,17 @@ class WorkstationPeer extends BaseWorkstationPeer
     }
 		$t = WorkstationPeer::doSelectJoinAll($c);
     
+    return self::_returnUpdatedInfo($t);
+	}
+  
+  public static function retrieveByPKs($pks, PropelPDO $con = null)
+  {
+    $t=parent::retrieveByPKs($pks);
+    return self::_returnUpdatedInfo($t);
+  }
+  
+  private static function _returnUpdatedInfo($t)
+  {
     $active=Generic::executeCommand(sprintf('workstations_getinternetenabled go'), false);
     $jobs=Generic::executeCommand(sprintf('workstations_getjobs go'), false);
 
@@ -58,7 +69,7 @@ class WorkstationPeer extends BaseWorkstationPeer
     }
     
 		return $t;
-	}
-  
+    
+  }
 
 }

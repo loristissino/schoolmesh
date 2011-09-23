@@ -54,9 +54,21 @@ class Workstation extends BaseWorkstation
     
     public function disableInternetAccess($user_id, $code, $sf_context)
     {
-      // the code is only the username of the user that enabled internet connection
-      // since it's not stored on the db, but is found on iptables comments, we'll pass it here
-      
+      if ($this->_doDisableInternetAccess($user_id, $code, $sf_context))
+      {
+        $result['result']='notice';
+        $result['message']='Internet access disabled for the workstation.';
+      }
+      else
+      {
+        $result['result']='error';
+        $result['message']='Internet access could not be disabled for the workstation.';
+      }
+      return $result;
+    }
+
+    private function _doDisableInternetAccess($user_id, $code, $sf_context)
+    {
       $code=Generic::b64_unserialize($code);
       $user=$code['user'];
       $type=$code['type'];
@@ -64,8 +76,6 @@ class Workstation extends BaseWorkstation
       try
       {
         Generic::executeCommand(sprintf('workstation_disableinternetaccess %s %s', $this->getIpCidr(), $user), false);
-        $result['result']='notice';
-        $result['message']='Internet access disabled for the workstation.';
         $this->addWfevent(
           $user_id,
           'Internet access disabled',
@@ -73,24 +83,35 @@ class Workstation extends BaseWorkstation
           1,
           $sf_context
           );
-        
+        return true;
       }
       catch (Exception $e)
       {
-        $result['result']='error';
-        $result['message']='Internet access could not be disabled for the workstation.';
+        return false;
       }
-      return $result;
-      
     }
 
+
     public function enableInternetAccess($user_id, $from, $to, $username, $sf_context)
+    {
+      if ($this->_doEnableInternetAccess($user_id, $from, $to, $username, $sf_context))
+      {
+        $result['result']='notice';
+        $result['message']='Internet access enabled for the workstation.';
+      }
+      else
+      {
+        $result['result']='error';
+        $result['message']='Internet access could not be enabled for the workstation.';
+      }
+      return $result;
+    }
+    
+    private function _doEnableInternetAccess($user_id, $from, $to, $username, $sf_context)
     {
       try
       {
         Generic::executeCommand(sprintf('workstation_enableinternetaccess %s %s %s %s', $this->getIpCidr(), $from, $to, $username), false);
-        $result['result']='notice';
-        $result['message']='Internet access enabled for the workstation.';
         $this->addWfevent(
           $user_id,
           'Internet access enabled',
@@ -98,14 +119,12 @@ class Workstation extends BaseWorkstation
           2,
           $sf_context
           );
-        }
+        return true;
+      }
       catch (Exception $e)
       {
-        $result['result']='error';
-        $result['message']='Internet access could not be enabled for the workstation.';
+        return false;
       }
-      return $result;
-      
     }
 
   public function addWfevent($userId, $comment='', $i18n_subs, $state=0, $sf_context=null)

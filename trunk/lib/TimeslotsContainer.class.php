@@ -45,6 +45,21 @@ class TimeslotsContainer
     }
   }
   
+  public function getFormChoices()
+  {
+    $c=array();
+    $count=0;
+    foreach($this->_slots as $slot)
+    {
+      if($slot['state']=='current' or $slot['state']=='future')
+      {
+        $c[$slot['period']][$count]=$slot['description'];
+      }
+      $count++;
+    }
+    return $c;
+  }
+  
   public function setPlanningInfo(Workstation $Workstation)
   {
     $jobs=$Workstation->getJobs();
@@ -55,10 +70,10 @@ class TimeslotsContainer
       if(is_array($jobs) and array_key_exists($this->_slots[$i]['begin'], $jobs))
       {
         $future=$jobs[$this->_slots[$i]['begin']]['status'];
-        $user=$jobs[$this->_slots[$i]['begin']]['status']=='on' ? $jobs[$this->_slots[$i]['begin']]['user'] : '';
+        $user=$future=='on' ? $jobs[$this->_slots[$i]['begin']]['user'] : '';
       }
       $this->_slots[$i]['future']=$future;
-      $this->_slots[$i]['user']=$user;
+      $this->_slots[$i]['user']= $i>=$this->_current ? $user : '';
     }
   }
   
@@ -90,6 +105,11 @@ class TimeslotsContainer
   public function getSlots()
   {
     return $this->_slots;
+  }
+  
+  public function getSlotsNumber()
+  {
+    return sizeof($this->_slots);
   }
   
   public function getCurrentSlotBegin()

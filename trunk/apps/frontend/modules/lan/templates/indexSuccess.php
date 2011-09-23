@@ -9,7 +9,7 @@
 
 <?php if(sizeof($Workstations)>0): ?>
 
-<form action="<?php echo url_for('workstations/batch') ?>" method="get">
+<form action="<?php echo url_for('lan/batch') ?>" method="get">
 
 <table>
   <thead>
@@ -107,8 +107,7 @@
 
 <?php echo optionsforselect(array(
   '0' => __('Choose an action'),
-  'enableinternetaccess' => __('Enable Internet access'),
-  'disableinternetaccess' => __('Disable Internet access'),
+  'scheduleinternetaccess' => __('Schedule Internet access'),
 ), 0) ?>
   </select>
 
