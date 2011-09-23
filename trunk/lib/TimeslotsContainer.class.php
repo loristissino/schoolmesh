@@ -4,12 +4,14 @@ class TimeslotsContainer
 {
   private $_config;
   private $_slots;
+  private $_current;
   
   public function __construct($configfile)
   {
     $this->_config=sfYaml::load($configfile);
     $this->_slots=array();
     $nowU=date('U', time());
+    $count=0;
     foreach($this->_config['timeslots'] as $period=>$slots)
     {
       foreach($slots as $slot)
@@ -19,6 +21,7 @@ class TimeslotsContainer
         list($h, $m)=explode(':', $slot['end']);
         $endU=date('U', mktime($h, $m));
         $duration=$endU-$beginU;
+        $state=($nowU>$endU) ? 'past' : ($nowU>$beginU ? 'current' : 'future');
         
         $this->_slots[]=array(
           'period'=>$period,
@@ -28,9 +31,16 @@ class TimeslotsContainer
           'beginU'=>$beginU,
           'endU'=>$endU,
           'duration'=>$duration,
-          'state'=> ($nowU>$endU) ? 'past' : ($nowU>$beginU ? 'current' : 'future'),
+          'state'=>$state,
           'width'=>round($duration/150),
           );
+    
+        if($state=='current')
+        {
+          $this->_current=$count;
+        }
+        $count++;
+
       }
     }
   }
@@ -39,7 +49,7 @@ class TimeslotsContainer
   {
     $jobs=$Workstation->getJobs();
     $future=$Workstation->getIsEnabled()? 'on': 'off';
-    $user='';
+    $user=$Workstation->getUser();
     for($i=0; $i<sizeof($this->_slots); $i++)
     {
       if(is_array($jobs) and array_key_exists($this->_slots[$i]['begin'], $jobs))
@@ -81,4 +91,15 @@ class TimeslotsContainer
   {
     return $this->_slots;
   }
+  
+  public function getCurrentSlotBegin()
+  {
+    return $this->_slots[$this->_current]['begin'];
+  }
+  
+  public function getCurrentSlotEnd()
+  {
+    return $this->_slots[$this->_current]['end'];
+  }
+  
 }
