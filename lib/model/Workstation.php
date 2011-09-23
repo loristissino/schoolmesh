@@ -4,6 +4,7 @@ class Workstation extends BaseWorkstation
 {
     private $_jobs;
     private $_state;
+    private $_user; // the one that enabled internet access
   
     public function __toString()
     {
@@ -14,6 +15,18 @@ class Workstation extends BaseWorkstation
     {
         $this->setIsEnabled($status);
         $this->save();
+        return $this;
+    }
+    
+    public function setUser($user)
+    {
+      $this->_user=$user;
+      return $this;
+    }
+    
+    public function getUser()
+    {
+      return $this->_user;
     }
     
     public function setJobs($values)
@@ -39,11 +52,18 @@ class Workstation extends BaseWorkstation
       $this->_state=$v;
     }
     
-    public function disableInternetAccess($user_id, $sf_context)
+    public function disableInternetAccess($user_id, $code, $sf_context)
     {
+      // the code is only the username of the user that enabled internet connection
+      // since it's not stored on the db, but is found on iptables comments, we'll pass it here
+      
+      $code=Generic::b64_unserialize($code);
+      $user=$code['user'];
+      $type=$code['type'];
+      
       try
       {
-        Generic::executeCommand(sprintf('workstation_disableinternetaccess %s', $this->getIpCidr()), false);
+        Generic::executeCommand(sprintf('workstation_disableinternetaccess %s %s', $this->getIpCidr(), $user), false);
         $result['result']='notice';
         $result['message']='Internet access disabled for the workstation.';
         $this->addWfevent(

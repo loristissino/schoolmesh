@@ -39,7 +39,21 @@ class WorkstationPeer extends BaseWorkstationPeer
 
     foreach($t as $Workstation)
     {
-      $Workstation->setIsEnabled(array_key_exists($Workstation->getIpCidr(), $active));
+      if(array_key_exists($Workstation->getIpCidr(), $active))
+      {
+        $Workstation
+        ->setIsEnabled(true)
+        ->setUser($active[$Workstation->getIpCidr()])
+        ;
+      }
+      else
+      {
+        $Workstation
+        ->setIsEnabled(false)
+        ->setUser('')
+        ;
+      }
+      
       $Workstation->setJobs(array_key_exists($Workstation->getIpCidr(), $queue) ? $queue[$Workstation->getIpCidr()] : null);
     }
     

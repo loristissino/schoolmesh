@@ -43,25 +43,49 @@ class lanActions extends sfActions
     return $this->redirect('lan/index');
   }
 
-  public function executeEnableinternetaccess(sfWebRequest $request)
+  public function executeAdminenableinternetaccess(sfWebRequest $request)
   {
     /*
     $this->forward404Unless($this->Workstation=WorkstationPeer::retrieveByPk($request->getParameter('id')));
     $this->form= new ToggleInternetAccessForm(null, array('timetable'=>sfConfig::get('app_config_timetablefile', '')));
     $this->form->setDefault('when', array('1', '2', '4', 'p'));
     */
+    $this->endtime=$this->timeslotsContainer->getEleventhHour();
+    $this->_doEnableinternetaccess($request);
+  }
+
+  public function executeUserenableinternetaccess(sfWebRequest $request)
+  {
+    /*
+    $this->forward404Unless($this->Workstation=WorkstationPeer::retrieveByPk($request->getParameter('id')));
+    $this->form= new ToggleInternetAccessForm(null, array('timetable'=>sfConfig::get('app_config_timetablefile', '')));
+    $this->form->setDefault('when', array('1', '2', '4', 'p'));
+    */
+    $this->endtime=$this->timeslotsContainer->getCurrentSlotEnd();
+    $this->_doEnableinternetaccess($request);
+  }
+
+  private function _doEnableinternetaccess(sfWebRequest $request)
+  {
     $this->forward404Unless($request->isMethod('POST'));
     $this->forward404Unless($this->Workstation=WorkstationPeer::retrieveByPk($request->getParameter('id')));
-    $result=$this->Workstation->enableInternetAccess($this->getUser()->getProfile()->getUserId(), date('H:i', time()-60), $this->timeslotsContainer->getEleventhHour(), $this->getUser()->getProfile()->getUsername(), $this->getContext());
+    $result=$this->Workstation->enableInternetAccess(
+      $this->getUser()->getProfile()->getUserId(), 
+      $this->timeslotsContainer->getCurrentSlotBegin(), 
+      $this->endtime, 
+      $this->getUser()->getProfile()->getUsername(),
+      $this->getContext()
+    );
     $this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
     return $this->redirect('lan/index');
   }
+  
 
   public function executeDisableinternetaccess(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('POST'));
     $this->forward404Unless($this->Workstation=WorkstationPeer::retrieveByPk($request->getParameter('id')));
-    $result=$this->Workstation->disableInternetAccess($this->getUser()->getProfile()->getUserId(), $this->getContext());
+    $result=$this->Workstation->disableInternetAccess($this->getUser()->getProfile()->getUserId(), $request->getParameter('code'), $this->getContext());
     $this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
     return $this->redirect('lan/index');
   }

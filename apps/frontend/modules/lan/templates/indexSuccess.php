@@ -41,29 +41,58 @@
       <td>
       <ul class="sf_admin_td_actions">
       <?php if($Workstation->getIsEnabled()): ?>
-	<li class="sf_admin_action_internetaccessoff">
-	<?php echo link_to(
-				__('Disable Internet access'),
-				'lan/disableinternetaccess?id='. $Workstation->getId(),
-				array(
-          'method'=>'post',
-          'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()),
-          'title'=>__('Disable Internet access for workstation %name%', array('%name%'=>$Workstation->getName()))
-          ) 
-				) ?>
-  </li>
-  <?php else: ?>
-	<li class="sf_admin_action_internetaccesson">
-	<?php echo link_to(
-				__('Enable Internet access'),
-				'lan/enableinternetaccess?id='. $Workstation->getId(),
-				array(
-          'method'=>'post',
-          'title'=>__('Enable Internet access for workstation %name%', array('%name%'=>$Workstation->getName())),
-          ) 
-				) ?>
-  </li>
-  <?php endif ?>
+        <?php if($sf_user->hasCredential('admin')): ?>
+          <li class="sf_admin_action_internetaccessoff">
+          <?php echo link_to(
+                __('Disable Internet access'),
+                'lan/disableinternetaccess?id='. $Workstation->getId().'&code='. Generic::b64_serialize(array('user'=>$Workstation->getUser(), 'type'=>'allday')),
+                array(
+                  'method'=>'post',
+                  'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()),
+                  'title'=>__('Disable Internet access for workstation %name%', array('%name%'=>$Workstation->getName()))
+                  ) 
+                ) ?>
+          </li>
+        <?php elseif($sf_user->hasCredential('internet') && $sf_user->getProfile()->getUsername()==$Workstation->getUser()): ?>
+          <li class="sf_admin_action_internetaccessoff">
+          <?php echo link_to(
+                __('Disable Internet access'),
+                'lan/disableinternetaccess?id='. $Workstation->getId().'&code='. Generic::b64_serialize(array('user'=>$sf_user->getProfile()->getUsername(), 'type'=>'timeslot')),
+                array(
+                  'method'=>'post',
+                  'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()),
+                  'title'=>__('Disable Internet access for workstation %name%', array('%name%'=>$Workstation->getName()))
+                  ) 
+                ) ?>
+          </li>
+        
+        <?php endif ?>
+      <?php else: ?>
+        <?php if($sf_user->hasCredential('admin')): ?>
+          <li class="sf_admin_action_internetaccesson">
+          <?php echo link_to(
+                __('Enable Internet access (day)'),
+                'lan/adminenableinternetaccess?id='. $Workstation->getId(),
+                array(
+                  'method'=>'post',
+                  'title'=>__('Enable Internet access for workstation %name% for the whole day', array('%name%'=>$Workstation->getName())),
+                  ) 
+                ) ?>
+          </li>
+        <?php endif ?>
+        <?php if($sf_user->hasCredential('internet')): ?>
+          <li class="sf_admin_action_internetaccesson">
+          <?php echo link_to(
+                __('Enable Internet access (timeslot)'),
+                'lan/userenableinternetaccess?id='. $Workstation->getId(),
+                array(
+                  'method'=>'post',
+                  'title'=>__('Enable Internet access for workstation %name% for the current timeslot', array('%name%'=>$Workstation->getName())),
+                  ) 
+                ) ?>
+          </li>
+        <?php endif ?>
+    <?php endif ?>
 </ul>
 </td>
     </tr>

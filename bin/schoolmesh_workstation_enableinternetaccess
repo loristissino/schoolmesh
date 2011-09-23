@@ -53,13 +53,13 @@ fi
 
 # "end timeslot" command
 
-COMMAND="iptables -D $FIREWALL_CHAIN -s $IPADDRESS -j ACCEPT -m comment --comment $FIREWALL_COMMENT"
+COMMAND="iptables -D $FIREWALL_CHAIN -s $IPADDRESS -j ACCEPT -m comment --comment \"$FIREWALL_COMMENT $REQUESTER\""
 
 echo "echo $COMMAND | ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS #schoolmesh,$IPADDRESS,$TO,off,$REQUESTER" | at $TO
 
 # "begin timeslot" command
 
-COMMAND="iptables -I $FIREWALL_CHAIN 1 -s $IPADDRESS -j ACCEPT -m comment --comment $FIREWALL_COMMENT"
+COMMAND="iptables -I $FIREWALL_CHAIN 1 -s $IPADDRESS -j ACCEPT -m comment --comment \"$FIREWALL_COMMENT $REQUESTER\""
 
 if [ $FROMS -lt $NOWS ]; then
   ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS "$COMMAND"
