@@ -233,4 +233,9 @@ class contentActions extends sfActions
 		
 	}
 
+  public function executeFirewall(sfWebRequest $request)
+  {
+  }
+
+
 }

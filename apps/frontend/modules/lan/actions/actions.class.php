@@ -17,9 +17,7 @@ class lanActions extends sfActions
     {
       throw new Exception('Could not read initialize timeslots manager');
     }
-  }
-  public function executeIndex(sfWebRequest $request)
-  {
+    
     $this->Subnets = SubnetPeer::doSelect(new Criteria());
     $this->mysubnet=SubnetPeer::findSubnetFromIP($this->Subnets, $_SERVER['REMOTE_ADDR']);
 
@@ -31,11 +29,15 @@ class lanActions extends sfActions
     {
       $this->currentsubnet=$this->mysubnet;
     }
-    
-    $this->Workstations = WorkstationPeer::retrieveAllWorkstations($this->currentsubnet);
-    
+
   }
-  
+  public function executeIndex(sfWebRequest $request)
+  {
+    $this->Workstations = WorkstationPeer::retrieveAllWorkstations($this->currentsubnet);
+  }
+
+
+
   public function executeSelectsubnet(sfWebRequest $request)
   {
     $this->getUser()->setAttribute('subnet', $request->getParameter('id'));
@@ -43,13 +45,88 @@ class lanActions extends sfActions
     return $this->redirect('lan/index');
   }
 
+  public function executeBatch(sfWebRequest $request)
+  {
+    $ids = $request->getParameter('ids');
+    $this->getUser()->setAttribute('ids', $ids);
+    
+    $action=$request->getParameter('batch_action');
+
+    if ($action==='0')
+      {
+        $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must specify an action.'));
+        $this->redirect('lan/index');
+      }
+    $this->forward('lan', $action);
+    // if an action is not valid, we get an error anyway, because there is no
+    // template BatchSuccess.php
+  }  
+
+  protected function _getIds(sfWebRequest $request)
+  {
+    $this->ids=null;
+    if($request->hasParameter('id'))
+    {
+      $this->ids=array($request->getParameter('id'));
+    }
+    elseif ($request->hasParameter('ids'))
+    {
+      if(!is_array($request->getParameter('ids')))
+      {
+        $this->ids = explode(',', $request->getParameter('ids'));
+      }
+      else
+      {
+        $this->ids = $request->getParameter('ids');
+      }
+    }
+    if (!$this->ids)
+		{
+				$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least one workstation.'));
+				$this->redirect('lan/index');
+		}
+    
+    return $this->ids; // we could avoid returning it, since it's avaailable anyway
+    
+  }
+
+  public function executeScheduleinternetaccess(sfWebRequest $request)
+  {
+    $this->form= new ToggleInternetAccessForm(null, array('tsc'=>$this->timeslotsContainer));
+
+		if ($request->isMethod('post'))
+    {
+			$this->form->bind($request->getParameter('info'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+//				$result=SchoolprojectPeer::setApprovalDate($this->getUser(), $params, $this->getContext());
+        
+				$this->getUser()->setFlash($result['result'],
+					$this->getContext()->getI18N()->__($result['message'])
+					);
+        
+        return $this->redirect('lan/index');
+			}
+		}
+
+    if($this->getUser()->hasAttribute('ids'))
+    {
+      $this->ids=$this->getUser()->getAttribute('ids');
+    }
+    else
+    {
+      $this->ids=$this->_getIds($request);
+    }
+    $this->Workstations=WorkstationPeer::retrieveByPks($this->ids);
+    $this->form->setDefaultsFromCurrentSettings($this->Workstations);
+
+  }
+
+
+
   public function executeAdminenableinternetaccess(sfWebRequest $request)
   {
-    /*
-    $this->forward404Unless($this->Workstation=WorkstationPeer::retrieveByPk($request->getParameter('id')));
-    $this->form= new ToggleInternetAccessForm(null, array('timetable'=>sfConfig::get('app_config_timetablefile', '')));
-    $this->form->setDefault('when', array('1', '2', '4', 'p'));
-    */
     $this->endtime=$this->timeslotsContainer->getEleventhHour();
     $this->_doEnableinternetaccess($request);
   }
@@ -89,5 +166,6 @@ class lanActions extends sfActions
     $this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
     return $this->redirect('lan/index');
   }
+  
 
 }
