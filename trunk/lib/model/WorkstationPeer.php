@@ -71,5 +71,129 @@ class WorkstationPeer extends BaseWorkstationPeer
 		return $t;
     
   }
+  
+  public static function scheduleInternetAccess($user, $params, TimeslotsContainer $tsc, $sf_context=null)
+  {
+    $ids=$user->getAttribute('ids');
+    $user_id=$user->getProfile()->getId();
+    $username=$user->getProfile()->getUsername();
+    
+    $Workstations = WorkstationPeer::retrieveByPKs($ids);
+    
+    $todo=sizeof($Workstations);
+    $done=0;
+    
+    foreach($Workstations as $Workstation)
+    {
+      if($Workstation->doDisableInternetAccess($user_id, Generic::b64_serialize(array('user'=>$Workstation->getUser(), 'type'=>'allday')), $sf_context) && $Workstation->doRemoveScheduledJobs($user_id, $sf_context))
+      {
+        $jdone=0;
+        foreach($params['when'] as $slot_index)
+        {
+          $slot=$tsc->getSlotByIndex($slot_index);
+          if($Workstation->doEnableInternetAccess($user_id, $slot['begin'], $slot['end'], $username, $sf_context))
+          {
+            $jdone++;
+          }
+        }
+        if($jdone==sizeof($params['when']))
+        {
+          $done++;
+        }
+      }
+    }
+    
+    if($done==$todo)
+    {
+      $result['result']='notice';
+      $result['message']='All scheduling done.';
+    }
+    elseif($done==0)
+    {
+      $result['result']='error';
+      $result['message']='No scheduling done.';
+    }
+    else
+    {
+      $result['result']='error';
+      $result['message']='Some scheduling done. ' . $done;
+    }
+    return $result;
+    
+  }
+
+  public static function enableInternetAccess($user, $Workstations, TimeslotsContainer $tsc, $type, $sf_context=null)
+  {
+    $user_id=$user->getProfile()->getId();
+    $username=$user->getProfile()->getUsername();
+    
+    $todo=sizeof($Workstations);
+    $done=0;
+    foreach($Workstations as $Workstation)
+    {
+      if($type=='allday')
+      {
+        $Workstation->doRemoveScheduledJobs();
+      }
+      if($Workstation->doEnableInternetAccess($user_id, $tsc->getCurrentSlotBegin(), $type=='current'?$tsc->getCurrentSlotEnd(): $tsc->getEleventhHour(), $username, $sf_context))
+      {
+        $done++;
+      }
+    }
+    
+    if($done==$todo)
+    {
+      $result['result']='notice';
+      $result['message']='Internet access enabled for all the workstations selected.';
+    }
+    elseif($done==0)
+    {
+      $result['result']='error';
+      $result['message']='Internet access could not be enabled for any of the workstations selected.';
+    }
+    else
+    {
+      $result['result']='error';
+      $result['message']='Internet access could be enabled only for some of the workstations selected.';
+    }
+    return $result;
+  }
+  
+  public static function disableInternetAccess($user, $Workstations, TimeslotsContainer $tsc, $type, $sf_context=null)
+  {
+    $user_id=$user->getProfile()->getId();
+    $username=$user->getProfile()->getUsername();
+  
+    $todo=sizeof($Workstations);
+    $done=0;
+    foreach($Workstations as $Workstation)
+    {
+      if($type=='allday')
+      {
+        $Workstation->doRemoveScheduledJobs();
+      }
+      if($Workstation->doDisableInternetAccess($user_id, Generic::b64_serialize(array('user'=>$type=='allday'?$Workstation->getUser() : $username, 'type'=>$type)), $sf_context))
+      {
+        $done++;
+      }
+    }
+    
+    if($done==$todo)
+    {
+      $result['result']='notice';
+      $result['message']='Internet access disabled for all the workstations selected.';
+    }
+    elseif($done==0)
+    {
+      $result['result']='error';
+      $result['message']='Internet access could not be disabled for any of the workstations selected.';
+    }
+    else
+    {
+      $result['result']='error';
+      $result['message']='Internet access could be disabled only for some of the workstations selected.';
+    }
+    return $result;
+  }
 
 }

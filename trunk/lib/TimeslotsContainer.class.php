@@ -12,6 +12,7 @@ class TimeslotsContainer
     $this->_slots=array();
     $nowU=date('U', time());
     $count=0;
+    $previousperiod='';
     foreach($this->_config['timeslots'] as $period=>$slots)
     {
       foreach($slots as $slot)
@@ -22,8 +23,18 @@ class TimeslotsContainer
         $endU=date('U', mktime($h, $m));
         $duration=$endU-$beginU;
         $state=($nowU>$endU) ? 'past' : ($nowU>$beginU ? 'current' : 'future');
+        if($period!=$previousperiod)
+        {
+          $newgroup=true;
+          $previousperiod=$period;
+        }
+        else
+        {
+          $newgroup=false;
+        }
         
         $this->_slots[]=array(
+          'newgroup'=>$newgroup,
           'period'=>$period,
           'begin'=>$slot['begin'],
           'end'=>$slot['end'],
@@ -122,4 +133,8 @@ class TimeslotsContainer
     return $this->_slots[$this->_current]['end'];
   }
   
+  public function getSlotByIndex($index)
+  {
+    return $this->_slots[$index];
+  }
 }

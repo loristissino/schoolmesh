@@ -1,5 +1,5 @@
 <?php
-class ToggleInternetAccessForm extends BaseForm
+class ScheduleInternetAccessForm extends BaseForm
 {
   public function configure()
   {
@@ -20,6 +20,11 @@ class ToggleInternetAccessForm extends BaseForm
 //    $this['when']->getWidget()->getRenderer()->setOption('separator','AAA');
 
     $this->widgetSchema->setNameFormat('info[%s]');
+    
+    $this->setValidators(array(
+				'when' => new sfValidatorPass(), 
+			));
+
   }
   
   public function setDefaultsFromCurrentSettings($Workstations)
