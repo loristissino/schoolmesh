@@ -17,10 +17,9 @@ class lanActions extends sfActions
     {
       throw new Exception('Could not read initialize timeslots manager');
     }
-    
     $this->Subnets = SubnetPeer::doSelect(new Criteria());
     $this->mysubnet=SubnetPeer::findSubnetFromIP($this->Subnets, $_SERVER['REMOTE_ADDR']);
-
+    
     if($this->getUser()->hasAttribute('subnet'))
     {
       $this->currentsubnet=SubnetPeer::retrieveByPK($this->getUser()->getAttribute('subnet'));
@@ -29,11 +28,45 @@ class lanActions extends sfActions
     {
       $this->currentsubnet=$this->mysubnet;
     }
-
   }
+
+  private function _retrieveWorkstations(sfWebRequest $request)
+  {
+    if($this->getUser()->hasAttribute('ids'))
+    {
+      $this->ids=$this->getUser()->getAttribute('ids');
+    }
+    else
+    {
+      $this->ids=$this->_getIds($request);
+    }
+    $this->Workstations=WorkstationPeer::retrieveByPks($this->ids);
+  }
+  
   public function executeIndex(sfWebRequest $request)
   {
     $this->Workstations = WorkstationPeer::retrieveAllWorkstations($this->currentsubnet);
+    
+    $this->actions=array(
+      '0' => $this->getContext()->getI18N()->__('Choose an action')
+      );
+    if($this->getUser()->hasCredential('internet'))
+    {
+      $this->actions=array_merge($this->actions, array(
+        'scheduleinternetaccess' => $this->getContext()->getI18N()->__('Schedule Internet access'),
+        'enable_ia_currenttimeslot' => $this->getContext()->getI18N()->__('Enable Internet access for the current time slot'),
+        'disable_ia_currenttimeslot' => $this->getContext()->getI18N()->__('Disable Internet access for the current time slot'), 
+      ));
+    }
+
+    if($this->getUser()->hasCredential('admin'))
+    {
+      $this->actions=array_merge($this->actions, array(
+        'enable_ia_until11thhour' => $this->getContext()->getI18N()->__('Enable Internet access until the eleventh hour'),
+        'viewevents' => $this->getContext()->getI18N()->__('View events'),
+        ));
+    }
+    
   }
 
 
@@ -92,7 +125,8 @@ class lanActions extends sfActions
 
   public function executeScheduleinternetaccess(sfWebRequest $request)
   {
-    $this->form= new ToggleInternetAccessForm(null, array('tsc'=>$this->timeslotsContainer));
+    
+    $this->form= new ScheduleInternetAccessForm(null, array('tsc'=>$this->timeslotsContainer));
 
 		if ($request->isMethod('post'))
     {
@@ -100,7 +134,7 @@ class lanActions extends sfActions
 			if ($this->form->isValid())
 			{
 				$params = $this->form->getValues();
-//				$result=SchoolprojectPeer::setApprovalDate($this->getUser(), $params, $this->getContext());
+				$result=WorkstationPeer::scheduleInternetAccess($this->getUser(), $params, $this->timeslotsContainer, $this->getContext());
         
 				$this->getUser()->setFlash($result['result'],
 					$this->getContext()->getI18N()->__($result['message'])
@@ -109,21 +143,65 @@ class lanActions extends sfActions
         return $this->redirect('lan/index');
 			}
 		}
-
-    if($this->getUser()->hasAttribute('ids'))
-    {
-      $this->ids=$this->getUser()->getAttribute('ids');
-    }
-    else
-    {
-      $this->ids=$this->_getIds($request);
-    }
-    $this->Workstations=WorkstationPeer::retrieveByPks($this->ids);
+    $this->_retrieveWorkstations($request);
     $this->form->setDefaultsFromCurrentSettings($this->Workstations);
-
   }
 
 
+  public function executeEnable_ia_currenttimeslot(sfWebRequest $request)
+  {
+    $this->_retrieveWorkstations($request);
+    if($request->isMethod('POST'))
+    {
+      $result=WorkstationPeer::enableInternetAccess($this->getUser(), $this->Workstations, $this->timeslotsContainer, 'current', $this->getContext());
+      $this->getUser()->setFlash($result['result'],
+        $this->getContext()->getI18N()->__($result['message'])
+        );
+      return $this->redirect('lan/index');
+    }
+
+    $this->form = new ConfirmForm();
+    $this->action='enable_ia_currenttimeslot';
+    $this->setTemplate('confirm');
+  }
+
+  public function executeDisable_ia_currenttimeslot(sfWebRequest $request)
+  {
+    $this->_retrieveWorkstations($request);
+    if($request->isMethod('POST'))
+    {
+      $result=WorkstationPeer::disableInternetAccess($this->getUser(), $this->Workstations, $this->timeslotsContainer, 'current', $this->getContext());
+      $this->getUser()->setFlash($result['result'],
+        $this->getContext()->getI18N()->__($result['message'])
+        );
+      return $this->redirect('lan/index');
+    }
+    $this->form = new ConfirmForm();
+    $this->action='disable_ia_currenttimeslot';
+    $this->setTemplate('confirm');
+  }
+
+
+  public function executeEnable_ia_until11thhour(sfWebRequest $request)
+  {
+    $this->_retrieveWorkstations($request);
+    if($request->isMethod('POST'))
+    {
+      $result=WorkstationPeer::enableInternetAccess($this->getUser(), $this->Workstations, $this->timeslotsContainer, 'allday', $this->getContext());
+      $this->getUser()->setFlash($result['result'],
+        $this->getContext()->getI18N()->__($result['message'])
+        );
+      return $this->redirect('lan/index');
+    }
+    $this->form = new ConfirmForm();
+    $this->action='enable_ia_until11thhour';
+    $this->setTemplate('confirm');
+  }
+  
+  public function executeViewevents(sfWebRequest $request)
+  {
+    $this->_retrieveWorkstations($request);
+  }
 
   public function executeAdminenableinternetaccess(sfWebRequest $request)
   {
@@ -133,11 +211,6 @@ class lanActions extends sfActions
 
   public function executeUserenableinternetaccess(sfWebRequest $request)
   {
-    /*
-    $this->forward404Unless($this->Workstation=WorkstationPeer::retrieveByPk($request->getParameter('id')));
-    $this->form= new ToggleInternetAccessForm(null, array('timetable'=>sfConfig::get('app_config_timetablefile', '')));
-    $this->form->setDefault('when', array('1', '2', '4', 'p'));
-    */
     $this->endtime=$this->timeslotsContainer->getCurrentSlotEnd();
     $this->_doEnableinternetaccess($request);
   }
@@ -166,6 +239,5 @@ class lanActions extends sfActions
     $this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
     return $this->redirect('lan/index');
   }
-  
 
 }

@@ -1,6 +1,5 @@
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
+<?php foreach(array('error', 'notice') as $flashname): ?>
+<?php if ($sf_user->hasFlash($flashname)): ?>
+  <div class="<?php echo $flashname ?>"><?php echo $sf_user->getFlash($flashname)?></div>
 <?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php endforeach ?>

@@ -12,11 +12,7 @@
 <?php include_partial('content/flashes'); ?>
 
 <p><?php echo __('You are scheduling Internet access for the following workstations:') ?></p>
-<ul>
-  <?php foreach($Workstations as $Workstation): ?>
-    <li><?php echo $Workstation->getName() ?></li>
-  <?php endforeach ?>
-</ul>
+<?php include_partial('workstations', array('Workstations'=>$Workstations)) ?>
 
 <form action="<?php echo url_for('lan/scheduleinternetaccess') ?>" method="POST">
 

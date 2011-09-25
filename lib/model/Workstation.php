@@ -54,7 +54,7 @@ class Workstation extends BaseWorkstation
     
     public function disableInternetAccess($user_id, $code, $sf_context)
     {
-      if ($this->_doDisableInternetAccess($user_id, $code, $sf_context))
+      if ($this->doDisableInternetAccess($user_id, $code, $sf_context))
       {
         $result['result']='notice';
         $result['message']='Internet access disabled for the workstation.';
@@ -67,7 +67,7 @@ class Workstation extends BaseWorkstation
       return $result;
     }
 
-    private function _doDisableInternetAccess($user_id, $code, $sf_context)
+    public function doDisableInternetAccess($user_id, $code, $sf_context)
     {
       $code=Generic::b64_unserialize($code);
       $user=$code['user'];
@@ -91,10 +91,31 @@ class Workstation extends BaseWorkstation
       }
     }
 
+    public function doRemoveScheduledJobs($user_id, $sf_context)
+    {
+      try
+      {
+        Generic::executeCommand(sprintf('workstation_removejobs %s', $this->getIpCidr()), false);
+        $this->addWfevent(
+          $user_id,
+          'Jobs removed',
+          null,
+          1,
+          $sf_context
+          );
+        return true;
+      }
+      catch (Exception $e)
+      {
+        return false;
+      }
+    }
+
+
 
     public function enableInternetAccess($user_id, $from, $to, $username, $sf_context)
     {
-      if ($this->_doEnableInternetAccess($user_id, $from, $to, $username, $sf_context))
+      if ($this->doEnableInternetAccess($user_id, $from, $to, $username, $sf_context))
       {
         $result['result']='notice';
         $result['message']='Internet access enabled for the workstation.';
@@ -107,7 +128,7 @@ class Workstation extends BaseWorkstation
       return $result;
     }
     
-    private function _doEnableInternetAccess($user_id, $from, $to, $username, $sf_context)
+    public function doEnableInternetAccess($user_id, $from, $to, $username, $sf_context)
     {
       try
       {

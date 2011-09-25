@@ -3,13 +3,13 @@
   ))
 ?>
 
-<?php include_partial('content/flashes'); ?>
+<?php include_partial('content/flashes') ?>
 
 <div class="sf_admin_list">
 
 <?php if(sizeof($Workstations)>0): ?>
 
-<form action="<?php echo url_for('lan/batch') ?>" method="get">
+<form action="<?php echo url_for('lan/batch') ?>" method="GET">
 
 <table>
   <thead>
@@ -105,10 +105,7 @@
       <li class="sf_admin_batch_actions_choice">
   <select name="batch_action">
 
-<?php echo optionsforselect(array(
-  '0' => __('Choose an action'),
-  'scheduleinternetaccess' => __('Schedule Internet access'),
-), 0) ?>
+<?php echo optionsforselect($actions, 0) ?>
   </select>
 
 <?php echo submittag(_('Ok')) ?>
