@@ -1,4 +1,3 @@
-.\"t
 .TH SCHOOLMESH_WORKSTATIONS_GETJOBS 8 "September 2011" "Schoolmesh User Manuals"
 .SH NAME
 .PP
@@ -11,27 +10,7 @@ schoolmesh_workstations_getjobs go
 .PP
 This script outputs a list of events, separated by commas,
 scheduled for the workstations.
-.PP
-It is assumed that a script on the firewall machine exists, with
-the following content:
-.PP
-.TS
-tab(@);
-l.
-T{
-#!/bin/bash
-T}
-T{
-for JOB in $(atq -q a| cut -f1); do
-T}
-T{
-echo \f[B]JOB,\f[](at -c $JOB | grep ^#schoolmesh | sed -e
-'s/^#schoolmesh,//')
-T}
-T{
-done
-T}
-.TE
+The jobs are in time order.
 .SH EXAMPLES
 .PP
 \f[CR]
