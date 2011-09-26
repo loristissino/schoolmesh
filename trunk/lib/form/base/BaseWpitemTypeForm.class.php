@@ -47,6 +47,10 @@ abstract class BaseWpitemTypeForm extends BaseFormPropel
       'evaluation_max_description' => new sfValidatorString(array('max_length' => 50, 'required' => false)),
     ));
 
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorPropelUnique(array('model' => 'WpitemType', 'column' => array('syllabus_id', 'code')))
+    );
+
     $this->widgetSchema->setNameFormat('wpitem_type[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);

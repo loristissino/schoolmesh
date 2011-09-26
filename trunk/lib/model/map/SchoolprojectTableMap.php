@@ -48,6 +48,7 @@ class SchoolprojectTableMap extends TableMap {
 		$this->addColumn('PURPOSES', 'Purposes', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('GOALS', 'Goals', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('FINAL_REPORT', 'FinalReport', 'LONGVARCHAR', false, null, null);
+		$this->addColumn('PROPOSALS', 'Proposals', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('HOURS_APPROVED', 'HoursApproved', 'INTEGER', false, null, null);
 		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
 		$this->addColumn('SUBMISSION_DATE', 'SubmissionDate', 'DATE', false, null, null);

@@ -29,6 +29,7 @@ class SchoolprojectForm extends BaseSchoolprojectForm
   $this['goals']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
   $this['description']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
   $this['final_report']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
+  $this['proposals']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
   
 /*
   $this->widgetSchema->setLabel('user_id', 'Coordinator');
@@ -53,7 +54,8 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_notes'], 
           $this['financing_notes'],
           $this['notes'],
-          $this['final_report']
+          $this['final_report'],
+          $this['proposals']
           );
         break;
       case Workflow::PROJ_SUBMITTED:
@@ -108,7 +110,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['addressees'],
           $this['purposes'],
           $this['goals']
-
           );
         break;
       case Workflow::PROJ_FINISHED:

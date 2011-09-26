@@ -27,6 +27,7 @@
 	array('title'=>__('View the list of students enrolled in this class'))
 	)?>
 	</li>
+  <?php if ($workplan->getSyllabus()->getIsActive()): ?>
 	<li class="sf_admin_action_syllabus">
 		<?php echo link_to(
 	__('Syllabus'),
@@ -34,5 +35,6 @@
 	array('title'=>__('View other contributions to this syllabus for this class'))
 	)?>
 	</li>
+  <?php endif ?>
 <?php endif ?>
 </ul>

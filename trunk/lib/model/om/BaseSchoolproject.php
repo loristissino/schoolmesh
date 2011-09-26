@@ -91,6 +91,12 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	protected $final_report;
 
 	/**
+	 * The value for the proposals field.
+	 * @var        string
+	 */
+	protected $proposals;
+
+	/**
 	 * The value for the hours_approved field.
 	 * @var        int
 	 */
@@ -330,6 +336,16 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	public function getFinalReport()
 	{
 		return $this->final_report;
+	}
+
+	/**
+	 * Get the [proposals] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getProposals()
+	{
+		return $this->proposals;
 	}
 
 	/**
@@ -763,6 +779,26 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	} // setFinalReport()
 
 	/**
+	 * Set the value of [proposals] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Schoolproject The current object (for fluent API support)
+	 */
+	public function setProposals($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->proposals !== $v) {
+			$this->proposals = $v;
+			$this->modifiedColumns[] = SchoolprojectPeer::PROPOSALS;
+		}
+
+		return $this;
+	} // setProposals()
+
+	/**
 	 * Set the value of [hours_approved] column.
 	 * 
 	 * @param      int $v new value
@@ -1073,15 +1109,16 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$this->purposes = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->goals = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
 			$this->final_report = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
-			$this->hours_approved = ($row[$startcol + 12] !== null) ? (int) $row[$startcol + 12] : null;
-			$this->state = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
-			$this->submission_date = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
-			$this->approval_date = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
-			$this->approval_notes = ($row[$startcol + 16] !== null) ? (string) $row[$startcol + 16] : null;
-			$this->financing_date = ($row[$startcol + 17] !== null) ? (string) $row[$startcol + 17] : null;
-			$this->financing_notes = ($row[$startcol + 18] !== null) ? (string) $row[$startcol + 18] : null;
-			$this->evaluation_min = ($row[$startcol + 19] !== null) ? (int) $row[$startcol + 19] : null;
-			$this->evaluation_max = ($row[$startcol + 20] !== null) ? (int) $row[$startcol + 20] : null;
+			$this->proposals = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
+			$this->hours_approved = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
+			$this->state = ($row[$startcol + 14] !== null) ? (int) $row[$startcol + 14] : null;
+			$this->submission_date = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
+			$this->approval_date = ($row[$startcol + 16] !== null) ? (string) $row[$startcol + 16] : null;
+			$this->approval_notes = ($row[$startcol + 17] !== null) ? (string) $row[$startcol + 17] : null;
+			$this->financing_date = ($row[$startcol + 18] !== null) ? (string) $row[$startcol + 18] : null;
+			$this->financing_notes = ($row[$startcol + 19] !== null) ? (string) $row[$startcol + 19] : null;
+			$this->evaluation_min = ($row[$startcol + 20] !== null) ? (int) $row[$startcol + 20] : null;
+			$this->evaluation_max = ($row[$startcol + 21] !== null) ? (int) $row[$startcol + 21] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1091,7 +1128,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 21; // 21 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 22; // 22 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Schoolproject object", $e);
@@ -1560,30 +1597,33 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				return $this->getFinalReport();
 				break;
 			case 12:
-				return $this->getHoursApproved();
+				return $this->getProposals();
 				break;
 			case 13:
-				return $this->getState();
+				return $this->getHoursApproved();
 				break;
 			case 14:
-				return $this->getSubmissionDate();
+				return $this->getState();
 				break;
 			case 15:
-				return $this->getApprovalDate();
+				return $this->getSubmissionDate();
 				break;
 			case 16:
-				return $this->getApprovalNotes();
+				return $this->getApprovalDate();
 				break;
 			case 17:
-				return $this->getFinancingDate();
+				return $this->getApprovalNotes();
 				break;
 			case 18:
-				return $this->getFinancingNotes();
+				return $this->getFinancingDate();
 				break;
 			case 19:
-				return $this->getEvaluationMin();
+				return $this->getFinancingNotes();
 				break;
 			case 20:
+				return $this->getEvaluationMin();
+				break;
+			case 21:
 				return $this->getEvaluationMax();
 				break;
 			default:
@@ -1619,15 +1659,16 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$keys[9] => $this->getPurposes(),
 			$keys[10] => $this->getGoals(),
 			$keys[11] => $this->getFinalReport(),
-			$keys[12] => $this->getHoursApproved(),
-			$keys[13] => $this->getState(),
-			$keys[14] => $this->getSubmissionDate(),
-			$keys[15] => $this->getApprovalDate(),
-			$keys[16] => $this->getApprovalNotes(),
-			$keys[17] => $this->getFinancingDate(),
-			$keys[18] => $this->getFinancingNotes(),
-			$keys[19] => $this->getEvaluationMin(),
-			$keys[20] => $this->getEvaluationMax(),
+			$keys[12] => $this->getProposals(),
+			$keys[13] => $this->getHoursApproved(),
+			$keys[14] => $this->getState(),
+			$keys[15] => $this->getSubmissionDate(),
+			$keys[16] => $this->getApprovalDate(),
+			$keys[17] => $this->getApprovalNotes(),
+			$keys[18] => $this->getFinancingDate(),
+			$keys[19] => $this->getFinancingNotes(),
+			$keys[20] => $this->getEvaluationMin(),
+			$keys[21] => $this->getEvaluationMax(),
 		);
 		return $result;
 	}
@@ -1696,30 +1737,33 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				$this->setFinalReport($value);
 				break;
 			case 12:
-				$this->setHoursApproved($value);
+				$this->setProposals($value);
 				break;
 			case 13:
-				$this->setState($value);
+				$this->setHoursApproved($value);
 				break;
 			case 14:
-				$this->setSubmissionDate($value);
+				$this->setState($value);
 				break;
 			case 15:
-				$this->setApprovalDate($value);
+				$this->setSubmissionDate($value);
 				break;
 			case 16:
-				$this->setApprovalNotes($value);
+				$this->setApprovalDate($value);
 				break;
 			case 17:
-				$this->setFinancingDate($value);
+				$this->setApprovalNotes($value);
 				break;
 			case 18:
-				$this->setFinancingNotes($value);
+				$this->setFinancingDate($value);
 				break;
 			case 19:
-				$this->setEvaluationMin($value);
+				$this->setFinancingNotes($value);
 				break;
 			case 20:
+				$this->setEvaluationMin($value);
+				break;
+			case 21:
 				$this->setEvaluationMax($value);
 				break;
 		} // switch()
@@ -1758,15 +1802,16 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[9], $arr)) $this->setPurposes($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setGoals($arr[$keys[10]]);
 		if (array_key_exists($keys[11], $arr)) $this->setFinalReport($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setHoursApproved($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setState($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setSubmissionDate($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setApprovalDate($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setApprovalNotes($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setFinancingDate($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setFinancingNotes($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setEvaluationMin($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setEvaluationMax($arr[$keys[20]]);
+		if (array_key_exists($keys[12], $arr)) $this->setProposals($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setHoursApproved($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setState($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setSubmissionDate($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setApprovalDate($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setApprovalNotes($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setFinancingDate($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setFinancingNotes($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setEvaluationMin($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setEvaluationMax($arr[$keys[21]]);
 	}
 
 	/**
@@ -1790,6 +1835,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SchoolprojectPeer::PURPOSES)) $criteria->add(SchoolprojectPeer::PURPOSES, $this->purposes);
 		if ($this->isColumnModified(SchoolprojectPeer::GOALS)) $criteria->add(SchoolprojectPeer::GOALS, $this->goals);
 		if ($this->isColumnModified(SchoolprojectPeer::FINAL_REPORT)) $criteria->add(SchoolprojectPeer::FINAL_REPORT, $this->final_report);
+		if ($this->isColumnModified(SchoolprojectPeer::PROPOSALS)) $criteria->add(SchoolprojectPeer::PROPOSALS, $this->proposals);
 		if ($this->isColumnModified(SchoolprojectPeer::HOURS_APPROVED)) $criteria->add(SchoolprojectPeer::HOURS_APPROVED, $this->hours_approved);
 		if ($this->isColumnModified(SchoolprojectPeer::STATE)) $criteria->add(SchoolprojectPeer::STATE, $this->state);
 		if ($this->isColumnModified(SchoolprojectPeer::SUBMISSION_DATE)) $criteria->add(SchoolprojectPeer::SUBMISSION_DATE, $this->submission_date);
@@ -1874,6 +1920,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		$copyObj->setGoals($this->goals);
 
 		$copyObj->setFinalReport($this->final_report);
+
+		$copyObj->setProposals($this->proposals);
 
 		$copyObj->setHoursApproved($this->hours_approved);
 
