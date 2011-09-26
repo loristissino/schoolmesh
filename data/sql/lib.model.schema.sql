@@ -737,8 +737,8 @@ CREATE TABLE `wpitem_type`
 	`evaluation_min_description` VARCHAR(50),
 	`evaluation_max_description` VARCHAR(50),
 	PRIMARY KEY (`id`),
+	UNIQUE KEY `sc` (`syllabus_id`, `code`),
 	KEY `wpitem_type_I_1`(`code`),
-	INDEX `wpitem_type_FI_1` (`syllabus_id`),
 	CONSTRAINT `wpitem_type_FK_1`
 		FOREIGN KEY (`syllabus_id`)
 		REFERENCES `syllabus` (`id`)
@@ -953,6 +953,7 @@ CREATE TABLE `schoolproject`
 	`purposes` TEXT,
 	`goals` TEXT,
 	`final_report` TEXT,
+	`proposals` TEXT,
 	`hours_approved` INTEGER,
 	`state` INTEGER,
 	`submission_date` DATE,

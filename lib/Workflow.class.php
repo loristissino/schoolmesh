@@ -10,6 +10,7 @@ class Workflow
 	const 	FR_WADMC = 70;
 	const 	FR_WSMC = 80;
 	const 	FR_ARCHIVED = 90;
+  const  AP_NOTDONE = 100;
   
   static private $wpfrSteps=Array(
 
@@ -234,7 +235,7 @@ class Workflow
 			'logMessageCode'=>'FR_ARCHIVED',
 			),
 		'actions' => Array()
-	)
+	),
 
 	);
 	

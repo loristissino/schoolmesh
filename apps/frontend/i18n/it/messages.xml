@@ -3043,6 +3043,10 @@
         <source>Workstations of subnet «%subnet%»</source>
         <target>Calcolatori della sottorete «%subnet%»</target>
     </trans-unit>
+    <trans-unit id="776">
+        <source>Proposals</source>
+        <target>Proposte&lt;br /&gt;di miglioramento</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

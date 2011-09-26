@@ -350,6 +350,7 @@ propel:
     purposes:     longvarchar
     goals:        longvarchar
     final_report: longvarchar
+    proposals:    longvarchar
     hours_approved: integer
     state:        { type: integer }
     submission_date: date

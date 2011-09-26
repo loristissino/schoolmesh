@@ -976,7 +976,7 @@ abstract class BaseWpitemTypePeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return array(array('syllabus_id', 'code'));
 	}
 
 } // BaseWpitemTypePeer

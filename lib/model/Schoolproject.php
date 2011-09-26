@@ -49,7 +49,7 @@ class Schoolproject extends BaseSchoolproject {
     return 
       $user->getProfile()->getUserId()===$this->getUserId() 
       || 
-      $user->hasCredential('schoolmaster') 
+      $user->hasCredential('proj_monitoring') 
       || 
       $user->hasCredential('admin')
       ;

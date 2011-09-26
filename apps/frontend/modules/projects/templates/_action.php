@@ -7,7 +7,7 @@
 		)?>
 		</li>
   <?php endif ?>
-  <?php if ($project->isEditableBy($sf_user)): ?>
+  <?php if ($project->isViewableBy($sf_user)): ?>
 	<li class="sf_admin_action_view">
 		<?php echo link_to(__('View'),
 			url_for('projects/view?id=' . $project->getId()),
