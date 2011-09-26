@@ -438,3 +438,37 @@ font-weight: normal;
   text-decoration: underline;	
 }
 
+#searches
+{
+  margin-right: 0;
+	background-color: #eff7f9;
+}
+
+#searches ul
+{
+  margin-left: 0;
+	/*list-style-type: none;	
+  #list-style: none;*/
+  padding-left: 0;
+}
+
+#searches ul li
+{
+	/*list-style-type: none;	
+  list-style: none;*/
+  display: inline;
+	background: url(../images/search.png) no-repeat 0 0;
+	
+}
+#searches ul li a
+{
+  text-decoration: none;
+  padding-left: 20px;
+}
+
+#searches ul li a:hover
+{
+  text-decoration: underline;	
+}
+
+

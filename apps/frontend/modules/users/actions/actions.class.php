@@ -655,6 +655,12 @@ class usersActions extends sfActions
   {
 	$this->user = $this->getUser();
   $this->query = $request->getParameter('query', '');
+  
+  $this->user->setAttribute('users_search_history',
+    array_merge(
+      $this->user->getAttribute('users_search_history', array()),
+      array($this->query=>'users/list?query=')
+      ));
 
   $this->pager = sfGuardUserProfilePeer::getForLuceneQuery(
     $this->query,

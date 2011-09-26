@@ -281,6 +281,13 @@ class profileActions extends sfActions
   }
 
 
+  public function executeClearhistory($request)
+  {
+    $this->forward404Unless($request->isMethod('POST'));
+    $this->getUser()->setAttribute($request->getParameter('name'), array());
+    $this->redirect($request->getReferer());
+  }
+
 }
 
 
