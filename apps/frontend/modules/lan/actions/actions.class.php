@@ -45,6 +45,11 @@ class lanActions extends sfActions
   
   public function executeIndex(sfWebRequest $request)
   {
+    if(!$this->currentsubnet)
+    {
+      return sfView::ERROR;
+    }
+    
     $this->Workstations = WorkstationPeer::retrieveAllWorkstations($this->currentsubnet);
     
     $this->actions=array(

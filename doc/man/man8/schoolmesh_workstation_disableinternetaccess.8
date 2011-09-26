@@ -2,20 +2,18 @@
 .SH NAME
 .PP
 schoolmesh_workstation_disableinternetaccess - Disable Internet
-access for a workstation, and remove all its scheduled jobs
+access for a workstation
 .SH SYNOPSIS
 .PP
 schoolmesh_workstation_disableinternetaccess \f[I]ipaddress\f[]
+\f[I]user\f[]
 .SH DESCRIPTION
 .PP
-This script disable Internet access for a workstation, and removes
-all its scheduled jobs.
-It is used before applying new rules, in order to reset the
-original \[lq]blank\[rq] conditions.
+This script disables Internet access for a workstation.
 .SH EXAMPLES
 .PP
 \f[CR]
-      schoolmesh_workstation_disableinternetaccess\ 192.168.1.3
+      schoolmesh_workstation_disableinternetaccess\ 192.168.1.3\ john
 \f[]
 .SH BUGS
 .PP
