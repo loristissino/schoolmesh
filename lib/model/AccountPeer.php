@@ -72,7 +72,7 @@ class AccountPeer extends BaseAccountPeer
     
     foreach ($userlist as $user)
     {
-      if ($account=$user->getProfile()->getAccountByType($accounttype))
+      if ($account=$user->getAccountByType($accounttype))
       {
         $info=$account->getQuotaInfo();
         $result['stats'][$user->getUsername()]=$info;

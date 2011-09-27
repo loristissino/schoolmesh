@@ -17,7 +17,7 @@ $darkyellow = 'dddd00';
 ?>
 <?php $title=__($messages[$chart],
     array(
-      '%name%'=>$user->getProfile()->getFirstName(),
+      '%name%'=>$user->getFirstName(),
       '%usedspace%'=>Generic::getHumanReadableSize($stats[$user->getUsername()]['used_blocks']*sfConfig::get('app_config_posix_blocksize', 1024)),
       '%availablespace%'=>Generic::getHumanReadableSize($stats[$user->getUsername()]['info_soft_blocks_quota']*1024),
       '%usedfiles%'=>$stats[$user->getUsername()]['used_files'],
@@ -25,7 +25,7 @@ $darkyellow = 'dddd00';
       )) ?>
 
 <?php if(!$personal_profile): ?>
-<td><?php echo $user->getProfile()->getFirstName() ?> <b><?php echo $user->getProfile()->getLastName() ?></b></td>
+<td><?php echo $user->getFirstName() ?> <b><?php echo $user->getLastName() ?></b></td>
 <td style="text-align: right"><?php echo $stats[$user->getUsername()]['used_' . $chart] ?></td>
 <td>
 <?php else: ?>
@@ -83,7 +83,7 @@ $darkyellow = 'dddd00';
     <?php echo link_to(
           __('Edit'),
           'users/editaccount?id='. $stats[$user->getUsername()]['id'],
-          array('title'=>__('Edit posix account of %user%', array('%user%'=>$user->getProfile()->getFullName())))
+          array('title'=>__('Edit posix account of %user%', array('%user%'=>$user->getFullName())))
           )?>
     </li>
     <?php if ($stats[$user->getUsername()][$chart .'_settings_changed']): ?>
@@ -115,7 +115,7 @@ $darkyellow = 'dddd00';
 </p>
 <?php endif ?>
 <?php else: ?>
-<td><?php echo $user->getProfile()->getFirstName() ?> <b><?php echo $user->getProfile()->getLastName() ?></b></td>
+<td><?php echo $user->getFirstName() ?> <b><?php echo $user->getLastName() ?></b></td>
 <td></td>
 <td><?php echo __('No account information available.') ?></td>
 <td></td>
