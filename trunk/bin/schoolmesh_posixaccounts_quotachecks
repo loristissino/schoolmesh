@@ -14,7 +14,8 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # DESCRIPTION
 #@
-#@ Use this script to get a list of users with information about disk quota exceeded. 
+#@ Use this script to get a list of users with information about disk quota
+#@ exceeded. 
 #@ You can decide to check only primary groups, only secondary, or both.
 #@
 #@ # EXAMPLES

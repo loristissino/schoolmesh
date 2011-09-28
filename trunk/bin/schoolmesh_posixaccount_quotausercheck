@@ -14,8 +14,9 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # DESCRIPTION
 #@
-#@ Use this script to check if a user has used more space than what is assumed to.
-#@ (This could be the result when you copy files of a user using administrative privileges).
+#@ Use this script to check if a user has used more space than what is 
+#@ assumed to. (This could be the result when you copy files of a user using 
+#@ administrative privileges).
 #@
 #@ # EXAMPLES
 #@

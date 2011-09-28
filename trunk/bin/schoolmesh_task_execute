@@ -14,7 +14,8 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # DESCRIPTION
 #@
-#@ This is a wrapper to execute symfony tasks without the need to change directory or specify or environment .
+#@ This is a wrapper to execute symfony tasks without the need to change 
+#@ directory or specify an environment.
 #@
 #@ # EXAMPLES
 #@
