@@ -3047,9 +3047,18 @@
         <source>Proposals</source>
         <target>Proposte&lt;br /&gt;di miglioramento</target>
     </trans-unit>
+    <trans-unit id="777">
+        <source>Recent searches:</source>
+        <target>Ricerche recenti:</target>
+    </trans-unit>
+    <trans-unit id="778">
+        <source>Clear history</source>
+        <target>Pulisci la storia</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
 
 
 

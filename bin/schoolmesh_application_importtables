@@ -14,13 +14,14 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # DESCRIPTION
 #@
-#@ Use this script to import data into the database. The input file must be in SQL format.
+#@ Use this script to import data into the database. The input file must be in
+#@ SQL format.
 #@ The output of *schoolmesh_application_dumptables(8)* should be adequate.
 #@
 #@ # WARNINGS
 #@ 
-#@ The database should have the tables, but empty. It's possible to re-create the tables with
-#@ *schoolmesh_application_createtables(8)*.
+#@ The database should have the tables, but empty. It's possible to re-create 
+#@ the tables with *schoolmesh_application_createtables(8)*.
 #@
 #@ # EXAMPLES
 #@

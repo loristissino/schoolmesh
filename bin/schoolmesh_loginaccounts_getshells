@@ -10,7 +10,8 @@
 #@
 #@ # DESCRIPTION
 #@
-#@ This script generates a list of pairs *key=value* with the shells available on the system.
+#@ This script generates a list of pairs *key=value* with the shells available
+#@ on the system.
 #@
 #@ # EXAMPLES
 #@

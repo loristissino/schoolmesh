@@ -14,8 +14,9 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # DESCRIPTION
 #@
-#@ This script updates the application, making a backup of specific configuraton files that
-#@ might have been customized, and restoring them afterwards.
+#@ This script updates the application, making a backup of specific
+#@ configuraton files that might have been customized, and restoring them
+#@ afterwards.
 #@ 
 #@ # WARNINGS
 #@ 
