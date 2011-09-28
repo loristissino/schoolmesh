@@ -1517,6 +1517,7 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
             }
             
 						$newgroup->setWpitemTypeId($WpitemType->getId());
+            
 						$newgroup->save();
 						
 						$items = $group->getWpmoduleItems();
@@ -1531,6 +1532,7 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 								$newitem->save();
 							}
 					}
+        
         foreach($wpmodule->getWpmoduleSyllabusItems() as $syllabus_item)
         {
           $newitem = new WpmoduleSyllabusItem();
@@ -1541,6 +1543,7 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
           ->setEvaluation(null)
           ->save();
         }
+        
 		
 	}
 
@@ -1548,22 +1551,19 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 
 	public function importFromDb($context, $iworkplan)
 	{
-		
-		$this->removeEverything();
-		$this->copyWpinfosFrom($iworkplan);
-		$this->copyWpmodulesFrom($iworkplan);
-		$this->copyWptoolsFrom($iworkplan);
-
-
-/*		
-		This isn't really useful, since contents to be copied had been presumably checked
-		Anyway, they'll be checked when the workplan is submitted
-
-		$this->getChecks($context);
-		$this->getChecks($context);
-		// FIXME: We call it twice because the first time we just get the groups for each module...
-
-*/		
+		try
+    {
+      $this->removeEverything();
+      $this->copyWpinfosFrom($iworkplan);
+      $this->copyWpmodulesFrom($iworkplan);
+      $this->copyWptoolsFrom($iworkplan);
+    }
+    catch (Exception $e)
+    {
+      $result['result']='error';
+      $result['message']='The workplan could not be imported.' . $e->getMessage();
+      return $result;
+    }
 		
 		$result['result']='notice';
 		$result['message']='The workplan has been correctly imported.';
