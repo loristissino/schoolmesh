@@ -43,13 +43,21 @@ class wpmoduleActions extends sfActions
 
 		$this->form->setDefaults(
 			array(
-				'title' => $this->wpmodule->getTitle(),
-				'period'=> $this->wpmodule->getPeriod(),
+				'title' => str_replace('---', '', $this->wpmodule->getTitle()),
+				'period'=> str_replace('---', '', $this->wpmodule->getPeriod()),
 				'hours_estimated'=>$this->wpmodule->getHoursEstimated()
 			)
 		);
 		}
 
+	public function executeGetProperty(sfWebRequest $request)
+	{
+		$module=WpmodulePeer::retrieveByPk($request->getParameter('id'));
+		$property=$request->getParameter('property');
+		$get_func= 'get'.$property;
+    $text=str_replace('---', '', $module->$get_func());
+		return $this->renderText($text);
+	}
 
 
 	public function executeEditInLine(sfWebRequest $request)
@@ -154,7 +162,7 @@ class wpmoduleActions extends sfActions
 
 	  $result=$this->workplan->importWpmodule($item, $this->workplan->getSyllabusId());
 
-	  $this->getUser()->setFlash('notice_modules', $this->getContext()->getI18N()->__('The item was imported'));
+	  $this->getUser()->setFlash($result['result']. '_modules', $this->getContext()->getI18N()->__($result['message']));
 	  $this->redirect('plansandreports/fill?id='.$this->workplan->getId() . '#wpmodules'); 
 	
 	}  
@@ -201,7 +209,7 @@ class wpmoduleActions extends sfActions
     $this->forward404Unless($this->wpmodule);
 	  $this->user=$this->getUser();
 
-    $this->syllabusview=$request->getParameter('syllabusview', 'table');
+    $this->syllabusview=$request->getParameter('syllabusview', 'tree');
     
 	  $this->owner=$this->wpmodule->getOwner();;
 		

@@ -68,7 +68,7 @@
 <?php endif ?><span id="moduleitem_<?php echo $wpmodule_item->getId()?>" class="editText"><?php echo html_entity_decode($wpmodule_item->getContent())?></span>
 
 	<?php if($wpmodule_item->getIsEditable() || $sf_user->hasCredential('backadmin')): ?>
-		<?php echo inputinplaceeditortag('#moduleitem_'.$wpmodule_item->getId(), url_for('wpmoduleitem/editInLine?property=Content&id='.$wpmodule_item->getId(), false), array('tooltip'=>__('Click here to edit this text'), 'hover'=>'yellow')) ?>
+		<?php echo inputinplaceeditortag('#moduleitem_'.$wpmodule_item->getId(), url_for('wpmoduleitem/editInLine?property=Content&id='.$wpmodule_item->getId(), false), array('tooltip'=>__('Click here to edit this text'), 'hover'=>'yellow', 'loadurl'=>url_for('wpmoduleitem/getContent?id='.$wpmodule_item->getId()))) ?>
 	<?php endif ?>
 	</td>
 	<?php if(($wpstate==Workflow::IR_DRAFT) && ($item_group->getWpitemType()->getEvaluationMax()>=0)): ?>

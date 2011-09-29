@@ -1493,10 +1493,10 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 	}
 
 
-   public function importWpmodule($wpmodule, $syllabusId)
-
+  public function importWpmodule($wpmodule, $syllabusId)
 	{
-		
+		try
+    {
 				$newwpmodule = new Wpmodule();
 				$newwpmodule->setUserId($this->getUserId());
 				$newwpmodule->setAppointmentId($this->getId());
@@ -1513,7 +1513,7 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
             $WpitemType=WpitemTypePeer::retrieveByCodeAndSyllabus($group->getWpitemType()->getCode(), $syllabusId);
             if (!$WpitemType)
             {
-              throw new Exception('No correspondence for syllabus and wpitemtype');
+              throw new Exception(sprintf('No correspondence for syllabus %d and wpitemtype «%s»', $syllabusId, $group->getWpitemType()->getCode()));
             }
             
 						$newgroup->setWpitemTypeId($WpitemType->getId());
@@ -1544,6 +1544,16 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
           ->save();
         }
         
+        $result['result']='notice';
+        $result['message']='The item was imported';
+
+    }
+    catch (Exception $e)
+    {
+      $result['result']='error';
+      $result['message']='The item could not be imported.' . $e->getMessage();
+    }
+    return $result;
 		
 	}
 
