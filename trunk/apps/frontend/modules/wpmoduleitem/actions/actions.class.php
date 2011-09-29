@@ -10,7 +10,15 @@
  */
 class wpmoduleitemActions extends sfActions
 {
-	
+
+  public function executeGetContent(sfWebRequest $request)
+	{		
+		$this->forward404Unless($moduleitem=WpmoduleItemPeer::retrieveByPk($request->getParameter('id')));
+		$this->forward404Unless($this->isUpdateble($request, $moduleitem));
+		return $this->renderText(str_replace('---', '', $moduleitem->getContent()));
+	}
+
+
 		public function executeEditInLine(sfWebRequest $request)
 	{		
 		$this->forward404Unless($request->getMethod()=="POST");

@@ -16,7 +16,7 @@
 			<?php echo image_tag('notdone', 'title=' . __('this content is required and is currently missing')). ' ' ?>
 <?php endif ?>
 <span id="moduletitle" class="editText"><?php echo $wpmodule->getTitle() ?></span>
-<?php echo inputinplaceeditortag('#moduletitle', url_for('wpmodule/editInLine?property=Title&id='.$wpmodule->getId()), array('tooltip'=>__('Click here to edit the title'), 'hover'=>'yellow', 'width'=>'600')) ?>
+<?php echo inputinplaceeditortag('#moduletitle', url_for('wpmodule/editInLine?property=Title&id='.$wpmodule->getId()), array('tooltip'=>__('Click here to edit the title'), 'hover'=>'yellow', 'width'=>'600', 'loadurl'=>url_for('wpmodule/getProperty?property=Title&id='.$wpmodule->getId()))) ?>
 </h1>
 
 <ul>
@@ -27,7 +27,7 @@
 			<?php echo image_tag('notdone', 'title=' . __('this content is required and is currently missing')). ' ' ?>
 <?php endif ?>
 <strong><span id="moduleperiod" class="editText"><?php echo $wpmodule->getPeriod() ?></span></strong>
-<?php echo inputinplaceeditortag('#moduleperiod', url_for('wpmodule/editInLine?property=Period&id='.$wpmodule->getId()),array('tooltip'=>__('Click here to edit the period'), 'hover'=>'yellow')) ?></li>
+<?php echo inputinplaceeditortag('#moduleperiod', url_for('wpmodule/editInLine?property=Period&id='.$wpmodule->getId()),array('tooltip'=>__('Click here to edit the period'), 'hover'=>'yellow', 'loadurl'=>url_for('wpmodule/getProperty?property=Period&id='.$wpmodule->getId()))) ?></li>
 <li><?php echo __('Hours estimated: ') ?>
 <strong><span id="modulehours_estimated" class="editText"><?php echo $wpmodule->getHoursEstimated() ?></span></strong><?php echo inputinplaceeditortag('#modulehours_estimated', url_for('wpmodule/editInLine?property=HoursEstimated&id='.$wpmodule->getId()), array('tooltip'=>__('Click here to edit the estimation of the hours needed'), 'hover'=>'yellow', 'width'=>'100')) ?></li>
 </ul>
@@ -62,7 +62,7 @@
 </li>
 </ul>
 
-<div id="syllabus" style="display: <?php echo $syllabusview=='tree'? 'visible': 'none' ?>">
+<div id="syllabus" style="display:visible">
 
 <?php include_partial('syllabi/links_' . $syllabusview, array('syllabus'=>$workplan->getSyllabus(), 'wpmodule'=>$wpmodule, 'syllabus_contributions'=>$syllabus_contributions, 'syllabusview'=>$syllabusview)) ?>
 

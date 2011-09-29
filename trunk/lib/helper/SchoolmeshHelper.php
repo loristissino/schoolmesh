@@ -82,9 +82,12 @@ function inputinplaceeditortag($name, $url, $options=array())
       $options[$key]=$defaultvalue;
     }
   }
+  
+  $loadurltext = array_key_exists('loadurl', $options) ? "'loadurl' : '" . $options['loadurl'] . "',\n" : '';
 
   return javascripttag("$(document).ready(function() {
      $('" . $name . "').editable('" . $url . "', {\n" .
+         $loadurltext . 
          "'indicator' : '" . $options['indicator'] . "',\n" .
          "'tooltip' : '" . $options['tooltip'] . "',\n" .
          "'cancel' : '" . $options['cancel'] . "',\n" .
