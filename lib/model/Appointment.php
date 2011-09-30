@@ -1513,7 +1513,8 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
             $WpitemType=WpitemTypePeer::retrieveByCodeAndSyllabus($group->getWpitemType()->getCode(), $syllabusId);
             if (!$WpitemType)
             {
-              throw new Exception(sprintf('No correspondence for syllabus %d and wpitemtype «%s»', $syllabusId, $group->getWpitemType()->getCode()));
+              continue; // we import the module anyway, but this item won't be there...
+              //throw new Exception(sprintf('No correspondence for syllabus %d and wpitemtype «%s»', $syllabusId, $group->getWpitemType()->getCode()));
             }
             
 						$newgroup->setWpitemTypeId($WpitemType->getId());

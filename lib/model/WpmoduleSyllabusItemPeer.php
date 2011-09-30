@@ -18,6 +18,5 @@ class WpmoduleSyllabusItemPeer extends BaseWpmoduleSyllabusItemPeer {
   
   const PARTIAL_CONTRIBUTION=1;
   const FOCUSSED_CONTRIBUTION=2;
-    
 
 } // WpmoduleSyllabusItemPeer
