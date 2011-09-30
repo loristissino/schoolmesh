@@ -16,4 +16,13 @@ require 'lib/model/om/BaseSyllabusItemPeer.php';
  */
 class SyllabusItemPeer extends BaseSyllabusItemPeer {
 
+  public static function retrieveBySyllabusIdAndRef($syllabusId, $ref)
+  {
+    $c = new Criteria();
+    $c->add(self::SYLLABUS_ID, $syllabusId);
+    $c->add(self::REF, $ref);
+    return self::doSelectOne($c);
+  }
+
+
 } // SyllabusItemPeer
