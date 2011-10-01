@@ -3055,9 +3055,31 @@
         <source>Clear history</source>
         <target>Pulisci la storia</target>
     </trans-unit>
+    <trans-unit id="779">
+        <source>Syllabus «%title%»</source>
+        <target>Syllabus «%title%»</target>
+    </trans-unit>
+    <trans-unit id="780">
+        <source>Version</source>
+        <target>Versione</target>
+    </trans-unit>
+    <trans-unit id="781">
+        <source>Author</source>
+        <target>Autore</target>
+    </trans-unit>
+    <trans-unit id="782">
+        <source>List</source>
+        <target>Lista</target>
+    </trans-unit>
+    <trans-unit id="783">
+        <source>Syllabi</source>
+        <target>Syllabus</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
+
 
 
 
