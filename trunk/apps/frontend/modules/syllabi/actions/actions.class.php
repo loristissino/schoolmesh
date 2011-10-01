@@ -11,7 +11,7 @@ class syllabiActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->syllabi = SyllabusPeer::doSelect(new Criteria());
+    $this->syllabi = SyllabusPeer::retrieveActive();
   }
 
   public function executeShow(sfWebRequest $request)

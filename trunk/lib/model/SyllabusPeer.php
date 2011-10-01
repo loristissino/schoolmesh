@@ -16,4 +16,11 @@ require 'lib/model/om/BaseSyllabusPeer.php';
  */
 class SyllabusPeer extends BaseSyllabusPeer {
 
+  public static function retrieveActive()
+  {
+    $c=new Criteria();
+    $c->add(self::IS_ACTIVE, true);
+    return parent::doSelect($c);
+  }
+
 } // SyllabusPeer
