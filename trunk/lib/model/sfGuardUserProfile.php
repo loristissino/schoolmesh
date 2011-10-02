@@ -622,7 +622,11 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
 			foreach($t as $account)
 			{
-				$r[]=$account->getRealAccount();
+        $account=$account->getRealAccount();
+        {
+          $r[]=$account;
+        }
+        
 			}
       
 			return $r;
@@ -1596,6 +1600,23 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
 			return $checks;
 		}
+    
+    
+  public function fixCredentialForAccount($accountType)
+  {
+    $account=$this->getAccountByType($accountType);
+    if($account->getCredentialShouldBeAdded() and !$this->hasPermission($accountType))
+    {
+      $this->addUserPermission($accountType);
+      return true;
+    }
+    elseif(!$account->getCredentialShouldBeAdded() and $this->hasPermission($accountType))
+    {
+      $this->revokeUserPermission($accountType);
+      return true;
+    }
+    return false;  // everything was OK, no fix was done
+  }
 
 
   public function updateLuceneIndex()

@@ -115,6 +115,11 @@ class GoogleappsAccount extends Account
 		);
 		return $info;
 	}
+  
+  public function getCredentialShouldBeAdded()
+  {
+    return $this->getAccountSetting('request_date')!=null;
+  }
 
   public function changePassword($password, $is_reset=false)
 	{

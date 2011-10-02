@@ -363,6 +363,15 @@ class usersActions extends sfActions
     
   }
   
+  public function executeFixgoogleappscredentials(sfWebRequest $request)
+  {
+    $ids=$this->_getIds($request);
+		$this->userlist=sfGuardUserProfilePeer::retrieveByPKs($ids);
+    $result=sfGuardUserProfilePeer::fixCredentialsForAccounts($this->userlist, 'googleapps');
+    $this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message'], $result['i18nsubs']));
+    $this->redirect('users/list');
+  }
+  
   
   public function executeShowquotastats(sfWebRequest $request)
   {

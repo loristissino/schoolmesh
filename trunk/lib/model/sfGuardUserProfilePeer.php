@@ -1049,5 +1049,22 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
   }
 
 
+  public static function fixCredentialsForAccounts($profiles, $accountType)
+  {
+    $todo=sizeof($profile);
+    $done=0;
+    foreach($profiles as $profile)
+    {
+      if ($profile->fixCredentialForAccount($accountType))
+      {
+        $done++;
+      }
+    }
+    $result['result']='notice';
+    $result['message']='Credentials fixed (number of actions needed: %number%).';
+    $result['i18nsubs']=array('%number%'=>$done);
+    return $result;
+  }
+
 
 }

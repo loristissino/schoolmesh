@@ -56,8 +56,8 @@
 
 <ul class="sf_admin_actions">
 <li class="sf_admin_action_schoolmesh"><strong><?php echo link_to(__('SchoolMesh main account'), url_for('profile/editprofile')) ?></strong></li><br />
-<?php if(sizeof($sf_user->getProfile()->getAccounts())>0): ?>
-<?php foreach($sf_user->getProfile()->getAccounts() as $account): ?>
+<?php if(sizeof($accounts)>0): ?>
+<?php foreach($accounts as $account): ?>
 <li class="sf_admin_action_<?php echo $account->getAccountType() ?>"><?php echo link_to(__($account->__toString()), url_for(('profile/viewaccount?type='. $account->getAccountType()))) ?></li><br />
 <?php endforeach ?>
 <?php endif ?>
