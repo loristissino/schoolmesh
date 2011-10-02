@@ -230,6 +230,11 @@ class Account extends BaseAccount
   {
     return false;
   }
+  
+  public function getCredentialShouldBeAdded()
+  {
+    return false;
+  }
 
 	protected function makeComparisons(&$checkList, $checks, $checkGroup)
 	{

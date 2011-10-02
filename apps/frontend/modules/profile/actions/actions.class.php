@@ -24,13 +24,10 @@ class profileActions extends sfActions
       $this->teams=$this->getUser()->getProfile()->getTeams();
     }
     */
+    $this->accounts=$this->getUser()->getProfile()->getAccounts();
 	
   }
   
-  public function executeTreeview(sfWebRequest $request)
-  {
-    
-  }
   
   public function executePoll(sfWebRequest $request)
   {
@@ -60,6 +57,11 @@ class profileActions extends sfActions
 	$this->account=$profile->getAccountByType($type);
 	
 	$this->forward404unless($this->account);
+  
+  if(!$this->getUser()->hasCredential($type))
+  {
+    return sfView::ERROR;
+  }
 	
 	$this->info=$this->account->getBasicInfo();
   if($this->account->getAccountType()=='posix')

@@ -105,6 +105,7 @@
   'getletter' => __('Get welcome letter'),
   'getgoogleappsletter' => __('Get GoogleApps letter'),
   'getgoogleappsdata' => __('Get GoogleApps data'),
+  'fixgoogleappscredentials' => __('Fix GoogleApps credentials'),
   'getlist' => __('Get list choosing a template'),
   'email' => __('Write an email'),
   'showquotastats' => __('Show quota statistics'),

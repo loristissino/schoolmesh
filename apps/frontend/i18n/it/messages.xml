@@ -3075,10 +3075,25 @@
         <source>Syllabi</source>
         <target>Syllabus</target>
     </trans-unit>
+    <trans-unit id="784">
+        <source>Lack of credential</source>
+        <target>Mancanza di credenziale</target>
+    </trans-unit>
+    <trans-unit id="785">
+        <source>You do not have the needed credential to use an account of type «%type%».</source>
+        <target>Non hai la credenziale necessaria per usare un account di tipo «%type%».</target>
+    </trans-unit>
+    <trans-unit id="786">
+        <source>Fix GoogleApps credentials</source>
+        <target>Sistema le credenziali GoogleApps</target>
+    </trans-unit>
+    <trans-unit id="787">
+        <source>Credentials fixed (number of actions needed: %number%).</source>
+        <target>Credenziali sistemate (numero di azioni necessarie: %number%).</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
-
 
 
 
