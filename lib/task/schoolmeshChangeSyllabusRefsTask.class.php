@@ -48,6 +48,20 @@ EOF;
     $con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
 		$con->beginTransaction();
 
+
+    if (!$SyllabusFrom=SyllabusPeer::retrieveByPk($arguments['from']))
+    {
+      $this->log($this->formatter->format('Not a valid Syllabus specified as "from" argument: ' . $arguments['from'], 'ERROR'));
+      return false;
+    }
+    
+    if (!$SyllabusTo=SyllabusPeer::retrieveByPk($arguments['to']))
+    {
+      $this->log($this->formatter->format('Not a valid Syllabus specified as "to" argument: ' . $arguments['from'], 'ERROR'));
+      return false;
+    }
+
+
     $c=new Criteria();
     $c->add(AppointmentPeer::YEAR_ID, $year);
 
@@ -85,6 +99,7 @@ EOF;
           }
           
         }
+        
         $appointment
         ->setSyllabusId($arguments['to'])
         ->save($con);
@@ -93,7 +108,15 @@ EOF;
       }
       
 	  }  // appointment loop
-    
+
+    foreach($SyllabusFrom->getWpitemTypes() as $WpitemType)
+    {
+      $WpitemType
+      ->setSyllabus($SyllabusTo)
+      ->save($con);
+      $this->logSection('wpitemtype@', $WpitemType->getTitle(), null, 'INFO');
+    }
+
     if ($options['dry-run'])
     {
       echo "Rolled back!\n";
