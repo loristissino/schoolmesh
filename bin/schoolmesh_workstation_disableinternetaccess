@@ -26,7 +26,7 @@ REQUESTER=$2
 checkString $IPADDRESS
 checkString $REQUESTER
 
-COMMAND="iptables -t $FIREWALL_TABLE -D $FIREWALL_CHAIN -s $IPADDRESS -j ACCEPT -m comment --comment \"$FIREWALL_COMMENT $REQUESTER\""
+COMMAND="iptables -t $FIREWALL_TABLE -D $FIREWALL_CHAIN -s $IPADDRESS -j $FIREWALL_ACCEPTRULE -m comment --comment \"$FIREWALL_COMMENT $REQUESTER\""
 
 ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS "$COMMAND" 2>/dev/null && msg_ok "internet access disabled: $IPADDRESS" && exit 0
 
