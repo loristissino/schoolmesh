@@ -22,7 +22,7 @@
 
 <hr />
 
-<?php include_partial('syllabi/items', array('syllabus'=>$syllabus)) ?>
+<?php include_partial('syllabi/items', array('syllabus'=>$syllabus, 'maxlevel'=>$maxlevel)) ?>
 
 <h2><?php echo __('Actions') ?></h2>
 <ul class="sf_admin_actions">

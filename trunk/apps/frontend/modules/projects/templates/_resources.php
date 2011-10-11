@@ -11,7 +11,7 @@
 		<li><?php echo __('Charged user') ?>: <strong><?php echo $resource->getChargedUserProfile() ?></strong></li>
     <?php if ($resource->getProjResourceTypeId()): ?>
       <li><?php echo __('Estimation') ?>: <strong><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getQuantityEstimated() ?></strong></li>
-      <?php if($resource->getQuantityApproved()>0): ?>
+      <?php if($project->getState()>Workflow::PROJ_SUBMITTED): ?>
       <li><?php echo __('Approved') ?>: <strong><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getQuantityApproved() ?></strong></li>
       <?php endif ?>
       <?php if($resource->getTotalQuantityForAcknowledgedActivities()>0): ?>

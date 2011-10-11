@@ -18,6 +18,7 @@ class syllabiActions extends sfActions
   {
     $this->syllabus = SyllabusPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->syllabus);
+    $this->maxlevel=$request->getParameter('maxlevel', 1000);
   }
 
   public function executeNew(sfWebRequest $request)
