@@ -9,6 +9,7 @@
 </table>
 */ ?>
 <?php foreach($syllabus->getSyllabusItems() as $syllabus_item): ?>
+<?php if($syllabus_item->getLevel()<=$maxlevel): ?>
   <p id="syllabus_<?php echo $syllabus_item->getRef() ?>">
     <?php echo str_repeat('&nbsp;', ($syllabus_item->getLevel()-1)*2) ?>
       <?php if($syllabus_item->getRef()): ?>
@@ -18,4 +19,5 @@
     <?php echo $syllabus_item->getContent() ?>
     <?php if(!$syllabus_item->getIsSelectable()): ?></strong><?php endif ?>
   </p>
+<?php endif ?>
 <?php endforeach ?>
