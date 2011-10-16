@@ -15,6 +15,7 @@ abstract class BasesfGuardUserProfileForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'user_id'                   => new sfWidgetFormInputHidden(),
+      'title'                     => new sfWidgetFormInputText(),
       'first_name'                => new sfWidgetFormInputText(),
       'middle_name'               => new sfWidgetFormInputText(),
       'last_name'                 => new sfWidgetFormInputText(),
@@ -36,6 +37,7 @@ abstract class BasesfGuardUserProfileForm extends BaseFormPropel
 
     $this->setValidators(array(
       'user_id'                   => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id', 'required' => false)),
+      'title'                     => new sfValidatorString(array('max_length' => 10, 'required' => false)),
       'first_name'                => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'middle_name'               => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'last_name'                 => new sfValidatorString(array('max_length' => 50, 'required' => false)),

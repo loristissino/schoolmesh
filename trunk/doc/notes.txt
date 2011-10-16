@@ -1,4 +1,12 @@
-# TODO
+Added Title field in sfGuardUserProfile table
+
+
+for the role "Teacher", do something like:
+
+UPDATE `sf_guard_user_profile`
+SET title='Prof.'
+WHERE `role_id` =39
+AND `gender` = 'M'
 
 Remove Resource_type column in ProjResourceType table
 Add Finalities, adddresses and other fields in Project table

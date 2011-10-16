@@ -21,6 +21,11 @@ class Schoolproject extends BaseSchoolproject {
 		return $this->getTitle();
 	}
   
+  public function getCoordinatorProfile()
+  {
+    return $this->getsfGuardUser()->getProfile();
+  }
+  
   public function isEditableBy($user)
   {
     return

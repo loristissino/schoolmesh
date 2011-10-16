@@ -3091,6 +3091,10 @@
         <source>Credentials fixed (number of actions needed: %number%).</source>
         <target>Credenziali sistemate (numero di azioni necessarie: %number%).</target>
     </trans-unit>
+    <trans-unit id="788">
+        <source>Get charge letters</source>
+        <target>Scarica lettere di incarico</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

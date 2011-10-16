@@ -140,6 +140,7 @@ DROP TABLE IF EXISTS `sf_guard_user_profile`;
 CREATE TABLE `sf_guard_user_profile`
 (
 	`user_id` INTEGER  NOT NULL,
+	`title` VARCHAR(10),
 	`first_name` VARCHAR(50),
 	`middle_name` VARCHAR(50),
 	`last_name` VARCHAR(50),
