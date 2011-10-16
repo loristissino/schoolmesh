@@ -25,13 +25,16 @@ abstract class BasesfGuardUserProfilePeer {
 	const TM_CLASS = 'sfGuardUserProfileTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 18;
+	const NUM_COLUMNS = 19;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the USER_ID field */
 	const USER_ID = 'sf_guard_user_profile.USER_ID';
+
+	/** the column name for the TITLE field */
+	const TITLE = 'sf_guard_user_profile.TITLE';
 
 	/** the column name for the FIRST_NAME field */
 	const FIRST_NAME = 'sf_guard_user_profile.FIRST_NAME';
@@ -107,11 +110,11 @@ abstract class BasesfGuardUserProfilePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('UserId', 'FirstName', 'MiddleName', 'LastName', 'Pronunciation', 'Info', 'RoleId', 'Gender', 'Email', 'EmailState', 'EmailVerificationCode', 'Birthdate', 'Birthplace', 'ImportCode', 'SystemAlerts', 'IsScheduledForDeletion', 'LastActionAt', 'LastLoginAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('userId', 'firstName', 'middleName', 'lastName', 'pronunciation', 'info', 'roleId', 'gender', 'email', 'emailState', 'emailVerificationCode', 'birthdate', 'birthplace', 'importCode', 'systemAlerts', 'isScheduledForDeletion', 'lastActionAt', 'lastLoginAt', ),
-		BasePeer::TYPE_COLNAME => array (self::USER_ID, self::FIRST_NAME, self::MIDDLE_NAME, self::LAST_NAME, self::PRONUNCIATION, self::INFO, self::ROLE_ID, self::GENDER, self::EMAIL, self::EMAIL_STATE, self::EMAIL_VERIFICATION_CODE, self::BIRTHDATE, self::BIRTHPLACE, self::IMPORT_CODE, self::SYSTEM_ALERTS, self::IS_SCHEDULED_FOR_DELETION, self::LAST_ACTION_AT, self::LAST_LOGIN_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('user_id', 'first_name', 'middle_name', 'last_name', 'pronunciation', 'info', 'role_id', 'gender', 'email', 'email_state', 'email_verification_code', 'birthdate', 'birthplace', 'import_code', 'system_alerts', 'is_scheduled_for_deletion', 'last_action_at', 'last_login_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, )
+		BasePeer::TYPE_PHPNAME => array ('UserId', 'Title', 'FirstName', 'MiddleName', 'LastName', 'Pronunciation', 'Info', 'RoleId', 'Gender', 'Email', 'EmailState', 'EmailVerificationCode', 'Birthdate', 'Birthplace', 'ImportCode', 'SystemAlerts', 'IsScheduledForDeletion', 'LastActionAt', 'LastLoginAt', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('userId', 'title', 'firstName', 'middleName', 'lastName', 'pronunciation', 'info', 'roleId', 'gender', 'email', 'emailState', 'emailVerificationCode', 'birthdate', 'birthplace', 'importCode', 'systemAlerts', 'isScheduledForDeletion', 'lastActionAt', 'lastLoginAt', ),
+		BasePeer::TYPE_COLNAME => array (self::USER_ID, self::TITLE, self::FIRST_NAME, self::MIDDLE_NAME, self::LAST_NAME, self::PRONUNCIATION, self::INFO, self::ROLE_ID, self::GENDER, self::EMAIL, self::EMAIL_STATE, self::EMAIL_VERIFICATION_CODE, self::BIRTHDATE, self::BIRTHPLACE, self::IMPORT_CODE, self::SYSTEM_ALERTS, self::IS_SCHEDULED_FOR_DELETION, self::LAST_ACTION_AT, self::LAST_LOGIN_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('user_id', 'title', 'first_name', 'middle_name', 'last_name', 'pronunciation', 'info', 'role_id', 'gender', 'email', 'email_state', 'email_verification_code', 'birthdate', 'birthplace', 'import_code', 'system_alerts', 'is_scheduled_for_deletion', 'last_action_at', 'last_login_at', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
 	);
 
 	/**
@@ -121,11 +124,11 @@ abstract class BasesfGuardUserProfilePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('UserId' => 0, 'FirstName' => 1, 'MiddleName' => 2, 'LastName' => 3, 'Pronunciation' => 4, 'Info' => 5, 'RoleId' => 6, 'Gender' => 7, 'Email' => 8, 'EmailState' => 9, 'EmailVerificationCode' => 10, 'Birthdate' => 11, 'Birthplace' => 12, 'ImportCode' => 13, 'SystemAlerts' => 14, 'IsScheduledForDeletion' => 15, 'LastActionAt' => 16, 'LastLoginAt' => 17, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('userId' => 0, 'firstName' => 1, 'middleName' => 2, 'lastName' => 3, 'pronunciation' => 4, 'info' => 5, 'roleId' => 6, 'gender' => 7, 'email' => 8, 'emailState' => 9, 'emailVerificationCode' => 10, 'birthdate' => 11, 'birthplace' => 12, 'importCode' => 13, 'systemAlerts' => 14, 'isScheduledForDeletion' => 15, 'lastActionAt' => 16, 'lastLoginAt' => 17, ),
-		BasePeer::TYPE_COLNAME => array (self::USER_ID => 0, self::FIRST_NAME => 1, self::MIDDLE_NAME => 2, self::LAST_NAME => 3, self::PRONUNCIATION => 4, self::INFO => 5, self::ROLE_ID => 6, self::GENDER => 7, self::EMAIL => 8, self::EMAIL_STATE => 9, self::EMAIL_VERIFICATION_CODE => 10, self::BIRTHDATE => 11, self::BIRTHPLACE => 12, self::IMPORT_CODE => 13, self::SYSTEM_ALERTS => 14, self::IS_SCHEDULED_FOR_DELETION => 15, self::LAST_ACTION_AT => 16, self::LAST_LOGIN_AT => 17, ),
-		BasePeer::TYPE_FIELDNAME => array ('user_id' => 0, 'first_name' => 1, 'middle_name' => 2, 'last_name' => 3, 'pronunciation' => 4, 'info' => 5, 'role_id' => 6, 'gender' => 7, 'email' => 8, 'email_state' => 9, 'email_verification_code' => 10, 'birthdate' => 11, 'birthplace' => 12, 'import_code' => 13, 'system_alerts' => 14, 'is_scheduled_for_deletion' => 15, 'last_action_at' => 16, 'last_login_at' => 17, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, )
+		BasePeer::TYPE_PHPNAME => array ('UserId' => 0, 'Title' => 1, 'FirstName' => 2, 'MiddleName' => 3, 'LastName' => 4, 'Pronunciation' => 5, 'Info' => 6, 'RoleId' => 7, 'Gender' => 8, 'Email' => 9, 'EmailState' => 10, 'EmailVerificationCode' => 11, 'Birthdate' => 12, 'Birthplace' => 13, 'ImportCode' => 14, 'SystemAlerts' => 15, 'IsScheduledForDeletion' => 16, 'LastActionAt' => 17, 'LastLoginAt' => 18, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('userId' => 0, 'title' => 1, 'firstName' => 2, 'middleName' => 3, 'lastName' => 4, 'pronunciation' => 5, 'info' => 6, 'roleId' => 7, 'gender' => 8, 'email' => 9, 'emailState' => 10, 'emailVerificationCode' => 11, 'birthdate' => 12, 'birthplace' => 13, 'importCode' => 14, 'systemAlerts' => 15, 'isScheduledForDeletion' => 16, 'lastActionAt' => 17, 'lastLoginAt' => 18, ),
+		BasePeer::TYPE_COLNAME => array (self::USER_ID => 0, self::TITLE => 1, self::FIRST_NAME => 2, self::MIDDLE_NAME => 3, self::LAST_NAME => 4, self::PRONUNCIATION => 5, self::INFO => 6, self::ROLE_ID => 7, self::GENDER => 8, self::EMAIL => 9, self::EMAIL_STATE => 10, self::EMAIL_VERIFICATION_CODE => 11, self::BIRTHDATE => 12, self::BIRTHPLACE => 13, self::IMPORT_CODE => 14, self::SYSTEM_ALERTS => 15, self::IS_SCHEDULED_FOR_DELETION => 16, self::LAST_ACTION_AT => 17, self::LAST_LOGIN_AT => 18, ),
+		BasePeer::TYPE_FIELDNAME => array ('user_id' => 0, 'title' => 1, 'first_name' => 2, 'middle_name' => 3, 'last_name' => 4, 'pronunciation' => 5, 'info' => 6, 'role_id' => 7, 'gender' => 8, 'email' => 9, 'email_state' => 10, 'email_verification_code' => 11, 'birthdate' => 12, 'birthplace' => 13, 'import_code' => 14, 'system_alerts' => 15, 'is_scheduled_for_deletion' => 16, 'last_action_at' => 17, 'last_login_at' => 18, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, )
 	);
 
 	/**
@@ -196,6 +199,7 @@ abstract class BasesfGuardUserProfilePeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 		$criteria->addSelectColumn(sfGuardUserProfilePeer::USER_ID);
+		$criteria->addSelectColumn(sfGuardUserProfilePeer::TITLE);
 		$criteria->addSelectColumn(sfGuardUserProfilePeer::FIRST_NAME);
 		$criteria->addSelectColumn(sfGuardUserProfilePeer::MIDDLE_NAME);
 		$criteria->addSelectColumn(sfGuardUserProfilePeer::LAST_NAME);

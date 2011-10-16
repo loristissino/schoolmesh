@@ -315,6 +315,40 @@ class projectsActions extends sfActions
     $this->projects=$this->result['projects'];
     $this->types=$this->result['types'];
   }
+  
+  public function executeGetchargeletters(sfWebRequest $request)
+  {
+  	set_time_limit(0);
+    $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
+
+		$result=SchoolprojectPeer::getChargeLetters($this->ids, sfConfig::get('app_config_default_format', 'odt'), $this->getContext());
+		
+		if ($result['result']=='error')
+		{
+			$this->getUser()->setFlash('error', $result['message']);
+			$this->redirect('users/list');
+		}
+		
+		$odfdoc=$result['content'];
+		if (is_object($odfdoc))
+		{
+			$odfdoc
+			->saveFile()
+			->setResponse($this->getContext()->getResponse());
+			return sfView::NONE;
+
+		}
+		else
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.'));
+			$this->redirect('projects/monitor');
+		}
+
+
+
+
+  }
+  
 
   public function executeSpreadsheet(sfWebRequest $request)
   {

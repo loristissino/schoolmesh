@@ -56,10 +56,34 @@ class OdfDocPeer
 	
 	static public function startUnoconv()
 	{
-		$command='/tmp/provacazzuta';
+		$command='/tmp/trial';
 		$result=implode("\n", self::executeCommand($command));
 		return $result;
 	}
 	
+  public static function quantityvalue($value, $mu='')
+  // this is close to the one present in the helper
+  {
+    if($mu)
+    {
+      $mu=$mu . ' ';
+    }
+    
+    if ($value)
+    {
+    return 
+      $mu . number_format($value, 
+        sfConfig::get('app_config_currency_decimals', 2), 
+        sfConfig::get('app_config_currency_decpoint', ','),
+        sfConfig::get('app_config_currency_thousandssep', '.')
+        );
+    }
+    else
+    {
+      return '';
+    }
+  }
+    
+  
 	
 }

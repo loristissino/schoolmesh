@@ -261,5 +261,95 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     
     return $result;
   }
+  
+  
+	public static function getChargeLetters($ids, $filetype='odt', $context=null)
+	{
+		$result=Array();
+
+		$usertypes=Array();
+		
+		$projects=self::retrieveByPks($ids);
+		
+    $filename='Charge letters';
+    
+		try
+		{
+			$templatename='projects_charges.odt';
+			$odf=new OdfDoc($templatename, $context?$context->getI18N()->__($filename):$filename, $filetype);
+		}
+		catch (Exception $e)
+		{
+			if ($e InstanceOf OdfDocTemplateException)
+			{
+				$result['result']='error';
+				$result['message']='Template not found or not readable: '. $templatename;
+				return $result;
+			}
+			
+			if ($e InstanceOf OdfException)
+			{
+				$result['result']='error';
+				$result['message']='Template not valid: '. $templatename;
+				return $result;
+			}
+			
+			throw $e;
+		}
+		
+		$odfdoc=$odf->getOdfDocument();
+		$letters=$odfdoc->setSegment('letters');
+		$count=0;
+		foreach($projects as $project)
+		{
+			$count++;
+      
+      $user=$project->getCoordinatorProfile();
+			$letters->userTitle($user->getTitle());
+			$letters->userFullName($user->getFullName());
+      $letters->userEmail($user->getValidatedEmail());
+			$letters->projectTitle($project->getTitle());
+			$letters->schoolPrincipal(sfConfig::get('app_school_principal', 'missing Principal name in config file'));
+			
+			$letters->letterDate(date('d/m/Y'));
+      
+      foreach($project->getProjResources() as $Resource)
+      {
+        $ResourceType=$Resource->getProjResourceType();
+        $letters->resources->resourceDescription($Resource->getDescription());
+        $letters->resources->resourceType($ResourceType->getDescription());
+        $letters->resources->resourceChargedUser($Resource->getChargedUserProfile());
+        $letters->resources->resourceQuantity(OdfDocPeer::quantityvalue($Resource->getQuantityApproved(), $ResourceType->getMeasurementUnit()));
+        $letters->resources->merge();
+      }
+      
+      foreach($project->getProjUpshots() as $Upshot)
+      {
+        $letters->upshots->upshotDescription($Upshot->getDescription());
+        $letters->upshots->upshotIndicator($Upshot->getIndicator());
+        $letters->upshots->merge();
+      }
+
+      foreach($project->getProjDeadlines() as $Deadline)
+      {
+        $letters->deadlines->deadlineDate($Deadline->getOriginalDeadlineDate('d/m/y'));
+        $letters->deadlines->deadlineDescription($Deadline->getDescription());
+        $letters->deadlines->merge();
+      }
+
+
+			$pagebreak=($count<sizeof($projects))?'<pagebreak>':'';
+			$letters->pagebreak($pagebreak);
+			$letters->merge();
+		}
+		
+		$odfdoc->mergeSegment($letters);
+
+		$result['content']=$odf;
+		$result['result']='notice';
+		return $result;
+
+	}
+  
 
 } // SchoolprojectPeer

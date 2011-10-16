@@ -25,6 +25,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $user_id;
 
 	/**
+	 * The value for the title field.
+	 * @var        string
+	 */
+	protected $title;
+
+	/**
 	 * The value for the first_name field.
 	 * @var        string
 	 */
@@ -186,6 +192,16 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	public function getUserId()
 	{
 		return $this->user_id;
+	}
+
+	/**
+	 * Get the [title] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getTitle()
+	{
+		return $this->title;
 	}
 
 	/**
@@ -465,6 +481,26 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 
 		return $this;
 	} // setUserId()
+
+	/**
+	 * Set the value of [title] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     sfGuardUserProfile The current object (for fluent API support)
+	 */
+	public function setTitle($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->title !== $v) {
+			$this->title = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::TITLE;
+		}
+
+		return $this;
+	} // setTitle()
 
 	/**
 	 * Set the value of [first_name] column.
@@ -938,23 +974,24 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		try {
 
 			$this->user_id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->first_name = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-			$this->middle_name = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-			$this->last_name = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->pronunciation = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->info = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->role_id = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
-			$this->gender = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->email = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-			$this->email_state = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
-			$this->email_verification_code = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
-			$this->birthdate = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
-			$this->birthplace = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
-			$this->import_code = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
-			$this->system_alerts = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
-			$this->is_scheduled_for_deletion = ($row[$startcol + 15] !== null) ? (boolean) $row[$startcol + 15] : null;
-			$this->last_action_at = ($row[$startcol + 16] !== null) ? (string) $row[$startcol + 16] : null;
-			$this->last_login_at = ($row[$startcol + 17] !== null) ? (string) $row[$startcol + 17] : null;
+			$this->title = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
+			$this->first_name = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->middle_name = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->last_name = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->pronunciation = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->info = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->role_id = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
+			$this->gender = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->email = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->email_state = ($row[$startcol + 10] !== null) ? (int) $row[$startcol + 10] : null;
+			$this->email_verification_code = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->birthdate = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
+			$this->birthplace = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
+			$this->import_code = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
+			$this->system_alerts = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
+			$this->is_scheduled_for_deletion = ($row[$startcol + 16] !== null) ? (boolean) $row[$startcol + 16] : null;
+			$this->last_action_at = ($row[$startcol + 17] !== null) ? (string) $row[$startcol + 17] : null;
+			$this->last_login_at = ($row[$startcol + 18] !== null) ? (string) $row[$startcol + 18] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -964,7 +1001,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 18; // 18 = sfGuardUserProfilePeer::NUM_COLUMNS - sfGuardUserProfilePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 19; // 19 = sfGuardUserProfilePeer::NUM_COLUMNS - sfGuardUserProfilePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating sfGuardUserProfile object", $e);
@@ -1304,54 +1341,57 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				return $this->getUserId();
 				break;
 			case 1:
-				return $this->getFirstName();
+				return $this->getTitle();
 				break;
 			case 2:
-				return $this->getMiddleName();
+				return $this->getFirstName();
 				break;
 			case 3:
-				return $this->getLastName();
+				return $this->getMiddleName();
 				break;
 			case 4:
-				return $this->getPronunciation();
+				return $this->getLastName();
 				break;
 			case 5:
-				return $this->getInfo();
+				return $this->getPronunciation();
 				break;
 			case 6:
-				return $this->getRoleId();
+				return $this->getInfo();
 				break;
 			case 7:
-				return $this->getGender();
+				return $this->getRoleId();
 				break;
 			case 8:
-				return $this->getEmail();
+				return $this->getGender();
 				break;
 			case 9:
-				return $this->getEmailState();
+				return $this->getEmail();
 				break;
 			case 10:
-				return $this->getEmailVerificationCode();
+				return $this->getEmailState();
 				break;
 			case 11:
-				return $this->getBirthdate();
+				return $this->getEmailVerificationCode();
 				break;
 			case 12:
-				return $this->getBirthplace();
+				return $this->getBirthdate();
 				break;
 			case 13:
-				return $this->getImportCode();
+				return $this->getBirthplace();
 				break;
 			case 14:
-				return $this->getSystemAlerts();
+				return $this->getImportCode();
 				break;
 			case 15:
-				return $this->getIsScheduledForDeletion();
+				return $this->getSystemAlerts();
 				break;
 			case 16:
-				return $this->getLastActionAt();
+				return $this->getIsScheduledForDeletion();
 				break;
 			case 17:
+				return $this->getLastActionAt();
+				break;
+			case 18:
 				return $this->getLastLoginAt();
 				break;
 			default:
@@ -1376,23 +1416,24 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$keys = sfGuardUserProfilePeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getUserId(),
-			$keys[1] => $this->getFirstName(),
-			$keys[2] => $this->getMiddleName(),
-			$keys[3] => $this->getLastName(),
-			$keys[4] => $this->getPronunciation(),
-			$keys[5] => $this->getInfo(),
-			$keys[6] => $this->getRoleId(),
-			$keys[7] => $this->getGender(),
-			$keys[8] => $this->getEmail(),
-			$keys[9] => $this->getEmailState(),
-			$keys[10] => $this->getEmailVerificationCode(),
-			$keys[11] => $this->getBirthdate(),
-			$keys[12] => $this->getBirthplace(),
-			$keys[13] => $this->getImportCode(),
-			$keys[14] => $this->getSystemAlerts(),
-			$keys[15] => $this->getIsScheduledForDeletion(),
-			$keys[16] => $this->getLastActionAt(),
-			$keys[17] => $this->getLastLoginAt(),
+			$keys[1] => $this->getTitle(),
+			$keys[2] => $this->getFirstName(),
+			$keys[3] => $this->getMiddleName(),
+			$keys[4] => $this->getLastName(),
+			$keys[5] => $this->getPronunciation(),
+			$keys[6] => $this->getInfo(),
+			$keys[7] => $this->getRoleId(),
+			$keys[8] => $this->getGender(),
+			$keys[9] => $this->getEmail(),
+			$keys[10] => $this->getEmailState(),
+			$keys[11] => $this->getEmailVerificationCode(),
+			$keys[12] => $this->getBirthdate(),
+			$keys[13] => $this->getBirthplace(),
+			$keys[14] => $this->getImportCode(),
+			$keys[15] => $this->getSystemAlerts(),
+			$keys[16] => $this->getIsScheduledForDeletion(),
+			$keys[17] => $this->getLastActionAt(),
+			$keys[18] => $this->getLastLoginAt(),
 		);
 		return $result;
 	}
@@ -1428,54 +1469,57 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->setUserId($value);
 				break;
 			case 1:
-				$this->setFirstName($value);
+				$this->setTitle($value);
 				break;
 			case 2:
-				$this->setMiddleName($value);
+				$this->setFirstName($value);
 				break;
 			case 3:
-				$this->setLastName($value);
+				$this->setMiddleName($value);
 				break;
 			case 4:
-				$this->setPronunciation($value);
+				$this->setLastName($value);
 				break;
 			case 5:
-				$this->setInfo($value);
+				$this->setPronunciation($value);
 				break;
 			case 6:
-				$this->setRoleId($value);
+				$this->setInfo($value);
 				break;
 			case 7:
-				$this->setGender($value);
+				$this->setRoleId($value);
 				break;
 			case 8:
-				$this->setEmail($value);
+				$this->setGender($value);
 				break;
 			case 9:
-				$this->setEmailState($value);
+				$this->setEmail($value);
 				break;
 			case 10:
-				$this->setEmailVerificationCode($value);
+				$this->setEmailState($value);
 				break;
 			case 11:
-				$this->setBirthdate($value);
+				$this->setEmailVerificationCode($value);
 				break;
 			case 12:
-				$this->setBirthplace($value);
+				$this->setBirthdate($value);
 				break;
 			case 13:
-				$this->setImportCode($value);
+				$this->setBirthplace($value);
 				break;
 			case 14:
-				$this->setSystemAlerts($value);
+				$this->setImportCode($value);
 				break;
 			case 15:
-				$this->setIsScheduledForDeletion($value);
+				$this->setSystemAlerts($value);
 				break;
 			case 16:
-				$this->setLastActionAt($value);
+				$this->setIsScheduledForDeletion($value);
 				break;
 			case 17:
+				$this->setLastActionAt($value);
+				break;
+			case 18:
 				$this->setLastLoginAt($value);
 				break;
 		} // switch()
@@ -1503,23 +1547,24 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$keys = sfGuardUserProfilePeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setUserId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setFirstName($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setMiddleName($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setLastName($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setPronunciation($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setInfo($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setRoleId($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setGender($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setEmail($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setEmailState($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setEmailVerificationCode($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setBirthdate($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setBirthplace($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setImportCode($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setSystemAlerts($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setIsScheduledForDeletion($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setLastActionAt($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setLastLoginAt($arr[$keys[17]]);
+		if (array_key_exists($keys[1], $arr)) $this->setTitle($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setFirstName($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setMiddleName($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setLastName($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setPronunciation($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setInfo($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setRoleId($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setGender($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setEmail($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setEmailState($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setEmailVerificationCode($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setBirthdate($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setBirthplace($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setImportCode($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setSystemAlerts($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setIsScheduledForDeletion($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setLastActionAt($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setLastLoginAt($arr[$keys[18]]);
 	}
 
 	/**
@@ -1532,6 +1577,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$criteria = new Criteria(sfGuardUserProfilePeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::USER_ID)) $criteria->add(sfGuardUserProfilePeer::USER_ID, $this->user_id);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::TITLE)) $criteria->add(sfGuardUserProfilePeer::TITLE, $this->title);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::FIRST_NAME)) $criteria->add(sfGuardUserProfilePeer::FIRST_NAME, $this->first_name);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::MIDDLE_NAME)) $criteria->add(sfGuardUserProfilePeer::MIDDLE_NAME, $this->middle_name);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::LAST_NAME)) $criteria->add(sfGuardUserProfilePeer::LAST_NAME, $this->last_name);
@@ -1604,6 +1650,8 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	{
 
 		$copyObj->setUserId($this->user_id);
+
+		$copyObj->setTitle($this->title);
 
 		$copyObj->setFirstName($this->first_name);
 

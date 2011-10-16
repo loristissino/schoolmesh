@@ -37,6 +37,7 @@ class sfGuardUserProfileTableMap extends TableMap {
 		$this->setUseIdGenerator(false);
 		// columns
 		$this->addForeignPrimaryKey('USER_ID', 'UserId', 'INTEGER' , 'sf_guard_user', 'ID', true, null, null);
+		$this->addColumn('TITLE', 'Title', 'VARCHAR', false, 10, null);
 		$this->addColumn('FIRST_NAME', 'FirstName', 'VARCHAR', false, 50, null);
 		$this->addColumn('MIDDLE_NAME', 'MiddleName', 'VARCHAR', false, 50, null);
 		$this->addColumn('LAST_NAME', 'LastName', 'VARCHAR', false, 50, null);

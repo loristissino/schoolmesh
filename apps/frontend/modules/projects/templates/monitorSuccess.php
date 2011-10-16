@@ -64,6 +64,7 @@
   'computebudget' => __('Compute budget'),
   'computesynthesis' => __('Compute data synthesis'),
   'updatestandardcosts' => __('Update standard costs'),
+  'getchargeletters' => __('Get charge letters'),
   'resettodraft' => __('Reset to draft'),
   'spreadsheet' => __('Export as spreadsheet'),
 ), 0) ?>

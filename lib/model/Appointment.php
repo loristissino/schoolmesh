@@ -975,7 +975,7 @@ public function getWorkflowLogs()
 			$template='workplan' . $this->getState() .'.odt';
 		}
 		
-		$teachertitle=$this->getSfGuardUser()->getProfile()->getIsMale()?'Mr. ':'Ms. ';
+		$teachertitle=$this->getSfGuardUser()->getProfile()->getTitle();
 
     $steps = Workflow::getWpfrSteps();
     $state=$steps[$this->getState()]['stateDescription'];
@@ -987,7 +987,6 @@ public function getWorkflowLogs()
 
 		if ($sfContext)
 		{
-			$teachertitle=$sfContext->getI18n()->__($teachertitle);
 			$state=$sfContext->getI18n()->__($state);
       foreach($contrib_descriptions as $key=>$description)
       {
