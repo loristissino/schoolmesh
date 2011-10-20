@@ -53,6 +53,7 @@ class sfGuardUserProfileTableMap extends TableMap {
 		$this->addColumn('IMPORT_CODE', 'ImportCode', 'VARCHAR', false, 20, null);
 		$this->addColumn('SYSTEM_ALERTS', 'SystemAlerts', 'VARCHAR', false, 255, null);
 		$this->addColumn('IS_SCHEDULED_FOR_DELETION', 'IsScheduledForDeletion', 'BOOLEAN', false, null, false);
+		$this->addColumn('PREFERS_RICHTEXT', 'PrefersRichtext', 'BOOLEAN', false, null, true);
 		$this->addColumn('LAST_ACTION_AT', 'LastActionAt', 'TIMESTAMP', false, null, null);
 		$this->addColumn('LAST_LOGIN_AT', 'LastLoginAt', 'TIMESTAMP', false, null, null);
 		// validators

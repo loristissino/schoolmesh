@@ -20,6 +20,7 @@
       <th class="sf_admin_text"><?php echo __('Title') ?></th>
       <th class="sf_admin_text"><?php echo __('Coordinator') ?></th>
       <th class="sf_admin_text"><?php echo __('State') ?></th>
+      <th class="sf_admin_text"><?php echo __('Reference number') ?></th>
       <th class="sf_admin_text"><?php echo __('Approval date') ?></th>
       <th class="sf_admin_text"><?php echo __('Financing date') ?></th>
       <th class="sf_admin_text"><?php echo __('Deadlines') ?></th>
@@ -37,6 +38,7 @@
       <td><strong><?php echo $project->getTitle() ?></strong></td>
       <td><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></td>
       <td><?php include_partial('state', array('project'=>$project)) ?></td>
+      <td><?php echo $project->getReferenceNumber() ?>
       <td><?php echo Generic::datetime($project->getApprovalDate('U'), $sf_context) ?></td>
       <td><?php echo Generic::datetime($project->getFinancingDate('U'), $sf_context) ?></td>
       <td>

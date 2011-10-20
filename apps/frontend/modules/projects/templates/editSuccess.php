@@ -50,19 +50,19 @@
   <?php if(!isset($form['purposes'])): ?>
   <tr>
     <th><label for="schoolproject_purposes"><?php echo __('Purposes') ?></label></th>
-    <td><?php echo $project->getPurposes() ?></td>
+    <td><?php echo nl2br($project->getPurposes()) ?></td>
   </tr>
   <?php endif ?>
   <?php if(!isset($form['purposes'])): ?>
   <tr>
     <th><label for="schoolproject_goals"><?php echo __('Goals') ?></label></th>
-    <td><?php echo $project->getGoals() ?></td>
+    <td><?php echo nl2br($project->getGoals()) ?></td>
   </tr>
   <?php endif ?>
   <?php if(!isset($form['addressees'])): ?>
   <tr>
     <th><label for="schoolproject_addressees"><?php echo __('Addressees') ?></label></th>
-    <td><?php echo $project->getAddressees() ?></td>
+    <td><?php echo nl2br($project->getAddressees()) ?></td>
   </tr>
   <?php endif ?>
 

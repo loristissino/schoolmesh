@@ -16,4 +16,12 @@ require 'lib/model/om/BaseProjResourceTypePeer.php';
  */
 class ProjResourceTypePeer extends BaseProjResourceTypePeer {
 
+  public static function retrieveResourcesWithRole()
+  {
+    $c=new Criteria();
+    $c->add(ProjResourceTypePeer::ROLE_ID, null, Criteria::ISNOTNULL);
+    return ProjResourceTypePeer::doSelect($c);
+  }
+
+
 } // ProjResourceTypePeer

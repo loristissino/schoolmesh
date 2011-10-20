@@ -265,17 +265,26 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
   
 	public static function getChargeLetters($ids, $filetype='odt', $context=null)
 	{
+    return self::_getInfoLetters($ids, 'Charge letters', 'projects_charges.odt', $filetype, $context);
+	}
+
+	public static function getSubmissionLetters($ids, $filetype='odt', $context=null)
+	{
+    return self::_getInfoLetters($ids, 'Submission letters', 'projects_submission.odt', $filetype, $context);
+	}
+
+
+
+	private static function _getInfoLetters($ids, $filename, $templatename, $filetype='odt', $context=null)
+	{
 		$result=Array();
 
 		$usertypes=Array();
 		
 		$projects=self::retrieveByPks($ids);
 		
-    $filename='Charge letters';
-    
 		try
 		{
-			$templatename='projects_charges.odt';
 			$odf=new OdfDoc($templatename, $context?$context->getI18N()->__($filename):$filename, $filetype);
 		}
 		catch (Exception $e)
@@ -313,6 +322,8 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 			
 			$letters->letterDate(date('d/m/Y'));
       
+      $usedtypes=array();
+      
       foreach($project->getProjResources() as $Resource)
       {
         $ResourceType=$Resource->getProjResourceType();
@@ -321,6 +332,10 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
         $letters->resources->resourceChargedUser($Resource->getChargedUserProfile());
         $letters->resources->resourceQuantity(OdfDocPeer::quantityvalue($Resource->getQuantityApproved(), $ResourceType->getMeasurementUnit()));
         $letters->resources->merge();
+        if($ResourceType->getRoleId())
+        {
+          $usedtypes[]=$ResourceType->getId();
+        }
       }
       
       foreach($project->getProjUpshots() as $Upshot)
@@ -336,7 +351,13 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
         $letters->deadlines->deadlineDescription($Deadline->getDescription());
         $letters->deadlines->merge();
       }
-
+      
+      foreach(ProjResourceTypePeer::retrieveByPks($usedtypes) as $ResourceType)
+      {
+        $letters->resourcetypes->rtDescription($ResourceType->getDescription());
+        $letters->resourcetypes->rtStandardCost(OdfDocPeer::quantityvalue($ResourceType->getStandardCost(), sfConfig::get('app_config_currency_symbol')));
+        $letters->resourcetypes->merge();
+      }
 
 			$pagebreak=($count<sizeof($projects))?'<pagebreak>':'';
 			$letters->pagebreak($pagebreak);
@@ -350,6 +371,5 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 		return $result;
 
 	}
-  
 
 } // SchoolprojectPeer

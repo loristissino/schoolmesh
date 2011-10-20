@@ -63,6 +63,7 @@ propel:
     import_code:  varchar(20)
     system_alerts: varchar(255)
     is_scheduled_for_deletion: { type: boolean, default: false }
+    prefers_richtext: { type: boolean, default: true }
     last_action_at: timestamp
     last_login_at: timestamp
 
@@ -355,6 +356,7 @@ propel:
     hours_approved: integer
     state:        { type: integer }
     submission_date: date
+    reference_number: varchar(20)
     approval_date: date
     approval_notes: longvarchar
     financing_date: date    

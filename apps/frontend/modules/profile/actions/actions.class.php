@@ -238,6 +238,7 @@ class profileActions extends sfActions
 
 				$this->profile
 				->setPronunciation($params['pronunciation'])
+        ->setPrefersRichtext($params['prefers_richtext'])
 				->setEmail($params['email']);
 				
 				$email_warning='';
@@ -272,6 +273,7 @@ class profileActions extends sfActions
 			array(
 				'pronunciation'=>$this->profile->getPronunciation(),
 				'email'=>$this->profile->getEmail(),
+        'prefers_richtext'=>$this->profile->getPrefersRichtext(),
 			)
 		);
 	
@@ -289,7 +291,7 @@ class profileActions extends sfActions
     $this->getUser()->setAttribute($request->getParameter('name'), array());
     $this->redirect($request->getReferer());
   }
-
+  
 }
 
 

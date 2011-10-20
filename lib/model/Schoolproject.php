@@ -32,7 +32,7 @@ class Schoolproject extends BaseSchoolproject {
       (
       $user->getProfile()->getUserId()===$this->getUserId()
       || 
-      $user->hasCredential('admin')
+      $user->hasCredential('proj_adm_ok')
       )
       &&
       $this->getState()<Workflow::PROJ_FINISHED;
@@ -347,6 +347,7 @@ class Schoolproject extends BaseSchoolproject {
       'addressees',
       'goals',
       'final_report',
+      'reference_number',
       ), $params);
       
     return $this;

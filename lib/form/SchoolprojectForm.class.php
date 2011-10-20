@@ -12,6 +12,8 @@ class SchoolprojectForm extends BaseSchoolprojectForm
 {
   public function configure()
   {
+    
+  $this->schoolproject=$this->getObject();
   
   unset($this['user_id'], $this['year_id'], $this['state']);
     
@@ -36,14 +38,14 @@ class SchoolprojectForm extends BaseSchoolprojectForm
 */	
   }
   
-  public function addStateDependentConfiguration($state)
+  public function addUserDependentConfiguration($user)
   {
     unset(
       $this['evaluation_min'],
       $this['evaluation_max']
       );
     
-    switch($state)
+    switch($this->schoolproject->getState())
     {
       case Workflow::PROJ_DRAFT:
         unset(
@@ -55,7 +57,8 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['financing_notes'],
           $this['notes'],
           $this['final_report'],
-          $this['proposals']
+          $this['proposals'],
+          $this['reference_number']
           );
         break;
       case Workflow::PROJ_SUBMITTED:
@@ -65,7 +68,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['description'],
           $this['notes'],
           $this['proj_category_id'],
-          $this['proj_financing_id'],
           $this['submission_date'],
           $this['approval_date'],
           $this['financing_date'],
@@ -75,6 +77,24 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['purposes'],
           $this['goals']
           );
+          if(!$user->hasCredential('proj_adm_ok'))
+          {
+            // in the office they can change ref numbers and financing types
+            unset(
+              $this['reference_number'],
+              $this['proj_financing_id']
+            );
+          }
+          if($user!=$this->schoolproject->getsfGuardUser())
+          {
+            // the coordinator can change final notes
+            unset(
+              $this['final_report'],
+              $this['proposals']
+            );
+          }
+          
+          
         break;
       case Workflow::PROJ_APPROVED:
         unset(
@@ -91,7 +111,8 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['financing_notes'],
           $this['addressees'],
           $this['purposes'],
-          $this['goals']
+          $this['goals'],
+          $this['reference_number']
           );
         break;
       case Workflow::PROJ_FINANCED:
@@ -109,7 +130,8 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['financing_notes'],
           $this['addressees'],
           $this['purposes'],
-          $this['goals']
+          $this['goals'],
+          $this['reference_number']
           );
         break;
       case Workflow::PROJ_FINISHED:
@@ -124,7 +146,8 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_date'],
           $this['financing_date'],
           $this['approval_notes'], 
-          $this['financing_notes']
+          $this['financing_notes'],
+          $this['reference_number']
           );
         break;
     }

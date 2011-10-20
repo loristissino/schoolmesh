@@ -31,6 +31,7 @@ abstract class BasesfGuardUserProfileForm extends BaseFormPropel
       'import_code'               => new sfWidgetFormInputText(),
       'system_alerts'             => new sfWidgetFormInputText(),
       'is_scheduled_for_deletion' => new sfWidgetFormInputCheckbox(),
+      'prefers_richtext'          => new sfWidgetFormInputCheckbox(),
       'last_action_at'            => new sfWidgetFormDateTime(),
       'last_login_at'             => new sfWidgetFormDateTime(),
     ));
@@ -53,6 +54,7 @@ abstract class BasesfGuardUserProfileForm extends BaseFormPropel
       'import_code'               => new sfValidatorString(array('max_length' => 20, 'required' => false)),
       'system_alerts'             => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'is_scheduled_for_deletion' => new sfValidatorBoolean(array('required' => false)),
+      'prefers_richtext'          => new sfValidatorBoolean(array('required' => false)),
       'last_action_at'            => new sfValidatorDateTime(array('required' => false)),
       'last_login_at'             => new sfValidatorDateTime(array('required' => false)),
     ));
