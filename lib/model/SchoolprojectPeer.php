@@ -314,7 +314,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 			$count++;
       
       $user=$project->getCoordinatorProfile();
-			$letters->userTitle($user->getTitle());
+			$letters->userTitle($user->getLettertitle());
 			$letters->userFullName($user->getFullName());
       $letters->userEmail($user->getValidatedEmail());
 			$letters->projectTitle($project->getTitle());

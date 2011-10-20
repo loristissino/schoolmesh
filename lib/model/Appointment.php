@@ -975,7 +975,7 @@ public function getWorkflowLogs()
 			$template='workplan' . $this->getState() .'.odt';
 		}
 		
-		$teachertitle=$this->getSfGuardUser()->getProfile()->getTitle();
+		$teachertitle=$this->getSfGuardUser()->getProfile()->getLettertitle();
 
     $steps = Workflow::getWpfrSteps();
     $state=$steps[$this->getState()]['stateDescription'];
