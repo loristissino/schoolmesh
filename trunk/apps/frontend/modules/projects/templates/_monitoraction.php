@@ -14,4 +14,16 @@
 		)?>
 		</li>
   <?php endif ?>
+	<li class="sf_admin_action_edit">
+		<?php echo link_to(__('Edit'),
+			url_for('projects/edit?id=' . $project->getId()),
+			array('title'=>__('Edit administrative information about this project'))
+		)?>
+		</li>
+	<li class="sf_admin_action_export">
+		<?php echo link_to(__('Export'),
+			url_for('projects/export?id=' . $project->getId()),
+			array('title'=>__('Export documentation from this project'))
+		)?>
+		</li>
 </ul>

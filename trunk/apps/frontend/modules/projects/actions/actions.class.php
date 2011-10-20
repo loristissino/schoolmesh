@@ -326,7 +326,7 @@ class projectsActions extends sfActions
 		if ($result['result']=='error')
 		{
 			$this->getUser()->setFlash('error', $result['message']);
-			$this->redirect('users/list');
+			$this->redirect('projects/monitor');
 		}
 		
 		$odfdoc=$result['content'];
@@ -793,7 +793,7 @@ class projectsActions extends sfActions
   $this->forward404Unless($this->project->isEditableBy($this->getUser())); // the project can be edited only by the owner  or by admins...
 	
 	$this->form = new SchoolprojectForm($this->project);
-  $this->form->addStateDependentConfiguration($this->project->getState());
+  $this->form->addUserDependentConfiguration($this->getUser());
 
 	if ($request->isMethod('post'))
 		{
@@ -881,9 +881,14 @@ class projectsActions extends sfActions
 
   public function executeNew(sfWebRequest $request)
   {
-    
-	$this->form = new SchoolprojectForm(new Schoolproject());
-  $this->form->addStateDependentConfiguration(Workflow::PROJ_DRAFT);
+  
+  $this->project = new Schoolproject();
+  $this->project
+  ->setUserId($this->getUser()->getProfile()->getUserId())
+  ->setState(Workflow::PROJ_DRAFT);
+
+	$this->form = new SchoolprojectForm($this->project);
+  $this->form->addUserDependentConfiguration($this->getUser());
 
   $this->deadlines=array();
 
@@ -894,8 +899,6 @@ class projectsActions extends sfActions
 			if ($this->form->isValid())
 			{
 				$params = $this->form->getValues();
-				
-				$this->project = new Schoolproject();
 				
 				$this->project
         ->updateFromForm($params)
@@ -925,6 +928,36 @@ class projectsActions extends sfActions
   
    }  
 	
-  
+  public function executeExport(sfWebRequest $request)
+  {
+    set_time_limit(0);
+    $this->forward404Unless($schoolproject=SchoolprojectPeer::retrieveByPK($request->getParameter('id')));
+    
+    $this->ids=array($schoolproject->getId());
+
+		$result=SchoolprojectPeer::getSubmissionLetters($this->ids, sfConfig::get('app_config_default_format', 'odt'), $this->getContext());
+		
+		if ($result['result']=='error')
+		{
+			$this->getUser()->setFlash('error', $result['message']);
+			$this->redirect('projects/monitor');
+		}
+		
+		$odfdoc=$result['content'];
+		if (is_object($odfdoc))
+		{
+			$odfdoc
+			->saveFile()
+			->setResponse($this->getContext()->getResponse());
+			return sfView::NONE;
+
+		}
+		else
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.'));
+			$this->redirect('projects/monitor');
+		}
+    
+  }
 
 }

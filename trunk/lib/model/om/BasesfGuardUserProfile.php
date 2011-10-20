@@ -123,6 +123,13 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $is_scheduled_for_deletion;
 
 	/**
+	 * The value for the prefers_richtext field.
+	 * Note: this column has a database default value of: true
+	 * @var        boolean
+	 */
+	protected $prefers_richtext;
+
+	/**
 	 * The value for the last_action_at field.
 	 * @var        string
 	 */
@@ -172,6 +179,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	{
 		$this->email_state = 0;
 		$this->is_scheduled_for_deletion = false;
+		$this->prefers_richtext = true;
 	}
 
 	/**
@@ -380,6 +388,16 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	public function getIsScheduledForDeletion()
 	{
 		return $this->is_scheduled_for_deletion;
+	}
+
+	/**
+	 * Get the [prefers_richtext] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getPrefersRichtext()
+	{
+		return $this->prefers_richtext;
 	}
 
 	/**
@@ -836,6 +854,26 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	} // setIsScheduledForDeletion()
 
 	/**
+	 * Set the value of [prefers_richtext] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     sfGuardUserProfile The current object (for fluent API support)
+	 */
+	public function setPrefersRichtext($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->prefers_richtext !== $v || $this->isNew()) {
+			$this->prefers_richtext = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::PREFERS_RICHTEXT;
+		}
+
+		return $this;
+	} // setPrefersRichtext()
+
+	/**
 	 * Sets the value of [last_action_at] column to a normalized version of the date/time value specified.
 	 * 
 	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
@@ -951,6 +989,10 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				return false;
 			}
 
+			if ($this->prefers_richtext !== true) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -990,8 +1032,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->import_code = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
 			$this->system_alerts = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
 			$this->is_scheduled_for_deletion = ($row[$startcol + 16] !== null) ? (boolean) $row[$startcol + 16] : null;
-			$this->last_action_at = ($row[$startcol + 17] !== null) ? (string) $row[$startcol + 17] : null;
-			$this->last_login_at = ($row[$startcol + 18] !== null) ? (string) $row[$startcol + 18] : null;
+			$this->prefers_richtext = ($row[$startcol + 17] !== null) ? (boolean) $row[$startcol + 17] : null;
+			$this->last_action_at = ($row[$startcol + 18] !== null) ? (string) $row[$startcol + 18] : null;
+			$this->last_login_at = ($row[$startcol + 19] !== null) ? (string) $row[$startcol + 19] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1001,7 +1044,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 19; // 19 = sfGuardUserProfilePeer::NUM_COLUMNS - sfGuardUserProfilePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 20; // 20 = sfGuardUserProfilePeer::NUM_COLUMNS - sfGuardUserProfilePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating sfGuardUserProfile object", $e);
@@ -1389,9 +1432,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				return $this->getIsScheduledForDeletion();
 				break;
 			case 17:
-				return $this->getLastActionAt();
+				return $this->getPrefersRichtext();
 				break;
 			case 18:
+				return $this->getLastActionAt();
+				break;
+			case 19:
 				return $this->getLastLoginAt();
 				break;
 			default:
@@ -1432,8 +1478,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$keys[14] => $this->getImportCode(),
 			$keys[15] => $this->getSystemAlerts(),
 			$keys[16] => $this->getIsScheduledForDeletion(),
-			$keys[17] => $this->getLastActionAt(),
-			$keys[18] => $this->getLastLoginAt(),
+			$keys[17] => $this->getPrefersRichtext(),
+			$keys[18] => $this->getLastActionAt(),
+			$keys[19] => $this->getLastLoginAt(),
 		);
 		return $result;
 	}
@@ -1517,9 +1564,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->setIsScheduledForDeletion($value);
 				break;
 			case 17:
-				$this->setLastActionAt($value);
+				$this->setPrefersRichtext($value);
 				break;
 			case 18:
+				$this->setLastActionAt($value);
+				break;
+			case 19:
 				$this->setLastLoginAt($value);
 				break;
 		} // switch()
@@ -1563,8 +1613,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[14], $arr)) $this->setImportCode($arr[$keys[14]]);
 		if (array_key_exists($keys[15], $arr)) $this->setSystemAlerts($arr[$keys[15]]);
 		if (array_key_exists($keys[16], $arr)) $this->setIsScheduledForDeletion($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setLastActionAt($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setLastLoginAt($arr[$keys[18]]);
+		if (array_key_exists($keys[17], $arr)) $this->setPrefersRichtext($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setLastActionAt($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setLastLoginAt($arr[$keys[19]]);
 	}
 
 	/**
@@ -1593,6 +1644,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::IMPORT_CODE)) $criteria->add(sfGuardUserProfilePeer::IMPORT_CODE, $this->import_code);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::SYSTEM_ALERTS)) $criteria->add(sfGuardUserProfilePeer::SYSTEM_ALERTS, $this->system_alerts);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION)) $criteria->add(sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION, $this->is_scheduled_for_deletion);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::PREFERS_RICHTEXT)) $criteria->add(sfGuardUserProfilePeer::PREFERS_RICHTEXT, $this->prefers_richtext);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::LAST_ACTION_AT)) $criteria->add(sfGuardUserProfilePeer::LAST_ACTION_AT, $this->last_action_at);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::LAST_LOGIN_AT)) $criteria->add(sfGuardUserProfilePeer::LAST_LOGIN_AT, $this->last_login_at);
 
@@ -1682,6 +1734,8 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$copyObj->setSystemAlerts($this->system_alerts);
 
 		$copyObj->setIsScheduledForDeletion($this->is_scheduled_for_deletion);
+
+		$copyObj->setPrefersRichtext($this->prefers_richtext);
 
 		$copyObj->setLastActionAt($this->last_action_at);
 

@@ -185,3 +185,8 @@ function check_count($checkList, $groupname)
 }
 
 
+function br2nl($text)
+{
+  return str_replace(array('&lt;br /&gt;', '<br />'), "\n", $text);
+}
+

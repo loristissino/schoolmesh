@@ -3095,6 +3095,26 @@
         <source>Get charge letters</source>
         <target>Scarica lettere di incarico</target>
     </trans-unit>
+    <trans-unit id="789">
+        <source>Prefers richtext</source>
+        <target>Pref. RichText</target>
+    </trans-unit>
+    <trans-unit id="790">
+        <source>Reference number</source>
+        <target>N. Protocollo</target>
+    </trans-unit>
+    <trans-unit id="791">
+        <source>Edit administrative information about this project</source>
+        <target>Modifica informazioni amministrative relative a questo progetto</target>
+    </trans-unit>
+    <trans-unit id="792">
+        <source>Export documentation from this project</source>
+        <target>Esporta la documentazione relativa a questo progetto</target>
+    </trans-unit>
+    <trans-unit id="793">
+        <source>Charge letters</source>
+        <target>Lettere di incarico</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

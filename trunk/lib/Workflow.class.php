@@ -103,7 +103,7 @@ class Workflow
 				'submitExtraParameters'=>'false',
 				'logMessageCode'=>'WP_APPROVED',
 				'submitNextState'=>self::IR_DRAFT,
-        'makeAttachments'=>true,
+        'makeAttachments'=>false,
         'sendEmail'=>true,
 				),
 			'reject' => Array(
@@ -205,7 +205,7 @@ class Workflow
 				'submitExtraParameters'=>'',
 				'submitNextState'=>self::FR_ARCHIVED,
 				'logMessageCode'=>'FR_APPROVED',
-        'makeAttachments'=>true,
+        'makeAttachments'=>false,
         'sendEmail'=>true,
 				),
 			'reject' => Array(

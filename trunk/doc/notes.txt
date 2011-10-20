@@ -1,4 +1,14 @@
-Added Title field in sfGuardUserProfile table
+Added title field in sfGuardUserProfile table
+
+MYSQL:	`title` VARCHAR(10),
+
+Added prefers_richtext field in sfGuardUserProfile table
+
+MYSQL:	`prefers_richtext` TINYINT default 1,
+
+Added reference_number field in Schoolproject table
+
+MYSQL:	`reference_number` VARCHAR(20),
 
 
 for the role "Teacher", do something like:

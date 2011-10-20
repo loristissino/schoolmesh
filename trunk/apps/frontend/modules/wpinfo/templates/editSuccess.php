@@ -1,5 +1,7 @@
 <?php use_helper('jQuery') ?>
-<?php use_javascript('tiny_mce/tiny_mce.js') ?>
+<?php if($sf_user->getProfile()->getPrefersRichtext()): ?>
+  <?php use_javascript('tiny_mce/tiny_mce.js') ?>
+<?php endif ?>
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     '@plansandreports' => "Plans and Reports",
@@ -39,6 +41,8 @@
 <?php endif; ?>
 <form action="<?php echo url_for('wpinfo/update?id='.$wpinfo->getId()) ?>" method="post" id="editform">
 
+<?php if($sf_user->getProfile()->getPrefersRichtext()): ?>
+
 <?php echo javascript_tag("
 tinyMCE.init({
 
@@ -54,10 +58,10 @@ editor_selector : \"mceAdvanced\"
 
 });
 ") ?>
+<?php endif ?>
 
-<textarea name="value" class="mceAdvanced" style="width:60%" rows="10" cols="50">
-<?php echo $wpinfo->getContent() ?>
-</textarea>
+<textarea name="value" class="mceAdvanced" style="width:600px" rows="20" cols="50">
+<?php if ($sf_user->getProfile()->getPrefersRichtext()): ?><?php echo nl2br($wpinfo->getContent()) ?><?php else: ?><?php echo br2nl($wpinfo->getContent()) ?><?php endif ?></textarea>
 
 <h2><?php echo __('Actions') ?></h2>
 

@@ -89,7 +89,7 @@ acknowledgeactivity:
   credentials: proj_coordination
 
 edit:
-  credentials: proj_coordination
+  credentials: [[ proj_coordination, proj_adm_ok ]]
 
 submit:
   credentials: proj_coordination
