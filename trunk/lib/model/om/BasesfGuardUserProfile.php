@@ -25,10 +25,10 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $user_id;
 
 	/**
-	 * The value for the title field.
+	 * The value for the lettertitle field.
 	 * @var        string
 	 */
-	protected $title;
+	protected $lettertitle;
 
 	/**
 	 * The value for the first_name field.
@@ -203,13 +203,13 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	}
 
 	/**
-	 * Get the [title] column value.
+	 * Get the [lettertitle] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getTitle()
+	public function getLettertitle()
 	{
-		return $this->title;
+		return $this->lettertitle;
 	}
 
 	/**
@@ -501,24 +501,24 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	} // setUserId()
 
 	/**
-	 * Set the value of [title] column.
+	 * Set the value of [lettertitle] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     sfGuardUserProfile The current object (for fluent API support)
 	 */
-	public function setTitle($v)
+	public function setLettertitle($v)
 	{
 		if ($v !== null) {
 			$v = (string) $v;
 		}
 
-		if ($this->title !== $v) {
-			$this->title = $v;
-			$this->modifiedColumns[] = sfGuardUserProfilePeer::TITLE;
+		if ($this->lettertitle !== $v) {
+			$this->lettertitle = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::LETTERTITLE;
 		}
 
 		return $this;
-	} // setTitle()
+	} // setLettertitle()
 
 	/**
 	 * Set the value of [first_name] column.
@@ -1016,7 +1016,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		try {
 
 			$this->user_id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->title = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
+			$this->lettertitle = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->first_name = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->middle_name = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->last_name = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
@@ -1384,7 +1384,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				return $this->getUserId();
 				break;
 			case 1:
-				return $this->getTitle();
+				return $this->getLettertitle();
 				break;
 			case 2:
 				return $this->getFirstName();
@@ -1462,7 +1462,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$keys = sfGuardUserProfilePeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getUserId(),
-			$keys[1] => $this->getTitle(),
+			$keys[1] => $this->getLettertitle(),
 			$keys[2] => $this->getFirstName(),
 			$keys[3] => $this->getMiddleName(),
 			$keys[4] => $this->getLastName(),
@@ -1516,7 +1516,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->setUserId($value);
 				break;
 			case 1:
-				$this->setTitle($value);
+				$this->setLettertitle($value);
 				break;
 			case 2:
 				$this->setFirstName($value);
@@ -1597,7 +1597,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$keys = sfGuardUserProfilePeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setUserId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setTitle($arr[$keys[1]]);
+		if (array_key_exists($keys[1], $arr)) $this->setLettertitle($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setFirstName($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setMiddleName($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setLastName($arr[$keys[4]]);
@@ -1628,7 +1628,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$criteria = new Criteria(sfGuardUserProfilePeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::USER_ID)) $criteria->add(sfGuardUserProfilePeer::USER_ID, $this->user_id);
-		if ($this->isColumnModified(sfGuardUserProfilePeer::TITLE)) $criteria->add(sfGuardUserProfilePeer::TITLE, $this->title);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::LETTERTITLE)) $criteria->add(sfGuardUserProfilePeer::LETTERTITLE, $this->lettertitle);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::FIRST_NAME)) $criteria->add(sfGuardUserProfilePeer::FIRST_NAME, $this->first_name);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::MIDDLE_NAME)) $criteria->add(sfGuardUserProfilePeer::MIDDLE_NAME, $this->middle_name);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::LAST_NAME)) $criteria->add(sfGuardUserProfilePeer::LAST_NAME, $this->last_name);
@@ -1703,7 +1703,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 
 		$copyObj->setUserId($this->user_id);
 
-		$copyObj->setTitle($this->title);
+		$copyObj->setLettertitle($this->lettertitle);
 
 		$copyObj->setFirstName($this->first_name);
 
