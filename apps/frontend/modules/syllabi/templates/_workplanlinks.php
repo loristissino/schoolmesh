@@ -2,7 +2,7 @@
 <td>
 <?php echo $syllabus_item->getRef() ?>
 </td>
-<?php foreach($workplan->getWpmodules() as $wpmodule): ?>
+<?php $ids=array(); foreach($workplan->getWpmodules() as $wpmodule): $ids[]=$wpmodule->getId() ?>
 <td>
 <?php if($syllabus_item->getIsSelectable()): ?>
   <?php $syllabus_contributions=$wpmodule->getSyllabusContributionsAsArray()->getRawValue() ?>
@@ -19,6 +19,19 @@
 <?php endif ?>
 </td>
 <?php endforeach ?>
+<td>
+<?php if($syllabus_item->getIsSelectable()): ?>
+  <?php echo jq_link_to_remote('◌',
+      array(
+        'update' => 'syllabus_' . $syllabus_item->getId(),
+        'url'      => url_for('wpmodule/syllabus?ids=' . Generic::b64_serialize($ids) . '&syllabus=' . $syllabus_item->getId() . '&value=R&partial=workplanlinks'),
+        'loading'=>'$(\'#loader_s'. $syllabus_item->getId() . '\').show();'),
+          array(
+          'title'=>__('Change all modules contribution to this goal\'s achievement', array('%moduletitle%'=>$wpmodule->getTitle()))
+            )
+          ) ?>
+<?php endif ?>
+</td>
 <td>
 <div style="margin-left: <?php echo ($syllabus_item->getLevel()-1)*10 ?>px;">
 <?php if ($syllabus_item->getIsSelectable()): ?>

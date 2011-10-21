@@ -46,7 +46,7 @@ class wpitemgroupActions extends sfActions
 
 	$this->wpitemType = $this->wpitemGroup->getWpitemType();
 	$this->wp = $this->wpmodule->getAppointment();
-    $this->user=$this->getUser();
+  $this->user=$this->getUser();
 	$this->forward404Unless($this->wp->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId()));
 	$this->forward404Unless($this->wp->getState()==Workflow::WP_DRAFT);
 		

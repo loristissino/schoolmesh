@@ -3115,6 +3115,18 @@
         <source>Charge letters</source>
         <target>Lettere di incarico</target>
     </trans-unit>
+    <trans-unit id="794">
+        <source>All modules</source>
+        <target>Tutti i moduli</target>
+    </trans-unit>
+    <trans-unit id="795">
+        <source>Change all modules contribution to this goal's achievement</source>
+        <target>Cambia il contributo di tutti i moduli a questo obiettivo</target>
+    </trans-unit>
+    <trans-unit id="796">
+        <source>All modules of this workplan</source>
+        <target>Tutti i moduli di questo piano di lavoro</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

@@ -1,5 +1,6 @@
-<?php use_javascript('tiny_mce/tiny_mce.js') ?>
-  
+<?php if($sf_user->getProfile()->getPrefersRichtext()): ?>
+  <?php use_javascript('tiny_mce/tiny_mce.js') ?>
+<?php endif ?>  
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     '@plansandreports' => "Plans and Reports",
@@ -21,6 +22,8 @@
 <p><?php echo __('Here you can manage all the items of this group as a list of paragraphs (this could be useful for copy&paste operations from legacy documents).') ?>
 <form action="<?php echo url_for('wpitemgroup/update?id='.$wpitemGroup->getId()) ?>" method="POST" id="editform">
 
+<?php if($sf_user->getProfile()->getPrefersRichtext()): ?>
+
 <?php echo javascripttag("
 tinyMCE.init({
 
@@ -37,9 +40,8 @@ editor_selector : \"mceAdvanced\"
 });
 ") ?>
 </script>
-<textarea name="value" class="mceAdvanced" style="width:100%" rows="20">
-<?php echo $wpitemGroup->getContent() ?>
-</textarea>
+<?php endif ?>
+<textarea name="value" class="mceAdvanced" style="width:100%" rows="20"><?php if ($sf_user->getProfile()->getPrefersRichtext()): ?><?php echo nl2br($wpitemGroup->getContent()) ?><?php else: ?><?php echo br2nl($wpitemGroup->getContent()) ?><?php endif ?></textarea>
 
 <h2><?php echo __('Actions') ?></h2>
 

@@ -45,7 +45,7 @@ class WpitemGroup extends BaseWpitemGroup
 	public function replaceItems($text)
 	{
 		$this->deleteItems();
-		$text=chop(html_entity_decode(Generic::strip_tags_and_attributes(str_replace('</p>', '<br />',$text), '<br><em>')));
+		$text=chop(html_entity_decode(Generic::strip_tags_and_attributes(str_replace(array('</p>', "\n"), '<br />',$text), '<br><em>')));
 
 		$items=explode('<br />', $text);
 		

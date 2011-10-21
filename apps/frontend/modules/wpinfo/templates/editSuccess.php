@@ -11,8 +11,6 @@
   ))
 ?>
 
-<h1><?php echo __('Edit Wpinfo') ?></h1>
-
 <? /* FIXME: I should use CSS here, instead of the table */ ?>
 <table>
 <tr>
@@ -58,6 +56,7 @@ editor_selector : \"mceAdvanced\"
 
 });
 ") ?>
+</script>
 <?php endif ?>
 
 <textarea name="value" class="mceAdvanced" style="width:600px" rows="20" cols="50">

@@ -251,20 +251,38 @@ class wpmoduleActions extends sfActions
 
   public function executeSyllabus(sfWebRequest $request)
   {
-    $this->wpmodule = WpmodulePeer::retrieveByPk($request->getParameter('id'));
-    $this->forward404Unless($this->wpmodule);
+    if($request->hasParameter('id'))
+    {
+      $this->wpmodule = WpmodulePeer::retrieveByPk($request->getParameter('id'));
+      $this->forward404Unless($this->wpmodule);
+    }
+    if($request->hasParameter('ids'))
+    {
+      $this->wpmodules = WpmodulePeer::retrieveByPks(Generic::b64_unserialize($request->getParameter('ids')));
+      $this->forward404Unless(sizeof($this->wpmodules));
+      $this->wpmodule = $this->wpmodules[0];
+    }
+    
 	  $this->user=$this->getUser();
+    $this->owner=$this->wpmodule->getOwner();  // FIXME We check only the owner of the first of the modules...
 
-
-	  $this->owner=$this->wpmodule->getOwner();;
-		
     $this->forward404Unless($this->owner->getUserId()==$this->getUser()->getProfile()->getSfGuardUser()->getId()
 		|| $this->user->hasCredential('backadmin'));
     
     $syllabus_item=SyllabusItemPeer::retrieveByPK($request->getParameter('syllabus'));
     $this->forward404Unless($syllabus_item->getIsSelectable());
 
-    $link=$this->wpmodule->manageSyllabusItem($syllabus_item->getId(), $request->getParameter('value', 0));
+    if($request->hasParameter('id'))
+    {
+      $link=$this->wpmodule->manageSyllabusItem($syllabus_item->getId(), $request->getParameter('value', 0));
+    }
+    if($request->hasParameter('ids'))
+    {
+      foreach($this->wpmodules as $wpmodule)
+      {
+        $link=$wpmodule->manageSyllabusItem($syllabus_item->getId(), $request->getParameter('value', 0));
+      }
+    }
     
     if($request->getParameter('partial')=='workplanlinks')
     {
@@ -296,7 +314,6 @@ class wpmoduleActions extends sfActions
         'showref'=>true,
         ));
     }
-    
     
   }
 

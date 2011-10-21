@@ -21,6 +21,14 @@
 				)
 			?></th>
 <?php endforeach ?>
+	<th width="10"><?php echo image_tag('vertical.php?text='. __('All modules') .
+	'&backcolor=0-0-0&textcolor=255-255-63&ywidth=250',
+			array(
+				'alt' => __('All modules'),
+				'title' => __('All modules of this workplan'),
+        'size' => '20x250')
+				)
+			?></th>
 <th><?php echo __('Item') ?></th>
 </tr>
 <?php foreach($syllabus->getSyllabusItems() as $syllabus_item): ?>
