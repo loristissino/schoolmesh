@@ -1,4 +1,6 @@
-<?php use_javascript('tiny_mce/tiny_mce.js') ?>
+<?php if($sf_user->getProfile()->getPrefersRichtext()): ?>
+  <?php use_javascript('tiny_mce/tiny_mce.js') ?>
+<?php endif ?>
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     '@plansandreports' => "Plans and Reports",
@@ -11,11 +13,9 @@
   ))
 ?>    
 
-
-<h1><?php echo $wpmodule->getTitle() ?></h1>
-<h2><?php echo $wpitemType->getTitle() ?></h2>
-
 <form action="<?php echo url_for('wpmoduleitem/update?id='.$wpmodule_item->getId()) ?>" method="POST" id="editform">
+
+<?php if($sf_user->getProfile()->getPrefersRichtext()): ?>
 
 <?php echo javascripttag("
 tinyMCE.init({
@@ -32,7 +32,10 @@ editor_selector : \"mceAdvanced\"
 
 });
 ") ?>
-<textarea name="value" class="mceAdvanced" style="width:100%">
+</script>
+<?php endif ?>
+
+<textarea name="value" class="mceAdvanced" style="width:100%" rows="2" cols="80">
 <?php echo $wpmodule_item->getContent() ?>
 </textarea>
 
