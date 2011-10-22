@@ -334,9 +334,9 @@ class Schoolproject extends BaseSchoolproject {
   }
 
 
-  public function updateFromForm($params)
+  public function updateFromForm($params, $user=null, $sf_context=null)
   {
-    Generic::updateObjectFromForm($this, array(
+    $changedfields = Generic::updateObjectFromForm($this, array(
       'title',
       'description',
       'proj_financing_id',
@@ -349,7 +349,19 @@ class Schoolproject extends BaseSchoolproject {
       'final_report',
       'reference_number',
       ), $params);
-      
+    
+    if($user && $user->getProfile()->getUserId()!=$this->getsfGuardUser())
+    {
+      foreach($changedfields as $field)
+      {
+        $this->addWfevent($user->getProfile()->getUserId(), 
+          'Value for field «%fieldname%» set to «%value%»', 
+          array('%fieldname%'=>$field, '%value%'=>$params[$field]),
+          null,
+          $sf_context);
+      }
+    }
+    
     return $this;
   }
   
@@ -752,11 +764,11 @@ class Schoolproject extends BaseSchoolproject {
     {
       foreach($resources as $resource)
       {
-        if($resource->getQuantityEstimated()<=0)
+        if($resource->getQuantityEstimated()<0)
         {
           $checkList->addCheck(new Check(
             Check::FAILED,
-            'No quantity defined for resource',
+            'The quantity defined for the resource cannot be negative',
             'Resources',
             array(
               'link_to'=>'projects/editresource?id=' . $resource->getId(),

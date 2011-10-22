@@ -2460,8 +2460,8 @@
         <target>Descrizione impostata</target>
     </trans-unit>
     <trans-unit id="634">
-        <source>No quantity defined for resource</source>
-        <target>Quantità non definita per la risorsa</target>
+        <source>The quantity defined for the resource cannot be negative</source>
+        <target>La quantità definita per la risorsa non può essere negativa</target>
     </trans-unit>
     <trans-unit id="635">
         <source>At least a resource/task is defined</source>
@@ -3126,6 +3126,10 @@
     <trans-unit id="796">
         <source>All modules of this workplan</source>
         <target>Tutti i moduli di questo piano di lavoro</target>
+    </trans-unit>
+    <trans-unit id="797">
+        <source>Value for field «%fieldname%» set to «%value%»</source>
+        <target>Valore per il campo «%fieldname%» impostato a «%value%»</target>
     </trans-unit>
     </body>
   </file>

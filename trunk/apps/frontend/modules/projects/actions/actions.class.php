@@ -809,7 +809,7 @@ class projectsActions extends sfActions
 				$this->project = SchoolprojectPeer::retrieveByPK($params['id']);
 				
 				$this->project
-        ->updateFromForm($params)
+        ->updateFromForm($params, $this->getUser(), $this->getContext())
         ->save();
 				
 				$this->getUser()->setFlash('notice',

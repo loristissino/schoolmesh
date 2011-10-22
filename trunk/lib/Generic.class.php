@@ -303,15 +303,20 @@ class Generic{
   // updates Objects (fields $fields) when in array $params
   public static function updateObjectFromForm($object, $fields, $params)
   {
+    $changedfields=array();
     // we need to check which fields are present
     foreach($fields as $field)
     {
       if (array_key_exists($field, $params))
       {
-        $object->setByName($field, $params[$field], BasePeer::TYPE_FIELDNAME);
+        if($object->getByName($field, BasePeer::TYPE_FIELDNAME)!=$params[$field])
+        {
+          $object->setByName($field, $params[$field], BasePeer::TYPE_FIELDNAME);
+          $changedfields[]=$field;
+        }
       }
     }
-//    $object->save();
+    return $changedfields;
   }
 
 
