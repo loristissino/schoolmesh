@@ -860,10 +860,12 @@ class projectsActions extends sfActions
 
     $result=$this->project->submit($this->getUser()->getProfile()->getId(), $this->getContext());
     
-    $this->getUser()->setFlash($result['result'],
-      $this->getContext()->getI18N()->__($result['message'])
-      );
-
+    $message=$this->getContext()->getI18N()->__($result['message']);
+    if(array_key_exists('mail_sent_to', $result))
+    {
+      $message .= ' ' . $this->getContext()->getI18N()->__('A confirmation message has been sent to your address %email%', array('%email%'=>$result['mail_sent_to']));
+    }
+    $this->getUser()->setFlash($result['result'], $message);
 
     if($result['result']=='notice')
     {

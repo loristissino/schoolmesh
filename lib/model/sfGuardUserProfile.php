@@ -180,7 +180,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     }
 		
 		
-		public function sendWorkflowConfirmationMessage($sfContext, $base, $arguments)
+		public function sendWorkflowConfirmationMessage($sfContext, $base, $arguments, $cc=null)
 		{
 			// This is used to send different kinds of messages to the user
 			
@@ -188,7 +188,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			{
 				try
 				{
-					$message=new WorkflowConfirmationMessage($this, $sfContext, $base, $arguments);
+					$message=new WorkflowConfirmationMessage($this, $sfContext, $base, $arguments, $cc);
 					$sfContext->getMailer()
 					->send($message);
 					return true;

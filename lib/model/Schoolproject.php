@@ -388,7 +388,7 @@ class Schoolproject extends BaseSchoolproject {
 		return parent::getProjUpshots($criteria);
 	}
 
-
+/* DEPRECATED
 	public function getOdf($doctype, sfContext $sfContext=null, $template='', $complete=true)
 	{
 		
@@ -433,6 +433,7 @@ class Schoolproject extends BaseSchoolproject {
 		return $odf;
 	}
   
+*/
   public function submit($user_id, $sf_context=null)
   {
     // we need the user_id because the project could be started by someone
@@ -444,16 +445,20 @@ class Schoolproject extends BaseSchoolproject {
     {
       try
       {
+        
+        $con = Propel::getConnection(SchoolprojectPeer::DATABASE_NAME);
+        $con->beginTransaction();
+        
         $this
         ->setState(Workflow::PROJ_SUBMITTED)
         ->setSubmissionDate(time())
-        ->save();
+        ->save($con);
         foreach($this->getProjResources() as $resource)
         {
           $resource
           ->setQuantityApproved($resource->getQuantityEstimated())
           ->setStandardCost($resource->getProjResourceType()->getStandardCost())
-          ->save();
+          ->save($con);
         }
         $result['result']='notice';
         $result['message']='The project has been submitted.';
@@ -463,13 +468,36 @@ class Schoolproject extends BaseSchoolproject {
           'Project submitted',
           null,
           Workflow::PROJ_SUBMITTED,
-          $sf_context
+          $sf_context,
+          $con
         );
+        
+        $con->commit();
+        
+        $steps=Workflow::getProjSteps();
+        
+        if ($this->getCoordinatorProfile()->sendWorkflowConfirmationMessage($sf_context, 'document_submission',
+          array(
+            '%document_id%'=>$this->getId(),
+            '%document_state%'=>$sf_context->getI18n()->__($steps[$this->getState()]['stateDescription']),
+            '%document_description%'=>$sf_context->getI18n()->__('Project «%project%»', array('%project%'=>$this->getTitle())),
+            )
+          ,
+          array(
+            sfConfig::get('app_config_projects_notifysubmission_email')=>sfConfig::get('app_config_projects_notifysubmission_name')
+            )
+        ))
+        {
+          $result['mail_sent_to']=$this->getCoordinatorProfile()->getEmail();
+        }
+
       }
       catch(Exception $e)
       {
         $result['result']='error';
         $result['message']='The project could not be submitted for an unkwnow reason.';
+        $con->rollback();
+
       }
       return $result;
     }
@@ -788,9 +816,9 @@ class Schoolproject extends BaseSchoolproject {
     
   }
   
-  public function addWfevent($userId, $comment='', $i18n_subs, $state=0, $sf_context=null)
+  public function addWfevent($userId, $comment='', $i18n_subs, $state=0, $sf_context=null, $con=null)
   {
-    Generic::addWfevent($this, $userId, $comment, $i18n_subs, $state, $sf_context);
+    Generic::addWfevent($this, $userId, $comment, $i18n_subs, $state, $sf_context, $con);
     return $this;
   }
   
@@ -802,6 +830,15 @@ class Schoolproject extends BaseSchoolproject {
 		else
 			return NULL;
 	}
+  
+  public function getLastEventDate($state, $format='U')
+  {
+		$t = WfeventPeer::retrieveLastByClassIdAndState('Schoolproject', $this->getId(), $state);
+		if ($t)
+			return $t->getCreatedAt($format);
+		else
+			return NULL;
+  }
 
   public function mayHaveResources()
   {

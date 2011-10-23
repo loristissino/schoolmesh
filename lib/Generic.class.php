@@ -320,9 +320,8 @@ class Generic{
   }
 
 
-  public static function addWfevent($object, $userId, $comment='', $i18n_subs=array(), $state=0, $sf_context=null)
+  public static function addWfevent($object, $userId, $comment='', $i18n_subs=array(), $state=0, $sf_context=null, $con=null)
   {
-    Generic::logMessage('saving wfevent1', $state);
 		$wfevent = new Wfevent();
 		$wfevent
     ->setUserId($userId)
@@ -336,7 +335,7 @@ class Generic{
 		$wfevent->setComment($comment);
     $wfevent->setState($state==null ? $object->getState(): $state); //if it is not specified, we keep the same
     
-    $wfevent->save();
+    $wfevent->save($con);
   }
 
   public static function correctString($s)

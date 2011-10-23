@@ -670,7 +670,6 @@ $con->query($sql);
 			$this->markSubItems('false');
 			$result['result']='notice';
 			$result['message']=$steps[$this->getState()]['owner']['submitDoneAction'];
-      Generic::logMessage('wfevent_insert', $this->getUserId());
 			$this->addWfevent($this->getUserId(), $steps[$this->getState()]['owner']['submitDoneAction'], null, $steps[$this->getState()]['owner']['submitNextState'], $sfContext);
 			
 			if ($this->getOwner()->getProfile()->sendWorkflowConfirmationMessage($sfContext, 'document_submission',
