@@ -59,4 +59,16 @@ class WfeventPeer extends BaseWfeventPeer {
     return self::doSelect($c);
   }
 
+  public static function retrieveLastByClassIdAndState($classname, $id, $state)
+  {
+    $c=new Criteria();
+    $c->add(self::BASE_TABLE, self::getBaseTableId($classname));
+    $c->add(self::BASE_ID, $id);
+    $c->add(self::STATE, $state);
+    $c->addDescendingOrderByColumn(WfeventPeer::CREATED_AT);
+    return self::doSelectOne($c);
+  }
+
+
+
 } // WfeventPeer

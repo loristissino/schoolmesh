@@ -262,20 +262,19 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     return $result;
   }
   
-  
 	public static function getChargeLetters($ids, $filetype='odt', $context=null)
 	{
-    return self::_getInfoLetters($ids, 'Charge letters', 'projects_charges.odt', $filetype, $context);
+    return self::_getInfoLetters($ids, 'Charge letters', 'projects_charges.odt', $filetype, array('date'=>'current'), $context);
 	}
 
 	public static function getSubmissionLetters($ids, $filetype='odt', $context=null)
 	{
-    return self::_getInfoLetters($ids, 'Submission letters', 'projects_submission.odt', $filetype, $context);
+    return self::_getInfoLetters($ids, 'Submission letters', 'projects_submission.odt', $filetype, array('date'=>'submission'), $context);
 	}
 
 
 
-	private static function _getInfoLetters($ids, $filename, $templatename, $filetype='odt', $context=null)
+	private static function _getInfoLetters($ids, $filename, $templatename, $filetype='odt', $options=array(), $context=null)
 	{
 		$result=Array();
 
@@ -320,7 +319,18 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 			$letters->projectTitle($project->getTitle());
 			$letters->schoolPrincipal(sfConfig::get('app_school_principal', 'missing Principal name in config file'));
 			
-			$letters->letterDate(date('d/m/Y'));
+      switch($options['date'])
+      {
+        case 'current':
+          $letters->letterDate(date('d/m/Y'));
+          break;
+        case 'submission':
+          $letters->letterDate($project->getLastEventDate(Workflow::PROJ_SUBMITTED, 'd/m/Y'));
+          break;
+        default:
+          $letters->letterDate('_______');
+          
+      }
       
       $usedtypes=array();
       
@@ -334,7 +344,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
         $letters->resources->merge();
         if($ResourceType->getRoleId())
         {
-          $usedtypes[]=$ResourceType->getId();
+          $usedtypes[$ResourceType->getId()]=$ResourceType;
         }
       }
       
@@ -352,7 +362,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
         $letters->deadlines->merge();
       }
       
-      foreach(ProjResourceTypePeer::retrieveByPks($usedtypes) as $ResourceType)
+      foreach($usedtypes as $ResourceType)
       {
         $letters->resourcetypes->rtDescription($ResourceType->getDescription());
         $letters->resourcetypes->rtStandardCost(OdfDocPeer::quantityvalue($ResourceType->getStandardCost(), sfConfig::get('app_config_currency_symbol')));

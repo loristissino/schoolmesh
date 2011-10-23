@@ -57,10 +57,11 @@ EOF;
         $count=0;
         foreach($appointment->getWpmodules() as $wpmodule)
         {
+          $date=$wpmodule->getUpdatedAt();
+            
           if(strpos($wpmodule->getTitle(), '---') or strpos($wpmodule->getPeriod(), '---'))
           {
             echo $wpmodule->getId() . ' # ' . $wpmodule->getTitle() . ' # ' . $wpmodule->getPeriod() . "\n";
-            $date=$wpmodule->getUpdatedAt();
             $wpmodule
             ->setTitle(str_replace('---', '', $wpmodule->getTitle()))
             ->setPeriod(str_replace('---', '', $wpmodule->getPeriod()))
@@ -71,6 +72,25 @@ EOF;
             ;
             echo "REPLACED WITH\n" . $wpmodule->getTitle() . ' # ' . $wpmodule->getPeriod() . "\n";
           }
+          
+          if($appointment->getState()>=Workflow::IR_DRAFT)
+          {
+            if(!$wpmodule->getIsPublic())
+            {
+              // It seems that it happened, we must introduce transactions to avoid this problem
+              $wpmodule
+              ->setIsPublic(true)
+              ->save($con)
+              ;
+              $wpmodule
+              ->setUpdatedAt($date)
+              ->save($con)
+              ;
+              
+              echo "FIXED Wpmodule " . $wpmodule->getId() . " public bit\n"; 
+            }
+          }
+          
           foreach($wpmodule->getWpItemGroups() as $WpitemGroup)
           {
             foreach($WpitemGroup->getWpmoduleItems() as $Wpitem)

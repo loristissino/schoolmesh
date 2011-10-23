@@ -2,7 +2,7 @@
 
 class WorkflowConfirmationMessage extends ProjectBaseMessage
 {
-  public function __construct(sfGuardUserProfile $user, sfContext $sfContext=null, $base='', $replacements=array())
+  public function __construct(sfGuardUserProfile $user, sfContext $sfContext=null, $base='', $replacements=array(), $cc=null)
   {
     parent::__construct();
     
@@ -12,5 +12,8 @@ class WorkflowConfirmationMessage extends ProjectBaseMessage
     ->makeReplacements($replacements)
 	  ->setTo(array($user->getEmail() => $user->getFullName()))
     ;
+    
+    $this->setCc($cc);
+   
   }
 }

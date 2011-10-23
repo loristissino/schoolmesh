@@ -38,9 +38,9 @@
       <td><strong><?php echo $project->getTitle() ?></strong></td>
       <td><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></td>
       <td><?php include_partial('state', array('project'=>$project)) ?></td>
-      <td><?php echo $project->getReferenceNumber() ?>
-      <td><?php echo Generic::datetime($project->getApprovalDate('U'), $sf_context) ?></td>
-      <td><?php echo Generic::datetime($project->getFinancingDate('U'), $sf_context) ?></td>
+      <td><?php echo $project->getReferenceNumber() ?></td>
+      <td><?php echo $project->getApprovalDate('d/m/y') ?></td>
+      <td><?php echo $project->getFinancingDate('d/m/y') ?></td>
       <td>
       <?php if ($project->isViewableBy($sf_user)): ?>
         <?php include_partial('deadlinesicons', array('project'=>$project)) ?>
