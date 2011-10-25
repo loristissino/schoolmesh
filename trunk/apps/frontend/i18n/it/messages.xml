@@ -795,8 +795,8 @@
         <target>Manca il gruppo %s</target>
       </trans-unit>
       <trans-unit id="227">
-        <source>There must be at least an item in group &#xAB;%s&#xBB;</source>
-        <target>Deve essere presente almeno un elemento nel gruppo &#xAB;%s&#xBB;</target>
+        <source>There must be at least an item in group «%s»</source>
+        <target>Deve essere presente almeno un elemento nel gruppo «%s»</target>
       </trans-unit>
       <trans-unit id="228">
         <source>Invalid text</source>
@@ -3131,6 +3131,38 @@
         <source>Value for field «%fieldname%» set to «%value%»</source>
         <target>Valore per il campo «%fieldname%» impostato a «%value%»</target>
     </trans-unit>
+    <trans-unit id="798">
+        <source>The document has been correctly made private.</source>
+        <target>Il documento è stato correttamente reso privato.</target>
+    </trans-unit>
+    <trans-unit id="799">
+        <source>Make the whole document public before submission, so that your colleagues can see it</source>
+        <target>Rendi l'intero documento pubblico prima della consegna, in modo che i tuoi colleghi possano prenderne visione</target>
+    </trans-unit>
+    <trans-unit id="800">
+        <source>Set the whole document to private</source>
+        <target>Rendi il documento privato</target>
+    </trans-unit>
+    <trans-unit id="801">
+        <source>The public bit cannot be changed for a document in this state.</source>
+        <target>Lo stato di pubblicazione non può essere cambiato per un documento in questo stato.</target>
+    </trans-unit>
+    <trans-unit id="802">
+        <source>The document has been correctly published. Please note that it is now viewable by your colleagues, but not submitted.</source>
+        <target>Il documento è stato correttamente pubblicato. Nota che è ora visibile dai tuoi colleghi, ma non è stato ancora consegnato.</target>
+    </trans-unit>
+    <trans-unit id="803">
+        <source>The document has been correctly made private.</source>
+        <target>Il documento è stato correttamente reso privato.</target>
+    </trans-unit>
+    <trans-unit id="804">
+        <source>The requested action could not be performed.</source>
+        <target>L'azione richiesta non è stata eseguita.</target>
+    </trans-unit>
+    <trans-unit id="805">
+        <source>Set syllabus contributions for all modules of this workplan</source>
+        <target>Imposta contributi al syllabus per tutti i moduli di questo piano di lavoro</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
@@ -3142,5 +3174,18 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
  
+
+
 

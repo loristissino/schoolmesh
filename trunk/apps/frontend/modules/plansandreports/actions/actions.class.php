@@ -256,7 +256,7 @@ public function executeBatch(sfWebRequest $request)
 
     $this->iworkplan = AppointmentPeer::retrieveByPk($request->getParameter('from'));
     $this->forward404Unless($this->iworkplan);
-    $this->forward404Unless(($this->iworkplan->getState()>Workflow::WP_DRAFT) || ($this->iworkplan->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId())));
+    $this->forward404Unless(($this->iworkplan->isViewableBy($this->user->getProfile()->getSfGuardUser()->getId())));
 	
 	$result=$this->workplan->importFromDB($this->getContext(), $this->iworkplan);
 
@@ -267,28 +267,41 @@ public function executeBatch(sfWebRequest $request)
 	}
 
 
+  public function executePublish(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));	
+    $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
+    
+    $this->forward404Unless($this->workplan->isOwnedBy($this->getUser()->getProfile()->getUserId()));
+    
+    $result=$this->workplan->teacherPublishUnpublish($request->getParameter('makepublic')=='true', $this->getContext());
+    $this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+    
+    return $this->redirect('plansandreports/fill?id='. $this->workplan->getId());
+  }
+
 	public function executeSubmit(sfWebRequest $request)
 	{
     $this->forward404Unless($request->isMethod('post')||$request->isMethod('put'));	
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
 	
-	$this->forward404Unless($this->workplan->isOwnedBy($this->getUser()->getProfile()->getUserId()));
+    $this->forward404Unless($this->workplan->isOwnedBy($this->getUser()->getProfile()->getUserId()));
+    
+    $result=$this->workplan->teacherSubmit($this->getContext());
+    $this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+    if ($result['mail_sent_to'])
+    {
+      $this->getUser()->setFlash('mail_sent_to', $result['mail_sent_to']);
+    }
 	
-	$result=$this->workplan->teacherSubmit($this->getContext());
-	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
-	if ($result['mail_sent_to'])
-	{
-		$this->getUser()->setFlash('mail_sent_to', $result['mail_sent_to']);
-	}
-	
-	if (array_key_exists('checkList', $result))
-	{
-		$this->checkList = $result['checkList'];
-	}
-		
-	$this->steps=Workflow::getWpfrSteps();
-	
-	$this->workflow_logs = $this->workplan->getWorkflowLogs();
+    if (array_key_exists('checkList', $result))
+    {
+      $this->checkList = $result['checkList'];
+    }
+      
+    $this->steps=Workflow::getWpfrSteps();
+    
+    $this->workflow_logs = $this->workplan->getWorkflowLogs();
 
 	}
 

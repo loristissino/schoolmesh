@@ -377,6 +377,7 @@ CREATE TABLE `appointment`
 	`year_id` INTEGER  NOT NULL,
 	`state` INTEGER,
 	`hours` INTEGER default 0,
+	`is_public` TINYINT,
 	`syllabus_id` INTEGER,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,

@@ -1,25 +1,12 @@
-<?php slot('title', sprintf('%s -- %s --  %s', $wpmodule->getTitle(), $workplan->__toString(), $owner->getFullName())) ?>
-<?php slot('breadcrumbs',
-	link_to(__("Plans and Reports"), "@plansandreports") . ' » ' . 
-	link_to($workplan, 'plansandreports/fill?id='.$workplan->getId()) . ' » ' . 
-	$wpmodule->getTitle() . ' » ' .
-	__('Edit module heading')
-	)
-	
-	?>
-
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     '@plansandreports' => "Plans and Reports",
     'plansandreports/fill?id='.$workplan->getId() => $workplan,
-    
+    'wpmodule/view?id='.$wpmodule->getId() => $wpmodule->getTitle(),
     ),
   'current'=>__('Edit module heading'),
-  'title'=>$workplan . ' -- ' . $wpmodule->getTitle(),
   ))
 ?>
-
-<h1><?php echo __('Edit module heading') ?></h1>
 
 <?php include_partial('content/flashes'); ?>
 

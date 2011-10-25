@@ -43,6 +43,7 @@ class AppointmentTableMap extends TableMap {
 		$this->addForeignKey('YEAR_ID', 'YearId', 'INTEGER', 'year', 'ID', true, null, null);
 		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
 		$this->addColumn('HOURS', 'Hours', 'INTEGER', false, null, 0);
+		$this->addColumn('IS_PUBLIC', 'IsPublic', 'BOOLEAN', false, null, null);
 		$this->addForeignKey('SYLLABUS_ID', 'SyllabusId', 'INTEGER', 'syllabus', 'ID', false, null, null);
 		$this->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null, null);
 		$this->addColumn('UPDATED_AT', 'UpdatedAt', 'TIMESTAMP', false, null, null);

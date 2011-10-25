@@ -7,7 +7,7 @@
     'plansandreports/fill?id='.$workplan->getId() => $workplan
     ),
   'current'=>$wpmodule->getTitle(),
-  'title'=>$workplan . ' -- ' . $wpmodule->getTitle(),
+  'hide_title'=>true,
   ))
 ?>    
 

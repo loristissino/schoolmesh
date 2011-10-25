@@ -25,7 +25,7 @@ abstract class BaseAppointmentPeer {
 	const TM_CLASS = 'AppointmentTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 11;
+	const NUM_COLUMNS = 12;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -50,6 +50,9 @@ abstract class BaseAppointmentPeer {
 
 	/** the column name for the HOURS field */
 	const HOURS = 'appointment.HOURS';
+
+	/** the column name for the IS_PUBLIC field */
+	const IS_PUBLIC = 'appointment.IS_PUBLIC';
 
 	/** the column name for the SYLLABUS_ID field */
 	const SYLLABUS_ID = 'appointment.SYLLABUS_ID';
@@ -86,11 +89,11 @@ abstract class BaseAppointmentPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'SubjectId', 'SchoolclassId', 'YearId', 'State', 'Hours', 'SyllabusId', 'CreatedAt', 'UpdatedAt', 'ImportCode', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'subjectId', 'schoolclassId', 'yearId', 'state', 'hours', 'syllabusId', 'createdAt', 'updatedAt', 'importCode', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::SUBJECT_ID, self::SCHOOLCLASS_ID, self::YEAR_ID, self::STATE, self::HOURS, self::SYLLABUS_ID, self::CREATED_AT, self::UPDATED_AT, self::IMPORT_CODE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'subject_id', 'schoolclass_id', 'year_id', 'state', 'hours', 'syllabus_id', 'created_at', 'updated_at', 'import_code', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'SubjectId', 'SchoolclassId', 'YearId', 'State', 'Hours', 'IsPublic', 'SyllabusId', 'CreatedAt', 'UpdatedAt', 'ImportCode', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'subjectId', 'schoolclassId', 'yearId', 'state', 'hours', 'isPublic', 'syllabusId', 'createdAt', 'updatedAt', 'importCode', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::SUBJECT_ID, self::SCHOOLCLASS_ID, self::YEAR_ID, self::STATE, self::HOURS, self::IS_PUBLIC, self::SYLLABUS_ID, self::CREATED_AT, self::UPDATED_AT, self::IMPORT_CODE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'subject_id', 'schoolclass_id', 'year_id', 'state', 'hours', 'is_public', 'syllabus_id', 'created_at', 'updated_at', 'import_code', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
 	);
 
 	/**
@@ -100,11 +103,11 @@ abstract class BaseAppointmentPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'SubjectId' => 2, 'SchoolclassId' => 3, 'YearId' => 4, 'State' => 5, 'Hours' => 6, 'SyllabusId' => 7, 'CreatedAt' => 8, 'UpdatedAt' => 9, 'ImportCode' => 10, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'subjectId' => 2, 'schoolclassId' => 3, 'yearId' => 4, 'state' => 5, 'hours' => 6, 'syllabusId' => 7, 'createdAt' => 8, 'updatedAt' => 9, 'importCode' => 10, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::SUBJECT_ID => 2, self::SCHOOLCLASS_ID => 3, self::YEAR_ID => 4, self::STATE => 5, self::HOURS => 6, self::SYLLABUS_ID => 7, self::CREATED_AT => 8, self::UPDATED_AT => 9, self::IMPORT_CODE => 10, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'subject_id' => 2, 'schoolclass_id' => 3, 'year_id' => 4, 'state' => 5, 'hours' => 6, 'syllabus_id' => 7, 'created_at' => 8, 'updated_at' => 9, 'import_code' => 10, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'SubjectId' => 2, 'SchoolclassId' => 3, 'YearId' => 4, 'State' => 5, 'Hours' => 6, 'IsPublic' => 7, 'SyllabusId' => 8, 'CreatedAt' => 9, 'UpdatedAt' => 10, 'ImportCode' => 11, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'subjectId' => 2, 'schoolclassId' => 3, 'yearId' => 4, 'state' => 5, 'hours' => 6, 'isPublic' => 7, 'syllabusId' => 8, 'createdAt' => 9, 'updatedAt' => 10, 'importCode' => 11, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::SUBJECT_ID => 2, self::SCHOOLCLASS_ID => 3, self::YEAR_ID => 4, self::STATE => 5, self::HOURS => 6, self::IS_PUBLIC => 7, self::SYLLABUS_ID => 8, self::CREATED_AT => 9, self::UPDATED_AT => 10, self::IMPORT_CODE => 11, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'subject_id' => 2, 'schoolclass_id' => 3, 'year_id' => 4, 'state' => 5, 'hours' => 6, 'is_public' => 7, 'syllabus_id' => 8, 'created_at' => 9, 'updated_at' => 10, 'import_code' => 11, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
 	);
 
 	/**
@@ -181,6 +184,7 @@ abstract class BaseAppointmentPeer {
 		$criteria->addSelectColumn(AppointmentPeer::YEAR_ID);
 		$criteria->addSelectColumn(AppointmentPeer::STATE);
 		$criteria->addSelectColumn(AppointmentPeer::HOURS);
+		$criteria->addSelectColumn(AppointmentPeer::IS_PUBLIC);
 		$criteria->addSelectColumn(AppointmentPeer::SYLLABUS_ID);
 		$criteria->addSelectColumn(AppointmentPeer::CREATED_AT);
 		$criteria->addSelectColumn(AppointmentPeer::UPDATED_AT);

@@ -64,7 +64,7 @@
 	<?php echo link_to(
 				__('Import'),
 				'plansandreports/importmodule?id='.$workplan->getId(),
-				array('title'=>'Import a module previously prepared')
+				array('title'=>__('Import a module previously prepared'))
 				)?>
 	
 	</li>
@@ -74,7 +74,7 @@
 	<?php echo link_to(
 				__('Syllabus'),
 				'plansandreports/syllabus?id='.$workplan->getId(),
-				array('title'=>'Set syllabus links for this workplan')
+				array('title'=>__('Set syllabus contributions for all modules of this workplan'))
 				)?>
 	</li>
   <?php endif ?>

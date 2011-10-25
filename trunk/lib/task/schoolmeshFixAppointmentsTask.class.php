@@ -16,7 +16,8 @@ class schoolmeshFixAppointmentsTask extends sfBaseTask
       // add your own options here
 	    new sfCommandOption('year', null, sfCommandOption::PARAMETER_REQUIRED, 'School year', ''), 
 	    new sfCommandOption('subject', null, sfCommandOption::PARAMETER_REQUIRED, 'Subject shortcut', ''), 
-      new sfCommandOption('dry-run', null, sfCommandOption::PARAMETER_NONE, 'whether the command will be executed leaving the db intact'),
+      new sfCommandOption('dry-run', null, sfCommandOption::PARAMETER_NONE, 'Whether the command will be executed leaving the db intact'),
+      new sfCommandOption('also-not-submitted', null, sfCommandOption::PARAMETER_NONE, 'Whether the documents not yet submitted must be considered'),
 
     ));
 
@@ -54,23 +55,91 @@ EOF;
     {
       if($appointment->getState()>Workflow::WP_WSMC)
       {
+        $dateA=$appointment->getUpdatedAt();
+        
+        $dirtyA=false;
+        
+        if(!$appointment->getIsPublic())
+        {
+          $appointment
+          ->setIsPublic(true)
+          ->save($con);
+          $dirtyA=true;
+        }
+        
+        if($dirtyA)
+        {
+          $appointment
+          ->setUpdatedAt($dateA)
+          ->save($con);
+          $this->logSection('appoint. '.$appointment->getId(), 'fixed public bit', null, 'COMMENT');
+        }
+      }
+      if($options['also-not-submitted'] || $appointment->getState()>Workflow::WP_WSMC)
+      {
         $count=0;
+
+        foreach($appointment->getWpinfos() as $wpinfo)
+        {
+          $date=$wpinfo->getUpdatedAt();
+          $old=$wpinfo->getContent();
+          $new=ltrim(rtrim($old));
+          if($old!=$new)
+          {
+            $this->logSection('wpinfo ' . $wpinfo->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
+            $wpinfo
+            ->setContent($new)
+            ->save($con)
+            ;
+            $wpinfo
+            ->setUpdatedAt($date)
+            ->save()
+            ;
+          }
+          
+        }
+
+
         foreach($appointment->getWpmodules() as $wpmodule)
         {
           $date=$wpmodule->getUpdatedAt();
-            
-          if(strpos($wpmodule->getTitle(), '---') or strpos($wpmodule->getPeriod(), '---'))
+          
+          $dirtyW=false;
+          
+          if(strpos($wpmodule->getTitle(), '---')!==false)
           {
-            echo $wpmodule->getId() . ' # ' . $wpmodule->getTitle() . ' # ' . $wpmodule->getPeriod() . "\n";
-            $wpmodule
-            ->setTitle(str_replace('---', '', $wpmodule->getTitle()))
-            ->setPeriod(str_replace('---', '', $wpmodule->getPeriod()))
-            ->save();
+            $old=$wpmodule->getTitle();
+            $new=str_replace('---', '', $old);
+            $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
+            $wpmodule->setTitle($new);
+            $dirtyW=true;
+          }
+          
+          $old=$wpmodule->getTitle();
+          $new=ltrim(rtrim($old));
+          if($old!=$new)
+          {
+            $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
+            $wpmodule->setTitle($new);
+            $dirtyW=true;
+          }
+
+
+          if(strpos($wpmodule->getPeriod(), '---')!==false)
+          {
+            $old=$wpmodule->getPeriod();
+            $new=str_replace('---', '', $old);
+            $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
+            $wpmodule->setPeriod($new);
+            $dirtyW=true;
+          }
+          if($dirtyW)
+          {
+            $wpmodule->save($con);
             $wpmodule
             ->setUpdatedAt($date)
             ->save($con)
             ;
-            echo "REPLACED WITH\n" . $wpmodule->getTitle() . ' # ' . $wpmodule->getPeriod() . "\n";
           }
           
           if($appointment->getState()>=Workflow::IR_DRAFT)
@@ -87,7 +156,7 @@ EOF;
               ->save($con)
               ;
               
-              echo "FIXED Wpmodule " . $wpmodule->getId() . " public bit\n"; 
+              $this->logSection('wpmodule ' . $wpmodule->getId(), 'fixed public bit', null, 'COMMENT'); 
             }
           }
           
@@ -95,18 +164,22 @@ EOF;
           {
             foreach($WpitemGroup->getWpmoduleItems() as $Wpitem)
             {
-              if(strpos($Wpitem->getContent(), '---') or strpos($Wpitem->getContent(), "\n"))
+              $old=$Wpitem->getContent();
+              $new=$old;
+              $new=str_replace('---', '', $new);
+              $new=str_replace(array("\r\n", "\n", "\r", '  '), ' ', $new);
+
+              if($new!=$old)
               {
-                echo $Wpitem->getId() . ' # ' . $Wpitem->getContent() . "\n";
                 $Wpitem
-                ->setContent(str_replace('---', '', $Wpitem->getContent()))
-                ->setContent(str_replace("\r\n", ' ', $Wpitem->getContent()))
-                ->setContent(str_replace("\n", ' ', $Wpitem->getContent()))
-                ->setContent(str_replace("\r", ' ', $Wpitem->getContent()))
-                ->setContent(str_replace('  ', ' ', $Wpitem->getContent()))
+                ->setContent($new)
                 ->save($con);
-                echo "REPLACED WITH\n" . $Wpitem->getContent() . "\n";
-                
+                $this->logSection('wpitem ' . $Wpitem->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
+                echo "»»» OLD TEXT «««\n";
+                echo $old . "\n";
+                echo "»»» NEW TEXT «««\n";
+                echo $new . "\n";
+                echo "^^^^^^^^^^^^^^^^\n";
               }
             }
           }
@@ -116,6 +189,9 @@ EOF;
           $this->logSection('appoint.', sprintf('%d: fixed %d module(s)', $appointment->getId(), $count), null, 'COMMENT');
         }
       }
+      
+      
+      $checkList=$appointment->getChecks();
       
 	  }  // appointment loop
     
