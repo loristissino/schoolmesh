@@ -12,13 +12,16 @@
 <tr>
 <th><?php echo __('Ref.') ?></th>
 <?php foreach($workplan->getWpmodules() as $wpmodule): ?>
-	<th width="10"><?php echo image_tag('vertical.php?text='. urlencode($wpmodule->getTitle()) .
-	'&backcolor=255-255-255&textcolor=0-0-0&ywidth=250',
-			array(
-				'alt' => $wpmodule->getTitle(),
-				'title' => $wpmodule->getTitle(),
-        'size' => '20x250')
-				)
+	<th width="10"><?php echo link_to(
+    image_tag('vertical.php?text='. urlencode($wpmodule->getTitle()) .
+    '&backcolor=255-255-255&textcolor=0-0-0&ywidth=250',
+        array(
+          'alt' => $wpmodule->getTitle(),
+          'title' => $wpmodule->getTitle(),
+          'size' => '20x250')
+          ),
+        'wpmodule/view?id=' . $wpmodule->getId()
+        )
 			?></th>
 <?php endforeach ?>
 	<th width="10"><?php echo image_tag('vertical.php?text='. __('All modules') .

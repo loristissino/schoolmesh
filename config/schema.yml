@@ -142,6 +142,7 @@ propel:
     is_selectable: { type: boolean, default: false }
     _uniques:
       ir: [syllabus_id, ref]
+      
   appointment:
     id: ~
     user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
@@ -150,6 +151,7 @@ propel:
     year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     state:             { type: integer }
     hours:            { type: integer, default: 0 }
+    is_public:         { type: boolean }
     syllabus_id: ~
     created_at:   
     updated_at:

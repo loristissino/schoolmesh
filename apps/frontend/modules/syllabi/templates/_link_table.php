@@ -4,7 +4,7 @@
 <?php echo $syllabus_item->getRef() ?>
 </td>
 <td>
-<div style="margin-left: <?php echo ($syllabus_item->getLevel()-1)*10 ?>px;">
+<div style="margin-left: <?php echo ($syllabus_item->getLevel()-1)*20 ?>px;">
 <?php include_partial('syllabi/link', array('syllabus_item'=>$syllabus_item, 'wpmodule'=>$wpmodule, 'syllabusview'=>'table', 'link'=>$link, 'showref'=>false)) ?>
 </div>
 </td>

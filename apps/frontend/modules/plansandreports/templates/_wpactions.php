@@ -17,6 +17,31 @@
 	</li><br />
 	<?php endif ?>
 	<?php include_partial('export', array('workplan' => $workplan, 'steps'=>$steps)) ?><br />
+	<?php if($workplan->getState()==Workflow::WP_DRAFT): ?>
+    <?php if(!$workplan->getIsPublic()): ?>
+      <li class="sf_admin_action_publish">
+            <?php echo link_to(
+            __('Publish'),
+            'plansandreports/publish?id='.$workplan->getId(). '&makepublic=true',
+            array(
+              'method' => 'put',
+              'title' => __('Make the whole document public before submission, so that your colleagues can see it')
+              )
+            )?>
+      </li><br />
+    <?php else: ?>
+      <li class="sf_admin_action_unpublish">
+            <?php echo link_to(
+            __('Keep private'),
+            'plansandreports/publish?id='.$workplan->getId(). '&makepublic=false',
+            array(
+              'method' => 'put',
+              'title' => __('Set the whole document to private')
+              )
+            )?>
+      </li><br />
+    <?php endif ?>
+	<?php endif ?>
 	<?php if($workplan->getState()==Workflow::WP_DRAFT || $workplan->getState()==Workflow::IR_DRAFT): ?>
 	<li class="sf_admin_action_submit">
 				<?php echo link_to(

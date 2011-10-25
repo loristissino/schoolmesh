@@ -27,7 +27,7 @@ class Appointment extends BaseAppointment
 	
 	{
 		$c=new Criteria();
-		$c->add(AppointmentPeer::STATE, Workflow::WP_DRAFT, Criteria::GREATER_THAN);  // must be already published
+		$c->add(AppointmentPeer::IS_PUBLIC, true);  // must be already published
 		$c->add(AppointmentPeer::USER_ID, $this->getUserId(), Criteria::NOT_EQUAL);  // not the same teacher
 		$c->add(AppointmentPeer::SUBJECT_ID, $this->getSubjectId());                 // the same subject
 		$c->addJoin(AppointmentPeer::SCHOOLCLASS_ID, SchoolclassPeer::ID);
@@ -187,8 +187,10 @@ class Appointment extends BaseAppointment
 			throw new Exception('state must be a string!');
 		}
 		
-		$con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
-	 
+		if(!$con)
+    {
+      $con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
+	  }
 //		$sql = 'UPDATE '.WpmoduleItemPeer::TABLE_NAME.' SET '.WpmoduleItemPeer::IS_EDITABLE.' = FALSE WHERE '.WpmoduleItemPeer::RANK.' > '.$this->getRank() . ' AND ' . WpmoduleItemPeer::WPITEM_GROUP_ID .'='. $this->getWpitemGroupId();
 
 // this should be made portable using Peer constants...
@@ -204,7 +206,6 @@ JOIN `appointment` ON `wpmodule`.`appointment_id` = `appointment`.`id`
 SET `is_editable` = ' . $newstate . '
 
 WHERE `appointment`.`id` = ' . $this->getId();
-
 
 $con->query($sql);
 		
@@ -503,7 +504,7 @@ $con->query($sql);
 									
 									$checkList->addCheck(new Check(
 										Check::FAILED,
-										'Missing group %s',
+										sprintf('Missing group %s', $it->getTitle()),
 										$groupname));
 										/*
 										
@@ -530,7 +531,7 @@ $con->query($sql);
 											
 											$checkList->addCheck(new Check(
 												Check::FAILED,
-												'There must be at least an item in group',
+												sprintf('There must be at least an item in group «%s»', $it->getTitle()),
 												$groupname));
 												/*
 												
@@ -646,6 +647,63 @@ $con->query($sql);
 			
 		return WptoolAppointmentPeer::countToolsOfTypeForAppointment($typeId, $this->getId());
 		}
+
+  private function _makePublic($public)
+  {
+    $con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
+
+    try
+    {
+      $this
+      ->setIsPublic($public)
+      ->save($con);
+      
+      foreach($this->getWpmodules() as $wpmodule)
+      {
+        $wpmodule->setIsPublic($public)->save($con);
+      }
+
+      $con->commit();
+
+      return true;
+    }
+    catch (Exception $e)
+    {
+      return false;
+    }
+    
+  }
+
+	public function teacherPublishUnpublish($public, sfContext $sfContext=null)
+	{
+    $result=Array();
+    
+    if($this->getState()>Workflow::WP_WSMC)
+    {
+      return array('result'=>'error', 'message'=>'The public bit cannot be changed for a document in this state.');
+    }
+
+    if($this->_makePublic($public))
+    {
+      $result['result']='notice';
+      if($public)
+      {
+        $result['message']='The document has been correctly published. Please note that it is now viewable by your colleagues, but not submitted.';
+      }
+      else
+      {
+        $result['message']='The document has been correctly made private.';
+      }
+    }
+    else
+    {
+      $con->rollback();
+      $result['result']='error';
+      $result['message']='The requested action could not be performed.';
+    }
+    return $result;
+  }
+
 
 	public function teacherSubmit(sfContext $sfContext=null)
 	{
@@ -880,6 +938,9 @@ public function getWorkflowLogs()
 		
 	if ($this->getState()>Workflow::WP_DRAFT)
 		return true;	
+  
+  if ($this->getIsPublic())
+    return true;
 
 	return false;
 	}
