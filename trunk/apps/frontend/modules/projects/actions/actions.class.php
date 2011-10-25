@@ -408,7 +408,7 @@ class projectsActions extends sfActions
   {
     $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
     $this->projects=SchoolprojectPeer::retrieveByPks($this->ids);
-    $this->setTemplate('report');   
+    $this->setTemplate('report');
     $this->breadcrumpstype='projects/monitoring/viewasreport';
   }
   
@@ -417,7 +417,7 @@ class projectsActions extends sfActions
    $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPK($request->getParameter('id')));
    $this->projects=Array($this->project);
    $this->setTemplate('report');   
-    $this->breadcrumpstype='projects/project/view';
+   $this->breadcrumpstype='projects/project/view';
   }
   
   public function executeMonitorview(sfWebRequest $request)
@@ -794,6 +794,15 @@ class projectsActions extends sfActions
 	
 	$this->form = new SchoolprojectForm($this->project);
   $this->form->addUserDependentConfiguration($this->getUser());
+  
+  if($request->getParameter('back','')=='monitor')
+  {
+    $this->breadcrumpstype='projects/monitoring';
+  }
+  else
+  {
+    $this->breadcrumpstype='projects/index';
+  }
 
 	if ($request->isMethod('post'))
 		{

@@ -16,7 +16,7 @@
   <?php endif ?>
 	<li class="sf_admin_action_edit">
 		<?php echo link_to(__('Edit'),
-			url_for('projects/edit?id=' . $project->getId()),
+			url_for('projects/edit?id=' . $project->getId() . '&back=monitor'),
 			array('title'=>__('Edit administrative information about this project'))
 		)?>
 		</li>

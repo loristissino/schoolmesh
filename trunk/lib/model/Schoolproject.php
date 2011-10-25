@@ -850,5 +850,16 @@ class Schoolproject extends BaseSchoolproject {
     return $this->getProjCategoryId() ? $this->getProjCategory()->getResources()==2 : false;
   }
 
+  public function getReferenceNumberOrDefault()
+  {
+    if ($this->getReferenceNumber())
+    {
+      return $this->getReferenceNumber();
+    }
+    else
+    {
+      return '_______';
+    }
+  }
 
 } // Schoolproject
