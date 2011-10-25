@@ -4,6 +4,16 @@
 <?php use_javascript('datepicker') ?>
 <?php //use_javascript('jquery.ui.datepicker-' . sfConfig::get('sf_default_culture') . '.js') ?>
 
+<?php if($breadcrumpstype=='projects/monitoring'):?>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'projects/monitor' => __("Projects monitoring"),
+    ),
+  'current'=>$project->getTitle()
+  ))
+?>
+<?php endif ?>
+<?php if($breadcrumpstype=='projects/index'):?>
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     'projects/index' => __("Projects"),
@@ -11,6 +21,7 @@
   'current'=>$project->getTitle()
   ))
 ?>
+<?php endif ?>
 
 <?php include_partial('content/flashes'); ?>
 

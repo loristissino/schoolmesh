@@ -318,7 +318,9 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       $letters->userEmail($user->getValidatedEmail());
 			$letters->projectTitle($project->getTitle());
 			$letters->schoolPrincipal(sfConfig::get('app_school_principal', 'missing Principal name in config file'));
-			
+      
+      $letters->referenceNumber($project->getReferenceNumberOrDefault()); 
+      
       switch($options['date'])
       {
         case 'current':
