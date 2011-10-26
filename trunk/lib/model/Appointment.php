@@ -179,9 +179,12 @@ class Appointment extends BaseAppointment
 		
 	}
 
-	public function markSubItems($newstate, $con=null)
+	public function markSubItemsAsEditable($parameters=array(), $con=null)
 	{
-		
+		$newstate=$parameters['newstate'];
+    
+    Generic::logMessage('mark', ">>$newstate<<");
+    
 		if (!is_string($newstate))
 		{
 			throw new Exception('state must be a string!');
@@ -206,6 +209,8 @@ JOIN `appointment` ON `wpmodule`.`appointment_id` = `appointment`.`id`
 SET `is_editable` = ' . $newstate . '
 
 WHERE `appointment`.`id` = ' . $this->getId();
+
+Generic::logMessage('rejectquery', $sql);
 
 $con->query($sql);
 		
@@ -257,18 +262,26 @@ $con->query($sql);
     $email_needed=$steps[$this->getState()]['actions']['approve']['sendEmail'];
     // we save the value before changing the state...
 
+    $extraactions=$steps[$this->getState()]['actions']['approve']['submitExtraActions'];
+    foreach($extraactions as $function=>$parameters)
+    {
+      $this->$function($parameters, $con);
+    }
+
+    /*
 		if($steps[$this->getState()]['actions']['approve']['submitExtraAction']!='')
 			$this->$steps[$this->getState()]['actions']['approve']['submitExtraAction']($steps[$this->getState()]['actions']['approve']['submitExtraParameters'], $con);
-		
+		*/
+    
 		$message=$steps[$this->getState()]['actions']['approve']['submitDoneAction'];
 		// we need to save the message before adding a line in the log...
 
     $logmessage=SystemMessagePeer::retrieveByKey($steps[$this->getState()]['actions']['approve']['logMessageCode']);
 		$text = $logmessage->getContent($culture);
 
-		$this->addWfevent($user_id, $text, null, $steps[$this->getState()]['actions']['approve']['submitNextState']);
+		$this->addWfevent($user_id, $text, null, $steps[$this->getState()]['actions']['approve']['submitNextState'], $context, $con);
 				
-		$this->getChecks(); // needed to create children objects for the new state...
+		$this->getChecks($con); // needed to create children objects for the new state...
 		$con->commit();
 		
 		$result['result']='notice';
@@ -323,9 +336,12 @@ $con->query($sql);
     $email_needed=$steps[$this->getState()]['actions']['reject']['sendEmail'];
     // we save this before updating the state...
 
-		if($steps[$this->getState()]['actions']['reject']['submitExtraAction']!='')
-			$this->$steps[$this->getState()]['actions']['reject']['submitExtraAction']($steps[$this->getState()]['actions']['reject']['submitExtraParameters'], $con);
-		
+    $extraactions=$steps[$this->getState()]['actions']['reject']['submitExtraActions'];
+    foreach($extraactions as $function=>$parameters)
+    {
+      $this->$function($parameters, $con);
+    }
+
 		if ($comment=='')
 		{
 			$message=$steps[$this->getState()]['actions']['reject']['submitDoneAction'];
@@ -336,7 +352,7 @@ $con->query($sql);
 		}
 		// we need to save the message before adding a line in the log...
 		
-		$this->addWfevent($user_id, $message, null, $steps[$this->getState()]['actions']['reject']['submitNextState']);
+		$this->addWfevent($user_id, $message, null, $steps[$this->getState()]['actions']['reject']['submitNextState'], $context, $con);
 
 		$con->commit();
 		
@@ -367,7 +383,7 @@ $con->query($sql);
 	}
 	
 	
-	public function getChecks()
+	public function getChecks($con=null)
 	{
 
 		$checkList=new CheckList();
@@ -384,7 +400,7 @@ $con->query($sql);
 						$wpinfo= new Wpinfo();
 						$wpinfo->setAppointmentId($this->getId());
 						$wpinfo->setWpinfoTypeId($wpinfotype->getId());
-						$wpinfo->save();
+						$wpinfo->save($con);
 					}
 					
 				if ($wpinfotype->getIsRequired())
@@ -500,7 +516,7 @@ $con->query($sql);
 									$group=new WpitemGroup();
 									$group->setWpitemTypeId($it->getId());
 									$group->setWpmoduleId($wpmodule->getId());
-									$group->save();
+									$group->save($con);
 									
 									$checkList->addCheck(new Check(
 										Check::FAILED,
@@ -527,7 +543,7 @@ $con->query($sql);
 											$wpmoduleItem->setIsEditable(true);
 											$wpmoduleItem->setWpitemGroupId($group->getId());
 											$wpmoduleItem->setEvaluation(null);
-											$wpmoduleItem->save();
+											$wpmoduleItem->save($con);
 											
 											$checkList->addCheck(new Check(
 												Check::FAILED,
@@ -648,10 +664,13 @@ $con->query($sql);
 		return WptoolAppointmentPeer::countToolsOfTypeForAppointment($typeId, $this->getId());
 		}
 
-  private function _makePublic($public)
+  private function _makePublic($public, $con=null)
   {
-    $con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
-
+    if(!$con)
+    {
+      $con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
+    }
+    
     try
     {
       $this
@@ -721,11 +740,17 @@ $con->query($sql);
 		}
 
 	$checkList=$this->getChecks();
+  if(!$this->_makePublic(true))
+  {
+			$result['result']='error';
+			$result['message']='Could not make the document public (this should not happen)';
+			return $result;
+  }
 	$result['mail_sent_to']=false;
   
 	if ($checkList->getTotalResults(Check::FAILED)==0)
 		{
-			$this->markSubItems('false');
+			$this->markSubItemsAsEditable(array('newstate'=>'false'));
 			$result['result']='notice';
 			$result['message']=$steps[$this->getState()]['owner']['submitDoneAction'];
 			$this->addWfevent($this->getUserId(), $steps[$this->getState()]['owner']['submitDoneAction'], null, $steps[$this->getState()]['owner']['submitNextState'], $sfContext);
@@ -838,12 +863,12 @@ $con->query($sql);
 	
 	}
 
-public function addWfevent($userId, $comment='', $i18n_subs=array(), $state=0, $sf_context=null)
+public function addWfevent($userId, $comment='', $i18n_subs=array(), $state=0, $sf_context=null, $con=null)
   {
     Generic::addWfevent($this, $userId, $comment, $i18n_subs, $state, $sf_context);
     $this
     ->setState($state)
-    ->save();
+    ->save($con);
 
     return $this;
   }
