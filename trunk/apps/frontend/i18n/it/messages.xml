@@ -3167,29 +3167,31 @@
         <source>Workplan administratively checked.</source>
         <target>Piano di lavoro accettato dal punto di vista amministrativo.</target>
     </trans-unit>
+    <trans-unit id="807">
+        <source>My credentials</source>
+        <target>Le mie credenziali</target>
+    </trans-unit>
+    <trans-unit id="808">
+        <source>%user%'s credentials</source>
+        <target>Credenziali di %user%</target>
+    </trans-unit>
+    <trans-unit id="809">
+        <source>Individual</source>
+        <target>Individuale</target>
+    </trans-unit>
+    <trans-unit id="810">
+        <source>Inherited</source>
+        <target>Ereditata</target>
+    </trans-unit>
+    <trans-unit id="811">
+        <source>Revoke this credential for %s</source>
+        <target>Revoca questa credenziale per %s</target>
+    </trans-unit>
+    <trans-unit id="812">
+        <source>Add credential</source>
+        <target>Aggiungi credenziale</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
 

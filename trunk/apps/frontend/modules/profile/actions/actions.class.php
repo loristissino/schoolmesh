@@ -218,6 +218,10 @@ class profileActions extends sfActions
 	
 	}  
 
+  public function executeCredentials(sfWebRequest $request)
+  {
+
+  }
 
   public function executeEditprofile(sfWebRequest $request)
 	{

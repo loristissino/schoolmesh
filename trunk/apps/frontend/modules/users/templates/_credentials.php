@@ -25,7 +25,7 @@
 				<?php if ($sf_user->hasCredential('backadmin') && $current_user->hasUserPermission($permission->getName())): ?>
 				<li class="sf_admin_action_delete">
 				<?php echo link_to(
-					sprintf(__('Revoke this permission for %s'), $current_user->getFullName()),
+					sprintf(__('Revoke this credential for %s'), $current_user->getFullName()),
 					url_for('users/revokepermission?id='.$current_user->getUserId(). '&permission=' . $permission->getName()),
 					array('method' => 'delete', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))
 					)
