@@ -183,8 +183,6 @@ class Appointment extends BaseAppointment
 	{
 		$newstate=$parameters['newstate'];
     
-    Generic::logMessage('mark', ">>$newstate<<");
-    
 		if (!is_string($newstate))
 		{
 			throw new Exception('state must be a string!');
@@ -209,8 +207,6 @@ JOIN `appointment` ON `wpmodule`.`appointment_id` = `appointment`.`id`
 SET `is_editable` = ' . $newstate . '
 
 WHERE `appointment`.`id` = ' . $this->getId();
-
-Generic::logMessage('rejectquery', $sql);
 
 $con->query($sql);
 		
