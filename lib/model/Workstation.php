@@ -69,10 +69,15 @@ class Workstation extends BaseWorkstation
 
     public function doDisableInternetAccess($user_id, $code, $sf_context)
     {
+      if(!$this->getIsEnabled())
+      {
+        return true;
+      }
+      
       $code=Generic::b64_unserialize($code);
       $user=$code['user'];
       $type=$code['type'];
-      
+
       try
       {
         Generic::executeCommand(sprintf('workstation_disableinternetaccess %s %s', $this->getIpCidr(), $user), false);

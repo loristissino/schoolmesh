@@ -139,6 +139,7 @@ class lanActions extends sfActions
 			if ($this->form->isValid())
 			{
 				$params = $this->form->getValues();
+        Generic::logMessage('action', $params);
 				$result=WorkstationPeer::scheduleInternetAccess($this->getUser(), $params, $this->timeslotsContainer, $this->getContext());
         
 				$this->getUser()->setFlash($result['result'],

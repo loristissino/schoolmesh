@@ -416,7 +416,7 @@ class usersActions extends sfActions
     $this->message=new InformativeMessage($this->userlist, $this->getUser()->getProfile(), $this->getContext());
     
     $this->form = new EmailForm();
-    $params=$request->getParameter('email');
+    $params=$request->getParameter('email', array());
     if (array_key_exists('send', $params))
 		{
       
