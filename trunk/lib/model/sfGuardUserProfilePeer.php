@@ -13,6 +13,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	const EMAIL_UNDEFINED=0;
 	const EMAIL_WAITINGVALIDATION=1;
 	const EMAIL_VERIFIED=2;
+  const EMAIL_FAULTY=3;
 	
 	public static function retrievePermissionByName($value)
 	{

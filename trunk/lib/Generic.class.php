@@ -333,7 +333,10 @@ class Generic{
       $comment=$sf_context->getI18N()->__($comment, $i18n_subs);
     }
 		$wfevent->setComment($comment);
-    $wfevent->setState($state==null ? $object->getState(): $state); //if it is not specified, we keep the same
+    if($state)
+    {
+      $wfevent->setState($state); //if it is not specified, we keep the same
+    }
     
     $wfevent->save($con);
   }

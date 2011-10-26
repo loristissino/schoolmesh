@@ -115,6 +115,8 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
           return 'waitingvalidation';
         case sfGuardUserProfilePeer::EMAIL_VERIFIED:
           return 'verified';
+        case sfGuardUserProgilePeer::EMAIL_FAULTY:
+          return 'faulty';
         default:
           return 'unknown';
       }
