@@ -3163,6 +3163,10 @@
         <source>Set syllabus contributions for all modules of this workplan</source>
         <target>Imposta contributi al syllabus per tutti i moduli di questo piano di lavoro</target>
     </trans-unit>
+    <trans-unit id="806">
+        <source>Workplan administratively checked.</source>
+        <target>Piano di lavoro accettato dal punto di vista amministrativo.</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

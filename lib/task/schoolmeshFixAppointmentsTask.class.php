@@ -53,7 +53,7 @@ EOF;
     $appointments=AppointmentPeer::doSelect($c);
     foreach($appointments as $appointment)
     {
-      if($appointment->getState()>Workflow::WP_WSMC)
+      if($appointment->getState()>Workflow::WP_DRAFT)
       {
         $dateA=$appointment->getUpdatedAt();
         
@@ -75,7 +75,7 @@ EOF;
           $this->logSection('appoint. '.$appointment->getId(), 'fixed public bit', null, 'COMMENT');
         }
       }
-      if($options['also-not-submitted'] || $appointment->getState()>Workflow::WP_WSMC)
+      if($options['also-not-submitted'] || $appointment->getState()>Workflow::WP_DRAFT)
       {
         $count=0;
 
@@ -191,7 +191,7 @@ EOF;
       }
       
       
-      $checkList=$appointment->getChecks();
+      $checkList=$appointment->getChecks($con);
       
 	  }  // appointment loop
     

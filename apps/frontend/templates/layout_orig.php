@@ -12,7 +12,7 @@
 	<?php endif; ?>
 </title>
 
-<link rel="shortcut icon" href="/images/favicon.ico" />
+<link rel="shortcut icon" href="images/favicon.ico" />
     <?php use_helper('jQuery') ?>
     <?php include_javascripts() 
     /* the book says it could be at the end of the page for performance reasons 
@@ -62,9 +62,33 @@
       <div id="footer">
         <div class="content">
           <span class="schoolmesh">
-            <a href="http://schoolmesh.mattiussilab.net"><img src="/schoolmesh/images/schoolmesh-mini.png" alt='schoolmesh' /></a>
-            powered by <a href="http://www.symfony-project.org/">
-            <img src="/schoolmesh/images/symfony.gif" alt="symfony framework" /></a>
+            <?php echo link_to(
+              image_tag(
+                'schoolmesh-mini',
+                array(
+                  'title'=>'SchoolMesh',
+                  'size'=>'102x21',
+                  )
+                ),
+                'http://schoolmesh.mattiussilab.net'
+              )
+            ?>, written by 
+            <?php echo link_to(
+              'Loris Tissino',
+              'http://loris.tissino.it'
+              )
+            ?>, powered by 
+            <?php echo link_to(
+              image_tag(
+                'symfony.gif',
+                array(
+                  'title'=>'Symfony',
+                  'size'=>'50x15',
+                  )
+                ),
+                'http://www.symfony-project.org'
+              )
+            ?>
           </span>
           <br />
           <em>released under the <a href="license/gpl.txt">GNU General Public License, version 3</a></em>
