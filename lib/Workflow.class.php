@@ -268,7 +268,7 @@ class Workflow
 
 	static public function getEmailVerificationStates()
 	{
-		return array('unverified', 'waiting', 'verified', 'faulty');
+		return array('undefined', 'waitingvalidation', 'verified', 'faulty');
 	}
 
 	static public function getGoogleappsAccountStatusses()

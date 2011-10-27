@@ -46,6 +46,13 @@ class profileActions extends sfActions
       '&token=' . $this->token;
   }
 
+  public function executeSendverificationcode(sfWebRequest $request)
+  {
+    $this->getUser()->getProfile()->sendEmailVerification($this->getContext());
+    $this->address=$this->getUser()->getProfile()->getEmail();
+    $this->setLayout('popup_layout');
+  }
+
   public function executeViewaccount(sfWebRequest $request)
 	{
 	$availableAccounts=sfConfig::get('app_config_accounts');

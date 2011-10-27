@@ -55,9 +55,20 @@
     <?php echo $form ?>
 	<?php if($profile->getEmail()!=''): ?>
 	<tr>
-		<th><label><?php echo __('Email validated?') ?></label></th>
+		<th><label><?php echo __('Email status') ?></label></th>
 		<td>
-			<?php echo $profile->getEmailState()==sfGuardUserProfilePeer::EMAIL_VERIFIED ? __('Yes') : __('No') ?>
+			<?php echo __($profile->getEmailStateDescription()) ?>
+      <?php if($profile->getEmailState()!=sfGuardUserProfilePeer::EMAIL_VERIFIED and $profile->getEmail()): ?>
+        <?php echo link_to(
+          __('Send another verification code'),
+          'profile/sendverificationcode',
+          array(
+            /* ideally, we should use post here, but this prevents from using a popup window */
+            'popup' => array('popupWindow', 'width=600,height=100,left=250,top=0,scrollbars=yes')
+            )
+          )
+        ?>
+      <?php endif ?>
 		</td>
 	</tr>
 	<?php endif ?>
