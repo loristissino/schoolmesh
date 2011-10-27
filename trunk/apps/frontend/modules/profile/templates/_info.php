@@ -31,9 +31,8 @@
         <?php echo link_to(__('You may logout'), '@sf_guard_signout') ?>
         </p>
 		
-		<?php if (!$sf_user->getProfile()->getHasValidatedEmail()): ?>
+		<?php if ($sf_user->getProfile()->getEmailState()==sfGuardUserProfilePeer::EMAIL_UNDEFINED): ?>
 			<p class="schoolmesh_profile_notices">
-			
 			<?php echo format_number_choice(__('[0]Please, set an email address in your profile.|[1]Please, set an email address in your profile.'), null, $sf_user->getProfile()->getIsMale()) ?>
 			<?php echo format_number_choice(__('[0]It will be easier to keep you informed on updates about the use of this application.|[1]]It will be easier to keep you informed on updates about the use of this application.'), null, $sf_user->getProfile()->getIsMale()) ?><br />
 			<?php echo link_to(
@@ -44,6 +43,32 @@
 			<?php echo __('Thank you.') ?> 
 			</p>
 		<?php endif ?>
+
+		<?php if ($sf_user->getProfile()->getEmailState()==sfGuardUserProfilePeer::EMAIL_WAITINGVALIDATION): ?>
+			<p class="schoolmesh_profile_notices">
+			<?php echo __('Your email address has not been validated yet.') ?>
+			<?php echo link_to(
+				__('Check your profile for information.'),
+				url_for('profile/editprofile')
+				)
+			?>
+			<?php echo __('Thank you.') ?> 
+			</p>
+		<?php endif ?>
+
+		<?php if ($sf_user->getProfile()->getEmailState()==sfGuardUserProfilePeer::EMAIL_FAULTY): ?>
+			<p class="schoolmesh_profile_notices">
+			<?php echo __('Your email address is faulty.') ?>
+			<?php echo link_to(
+				__('Check your profile for information.'),
+				url_for('profile/editprofile')
+				)
+			?>
+			<?php echo __('Thank you.') ?> 
+			</p>
+		<?php endif ?>
+
+
 
 <?php /*
 		<br /><?php echo sprintf(__('Your last action was at: %s'), Generic::datetime($sf_user->getProfile()->getLastActionAt('U'), $sf_context->getRawValue())) ?>

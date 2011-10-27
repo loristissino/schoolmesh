@@ -1491,8 +1491,8 @@
         <target>Luogo di nascita</target>
       </trans-unit>
 	  <trans-unit id="399">
-        <source>Email validated?</source>
-        <target>Email convalidata?</target>
+        <source>Email status</source>
+        <target>Stato email</target>
       </trans-unit>
 	  <trans-unit id="400">
         <source>Middle name</source>
@@ -3191,7 +3191,49 @@
         <source>Add credential</source>
         <target>Aggiungi credenziale</target>
     </trans-unit>
+    <trans-unit id="813">
+        <source>undefined</source>
+        <target>indefinito</target>
+    </trans-unit>
+    <trans-unit id="814">
+        <source>waitingvalidation</source>
+        <target>in attesa di validazione</target>
+    </trans-unit>
+    <trans-unit id="815">
+        <source>verified</source>
+        <target>verificata</target>
+    </trans-unit>
+    <trans-unit id="816">
+        <source>faulty</source>
+        <target>errata</target>
+    </trans-unit>
+    <trans-unit id="817">
+        <source>A verification email has been sent to %address%.</source>
+        <target>Un'email di verifica è stata spedita all'indirizzo %address%.</target>
+    </trans-unit>
+    <trans-unit id="818">
+        <source>Send another verification code</source>
+        <target>Manda una nuova email di verifica</target>
+    </trans-unit>
+    <trans-unit id="819">
+        <source>Email sent</source>
+        <target>Email inviata</target>
+    </trans-unit>
+    <trans-unit id="819">
+        <source>Your email address is faulty.</source>
+        <target>Il tuo indirizzo email risulta errato.</target>
+    </trans-unit>
+    <trans-unit id="819">
+        <source>Check your profile for information.</source>
+        <target>Controlla il tuo profilo per informazioni.</target>
+    </trans-unit>
+    <trans-unit id="819">
+        <source>Your email address has not been validated yet.</source>
+        <target>Il tuo indirizzo email non è stato ancora convalidato.</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
+
 
