@@ -18,7 +18,11 @@ class Schoolproject extends BaseSchoolproject {
 
 	public function __toString()
 	{
-		return $this->getTitle();
+    if($this->getTitle())
+    {
+      return $this->getTitle();
+    }
+    return '';
 	}
   
   public function getCoordinatorProfile()

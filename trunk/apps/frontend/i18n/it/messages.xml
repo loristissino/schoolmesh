@@ -3231,6 +3231,14 @@
         <source>Your email address has not been validated yet.</source>
         <target>Il tuo indirizzo email non è stato ancora convalidato.</target>
     </trans-unit>
+    <trans-unit id="820">
+        <source>Class composition</source>
+        <target>Composizione classe</target>
+    </trans-unit>
+    <trans-unit id="821">
+        <source>class composition</source>
+        <target>composizione classe</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

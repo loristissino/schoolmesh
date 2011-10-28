@@ -23,11 +23,16 @@ class schoolclassesActions extends sfActions
 		$this->forward404Unless($this->schoolclass = SchoolclassPeer::retrieveByPK($this->schoolclass_id));
 		$this->appointment_id = $request->getParameter('appointment');
 		if ($this->appointment_id)
-			{
-				$this->forward404Unless($this->appointment = AppointmentPeer::retrieveByPK($this->appointment_id));
-				$this->forward404Unless($this->appointment->getSchoolclassId() == $this->schoolclass_id);
-				$this->forward404Unless($this->appointment->getUserId() == $this->getUser()->getProfile()->getUserId());
-			}
+    {
+      $this->forward404Unless($this->appointment = AppointmentPeer::retrieveByPK($this->appointment_id));
+      $this->forward404Unless($this->appointment->getSchoolclassId() == $this->schoolclass_id);
+      $this->forward404Unless($this->appointment->getUserId() == $this->getUser()->getProfile()->getUserId());
+      $this->breadcrumpstype='/plansandreports/appointment/class';
+    }
+    else
+    {
+      $this->breadcrumpstype='/schoolclasses';
+    }
 		$this->enrolments=$this->schoolclass->getCurrentEnrolments();
 		$this->ids = $this->getUser()->getAttribute('ids', array());
 
@@ -39,6 +44,8 @@ public function executeBatch(sfWebRequest $request)
 	
     $ids = $request->getParameter('ids');
     $this->getUser()->setAttribute('ids', $ids);
+    
+    Generic::logMessage('batch', $ids);
     
     $action=$request->getParameter('batch_action');
 
@@ -74,10 +81,16 @@ public function executeFillrecuperationgrid(sfWebRequest $request)
 	$this->forward404Unless($this->schoolclass_id = $request->getParameter('id'));
 	
 	$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
+  
+	$this->forward404Unless($this->appointment->getSchoolclassId()!=$this->schoolclass_id);
+  
 	$this->hints=RecuperationHintPeer::retrieveAllByRankForTeacher($this->appointment->getUserId());
 	
 	$this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($this->getUser()->getAttribute('ids'));
 
+
+  Generic::logMessage('fill', $this->getUser()->getAttribute('ids'));
+  
   $this->getUser()->setFlash('helpaction', 'fillrecuperationgrid');
 
 //	$this->ids=Generic::b64_serialize($ids);
@@ -171,9 +184,11 @@ public function executeGetschoolregisterheading(sfWebRequest $request)
 	{
 
 		$ids = $this->getUser()->getAttribute('ids');
-		
-		$this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($ids);
-		
+	
+    Generic::logMessage('tickit', $ids);
+
+    $this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($ids);
+
 		$term_id=sfConfig::get('app_config_current_term');
 	
 		$wpmodule_item_id=$request->getParameter('item');
@@ -194,6 +209,7 @@ public function executeGetschoolregisterheading(sfWebRequest $request)
 			
 			$wpmodule_item->toggleStudent($student_id, $term_id);
 		}
+
 
  	    return $this->renderPartial('wpmoduleitem', array('students'=>$this->students, 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id));
 
