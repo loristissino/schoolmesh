@@ -1,26 +1,31 @@
-<?php use_helper('Schoolmesh') ?>
-<?php slot('title', $schoolclass_id) ?>
-<?php slot('breadcrumbs',
-	link_to(__('Classes'), 'schoolclasses/index') . ' » ' . 
-	$schoolclass_id
-	)
-	
-	?>
-	<h1><?php echo sprintf(__('Class %s'), $schoolclass_id) ?></h1>
+<?php if($breadcrumpstype=='/plansandreports/appointment/class'): ?>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    '@plansandreports' => __('Plans and Reports'),
+    'plansandreports/fill?id=' . $appointment->getId() => $appointment
+    ),
+  'current'=>__('Class composition'),
+  'title'=>$schoolclass_id . ' (' . $appointment->getSubject() . ') - ' . __('class composition')
+  ))
+?>
+<?php endif ?>
+<?php if($breadcrumpstype=='/schoolclasses'): ?>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    '_schoolclasses' => __('Classes'),
+    ),
+  'current'=>$schoolclass_id
+  ))
+?>
+<?php endif ?>
 
 <?php if(sizeof($enrolments)>0): ?>
 
 <?php if(isset($appointment)): ?>
-	<p><?php echo $appointment->getSubject()->getDescription() ?>
 	<form action="<?php echo url_for('schoolclasses/batch?id=' . $schoolclass_id . '&appointment=' . $appointment->getId()) ?>" method="get">
 <?php endif ?>
 
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
 
 <table cellspacing="0">
   <thead>

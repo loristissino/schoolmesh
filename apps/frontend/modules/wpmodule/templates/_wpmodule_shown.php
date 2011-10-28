@@ -27,7 +27,8 @@
 		<?php endif ?>
 	<?php endforeach; ?>
   
+  <?php if($wpmodule->getAppointment()->getSyllabus()->getIsActive()): ?>
   <h4><?php echo __('Syllabus links') ?></h4>
   <?php include_partial('plansandreports/syllabus', array('syllabus_contributions'=>$wpmodule->getSyllabusContributionsWithRefs())) ?>
-
+  <?php endif ?>
 </div>

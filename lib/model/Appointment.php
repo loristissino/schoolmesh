@@ -1050,10 +1050,16 @@ public function getWorkflowLogs()
 
 	public function getOdf($doctype, sfContext $sfContext=null, $template='', $complete=true)
 	{
-		
+		$activesyllabus=$this->getSyllabus()->getIsActive();
+    
 		if ($template=='')
 		{
-			$template='workplan' . $this->getState() .'.odt';
+      // if the syllabus is active we use a different template
+      /* templates should have a name like
+         workplan20_s.odt for workplans with active syllabi
+         workplan20_n.odt for workplans without active syllabi
+      */
+			$template='workplan' . $this->getState() . '_' . ($activesyllabus?'s':'n') .'.odt';
 		}
 		
 		$teachertitle=$this->getSfGuardUser()->getProfile()->getLettertitle();
@@ -1088,7 +1094,7 @@ public function getWorkflowLogs()
 		
 //		$odfdoc->setVars('doctype',  $state);
 		$odfdoc->setVars('year',  $this->getYear()->__toString());
-		$odfdoc->setVars('teacher',  $teachertitle . $this->getSfGuardUser()->getProfile()->getFullName());
+		$odfdoc->setVars('teacher',  $teachertitle . ' ' . $this->getSfGuardUser()->getProfile()->getFullName());
 		$odfdoc->setVars('subject', $this->getSubject()->getDescription());
 		$odfdoc->setVars('year',  $this->getYear()->__toString());
 		$odfdoc->setVars('schoolclass',  $this->getSchoolclassId());
@@ -1219,11 +1225,14 @@ public function getWorkflowLogs()
             $modules->group->merge();
           }
         }
-        foreach($wpmodule->getSyllabusContributionsWithRefs() as $ref=>$contribution)
+        if($activesyllabus)
         {
-          $modules->syllabus->syllabusRef($ref);
-          $modules->syllabus->syllabusContent($contribution['content'] . ' (' . $contrib_descriptions[$contribution['contribution']] . ')');
-          $modules->syllabus->merge();
+          foreach($wpmodule->getSyllabusContributionsWithRefs() as $ref=>$contribution)
+          {
+            $modules->syllabus->syllabusRef($ref);
+            $modules->syllabus->syllabusContent($contribution['content'] . ' (' . $contrib_descriptions[$contribution['contribution']] . ')');
+            $modules->syllabus->merge();
+          }
         }
         
         $pagebreak=($moduleNumber<sizeof($wpmodules))?'<pagebreak>':'';
