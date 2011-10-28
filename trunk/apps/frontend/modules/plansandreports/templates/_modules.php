@@ -72,6 +72,14 @@
 				array('title'=>__('Fill this module specifying contents, objectives, skills, competencies, etc.')) 
 				)?>
 			</li>
+      <li class="sf_admin_action_view">
+					<?php echo link_to(
+				__('View'),
+				'wpmodule/show?id=' . $wpmodule->getId(),
+				array('title'=>__('Show this module') . ' ' . __('(opens in a new window)'), 'popup' => array('popupWindow', 'width=600,height=300,left=250,top=0,scrollbars=yes'))
+				)?>
+			</li>
+
 			<?php if($wpmodule->getIsDeletable()): ?>
 			<li class="sf_admin_action_delete">
 				<?php echo link_to(
