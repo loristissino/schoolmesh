@@ -13,6 +13,8 @@
   ))
 ?>    
 
+<?php include_partial('content/flashes'); ?>
+
 <form action="<?php echo url_for('wpmoduleitem/update?id='.$wpmodule_item->getId()) ?>" method="POST" id="editform">
 
 <?php if($sf_user->getProfile()->getPrefersRichtext()): ?>
@@ -47,7 +49,15 @@ editor_selector : \"mceAdvanced\"
 		onClick="var f = document.getElementById('editform'); var m = document.createElement('input'); m.setAttribute('type', 'hidden'); m.setAttribute('name', 'save'); m.setAttribute('value', 'save'); f.appendChild(m); f.submit(); return false;"
 		title="<?php echo __('Save this content and go back to the module') ?>"
 	><?php echo __("Save and go back to the module") ?></a>
-	</li>
+  </li>
+  <?php if($sf_user->hasFlash('quick')): // we have this link only once, so that we do not have to care about saving... ?>
+  <br /><li class="sf_admin_action_items">
+    <?php echo link_to(
+      __('Quick list edit'), 'wpitemgroup/manage?id=' .$wpmodule_item->getWpitemgroup()->getId()
+      )
+    ?>
+    </li>
+  <?php endif ?>
 </ul>
 
 <?php /*<input type="submit" name="submit" value="<?php echo __("Save") ?>" /> */ ?>

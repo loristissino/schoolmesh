@@ -21,9 +21,12 @@ class WpitemGroup extends BaseWpitemGroup
 		
 	}
 
-	protected function deleteItems(PropelPDO $con = null)
+	public function deleteItems(PropelPDO $con = null)
 	{  
-	  $con = Propel::getConnection(WpitemGroupPeer::DATABASE_NAME);
+    if(!$con)
+    {
+      $con = Propel::getConnection(WpitemGroupPeer::DATABASE_NAME);
+    }
 	  try
 	  {
 		$con->beginTransaction();
@@ -41,6 +44,7 @@ class WpitemGroup extends BaseWpitemGroup
 	  }
 	
 	}
+  
 
 	public function replaceItems($text)
 	{
