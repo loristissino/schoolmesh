@@ -95,12 +95,19 @@ class wpmoduleitemActions extends sfActions
 	$this->getUser()->setFlash('notice'.$gr, $this->getContext()->getI18N()->__('The item was updated'));
 
 	$wpmodule_item->save();
+  
+  if(strpos($wpmodule_item->getContent(), "\n")!==false and $wpmodule_item->getWpitemGroup()->getWpmodule()->getAppointment()->getState()==Workflow::WP_DRAFT)
+  {
+    $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('You cannot have carriage returns in this text. Consider using the "Quick list edit" action instead.'));
+    $this->getUser()->setFlash('quick', true);
+    return $this->redirect('wpmoduleitem/edit?id='.$wpmodule_item->getId());
+  }
+  
 //    $this->processForm($request, $this->form);
 	//$this->wpmodule_item=$wpmodule_item;
 		//return $this->renderText($wpmodule_item->getWpmoduleGroup());
     //$this->setTemplate('edit');
     
-	
    return $this->redirect('wpmodule/view?id='.$wpmodule_item->getWpitemGroup()->getWpmoduleId().'#'.$wpmodule_item->getWpitemGroupId());
 //	$this->redirect('wpmodule/view?id='.$item->getWpitemGroup()->getWpmoduleId().'#'.$item->getWpitemGroupId()); 	
 
@@ -138,7 +145,6 @@ class wpmoduleitemActions extends sfActions
 	{
 		$newvalue=chop(html_entity_decode(strip_tags($givenValue, '<br><em><sup><sub>')));
     if (substr($newvalue, 0, 3)=='---') $newvalue=substr($newvalue, 3);
-
 		if ($newvalue=='') $newvalue='---';
 		return $newvalue;
 	}

@@ -162,6 +162,16 @@ EOF;
           
           foreach($wpmodule->getWpItemGroups() as $WpitemGroup)
           {
+            if($WpitemGroup->getWpitemType()->getState()>$appointment->getState())
+            {
+              // imported by error
+              if($WpitemGroup->countWpmoduleItems())
+              {
+                $this->logSection('wpitemgroup-', 'removed children items (id=' . $WpitemGroup->getId() . ')', null, 'NOTICE');
+                $WpitemGroup->deleteItems($con);
+              }
+            }
+            
             foreach($WpitemGroup->getWpmoduleItems() as $Wpitem)
             {
               $old=$Wpitem->getContent();

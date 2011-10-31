@@ -3239,6 +3239,10 @@
         <source>class composition</source>
         <target>composizione classe</target>
     </trans-unit>
+    <trans-unit id="822">
+        <source>You cannot have carriage returns in this text. Consider using the "Quick list edit" action instead.</source>
+        <target>Non puoi avere ritorni a capo in questo testo. Considera la possibilità di usare l'azione "Modifica rapida della lista".</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

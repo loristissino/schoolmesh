@@ -1606,6 +1606,11 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
               //throw new Exception(sprintf('No correspondence for syllabus %d and wpitemtype «%s»', $syllabusId, $group->getWpitemType()->getCode()));
             }
             
+            if ($WpitemType->getState() > Workflow::WP_DRAFT)
+            {
+              continue; // we do not want to import final notes and such...
+            }
+            
 						$newgroup->setWpitemTypeId($WpitemType->getId());
             
 						$newgroup->save();
