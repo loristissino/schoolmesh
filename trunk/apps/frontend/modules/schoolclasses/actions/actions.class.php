@@ -82,7 +82,7 @@ public function executeFillrecuperationgrid(sfWebRequest $request)
 	
 	$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
   
-	$this->forward404Unless($this->appointment->getSchoolclassId()!=$this->schoolclass_id);
+	$this->forward404Unless($this->appointment->getSchoolclassId()==$this->schoolclass_id);
   
 	$this->hints=RecuperationHintPeer::retrieveAllByRankForTeacher($this->appointment->getUserId());
 	

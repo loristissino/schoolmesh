@@ -64,6 +64,7 @@ class WorkstationPeer extends BaseWorkstationPeer
         ->setUser('')
         ;
       }
+      $Workstation->save();
       
       $Workstation->setJobs(array_key_exists($Workstation->getIpCidr(), $queue) ? $queue[$Workstation->getIpCidr()] : null);
     }
