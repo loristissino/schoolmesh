@@ -261,7 +261,8 @@ class Generic{
 				}
 			}
 			
-      Generic::logMessage('result', $command);
+      Generic::logMessage('result', $result);
+      Generic::logMessage('info', $info);
 
 			return $info;
 		}
