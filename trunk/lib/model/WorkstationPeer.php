@@ -117,7 +117,7 @@ class WorkstationPeer extends BaseWorkstationPeer
     else
     {
       $result['result']='error';
-      $result['message']='Some scheduling done. ' . $done;
+      $result['message']='Some scheduling done.';
     }
     return $result;
     
@@ -145,17 +145,17 @@ class WorkstationPeer extends BaseWorkstationPeer
     if($done==$todo)
     {
       $result['result']='notice';
-      $result['message']='Internet access enabled for all the workstations selected.';
+      $result['message']='Web access enabled for all the workstations selected.';
     }
     elseif($done==0)
     {
       $result['result']='error';
-      $result['message']='Internet access could not be enabled for any of the workstations selected.';
+      $result['message']='Web access could not be enabled for any of the workstations selected.';
     }
     else
     {
       $result['result']='error';
-      $result['message']='Internet access could be enabled only for some of the workstations selected.';
+      $result['message']='Web access could be enabled only for some of the workstations selected.';
     }
     return $result;
   }
@@ -182,17 +182,17 @@ class WorkstationPeer extends BaseWorkstationPeer
     if($done==$todo)
     {
       $result['result']='notice';
-      $result['message']='Internet access disabled for all the workstations selected.';
+      $result['message']='Web access disabled for all the workstations selected.';
     }
     elseif($done==0)
     {
       $result['result']='error';
-      $result['message']='Internet access could not be disabled for any of the workstations selected.';
+      $result['message']='Web access could not be disabled for any of the workstations selected.';
     }
     else
     {
       $result['result']='error';
-      $result['message']='Internet access could be disabled only for some of the workstations selected.';
+      $result['message']='Web access could be disabled only for some of the workstations selected.';
     }
     return $result;
   }

@@ -10,13 +10,13 @@
 
 <p>
 <?php if($action=='enable_ia_currenttimeslot'): ?>
-  <?php echo __('You are going to enable Internet access for the current timeslot for the following workstations:') ?>
+  <?php echo __('You are going to enable web access for the current timeslot for the following workstations:') ?>
 <?php endif ?>
 <?php if($action=='disable_ia_currenttimeslot'): ?>
-  <?php echo __('You are going to disable Internet access for the current timeslot for the following workstations:') ?>
+  <?php echo __('You are going to disable web access for the current timeslot for the following workstations:') ?>
 <?php endif ?>
 <?php if($action=='enable_ia_until11thhour'): ?>
-  <?php echo __('You are going to enable Internet access for the following workstations until the end of the day:') ?>
+  <?php echo __('You are going to enable web access for the following workstations until the end of the day:') ?>
 <?php endif ?>
 </p>
 

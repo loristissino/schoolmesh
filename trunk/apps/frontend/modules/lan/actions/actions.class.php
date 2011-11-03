@@ -15,7 +15,7 @@ class lanActions extends sfActions
     $this->timeslotsContainer=new TimeslotsContainer(sfConfig::get('app_config_timeslotsfile'));
     if(!$this->timeslotsContainer)
     {
-      throw new Exception('Could not read initialize timeslots manager');
+      throw new Exception('Could not initialize timeslots manager');
     }
     $this->Subnets = SubnetPeer::doSelect(new Criteria());
     $this->mysubnet=SubnetPeer::findSubnetFromIP($this->Subnets, $_SERVER['REMOTE_ADDR']);
@@ -58,16 +58,16 @@ class lanActions extends sfActions
     if($this->getUser()->hasCredential('internet'))
     {
       $this->actions=array_merge($this->actions, array(
-        'scheduleinternetaccess' => $this->getContext()->getI18N()->__('Schedule Internet access'),
-        'enable_ia_currenttimeslot' => $this->getContext()->getI18N()->__('Enable Internet access for the current time slot'),
-        'disable_ia_currenttimeslot' => $this->getContext()->getI18N()->__('Disable Internet access for the current time slot'), 
+        'scheduleinternetaccess' => $this->getContext()->getI18N()->__('Schedule web access'),
+        'enable_ia_currenttimeslot' => $this->getContext()->getI18N()->__('Enable web access for the current time slot'),
+        'disable_ia_currenttimeslot' => $this->getContext()->getI18N()->__('Disable web access for the current time slot'), 
       ));
     }
 
     if($this->getUser()->hasCredential('admin'))
     {
       $this->actions=array_merge($this->actions, array(
-        'enable_ia_until11thhour' => $this->getContext()->getI18N()->__('Enable Internet access until the eleventh hour'),
+        'enable_ia_until11thhour' => $this->getContext()->getI18N()->__('Enable web access until the eleventh hour'),
         'viewevents' => $this->getContext()->getI18N()->__('View events'),
         ));
     }

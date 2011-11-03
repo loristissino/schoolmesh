@@ -16,7 +16,6 @@
     <tr>
       <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
       <th><?php echo __('Name') ?></th>
-      <th><?php echo __('Enabled?') ?></th>
       <th><?php echo __('Time slots') ?></th>
       <th><?php echo __('Subnet') ?></th>
       <th><?php echo __('Actions') ?></th>
@@ -35,7 +34,6 @@
         )
       ) ?>
       <?php endif ?></td>
-      <td><?php echo $Workstation->getIsEnabled() ? __('Yes'): __('No') ?></td>
       <td><?php include_partial('queue', array('Workstation'=>$Workstation, 'tsc'=>$timeslotsContainer)) ?></td>
       <td><?php echo $Workstation->getSubnet() ?></td>
       <td>
@@ -44,24 +42,25 @@
         <?php if($sf_user->hasCredential('admin')): ?>
           <li class="sf_admin_action_internetaccessoff">
           <?php echo link_to(
-                __('Disable Internet access'),
+                __('Web off (day)'),
                 'lan/disableinternetaccess?id='. $Workstation->getId().'&code='. Generic::b64_serialize(array('user'=>$Workstation->getUser(), 'type'=>'allday')),
                 array(
                   'method'=>'post',
                   'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()),
-                  'title'=>__('Disable Internet access for workstation %name%', array('%name%'=>$Workstation->getName()))
+                  'title'=>__('Disable web access for workstation %name% until the eleventh hour', array('%name%'=>$Workstation->getName()))
                   ) 
                 ) ?>
           </li>
-        <?php elseif($sf_user->hasCredential('internet') && $sf_user->getProfile()->getUsername()==$Workstation->getUser()): ?>
+        <?php endif ?>
+        <?php if($sf_user->hasCredential('internet') && $sf_user->getProfile()->getUsername()==$Workstation->getUser()): ?>
           <li class="sf_admin_action_internetaccessoff">
           <?php echo link_to(
-                __('Disable Internet access'),
+                __('Web off (ts)'),
                 'lan/disableinternetaccess?id='. $Workstation->getId().'&code='. Generic::b64_serialize(array('user'=>$sf_user->getProfile()->getUsername(), 'type'=>'timeslot')),
                 array(
                   'method'=>'post',
                   'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()),
-                  'title'=>__('Disable Internet access for workstation %name%', array('%name%'=>$Workstation->getName()))
+                  'title'=>__('Disable web access for workstation %name% for the current timeslot', array('%name%'=>$Workstation->getName()))
                   ) 
                 ) ?>
           </li>
@@ -71,11 +70,11 @@
         <?php if($sf_user->hasCredential('admin')): ?>
           <li class="sf_admin_action_internetaccesson">
           <?php echo link_to(
-                __('Enable Internet access (day)'),
+                __('Web on (day)'),
                 'lan/adminenableinternetaccess?id='. $Workstation->getId(),
                 array(
                   'method'=>'post',
-                  'title'=>__('Enable Internet access for workstation %name% for the whole day', array('%name%'=>$Workstation->getName())),
+                  'title'=>__('Enable web access for workstation %name% until the eleventh hour', array('%name%'=>$Workstation->getName())),
                   ) 
                 ) ?>
           </li>
@@ -83,11 +82,11 @@
         <?php if($sf_user->hasCredential('internet')): ?>
           <li class="sf_admin_action_internetaccesson">
           <?php echo link_to(
-                __('Enable Internet access (timeslot)'),
+                __('Web on (ts)'),
                 'lan/userenableinternetaccess?id='. $Workstation->getId(),
                 array(
                   'method'=>'post',
-                  'title'=>__('Enable Internet access for workstation %name% for the current timeslot', array('%name%'=>$Workstation->getName())),
+                  'title'=>__('Enable web access for workstation %name% for the current timeslot', array('%name%'=>$Workstation->getName())),
                   ) 
                 ) ?>
           </li>
