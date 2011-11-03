@@ -123,12 +123,12 @@ class Workstation extends BaseWorkstation
       if ($this->doEnableInternetAccess($user_id, $from, $to, $username, $sf_context))
       {
         $result['result']='notice';
-        $result['message']='Internet access enabled for the workstation.';
+        $result['message']='Web access enabled for the workstation.';
       }
       else
       {
         $result['result']='error';
-        $result['message']='Internet access could not be enabled for the workstation.';
+        $result['message']='Web access could not be enabled for the workstation.';
       }
       return $result;
     }

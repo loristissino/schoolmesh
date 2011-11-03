@@ -3,15 +3,15 @@
     'lan/index' => __("Local Area Network"),
     '_subnet' => $currentsubnet->getName(),
     ),
-  'current'=>__('Schedule Internet access'),
-  'title'=>__('Internet access schedule for subnet «%name%»', array('%name%'=>$currentsubnet->getName())),
+  'current'=>__('Schedule web access'),
+  'title'=>__('Web access scheduling for subnet «%name%»', array('%name%'=>$currentsubnet->getName())),
     )
   )
 ?>
 
 <?php include_partial('content/flashes'); ?>
 
-<p><?php echo __('You are scheduling Internet access for the following workstations:') ?></p>
+<p><?php echo __('You are scheduling web access for the following workstations:') ?></p>
 <?php include_partial('workstations', array('Workstations'=>$Workstations)) ?>
 
 <form action="<?php echo url_for('lan/scheduleinternetaccess') ?>" method="POST">
@@ -20,7 +20,7 @@
     <?php echo $form ?>
 	<tr>
       <td colspan="2">
-         <input type="submit" name="save" value="<?php echo __('Save') ?>">
+         <input type="submit" name="save" value="<?php echo __('Schedule') ?>">
       </td>
     </tr>
   </table>

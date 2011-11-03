@@ -3008,8 +3008,8 @@
         <target>Scarica intestazioni per il registro docente</target>
     </trans-unit>
     <trans-unit id="767">
-        <source>Disable Internet access for workstation %name%</source>
-        <target>Disabilita l'accesso ad Internet per il calcolatore %name%</target>
+        <source>Disable web access for workstation %name% until the eleventh hour</source>
+        <target>Disabilita l'accesso ad Internet per il calcolatore %name% fino alla fine della giornata</target>
     </trans-unit>
     <trans-unit id="768">
         <source>Enable Internet access for workstation %name%</source>
@@ -3020,8 +3020,8 @@
         <target>Abilita accesso Internet</target>
     </trans-unit>
     <trans-unit id="770">
-        <source>Disable Internet access</source>
-        <target>Disabilita accesso Internet</target>
+        <source>Web off (day)</source>
+        <target>Dis. web (g)</target>
     </trans-unit>
     <trans-unit id="771">
         <source>Workstations</source>
@@ -3243,9 +3243,158 @@
         <source>You cannot have carriage returns in this text. Consider using the "Quick list edit" action instead.</source>
         <target>Non puoi avere ritorni a capo in questo testo. Considera la possibilità di usare l'azione "Modifica rapida della lista".</target>
     </trans-unit>
+    <trans-unit id="823">
+        <source>Time slots</source>
+        <target>Intervalli orari</target>
+    </trans-unit>
+    <trans-unit id="824">
+        <source>This is the workstation you are currently using</source>
+        <target>Questo è il calcolatore su cui stai lavorando</target>
+    </trans-unit>
+    <trans-unit id="825">
+        <source>Web off (ts)</source>
+        <target>Dis. web (h)</target>
+    </trans-unit>
+    <trans-unit id="826">
+        <source>Web on (day)</source>
+        <target>Ab. web (g)</target>
+    </trans-unit>
+    <trans-unit id="827">
+        <source>Web on (ts)</source>
+        <target>Ab. web (h)</target>
+    </trans-unit>
+    <trans-unit id="828">
+        <source>Disable web access for workstation %name% for the current timeslot</source>
+        <target>Disabilita l'accesso web per il calcolatore %name% per l'intervallo orario corrente</target>
+    </trans-unit>
+    <trans-unit id="829">
+        <source>No workstations defined.</source>
+        <target>Nessun calcolatore definito.</target>
+    </trans-unit>
+    <trans-unit id="830">
+        <source>Enable web access for workstation %name% for the current timeslot</source>
+        <target>Abilita l'accesso web per il calcolatore %name% per l'intervallo orario corrente</target>
+    </trans-unit>
+    <trans-unit id="831">
+        <source>Enable web access for workstation %name% until the eleventh hour</source>
+        <target>Abilita l'accesso web per il calcolatore %name% fino alla fine della giornata</target>
+    </trans-unit>
+    <trans-unit id="832">
+        <source>Schedule web access</source>
+        <target>Programma accesso al web</target>
+    </trans-unit>
+    <trans-unit id="833">
+        <source>Enable web access for the current time slot</source>
+        <target>Abilita accesso web per l'intervallo orario corrente</target>
+    </trans-unit>
+    <trans-unit id="834">
+        <source>Disable web access for the current time slot</source>
+        <target>Disabilita accesso web per l'intervallo orario corrente</target>
+    </trans-unit>
+    <trans-unit id="835">
+        <source>Enable web access until the eleventh hour</source>
+        <target>Abilita accesso web fino alla fine della giornata</target>
+    </trans-unit>
+    <trans-unit id="836">
+        <source>Switched subnet.</source>
+        <target>Sottorete cambiata.</target>
+    </trans-unit>
+    <trans-unit id="837">
+        <source>You are currently working on subnet %subnet%, not on the one you are actually logged on.</source>
+        <target>Stai lavorando sulla sottorete %subnet%, non su quella nella quale ti sei autenticato.</target>
+    </trans-unit>
+    <trans-unit id="838">
+        <source>Web access enabled for the workstation.</source>
+        <target>Accesso web abilitato per il calcolatore.</target>
+    </trans-unit>
+    <trans-unit id="839">
+        <source>Web access could not be enabled for the workstation.</source>
+        <target>Accesso web per il calcolatore non abilitato a causa di qualche problema.</target>
+    </trans-unit>
+    <trans-unit id="840">
+        <source>All scheduling done.</source>
+        <target>Programmazione effettuata.</target>
+    </trans-unit>
+    <trans-unit id="841">
+        <source>No scheduling done.</source>
+        <target>Programmazione non riuscita.</target>
+    </trans-unit>
+    <trans-unit id="842">
+        <source>Some scheduling done.</source>
+        <target>Parte della programmazione effettuata.</target>
+    </trans-unit>
+    <trans-unit id="843">
+        <source>Web access enabled for all the workstations selected.</source>
+        <target>Accesso web abilitato per tutti i calcolatori selezionati.</target>
+    </trans-unit>
+    <trans-unit id="844">
+        <source>Web access could not be enabled for any of the workstations selected.</source>
+        <target>Accesso web non abilitato per nessuno dei calcolatori selezionati.</target>
+    </trans-unit>
+    <trans-unit id="845">
+        <source>Web access could be enabled only for some of the workstations selected.</source>
+        <target>Accesso web abilitato solo per alcuni dei calcolatori selezionati.</target>
+    </trans-unit>
+    <trans-unit id="846">
+        <source>Web access disabled for all the workstations selected.</source>
+        <target>Accesso web disabilitato per tutti i calcolatori selezionati.</target>
+    </trans-unit>
+    <trans-unit id="847">
+        <source>Web access could not be disabled for any of the workstations selected.</source>
+        <target>Accesso web non è stato disabilitato per nessuno dei calcolatori selezionati.</target>
+    </trans-unit>
+    <trans-unit id="848">
+        <source>Web access could be disabled only for some of the workstations selected.</source>
+        <target>Accesso web disabilitato solo per alcuni dei calcolatori selezionati.</target>
+    </trans-unit>
+    <trans-unit id="849">
+        <source>Schedule web access</source>
+        <target>Programma accesso web</target>
+    </trans-unit>
+    <trans-unit id="850">
+        <source>Web access scheduling for subnet «%name%»</source>
+        <target>Programmazione accesso web per la sottorete «%name%»</target>
+    </trans-unit>
+    <trans-unit id="851">
+        <source>You are scheduling web access for the following workstations:</source>
+        <target>Stai programmando l'accesso web per i seguenti calcolatori:</target>
+    </trans-unit>
+    <trans-unit id="852">
+        <source>Schedule</source>
+        <target>Programma</target>
+    </trans-unit>
+    <trans-unit id="853">
+        <source>When</source>
+        <target>Quando</target>
+    </trans-unit>
+    <trans-unit id="854">
+        <source>Confirm action</source>
+        <target>Conferma azione</target>
+    </trans-unit>
+    <trans-unit id="855">
+        <source>You are going to enable web access for the current timeslot for the following workstations:</source>
+        <target>Stai per abilitare l'accesso web per l'ora corrente per i seguenti calcolatori:</target>
+    </trans-unit>
+    <trans-unit id="856">
+        <source>You are going to disable web access for the current timeslot for the following workstations:</source>
+        <target>Stai per disabilitare l'accesso web per l'ora corrente per i seguenti calcolatori:</target>
+    </trans-unit>
+    <trans-unit id="857">
+        <source>You are going to enable web access for the following workstations until the end of the day:</source>
+        <target>Stai per abilitare l'accesso web fino alla fine della giornata per i seguenti calcolatori:</target>
+    </trans-unit>
+    <trans-unit id="858">
+        <source>Back to LAN administration</source>
+        <target>Torna all'amministrazione della LAN</target>
+    </trans-unit>
+    <trans-unit id="859">
+        <source>Get back to LAN administration page</source>
+        <target>Torna alla pagina di amministrazione della LAN</target>
+    </trans-unit>
+    <trans-unit id="860">
+        <source>Confirm</source>
+        <target>Conferma</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
-
-
-
