@@ -24,6 +24,14 @@ class ProjResourceForm extends BaseProjResourceForm
     $project=$resource->getSchoolproject();
     $resourceType=$resource->getProjResourceType();
     
+    $this->setValidators(array(
+				'proj_resource_type_id' => new sfValidatorPropelChoice(array('model'=>'ProjResourceType')),
+				'description' => new sfValidatorString(array('required'=>true)),
+				'scheduled_deadline' => new sfValidatorDate(),
+        'id' => new sfValidatorInteger(),
+        'quantity_estimated' => new sfValidatorInteger(),
+        'charged_user_id' => new sfValidatorPropelChoice(array('model'=>'sfGuardUserProfile', 'required'=>false)),
+			));
     
     $this['proj_resource_type_id']->getWidget()->setLabel('Resource type');
     

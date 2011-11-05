@@ -679,6 +679,58 @@ class Schoolproject extends BaseSchoolproject {
         ));
     }
 
+    $resources=$this->getProjResources();
+    if(sizeof($resources)==0)
+    {
+      if($this->mustHaveResources())
+      {
+      $checkList->addCheck(new Check(
+				Check::FAILED,
+				'No resource/task defined',
+				'Tasks, resources, schedule',
+        array(
+          'link_to'=>'projects/edit?id=' . $this->getId() . '#resources'
+          )
+        )) ;
+      }
+    }
+    else
+    {
+      foreach($resources as $resource)
+      {
+        if(!$resource->getQuantityEstimated()>0)
+        {
+          $checkList->addCheck(new Check(
+            Check::FAILED,
+            'The quantity defined for the resource is not set',
+            'Tasks, resources, schedule',
+            array(
+              'link_to'=>'projects/editresource?id=' . $resource->getId(),
+              )
+            ));
+        }
+        if(!$resource->getProjResourceTypeId())
+        {
+          $checkList->addCheck(new Check(
+            Check::FAILED,
+            'The resource type is not set',
+            'Tasks, resources, schedule',
+            array(
+              'link_to'=>'projects/editresource?id=' . $resource->getId(),
+              )
+            ));
+        }
+        
+      }
+      $checkList->addCheck(new Check(
+				Check::PASSED,
+				'At least a resource/task is defined',
+				'Tasks, resources, schedule'
+        )) ;
+ 
+    }
+
+
     $upshots=$this->getProjUpshots();
     if(sizeof($upshots)==0)
     {
@@ -687,7 +739,7 @@ class Schoolproject extends BaseSchoolproject {
 				'No upshots defined',
 				'Expected upshots',
         array(
-          'link_to'=>'projects/edit?id=' . $this->getId()
+          'link_to'=>'projects/edit?id=' . $this->getId() . '#upshots'
           )
         ));
     }
@@ -735,7 +787,7 @@ class Schoolproject extends BaseSchoolproject {
 				'No deadline defined',
 				'Deadlines',
         array(
-          'link_to'=>'projects/edit?id=' . $this->getId()
+          'link_to'=>'projects/edit?id=' . $this->getId() . '#deadlines'
           )
         ));
     }
@@ -774,48 +826,6 @@ class Schoolproject extends BaseSchoolproject {
 
     }
 
-
-
-
-    $resources=$this->getProjResources();
-    if(sizeof($resources)==0)
-    {
-      if($this->mustHaveResources())
-      {
-      $checkList->addCheck(new Check(
-				Check::FAILED,
-				'No resource/task defined',
-				'Resources, tasks, schedule',
-        array(
-          'link_to'=>'projects/edit?id=' . $this->getId()
-          )
-        )) ;
-      }
-    }
-    else
-    {
-      foreach($resources as $resource)
-      {
-        if($resource->getQuantityEstimated()<0)
-        {
-          $checkList->addCheck(new Check(
-            Check::FAILED,
-            'The quantity defined for the resource cannot be negative',
-            'Resources',
-            array(
-              'link_to'=>'projects/editresource?id=' . $resource->getId(),
-              )
-            ));
-        }
-      }
-      $checkList->addCheck(new Check(
-				Check::PASSED,
-				'At least a resource/task is defined',
-				'Resources'
-        )) ;
- 
-    }
-    
     return $checkList;
     
   }
