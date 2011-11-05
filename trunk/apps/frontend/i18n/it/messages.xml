@@ -2460,8 +2460,8 @@
         <target>Descrizione impostata</target>
     </trans-unit>
     <trans-unit id="634">
-        <source>The quantity defined for the resource cannot be negative</source>
-        <target>La quantità definita per la risorsa non può essere negativa</target>
+        <source>The quantity defined for the resource is not set</source>
+        <target>La quantità definita per la risorsa non è impostata</target>
     </trans-unit>
     <trans-unit id="635">
         <source>At least a resource/task is defined</source>
@@ -3281,7 +3281,7 @@
     </trans-unit>
     <trans-unit id="832">
         <source>Schedule web access</source>
-        <target>Programma accesso al web</target>
+        <target>Pianifica orario accesso al web</target>
     </trans-unit>
     <trans-unit id="833">
         <source>Enable web access for the current time slot</source>
@@ -3395,6 +3395,32 @@
         <source>Confirm</source>
         <target>Conferma</target>
     </trans-unit>
+    <trans-unit id="861">
+        <source>The resource type is not set</source>
+        <target>Il tipo di risorsa non è impostato</target>
+    </trans-unit>
+    <trans-unit id="862">
+        <source>No upshots defined</source>
+        <target>Nessun esito atteso definito</target>
+    </trans-unit>
+    <trans-unit id="863">
+        <source>Goals set</source>
+        <target>Obiettivi definiti</target>
+    </trans-unit>
+    <trans-unit id="864">
+        <source>Purposes set</source>
+        <target>Finalità definite</target>
+    </trans-unit>
+    <trans-unit id="865">
+        <source>Addressees set</source>
+        <target>Destinatari definiti</target>
+    </trans-unit>
+    <trans-unit id="865">
+        <source>Addressees set</source>
+        <target>Destinatari definiti</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
+
