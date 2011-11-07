@@ -21,8 +21,6 @@ UTILITY LIST
 
        schoolmesh_application_setstate - Enable/disable the application
 
-       schoolmesh_application_update - Update the application with the newest SVN release
-
        schoolmesh_loginaccount_changeshell - Change the shell for the login account of a user
 
        schoolmesh_loginaccount_getinfo - Get info about the login account of a user
@@ -118,7 +116,7 @@ AUTHORS
 
 
 
-Schoolmesh utilities User Manuals					   September 2011							      SCHOOLMESH(8)
+Schoolmesh utilities User Manuals					    October 2011							      SCHOOLMESH(8)
 }}}
 
 
@@ -1719,7 +1717,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   September 2011			    SCHOOLMESH_WORKSTATION_DISABLEINTERNETACCESS(8)
+Schoolmesh User Manuals 						    October 2011			    SCHOOLMESH_WORKSTATION_DISABLEINTERNETACCESS(8)
 }}}
 
 
@@ -1756,7 +1754,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   September 2011			     SCHOOLMESH_WORKSTATION_ENABLEINTERNETACCESS(8)
+Schoolmesh User Manuals 						    October 2011			     SCHOOLMESH_WORKSTATION_ENABLEINTERNETACCESS(8)
 }}}
 
 
@@ -1831,7 +1829,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   September 2011			      SCHOOLMESH_WORKSTATIONS_GETINTERNETENABLED(8)
+Schoolmesh User Manuals 						    October 2011			      SCHOOLMESH_WORKSTATIONS_GETINTERNETENABLED(8)
 }}}
 
 
