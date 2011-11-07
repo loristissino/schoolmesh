@@ -1,7 +1,5 @@
 #/bin/bash
 
-#/root/schoolmesh/schoolmesh_iptables
-
 CONFIG=/etc/schoolmesh/schoolmesh_iptables.rc
 
 source $CONFIG
@@ -11,11 +9,15 @@ if [ -z $CHAIN ]; then
 	exit 1
 fi
 
-iptables -N $CHAIN || exit 2
+iptables -t $TABLE -N $CHAIN || exit 2
 
 for ADDRESS in $ALWAYS_ACCEPTED; do
-        iptables -A $CHAIN -s $ADDRESS -j ACCEPT
+        iptables -t $TABLE -A $CHAIN -s $ADDRESS -j $ACCEPT_RULE -m comment --comment "$COMMENT" || exit 3
 done
 
-iptables -A $CHAIN -s 192.168.0.0/16 -j $DEFAULT_RULE
-iptables -I INPUT  1 -j $CHAIN
+iptables -t $TABLE -A $CHAIN $DEFAULT_CONDITION -j $DEFAULT_RULE || exit 4
+iptables -t $TABLE -I $BASICCHAIN  1 -j $CHAIN || exit 5
+
+echo "Everything ok. Done."
+exit 0
+
