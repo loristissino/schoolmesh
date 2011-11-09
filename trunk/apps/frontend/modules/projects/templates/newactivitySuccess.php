@@ -33,5 +33,12 @@
     'title'=>format_number_choice(__('[0]This is a task you are in charge of|[1]This is a task you are in charge of'), null, $sf_user->getProfile()->getIsMale())
     ))?>
   <?php endif ?>
+  <?php if($resource->getSchoolproject()->getState()<Workflow::PROJ_FINANCED): ?>
+    <?php echo image_tag(
+      'dubious',
+      array(
+      'title'=>__('This task belongs to a project not yet financed')
+      ))?>
+  <?php endif ?>
 </div>
 <?php endforeach ?>

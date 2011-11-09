@@ -23,7 +23,6 @@ class ProjActivityForm extends BaseProjActivityForm
     $this->setWidget('beginning', new sfWidgetFormI18nDateTime(array('culture'=>'it')));
     $this->setWidget('proj_resource_id', new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)));
 
-
     $this['notes']->getWidget()
       ->setAttributes(array('cols'=>'60', 'rows'=>'5'))
       ;

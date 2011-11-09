@@ -20,11 +20,17 @@
 
   <table>
   <tr>
-    <th><label for="schoolproject_resource"><?php echo __('Resource') ?></label></th>
+    <th><label for="schoolproject_resource"><?php echo __('Task') ?></label></th>
     <td><?php echo $resource->getDescription() ?></td>
   </tr>
   <tr>
-    <th><label for="schoolproject_charged_user"><?php echo __('Charged user') ?></label></th>
+    <th><label for="schoolproject_charged_user">
+    <?php if($resource->getChargedUserProfile()): ?>
+      <?php echo format_number_choice(__('[0]Charged user <!--female-->|[1]Charged user <!--male-->'), null, $resource->getChargedUserProfile()->getIsMale()) ?>
+    <?php else: ?>
+      <?php echo __('Charged user') ?>
+    <?php endif ?>
+    </label></th>
     <td><?php echo $resource->getChargedUserProfile() ?>
     <?php if($action!='addacknowledgedactivity' and $resource->getChargedUserId()!=$sf_user->getProfile()->getId()): ?>
     <?php echo image_tag(
