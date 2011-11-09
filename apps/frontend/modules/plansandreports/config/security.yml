@@ -30,3 +30,9 @@ editwfevent:
 
 removewfevent:
   credentials: [[ backadmin ]]
+
+export:
+  credentials: [[ wpfr_submission, wp_adm_ok, fr_adm_ok, wp_sm_ok, fr_sm_ok, backadmin ]]
+
+servedoc:
+  credentials: [[ wpfr_submission, wp_adm_ok, fr_adm_ok, wp_sm_ok, fr_sm_ok, backadmin ]]

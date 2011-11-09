@@ -61,7 +61,7 @@ class ProjResourceForm extends BaseProjResourceForm
         
       if($resourceType->getRoleId())
       {
-        $this->setWidget('charged_user_id', new sfWidgetFormPropelChoice(array('model'=>'sfGuardUserProfile', 'add_empty'=>'Choose a user', 'peer_method'=>'doSelect', 'criteria'=>$resource->getCriteriaForUserSelection())));
+        $this->setWidget('charged_user_id', new sfWidgetFormPropelChoice(array('model'=>'sfGuardUserProfile', 'add_empty'=>'Choose a charged person', 'peer_method'=>'doSelect', 'criteria'=>$resource->getCriteriaForUserSelection())));
         $this->setDefault('charged_user_id', $resource->getChargedUserId());
       }
       else
