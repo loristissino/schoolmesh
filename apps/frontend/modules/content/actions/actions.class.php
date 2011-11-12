@@ -236,6 +236,11 @@ class contentActions extends sfActions
   public function executeFirewall(sfWebRequest $request)
   {
   }
+  
+  public function executeTest(sfWebRequest $request)
+  {
+    return $this->renderText('This is a test');
+  }
 
 
 }
