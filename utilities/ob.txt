@@ -1,6 +1,0 @@
-ob_start();
-
-echo "---------\n";
-print_r($p);
-
-$f=fopen('lorislog.txt', 'a'); fwrite($f, ob_get_contents());fclose($f);ob_end_clean();
