@@ -51,6 +51,14 @@
 </ul>
 <?php endif ?>
 
+<?php if ($sf_user->hasCredential('internet')): ?>
+<h2><?php echo __('Local Area Network') ?></h2>
+<ul class="sf_admin_actions">
+    <li class="sf_admin_action_items"><?php echo link_to(__('Web access management'), url_for('lan/index')) ?></li>
+</ul>
+<?php endif ?>
+
+
 
 <h2><?php echo __('Accounts') ?></h2>
 

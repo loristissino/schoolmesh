@@ -3435,6 +3435,14 @@
         <source>[0]Charged user &lt;!--female--&gt;|[1]Charged user &lt;!--male--&gt;</source>
         <target>[0]Incaricata|[1]Incaricato</target>
     </trans-unit>
+    <trans-unit id="870">
+        <source>Local Area Network</source>
+        <target>Rete locale (LAN)</target>
+    </trans-unit>
+    <trans-unit id="871">
+        <source>Web access management</source>
+        <target>Gestione accesso al web</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
