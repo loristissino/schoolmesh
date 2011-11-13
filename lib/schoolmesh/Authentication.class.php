@@ -60,6 +60,8 @@ This code must be refactored. In particular, it would be nicer to have a sort of
 	
 	static function checkDBPassword($username, $password)
 	{
+    
+    
 		$user=sfGuardUserProfilePeer::retrieveByUsername($username);
 		$algorithm = $user->getAlgorithm();
 		if (false !== $pos = strpos($algorithm, '::'))
