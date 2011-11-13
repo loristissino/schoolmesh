@@ -15,7 +15,8 @@
       'id'  => new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
       'old_username' =>  new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
       'username' => new sfWidgetFormInputText(array(), array('size'=>25)),
-      'is_active'=> new sfWidgetFormSelect(array('choices' =>array('no', 'yes'))), 
+      'is_active'=> new sfWidgetFormSelect(array('choices' =>array('no', 'yes'))),
+      'lettertitle' => new sfWidgetFormInputText(array(), array('size'=>20)), 
       'first_name'    => new sfWidgetFormInputText(array(), array('size'=>50)),
       'middle_name'   => new sfWidgetFormInputText(array(), array('size'=>15)),
       'last_name' => new sfWidgetFormInputText(array(), array('size'=>50)),
@@ -43,7 +44,8 @@
 					new sfValidatorRegex(array('pattern'=>'/^[a-z][a-z0-9\.]{3,19}$/')),
 			)),
 				'first_name' => new sfValidatorString(array('trim' => true)),
-				'old_username' => new sfValidatorString(),
+        'lettertitle' => new sfValidatorString(array('trim' => true)),
+        'old_username' => new sfValidatorString(),
 				'id' => new sfValidatorInteger(),
 				'posix_uid' => new sfValidatorInteger(array('required'=>false, 'min'=>500, 'max'=>65534)),  
 				'is_active' => new sfValidatorInteger(array('min'=>0, 'max'=>1)),
@@ -74,6 +76,9 @@
 					new sfValidatorSchemaCompare('username', sfValidatorSchemaCompare::EQUAL, 'old_username'),
 					new smValidatorUsername('username')))
 				);
+        
+    $this['lettertitle']->getWidget()->setLabel('Title');
+    
 		/* KEPT FOR REFERENCE 
 		$this->validatorSchema->setPostValidator(
 			new sfValidatorAnd(array(

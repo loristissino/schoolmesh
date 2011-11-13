@@ -5,7 +5,7 @@
 	$current_user
 	)
 	
-	?><h1><?php echo sprintf(__('Edit user %s'), $current_user)?></h1>
+	?><h1><?php echo __('Edit user %fullname%', array('%fullname%'=>$current_user))?></h1>
 
 <?php if ($sf_user->hasFlash('notice')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>

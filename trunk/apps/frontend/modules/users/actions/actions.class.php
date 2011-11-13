@@ -750,6 +750,7 @@ class usersActions extends sfActions
 				}
 
 				$this->current_user
+        ->setLettertitle($params['lettertitle'])
 				->setFirstName($params['first_name'])
 				->setMiddleName($params['middle_name'])
 				->setLastName($params['last_name'])
@@ -790,6 +791,7 @@ class usersActions extends sfActions
 	$this->userform->setDefaults(
 		array(
 			'id' => $this->current_user->getUserId(),
+      'lettertitle' => $this->current_user->getLetterTitle(),
 			'username' => $this->current_user->getUsername(),
 			'is_active'=> $this->current_user->getsfGuardUser()->getIsActive(),
 			'old_username' => $this->current_user->getUsername(),
