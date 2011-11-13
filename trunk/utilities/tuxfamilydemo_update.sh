@@ -23,8 +23,7 @@ cd "$STARTDIR"
 echo "Updating $STARTDIR"
 svn update
 
-# we need to reset the symlinks
-cd /home/
+echo "Resetting the symlinks..."
 ln -sfv ../php-include/plugins/sfJqueryReloadedPlugin/web/ sfJqueryReloadedPlugin
 ln -sfv ../php-include/plugins/sfOdfPlugin/web/ sfOdfPlugin
 ln -sfv ../php-include/lib/vendor/symfony/lib/plugins/sfPropelPlugin/web/ sfPropelPlugin
