@@ -25,7 +25,7 @@
   jq_visual_effect('slideToggle', '#' .$groupname)
 ) ?> &nbsp;<?php echo __($groupname) ?></strong>  (<?php echo check_count($checkList, $groupname) ?>)</p>
 
-		<div class='check_results' id="<?php echo $groupname ?>" style="display:<?php  echo (!$start_closed and ($checkList->getResultsByGroupName($groupname, Check::FAILED)+$checkList->getResultsByGroupName($groupname, Check::WARNING))>0)? 'visible': 'none' ?>">
+		<div class='check_results' id="<?php echo $groupname ?>" style="display:<?php  echo ($show_successes or (!$start_closed and ($checkList->getResultsByGroupName($groupname, Check::FAILED)+$checkList->getResultsByGroupName($groupname, Check::WARNING))>0))? 'visible': 'none' ?>">
 		<?php foreach($checkList->getChecksByGroupName($groupname) as $check): ?>
 		<p>
 			<?php echo image_tag($check->getImageTag(), 'title=' . $check->getImageTitle()); ?>
@@ -38,6 +38,7 @@
 		</div>
 <?php endforeach ?>
 
+<?php if($sf_request->getReferer()): ?>
 <h2><?php echo __('Actions') ?></h2>
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_back">
@@ -47,4 +48,4 @@
       )?>
   </li>
   </ul>
-  
+<?php endif ?>
