@@ -3443,8 +3443,41 @@
         <source>Web access management</source>
         <target>Gestione accesso al web</target>
     </trans-unit>
+    <trans-unit id="872">
+        <source>Main role</source>
+        <target>Ruolo principale</target>
+    </trans-unit>
+    <trans-unit id="873">
+        <source>Email state</source>
+        <target>Stato email</target>
+    </trans-unit>
+    <trans-unit id="874">
+        <source>Appointments</source>
+        <target>Incarichi di docenza</target>
+    </trans-unit>
+    <trans-unit id="875">
+        <source>Add appointment</source>
+        <target>Aggiungi incarico</target>
+    </trans-unit>
+    <trans-unit id="876">
+        <source>Is active</source>
+        <target>È attivo?</target>
+    </trans-unit>
+    <trans-unit id="877">
+        <source>Import code</source>
+        <target>Codice importazione</target>
+    </trans-unit>
+    <trans-unit id="878">
+        <source>Edit user %fullname%</source>
+        <target>Modifica utente %fullname%</target>
+    </trans-unit>
+    <trans-unit id="879">
+        <source>You do not seem to be logged on in the local area network.</source>
+        <target>Sembra che tu non stia lavorando su un calcolatore della rete locale.</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
 
 
