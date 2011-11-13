@@ -23,7 +23,7 @@ class schoolmeshExtractInfoTask extends sfBaseTask
 
     ));
 
-	$this->addArgument('infotype', sfCommandArgument::REQUIRED, 'The information type requested');
+    $this->addArgument('infotype', sfCommandArgument::REQUIRED, 'The information type requested');
 
 
     $this->namespace        = 'schoolmesh';
