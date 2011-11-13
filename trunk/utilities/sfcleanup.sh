@@ -250,7 +250,6 @@ pt.dat \
 pt_PT.dat \
 ro.dat \
 ro_MD.dat \
-root.dat \
 ro_RO.dat \
 ru.dat \
 ru_RU.dat \
