@@ -239,7 +239,15 @@ class contentActions extends sfActions
   
   public function executeChecksetup(sfWebRequest $request)
   {
-    
+    if(sfConfig::get('app_config_enable_checks', false))
+    {
+      $setupChecker = new SetupChecker();
+      $this->checkList= $setupChecker->getChecks();
+    }
+    else
+    {
+      return sfView::ERROR;
+    }
   }
 
 

@@ -16,6 +16,7 @@ all:
     template_directory: /var/schoolmesh/templates/email
     
   config:
+    enable_checks:  true
     current_year:   2009 # only the first of the two years of a scholastic/academic year
     current_term:   Term1
     culture: it
