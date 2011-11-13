@@ -21,6 +21,7 @@ class profileComponents extends sfComponents
 
 */
 			}
+      /*
 			
 			if ($this->getUser()->isAuthenticated())
 			{
@@ -34,7 +35,7 @@ class profileComponents extends sfComponents
 				}
 			}
 
-			
+			*/
 			
 			
 			

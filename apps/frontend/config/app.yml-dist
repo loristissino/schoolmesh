@@ -7,7 +7,8 @@ all:
     name:           Example High School
     town:           Nowhere
     website:        'http://www.example.com'
-
+    principal:      prof. Bruno Rossi
+    
   mail:
     webmaster:      web@example.com
     bot_address:    schoolmesh@example.com
@@ -59,6 +60,16 @@ all:
     
     help_index: /etc/schoolmesh/help.yml
     timeslotsfile: /etc/schoolmesh/timeslots.yml
+
+    logfile: /var/schoolmesh/log/schoolmeshlog.txt
+    debug: true
+
+  lucene:
+    directory: /var/schoolmesh/data
+    # where Lucene index binary files will be put
+    # since different indexes may be built, we'll get different subdirectories 
+    # like /var/schoolmesh/data/foo_prod.index/, /var/schoolmesh/data/bar_prod.index/,
+    # and so on (the names are made up with the object indexed and the environment)  
 
   sf_guard_plugin:
     check_password_callable: [Authentication, testOnly]

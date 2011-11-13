@@ -176,7 +176,7 @@ public function executeGetrecuperationletters(sfWebRequest $request)
 
 public function executeGetschoolregisterheading(sfWebRequest $request)
 {
-  $this->getUser()->setAttribute('template', 'teachersregisterheading.odt'); 
+  $this->getUser()->setAttribute('template', 'userlist_teachersregisterheading.odt'); 
   $this->forward('users', 'getlist');
 }
 
