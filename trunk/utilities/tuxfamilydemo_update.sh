@@ -34,3 +34,5 @@ for FILE in default delete desc edit error first last list new next previous tic
   do
     ln -sfv ../../php-include/lib/vendor/symfony/lib/plugins/sfPropelPlugin/web/images/$FILE.png $FILE.png
   done
+
+ln -sfv ../../php-include/extra4demo/Arial.ttf Arial.ttf
