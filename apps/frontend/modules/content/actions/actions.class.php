@@ -237,9 +237,9 @@ class contentActions extends sfActions
   {
   }
   
-  public function executeTest(sfWebRequest $request)
+  public function executeChecksetup(sfWebRequest $request)
   {
-    return $this->renderText('This is a test');
+    
   }
 
 
