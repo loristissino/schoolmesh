@@ -46,6 +46,7 @@ class SetupChecker
       }
     }
 
+
     foreach(array(
       'document_approval.yml',
       'document_rejection.yml',
@@ -57,11 +58,12 @@ class SetupChecker
       'projects_submission.yml',
       ) as $file)
     {
-      if(file_exists(sfConfig::get('app_mail_template_directory'). '/' . $file))
+      $path=sfConfig::get('app_mail_template_directory'). '/' . $file;
+      if(file_exists($path))
       {
         $checkList->addCheck(new Check(
           Check::PASSED,
-          sprintf('File «%s» exists', $file),
+          sprintf('File «%s» exists', $path),
           'mail templates'
           ));
       }
@@ -69,7 +71,7 @@ class SetupChecker
       {
         $checkList->addCheck(new Check(
           Check::FAILED,
-          sprintf('File «%s» does not exist', $file),
+          sprintf('File «%s» does not exist', $path),
           'mail templates'
           ));
       }
