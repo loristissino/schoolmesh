@@ -290,17 +290,24 @@ class profileActions extends sfActions
 	
 	}  
 
-  public function executeGoogleapps($request)
+  public function executeGoogleapps(sfWebRequest $request)
   {
 	
   }
 
 
-  public function executeClearhistory($request)
+  public function executeClearhistory(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('POST'));
     $this->getUser()->setAttribute($request->getParameter('name'), array());
     $this->redirect($request->getReferer());
+  }
+  
+  public function executeSso(sfWebRequest $request)
+  {
+    $this->forward404Unless($sso=new SSO(sfConfig::get('app_sso_applications', null)));
+    $url=$sso->getRedirection($request, $this->getUser()->getProfile()->getUsername());
+    $this->redirect($sso->getRedirection($request, $this->getUser()->getProfile()->getUsername()));
   }
   
 }
