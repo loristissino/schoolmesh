@@ -103,9 +103,6 @@ class SetupChecker
       'projects_charges.odt',
       'projects_submission.odt',
       'recuperation.odt',
-      'userlist_googleapps.odt',
-      'userlist_htmltable.odt',
-      'userlist_teachersregisterheading.odt',
       'workplan20_n.odt',
       'workplan20_s.odt',
       'workplan30_n.odt',
@@ -142,6 +139,32 @@ class SetupChecker
           ));
       }
     }
+
+    foreach(array(
+      'userlist_googleapps.odt',
+      'userlist_htmltable.odt',
+      'userlist_teachersregisterheading.odt',
+      ) as $file)
+    {
+      $path=sfConfig::get('app_opendocument_template_directory'). '/' . $file;
+      if(file_exists($path))
+      {
+        $checkList->addCheck(new Check(
+          Check::PASSED,
+          sprintf('File «%s» exists', $path),
+          'opendocument templates'
+          ));
+      }
+      else
+      {
+        $checkList->addCheck(new Check(
+          Check::WARNING,
+          sprintf('File «%s» does not exist (but maybe you do not really need it)', $path),
+          'opendocument templates'
+          ));
+      }
+    }
+
 
 
     foreach(RolePeer::retrieveMainRoles() as $role)
