@@ -1640,7 +1640,15 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     $doc->addField(Zend_Search_Lucene_Field::UnStored('lastname', $this->getLastName(), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('roster', $this->getCurrentSchoolclassId(), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('grade', $this->getCurrentGrade(), 'utf-8'));
-    $doc->addField(Zend_Search_Lucene_Field::UnStored('role', $this->getRole()->getPosixName(), 'utf-8'));    
+    
+    if($this->getRoleId())
+    {
+      $doc->addField(Zend_Search_Lucene_Field::UnStored('role', $this->getRole()->getPosixName(), 'utf-8'));
+    }
+    else
+    {
+      $doc->addField(Zend_Search_Lucene_Field::UnStored('role', 'undefined', 'utf-8'));
+    }
     $doc->addField(Zend_Search_Lucene_Field::UnStored('birthdate', $this->getBirthdate('%Y%m%d'), 'utf-8'));    
     $doc->addField(Zend_Search_Lucene_Field::UnStored('birthday', $this->getBirthdate('%m%d'), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('active', $this->getsfGuardUser()->getIsActive()?'true':'false', 'utf-8'));

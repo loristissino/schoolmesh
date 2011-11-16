@@ -232,6 +232,12 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		$imported=0;
 		$skipped=0;
 		
+    $teacherRole=RolePeer::retrieveByPosixName(sfConfig::get('app_config_teachers_default_posix_group'));
+    $teacherGuardGroup=sfGuardGroupProfilePeer::retrieveGuardGroupByName($teacherRole->getDefaultGuardGroup());
+		$studentRole=RolePeer::retrieveByPosixName(sfConfig::get('app_config_students_default_posix_group'));
+    $studentGuardGroup=sfGuardGroupProfilePeer::retrieveGuardGroupByName($studentRole->getDefaultGuardGroup());
+    
+    
 		$handle = fopen($file, "r");
 		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 			//$num = count($data);
@@ -365,15 +371,13 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 				{
 					case('T'):
 						// found a teacher
-						$role=RolePeer::retrieveByPosixName(sfConfig::get('app_config_teachers_default_posix_group'));
-						$profile->setRole($role);
+						$profile->setRole($teacherRole);
 						$typeok=true;
 						break;
 					
 					case('S'):
 						// found a student
-						$role=RolePeer::retrieveByPosixName(sfConfig::get('app_config_students_default_posix_group'));
-						$profile->setRole($role);
+						$profile->setRole($studentRole);
 						$typeok=true;
 						break;
 					
@@ -400,14 +404,24 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
 					$checkList->addCheck(new Check(Check::PASSED, sprintf('created user %s (%s)', $profile->getFullName(), $user->getUsername()), $groupName));
 				
-					if ($role->getDefaultGuardGroup())
-					{
-						$guardGroup=sfGuardGroupProfilePeer::retrieveGuardGroupByName($role->getDefaultGuardGroup());
-						$profile->addToGuardGroup($guardGroup);
-					}
+        
+          // we do this now, because we could not before, since the object was yet saved
+          switch($type)
+          {
+            case('T'):
+              // found a teacher
+              $profile->addToGuardGroup($teacherGuardGroup);
+              break;
+            
+            case('S'):
+              // found a student
+              $profile->addToGuardGroup($studentGuardGroup);
+              break;
+          }
 
 				}
 				
+        /* this will be moved into a separate task...
 
 				switch($type)
 				{
@@ -452,6 +466,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 						break;
 					
 				}
+        */
 			}
 			
 			
