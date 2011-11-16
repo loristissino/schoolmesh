@@ -45,8 +45,11 @@ all:
     googleapps_admin_credentials: [ schoolmeshadmin@example.com, NoReAsOnToTeLlYoU ]
     googleapps_url: http://webmail.example.com
 
-
     major_age: 18
+    
+    default_male_teachertitle: Prof.
+    default_female_teachertitle: Prof.ssa
+
 
     currency_symbol: €
     currency_decimals: 2
