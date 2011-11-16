@@ -19,7 +19,6 @@ class SetupChecker
       'app_config_students_default_posix_group'=>'apps/frontend/config/app.yml',
       'app_config_default_teams_role'=>'apps/frontend/config/app.yml',
       'app_lucene_directory'=>'apps/frontend/config/app.yml',
-      'app_sf_guard_plugin_check_password_callable'=>'apps/frontend/config/app.yml',
       'app_sf_guard_plugin_success_signout_url'=>'apps/frontend/config/app.yml',
       'app_opendocument_template_directory'=>'apps/frontend/config/app.yml',
       'app_documents_main_directory'=>'apps/frontend/config/app.yml',
@@ -47,6 +46,27 @@ class SetupChecker
       }
     }
 
+    foreach(array(
+      'app_sf_guard_plugin_check_password_callable'=>'apps/frontend/config/app.yml',
+      ) as $item=>$group)
+    {
+      if($text=sfConfig::get($item))
+      {
+        $checkList->addCheck(new Check(
+          Check::PASSED,
+          sprintf('%s is set («%s»)', $item, is_array($text)? serialize($text): $text),
+          $group
+          ));
+      }
+      else
+      {
+        $checkList->addCheck(new Check(
+          Check::WARNING,
+          $item . ' is not set, the default value will be used',
+          $group
+          ));
+      }
+    }
 
     foreach(array(
       'document_approval.yml',
