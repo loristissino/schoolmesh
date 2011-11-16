@@ -377,6 +377,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 					case('T'):
 						// found a teacher
 						$profile->setRole($teacherRole);
+            $profile->setLettertitle($profile->getIsMale()? sfConfig::get('app_config_default_male_teachertitle', 'Mr'): sfConfig::get('app_config_default_male_teachertitle', 'Ms'));
 						$typeok=true;
 						break;
 					
@@ -426,8 +427,6 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
 				}
 				
-        /* this will be moved into a separate task...
-
 				switch($type)
 				{
 					case('T'):
@@ -451,6 +450,8 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 					case('S'):
 						// found a student
 						$schoolclass=SchoolclassPeer::retrieveByPK($group);
+            // FIXME... This could be cached...
+            
 						if($schoolclass)
 						{
 							$enrolment=new Enrolment();
@@ -471,7 +472,6 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 						break;
 					
 				}
-        */
 			}
 			
 			

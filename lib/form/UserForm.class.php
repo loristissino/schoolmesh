@@ -44,7 +44,7 @@
 					new sfValidatorRegex(array('pattern'=>'/^[a-z][a-z0-9\.]{3,19}$/')),
 			)),
 				'first_name' => new sfValidatorString(array('trim' => true)),
-        'lettertitle' => new sfValidatorString(array('trim' => true)),
+        'lettertitle' => new sfValidatorString(array('trim' => true, 'required'=>false)),
         'old_username' => new sfValidatorString(),
 				'id' => new sfValidatorInteger(),
 				'posix_uid' => new sfValidatorInteger(array('required'=>false, 'min'=>500, 'max'=>65534)),  
