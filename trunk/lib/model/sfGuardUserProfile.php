@@ -1623,13 +1623,17 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
   public function updateLuceneIndex()
   {
-    
+    $old=$this->getFirstName().$this->getMiddleName().$this->getLastName();
     $this
     ->setFirstname(ltrim(rtrim($this->getFirstname())))
     ->setMiddlename(ltrim(rtrim($this->getMiddlename())))
     ->setLastname(ltrim(rtrim($this->getLastname())))
-    ->save()
     ;
+    $new=$this->getFirstName().$this->getMiddleName().$this->getLastName();
+    if($old!=$new)
+    {
+      $this->save();
+    }
     
     $index = sfGuardUserProfilePeer::getLuceneIndex();
  

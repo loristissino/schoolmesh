@@ -260,6 +260,11 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
 			list($type,$first_name,$middle_name,$last_name,$gender,$birthdate,$birthplace,$email,$import_code,$group, $info)=$data;
 
+
+      $first_name=ltrim(rtrim($first_name));
+      $middle_name=ltrim(rtrim($middle_name));
+      $last_name=ltrim(rtrim($last_name));
+      
 //			$checkList->addCheck(new Check(Check::FAILED, 'Type is ' . $type, $groupName));
 
 			if ($import_code=='')
