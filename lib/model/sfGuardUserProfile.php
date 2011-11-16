@@ -1627,7 +1627,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     $this
     ->setFirstname(ltrim(rtrim($this->getFirstname())))
     ->setMiddlename(ltrim(rtrim($this->getMiddlename())))
-    ->setLastname(ltrim(rtrim($this->getFirstname())))
+    ->setLastname(ltrim(rtrim($this->getLastname())))
     ->save()
     ;
     
