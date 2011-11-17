@@ -337,4 +337,47 @@ $this->getContext()->getI18N()->__('A new item was inserted'));
     }
     
   }
+  
+  public function executeExportsyllabus(sfWebRequest $request)
+  {
+    
+		$this->forward404Unless($this->appointment = AppointmentPeer::retrieveByPK($request->getParameter('id')));
+
+    /*$this->schoolclass=$this->appointment->getSchoolclass();
+    $this->appointments=$this->appointment->getCurrentAppointmentsWhichShareSameSyllabus();
+    $this->contributions=$this->schoolclass->getSyllabusContributions();
+    
+    $this->syllabus=$this->appointment->getSyllabus();
+    $this->syllabus_items=$this->syllabus->getSyllabusItems();
+
+    */
+
+		$this->doctype=$request->getParameter('doctype', sfConfig::get('app_config_default_format', 'odt'));
+
+    try 
+		{
+			$odfdoc=$this->appointment->getSyllabusOdf($this->doctype, $this->getContext(), $request->getParameter('template', ''), true);
+		}
+		catch (Exception $e)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.') . $e->getMessage());
+			$this->redirect('schoolclasses/syllabus?id='. $this->appointment->getId());
+		}
+		
+		try
+		{
+			$odfdoc
+			->saveFile()
+			->setResponse($this->getContext()->getResponse());
+			return sfView::NONE;
+		}
+		catch (Exception $e)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Conversion failed.'));
+			$this->redirect('schoolclasses/syllabus?id='. $this->appointment->getId());
+		}
+
+  }
+  
+  
 }

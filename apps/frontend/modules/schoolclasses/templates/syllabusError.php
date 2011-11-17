@@ -14,7 +14,8 @@
 <?php $ids[] = $appointment->getId() ?> 
 <?php endforeach ?>
 
-UPDATE appointment SET syllabus_id=2 WHERE id IN (<?php echo implode(', ', $ids) ?>);
+<p>Maybe you should run something like:</p>
+<pre>UPDATE appointment SET syllabus_id=2 WHERE id IN (<?php echo implode(', ', $ids) ?>);</pre>
 
 
 
