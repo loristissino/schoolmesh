@@ -1266,6 +1266,96 @@ public function getWorkflowLogs()
 		
 		return $odf;
 	}
+
+
+	public function getSyllabusOdf($doctype, sfContext $sfContext=null, $template='', $complete=true)
+	{
+
+		$appointments=$this->getCurrentAppointmentsWhichShareSameSyllabus();
+    
+		if ($template=='')
+		{
+			$template='syllabus_subjects.odt';
+      // there must be a different template for each number of subjects
+      // the template must be named like syllabus_13subjects.odt
+		}
+		
+		try
+		{
+			$odf=new OdfDoc($template, 'syllabus.' . $doctype, $doctype);
+		}
+		catch (Exception $e)
+		{
+			throw $e;
+		}
+		
+		$odfdoc=$odf->getOdfDocument();
+
+    $syllabus=$this->getSyllabus();
+		
+		$odfdoc->setVars('year',  $this->getYear()->__toString());
+		$odfdoc->setVars('schoolclass',  $this->getSchoolclassId());
+    $odfdoc->setVars('date', date('d/m/Y'));
+    $odfdoc->setVars('syllabus', $syllabus->__toString());
+		
+    $count=0;
+    $maxsubjects=sfConfig::get('app_config_default_maxsubjects_per_class');
+    
+		foreach($appointments as $appointment)
+		{
+      $odfdoc->setvars(sprintf('subject%02d', ++$count), $appointment->getSubject());
+		}
+    for($i=$count+1; $i<=$maxsubjects; $i++)
+    {
+      $odfdoc->setvars(sprintf('subject%02d', $i), '');
+    }
+		
+    $syllabus_items=$syllabus->getSyllabusItems();
+    $contributions=$this->getSchoolclass()->getSyllabusContributions();
+
+    $itemssegment=$odfdoc->setSegment('items');
+
+    foreach($syllabus_items as $syllabus_item)
+    {
+      if($syllabus_item->getIsSelectable())
+      {
+        $itemssegment->item($syllabus_item->getRef());
+        
+        $count=0;
+        foreach($appointments as $appointment)
+        {
+          $fieldname=sprintf('contribution%02d', ++$count);
+          if(array_key_exists($syllabus_item->getId(), $contributions) && array_key_exists($appointment->getId(), $contributions[$syllabus_item->getId()]))
+          {
+            $max=0;
+            foreach($contributions[$syllabus_item->getId()][$appointment->getId()] as $contribution)
+            {
+              $max=max($max, $contribution['contribution']);
+            }
+            $itemssegment->$fieldname($max);
+          }
+          else
+          {
+            $itemssegment->$fieldname('');
+          }
+        }
+        
+        for($i=$count+1; $i<=$maxsubjects; $i++)
+        {
+          $odfdoc->setvars(sprintf('contribution%02d', $i), '');
+        }
+        
+        
+        $itemssegment->merge();
+      }
+    }
+    $odfdoc->mergeSegment($itemssegment);
+    
+		return $odf;
+	}
+
+
+
 	
 	public function getRecuperationLettersOdf($ids, $doctype, sfContext $sfContext=null, $template='')
 	{

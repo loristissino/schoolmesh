@@ -9,6 +9,8 @@
   ))
 ?>    
 
+<?php include_partial('content/flashes'); ?>
+
 <table>
 <tr>
 <th><?php echo __('Ref.') ?></th><th><?php echo __('Item') ?></th>
@@ -54,6 +56,11 @@
 <li class="sf_admin_action_report"><?php echo link_to(
   __('View as report'),
   'schoolclasses/syllabus?id=' . $appointment->getId() . '&template=syllabusreport'
+  )
+?></li><br />
+<li class="sf_admin_action_export"><?php echo link_to(
+  __('Export'),
+  'schoolclasses/exportsyllabus?id=' . $appointment->getId()
   )
 ?></li>
 </ul>
