@@ -5,7 +5,7 @@
  *
  * @package    schoolmesh
  * @subpackage user
- * @author     Your name here
+ * @author     Loris Tissino
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
  */
 class usersActions extends sfActions
@@ -321,6 +321,38 @@ class usersActions extends sfActions
     $ids=$this->_getIds($request);
 		
 		$result=sfGuardUserProfilePeer::getGoogleAppsLetter($ids, 'odt', $this->getContext());
+		
+		if ($result['result']=='error')
+		{
+			$this->getUser()->setFlash('error', $result['message']);
+			$this->redirect('users/list');
+		}
+		
+		$odfdoc=$result['content'];
+		if (is_object($odfdoc))
+		{
+			$odfdoc
+			->saveFile()
+			->setResponse($this->getContext()->getResponse());
+			return sfView::NONE;
+
+		}
+		else
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.'));
+			$this->redirect('users/list');
+		}
+
+  }
+
+  public function executeGetsigns(sfWebRequest $request)
+  {
+
+		set_time_limit(0);
+
+    $ids=$this->_getIds($request);
+		
+		$result=sfGuardUserProfilePeer::getSigns($ids, 'odt', $this->getContext());
 		
 		if ($result['result']=='error')
 		{

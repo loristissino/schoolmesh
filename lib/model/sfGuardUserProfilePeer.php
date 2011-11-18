@@ -784,6 +784,85 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
 	}
   
+
+	public static function getSigns($ids, $filetype='odt', $context=null)
+	{
+		$result=Array();
+
+		$usertypes=Array();
+		
+		$users=self::retrieveByPksSortedByLastnames($ids);
+		
+		try
+		{
+			$templatename='teachers_signs.odt';
+			$odf=new OdfDoc($templatename, 'Teachers signs', $filetype);
+		}
+		catch (Exception $e)
+		{
+			if ($e InstanceOf OdfDocTemplateException)
+			{
+				$result['result']='error';
+				$result['message']='Template not found or not readable: '. $templatename;
+				return $result;
+			}
+			
+			if ($e InstanceOf OdfException)
+			{
+				$result['result']='error';
+				$result['message']='Template not valid: '. $templatename;
+				return $result;
+			}
+			
+			throw $e;
+		}
+		
+		$odfdoc=$odf->getOdfDocument();
+		$signs=$odfdoc->setSegment('signs');
+		$count=0;
+		foreach($users as $user)
+		{
+			$count++;
+
+      $appointments=$user->getCurrentAppointments(array(AppointmentPeer::SUBJECT_ID=>true));
+
+			$signs->userTitle($user->getLettertitle());
+			$signs->userFirstName($user->getFirstName());
+			$signs->userLastName($user->getLastName());
+			
+      $oldsubject='';
+      
+      if($appointments)
+      {
+        foreach($appointments as $appointment)
+        {
+          $signs->appointments->schoolclass($appointment->getSchoolclassId());
+          $signs->appointments->subject($oldsubject==$appointment->getSubject()? '': $appointment->getSubject());
+          $oldsubject=$appointment->getSubject();
+          $signs->appointments->merge();
+        }
+      }
+      else
+      {
+        $signs->appointments->schoolclass('');
+        $signs->appointments->subject('');
+        $signs->appointments->merge();
+      }
+      
+			$pagebreak=($count<sizeof($users))?'<pagebreak>':'';
+			$signs->pagebreak($pagebreak);
+			$signs->merge();
+		}
+		
+		$odfdoc->mergeSegment($signs);
+
+		$result['content']=$odf;
+		$result['result']='notice';
+		return $result;
+
+	}
+
+
 	public static function getUserlistDocument($template, $ids, $filetype='odt', $context=null)
 	{
     

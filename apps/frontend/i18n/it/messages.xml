@@ -3475,6 +3475,18 @@
         <source>You do not seem to be logged on in the local area network.</source>
         <target>Sembra che tu non stia lavorando su un calcolatore della rete locale.</target>
     </trans-unit>
+    <trans-unit id="880">
+        <source>Get signs for parent-teaching consulting</source>
+        <target>Scarica cartelli per il ricevimento dei genitori</target>
+    </trans-unit>
+    <trans-unit id="881">
+        <source>Export to OpenDocument</source>
+        <target>Esporta come OpenDocument</target>
+    </trans-unit>
+    <trans-unit id="882">
+        <source>Export to PDF</source>
+        <target>Esporta come PDF</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

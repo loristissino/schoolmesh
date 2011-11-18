@@ -134,12 +134,18 @@ class Appointment extends BaseAppointment
 		return parent::getWpinfos($criteria);
 		
 	}	
+  
 	public function __toString()
 	{
-			return $this->getSubject() . ' (' . $this->getSchoolclass() . ', ' . $this->getYear() . ')';
+    return $this->getSubject() . ' (' . $this->getSchoolclass() . $this->getYear() . ')';
 	}
 
-    public function getDescription()
+	public function getShortDescription()
+	{
+    return $this->getSchoolclass() . ': '. $this->getSubject();
+	}
+
+  public function getDescription()
 	{
 			return $this->getFullName() . ' » ' . $this->getSubject() . ' (' . $this->getSchoolclass() . ', ' . $this->getYear() . ')';
 
