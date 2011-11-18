@@ -807,20 +807,36 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 		}
 
-        public function getCurrentAppointments()
-        {
-	        $c = new Criteria();
+    public function getCurrentAppointments($sortcolumns=array())
+    {
+      $c = new Criteria();
 			$c->add(AppointmentPeer::USER_ID, $this->getUserId());
 			$c->add(AppointmentPeer::STATE, Workflow::AP_ASSIGNED, Criteria::GREATER_THAN);
 			$c->add(AppointmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
-			$c->addDescendingOrderByColumn(AppointmentPeer::UPDATED_AT);
-			$c->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID);
+      if(sizeof($sortcolumns)==0)
+      {
+        $c->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID);
+      }
+      else
+      {
+        foreach($sortcolumns as $sortcolumn=>$ascending)
+        {
+          if($ascending)
+          {
+            $c->addAscendingOrderByColumn($sortcolumn);
+          }
+          else
+          {
+            $c->addDescendingOrderByColumn($sortcolumn);
+          }
+        }
+      }
 			$t = AppointmentPeer::doSelectJoinAllExceptsfGuardUser($c);
 			return $t;
-        }
+    }
 		
-        public function getCurrentSchoolclasses()
-        {
+    public function getCurrentSchoolclasses()
+    {
 			$appointments=$this->getCurrentAppointments();
 			
 			$schoolclasses=Array();
@@ -832,12 +848,12 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 			ksort($schoolclasses);
 			return $schoolclasses;
-        }
+    }
 		
 		
 
-        public function getWorkplans()
-        {
+    public function getWorkplans()
+    {
 			$c = new Criteria();
 			$c->add(AppointmentPeer::USER_ID, $this->getUserId());
 			$c->addDescendingOrderByColumn(AppointmentPeer::YEAR_ID);
@@ -846,19 +862,19 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$c->addAscendingOrderByColumn(AppointmentPeer::SUBJECT_ID);
 			$t = AppointmentPeer::doSelectJoinAll($c);
 			return $t;
-        }
+    }
 
-        public function getTeams()
-        {
-	        $c = new Criteria();
+    public function getTeams()
+    {
+      $c = new Criteria();
 			$c->add(UserTeamPeer::USER_ID, $this->getUserId());
 			$t = UserTeamPeer::doSelectJoinAllExceptsfGuardUser($c);
 			return $t;
-        }
+    }
 				
-        public function getBelongsToTeam($posixname)
-        {
-	        $c = new Criteria();
+    public function getBelongsToTeam($posixname)
+    {
+      $c = new Criteria();
 			$c->add(UserTeamPeer::USER_ID, $this->getUserId());
 			$c->addJoin(UserTeamPeer::TEAM_ID, TeamPeer::ID);
 			$c->add(TeamPeer::POSIX_NAME, $posixname);
@@ -873,7 +889,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 				return false;
 			}
 			;
-        }
+    }
 		
 		public function addToTeam(Team $team, Role $role)
 		{

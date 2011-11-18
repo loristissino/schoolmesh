@@ -107,6 +107,7 @@
   'getgoogleappsdata' => __('Get GoogleApps data'),
   'fixgoogleappscredentials' => __('Fix GoogleApps credentials'),
   'getlist' => __('Get list choosing a template'),
+  'getsigns' => __('Get signs for parent-teaching consulting'),
   'email' => __('Write an email'),
   'showquotastats' => __('Show quota statistics'),
 ), 0) ?>

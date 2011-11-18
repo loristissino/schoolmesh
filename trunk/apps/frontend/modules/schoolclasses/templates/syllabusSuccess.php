@@ -58,9 +58,16 @@
   'schoolclasses/syllabus?id=' . $appointment->getId() . '&template=syllabusreport'
   )
 ?></li><br />
-<li class="sf_admin_action_export"><?php echo link_to(
-  __('Export'),
-  'schoolclasses/exportsyllabus?id=' . $appointment->getId()
+<li class="sf_admin_action_odt"><?php echo link_to(
+  __('Export to OpenDocument'),
+  'schoolclasses/exportsyllabus?id=' . $appointment->getId().'&doctype=odt'
   )
-?></li>
+?></li><br />
+<?php if (sfConfig::get('app_opendocument_converter_active', false)): ?>
+<li class="sf_admin_action_pdf"><?php echo link_to(
+  __('Export to PDF'),
+  'schoolclasses/exportsyllabus?id=' . $appointment->getId().'&doctype=pdf'
+  )
+?></li><br />
+<?php endif ?>
 </ul>

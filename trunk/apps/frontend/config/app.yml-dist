@@ -100,6 +100,7 @@ all:
 
   opendocument:
     template_directory: /var/schoolmesh/templates/oo  
+    converter_active:   false
     attachments: /var/schoolmesh/data/attachments
 
   documents:
