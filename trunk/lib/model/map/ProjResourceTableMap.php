@@ -43,6 +43,8 @@ class ProjResourceTableMap extends TableMap {
 		$this->addForeignKey('CHARGED_USER_ID', 'ChargedUserId', 'INTEGER', 'sf_guard_user', 'ID', false, null, null);
 		$this->addColumn('QUANTITY_ESTIMATED', 'QuantityEstimated', 'DECIMAL', false, 10, null);
 		$this->addColumn('QUANTITY_APPROVED', 'QuantityApproved', 'DECIMAL', false, 10, null);
+		$this->addColumn('QUANTITY_EXTERNALLY_FUNDED', 'QuantityExternallyFunded', 'DECIMAL', false, 10, null);
+		$this->addColumn('FINANCING_NOTES', 'FinancingNotes', 'VARCHAR', false, 255, null);
 		$this->addColumn('QUANTITY_FINAL', 'QuantityFinal', 'DECIMAL', false, 10, null);
 		$this->addColumn('STANDARD_COST', 'StandardCost', 'DECIMAL', false, 10, null);
 		$this->addColumn('SCHEDULED_DEADLINE', 'ScheduledDeadline', 'DATE', false, null, null);

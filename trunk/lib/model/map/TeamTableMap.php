@@ -50,6 +50,7 @@ class TeamTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
+    $this->addRelation('Appointment', 'Appointment', RelationMap::ONE_TO_MANY, array('id' => 'team_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('UserTeam', 'UserTeam', RelationMap::ONE_TO_MANY, array('id' => 'team_id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 

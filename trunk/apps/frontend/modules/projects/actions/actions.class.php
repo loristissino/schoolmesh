@@ -321,7 +321,7 @@ class projectsActions extends sfActions
   	set_time_limit(0);
     $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
 
-		$result=SchoolprojectPeer::getChargeLetters($this->ids, sfConfig::get('app_config_default_format', 'odt'), $this->getContext());
+		$result=SchoolprojectPeer::getChargeLetters($this->ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
 		
 		if ($result['result']=='error')
 		{
@@ -946,7 +946,7 @@ class projectsActions extends sfActions
     
     $this->ids=array($schoolproject->getId());
 
-		$result=SchoolprojectPeer::getSubmissionLetters($this->ids, sfConfig::get('app_config_default_format', 'odt'), $this->getContext());
+		$result=SchoolprojectPeer::getSubmissionLetters($this->ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
 		
 		if ($result['result']=='error')
 		{

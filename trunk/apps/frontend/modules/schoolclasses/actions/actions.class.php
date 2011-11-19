@@ -39,8 +39,8 @@ class schoolclassesActions extends sfActions
   }
 
 
-public function executeBatch(sfWebRequest $request)
-{
+  public function executeBatch(sfWebRequest $request)
+  {
 	
     $ids = $request->getParameter('ids');
     $this->getUser()->setAttribute('ids', $ids);
@@ -59,7 +59,7 @@ public function executeBatch(sfWebRequest $request)
     // if an action is not valid, we get an error anyway, because there is no
     // template BatchSuccess.php
 
-}
+  }
 
 
 	public function executeRedirect(sfWebRequest $request)
@@ -70,123 +70,89 @@ public function executeBatch(sfWebRequest $request)
 		$this->redirect($redirectURL);
 	}
 
-public function executeFillrecuperationgrid(sfWebRequest $request)
-{
-	
-	$this->term_id=sfConfig::get('app_config_current_term');
-	$this->forward404Unless($this->term=TermPeer::retrieveByPK($this->term_id));
+  public function executeFillrecuperationgrid(sfWebRequest $request)
+  {
+    
+    $this->term_id=sfConfig::get('app_config_current_term');
+    $this->forward404Unless($this->term=TermPeer::retrieveByPK($this->term_id));
 
-	$this->suggestions=SuggestionPeer::retrieveAllByRank();
-	
-	$this->forward404Unless($this->schoolclass_id = $request->getParameter('id'));
-	
-	$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
-  
-	$this->forward404Unless($this->appointment->getSchoolclassId()==$this->schoolclass_id);
-  
-	$this->hints=RecuperationHintPeer::retrieveAllByRankForTeacher($this->appointment->getUserId());
-	
-	$this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($this->getUser()->getAttribute('ids'));
+    $this->suggestions=SuggestionPeer::retrieveAllByRank();
+    
+    $this->forward404Unless($this->schoolclass_id = $request->getParameter('id'));
+    
+    $this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
+    
+    $this->forward404Unless($this->appointment->getSchoolclassId()==$this->schoolclass_id);
+    
+    $this->hints=RecuperationHintPeer::retrieveAllByRankForTeacher($this->appointment->getUserId());
+    
+    $this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($this->getUser()->getAttribute('ids'));
 
+    $this->getUser()->setFlash('helpaction', 'fillrecuperationgrid');
 
-  Generic::logMessage('fill', $this->getUser()->getAttribute('ids'));
-  
-  $this->getUser()->setFlash('helpaction', 'fillrecuperationgrid');
+    if (sizeof($this->students)==0)
+      {
+        $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least a student.'));
+        $this->forward('schoolclasses', 'redirect');
+      }
 
-//	$this->ids=Generic::b64_serialize($ids);
-	
-	if (sizeof($this->students)==0)
-		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least a student.'));
-			$this->forward('schoolclasses', 'redirect');
-		}
+  }
 
-  /*
-  $this->form=new AssessmentDateForm();
-  $this->form->setDefaults(array(
-    'id'=>$this->appointment->getId(),
-    'assessment_date'=>$this->getUser()->getAttribute('assessment_date')
-  ));
-  */
-  
-/*
-    $ids = $request->getParameter('ids');
-    $this->students = sfGuardUserPeer::retrieveByPks($ids);
-	$this->ids=Generic::b64_serialize($ids);
-	
-	if (sizeof($this->students)==0)
-		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least a student.'));
-			$this->forward('schoolclasses', 'redirect');
-		}
-*/
-}
+  public function executeGetrecuperationletters(sfWebRequest $request)
+  {
+    $this->term_id=sfConfig::get('app_config_current_term');
+    $this->forward404Unless($this->term=TermPeer::retrieveByPK($this->term_id));
+    
+    $this->forward404Unless($this->schoolclass_id = $request->getParameter('id'));
+    $this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
 
-public function executeGetrecuperationletters(sfWebRequest $request)
-{
-	$this->term_id=sfConfig::get('app_config_current_term');
-	$this->forward404Unless($this->term=TermPeer::retrieveByPK($this->term_id));
-	
-	$this->forward404Unless($this->schoolclass_id = $request->getParameter('id'));
-	$this->forward404Unless($this->appointment= AppointmentPeer::retrieveByPK($request->getParameter('appointment')));
+    $this->ids = $this->getUser()->getAttribute('ids');
+    $this->students = sfGuardUserPeer::retrieveByPks($this->ids);
+    
+    if (sizeof($this->students)==0)
+      {
+        $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least one student.'));
+        $this->forward('schoolclasses', 'redirect');
+      }
 
-	$this->ids = $this->getUser()->getAttribute('ids');
-	$this->students = sfGuardUserPeer::retrieveByPks($this->ids);
-	
-	if (sizeof($this->students)==0)
-		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least one student.'));
-			$this->forward('schoolclasses', 'redirect');
-		}
+    $this->getUser()->setFlash('helpaction', 'getrecuperationletters');
 
-  $this->getUser()->setFlash('helpaction', 'getrecuperationletters');
+    try 
+      {
+        $odfdoc=$this->appointment->getRecuperationLettersOdf($this->ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext(), $request->getParameter('template', ''));
+      }
+    catch (Exception $e)
+      {
+        $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.') . ' '. $e->getMessage());
+        $this->forward('schoolclasses', 'redirect');
+      }
+      
+    try
+      {
+        $odfdoc
+        ->saveFile()
+        ->setResponse($this->getContext()->getResponse());
+        return sfView::NONE;
+      }
+      catch (Exception $e)
+      {
+        $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Conversion failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the contents.'));
+        $this->forward('schoolclasses', 'redirect');
+      }
+    
+  }
 
-	$this->doctype=$request->getParameter('doctype');
-	if (!in_array($this->doctype, array('odt', 'doc', 'pdf', 'rtf')))
-	{
-		return;
-		// we show the page where the user can choose the doctype
-	}
-	$this->forward404Unless(in_array($this->doctype, array('odt', 'doc', 'pdf', 'rtf')));
-		
-	try 
-		{
-			$odfdoc=$this->appointment->getRecuperationLettersOdf($this->ids, $this->doctype, $this->getContext(), $request->getParameter('template', ''));
-		}
-	catch (Exception $e)
-		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.') . ' '. $e->getMessage());
-			$this->forward('schoolclasses', 'redirect');
-		}
-		
-	try
-		{
-			$odfdoc
-			->saveFile()
-			->setResponse($this->getContext()->getResponse());
-			return sfView::NONE;
-		}
-		catch (Exception $e)
-		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Conversion failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the contents.'));
-			$this->forward('schoolclasses', 'redirect');
-		}
-	
-}
-
-public function executeGetschoolregisterheading(sfWebRequest $request)
-{
-  $this->getUser()->setAttribute('template', 'userlist_teachersregisterheading.odt'); 
-  $this->forward('users', 'getlist');
-}
+  public function executeGetschoolregisterheading(sfWebRequest $request)
+  {
+    $this->getUser()->setAttribute('template', 'userlist_teachersregisterheading.odt'); 
+    $this->forward('users', 'getlist');
+  }
 
 	public function executeTickit(sfWebRequest $request)
 	{
 
 		$ids = $this->getUser()->getAttribute('ids');
 	
-    Generic::logMessage('tickit', $ids);
-
     $this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($ids);
 
 		$term_id=sfConfig::get('app_config_current_term');
@@ -215,89 +181,89 @@ public function executeGetschoolregisterheading(sfWebRequest $request)
 
 	}
 	
-public function executeSuggestion(sfWebRequest $request)
+  public function executeSuggestion(sfWebRequest $request)
 
-{
-		$ids = $this->getUser()->getAttribute('ids');
-		$this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($ids);
-		
-		$term_id=sfConfig::get('app_config_current_term');
-		
-		$suggestion_id=$request->getParameter('suggestion');
-		$suggestion=SuggestionPeer::retrieveByPK($suggestion_id);
-	
-		$appointment_id=$request->getParameter('appointment');
-		$appointment=AppointmentPeer::retrieveByPK($appointment_id);
+  {
+      $ids = $this->getUser()->getAttribute('ids');
+      $this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($ids);
+      
+      $term_id=sfConfig::get('app_config_current_term');
+      
+      $suggestion_id=$request->getParameter('suggestion');
+      $suggestion=SuggestionPeer::retrieveByPK($suggestion_id);
+    
+      $appointment_id=$request->getParameter('appointment');
+      $appointment=AppointmentPeer::retrieveByPK($appointment_id);
 
-		$student_id=$request->getParameter('student');
-		
-		if ($student_id=='all')
-		{
-			foreach($ids as $id)
-			{
-				$appointment->toggleStudentSuggestion($id, $term_id, $suggestion);				
-			}
-			
-		}
-		else
-		{
-			
-			$appointment->toggleStudentSuggestion($student_id, $term_id, $suggestion);
-		}
+      $student_id=$request->getParameter('student');
+      
+      if ($student_id=='all')
+      {
+        foreach($ids as $id)
+        {
+          $appointment->toggleStudentSuggestion($id, $term_id, $suggestion);				
+        }
+        
+      }
+      else
+      {
+        
+        $appointment->toggleStudentSuggestion($student_id, $term_id, $suggestion);
+      }
 
-  	    return $this->renderPartial('suggestion', array('suggestion'=>$suggestion, 'students'=>$this->students, 'ids'=>Generic::b64_serialize($ids), 'appointment_id'=>$appointment->getId(), 'term_id'=>$term_id));
-		
-}
+          return $this->renderPartial('suggestion', array('suggestion'=>$suggestion, 'students'=>$this->students, 'ids'=>Generic::b64_serialize($ids), 'appointment_id'=>$appointment->getId(), 'term_id'=>$term_id));
+      
+  }
 
-public function executeHint(sfWebRequest $request)
+  public function executeHint(sfWebRequest $request)
 
-{
-		$ids = $this->getUser()->getAttribute('ids');
-		$this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($ids);
-		
-		$term_id=sfConfig::get('app_config_current_term');
-		
-		$hint_id=$request->getParameter('hint');
-		$hint=RecuperationHintPeer::retrieveByPK($hint_id);
-	
-		$appointment_id=$request->getParameter('appointment');
-		$appointment=AppointmentPeer::retrieveByPK($appointment_id);
+  {
+      $ids = $this->getUser()->getAttribute('ids');
+      $this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($ids);
+      
+      $term_id=sfConfig::get('app_config_current_term');
+      
+      $hint_id=$request->getParameter('hint');
+      $hint=RecuperationHintPeer::retrieveByPK($hint_id);
+    
+      $appointment_id=$request->getParameter('appointment');
+      $appointment=AppointmentPeer::retrieveByPK($appointment_id);
 
-		$student_id=$request->getParameter('student');
-		
-		if ($student_id=='all')
-		{
-			foreach($ids as $id)
-			{
-				$appointment->toggleStudentRecuperationHint($id, $term_id, $hint);				
-			}
-			
-		}
-		else
-		{
-			
-			$appointment->toggleStudentRecuperationHint($student_id, $term_id, $hint);
-		}
+      $student_id=$request->getParameter('student');
+      
+      if ($student_id=='all')
+      {
+        foreach($ids as $id)
+        {
+          $appointment->toggleStudentRecuperationHint($id, $term_id, $hint);				
+        }
+        
+      }
+      else
+      {
+        
+        $appointment->toggleStudentRecuperationHint($student_id, $term_id, $hint);
+      }
 
-  	    return $this->renderPartial('hint', array('hint'=>$hint, 'students'=>$this->students, 'ids'=>Generic::b64_serialize($ids), 'appointment_id'=>$appointment->getId(), 'term_id'=>$term_id));
-		
-}
+          return $this->renderPartial('hint', array('hint'=>$hint, 'students'=>$this->students, 'ids'=>Generic::b64_serialize($ids), 'appointment_id'=>$appointment->getId(), 'term_id'=>$term_id));
+      
+  }
 
-public function executeEditHintInLine(sfWebRequest $request)
-{
-		$this->forward404Unless($request->getMethod()=="POST");
-		$this->forward404Unless($hint=RecuperationHintPeer::retrieveByPk($request->getParameter('id')));
+  public function executeEditHintInLine(sfWebRequest $request)
+  {
+      $this->forward404Unless($request->getMethod()=="POST");
+      $this->forward404Unless($hint=RecuperationHintPeer::retrieveByPk($request->getParameter('id')));
 
-		$this->forward404Unless($hint->getIsEditable());
+      $this->forward404Unless($hint->getIsEditable());
 
-		$value=$request->getParameter('value')==''? '...' : $request->getParameter('value');
-		$hint
-		->setCheckedContent($value)
-		->save();
+      $value=$request->getParameter('value')==''? '...' : $request->getParameter('value');
+      $hint
+      ->setCheckedContent($value)
+      ->save();
 
-		return $this->renderText($hint->getContent());
+      return $this->renderText($hint->getContent());
 
-}
+  }
 
   public function executeAddhint(sfWebRequest $request)
   {
@@ -313,7 +279,7 @@ public function executeEditHintInLine(sfWebRequest $request)
    // FIXME Rank is set to 100, just to have first general hints
 
    $this->getUser()->setFlash('notice_hints',
-$this->getContext()->getI18N()->__('A new item was inserted'));
+   $this->getContext()->getI18N()->__('A new item was inserted'));
 
    $this->redirect($request->getReferer().'#hints');
 
@@ -352,7 +318,7 @@ $this->getContext()->getI18N()->__('A new item was inserted'));
 
     */
 
-		$this->doctype=$request->getParameter('doctype', sfConfig::get('app_config_default_format', 'odt'));
+		$this->doctype=$request->getParameter('doctype', $sf_user->getProfile()->getPreferredFormat());
 
     try 
 		{

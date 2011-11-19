@@ -61,6 +61,18 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	protected $quantity_approved;
 
 	/**
+	 * The value for the quantity_externally_funded field.
+	 * @var        string
+	 */
+	protected $quantity_externally_funded;
+
+	/**
+	 * The value for the financing_notes field.
+	 * @var        string
+	 */
+	protected $financing_notes;
+
+	/**
 	 * The value for the quantity_final field.
 	 * @var        string
 	 */
@@ -189,6 +201,26 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	public function getQuantityApproved()
 	{
 		return $this->quantity_approved;
+	}
+
+	/**
+	 * Get the [quantity_externally_funded] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getQuantityExternallyFunded()
+	{
+		return $this->quantity_externally_funded;
+	}
+
+	/**
+	 * Get the [financing_notes] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getFinancingNotes()
+	{
+		return $this->financing_notes;
 	}
 
 	/**
@@ -402,6 +434,46 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 	} // setQuantityApproved()
 
 	/**
+	 * Set the value of [quantity_externally_funded] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     ProjResource The current object (for fluent API support)
+	 */
+	public function setQuantityExternallyFunded($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->quantity_externally_funded !== $v) {
+			$this->quantity_externally_funded = $v;
+			$this->modifiedColumns[] = ProjResourcePeer::QUANTITY_EXTERNALLY_FUNDED;
+		}
+
+		return $this;
+	} // setQuantityExternallyFunded()
+
+	/**
+	 * Set the value of [financing_notes] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     ProjResource The current object (for fluent API support)
+	 */
+	public function setFinancingNotes($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->financing_notes !== $v) {
+			$this->financing_notes = $v;
+			$this->modifiedColumns[] = ProjResourcePeer::FINANCING_NOTES;
+		}
+
+		return $this;
+	} // setFinancingNotes()
+
+	/**
 	 * Set the value of [quantity_final] column.
 	 * 
 	 * @param      string $v new value
@@ -529,9 +601,11 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			$this->charged_user_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
 			$this->quantity_estimated = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->quantity_approved = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->quantity_final = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->standard_cost = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-			$this->scheduled_deadline = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->quantity_externally_funded = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->financing_notes = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->quantity_final = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->standard_cost = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
+			$this->scheduled_deadline = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -541,7 +615,7 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 10; // 10 = ProjResourcePeer::NUM_COLUMNS - ProjResourcePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 12; // 12 = ProjResourcePeer::NUM_COLUMNS - ProjResourcePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjResource object", $e);
@@ -940,12 +1014,18 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 				return $this->getQuantityApproved();
 				break;
 			case 7:
-				return $this->getQuantityFinal();
+				return $this->getQuantityExternallyFunded();
 				break;
 			case 8:
-				return $this->getStandardCost();
+				return $this->getFinancingNotes();
 				break;
 			case 9:
+				return $this->getQuantityFinal();
+				break;
+			case 10:
+				return $this->getStandardCost();
+				break;
+			case 11:
 				return $this->getScheduledDeadline();
 				break;
 			default:
@@ -976,9 +1056,11 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 			$keys[4] => $this->getChargedUserId(),
 			$keys[5] => $this->getQuantityEstimated(),
 			$keys[6] => $this->getQuantityApproved(),
-			$keys[7] => $this->getQuantityFinal(),
-			$keys[8] => $this->getStandardCost(),
-			$keys[9] => $this->getScheduledDeadline(),
+			$keys[7] => $this->getQuantityExternallyFunded(),
+			$keys[8] => $this->getFinancingNotes(),
+			$keys[9] => $this->getQuantityFinal(),
+			$keys[10] => $this->getStandardCost(),
+			$keys[11] => $this->getScheduledDeadline(),
 		);
 		return $result;
 	}
@@ -1032,12 +1114,18 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 				$this->setQuantityApproved($value);
 				break;
 			case 7:
-				$this->setQuantityFinal($value);
+				$this->setQuantityExternallyFunded($value);
 				break;
 			case 8:
-				$this->setStandardCost($value);
+				$this->setFinancingNotes($value);
 				break;
 			case 9:
+				$this->setQuantityFinal($value);
+				break;
+			case 10:
+				$this->setStandardCost($value);
+				break;
+			case 11:
 				$this->setScheduledDeadline($value);
 				break;
 		} // switch()
@@ -1071,9 +1159,11 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[4], $arr)) $this->setChargedUserId($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setQuantityEstimated($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setQuantityApproved($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setQuantityFinal($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setStandardCost($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setScheduledDeadline($arr[$keys[9]]);
+		if (array_key_exists($keys[7], $arr)) $this->setQuantityExternallyFunded($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setFinancingNotes($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setQuantityFinal($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setStandardCost($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setScheduledDeadline($arr[$keys[11]]);
 	}
 
 	/**
@@ -1092,6 +1182,8 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProjResourcePeer::CHARGED_USER_ID)) $criteria->add(ProjResourcePeer::CHARGED_USER_ID, $this->charged_user_id);
 		if ($this->isColumnModified(ProjResourcePeer::QUANTITY_ESTIMATED)) $criteria->add(ProjResourcePeer::QUANTITY_ESTIMATED, $this->quantity_estimated);
 		if ($this->isColumnModified(ProjResourcePeer::QUANTITY_APPROVED)) $criteria->add(ProjResourcePeer::QUANTITY_APPROVED, $this->quantity_approved);
+		if ($this->isColumnModified(ProjResourcePeer::QUANTITY_EXTERNALLY_FUNDED)) $criteria->add(ProjResourcePeer::QUANTITY_EXTERNALLY_FUNDED, $this->quantity_externally_funded);
+		if ($this->isColumnModified(ProjResourcePeer::FINANCING_NOTES)) $criteria->add(ProjResourcePeer::FINANCING_NOTES, $this->financing_notes);
 		if ($this->isColumnModified(ProjResourcePeer::QUANTITY_FINAL)) $criteria->add(ProjResourcePeer::QUANTITY_FINAL, $this->quantity_final);
 		if ($this->isColumnModified(ProjResourcePeer::STANDARD_COST)) $criteria->add(ProjResourcePeer::STANDARD_COST, $this->standard_cost);
 		if ($this->isColumnModified(ProjResourcePeer::SCHEDULED_DEADLINE)) $criteria->add(ProjResourcePeer::SCHEDULED_DEADLINE, $this->scheduled_deadline);
@@ -1160,6 +1252,10 @@ abstract class BaseProjResource extends BaseObject  implements Persistent {
 		$copyObj->setQuantityEstimated($this->quantity_estimated);
 
 		$copyObj->setQuantityApproved($this->quantity_approved);
+
+		$copyObj->setQuantityExternallyFunded($this->quantity_externally_funded);
+
+		$copyObj->setFinancingNotes($this->financing_notes);
 
 		$copyObj->setQuantityFinal($this->quantity_final);
 

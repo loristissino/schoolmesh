@@ -50,7 +50,7 @@ class SetupChecker
       'app_sf_guard_plugin_check_password_callable'=>'apps/frontend/config/app.yml',
       'app_config_default_male_teachertitle'=>'apps/frontend/config/app.yml',
       'app_config_default_female_teachertitle'=>'apps/frontend/config/app.yml',
-      'app_opendocument_converter_active'=>'apps/frontend/config/app.yml',
+      'app_opendocument_formats'=>'apps/frontend/config/app.yml',
       ) as $item=>$group)
     {
       if($text=sfConfig::get($item))

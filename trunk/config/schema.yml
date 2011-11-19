@@ -64,6 +64,7 @@ propel:
     system_alerts: varchar(255)
     is_scheduled_for_deletion: { type: boolean, default: false }
     prefers_richtext: { type: boolean, default: true }
+    preferred_format: varchar(5)
     last_action_at: timestamp
     last_login_at: timestamp
 
@@ -148,6 +149,7 @@ propel:
     user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     subject_id:       { type: integer, foreignTable: subject, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    team_id:          { type: integer, foreignTable: team, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
     year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     state:             { type: integer }
     hours:            { type: integer, default: 0 }
@@ -405,8 +407,10 @@ propel:
     proj_resource_type_id: ~
     description: varchar(255)
     charged_user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
-    quantity_estimated:  { type: decimal, size: 10, scale: 2 }
-    quantity_approved:  { type: decimal, size: 10, scale: 2 }
+    quantity_estimated:         { type: decimal, size: 10, scale: 2 }
+    quantity_approved:          { type: decimal, size: 10, scale: 2 }
+    quantity_externally_funded: { type: decimal, size: 10, scale: 2 }
+    financing_notes: varchar(255)
     quantity_final:  { type: decimal, size: 10, scale: 2 }
     standard_cost:  { type: decimal, size: 10, scale: 2 }
     scheduled_deadline: date

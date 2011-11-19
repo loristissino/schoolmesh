@@ -40,6 +40,7 @@ class AppointmentTableMap extends TableMap {
 		$this->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
 		$this->addForeignKey('SUBJECT_ID', 'SubjectId', 'INTEGER', 'subject', 'ID', true, null, null);
 		$this->addForeignKey('SCHOOLCLASS_ID', 'SchoolclassId', 'VARCHAR', 'schoolclass', 'ID', true, 5, null);
+		$this->addForeignKey('TEAM_ID', 'TeamId', 'INTEGER', 'team', 'ID', false, null, null);
 		$this->addForeignKey('YEAR_ID', 'YearId', 'INTEGER', 'year', 'ID', true, null, null);
 		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
 		$this->addColumn('HOURS', 'Hours', 'INTEGER', false, null, 0);
@@ -59,6 +60,7 @@ class AppointmentTableMap extends TableMap {
     $this->addRelation('sfGuardUser', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Subject', 'Subject', RelationMap::MANY_TO_ONE, array('subject_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Schoolclass', 'Schoolclass', RelationMap::MANY_TO_ONE, array('schoolclass_id' => 'id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('Team', 'Team', RelationMap::MANY_TO_ONE, array('team_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Year', 'Year', RelationMap::MANY_TO_ONE, array('year_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Syllabus', 'Syllabus', RelationMap::MANY_TO_ONE, array('syllabus_id' => 'id', ), null, null);
     $this->addRelation('Wpevent', 'Wpevent', RelationMap::ONE_TO_MANY, array('id' => 'appointment_id', ), null, null);

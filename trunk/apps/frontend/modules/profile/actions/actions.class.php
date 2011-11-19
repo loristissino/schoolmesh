@@ -250,6 +250,7 @@ class profileActions extends sfActions
 				$this->profile
 				->setPronunciation($params['pronunciation'])
         ->setPrefersRichtext($params['prefers_richtext'])
+        ->setPreferredFormat($params['preferred_format'])
 				->setEmail($params['email']);
 				
 				$email_warning='';
@@ -285,6 +286,7 @@ class profileActions extends sfActions
 				'pronunciation'=>$this->profile->getPronunciation(),
 				'email'=>$this->profile->getEmail(),
         'prefers_richtext'=>$this->profile->getPrefersRichtext(),
+        'preferred_format'=>$this->profile->getPreferredFormat(),
 			)
 		);
 	

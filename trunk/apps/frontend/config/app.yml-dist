@@ -56,8 +56,6 @@ all:
     currency_decpoint: ','
     currency_thousandssep: '.'
 
-    default_format: odt
-    
     projects_evaluation_min: 1
     projects_evaluation_max: 4
     
@@ -100,8 +98,11 @@ all:
 
   opendocument:
     template_directory: /var/schoolmesh/templates/oo  
-    converter_active:   false
-    attachments: /var/schoolmesh/data/attachments
+    formats:
+      odt: OpenDocument (odt)
+      pdf: Portable Document Format (pdf)
+      doc: Microsoft Word (doc)
+      rtf: Rich Text Format (rtf)
 
   documents:
     main_directory: /var/schoolmesh/data/documents
