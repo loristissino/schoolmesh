@@ -286,7 +286,7 @@ class usersActions extends sfActions
     $ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
 
 
-		$result=sfGuardUserProfilePeer::getWelcomeLetter($ids, sfConfig::get('app_config_default_format', 'odt'), $this->getContext());
+		$result=sfGuardUserProfilePeer::getWelcomeLetter($ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
 		
 		if ($result['result']=='error')
 		{
@@ -320,7 +320,7 @@ class usersActions extends sfActions
 
     $ids=$this->_getIds($request);
 		
-		$result=sfGuardUserProfilePeer::getGoogleAppsLetter($ids, 'odt', $this->getContext());
+		$result=sfGuardUserProfilePeer::getGoogleAppsLetter($ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
 		
 		if ($result['result']=='error')
 		{
@@ -352,7 +352,7 @@ class usersActions extends sfActions
 
     $ids=$this->_getIds($request);
 		
-		$result=sfGuardUserProfilePeer::getSigns($ids, 'odt', $this->getContext());
+		$result=sfGuardUserProfilePeer::getSigns($ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
 		
 		if ($result['result']=='error')
 		{
@@ -523,7 +523,7 @@ class usersActions extends sfActions
       // the user must choose a template
     }
     
-    $result=sfGuardUserProfilePeer::getUserlistDocument($this->template, $ids, 'odt', $this->getContext());
+    $result=sfGuardUserProfilePeer::getUserlistDocument($this->template, $ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
     
     
     $odfdoc=$result['content'];

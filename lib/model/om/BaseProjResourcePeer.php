@@ -25,7 +25,7 @@ abstract class BaseProjResourcePeer {
 	const TM_CLASS = 'ProjResourceTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 10;
+	const NUM_COLUMNS = 12;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -50,6 +50,12 @@ abstract class BaseProjResourcePeer {
 
 	/** the column name for the QUANTITY_APPROVED field */
 	const QUANTITY_APPROVED = 'proj_resource.QUANTITY_APPROVED';
+
+	/** the column name for the QUANTITY_EXTERNALLY_FUNDED field */
+	const QUANTITY_EXTERNALLY_FUNDED = 'proj_resource.QUANTITY_EXTERNALLY_FUNDED';
+
+	/** the column name for the FINANCING_NOTES field */
+	const FINANCING_NOTES = 'proj_resource.FINANCING_NOTES';
 
 	/** the column name for the QUANTITY_FINAL field */
 	const QUANTITY_FINAL = 'proj_resource.QUANTITY_FINAL';
@@ -83,11 +89,11 @@ abstract class BaseProjResourcePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'SchoolprojectId', 'ProjResourceTypeId', 'Description', 'ChargedUserId', 'QuantityEstimated', 'QuantityApproved', 'QuantityFinal', 'StandardCost', 'ScheduledDeadline', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'schoolprojectId', 'projResourceTypeId', 'description', 'chargedUserId', 'quantityEstimated', 'quantityApproved', 'quantityFinal', 'standardCost', 'scheduledDeadline', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::SCHOOLPROJECT_ID, self::PROJ_RESOURCE_TYPE_ID, self::DESCRIPTION, self::CHARGED_USER_ID, self::QUANTITY_ESTIMATED, self::QUANTITY_APPROVED, self::QUANTITY_FINAL, self::STANDARD_COST, self::SCHEDULED_DEADLINE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'schoolproject_id', 'proj_resource_type_id', 'description', 'charged_user_id', 'quantity_estimated', 'quantity_approved', 'quantity_final', 'standard_cost', 'scheduled_deadline', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'SchoolprojectId', 'ProjResourceTypeId', 'Description', 'ChargedUserId', 'QuantityEstimated', 'QuantityApproved', 'QuantityExternallyFunded', 'FinancingNotes', 'QuantityFinal', 'StandardCost', 'ScheduledDeadline', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'schoolprojectId', 'projResourceTypeId', 'description', 'chargedUserId', 'quantityEstimated', 'quantityApproved', 'quantityExternallyFunded', 'financingNotes', 'quantityFinal', 'standardCost', 'scheduledDeadline', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::SCHOOLPROJECT_ID, self::PROJ_RESOURCE_TYPE_ID, self::DESCRIPTION, self::CHARGED_USER_ID, self::QUANTITY_ESTIMATED, self::QUANTITY_APPROVED, self::QUANTITY_EXTERNALLY_FUNDED, self::FINANCING_NOTES, self::QUANTITY_FINAL, self::STANDARD_COST, self::SCHEDULED_DEADLINE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'schoolproject_id', 'proj_resource_type_id', 'description', 'charged_user_id', 'quantity_estimated', 'quantity_approved', 'quantity_externally_funded', 'financing_notes', 'quantity_final', 'standard_cost', 'scheduled_deadline', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
 	);
 
 	/**
@@ -97,11 +103,11 @@ abstract class BaseProjResourcePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'SchoolprojectId' => 1, 'ProjResourceTypeId' => 2, 'Description' => 3, 'ChargedUserId' => 4, 'QuantityEstimated' => 5, 'QuantityApproved' => 6, 'QuantityFinal' => 7, 'StandardCost' => 8, 'ScheduledDeadline' => 9, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'schoolprojectId' => 1, 'projResourceTypeId' => 2, 'description' => 3, 'chargedUserId' => 4, 'quantityEstimated' => 5, 'quantityApproved' => 6, 'quantityFinal' => 7, 'standardCost' => 8, 'scheduledDeadline' => 9, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SCHOOLPROJECT_ID => 1, self::PROJ_RESOURCE_TYPE_ID => 2, self::DESCRIPTION => 3, self::CHARGED_USER_ID => 4, self::QUANTITY_ESTIMATED => 5, self::QUANTITY_APPROVED => 6, self::QUANTITY_FINAL => 7, self::STANDARD_COST => 8, self::SCHEDULED_DEADLINE => 9, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'schoolproject_id' => 1, 'proj_resource_type_id' => 2, 'description' => 3, 'charged_user_id' => 4, 'quantity_estimated' => 5, 'quantity_approved' => 6, 'quantity_final' => 7, 'standard_cost' => 8, 'scheduled_deadline' => 9, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'SchoolprojectId' => 1, 'ProjResourceTypeId' => 2, 'Description' => 3, 'ChargedUserId' => 4, 'QuantityEstimated' => 5, 'QuantityApproved' => 6, 'QuantityExternallyFunded' => 7, 'FinancingNotes' => 8, 'QuantityFinal' => 9, 'StandardCost' => 10, 'ScheduledDeadline' => 11, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'schoolprojectId' => 1, 'projResourceTypeId' => 2, 'description' => 3, 'chargedUserId' => 4, 'quantityEstimated' => 5, 'quantityApproved' => 6, 'quantityExternallyFunded' => 7, 'financingNotes' => 8, 'quantityFinal' => 9, 'standardCost' => 10, 'scheduledDeadline' => 11, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SCHOOLPROJECT_ID => 1, self::PROJ_RESOURCE_TYPE_ID => 2, self::DESCRIPTION => 3, self::CHARGED_USER_ID => 4, self::QUANTITY_ESTIMATED => 5, self::QUANTITY_APPROVED => 6, self::QUANTITY_EXTERNALLY_FUNDED => 7, self::FINANCING_NOTES => 8, self::QUANTITY_FINAL => 9, self::STANDARD_COST => 10, self::SCHEDULED_DEADLINE => 11, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'schoolproject_id' => 1, 'proj_resource_type_id' => 2, 'description' => 3, 'charged_user_id' => 4, 'quantity_estimated' => 5, 'quantity_approved' => 6, 'quantity_externally_funded' => 7, 'financing_notes' => 8, 'quantity_final' => 9, 'standard_cost' => 10, 'scheduled_deadline' => 11, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
 	);
 
 	/**
@@ -178,6 +184,8 @@ abstract class BaseProjResourcePeer {
 		$criteria->addSelectColumn(ProjResourcePeer::CHARGED_USER_ID);
 		$criteria->addSelectColumn(ProjResourcePeer::QUANTITY_ESTIMATED);
 		$criteria->addSelectColumn(ProjResourcePeer::QUANTITY_APPROVED);
+		$criteria->addSelectColumn(ProjResourcePeer::QUANTITY_EXTERNALLY_FUNDED);
+		$criteria->addSelectColumn(ProjResourcePeer::FINANCING_NOTES);
 		$criteria->addSelectColumn(ProjResourcePeer::QUANTITY_FINAL);
 		$criteria->addSelectColumn(ProjResourcePeer::STANDARD_COST);
 		$criteria->addSelectColumn(ProjResourcePeer::SCHEDULED_DEADLINE);

@@ -190,3 +190,21 @@ function br2nl($text)
   return str_replace(array('&lt;br /&gt;', '<br />'), "\n", $text);
 }
 
+function export_action_links($sf_user, $action, $sf_context)
+{
+  $text='';
+  foreach(sfConfig::get('app_opendocument_formats') as $key=>$value)
+  {
+    $text.='<li class="sf_admin_action_' . $key . '">' . 
+      link_to(
+        $sf_context->getI18N()->__('Export to %format%', array('%format%'=>$value)),
+        $action . '&doctype='.$key,
+        array(
+          'title'=>$sf_context->getI18N()->__('Export this document in the specified format')
+          )
+        ) .
+      '</li><br />';
+  }
+  
+  return $text;
+}

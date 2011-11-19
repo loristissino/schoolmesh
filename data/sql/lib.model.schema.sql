@@ -157,6 +157,7 @@ CREATE TABLE `sf_guard_user_profile`
 	`system_alerts` VARCHAR(255),
 	`is_scheduled_for_deletion` TINYINT default 0,
 	`prefers_richtext` TINYINT default 1,
+	`preferred_format` VARCHAR(5),
 	`last_action_at` DATETIME,
 	`last_login_at` DATETIME,
 	PRIMARY KEY (`user_id`),
@@ -374,6 +375,7 @@ CREATE TABLE `appointment`
 	`user_id` INTEGER  NOT NULL,
 	`subject_id` INTEGER  NOT NULL,
 	`schoolclass_id` VARCHAR(5)  NOT NULL,
+	`team_id` INTEGER,
 	`year_id` INTEGER  NOT NULL,
 	`state` INTEGER,
 	`hours` INTEGER default 0,
@@ -401,14 +403,20 @@ CREATE TABLE `appointment`
 		REFERENCES `schoolclass` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
-	INDEX `appointment_FI_4` (`year_id`),
+	INDEX `appointment_FI_4` (`team_id`),
 	CONSTRAINT `appointment_FK_4`
+		FOREIGN KEY (`team_id`)
+		REFERENCES `team` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `appointment_FI_5` (`year_id`),
+	CONSTRAINT `appointment_FK_5`
 		FOREIGN KEY (`year_id`)
 		REFERENCES `year` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
-	INDEX `appointment_FI_5` (`syllabus_id`),
-	CONSTRAINT `appointment_FK_5`
+	INDEX `appointment_FI_6` (`syllabus_id`),
+	CONSTRAINT `appointment_FK_6`
 		FOREIGN KEY (`syllabus_id`)
 		REFERENCES `syllabus` (`id`)
 )Type=InnoDB;
@@ -1091,6 +1099,8 @@ CREATE TABLE `proj_resource`
 	`charged_user_id` INTEGER,
 	`quantity_estimated` DECIMAL(10,2),
 	`quantity_approved` DECIMAL(10,2),
+	`quantity_externally_funded` DECIMAL(10,2),
+	`financing_notes` VARCHAR(255),
 	`quantity_final` DECIMAL(10,2),
 	`standard_cost` DECIMAL(10,2),
 	`scheduled_deadline` DATE,

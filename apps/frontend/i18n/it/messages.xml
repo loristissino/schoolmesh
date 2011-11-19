@@ -1800,7 +1800,7 @@
         <target>I dati vengono esportati usando il modello e le impostazioni correnti.</target>
     </trans-unit>
     <trans-unit id="472">
-        <source>If you need the original versione, please use the attachments below.</source>
+        <source>If you need the original version, please use the attachments below.</source>
         <target>Se necessiti della versione originale, usa gli allegati elencati qui sotto.</target>
     </trans-unit>
     <trans-unit id="473">
@@ -3480,16 +3480,20 @@
         <target>Scarica cartelli per il ricevimento dei genitori</target>
     </trans-unit>
     <trans-unit id="881">
-        <source>Export to OpenDocument</source>
-        <target>Esporta come OpenDocument</target>
+        <source>Export to %format%</source>
+        <target>Esporta in formato %format%</target>
     </trans-unit>
     <trans-unit id="882">
-        <source>Export to PDF</source>
-        <target>Esporta come PDF</target>
+        <source>Export this document in the specified format</source>
+        <target>Esporta questo documento nel formato specificato</target>
     </trans-unit>
     <trans-unit id="883">
         <source>Choose a role</source>
         <target>Scegli un ruolo</target>
+    </trans-unit>
+    <trans-unit id="884">
+        <source>Preferred format</source>
+        <target>Formato preferito</target>
     </trans-unit>
     </body>
   </file>

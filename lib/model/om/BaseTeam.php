@@ -57,6 +57,16 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 	protected $needs_mailing_list;
 
 	/**
+	 * @var        array Appointment[] Collection to store aggregation of Appointment objects.
+	 */
+	protected $collAppointments;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collAppointments.
+	 */
+	private $lastAppointmentCriteria = null;
+
+	/**
 	 * @var        array UserTeam[] Collection to store aggregation of UserTeam objects.
 	 */
 	protected $collUserTeams;
@@ -403,6 +413,9 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
+			$this->collAppointments = null;
+			$this->lastAppointmentCriteria = null;
+
 			$this->collUserTeams = null;
 			$this->lastUserTeamCriteria = null;
 
@@ -536,6 +549,14 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
 			}
 
+			if ($this->collAppointments !== null) {
+				foreach ($this->collAppointments as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collUserTeams !== null) {
 				foreach ($this->collUserTeams as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -614,6 +635,14 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collAppointments !== null) {
+					foreach ($this->collAppointments as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 				if ($this->collUserTeams !== null) {
 					foreach ($this->collUserTeams as $referrerFK) {
@@ -867,6 +896,12 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 			// the getter/setter methods for fkey referrer objects.
 			$copyObj->setNew(false);
 
+			foreach ($this->getAppointments() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addAppointment($relObj->copy($deepCopy));
+				}
+			}
+
 			foreach ($this->getUserTeams() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addUserTeam($relObj->copy($deepCopy));
@@ -918,6 +953,395 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 			self::$peer = new TeamPeer();
 		}
 		return self::$peer;
+	}
+
+	/**
+	 * Clears out the collAppointments collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addAppointments()
+	 */
+	public function clearAppointments()
+	{
+		$this->collAppointments = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collAppointments collection (array).
+	 *
+	 * By default this just sets the collAppointments collection to an empty array (like clearcollAppointments());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initAppointments()
+	{
+		$this->collAppointments = array();
+	}
+
+	/**
+	 * Gets an array of Appointment objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this Team has previously been saved, it will retrieve
+	 * related Appointments from storage. If this Team is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array Appointment[]
+	 * @throws     PropelException
+	 */
+	public function getAppointments($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(TeamPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAppointments === null) {
+			if ($this->isNew()) {
+			   $this->collAppointments = array();
+			} else {
+
+				$criteria->add(AppointmentPeer::TEAM_ID, $this->id);
+
+				AppointmentPeer::addSelectColumns($criteria);
+				$this->collAppointments = AppointmentPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(AppointmentPeer::TEAM_ID, $this->id);
+
+				AppointmentPeer::addSelectColumns($criteria);
+				if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
+					$this->collAppointments = AppointmentPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastAppointmentCriteria = $criteria;
+		return $this->collAppointments;
+	}
+
+	/**
+	 * Returns the number of related Appointment objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Appointment objects.
+	 * @throws     PropelException
+	 */
+	public function countAppointments(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(TeamPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collAppointments === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(AppointmentPeer::TEAM_ID, $this->id);
+
+				$count = AppointmentPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(AppointmentPeer::TEAM_ID, $this->id);
+
+				if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
+					$count = AppointmentPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collAppointments);
+				}
+			} else {
+				$count = count($this->collAppointments);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a Appointment object to this object
+	 * through the Appointment foreign key attribute.
+	 *
+	 * @param      Appointment $l Appointment
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addAppointment(Appointment $l)
+	{
+		if ($this->collAppointments === null) {
+			$this->initAppointments();
+		}
+		if (!in_array($l, $this->collAppointments, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collAppointments, $l);
+			$l->setTeam($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Team is new, it will return
+	 * an empty collection; or if this Team has previously
+	 * been saved, it will retrieve related Appointments from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Team.
+	 */
+	public function getAppointmentsJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(TeamPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAppointments === null) {
+			if ($this->isNew()) {
+				$this->collAppointments = array();
+			} else {
+
+				$criteria->add(AppointmentPeer::TEAM_ID, $this->id);
+
+				$this->collAppointments = AppointmentPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(AppointmentPeer::TEAM_ID, $this->id);
+
+			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
+				$this->collAppointments = AppointmentPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastAppointmentCriteria = $criteria;
+
+		return $this->collAppointments;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Team is new, it will return
+	 * an empty collection; or if this Team has previously
+	 * been saved, it will retrieve related Appointments from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Team.
+	 */
+	public function getAppointmentsJoinSubject($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(TeamPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAppointments === null) {
+			if ($this->isNew()) {
+				$this->collAppointments = array();
+			} else {
+
+				$criteria->add(AppointmentPeer::TEAM_ID, $this->id);
+
+				$this->collAppointments = AppointmentPeer::doSelectJoinSubject($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(AppointmentPeer::TEAM_ID, $this->id);
+
+			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
+				$this->collAppointments = AppointmentPeer::doSelectJoinSubject($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastAppointmentCriteria = $criteria;
+
+		return $this->collAppointments;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Team is new, it will return
+	 * an empty collection; or if this Team has previously
+	 * been saved, it will retrieve related Appointments from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Team.
+	 */
+	public function getAppointmentsJoinSchoolclass($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(TeamPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAppointments === null) {
+			if ($this->isNew()) {
+				$this->collAppointments = array();
+			} else {
+
+				$criteria->add(AppointmentPeer::TEAM_ID, $this->id);
+
+				$this->collAppointments = AppointmentPeer::doSelectJoinSchoolclass($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(AppointmentPeer::TEAM_ID, $this->id);
+
+			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
+				$this->collAppointments = AppointmentPeer::doSelectJoinSchoolclass($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastAppointmentCriteria = $criteria;
+
+		return $this->collAppointments;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Team is new, it will return
+	 * an empty collection; or if this Team has previously
+	 * been saved, it will retrieve related Appointments from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Team.
+	 */
+	public function getAppointmentsJoinYear($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(TeamPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAppointments === null) {
+			if ($this->isNew()) {
+				$this->collAppointments = array();
+			} else {
+
+				$criteria->add(AppointmentPeer::TEAM_ID, $this->id);
+
+				$this->collAppointments = AppointmentPeer::doSelectJoinYear($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(AppointmentPeer::TEAM_ID, $this->id);
+
+			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
+				$this->collAppointments = AppointmentPeer::doSelectJoinYear($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastAppointmentCriteria = $criteria;
+
+		return $this->collAppointments;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Team is new, it will return
+	 * an empty collection; or if this Team has previously
+	 * been saved, it will retrieve related Appointments from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Team.
+	 */
+	public function getAppointmentsJoinSyllabus($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(TeamPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAppointments === null) {
+			if ($this->isNew()) {
+				$this->collAppointments = array();
+			} else {
+
+				$criteria->add(AppointmentPeer::TEAM_ID, $this->id);
+
+				$this->collAppointments = AppointmentPeer::doSelectJoinSyllabus($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(AppointmentPeer::TEAM_ID, $this->id);
+
+			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
+				$this->collAppointments = AppointmentPeer::doSelectJoinSyllabus($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastAppointmentCriteria = $criteria;
+
+		return $this->collAppointments;
 	}
 
 	/**
@@ -1180,6 +1604,11 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
+			if ($this->collAppointments) {
+				foreach ((array) $this->collAppointments as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->collUserTeams) {
 				foreach ((array) $this->collUserTeams as $o) {
 					$o->clearAllReferences($deep);
@@ -1187,6 +1616,7 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 			}
 		} // if ($deep)
 
+		$this->collAppointments = null;
 		$this->collUserTeams = null;
 	}
 
