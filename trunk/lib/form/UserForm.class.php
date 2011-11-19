@@ -29,6 +29,9 @@
       'main_role' => new sfWidgetFormPropelChoice(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
             ));
 
+    $this['lettertitle']->getWidget()->setLabel('Title');
+
+
 			if(isset($this->options['new']))
 			{
             $this->setWidgets(array(
@@ -77,7 +80,6 @@
 					new smValidatorUsername('username')))
 				);
         
-    $this['lettertitle']->getWidget()->setLabel('Title');
     
 		/* KEPT FOR REFERENCE 
 		$this->validatorSchema->setPostValidator(
