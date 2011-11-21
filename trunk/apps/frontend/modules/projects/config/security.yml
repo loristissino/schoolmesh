@@ -30,7 +30,7 @@ setfinancingdate:
   
 computebudget:
   credentials: [[ proj_view, proj_adm_ok, proj_monitoring ]]
-
+  
 spreadsheet:
   credentials: [[ proj_view, proj_adm_ok, proj_monitoring ]]
 
@@ -77,7 +77,7 @@ editdeadline:
   credentials: proj_coordination
 
 editresource:
-  credentials: proj_coordination
+  credentials: [[ proj_coordination, proj_adm_ok, proj_monitoring ]]
 
 editupshot:
   credentials: proj_coordination
@@ -96,7 +96,6 @@ submit:
 
 new:
   credentials: proj_coordination
-
 
 default:
   credentials: [[ proj_coordination, proj_activity, proj_view, proj_adm_ok, proj_monitoring ]]

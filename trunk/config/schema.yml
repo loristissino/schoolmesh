@@ -365,6 +365,8 @@ propel:
     approval_notes: longvarchar
     financing_date: date    
     financing_notes: longvarchar
+    confirmation_date:  date    
+    confirmation_notes: longvarchar
     evaluation_min: integer  # the minimum value for evaluations of upshots of this project
     evaluation_max: integer  # the minimum value for evaluations of upshots of this project
 
@@ -403,17 +405,18 @@ propel:
 
   proj_resource:
     id: ~
-    schoolproject_id: ~
-    proj_resource_type_id: ~
-    description: varchar(255)
-    charged_user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
+    schoolproject_id:           ~
+    proj_resource_type_id:      ~
+    description:                varchar(255)
+    charged_user_id:            { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
     quantity_estimated:         { type: decimal, size: 10, scale: 2 }
     quantity_approved:          { type: decimal, size: 10, scale: 2 }
-    quantity_externally_funded: { type: decimal, size: 10, scale: 2 }
-    financing_notes: varchar(255)
-    quantity_final:  { type: decimal, size: 10, scale: 2 }
-    standard_cost:  { type: decimal, size: 10, scale: 2 }
-    scheduled_deadline: date
+    amount_estimated:           { type: decimal, size: 10, scale: 2 }
+    amount_funded_externally:   { type: decimal, size: 10, scale: 2 }
+    financing_notes:            varchar(255)
+    quantity_final:             { type: decimal, size: 10, scale: 2 }
+    standard_cost:              { type: decimal, size: 10, scale: 2 }
+    scheduled_deadline:         date
     
   proj_activity:
     id: ~

@@ -5,7 +5,7 @@
  *
  * @package    schoolmesh
  * @subpackage projects
- * @author     Your name here
+ * @author     Loris Tissino <loris.tisino@gmail.com>
  * @version    SVN: $Id: actions.class.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class projectsActions extends sfActions
@@ -212,62 +212,57 @@ class projectsActions extends sfActions
 
   public function executeSetapprovaldate(sfWebRequest $request)
   {
-
-    $this->form = new ProjectDateForm();
-    
-    $this->form->setLabels(array(
-      'date'=>$this->getContext()->getI18N()->__('Approval date'),
-      'notes'=>$this->getContext()->getI18N()->__('Approval notes')
-      ));
-    
-    $this->action='setapprovaldate';
-    $this->setTemplate('projdate');
-    
-		if ($request->isMethod('post'))
-    {
-			$this->form->bind($request->getParameter('projectinfo'));
-			if ($this->form->isValid())
-			{
-				$params = $this->form->getValues();
-				$result=SchoolprojectPeer::setApprovalDate($this->getUser(), $params, $this->getContext());
-        
-				$this->getUser()->setFlash($result['result'],
-					$this->getContext()->getI18N()->__($result['message'])
-					);
-        
-        return $this->redirect('projects/monitor');
-			}
-		}
-
-    if($this->getUser()->hasAttribute('ids'))
-    {
-      $this->ids=$this->getUser()->getAttribute('ids');
-    }
-    else
-    {
-      $this->ids=$this->_getIds($request);
-    }
-    $this->projects=SchoolprojectPeer::retrieveByPks($this->ids);
-    $date=$this->projects[0]->getApprovalDate('U');
-    if(!$date) $date=time();
-    $this->form->setDefault('date', $date);
-    $this->form->setDefault('notes', $this->projects[0]->getApprovalNotes());
-
+    return $this->_executeSetgenericdate($request, 
+      array(
+        'date'=>'Approval date', 
+        'notes'=>'Approval notes',
+        'action'=>'setapprovaldate',
+        'methodkey'=>'Approval',
+        )
+      );
   }
-
 
   public function executeSetfinancingdate(sfWebRequest $request)
   {
+    return $this->_executeSetgenericdate($request, 
+      array(
+        'date'=>'Financing date', 
+        'notes'=>'Financing notes',
+        'action'=>'setfinancingdate',
+        'methodkey'=>'Financing',
+        )
+      );
 
+  }
+
+  public function executeSetconfirmationdate(sfWebRequest $request)
+  {
+    return $this->_executeSetgenericdate($request, 
+      array(
+        'date'=>'Confirmation date', 
+        'notes'=>'Confirmation notes',
+        'action'=>'setconfirmationdate',
+        'methodkey'=>'Confirmation',
+        )
+      );
+
+  }
+  
+  private function _executeSetgenericdate(sfWebRequest $request, $options=array())
+  {
+  
     $this->form = new ProjectDateForm();
     
     $this->form->setLabels(array(
-      'date'=>$this->getContext()->getI18N()->__('Financing date'),
-      'notes'=>$this->getContext()->getI18N()->__('Financing notes')
+      'date'=>$this->getContext()->getI18N()->__($options['date']),
+      'notes'=>$this->getContext()->getI18N()->__($options['notes'])
       ));
     
-    $this->action='setfinancingdate';
+    $this->action=$options['action'];
     $this->setTemplate('projdate');
+    
+    $setmethod='set'.$options['methodkey'].'Date';
+    $getmethod='get'.$options['methodkey'].'Date';
     
 		if ($request->isMethod('post'))
     {
@@ -275,15 +270,14 @@ class projectsActions extends sfActions
 			if ($this->form->isValid())
 			{
 				$params = $this->form->getValues();
-				$result=SchoolprojectPeer::setFinancingDate($this->getUser(), $params, $this->getContext());
+				$result=SchoolprojectPeer::$setmethod($this->getUser(), $params, $this->getContext());
         
 				$this->getUser()->setFlash($result['result'],
 					$this->getContext()->getI18N()->__($result['message'])
 					);
-          
+        
         return $this->redirect('projects/monitor');
 			}
-			
 		}
 
     if($this->getUser()->hasAttribute('ids'))
@@ -295,11 +289,14 @@ class projectsActions extends sfActions
       $this->ids=$this->_getIds($request);
     }
     $this->projects=SchoolprojectPeer::retrieveByPks($this->ids);
-    $date=$this->projects[0]->getFinancingDate('U');
+    $date=$this->projects[0]->$getmethod('U');
     if(!$date) $date=time();
     $this->form->setDefault('date', $date);
-    $this->form->setDefault('notes', $this->projects[0]->getFinancingNotes());
+    $this->form->setDefault('notes', $this->projects[0]->$getmethod());
+
   }
+
+
   
   public function executeComputebudget(sfWebRequest $request)
   {

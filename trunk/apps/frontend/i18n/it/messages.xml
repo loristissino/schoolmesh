@@ -3495,9 +3495,39 @@
         <source>Preferred format</source>
         <target>Formato preferito</target>
     </trans-unit>
+    <trans-unit id="885">
+        <source>State set to «confirmed»</source>
+        <target>Stato impostato a «confermato»</target>
+    </trans-unit>
+    <trans-unit id="886">
+        <source>Set confirmation date</source>
+        <target>Imposta data di conferma</target>
+    </trans-unit>
+    <trans-unit id="887">
+        <source>You are setting the confirmation date for the following projects:</source>
+        <target>Stai impostando la data di conferma per i seguenti progetti:</target>
+    </trans-unit>
+    <trans-unit id="888">
+        <source>Confirmation date</source>
+        <target>Conferma</target>
+    </trans-unit>
+    <trans-unit id="889">
+        <source>Confirmation notes</source>
+        <target>Note</target>
+    </trans-unit>
+    <trans-unit id="890">
+        <source>Confirmation date set to %date% (%comment%)</source>
+        <target>Data di conferma impostata a %date% (%comment%)</target>
+    </trans-unit>
+    <trans-unit id="891">
+        <source>Dates</source>
+        <target>Date</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
+
 
 
 
