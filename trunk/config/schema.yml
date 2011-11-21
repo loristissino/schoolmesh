@@ -402,6 +402,7 @@ propel:
     role_id: ~
     standard_cost: { type: decimal, size: 10, scale: 2 }
     measurement_unit: varchar(10)
+    is_monetary: { type: boolean, default: true }
 
   proj_resource:
     id: ~
@@ -416,6 +417,7 @@ propel:
     financing_notes:            varchar(255)
     quantity_final:             { type: decimal, size: 10, scale: 2 }
     standard_cost:              { type: decimal, size: 10, scale: 2 }
+    is_monetary:                { type: boolean, default: true }
     scheduled_deadline:         date
     
   proj_activity:

@@ -23,6 +23,7 @@ abstract class BaseProjResourceFormFilter extends BaseFormFilterPropel
       'financing_notes'          => new sfWidgetFormFilterInput(),
       'quantity_final'           => new sfWidgetFormFilterInput(),
       'standard_cost'            => new sfWidgetFormFilterInput(),
+      'is_monetary'              => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'scheduled_deadline'       => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
     ));
 
@@ -38,6 +39,7 @@ abstract class BaseProjResourceFormFilter extends BaseFormFilterPropel
       'financing_notes'          => new sfValidatorPass(array('required' => false)),
       'quantity_final'           => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'standard_cost'            => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'is_monetary'              => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'scheduled_deadline'       => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
     ));
 
@@ -68,6 +70,7 @@ abstract class BaseProjResourceFormFilter extends BaseFormFilterPropel
       'financing_notes'          => 'Text',
       'quantity_final'           => 'Number',
       'standard_cost'            => 'Number',
+      'is_monetary'              => 'Boolean',
       'scheduled_deadline'       => 'Date',
     );
   }

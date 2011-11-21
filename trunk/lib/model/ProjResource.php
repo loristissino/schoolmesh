@@ -40,6 +40,7 @@ class ProjResource extends BaseProjResource {
   public function updateFromForm($params, $user=null, $sf_context=null)
   {
     $old_quantity_approved=$this->getQuantityApproved();
+    $old_amount_funded_externally=$this->getAmountFundedExternally();
     $con = Propel::getConnection(ProjResourcePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
     // we need to check which ones are present, because they depend on the state
     Generic::updateObjectFromForm($this, array(
@@ -49,6 +50,8 @@ class ProjResource extends BaseProjResource {
       'quantity_approved',
       'charged_user_id',
       'scheduled_deadline',
+      'amount_funded_externally',
+      'financing_notes',
       ), $params);
       
     if(!$this->getProjResourceType()->getRoleId())
@@ -75,6 +78,17 @@ class ProjResource extends BaseProjResource {
             $sf_context
           );
         }
+        if($this->getAmountFundedExternally()!=$old_amount_funded_externally)
+        {
+          $this->getSchoolproject()->addWfevent(
+            $user->getProfile()->getId(),
+            'Updated amount funded externally for resource «%resource%», set to %amount% (%notes%)',
+            array('%resource%'=>$this->getDescription(), '%amount%'=>$params['amount_funded_externally'], '%notes%'=>$params['financing_notes']),
+            null,
+            $sf_context
+          );
+        }
+        
       }
     }
     catch (Exception $e)
@@ -166,6 +180,10 @@ class ProjResource extends BaseProjResource {
   
   public function getQuantityMultipliedByCost()
   {
+    if (!$this->getIsMonetary())
+    {
+      return false;
+    }
     return $this->getStandardCost() ? $this->getQuantityApproved() * $this->getStandardCost() : $this->getQuantityApproved();
   }
 

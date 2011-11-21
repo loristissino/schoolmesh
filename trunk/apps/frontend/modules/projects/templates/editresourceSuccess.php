@@ -39,6 +39,13 @@
     <td><?php echo $resource->getQuantityEstimated() ?></td>
   </tr>
   <?php endif ?>
+  <?php if($resource->getSchoolproject()->getState() >= Workflow::PROJ_SUBMITTED):?>
+  <tr>
+    <th><label for="resource_amount_estimated"><?php echo __('Amount est. ('. sfConfig::get('app_config_currency_symbol') .')') ?></label></th>
+    <td><?php echo $resource->getAmountEstimated() ?></td>
+  </tr>
+  <?php endif ?>
+
 
     <?php echo $form ?>
 	<tr>

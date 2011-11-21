@@ -168,19 +168,40 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
           if(!array_key_exists($resource->getProjResourceTypeId(), $costscache))
           {
             // we cache the results...
-            $costscache[$resource->getProjResourceTypeId()]=$resource->getProjResourceType()->getStandardCost();
+            $costscache[$resource->getProjResourceTypeId()]=array(
+              'cost'=>$resource->getProjResourceType()->getStandardCost(),
+              'is_monetary'=>$resource->getProjResourceType()->getIsMonetary()
+              );
           }
-          if($costscache[$resource->getProjResourceTypeId()]!=$resource->getStandardCost())
+          if(
+            ($costscache[$resource->getProjResourceTypeId()]['cost']!=$resource->getStandardCost())
+            or
+            ($costscache[$resource->getProjResourceTypeId()]['is_monetary']!=$resource->getIsMonetary())
+            )
           {
             $resource
-            ->setStandardCost($costscache[$resource->getProjResourceTypeId()])
+            ->setStandardCost($costscache[$resource->getProjResourceTypeId()]['cost'])
+            ->setIsMonetary($costscache[$resource->getProjResourceTypeId()]['is_monetary'])
             ->save();
             $projdirty=true;
-            $resourcesNo++;
             $project->addWfevent(
               $user_id,
-              'Updated standard cost of resource «%resource%», set to %amount%',
-              array('%resource%'=>$resource->getDescription(), '%amount%'=>$resource->getStandardCost()),
+              'Updated standard cost of resource «%resource%», set to «%amount%» (monetary? %monetary%)',
+              array('%resource%'=>$resource->getDescription(), '%amount%'=>$resource->getStandardCost(), '%monetary%'=>$resource->getIsMonetary()?'1':'0'),
+              null,
+              $sf_context
+            );
+          }
+          if($resource->getAmountEstimated()!=$resource->getQuantityMultipliedByCost())
+          {
+            $resource
+            ->setAmountEstimated($resource->getQuantityMultipliedByCost())
+            ->save();
+            $projdirty=true;
+            $project->addWfevent(
+              $user_id,
+              'Updated estimated amount of resource «%resource%», set to «%amount%»',
+              array('%resource%'=>$resource->getDescription(), '%amount%'=>$resource->getAmountEstimated()),
               null,
               $sf_context
             );

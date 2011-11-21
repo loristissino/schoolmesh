@@ -49,6 +49,13 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	protected $measurement_unit;
 
 	/**
+	 * The value for the is_monetary field.
+	 * Note: this column has a database default value of: true
+	 * @var        boolean
+	 */
+	protected $is_monetary;
+
+	/**
 	 * @var        Role
 	 */
 	protected $aRole;
@@ -80,6 +87,27 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	// symfony behavior
 	
 	const PEER = 'ProjResourceTypePeer';
+
+	/**
+	 * Applies default values to this object.
+	 * This method should be called from the object's constructor (or
+	 * equivalent initialization method).
+	 * @see        __construct()
+	 */
+	public function applyDefaultValues()
+	{
+		$this->is_monetary = true;
+	}
+
+	/**
+	 * Initializes internal state of BaseProjResourceType object.
+	 * @see        applyDefaults()
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
 
 	/**
 	 * Get the [id] column value.
@@ -129,6 +157,16 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	public function getMeasurementUnit()
 	{
 		return $this->measurement_unit;
+	}
+
+	/**
+	 * Get the [is_monetary] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsMonetary()
+	{
+		return $this->is_monetary;
 	}
 
 	/**
@@ -236,6 +274,26 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	} // setMeasurementUnit()
 
 	/**
+	 * Set the value of [is_monetary] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     ProjResourceType The current object (for fluent API support)
+	 */
+	public function setIsMonetary($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_monetary !== $v || $this->isNew()) {
+			$this->is_monetary = $v;
+			$this->modifiedColumns[] = ProjResourceTypePeer::IS_MONETARY;
+		}
+
+		return $this;
+	} // setIsMonetary()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -245,6 +303,10 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->is_monetary !== true) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -272,6 +334,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			$this->role_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->standard_cost = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->measurement_unit = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->is_monetary = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -281,7 +344,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 5; // 5 = ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 6; // 6 = ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjResourceType object", $e);
@@ -639,6 +702,9 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			case 4:
 				return $this->getMeasurementUnit();
 				break;
+			case 5:
+				return $this->getIsMonetary();
+				break;
 			default:
 				return null;
 				break;
@@ -665,6 +731,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			$keys[2] => $this->getRoleId(),
 			$keys[3] => $this->getStandardCost(),
 			$keys[4] => $this->getMeasurementUnit(),
+			$keys[5] => $this->getIsMonetary(),
 		);
 		return $result;
 	}
@@ -711,6 +778,9 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			case 4:
 				$this->setMeasurementUnit($value);
 				break;
+			case 5:
+				$this->setIsMonetary($value);
+				break;
 		} // switch()
 	}
 
@@ -740,6 +810,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setRoleId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setStandardCost($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setMeasurementUnit($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setIsMonetary($arr[$keys[5]]);
 	}
 
 	/**
@@ -756,6 +827,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProjResourceTypePeer::ROLE_ID)) $criteria->add(ProjResourceTypePeer::ROLE_ID, $this->role_id);
 		if ($this->isColumnModified(ProjResourceTypePeer::STANDARD_COST)) $criteria->add(ProjResourceTypePeer::STANDARD_COST, $this->standard_cost);
 		if ($this->isColumnModified(ProjResourceTypePeer::MEASUREMENT_UNIT)) $criteria->add(ProjResourceTypePeer::MEASUREMENT_UNIT, $this->measurement_unit);
+		if ($this->isColumnModified(ProjResourceTypePeer::IS_MONETARY)) $criteria->add(ProjResourceTypePeer::IS_MONETARY, $this->is_monetary);
 
 		return $criteria;
 	}
@@ -817,6 +889,8 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 		$copyObj->setStandardCost($this->standard_cost);
 
 		$copyObj->setMeasurementUnit($this->measurement_unit);
+
+		$copyObj->setIsMonetary($this->is_monetary);
 
 
 		if ($deepCopy) {

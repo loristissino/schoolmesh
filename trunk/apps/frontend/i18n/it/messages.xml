@@ -2772,8 +2772,8 @@
         <target>Aggiorna i costi standard</target>
     </trans-unit>
     <trans-unit id="709">
-        <source>Updated standard cost of resource «%resource%», set to %amount%</source>
-        <target>Aggiornato il costo standard della risorsa «%resource%», impostato a %amount%</target>
+        <source>Updated standard cost of resource «%resource%», set to «%amount%» (monetary? %monetary%)</source>
+        <target>Aggiornato il costo standard della risorsa «%resource%», impostato a «%amount%» (monetario? %monetary%)</target>
     </trans-unit>
     <trans-unit id="710">
         <source>Projects resource types definitions</source>
@@ -3523,9 +3523,34 @@
         <source>Dates</source>
         <target>Date</target>
     </trans-unit>
+    <trans-unit id="892">
+        <source>Project confirmed</source>
+        <target>Progetto confermato</target>
+    </trans-unit>
+    <trans-unit id="893">
+        <source>Amount est. (€)</source>
+        <target>Importo stim. (€)</target>
+    </trans-unit>
+    <trans-unit id="894">
+        <source>Funded ext.lly (€)</source>
+        <target>Fin. est. (€)</target>
+    </trans-unit>
+    <trans-unit id="895">
+        <source>Updated amount funded externally for resource «%resource%», set to %amount% (%notes%)</source>
+        <target>Aggiornato importo del finanziamento esterno per la risorsa «%resource%», impostato a %amount% (%notes%)</target>
+    </trans-unit>
+    <trans-unit id="896">
+        <source>Amount int</source>
+        <target>FIS</target><!-- In Italian schools, the internal financing is called FIS -->
+    </trans-unit>
+    <trans-unit id="897">
+        <source>Amount ext</source>
+        <target>Extra-FIS</target><!-- In Italian schools, the internal financing is called FIS -->
+    </trans-unit>
     </body>
   </file>
 </xliff>
+
 
 
 

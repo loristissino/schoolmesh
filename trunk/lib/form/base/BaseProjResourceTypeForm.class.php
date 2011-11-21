@@ -19,6 +19,7 @@ abstract class BaseProjResourceTypeForm extends BaseFormPropel
       'role_id'          => new sfWidgetFormPropelChoice(array('model' => 'Role', 'add_empty' => true)),
       'standard_cost'    => new sfWidgetFormInputText(),
       'measurement_unit' => new sfWidgetFormInputText(),
+      'is_monetary'      => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -27,6 +28,7 @@ abstract class BaseProjResourceTypeForm extends BaseFormPropel
       'role_id'          => new sfValidatorPropelChoice(array('model' => 'Role', 'column' => 'id', 'required' => false)),
       'standard_cost'    => new sfValidatorNumber(array('required' => false)),
       'measurement_unit' => new sfValidatorString(array('max_length' => 10, 'required' => false)),
+      'is_monetary'      => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('proj_resource_type[%s]');

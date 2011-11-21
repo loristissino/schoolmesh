@@ -26,6 +26,7 @@ abstract class BaseProjResourceForm extends BaseFormPropel
       'financing_notes'          => new sfWidgetFormInputText(),
       'quantity_final'           => new sfWidgetFormInputText(),
       'standard_cost'            => new sfWidgetFormInputText(),
+      'is_monetary'              => new sfWidgetFormInputCheckbox(),
       'scheduled_deadline'       => new sfWidgetFormDate(),
     ));
 
@@ -42,6 +43,7 @@ abstract class BaseProjResourceForm extends BaseFormPropel
       'financing_notes'          => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'quantity_final'           => new sfValidatorNumber(array('required' => false)),
       'standard_cost'            => new sfValidatorNumber(array('required' => false)),
+      'is_monetary'              => new sfValidatorBoolean(array('required' => false)),
       'scheduled_deadline'       => new sfValidatorDate(array('required' => false)),
     ));
 

@@ -1078,6 +1078,7 @@ CREATE TABLE `proj_resource_type`
 	`role_id` INTEGER,
 	`standard_cost` DECIMAL(10,2),
 	`measurement_unit` VARCHAR(10),
+	`is_monetary` TINYINT default 1,
 	PRIMARY KEY (`id`),
 	INDEX `proj_resource_type_FI_1` (`role_id`),
 	CONSTRAINT `proj_resource_type_FK_1`
@@ -1106,6 +1107,7 @@ CREATE TABLE `proj_resource`
 	`financing_notes` VARCHAR(255),
 	`quantity_final` DECIMAL(10,2),
 	`standard_cost` DECIMAL(10,2),
+	`is_monetary` TINYINT default 1,
 	`scheduled_deadline` DATE,
 	PRIMARY KEY (`id`),
 	INDEX `proj_resource_FI_1` (`schoolproject_id`),
