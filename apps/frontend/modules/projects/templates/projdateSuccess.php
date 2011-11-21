@@ -22,6 +22,8 @@
 <?php echo __('You are setting the approval date for the following projects:') ?>
 <?php elseif($action=='setfinancingdate'): ?>
 <?php echo __('You are setting the financing date for the following projects:') ?>
+<?php elseif($action=='setconfirmationdate'): ?>
+<?php echo __('You are setting the confirmation date for the following projects:') ?>
 <?php endif ?>
 </p>
 <ul>

@@ -26,7 +26,7 @@ class ProjResource extends BaseProjResource {
     return 
       $user->getProfile()->getUserId()===$this->getSchoolproject()->getUserId()
       || 
-      $user->hasCredential('admin')
+      $user->hasCredential('proj_adm_ok')
       ||
       $user->hasCredential('project') 
       ;

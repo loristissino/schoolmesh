@@ -56,11 +56,13 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 		return self::doSelectOne($c);
 	}
 
-
-  public static function setApprovalDate($user, $params, $sf_context=null)
+  private static function _setGenericDate($user, $params, $sf_context=null, $options=array())
   {
     $ids=$user->getAttribute('ids');
     $user_id=$user->getProfile()->getId();
+    
+    $setDateMethod='set'.$options['methodkey'].'Date';
+    $setNotesMethod='set'.$options['methodkey'].'Notes';
     
     if($params['date']>date('Y-m-d', time()))
     {
@@ -80,73 +82,69 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     foreach($projects as $project)
     {
       $project
-      ->setApprovalDate($params['date'])
-      ->setApprovalNotes($params['notes'])
+      ->$setDateMethod($params['date'])
+      ->$setNotesMethod($params['notes'])
       ;
       $project->addWfevent(
           $user_id,
-          'Approval date set to %date% (%comment%)',
+          $options['date'] . ' set to %date% (%comment%)',
           array('%date%'=>$params['date'], '%comment%'=>$params['notes']),
           null,
           $sf_context
         );
 
-      if ($project->getState()<Workflow::PROJ_APPROVED)
+      if ($project->getState()<$options['comparison_state'])
       {
-        $project->setState(Workflow::PROJ_APPROVED);
+        $project->setState($options['comparison_state']);
         $project->addWfevent(
           $user_id,
-          'State set to «approved»',
+          sprintf('State set to «%s»', $options['newstate']),
           null,
-          Workflow::PROJ_APPROVED,
+          $options['comparison_state'],
           $sf_context
         );
-
       }
       $project->save();
     }
     $result['result']='notice';
     $result['message']='Projects information have been updated.';
     return $result;
+  }
 
+  public static function setApprovalDate($user, $params, $sf_context=null)
+  {
+    return self::_setGenericDate($user, $params, $sf_context,
+      array(
+        'date'=>'Approval date',
+        'methodkey'=>'Approval',
+        'comparison_state'=>Workflow::PROJ_APPROVED,
+        'newstate'=>'approved',
+        )
+      );
   }
 
   public static function setFinancingDate($user, $params, $sf_context=null)
   {
-    $ids=$user->getAttribute('ids');
-    $user_id=$user->getProfile()->getId();
-    
-    $projects = SchoolprojectPeer::retrieveByPKs($ids);
-    foreach($projects as $project)
-    {
-      $project
-      ->setFinancingDate($params['date'])
-      ->setFinancingNotes($params['notes'])
-      ;
-      $project->addWfevent(
-          $user_id,
-          'Financing date set to %date% (%comment%)',
-          array('%date%'=>$params['date'], '%comment%'=>$params['notes']),
-          null,
-          $sf_context
-        );
-      if ($project->getState()<Workflow::PROJ_FINANCED)
-      {
-        $project->setState(Workflow::PROJ_FINANCED);
-        $project->addWfevent(
-          $user_id,
-          'State set to «financed»',
-          null,
-          Workflow::PROJ_APPROVED,
-          $sf_context
-        );
-      }
-      $project->save();
-    }
-    $result['result']='notice';
-    $result['message']='Projects information have been updated.';
-    return $result;
+    return self::_setGenericDate($user, $params, $sf_context,
+      array(
+        'date'=>'Financing date',
+        'methodkey'=>'Financing',
+        'comparison_state'=>Workflow::PROJ_FINANCED,
+        'newstate'=>'financed',
+        )
+      );
+  }
 
+  public static function setConfirmationDate($user, $params, $sf_context=null)
+  {
+    return self::_setGenericDate($user, $params, $sf_context,
+      array(
+        'date'=>'Confirmation date',
+        'methodkey'=>'Confirmation',
+        'comparison_state'=>Workflow::PROJ_CONFIRMED,
+        'newstate'=>'confirmed',
+        )
+      );
   }
 
   public static function updateStandardCosts($user, $ids, $sf_context=null)

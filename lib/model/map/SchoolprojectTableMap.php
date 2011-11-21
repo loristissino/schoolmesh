@@ -57,6 +57,8 @@ class SchoolprojectTableMap extends TableMap {
 		$this->addColumn('APPROVAL_NOTES', 'ApprovalNotes', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('FINANCING_DATE', 'FinancingDate', 'DATE', false, null, null);
 		$this->addColumn('FINANCING_NOTES', 'FinancingNotes', 'LONGVARCHAR', false, null, null);
+		$this->addColumn('CONFIRMATION_DATE', 'ConfirmationDate', 'DATE', false, null, null);
+		$this->addColumn('CONFIRMATION_NOTES', 'ConfirmationNotes', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('EVALUATION_MIN', 'EvaluationMin', 'INTEGER', false, null, null);
 		$this->addColumn('EVALUATION_MAX', 'EvaluationMax', 'INTEGER', false, null, null);
 		// validators

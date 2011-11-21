@@ -281,7 +281,8 @@ class Workflow
     PROJ_SUBMITTED = 20,
     PROJ_APPROVED = 30,
     PROJ_FINANCED = 40,
-    PROJ_FINISHED = 50;
+    PROJ_CONFIRMED = 50,
+    PROJ_FINISHED = 60;
 	
 	static private $projSteps=Array(
 
@@ -299,6 +300,10 @@ class Workflow
     
 	self::PROJ_FINANCED=>Array(
 		'stateDescription'=>"Project financed",
+		),
+
+	self::PROJ_CONFIRMED=>Array(
+		'stateDescription'=>"Project confirmed",
 		),
 
   self::PROJ_FINISHED=>Array(

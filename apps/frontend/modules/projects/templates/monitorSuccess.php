@@ -21,8 +21,7 @@
       <th class="sf_admin_text"><?php echo __('Coordinator') ?></th>
       <th class="sf_admin_text"><?php echo __('State') ?></th>
       <th class="sf_admin_text"><?php echo __('Reference number') ?></th>
-      <th class="sf_admin_text"><?php echo __('Approval date') ?></th>
-      <th class="sf_admin_text"><?php echo __('Financing date') ?></th>
+      <th class="sf_admin_text" style="width: 100px"><?php echo __('Dates') ?></th>
       <th class="sf_admin_text"><?php echo __('Deadlines') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
@@ -39,8 +38,7 @@
       <td><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></td>
       <td><?php include_partial('state', array('project'=>$project)) ?></td>
       <td><?php echo $project->getReferenceNumber() ?></td>
-      <td><?php echo $project->getApprovalDate('d/m/y') ?></td>
-      <td><?php echo $project->getFinancingDate('d/m/y') ?></td>
+      <td><?php include_partial('dates', array('project'=>$project)) ?></td>
       <td>
       <?php if ($project->isViewableBy($sf_user)): ?>
         <?php include_partial('deadlinesicons', array('project'=>$project)) ?>
@@ -62,6 +60,7 @@
   0 => __('Choose an action'),
   'setapprovaldate' => __('Set approval date'),
   'setfinancingdate' => __('Set financing date'),
+  'setconfirmationdate' => __('Set confirmation date'),
   'viewasreport' => __('View as report'),
   'computebudget' => __('Compute budget'),
   'computesynthesis' => __('Compute data synthesis'),

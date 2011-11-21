@@ -145,6 +145,18 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	protected $financing_notes;
 
 	/**
+	 * The value for the confirmation_date field.
+	 * @var        string
+	 */
+	protected $confirmation_date;
+
+	/**
+	 * The value for the confirmation_notes field.
+	 * @var        string
+	 */
+	protected $confirmation_notes;
+
+	/**
 	 * The value for the evaluation_min field.
 	 * @var        int
 	 */
@@ -516,6 +528,54 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	public function getFinancingNotes()
 	{
 		return $this->financing_notes;
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [confirmation_date] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getConfirmationDate($format = 'Y-m-d')
+	{
+		if ($this->confirmation_date === null) {
+			return null;
+		}
+
+
+		if ($this->confirmation_date === '0000-00-00') {
+			// while technically this is not a default value of NULL,
+			// this seems to be closest in meaning.
+			return null;
+		} else {
+			try {
+				$dt = new DateTime($this->confirmation_date);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->confirmation_date, true), $x);
+			}
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
+	}
+
+	/**
+	 * Get the [confirmation_notes] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getConfirmationNotes()
+	{
+		return $this->confirmation_notes;
 	}
 
 	/**
@@ -1062,6 +1122,75 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	} // setFinancingNotes()
 
 	/**
+	 * Sets the value of [confirmation_date] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     Schoolproject The current object (for fluent API support)
+	 */
+	public function setConfirmationDate($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->confirmation_date !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->confirmation_date !== null && $tmpDt = new DateTime($this->confirmation_date)) ? $tmpDt->format('Y-m-d') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->confirmation_date = ($dt ? $dt->format('Y-m-d') : null);
+				$this->modifiedColumns[] = SchoolprojectPeer::CONFIRMATION_DATE;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setConfirmationDate()
+
+	/**
+	 * Set the value of [confirmation_notes] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Schoolproject The current object (for fluent API support)
+	 */
+	public function setConfirmationNotes($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->confirmation_notes !== $v) {
+			$this->confirmation_notes = $v;
+			$this->modifiedColumns[] = SchoolprojectPeer::CONFIRMATION_NOTES;
+		}
+
+		return $this;
+	} // setConfirmationNotes()
+
+	/**
 	 * Set the value of [evaluation_min] column.
 	 * 
 	 * @param      int $v new value
@@ -1154,8 +1283,10 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$this->approval_notes = ($row[$startcol + 18] !== null) ? (string) $row[$startcol + 18] : null;
 			$this->financing_date = ($row[$startcol + 19] !== null) ? (string) $row[$startcol + 19] : null;
 			$this->financing_notes = ($row[$startcol + 20] !== null) ? (string) $row[$startcol + 20] : null;
-			$this->evaluation_min = ($row[$startcol + 21] !== null) ? (int) $row[$startcol + 21] : null;
-			$this->evaluation_max = ($row[$startcol + 22] !== null) ? (int) $row[$startcol + 22] : null;
+			$this->confirmation_date = ($row[$startcol + 21] !== null) ? (string) $row[$startcol + 21] : null;
+			$this->confirmation_notes = ($row[$startcol + 22] !== null) ? (string) $row[$startcol + 22] : null;
+			$this->evaluation_min = ($row[$startcol + 23] !== null) ? (int) $row[$startcol + 23] : null;
+			$this->evaluation_max = ($row[$startcol + 24] !== null) ? (int) $row[$startcol + 24] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1165,7 +1296,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 23; // 23 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 25; // 25 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Schoolproject object", $e);
@@ -1661,9 +1792,15 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				return $this->getFinancingNotes();
 				break;
 			case 21:
-				return $this->getEvaluationMin();
+				return $this->getConfirmationDate();
 				break;
 			case 22:
+				return $this->getConfirmationNotes();
+				break;
+			case 23:
+				return $this->getEvaluationMin();
+				break;
+			case 24:
 				return $this->getEvaluationMax();
 				break;
 			default:
@@ -1708,8 +1845,10 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$keys[18] => $this->getApprovalNotes(),
 			$keys[19] => $this->getFinancingDate(),
 			$keys[20] => $this->getFinancingNotes(),
-			$keys[21] => $this->getEvaluationMin(),
-			$keys[22] => $this->getEvaluationMax(),
+			$keys[21] => $this->getConfirmationDate(),
+			$keys[22] => $this->getConfirmationNotes(),
+			$keys[23] => $this->getEvaluationMin(),
+			$keys[24] => $this->getEvaluationMax(),
 		);
 		return $result;
 	}
@@ -1805,9 +1944,15 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				$this->setFinancingNotes($value);
 				break;
 			case 21:
-				$this->setEvaluationMin($value);
+				$this->setConfirmationDate($value);
 				break;
 			case 22:
+				$this->setConfirmationNotes($value);
+				break;
+			case 23:
+				$this->setEvaluationMin($value);
+				break;
+			case 24:
 				$this->setEvaluationMax($value);
 				break;
 		} // switch()
@@ -1855,8 +2000,10 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[18], $arr)) $this->setApprovalNotes($arr[$keys[18]]);
 		if (array_key_exists($keys[19], $arr)) $this->setFinancingDate($arr[$keys[19]]);
 		if (array_key_exists($keys[20], $arr)) $this->setFinancingNotes($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setEvaluationMin($arr[$keys[21]]);
-		if (array_key_exists($keys[22], $arr)) $this->setEvaluationMax($arr[$keys[22]]);
+		if (array_key_exists($keys[21], $arr)) $this->setConfirmationDate($arr[$keys[21]]);
+		if (array_key_exists($keys[22], $arr)) $this->setConfirmationNotes($arr[$keys[22]]);
+		if (array_key_exists($keys[23], $arr)) $this->setEvaluationMin($arr[$keys[23]]);
+		if (array_key_exists($keys[24], $arr)) $this->setEvaluationMax($arr[$keys[24]]);
 	}
 
 	/**
@@ -1889,6 +2036,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SchoolprojectPeer::APPROVAL_NOTES)) $criteria->add(SchoolprojectPeer::APPROVAL_NOTES, $this->approval_notes);
 		if ($this->isColumnModified(SchoolprojectPeer::FINANCING_DATE)) $criteria->add(SchoolprojectPeer::FINANCING_DATE, $this->financing_date);
 		if ($this->isColumnModified(SchoolprojectPeer::FINANCING_NOTES)) $criteria->add(SchoolprojectPeer::FINANCING_NOTES, $this->financing_notes);
+		if ($this->isColumnModified(SchoolprojectPeer::CONFIRMATION_DATE)) $criteria->add(SchoolprojectPeer::CONFIRMATION_DATE, $this->confirmation_date);
+		if ($this->isColumnModified(SchoolprojectPeer::CONFIRMATION_NOTES)) $criteria->add(SchoolprojectPeer::CONFIRMATION_NOTES, $this->confirmation_notes);
 		if ($this->isColumnModified(SchoolprojectPeer::EVALUATION_MIN)) $criteria->add(SchoolprojectPeer::EVALUATION_MIN, $this->evaluation_min);
 		if ($this->isColumnModified(SchoolprojectPeer::EVALUATION_MAX)) $criteria->add(SchoolprojectPeer::EVALUATION_MAX, $this->evaluation_max);
 
@@ -1984,6 +2133,10 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		$copyObj->setFinancingDate($this->financing_date);
 
 		$copyObj->setFinancingNotes($this->financing_notes);
+
+		$copyObj->setConfirmationDate($this->confirmation_date);
+
+		$copyObj->setConfirmationNotes($this->confirmation_notes);
 
 		$copyObj->setEvaluationMin($this->evaluation_min);
 
