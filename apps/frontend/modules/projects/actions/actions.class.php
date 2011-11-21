@@ -676,7 +676,7 @@ class projectsActions extends sfActions
   public function executeEditresource(sfWebRequest $request)
   {
     $this->forward404Unless($this->resource=ProjResourcePeer::retrieveByPk($request->getParameter('id')));
-    $this->forward404Unless($this->resource->isEditableBy($this->getUser())); // the resource can be edited only by the owner or admins...
+    $this->forward404Unless($this->resource->isEditableBy($this->getUser()));
     
     $this->form = new ProjResourceForm($this->resource);
     
