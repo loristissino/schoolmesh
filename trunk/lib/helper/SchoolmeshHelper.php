@@ -134,13 +134,20 @@ function breadcrumps_to_html($crumps=array(), $current='')
 
 function currencyvalue($value)
 {
-  return 
-    sfConfig::get('app_config_currency_symbol', '€') . '&nbsp;' .
-    number_format($value, 
-      sfConfig::get('app_config_currency_decimals', 2), 
-      sfConfig::get('app_config_currency_decpoint', ','),
-      sfConfig::get('app_config_currency_thousandssep', '.')
-      );
+  if ($value)
+  {
+    return 
+      sfConfig::get('app_config_currency_symbol', '€') . '&nbsp;' .
+      number_format($value, 
+        sfConfig::get('app_config_currency_decimals', 2), 
+        sfConfig::get('app_config_currency_decpoint', ','),
+        sfConfig::get('app_config_currency_thousandssep', '.')
+        );
+    }
+  else
+  {
+    return '';
+  }
 }
 
 function quantityvalue($value, $mu='')

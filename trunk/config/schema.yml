@@ -412,7 +412,6 @@ propel:
     charged_user_id:            { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
     quantity_estimated:         { type: decimal, size: 10, scale: 2 }
     quantity_approved:          { type: decimal, size: 10, scale: 2 }
-    amount_estimated:           { type: decimal, size: 10, scale: 2 }
     amount_funded_externally:   { type: decimal, size: 10, scale: 2 }
     financing_notes:            varchar(255)
     quantity_final:             { type: decimal, size: 10, scale: 2 }

@@ -192,20 +192,6 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
               $sf_context
             );
           }
-          if($resource->getAmountEstimated()!=$resource->getQuantityMultipliedByCost())
-          {
-            $resource
-            ->setAmountEstimated($resource->getQuantityMultipliedByCost())
-            ->save();
-            $projdirty=true;
-            $project->addWfevent(
-              $user_id,
-              'Updated estimated amount of resource «%resource%», set to «%amount%»',
-              array('%resource%'=>$resource->getDescription(), '%amount%'=>$resource->getAmountEstimated()),
-              null,
-              $sf_context
-            );
-          }
         }
         if($projdirty)
         {

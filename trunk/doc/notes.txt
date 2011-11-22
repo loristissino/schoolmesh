@@ -1,3 +1,14 @@
+
+Added preferred_format in sfGuardUserProfile table
+
+UPDATE `schoolmesh`.`sf_guard_user_profile` SET `preferred_format` = 'odt';
+
+
+Added is_monetary field in proj_resource e proj_resource_type tables
+
+UPDATE `schoolmesh`.`proj_resource_type` SET `is_monetary` = '0' WHERE `proj_resource_type`.`id` =7;
+
+
 Added is_public field in appointment table
 
 

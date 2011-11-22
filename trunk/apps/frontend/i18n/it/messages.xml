@@ -3547,6 +3547,10 @@
         <source>Amount ext</source>
         <target>Extra-FIS</target><!-- In Italian schools, the internal financing is called FIS -->
     </trans-unit>
+    <trans-unit id="898">
+        <source>External financing undefined</source>
+        <target>Finanziamento esterno non definito</target><!-- In Italian schools, the internal financing is called FIS -->
+    </trans-unit>
     </body>
   </file>
 </xliff>
