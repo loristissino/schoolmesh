@@ -1102,7 +1102,6 @@ CREATE TABLE `proj_resource`
 	`charged_user_id` INTEGER,
 	`quantity_estimated` DECIMAL(10,2),
 	`quantity_approved` DECIMAL(10,2),
-	`amount_estimated` DECIMAL(10,2),
 	`amount_funded_externally` DECIMAL(10,2),
 	`financing_notes` VARCHAR(255),
 	`quantity_final` DECIMAL(10,2),

@@ -186,6 +186,12 @@ class ProjResource extends BaseProjResource {
     }
     return $this->getStandardCost() ? $this->getQuantityApproved() * $this->getStandardCost() : $this->getQuantityApproved();
   }
+  
+  public function getAmountEstimated()
+  {
+    return $this->getQuantityMultipliedByCost();
+    // kept for compatibility with templates
+  }
 
 
 } // ProjResource
