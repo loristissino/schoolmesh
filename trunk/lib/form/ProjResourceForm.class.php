@@ -40,6 +40,7 @@ class ProjResourceForm extends BaseProjResourceForm
         'amount_funded_externally'=> new sfValidatorNumber(array('required'=>false, 'max'=>$resource->getAmountEstimated())),
         'financing_notes'=> new sfValidatorString(array('trim'=>true, 'required'=>false)),
         'charged_user_id' => new sfValidatorPropelChoice(array('model'=>'sfGuardUserProfile', 'required'=>false)),
+        'quantity_final' => new sfValidatorNumber(array('required'=>false)),
 			));
     
     $this['proj_resource_type_id']->getWidget()->setLabel('Resource type');
@@ -101,6 +102,7 @@ class ProjResourceForm extends BaseProjResourceForm
         unset(
           $this['description'],
           $this['proj_resource_type_id'],
+          $this['charged_user_id'],
           $this['quantity_estimated'],
           $this['quantity_final'],
           $this['standard_cost'],
@@ -111,6 +113,7 @@ class ProjResourceForm extends BaseProjResourceForm
         unset(
           $this['description'],
           $this['proj_resource_type_id'],
+          $this['charged_user_id'],
           $this['quantity_estimated'],
           $this['standard_cost'],
           $this['scheduled_deadline']
@@ -120,7 +123,19 @@ class ProjResourceForm extends BaseProjResourceForm
         unset(
           $this['description'],
           $this['proj_resource_type_id'],
+          $this['charged_user_id'],
           $this['quantity_estimated'],
+          $this['standard_cost'],
+          $this['scheduled_deadline']
+          );
+        break;
+      case Workflow::PROJ_CONFIRMED:
+        unset(
+          $this['description'],
+          $this['proj_resource_type_id'],
+          $this['charged_user_id'],
+          $this['quantity_estimated'],
+          $this['quantity_approved'],
           $this['standard_cost'],
           $this['scheduled_deadline']
           );

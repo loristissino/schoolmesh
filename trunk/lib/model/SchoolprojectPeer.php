@@ -251,10 +251,11 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     foreach($projects as $project)
     {
       $result['projects'][$project->getId()]['title']=$project->getTitle();
+      $result['projects'][$project->getId()]['id']=$project->getId();
       $result['projects'][$project->getId()]['resources']=array();
       foreach($project->getProjResources() as $resource)
       {
-        @$result['projects'][$project->getId()]['resources'][$resource->getProjResourceTypeId()]+=$resource->getQuantityMultipliedByCost();
+        @$result['projects'][$project->getId()]['resources'][$resource->getProjResourceTypeId()]+=($resource->getQuantityMultipliedByCost()-$resource->getAmountFundedExternally());
         if(!array_key_exists($resource->getProjResourceTypeId(), $types))
         {
           $types[$resource->getProjResourceTypeId()]=1;

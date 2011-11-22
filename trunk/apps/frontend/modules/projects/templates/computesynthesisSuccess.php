@@ -41,7 +41,11 @@
     <?php foreach ($projects as $project): $total=0?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <td>
-        <?php echo $project['title'] ?>
+        <?php echo link_to(
+          $project['title'],
+          url_for('projects/batch?id='. $project['id'] . '&batch_action=computebudget')
+          )
+        ?>
       </td>
       <?php foreach($types as $type): ?>
         <td style="text-align: right">
