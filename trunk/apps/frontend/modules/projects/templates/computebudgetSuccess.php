@@ -1,4 +1,3 @@
-<?php use_stylesheet('print', 'last', array('media'=>'print')) ?>
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     'projects/monitor' =>__("Projects monitoring")
@@ -58,15 +57,15 @@
     <th colspan="6"><?php echo __('Total for the project «%title%»', array('%title%'=>$project->getTitle())) ?></th>
     <?php $grandtotal+=$total ?>
     <?php $egrandtotal+=$etotal ?>
-    <td style="text-align: right; font-weight: bold"><?php echo currencyvalue($total) ?></td>
-    <td style="text-align: right; font-weight: bold"><?php echo currencyvalue($etotal) ?></td>
+    <td style="text-align: right; font-weight: bold" class="amount"><?php echo currencyvalue($total) ?></td>
+    <td style="text-align: right; font-weight: bold" class="amount"><?php echo currencyvalue($etotal) ?></td>
     <th></th>
     </tr>
     <?php endforeach; ?>
     <tr>
     <th colspan="7"><?php echo format_number_choice(__('[1]Grand total for the project selected|[1,+Inf]Grand total for the %number% projects selected'), array('%number%'=>sizeof($projects)), sizeof($projects)) ?></th>
-    <td style="text-align: right; font-weight: bold; color:blue"><?php echo currencyvalue($grandtotal) ?></td>
-    <td style="text-align: right; font-weight: bold; color:blue"><?php echo currencyvalue($egrandtotal) ?></td>
+    <td style="text-align: right; font-weight: bold; color:blue" class="amount"><?php echo currencyvalue($grandtotal) ?></td>
+    <td style="text-align: right; font-weight: bold; color:blue" class="amount"><?php echo currencyvalue($egrandtotal) ?></td>
     <th></th>
     </tr>
   </tbody>

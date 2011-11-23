@@ -1,4 +1,3 @@
-<?php use_stylesheet('print', 'last', array('media'=>'print')) ?>
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     'projects/monitor' =>__("Projects monitoring")
@@ -17,7 +16,7 @@
     <tr>
       <th class="sf_admin_text"><?php echo __('Project') ?></th>
     <?php foreach($types as $type): if($type->getIsMonetary()):?>
-      <th width="10" style="text-align: right"><?php echo image_tag('vertical.php?text='. urlencode($type->getDescription()) .
+      <th width="10" style="text-align: right" class="verticalheader"><?php echo image_tag('vertical.php?text='. urlencode($type->getDescription()) .
       '&backcolor=255-255-255&textcolor=0-0-0&ywidth=250',
           array(
             'alt' => $type->getDescription(),
