@@ -6,6 +6,8 @@
 <?php include_http_metas() ?>
 <?php include_metas() ?>
 
+<?php use_stylesheet('print', 'last', array('media'=>'print')) ?>
+
 <title>SchoolMesh - 
 	<?php if (!include_slot('title')): ?>
 	<?php echo __('An integrated environment for school applications'); ?>

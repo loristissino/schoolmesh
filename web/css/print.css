@@ -39,14 +39,16 @@ td.projecttitle
   vertical-align: top;
 }
 
-td.amount
+.amount
 {
   padding: 0px 15px 0px 15px;
+  vertical-align: bottom;
 }
 
 a
 {
-  text-decoration: none
+  text-decoration: none;
+  color: black;
 }
 
 
@@ -54,3 +56,17 @@ thead
 {
   display: table-header-group;
 }
+
+
+td, th
+{
+  border-bottom-style: solid; 
+  border-bottom-width: 1px; 
+}
+
+th.verticalheader
+{
+  padding-right: 30px;
+}
+
+
