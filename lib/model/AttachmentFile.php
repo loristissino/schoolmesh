@@ -36,7 +36,7 @@ class AttachmentFile extends BaseAttachmentFile {
     return 
       $user->getProfile()->getUserId()===$this->getUserId() 
       || 
-      $user->hasCredential('schoolmaster') 
+      $user->hasCredential('wpfr_view') 
       || 
       $user->hasCredential('admin')
       ;

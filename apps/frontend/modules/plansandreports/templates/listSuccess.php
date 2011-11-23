@@ -44,8 +44,7 @@
 	  <td><?php echo $lastlog?$lastlog->getCreatedAt():'' ?></td>*/ ?>
 	  <td><?php  include_partial('state', array('state' => $workplan->getState(), 'steps' => $steps, 'size'=>'r')) ?></td>
 	  <td><?php  include_partial('action_monitor', array('workplan' => $workplan, 'steps' => $steps, 'page'=> $page))  ?></td>
- 	
-	</td>
+
     </tr>
     <?php endforeach; ?>
   </tbody>
@@ -57,24 +56,21 @@
 <?php include_partial('checkalljs') ?>
     <ul class="sf_admin_actions">
       <li class="sf_admin_batch_actions_choice">
-  <select name="batch_action">
+        <select name="batch_action">
 
-<?php echo optionsforselect(array(
-  '' => __('Choose an action'),
-  'Approve' => __('Approve selected documents'),
-), null) ?>
-  </select>
-
-<?php echo submittag(_('Ok')) ?>
-
-
-
+          <?php echo optionsforselect(array(
+            '' => __('Choose an action'),
+            'Approve' => __('Approve selected documents'),
+            ), null) ?>
+        </select>
+        <?php echo submittag(_('Ok')) ?>
+      </li>
+    </ul>
 </form>
 
 <?php endif ?>
 
 <hr />
-
 
 <h2><?php echo __('Filters') ?></h2>
 <?php include_partial('content/filter',

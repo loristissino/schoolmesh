@@ -3,6 +3,18 @@
 class AppointmentPeer extends BaseAppointmentPeer
 {
 	
+  public static function retrieveByStateYear($state, $year=null)
+  {
+    if (!$year)
+    {
+      $year=YearPeer::retrieveByPK(sfConfig::get('app_config_current_year'));
+    }
+    $c=new Criteria();
+    $c->add(AppointmentPeer::STATE, $state);
+    $c->add(AppointmentPeer::YEAR_ID, $year->getId());
+    return AppointmentPeer::doSelect($c);
+  }
+  
 	public static function getSubmitted($state)
 	{
 		

@@ -3551,6 +3551,10 @@
         <source>External financing undefined</source>
         <target>Finanziamento esterno non definito</target><!-- In Italian schools, the internal financing is called FIS -->
     </trans-unit>
+    <trans-unit id="899">
+        <source>Workplan approved</source>
+        <target>Piano di lavoro approvato</target>
+    </trans-unit>
     </body>
   </file>
 </xliff>

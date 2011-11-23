@@ -68,6 +68,7 @@
                 array(
                   'title'=>'SchoolMesh',
                   'size'=>'102x21',
+                  'alt'=>'SchooMesh',
                   )
                 ),
                 'http://schoolmesh.mattiussilab.net'
@@ -84,6 +85,7 @@
                 array(
                   'title'=>'Symfony',
                   'size'=>'50x15',
+                  'alt'=>'Symfony',
                   )
                 ),
                 'http://www.symfony-project.org'
