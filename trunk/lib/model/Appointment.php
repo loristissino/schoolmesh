@@ -244,20 +244,6 @@ $con->query($sql);
 	  try
 	  {
       
-    if($steps[$this->getState()]['actions']['approve']['makeAttachments']==true)
-    {
-      foreach (array(true, false) as $complete)
-      {
-        try
-        {
-          $this->createAttachment($complete, $context);
-        }
-        catch (Exception $e)
-        {
-          throw new Exception('Could not create attachment. ' . $e);
-        }
-      }
-    }
     
 		$con->beginTransaction();
     
@@ -1912,21 +1898,11 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
   }
 
 
-  public function createAttachment($complete=false, sfContext $context=null, $format='')
+  public function createAttachment($complete=false, sfContext $context=null, $format='odt')
   {
-
-    if($format=='')
-    {
-      $format=sfConfig::get('app_config_default_format', 'pdf');
-    }
-    
-    $format='pdf';
-    
     try 
 		{
-
-    $odfdoc=$this->getOdf($format, $context, '', $complete);
-
+      $odfdoc=$this->getOdf($format, $context, '', $complete);
 		}
 		catch (Exception $e)
 		{

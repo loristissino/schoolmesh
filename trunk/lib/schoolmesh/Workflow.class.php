@@ -5,12 +5,19 @@ class Workflow
 	const 	WP_DRAFT = 20;
 	const 	WP_WADMC = 30;
 	const 	WP_WSMC = 40;
+  const   WP_APPROVED = 41;
+  /* 
+   * this code 41 is just needed to generate attachments from the task,
+   * since we need to consider the appointment in 'planning state'
+   * to choose the correct template
+   *
+  */
 	const 	IR_DRAFT = 50;
 	const 	IR_WSMC = 60;
 	const 	FR_WADMC = 70;
 	const 	FR_WSMC = 80;
 	const 	FR_ARCHIVED = 90;
-  const  AP_NOTDONE = 100;
+  const   AP_NOTDONE = 100;
   
   static private $wpfrSteps=Array(
 
@@ -102,7 +109,7 @@ class Workflow
           'markSubItemsAsEditable'=>array('newstate'=>'false')
           ),
 				'logMessageCode'=>'WP_APPROVED',
-				'submitNextState'=>self::IR_DRAFT,
+				'submitNextState'=>self::WP_APPROVED,
         'makeAttachments'=>false,
         'sendEmail'=>true,
 				),
@@ -120,6 +127,21 @@ class Workflow
 				),
 		),
 	),
+  
+	self::WP_APPROVED=>Array(
+		'stateDescription'=>"Workplan approved",
+		'owner' => Array(
+			'viewAction'=>"view",
+			'exportActionTip'=>'Export the workplan in one of the available formats',
+			'displayedAction'=>'View',
+			'submitAction'=>'',
+			'submitDisplayedAction'=>'',
+			'submitDoneAction'=>'',
+			'submitNextState'=>null,
+			),
+		'actions' => Array(),
+	),
+
 	
 	self::IR_DRAFT=>Array(
 		'stateDescription'=>"Intermediate / final report",

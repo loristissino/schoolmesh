@@ -113,6 +113,8 @@ class SetupChecker
       'workplan30_s.odt',
       'workplan40_n.odt',
       'workplan40_s.odt',
+      'workplan41_n.odt',
+      'workplan41_s.odt',
       'workplan50_n.odt',
       'workplan50_s.odt',
       'workplan60_n.odt',

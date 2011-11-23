@@ -53,6 +53,8 @@ EOF;
     $appointments=AppointmentPeer::doSelect($c);
     foreach($appointments as $appointment)
     {
+      $this->logSection('appoint. '.$appointment->getId(), 'under check...', null, 'COMMENT');
+      
       if($appointment->getState()>Workflow::WP_DRAFT)
       {
         $dateA=$appointment->getUpdatedAt();
@@ -81,19 +83,32 @@ EOF;
 
         foreach($appointment->getWpinfos() as $wpinfo)
         {
+          $dirty=false;
+          
           $date=$wpinfo->getUpdatedAt();
+          
+          
           $old=$wpinfo->getContent();
           $new=ltrim(rtrim($old));
           if($old!=$new)
           {
-            $this->logSection('wpinfo ' . $wpinfo->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
-            $wpinfo
-            ->setContent($new)
-            ->save($con)
-            ;
+            $wpinfo->setContent($new);
+            $dirty=true;
+          }
+          
+          if($wpinfo->getContent() && $wpinfo->getWpinfoType()->getState()>$appointment->getState())
+          {
+            $this->logSection('wpinfo-', sprintf('%d, removed content «%s» ', $wpinfo->getId(), $new), null, 'INFO');
+            $wpinfo->setContent('');
+            $dirty=true;
+          }
+          
+          if($dirty)
+          {
+            $wpinfo->save($con);
             $wpinfo
             ->setUpdatedAt($date)
-            ->save()
+            ->save($con)
             ;
           }
           
