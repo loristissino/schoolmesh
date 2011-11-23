@@ -1,3 +1,4 @@
+<?php use_stylesheet('print', 'last', array('media'=>'print')) ?>
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     'projects/monitor' =>__("Projects monitoring")
@@ -48,7 +49,7 @@
         ?>
       </td>
       <?php foreach($types as $type): ?>
-        <td style="text-align: right">
+        <td style="text-align: right"  class='amount'>
         <?php if(array_key_exists($type->getId(), $project['resources']->getRawValue())): ?>
           <?php echo currencyvalue($project['resources'][$type->getId()]) ?>
           <?php $total+=$project['resources'][$type->getId()] ?>
@@ -56,7 +57,7 @@
         <?php endif ?>
         </td>
       <?php endforeach ?>
-        <th style="text-align: right; font-weight: bold">
+        <th style="text-align: right; font-weight: bold"  class='amount'>
           <?php echo currencyvalue($total) ?>
           <?php $grandtotal+=$total ?>
         </th>
@@ -65,9 +66,9 @@
     <tr>
     <th><?php echo __('Grand totals') ?></th>
     <?php foreach($types as $type): ?>
-    <th style="text-align: right"><?php echo currencyvalue($totals_by_type[$type->getId()]) ?></th>
+    <th style="text-align: right" class='amount'><?php echo currencyvalue($totals_by_type[$type->getId()]) ?></th>
     <?php endforeach ?>
-    <td style="text-align: right; font-weight: bold; color:blue"><?php echo currencyvalue($grandtotal) ?></td>
+    <td style="text-align: right; font-weight: bold; color:blue" class='amount'><?php echo currencyvalue($grandtotal) ?></td>
     </tr>
   </tbody>
 </table>
