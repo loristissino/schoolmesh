@@ -24,6 +24,17 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     $c->add(self::STATE, Workflow::PROJ_DRAFT, Criteria::GREATER_THAN);
 		$c->addJoin(self::USER_ID, sfGuardUserPeer::ID);
 		$c->addAscendingOrderByColumn(self::PROJ_CATEGORY_ID);
+		$c->addAscendingOrderByColumn(self::TITLE);
+		return self::doSelectJoinAll($c);
+	}
+  
+  public static function retrieveByPKsSorted($ids)
+	{
+		$c=new Criteria();
+		$c->add(self::ID, $ids, Criteria::IN);
+		$c->addJoin(self::USER_ID, sfGuardUserPeer::ID);
+		$c->addAscendingOrderByColumn(self::PROJ_CATEGORY_ID);
+		$c->addAscendingOrderByColumn(self::TITLE);
 		return self::doSelectJoinAll($c);
 	}
 
@@ -246,7 +257,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
  
     $result=array();
 
-    $projects=self::retrieveByPKs($ids);
+    $projects=self::retrieveByPKsSorted($ids);
     
     foreach($projects as $project)
     {

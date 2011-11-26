@@ -25,7 +25,7 @@
             )
           ?></th>
     <?php endif; endforeach ?>
-	<th width="10" style="text-align: right"><?php echo image_tag('vertical.php?text='. urlencode(__('Total amount')) .
+	<th width="10" style="text-align: right" class="verticalheader"><?php echo image_tag('vertical.php?text='. urlencode(__('Total amount')) .
 	'&backcolor=0-0-0&textcolor=255-255-63&ywidth=250',
 			array(
 				'alt' => __('Total'),

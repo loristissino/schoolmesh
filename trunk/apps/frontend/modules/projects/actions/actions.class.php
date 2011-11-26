@@ -301,7 +301,7 @@ class projectsActions extends sfActions
   public function executeComputebudget(sfWebRequest $request)
   {
     $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
-    $this->projects=SchoolprojectPeer::retrieveByPks($this->ids);
+    $this->projects=SchoolprojectPeer::retrieveByPksSorted($this->ids);
     $this->getUser()->setAttribute('back', 'budget');
   }
 
@@ -350,7 +350,7 @@ class projectsActions extends sfActions
   public function executeSpreadsheet(sfWebRequest $request)
   {
     $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
-    $this->projects=SchoolprojectPeer::retrieveByPks($this->ids);
+    $this->projects=SchoolprojectPeer::retrieveByPksSorted($this->ids);
     $response = $this->getContext()->getResponse();
 		$response->setHttpHeader('Content-Type', 'text/csv');
 		$response->setHttpHeader('Content-Disposition', 'attachment; filename="'. $this->getContext()->getI18N()->__('Projects') . '_'. date('Ymd') . '.csv"');
@@ -404,7 +404,7 @@ class projectsActions extends sfActions
   public function executeViewasreport(sfWebRequest $request)
   {
     $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
-    $this->projects=SchoolprojectPeer::retrieveByPks($this->ids);
+    $this->projects=SchoolprojectPeer::retrieveByPksSorted($this->ids);
     $this->setTemplate('report');
     $this->breadcrumpstype='projects/monitoring/viewasreport';
   }

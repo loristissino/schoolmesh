@@ -3555,8 +3555,21 @@
         <source>Workplan approved</source>
         <target>Piano di lavoro approvato</target>
     </trans-unit>
+    <trans-unit id="900">
+        <source>Is monetary</source>
+        <target>Monetario</target>
+    </trans-unit>
+    <trans-unit id="901">
+        <source>Projectresourcetypes List</source>
+        <target>Lista tipi risorse</target>
+    </trans-unit>
+    <trans-unit id="902">
+        <source>Edit Projectresourcetypes</source>
+        <target>Modifica tipo risorse</target>
+    </trans-unit>
     </body>
   </file>
+  
 </xliff>
 
 
