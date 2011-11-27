@@ -3571,6 +3571,11 @@
       <source>Export the report in one of the available formats</source>
       <target>Esporta la relazione in uno dei formati disponibili</target>
     </trans-unit>
+    <trans-unit id="904">
+      <source>[0]The database will be reset to default in few seconds.|[1]The database will be reset to default in one minute.|(1,+Inf]The database will be reset to default in %minutes% minutes.</source>
+      <target>[0]Il database sarà reimpostato al default tra pochi secondi.|[1]Il database sarà reimpostato al default tra circa un minuto.|(1,+Inf]Il database sarà reimpostato al default tra circa %minutes% minuti.</target>
+    </trans-unit>
+
     </body>
   </file>
   

@@ -1,26 +1,20 @@
 <?php
 
 class profileComponents extends sfComponents
-        {
-          public function executeInfo()
-          {
-            $this->softuser = softUser::getSoftUser();
-            
-            $this->current_user = $this->getUser()->isAuthenticated() ? $this->getUser()->getGuardUser() : $this->softuser;
-            
-            if ($this->current_user instanceof sfGuardUser)
-            {
-				
-				$this->current_user->getProfile()
-				->setLastActionAt(time())
-				->save();
-				
-				/* FIXME This should be refactored ...
-				
-                $this->disk_soft_quota_exceeded = $this->current_user->getProfile()->getDiskUsedBlocks() > $this->current_user->getProfile()->getDiskSetSoftBlocksQuota();
-
-*/
-			}
+{
+  public function executeInfo()
+  {
+    $this->softuser = softUser::getSoftUser();
+    
+    $this->current_user = $this->getUser()->isAuthenticated() ? $this->getUser()->getGuardUser() : $this->softuser;
+    
+    if ($this->current_user instanceof sfGuardUser)
+    {
+      $this->current_user->getProfile()
+      ->setLastActionAt(time())
+      ->save();
+    }
+    
       /*
 			
 			if ($this->getUser()->isAuthenticated())
@@ -39,7 +33,7 @@ class profileComponents extends sfComponents
 			
 			
 			
-//            $this->softuser = softUser::getSoftUsername();
- //           $this->fullname = softUser::getFullname();
-          }
-        }
+//  $this->softuser = softUser::getSoftUsername();
+//  $this->fullname = softUser::getFullname();
+  }
+}

@@ -215,3 +215,10 @@ function export_action_links($sf_user, $action, $sf_context)
   
   return $text;
 }
+
+function minutes_missing_to_restore()
+{
+  $info=stat(sfConfig::get('app_demo_last_restore_file'));
+  $datelastrestore=$info['mtime'];
+  return max(0, 60 - floor((time()-$datelastrestore)/60));
+}
