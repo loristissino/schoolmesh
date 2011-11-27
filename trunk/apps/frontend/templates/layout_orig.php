@@ -37,7 +37,7 @@
   <?php endif ?>
 	<?php if (has_slot('breadcrumbs')): ?>
 		<div id="breadcrumbs">
-			<p><?php echo __('Where am I? ') . link_to(__("Home"), "@homepage") ?> Â» <?php include_slot('breadcrumbs') ?></p>
+			<p><?php echo __('Where am I? ') . link_to(__("Home"), "@homepage") ?> » <?php include_slot('breadcrumbs') ?></p>
 		</div>
 	<?php endif ?>
   <?php include_component('help', 'help', array('sf_user'=>$sf_user, 'module'=>$sf_params->get('module'), 'action'=>$sf_params->get('action'))) ?>
