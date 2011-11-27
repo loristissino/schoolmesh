@@ -3567,6 +3567,10 @@
         <source>Edit Projectresourcetypes</source>
         <target>Modifica tipo risorse</target>
     </trans-unit>
+    <trans-unit id="903">
+      <source>Export the report in one of the available formats</source>
+      <target>Esporta la relazione in uno dei formati disponibili</target>
+    </trans-unit>
     </body>
   </file>
   

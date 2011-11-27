@@ -34,7 +34,8 @@ class schoolclassesActions extends sfActions
       $this->breadcrumpstype='/schoolclasses';
     }
 		$this->enrolments=$this->schoolclass->getCurrentEnrolments();
-		$this->ids = $this->getUser()->getAttribute('ids', array());
+		$this->getUser()->setAttribute('ids', array());
+		$this->ids = $this->getUser()->getAttribute('ids');
 
   }
 
