@@ -1673,6 +1673,7 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 				$newwpmodule->setAppointmentId($this->getId());
 				$newwpmodule->setTitle($wpmodule->getTitle());
 				$newwpmodule->setPeriod($wpmodule->getPeriod());
+        $newwpmodule->setHoursEstimated($wpmodule->getHoursEstimated());
 				$newwpmodule->setIsPublic(false);
 				$newwpmodule->save();
 				$groups = $wpmodule->getWpitemGroups();

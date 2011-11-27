@@ -971,8 +971,8 @@
         <target>Dovr&#xE0; essere controllato dal punto di vista amministrativo e successivamente approvato dal Dirigente Scolastico.</target>
       </trans-unit>
       <trans-unit id="273">
-        <source>A confirmation message has been sent to your address %email%</source>
-        <target>Un messaggio di conferma ti &#xE8; stato spedito all'indirizzo %email%</target>
+        <source>A confirmation message has been sent to your address %email%.</source>
+        <target>Un messaggio di conferma ti &#xE8; stato spedito all'indirizzo %email%.</target>
       </trans-unit>
       <trans-unit id="274">
         <source>Content replaced.</source>

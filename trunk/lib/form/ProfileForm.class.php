@@ -9,7 +9,7 @@ class ProfileForm extends BaseForm
       $this->setWidgets(array(
         'pronunciation' => new sfWidgetFormInputText(array(), array('size'=>70)),
         'prefers_richtext' => new sfWidgetFormInputCheckbox(),
-        'preferred_format' => new sfWidgetFormSelect(array('choices' =>$formats)),
+        'preferred_format' => new sfWidgetFormSelect(array('choices' =>array_merge(array('---'), $formats))),
         'email' => new sfWidgetFormInputText(),
       ));
 

@@ -21,6 +21,7 @@
     <tr>
       <th class="sf_admin_text"><?php echo __('Year') ?></th>
       <th class="sf_admin_text"><?php echo __('Class') ?></th>
+      <th class="sf_admin_text"><?php echo __('Subject') ?></th>
       <th class="sf_admin_text"><?php echo __('Modules') ?></th>
 	  <th class="sf_admin_text"><?php echo __('State') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
@@ -32,9 +33,10 @@
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <?php include_partial('content/td_year', array('year'=>$iworkplan->getYear())) ?>
       <td><?php echo $iworkplan->getSchoolclass() ?></td>
-	  <td><?php echo $iworkplan->countWpmodules() ?></td>
-	  <td><?php include_partial('state', array('state' => $iworkplan->getState(), 'steps' => $steps, 'size'=>'r')) ?></td>
-	  <td><?php include_partial('actionimport', array('iworkplan'=>$iworkplan, 'workplan'=>$workplan, 'user'=>$user))?></td>
+      <td><?php echo $iworkplan->getSubject() ?></td>
+      <td><?php echo $iworkplan->countWpmodules() ?></td>
+      <td><?php include_partial('state', array('state' => $iworkplan->getState(), 'steps' => $steps, 'size'=>'r')) ?></td>
+      <td><?php include_partial('actionimport', array('iworkplan'=>$iworkplan, 'workplan'=>$workplan, 'user'=>$user))?></td>
 	</td>
     </tr>
     <?php endforeach; ?>
