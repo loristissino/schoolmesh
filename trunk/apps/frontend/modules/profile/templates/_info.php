@@ -67,29 +67,7 @@
 			<?php echo __('Thank you.') ?> 
 			</p>
 		<?php endif ?>
-
-
-
-<?php /*
-		<br /><?php echo sprintf(__('Your last action was at: %s'), Generic::datetime($sf_user->getProfile()->getLastActionAt('U'), $sf_context->getRawValue())) ?>
-*/ ?>
-  <?php endif; ?>
-  <?php /*
-   <?php if(isset($current_user)): ?>
-        <?php if ($current_user->getProfile()->getDiskSetHardBlocksQuota()>0): ?>
-
-            <p>
-                <?php if($disk_soft_quota_exceeded): ?>
-                    <?php echo image_tag('error', array('alt'=>__('failed'))) ?>
-                <?php else: ?>
-                    <?php echo image_tag('tick', array('alt'=>__('passed'))) ?>
-                <?php endif; ?>
     
-                <?php //echo __("You are using %percentage%% of your assigned disk space.", array('%percentage%'=>100*$current_user->getProfile()->getDiskUsedBlocks()/$current_user->getProfile()->getDiskSetHardBlocksQuota())) ?>
-                <?php //echo __("Last check was on %date%.", array('%date%'=>format_datetime($current_user->getProfile()->getDiskUpdatedAt()))) ?>
-            </p>
-        <?php endif; ?>
-    <?php endif; ?>
-*/ ?>
+  <?php endif ?>
 
 </div>
