@@ -54,7 +54,7 @@ class WfeventPeer extends BaseWfeventPeer {
     {
       $c->addDescendingOrderByColumn(WfeventPeer::CREATED_AT);
     }
-		$c->addJoin(WpeventPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
+		$c->addJoin(WfeventPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
     $c->setDistinct();
     return self::doSelect($c);
   }
