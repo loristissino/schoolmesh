@@ -462,7 +462,6 @@ class Schoolproject extends BaseSchoolproject {
           $resource
           ->setQuantityApproved($resource->getQuantityEstimated())
           ->setStandardCost($resource->getProjResourceType()->getStandardCost())
-          ->setAmountEstimated($resource->getQuantityMultipliedByCost())
           ->save($con);
         }
         $result['result']='notice';

@@ -869,7 +869,7 @@ class projectsActions extends sfActions
     $message=$this->getContext()->getI18N()->__($result['message']);
     if(array_key_exists('mail_sent_to', $result))
     {
-      $message .= ' ' . $this->getContext()->getI18N()->__('A confirmation message has been sent to your address %email%', array('%email%'=>$result['mail_sent_to']));
+      $message .= ' ' . $this->getContext()->getI18N()->__('A confirmation message has been sent to your address %email%.', array('%email%'=>$result['mail_sent_to']));
     }
     $this->getUser()->setFlash($result['result'], $message);
 
