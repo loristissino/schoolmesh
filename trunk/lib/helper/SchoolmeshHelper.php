@@ -220,5 +220,5 @@ function minutes_missing_to_restore()
 {
   $info=stat(sfConfig::get('app_demo_last_restore_file'));
   $datelastrestore=$info['mtime'];
-  return max(0, 60 - floor((time()-$datelastrestore)/60));
+  return max(0, sfConfig::get('app_demo_time_after') - floor((time()-$datelastrestore)/60));
 }
