@@ -107,7 +107,7 @@ class AttachmentFilePeer extends BaseAttachmentFilePeer {
       }
       else
       {
-          echo "setfile non va\n";
+        echo "error in setting file\n";
         $con->rollBack();
         $result['result']='error';
         $result['message']='Could not save the uploaded file.';
