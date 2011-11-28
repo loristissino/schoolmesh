@@ -3575,7 +3575,10 @@
       <source>[0]The database will be reset to default in few seconds.|[1]The database will be reset to default in one minute.|(1,+Inf]The database will be reset to default in %minutes% minutes.</source>
       <target>[0]Il database sarà reimpostato al default tra pochi secondi.|[1]Il database sarà reimpostato al default tra circa un minuto.|(1,+Inf]Il database sarà reimpostato al default tra circa %minutes% minuti.</target>
     </trans-unit>
-
+    <trans-unit id="905">
+      <source>This is a &lt;a href="http://www.schoolmesh.mattiussilab.net/demo"&gt;demo&lt;/a&gt; version, and the contents need to be cleaned up every hour.</source>
+      <target>Questa è una versione &lt;a href="http://www.schoolmesh.mattiussilab.net/demo"&gt;demo&lt;/a&gt;, e i contenuti aggiunti dagli utenti vengono eliminati ogni ora.</target>
+    </trans-unit>
     </body>
   </file>
   
