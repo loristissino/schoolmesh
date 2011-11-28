@@ -37,7 +37,7 @@ for FILE in default delete desc edit error first last list new next previous tic
 
 ln -sfv ../../php-include/extra4demo/Arial.ttf Arial.ttf
 
-cd ../php-include/apps/frontend/templates
+cd ../../php-include/apps/frontend/templates
 ln -sfv layout_demo.php layout.php
 
 
