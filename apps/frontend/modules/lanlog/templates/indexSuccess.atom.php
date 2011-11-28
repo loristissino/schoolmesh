@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?php echo '<?xml' ?> version="1.0" encoding="utf-8"?>
        <feed xmlns="http://www.w3.org/2005/Atom">
          <title><?php echo sfConfig::get('app_school_name'); ?> - Who's on line</title>
          <subtitle>Who's on line at <?php echo sfConfig::get('app_school_name'); ?> - powered by SchoolMesh</subtitle>
