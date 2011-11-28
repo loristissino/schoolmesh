@@ -28,6 +28,13 @@
 			<?php echo $sf_user->getFlash('schoolmesh_alerts') ?>
 		</div>
 	<?php endif ?>
+  <?php if(sfConfig::get('app_demo_is_active', false)): ?>
+    <?php $minutes_missing=minutes_missing_to_restore() ?>
+    <div style="background-color: <?php echo $minutes_missing>5? '#DBF8E7': ($minutes_missing>1? '#FFF5A5': 'red') ?>"><?php echo __('This is a <a href="http://www.schoolmesh.mattiussilab.net/demo">demo</a> version, and the contents need to be cleaned up every hour.')?> <?php echo format_number_choice(
+      '[0]The database will be reset to default in few seconds.|[1]The database will be reset to default in one minute.|(1,+Inf]The database will be reset to default in %minutes% minutes.', 
+      array('%minutes%' => minutes_missing_to_restore()), minutes_missing_to_restore()) ?>
+    </div>
+  <?php endif ?>
 	<?php if (has_slot('breadcrumbs')): ?>
 		<div id="breadcrumbs">
 			<p><?php echo __('Where am I? ') . link_to(__("Home"), "@homepage") ?> » <?php include_slot('breadcrumbs') ?></p>
