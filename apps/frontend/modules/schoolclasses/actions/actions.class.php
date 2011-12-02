@@ -28,6 +28,11 @@ class schoolclassesActions extends sfActions
       $this->forward404Unless($this->appointment->getSchoolclassId() == $this->schoolclass_id);
       $this->forward404Unless($this->appointment->getUserId() == $this->getUser()->getProfile()->getUserId());
       $this->breadcrumpstype='/plansandreports/appointment/class';
+      
+      if($this->appointment->getTeamId())
+      {
+        $this->teamcomponents=$this->appointment->getTeam()->getComponentsIds();
+      }
     }
     else
     {

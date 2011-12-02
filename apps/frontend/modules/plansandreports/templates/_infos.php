@@ -24,7 +24,7 @@
       <td><?php echo Generic::datetime($wpinfo->getUpdatedAt('U'), $sf_context) ?></td>
       <td>
 		  <?php if ($wpinfo->getContent()=='' and $wpinfo->getWpinfoType()->getIsRequired()): ?>
-			<?php echo image_tag('notdone', 'title=' . __('this content is required and is currently missing')) ?>
+			<?php echo image_tag('notdone', array('title'=>__('This content is required and is currently missing'))) ?>
 	  <?php endif ?>
 	<?php echo  html_entity_decode($wpinfo->getContent()) ?></td>
       <td>

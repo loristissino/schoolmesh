@@ -49,7 +49,9 @@
 	
 <?php if(isset($appointment)): ?>
 		<td>
+    <?php if(!$appointment->getTeamId() or ($appointment->getTeamId() and in_array($enrolment->getsfGuardUser()->getId(), $teamcomponents->getRawValue()))): ?>
   <input type="checkbox" name="ids[]" value="<?php echo $enrolment->getsfGuardUser()->getId() ?>" class="sf_admin_batch_checkbox" <?php echo in_array($enrolment->getsfGuardUser()->getId(), $ids->getRawValue()) ? "checked='checked'": '' ?>"/>
+    <?php endif ?>
 </td>
 <?php endif ?>
 

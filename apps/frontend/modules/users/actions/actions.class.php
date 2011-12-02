@@ -395,6 +395,8 @@ class usersActions extends sfActions
     
   }
   
+  
+  
   public function executeFixgoogleappscredentials(sfWebRequest $request)
   {
     $ids=$this->_getIds($request);
@@ -567,6 +569,8 @@ class usersActions extends sfActions
   
   }
 
+
+
   public function executeRunteamchecks(sfWebRequest $request)
   {
 	$this->user = $this->getUser();
@@ -643,6 +647,41 @@ class usersActions extends sfActions
 		return $this->redirect('users/list');
 	
 	}  
+
+  public function executeAdduserstoteam(sfWebRequest $request)
+  {
+    $this->_changePostToGet($request, 'adduserstoteam');
+    
+    $this->ids=$this->_getIds($request);
+    $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
+
+    $this->form=new ChooseTeamForm();
+  
+  }
+
+  public function executeConfirmadduserstoteam(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('POST'));
+    $this->forward404Unless($this->team=TeamPeer::retrieveByPK($request->getParameter('team_id')));
+    $this->forward404Unless($this->role=RolePeer::retrieveByPK($request->getParameter('role_id')));
+    
+    $this->ids=$this->_getIds($request);
+    $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
+    foreach($this->userlist as $user)
+    {
+      $user->addToTeam($this->team, $this->role);
+    }
+		
+		$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Users successfully added to team.'));
+		$this->redirect('users/list');
+
+
+
+
+    
+  }
+  
+
 
 
 	public function executeSetsortlistpreference(sfWebRequest $request)
