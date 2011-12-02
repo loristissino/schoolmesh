@@ -1167,4 +1167,19 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
   }
 
 
+  public static function retrieveByPermission($value)
+  {
+    // FIXME; this could be done by querying the tables, but we should
+    // look for inherited permissions too...
+    $users=array();
+    foreach(self::retrieveAllSortedByLastName() as $user)
+    {
+      if ($user->hasPermission($value))
+      {
+        $users[]=$user;
+      }
+    }
+    return $users;
+  }
+
 }
