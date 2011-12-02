@@ -77,10 +77,6 @@ class wpinfoActions extends sfActions
 	
 	if($result['result']=='notice_info')
 		{
-//			$wpinfo->save();
-			
-//			$this->params = $this->getRequest()->getParameterHolder()->getAll();
-//			return;
 			
 			if ($request->getParameter('save') || $request->getParameter('save_x'))
 				// we check also save_x to support image submit
@@ -114,22 +110,20 @@ class wpinfoActions extends sfActions
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
     $this->forward404Unless($wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
     $this->forward404Unless($wpinfo2 = WpinfoPeer::retrieveByPk($request->getParameter('app')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('app')));
-	$wpinfo->setContent($wpinfo2->getContent());
-	$wpinfo->save();
-	$this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content replaced.'));
-	$this->redirect('wpinfo/edit?id=' . $wpinfo->getId());
-	
+    $wpinfo->setContent($wpinfo2->getContent());
+    $wpinfo->save();
+    $this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content replaced.'));
+    $this->redirect('wpinfo/edit?id=' . $wpinfo->getId());
 	}
 	
   public function executeTakeexample(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
     $this->forward404Unless($wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
-	$wpinfo->setContent($wpinfo->getWpinfoType()->getExample());
-	$wpinfo->save();
-	$this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content replaced.'));
-	$this->redirect('wpinfo/edit?id=' . $wpinfo->getId());
-	
+    $wpinfo->setContent($wpinfo->getWpinfoType()->getExample());
+    $wpinfo->save();
+    $this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content replaced.'));
+    $this->redirect('wpinfo/edit?id=' . $wpinfo->getId());
 	}
 	
 	
@@ -138,11 +132,10 @@ class wpinfoActions extends sfActions
     $this->forward404Unless($request->isMethod('post') || $request->isMethod('put'));
     $this->forward404Unless($wpinfo = WpinfoPeer::retrieveByPk($request->getParameter('id')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('id')));
     $this->forward404Unless($wpinfo2 = WpinfoPeer::retrieveByPk($request->getParameter('app')), sprintf('Object wpinfo does not exist (%s).', $request->getParameter('app')));
-	$wpinfo->setCheckedContent($this->getUser(), $wpinfo->getContent() .  '<br />' . $wpinfo2->getContent());
-	$wpinfo->save();
-	$this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content appended.'));
-	$this->forward('wpinfo', 'edit');
-	
+    $wpinfo->setCheckedContent($this->getUser(), $wpinfo->getContent() .  '<br />' . $wpinfo2->getContent());
+    $wpinfo->save();
+    $this->getUser()->setFlash('notice_info', $this->getContext()->getI18N()->__('Content appended.'));
+    $this->forward('wpinfo', 'edit');
 	}
 	
 	
