@@ -1,12 +1,14 @@
 <?php
 
 /**
- * Subclass for representing a row from the 'year' table.
+ * Year class.
  *
- * 
- *
- * @package lib.model
- */ 
+ * @package    schoolmesh
+ * @subpackage lib.model
+ * @author     Loris Tissino
+ * @license    GNU GPLv3 -- see license/gpl.txt for details
+ */
+
 class Year extends BaseYear
 {
   public function __toString()

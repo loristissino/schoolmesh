@@ -5,7 +5,7 @@
  *
  * @package    schoolmesh
  * @subpackage workstations
- * @author     Your name here
+ * @author     Loris Tissino
  */
 class lanActions extends sfActions
 {

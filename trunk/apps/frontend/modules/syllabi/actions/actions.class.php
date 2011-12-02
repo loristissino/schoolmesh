@@ -5,7 +5,7 @@
  *
  * @package    schoolmesh
  * @subpackage syllabi
- * @author     Your name here
+ * @author     Loris Tissino
  */
 class syllabiActions extends sfActions
 {

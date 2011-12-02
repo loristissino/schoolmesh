@@ -47,16 +47,6 @@ abstract class BaseSubnet extends BaseObject  implements Persistent {
 	private $lastWorkstationCriteria = null;
 
 	/**
-	 * @var        array SubnetService[] Collection to store aggregation of SubnetService objects.
-	 */
-	protected $collSubnetServices;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collSubnetServices.
-	 */
-	private $lastSubnetServiceCriteria = null;
-
-	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -273,9 +263,6 @@ abstract class BaseSubnet extends BaseObject  implements Persistent {
 			$this->collWorkstations = null;
 			$this->lastWorkstationCriteria = null;
 
-			$this->collSubnetServices = null;
-			$this->lastSubnetServiceCriteria = null;
-
 		} // if (deep)
 	}
 
@@ -414,14 +401,6 @@ abstract class BaseSubnet extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collSubnetServices !== null) {
-				foreach ($this->collSubnetServices as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			$this->alreadyInSave = false;
 
 		}
@@ -495,14 +474,6 @@ abstract class BaseSubnet extends BaseObject  implements Persistent {
 
 				if ($this->collWorkstations !== null) {
 					foreach ($this->collWorkstations as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collSubnetServices !== null) {
-					foreach ($this->collSubnetServices as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -726,12 +697,6 @@ abstract class BaseSubnet extends BaseObject  implements Persistent {
 				}
 			}
 
-			foreach ($this->getSubnetServices() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addSubnetService($relObj->copy($deepCopy));
-				}
-			}
-
 		} // if ($deepCopy)
 
 
@@ -934,207 +899,6 @@ abstract class BaseSubnet extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Clears out the collSubnetServices collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addSubnetServices()
-	 */
-	public function clearSubnetServices()
-	{
-		$this->collSubnetServices = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collSubnetServices collection (array).
-	 *
-	 * By default this just sets the collSubnetServices collection to an empty array (like clearcollSubnetServices());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initSubnetServices()
-	{
-		$this->collSubnetServices = array();
-	}
-
-	/**
-	 * Gets an array of SubnetService objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Subnet has previously been saved, it will retrieve
-	 * related SubnetServices from storage. If this Subnet is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array SubnetService[]
-	 * @throws     PropelException
-	 */
-	public function getSubnetServices($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(SubnetPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collSubnetServices === null) {
-			if ($this->isNew()) {
-			   $this->collSubnetServices = array();
-			} else {
-
-				$criteria->add(SubnetServicePeer::SUBNET_ID, $this->id);
-
-				SubnetServicePeer::addSelectColumns($criteria);
-				$this->collSubnetServices = SubnetServicePeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(SubnetServicePeer::SUBNET_ID, $this->id);
-
-				SubnetServicePeer::addSelectColumns($criteria);
-				if (!isset($this->lastSubnetServiceCriteria) || !$this->lastSubnetServiceCriteria->equals($criteria)) {
-					$this->collSubnetServices = SubnetServicePeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastSubnetServiceCriteria = $criteria;
-		return $this->collSubnetServices;
-	}
-
-	/**
-	 * Returns the number of related SubnetService objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related SubnetService objects.
-	 * @throws     PropelException
-	 */
-	public function countSubnetServices(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(SubnetPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collSubnetServices === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(SubnetServicePeer::SUBNET_ID, $this->id);
-
-				$count = SubnetServicePeer::doCount($criteria, false, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(SubnetServicePeer::SUBNET_ID, $this->id);
-
-				if (!isset($this->lastSubnetServiceCriteria) || !$this->lastSubnetServiceCriteria->equals($criteria)) {
-					$count = SubnetServicePeer::doCount($criteria, false, $con);
-				} else {
-					$count = count($this->collSubnetServices);
-				}
-			} else {
-				$count = count($this->collSubnetServices);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a SubnetService object to this object
-	 * through the SubnetService foreign key attribute.
-	 *
-	 * @param      SubnetService $l SubnetService
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addSubnetService(SubnetService $l)
-	{
-		if ($this->collSubnetServices === null) {
-			$this->initSubnetServices();
-		}
-		if (!in_array($l, $this->collSubnetServices, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collSubnetServices, $l);
-			$l->setSubnet($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Subnet is new, it will return
-	 * an empty collection; or if this Subnet has previously
-	 * been saved, it will retrieve related SubnetServices from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Subnet.
-	 */
-	public function getSubnetServicesJoinService($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(SubnetPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collSubnetServices === null) {
-			if ($this->isNew()) {
-				$this->collSubnetServices = array();
-			} else {
-
-				$criteria->add(SubnetServicePeer::SUBNET_ID, $this->id);
-
-				$this->collSubnetServices = SubnetServicePeer::doSelectJoinService($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(SubnetServicePeer::SUBNET_ID, $this->id);
-
-			if (!isset($this->lastSubnetServiceCriteria) || !$this->lastSubnetServiceCriteria->equals($criteria)) {
-				$this->collSubnetServices = SubnetServicePeer::doSelectJoinService($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastSubnetServiceCriteria = $criteria;
-
-		return $this->collSubnetServices;
-	}
-
-	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -1151,15 +915,9 @@ abstract class BaseSubnet extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collSubnetServices) {
-				foreach ((array) $this->collSubnetServices as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 		} // if ($deep)
 
 		$this->collWorkstations = null;
-		$this->collSubnetServices = null;
 	}
 
 } // BaseSubnet

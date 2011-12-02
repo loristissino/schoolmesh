@@ -1,4 +1,15 @@
 <?php 
+
+/**
+ * Workflow class.
+ *
+ * @package    schoolmesh
+ * @subpackage lib.schoolmesh
+ * @author     Loris Tissino
+ * @license    GNU GPLv3 -- see license/gpl.txt for details
+ */
+
+
 class Workflow
 {
 	const 	AP_ASSIGNED = 10;

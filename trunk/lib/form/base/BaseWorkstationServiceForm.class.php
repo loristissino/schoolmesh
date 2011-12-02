@@ -7,7 +7,7 @@
  *
  * @package    schoolmesh
  * @subpackage form
- * @author     Your name here
+ * @author     Loris Tissino
  */
 abstract class BaseWorkstationServiceForm extends BaseFormPropel
 {

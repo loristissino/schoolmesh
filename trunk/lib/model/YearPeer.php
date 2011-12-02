@@ -1,12 +1,14 @@
 <?php
 
 /**
- * Subclass for performing query and update operations on the 'year' table.
+ * YearPeer class.
  *
- * 
- *
- * @package lib.model
- */ 
+ * @package    schoolmesh
+ * @subpackage lib.model
+ * @author     Loris Tissino
+ * @license    GNU GPLv3 -- see license/gpl.txt for details
+ */
+
 class YearPeer extends BaseYearPeer
 {
 	public static function retrieveByDescription($value)

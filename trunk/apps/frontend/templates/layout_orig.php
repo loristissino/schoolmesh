@@ -95,7 +95,7 @@
             ?>
           </span>
           <br />
-          <em>released under the <a href="license/gpl.txt">GNU General Public License, version 3</a></em>
+          <em>released under the <?php echo link_to('GNU General Public License', url_for('content/license')) ?></em>
 
         </div>
       </div>

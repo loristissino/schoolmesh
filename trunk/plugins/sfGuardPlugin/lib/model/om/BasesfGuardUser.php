@@ -151,16 +151,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	private $lastUserTeamCriteria = null;
 
 	/**
-	 * @var        array Wpevent[] Collection to store aggregation of Wpevent objects.
-	 */
-	protected $collWpevents;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collWpevents.
-	 */
-	private $lastWpeventCriteria = null;
-
-	/**
 	 * @var        array Wfevent[] Collection to store aggregation of Wfevent objects.
 	 */
 	protected $collWfevents;
@@ -882,9 +872,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$this->collUserTeams = null;
 			$this->lastUserTeamCriteria = null;
 
-			$this->collWpevents = null;
-			$this->lastWpeventCriteria = null;
-
 			$this->collWfevents = null;
 			$this->lastWfeventCriteria = null;
 
@@ -1124,14 +1111,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 			if ($this->collUserTeams !== null) {
 				foreach ($this->collUserTeams as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collWpevents !== null) {
-				foreach ($this->collWpevents as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -1385,14 +1364,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 				if ($this->collUserTeams !== null) {
 					foreach ($this->collUserTeams as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collWpevents !== null) {
-					foreach ($this->collWpevents as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1840,12 +1811,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			foreach ($this->getUserTeams() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addUserTeam($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getWpevents() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addWpevent($relObj->copy($deepCopy));
 				}
 			}
 
@@ -3662,207 +3627,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->lastUserTeamCriteria = $criteria;
 
 		return $this->collUserTeams;
-	}
-
-	/**
-	 * Clears out the collWpevents collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addWpevents()
-	 */
-	public function clearWpevents()
-	{
-		$this->collWpevents = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collWpevents collection (array).
-	 *
-	 * By default this just sets the collWpevents collection to an empty array (like clearcollWpevents());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initWpevents()
-	{
-		$this->collWpevents = array();
-	}
-
-	/**
-	 * Gets an array of Wpevent objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
-	 * related Wpevents from storage. If this sfGuardUser is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array Wpevent[]
-	 * @throws     PropelException
-	 */
-	public function getWpevents($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collWpevents === null) {
-			if ($this->isNew()) {
-			   $this->collWpevents = array();
-			} else {
-
-				$criteria->add(WpeventPeer::USER_ID, $this->id);
-
-				WpeventPeer::addSelectColumns($criteria);
-				$this->collWpevents = WpeventPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(WpeventPeer::USER_ID, $this->id);
-
-				WpeventPeer::addSelectColumns($criteria);
-				if (!isset($this->lastWpeventCriteria) || !$this->lastWpeventCriteria->equals($criteria)) {
-					$this->collWpevents = WpeventPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastWpeventCriteria = $criteria;
-		return $this->collWpevents;
-	}
-
-	/**
-	 * Returns the number of related Wpevent objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related Wpevent objects.
-	 * @throws     PropelException
-	 */
-	public function countWpevents(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collWpevents === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(WpeventPeer::USER_ID, $this->id);
-
-				$count = WpeventPeer::doCount($criteria, false, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(WpeventPeer::USER_ID, $this->id);
-
-				if (!isset($this->lastWpeventCriteria) || !$this->lastWpeventCriteria->equals($criteria)) {
-					$count = WpeventPeer::doCount($criteria, false, $con);
-				} else {
-					$count = count($this->collWpevents);
-				}
-			} else {
-				$count = count($this->collWpevents);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a Wpevent object to this object
-	 * through the Wpevent foreign key attribute.
-	 *
-	 * @param      Wpevent $l Wpevent
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addWpevent(Wpevent $l)
-	{
-		if ($this->collWpevents === null) {
-			$this->initWpevents();
-		}
-		if (!in_array($l, $this->collWpevents, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collWpevents, $l);
-			$l->setsfGuardUser($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this sfGuardUser is new, it will return
-	 * an empty collection; or if this sfGuardUser has previously
-	 * been saved, it will retrieve related Wpevents from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in sfGuardUser.
-	 */
-	public function getWpeventsJoinAppointment($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collWpevents === null) {
-			if ($this->isNew()) {
-				$this->collWpevents = array();
-			} else {
-
-				$criteria->add(WpeventPeer::USER_ID, $this->id);
-
-				$this->collWpevents = WpeventPeer::doSelectJoinAppointment($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(WpeventPeer::USER_ID, $this->id);
-
-			if (!isset($this->lastWpeventCriteria) || !$this->lastWpeventCriteria->equals($criteria)) {
-				$this->collWpevents = WpeventPeer::doSelectJoinAppointment($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastWpeventCriteria = $criteria;
-
-		return $this->collWpevents;
 	}
 
 	/**
@@ -7165,11 +6929,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collWpevents) {
-				foreach ((array) $this->collWpevents as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 			if ($this->collWfevents) {
 				foreach ((array) $this->collWfevents as $o) {
 					$o->clearAllReferences($deep);
@@ -7255,7 +7014,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->collAppointments = null;
 		$this->collEnrolments = null;
 		$this->collUserTeams = null;
-		$this->collWpevents = null;
 		$this->collWfevents = null;
 		$this->collWpmodules = null;
 		$this->collStudentSituations = null;

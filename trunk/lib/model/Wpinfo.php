@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Wpinfo class.
+ *
+ * @package    schoolmesh
+ * @subpackage lib.model
+ * @author     Loris Tissino
+ * @license    GNU GPLv3 -- see license/gpl.txt for details
+ */
+
+
 class Wpinfo extends BaseWpinfo
 {
 	public function __toString()

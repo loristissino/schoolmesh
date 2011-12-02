@@ -1,19 +1,14 @@
 <?php
 
-require 'lib/model/om/BaseRecuperationHint.php';
-
-
 /**
- * Skeleton subclass for representing a row from the 'recuperation_hint' table.
+ * RecuperationHint class.
  *
- * 
- *
- * You should add additional methods to this class to meet the
- * application requirements.  This class will only be generated as
- * long as it does not already exist in the output directory.
- *
- * @package    lib.model
+ * @package    schoolmesh
+ * @subpackage lib.model
+ * @author     Loris Tissino
+ * @license    GNU GPLv3 -- see license/gpl.txt for details
  */
+
 class RecuperationHint extends BaseRecuperationHint {
 
 	public function getStudentIdsForAppointmentAndTerm($appointment_id, $term_id)

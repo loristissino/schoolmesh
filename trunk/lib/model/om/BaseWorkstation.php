@@ -71,16 +71,6 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 	private $lastLanlogCriteria = null;
 
 	/**
-	 * @var        array WorkstationService[] Collection to store aggregation of WorkstationService objects.
-	 */
-	protected $collWorkstationServices;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collWorkstationServices.
-	 */
-	private $lastWorkstationServiceCriteria = null;
-
-	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -423,9 +413,6 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 			$this->collLanlogs = null;
 			$this->lastLanlogCriteria = null;
 
-			$this->collWorkstationServices = null;
-			$this->lastWorkstationServiceCriteria = null;
-
 		} // if (deep)
 	}
 
@@ -576,14 +563,6 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collWorkstationServices !== null) {
-				foreach ($this->collWorkstationServices as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			$this->alreadyInSave = false;
 
 		}
@@ -669,14 +648,6 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 
 				if ($this->collLanlogs !== null) {
 					foreach ($this->collLanlogs as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collWorkstationServices !== null) {
-					foreach ($this->collWorkstationServices as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -930,12 +901,6 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 			foreach ($this->getLanlogs() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addLanlog($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getWorkstationServices() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addWorkstationService($relObj->copy($deepCopy));
 				}
 			}
 
@@ -1237,207 +1202,6 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Clears out the collWorkstationServices collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addWorkstationServices()
-	 */
-	public function clearWorkstationServices()
-	{
-		$this->collWorkstationServices = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collWorkstationServices collection (array).
-	 *
-	 * By default this just sets the collWorkstationServices collection to an empty array (like clearcollWorkstationServices());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initWorkstationServices()
-	{
-		$this->collWorkstationServices = array();
-	}
-
-	/**
-	 * Gets an array of WorkstationService objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Workstation has previously been saved, it will retrieve
-	 * related WorkstationServices from storage. If this Workstation is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array WorkstationService[]
-	 * @throws     PropelException
-	 */
-	public function getWorkstationServices($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(WorkstationPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collWorkstationServices === null) {
-			if ($this->isNew()) {
-			   $this->collWorkstationServices = array();
-			} else {
-
-				$criteria->add(WorkstationServicePeer::WORKSTATION_ID, $this->id);
-
-				WorkstationServicePeer::addSelectColumns($criteria);
-				$this->collWorkstationServices = WorkstationServicePeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(WorkstationServicePeer::WORKSTATION_ID, $this->id);
-
-				WorkstationServicePeer::addSelectColumns($criteria);
-				if (!isset($this->lastWorkstationServiceCriteria) || !$this->lastWorkstationServiceCriteria->equals($criteria)) {
-					$this->collWorkstationServices = WorkstationServicePeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastWorkstationServiceCriteria = $criteria;
-		return $this->collWorkstationServices;
-	}
-
-	/**
-	 * Returns the number of related WorkstationService objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related WorkstationService objects.
-	 * @throws     PropelException
-	 */
-	public function countWorkstationServices(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(WorkstationPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collWorkstationServices === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(WorkstationServicePeer::WORKSTATION_ID, $this->id);
-
-				$count = WorkstationServicePeer::doCount($criteria, false, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(WorkstationServicePeer::WORKSTATION_ID, $this->id);
-
-				if (!isset($this->lastWorkstationServiceCriteria) || !$this->lastWorkstationServiceCriteria->equals($criteria)) {
-					$count = WorkstationServicePeer::doCount($criteria, false, $con);
-				} else {
-					$count = count($this->collWorkstationServices);
-				}
-			} else {
-				$count = count($this->collWorkstationServices);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a WorkstationService object to this object
-	 * through the WorkstationService foreign key attribute.
-	 *
-	 * @param      WorkstationService $l WorkstationService
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addWorkstationService(WorkstationService $l)
-	{
-		if ($this->collWorkstationServices === null) {
-			$this->initWorkstationServices();
-		}
-		if (!in_array($l, $this->collWorkstationServices, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collWorkstationServices, $l);
-			$l->setWorkstation($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Workstation is new, it will return
-	 * an empty collection; or if this Workstation has previously
-	 * been saved, it will retrieve related WorkstationServices from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Workstation.
-	 */
-	public function getWorkstationServicesJoinService($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(WorkstationPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collWorkstationServices === null) {
-			if ($this->isNew()) {
-				$this->collWorkstationServices = array();
-			} else {
-
-				$criteria->add(WorkstationServicePeer::WORKSTATION_ID, $this->id);
-
-				$this->collWorkstationServices = WorkstationServicePeer::doSelectJoinService($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(WorkstationServicePeer::WORKSTATION_ID, $this->id);
-
-			if (!isset($this->lastWorkstationServiceCriteria) || !$this->lastWorkstationServiceCriteria->equals($criteria)) {
-				$this->collWorkstationServices = WorkstationServicePeer::doSelectJoinService($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastWorkstationServiceCriteria = $criteria;
-
-		return $this->collWorkstationServices;
-	}
-
-	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -1454,15 +1218,9 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collWorkstationServices) {
-				foreach ((array) $this->collWorkstationServices as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 		} // if ($deep)
 
 		$this->collLanlogs = null;
-		$this->collWorkstationServices = null;
 			$this->aSubnet = null;
 	}
 

@@ -345,9 +345,6 @@ abstract class BaseSubnetPeer {
 	 */
 	public static function clearRelatedInstancePool()
 	{
-		// invalidate objects in SubnetServicePeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		SubnetServicePeer::clearInstancePool();
-
 	}
 
 	/**

@@ -3,11 +3,13 @@
 /**
  * content actions.
  *
- * @package   schoolmesh
+ * @package    schoolmesh
  * @subpackage content
  * @author     Loris Tissino
- * @version    SVN: $Id: actions.class.php 9301 2008-05-27 01:08:46Z dwhittle $
+ * @license    GNU GPLv3 -- see license/gpl.txt for details
+ * 
  */
+
 class contentActions extends sfActions
 {
  /**
@@ -250,5 +252,9 @@ class contentActions extends sfActions
     }
   }
 
+  public function executeLicense(sfWebRequest $request)
+  {
+    $this->file=file('license/gpl.txt');
+  }
 
 }

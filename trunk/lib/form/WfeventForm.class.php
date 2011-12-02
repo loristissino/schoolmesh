@@ -5,7 +5,7 @@
  *
  * @package    schoolmesh
  * @subpackage form
- * @author     Your name here
+ * @author     Loris Tissino
  */
 class WfeventForm extends BaseWfeventForm
 {
