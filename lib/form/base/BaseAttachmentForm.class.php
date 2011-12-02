@@ -7,7 +7,7 @@
  *
  * @package    schoolmesh
  * @subpackage form
- * @author     Your name here
+ * @author     Loris Tissino
  * @version    SVN: $Id: sfPropelFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
 abstract class BaseAttachmentForm extends BaseFormPropel

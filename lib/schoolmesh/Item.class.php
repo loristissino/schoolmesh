@@ -1,4 +1,15 @@
 <?php
+
+/**
+ * Item class.
+ *
+ * @package    schoolmesh
+ * @subpackage lib.schoolmesh
+ * @author     Loris Tissino
+ * @license    GNU GPLv3 -- see license/gpl.txt for details
+ */
+
+
 class Item implements IteratorAggregate
 {
 	
@@ -27,14 +38,4 @@ class Item implements IteratorAggregate
 	}
 
 }
-/*
-$obj=new Item(5, 'prova');
-$obj->a='1';
-$obj->b='2';
 
-foreach($obj as $key=>$value)
-{
-	echo $key . ' --> ' . $value . "\n";
-}
-
-*/

@@ -5,7 +5,7 @@
  *
  * @package    schoolmesh
  * @subpackage filter
- * @author     Your name here
+ * @author     Loris Tissino
  */
 class ProjActivityFormFilter extends BaseProjActivityFormFilter
 {

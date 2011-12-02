@@ -1,19 +1,14 @@
 <?php
 
-require 'lib/model/om/BaseWpmoduleSyllabusItemPeer.php';
-
-
 /**
- * Skeleton subclass for performing query and update operations on the 'wpmodule_syllabus_item' table.
+ * WpmoduleSyllabusItemPeer class.
  *
- * 
- *
- * You should add additional methods to this class to meet the
- * application requirements.  This class will only be generated as
- * long as it does not already exist in the output directory.
- *
- * @package    lib.model
+ * @package    schoolmesh
+ * @subpackage lib.model
+ * @author     Loris Tissino
+ * @license    GNU GPLv3 -- see license/gpl.txt for details
  */
+
 class WpmoduleSyllabusItemPeer extends BaseWpmoduleSyllabusItemPeer {
   
   const PARTIAL_CONTRIBUTION=1;

@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * helper functions.
+ *
+ * @package    schoolmesh
+ * @subpackage lib.helper
+ * @author     Loris Tissino
+ * @license    GNU GPLv3 -- see license/gpl.txt for details
+ */
+
+
 function human_readable_size($size)
 {
   return Generic::getHumanReadableSize($size);

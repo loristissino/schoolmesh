@@ -52,7 +52,6 @@ class WorkstationTableMap extends TableMap {
 	{
     $this->addRelation('Subnet', 'Subnet', RelationMap::MANY_TO_ONE, array('subnet_id' => 'id', ), null, null);
     $this->addRelation('Lanlog', 'Lanlog', RelationMap::ONE_TO_MANY, array('id' => 'workstation_id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('WorkstationService', 'WorkstationService', RelationMap::ONE_TO_MANY, array('id' => 'workstation_id', ), 'CASCADE', 'CASCADE');
 	} // buildRelations()
 
 	/**

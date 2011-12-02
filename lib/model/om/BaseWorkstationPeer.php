@@ -357,9 +357,6 @@ abstract class BaseWorkstationPeer {
 	 */
 	public static function clearRelatedInstancePool()
 	{
-		// invalidate objects in WorkstationServicePeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		WorkstationServicePeer::clearInstancePool();
-
 	}
 
 	/**

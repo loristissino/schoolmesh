@@ -1,4 +1,15 @@
 <?php 
+
+/**
+ * Check class.
+ *
+ * @package    schoolmesh
+ * @subpackage lib.schoolmesh
+ * @author     Loris Tissino
+ * @license    GNU GPLv3 -- see license/gpl.txt for details
+ */
+
+
 class Check{
 	
 	const FAILED = 0;

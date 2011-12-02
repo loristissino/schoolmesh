@@ -12,15 +12,13 @@ abstract class BaseSubnetFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'name'                => new sfWidgetFormFilterInput(),
-      'ip_cidr'             => new sfWidgetFormFilterInput(),
-      'subnet_service_list' => new sfWidgetFormPropelChoice(array('model' => 'Service', 'add_empty' => true)),
+      'name'    => new sfWidgetFormFilterInput(),
+      'ip_cidr' => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'name'                => new sfValidatorPass(array('required' => false)),
-      'ip_cidr'             => new sfValidatorPass(array('required' => false)),
-      'subnet_service_list' => new sfValidatorPropelChoice(array('model' => 'Service', 'required' => false)),
+      'name'    => new sfValidatorPass(array('required' => false)),
+      'ip_cidr' => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('subnet_filters[%s]');
@@ -28,31 +26,6 @@ abstract class BaseSubnetFormFilter extends BaseFormFilterPropel
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
     parent::setup();
-  }
-
-  public function addSubnetServiceListColumnCriteria(Criteria $criteria, $field, $values)
-  {
-    if (!is_array($values))
-    {
-      $values = array($values);
-    }
-
-    if (!count($values))
-    {
-      return;
-    }
-
-    $criteria->addJoin(SubnetServicePeer::SUBNET_ID, SubnetPeer::ID);
-
-    $value = array_pop($values);
-    $criterion = $criteria->getNewCriterion(SubnetServicePeer::SERVICE_ID, $value);
-
-    foreach ($values as $value)
-    {
-      $criterion->addOr($criteria->getNewCriterion(SubnetServicePeer::SERVICE_ID, $value));
-    }
-
-    $criteria->add($criterion);
   }
 
   public function getModelName()
@@ -63,10 +36,9 @@ abstract class BaseSubnetFormFilter extends BaseFormFilterPropel
   public function getFields()
   {
     return array(
-      'id'                  => 'Number',
-      'name'                => 'Text',
-      'ip_cidr'             => 'Text',
-      'subnet_service_list' => 'ManyKey',
+      'id'      => 'Number',
+      'name'    => 'Text',
+      'ip_cidr' => 'Text',
     );
   }
 }

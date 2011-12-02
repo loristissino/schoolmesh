@@ -531,34 +531,6 @@ CREATE TABLE `user_team`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
-#-- wpevent
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `wpevent`;
-
-
-CREATE TABLE `wpevent`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`created_at` DATETIME,
-	`appointment_id` INTEGER,
-	`user_id` INTEGER,
-	`comment` VARCHAR(255),
-	`state` INTEGER,
-	PRIMARY KEY (`id`),
-	INDEX `wpevent_FI_1` (`appointment_id`),
-	CONSTRAINT `wpevent_FK_1`
-		FOREIGN KEY (`appointment_id`)
-		REFERENCES `appointment` (`id`),
-	INDEX `wpevent_FI_2` (`user_id`),
-	CONSTRAINT `wpevent_FK_2`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `sf_guard_user` (`id`)
-		ON UPDATE CASCADE
-		ON DELETE RESTRICT
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
 #-- wfevent
 #-----------------------------------------------------------------------------
 
@@ -1254,75 +1226,6 @@ CREATE TABLE `lanlog`
 		REFERENCES `workstation` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- service
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `service`;
-
-
-CREATE TABLE `service`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(40),
-	`is_enabled_by_default` TINYINT default 0,
-	`port` INTEGER  NOT NULL,
-	`is_udp` TINYINT default 0,
-	PRIMARY KEY (`id`),
-	UNIQUE KEY `port_is_udp` (`port`, `is_udp`),
-	KEY `service_I_1`(`name`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- workstation_service
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `workstation_service`;
-
-
-CREATE TABLE `workstation_service`
-(
-	`workstation_id` INTEGER  NOT NULL,
-	`service_id` INTEGER  NOT NULL,
-	PRIMARY KEY (`workstation_id`,`service_id`),
-	CONSTRAINT `workstation_service_FK_1`
-		FOREIGN KEY (`workstation_id`)
-		REFERENCES `workstation` (`id`)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE,
-	INDEX `workstation_service_FI_2` (`service_id`),
-	CONSTRAINT `workstation_service_FK_2`
-		FOREIGN KEY (`service_id`)
-		REFERENCES `service` (`id`)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- subnet_service
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `subnet_service`;
-
-
-CREATE TABLE `subnet_service`
-(
-	`subnet_id` INTEGER  NOT NULL,
-	`service_id` INTEGER  NOT NULL,
-	PRIMARY KEY (`subnet_id`,`service_id`),
-	CONSTRAINT `subnet_service_FK_1`
-		FOREIGN KEY (`subnet_id`)
-		REFERENCES `subnet` (`id`)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE,
-	INDEX `subnet_service_FI_2` (`service_id`),
-	CONSTRAINT `subnet_service_FK_2`
-		FOREIGN KEY (`service_id`)
-		REFERENCES `service` (`id`)
-		ON UPDATE CASCADE
-		ON DELETE CASCADE
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

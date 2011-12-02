@@ -7,7 +7,7 @@ require_once(sfConfig::get('sf_lib_dir').'/filter/base/BaseFormFilterPropel.clas
  *
  * @package    schoolmesh
  * @subpackage filter
- * @author     Your name here
+ * @author     Loris Tissino
  * @version    SVN: $Id: sfPropelFormFilterGeneratedTemplate.php 13459 2008-11-28 14:48:12Z fabien $
  */
 class BaseAccountUserFormFilter extends BaseFormFilterPropel

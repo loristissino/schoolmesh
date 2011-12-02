@@ -48,7 +48,6 @@ class SubnetTableMap extends TableMap {
 	public function buildRelations()
 	{
     $this->addRelation('Workstation', 'Workstation', RelationMap::ONE_TO_MANY, array('id' => 'subnet_id', ), null, null);
-    $this->addRelation('SubnetService', 'SubnetService', RelationMap::ONE_TO_MANY, array('id' => 'subnet_id', ), 'CASCADE', 'CASCADE');
 	} // buildRelations()
 
 	/**
