@@ -14,7 +14,7 @@
 	<?php endif; ?>
 </title>
 
-<link rel="shortcut icon" href="images/favicon.ico" />
+<link rel="shortcut icon" href="http://www.schoolmeshdemo.tuxfamily.org/images/favicon.ico" />
     <?php use_helper('jQuery') ?>
     <?php include_javascripts() 
     /* the book says it could be at the end of the page for performance reasons 
