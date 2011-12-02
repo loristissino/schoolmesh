@@ -90,10 +90,21 @@ class Team extends BaseTeam
 			{
 				$checkList->addCheck(new Check(Check::PASSED, sprintf('user %s has a link in their folder for %s', $user->getUsername(), $this->getPosixName()), $checkGroup));
 			}
-
 		}
-		
-		
 	}
+  
+  
+  public function getComponentsIds()
+  {
+    $ids=array();
+    $c=new Criteria();
+    $c->add(UserTeamPeer::TEAM_ID, $this->getId());
+    $rows=UserTeamPeer::doSelect($c);
+    foreach($rows as $row)
+    {
+      $ids[]=$row->getUserId();
+    }
+    return $ids;
+  }
 	
 }

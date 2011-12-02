@@ -30,7 +30,7 @@ class schoolmeshSyncGoogleAppsAccountsTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'sync-googleapps-accounts';
-    $this->briefDescription = 'Sesynchronizes google apps accounts';
+    $this->briefDescription = 'Synchronizes google apps accounts';
     $this->detailedDescription = <<<EOF
 The [schoolmesh:sync-googleappas-accounts|INFO] task syncronizes google apps accounts.
 Call it with:

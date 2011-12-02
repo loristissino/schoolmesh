@@ -110,6 +110,7 @@
   'getsigns' => __('Get signs for parent-teaching consulting'),
   'email' => __('Write an email'),
   'showquotastats' => __('Show quota statistics'),
+  'adduserstoteam' => __('Add selected users to a team'),
 ), 0) ?>
   </select>
 
