@@ -3579,6 +3579,10 @@
       <source>This is a &lt;a href="http://www.schoolmesh.mattiussilab.net/demo"&gt;demo version&lt;/a&gt;, and the contents need to be cleaned up every hour.</source>
       <target>Questa è una &lt;a href="http://www.schoolmesh.mattiussilab.net/demo"&gt;versione dimostrativa&lt;/a&gt;, e i contenuti aggiunti dagli utenti vengono eliminati ogni ora.</target>
     </trans-unit>
+    <trans-unit id="906">
+      <source>This message has been sent to:</source>
+      <target>Questo messaggio è stato spedito a:</target>
+    </trans-unit>
     </body>
   </file>
   
