@@ -10,120 +10,36 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # SYNOPSIS
 #@
-#@ {} database outfile
+#@ {} environment outfile
 #@
 #@ # DESCRIPTION
 #@
 #@ This script makes a backup of the data of SchoolMesh database, in the form 
-#@ of a SQL plaintext file.
-#@ The tables are backed up in an order that allows to reimport them without 
-#@ problems.
+#@ of a SQL plaintext gzipped file, with foreign key checks disabled.
 #@ The output can be used with *schoolmesh_application_importtables(8)*.
 #@ 
 #@ # EXAMPLES
 #@
-#@	{-} schoolmesh_prod mybackupfile.sql 
+#@	{-} prod mybackupfile
 
-USERNAME=$(cat /var/schoolmesh/config/databases.yml | grep username | gawk '{print $2}')
-PASSWORD=$(cat /var/schoolmesh/config/databases.yml | grep password | gawk '{print $2}')
-# This is awful, we should load the file and parse it in the right way...
-
-DATABASE=$1
+ENV=$1
 OUTFILE=$2
 
-checkString $DATABASE "database"
+checkOneOf $ENV dev prod test
 checkNotFile $OUTFILE
+checkNotFile $OUTFILE.sql
+checkNotFile $OUTFILE.sql.gz
+
+SCRIPT=$(mktemp)
+
+symfony schoolmesh:generate-backup-script --application=frontend --env=$ENV $SCRIPT $OUTFILE.sql > /dev/null
+
+chmod +x $SCRIPT
+
+$SCRIPT
+
+gzip $OUTFILE.sql
+
+rm -f $SCRIPT
 
 
-TABLES="
-track
-year
-term
-suggestion
-subject
-schoolclass
-sf_guard_user
-sf_guard_permission
-subnet
-account_type
-proj_category
-proj_financing
-syllabus
-
-role
-account
-service
-sf_guard_group
-system_message
-system_message_i18n
-team
-ticket
-ticket_type
-workstation
-wpitem_group
-wpitem_type
-wpmodule
-recuperation_hint
-proj_resource_type
-proj_resource
-
-appointment
-enrolment
-reserved_username
-lanlog
-sf_guard_group_permission
-sf_guard_remember_key
-sf_guard_user_group
-sf_guard_user_profile
-sf_guard_user_permission
-subnet_service
-ticket_event
-user_team
-workstation_service
-wpevent
-wpinfo
-wpinfo_type
-wptool_appointment
-wptool_item
-wptool_item_type
-wpmodule_item
-student_situation
-student_suggestion
-student_hint
-schoolproject
-proj_deadline
-proj_activity
-proj_upshot
-attachment_file
-syllabus_item
-wpmodule_syllabus_item
-
-wfevent
-"
-
-TEMPFILE0=$(mktemp)
-TEMPFILE1=$(mktemp)
-TEMPFILE2=$(mktemp)
-
-TABLESDUMPED=0
-
-for TABLE in $TABLES
-	do
-		mysqldump  $DATABASE $TABLE --user=$USERNAME --password=$PASSWORD --no-create-info --complete-insert >> $OUTFILE && msg_ok "Dumped table  $TABLE"
-		let "TABLESDUMPED += 1"
-		echo $TABLE >> $TEMPFILE0
-	done
-
-echo "Dumped $TABLESDUMPED tables"
-
-sort $TEMPFILE0 > $TEMPFILE1
-
-echo 'show tables;' | mysql $DATABASE --user=$USERNAME --password=$PASSWORD --raw --skip-column-names | sort > $TEMPFILE2
-
-TOTALNUMBER=$(cat $TEMPFILE2 | wc -l)
-
-echo "Available $TOTALNUMBER tables"
-
-diff $TEMPFILE1 $TEMPFILE2  && msg_ok "Successfully dumped all tables" || msg_failed "Not all tables have been dumped"
-
-rm -f $TEMPFILE0 $TEMPFILE1 $TEMPFILE2
