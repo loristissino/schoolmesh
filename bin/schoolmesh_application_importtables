@@ -10,12 +10,12 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # SYNOPSIS
 #@
-#@ {} *database* *inputfile*
+#@ {} *environment* *inputfile*
 #@
 #@ # DESCRIPTION
 #@
 #@ Use this script to import data into the database. The input file must be in
-#@ SQL format.
+#@ SQL gzipped format.
 #@ The output of *schoolmesh_application_dumptables(8)* should be adequate.
 #@
 #@ # WARNINGS
@@ -25,16 +25,24 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # EXAMPLES
 #@
-#@	{-} schoolmesh myfile.sql  
-#@	{-} schoolmesh_prod myfile.sql
+#@	{-} prod /var/backups/myfile.sql.gz
 
-USERNAME=$(cat /var/schoolmesh/config/databases.yml | grep username | gawk '{print $2}')
-PASSWORD=$(cat /var/schoolmesh/config/databases.yml | grep password | gawk '{print $2}')
-
-DATABASE=$1
+ENVIRONMENT=$1
 INFILE=$2
 
+checkOneOf $ENVIRONMENT dev prod test
 checkFile $INFILE
 
-cat $INFILE | mysql $DATABASE --user=$USERNAME --password=$PASSWORD && msg_ok "Successfully imported data" || msg_failed "Data could not be imported"
+SCRIPT=$(mktemp)
+
+symfony schoolmesh:generate-db-script --application=frontend --env=$ENVIRONMENT --backupfile=$INFILE restore $SCRIPT > /dev/null
+
+chmod +x $SCRIPT
+
+$SCRIPT
+
+rm -f $SCRIPT
+
+
+
 

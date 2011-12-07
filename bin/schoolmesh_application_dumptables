@@ -6,7 +6,7 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 
 #@ # NAME
 #@
-#@ {} - Backup data from the database in SQL format
+#@ {} - Backup data from the database in gzipped SQL format
 #@
 #@ # SYNOPSIS
 #@
@@ -20,19 +20,19 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@ 
 #@ # EXAMPLES
 #@
-#@	{-} prod mybackupfile
+#@	{-} prod /var/backups/myfile.sql.gz
 
-ENV=$1
+ENVIRONMENT=$1
 OUTFILE=$2
 
-checkOneOf $ENV dev prod test
+checkOneOf $ENVIRONMENT dev prod test
 checkNotFile $OUTFILE
 checkNotFile $OUTFILE.sql
 checkNotFile $OUTFILE.sql.gz
 
 SCRIPT=$(mktemp)
 
-symfony schoolmesh:generate-backup-script --application=frontend --env=$ENV $SCRIPT $OUTFILE.sql > /dev/null
+symfony schoolmesh:generate-db-script --application=frontend --env=$ENVIRONMENT --backupfile=$OUTFILE.sql backup $SCRIPT > /dev/null
 
 chmod +x $SCRIPT
 

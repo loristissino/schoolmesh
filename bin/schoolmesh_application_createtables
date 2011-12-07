@@ -27,12 +27,16 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@	{-} prod 
 #@	{-} dev
 
-ENVIR=$1
+ENVIRONMENT=$1
 
-checkString $ENVIR "environment"
+checkOneOf $ENVIRONMENT dev prod test
 
-checkOneOf $ENVIR dev prod test
+SCRIPT=$(mktemp)
 
-cd /var/schoolmesh
-symfony propel:insert-sql --env=$ENVIR
+symfony schoolmesh:generate-db-script --application=frontend --env=$ENVIRONMENT init $SCRIPT > /dev/null
 
+chmod +x $SCRIPT
+
+$SCRIPT
+
+rm -f $SCRIPT

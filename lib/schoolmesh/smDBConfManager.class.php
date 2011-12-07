@@ -18,9 +18,20 @@ class smDBConfManager
   public function __construct($env)
   {
     
-    $this->_dump_command='unknown';
+    $this->_init_command='#unknown';
+    $this->_backup_command='#unknown';
+    $this->_restore_command='#unknown';
     
     $conf=sfYaml::load(sfConfig::get('app_config_base_dir').'/config/databases.yml');
+    
+    $sqlfiles=array();
+    foreach(scandir(sfConfig::get('app_config_base_dir').'/data/sql') as $entry)
+    {
+      if(preg_match('/sql$/', $entry))
+      {
+        $sqlfiles[]=sfConfig::get('app_config_base_dir').'/data/sql/' . $entry;
+      }
+    }
     
     if(!is_array($conf))
     {
@@ -71,11 +82,21 @@ class smDBConfManager
           list($key, $value)=explode('=', $item);
           $pairs[$key]=$value;
         }
-        $this->_dump_command=sprintf("
+        $this->_init_command='';
+        foreach($sqlfiles as $sqlfile)
+        {
+          $this->_init_command.=sprintf("cat %s | mysql --host=%s -u %s -p%s %s\n", 
+            $sqlfile, $pairs['host'], $username, $password, $pairs['dbname']
+            );
+        }
+        $this->_backup_command=sprintf("
 echo 'SET foreign_key_checks = 0;' > '_BACKUPFILE_'
 mysqldump --host=%s --no-create-info -u %s -p%s %s >> '_BACKUPFILE_'
 echo 'SET foreign_key_checks = 1;' >> '_BACKUPFILE_'
 ",
+          $pairs['host'], $username, $password, $pairs['dbname']
+        );
+        $this->_restore_command=sprintf("zcat '_BACKUPFILE_' | mysql --host=%s -u %s -p%s %s",
           $pairs['host'], $username, $password, $pairs['dbname']
         );
         break;
@@ -83,9 +104,19 @@ echo 'SET foreign_key_checks = 1;' >> '_BACKUPFILE_'
 
   }
   
-  public function getDumpCommand($backupfile)
+  public function getInitCommand()
   {
-    return str_replace('_BACKUPFILE_', $backupfile, $this->_dump_command);
+    return $this->_init_command;
+  }
+
+  public function getBackupCommand($backupfile)
+  {
+    return str_replace('_BACKUPFILE_', $backupfile, $this->_backup_command);
+  }
+
+  public function getRestoreCommand($backupfile)
+  {
+    return str_replace('_BACKUPFILE_', $backupfile, $this->_restore_command);
   }
   
 }
