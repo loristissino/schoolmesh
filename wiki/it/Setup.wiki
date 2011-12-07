@@ -19,5 +19,5 @@
 
 7. [Setup06OpenOffice Template OpenOffice e conversione di documenti]
 
-8. [Setup07SmoothWall Template OpenOffice e conversione di documenti]
+8. [Setup07SmoothWall Integratione con il firewall SmoothWall]
 

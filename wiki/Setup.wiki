@@ -1,7 +1,24 @@
 #summary How to install SchoolMesh.
+#labels Phase-Deploy,Featured
 
-= Introduction =
+= How to install SchoolMesh =
 
-I'll translate this page in English soon.
+*Warning.* The procedure described here has not been deeply tested. Use it at your own risk (possibly on a trial machine...)
 
-For now, instructions are in Italian only: see [IstruzioniInstallazione Installazione].
+1. [Setup00BeforeStarting Before starting]
+
+2. [Setup01SchoolMeshSetup SchoolMesh setup]
+
+3. [Setup02ApacheSSL Apache configuration]
+
+4. [Setup03MySQL MySQL configuration]
+
+5. [Setup04Customization Local customizations]
+
+6. [Setup05ApplicationIntegration Integration with other applications like Samba, Squid, etc.]
+
+7. [Setup06OpenOffice OpenOffice templating and document conversions]
+
+8. [Setup07SmoothWall Integration with SmoothWall firewall]
+
+
