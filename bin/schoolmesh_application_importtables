@@ -35,7 +35,7 @@ checkFile $INFILE
 
 SCRIPT=$(mktemp)
 
-symfony schoolmesh:generate-db-script --application=frontend --env=$ENVIRONMENT --backupfile=$INFILE restore $SCRIPT > /dev/null
+php symfony schoolmesh:generate-db-script --application=frontend --env=$ENVIRONMENT --backupfile=$INFILE restore $SCRIPT > /dev/null
 
 chmod +x $SCRIPT
 

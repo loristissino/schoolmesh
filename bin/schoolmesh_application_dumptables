@@ -32,7 +32,7 @@ checkNotFile $OUTFILE.sql.gz
 
 SCRIPT=$(mktemp)
 
-symfony schoolmesh:generate-db-script --application=frontend --env=$ENVIRONMENT --backupfile=$OUTFILE.sql backup $SCRIPT > /dev/null
+php symfony schoolmesh:generate-db-script --application=frontend --env=$ENVIRONMENT --backupfile=$OUTFILE.sql backup $SCRIPT > /dev/null
 
 chmod +x $SCRIPT
 
