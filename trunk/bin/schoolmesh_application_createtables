@@ -41,9 +41,6 @@ if [[ "$2" != "--no-confirmation" ]]; then
   fi 
 fi
 
-echo "going on"
-exit
-
 SCRIPT=$(mktemp)
 
 php symfony schoolmesh:generate-db-script --application=frontend --env=$ENVIRONMENT init $SCRIPT > /dev/null
@@ -53,3 +50,5 @@ chmod +x $SCRIPT
 $SCRIPT
 
 rm -f $SCRIPT
+
+echo "Done."
