@@ -1,4 +1,4 @@
-.TH SCHOOLMESH 8 "October 2011" "Schoolmesh utilities User Manuals"
+.TH SCHOOLMESH 8 "December 2011" "Schoolmesh utilities User Manuals"
 .SH NAME
 .PP
 schoolmesh - command line utilities to be used with SchoolMesh web
@@ -9,7 +9,7 @@ schoolmesh_application_createtables -
 \f[I]Create empty tables for the database\f[]
 .PP
 schoolmesh_application_dumptables -
-\f[I]Backup data from the database in SQL format\f[]
+\f[I]Backup data from the database in gzipped SQL format\f[]
 .PP
 schoolmesh_application_importtables -
 \f[I]Import data from a backup sql file\f[]
@@ -106,9 +106,6 @@ schoolmesh_sambaaccount_getinfo -
 .PP
 schoolmesh_sambaaccount_unlock -
 \f[I]Unlock the samba (SMB/CIFS) account of a user\f[]
-.PP
-schoolmesh_task_execute -
-\f[I]Executes a symfony SchoolMesh task\f[]
 .PP
 schoolmesh_unoconv_launch -
 \f[I]launch Unoconv and locks the screen at once\f[]

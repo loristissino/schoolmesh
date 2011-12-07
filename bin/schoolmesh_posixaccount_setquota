@@ -20,7 +20,7 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # EXAMPLES
 #@
-#@	{-} john 80000 100000 5000 6000
+#@ {-} john 80000 100000 5000 6000
 
 USERNAME=$1
 SBQ=$2

@@ -14,13 +14,14 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # DESCRIPTION
 #@
-#@ This script makes a backup of the data of SchoolMesh database, in the form 
-#@ of a SQL plaintext gzipped file, with foreign key checks disabled.
-#@ The output can be used with *schoolmesh_application_importtables(8)*.
+#@ This script makes a backup of the data of SchoolMesh database, in
+#@ the form of a SQL plaintext gzipped file, with foreign key checks 
+#@ disabled. The output can be used with 
+#@ *schoolmesh_application_importtables(8)*.
 #@ 
 #@ # EXAMPLES
 #@
-#@	{-} prod /var/backups/myfile.sql.gz
+#@ {-} prod /var/backups/myfile.sql.gz
 
 ENVIRONMENT=$1
 OUTFILE=$2

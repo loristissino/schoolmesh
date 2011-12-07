@@ -1,6 +1,6 @@
 % SCHOOLMESH_APPLICATION_IMPORTTABLES(8) Schoolmesh User Manuals
 % Loris Tissino (loris.tissino@mattiussilab.net)
-% September 2011
+% December 2011
 
 # NAME
 
@@ -8,13 +8,14 @@ schoolmesh\_application\_importtables - Import data from a backup sql file
 
 # SYNOPSIS
 
-schoolmesh\_application\_importtables *database* *inputfile*
+schoolmesh\_application\_importtables *environment* *inputfile*
 
 # DESCRIPTION
 
-Use this script to import data into the database. The input file must be in
-SQL format.
-The output of *schoolmesh_application_dumptables(8)* should be adequate.
+Use this script to import data into the database. The input file
+SQL must be in gzipped format.
+The output of *schoolmesh_application_dumptables(8)* should be
+adequate.
 
 # WARNINGS
 
@@ -23,8 +24,7 @@ the tables with *schoolmesh_application_createtables(8)*.
 
 # EXAMPLES
 
-	schoolmesh_application_importtables schoolmesh myfile.sql  
-	schoolmesh_application_importtables schoolmesh_prod myfile.sql
+schoolmesh_application_importtables prod /var/backups/myfile.sql.gz
 
 # BUGS
 

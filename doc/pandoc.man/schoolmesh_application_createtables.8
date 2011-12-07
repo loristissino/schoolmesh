@@ -1,6 +1,6 @@
 % SCHOOLMESH_APPLICATION_CREATETABLES(8) Schoolmesh User Manuals
 % Loris Tissino (loris.tissino@mattiussilab.net)
-% September 2011
+% December 2011
 
 # NAME
 
@@ -8,22 +8,24 @@ schoolmesh\_application\_createtables - Create empty tables for the database
 
 # SYNOPSIS
 
-schoolmesh\_application\_createtables *environment*
+schoolmesh\_application\_createtables *environment* [--no-confirmation]
 
 # DESCRIPTION
 
-Use this script to create empty tables in the database (using the schoolmesh
-symfony-generated script).
+Use this script to create empty tables in the database (using the 
+schoolmesh symfony-generated script).
+If the option --no-confirmation is set, the dialog with the 
+confirmation question is not shown.
 
 # WARNINGS
 
-This will delete all the contents of the database. Be sure to make a backup 
-before using it.
+This will delete all the contents of the database. Be sure to make a
+backup before using it.
 
 # EXAMPLES
 
-	schoolmesh_application_createtables prod 
-	schoolmesh_application_createtables dev
+schoolmesh_application_createtables prod 
+ schoolmesh_application_createtables dev
 
 # BUGS
 

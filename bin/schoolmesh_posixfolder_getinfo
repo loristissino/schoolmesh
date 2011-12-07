@@ -26,9 +26,9 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # EXAMPLES
 #@
-#@	{-} john.test path '/'  
-#@	{-} john.test list '/mydocs' 
-#@  {-} john.test file '/mydocs/myfile.odt'
+#@ {-} john.test path '/'  
+#@ {-} john.test list '/mydocs' 
+#@ {-} john.test file '/mydocs/myfile.odt'
 
 USERNAME=$1
 COMMAND=$2

@@ -24,7 +24,7 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # EXAMPLES
 #@
-#@	{-} johnn john
+#@ {-} johnn john
 
 NEW_USERNAME=$1
 OLD_USERNAME=$2

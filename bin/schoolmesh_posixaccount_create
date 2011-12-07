@@ -19,7 +19,7 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # EXAMPLES
 #@
-#@	{-} john students 'John Doe'
+#@ {-} john students 'John Doe'
 
 USERNAME=$1
 GROUP=$2

@@ -25,7 +25,7 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # EXAMPLES
 #@
-#@	{-} john.test '/mydocs/my letters'
+#@ {-} john.test '/mydocs/my letters'
 
 USERNAME=$1
 FILEPATH=$2

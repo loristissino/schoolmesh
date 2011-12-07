@@ -1,4 +1,4 @@
-.TH SCHOOLMESH_POSIXACCOUNTS_QUOTACHECKS 8 "September 2011" "Schoolmesh User Manuals"
+.TH SCHOOLMESH_POSIXACCOUNTS_QUOTACHECKS 8 "December 2011" "Schoolmesh User Manuals"
 .SH NAME
 .PP
 schoolmesh_posixaccounts_quotachecks - Get a list of users
@@ -15,11 +15,19 @@ You can decide to check only primary groups, only secondary, or
 both.
 .SH EXAMPLES
 .PP
-\f[CR]
-      schoolmesh_posixaccounts_quotachecks\ primary\ students\ \ 
-      schoolmesh_posixaccounts_quotachecks\ secondary\ students\ \ 
-      schoolmesh_posixaccounts_quotachecks\ all\ students
-\f[]
+schoolmesh_posixaccounts_quotachecks primary
+students
+.PD 0
+.P
+.PD
+schoolmesh_posixaccounts_quotachecks
+secondary
+students
+.PD 0
+.P
+.PD
+schoolmesh_posixaccounts_quotachecks all
+students
 .SH BUGS
 .PP
 Probably many.

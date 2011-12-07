@@ -1,4 +1,4 @@
-.TH SCHOOLMESH_SAMBAACCOUNT_CREATE 8 "July 2010" "Schoolmesh User Manuals"
+.TH SCHOOLMESH_SAMBAACCOUNT_CREATE 8 "December 2011" "Schoolmesh User Manuals"
 .SH NAME
 .PP
 schoolmesh_sambaaccount_create - Create a samba account for a user
@@ -12,16 +12,12 @@ Use this script to create a posix account.
 Some checks are done before the creation.
 .SH EXAMPLES
 .PP
-\f[CR]
-      schoolmesh_sambaaccount_create\ john\ \[aq]John\ Doe\[aq]\ ck33LmrdH_45
-\f[]
+schoolmesh_sambaaccount_create john `John Doe' ck33LmrdH_45
 .SH TO DO
 .PP
-\f[CR]
-      Passwords\ should\ not\ be\ passed\ on\ the\ command\ line.\ This\ must\ be\ modified,
-\f[]
-.PP
-probably by passing a file name containing the password.
+Passwords should not be passed on the command line.
+This must be modified,probably by passing a file name containing
+the password.
 .SH BUGS
 .PP
 Probably many.
