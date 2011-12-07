@@ -19,12 +19,12 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # EXAMPLES
 #@
-#@	{-} john 'John' 'Doe' ck33LmrdH_45 john.doe@example.com
+#@ {-} john 'John' 'Doe' ck33LmrdH_45 john.doe@example.com
 #@
 #@ # TO DO
 #@
-#@	Passwords should not be passed on the command line. This must be modified,
-#@  probably by passing a file name containing the password.
+#@ Passwords should not be passed on the command line. This must be
+#@ modified,probably by passing a file name containing the password.
 
 USERNAME=$1
 FIRSTNAME=$2

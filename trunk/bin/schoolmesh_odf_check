@@ -27,7 +27,7 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # EXAMPLES
 #@
-#@	{-} ~/Desktop/myfile.odt 2 5218
+#@ {-} ~/Desktop/myfile.odt 2 5218
 
 TEMPLATE=$1
 ROW=$2

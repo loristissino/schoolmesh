@@ -20,12 +20,12 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@ 
 #@ # WARNINGS
 #@
-#@ The user who runs this (typically, www-data or apache) must be allowed
-#@ to run commands on behalf of other users (through sudo).
+#@ The user who runs this (typically, www-data or apache) must be
+#@ allowed to run commands on behalf of other users (through sudo).
 #@
 #@ # EXAMPLES
 #@
-#@	{-} john.test '/mydocs/My report.odt'
+#@ {-} john.test '/mydocs/My report.odt'
 
 USERNAME=$1
 FILEPATH=$2

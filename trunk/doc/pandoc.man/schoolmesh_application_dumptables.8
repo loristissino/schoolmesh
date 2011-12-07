@@ -1,26 +1,25 @@
 % SCHOOLMESH_APPLICATION_DUMPTABLES(8) Schoolmesh User Manuals
 % Loris Tissino (loris.tissino@mattiussilab.net)
-% September 2011
+% December 2011
 
 # NAME
 
-schoolmesh\_application\_dumptables - Backup data from the database in SQL format
+schoolmesh\_application\_dumptables - Backup data from the database in gzipped SQL format
 
 # SYNOPSIS
 
-schoolmesh\_application\_dumptables database outfile
+schoolmesh\_application\_dumptables environment outfile
 
 # DESCRIPTION
 
-This script makes a backup of the data of SchoolMesh database, in the form 
-of a SQL plaintext file.
-The tables are backed up in an order that allows to reimport them without 
-problems.
-The output can be used with *schoolmesh_application_importtables(8)*.
+This script makes a backup of the data of SchoolMesh database, in
+the form of a SQL plaintext gzipped file, with foreign key checks 
+disabled. The output can be used with 
+*schoolmesh_application_importtables(8)*.
 
 # EXAMPLES
 
-	schoolmesh_application_dumptables schoolmesh_prod mybackupfile.sql 
+schoolmesh_application_dumptables prod /var/backups/myfile.sql.gz
 
 # BUGS
 

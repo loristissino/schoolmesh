@@ -19,7 +19,7 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # EXAMPLES
 #@
-#@	{-} john /bin/bash
+#@ {-} john /bin/bash
 
 USERNAME=$1
 SHELL=$2

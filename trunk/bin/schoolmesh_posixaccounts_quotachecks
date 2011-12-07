@@ -20,9 +20,9 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # EXAMPLES
 #@
-#@	{-} primary students  
-#@	{-} secondary students  
-#@	{-} all students
+#@ {-} primary students  
+#@ {-} secondary students  
+#@ {-} all students
 
 
 TYPE=$1

@@ -69,11 +69,13 @@ schoolmesh - command line utilities to be used with SchoolMesh web application
 
 # DESCRIPTION
 
-These utilities are really only basic wrapper scripts to be used together with
-SchoolMesh. The idea is to provide flexibility. For instance, instead of calling
-directly __useradd__, we call __schoolmesh\_posixaccount\_create__. This way, if one day we 
-need to change the behaviour needed to add a system user (for instance, using _ldap_,
-or contacting a different server), we just need to change the wrapper scripts.
+These utilities are really only basic wrapper scripts to be used
+together with SchoolMesh. The idea is to provide flexibility. For 
+instance, instead of calling directly __useradd__, we call 
+__schoolmesh\_posixaccount\_create__. This way, if one day we need to 
+change the behaviour needed to add a system user (for instance, 
+using _ldap_, or contacting a different server), we just need to change
+the wrapper scripts.
 
 Each utility should have its own man page (work in progress).
 

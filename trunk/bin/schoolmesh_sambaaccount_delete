@@ -18,7 +18,7 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # EXAMPLES
 #@
-#@	{-} john
+#@ {-} john
 
 USERNAME=$1
 

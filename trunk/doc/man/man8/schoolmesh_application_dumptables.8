@@ -1,24 +1,21 @@
-.TH SCHOOLMESH_APPLICATION_DUMPTABLES 8 "September 2011" "Schoolmesh User Manuals"
+.TH SCHOOLMESH_APPLICATION_DUMPTABLES 8 "December 2011" "Schoolmesh User Manuals"
 .SH NAME
 .PP
 schoolmesh_application_dumptables - Backup data from the database
-in SQL format
+in gzipped SQL format
 .SH SYNOPSIS
 .PP
-schoolmesh_application_dumptables database outfile
+schoolmesh_application_dumptables environment outfile
 .SH DESCRIPTION
 .PP
 This script makes a backup of the data of SchoolMesh database, in
-the form of a SQL plaintext file.
-The tables are backed up in an order that allows to reimport them
-without problems.
+the form of a SQL plaintext gzipped file, with foreign key checks
+disabled.
 The output can be used with
 \f[I]schoolmesh_application_importtables(8)\f[].
 .SH EXAMPLES
 .PP
-\f[CR]
-      schoolmesh_application_dumptables\ schoolmesh_prod\ mybackupfile.sql\ 
-\f[]
+schoolmesh_application_dumptables prod /var/backups/myfile.sql.gz
 .SH BUGS
 .PP
 Probably many.

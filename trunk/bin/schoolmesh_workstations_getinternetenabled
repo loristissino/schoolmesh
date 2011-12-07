@@ -21,6 +21,6 @@ if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; f
 #@
 #@ # EXAMPLES
 #@
-#@	{-} 
+#@ {-} go
 
 ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS iptables -t $FIREWALL_TABLE -nL $FIREWALL_CHAIN | grep "^$FIREWALL_ACCEPTRULE.* $FIREWALL_COMMENT" | gawk '{ printf "%s=%s\n", $4, $8 }'
