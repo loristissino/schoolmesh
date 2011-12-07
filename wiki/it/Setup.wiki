@@ -1,7 +1,7 @@
 #summary Guida all'installazione e all'aggiornamento
 #labels Phase-Deploy,Featured
 
-=Come installare SchoolMesh=
+=Come installare !SchoolMesh=
 
 *Attenzione.* La procedura descritta qui di seguito è provvisoria e non ancora testata sufficientemente. Eseguitela a vostro rischio e pericolo (possibilmente su una macchina di prova...)
 

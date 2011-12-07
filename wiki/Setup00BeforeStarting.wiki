@@ -1,17 +1,19 @@
-#summary Informazioni preliminari
+#summary Basic information needed before starting the installation
 #labels Phase-Deploy
 
-= Prima di iniziare =
+= Before starting =
 
-Questo progetto è nato con lo scopo di fornire un'interfaccia agevole di amministrazione di alcune attività comuni in una scuola secondaria superiore.
+This project has the goal of providing a useful and usable interface for the administration of common activities in a secondary school.
 
-L'applicazione è pensata per essere altamente configurabile, ma per il momento non viene dato supporto in merito.
+The application is extremely configurable, but the support about this is still not available.
 
-Vale naturalmente il principio che, qualsiasi cosa vi succeda usando questa applicazione o le informazioni qui presenti, gli autori non potranno essere ritenuti responsabili.
+And, of course, the authors can not be considered responsible of anything bad should happen to you, your machines or your data.
 
-= Pacchetti necessari =
+= Needed packages =
 
 Segue una lista dei pacchetti che dovrebbero essere necessari in Ubuntu 10.04 LTS, in forma di comando da impartire per installarli.
+
+This is a list of packages needed for the application to run. 
 
 <code language="bash">
 sudo apt-get update

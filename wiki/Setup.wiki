@@ -1,7 +1,7 @@
 #summary How to install SchoolMesh.
 #labels Phase-Deploy,Featured
 
-= How to install SchoolMesh =
+= How to install !SchoolMesh =
 
 *Warning.* The procedure described here has not been deeply tested. Use it at your own risk (possibly on a trial machine...)
 
