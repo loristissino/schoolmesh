@@ -1544,7 +1544,7 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 
 	public function removeEverything()
 	{
-		foreach ($this->getWpevents() as $item)
+		foreach ($this->getWfevents() as $item)
 			$item->delete();
 		
 		foreach ($this->getWpinfos() as $item)
@@ -1552,7 +1552,6 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 		
 		foreach ($this->getWptoolAppointments() as $item)
 			$item->delete();
-
 
 		$this->removeAllModules();
 		
