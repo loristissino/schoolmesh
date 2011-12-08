@@ -4,10 +4,22 @@ OWNER=$(whoami)
 INSTALLDIR=/var/schoolmesh
 CONFIGDIR=/etc/schoolmesh
 
-echo "Creating the basic directories if necessary..."
+echo "Updating the sources..."
+sudo apt-get update
+echo "Upgrading installed software..."
+sudo apt-get upgrade
+echo "Installed needed software..."
+sudo apt-get install subversion gawk pandoc php5-common php5-cli php5-gd \
+php5-mcrypt libapache2-mod-php5 php5-ldap php5-mysql php5-xsl dialog \
+apache2 apache2-utils mysql-server libdbd-mysql-perl libdbi-perl \
+libhtml-template-perl libnet-daemon-perl libplrpc-perl \
+mysql-client-5.1 mysql-server-5.1  phpmyadmin dbconfig-common \
+libgd2-xpm libmcrypt4 quota tidy msttcorefonts
+
+echo "Creating basic directories if necessary..."
 [[ -d "$INSTALLDIR" ]] || sudo mkdir -v "$INSTALLDIR"
 
-echo "Creating the local configuration directories if necessary..."
+echo "Creating local configuration directories if necessary..."
 # We create the local configuration directory if necessary
 # (all local files must be kept here, in order to avoid conflicts when upgrading)
 [[ -d "$CONFIGDIR" ]] || sudo mkdir -pv "$CONFIGDIR/apps/"{frontend,backend}/config && sudo mkdir -pv "$CONFIGDIR/config"
@@ -15,6 +27,8 @@ echo "Creating the local configuration directories if necessary..."
 sudo chown -R $OWNER "$INSTALLDIR" "$CONFIGDIR"
 
 cd "$INSTALLDIR"
+
+echo "Downloading schoolmesh, symfony and zend libraries..."
 
 svn checkout http://schoolmesh.googlecode.com/svn/trunk/ "$INSTALLDIR"
 
