@@ -10,15 +10,15 @@ Diamo per scontato che si voglia avere un file di configurazione specifico per _
 1. Scaricare il file _schoolmesh_, aggiungerlo ai file di configurazione del server web e riavviare lo stesso:
 
 <code language="sh">
-    wget http://schoolmesh.googlecode.com/svn/trunk/utilities/ubuntu10.04LTS/apache2/schoolmesh -O /tmp/schoolmesh
-    sudo mv /tmp/schoolmesh /etc/apache2/sites-available
-    sudo chown root:root /etc/apache2/sites-available/schoolmesh
-    sudo chmod 644 /etc/apache2/sites-available/schoolmesh
-    sudo a2ensite schoolmesh
-    sudo service apache2 restart
+wget http://schoolmesh.googlecode.com/svn/trunk/utilities/ubuntu10.04LTS/apache2/schoolmesh -O /tmp/schoolmesh
+sudo mv /tmp/schoolmesh /etc/apache2/sites-available
+sudo chown root:root /etc/apache2/sites-available/schoolmesh
+sudo chmod 644 /etc/apache2/sites-available/schoolmesh
+sudo a2ensite schoolmesh
+sudo service apache2 restart
 </code>
 
-2. Se il percorso scelto per l'applicazione non è _/schoolmesh_, modificare la riga del file _web/.htaccess_ contenente la riga relativa alla _RewriteRule_:
+2. Se il percorso scelto per l'applicazione non è _/schoolmesh_, modificare la riga del file _web/.htaccess_ contenente la riga relativa alla _!RewriteRule_:
 
 {{{
   RewriteRule ^(.*)$ /schoolmesh/index.php [QSA,L]
@@ -75,7 +75,7 @@ Togliere il `#` sulla riga
 # Cmnd_Alias SCHOOLMESH_APPLY = /usr/local/bin/schoolmesh*
 }}}
 
-solo se si configura SchoolMesh per l'esecuzione automatica degli script di gestione di sistema (*non raccomandabile per il momento*).
+solo se si configura !SchoolMesh per l'esecuzione automatica degli script di gestione di sistema (*non raccomandabile per il momento*).
 
 == SSL ==
 

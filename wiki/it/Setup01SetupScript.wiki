@@ -1,7 +1,7 @@
 #summary Installazione/aggiornamento di SchoolMesh e delle librerie Symfony
 #labels Phase-Deploy
 
-= Setup di SchoolMesh =
+= Setup di !SchoolMesh =
 
 == Ubuntu 10.04LTS Server ==
 
