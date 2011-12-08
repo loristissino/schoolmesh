@@ -1,5 +1,5 @@
 <VirtualHost 127.0.0.1:80>
-  ServerName www.schoolmesh.mattiussilab.localhost
+  ServerName schoolmesh.local
   DocumentRoot "/var/schoolmesh/web"
   DirectoryIndex index.php
   <Directory "/var/schoolmesh/web">
