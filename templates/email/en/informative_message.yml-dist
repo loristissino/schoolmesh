@@ -1,0 +1,12 @@
+message:
+  subject: Information
+  salutation: true
+  body: |
+  
+
+    Greetings,
+
+        %sender_fullname%
+        %sender_email%
+
+

@@ -9,7 +9,3 @@ message:
         %sender_fullname%
         %sender_email%
 
-  tagline: |
-    Attenzione:
-    Questo messaggio è stato generato automaticamente.
-
