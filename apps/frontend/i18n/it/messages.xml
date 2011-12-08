@@ -3583,6 +3583,10 @@
       <source>This message has been sent to:</source>
       <target>Questo messaggio è stato spedito a:</target>
     </trans-unit>
+    <trans-unit id="907">
+      <source>You don't have any appointment set.</source>
+      <target>Non hai nessun incarico di insegnamento.</target>
+    </trans-unit>
     </body>
   </file>
   
