@@ -18,5 +18,3 @@ Esempio:
 # /dev/sdb5
 UUID=73c413d6-a6d6-4279-ad84-0255d1db83de /home ext3 relatime,defaults,usrquota,acl       0       2
 }}}
-
-Passo successivo: [OpenOffice Template OpenOffice e conversione di documenti]

@@ -5,44 +5,22 @@
 
 1. Accertarsi che il server MySQL sia in funzione:
 
-{{{
-$ sudo /etc/init.d/mysql status
- * /usr/bin/mysqladmin  Ver 8.41 Distrib 5.0.67, for debian-linux-gnu on i486
-Copyright (C) 2000-2006 MySQL AB
-This software comes with ABSOLUTELY NO WARRANTY. This is free software,
-and you are welcome to modify and redistribute it under the GPL license
+<code language="sh">
+sudo service mysql status
+</code>
 
-Server version		5.0.67-0ubuntu6
-Protocol version	10
-Connection		Localhost via UNIX socket
-UNIX socket		/var/run/mysqld/mysqld.sock
-Uptime:			3 hours 52 min 11 sec
-
-Threads: 1  Questions: 5771  Slow queries: 1  Opens: 3984  Flush tables: 1  Open tables: 64  Queries per second avg: 0.414
-}}}
-
-2. Creare, con l'interfaccia preferita (ad esempio con phpMyAdmin), un utente _schoolmesh_ e i tre database necessari:
-
-  * `schoolmesh` (database per le prove)
-  * `schoolmesh_test` (database per i test automatizzati)
-  * `schoolmesh_prod` (database di produzione, da usare con i dati veri)
+2. Creare, con l'interfaccia preferita (ad esempio con phpMyAdmin), un utente `schoolmesh` e un database `schoolmesh_prod`:
 
 Dovrebbero essere sufficienti i seguenti comandi SQL (ovviamente va sostituita la password):
 
 {{{
-CREATE DATABASE `schoolmesh` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE USER 'schoolmesh'@'localhost' IDENTIFIED BY  'SuPeRsEcReT';
 
-CREATE DATABASE `schoolmesh_prod` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+GRANT USAGE ON * . * TO  'schoolmesh'@'localhost' IDENTIFIED BY  'SuPeRsEcReT' WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0 ;
 
-CREATE DATABASE `schoolmesh_test` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+GRANT ALL PRIVILEGES ON  `schoolmesh\_%` . * TO  'schoolmesh'@'localhost';
 
-CREATE USER 'schoolmesh'@'localhost' IDENTIFIED BY 'seGreTo';
-
-GRANT ALL PRIVILEGES ON `schoolmesh` . * TO 'schoolmesh'@'localhost' WITH GRANT OPTION ;
-
-GRANT ALL PRIVILEGES ON `schoolmesh_prod` . * TO 'schoolmesh'@'localhost' WITH GRANT OPTION ;
-
-GRANT ALL PRIVILEGES ON `schoolmesh_test` . * TO 'schoolmesh'@'localhost' WITH GRANT OPTION ;
+CREATE DATABASE  `schoolmesh_prod` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 }}}
 
@@ -70,7 +48,7 @@ all:
     param:
       dsn: 'mysql:dbname=schoolmesh;host=localhost'
       username: schoolmesh
-      password: seGreTo
+      password: SuPeRsEcReT
       encoding: utf8
       persistent: true
       pooling: true
@@ -79,37 +57,18 @@ all:
 
 4. Creare la struttura dei database:
 
-{{{
+<code language="sh">
 cd /var/schoolmesh
-symfony propel:insert-sql --no-confirmation
-symfony propel:insert-sql --env=test --no-confirmation
-symfony propel:insert-sql --env=prod --no-confirmation
-}}}
+schoolmesh_application_createtables prod
+</code>
 
-5. Caricare i dati di prova nel database di prova:
+5. Caricare i dati del demo nel database:
 
-{{{
+<code language="sh">
 cd /var/schoolmesh
-symfony propel:data-load
-}}}
+wget http://www.schoolmeshdemo.tuxfamily.org/schoolmeshbase.sql.gz -O /tmp/schoolmesh/schoolmeshbase.sql.gz
+schoolmesh_application_importtables prod /tmp/schoolmeshbase.sql.gz
+</code>
 
-6. Accedere con un browser alla pagina http://localhost/schoolmesh/frontend_dev.php e provare a fare il login con le credenziali:
+6. Accedere con un browser alla pagina http://localhost/index.php e provare a fare il login con le credenziali indicate nella pagina http://www.schoolmesh.mattiussilab.net/demo
 
-  * username: _john.test_ (docente)
-  * password: _a_
-
-oppure
-
-  * username: _helen.abram_ (studentessa)
-  * password: _a_
-
-oppure
-
-  * username: _loris.tissino_ (superadmin)
-  * password: _a_
-
-(con quest'ultimo utente è possibile accedere anche alla pagina di gestione del backend http://localhost/schoolmesh/backend_dev.php)
-
-(Nella configurazione di prova la password non viene controllata, basta che ci sia qualche carattere.)
-
-Passo successivo: [ModificheLocali Modifiche locali e personalizzazioni]

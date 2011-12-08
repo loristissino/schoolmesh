@@ -28,13 +28,13 @@ sudo service apache2 restart
 
 {{{
 short_open_tag = Off
-memory_limit = 128M
 }}}
 
 Comando:
 
 {{{
-sudo vi /etc/php5/apache2/php.ini /etc/php5/cli/php.ini
+sudo vi /etc/php5/apache2/php.ini
+sudo vi /etc/php5/cli/php.ini
 }}}
 
 4. Riavviare il server apache.
@@ -91,4 +91,6 @@ $ sudo /etc/init.d/apache2 force-reload
  * Reloading web server config apache2                                   [ OK ] 
 
 }}}
+
+
 
