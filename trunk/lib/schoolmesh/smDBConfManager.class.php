@@ -91,12 +91,12 @@ class smDBConfManager
         }
         $this->_backup_command=sprintf("
 echo 'SET foreign_key_checks = 0;' > '_BACKUPFILE_'
-mysqldump --host=%s --no-create-info -u %s -p%s %s >> '_BACKUPFILE_'
+mysqldump --host=%s --no-create-info --default-character-set=utf8 -u %s -p%s %s >> '_BACKUPFILE_'
 echo 'SET foreign_key_checks = 1;' >> '_BACKUPFILE_'
 ",
           $pairs['host'], $username, $password, $pairs['dbname']
         );
-        $this->_restore_command=sprintf("zcat '_BACKUPFILE_' | mysql --host=%s -u %s -p%s %s",
+        $this->_restore_command=sprintf("zcat '_BACKUPFILE_' | mysql --host=%s -u %s -p%s %s --default-character-set=utf8",
           $pairs['host'], $username, $password, $pairs['dbname']
         );
         break;

@@ -44,6 +44,6 @@
   </tbody>
 </table>
 <?php else: ?>
-<p><?php echo __('You don\'t have any workplan set.') ?></p>
+<p><?php echo __('You don\'t have any appointment set.') ?></p>
 <?php endif ?>
 </div>
