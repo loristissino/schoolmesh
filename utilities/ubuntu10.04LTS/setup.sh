@@ -53,7 +53,10 @@ cd "$INSTALLDIR/lib/vendor/Zend"
 cat README | bash
 
 echo "Copying and linking main configuration files..."
-for FILE in schoolmesh.rc databases.yml timeslots.yml ProjectConfiguration.class.php; do
+
+cp -v "$INSTALLDIR/config/ProjectConfiguration.class.php-dist" "$INSTALLDIR/config/ProjectConfiguration.class.php"
+
+for FILE in schoolmesh.rc databases.yml timeslots.yml; do
   sudo cp -v "$INSTALLDIR/config/$FILE-dist" "$CONFIGDIR/config/$FILE"
   sudo ln -s "$CONFIGDIR/config/$FILE" "$INSTALLDIR/config/$FILE"
 done
@@ -68,10 +71,18 @@ for FILE in app.yml; do
   sudo ln -s "$CONFIGDIR/apps/backend/config/$FILE" "$INSTALLDIR/apps/backend/config/$FILE"
 done
 
+sudo mkdir -v "$INSTALLDIR"/data/lucene
+
 sudo chown -R $OWNER:www-data "$INSTALLDIR"
 sudo chown -R $OWNER:www-data "$CONFIGDIR"
 
 sudo chmod -R 770 "$INSTALLDIR"/{cache,log}
+sudo chmod -R 777 "$INSTALLDIR"/data/lucene
+
+sudo chmod +x "$INSTALLDIR"/symfony
+sudo ln -sf "$INSTALLDIR"/symfony /usr/local/bin/symfony
+
+
 
 echo "SchoolMesh setup done."
 
