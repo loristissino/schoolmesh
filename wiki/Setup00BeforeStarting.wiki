@@ -11,8 +11,6 @@ And, of course, the authors can not be considered responsible of anything bad sh
 
 = Needed packages =
 
-Segue una lista dei pacchetti che dovrebbero essere necessari in Ubuntu 10.04 LTS, in forma di comando da impartire per installarli.
-
 This is a list of packages needed for the application to run. 
 
 <code language="bash">
