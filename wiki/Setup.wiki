@@ -7,7 +7,7 @@
 
 1. [Setup00BeforeStarting Before starting]
 
-2. [Setup01SchoolMeshSetup SchoolMesh setup]
+2. [Setup01SetupScript SchoolMesh setup]
 
 3. [Setup02ApacheSSL Apache configuration]
 
