@@ -18,5 +18,23 @@ class ProjResourceTypePeer extends BaseProjResourceTypePeer {
     return ProjResourceTypePeer::doSelect($c);
   }
 
+  public static function retrieveSortedByRank($staffonly=false)
+  {
+    $c=new Criteria();
+    if($staffonly)
+    {
+      $c->add(ProjResourceTypePeer::ROLE_ID, null, Criteria::ISNOTNULL);
+    }
+    $c->addAscendingOrderByColumn(ProjResourceTypePeer::RANK);
+    return ProjResourceTypePeer::doSelect($c);
+  }
+
+  public static function retrieveByPKsSortedByRank($ids)
+  {
+    $c=new Criteria();
+    $c->add(ProjResourceTypePeer::ID, $ids, Criteria::IN);
+    $c->addAscendingOrderByColumn(ProjResourceTypePeer::RANK);
+    return ProjResourceTypePeer::doSelect($c);
+  }
 
 } // ProjResourceTypePeer

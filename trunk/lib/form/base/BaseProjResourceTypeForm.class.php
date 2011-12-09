@@ -20,6 +20,7 @@ abstract class BaseProjResourceTypeForm extends BaseFormPropel
       'standard_cost'    => new sfWidgetFormInputText(),
       'measurement_unit' => new sfWidgetFormInputText(),
       'is_monetary'      => new sfWidgetFormInputCheckbox(),
+      'rank'             => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -29,6 +30,7 @@ abstract class BaseProjResourceTypeForm extends BaseFormPropel
       'standard_cost'    => new sfValidatorNumber(array('required' => false)),
       'measurement_unit' => new sfValidatorString(array('max_length' => 10, 'required' => false)),
       'is_monetary'      => new sfValidatorBoolean(array('required' => false)),
+      'rank'             => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('proj_resource_type[%s]');

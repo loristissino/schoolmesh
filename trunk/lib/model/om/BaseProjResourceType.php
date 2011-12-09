@@ -56,6 +56,12 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	protected $is_monetary;
 
 	/**
+	 * The value for the rank field.
+	 * @var        int
+	 */
+	protected $rank;
+
+	/**
 	 * @var        Role
 	 */
 	protected $aRole;
@@ -167,6 +173,16 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	public function getIsMonetary()
 	{
 		return $this->is_monetary;
+	}
+
+	/**
+	 * Get the [rank] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getRank()
+	{
+		return $this->rank;
 	}
 
 	/**
@@ -294,6 +310,26 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	} // setIsMonetary()
 
 	/**
+	 * Set the value of [rank] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     ProjResourceType The current object (for fluent API support)
+	 */
+	public function setRank($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->rank !== $v) {
+			$this->rank = $v;
+			$this->modifiedColumns[] = ProjResourceTypePeer::RANK;
+		}
+
+		return $this;
+	} // setRank()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -335,6 +371,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			$this->standard_cost = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->measurement_unit = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->is_monetary = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
+			$this->rank = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -344,7 +381,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 6; // 6 = ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 7; // 7 = ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjResourceType object", $e);
@@ -705,6 +742,9 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			case 5:
 				return $this->getIsMonetary();
 				break;
+			case 6:
+				return $this->getRank();
+				break;
 			default:
 				return null;
 				break;
@@ -732,6 +772,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			$keys[3] => $this->getStandardCost(),
 			$keys[4] => $this->getMeasurementUnit(),
 			$keys[5] => $this->getIsMonetary(),
+			$keys[6] => $this->getRank(),
 		);
 		return $result;
 	}
@@ -781,6 +822,9 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			case 5:
 				$this->setIsMonetary($value);
 				break;
+			case 6:
+				$this->setRank($value);
+				break;
 		} // switch()
 	}
 
@@ -811,6 +855,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setStandardCost($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setMeasurementUnit($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setIsMonetary($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setRank($arr[$keys[6]]);
 	}
 
 	/**
@@ -828,6 +873,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProjResourceTypePeer::STANDARD_COST)) $criteria->add(ProjResourceTypePeer::STANDARD_COST, $this->standard_cost);
 		if ($this->isColumnModified(ProjResourceTypePeer::MEASUREMENT_UNIT)) $criteria->add(ProjResourceTypePeer::MEASUREMENT_UNIT, $this->measurement_unit);
 		if ($this->isColumnModified(ProjResourceTypePeer::IS_MONETARY)) $criteria->add(ProjResourceTypePeer::IS_MONETARY, $this->is_monetary);
+		if ($this->isColumnModified(ProjResourceTypePeer::RANK)) $criteria->add(ProjResourceTypePeer::RANK, $this->rank);
 
 		return $criteria;
 	}
@@ -891,6 +937,8 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 		$copyObj->setMeasurementUnit($this->measurement_unit);
 
 		$copyObj->setIsMonetary($this->is_monetary);
+
+		$copyObj->setRank($this->rank);
 
 
 		if ($deepCopy) {

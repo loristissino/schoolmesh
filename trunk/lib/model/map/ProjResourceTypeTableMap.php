@@ -42,6 +42,7 @@ class ProjResourceTypeTableMap extends TableMap {
 		$this->addColumn('STANDARD_COST', 'StandardCost', 'DECIMAL', false, 10, null);
 		$this->addColumn('MEASUREMENT_UNIT', 'MeasurementUnit', 'VARCHAR', false, 10, null);
 		$this->addColumn('IS_MONETARY', 'IsMonetary', 'BOOLEAN', false, null, true);
+		$this->addColumn('RANK', 'Rank', 'INTEGER', false, null, null);
 		// validators
 	} // initialize()
 

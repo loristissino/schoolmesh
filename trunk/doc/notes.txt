@@ -1,3 +1,7 @@
+2011/12/09
+Added rank in proj_resource_type table
+
+
 /*
 - _root preexec_ (sets a command to run as root, before connecting to the share)  
 - _root preexec close_ (if set to yes, nonzero exit status of root preexec command will disconnect)  

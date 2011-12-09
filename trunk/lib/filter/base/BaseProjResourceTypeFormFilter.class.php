@@ -17,6 +17,7 @@ abstract class BaseProjResourceTypeFormFilter extends BaseFormFilterPropel
       'standard_cost'    => new sfWidgetFormFilterInput(),
       'measurement_unit' => new sfWidgetFormFilterInput(),
       'is_monetary'      => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'rank'             => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -25,6 +26,7 @@ abstract class BaseProjResourceTypeFormFilter extends BaseFormFilterPropel
       'standard_cost'    => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'measurement_unit' => new sfValidatorPass(array('required' => false)),
       'is_monetary'      => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'rank'             => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('proj_resource_type_filters[%s]');
@@ -48,6 +50,7 @@ abstract class BaseProjResourceTypeFormFilter extends BaseFormFilterPropel
       'standard_cost'    => 'Number',
       'measurement_unit' => 'Text',
       'is_monetary'      => 'Boolean',
+      'rank'             => 'Number',
     );
   }
 }
