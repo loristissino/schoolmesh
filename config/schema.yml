@@ -392,6 +392,7 @@ propel:
     standard_cost: { type: decimal, size: 10, scale: 2 }
     measurement_unit: varchar(10)
     is_monetary: { type: boolean, default: true }
+    rank: integer
 
   proj_resource:
     id: ~

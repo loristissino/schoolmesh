@@ -1051,6 +1051,7 @@ CREATE TABLE `proj_resource_type`
 	`standard_cost` DECIMAL(10,2),
 	`measurement_unit` VARCHAR(10),
 	`is_monetary` TINYINT default 1,
+	`rank` INTEGER,
 	PRIMARY KEY (`id`),
 	INDEX `proj_resource_type_FI_1` (`role_id`),
 	CONSTRAINT `proj_resource_type_FK_1`

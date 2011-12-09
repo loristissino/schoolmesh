@@ -244,9 +244,9 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 
   }
   
-  public static function computeDataSynthesis($ids)
+  public static function computeDataSynthesis($ids, $staffonly)
   {
-    $projResourceTypes=ProjResourceTypePeer::doSelect(new Criteria());
+    $projResourceTypes=ProjResourceTypePeer::retrieveSortedByRank($staffonly);
     
     $types=array();
  
@@ -254,22 +254,32 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 
     $projects=self::retrieveByPKsSorted($ids);
     
+    $criteria=new Criteria();
+    if($staffonly)
+    {
+      $criteria->add(ProjResourceTypePeer::ROLE_ID, null, Criteria::ISNOTNULL);
+    }
+    
     foreach($projects as $project)
     {
       $result['projects'][$project->getId()]['title']=$project->getTitle();
       $result['projects'][$project->getId()]['id']=$project->getId();
       $result['projects'][$project->getId()]['resources']=array();
-      foreach($project->getProjResources() as $resource)
+      foreach($project->getProjResources($criteria) as $resource)
       {
-        @$result['projects'][$project->getId()]['resources'][$resource->getProjResourceTypeId()]+=($resource->getQuantityMultipliedByCost()-$resource->getAmountFundedExternally());
-        if(!array_key_exists($resource->getProjResourceTypeId(), $types))
+        $amount=$resource->getQuantityMultipliedByCost()-$resource->getAmountFundedExternally();
+        if($amount)
         {
-          $types[$resource->getProjResourceTypeId()]=1;
+          @$result['projects'][$project->getId()]['resources'][$resource->getProjResourceTypeId()]+=$amount;
+          if(!array_key_exists($resource->getProjResourceTypeId(), $types))
+          {
+            $types[$resource->getProjResourceTypeId()]=1;
+          }
         }
       }
     }
     
-    $result['types']=ProjResourceTypePeer::retrieveByPKs(array_keys($types));
+    $result['types']=ProjResourceTypePeer::retrieveByPKsSortedByRank(array_keys($types));
     
     return $result;
   }

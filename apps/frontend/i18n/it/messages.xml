@@ -2872,8 +2872,8 @@
         <target>Mostra i collegamenti al syllabus in forma tabellare</target>
     </trans-unit>
     <trans-unit id="733">
-        <source>Compute data synthesis</source>
-        <target>Calcola dati di sintesi</target>
+        <source>Compute data synthesis (complete)</source>
+        <target>Calcola dati di sintesi (completi)</target>
     </trans-unit>
     <trans-unit id="734">
         <source>Projects data synthesis computation</source>
@@ -3587,6 +3587,15 @@
       <source>You don't have any appointment set.</source>
       <target>Non hai nessun incarico di insegnamento.</target>
     </trans-unit>
+    <trans-unit id="908">
+        <source>Compute data synthesis (staff only)</source>
+        <target>Calcola dati di sintesi (solo personale)</target>
+    </trans-unit>
+    <trans-unit id="909">
+        <source>Compute data synthesis</source>
+        <target>Calcola dati di sintesi</target>
+    </trans-unit>
+
     </body>
   </file>
   

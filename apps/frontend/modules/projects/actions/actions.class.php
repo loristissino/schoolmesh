@@ -305,12 +305,23 @@ class projectsActions extends sfActions
     $this->getUser()->setAttribute('back', 'budget');
   }
 
-  public function executeComputesynthesis(sfWebRequest $request)
+  public function executeComputesynthesiscomplete(sfWebRequest $request)
+  {
+    $this->_executeComputesynthesis($request, false);
+  }
+  
+  public function executeComputesynthesisstaffonly(sfWebRequest $request)
+  {
+    $this->_executeComputesynthesis($request, true);
+  }
+  
+  protected function _executeComputesynthesis(sfWebRequest $request, $staffonly=false)
   {
     $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
-    $this->result=SchoolprojectPeer::computeDataSynthesis($this->ids);
+    $this->result=SchoolprojectPeer::computeDataSynthesis($this->ids, $staffonly);
     $this->projects=$this->result['projects'];
     $this->types=$this->result['types'];
+    $this->setTemplate('computesynthesis');
   }
   
   public function executeGetchargeletters(sfWebRequest $request)
