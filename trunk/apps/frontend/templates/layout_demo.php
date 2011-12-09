@@ -30,7 +30,7 @@
 	<?php endif ?>
   <?php if(sfConfig::get('app_demo_is_active', false)): ?>
     <?php $minutes_missing=minutes_missing_to_restore() ?>
-    <div style="background-color: <?php echo $minutes_missing>5? '#DBF8E7': ($minutes_missing>1? '#FFF5A5': 'red') ?>"><?php echo __('This is a <a href="http://www.schoolmesh.mattiussilab.net/demo">demo version</a>, and the contents need to be cleaned up every hour.')?> <?php echo format_number_choice(
+    <div style="background-color: <?php echo $minutes_missing>5? '#DBF8E7': ($minutes_missing>1? '#FFF5A5': 'red') ?>" id="demoheader"><?php echo __('This is a <a href="http://www.schoolmesh.mattiussilab.net/demo">demo version</a>, and the contents need to be cleaned up every hour.')?> <?php echo format_number_choice(
       '[0]The database will be reset to default in few seconds.|[1]The database will be reset to default in one minute.|(1,+Inf]The database will be reset to default in %minutes% minutes.', 
       array('%minutes%' => minutes_missing_to_restore()), minutes_missing_to_restore()) ?>
     </div>
@@ -105,10 +105,10 @@
           <em>released under the <a href="license/gpl.txt">GNU General Public License, version 3</a></em>
 
         </div>
+        <hr />
+        <div><a href="http://tuxfamily.org "><img src="http://logo.tuxfamily.org/hosted_by_tf2.png" alt="hosted by
+  tuxfamily.org" /></a></div>
       </div>
-      <hr />
-      <div><a href="http://tuxfamily.org "><img src="http://logo.tuxfamily.org/hosted_by_tf2.png" alt="hosted by
-tuxfamily.org" /></a></div>
 
       
 
