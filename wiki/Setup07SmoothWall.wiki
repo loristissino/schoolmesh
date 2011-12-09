@@ -1,0 +1,4 @@
+#summary SmoothWall integration
+#labels Phase-Deploy
+
+(not translated yet, sorry)

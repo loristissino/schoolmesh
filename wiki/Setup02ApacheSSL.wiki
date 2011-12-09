@@ -1,53 +1,53 @@
-#summary Configurazione di Apache
+#summary Apache configuration
 #labels Phase-Deploy
 
-= Configurazione di Apache =
+= Apache web server configuration =
 
-Qui di seguito viene dato per scontato che la directory in cui risiede il software sia _var/schoolmesh_. Se si installa il software altrove, andranno modificate di conseguenza le istruzioni.
+The following instructions assume that the installation directory is _/var/schoolmesh_. If you have a different configuration, change them accordingly.
 
-Diamo per scontato che si voglia avere un file di configurazione specifico per _schoolmesh_. Ovviamente ognuno potrà personalizzare le cose come crede.
+We will create a specific file for _schoolmesh_, instead of changing the _default_ settings.
 
-1. Scaricare il file _schoolmesh_, aggiungerlo ai file di configurazione del server web e riavviare lo stesso:
+1. Download the file _schoolmesh_, add it to the sites-available section of apache configuration and restart the server::
 
 <code language="sh">
-    wget http://schoolmesh.googlecode.com/svn/trunk/utilities/ubuntu10.04LTS/apache2/schoolmesh -O /tmp/schoolmesh
-    sudo mv /tmp/schoolmesh /etc/apache2/sites-available
-    sudo chown root:root /etc/apache2/sites-available/schoolmesh
-    sudo chmod 644 /etc/apache2/sites-available/schoolmesh
-    sudo a2ensite schoolmesh
-    sudo service apache2 restart
+wget http://schoolmesh.googlecode.com/svn/trunk/utilities/ubuntu10.04LTS/apache2/schoolmesh -O /tmp/schoolmesh
+sudo mv /tmp/schoolmesh /etc/apache2/sites-available
+sudo chown root:root /etc/apache2/sites-available/schoolmesh
+sudo chmod 644 /etc/apache2/sites-available/schoolmesh
+sudo a2ensite schoolmesh
+sudo service apache2 restart
 </code>
 
-2. Se il percorso scelto per l'applicazione non è _/schoolmesh_, modificare la riga del file _web/.htaccess_ contenente la riga relativa alla _RewriteRule_:
+2. If you have a path in the URL different from _/schoolmesh_, you might need to change the _web/.htaccess_ file in the line with the _!RewriteRule_:
 
 {{{
   RewriteRule ^(.*)$ /schoolmesh/index.php [QSA,L]
 }}} 
 
-3. Modificare i file di configurazione di PHP (_/etc/php5/apache2/php.ini_ e _/etc/php5/cli/php.ini_) in modo che contengano le seguenti impostazioni:
+3. Edit the PHP configuration files (_/etc/php5/apache2/php.ini_ e _/etc/php5/cli/php.ini_) so that they contain the following settings:
 
 {{{
 short_open_tag = Off
-memory_limit = 128M
 }}}
 
-Comando:
+Commmand:
 
 {{{
-sudo vi /etc/php5/apache2/php.ini /etc/php5/cli/php.ini
+sudo vi /etc/php5/apache2/php.ini
+sudo vi /etc/php5/cli/php.ini
 }}}
 
-4. Riavviare il server apache.
+4. Restart the web server.
 
-Comando:
+Command:
 
 {{{
 sudo service apache2 restart
 }}}
 
-5. Se lo si desidera, configurare _sudo_ in modo che l'utente _www-data_ abbia la delega per interrogare il sistema sugli utenti e le loro directory.
+5. If you desire it, configure _sudo_ so that the user _www-data_ may get information from the system about users and their directories.
 
-Il file _/etc/sudoers_ (da modificare con `sudo visudo`, non direttamente!) dovrebbe contenere le seguenti voci:
+The file _/etc/sudoers_ (that has to be edited with `sudo visudo`!) should contain the following lines:
 
 {{{
 # User alias specification
@@ -69,19 +69,19 @@ root    ALL=(ALL) ALL
 WEBSERVER ALL=NOPASSWD: SCHOOLMESH_INFO, SCHOOLMESH_APPLY
 }}}
 
-Togliere il `#` sulla riga 
+Remove the symbol `#` from the line 
 
 {{{
 # Cmnd_Alias SCHOOLMESH_APPLY = /usr/local/bin/schoolmesh*
 }}}
 
-solo se si configura SchoolMesh per l'esecuzione automatica degli script di gestione di sistema (*non raccomandabile per il momento*).
+only if you want that !SchoolMesh executes some scripts directly (*not recommended at the moment*).
 
 == SSL ==
 
-(Da completare)
+(To be completed)
 
-Abilitazione del modulo ssl di Apache:
+Enable ssl module of Apache:
 
 {{{
 $ sudo a2enmod ssl
@@ -91,4 +91,6 @@ $ sudo /etc/init.d/apache2 force-reload
  * Reloading web server config apache2                                   [ OK ] 
 
 }}}
+
+
 

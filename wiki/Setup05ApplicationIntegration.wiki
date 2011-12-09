@@ -1,0 +1,18 @@
+#summary Application integration
+
+= Application integration with Samba, Squid, etc. =
+
+(to be completed)
+
+== Disk quotas and ACL ==
+
+You might want to use !SchoolMesh to see and set disk quotas of your users, and to use ACLs.
+
+The file _/etc/fstab_ could need to be edited in order to have _usrquota_ and _acl_ settings.
+
+Example:
+
+{{{
+# /dev/sdb5
+UUID=73c413d6-a6d6-4279-ad84-0255d1db83de /home ext3 relatime,defaults,usrquota,acl       0       2
+}}}

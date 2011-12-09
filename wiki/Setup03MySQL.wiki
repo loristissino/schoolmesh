@@ -1,17 +1,17 @@
-#summary Configurazione di MySQL server
+#summary Configuration of MySQL server
 #labels Phase-Deploy
 
 = MySQL =
 
-1. Accertarsi che il server MySQL sia in funzione:
+1. Be sure that MySQL server is running:
 
 <code language="sh">
 sudo service mysql status
 </code>
 
-2. Creare, con l'interfaccia preferita (ad esempio con phpMyAdmin), un utente `schoolmesh` e un database `schoolmesh_prod`:
+2. Create, with the interface you like (phpMyAdmin, for instance), a user `schoolmesh` and a database `schoolmesh_prod`:
 
-Dovrebbero essere sufficienti i seguenti comandi SQL (ovviamente va sostituita la password):
+This commands should be enough (just change the password):
 
 {{{
 CREATE USER 'schoolmesh'@'localhost' IDENTIFIED BY  'SuPeRsEcReT';
@@ -24,7 +24,7 @@ CREATE DATABASE  `schoolmesh_prod` DEFAULT CHARACTER SET utf8 COLLATE utf8_gener
 
 }}}
 
-3. Modificare il file _config/databases.yml_ impostando la password scelta per l'utente _schoolmesh_:
+3. Edit the file _config/databases.yml_ setting the password chosen for the user _schoolmesh_:
 
 {{{
 dev:
@@ -55,14 +55,14 @@ all:
       classname: PropelPDO
 }}}
 
-4. Creare la struttura del database:
+4. Create the structure of the database:
 
 <code language="sh">
 cd /var/schoolmesh
 schoolmesh_application_createtables prod
 </code>
 
-5. Caricare i dati del demo nel database:
+5. Load demo data into the database:
 
 <code language="sh">
 cd /var/schoolmesh
@@ -70,9 +70,9 @@ wget http://www.schoolmeshdemo.tuxfamily.org/schoolmeshbase.sql.gz -O /tmp/schoo
 schoolmesh_application_importtables prod /tmp/schoolmeshbase.sql.gz
 </code>
 
-6. Accedere con un browser alla pagina http://localhost/index.php e provare a fare il login con le credenziali indicate nella pagina http://www.schoolmesh.mattiussilab.net/demo
+6. Point your browser to the page http://localhost/index.php and try to login with the credentials shown in  http://www.schoolmesh.mattiussilab.net/demo
 
-7. Generare i file indice usati dal motore di ricerca interno, basato su Lucene:
+7. Generate the index files used by the internal search engine, based on Lucene:
 
 {{{
 symfony schoolmesh:rebuild-indexes --application=frontend --env=prod

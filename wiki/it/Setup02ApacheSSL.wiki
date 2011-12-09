@@ -3,7 +3,7 @@
 
 = Configurazione di Apache =
 
-Qui di seguito viene dato per scontato che la directory in cui risiede il software sia _var/schoolmesh_. Se si installa il software altrove, andranno modificate di conseguenza le istruzioni.
+Qui di seguito viene dato per scontato che la directory in cui risiede il software sia _/var/schoolmesh_. Se si installa il software altrove, andranno modificate di conseguenza le istruzioni.
 
 Diamo per scontato che si voglia avere un file di configurazione specifico per _schoolmesh_. Ovviamente ognuno potrà personalizzare le cose come crede.
 

@@ -1,6 +1,6 @@
-#summary Integrazione con Samba, Squid, ecc
+#summary OpenOffice.org
 
-= Template OpenOffice e conversione di documenti =
+= Template OpenOffice.org e conversione di documenti =
 
 SchoolMesh prepara i documenti da stampare o esportare basandosi su modelli (_template_) preparati con OpenOffice.org Writer. Se si vuole ottenere un file in altro formato (es. PDF o Microsoft Word), OpenOffice.org viene utilizzato come convertitore.
 

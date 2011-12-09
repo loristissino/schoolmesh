@@ -9,7 +9,6 @@ I file da prendere in considerazione sono:
 
   * _apps/frontend/config/app.yml_ (configurazione dell'applicazione di frontend)
   * _apps/backend/config/app.yml_ (configurazione dell'applicazione di backend)
-  * _config/databases.yml_ (accesso ai database)
   * tutti i _template_ dei documenti da produrre e delle email da inviare (in _templates_, salvo diverse configurazioni)
 
 Accedendo con il browser alla pagina http://localhost/index.php/content/checksetup si dovrebbe avere accesso alla configurazione corrente, con indicazione di eventuali file mancanti.
