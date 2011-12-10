@@ -4,6 +4,7 @@
 	<tr>
 		<th class="sf_admin_text"><?php echo __('Year') ?></th>
 		<th class="sf_admin_text"><?php echo __('Class') ?></th>
+		<th class="sf_admin_text"><?php echo __('Team') ?></th>
 		<th class="sf_admin_text"><?php echo __('Subject') ?></th>
 		<th class="sf_admin_text"><?php echo __('Hours') ?></th>
 		<th class="sf_admin_text"><?php echo __('State') ?></th>
@@ -17,6 +18,9 @@
     <td>
 			<?php echo $appointment->getSchoolclass()->getId() ?>
 		</td>
+    <td>
+			<?php echo $appointment->getTeam() ?>
+		</td>
 		<td>
 			<?php echo $appointment->getSubject() ?>
 		</td>
@@ -27,7 +31,7 @@
 			<?php include_partial('plansandreports/state', array('state' => $appointment->getState(), 'steps' => Workflow::getWpfrSteps(), 'size'=>'r')) ?>
 		<td>
 			<ul class="sf_admin_td_actions">
-				<?php  if ($appointment->getState()==Workflow::AP_ASSIGNED): ?>
+				<?php  if ($sf_user->hasCredential('admin') or $appointment->getState()==Workflow::AP_ASSIGNED): ?>
 				<li class="sf_admin_action_edit">
 				<?php echo link_to(
 					__('Edit'),

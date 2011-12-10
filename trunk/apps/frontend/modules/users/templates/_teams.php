@@ -27,7 +27,7 @@
 				</li>
 				<li class="sf_admin_action_delete">
 				<?php echo link_to(
-					sprintf(__('Remove %s from this team'), $current_user->getFullname()),
+					__('Remove %user% from this team', array('%user%'=>$current_user->getFullname())),
 					url_for('users/removefromteam?id='.$current_user->getUserId(). '&team=' . $team->getTeam()->getId()),
 					array('method' => 'delete', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))
 					)
@@ -43,7 +43,7 @@
 <li class="sf_admin_action_new">
 <?php
 echo link_to(
-__('Add to team'),
+__('Add to a team'),
 url_for('users/addtoteam?user='.$current_user->getUserId())
 ) ?>
 </li>

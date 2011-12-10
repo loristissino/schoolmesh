@@ -1,17 +1,17 @@
-<?php slot('title', __('User management')) ?>
-<?php slot('breadcrumbs',
-	__("User management")
-	)
-	
-	?><h1><?php echo __("User management")?></h1>
+<?php include_partial('content/breadcrumps', array(
+  'current'=>__('Users'),
+  ))
+?>
+
+<?php include_partial('content/flashes'); ?>
 
 <h2><?php echo __('Actions') ?></h2>
 
-<h3><?php echo __('Basic users information') ?></h3>
+<h3><?php echo __('Users management') ?></h3>
 
 	<ul class="sf_admin_actions">
 	<li class="sf_admin_action_users">
-		<?php echo link_to(__('User list'), 'users/list') ?>
+		<?php echo link_to(__('List/Search'), 'users/list') ?>
 	</li><br />
 	<li class="sf_admin_action_new">
 		<?php echo link_to(__('Add a new user'), 'users/new', array('title'=>__(SentencePeer::getSentence('users_new'))))?>
@@ -35,5 +35,5 @@
 	</li><br />
 	</ul>
 
-<p><?php echo image_tag('star') ?> <?php echo __('Years, Roles, Subjects, Reserved usernames, and Tracks can be managed only in the backend application.') ?></p>
+<p><?php echo image_tag('star') ?> <?php echo __('Years, Roles, Subjects, Reserved usernames, and Tracks can be managed only in the back end application.') ?></p>
 

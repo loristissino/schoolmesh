@@ -17,7 +17,7 @@
 				<?php if ($sf_user->hasCredential('backadmin')): ?>
 				<li class="sf_admin_action_delete">
 				<?php echo link_to(
-					sprintf(__('Remove %s from this GuardGroup'), $current_user->getFullName()),
+					__('Remove %user% from this GuardGroup', array('%user%'=>$current_user->getFullName())),
 					url_for('users/removefromguardgroup?id='.$current_user->getUserId(). '&guardgroup=' . $guardgroup->getsfGuardGroup()->getName()),
 					array('method' => 'delete', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))
 					)

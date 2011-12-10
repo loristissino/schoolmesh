@@ -714,7 +714,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 		}
 		
-		public function modifyAppointment($appointmentId, $schoolclassId, $yearId, $subjectId, $syllabusId, $hours)
+		public function modifyAppointment($appointmentId, $schoolclassId, $yearId, $subjectId, $syllabusId, $hours, $teamId)
 		{
 			
 			$result=array();
@@ -724,6 +724,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			{
 				$appointment
 				->setSchoolclassId($schoolclassId)
+        ->setTeamId($teamId)
 				->setYearId($yearId)
 				->setSubjectId($subjectId)
         ->setSyllabusId($syllabusId)

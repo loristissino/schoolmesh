@@ -3,6 +3,9 @@
   {
     public function configure()
     {
+      
+      $formats=sfConfig::get('app_opendocument_formats');
+      
 			$years_min=sfConfig::get('app_config_current_year')-65;
 			$years_max=sfConfig::get('app_config_current_year')-13;
 			foreach(range($years_min, $years_max) as $year)
@@ -15,13 +18,16 @@
       'id'  => new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
       'old_username' =>  new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
       'username' => new sfWidgetFormInputText(array(), array('size'=>25)),
+      'import_code' => new sfWidgetFormInputText(array(), array('size'=>20)),
       'is_active'=> new sfWidgetFormSelect(array('choices' =>array('no', 'yes'))),
       'lettertitle' => new sfWidgetFormInputText(array(), array('size'=>20)), 
       'first_name'    => new sfWidgetFormInputText(array(), array('size'=>50)),
       'middle_name'   => new sfWidgetFormInputText(array(), array('size'=>15)),
       'last_name' => new sfWidgetFormInputText(array(), array('size'=>50)),
       'pronunciation' => new sfWidgetFormInputText(array(), array('size'=>70)),
-      'gender' => new sfWidgetFormSelect(array('choices' =>array('F', 'M', 'unknown'))),  
+      'gender' => new sfWidgetFormSelect(array('choices' =>array('F', 'M', 'unknown'))),
+      'prefers_richtext' => new sfWidgetFormInputCheckbox(),
+      'preferred_format' => new sfWidgetFormSelect(array('choices' =>array_merge(array('---'), $formats))),
       'email' => new sfWidgetFormInputText(),
       'email_state' => new sfWidgetFormSelect(array('choices' =>$emailstates)),  
       'birthdate' => new sfWidgetFormI18nDate(array('culture'=>'it', 'years'=>$years)),  
@@ -46,21 +52,25 @@
 					new sfValidatorString(array('trim' => true, 'min_length'=>4, 'max_length'=>20)),
 					new sfValidatorRegex(array('pattern'=>'/^[a-z][a-z0-9\.]{3,19}$/')),
 			)),
-				'first_name' => new sfValidatorString(array('trim' => true)),
         'lettertitle' => new sfValidatorString(array('trim' => true, 'required'=>false)),
         'old_username' => new sfValidatorString(),
 				'id' => new sfValidatorInteger(),
 				'posix_uid' => new sfValidatorInteger(array('required'=>false, 'min'=>500, 'max'=>65534)),  
 				'is_active' => new sfValidatorInteger(array('min'=>0, 'max'=>1)),
-				'last_name' => new sfValidatorString(array('trim' => true)),
+				'first_name' => new sfValidatorString(array('trim' => true)),
 				'middle_name'  => new sfValidatorString(array('trim' => true, 'required' => false)),
+				'last_name' => new sfValidatorString(array('trim' => true)),
+				'import_code' => new sfValidatorString(array('trim' => true)),
 				'pronunciation'  => new sfValidatorString(array('trim' => true, 'required' => false, 'max_length'=>100)),
 				'gender' => new sfValidatorInteger(array('min'=>0, 'max'=>2)),
 				'email'   => new sfValidatorEmail(array('trim' => true, 'required'=>false)),
 				'email_state' => new sfValidatorInteger(array('min'=>0, 'max'=>sizeof($emailstates)-1)),  
 				'birthdate' => new sfValidatorDate(array('required'=>false)),
 				'birthplace' => new sfValidatorString(array('trim'=>true, 'required'=>false)),
-				'main_role' => new sfValidatorPropelChoice(array('model'=>'role')), 
+				'main_role' => new sfValidatorPropelChoice(array('model'=>'role')),
+        'prefers_richtext' => new sfValidatorBoolean(),
+        'preferred_format' => new sfValidatorChoice(array('choices' => array_keys($formats), 'multiple'=>false)),
+
 			));
 			
 			if(isset($this->options['new']))
