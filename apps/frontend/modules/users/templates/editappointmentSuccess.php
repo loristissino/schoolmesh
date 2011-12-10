@@ -1,19 +1,14 @@
-<?php slot('title', __('User management')) ?>
-<?php slot('breadcrumbs',
-	link_to(__("User management"), 'users/index') . ' » ' .
-	link_to(__("User list"), 'users/list') . ' » ' .
-	link_to($current_user->getFullName(), 'users/edit?id=' . $current_user->getUserId()) . ' » '.
-	'Edit appointment'
-	)
-	
-	?><h1><?php echo __('Edit appointment')?></h1>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'users/index' =>__('Users'),
+    'users/list' => __('List/Search'),
+    'users/edit?id=' . $current_user->getUserId() => $current_user->getFullname(),
+    ),
+  'current'=>__('Edit appointment'),
+  ))
+?>
 
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
 
 <form action="<?php echo url_for('users/editappointment?id='. $appointment->getId()) ?>" method="post">
 

@@ -3603,13 +3603,136 @@
         <source>Staff Synthetic Data</source>
         <target>Dati sintetici del personale</target>
     </trans-unit>
+    <trans-unit id="912">
+        <source>Teams</source>
+        <target>Team</target>
+    </trans-unit>
+    <trans-unit id="913">
+        <source>Change role</source>
+        <target>Cambia ruolo</target>
+    </trans-unit>
+    <trans-unit id="914">
+        <source>Remove %user% from this team</source>
+        <target>Rimuovi %user% da questo team</target>
+    </trans-unit>
+    <trans-unit id="915">
+        <source>Add to a team</source>
+        <target>Aggiungi a un team</target>
+    </trans-unit>
+    <trans-unit id="916">
+        <source>GuardGroups</source>
+        <target>GuardGroup</target>
+    </trans-unit>
+    <trans-unit id="917">
+        <source>Remove %user% from this GuardGroup</source>
+        <target>Rimuovi %user% da questo GuardGroup</target>
+    </trans-unit>
+    <trans-unit id="918">
+        <source>Add to a GuardGroup</source>
+        <target>Aggiungi a un GuardGroup</target>
+    </trans-unit>
+    <trans-unit id="919">
+        <source>Credentials</source>
+        <target>Credenziali</target>
+    </trans-unit>
+    <trans-unit id="920">
+        <source>Edit appointment</source>
+        <target>Modifica incarico di insegnamento</target>
+    </trans-unit>
+    <trans-unit id="921">
+        <source>Users</source>
+        <target>Utenti</target>
+    </trans-unit>
+    <trans-unit id="922">
+        <source>List/Search</source>
+        <target>Elenco/Ricerca</target>
+    </trans-unit>
+    <trans-unit id="923">
+        <source>User information updated.</source>
+        <target>Informazioni sull'utente aggiornate.</target>
+    </trans-unit>
+    <trans-unit id="924">
+        <source>You might need to run User Checks in order to apply the changes.</source>
+        <target>Potresti dover eseguire i controlli utente per applicare le modifiche.</target>
+    </trans-unit>
+    <trans-unit id="925">
+        <source>Add a new user</source>
+        <target>Aggiungi un nuovo utente</target>
+    </trans-unit>
+    <trans-unit id="926">
+        <source>Users management</source>
+        <target>Gestione utenti</target>
+    </trans-unit>
+    <trans-unit id="927">
+        <source>System administration</source>
+        <target>Amministrazione di sistema</target>
+    </trans-unit>
+    <trans-unit id="928">
+        <source>Upload classes</source>
+        <target>Carica classi</target>
+    </trans-unit>
+    <trans-unit id="929">
+        <source>Upload appointments</source>
+        <target>Carica incarichi di insegnamento</target>
+    </trans-unit>
+    <trans-unit id="930">
+        <source>Run team checks</source>
+        <target>Esegui i controlli sui team</target>
+    </trans-unit>
+    <trans-unit id="931">
+        <source>Years, Roles, Subjects, Reserved usernames, and Tracks can be managed only in the back end application.</source>
+        <target>Anni, ruoli, materie, nomi utente riservati e indirizzi possono essere gestiti solo nell'applicazione di back end</target>
+    </trans-unit>
+    <trans-unit id="932">
+        <source>Posix name</source>
+        <target>Nome posix</target>
+    </trans-unit>
+    <trans-unit id="933">
+        <source>Posix name</source>
+        <target>Nome posix</target>
+    </trans-unit>
+    <trans-unit id="934">
+        <source>Posix name</source>
+        <target>Nome posix</target>
+    </trans-unit>
+    <trans-unit id="935">
+        <source>Quality code</source>
+        <target>Codice qualità</target>
+    </trans-unit>
+    <trans-unit id="936">
+        <source>Needs folder</source>
+        <target>Cartella comune</target>
+    </trans-unit>
+    <trans-unit id="937">
+        <source>Needs mailing list</source>
+        <target>Mailing list</target>
+    </trans-unit>
+    <trans-unit id="938">
+        <source>New team</source>
+        <target>Nuovo team</target>
+    </trans-unit>
+    <trans-unit id="940">
+        <source>Create a new team</source>
+        <target>Crea un nuovo team</target>
+    </trans-unit>
+    <trans-unit id="941">
+        <source>Back to list</source>
+        <target>Torna alla lista</target>
+    </trans-unit>
+    <trans-unit id="942">
+        <source>Users successfully added to team.</source>
+        <target>Utenti aggiunti al team.</target>
+    </trans-unit>
+    <trans-unit id="943">
+        <source>Add selected users to a team</source>
+        <target>Aggiungi gli utenti selezionati a un team</target>
+    </trans-unit>
+    <trans-unit id="944">
+        <source>Appointment successfully saved.</source>
+        <target>Incarico di insegnamento salvato.</target>
+    </trans-unit>
     </body>
-  </file>
-  
+  </file> 
 </xliff>
-
-
-
-
 
 

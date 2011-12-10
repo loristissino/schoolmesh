@@ -23,8 +23,8 @@
       <td><?php echo $Team->getDescription() ?></td>
       <td><?php echo $Team->getPosixName() ?></td>
       <td><?php echo $Team->getQualityCode() ?></td>
-      <td><?php echo $Team->getNeedsFolder() ?></td>
-      <td><?php echo $Team->getNeedsMailingList() ?></td>
+      <td style="text-align: center"><?php echo $Team->getNeedsFolder()? __('Yes'): __('No') ?></td>
+      <td style="text-align: center"><?php echo $Team->getNeedsMailingList()? __('Yes'): __('No') ?></td>
     </tr>
     <?php endforeach; ?>
   </tbody>

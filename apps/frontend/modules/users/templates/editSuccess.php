@@ -1,33 +1,19 @@
-<?php slot('title', __('User management')) ?>
-<?php slot('breadcrumbs',
-	link_to(__("User management"), 'users/index') . ' » ' .
-	link_to(__("User list"), 'users/list') . ' » ' .
-	$current_user
-	)
-	
-	?><h1><?php echo __('Edit user %fullname%', array('%fullname%'=>$current_user))?></h1>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'users/index' =>__('Users'),
+    'users/list' => __('List/Search'),
+    ),
+  'current'=>$current_user->getFullname(),
+  ))
+?>
 
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
-<?php if ($current_user->getSystemAlerts()!=''): ?>
-  <div class="alert"><?php echo $current_user->getSystemAlerts()?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
 
 <form action="<?php echo url_for('users/edit?id='. $current_user->getSfGuardUser()->getId()) ?>" method="post">
 
 <h2><?php echo __('Basic information') ?></h2>
 
   <table>
-	<tr>
-		<th><label><?php echo __('Import code') ?></label></th>
-		<td>
-			<?php echo $current_user->getImportCode() ?>
-		</td>
-	</tr>
     <?php echo $userform ?>
 	<?php if ($current_user->getCurrentSchoolclassId()): ?>
 	<tr>

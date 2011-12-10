@@ -49,13 +49,13 @@
 	
 <?php if(isset($appointment)): ?>
 		<td>
-    <?php if(!$appointment->getTeamId() or ($appointment->getTeamId() and in_array($enrolment->getsfGuardUser()->getId(), $teamcomponents->getRawValue()))): ?>
+    <?php if($enrolment->getsfGuardUser()->getIsActive() && !$appointment->getTeamId() or ($appointment->getTeamId() and in_array($enrolment->getsfGuardUser()->getId(), $teamcomponents->getRawValue()))): ?>
   <input type="checkbox" name="ids[]" value="<?php echo $enrolment->getsfGuardUser()->getId() ?>" class="sf_admin_batch_checkbox" <?php echo in_array($enrolment->getsfGuardUser()->getId(), $ids->getRawValue()) ? "checked='checked'": '' ?>"/>
     <?php endif ?>
 </td>
 <?php endif ?>
 
-      <td><?php echo $i ?></td>
+      <td<?php if(!$enrolment->getsfGuardUser()->getIsActive()) echo ' class="notcurrent"' ?>><?php echo $i ?></td>
       <td><?php include_partial('users/gender', array('gender'=>$enrolment->getsfGuardUser()->getProfile()->getGender())) ?></td>
       <td><?php echo $enrolment->getsfGuardUser()->getProfile()->getFirstName() ?></td>
       <td><?php echo $enrolment->getsfGuardUser()->getProfile()->getLastName() ?></td>

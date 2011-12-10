@@ -1,10 +1,10 @@
 <?php
 
 /**
- * user actions.
+ * users actions.
  *
  * @package    schoolmesh
- * @subpackage user
+ * @subpackage users
  * @author     Loris Tissino
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
  */
@@ -825,6 +825,7 @@ class usersActions extends sfActions
 				->setFirstName($params['first_name'])
 				->setMiddleName($params['middle_name'])
 				->setLastName($params['last_name'])
+        ->setImportCode($params['import_code'])
 				->setPronunciation($params['pronunciation'])
 				->setGenderChoice($params['gender'])
 				->setEmail($params['email'])
@@ -832,6 +833,8 @@ class usersActions extends sfActions
 				->setBirthplace($params['birthplace'])
 				->setRoleId($params['main_role'])
 				->setEmailState($params['email_state'])
+        ->setPrefersRichtext($params['prefers_richtext'])
+        ->setPreferredFormat($params['preferred_format'])
 				->setSystemAlerts('')
 				->save();
 				$this->current_user
@@ -866,6 +869,7 @@ class usersActions extends sfActions
 			'username' => $this->current_user->getUsername(),
 			'is_active'=> $this->current_user->getsfGuardUser()->getIsActive(),
 			'old_username' => $this->current_user->getUsername(),
+      'import_code' => $this->current_user->getImportCode(),
 			'first_name'=>$this->current_user->getFirstName(),
 			'middle_name'=>$this->current_user->getMiddleName(),
 			'last_name'=>$this->current_user->getLastName(),
@@ -876,6 +880,8 @@ class usersActions extends sfActions
 			'birthdate' => $this->current_user->getBirthdate(),
 			'birthplace' => $this->current_user->getBirthplace(),
 			'main_role'=>$this->current_user->getRoleId(),
+      'preferred_format'=>$this->current_user->getPreferredFormat(),
+      'prefers_richtext'=>$this->current_user->getPrefersRichtext(),
 		)
 	);
 	
@@ -1028,7 +1034,7 @@ public function executeEditappointment(sfWebRequest $request)
   {
 	$this->appointment=AppointmentPeer::retrieveByPK($request->getParameter('id'));
 	
-	$this->forward404Unless($this->appointment->getState()==Workflow::AP_ASSIGNED);
+	$this->forward404Unless($this->getUser()->hasCredential('admin') or $this->appointment->getState()==Workflow::AP_ASSIGNED);
 	
 	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($this->appointment->getUserId());
 	
@@ -1042,7 +1048,7 @@ public function executeEditappointment(sfWebRequest $request)
 				$params = $this->form->getValues();
 				$current_user=$this->appointment->getsfGuardUser()->getProfile();
 				
-				$result=$current_user->modifyAppointment($this->appointment->getId(), $params['class'], $params['year'], $params['subject'], $params['syllabus'], $params['hours']);
+				$result=$current_user->modifyAppointment($this->appointment->getId(), $params['class'], $params['year'], $params['subject'], $params['syllabus'], $params['hours'], $params['team']);
 				
 				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 				
