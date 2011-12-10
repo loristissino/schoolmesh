@@ -65,6 +65,7 @@
   'computebudget' => __('Compute budget'),
   'computesynthesiscomplete' => __('Compute data synthesis (complete)'),
   'computesynthesisstaffonly' => __('Compute data synthesis (staff only)'),
+  'getstaffsynthesis' => __('Get staff synthetic document'),
   'updatestandardcosts' => __('Update standard costs'),
   'getchargeletters' => __('Get charge letters'),
   'resettodraft' => __('Reset to draft'),

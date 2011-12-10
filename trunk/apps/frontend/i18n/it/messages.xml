@@ -3595,7 +3595,14 @@
         <source>Compute data synthesis</source>
         <target>Calcola dati di sintesi</target>
     </trans-unit>
-
+    <trans-unit id="910">
+        <source>Get staff synthetic document</source>
+        <target>Scarica documento sintetico del personale</target>
+    </trans-unit>
+    <trans-unit id="911">
+        <source>Staff Synthetic Data</source>
+        <target>Dati sintetici del personale</target>
+    </trans-unit>
     </body>
   </file>
   
