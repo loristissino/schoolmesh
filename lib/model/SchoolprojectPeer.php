@@ -406,4 +406,120 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 
 	}
 
+
+	public static function getStaffSynthesisDoc($ids, $filetype='odt', $context=null)
+	{
+		$result=Array();
+
+		$projects=self::retrieveByPks($ids);
+		
+    $filename='Staff Synthetic Data';
+    $templatename='projects_staffsynthesis.odt';
+    
+		try
+		{
+			$odf=new OdfDoc($templatename, $context?$context->getI18N()->__($filename):$filename, $filetype);
+		}
+		catch (Exception $e)
+		{
+			if ($e InstanceOf OdfDocTemplateException)
+			{
+				$result['result']='error';
+				$result['message']='Template not found or not readable: '. $templatename;
+				return $result;
+			}
+			
+			if ($e InstanceOf OdfException)
+			{
+				$result['result']='error';
+				$result['message']='Template not valid: '. $templatename;
+				return $result;
+			}
+			
+			throw $e;
+		}
+		
+    
+		$odfdoc=$odf->getOdfDocument();
+		$roles=$odfdoc->setSegment('roles');
+		$count=0;
+    
+    $dirty=false;
+    
+		foreach(ProjResourceTypePeer::retrieveSortedByRank(true) as $projResourceType)
+		{
+			$count++;
+      
+      $criteria= new Criteria();
+      $criteria->add(ProjResourceTypePeer::ID, $projResourceType->getId());
+      
+      $total=0;
+      $totalInternal=0;
+      
+      foreach($projects as $project)
+      {
+        
+        $resources=$project->getProjResources($criteria);
+        
+        $chargedUsers=array();
+        $anonymousUsers=false;
+        $hours=0;
+        $amount=0;
+        $externallyFunded=0;
+        
+        foreach($resources as $resource)
+        {
+          if($resource->getChargedUserId())
+          {
+            @$chargedUsers[$resource->getChargedUserId()]++;
+          }
+          else
+          {
+            $anonymousUsers=true;
+          }
+          
+          $hours+=$resource->getQuantityApproved();
+          $amount+=$resource->getQuantityMultipliedByCost();
+          $externallyFunded+=$resource->getAmountFundedExternally();
+        }
+        if(sizeof($chargedUsers)>0 || $anonymousUsers>0)
+        {
+          
+          $roles->projects->projectTitle($project->getTitle());
+          $roles->projects->projectCoordinator($project->getCoordinatorProfile()->getLastname());
+          $roles->projects->projectNumber(sprintf('%s %d', ($anonymousUsers?'* ': ''), sizeof($chargedUsers), $anonymousUsers));
+          $roles->projects->projectHours($hours);
+          $roles->projects->projectAmount(OdfDocPeer::quantityvalue($amount, sfConfig::get('app_config_currency_symbol')));
+          $roles->projects->projectInternalAmount(OdfDocPeer::quantityvalue($amount-$externallyFunded, sfConfig::get('app_config_currency_symbol')));
+          
+          $total+=$amount;
+          $totalInternal+=$amount-$externallyFunded;
+
+          $roles->projects->merge();
+          
+          $roles->roleDescription($projResourceType->getDescription());
+          $roles->roleTotalAmount(OdfDocPeer::quantityvalue($total, sfConfig::get('app_config_currency_symbol')));
+          $roles->roleTotalInternalAmount(OdfDocPeer::quantityvalue($totalInternal, sfConfig::get('app_config_currency_symbol')));
+          $dirty=true;
+
+        }
+      }
+      
+      if($dirty)
+      {
+        $roles->merge();
+      }
+      
+      unset($criteria);
+		}
+		
+		$odfdoc->mergeSegment($roles);
+
+		$result['content']=$odf;
+		$result['result']='notice';
+		return $result;
+
+	}
+
+
 } // SchoolprojectPeer

@@ -351,12 +351,35 @@ class projectsActions extends sfActions
 			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.'));
 			$this->redirect('projects/monitor');
 		}
-
-
-
-
   }
   
+  public function executeGetstaffsynthesis(sfWebRequest $request)
+  {
+  	set_time_limit(0);
+    $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
+
+		$result=SchoolprojectPeer::getStaffSynthesisDoc($this->ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
+		
+		if ($result['result']=='error')
+		{
+			$this->getUser()->setFlash('error', $result['message']);
+			$this->redirect('projects/monitor');
+		}
+		
+		$odfdoc=$result['content'];
+		if (is_object($odfdoc))
+		{
+			$odfdoc
+			->saveFile()
+			->setResponse($this->getContext()->getResponse());
+			return sfView::NONE;
+		}
+		else
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.'));
+			$this->redirect('projects/monitor');
+		}
+  }
 
   public function executeSpreadsheet(sfWebRequest $request)
   {
@@ -504,6 +527,7 @@ class projectsActions extends sfActions
 	
   public function executeLetters(sfWebRequest $request)
 	{
+    /* this is deprecated */
 		$this->text='';
 		$this->projects=SchoolprojectPeer::retrieveAllForYear(sfConfig::get('app_config_current_year'));
 		
