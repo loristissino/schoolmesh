@@ -1,4 +1,4 @@
-<div id='appointments'>
+<div>
 <table>
 <thead>
 	<tr>

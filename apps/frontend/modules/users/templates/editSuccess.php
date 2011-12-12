@@ -52,6 +52,7 @@
 <?php endif ?>
 
 <?php if ($current_user->getRole() && $current_user->getRole()->getPosixName()==sfConfig::get('app_config_teachers_default_posix_group')): ?>
+  <a name='appointments'></a>
 	<h2><?php echo __('Appointments') ?></h2>
 	<?php include_partial('appointments', array('current_user'=>$current_user)) ?>
 <?php endif ?>

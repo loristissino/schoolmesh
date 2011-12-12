@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
   <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-07-23T14:10:48Z" product-name="messages">
+  <!-- localization by Loris Tissino loris.tissino@gmail.com -->
     <body>
       <trans-unit id="3">
         <source>Forgot your password?</source>
@@ -1195,7 +1196,7 @@
         <target>Attività della segreteria</target>
       </trans-unit>
       <trans-unit id="326">
-        <source>Manage appointments</source>
+        <source>Appointments management</source>
         <target>Gestione incarichi docenti</target>
       </trans-unit>
       <trans-unit id="326">
@@ -1620,7 +1621,7 @@
         <target>Scadenze di monitoraggio</target>
     </trans-unit>
     <trans-unit id="429">
-        <source>Manage projects</source>
+        <source>Projects management</source>
         <target>Gestione progetti</target>
     </trans-unit>
     <trans-unit id="430">
@@ -2288,8 +2289,8 @@
         <target>Approvazione</target>
     </trans-unit>
     <trans-unit id="591">
-        <source>Projects monitoring</source>
-        <target>Monitoraggio progetti</target>
+        <source>Teams management</source>
+        <target>Gestione team</target>
     </trans-unit>
     <trans-unit id="592">
         <source>Submit project</source>
@@ -3730,6 +3731,10 @@
     <trans-unit id="944">
         <source>Appointment successfully saved.</source>
         <target>Incarico di insegnamento salvato.</target>
+    </trans-unit>
+    <trans-unit id="945">
+        <source>Upload users</source>
+        <target>Carica utenti</target>
     </trans-unit>
     </body>
   </file> 
