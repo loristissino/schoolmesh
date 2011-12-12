@@ -38,7 +38,17 @@
 
       <td><?php echo $workplan->getSchoolclassId() ?></td>
       <td><?php echo $workplan->getSubject()->getDescription() ?></td>
-      <td><?php echo $workplan->getFullName() ?></td>
+      <td>
+      <?php if($sf_user->hasCredential('admin')): ?>
+        <?php echo link_to(
+          $workplan->getFullName(),
+          url_for('users/edit?id=' . $workplan->getsfGuardUser()->getId()). '#appointments'
+          )
+        ?>
+      <?php else: ?>
+        <?php echo $workplan->getFullName() ?>
+      <?php endif ?>
+      </td>
 	  <td><?php echo $workplan->getHours() ?></td>
 	  <?php /*<?php $lastlog=$workplan->getLastLog() ?>  
 	  <td><?php echo $lastlog?$lastlog->getCreatedAt():'' ?></td>*/ ?>

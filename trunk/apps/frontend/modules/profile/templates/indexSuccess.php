@@ -28,16 +28,17 @@
 <h2><?php echo __('Administration') ?></h2>
 <ul class="sf_admin_actions">
 <?php if ($sf_user->hasCredential('wpfr_monitoring')): ?>
-    <li class="sf_admin_action_items"><?php echo link_to(__('Manage appointments'), 'plansandreports/list') ?></li><br />
+    <li class="sf_admin_action_items"><?php echo link_to(__('Appointments management'), 'plansandreports/list') ?></li><br />
 <?php endif ?>
 <?php if ($sf_user->hasCredential('proj_monitoring')): ?>
-    <li class="sf_admin_action_items"><?php echo link_to(__('Projects monitoring'), 'projects/monitor') ?></li><br />
+    <li class="sf_admin_action_items"><?php echo link_to(__('Projects management'), 'projects/monitor') ?></li><br />
 <?php endif ?>
 <?php if ($sf_user->hasCredential('proj_adm_ok')): ?>
     <li class="sf_admin_action_items"><?php echo link_to(__('Projects resource types definitions'), '@proj_resource_type') ?></li><br />
 <?php endif ?>
 <?php if ($sf_user->hasCredential('admin')): ?>
 	<li class="sf_admin_action_users"><?php echo link_to(__('Users management'), url_for('users')) ?></li><br />
+	<li class="sf_admin_action_users"><?php echo link_to(__('Teams management'), url_for('teams/index')) ?></li><br />
 <?php endif ?>
 </ul>
 <?php endif ?>
