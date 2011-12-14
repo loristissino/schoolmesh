@@ -1,0 +1,164 @@
+2011/12/09
+Added rank in proj_resource_type table
+
+
+/*
+- _root preexec_ (sets a command to run as root, before connecting to the share)  
+- _root preexec close_ (if set to yes, nonzero exit status of root preexec command will disconnect)  
+- _preexec_ (sets a Unix command to run as the user before connecting to the share)  
+- _preexec close_ (if set to yes, nonzero exit status of preexec command will disconnect)  
+- _postexec_ (sets a Unix command to run as the user after disconnecting from the share)  
+- _root postexec_ (sets a Unix command to run as root after disconnecting from the share). \cite[pag.~430]{Ts2003}
+
+
+    [homes]
+     ...
+     preexec = wget --post-data='token=sekretToken' \
+       http://localhost/schoolmesh/index.php/lanlogin/%U/%M/%m \
+       -O /dev/null
+     postexec = wget --post-data='token=sekretToken' \
+       http://localhost/schoolmesh/index.php/lanlogout/%U/%M/%m \
+       -O /dev/null
+
+*/
+
+
+Added preferred_format in sfGuardUserProfile table
+
+UPDATE `schoolmesh`.`sf_guard_user_profile` SET `preferred_format` = 'odt';
+
+
+Added is_monetary field in proj_resource e proj_resource_type tables
+
+UPDATE `schoolmesh`.`proj_resource_type` SET `is_monetary` = '0' WHERE `proj_resource_type`.`id` =7;
+
+
+Added is_public field in appointment table
+
+
+Added title field in sfGuardUserProfile table
+
+MYSQL:	`title` VARCHAR(10),
+
+Added prefers_richtext field in sfGuardUserProfile table
+
+MYSQL:	`prefers_richtext` TINYINT default 1,
+
+Added reference_number field in Schoolproject table
+
+MYSQL:	`reference_number` VARCHAR(20),
+
+
+for the role "Teacher", do something like:
+
+UPDATE `sf_guard_user_profile`
+SET title='Prof.'
+WHERE `role_id` =39
+AND `gender` = 'M'
+
+Remove Resource_type column in ProjResourceType table
+Add Finalities, adddresses and other fields in Project table
+
+
+# Revision 498:
+Changed is_reserved to is_confidential in wpinfo
+Added is_public in attachment_file
+
+
+# Revision 429:
+
+Cmnd_Alias SCHOOLMESH_USERFOLDER = /usr/bin/find -L /home/homeschoolmesh/users/*, /usr/bin/test -e /home/homeschoolmesh/users/*, /usr/bin/stat /home/homeschoolmesh/users/*, /usr/bin/file /home/homeschoolmesh/users/*, /bin/cp /home/homeschoolmesh/users/* /tmp/*schoolmesh, /bin/chmod 766 /tmp/*schoolmesh, /bin/cp /tmp/* /home/homeschoolmesh/users/*, /bin/chmod 644 /home/homeschoolmesh/users/*, /bin/rm /home/homeschoolmesh/users/*, /bin/mkdir /home/homeschoolmesh/users/*, /bin/rmdir /home/homeschoolmesh/users/*
+
+# Revision 425:
+
+Changed in /etc/sudoers:
+
+Cmnd_Alias SCHOOLMESH_USERFOLDER = /usr/bin/find -L /home/homeschoolmesh/users/*, /usr/bin/test -e /home/homeschoolmesh/users/*, /usr/bin/stat /home/homeschoolmesh/users/*, /usr/bin/file /home/homeschoolmesh/users/*, /bin/cp /home/homeschoolmesh/users/* /tmp/*schoolmesh, /bin/chmod 766 /tmp/*schoolmesh, /bin/cp /tmp/* /home/homeschoolmesh/users/*, /bin/chmod 644 /home/homeschoolmesh/users/*
+
+# Revision 423:
+
+Changed this in /etc/sudoers:
+
+----
+# Cmnd alias specification
+Cmnd_Alias SCHOOLMESH_USERFOLDER = /usr/bin/find -L /home/homeschoolmesh/users/*, /usr/bin/test -d /home/homeschoolmesh/users/*, /usr/bin/stat /home/homeschoolmesh/users/*, /usr/bin/file /home/homeschoolmesh/users/*, /bin/cp /home/homeschoolmesh/users/* /tmp/*schoolmesh, /bin/chmod 766 /tmp/*schoolmesh
+
+
+
+
+# Revision 421:
+
+Added this in /etc/sudoers:
+
+----
+Cmnd_Alias SCHOOLMESH_USERFOLDER = /usr/bin/find -L /home/homeschoolmesh/users/*, /usr/bin/test -d /home/homeschoolmesh/users/*, /usr/bin/stat /home/homeschoolmesh/users/*, /usr/bin/file /home/homeschoolmesh/users/*
+
+...
+
+WEBSERVER ALL=(ALL)NOPASSWD: SCHOOLMESH_USERFOLDER
+----
+
+# Revision 405:
+
+Changed size of field EmailVerificationCode for sfGuardUserProfile table
+
+# Revision 395:
+
+Added tables about hints
+
+# Revision 391:
+
+Added tables about projects
+
+# Revision 389:
+
+Added some tables.
+
+INSERT INTO `suggestion` (`shortcut`, `content`, `rank`) VALUES
+('individ', 'Studio individuale', 1),
+('itinere', 'Recupero in itinere', 2),
+('sportello', 'Sportello', 3),
+('corso', 'Corso di recupero', 4);
+
+INSERT INTO `term` (`id`, `description`, `end_day`, `has_formal_evaluation`) VALUES
+('Term1', 'Primo quadrimestre', 120, 1),
+('Term2', 'Secondo quadrimestre', 285, 1),
+('Term2a', 'Secondo quadrimestre, valutazi', 195, 0);
+
+
+# From revision 366 to revision 367:
+
+Added sfOdfPlugin, we should need to change settings.yml
+
+	enabled_modules:
+      - default
+      - sfGuardAuth
+      - sfGuardUser
+      - sfOdfOdt  
+
+# From revision 331 to revision 332:
+
+Add in app.yml:
+
+    appointments_max_per_page: 30
+
+# From revision 321 to revision 322:
+
+Change WpinfoType in the database, 0->10, 30->40 (state)
+Workplans:
+	Recupero -> Recupero programmato
+	Commenti - > Commenti (progettazione)
+	Considerazioni finali -> Situazione finale della classe
+	Tipologia delle verifiche -> Tipologia delle verifiche previste
+	Strumenti -> Strumenti previsti
+	
+
+# From revision 319 to revision 320:
+
+Changed Appointments/Workplans workflow, adding a AP_ASSIGNED initial state. Constants changed meaning. Updated data fixtures.
+
+# From revision 316 to revision 317:
+
+Add in app.yml:
+
+    users_max_per_page: 30

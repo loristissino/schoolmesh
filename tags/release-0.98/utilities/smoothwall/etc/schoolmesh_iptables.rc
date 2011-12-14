@@ -1,0 +1,24 @@
+#/bin/bash
+
+ALWAYS_ACCEPTED="192.168.0.121 192.168.1.105 192.168.0.122 192.168.0.123 192.168.11.1 192.168.11.2 192.168.11.3 192.168.11.4"
+# Connections from these hosts will be always accepted
+
+DEFAULT_CONDITION="-p tcp -s 192.168.0.0/16 --dport 800"
+# We will filter packets with these characteristics:
+# - the source is in the LAN
+# - the destination port is 800 (standard for smoothwall proxy)
+
+DEFAULT_RULE="DNAT --to-destination 172.16.200.254:80"
+# This is a kind of general policy used on basic chains.
+# When a connection is refused, we'll change the destination address 
+# to another machine connected directly to the firewall
+# (in this case, the internal IP address of the router is chosen)
+
+COMMENT="schoolmeshrule default"
+
+ACCEPT_RULE="RETURN"
+
+CHAIN=schoolmesh
+TABLE=nat
+BASICCHAIN=PREROUTING
+

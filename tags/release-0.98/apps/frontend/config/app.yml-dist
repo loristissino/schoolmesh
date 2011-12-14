@@ -1,0 +1,111 @@
+# REMEMBER TO CLEAR YOUR CACHE AFTER EDITING THIS FILE!
+# Run: 
+# symfony cc
+
+all:
+  school:
+    name:           Example High School
+    town:           Nowhere
+    website:        'http://www.example.com'
+    principal:      prof. Bruno Rossi
+    
+  mail:
+    webmaster:      web@example.com
+    bot_address:    schoolmesh@example.com
+    bot_name:       SchoolMesh App Bot
+    backup_address: backup@example.com
+    template_directory: /var/schoolmesh/templates/email
+    
+  config:
+    enable_checks:  true
+    current_year:   2009 # only the first of the two years of a scholastic/academic year
+    current_term:   Term1
+    culture: it
+    base_url: 'http://www.schoolmesh.example.com'
+    lan_url: 'http://192.168.0.1/schoolmesh'
+    wan_url: 'https://intranet.example.com/schoolmesh'
+    local_addresses: '192.168.0.0/16'
+    base_dir: '/var/schoolmesh'
+
+    users_max_per_page: 100
+    appointments_max_per_page: 30
+    posix_homedir: /home/testhome 
+    posix_basefolder: MySchool  # this folder contains symbolic links and other stuff; should be present in each homedir
+    teachers_default_posix_group: teachers
+    default_teams_role: member
+    students_default_posix_group: students
+    class_teachersteam_prefix: cdc  # for the new team of teachers automatically created, and the name will be prefixed with this
+    class_teachersteam_name: Class Council
+    moodle_key: aSekRetTokEnShAred # used for quasi-SSO with Moodle
+    moodle_url: http://www.mattiussilab.net/moodle/
+    moodle_access: http://www.mattiussilab.net/intranet/moodle_schoolmesh.php
+    accounts: [ posix, login, samba, googleapps ]
+    googleapps_key: aNoThErSuPeRsEkReTkEy
+    googleapps_domain: example.com
+    googleapps_policy_url: http://www.google.com/apps/intl/it/terms/use_policy.html
+    googleapps_admin_credentials: [ schoolmeshadmin@example.com, NoReAsOnToTeLlYoU ]
+    googleapps_url: http://webmail.example.com
+
+    major_age: 18
+    
+    default_male_teachertitle: Prof.
+    default_female_teachertitle: Prof.ssa
+
+
+    currency_symbol: €
+    currency_decimals: 2
+    currency_decpoint: ','
+    currency_thousandssep: '.'
+
+    projects_evaluation_min: 1
+    projects_evaluation_max: 4
+    
+    help_index: /etc/schoolmesh/help.yml
+    timeslotsfile: /etc/schoolmesh/timeslots.yml
+
+    logfile: /var/schoolmesh/log/schoolmeshlog.txt
+    debug: true
+
+  lucene:
+    directory: /var/schoolmesh/data/lucene
+    # Where Lucene index binary files will be put
+    # Since different indexes may be built, we'll get different subdirectories 
+    # like /var/schoolmesh/data/lucene/foo_prod.index/, /var/schoolmesh/data/lucene/bar_prod.index/,
+    # and so on (the names are made up with the object indexed and the environment) 
+    # Be sure that the directory is readable and writeable by the web server user (www-data)
+
+  sf_guard_plugin:
+#    check_password_callable: [Authentication, testOnly]
+    success_signout_url: /index.php
+
+# Choose one of the following functions:
+# testOnly: all users are authenticated whatever password (but null) they provide
+# checkDBPassword: users are authenticated against the internal DB
+# checkLdapPassword: users are authenticated against a LDAP server, specified in the lines below
+# checkSambaPassword: users are authenticated against a Samba server (probably working also against a Windows authentication server)
+# checkFirstSambaThenDBPassword: it they have a Samba Account, users are authenticated with that, otherwise against the DB
+
+  authentication:
+    ldap_host: localhost
+    ldap_domain: dc=example,dc=com
+    samba_share: //example_server/homes
+    samba_address: 127.0.0.1
+
+  system:
+    commands_view: true
+    commands_apply: false
+
+  prelogin:
+    token: sekretToken  
+
+  opendocument:
+    template_directory: /var/schoolmesh/templates/oo  
+    formats:
+      odt: OpenDocument (odt)
+      pdf: Portable Document Format (pdf)
+      doc: Microsoft Word (doc)
+      rtf: Rich Text Format (rtf)
+
+  documents:
+    main_directory: /var/schoolmesh/data/documents
+    attachments:    /var/schoolmesh/data/attachments

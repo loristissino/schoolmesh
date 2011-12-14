@@ -1,0 +1,30 @@
+.TH SCHOOLMESH_POSIXFOLDER_MAKEDIR 8 "December 2011" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_posixfolder_makedir - Make a directory in a user's home
+(sub)directory
+.SH SYNOPSIS
+.PP
+schoolmesh_posixfolder_makedir \f[I]username\f[] \f[I]path\f[]
+.SH DESCRIPTION
+.PP
+This script makes a directory in a user's directory.
+The user must exist.
+The path is relative to user's home directory.
+.SH WARNINGS
+.PP
+The user who runs this (typically, www-data or apache) must be
+allowed to run commands on behalf of other users (through sudo).
+.SH EXAMPLES
+.PP
+schoolmesh_posixfolder_makedir john.test `/mydocs/my letters'
+.SH BUGS
+.PP
+Probably many.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>.
+.SH AUTHORS
+Loris Tissino (loris.tissino\@mattiussilab.net).
+

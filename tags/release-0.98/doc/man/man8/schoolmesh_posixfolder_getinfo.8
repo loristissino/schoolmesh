@@ -1,0 +1,41 @@
+.TH SCHOOLMESH_POSIXFOLDER_GETINFO 8 "December 2011" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_posixfolder_getinfo - Get info about a posix user's
+folder's contents
+.SH SYNOPSIS
+.PP
+schoolmesh_posixfolder_getinfo \f[I]username\f[] path
+\f[I]directoryname\f[] schoolmesh_posixfolder_getinfo
+\f[I]username\f[] list \f[I]directoryname\f[]
+schoolmesh_posixfolder_getinfo \f[I]username\f[] file
+\f[I]directoryname/filename\f[]
+.SH DESCRIPTION
+.PP
+This script generates a list of pairs \f[I]key=value\f[] about a
+posix folder.
+The user must exist.
+.SH WARNINGS
+.PP
+The user who runs this (typically, www-data or apache) must be
+allowed to run commands on behalf of other users (through sudo).
+.SH EXAMPLES
+.PP
+schoolmesh_posixfolder_getinfo john.test path
+`/'
+.PD 0
+.P
+.PD
+schoolmesh_posixfolder_getinfo john.test list
+`/mydocs' schoolmesh_posixfolder_getinfo john.test file
+`/mydocs/myfile.odt'
+.SH BUGS
+.PP
+Probably many.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>.
+.SH AUTHORS
+Loris Tissino (loris.tissino\@mattiussilab.net).
+

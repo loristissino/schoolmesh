@@ -1,0 +1,29 @@
+.TH SCHOOLMESH_APPLICATION_SETSTATE 8 "December 2011" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_application_setstate - Enable/disable the application
+.SH SYNOPSIS
+.PP
+schoolmesh_application_setstate enabled | disabled
+\f[I]environment\f[]
+.SH DESCRIPTION
+.PP
+Use this script to enable or disable the application.
+.SH WARNINGS
+.PP
+This will delete all the contents of the database.
+Be sure to make a backup before using it.
+.SH EXAMPLES
+.PP
+schoolmesh_application_setstate enabled prod
+schoolmesh_application_setstate disabled prod
+.SH BUGS
+.PP
+Probably many.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>.
+.SH AUTHORS
+Loris Tissino (loris.tissino\@mattiussilab.net).
+

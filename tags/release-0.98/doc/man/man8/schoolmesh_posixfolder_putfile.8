@@ -1,0 +1,32 @@
+.TH SCHOOLMESH_POSIXFOLDER_PUTFILE 8 "December 2011" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_posixfolder_putfile - Copy an uploaded file to a user's
+home (sub)directory
+.SH SYNOPSIS
+.PP
+schoolmesh_posixfolder_putfile \f[I]username\f[] \f[I]tempname\f[]
+\f[I]destinationpath\f[]
+.SH DESCRIPTION
+.PP
+This script copies an uploaded file to a user's directory.
+The user must exist.
+The path is relative to user's home directory.
+.SH WARNINGS
+.PP
+The user who runs this (typically, www-data or apache) must be
+allowed to run commands on behalf of other users (through sudo).
+.SH EXAMPLES
+.PP
+schoolmesh_posixfolder_putfile john.test /tmp.Vm6STjrivF
+`/mydocs/My report.odt'
+.SH BUGS
+.PP
+Probably many.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>.
+.SH AUTHORS
+Loris Tissino (loris.tissino\@mattiussilab.net).
+

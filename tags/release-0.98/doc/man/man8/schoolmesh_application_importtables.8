@@ -1,0 +1,33 @@
+.TH SCHOOLMESH_APPLICATION_IMPORTTABLES 8 "December 2011" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_application_importtables - Import data from a backup sql
+file
+.SH SYNOPSIS
+.PP
+schoolmesh_application_importtables \f[I]environment\f[]
+\f[I]inputfile\f[]
+.SH DESCRIPTION
+.PP
+Use this script to import data into the database.
+The input file SQL must be in gzipped format.
+The output of \f[I]schoolmesh_application_dumptables(8)\f[] should
+be adequate.
+.SH WARNINGS
+.PP
+The database should have the tables, but empty.
+It's possible to re-create the tables with
+\f[I]schoolmesh_application_createtables(8)\f[].
+.SH EXAMPLES
+.PP
+schoolmesh_application_importtables prod /var/backups/myfile.sql.gz
+.SH BUGS
+.PP
+Probably many.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>.
+.SH AUTHORS
+Loris Tissino (loris.tissino\@mattiussilab.net).
+

@@ -1,0 +1,38 @@
+% SCHOOLMESH_APPLICATION_UPDATE(8) Schoolmesh User Manuals
+% Loris Tissino (loris.tissino@mattiussilab.net)
+% September 2011
+
+# NAME
+
+schoolmesh\_application\_update - Update the application with the newest SVN release
+
+# SYNOPSIS
+
+schoolmesh\_application\_update prod | dev | test
+
+# DESCRIPTION
+
+This script updates the application, making a backup of specific
+configuraton files that might have been customized, and restoring them
+afterwards.
+
+# WARNINGS
+
+This script does not backup the database. It's better to run _schoolmesh\_application\_dumptables(8)_ before its use.
+
+The list of customizable files to backup might be incomplete.
+
+Run at your own risk. New versions may introduce regressions.
+
+# EXAMPLES
+
+	schoolmesh_application_update prod
+
+# BUGS
+
+Probably many.
+
+# SEE ALSO
+
+The SchoolMesh project is described at <http://schoolmesh.mattiussilab.net/>.
+

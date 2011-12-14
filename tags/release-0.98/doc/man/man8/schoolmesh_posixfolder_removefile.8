@@ -1,0 +1,31 @@
+.TH SCHOOLMESH_POSIXFOLDER_REMOVEFILE 8 "December 2011" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_posixfolder_removefile - Remove a file from a user's
+home (sub)directory
+.SH SYNOPSIS
+.PP
+schoolmesh_posixfolder_removefile \f[I]username\f[]
+\f[I]filepath\f[]
+.SH DESCRIPTION
+.PP
+This script removes a file from a user's directory.
+The user must exist.
+The path is relative to user's home directory.
+.SH WARNINGS
+.PP
+The user who runs this (typically, www-data or apache) must be
+allowed to run commands on behalf of other users (through sudo).
+.SH EXAMPLES
+.PP
+schoolmesh_posixfolder_removefile john.test `/mydocs/My report.odt'
+.SH BUGS
+.PP
+Probably many.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>.
+.SH AUTHORS
+Loris Tissino (loris.tissino\@mattiussilab.net).
+

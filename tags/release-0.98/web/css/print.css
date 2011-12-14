@@ -1,0 +1,72 @@
+#breadcrumbs, #help, #navigation, #footer, #demoheader
+{
+  display: none;
+}
+
+.info, .feedback
+{
+  display: none;
+}
+
+#actionshead
+{
+  display: none;
+}
+
+.actionscolumn
+{
+  display: none;
+}
+
+.statisticstable {
+  page-break-after: always;
+}
+
+body
+{
+  background: white;
+  color: black;
+  font-size: 9pt;
+  font-family: 'sans-serif';
+  
+  width: 100%;
+	margin: 0;
+	float: none;
+}
+
+td.projecttitle
+{
+  vertical-align: top;
+}
+
+.amount
+{
+  padding: 0px 15px 0px 15px;
+  vertical-align: bottom;
+}
+
+a
+{
+  text-decoration: none;
+  color: black;
+}
+
+
+thead 
+{
+  display: table-header-group;
+}
+
+
+td, th
+{
+  border-bottom-style: solid; 
+  border-bottom-width: 1px; 
+}
+
+th.verticalheader
+{
+  padding-right: 10px;
+}
+
+

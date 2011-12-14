@@ -1,0 +1,30 @@
+.TH SCHOOLMESH_SAMBAACCOUNT_CREATE 8 "December 2011" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_sambaaccount_create - Create a samba account for a user
+.SH SYNOPSIS
+.PP
+schoolmesh_sambaaccount_create \f[I]username\f[] \f[I]fullname\f[]
+\f[I]password\f[]
+.SH DESCRIPTION
+.PP
+Use this script to create a posix account.
+Some checks are done before the creation.
+.SH EXAMPLES
+.PP
+schoolmesh_sambaaccount_create john `John Doe' ck33LmrdH_45
+.SH TO DO
+.PP
+Passwords should not be passed on the command line.
+This must be modified,probably by passing a file name containing
+the password.
+.SH BUGS
+.PP
+Probably many.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>.
+.SH AUTHORS
+Loris Tissino (loris.tissino\@mattiussilab.net).
+

@@ -1,0 +1,12 @@
+Just few notes about port forwarding under NAT configuration with VirtualBox
+
+vboxmanage setextradata SchoolmeshMachine 'VBoxInternal/Devices/pcnet/0/LUN#0/Config/guestwww/Protocol' TCP
+vboxmanage setextradata SchoolmeshMachine 'VBoxInternal/Devices/pcnet/0/LUN#0/Config/guestwww/HostPort' 11080
+vboxmanage setextradata SchoolmeshMachine 'VBoxInternal/Devices/pcnet/0/LUN#0/Config/guestwww/GuestPort' 80
+
+vboxmanage setextradata SchoolmeshMachine 'VBoxInternal/Devices/pcnet/0/LUN#0/Config/guestssh/Protocol' TCP
+vboxmanage setextradata SchoolmeshMachine 'VBoxInternal/Devices/pcnet/0/LUN#0/Config/guestssh/HostPort' 11022
+vboxmanage setextradata SchoolmeshMachine 'VBoxInternal/Devices/pcnet/0/LUN#0/Config/guestssh/GuestPort' 22
+
+After running this commands, you can access the guest web server from the host machine pointing your browser at
+127.0.0.1:11080, and make ssh connections with ssh -p 11022 127.0.0.1.

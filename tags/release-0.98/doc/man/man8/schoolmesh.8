@@ -1,0 +1,148 @@
+.TH SCHOOLMESH 8 "December 2011" "Schoolmesh utilities User Manuals"
+.SH NAME
+.PP
+schoolmesh - command line utilities to be used with SchoolMesh web
+application
+.SH UTILITY LIST
+.PP
+schoolmesh_application_createtables -
+\f[I]Create empty tables for the database\f[]
+.PP
+schoolmesh_application_dumptables -
+\f[I]Backup data from the database in gzipped SQL format\f[]
+.PP
+schoolmesh_application_importtables -
+\f[I]Import data from a backup sql file\f[]
+.PP
+schoolmesh_application_setstate -
+\f[I]Enable/disable the application\f[]
+.PP
+schoolmesh_loginaccount_changeshell -
+\f[I]Change the shell for the login account of a user\f[]
+.PP
+schoolmesh_loginaccount_getinfo -
+\f[I]Get info about the login account of a user\f[]
+.PP
+schoolmesh_loginaccount_setpassword -
+\f[I]Change the login password for a user\f[]
+.PP
+schoolmesh_loginaccounts_getshells -
+\f[I]Get a list of available shells on the system\f[]
+.PP
+schoolmesh_moodleaccount_create -
+\f[I]Create a moodle account for a user\f[]
+.PP
+schoolmesh_odf_check -
+\f[I]Get a specific portion of an OpenOffice.org document's content.xml file\f[]
+.PP
+schoolmesh_odf_converter -
+\f[I]start, stop or show the status of Unoconv Odf converter\f[]
+.PP
+schoolmesh_posixaccount_changefullname -
+\f[I]Change full name for a posix account of a user\f[]
+.PP
+schoolmesh_posixaccount_changegroup -
+\f[I]Change the primary group of a user\f[]
+.PP
+schoolmesh_posixaccount_changeusername -
+\f[I]Change username for the posix account of a user\f[]
+.PP
+schoolmesh_posixaccount_create -
+\f[I]Create a posix account for a user\f[]
+.PP
+schoolmesh_posixaccount_createbasefolder -
+\f[I]Create the basefolder for a user\f[]
+.PP
+schoolmesh_posixaccount_createhomedir -
+\f[I]Create the home directory for a user\f[]
+.PP
+schoolmesh_posixaccount_getinfo -
+\f[I]Get info about the posix account of a user\f[]
+.PP
+schoolmesh_posixaccount_lockuser - \f[I]Lock a user\f[]
+.PP
+schoolmesh_posixaccount_quotausercheck -
+\f[I]Check if the quota of a user was exceeded\f[]
+.PP
+schoolmesh_posixaccount_repairbasefolder -
+\f[I]Repair the basefolder of a user\f[]
+.PP
+schoolmesh_posixaccount_repairhomedir -
+\f[I]Repair the basefolder of a user\f[]
+.PP
+schoolmesh_posixaccount_setquota - \f[I]Set the quota of a user\f[]
+.PP
+schoolmesh_posixaccount_unlockuser - \f[I]Unlock a user\f[]
+.PP
+schoolmesh_posixaccounts_list -
+\f[I]Get a list of posix users belonging to a specified group\f[]
+.PP
+schoolmesh_posixaccounts_quotachecks -
+\f[I]Get a list of users specifying who of them exceeds their quota\f[]
+.PP
+schoolmesh_posixfolder_copyfile -
+\f[I]Copy a user's file in cache, applying read permission for webserver\f[]
+.PP
+schoolmesh_posixfolder_getinfo -
+\f[I]Get info about a posix user's folder's contents\f[]
+.PP
+schoolmesh_posixfolder_makedir -
+\f[I]Make a directory in a user's home (sub)directory\f[]
+.PP
+schoolmesh_posixfolder_putfile -
+\f[I]Copy an uploaded file to a user's home (sub)directory\f[]
+.PP
+schoolmesh_posixfolder_removefile -
+\f[I]Remove a file from a user's home (sub)directory\f[]
+.PP
+schoolmesh_sambaaccount_create -
+\f[I]Create a samba account for a user\f[]
+.PP
+schoolmesh_sambaaccount_delete -
+\f[I]Delete a samba account for a user\f[]
+.PP
+schoolmesh_sambaaccount_getinfo -
+\f[I]Get info about the samba (SMB/CIFS) account of a user\f[]
+.PP
+schoolmesh_sambaaccount_unlock -
+\f[I]Unlock the samba (SMB/CIFS) account of a user\f[]
+.PP
+schoolmesh_unoconv_launch -
+\f[I]launch Unoconv and locks the screen at once\f[]
+.PP
+schoolmesh_workstation_disableinternetaccess -
+\f[I]Disable Internet access for a workstation\f[]
+.PP
+schoolmesh_workstation_enableinternetaccess -
+\f[I]Enable internet access for a workstation\f[]
+.PP
+schoolmesh_workstation_removejobs -
+\f[I]Remove all scheduled jobs for a workstation\f[]
+.PP
+schoolmesh_workstations_getinternetenabled -
+\f[I]Get the list of workstations for which Internet access is enabled\f[]
+.PP
+schoolmesh_workstations_getjobs -
+\f[I]Get the list of jobs scheduled for all the workstations\f[]
+.SH DESCRIPTION
+.PP
+These utilities are really only basic wrapper scripts to be used
+together with SchoolMesh.
+The idea is to provide flexibility.
+For instance, instead of calling directly \f[B]useradd\f[], we call
+\f[B]schoolmesh_posixaccount_create\f[].
+This way, if one day we need to change the behaviour needed to add
+a system user (for instance, using \f[I]ldap\f[], or contacting a
+different server), we just need to change the wrapper scripts.
+.PP
+Each utility should have its own man page (work in progress).
+.SH BUGS
+.PP
+Probably many.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>.
+.SH AUTHORS
+Loris Tissino.
+

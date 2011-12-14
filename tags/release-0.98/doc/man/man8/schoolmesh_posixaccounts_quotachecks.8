@@ -1,0 +1,40 @@
+.TH SCHOOLMESH_POSIXACCOUNTS_QUOTACHECKS 8 "December 2011" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_posixaccounts_quotachecks - Get a list of users
+specifying who of them exceeds their quota
+.SH SYNOPSIS
+.PP
+schoolmesh_posixaccounts_quotachecks primary | secondary | all
+\f[I]group\f[]
+.SH DESCRIPTION
+.PP
+Use this script to get a list of users with information about disk
+quota exceeded.
+You can decide to check only primary groups, only secondary, or
+both.
+.SH EXAMPLES
+.PP
+schoolmesh_posixaccounts_quotachecks primary
+students
+.PD 0
+.P
+.PD
+schoolmesh_posixaccounts_quotachecks
+secondary
+students
+.PD 0
+.P
+.PD
+schoolmesh_posixaccounts_quotachecks all
+students
+.SH BUGS
+.PP
+Probably many.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://schoolmesh.mattiussilab.net/>.
+.SH AUTHORS
+Loris Tissino (loris.tissino\@mattiussilab.net).
+

@@ -1,0 +1,477 @@
+propel:
+  track:
+    id:           ~
+    shortcut:     { type: varchar(3), index: true, unique: true }
+    description:  { type: varchar(255), required: true }
+
+  schoolclass:
+    id:           { type: varchar(5), primaryKey: true }
+    grade:        { type: integer, required: true }
+    section:      { type: varchar(3), required: true }
+    track_id:   
+    description:  { type: varchar(255), required: false }
+
+  year:
+    id:           { type: integer, required: true, primaryKey: true, autoIncrement: false }
+    description:  { type: varchar(7), unique: true }
+    start_date: { type: date }
+    end_date: { type: date }
+
+  term:
+    id:           { type: varchar(10), primaryKey: true }
+    description: { type: varchar(100), required: true }
+    end_day:  { type: integer, required: true } # the number of days, following the start date of the year, when the term finishes (an approx. value, used for comparison between years if necessary)
+    has_formal_evaluation: boolean
+
+  subject:
+    id:           ~
+    shortcut:     { type: varchar(3), index: true, required: true, unique: true }
+    description:  { type: varchar(255), required: true }
+    rank:     integer
+
+  suggestion:
+    id: ~
+    shortcut:     { type: varchar(20), index: true, required: true, unique: true }
+    content:  { type: varchar(255), required: true }
+    is_selectable: boolean
+    rank:   integer
+
+  recuperation_hint:
+    id: ~
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: false, onUpdate: cascade, onDelete: cascade, index:true }
+    content:  { type: varchar(255), required: true }
+    is_selectable: boolean
+    rank:  integer
+    
+
+  sf_guard_user_profile:
+    _attributes:  { phpName: sfGuardUserProfile }
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onUpdate: cascade, onDelete: cascade, primaryKey: true }
+    lettertitle:        varchar(10)  # the title to be used in formal letters
+    first_name:   varchar(50)
+    middle_name:  varchar(50)
+    last_name:    varchar(50)
+    pronunciation: varchar(100)
+    info: longvarchar
+    role_id:      ~
+    gender:      varchar(1)
+    email:        varchar(50)
+    email_state: { type: integer, default: 0 }
+    email_verification_code: varchar(40)
+    birthdate:    date
+    birthplace:   varchar(50)
+    import_code:  varchar(20)
+    system_alerts: varchar(255)
+    is_scheduled_for_deletion: { type: boolean, default: false }
+    prefers_richtext: { type: boolean, default: true }
+    preferred_format: varchar(5)
+    last_action_at: timestamp
+    last_login_at: timestamp
+
+
+  account_type:
+    id:
+    name:           { type: varchar, size: 255, required: true, index: unique }
+    description:    { type: longvarchar }
+    is_external:   { type: boolean, required: true }
+    rank:    integer
+
+  account:
+    id:   
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onUpdate: cascade, onDelete: cascade, index:true }
+    account_type_id: { type: integer, foreignTable: account_type, foreignReference: id, required: true, onDelete: restrict, index: true }
+    info:  longvarchar
+    settings: longvarchar
+    exists: boolean
+    is_locked: boolean
+    temporary_password: varchar(10)
+    info_updated_at: timestamp
+    last_known_login_at: timestamp
+    quota_percentage: integer
+    updated_at: ~
+    created_at: ~
+    _uniques:
+      ua: [user_id, account_type_id]
+# info: it is a serialized array of information read from the actual system in which the account is present
+# settings: it is a serialized array of information that should be set in the actual system
+# quota_percentage: an integer in the range 0-100
+# is_locked: true if it is locked (suspended), false if it is active, null if unknown
+
+
+  reserved_username:
+    id:   
+    username: { type: varchar(20), index: unique }
+    aliases_to: { type: varchar(20), index: true }
+
+
+  ticket_type:
+    id: 
+    description: { type: varchar(50), required: true }
+
+  ticket:
+    id:
+    referrer:  varchar(255)
+    ticket_type_id: 
+    updated_at:
+    state:  integer
+
+  ticket_event:
+    id:
+    ticket_id: 
+    user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: restrict, onUpdate: cascade, index:true }
+    created_at: 
+    content:  { type: varchar(255), required: true }
+    state: integer
+    assignee_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: false, onDelete: restrict, onUpdate: cascade, index:true }
+
+  syllabus:
+    id: ~
+    name: varchar(50)
+    version: varchar(20)
+    author: varchar(50)
+    href: varchar(255)
+    is_active:  { type: boolean, default: true }
+    
+  syllabus_item:
+    syllabus_id: ~
+    id: ~
+    rank: integer
+    ref: varchar(24)
+    level: integer
+    parent_id: { type: integer, foreignTable: syllabus_item, foreignReference: id, required: false, onDelete: restrict, onUpdate: cascade, index:true }
+    content: longvarchar
+    is_selectable: { type: boolean, default: false }
+    _uniques:
+      ir: [syllabus_id, ref]
+      
+  appointment:
+    id: ~
+    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    subject_id:       { type: integer, foreignTable: subject, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    team_id:          { type: integer, foreignTable: team, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
+    year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    state:             { type: integer }
+    hours:            { type: integer, default: 0 }
+    is_public:         { type: boolean }
+    syllabus_id: ~
+    created_at:   
+    updated_at:
+    import_code:  varchar(20)
+    _uniques:
+      ussy: [user_id, subject_id, schoolclass_id, year_id]
+
+  enrolment:
+    id: ~
+    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    info: longvarchar
+    created_at:   
+    updated_at:
+    import_code:  varchar(20)
+    _uniques:
+      usy: [user_id, year_id]
+    
+
+  team:
+    id:           ~
+    description:  varchar(100)
+    posix_name:   varchar(20)
+    quality_code: varchar(10)
+    needs_folder: { type: boolean, default: false }
+    needs_mailing_list:  { type: boolean, default: false }
+    
+  role:
+    id:           ~
+    male_description:  varchar(100)
+    female_description:  varchar(100)
+    quality_code: varchar(10)        
+    posix_name: varchar(20)
+    may_be_main_role: boolean
+    default_guardgroup: varchar(20)
+
+  user_team:
+    id: ~
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    team_id:     { type: integer, foreignTable: team, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true  }
+    role_id:       { type: integer, foreignTable: role, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    _uniques:
+      utr: [user_id, team_id]
+
+  wfevent:
+    id:  ~
+    base_table: integer
+    base_id: integer
+    created_at: ~
+    user_id:  	{ type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade }
+    comment:   { type: varchar(255) }
+    state:  integer
+
+  wpinfo_type:
+    id:          ~
+    title:        varchar(50)
+    description:  varchar(255)
+    rank:    { type: integer, required: true }
+    state:  integer
+    template:     longvarchar
+    example:     longvarchar
+    is_required:  boolean
+    is_confidential: boolean
+# state indicates in which of workplan's state this item type should be shown
+# is_confidential indicates that this field should not be published and should be seen only by the schoolmaster 
+
+  wpinfo:
+    id: ~
+    appointment_id:   ~
+    wpinfo_type_id:  ~
+    updated_at: 
+    content:   longvarchar
+
+  wptool_item_type:
+    id:         ~
+    description:  varchar(50)
+    rank:   integer
+    state: integer
+    min_selected: integer
+    max_selected: integer
+
+  wptool_item:
+    id:   ~
+    description: varchar(50);
+    wptool_item_type_id: ~
+
+  wptool_appointment:
+    appointment_id:  { type: integer, foreignTable: appointment, foreignReference: id, required: true, onDelete: cascade, onUpdate: cascade, primaryKey: true }
+    wptool_item_id:  { type: integer, foreignTable: wptool_item, foreignReference: id, required: true, onDelete: restrict, onUpdate: cascade, primaryKey: true }
+
+  wpmodule:
+    id:         ~
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: cascade, onUpdate: cascade }
+    title:        varchar(255)
+    period:       varchar(255)
+    hours_estimated:    { type:  integer, default: 0 }
+    hours_used:     { type:  integer, default: 0 }
+    appointment_id:   
+    rank:       integer
+    is_public:    boolean
+    created_at:   ~
+    updated_at:   ~
+
+  wpitem_type:
+    id:          ~
+    title:        varchar(50)
+    singular: varchar(50)
+    description:  varchar(200)
+    style:       varchar(50)
+    rank:    { type: integer, required: true }
+    state:  integer
+    is_required: boolean
+    syllabus_id: ~
+    code: { type: varchar(20), index: true }
+    evaluation_min:  integer
+    evaluation_max:  integer
+    evaluation_min_description: varchar(50)
+    evaluation_max_description: varchar(50)
+# state indicates in which of workplan's state this item type should be shown
+# code is needed to make it possible copying similar items where the syllabus is not the same
+    _uniques:
+      sc: [syllabus_id, code]
+
+
+  wpitem_group:
+    id:           ~
+    wpitem_type_id:  ~
+    wpmodule_id:  { type: integer, foreignTable: wpmodule, foreignReference: id, onDelete: cascade, onUpdate: cascade, required: true  }
+    _uniques:
+      iti_mi: [wpitem_type_id, wpmodule_id]
+
+  wpmodule_item:
+    id:           ~
+    wpitem_group_id: { type: integer, foreignTable: wpitem_group, foreignReference: id, onDelete: cascade, onUpdate: cascade, required: true  }
+    rank:    { type: integer, required: true }
+    content:      longvarchar
+    evaluation:  { type: integer, required: false } 
+    is_editable: boolean
+    _uniques:
+      id_pos:     [id, rank]
+
+  student_situation:
+    id:     ~
+    term_id:           { type: varchar(10), foreignTable: term, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    wpmodule_item_id:   { type: integer, foreignTable: wpmodule_item, foreignReference: id, onDelete: cascade, onUpdate: cascade, required: true  }
+    user_id:  	{ type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    evaluation:  integer
+    _uniques:
+      twu:     [term_id, wpmodule_item_id, user_id]
+
+  student_suggestion:
+    id:     ~
+    term_id:           { type: varchar(10), foreignTable: term, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    appointment_id:   { type: integer, foreignTable: appointment, foreignReference: id, required: true, onDelete: cascade, onUpdate: cascade, primaryKey: true }
+    user_id:  	{ type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    suggestion_id: ~
+    _uniques:
+      taus:     [term_id, appointment_id, user_id, suggestion_id]
+
+  student_hint:
+    id:     ~
+    term_id:           { type: varchar(10), foreignTable: term, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    appointment_id:   { type: integer, foreignTable: appointment, foreignReference: id, required: true, onDelete: cascade, onUpdate: cascade, primaryKey: true }
+    user_id:  	{ type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    recuperation_hint_id: ~
+    _uniques:
+      taur:     [term_id, appointment_id, user_id, recuperation_hint_id]
+      
+  wpmodule_syllabus_item:
+    id: ~
+    wpmodule_id: ~
+    syllabus_item_id: ~
+    contribution: integer  # 1 for partial contribution, 2 for focussed contribution
+    evaluation: { type: integer, required: false } 
+    _uniques:
+      ws: [wpmodule_id, syllabus_item_id]
+
+  schoolproject:
+    id: ~
+    proj_category_id: ~
+    proj_financing_id: ~ 
+    year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    title:        varchar(255)
+    description:  longvarchar # what has to be done and how
+    notes:        longvarchar
+    addressees:   longvarchar
+    purposes:     longvarchar
+    goals:        longvarchar
+    final_report: longvarchar
+    proposals:    longvarchar
+    hours_approved: integer
+    state:        { type: integer }
+    submission_date: date
+    reference_number: varchar(20)
+    approval_date: date
+    approval_notes: longvarchar
+    financing_date: date    
+    financing_notes: longvarchar
+    confirmation_date:  date    
+    confirmation_notes: longvarchar
+    evaluation_min: integer  # the minimum value for evaluations of upshots of this project
+    evaluation_max: integer  # the minimum value for evaluations of upshots of this project
+
+  proj_category:
+    id: ~
+    title: varchar(255)
+    rank: { type: integer, required: true }
+    resources: integer  # 0: cannot have resources; 1: may have resources; 2: must have resources 
+
+  proj_deadline:
+    id:  ~
+    schoolproject_id:  ~
+    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    original_deadline_date: date
+    current_deadline_date: date
+    description: varchar(255)
+    notes:   longvarchar
+    completed: boolean
+    needs_attachment: boolean
+    created_at: ~
+    updated_at: ~
+
+# completed should be changed in state: completed, overdue, canceled, etc.
+
+  proj_financing:
+    id: ~
+    description: varchar(255)
+    rank: { type: integer, required: true }
+
+  proj_resource_type:
+    id: ~
+    description: varchar(255)
+    role_id: ~
+    standard_cost: { type: decimal, size: 10, scale: 2 }
+    measurement_unit: varchar(10)
+    is_monetary: { type: boolean, default: true }
+    rank: integer
+
+  proj_resource:
+    id: ~
+    schoolproject_id:           ~
+    proj_resource_type_id:      ~
+    description:                varchar(255)
+    charged_user_id:            { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
+    quantity_estimated:         { type: decimal, size: 10, scale: 2 }
+    quantity_approved:          { type: decimal, size: 10, scale: 2 }
+    amount_funded_externally:   { type: decimal, size: 10, scale: 2 }
+    financing_notes:            varchar(255)
+    quantity_final:             { type: decimal, size: 10, scale: 2 }
+    standard_cost:              { type: decimal, size: 10, scale: 2 }
+    is_monetary:                { type: boolean, default: true }
+    scheduled_deadline:         date
+    
+  proj_activity:
+    id: ~
+    proj_resource_id: ~
+    user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    beginning: timestamp
+    quantity:  { type: decimal, size: 10, scale: 2 }
+    notes: longvarchar
+    created_at: ~
+    acknowledged_at: timestamp
+    acknowledger_user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
+    added_by_coordinator: { type: boolean, default: false }
+
+  proj_upshot:
+    id: ~
+    schoolproject_id: ~
+    description: varchar(255)
+    indicator: varchar(255)  # expectation
+    upshot: varchar(255)
+    evaluation: integer  # the minimum and the maximum are set in schoolproject table
+    scheduled_date: date    
+
+  subnet:
+    id:
+    name:   { type: varchar(40), index: true, unique: true }
+    ip_cidr:     { type: varchar(20), required: false }
+
+  workstation:
+    id:          
+    name:    { type: varchar(40), index: true, unique: true }
+    ip_cidr:   { type: varchar(20), required: true, unique: true }
+    mac_address: { type: varchar(17), required: false, unique: true }
+    is_enabled: { type: boolean, default: false }
+    subnet_id: ~
+
+  lanlog:
+    id: ~
+    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    workstation_id:  { type: integer, foreignTable: workstation, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true}
+    created_at: 
+    updated_at:
+    is_online: { type: boolean, required: true, default: false }
+    os_used: varchar(100)
+
+  attachment_file:
+    id:
+    user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    base_table: integer
+    base_id: integer
+    internet_media_type: varchar
+    original_file_name: varchar
+    uniqid: { type: varchar(50), required: true, index: unique }
+    file_size: bigint
+    is_public: { type: boolean, default: false }
+    md5sum: varchar(32)
+    _uniques:
+      tim: [base_table, base_id, md5sum]
+
+  system_message:
+    id:
+    key: varchar(30)
+    _uniques:
+      key: [key]
+
+  system_message_i18n:
+    content: varchar(255)  
+
