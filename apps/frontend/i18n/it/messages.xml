@@ -3736,6 +3736,10 @@
         <source>Upload users</source>
         <target>Carica utenti</target>
     </trans-unit>
+    <trans-unit id="946">
+        <source>%name% belongs to the team your appointment is set for</source>
+        <target>%name% appartiene al team relativo al tuo incarico di insegnamento</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

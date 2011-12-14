@@ -34,8 +34,10 @@
 <?php if(isset($appointment)): ?>
 	  <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
 <?php endif ?>
-
       <th class="sf_admin_text"><?php echo __('Number') ?></th>
+<?php if(isset($appointment)): ?>
+    <th class="sf_admin_text"></th>
+<?php endif ?>
       <th class="sf_admin_text"><?php echo __('Gender') ?></th>
       <th class="sf_admin_text"><?php echo __('First name') ?></th>
       <th class="sf_admin_text"><?php echo __('Last name') ?></th>
@@ -48,14 +50,26 @@
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
 	
 <?php if(isset($appointment)): ?>
-		<td>
-    <?php if($enrolment->getsfGuardUser()->getIsActive() && !$appointment->getTeamId() or ($appointment->getTeamId() and in_array($enrolment->getsfGuardUser()->getId(), $teamcomponents->getRawValue()))): ?>
-  <input type="checkbox" name="ids[]" value="<?php echo $enrolment->getsfGuardUser()->getId() ?>" class="sf_admin_batch_checkbox" <?php echo in_array($enrolment->getsfGuardUser()->getId(), $ids->getRawValue()) ? "checked='checked'": '' ?>"/>
-    <?php endif ?>
-</td>
+    <td>
+    <input type="checkbox" name="ids[]" value="<?php echo $enrolment->getsfGuardUser()->getId() ?>" class="sf_admin_batch_checkbox" <?php echo in_array($enrolment->getsfGuardUser()->getId(), $ids->getRawValue()) ? "checked='checked'": '' ?>"/>
+    </td>
 <?php endif ?>
 
-      <td<?php if(!$enrolment->getsfGuardUser()->getIsActive()) echo ' class="notcurrent"' ?>><?php echo $i ?></td>
+      <td<?php if(!$enrolment->getsfGuardUser()->getIsActive()) echo ' class="notcurrent"' ?> style="text-align:right"><?php echo $i ?></td>
+
+<?php if(isset($appointment)): ?>
+		<td>
+    <?php if($appointment->getTeamId() and in_array($enrolment->getsfGuardUser()->getId(), $teamcomponents->getRawValue())): ?>
+    <?php echo image_tag('selectable', array(
+      'title'=>__('%name% belongs to the team your appointment is set for', array('%name%'=>$enrolment->getsfGuardUser()->getProfile()->getFullName())),
+      'size'=>'16x16'
+      ))
+    ?>
+    <?php endif ?>
+    </td>
+<?php endif ?>
+
+
       <td><?php include_partial('users/gender', array('gender'=>$enrolment->getsfGuardUser()->getProfile()->getGender())) ?></td>
       <td><?php echo $enrolment->getsfGuardUser()->getProfile()->getFirstName() ?></td>
       <td><?php echo $enrolment->getsfGuardUser()->getProfile()->getLastName() ?></td>
