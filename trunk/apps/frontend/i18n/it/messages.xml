@@ -3740,8 +3740,74 @@
         <source>%name% belongs to the team your appointment is set for</source>
         <target>%name% appartiene al team relativo al tuo incarico di insegnamento</target>
     </trans-unit>
+    <trans-unit id="947">
+        <source>Users' settings</source>
+        <target>Impostazioni utenti</target>
+    </trans-unit>
+    <trans-unit id="948">
+        <source>Password reset</source>
+        <target>Reimpostazione password</target>
+    </trans-unit>
+    <trans-unit id="949">
+        <source>In this page you can reset the password of the students that might have forgot it.</source>
+        <target>In questa pagina puoi reimpostare la password per gli studenti che l'hanno dimenticata.</target>
+    </trans-unit>
+    <trans-unit id="950">
+        <source>Teachers' and staff's passwords can be reset only by an administrator.</source>
+        <target>Le password del personale docente e non docente possono essere reimpostate solo dagli amministratori.</target>
+    </trans-unit>
+    <trans-unit id="951">
+        <source>Choose the account type</source>
+        <target>Scegli il tipo di account</target>
+    </trans-unit>
+    <trans-unit id="952">
+        <source>Choose</source>
+        <target>Scegli</target>
+    </trans-unit>
+    <trans-unit id="953">
+        <source>Confirm password reset</source>
+        <target>Conferma reimpostazione password</target>
+    </trans-unit>
+    <trans-unit id="954">
+        <source>You are about to reset the password for this account.</source>
+        <target>Stai per reimpostare la password legata a questo account.</target>
+    </trans-unit>
+    <trans-unit id="955">
+        <source>Is it OK to proceed?</source>
+        <target>Sei sicuro di voler procedere?</target>
+    </trans-unit>
+    <trans-unit id="956">
+        <source>User %username% does not have an account of type %account%</source>
+        <target>L'utente %username% non dispone di un account di tipo %account%</target>
+    </trans-unit>
+    <trans-unit id="957">
+        <source>You don't have the required credential to reset passwords for user %username%</source>
+        <target>Non disponi delle credenziali necessarie per reimpostare le password dell'utente %username%</target>
+    </trans-unit>
+    <trans-unit id="958">
+        <source>You must select a user.</source>
+        <target>Devi selezionare un utente.</target>
+    </trans-unit>
+    <trans-unit id="959">
+        <source>You don\'t have the required credential to reset passwords of type %accounttype%.</source>
+        <target>Non disponi della credenziale per reimpostare le password di tipo %accounttype%.</target>
+    </trans-unit>
+    <trans-unit id="960">
+        <source>Password successfully reset.</source>
+        <target>Password correttamente reimpostata.</target>
+    </trans-unit>
+    <trans-unit id="961">
+        <source>Password reset by %username%</source>
+        <target>Password reimpostata da %username%</target>
+    </trans-unit>
+    <trans-unit id="962">
+        <source>Cancel</source>
+        <target>Annulla</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
+
 
 

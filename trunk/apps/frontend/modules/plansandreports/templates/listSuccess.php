@@ -1,5 +1,5 @@
 <?php include_partial('content/breadcrumps', array(
-  'current'=>__('Manage appointments'),
+  'current'=>__('Appointments management'),
   'title'=>__("Workplans and reports' monitoring")
   ))
 ?>

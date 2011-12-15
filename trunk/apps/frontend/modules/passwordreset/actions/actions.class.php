@@ -18,7 +18,7 @@ class passwordresetActions extends sfActions
   public function executeIndex(sfWebRequest $request)
 	{
 		$this->available_accounts=sfConfig::get('app_config_accounts');
-		$this->form = new ChooseUserForm();
+		$this->form = new ChooseUserAccountForm();
 		
 		
 	}
@@ -42,7 +42,7 @@ class passwordresetActions extends sfActions
   public function executeConfirm(sfWebRequest $request)
 	{
 		$this->available_accounts=sfConfig::get('app_config_accounts');
-		$this->form = new ConfirmUserForm();
+		$this->form = new ConfirmUserAccountForm();
 		$this->referer=$request->getReferer();
 				
 		if ($request->isMethod('post'))
@@ -55,28 +55,28 @@ class passwordresetActions extends sfActions
 				$this->username=$params['username'];
 				if(!($this->getUser()->hasCredential($this->account.'_resetpwd')||($this->getUser()->hasCredential('admin'))))
 				{
-					$this->getUser()->setFlash('error', sprintf('You don\'t have the required permission to reset passwords of type %s.', $this->account));
+					$this->getUser()->setFlash('error', $this->getContext()->getI18n()->__('You don\'t have the required credential to reset passwords of type %accounttype%.', array('%accounttype%'=>$this->account)));
 					$this->redirect('passwordreset/index');
 				}
 				
 				$user=sfGuardUserProfilePeer::retrieveByUsername($this->username);
 				if ((!$user->getProfile()->getBelongsToGuardGroupByName('student'))&&(!$this->getUser()->hasCredential('admin')))
 				{
-					$this->getUser()->setFlash('error', sprintf('You don\'t have the required permission to reset passwords for user %s.', $this->username));
+					$this->getUser()->setFlash('error', $this->getContext()->getI18n()->__('You don\'t have the required credential to reset passwords for user %username%', array('%username%'=>$this->username)));
 					$this->redirect('passwordreset/index');
 				}
 				
 				if (!$user->getProfile()->hasAccountOfType($this->account))
 				{
-					$this->getUser()->setFlash('error', sprintf('User %s does not have an account of type %s', $this->username, $this->account));
+					$this->getUser()->setFlash('error', $this->getContext()->getI18n()->__('User %username% does not have an account of type %account%', array('%username%'=>$this->username, '%account%'=>$this->account)));
 					$this->redirect('passwordreset/index');
 				}
 				
 				$user->getProfile()->getAccountByType($this->account)->resetPassword();
 				$user->getProfile()
-				->addSystemAlert(sprintf('password reset by %s', $this->getUser()->getUsername()))
+				->addSystemAlert($this->getContext()->getI18n()->__('Password reset by %username%', array('%username%'=>$this->getUser()->getUsername())))
 				->save();
-				$this->getUser()->setFlash('notice', 'Password successfully reset.');
+				$this->getUser()->setFlash('notice', $this->getContext()->getI18n()->__('Password successfully reset.'));
 				$this->redirect('passwordreset/view?username='. $this->username . '&account=' . $this->account);
 			}
 		}
@@ -95,7 +95,7 @@ class passwordresetActions extends sfActions
 		
 		if(!($this->getUser()->hasCredential($this->account.'_resetpwd')||($this->getUser()->hasCredential('admin'))))
 		{
-			$this->getUser()->setFlash('error', sprintf('You don\'t have the required creential to reset passwords of type %s', $this->account));
+			$this->getUser()->setFlash('error', $this->getContext()->getI18n()->__('You don\'t have the required credential to reset passwords of type %accounttype%.', array('%accounttype%'=>$this->account)));
 			$this->redirect('passwordreset/index');
 		}
 		
@@ -103,18 +103,18 @@ class passwordresetActions extends sfActions
 		
 		if(!$user)
 		{
-			$this->getUser()->setFlash('error', 'You must select a user');
+			$this->getUser()->setFlash('error', $this->getContext()->getI18n()->__('You must select a user.'));
 			$this->redirect('passwordreset/index');
 		}
 		
 		if ((!$user->getProfile()->getBelongsToGuardGroupByName('student'))&&(!$this->getUser()->hasCredential('admin')))
 		{
-			$this->getUser()->setFlash('error', sprintf('You don\'t have the required permission to reset passwords for user %s.', $this->username));
+			$this->getUser()->setFlash('error', $this->getContext()->getI18n()->__('You don\'t have the required credential to reset passwords for user %username%', array('%username%'=>$this->username)));
 			$this->redirect('passwordreset/index');
 		}
 		if (!$user->getProfile()->hasAccountOfType($this->account))
 		{
-			$this->getUser()->setFlash('error', sprintf('User %s does not have an account of type %s.', $this->username, $this->account));
+			$this->getUser()->setFlash('error', $this->getContext()->getI18n()->__('User %username% does not have an account of type %account%', array('%username%'=>$this->username, '%account%'=>$this->account)));
 			$this->redirect('passwordreset/index');
 		}
 
