@@ -191,7 +191,44 @@ class usersActions extends sfActions
   
   public function executeReassignappointment(sfWebRequest $request)
   {
-    
+    $this->forward404Unless($this->appointment=AppointmentPeer::retrieveByPK($request->getParameter('id')));
+    //$this->forward404Unless($this->appointment->isReassignable());
+    $this->form=new ChooseUserForm(
+      array(
+        'user_id'=>$this->appointment->getSfGuardUser()->getId()
+        ),
+      array(
+        'peer_method'=>'retrieveTeachers',
+        'add_empty'=>'Select a teacher',
+        )
+      );
+      
+    if($request->isMethod('post'))
+ 		{
+      $oldOwnerId=$this->appointment->getSfGuardUser()->getId();
+      
+			$this->form->bind($request->getParameter('info'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+
+        if($params['user_id']==$this->appointment->getSfGuardUser()->getId())
+        {
+          $this->getUser()->setFlash('notice',
+            $this->getContext()->getI18N()->__('Appointment left unchanged.')
+            );          
+        }
+        else
+        {
+          $result=$this->appointment->reassign($this->getUser()->getProfile()->getUserId(), $params, $this->getContext());
+          $this->getUser()->setFlash($result['result'],
+            $this->getContext()->getI18N()->__($result['message'])
+            );
+        }
+				$this->redirect('users/edit?id='. $oldOwnerId);
+			}
+    }
+      
   }
 
   public function executeUnlock(sfWebRequest $request)

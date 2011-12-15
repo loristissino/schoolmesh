@@ -59,10 +59,10 @@
 				?>
 				</li>
 				<?php endif ?>
-				<?php  if ($sf_user->hasCredential('admin') && $appointment->getState()<Workflow::FR_ARCHIVED): ?>
+				<?php  if ($sf_user->hasCredential('admin') && $appointment->isReassignable()): ?>
 				<li class="sf_admin_action_reassign">
 				<?php echo link_to(
-					__('Re-assign'),
+					__('Reassign'),
 					url_for('users/reassignappointment?id='.$appointment->getId()),
           array(
             'title'=>__('Change teacher for this appointment')
