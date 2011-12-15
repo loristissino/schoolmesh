@@ -1,6 +1,6 @@
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
-    '_users' => __("User's settings"),
+    '_users' => __("Users' settings"),
     '_passwordreset' => __("Password reset")
     ),
   'current'=>__("Confirm password reset")
@@ -15,7 +15,7 @@
 </strong> 
 </p>
 <p>
-         <?php echo __('Is it ok to proceed?') ?>
+         <?php echo __('Is it OK to proceed?') ?>
 </p>
 
 <form action="<?php echo url_for('passwordreset/confirm') ?>" method="post">

@@ -188,6 +188,11 @@ class usersActions extends sfActions
 
 
   }
+  
+  public function executeReassignappointment(sfWebRequest $request)
+  {
+    
+  }
 
   public function executeUnlock(sfWebRequest $request)
   {

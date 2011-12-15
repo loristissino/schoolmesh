@@ -78,7 +78,7 @@ class LoginAccount extends Account
 				),
 			);
 
-		$this->makeComparisons(&$checkList, $checks, $checkGroup);
+		$this->makeComparisons($checkList, $checks, $checkGroup);
 		$this->save();
 		return $this;
 	}

@@ -77,6 +77,8 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		$c->addJoin(sfGuardUserGroupPeer::GROUP_ID, sfGuardGroupPeer::ID);
 		$c->add(sfGuardGroupPeer::NAME, $guardgroupName);
 		$c->addJoin(sfGuardUserProfilePeer::USER_ID, sfGuardUserGroupPeer::USER_ID);
+    $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+    $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
 		$t = sfGuardUserGroupPeer::doSelectJoinAll($c);
 		return $t;
 	}
