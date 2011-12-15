@@ -165,12 +165,16 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	}
 
 
-	public static function retrieveTeachers($year=0)
+	public static function retrieveTeachers($criteria=null, $year=0)
 	{
+    $c=$criteria;
+    if(!$c)
+    {
+      $c = new Criteria();
+    }
 
     if ($year==0)
     {
-      $c = new Criteria();
       $c->addJoin(sfGuardUserProfilePeer::ROLE_ID, RolePeer::ID);
       $c->add(RolePeer::POSIX_NAME, sfConfig::get('app_config_teachers_default_posix_group'));
       $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
@@ -182,7 +186,6 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
     }
     else
     {
-    	$c = new Criteria();
       $c->setDistinct();
       $c->addJoin(AppointmentPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
       $c->add(AppointmentPeer::YEAR_ID, $year);

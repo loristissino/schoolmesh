@@ -3804,9 +3804,68 @@
         <source>Cancel</source>
         <target>Annulla</target>
     </trans-unit>
+    <trans-unit id="963">
+        <source>Reassign</source>
+        <target>Riassegna</target>
+    </trans-unit>
+    <trans-unit id="964">
+        <source>Change teacher for this appointment</source>
+        <target>Cambia insegnante per questo incarico</target>
+    </trans-unit>
+    <trans-unit id="965">
+        <source>Reassign appointment</source>
+        <target>Riassegna incarico</target>
+    </trans-unit>
+    <trans-unit id="966">
+        <source>Appointment reassignment</source>
+        <target>Riassegnazione incarico</target>
+    </trans-unit>
+    <trans-unit id="967">
+        <source>You are going to reassign the appointment «%appointment%», that currently %teachername% is charged with, to another teacher.</source>
+        <target>Stai per riassegnare l'incarico «%appointment%», correntemente affidato a %teachername%, ad un altro docente.</target>
+    </trans-unit>
+    <trans-unit id="968">
+        <source>This action will change the ownership of the workplan/report, but not the events associated with it.</source>
+        <target>Questa azione cambierà il proprietario di piano di lavoro e relazione collegati all'incarico, ma non gli eventi associati.</target>
+    </trans-unit>
+    <trans-unit id="969">
+        <source>Usually you need to do this when a substition begins or ends.</source>
+        <target>Generalmente hai bisogno di compiere questa azione all'inizio o al termine di una supplenza.</target>
+    </trans-unit>
+    <trans-unit id="970">
+        <source>Select a teacher</source>
+        <target>Scegli un docente</target>
+    </trans-unit>
+    <trans-unit id="971">
+        <source>An appointment in this state cannot be reassigned.</source>
+        <target>Un incarico in questo stato non può essere riassegnato.</target>
+    </trans-unit>
+    <trans-unit id="972">
+        <source>Appointment reassigned (from %oldteachername% to %newteachername%)</source>
+        <target>Incarico riassegnato (da %oldteachername% a %newteachername%)</target>
+    </trans-unit>
+    <trans-unit id="973">
+        <source>Appointment successfully reassigned.</source>
+        <target>Incarico correttamente riassegnato.</target>
+    </trans-unit>
+    <trans-unit id="974">
+        <source>The appointment could not be reassigned.</source>
+        <target>Riassegnazione dell'incarico impossibile.</target>
+    </trans-unit>
+    <trans-unit id="975">
+        <source>Appointment left unchanged.</source>
+        <target>Incarico lasciato immutato.</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
+
+
+
+
+
+
 
 
 

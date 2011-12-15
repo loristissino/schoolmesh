@@ -1,5 +1,5 @@
 <?php
-class ChooseUserForm extends BaseForm
+class ChooseUserAccountForm extends BaseForm
 {
   public function configure()
   {

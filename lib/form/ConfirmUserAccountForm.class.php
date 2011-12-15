@@ -1,5 +1,5 @@
 <?php
-        class ConfirmUserForm extends BaseForm
+        class ConfirmUserAccountForm extends BaseForm
         {
           public function configure()
           {

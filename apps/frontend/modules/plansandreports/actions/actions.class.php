@@ -193,7 +193,7 @@ public function executeBatch(sfWebRequest $request)
 		$this->schoolclasses = SchoolclassPeer::retrieveCurrentSchoolclasses($this->year);
 		$this->subjects = SubjectPeer::retrieveAllByRank();
 		$this->states = Workflow::getWpfrStates(true);
-		$this->teachers = sfGuardUserProfilePeer::retrieveTeachers($this->year);
+		$this->teachers = sfGuardUserProfilePeer::retrieveTeachers(null, $this->year);
     $this->years = YearPeer::retrieveAll();
 	}
 	

@@ -146,7 +146,7 @@ class Appointment extends BaseAppointment
   
 	public function __toString()
 	{
-    return $this->getSubject() . ' (' . $this->getSchoolclass() . $this->getYear() . ')';
+    return sprintf('%s (%s %s)', $this->getSubject(), $this->getSchoolclass(), $this->getYear());
 	}
 
 	public function getShortDescription()
@@ -378,8 +378,74 @@ $con->query($sql);
 	  }
 
 	}
-	
-	
+
+  public function isReassignable()
+  {
+    return in_array($this->getState(), array(
+      Workflow::AP_ASSIGNED,
+      Workflow::WP_DRAFT,
+      Workflow::IR_DRAFT,
+      Workflow::FR_WADMC)
+      );
+  }
+
+	public function Reassign($user_id, $params, sfContext $context=null)
+	{
+    $result=Array();
+    if(!$this->isReassignable())
+    {
+      $result['result']='error';
+      $result['message']='An appointment in this state cannot be reassigned.';
+      return $result;
+    }
+
+    $con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
+	  try
+	  {
+      $oldOwner=$this->getFullName();
+      $newOwnerId=$params['user_id'];
+    
+      $con->beginTransaction();
+      
+      $this
+      ->setUserId($newOwnerId)
+      ->save($con)
+      ;
+      
+      foreach($this->getWpmodules() as $wpmodule)
+      {
+        $wpmodule
+        ->setUserId($newOwnerId)
+        ->save($con)
+        ;
+      }
+      
+      $this->addWfevent(
+        $user_id, 'Appointment reassigned (from %oldteachername% to %newteachername%)', 
+        array('%oldteachername%'=>$oldOwner, '%newteachername%'=>$this->getFullName()), 
+        null, 
+        $context, 
+        $con);
+				
+      $con->commit();
+		
+      $result['result']='notice';
+      $result['message']='Appointment successfully reassigned.';
+    
+      return $result;
+	  }
+	  catch (Exception $e)
+	  {
+      $con->rollback();
+      
+      $result['result']='error';
+      $result['message']='The appointment could not be reassigned.';
+      $result['exception']=$e;
+      return $result;
+	  }
+
+	}
+
 	public function getChecks($con=null)
 	{
 
@@ -863,9 +929,11 @@ $con->query($sql);
 public function addWfevent($userId, $comment='', $i18n_subs=array(), $state=0, $sf_context=null, $con=null)
   {
     Generic::addWfevent($this, $userId, $comment, $i18n_subs, $state, $sf_context);
-    $this
-    ->setState($state)
-    ->save($con);
+    if($state)
+    {
+      $this->setState($state);
+    }
+    $this->save($con);
 
     return $this;
   }
