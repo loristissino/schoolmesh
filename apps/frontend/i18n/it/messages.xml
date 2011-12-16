@@ -3876,17 +3876,14 @@
         <source>No workflow logs available for this item.</source>
         <target>Non sono presenti voci relative al workflow per questo elemento.</target>
     </trans-unit>
+    <trans-unit id="980">
+        <source>Knowledge and skills from the Syllabus</source>
+        <target>Conoscenze e abilità dal Syllabus</target>
+    </trans-unit>
+    <trans-unit id="981">
+        <source>No item selected</source>
+        <target>Nessun elemento selezionato</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
-
-
-
-
-
-
-
-
-
-
-

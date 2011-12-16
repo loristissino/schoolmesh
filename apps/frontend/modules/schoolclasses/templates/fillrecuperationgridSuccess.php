@@ -46,8 +46,24 @@
 </table>
 <?php endforeach ?>
 
+<hr />
 
-<hr>
+<table width="100%">
+<tr>
+	<th colspan="2">
+		<h2><?php echo __('Knowledge and skills from the Syllabus') ?></h2>
+	</th>
+<?php include_partial('students', array('students'=>$students)) ?>
+
+</tr>
+<?php foreach($syllabusitems as $syllabusitem): ?>
+<tr id="syllabusitem_<?php echo $syllabusitem->getId()?>">
+	<?php include_partial('syllabusitem', array('students'=>$students, 'appointment_id'=>$appointment->getId(),'syllabusitem'=>$syllabusitem,  'term_id'=>$term_id)) ?>
+</tr>
+<?php endforeach ?>
+</table>
+
+<hr />
 
 <table width="100%">
 <tr>
@@ -66,7 +82,7 @@
 
 </table>
 
-<hr>
+<hr />
 <a name="hints"></a>
 <?php if ($sf_user->hasFlash('notice_hints')): ?>
   <div class="notice"><?php echo $sf_user->getFlash('notice_hints')?></div>

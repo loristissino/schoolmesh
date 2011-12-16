@@ -88,6 +88,8 @@ class schoolclassesActions extends sfActions
     
     $this->hints=RecuperationHintPeer::retrieveAllByRankForTeacher($this->appointment->getUserId());
     
+    $this->syllabusitems=$this->appointment->getSyllabusItems();
+    
     $this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($this->getUser()->getAttribute('ids'));
   
     $this->getUser()->setFlash('helpaction', 'fillrecuperationgrid');
@@ -249,6 +251,37 @@ class schoolclassesActions extends sfActions
 
           return $this->renderPartial('hint', array('hint'=>$hint, 'students'=>$this->students, 'ids'=>Generic::b64_serialize($ids), 'appointment_id'=>$appointment->getId(), 'term_id'=>$term_id));
       
+  }
+
+  public function executeSyllabusitem(sfWebRequest $request)
+  {
+      $ids = $this->getUser()->getAttribute('ids');
+      $this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($ids);
+      
+      $term_id=sfConfig::get('app_config_current_term');
+      
+      $syllabusitem_id=$request->getParameter('syllabusitem');
+      $syllabusitem=SyllabusItemPeer::retrieveByPK($syllabusitem_id);
+    
+      $appointment_id=$request->getParameter('appointment');
+      $appointment=AppointmentPeer::retrieveByPK($appointment_id);
+
+      $student_id=$request->getParameter('student');
+      
+      if ($student_id=='all')
+      {
+        foreach($ids as $id)
+        {
+          $appointment->toggleStudentSyllabusItem($id, $term_id, $syllabusitem);				
+        }
+        
+      }
+      else
+      {
+        $appointment->toggleStudentSyllabusItem($student_id, $term_id, $syllabusitem);
+      }
+
+      return $this->renderPartial('syllabusitem', array('syllabusitem'=>$syllabusitem, 'students'=>$this->students, 'ids'=>Generic::b64_serialize($ids), 'appointment_id'=>$appointment->getId(), 'term_id'=>$term_id));
   }
 
   public function executeEditHintInLine(sfWebRequest $request)

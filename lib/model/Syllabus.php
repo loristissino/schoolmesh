@@ -21,10 +21,17 @@ class Syllabus extends BaseSyllabus {
   
   public function getSyllabusItems($criteria = null, PropelPDO $con = null)
   {
-    $c=new Criteria();
+    $c=$criteria?$criteria:new Criteria();
     $c->add(SyllabusItemPeer::SYLLABUS_ID, $this->getId());
     $c->addAscendingOrderByColumn(SyllabusItemPeer::RANK);
     return SyllabusItemPeer::doSelect($c);
+  }
+
+  public function getSelectableSyllabusItems($criteria = null, PropelPDO $con = null)
+  {
+    $c=new Criteria();
+    $c->add(SyllabusItemPeer::IS_SELECTABLE, true);
+    return $this->getSyllabusItems($c);
   }
 
   public function saveItems($items=array(), $con=null)

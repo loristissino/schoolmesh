@@ -43,5 +43,39 @@ class SyllabusItem extends BaseSyllabusItem {
     return $this;
     
   }
+  
+  
+	public function getStudentIdsForAppointmentAndTerm($appointment_id, $term_id)
+	{
+		$c = new Criteria();
+		$c->add(StudentSyllabusItemPeer::SYLLABUS_ITEM_ID, $this->getId());
+		$c->add(StudentSyllabusItemPeer::APPOINTMENT_ID, $appointment_id);
+		$c->add(StudentSyllabusItemPeer::TERM_ID, $term_id);
+
+		$result=StudentSyllabusItemPeer::doSelect($c);
+		
+		$ids=array();
+		foreach($result as $r)
+		{
+			$ids[]=$r->getUserId();
+		}
+		
+		return $ids;
+	}
+
+	public function hasStudentSyllabusItemForAppointment($student_id, $appointment_id, $term_id)
+	{
+		$c = new Criteria();
+		$c->add(StudentSyllabusItemPeer::SYLLABUS_ITEM_ID, $this->getId());
+		$c->add(StudentSyllabusItemPeer::APPOINTMENT_ID, $appointment_id);
+		$c->add(StudentSyllabusItemPeer::TERM_ID, $term_id);
+		$c->add(StudentSyllabusItemPeer::USER_ID, $student_id);
+
+		return (StudentSyllabusItemPeer::doCount($c)==1);
+	}
+
+
+
+  
 
 } // SyllabusItem
