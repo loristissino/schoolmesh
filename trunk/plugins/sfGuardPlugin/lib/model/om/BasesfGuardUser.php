@@ -201,6 +201,16 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	private $lastStudentHintCriteria = null;
 
 	/**
+	 * @var        array StudentSyllabusItem[] Collection to store aggregation of StudentSyllabusItem objects.
+	 */
+	protected $collStudentSyllabusItems;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collStudentSyllabusItems.
+	 */
+	private $lastStudentSyllabusItemCriteria = null;
+
+	/**
 	 * @var        array Schoolproject[] Collection to store aggregation of Schoolproject objects.
 	 */
 	protected $collSchoolprojects;
@@ -887,6 +897,9 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$this->collStudentHints = null;
 			$this->lastStudentHintCriteria = null;
 
+			$this->collStudentSyllabusItems = null;
+			$this->lastStudentSyllabusItemCriteria = null;
+
 			$this->collSchoolprojects = null;
 			$this->lastSchoolprojectCriteria = null;
 
@@ -1157,6 +1170,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collStudentSyllabusItems !== null) {
+				foreach ($this->collStudentSyllabusItems as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collSchoolprojects !== null) {
 				foreach ($this->collSchoolprojects as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -1404,6 +1425,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 				if ($this->collStudentHints !== null) {
 					foreach ($this->collStudentHints as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collStudentSyllabusItems !== null) {
+					foreach ($this->collStudentSyllabusItems as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1841,6 +1870,12 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			foreach ($this->getStudentHints() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addStudentHint($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getStudentSyllabusItems() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addStudentSyllabusItem($relObj->copy($deepCopy));
 				}
 			}
 
@@ -4823,6 +4858,301 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collStudentSyllabusItems collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addStudentSyllabusItems()
+	 */
+	public function clearStudentSyllabusItems()
+	{
+		$this->collStudentSyllabusItems = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collStudentSyllabusItems collection (array).
+	 *
+	 * By default this just sets the collStudentSyllabusItems collection to an empty array (like clearcollStudentSyllabusItems());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initStudentSyllabusItems()
+	{
+		$this->collStudentSyllabusItems = array();
+	}
+
+	/**
+	 * Gets an array of StudentSyllabusItem objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related StudentSyllabusItems from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array StudentSyllabusItem[]
+	 * @throws     PropelException
+	 */
+	public function getStudentSyllabusItems($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentSyllabusItems === null) {
+			if ($this->isNew()) {
+			   $this->collStudentSyllabusItems = array();
+			} else {
+
+				$criteria->add(StudentSyllabusItemPeer::USER_ID, $this->id);
+
+				StudentSyllabusItemPeer::addSelectColumns($criteria);
+				$this->collStudentSyllabusItems = StudentSyllabusItemPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(StudentSyllabusItemPeer::USER_ID, $this->id);
+
+				StudentSyllabusItemPeer::addSelectColumns($criteria);
+				if (!isset($this->lastStudentSyllabusItemCriteria) || !$this->lastStudentSyllabusItemCriteria->equals($criteria)) {
+					$this->collStudentSyllabusItems = StudentSyllabusItemPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastStudentSyllabusItemCriteria = $criteria;
+		return $this->collStudentSyllabusItems;
+	}
+
+	/**
+	 * Returns the number of related StudentSyllabusItem objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related StudentSyllabusItem objects.
+	 * @throws     PropelException
+	 */
+	public function countStudentSyllabusItems(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collStudentSyllabusItems === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(StudentSyllabusItemPeer::USER_ID, $this->id);
+
+				$count = StudentSyllabusItemPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(StudentSyllabusItemPeer::USER_ID, $this->id);
+
+				if (!isset($this->lastStudentSyllabusItemCriteria) || !$this->lastStudentSyllabusItemCriteria->equals($criteria)) {
+					$count = StudentSyllabusItemPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collStudentSyllabusItems);
+				}
+			} else {
+				$count = count($this->collStudentSyllabusItems);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a StudentSyllabusItem object to this object
+	 * through the StudentSyllabusItem foreign key attribute.
+	 *
+	 * @param      StudentSyllabusItem $l StudentSyllabusItem
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addStudentSyllabusItem(StudentSyllabusItem $l)
+	{
+		if ($this->collStudentSyllabusItems === null) {
+			$this->initStudentSyllabusItems();
+		}
+		if (!in_array($l, $this->collStudentSyllabusItems, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collStudentSyllabusItems, $l);
+			$l->setsfGuardUser($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related StudentSyllabusItems from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getStudentSyllabusItemsJoinTerm($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentSyllabusItems === null) {
+			if ($this->isNew()) {
+				$this->collStudentSyllabusItems = array();
+			} else {
+
+				$criteria->add(StudentSyllabusItemPeer::USER_ID, $this->id);
+
+				$this->collStudentSyllabusItems = StudentSyllabusItemPeer::doSelectJoinTerm($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentSyllabusItemPeer::USER_ID, $this->id);
+
+			if (!isset($this->lastStudentSyllabusItemCriteria) || !$this->lastStudentSyllabusItemCriteria->equals($criteria)) {
+				$this->collStudentSyllabusItems = StudentSyllabusItemPeer::doSelectJoinTerm($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentSyllabusItemCriteria = $criteria;
+
+		return $this->collStudentSyllabusItems;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related StudentSyllabusItems from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getStudentSyllabusItemsJoinAppointment($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentSyllabusItems === null) {
+			if ($this->isNew()) {
+				$this->collStudentSyllabusItems = array();
+			} else {
+
+				$criteria->add(StudentSyllabusItemPeer::USER_ID, $this->id);
+
+				$this->collStudentSyllabusItems = StudentSyllabusItemPeer::doSelectJoinAppointment($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentSyllabusItemPeer::USER_ID, $this->id);
+
+			if (!isset($this->lastStudentSyllabusItemCriteria) || !$this->lastStudentSyllabusItemCriteria->equals($criteria)) {
+				$this->collStudentSyllabusItems = StudentSyllabusItemPeer::doSelectJoinAppointment($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentSyllabusItemCriteria = $criteria;
+
+		return $this->collStudentSyllabusItems;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related StudentSyllabusItems from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getStudentSyllabusItemsJoinSyllabusItem($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collStudentSyllabusItems === null) {
+			if ($this->isNew()) {
+				$this->collStudentSyllabusItems = array();
+			} else {
+
+				$criteria->add(StudentSyllabusItemPeer::USER_ID, $this->id);
+
+				$this->collStudentSyllabusItems = StudentSyllabusItemPeer::doSelectJoinSyllabusItem($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(StudentSyllabusItemPeer::USER_ID, $this->id);
+
+			if (!isset($this->lastStudentSyllabusItemCriteria) || !$this->lastStudentSyllabusItemCriteria->equals($criteria)) {
+				$this->collStudentSyllabusItems = StudentSyllabusItemPeer::doSelectJoinSyllabusItem($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastStudentSyllabusItemCriteria = $criteria;
+
+		return $this->collStudentSyllabusItems;
+	}
+
+	/**
 	 * Clears out the collSchoolprojects collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
@@ -6954,6 +7284,11 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collStudentSyllabusItems) {
+				foreach ((array) $this->collStudentSyllabusItems as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->collSchoolprojects) {
 				foreach ((array) $this->collSchoolprojects as $o) {
 					$o->clearAllReferences($deep);
@@ -7019,6 +7354,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->collStudentSituations = null;
 		$this->collStudentSuggestions = null;
 		$this->collStudentHints = null;
+		$this->collStudentSyllabusItems = null;
 		$this->collSchoolprojects = null;
 		$this->collProjDeadlines = null;
 		$this->collProjResources = null;

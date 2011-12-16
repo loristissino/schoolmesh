@@ -1433,21 +1433,21 @@ public function getWorkflowLogs()
 		{
 			throw new Exception('term not defined');
 		}
-		
 				
 		if ($template=='')
 		{
 			$template='recuperation.odt';
 		}
 		
-		$teachertitle=$this->getSfGuardUser()->getProfile()->getIsMale()?'Mr. ':'Ms. ';
+		$teachertitle=$this->getSfGuardUser()->getProfile()->getLetterTitle();
 		$doctitle='Recuperation suggestions';
+    
+    $nocontent='No item selected';
 
 		if ($sfContext)
 		{
-			$teachertitle=$sfContext->getI18n()->__($teachertitle);
 			$doctitle=$sfContext->getI18n()->__($doctitle);
-
+      $nocontent=$sfContext->getI18n()->__($nocontent);
 		}
 	
 		try
@@ -1467,6 +1467,8 @@ public function getWorkflowLogs()
 		
 		$suggestions=SuggestionPeer::retrieveAllByRank();
 		$hints=RecuperationHintPeer::retrieveAllByRankForTeacher($this->getUserId());
+    
+    $syllabusitems=$this->getSyllabus()->getSelectableSyllabusItems();
 		
 		$letters=$odfdoc->setSegment('letters');
 		
@@ -1487,17 +1489,23 @@ public function getWorkflowLogs()
 								{
 									$selectedStudents[$student->getFullName()]['modules'][$wpmodule->getTitle()][$wpitemgroup->getWpitemType()->getTitle()][]=$wpitem->getContent();
 								}
-								
 							}
-						
 					}
 			}
+      
+			foreach ($syllabusitems as $syllabusitem)
+			{
+				if($syllabusitem->hasStudentSyllabusItemForAppointment($student->getId(), $this->getId(), $term->getId()))
+				{
+					$selectedStudents[$student->getFullName()]['syllabusitems'][]=$syllabusitem->getContent();
+				}
+			}
+      
 			foreach ($suggestions as $suggestion)
 			{
 				if($suggestion->hasStudentSuggestionForAppointment($student->getId(), $this->getId(), $term->getId()))
 				{
 					$selectedStudents[$student->getFullName()]['suggestions'][]=$suggestion->getContent();
-					
 				}
 			}
 			
@@ -1506,11 +1514,8 @@ public function getWorkflowLogs()
 				if($hint->hasStudentHintForAppointment($student->getId(), $this->getId(), $term->getId()))
 				{
 					$selectedStudents[$student->getFullName()]['hints'][]=$hint->getContent();
-					
 				}
 			}
-			
-			
 		}
 			
 		$studentsNumber=sizeof(array_keys($selectedStudents));
@@ -1545,6 +1550,22 @@ public function getWorkflowLogs()
 				}
 			}
 			
+			if (@is_array($selectedStudent_value['syllabusitems']))
+			{
+				$selectedSyllabusitems=$selectedStudent_value['syllabusitems'];
+			
+				foreach($selectedSyllabusitems as $selectedSyllabusitem)
+				{
+					$letters->syllabusitems->syllabusitemContent($selectedSyllabusitem);
+					$letters->syllabusitems->merge();
+				}
+			}
+			else
+			{
+				$letters->syllabusitems->syllabusitemContent('['. $nocontent. ']');
+				$letters->syllabusitems->merge();
+			}
+
 			if (@is_array($selectedStudent_value['suggestions']))
 			{
 				$selectedSuggestions=$selectedStudent_value['suggestions'];
@@ -1558,7 +1579,7 @@ public function getWorkflowLogs()
 			}
 			else
 			{
-				$letters->suggestions->suggestionContent('');
+				$letters->suggestions->suggestionContent('['. $nocontent. ']');
 				$letters->suggestions->merge();
 			}
 			
@@ -1576,7 +1597,7 @@ public function getWorkflowLogs()
 			}
 			else
 			{
-				$letters->hints->hintContent('');
+				$letters->hints->hintContent('['. $nocontent. ']');
 				$letters->hints->merge();
 			}
 			
@@ -1896,7 +1917,6 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 	}
 	public function toggleStudentRecuperationHint($student_id, $term_id, RecuperationHint $hint)
 	{
-		
 		//FIXME: Add check about the teacher doing the action...
 		$c = new Criteria();
 		$c->add(StudentHintPeer::APPOINTMENT_ID, $this->getId());
@@ -1938,11 +1958,53 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 			}
 			
 		}
-
-
-
-		
 	}
+
+	public function toggleStudentSyllabusItem($student_id, $term_id, SyllabusItem $syllabusitem)
+	{
+		//FIXME: Add check about the teacher doing the action...
+		$c = new Criteria();
+		$c->add(StudentSyllabusItemPeer::APPOINTMENT_ID, $this->getId());
+		$c->add(StudentSyllabusItemPeer::TERM_ID, $term_id);
+		$c->add(StudentSyllabusItemPeer::USER_ID, $student_id);
+		$c->add(StudentSyllabusItemPeer::SYLLABUS_ITEM_ID, $syllabusitem->getId());
+
+		$studentSyllabusItem = StudentSyllabusItemPeer::doSelectOne($c);
+		
+		$error=false;
+		
+		if ($studentSyllabusItem)
+		{
+			try
+			{
+				$studentSyllabusItem->delete();
+			}
+			catch (Exception $e)
+			{
+				$error=true;
+			}
+		}
+		else
+		{
+			
+			try
+			{
+				$studentSyllabusItem = new StudentSyllabusItem();
+				$studentSyllabusItem
+				->setTermId($term_id)
+				->setUserId($student_id)
+				->setAppointmentId($this->getId())
+				->setSyllabusItem($syllabusitem)
+				->save();
+			}
+			catch (Exception $e)
+			{
+				$error=true;
+			}
+			
+		}
+	}
+
 
   public function updateStateRecursively($state)
   {
@@ -2026,5 +2088,18 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 		$c->addJoin(AppointmentPeer::SUBJECT_ID, SubjectPeer::ID);
 		return AppointmentPeer::doSelectJoinAll($c);
 	}
+  
+  public function getSyllabusItems()
+  {
+    $c=new Criteria();
+    $c->addJoin(AppointmentPeer::ID, WpmodulePeer::APPOINTMENT_ID);
+    $c->addJoin(WpmodulePeer::ID, WpmoduleSyllabusItemPeer::WPMODULE_ID);
+    $c->addJoin(WpmoduleSyllabusItemPeer::SYLLABUS_ITEM_ID, SyllabusItemPeer::ID);
+    $c->add(AppointmentPeer::ID, $this->getId());
+    $c->setDistinct();
+    $c->addAscendingOrderByColumn(SyllabusItemPeer::ID);
+    return SyllabusItemPeer::doSelect($c);
+  }
+  
 
 }

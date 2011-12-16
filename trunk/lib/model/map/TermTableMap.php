@@ -51,6 +51,7 @@ class TermTableMap extends TableMap {
     $this->addRelation('StudentSituation', 'StudentSituation', RelationMap::ONE_TO_MANY, array('id' => 'term_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('StudentSuggestion', 'StudentSuggestion', RelationMap::ONE_TO_MANY, array('id' => 'term_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('StudentHint', 'StudentHint', RelationMap::ONE_TO_MANY, array('id' => 'term_id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('StudentSyllabusItem', 'StudentSyllabusItem', RelationMap::ONE_TO_MANY, array('id' => 'term_id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
 	/**

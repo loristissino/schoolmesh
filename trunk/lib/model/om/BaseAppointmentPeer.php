@@ -394,6 +394,9 @@ abstract class BaseAppointmentPeer {
 		// invalidate objects in StudentHintPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 		StudentHintPeer::clearInstancePool();
 
+		// invalidate objects in StudentSyllabusItemPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
+		StudentSyllabusItemPeer::clearInstancePool();
+
 	}
 
 	/**

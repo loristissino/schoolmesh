@@ -66,6 +66,7 @@ class sfGuardUserTableMap extends TableMap {
     $this->addRelation('StudentSituation', 'StudentSituation', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('StudentSuggestion', 'StudentSuggestion', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('StudentHint', 'StudentHint', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('StudentSyllabusItem', 'StudentSyllabusItem', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Schoolproject', 'Schoolproject', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('ProjDeadline', 'ProjDeadline', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('ProjResource', 'ProjResource', RelationMap::ONE_TO_MANY, array('id' => 'charged_user_id', ), 'RESTRICT', 'CASCADE');

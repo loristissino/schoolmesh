@@ -891,6 +891,45 @@ CREATE TABLE `student_hint`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- student_syllabus_item
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `student_syllabus_item`;
+
+
+CREATE TABLE `student_syllabus_item`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`term_id` VARCHAR(10)  NOT NULL,
+	`appointment_id` INTEGER  NOT NULL,
+	`user_id` INTEGER  NOT NULL,
+	`syllabus_item_id` INTEGER,
+	PRIMARY KEY (`id`,`appointment_id`),
+	UNIQUE KEY `taus` (`term_id`, `appointment_id`, `user_id`, `syllabus_item_id`),
+	CONSTRAINT `student_syllabus_item_FK_1`
+		FOREIGN KEY (`term_id`)
+		REFERENCES `term` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `student_syllabus_item_FI_2` (`appointment_id`),
+	CONSTRAINT `student_syllabus_item_FK_2`
+		FOREIGN KEY (`appointment_id`)
+		REFERENCES `appointment` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE,
+	INDEX `student_syllabus_item_FI_3` (`user_id`),
+	CONSTRAINT `student_syllabus_item_FK_3`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `student_syllabus_item_FI_4` (`syllabus_item_id`),
+	CONSTRAINT `student_syllabus_item_FK_4`
+		FOREIGN KEY (`syllabus_item_id`)
+		REFERENCES `syllabus_item` (`id`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- wpmodule_syllabus_item
 #-----------------------------------------------------------------------------
 
