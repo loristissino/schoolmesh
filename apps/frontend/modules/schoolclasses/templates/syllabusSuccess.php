@@ -14,12 +14,12 @@
 <table>
 <tr>
 <th><?php echo __('Ref.') ?></th><th><?php echo __('Item') ?></th>
-<?php foreach($appointments as $appointment): ?>
-	<th width="10"><?php echo image_tag(/*Generic::getBaseUrl().*/'vertical.php?text='. urlencode($appointment->getSubject()->getDescription()) .
-	'&backcolor=255-255-255&textcolor=0-0-0&ywidth=250',
+<?php foreach($appointments as $appointment): $backcolor=$appointment->getTeamId()?'255-255-191':'255-255-255' ?>
+	<th width="10"><?php echo image_tag('vertical.php?text='. urlencode($appointment->getSubject()->getDescription()) .
+	'&backcolor='.$backcolor.'&textcolor=0-0-0&ywidth=250',
 			array(
 				'alt' => $appointment->getSubject()->getDescription(),
-				'title' => $appointment->getSubject()->getDescription(),
+				'title' => $appointment->getSubject()->getDescription() . ($appointment->getTeamId()? sprintf(' (%s)', __('this appointment is set only for some of the students')): ''),
         'size' => '20x250')
 				)
 			?></th>
@@ -32,11 +32,11 @@
 <tr>
 <?php include_partial('syllabi/item', array('syllabus_item'=>$syllabus_item)) ?>
 <?php foreach($appointments as $appointment): ?>
-	<td>
+	<td<?php if($appointment->getTeamId()) echo ' style="background-color: #FFFFBF"' ?>>
   <?php if(array_key_exists($syllabus_item->getId(), $contributions) && array_key_exists($appointment->getId(), $contributions[$syllabus_item->getId()])): ?>
     <?php foreach($contributions[$syllabus_item->getId()][$appointment->getId()] as $contribution): ?>
       <?php if($contribution['contribution']==WpmoduleSyllabusItemPeer::PARTIAL_CONTRIBUTION) $p+=1; else $f+=1 ?>
-      <?php include_partial('syllabi/contribution', array('contribution'=>$contribution)) ?>
+      <?php include_partial('syllabi/contribution', array('contribution'=>$contribution, 'appointment'=>$appointment)) ?>
     <?php endforeach ?>
   <?php endif ?>
   </td>

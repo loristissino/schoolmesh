@@ -8,6 +8,11 @@
   display: none;
 }
 
+abbr
+{
+  border-bottom: none;
+}
+
 #actionshead
 {
   display: none;

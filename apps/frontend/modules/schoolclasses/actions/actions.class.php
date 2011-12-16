@@ -324,7 +324,7 @@ class schoolclassesActions extends sfActions
 
     */
 
-		$this->doctype=$request->getParameter('doctype', $sf_user->getProfile()->getPreferredFormat());
+		$this->doctype=$request->getParameter('doctype', $this->getUser()->getProfile()->getPreferredFormat());
 
     try 
 		{
