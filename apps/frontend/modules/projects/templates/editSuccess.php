@@ -36,6 +36,12 @@
     <td><?php echo $project->getTitle() ?></td>
   </tr>
   <?php endif ?>
+  <?php if(!isset($form['reference_number'])): ?>
+  <tr>
+    <th><label for="schoolproject_reference_number"><?php echo __('Reference number') ?></label></th>
+    <td><?php echo $project->getReferenceNumber() ?></td>
+  </tr>
+  <?php endif ?>
   <?php if(!isset($form['description'])): ?>
   <tr>
     <th><label for="schoolproject_description"><?php echo __('Description') ?></label></th>

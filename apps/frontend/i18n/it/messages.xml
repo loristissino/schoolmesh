@@ -3738,7 +3738,7 @@
     </trans-unit>
     <trans-unit id="946">
         <source>%name% belongs to the team your appointment is set for</source>
-        <target>%name% appartiene al team relativo al tuo incarico di insegnamento</target>
+        <target>%name% appartiene al team associato al tuo incarico di insegnamento</target>
     </trans-unit>
     <trans-unit id="947">
         <source>Users' settings</source>
@@ -3884,6 +3884,12 @@
         <source>No item selected</source>
         <target>Nessun elemento selezionato</target>
     </trans-unit>
+    <trans-unit id="982">
+        <source>[0]Looks like %studentname% is not enrolled anymore|[1]Looks like %studentname% is not enrolled anymore</source>
+        <target>[0]A quanto pare, %studentname% non è più iscritta|[1]A quanto pare, %studentname% non è più iscritto</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
+
