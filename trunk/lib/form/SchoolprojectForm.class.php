@@ -120,6 +120,14 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['goals'],
           $this['reference_number']
           );
+          if($user!=$this->schoolproject->getsfGuardUser())
+          {
+            // the coordinator can change final notes
+            unset(
+              $this['final_report'],
+              $this['proposals']
+            );
+          }
         break;
       case Workflow::PROJ_FINANCED:
         unset(
@@ -141,6 +149,43 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['goals'],
           $this['reference_number']
           );
+          if($user!=$this->schoolproject->getsfGuardUser())
+          {
+            // the coordinator can change final notes
+            unset(
+              $this['final_report'],
+              $this['proposals']
+            );
+          }
+        break;
+      case Workflow::PROJ_CONFIRMED:
+        unset(
+          $this['hours_approved'],
+          $this['title'],
+          $this['description'],
+          $this['notes'],
+          $this['proj_category_id'],
+          $this['proj_financing_id'],
+          $this['submission_date'],
+          $this['approval_date'],
+          $this['financing_date'],
+          $this['confirmation_date'],
+          $this['approval_notes'], 
+          $this['financing_notes'],
+          $this['confirmation_notes'],
+          $this['addressees'],
+          $this['purposes'],
+          $this['goals'],
+          $this['reference_number']
+          );
+          if($user!=$this->schoolproject->getsfGuardUser())
+          {
+            // the coordinator can change final notes
+            unset(
+              $this['final_report'],
+              $this['proposals']
+            );
+          }
         break;
       case Workflow::PROJ_FINISHED:
         unset(

@@ -55,7 +55,11 @@
     </td>
 <?php endif ?>
 
-      <td<?php if(!$enrolment->getsfGuardUser()->getIsActive()) echo ' class="notcurrent"' ?> style="text-align:right"><?php echo $i ?></td>
+    <?php if(!$enrolment->getsfGuardUser()->getIsActive()): ?>
+      <td class="notcurrent" style="text-align:right"><abbr title="<?php echo format_number_choice(__('[0]Looks like %studentname% is not enrolled anymore|[1]Looks like %studentname% is not enrolled anymore', array('%studentname%'=>$enrolment->getsfGuardUser()->getProfile()->getFullName())), null, $enrolment->getsfGuardUser()->getProfile()->getIsMale()) ?>"><?php echo $i ?></abbr></td>
+    <?php else: ?>
+      <td style="text-align:right"><?php echo $i ?></td>
+    <?php endif ?>
 
 <?php if(isset($appointment)): ?>
 		<td>
