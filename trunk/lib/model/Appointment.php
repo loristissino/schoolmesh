@@ -1372,7 +1372,7 @@ public function getWorkflowLogs()
     
 		foreach($appointments as $appointment)
 		{
-      $odfdoc->setvars(sprintf('subject%02d', ++$count), $appointment->getSubject());
+      $odfdoc->setvars(sprintf('subject%02d', ++$count), $appointment->getSubject() . ($appointment->getTeamId()?'*':''));
 		}
     for($i=$count+1; $i<=$maxsubjects; $i++)
     {

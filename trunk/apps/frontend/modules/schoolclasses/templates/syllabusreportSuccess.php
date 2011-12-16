@@ -31,7 +31,8 @@
       <?php include_partial('syllabi/contributionreport', array(
         'subject'=>$contribution['subject'],
         'title' =>$contribution['title'],
-        'contribution'=>$contribution['contribution']
+        'contribution'=>$contribution['contribution'],
+        'appointment'=>$appointment,
         ))
       ?>
     <?php endforeach ?>
@@ -49,11 +50,19 @@
 
 </table>
 
+<h2><?php echo __('Legend') ?></h2>
+<p>
+<strong>▣</strong>: <?php echo __('focussed contribution') ?><br />
+<strong>◪</strong>: <?php echo __('partial contribution') ?><br />
+<strong>*</strong>: <?php echo __('this appointment is set only for some of the students') ?><br />
+</p>
+
 <h2><?php echo __('Actions') ?></h2>
 <ul class="sf_admin_actions">
 <li class="sf_admin_action_report"><?php echo link_to(
   __('View as table'),
-  'schoolclasses/syllabus?id=' . $schoolclass->getId()
+  'schoolclasses/syllabus?id=' . $appointment->getId()
   )
-?></li>
+?></li><br />
+<?php echo export_action_links($sf_user, 'schoolclasses/exportsyllabus?id=' . $appointment->getId(), $sf_context) ?>
 </ul>

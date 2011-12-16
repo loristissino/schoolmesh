@@ -1197,7 +1197,7 @@
       </trans-unit>
       <trans-unit id="326">
         <source>Appointments management</source>
-        <target>Gestione incarichi docenti</target>
+        <target>Gestione incarichi di docenza</target>
       </trans-unit>
       <trans-unit id="326">
         <source>Schoolmaster's actions</source>
@@ -3674,7 +3674,7 @@
     </trans-unit>
     <trans-unit id="929">
         <source>Upload appointments</source>
-        <target>Carica incarichi di insegnamento</target>
+        <target>Carica incarichi di docenza</target>
     </trans-unit>
     <trans-unit id="930">
         <source>Run team checks</source>
@@ -3855,6 +3855,22 @@
     <trans-unit id="975">
         <source>Appointment left unchanged.</source>
         <target>Incarico lasciato immutato.</target>
+    </trans-unit>
+    <trans-unit id="976">
+        <source>this appointment is set only for some of the students</source>
+        <target>questo incarico è impostato solo per alcuni degli studenti</target>
+    </trans-unit>
+    <trans-unit id="977">
+        <source>focussed contribution</source>
+        <target>contributo specifico</target>
+    </trans-unit>
+    <trans-unit id="978">
+        <source>partial contribution</source>
+        <target>contributo parziale</target>
+    </trans-unit>
+    <trans-unit id="979">
+        <source>Legend</source>
+        <target>Legenda</target>
     </trans-unit>
     </body>
   </file> 
