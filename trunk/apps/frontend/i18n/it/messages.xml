@@ -3872,6 +3872,10 @@
         <source>Legend</source>
         <target>Legenda</target>
     </trans-unit>
+    <trans-unit id="979">
+        <source>No workflow logs available for this item.</source>
+        <target>Non sono presenti voci relative al workflow per questo elemento.</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

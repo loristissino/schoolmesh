@@ -47,11 +47,8 @@ class schoolclassesActions extends sfActions
 
   public function executeBatch(sfWebRequest $request)
   {
-	
     $ids = $request->getParameter('ids');
     $this->getUser()->setAttribute('ids', $ids);
-    
-    Generic::logMessage('batch', $ids);
     
     $action=$request->getParameter('batch_action');
 
@@ -60,8 +57,8 @@ class schoolclassesActions extends sfActions
         $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must specify an action.'));
         $this->redirect('schoolclasses/view?id='. $request->getParameter('id') . '&appointment=' . $request->getParameter('appointment'));
       }
-      
-    $this->forward('schoolclasses', $action);
+
+    return $this->forward('schoolclasses', $action);
     // if an action is not valid, we get an error anyway, because there is no
     // template BatchSuccess.php
 
@@ -78,7 +75,6 @@ class schoolclassesActions extends sfActions
 
   public function executeFillrecuperationgrid(sfWebRequest $request)
   {
-    
     $this->term_id=sfConfig::get('app_config_current_term');
     $this->forward404Unless($this->term=TermPeer::retrieveByPK($this->term_id));
 
@@ -93,15 +89,15 @@ class schoolclassesActions extends sfActions
     $this->hints=RecuperationHintPeer::retrieveAllByRankForTeacher($this->appointment->getUserId());
     
     $this->students = sfGuardUserProfilePeer::retrieveByPksSortedByLastnames($this->getUser()->getAttribute('ids'));
-
+  
     $this->getUser()->setFlash('helpaction', 'fillrecuperationgrid');
 
     if (sizeof($this->students)==0)
       {
         $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select at least a student.'));
         $this->forward('schoolclasses', 'redirect');
+        
       }
-
   }
 
   public function executeGetrecuperationletters(sfWebRequest $request)
