@@ -50,7 +50,7 @@
 	<?php endif ?>
 <?php endforeach ?>
 
-<?php if($workplan->getSyllabus()->getIsActive()): ?>
+<?php if($workplan->isWorkplan() && $workplan->getSyllabus()->getIsActive()): ?>
 <h2><?php echo __('Syllabus links') ?></h2>
 
 <ul class="sf_admin_actions">
