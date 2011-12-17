@@ -1,7 +1,13 @@
 #!/bin/bash
 
+PANDOCMANDIR=/home/loris/Importanti/SchoolMesh/pandoc.man
+WIKIFILE=/home/loris/Importanti/SchoolMesh/wiki/ManPage.wiki
+
 FILELIST=`mktemp`
 echo "" > $FILELIST
+
+sudo rm -fv /usr/local/share/man/man8/schoolmesh*
+sudo rm -fv $PANDOCMANDIR/schoolmesh*
 
 cd /var/schoolmesh/bin/
 
@@ -19,7 +25,7 @@ for FILE in $(ls schoolmesh_*| sed 's/_/0/g' | sort | sed 's/0/_/g')
 	
 		cat > /tmp/$FILE <<EOT
 % {}(8) Schoolmesh User Manuals
-% Loris Tissino (loris.tissino@mattiussilab.net)
+% Loris Tissino (loris.tissino@gmail.com)
 % {DATE}
 
 EOT
@@ -37,7 +43,7 @@ Probably many.
 
 # SEE ALSO
 
-The SchoolMesh project is described at <http://schoolmesh.mattiussilab.net/>.
+The SchoolMesh project is described at <http://www.schoolmesh.mattiussilab.net/>.
 
 EOT
 
@@ -46,19 +52,19 @@ EOT
 		
 		FILEDATE=$(LANG=C date +'%B %Y' -r $FILE)
 		
-		sed -e "s/{}/$CMDNAME/g" -e "s/{-}/$FILE/" /tmp/$FILE > /var/schoolmesh/doc/pandoc.man/$FILE.8
-		sed -i "s/{DATE}/$FILEDATE/" /var/schoolmesh/doc/pandoc.man/$FILE.8
+		sed -e "s/{}/$CMDNAME/g" -e "s/{-}/$FILE/" /tmp/$FILE > $PANDOCMANDIR/$FILE.8
+		sed -i "s/{DATE}/$FILEDATE/" $PANDOCMANDIR/$FILE.8
 
 	fi
 
 	done
 
 
-cd /var/schoolmesh/doc/pandoc.man
+cd $PANDOCMANDIR
 
 cat > schoolmesh.8 <<EOT
 % SCHOOLMESH(8) Schoolmesh utilities User Manuals
-% Loris Tissino
+% Loris Tissino <loris.tissino@gmail.com>
 % $(LANG=C date +'%B %Y')
 
 # NAME
@@ -85,7 +91,7 @@ Probably many.
 
 # SEE ALSO
 
-The SchoolMesh project is described at <http://schoolmesh.mattiussilab.net/>.
+The SchoolMesh project is described at <http://www.schoolmesh.mattiussilab.net/>.
 EOT
 
 sed -i "/# UTILITY LIST/ r $FILELIST" schoolmesh.8
@@ -94,8 +100,8 @@ for FILE in *
 	do
 		SECTION=${FILE#*.}
 		echo "Producing man page: $FILE (section $SECTION)..."
-		pandoc -s --write man $FILE -o ../man/man$SECTION/$FILE
-		chmod 644 ../man/man$SECTION/$FILE
+		pandoc -s --write man $FILE -o /var/schoolmesh/doc/man/man$SECTION/$FILE
+		chmod 644 /var/schoolmesh/doc/man/man$SECTION/$FILE
 	done
 
 for i in 1 8
@@ -104,9 +110,6 @@ for i in 1 8
 	done
 
 rm $FILELIST
-
-WIKIFILE=/home/loris/Importanti/SchoolMesh/wiki/ManPage.wiki
-
 
 cat > $WIKIFILE <<EOT
 = Man Pages =
@@ -124,6 +127,7 @@ for i in 8
 
 		for FILE in schoolmesh*
 		do
+      echo $FILE
 			CMDNAME=${FILE%.8}
 			echo considering $CMDNAME
 			echo -e "== $CMDNAME ==\n" >> $WIKIFILE
@@ -134,3 +138,17 @@ for i in 8
 		done
 	done
 
+
+MANLIST=$(mktemp)
+CMDLIST=$(mktemp)
+
+ls /var/schoolmesh/doc/man/man8 | sed 's/\.8$//' | grep -v '^schoolmesh$' | sort > $MANLIST
+ls /var/schoolmesh/bin | sort > $CMDLIST
+
+echo "-------------------"
+echo "Commands to execute":
+diff $MANLIST $CMDLIST | grep '^<' | sed -e 's-< -svn rm /var/schoolmesh/doc/man/man8/-' -e 's/$/.8/'
+
+echo "-------------------"
+echo "Man pages missing":
+diff $MANLIST $CMDLIST | grep '^>'
