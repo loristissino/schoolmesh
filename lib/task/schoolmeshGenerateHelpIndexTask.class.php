@@ -24,6 +24,8 @@ class schoolmeshGenerateHelpIndexTask extends sfBaseTask
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       // add your own options here
+      
+      new sfCommandOption('basehref', null, sfCommandOption::PARAMETER_OPTIONAL, 'The base href for documents', 'http://www.schoolmeshdemo.tuxfamily.org/help/'),
             
     ));
 
@@ -108,6 +110,8 @@ class schoolmeshGenerateHelpIndexTask extends sfBaseTask
       }
       
     }
+
+    $template['help']['basehref']=$options['basehref'];
     
     $fp=fopen($arguments['outputfile'], 'w');
     fwrite($fp, sfYaml::dump($template, 4));

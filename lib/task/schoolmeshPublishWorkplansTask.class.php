@@ -30,7 +30,7 @@ class schoolmeshPublishWorkplansTask extends sfBaseTask
     $this->name             = 'publish-workplans';
     $this->briefDescription = 'Publish teacher\'s workplans as attachments';
     $this->detailedDescription = <<<EOF
-This task will be used for several general checks and fixes about appointments.
+This task will publish teachers' workplans for archiviation purposes.
 EOF;
   }
 
