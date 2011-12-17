@@ -1,7 +1,7 @@
 #summary TODO list
 #labels Phase-Design
 
-= SchoolMesh TO DO list =
+= !SchoolMesh TO DO list =
 
 There is a lot of things to do. Here we'll list them just to keep a reference.
 
@@ -14,21 +14,22 @@ There is a lot of things to do. Here we'll list them just to keep a reference.
   # complete code revision
     * ~~move from Symfony 1.3 to 1.4~~
     * ~~remove deprecated solutions (e,g. use of unobtrusive Javascript with sfJqueryReloaded)~~
-    * ~~choose best practices for standard problems (exceptions, breadcrumbs, etc)~~ partially done
+    * ~~choose best practices for standard problems (exceptions, breadcrumbs, model results, etc)~~ partially done
   # ~~school projects management~~
   # profile management
   # ~~google apps integration~~
   # moodle integration (partially done)
-  # teams management
-  # change appointment organization, team- and user- dependant
+  # teams management (partially done)
+  # ~~change appointment organization, making it team-dependant~~
   # add common queries for users search
   # add possibility to declare activities 
-    * before projects approval
+    * ~~before projects approval~~
     * with external (paper) book reference 
+  # web access management at logon
 
 == Configuration ==
 
-  # ~~Mail server~~ done, with SwiftMailer
+  # ~~Mail server~~ done, with !SwiftMailer
   # ~~DNS server~~
   # ~~Apache-SSL~~
 
@@ -36,3 +37,9 @@ There is a lot of things to do. Here we'll list them just to keep a reference.
 
   # General user's guide
   # ~~Teacher's guide~~ done (Italian only, for Mattiussi's teachers: http://www.mattiussilab.net/help)
+
+== Demo site ==
+
+  # Done, available at http://www.schoolmeshdemo.tuxfamily.org
+  
+  
