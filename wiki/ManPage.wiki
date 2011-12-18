@@ -5,7 +5,7 @@ These are the man pages for the scripts used by the application and available fo
 == schoolmesh ==
 
 {{{
-SCHOOLMESH(8)																	      SCHOOLMESH(8)
+SCHOOLMESH(8)																	     SCHOOLMESH(8)
 
 
 
@@ -83,6 +83,8 @@ UTILITY LIST
 
        schoolmesh_sambaaccount_unlock - Unlock the samba (SMB/CIFS) account of a user
 
+       schoolmesh_sambaaccounts_log - Ask for registration of logon or logoff of a user in schoolmesh db
+
        schoolmesh_unoconv_launch - launch Unoconv and locks the screen at once
 
        schoolmesh_workstation_disableinternetaccess - Disable Internet access for a workstation
@@ -96,8 +98,8 @@ UTILITY LIST
        schoolmesh_workstations_getjobs - Get the list of jobs scheduled for all the workstations
 
 DESCRIPTION
-       These  utilities  are  really only basic wrapper scripts to be used together with SchoolMesh.  The idea is to provide flexibility.  For instance, instead of
-       calling directly useradd, we call schoolmesh_posixaccount_create.  This way, if one day we need to change the behaviour needed to add  a  system  user  (for
+       These  utilities  are really only basic wrapper scripts to be used together with SchoolMesh.  The idea is to provide flexibility.  For instance, instead of
+       calling directly useradd, we call schoolmesh_posixaccount_create.  This way, if one day we need to change the behaviour needed to add a	system	user  (for
        instance, using ldap, or contacting a different server), we just need to change the wrapper scripts.
 
        Each utility should have its own man page (work in progress).
@@ -114,7 +116,7 @@ AUTHORS
 
 
 
-Schoolmesh utilities User Manuals					   December 2011							      SCHOOLMESH(8)
+Schoolmesh utilities User Manuals					   December 2011							     SCHOOLMESH(8)
 }}}
 
 
@@ -122,7 +124,7 @@ Schoolmesh utilities User Manuals					   December 2011							      SCHOOLMESH(8)
 == schoolmesh_application_createtables ==
 
 {{{
-SCHOOLMESH_APPLICATION_CREATETABLES(8)											     SCHOOLMESH_APPLICATION_CREATETABLES(8)
+SCHOOLMESH_APPLICATION_CREATETABLES(8)											    SCHOOLMESH_APPLICATION_CREATETABLES(8)
 
 
 
@@ -133,7 +135,7 @@ SYNOPSIS
        schoolmesh_application_createtables environment [—no-confirmation]
 
 DESCRIPTION
-       Use  this  script to create empty tables in the database (using the schoolmesh symfony-generated script).  If the option —no-confirmation is set, the dialog
+       Use  this script to create empty tables in the database (using the schoolmesh symfony-generated script).  If the option —no-confirmation is set, the dialog
        with the confirmation question is not shown.
 
 WARNINGS
@@ -154,7 +156,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				     SCHOOLMESH_APPLICATION_CREATETABLES(8)
+Schoolmesh User Manuals 						   December 2011				    SCHOOLMESH_APPLICATION_CREATETABLES(8)
 }}}
 
 
@@ -162,7 +164,7 @@ Schoolmesh User Manuals 						   December 2011				     SCHOOLMESH_APPLICATION_CR
 == schoolmesh_application_dumptables ==
 
 {{{
-SCHOOLMESH_APPLICATION_DUMPTABLES(8)											       SCHOOLMESH_APPLICATION_DUMPTABLES(8)
+SCHOOLMESH_APPLICATION_DUMPTABLES(8)											      SCHOOLMESH_APPLICATION_DUMPTABLES(8)
 
 
 
@@ -173,7 +175,7 @@ SYNOPSIS
        schoolmesh_application_dumptables environment outfile
 
 DESCRIPTION
-       This  script  makes  a backup of the data of SchoolMesh database, in the form of a SQL plaintext gzipped file, with foreign key checks disabled.  The output
+       This  script  makes a backup of the data of SchoolMesh database, in the form of a SQL plaintext gzipped file, with foreign key checks disabled.	The output
        can be used with schoolmesh_application_importtables(8).
 
 EXAMPLES
@@ -191,7 +193,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				       SCHOOLMESH_APPLICATION_DUMPTABLES(8)
+Schoolmesh User Manuals 						   December 2011				      SCHOOLMESH_APPLICATION_DUMPTABLES(8)
 }}}
 
 
@@ -199,7 +201,7 @@ Schoolmesh User Manuals 						   December 2011				       SCHOOLMESH_APPLICATION_
 == schoolmesh_application_importtables ==
 
 {{{
-SCHOOLMESH_APPLICATION_IMPORTTABLES(8)											     SCHOOLMESH_APPLICATION_IMPORTTABLES(8)
+SCHOOLMESH_APPLICATION_IMPORTTABLES(8)											    SCHOOLMESH_APPLICATION_IMPORTTABLES(8)
 
 
 
@@ -210,7 +212,7 @@ SYNOPSIS
        schoolmesh_application_importtables environment inputfile
 
 DESCRIPTION
-       Use  this script to import data into the database.  The input file SQL must be in gzipped format.  The output of schoolmesh_application_dumptables(8) should
+       Use this script to import data into the database.  The input file SQL must be in gzipped format.  The output of schoolmesh_application_dumptables(8) should
        be adequate.
 
 WARNINGS
@@ -231,7 +233,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				     SCHOOLMESH_APPLICATION_IMPORTTABLES(8)
+Schoolmesh User Manuals 						   December 2011				    SCHOOLMESH_APPLICATION_IMPORTTABLES(8)
 }}}
 
 
@@ -239,7 +241,7 @@ Schoolmesh User Manuals 						   December 2011				     SCHOOLMESH_APPLICATION_IM
 == schoolmesh_application_setstate ==
 
 {{{
-SCHOOLMESH_APPLICATION_SETSTATE(8)												 SCHOOLMESH_APPLICATION_SETSTATE(8)
+SCHOOLMESH_APPLICATION_SETSTATE(8)												SCHOOLMESH_APPLICATION_SETSTATE(8)
 
 
 
@@ -270,7 +272,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_APPLICATION_SETSTATE(8)
+Schoolmesh User Manuals 						   December 2011					SCHOOLMESH_APPLICATION_SETSTATE(8)
 }}}
 
 
@@ -278,7 +280,7 @@ Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_APPLICATION_SETST
 == schoolmesh_loginaccount_changeshell ==
 
 {{{
-SCHOOLMESH_LOGINACCOUNT_CHANGESHELL(8)											     SCHOOLMESH_LOGINACCOUNT_CHANGESHELL(8)
+SCHOOLMESH_LOGINACCOUNT_CHANGESHELL(8)											    SCHOOLMESH_LOGINACCOUNT_CHANGESHELL(8)
 
 
 
@@ -306,7 +308,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				     SCHOOLMESH_LOGINACCOUNT_CHANGESHELL(8)
+Schoolmesh User Manuals 						   December 2011				    SCHOOLMESH_LOGINACCOUNT_CHANGESHELL(8)
 }}}
 
 
@@ -314,7 +316,7 @@ Schoolmesh User Manuals 						   December 2011				     SCHOOLMESH_LOGINACCOUNT_C
 == schoolmesh_loginaccount_getinfo ==
 
 {{{
-SCHOOLMESH_LOGINACCOUNT_GETINFO(8)												 SCHOOLMESH_LOGINACCOUNT_GETINFO(8)
+SCHOOLMESH_LOGINACCOUNT_GETINFO(8)												SCHOOLMESH_LOGINACCOUNT_GETINFO(8)
 
 
 
@@ -342,7 +344,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_LOGINACCOUNT_GETINFO(8)
+Schoolmesh User Manuals 						   December 2011					SCHOOLMESH_LOGINACCOUNT_GETINFO(8)
 }}}
 
 
@@ -350,7 +352,7 @@ Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_LOGINACCOUNT_GETI
 == schoolmesh_loginaccount_setpassword ==
 
 {{{
-SCHOOLMESH_LOGINACCOUNT_SETPASSWORD(8)											     SCHOOLMESH_LOGINACCOUNT_SETPASSWORD(8)
+SCHOOLMESH_LOGINACCOUNT_SETPASSWORD(8)											    SCHOOLMESH_LOGINACCOUNT_SETPASSWORD(8)
 
 
 
@@ -378,7 +380,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				     SCHOOLMESH_LOGINACCOUNT_SETPASSWORD(8)
+Schoolmesh User Manuals 						   December 2011				    SCHOOLMESH_LOGINACCOUNT_SETPASSWORD(8)
 }}}
 
 
@@ -386,7 +388,7 @@ Schoolmesh User Manuals 						   December 2011				     SCHOOLMESH_LOGINACCOUNT_S
 == schoolmesh_loginaccounts_getshells ==
 
 {{{
-SCHOOLMESH_LOGINACCOUNTS_GETSHELLS(8)											      SCHOOLMESH_LOGINACCOUNTS_GETSHELLS(8)
+SCHOOLMESH_LOGINACCOUNTS_GETSHELLS(8)											     SCHOOLMESH_LOGINACCOUNTS_GETSHELLS(8)
 
 
 
@@ -414,7 +416,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				      SCHOOLMESH_LOGINACCOUNTS_GETSHELLS(8)
+Schoolmesh User Manuals 						   December 2011				     SCHOOLMESH_LOGINACCOUNTS_GETSHELLS(8)
 }}}
 
 
@@ -422,7 +424,7 @@ Schoolmesh User Manuals 						   December 2011				      SCHOOLMESH_LOGINACCOUNTS
 == schoolmesh_moodleaccount_create ==
 
 {{{
-SCHOOLMESH_MOODLEACCOUNT_CREATE(8)												 SCHOOLMESH_MOODLEACCOUNT_CREATE(8)
+SCHOOLMESH_MOODLEACCOUNT_CREATE(8)												SCHOOLMESH_MOODLEACCOUNT_CREATE(8)
 
 
 
@@ -453,7 +455,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_MOODLEACCOUNT_CREATE(8)
+Schoolmesh User Manuals 						   December 2011					SCHOOLMESH_MOODLEACCOUNT_CREATE(8)
 }}}
 
 
@@ -461,7 +463,7 @@ Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_MOODLEACCOUNT_CRE
 == schoolmesh_odf_check ==
 
 {{{
-SCHOOLMESH_ODF_CHECK(8) 														    SCHOOLMESH_ODF_CHECK(8)
+SCHOOLMESH_ODF_CHECK(8) 														   SCHOOLMESH_ODF_CHECK(8)
 
 
 
@@ -472,12 +474,12 @@ SYNOPSIS
        schoolmesh_odf_check path/to/document row column
 
 DESCRIPTION
-       When  generating documents from templates, sometimes weird errors occur, and the generated document cannot be opened (OpenOffice.org complains saying Format
+       When generating documents from templates, sometimes weird errors occur, and the generated document cannot be opened (OpenOffice.org complains saying Format
        error discovered in the file in the sub-document content.xml at ... (row, col)).
 
        This utility might be handy to find the specific error.
 
-       When preparing templates, you may want to uncheck Size optimization for XML format in the General tab of the Load/Save  section	of  OpenOffice.org  options
+       When preparing templates, you may want to uncheck Size optimization for XML format in the General tab of the Load/Save section  of  OpenOffice.org  options
        dialog.
 
 EXAMPLES
@@ -495,7 +497,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011						    SCHOOLMESH_ODF_CHECK(8)
+Schoolmesh User Manuals 						   December 2011						   SCHOOLMESH_ODF_CHECK(8)
 }}}
 
 
@@ -503,7 +505,7 @@ Schoolmesh User Manuals 						   December 2011						    SCHOOLMESH_ODF_CHECK(8)
 == schoolmesh_odf_converter ==
 
 {{{
-SCHOOLMESH_ODF_CONVERTER(8)														SCHOOLMESH_ODF_CONVERTER(8)
+SCHOOLMESH_ODF_CONVERTER(8)													       SCHOOLMESH_ODF_CONVERTER(8)
 
 
 
@@ -534,7 +536,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011						SCHOOLMESH_ODF_CONVERTER(8)
+Schoolmesh User Manuals 						   December 2011					       SCHOOLMESH_ODF_CONVERTER(8)
 }}}
 
 
@@ -542,7 +544,7 @@ Schoolmesh User Manuals 						   December 2011						SCHOOLMESH_ODF_CONVERTER(8)
 == schoolmesh_posixaccount_changefullname ==
 
 {{{
-SCHOOLMESH_POSIXACCOUNT_CHANGEFULLNAME(8)										  SCHOOLMESH_POSIXACCOUNT_CHANGEFULLNAME(8)
+SCHOOLMESH_POSIXACCOUNT_CHANGEFULLNAME(8)										 SCHOOLMESH_POSIXACCOUNT_CHANGEFULLNAME(8)
 
 
 
@@ -570,7 +572,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				  SCHOOLMESH_POSIXACCOUNT_CHANGEFULLNAME(8)
+Schoolmesh User Manuals 						   December 2011				 SCHOOLMESH_POSIXACCOUNT_CHANGEFULLNAME(8)
 }}}
 
 
@@ -578,7 +580,7 @@ Schoolmesh User Manuals 						   December 2011				  SCHOOLMESH_POSIXACCOUNT_CHAN
 == schoolmesh_posixaccount_changegroup ==
 
 {{{
-SCHOOLMESH_POSIXACCOUNT_CHANGEGROUP(8)											     SCHOOLMESH_POSIXACCOUNT_CHANGEGROUP(8)
+SCHOOLMESH_POSIXACCOUNT_CHANGEGROUP(8)											    SCHOOLMESH_POSIXACCOUNT_CHANGEGROUP(8)
 
 
 
@@ -606,7 +608,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				     SCHOOLMESH_POSIXACCOUNT_CHANGEGROUP(8)
+Schoolmesh User Manuals 						   December 2011				    SCHOOLMESH_POSIXACCOUNT_CHANGEGROUP(8)
 }}}
 
 
@@ -614,7 +616,7 @@ Schoolmesh User Manuals 						   December 2011				     SCHOOLMESH_POSIXACCOUNT_C
 == schoolmesh_posixaccount_changeusername ==
 
 {{{
-SCHOOLMESH_POSIXACCOUNT_CHANGEUSERNAME(8)										  SCHOOLMESH_POSIXACCOUNT_CHANGEUSERNAME(8)
+SCHOOLMESH_POSIXACCOUNT_CHANGEUSERNAME(8)										 SCHOOLMESH_POSIXACCOUNT_CHANGEUSERNAME(8)
 
 
 
@@ -628,7 +630,7 @@ DESCRIPTION
        Use this script to change the username of a user.
 
 WARNINGS
-       If  the	user  has  also  external  accounts,  theese  won't be affected.  Internal accounts, like samba, that depend on the existence of posix one, will be
+       If  the	user  has  also  external  accounts,  theese won't be affected.  Internal accounts, like samba, that depend on the existence of posix one, will be
        deleted, but not recreated.
 
 EXAMPLES
@@ -646,7 +648,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				  SCHOOLMESH_POSIXACCOUNT_CHANGEUSERNAME(8)
+Schoolmesh User Manuals 						   December 2011				 SCHOOLMESH_POSIXACCOUNT_CHANGEUSERNAME(8)
 }}}
 
 
@@ -654,7 +656,7 @@ Schoolmesh User Manuals 						   December 2011				  SCHOOLMESH_POSIXACCOUNT_CHAN
 == schoolmesh_posixaccount_create ==
 
 {{{
-SCHOOLMESH_POSIXACCOUNT_CREATE(8)												  SCHOOLMESH_POSIXACCOUNT_CREATE(8)
+SCHOOLMESH_POSIXACCOUNT_CREATE(8)												 SCHOOLMESH_POSIXACCOUNT_CREATE(8)
 
 
 
@@ -682,7 +684,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					  SCHOOLMESH_POSIXACCOUNT_CREATE(8)
+Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_POSIXACCOUNT_CREATE(8)
 }}}
 
 
@@ -690,7 +692,7 @@ Schoolmesh User Manuals 						   December 2011					  SCHOOLMESH_POSIXACCOUNT_CRE
 == schoolmesh_posixaccount_createbasefolder ==
 
 {{{
-SCHOOLMESH_POSIXACCOUNT_CREATEBASEFOLDER(8)										SCHOOLMESH_POSIXACCOUNT_CREATEBASEFOLDER(8)
+SCHOOLMESH_POSIXACCOUNT_CREATEBASEFOLDER(8)									       SCHOOLMESH_POSIXACCOUNT_CREATEBASEFOLDER(8)
 
 
 
@@ -701,7 +703,7 @@ SYNOPSIS
        schoolmesh_posixaccount_createbasefolder username
 
 DESCRIPTION
-       Use  this script to create the basefolder inside a user's directory.  The basefolder will have the name specified in schoolmesh.rc and will be the immutable
+       Use this script to create the basefolder inside a user's directory.  The basefolder will have the name specified in schoolmesh.rc and will be the immutable
        flag.
 
 EXAMPLES
@@ -719,7 +721,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				SCHOOLMESH_POSIXACCOUNT_CREATEBASEFOLDER(8)
+Schoolmesh User Manuals 						   December 2011			       SCHOOLMESH_POSIXACCOUNT_CREATEBASEFOLDER(8)
 }}}
 
 
@@ -727,7 +729,7 @@ Schoolmesh User Manuals 						   December 2011				SCHOOLMESH_POSIXACCOUNT_CREATE
 == schoolmesh_posixaccount_createhomedir ==
 
 {{{
-SCHOOLMESH_POSIXACCOUNT_CREATEHOMEDIR(8)										   SCHOOLMESH_POSIXACCOUNT_CREATEHOMEDIR(8)
+SCHOOLMESH_POSIXACCOUNT_CREATEHOMEDIR(8)										  SCHOOLMESH_POSIXACCOUNT_CREATEHOMEDIR(8)
 
 
 
@@ -738,8 +740,8 @@ SYNOPSIS
        schoolmesh_posixaccount_createhomedir username
 
 DESCRIPTION
-       Use this script to create the home directory for a user.  The home directory will be placed in the directory specified in schoolmesh.rc and will be named as
-       the username.  It will be assigned root group owner and 711 permissions.
+       Use  this  script to create the home directory for a user.  The home directory will be placed in the directory specified in schoolmesh.rc and will be named
+       as the username.  It will be assigned root group owner and 711 permissions.
 
 EXAMPLES
        schoolmesh_posixaccount_createhomedir john
@@ -756,7 +758,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				   SCHOOLMESH_POSIXACCOUNT_CREATEHOMEDIR(8)
+Schoolmesh User Manuals 						   December 2011				  SCHOOLMESH_POSIXACCOUNT_CREATEHOMEDIR(8)
 }}}
 
 
@@ -764,7 +766,7 @@ Schoolmesh User Manuals 						   December 2011				   SCHOOLMESH_POSIXACCOUNT_CRE
 == schoolmesh_posixaccount_getinfo ==
 
 {{{
-SCHOOLMESH_POSIXACCOUNT_GETINFO(8)												 SCHOOLMESH_POSIXACCOUNT_GETINFO(8)
+SCHOOLMESH_POSIXACCOUNT_GETINFO(8)												SCHOOLMESH_POSIXACCOUNT_GETINFO(8)
 
 
 
@@ -792,7 +794,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_POSIXACCOUNT_GETINFO(8)
+Schoolmesh User Manuals 						   December 2011					SCHOOLMESH_POSIXACCOUNT_GETINFO(8)
 }}}
 
 
@@ -800,7 +802,7 @@ Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_POSIXACCOUNT_GETI
 == schoolmesh_posixaccount_lockuser ==
 
 {{{
-SCHOOLMESH_POSIXACCOUNT_LOCKUSER(8)												SCHOOLMESH_POSIXACCOUNT_LOCKUSER(8)
+SCHOOLMESH_POSIXACCOUNT_LOCKUSER(8)											       SCHOOLMESH_POSIXACCOUNT_LOCKUSER(8)
 
 
 
@@ -828,7 +830,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					SCHOOLMESH_POSIXACCOUNT_LOCKUSER(8)
+Schoolmesh User Manuals 						   December 2011				       SCHOOLMESH_POSIXACCOUNT_LOCKUSER(8)
 }}}
 
 
@@ -836,7 +838,7 @@ Schoolmesh User Manuals 						   December 2011					SCHOOLMESH_POSIXACCOUNT_LOCKU
 == schoolmesh_posixaccount_quotausercheck ==
 
 {{{
-SCHOOLMESH_POSIXACCOUNT_QUOTAUSERCHECK(8)										  SCHOOLMESH_POSIXACCOUNT_QUOTAUSERCHECK(8)
+SCHOOLMESH_POSIXACCOUNT_QUOTAUSERCHECK(8)										 SCHOOLMESH_POSIXACCOUNT_QUOTAUSERCHECK(8)
 
 
 
@@ -847,7 +849,7 @@ SYNOPSIS
        schoolmesh_posixaccount_quotausercheck username
 
 DESCRIPTION
-       Use  this  script to check if a user has used more space than what is assumed to.  (This could be the result when you copy files of a user using administra‐
+       Use  this script to check if a user has used more space than what is assumed to.  (This could be the result when you copy files of a user using administra‐
        tive privileges).
 
 EXAMPLES
@@ -865,7 +867,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				  SCHOOLMESH_POSIXACCOUNT_QUOTAUSERCHECK(8)
+Schoolmesh User Manuals 						   December 2011				 SCHOOLMESH_POSIXACCOUNT_QUOTAUSERCHECK(8)
 }}}
 
 
@@ -873,7 +875,7 @@ Schoolmesh User Manuals 						   December 2011				  SCHOOLMESH_POSIXACCOUNT_QUOT
 == schoolmesh_posixaccount_repairbasefolder ==
 
 {{{
-SCHOOLMESH_POSIXACCOUNT_REPAIRBASEFOLDER(8)										SCHOOLMESH_POSIXACCOUNT_REPAIRBASEFOLDER(8)
+SCHOOLMESH_POSIXACCOUNT_REPAIRBASEFOLDER(8)									       SCHOOLMESH_POSIXACCOUNT_REPAIRBASEFOLDER(8)
 
 
 
@@ -901,7 +903,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				SCHOOLMESH_POSIXACCOUNT_REPAIRBASEFOLDER(8)
+Schoolmesh User Manuals 						   December 2011			       SCHOOLMESH_POSIXACCOUNT_REPAIRBASEFOLDER(8)
 }}}
 
 
@@ -909,7 +911,7 @@ Schoolmesh User Manuals 						   December 2011				SCHOOLMESH_POSIXACCOUNT_REPAIR
 == schoolmesh_posixaccount_repairhomedir ==
 
 {{{
-SCHOOLMESH_POSIXACCOUNT_REPAIRHOMEDIR(8)										   SCHOOLMESH_POSIXACCOUNT_REPAIRHOMEDIR(8)
+SCHOOLMESH_POSIXACCOUNT_REPAIRHOMEDIR(8)										  SCHOOLMESH_POSIXACCOUNT_REPAIRHOMEDIR(8)
 
 
 
@@ -937,7 +939,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				   SCHOOLMESH_POSIXACCOUNT_REPAIRHOMEDIR(8)
+Schoolmesh User Manuals 						   December 2011				  SCHOOLMESH_POSIXACCOUNT_REPAIRHOMEDIR(8)
 }}}
 
 
@@ -945,7 +947,7 @@ Schoolmesh User Manuals 						   December 2011				   SCHOOLMESH_POSIXACCOUNT_REP
 == schoolmesh_posixaccount_setquota ==
 
 {{{
-SCHOOLMESH_POSIXACCOUNT_SETQUOTA(8)												SCHOOLMESH_POSIXACCOUNT_SETQUOTA(8)
+SCHOOLMESH_POSIXACCOUNT_SETQUOTA(8)											       SCHOOLMESH_POSIXACCOUNT_SETQUOTA(8)
 
 
 
@@ -973,7 +975,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					SCHOOLMESH_POSIXACCOUNT_SETQUOTA(8)
+Schoolmesh User Manuals 						   December 2011				       SCHOOLMESH_POSIXACCOUNT_SETQUOTA(8)
 }}}
 
 
@@ -981,7 +983,7 @@ Schoolmesh User Manuals 						   December 2011					SCHOOLMESH_POSIXACCOUNT_SETQU
 == schoolmesh_posixaccounts_list ==
 
 {{{
-SCHOOLMESH_POSIXACCOUNTS_LIST(8)												   SCHOOLMESH_POSIXACCOUNTS_LIST(8)
+SCHOOLMESH_POSIXACCOUNTS_LIST(8)												  SCHOOLMESH_POSIXACCOUNTS_LIST(8)
 
 
 
@@ -1011,7 +1013,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					   SCHOOLMESH_POSIXACCOUNTS_LIST(8)
+Schoolmesh User Manuals 						   December 2011					  SCHOOLMESH_POSIXACCOUNTS_LIST(8)
 }}}
 
 
@@ -1019,7 +1021,7 @@ Schoolmesh User Manuals 						   December 2011					   SCHOOLMESH_POSIXACCOUNTS_L
 == schoolmesh_posixaccounts_quotachecks ==
 
 {{{
-SCHOOLMESH_POSIXACCOUNTS_QUOTACHECKS(8) 										    SCHOOLMESH_POSIXACCOUNTS_QUOTACHECKS(8)
+SCHOOLMESH_POSIXACCOUNTS_QUOTACHECKS(8) 										   SCHOOLMESH_POSIXACCOUNTS_QUOTACHECKS(8)
 
 
 
@@ -1049,7 +1051,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				    SCHOOLMESH_POSIXACCOUNTS_QUOTACHECKS(8)
+Schoolmesh User Manuals 						   December 2011				   SCHOOLMESH_POSIXACCOUNTS_QUOTACHECKS(8)
 }}}
 
 
@@ -1057,7 +1059,7 @@ Schoolmesh User Manuals 						   December 2011				    SCHOOLMESH_POSIXACCOUNTS_Q
 == schoolmesh_posixaccount_unlockuser ==
 
 {{{
-SCHOOLMESH_POSIXACCOUNT_UNLOCKUSER(8)											      SCHOOLMESH_POSIXACCOUNT_UNLOCKUSER(8)
+SCHOOLMESH_POSIXACCOUNT_UNLOCKUSER(8)											     SCHOOLMESH_POSIXACCOUNT_UNLOCKUSER(8)
 
 
 
@@ -1085,7 +1087,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				      SCHOOLMESH_POSIXACCOUNT_UNLOCKUSER(8)
+Schoolmesh User Manuals 						   December 2011				     SCHOOLMESH_POSIXACCOUNT_UNLOCKUSER(8)
 }}}
 
 
@@ -1093,7 +1095,7 @@ Schoolmesh User Manuals 						   December 2011				      SCHOOLMESH_POSIXACCOUNT_
 == schoolmesh_posixfolder_copyfile ==
 
 {{{
-SCHOOLMESH_POSIXFOLDER_COPYFILE(8)												 SCHOOLMESH_POSIXFOLDER_COPYFILE(8)
+SCHOOLMESH_POSIXFOLDER_COPYFILE(8)												SCHOOLMESH_POSIXFOLDER_COPYFILE(8)
 
 
 
@@ -1104,8 +1106,8 @@ SYNOPSIS
        schoolmesh_posixfolder_copyfile username filepath
 
 DESCRIPTION
-       This script copies a file in cache directory, in order to allow the webserver to serve it.  The user must exist.  The path is relative to user's home direc‐
-       tory.
+       This  script  copies  a	file  in  cache directory, in order to allow the webserver to serve it.  The user must exist.  The path is relative to user's home
+       directory.
 
 WARNINGS
        The user who runs this (typically, www-data or apache) must be allowed to run commands on behalf of other users (through sudo).
@@ -1125,7 +1127,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_POSIXFOLDER_COPYFILE(8)
+Schoolmesh User Manuals 						   December 2011					SCHOOLMESH_POSIXFOLDER_COPYFILE(8)
 }}}
 
 
@@ -1133,7 +1135,7 @@ Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_POSIXFOLDER_COPYF
 == schoolmesh_posixfolder_getinfo ==
 
 {{{
-SCHOOLMESH_POSIXFOLDER_GETINFO(8)												  SCHOOLMESH_POSIXFOLDER_GETINFO(8)
+SCHOOLMESH_POSIXFOLDER_GETINFO(8)												 SCHOOLMESH_POSIXFOLDER_GETINFO(8)
 
 
 
@@ -1141,7 +1143,7 @@ NAME
        schoolmesh_posixfolder_getinfo - Get info about a posix user's folder's contents
 
 SYNOPSIS
-       schoolmesh_posixfolder_getinfo  username  path directoryname schoolmesh_posixfolder_getinfo username list directoryname schoolmesh_posixfolder_getinfo user‐
+       schoolmesh_posixfolder_getinfo  username path directoryname schoolmesh_posixfolder_getinfo username list directoryname schoolmesh_posixfolder_getinfo user‐
        name file directoryname/filename
 
 DESCRIPTION
@@ -1166,7 +1168,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					  SCHOOLMESH_POSIXFOLDER_GETINFO(8)
+Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_POSIXFOLDER_GETINFO(8)
 }}}
 
 
@@ -1174,7 +1176,7 @@ Schoolmesh User Manuals 						   December 2011					  SCHOOLMESH_POSIXFOLDER_GETI
 == schoolmesh_posixfolder_makedir ==
 
 {{{
-SCHOOLMESH_POSIXFOLDER_MAKEDIR(8)												  SCHOOLMESH_POSIXFOLDER_MAKEDIR(8)
+SCHOOLMESH_POSIXFOLDER_MAKEDIR(8)												 SCHOOLMESH_POSIXFOLDER_MAKEDIR(8)
 
 
 
@@ -1205,7 +1207,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					  SCHOOLMESH_POSIXFOLDER_MAKEDIR(8)
+Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_POSIXFOLDER_MAKEDIR(8)
 }}}
 
 
@@ -1213,7 +1215,7 @@ Schoolmesh User Manuals 						   December 2011					  SCHOOLMESH_POSIXFOLDER_MAKE
 == schoolmesh_posixfolder_putfile ==
 
 {{{
-SCHOOLMESH_POSIXFOLDER_PUTFILE(8)												  SCHOOLMESH_POSIXFOLDER_PUTFILE(8)
+SCHOOLMESH_POSIXFOLDER_PUTFILE(8)												 SCHOOLMESH_POSIXFOLDER_PUTFILE(8)
 
 
 
@@ -1244,7 +1246,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					  SCHOOLMESH_POSIXFOLDER_PUTFILE(8)
+Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_POSIXFOLDER_PUTFILE(8)
 }}}
 
 
@@ -1252,7 +1254,7 @@ Schoolmesh User Manuals 						   December 2011					  SCHOOLMESH_POSIXFOLDER_PUTF
 == schoolmesh_posixfolder_removefile ==
 
 {{{
-SCHOOLMESH_POSIXFOLDER_REMOVEFILE(8)											       SCHOOLMESH_POSIXFOLDER_REMOVEFILE(8)
+SCHOOLMESH_POSIXFOLDER_REMOVEFILE(8)											      SCHOOLMESH_POSIXFOLDER_REMOVEFILE(8)
 
 
 
@@ -1283,7 +1285,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				       SCHOOLMESH_POSIXFOLDER_REMOVEFILE(8)
+Schoolmesh User Manuals 						   December 2011				      SCHOOLMESH_POSIXFOLDER_REMOVEFILE(8)
 }}}
 
 
@@ -1291,7 +1293,7 @@ Schoolmesh User Manuals 						   December 2011				       SCHOOLMESH_POSIXFOLDER_
 == schoolmesh_sambaaccount_create ==
 
 {{{
-SCHOOLMESH_SAMBAACCOUNT_CREATE(8)												  SCHOOLMESH_SAMBAACCOUNT_CREATE(8)
+SCHOOLMESH_SAMBAACCOUNT_CREATE(8)												 SCHOOLMESH_SAMBAACCOUNT_CREATE(8)
 
 
 
@@ -1322,7 +1324,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					  SCHOOLMESH_SAMBAACCOUNT_CREATE(8)
+Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_SAMBAACCOUNT_CREATE(8)
 }}}
 
 
@@ -1330,7 +1332,7 @@ Schoolmesh User Manuals 						   December 2011					  SCHOOLMESH_SAMBAACCOUNT_CRE
 == schoolmesh_sambaaccount_delete ==
 
 {{{
-SCHOOLMESH_SAMBAACCOUNT_DELETE(8)												  SCHOOLMESH_SAMBAACCOUNT_DELETE(8)
+SCHOOLMESH_SAMBAACCOUNT_DELETE(8)												 SCHOOLMESH_SAMBAACCOUNT_DELETE(8)
 
 
 
@@ -1358,7 +1360,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					  SCHOOLMESH_SAMBAACCOUNT_DELETE(8)
+Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_SAMBAACCOUNT_DELETE(8)
 }}}
 
 
@@ -1366,7 +1368,7 @@ Schoolmesh User Manuals 						   December 2011					  SCHOOLMESH_SAMBAACCOUNT_DEL
 == schoolmesh_sambaaccount_getinfo ==
 
 {{{
-SCHOOLMESH_SAMBAACCOUNT_GETINFO(8)												 SCHOOLMESH_SAMBAACCOUNT_GETINFO(8)
+SCHOOLMESH_SAMBAACCOUNT_GETINFO(8)												SCHOOLMESH_SAMBAACCOUNT_GETINFO(8)
 
 
 
@@ -1394,7 +1396,50 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_SAMBAACCOUNT_GETINFO(8)
+Schoolmesh User Manuals 						   December 2011					SCHOOLMESH_SAMBAACCOUNT_GETINFO(8)
+}}}
+
+
+
+== schoolmesh_sambaaccounts_log ==
+
+{{{
+SCHOOLMESH_SAMBAACCOUNTS_LOG(8) 												   SCHOOLMESH_SAMBAACCOUNTS_LOG(8)
+
+
+
+NAME
+       schoolmesh_sambaaccounts_log - Ask for registration of logon or logoff of a user in schoolmesh db
+
+SYNOPSIS
+       schoolmesh_sambaaccounts_log [logon|logoff] username machinename ip
+
+DESCRIPTION
+       This script is used from samba to ask for the registration of logons and logoffs of users from the local network.  Edit your smb.conf adding these lines in
+       [homes] section:
+
+
+	     [homes]
+	      ...
+	      preexec = schoolmesh_sambaaccounts_log logon %U %M %m
+	      postexec = schoolmesh_sambaaccounts_log logon %U %M %m
+
+EXAMPLES
+       schoolmesh_sambaaccounts_log logon john.doe pc13labinf3 192.168.3.13 schoolmesh_sambaaccounts_log logoff john.doe pc13labinf3 192.168.3.13
+
+BUGS
+       Probably many.
+
+SEE ALSO
+       The SchoolMesh project is described at <http://www.schoolmesh.mattiussilab.net/>.
+
+AUTHORS
+       Loris Tissino (loris.tissino@gmail.com).
+
+
+
+
+Schoolmesh User Manuals 						   December 2011					   SCHOOLMESH_SAMBAACCOUNTS_LOG(8)
 }}}
 
 
@@ -1402,7 +1447,7 @@ Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_SAMBAACCOUNT_GETI
 == schoolmesh_sambaaccount_unlock ==
 
 {{{
-SCHOOLMESH_SAMBAACCOUNT_UNLOCK(8)												  SCHOOLMESH_SAMBAACCOUNT_UNLOCK(8)
+SCHOOLMESH_SAMBAACCOUNT_UNLOCK(8)												 SCHOOLMESH_SAMBAACCOUNT_UNLOCK(8)
 
 
 
@@ -1430,7 +1475,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					  SCHOOLMESH_SAMBAACCOUNT_UNLOCK(8)
+Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_SAMBAACCOUNT_UNLOCK(8)
 }}}
 
 
@@ -1438,7 +1483,7 @@ Schoolmesh User Manuals 						   December 2011					  SCHOOLMESH_SAMBAACCOUNT_UNL
 == schoolmesh_unoconv_launch ==
 
 {{{
-SCHOOLMESH_UNOCONV_LAUNCH(8)													       SCHOOLMESH_UNOCONV_LAUNCH(8)
+SCHOOLMESH_UNOCONV_LAUNCH(8)													      SCHOOLMESH_UNOCONV_LAUNCH(8)
 
 
 
@@ -1449,7 +1494,7 @@ SYNOPSIS
        schoolmesh_unoconv_launch
 
 DESCRIPTION
-       This  script  should  be  used by an unprivileged user just in order to have a working instance of Unoconv converter running and listening to client unoconv
+       This  script  should  be used by an unprivileged user just in order to have a working instance of Unoconv converter running and listening to client unoconv
        calls.
 
        The user might have an automatic login, and therefore the script locks the screen immediately after.
@@ -1470,7 +1515,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   September 2011					       SCHOOLMESH_UNOCONV_LAUNCH(8)
+Schoolmesh User Manuals 						  September 2011					      SCHOOLMESH_UNOCONV_LAUNCH(8)
 }}}
 
 
@@ -1478,7 +1523,7 @@ Schoolmesh User Manuals 						   September 2011					       SCHOOLMESH_UNOCONV_LA
 == schoolmesh_workstation_disableinternetaccess ==
 
 {{{
-SCHOOLMESH_WORKSTATION_DISABLEINTERNETACCESS(8) 								    SCHOOLMESH_WORKSTATION_DISABLEINTERNETACCESS(8)
+SCHOOLMESH_WORKSTATION_DISABLEINTERNETACCESS(8) 								   SCHOOLMESH_WORKSTATION_DISABLEINTERNETACCESS(8)
 
 
 
@@ -1506,7 +1551,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011			    SCHOOLMESH_WORKSTATION_DISABLEINTERNETACCESS(8)
+Schoolmesh User Manuals 						   December 2011			   SCHOOLMESH_WORKSTATION_DISABLEINTERNETACCESS(8)
 }}}
 
 
@@ -1514,7 +1559,7 @@ Schoolmesh User Manuals 						   December 2011			    SCHOOLMESH_WORKSTATION_DISA
 == schoolmesh_workstation_enableinternetaccess ==
 
 {{{
-SCHOOLMESH_WORKSTATION_ENABLEINTERNETACCESS(8)									     SCHOOLMESH_WORKSTATION_ENABLEINTERNETACCESS(8)
+SCHOOLMESH_WORKSTATION_ENABLEINTERNETACCESS(8)									    SCHOOLMESH_WORKSTATION_ENABLEINTERNETACCESS(8)
 
 
 
@@ -1542,7 +1587,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011			     SCHOOLMESH_WORKSTATION_ENABLEINTERNETACCESS(8)
+Schoolmesh User Manuals 						   December 2011			    SCHOOLMESH_WORKSTATION_ENABLEINTERNETACCESS(8)
 }}}
 
 
@@ -1550,7 +1595,7 @@ Schoolmesh User Manuals 						   December 2011			     SCHOOLMESH_WORKSTATION_ENA
 == schoolmesh_workstation_removejobs ==
 
 {{{
-SCHOOLMESH_WORKSTATION_REMOVEJOBS(8)											       SCHOOLMESH_WORKSTATION_REMOVEJOBS(8)
+SCHOOLMESH_WORKSTATION_REMOVEJOBS(8)											      SCHOOLMESH_WORKSTATION_REMOVEJOBS(8)
 
 
 
@@ -1578,7 +1623,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011				       SCHOOLMESH_WORKSTATION_REMOVEJOBS(8)
+Schoolmesh User Manuals 						   December 2011				      SCHOOLMESH_WORKSTATION_REMOVEJOBS(8)
 }}}
 
 
@@ -1586,7 +1631,7 @@ Schoolmesh User Manuals 						   December 2011				       SCHOOLMESH_WORKSTATION_
 == schoolmesh_workstations_getinternetenabled ==
 
 {{{
-SCHOOLMESH_WORKSTATIONS_GETINTERNETENABLED(8)									      SCHOOLMESH_WORKSTATIONS_GETINTERNETENABLED(8)
+SCHOOLMESH_WORKSTATIONS_GETINTERNETENABLED(8)									     SCHOOLMESH_WORKSTATIONS_GETINTERNETENABLED(8)
 
 
 
@@ -1597,7 +1642,7 @@ SYNOPSIS
        schoolmesh_workstations_getinternetenabled go
 
 DESCRIPTION
-       This  script outputs a list of IP addresses of workstations for which Internet access is enabled.  It assumes that the firewall machine uses a special chain
+       This script outputs a list of IP addresses of workstations for which Internet access is enabled.  It assumes that the firewall machine uses a special chain
        and a special command for rules that must be matched.  The names of the chain and of the comment are in schoolmesh.rc file.
 
 EXAMPLES
@@ -1615,7 +1660,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011			      SCHOOLMESH_WORKSTATIONS_GETINTERNETENABLED(8)
+Schoolmesh User Manuals 						   December 2011			     SCHOOLMESH_WORKSTATIONS_GETINTERNETENABLED(8)
 }}}
 
 
@@ -1623,7 +1668,7 @@ Schoolmesh User Manuals 						   December 2011			      SCHOOLMESH_WORKSTATIONS_G
 == schoolmesh_workstations_getjobs ==
 
 {{{
-SCHOOLMESH_WORKSTATIONS_GETJOBS(8)												 SCHOOLMESH_WORKSTATIONS_GETJOBS(8)
+SCHOOLMESH_WORKSTATIONS_GETJOBS(8)												SCHOOLMESH_WORKSTATIONS_GETJOBS(8)
 
 
 
@@ -1651,7 +1696,7 @@ AUTHORS
 
 
 
-Schoolmesh User Manuals 						   December 2011					 SCHOOLMESH_WORKSTATIONS_GETJOBS(8)
+Schoolmesh User Manuals 						   December 2011					SCHOOLMESH_WORKSTATIONS_GETJOBS(8)
 }}}
 
 
