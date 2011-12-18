@@ -1,2 +1,9 @@
 default:
   is_secure: true
+
+registerlogon:
+  is_secure: false
+
+registerlogoff:
+  is_secure: false
+

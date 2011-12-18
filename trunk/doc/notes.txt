@@ -4,28 +4,6 @@ Added table student_syllabus_item
 2011/12/09
 Added rank in proj_resource_type table
 
-
-/*
-- _root preexec_ (sets a command to run as root, before connecting to the share)  
-- _root preexec close_ (if set to yes, nonzero exit status of root preexec command will disconnect)  
-- _preexec_ (sets a Unix command to run as the user before connecting to the share)  
-- _preexec close_ (if set to yes, nonzero exit status of preexec command will disconnect)  
-- _postexec_ (sets a Unix command to run as the user after disconnecting from the share)  
-- _root postexec_ (sets a Unix command to run as root after disconnecting from the share). \cite[pag.~430]{Ts2003}
-
-
-    [homes]
-     ...
-     preexec = wget --post-data='token=sekretToken' \
-       http://localhost/schoolmesh/index.php/lanlogin/%U/%M/%m \
-       -O /dev/null
-     postexec = wget --post-data='token=sekretToken' \
-       http://localhost/schoolmesh/index.php/lanlogout/%U/%M/%m \
-       -O /dev/null
-
-*/
-
-
 Added preferred_format in sfGuardUserProfile table
 
 UPDATE `schoolmesh`.`sf_guard_user_profile` SET `preferred_format` = 'odt';
