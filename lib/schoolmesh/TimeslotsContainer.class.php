@@ -18,6 +18,10 @@ class TimeslotsContainer
   
   public function __construct($configfile)
   {
+    if(!$configfile)
+    {
+      throw new Exception('missing configfile in call');
+    }
     $this->_config=sfYaml::load($configfile);
     $this->_slots=array();
     $nowU=date('U', time());
