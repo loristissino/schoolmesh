@@ -20,81 +20,122 @@ class lanlogActions extends sfActions
 
 	}  
 
-  public function executeCreate(sfWebRequest $request)
+  public function executeRegisterlogon(sfWebRequest $request)
   {
-//  $this->forward404Unless($request->isMethod('POST'), "");
-  $this->checkParameters($request);
+    if(!$this->checkParameters($request))
+    {
+      return sfView::ERROR;
+    }
+    
+    if (!$lanlog=LanlogPeer::retrieveByUserAndWorkstation($this->user->getId(), $this->workstation->getId()))
+    {
+      $lanlog = new Lanlog();
+      
+      $lanlog->setUserId($this->user->getId());
+      $lanlog->setWorkstationId($this->workstation->getId());
 
-  if (!$lanlog=LanlogPeer::retrieveByUserAndWorkstation($this->user->getId(), $this->workstation->getId()))
-	{
-	  $lanlog = new Lanlog();
-	  
-	  $lanlog->setUserId($this->user->getId());
-	  $lanlog->setWorkstationId($this->workstation->getId());
+      $lanlog->setIsOnline(true);
+      $this->type="new";  
+    }
+    else
+    {
+      $this->type="update";
+      $lanlog->setUpdatedAt(time());
+    }
 
-	  $lanlog->setIsOnline(true);
-	  $this->type="new";  
-
-	}
-	else
-	{
-		$this->type="update";
-	  $lanlog->setUpdatedAt(time());
-		
-		}
-
-  $lanlog->save();
+    $lanlog->save();
   
-  $this->lanlog = $lanlog;  
-/*
-  $this->internet=in_array('internet', $this->user->getAllPermissions());
-  
-   if ($this->internet)
-        $lanlog->getWorkstation()->InternetEnable(true);
-  
-*/
-   $this->autoEnableWorkstation($lanlog, true);
+    $this->lanlog = $lanlog;  
 
-
+    $this->autoEnableWorkstation($lanlog, true);
   }
 
 
-  public function executeUpdate(sfWebRequest $request)
+  public function executeRegisterlogoff(sfWebRequest $request)
   {
-
-  $this->checkParameters($request);
-
-  $this->forward404Unless($lanlog=LanlogPeer::retrieveByUserAndWorkstation($this->user->getId(), $this->workstation->getId()), sprintf('User %s does not seem to be active on workstation %s',  $this->user->getUsername(), $this->workstation->getname()));
+    if(!$this->checkParameters($request))
+    {
+      return sfView::ERROR;
+    }
+    
+    if(!$lanlog=LanlogPeer::retrieveByUserAndWorkstation($this->user->getId(), $this->workstation->getId()))
+    {
+      $this->errormessage=sprintf('User %s does not seem to be active on workstation %s.',  $this->user->getUsername(), $this->workstation->getname());
+      return sfView::ERROR;
+    }
 
 	  $lanlog->setIsOnline(false);
-      $lanlog->save();  
-	  $this->lanlog= $lanlog;  
-     $this->autoEnableWorkstation($lanlog, false);
+    $lanlog->save();  
+    
+    $this->type='deleted';
+
+    $this->autoEnableWorkstation($lanlog, false);
 
 }
 
 
   protected function checkParameters(sfWebRequest $request)
 	{
-		
-//   $this->forward404Unless($request->getPostParameter('token')==sfConfig::get('app_prelogin_token'), "Invalid token");
-	
-    $this->decodedUsername=chop(base64_decode($request->getParameter('username')));
-    $this->forward404Unless($this->user = sfGuardUserProfilePeer::retrieveByUsername($this->decodedUsername, sprintf('Username does not exist (%s).', $this->decodedUsername)));
-
-    $this->forward404Unless($this->workstation = WorkstationPeer::retrieveByNameAndIp($request->getParameter('workstation'), $request->getParameter('ip')), sprintf('Wokstation %s with IP address %s does not exist.', $request->getParameter('workstation'), $request->getParameter('ip')));
-	
+    //$this->forward404Unless($request->isMethod('POST'), 'Only POST requests are allowed.');
+    
+    $this->setTemplate('register');
+    
+    $this->username=$request->getParameter('username');
+    $this->ip=$request->getParameter('ip');
+    $this->workstationname=$request->getParameter('workstation');
+    
+    $this->internalcheck=md5($this->username. $this->ip . $this->workstationname . sfConfig::get('app_authentication_token'));
+    
+    if($this->internalcheck!=$request->getParameter('check'))
+    {
+      $this->errormessage='Wrong data check result.';
+      return false;
+    }
+    
+    if(!$this->user=sfGuardUserPeer::retrieveByUsername($this->username))
+    {
+      $this->errormessage=sprintf('Invalid username: %s.', $this->username);
+      return false;
+    }
+      
+    if(!$this->workstation = WorkstationPeer::retrieveByNameAndIp($this->workstationname, $this->ip))
+    {
+      $this->errormessage=sprintf('Wokstation %s with IP address %s does not exist.', $this->workstationname, $this->ip);
+      return false;
+    }
+    
+    return true;
+    
 	}  
 
 
    protected function autoEnableWorkstation($lanlog, $active=false)
    {
-   $this->internet=in_array('internet', $this->user->getAllPermissions());
-  
-   if ($this->internet)
-        $lanlog->getWorkstation()->InternetEnable($active);
-       
-    }
+     $this->internet=in_array('internet', $this->user->getAllPermissions());
+     if ($this->internet)
+     {
+       if($active)
+       {
+         $tsc=new TimeslotsContainer();
+         
+         $this->result=$lanlog->getWorkstation()->enableInternetAccess(
+          $this->user->getId(),
+          $tsc->getCurrentSlotBegin(),
+          $tsc->getEleventhHour(),
+          $this->user->getUsername(), 
+          $this->getContext()
+          );
+        }
+        else
+        {
+         $this->result=$lanlog->getWorkstation()->disableInternetAccess(
+          $this->user->getId(), 
+          Generic::b64_serialize(array('user'=>$this->user->getUsername(), 'type'=>'allday')),
+          $this->getContext()
+          );
+        }
+     }
+   }
 
 
 }

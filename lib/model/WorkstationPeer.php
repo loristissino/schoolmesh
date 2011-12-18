@@ -135,6 +135,8 @@ class WorkstationPeer extends BaseWorkstationPeer
 
   public static function enableInternetAccess($user, $Workstations, TimeslotsContainer $tsc, $type, $sf_context=null)
   {
+    // type can be "current" or "allday"
+    
     $user_id=$user->getProfile()->getId();
     $username=$user->getProfile()->getUsername();
     

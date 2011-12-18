@@ -27,12 +27,15 @@ class LanlogPeer extends BaseLanlogPeer
 
 	public static function retrieveByUserAndWorkstation($userId, $workstationId)
 	{
-	$c=new Criteria();
-	$c->add(LanlogPeer::USER_ID, $userId);
-	$c->add(LanlogPeer::WORKSTATION_ID, $workstationId);
-	$c->add(LanlogPeer::IS_ONLINE, true);
-	$t = LanlogPeer::doSelectOne($c);
-	return $t;
+    Generic::logMessage('userid', $userId);
+    Generic::logMessage('wsid', $workstationId);
+    $c=new Criteria();
+    $c->add(LanlogPeer::USER_ID, $userId);
+    $c->add(LanlogPeer::WORKSTATION_ID, $workstationId);
+    $c->add(LanlogPeer::IS_ONLINE, true);
+    $t = LanlogPeer::doSelectOne($c);
+    Generic::logMessage('t', $t);
+    return $t;
 	}
 
 	public static function retrieveOnline()

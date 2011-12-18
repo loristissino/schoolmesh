@@ -90,6 +90,8 @@ all:
     ldap_domain: dc=example,dc=com
     samba_share: //example_server/homes
     samba_address: 127.0.0.1
+    token: abcdefgh12 # used for logon and logoff registrations in the db - it must correspond to the one 
+                          #  specified in schoolmesh.rc file
 
   system:
     commands_view: true
