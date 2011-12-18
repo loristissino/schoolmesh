@@ -116,7 +116,10 @@ class lanlogActions extends sfActions
      {
        if($active)
        {
-         $tsc=new TimeslotsContainer();
+         $tsc=new TimeslotsContainer(sfConfig::get('app_config_timeslotsfile'));
+         
+         Generic::logMessage('tsc', $tsc->getCurrentSlotBegin());
+         Generic::logMessage('tsc', $tsc->getEleventhHour());
          
          $this->result=$lanlog->getWorkstation()->enableInternetAccess(
           $this->user->getId(),
