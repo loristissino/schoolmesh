@@ -93,6 +93,13 @@ all:
     token: abcdefgh12 # used for logon and logoff registrations in the db - it must correspond to the one 
                           #  specified in schoolmesh.rc file
 
+# edit yout smb.conf like this (edit server address and token):
+#
+# [homes]
+#   ...
+#   root preexec = /usr/bin/wget --no-check-certificate --post-data 'token=abcdefgh12' https://192.168.1.1/index.php/lanlog/lanlogon/user/%U/ip/%m/workstation/%M -O /dev/null
+#   root postexec = /usr/bin/wget --no-check-certificate --post-data 'token=abcdefgh12' https://192.168.1.1/index.php/lanlog/lanlogoff/user/%U/ip/%m/workstation/%M -O /dev/null
+
   system:
     commands_view: true
     commands_apply: false

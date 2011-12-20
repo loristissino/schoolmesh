@@ -26,10 +26,6 @@ FIREWALL_SSH_USER=root
 FIREWALL_CHAIN=schoolmesh
 FIREWALL_COMMENT=schoolmeshrule
 
-SCHOOLMESH_SERVER=http://127.0.0.1/frontend_dev.php
-SCHOOLMESH_TOKEN=abcdefgh12
-
-
 # DO NET EDIT PASS THIS LINE
 
 source /var/schoolmesh/config/schoolmesh.bashfunctions
