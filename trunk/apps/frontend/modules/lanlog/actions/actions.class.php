@@ -76,7 +76,7 @@ class lanlogActions extends sfActions
 
   protected function checkParameters(sfWebRequest $request)
 	{
-    //$this->forward404Unless($request->isMethod('POST'), 'Only POST requests are allowed.');
+    $this->forward404Unless($request->isMethod('POST'), 'Only POST requests are allowed.');
     
     $this->setTemplate('register');
     
@@ -84,11 +84,9 @@ class lanlogActions extends sfActions
     $this->ip=$request->getParameter('ip');
     $this->workstationname=$request->getParameter('workstation');
     
-    $this->internalcheck=md5($this->username. $this->ip . $this->workstationname . sfConfig::get('app_authentication_token'));
-    
-    if($this->internalcheck!=$request->getParameter('check'))
+    if($request->getParameter('token')!=sfConfig::get('app_authentication_token'))
     {
-      $this->errormessage='Wrong data check result.';
+      $this->errormessage='Wrong token.';
       return false;
     }
     
