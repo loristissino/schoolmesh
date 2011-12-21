@@ -2,9 +2,27 @@
 
 = Integrazione con Samba, Squid, ecc. =
 
-Si può fare in modo che il logon degli utenti autenticati da Samba venga riconosciuto da SchoolMesh in quella che viene chiamata "autenticazione leggera".
+Si può fare in modo che il logon e il logoff degli utenti autenticati da Samba venga riconosciuto da SchoolMesh in quella che viene chiamata "autenticazione leggera".
 
-(da completare)
+In pratica, è sufficiente aggiungere nel file _sbm.conf_ delle righe che dicono quale operazione fare al momento dell'accesso alla home directory.
+
+{{{
+[homes]
+  ... 
+	root preexec =  /usr/bin/wget --no-check-certificate --post-data 'token=AtOkEn2kIp' https://schoolmeshserver/schoolmesh/index.php/lanlogon/username/%U/ip/%I/workstation/%m -O /tmp/logon%U.%m.%I.html
+	root postexec = /usr/bin/wget --no-check-certificate --post-data 'token=AtOkEn2kIp' https://schoolmeshserver/schoolmesh/index.php/lanlogoff/username/%U/ip/%I/workstation/%m -O /tmp/logoff%U.%m.%I.html 
+
+}}}
+
+Così facendo, al logon e al logoff su una macchina della rete locale, viene invocata l'applicazione web con un POST ad un indirizzo come il seguente:
+
+{{{
+  https://schoolmeshserver/schoolmesh/index.php/lanlogoff/username/filippo.monti/ip/192.168.1.12/workstation/pc12labinf1
+}}}
+
+Il POST contiene un token segreto, che deve corrispondere a quello indicato nel file _app.yml_.
+
+Se !SchoolMesh viene usata per abilitare/disabilitare l'accesso a Internet, l'attivazione/disattivazione avviene automaticamente, per la postazione in uso, quando un docente fa il logon su una macchina.
 
 == Configurazione quote disco ==
 
