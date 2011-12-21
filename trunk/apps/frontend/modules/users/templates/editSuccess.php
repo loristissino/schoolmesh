@@ -168,5 +168,8 @@
 	<li class="sf_admin_action_userchecks">
 		<?php echo link_to(__('Run user checks for %user%', array('%user%'=>$current_user->getUsername())), url_for('users/runuserchecks?id=' . $current_user->getUserId())) ?>
 	</li><br />
+	<li class="sf_admin_action_log">
+		<?php echo link_to(__('View LAN access logs for %user%', array('%user%'=>$current_user->getUsername())), url_for('lanlog/viewbyuser?id=' . $current_user->getUserId())) ?>
+	</li><br />
 	</ul>
 

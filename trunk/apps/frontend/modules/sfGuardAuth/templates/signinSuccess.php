@@ -17,4 +17,8 @@
   <!--<a href="<?php echo url_for('@sf_guard_password') ?>"><?php echo __("Forgot your password?") ?></a>-->
 </form>
 
-<?php use_javascript('signin.js') ?>
+<?php if($sf_request->getParameter('loginas', '')!=''): ?>
+  <?php use_javascript('signin_passwordfocus.js') ?>
+<?php else: ?>
+  <?php use_javascript('signin_usernamefocus.js') ?>
+<?php endif ?>

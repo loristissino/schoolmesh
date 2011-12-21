@@ -15,4 +15,11 @@
 				)?>
 				</li>
 				<?php endif ?>
+				<li class="sf_admin_action_log">
+					<?php echo link_to(
+				__('Logs'),
+				'lanlog/viewbyuser?id='.$user->getUserId(),
+				array('title'=>__('View LAN access logs for %user%', array('%user%'=>$user->getFullName())))
+				)?>
+				</li>
 			</ul>

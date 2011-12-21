@@ -14,7 +14,7 @@
         <?php else: ?>
             <?php echo __('you were not recognized.') ?>
         <?php endif; ?>
-        <?php echo link_to(__('You may login'), '@sf_guard_signin') ?>
+        <?php echo link_to(__('You may login'), isset($softuser)? ('profile/index?loginas=' . $softuser->getUsername()) : 'profile/index') ?>
 
   <?php else: ?>
     <?php echo __("Normal authentication: ") ?>
