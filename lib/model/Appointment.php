@@ -420,6 +420,14 @@ $con->query($sql);
         ;
       }
       
+      foreach($this->getAttachmentFiles() as $AttachmentFile)
+      {
+        $AttachmentFile
+        ->setUserId($newOwnerId)
+        ->save($con)
+        ;
+      }
+      
       $this->addWfevent(
         $user_id, 'Appointment reassigned (from %oldteachername% to %newteachername%)', 
         array('%oldteachername%'=>$oldOwner, '%newteachername%'=>$this->getFullName()), 

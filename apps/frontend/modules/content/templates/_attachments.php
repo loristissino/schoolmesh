@@ -24,12 +24,14 @@
   <?php include_partial('content/td_public', array('object'=>$attachment, 'owner'=>null)) ?>
       <td>
       <ul class="sf_admin_td_actions">
+      <?php if($attachment->isViewableBy($sf_user)): ?>
       <li class="sf_admin_action_download"><?php echo link_to(
 				__('Download'),
 				url_for('content/attachment?id='. $attachment->getId())
 				)
 			?>
 			</li>
+      <?php endif ?>
       </ul>
       </td>
     </tr>
