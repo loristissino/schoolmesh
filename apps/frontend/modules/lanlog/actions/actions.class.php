@@ -18,8 +18,25 @@ class lanlogActions extends sfActions
 // FIXME This must be reviewed in order to take in consideration users logged on (the network) and in (the application)
 	$this->lanlog_list = sfGuardUserProfilePeer::retrieveOnline();
 
-	}  
-
+	}
+  
+  public function executeList(sfWebRequest $request)
+  {
+    $this->lanlog_list = LanlogPeer::doSelect(new Criteria());
+  }
+  
+  public function executeViewbyuser(sfWebRequest $request)
+  {
+    $this->lanlog_list = LanlogPeer::retrieveByUserId($request->getParameter('id'));
+    $this->setTemplate('list');
+  }
+  
+  public function executeViewbyworkstation(sfWebRequest $request)
+  {
+    $this->lanlog_list = LanlogPeer::retrieveByWorkstationId($request->getParameter('id'));
+    $this->setTemplate('list');
+  }
+  
   public function executeRegisterlogon(sfWebRequest $request)
   {
     if(!$this->checkParameters($request))

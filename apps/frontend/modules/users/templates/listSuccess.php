@@ -1,15 +1,12 @@
-<?php use_helper('Schoolmesh') ?>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'users/index' =>__('User management'),
+    ),
+  'current'=>__('List/Search'),
+  ))
+?>
 
-<?php slot('title', __('User management')) ?>
-	
-<?php slot('breadcrumbs',
-	link_to(__("User management"), 'users/index') . ' » ' .
-	__("User list")
-	)
-
-?><h1><?php echo __("User management")?></h1>
-
-<?php include_partial('content/flashes') ?>
+<?php include_partial('content/flashes'); ?>
 
 <?php include_partial('content/searchbox', array('query'=>$query)) ?>
 

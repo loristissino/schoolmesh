@@ -92,6 +92,17 @@
           </li>
         <?php endif ?>
     <?php endif ?>
+    <?php if($sf_user->hasCredential('admin')): ?>
+      <li class="sf_admin_action_log">
+      <?php echo link_to(
+            __('Logs'),
+            'lanlog/viewbyworkstation?id='. $Workstation->getId(),
+            array(
+              'title'=>__('View LAN access logs for workstation %name%', array('%name%'=>$Workstation->getName())),
+              ) 
+            ) ?>
+      </li>
+    <?php endif ?>
 </ul>
 </td>
     </tr>

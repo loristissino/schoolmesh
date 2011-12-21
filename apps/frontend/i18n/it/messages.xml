@@ -105,11 +105,11 @@
       </trans-unit>
       <trans-unit id="45">
         <source>It seems you are a guest of %fullname%. &lt;!--male--&gt;</source>
-        <target>Sembra che tu sia un ospite di %fullname%.</target>
+        <target>A quanto pare, sei un ospite di %fullname%.</target>
       </trans-unit>
       <trans-unit id="46">
         <source>It seems you are a guest of %fullname%. &lt;!--female--&gt;</source>
-        <target>Sembra che tu sia un'ospite di %fullname%.</target>
+        <target>A quanto pare, sei un'ospite di %fullname%.</target>
       </trans-unit>
       <trans-unit id="47">
         <source>%fullname%'s profile</source>
@@ -3887,6 +3887,38 @@
     <trans-unit id="982">
         <source>[0]Looks like %studentname% is not enrolled anymore|[1]Looks like %studentname% is not enrolled anymore</source>
         <target>[0]A quanto pare, %studentname% non è più iscritta|[1]A quanto pare, %studentname% non è più iscritto</target>
+    </trans-unit>
+    <trans-unit id="983">
+        <source>LAN Logons and logoffs</source>
+        <target>Registro accessi alla LAN</target>
+    </trans-unit>
+    <trans-unit id="984">
+        <source>LAN Logons and logoffs, by user</source>
+        <target>Registro accessi alla LAN, per utente</target>
+    </trans-unit>
+    <trans-unit id="985">
+        <source>LAN Logons and logoffs, by workstation</source>
+        <target>Registro accessi alla LAN, per calcolatore</target>
+    </trans-unit>
+    <trans-unit id="986">
+        <source>Logs</source>
+        <target>Registrazioni</target>
+    </trans-unit>
+    <trans-unit id="987">
+        <source>Logs</source>
+        <target>Registrazioni</target>
+    </trans-unit>
+    <trans-unit id="988">
+        <source>View LAN access logs for %user%</source>
+        <target>Visualizza accessi alla LAN di %user%</target>
+    </trans-unit>
+    <trans-unit id="989">
+        <source>View LAN access logs for workstation %name%</source>
+        <target>Visualizza accessi alla LAN per il calcolatore %name%</target>
+    </trans-unit>
+    <trans-unit id="990">
+        <source>Last access</source>
+        <target>Ultimo accesso</target>
     </trans-unit>
     </body>
   </file> 

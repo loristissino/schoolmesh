@@ -473,7 +473,7 @@ class projectsActions extends sfActions
 				$this->project = SchoolprojectPeer::retrieveByPK($request->getParameter('id'));
 				$result=$this->project->sendEmail($params, $this->getUser()->getProfile(), $this->getContext());
 				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
-        return $this->redirect('projects/index');
+        return $this->redirect('projects/monitor');
       }
 		}
     $this->form
