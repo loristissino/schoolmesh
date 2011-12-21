@@ -30,6 +30,8 @@ class AttachmentFile extends BaseAttachmentFile {
   public function isViewableBy($user)
   {
     return 
+      $this->getIsPublic()
+      ||
       $user->getProfile()->getUserId()===$this->getUserId() 
       || 
       $user->hasCredential('wpfr_view') 
