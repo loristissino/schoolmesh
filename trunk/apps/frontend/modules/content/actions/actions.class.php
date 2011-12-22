@@ -113,8 +113,9 @@ class contentActions extends sfActions
 		if (!$file->isReadable())
 		{
 			return $this->renderText($file->getFilename() . ' not readable'); 
-//		$this->forward404Unless($file->isReadable());
 		}
+
+    
     if($deliveryname)
     {
       $file->setDeliveryName($deliveryname);
