@@ -23,14 +23,20 @@ class AppointmentPeer extends BaseAppointmentPeer
     $c->add(AppointmentPeer::YEAR_ID, $year->getId());
     return AppointmentPeer::doSelect($c);
   }
-  
+
+
+  public static function retrieveByYear(Year $year)
+  {
+    $c=new Criteria();
+    $c->add(AppointmentPeer::YEAR_ID, $year->getId());
+    return AppointmentPeer::doSelect($c);
+  }
+
 	public static function getSubmitted($state)
 	{
-		
-	$c=new Criteria();
-	$c->add(AppointmentPeer::STATE, $state);
-	return parent::doSelect($c);
-
+    $c=new Criteria();
+    $c->add(AppointmentPeer::STATE, $state);
+    return parent::doSelect($c);
 	}
 	
 	

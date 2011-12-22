@@ -33,12 +33,24 @@ class smFileInfo extends SPLFileInfo
     return $result[0];
   }
   
+  public function getUsedPathname()
+  {
+    if ($this->isLink())
+    {
+      return $this->getRealPath();
+    }
+    else
+    {
+      return $this->getPathname();
+    }
+  }
+  
   public function getCorrectedPathname()
   {
     $name =  str_replace(
       array("&#039;", ' ', "&quot;"), 
       array("\\'", '\ ', '\"'), 
-      $this->getPathname()
+      $this->getUsedPathname()
     );
     
     return $name;
@@ -49,7 +61,7 @@ class smFileInfo extends SPLFileInfo
     $name =  str_replace(
       array("&#039;", "&quot;"), 
       array("'", '"'), 
-      $this->getPathname()
+      $this->getUsedPathname()
     );
     
     return $name;
@@ -65,11 +77,13 @@ class smFileInfo extends SPLFileInfo
     {
       $result = array();
       $command='stat -c "%s:%a" ' . $this->getCorrectedPathname();
-      
+
       // the replacements are needed because of filenames having quotes inside...
       
       exec($command, $result, $return_var);
       list($this->_size, $this->_perms) = explode(':', $result[0]);
+      
+
     }
   }
   
