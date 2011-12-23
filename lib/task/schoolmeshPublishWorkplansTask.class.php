@@ -61,14 +61,10 @@ EOF;
         {
           $appointment->createAttachment($complete, $this->context, $options['format']);
           $this->logSection('attachment+', sprintf('complete? %s', $complete?'true':'false') , null, 'INFO');
-          if ($options['format']!='odt')
-          {
-            sleep(5);  // otherwise unoconv complains about memory leaks... hoping this works!
-          }
         }
         catch (Exception $e)
         {
-          $this->logSection('attachment', 'Could not create attachment.', null, 'INFO');
+          $this->logSection('attachment', 'Could not create attachment.', null, 'ERROR');
           $done=false;
         }
       }
