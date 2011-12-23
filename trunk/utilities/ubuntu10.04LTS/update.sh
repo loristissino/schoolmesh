@@ -3,7 +3,7 @@
 
 STARTDIR=/var/schoolmesh
 
-for DIR in apps bin config data doc error graph plugins templates utilities
+for DIR in apps bin config data doc error graph plugins templates utilities web
   do
     cd "$STARTDIR/$DIR"
     echo "Updating $STARTDIR/$DIR..."
@@ -18,8 +18,4 @@ for DIR in account  email  filter  form  helper  model  schoolmesh  task  test
     svn update
   done
 
-STARTDIR="$STARTDIR/web"
-cd "$STARTDIR"
-echo "Updating $STARTDIR"
-svn update
 
