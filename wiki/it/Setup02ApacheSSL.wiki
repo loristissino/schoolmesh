@@ -24,17 +24,10 @@ sudo service apache2 restart
   RewriteRule ^(.*)$ /schoolmesh/index.php [QSA,L]
 }}} 
 
-3. Modificare i file di configurazione di PHP (_/etc/php5/apache2/php.ini_ e _/etc/php5/cli/php.ini_) in modo che contengano le seguenti impostazioni:
+3. (opzionale) Modificare i file di configurazione di PHP (_/etc/php5/apache2/php.ini_ e _/etc/php5/cli/php.ini_) in modo che contengano le seguenti impostazioni:
 
 {{{
 short_open_tag = Off
-}}}
-
-Comando:
-
-{{{
-sudo vi /etc/php5/apache2/php.ini
-sudo vi /etc/php5/cli/php.ini
 }}}
 
 4. Riavviare il server apache.
@@ -79,18 +72,31 @@ solo se si configura !SchoolMesh per l'esecuzione automatica degli script di ges
 
 == SSL ==
 
-(Da completare)
+È possibile abilitare il modulo ssl di Apache in modo da poter avere connessioni sicure. In questo esempio vedremo come
+farlo con un certificato autofirmato.
 
-Abilitazione del modulo ssl di Apache:
+1. Abilitare il modulo ssl di Apache:
 
 {{{
 $ sudo a2enmod ssl
-Module ssl installed; run /etc/init.d/apache2 force-reload to enable.
-
-$ sudo /etc/init.d/apache2 force-reload
- * Reloading web server config apache2                                   [ OK ] 
-
+Enabling module ssl.
 }}}
 
+2. Creare il certificato:
 
+{{{
+$ sudo make-ssl-cert generate-default-snakeoil --force-overwrite
+}}}
 
+Questo comando crea i due file _/etc/ssl/certs/ssl-cert-snakeoil.pem_ e _/etc/ssl/private/ssl-cert-snakeoil.key_.
+
+3. Scaricare il file _schoolmesh-ssl_, copiarlo nella directory di configurazione di _apache_, abilitare il sito e riavviare il server:
+
+<code language="sh">
+wget http://schoolmesh.googlecode.com/svn/trunk/utilities/ubuntu10.04LTS/apache2/schoolmesh-ssl -O /tmp/schoolmesh-ssl
+sudo mv /tmp/schoolmesh-ssl /etc/apache2/sites-available
+sudo chown root:root /etc/apache2/sites-available/schoolmesh-ssl
+sudo chmod 644 /etc/apache2/sites-available/schoolmesh-ssl
+sudo a2ensite schoolmesh-ssl
+sudo service apache2 restart
+</code>
