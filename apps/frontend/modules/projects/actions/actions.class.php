@@ -702,9 +702,6 @@ class projectsActions extends sfActions
 			
 		}
 
-
-
-
   }
  
 
@@ -713,7 +710,7 @@ class projectsActions extends sfActions
     $this->forward404Unless($this->resource=ProjResourcePeer::retrieveByPk($request->getParameter('id')));
     $this->forward404Unless($this->resource->isEditableBy($this->getUser()));
     
-    $this->form = new ProjResourceForm($this->resource);
+    $this->form = new ProjResourceForm($this->resource,  array('culture' => $this->getUser()->getCulture()));
     
     if(!$this->resource->getScheduledDeadline())
     {

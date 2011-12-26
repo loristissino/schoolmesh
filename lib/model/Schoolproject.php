@@ -17,7 +17,7 @@ class Schoolproject extends BaseSchoolproject {
     {
       return $this->getTitle();
     }
-    return '';
+    return 'untitled';
 	}
   
   public function getCoordinatorProfile()
