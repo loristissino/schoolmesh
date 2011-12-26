@@ -1,3 +1,7 @@
+2011/12/26
+Added field "preferred culture" in sfGuardUserProfile table
+UPDATE `schoolmesh`.`sf_guard_user_profile` SET `preferred_culture` = 'it';
+
 2011/12/22
 Consider whether to link to http://www.ohloh.net/p/schoolmesh in the documentation
 Test https://launchpad.net/~openoffice-pkgs/+archive/ppa?field.series_filter=lucid to see if it solves problems of conversions

@@ -30,6 +30,7 @@ abstract class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'is_scheduled_for_deletion' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'prefers_richtext'          => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'preferred_format'          => new sfWidgetFormFilterInput(),
+      'preferred_culture'         => new sfWidgetFormFilterInput(),
       'last_action_at'            => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'last_login_at'             => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
     ));
@@ -53,6 +54,7 @@ abstract class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'is_scheduled_for_deletion' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'prefers_richtext'          => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'preferred_format'          => new sfValidatorPass(array('required' => false)),
+      'preferred_culture'         => new sfValidatorPass(array('required' => false)),
       'last_action_at'            => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'last_login_at'             => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
     ));
@@ -91,6 +93,7 @@ abstract class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'is_scheduled_for_deletion' => 'Boolean',
       'prefers_richtext'          => 'Boolean',
       'preferred_format'          => 'Text',
+      'preferred_culture'         => 'Text',
       'last_action_at'            => 'Date',
       'last_login_at'             => 'Date',
     );

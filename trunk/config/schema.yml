@@ -65,6 +65,7 @@ propel:
     is_scheduled_for_deletion: { type: boolean, default: false }
     prefers_richtext: { type: boolean, default: true }
     preferred_format: varchar(5)
+    preferred_culture: varchar(7)
     last_action_at: timestamp
     last_login_at: timestamp
 
