@@ -17,15 +17,8 @@ class profileActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-		/*if ($this->profile = $this->getUser()->getProfile())
-    {
-      $this->name = $this->profile->getFullName();
-      //$this->appointments = $this->getUser()->getProfile()->getCurrentAppointments();
-      $this->teams=$this->getUser()->getProfile()->getTeams();
-    }
-    */
     $this->accounts=$this->getUser()->getProfile()->getAccounts();
-	
+    $this->getUser()->setCulture($this->getUser()->getProfile()->getPreferredCulture());
   }
   
   
@@ -251,6 +244,7 @@ class profileActions extends sfActions
 				->setPronunciation($params['pronunciation'])
         ->setPrefersRichtext($params['prefers_richtext'])
         ->setPreferredFormat($params['preferred_format'])
+        ->setPreferredCulture($params['preferred_culture'])
 				->setEmail($params['email']);
 				
 				$email_warning='';
@@ -287,6 +281,7 @@ class profileActions extends sfActions
 				'email'=>$this->profile->getEmail(),
         'prefers_richtext'=>$this->profile->getPrefersRichtext(),
         'preferred_format'=>$this->profile->getPreferredFormat(),
+        'preferred_culture'=>$this->profile->getPreferredCulture(),
 			)
 		);
 	

@@ -158,6 +158,7 @@ CREATE TABLE `sf_guard_user_profile`
 	`is_scheduled_for_deletion` TINYINT default 0,
 	`prefers_richtext` TINYINT default 1,
 	`preferred_format` VARCHAR(5),
+	`preferred_culture` VARCHAR(7),
 	`last_action_at` DATETIME,
 	`last_login_at` DATETIME,
 	PRIMARY KEY (`user_id`),

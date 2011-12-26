@@ -4,9 +4,6 @@ require_once(sfConfig::get('sf_plugins_dir').'/sfGuardPlugin/modules/sfGuardAuth
  
 class sfGuardAuthActions extends BasesfGuardAuthActions
 {
-/*  public function executeNewAction()
-  {
-    return $this->renderText('This is a new sfGuardAuth action.');
-  }
-*/
+
+
 }

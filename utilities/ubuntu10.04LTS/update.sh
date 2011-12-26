@@ -18,4 +18,5 @@ for DIR in account  email  filter  form  helper  model  schoolmesh  task  test
     svn update
   done
 
+rm -rf "$STARTDIR/utilities/ubuntu10.04LTS/setup.sh" # we remove this file because it is dangerous
 

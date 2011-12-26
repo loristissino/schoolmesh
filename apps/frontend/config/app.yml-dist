@@ -21,6 +21,9 @@ all:
     current_year:   2009 # only the first of the two years of a scholastic/academic year
     current_term:   Term1
     culture: it
+    cultures:
+      it: Italiano
+      en: English
     base_url: 'http://www.schoolmesh.example.com'
     lan_url: 'http://192.168.0.1/schoolmesh'
     wan_url: 'https://intranet.example.com/schoolmesh'

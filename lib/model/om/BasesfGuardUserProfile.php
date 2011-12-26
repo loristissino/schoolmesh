@@ -136,6 +136,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $preferred_format;
 
 	/**
+	 * The value for the preferred_culture field.
+	 * @var        string
+	 */
+	protected $preferred_culture;
+
+	/**
 	 * The value for the last_action_at field.
 	 * @var        string
 	 */
@@ -414,6 +420,16 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	public function getPreferredFormat()
 	{
 		return $this->preferred_format;
+	}
+
+	/**
+	 * Get the [preferred_culture] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getPreferredCulture()
+	{
+		return $this->preferred_culture;
 	}
 
 	/**
@@ -910,6 +926,26 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	} // setPreferredFormat()
 
 	/**
+	 * Set the value of [preferred_culture] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     sfGuardUserProfile The current object (for fluent API support)
+	 */
+	public function setPreferredCulture($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->preferred_culture !== $v) {
+			$this->preferred_culture = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::PREFERRED_CULTURE;
+		}
+
+		return $this;
+	} // setPreferredCulture()
+
+	/**
 	 * Sets the value of [last_action_at] column to a normalized version of the date/time value specified.
 	 * 
 	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
@@ -1070,8 +1106,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->is_scheduled_for_deletion = ($row[$startcol + 16] !== null) ? (boolean) $row[$startcol + 16] : null;
 			$this->prefers_richtext = ($row[$startcol + 17] !== null) ? (boolean) $row[$startcol + 17] : null;
 			$this->preferred_format = ($row[$startcol + 18] !== null) ? (string) $row[$startcol + 18] : null;
-			$this->last_action_at = ($row[$startcol + 19] !== null) ? (string) $row[$startcol + 19] : null;
-			$this->last_login_at = ($row[$startcol + 20] !== null) ? (string) $row[$startcol + 20] : null;
+			$this->preferred_culture = ($row[$startcol + 19] !== null) ? (string) $row[$startcol + 19] : null;
+			$this->last_action_at = ($row[$startcol + 20] !== null) ? (string) $row[$startcol + 20] : null;
+			$this->last_login_at = ($row[$startcol + 21] !== null) ? (string) $row[$startcol + 21] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1081,7 +1118,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 21; // 21 = sfGuardUserProfilePeer::NUM_COLUMNS - sfGuardUserProfilePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 22; // 22 = sfGuardUserProfilePeer::NUM_COLUMNS - sfGuardUserProfilePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating sfGuardUserProfile object", $e);
@@ -1475,9 +1512,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				return $this->getPreferredFormat();
 				break;
 			case 19:
-				return $this->getLastActionAt();
+				return $this->getPreferredCulture();
 				break;
 			case 20:
+				return $this->getLastActionAt();
+				break;
+			case 21:
 				return $this->getLastLoginAt();
 				break;
 			default:
@@ -1520,8 +1560,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$keys[16] => $this->getIsScheduledForDeletion(),
 			$keys[17] => $this->getPrefersRichtext(),
 			$keys[18] => $this->getPreferredFormat(),
-			$keys[19] => $this->getLastActionAt(),
-			$keys[20] => $this->getLastLoginAt(),
+			$keys[19] => $this->getPreferredCulture(),
+			$keys[20] => $this->getLastActionAt(),
+			$keys[21] => $this->getLastLoginAt(),
 		);
 		return $result;
 	}
@@ -1611,9 +1652,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->setPreferredFormat($value);
 				break;
 			case 19:
-				$this->setLastActionAt($value);
+				$this->setPreferredCulture($value);
 				break;
 			case 20:
+				$this->setLastActionAt($value);
+				break;
+			case 21:
 				$this->setLastLoginAt($value);
 				break;
 		} // switch()
@@ -1659,8 +1703,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[16], $arr)) $this->setIsScheduledForDeletion($arr[$keys[16]]);
 		if (array_key_exists($keys[17], $arr)) $this->setPrefersRichtext($arr[$keys[17]]);
 		if (array_key_exists($keys[18], $arr)) $this->setPreferredFormat($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setLastActionAt($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setLastLoginAt($arr[$keys[20]]);
+		if (array_key_exists($keys[19], $arr)) $this->setPreferredCulture($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setLastActionAt($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setLastLoginAt($arr[$keys[21]]);
 	}
 
 	/**
@@ -1691,6 +1736,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION)) $criteria->add(sfGuardUserProfilePeer::IS_SCHEDULED_FOR_DELETION, $this->is_scheduled_for_deletion);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::PREFERS_RICHTEXT)) $criteria->add(sfGuardUserProfilePeer::PREFERS_RICHTEXT, $this->prefers_richtext);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::PREFERRED_FORMAT)) $criteria->add(sfGuardUserProfilePeer::PREFERRED_FORMAT, $this->preferred_format);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::PREFERRED_CULTURE)) $criteria->add(sfGuardUserProfilePeer::PREFERRED_CULTURE, $this->preferred_culture);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::LAST_ACTION_AT)) $criteria->add(sfGuardUserProfilePeer::LAST_ACTION_AT, $this->last_action_at);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::LAST_LOGIN_AT)) $criteria->add(sfGuardUserProfilePeer::LAST_LOGIN_AT, $this->last_login_at);
 
@@ -1784,6 +1830,8 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$copyObj->setPrefersRichtext($this->prefers_richtext);
 
 		$copyObj->setPreferredFormat($this->preferred_format);
+
+		$copyObj->setPreferredCulture($this->preferred_culture);
 
 		$copyObj->setLastActionAt($this->last_action_at);
 
