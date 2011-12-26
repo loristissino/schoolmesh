@@ -9,10 +9,17 @@
  */
 class ProjResourceForm extends BaseProjResourceForm
 {
+  
+  
+  public function getCurrentCulture()
+  {
+    return isset($this->options['culture']) ? $this->options['culture'] : 'en';
+  }
+
   public function configure()
   {
     
-    $this->setWidget('scheduled_deadline', new sfWidgetFormI18nDate(array('culture'=>'it')));
+    $this->setWidget('scheduled_deadline', new sfWidgetFormI18nDate(array('culture'=>$this->getCurrentCulture())));
     
     unset($this['schoolproject_id']);
     unset($this['is_monetary']);

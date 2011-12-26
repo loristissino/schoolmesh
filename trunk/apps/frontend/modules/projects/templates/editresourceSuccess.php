@@ -2,12 +2,12 @@
 <?php use_javascripts_for_form($form) ?>
 <?php use_javascript('jquery-ui-1.8.custom.min.js') ?>
 <?php use_javascript('datepicker') ?>
-<?php use_javascript('jquery.ui.datepicker-' . sfConfig::get('sf_default_culture') . '.js') ?>
+<?php use_javascript('jquery.ui.datepicker-' . $sf_user->getCulture() . '.js') ?>
 
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     'projects/index' => __("Projects"),
-    'projects/edit?id=' . $resource->getSchoolproject()->getId() => $resource->getSchoolproject(),
+    'projects/edit?id=' . $resource->getSchoolproject()->getId() => __('Project «%project%»', array('%project%'=>$resource->getSchoolproject()->__toString())),
     ),
   'current'=>__('Resource #%id%', array('%id%'=>$resource->getId()))
     )
