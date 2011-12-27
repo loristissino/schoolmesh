@@ -93,7 +93,6 @@ class Team extends BaseTeam
 		}
 	}
   
-  
   public function getComponentsIds()
   {
     $ids=array();
@@ -105,6 +104,18 @@ class Team extends BaseTeam
       $ids[]=$row->getUserId();
     }
     return $ids;
+  }
+  
+  public function getComponents()
+  {
+    $c=new Criteria();
+    $c->add(UserTeamPeer::TEAM_ID, $this->getId());
+    $c->addJoin(UserTeamPeer::USER_ID, sfGuardUserPeer::ID);
+    $c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
+    $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+    $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
+    $rows=UserTeamPeer::doSelectJoinAll($c);
+    return $rows;
   }
 	
 }
