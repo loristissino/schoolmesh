@@ -74,12 +74,12 @@ class schoolmeshGenerateWorkplansIndexTask extends sfBaseTask
         if($AttachmentFile->getIsPublic())
         {
           $count++;
-          $linkpath=$symlinksdir.'/'.$AttachmentFile->getUniqid();
+          $linkpath=$symlinksdir.'/'.$AttachmentFile->getOriginalFileName();
           symlink($attachmentsdir.'/'.$AttachmentFile->getUniqid(), $linkpath);
           $yaml['sections'][$Appointment->getSchoolclassId()]['title']=$Appointment->getSchoolclassId();
           $yaml['sections'][$Appointment->getSchoolclassId()]['links'][$count]=array(
             'title'=>$AttachmentFile->getOriginalFileName(),
-            'file'=>$dirname.'/'.$AttachmentFile->getUniqId(),
+            'file'=>$dirname.'/'.$AttachmentFile->getOriginalFileName(),
             'date'=>date('U')
             );
           

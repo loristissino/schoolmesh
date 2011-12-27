@@ -3920,8 +3920,14 @@
         <source>Last access</source>
         <target>Ultimo accesso</target>
     </trans-unit>
+    <trans-unit id="991">
+        <source>Workplans of year %year%</source>
+        <target>Piani di lavoro dell'anno %year%</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
+
 
 
