@@ -18,6 +18,7 @@ class teamsActions extends sfActions
   {
     $this->Team = TeamPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->Team);
+    $this->components=$this->Team->getComponents();
   }
 
   public function executeNew(sfWebRequest $request)
