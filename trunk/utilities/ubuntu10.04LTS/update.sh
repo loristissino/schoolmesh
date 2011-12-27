@@ -20,3 +20,5 @@ for DIR in account  email  filter  form  helper  model  schoolmesh  task  test
 
 rm -rf "$STARTDIR/utilities/ubuntu10.04LTS/setup.sh" # we remove this file because it is dangerous
 
+sudo cp -v "$STARTDIR"/bin/schoolmesh* /usr/local/bin
+
