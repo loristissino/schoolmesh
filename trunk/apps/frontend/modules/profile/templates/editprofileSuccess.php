@@ -1,17 +1,12 @@
-<?php slot('title', __('Profile')) ?>
-<?php slot('breadcrumbs',
-	link_to(__('My profile'), url_for('profile')) . ' » ' .
-	__('SchoolMesh account')
-	)
-	
-	?><h1><?php echo __('My profile')?></h1>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'profile/index' =>__('My profile')
+    ),
+  'current'=>__('SchoolMesh main account'),
+  ))
+?>
 
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
 
 <form action="<?php echo url_for('profile/editprofile') ?>" method="post">
 

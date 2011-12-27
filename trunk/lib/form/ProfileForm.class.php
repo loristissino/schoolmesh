@@ -16,6 +16,7 @@ class ProfileForm extends BaseForm
       ));
 
 			$this->widgetSchema->setNameFormat('userinfo[%s]');
+      $this['preferred_culture']->getWidget()->setLabel('Interface language');
 			
 			$this->setValidators(array(
 				'pronunciation'  => new sfValidatorString(array('trim' => true, 'required' => false, 'max_length'=>100)),

@@ -271,7 +271,7 @@ class profileActions extends sfActions
 					$this->getContext()->getI18N()->__('User profile information updated.'). ' ' . $email_warning
 					);
 					
-				$this->redirect('profile/editprofile');
+				$this->redirect('profile/index');
 			}
 		}
 

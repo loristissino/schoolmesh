@@ -4,6 +4,8 @@
   ))
 ?>
 
+<?php include_partial('content/flashes'); ?>
+
 <?php if ($sf_user->hasCredential('wpfr_submission') or $sf_user->hasCredential('proj_coordination') or $sf_user->hasCredential('proj_activity')): ?>
 <h2><?php echo __('Appointments and projects') ?></h2>
 <ul class="sf_admin_actions">
