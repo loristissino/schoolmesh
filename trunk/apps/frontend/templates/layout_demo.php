@@ -62,7 +62,7 @@
 
 <div class="feedback">
   <h3><?php echo __('Feedback') ?></h3>
-    <p><?php echo __('This application is under active development. Please open issues about anomalies either by writing to %address% or by filling the issue web page at www.schoolmesh.mattiussilab.net. Thank you', array('%address%'=>sfConfig::get('app_mail_webmaster'))) ?></p>
+    <p><?php echo __('This application is under active development. Please open issues about anomalies either by writing to %address% or by filling the issue web page at www.schoolmesh.mattiussilab.net. Thank you.', array('%address%'=>sfConfig::get('app_mail_webmaster'))) ?></p>
 </div>
 
 </div>
