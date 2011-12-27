@@ -1,15 +1,39 @@
 #summary Integrazione con SmoothWall
 #labels Phase-Deploy
 
-= Integrazione con SmoothWall =
+= Integrazione con !SmoothWall =
 
-Per l'abilitazione/disabilitazione dell'accesso a Internet SchoolMesh si basa su dei comandi da dare ad una macchina Linux che funziona da firewall e proxy server.
+Per l'abilitazione/disabilitazione dell'accesso a Internet !SchoolMesh si basa su dei comandi da dare ad una macchina Linux che funziona da firewall e proxy server.
 
-La documentazione che segue riguarda SmoothWall, ma dovrebbe essere facilmente adattabile anche ad altri tipi di distribuzioni Linux, visto che si basa su semplici comandi iptables.
+La documentazione che segue riguarda !SmoothWall, ma dovrebbe essere facilmente adattabile anche ad altri tipi di distribuzioni Linux, visto che si basa su semplici comandi iptables.
 
 == Aggiunta delle chiavi di autorizzazione ==
 
-Fare in modo che l'utente www-data (server web sotto cui funziona l'applicazione SchoolMesh) possa eseguire i comandi dell'utente `root` della macchina SmoothWall, attraverso l'aggiunta delle chiavi di autorizzazione, agendo sul file `/root/.ssh/authorized_keys`. 
+Fare in modo che l'utente www-data (server web sotto cui funziona l'applicazione !SchoolMesh) possa eseguire i comandi dell'utente `root` della macchina SmoothWall, attraverso l'aggiunta delle chiavi di autorizzazione, agendo sul file `/root/.ssh/authorized_keys`.
+
+Fondamentalmente, creare una directory per le chiavi di www-data e generare le stesse:
+
+{{{
+sudo mkdir /var/www/.ssh
+sudo chown www-data /var/www/.ssh
+sudo -u www-data ssh-keygen -t rsa
+}}}
+
+Poi, copiare la chiave pubblica di www-data sul server !SmoothWall e aggiungerla alle `authorized_keys`:
+
+{{{
+scp -P 222 /var/www/.ssh/id_rsa.pub root@192.168.0.100:/tmp/www-data-key
+}}}
+
+e, sul server !SmoothWall:
+
+{{{
+cat /tmp/www-data-key >> /root/.ssh/authorized_keys
+}}}
+
+== Autorizzazione all'esecuzione con _at_ ==
+
+È necessario fare in modo che l'utente www-data possa eseguire operazioni temporizzate. Per farlo, è necessario eliminare la voce www-data dal file `/etc/at.deny`.
 
 == Personalizzazione di SmoothWall ==
 
