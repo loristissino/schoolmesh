@@ -15,14 +15,23 @@ class AttachmentFile extends BaseAttachmentFile {
   private
     $_filename;
     
-  public function setFilename($v)
+  public function setFilename($v=null)
   {
-    $this->_filename=$v;
+    if(!$v)
+    {
+      $v=$this->getUniqId();
+    }
+    
+    $this->_filename=sfConfig::get('app_documents_attachments').'/'. $v;
     return $this;
   }
   
   public function getFilename()
   {
+    if(!$this->_filename)
+    {
+      $this->setFilename();
+    }
     return $this->_filename;
   }
 
@@ -44,7 +53,7 @@ class AttachmentFile extends BaseAttachmentFile {
   {
     $this->setUniqId(uniqid($prefix . '_', true) . $file->getExtension());
 
-    $this->setFilename(sfConfig::get('app_documents_attachments').'/'.$this->getUniqId());
+    $this->setFilename($this->getUniqId());
     
     try
     {
