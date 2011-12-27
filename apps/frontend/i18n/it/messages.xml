@@ -3924,6 +3924,18 @@
         <source>Workplans of year %year%</source>
         <target>Piani di lavoro dell'anno %year%</target>
     </trans-unit>
+    <trans-unit id="992">
+        <source>Interface language</source>
+        <target>Lingua interfaccia</target>
+    </trans-unit>
+    <trans-unit id="993">
+        <source>This application is under active development. Please open issues about anomalies either by writing to %address% or by filling the issue web page at www.schoolmesh.mattiussilab.net. Thank you.</source>
+        <target>Questa applicazione è in via di sviluppo. Eventuali anomalie possono essere segnalate scrivendo a %address% oppure aprendo un problema alla pagina web www.schoolmesh.mattiussilab.net. Grazie.</target>
+    </trans-unit>
+    <trans-unit id="994">
+        <source>Feedback</source>
+        <target>Riscontri</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

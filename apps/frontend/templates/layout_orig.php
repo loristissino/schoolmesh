@@ -54,9 +54,8 @@
 <?php include_component('profile', 'info') ?>
 
 <div class="feedback">
-  <h3>Feedback</h3>
-    <p>Questa applicazione è in via di sviluppo. Si prega di segnalare qualsiasi anomalia inviando un'email
-    all'indirizzo <em><?php echo sfConfig::get('app_mail_webmaster'); ?></em>. Grazie.</p>
+  <h3><?php echo __('Feedback') ?></h3>
+    <p><?php echo __('This application is under active development. Please open issues about anomalies either by writing to %address% or by filling the issue web page at www.schoolmesh.mattiussilab.net. Thank you.', array('%address%'=>sfConfig::get('app_mail_webmaster'))) ?></p>
 </div>
 
 
