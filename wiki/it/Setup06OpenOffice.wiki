@@ -116,4 +116,40 @@ Alternative:
   # trovare un altro convertitore affidabile
   # ospitare il convertitore su un altro host
   # ospitare il convertitore su una macchina virtuale
-  # usare un server X dummy, come _xserver-xorg-video-dummy_ 
+  # ~~usare un server X dummy, come _xserver-xorg-video-dummy_~~
+  
+== Altre informazioni che potrebbero essere utili (Ubuntu 10.04LTS) ==
+
+(QUESTA PARTE VA VERIFICATA!)
+
+Per usare l'ultima versione di !OpenOffice.org è meglio usare attivare i repository di !OpenOffice: aggiungere nel file _/etc/apt/sources.list_ queste righe:
+  
+{{{
+  deb http://ppa.launchpad.net/openoffice-pkgs/ppa/ubuntu lucid main 
+  deb-src http://ppa.launchpad.net/openoffice-pkgs/ppa/ubuntu lucid main 
+}}}
+
+Aggiungere le firme dei pacchetti:
+
+{{{ 
+sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:openoffice-pkgs/ppa
+sudo apt-get update
+sudo apt-get upgrade
+}}}
+
+Controllare di avere installato _unoconv_ e _writer_:
+
+{{{ 
+sudo apt-get install unoconv openoffice.org-writer
+}}}
+
+Potrebbe essere utile disabilitare la comparsa del primo wizard. Eventualmente, seguire le istruzioni presenti in 
+http://wiki.services.openoffice.org/wiki/Documentation/Administration_Guide/Deactivating_Registration_Wizard
+
+Fare in modo che all'avvio parta openoffice in background, in modo da permettere le connessioni di _unoconv_:
+
+{{{
+/usr/bin/soffice -headless -accept="socket,host=127.0.0.1,port=2002;urp;" -nofirststartwizard
+}}}
+
