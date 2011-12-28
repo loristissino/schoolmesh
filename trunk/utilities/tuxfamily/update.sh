@@ -28,6 +28,7 @@ ln -sfv ../php-include/plugins/sfJqueryReloadedPlugin/web/ sfJqueryReloadedPlugi
 ln -sfv ../php-include/plugins/sfOdfPlugin/web/ sfOdfPlugin
 ln -sfv ../php-include/lib/vendor/symfony/lib/plugins/sfPropelPlugin/web/ sfPropelPlugin
 ln -sfv ../php-include/plugins/sfTCPDFPlugin/web/ sfTCPDFPlugin
+ln -sfv ../php-include/lib/vendor/symfony/data/web/sf/ sf
 
 cd images
 for FILE in default delete desc edit error first last list new next previous tick
