@@ -101,15 +101,15 @@ class OdfDoc
     {
       case('doc'):
         $this->_convertTo('doc');
-        $this->_mimetype="application/msword";
+        $this->_mimetype='application/msword';
         break;
       case('pdf'):
         $this->_convertTo('pdf');
-        $this->_mimetype="application/pdf";
+        $this->_mimetype='application/pdf';
         break;
       case('rtf'):
         $this->_convertTo('rtf');
-        $this->_mimetype="text/rtf";
+        $this->_mimetype='text/rtf';
         break;
       default:
         $this->_mimetype='application/vnd.oasis.opendocument.text';

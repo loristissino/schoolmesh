@@ -19,7 +19,7 @@ class OdfDocPeer
 {
 	
 	const UNOCONV_PORT=2002;
-	const UNOCONV_USER='loris';
+	//const UNOCONV_USER='loris';
 	const UNOCONV_DISPLAY=':0.0';
 	
 	static public function executeCommand($command)
