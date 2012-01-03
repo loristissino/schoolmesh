@@ -138,18 +138,22 @@ sudo apt-get update
 sudo apt-get upgrade
 }}}
 
-Controllare di avere installato _unoconv_ e _writer_:
-
-{{{ 
-sudo apt-get install unoconv openoffice.org-writer
-}}}
-
-Potrebbe essere utile disabilitare la comparsa del primo wizard. Eventualmente, seguire le istruzioni presenti in 
-http://wiki.services.openoffice.org/wiki/Documentation/Administration_Guide/Deactivating_Registration_Wizard
-
-Fare in modo che all'avvio parta openoffice in background, in modo da permettere le connessioni di _unoconv_:
+In alternativa, è possibile usare LibreOffice:
 
 {{{
-/usr/bin/soffice -headless -accept="socket,host=127.0.0.1,port=2002;urp;" -nofirststartwizard
+sudo add-apt-repository ppa:libreoffice/ppa
+sudo apt-get update
+sudo apt-get install libreoffice libreoffice-l10n-it libreoffice-help-it
+sudo apt-get install libreoffice-gnome
 }}}
+
+Fare in modo che all'avvio parta openoffice in background, in modo da permettere le connessioni di _unoconv_. Dovrebbe essere sufficiente aggiungere in _/etc/rc.local_ la seguente riga, prima del comando `exit`:
+
+{{{
+/usr/bin/soffice --accept="socket,host=127.0.0.1,port=2002,tcpNoDelay=1;urp;" --headless --nodefault --nofirststartwizard --nolockcheck --nologo --norestore
+}}}
+
+Il pacchetto _unoconv_ 3.6 presente nella distribuzione è bacato. Lo si può installare per soddisfare le dipendenze, ma poi è meglio prendere la versione 4.0 presente in http://dag.wieers.com/home-made/unoconv/unoconv-0.4.tar.bz2
+ e sostituire il file _/usr/bin/unoconv_.
+
 
