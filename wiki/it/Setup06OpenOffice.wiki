@@ -98,62 +98,35 @@ Inoltre, per gestire il salto pagina, sarà necessario definire uno stile paragr
 Può capitare che si commettano degli errori nella predisposizione dei template, che portano alla generazione di un documento ODT non valido (OpenOffice all'apertura del documento dice "Errore di formato nel file, nel sottodocumento content.xml in Y,X (riga, colonna)").
 
 Può essere utile salvare il documento generato e utilizzare l'utility `schoolmesh_odf_check` per analizzare il risultato.
-
-== Uso del convertitore ==
-
-Affinché il convertitore di documenti possa funzionare, è necessario che esso venga attivato da un utente che ha a disposizione una sessione X.
-
-Un possibile escamotage (sotto GNOME) è il seguente:
-
-  # creare un account fittizio (es. _unoconv_) sul server
-  # effettuare il login con quell'account
-  # deselezionare tutti i programmi di avvio in _Preferenze/Sessioni_ 
-  # aggiungere, come unico programma d'avvio, `schoolmesh_unoconv_launch` (che lancia _unoconv_ e poi blocca lo schermo, impedendo altre operazioni)
-  # in _Amministrazione/Finestra di accesso_ abilitare l'accesso temporizzato (scheda _Sicurezza_) per l'utente fittizio creato
-
-Alternative:
-
-  # trovare un altro convertitore affidabile
-  # ospitare il convertitore su un altro host
-  # ospitare il convertitore su una macchina virtuale
-  # ~~usare un server X dummy, come _xserver-xorg-video-dummy_~~
   
-== Altre informazioni che potrebbero essere utili (Ubuntu 10.04LTS) ==
+== Conversione di documenti in formato PDF e Microsoft Word (Ubuntu 10.04LTS) ==
 
-(QUESTA PARTE VA VERIFICATA!)
+I documenti generati possono essere convertiti in formato PDF, Microsoft Word o RichTextFormat grazie all'utility di conversione _unoconv_ e a !LibreOffice.
 
-Per usare l'ultima versione di !OpenOffice.org è meglio usare attivare i repository di !OpenOffice: aggiungere nel file _/etc/apt/sources.list_ queste righe:
-  
+Per installare !LibreOffice su Ubuntu 10.04LTSserver seguire i seguenti passi:
+
 {{{
-  deb http://ppa.launchpad.net/openoffice-pkgs/ppa/ubuntu lucid main 
-  deb-src http://ppa.launchpad.net/openoffice-pkgs/ppa/ubuntu lucid main 
-}}}
-
-Aggiungere le firme dei pacchetti:
-
-{{{ 
 sudo apt-get install python-software-properties
-sudo add-apt-repository ppa:openoffice-pkgs/ppa
-sudo apt-get update
-sudo apt-get upgrade
-}}}
-
-In alternativa, è possibile usare LibreOffice:
-
-{{{
 sudo add-apt-repository ppa:libreoffice/ppa
 sudo apt-get update
 sudo apt-get install libreoffice libreoffice-l10n-it libreoffice-help-it
-sudo apt-get install libreoffice-gnome
 }}}
 
-Fare in modo che all'avvio parta openoffice in background, in modo da permettere le connessioni di _unoconv_. Dovrebbe essere sufficiente aggiungere in _/etc/rc.local_ la seguente riga, prima del comando `exit`:
+Fare in modo che all'avvio parta libreoffice in background, in modo da permettere le connessioni di _unoconv_. Dovrebbe essere sufficiente aggiungere in _/etc/rc.local_ la seguente riga, prima del comando `exit`:
 
 {{{
 /usr/bin/soffice --accept="socket,host=127.0.0.1,port=2002,tcpNoDelay=1;urp;" --headless --nodefault --nofirststartwizard --nolockcheck --nologo --norestore
 }}}
 
-Il pacchetto _unoconv_ 3.6 presente nella distribuzione è bacato. Lo si può installare per soddisfare le dipendenze, ma poi è meglio prendere la versione 4.0 presente in http://dag.wieers.com/home-made/unoconv/unoconv-0.4.tar.bz2
+Il pacchetto _unoconv_ 3.6 presente nei repository ufficiali è bacato. Lo si può installare per soddisfare le dipendenze, ma poi è meglio prendere la versione 4.0 presente in http://dag.wieers.com/home-made/unoconv/unoconv-0.4.tar.bz2
  e sostituire il file _/usr/bin/unoconv_.
+
+Infine, è necessario creare la directory _.libreoffice_ dentro _/var/www_ e rendere l'utente _www-data_ proprietario della stessa, con diritti di scrittura.
+
+{{{
+sudo mkdir /var/www/.libreoffice
+sudo chmod 755 /var/www/.libreoffice
+sudo chown www-data /var/www/.libreoffice
+}}}
 
 
