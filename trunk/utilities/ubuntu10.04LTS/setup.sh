@@ -14,7 +14,7 @@ php5-mcrypt libapache2-mod-php5 php5-ldap php5-mysql php5-xsl dialog \
 apache2 apache2-utils mysql-server libdbd-mysql-perl libdbi-perl \
 libhtml-template-perl libnet-daemon-perl libplrpc-perl \
 mysql-client-5.1 mysql-server-5.1  phpmyadmin dbconfig-common \
-libgd2-xpm libmcrypt4 quota tidy msttcorefonts
+libgd2-xpm libmcrypt4 quota tidy
 
 echo "Creating basic directories if necessary..."
 [[ -d "$INSTALLDIR" ]] || sudo mkdir -v "$INSTALLDIR"
