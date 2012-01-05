@@ -24,7 +24,7 @@ sudo a2ensite schoolmesh
 sudo service apache2 restart
 </code>
 
-== HTTPS ==
+=== HTTPS ===
 
 È possibile abilitare il modulo ssl di Apache in modo da poter avere connessioni sicure. In questo esempio vedremo come
 farlo con un certificato autofirmato.
