@@ -125,7 +125,15 @@ Fare in modo che all'avvio parta libreoffice in background, in modo da permetter
 }}}
 
 Il pacchetto _unoconv_ 3.6 presente nei repository ufficiali di Ubuntu 10.04LTS è bacato. Lo si può installare per soddisfare eventuali dipendenze, ma poi è meglio prendere la versione 4.0 presente in http://dag.wieers.com/home-made/unoconv/unoconv-0.4.tar.bz2
- e sostituire il file _/usr/bin/unoconv_.
+ e sostituire il file _/usr/bin/unoconv_ (e la relativa pagina di manuale).
+
+{{{
+wget http://dag.wieers.com/home-made/unoconv/unoconv-0.4.tar.bz2 
+tar xvjf unoconv-0.4.tar.bz2 
+sudo cp unoconv-0.4/unoconv /usr/bin/
+gzip docs/unoconv.1
+sudo cp docs/unoconv.1.gz  /usr/share/man/man1/
+}}}
 
 Infine, è necessario che l'utente _www-data_ abbia diritti di scrittura nella sua home directory (!LibreOffice genera dei file temporanei in essa).
 
