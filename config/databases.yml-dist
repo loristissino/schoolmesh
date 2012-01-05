@@ -19,7 +19,7 @@ all:
     param:
       dsn: 'mysql:dbname=schoolmesh;host=localhost'
       username: schoolmesh
-      password: seGreTo
+      password: SuPeRsEcReT
       encoding: utf8
       persistent: false
       pooling: true
