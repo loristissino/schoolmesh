@@ -99,7 +99,7 @@ Può capitare che si commettano degli errori nella predisposizione dei template,
 
 Può essere utile salvare il documento generato e utilizzare l'utility `schoolmesh_odf_check` per analizzare il risultato.
   
-== Conversione di documenti in formato PDF e Microsoft Word (Ubuntu 10.04LTS) ==
+== Conversione di documenti in formato PDF e Microsoft Word ==
 
 I documenti generati possono essere convertiti in formato PDF, Microsoft Word o RichTextFormat grazie all'utility di conversione _unoconv_ e a !LibreOffice.
 
@@ -109,7 +109,13 @@ Per installare !LibreOffice su Ubuntu 10.04LTSserver seguire i seguenti passi:
 sudo apt-get install python-software-properties
 sudo add-apt-repository ppa:libreoffice/ppa
 sudo apt-get update
-sudo apt-get install libreoffice libreoffice-l10n-it libreoffice-help-it
+sudo apt-get install libreoffice libreoffice-l10n-it libreoffice-help-it unoconv
+}}}
+
+Per installare !LibreOffice su Ubuntu 11.10server seguire i seguenti passi:
+
+{{{
+sudo apt-get install libreoffice libreoffice-l10n-it libreoffice-help-it unoconv
 }}}
 
 Fare in modo che all'avvio parta libreoffice in background, in modo da permettere le connessioni di _unoconv_. Dovrebbe essere sufficiente aggiungere in _/etc/rc.local_ la seguente riga, prima del comando `exit`:
@@ -118,15 +124,14 @@ Fare in modo che all'avvio parta libreoffice in background, in modo da permetter
 /usr/bin/soffice --accept="socket,host=127.0.0.1,port=2002,tcpNoDelay=1;urp;" --headless --nodefault --nofirststartwizard --nolockcheck --nologo --norestore
 }}}
 
-Il pacchetto _unoconv_ 3.6 presente nei repository ufficiali è bacato. Lo si può installare per soddisfare le dipendenze, ma poi è meglio prendere la versione 4.0 presente in http://dag.wieers.com/home-made/unoconv/unoconv-0.4.tar.bz2
+Il pacchetto _unoconv_ 3.6 presente nei repository ufficiali di Ubuntu 10.04LTS è bacato. Lo si può installare per soddisfare eventuali dipendenze, ma poi è meglio prendere la versione 4.0 presente in http://dag.wieers.com/home-made/unoconv/unoconv-0.4.tar.bz2
  e sostituire il file _/usr/bin/unoconv_.
 
-Infine, è necessario creare la directory _.libreoffice_ dentro _/var/www_ e rendere l'utente _www-data_ proprietario della stessa, con diritti di scrittura.
+Infine, è necessario che l'utente _www-data_ abbia diritti di scrittura nella sua home directory (!LibreOffice genera dei file temporanei in essa).
 
 {{{
-sudo mkdir /var/www/.libreoffice
-sudo chmod 755 /var/www/.libreoffice
-sudo chown www-data /var/www/.libreoffice
+sudo chown www-data:root /var/www
+sudo chmod 775 /var/www
 }}}
 
 

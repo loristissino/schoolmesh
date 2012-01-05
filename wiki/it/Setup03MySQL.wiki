@@ -70,7 +70,7 @@ wget http://www.schoolmeshdemo.tuxfamily.org/schoolmeshbase.sql.gz -O /tmp/schoo
 schoolmesh_application_importtables prod /tmp/schoolmeshbase.sql.gz
 </code>
 
-6. Accedere con un browser alla pagina http://localhost/index.php e provare a fare il login con le credenziali indicate nella pagina http://www.schoolmesh.mattiussilab.net/demo
+6. Accedere con un browser alla pagina http://localhost/index.php o https://localhost/index.php e provare a fare il login con le credenziali indicate nella pagina http://www.schoolmesh.mattiussilab.net/demo
 
 7. Generare i file indice usati dal motore di ricerca interno, basato su Lucene:
 
