@@ -5,9 +5,15 @@
 
 Qui di seguito viene dato per scontato che la directory in cui risiede il software sia _/var/schoolmesh_. Se si installa il software altrove, andranno modificate di conseguenza le istruzioni.
 
-Diamo per scontato che si voglia avere un file di configurazione specifico per _schoolmesh_. Ovviamente ognuno potrà personalizzare le cose come crede.
+Diamo per scontato che si voglia avere un file di configurazione specifico per !SchoolMesh. Ovviamente ognuno potrà personalizzare le cose come crede.
 
-1. Scaricare il file _schoolmesh_, aggiungerlo ai file di configurazione del server web e riavviare lo stesso:
+== Scelta tra http e https ==
+
+Come per tutte le applicazioni web, si può decidere se far funzionare !SchoolMesh con http o con https.
+
+=== HTTP ===
+
+Scaricare il file _schoolmesh_, aggiungerlo ai file di configurazione del server web e riavviare lo stesso:
 
 <code language="sh">
 wget http://schoolmesh.googlecode.com/svn/trunk/utilities/ubuntu10.04LTS/apache2/schoolmesh -O /tmp/schoolmesh
@@ -18,19 +24,51 @@ sudo a2ensite schoolmesh
 sudo service apache2 restart
 </code>
 
-2. Se il percorso scelto per l'applicazione non è _/schoolmesh_, modificare la riga del file _web/.htaccess_ contenente la riga relativa alla _!RewriteRule_:
+== SSL ==
+
+È possibile abilitare il modulo ssl di Apache in modo da poter avere connessioni sicure. In questo esempio vedremo come
+farlo con un certificato autofirmato.
+
+1. Abilitare il modulo ssl di Apache:
+
+{{{
+$ sudo a2enmod ssl
+}}}
+
+2. Creare il certificato:
+
+{{{
+$ sudo make-ssl-cert generate-default-snakeoil --force-overwrite
+}}}
+
+Questo comando crea i due file _/etc/ssl/certs/ssl-cert-snakeoil.pem_ e _/etc/ssl/private/ssl-cert-snakeoil.key_.
+
+3. Scaricare il file _schoolmesh-ssl_, copiarlo nella directory di configurazione di _apache_, abilitare il sito e riavviare il server:
+
+<code language="sh">
+wget http://schoolmesh.googlecode.com/svn/trunk/utilities/ubuntu10.04LTS/apache2/schoolmesh-ssl -O /tmp/schoolmesh-ssl
+sudo mv /tmp/schoolmesh-ssl /etc/apache2/sites-available
+sudo chown root:root /etc/apache2/sites-available/schoolmesh-ssl
+sudo chmod 644 /etc/apache2/sites-available/schoolmesh-ssl
+sudo a2ensite schoolmesh-ssl
+sudo service apache2 restart
+</code>
+
+== Altre configurazioni (opzionali) ==
+
+1. Se il percorso scelto per l'applicazione non è _/schoolmesh_, modificare la riga del file _web/.htaccess_ contenente la riga relativa alla _!RewriteRule_:
 
 {{{
   RewriteRule ^(.*)$ /schoolmesh/index.php [QSA,L]
 }}} 
 
-3. (opzionale) Modificare i file di configurazione di PHP (_/etc/php5/apache2/php.ini_ e _/etc/php5/cli/php.ini_) in modo che contengano le seguenti impostazioni:
+2. (opzionale) Modificare i file di configurazione di PHP (_/etc/php5/apache2/php.ini_ e _/etc/php5/cli/php.ini_) in modo che contengano le seguenti impostazioni:
 
 {{{
 short_open_tag = Off
 }}}
 
-4. Riavviare il server apache.
+3. Riavviare il server apache.
 
 Comando:
 
@@ -38,7 +76,7 @@ Comando:
 sudo service apache2 restart
 }}}
 
-5. Se lo si desidera, configurare _sudo_ in modo che l'utente _www-data_ abbia la delega per interrogare il sistema sugli utenti e le loro directory.
+4. Se lo si desidera, configurare _sudo_ in modo che l'utente _www-data_ abbia la delega per interrogare il sistema sugli utenti e le loro directory.
 
 Il file _/etc/sudoers_ (da modificare con `sudo visudo`, non direttamente!) dovrebbe contenere le seguenti voci:
 
@@ -70,33 +108,3 @@ Togliere il `#` sulla riga
 
 solo se si configura !SchoolMesh per l'esecuzione automatica degli script di gestione di sistema (*non raccomandabile per il momento*).
 
-== SSL ==
-
-È possibile abilitare il modulo ssl di Apache in modo da poter avere connessioni sicure. In questo esempio vedremo come
-farlo con un certificato autofirmato.
-
-1. Abilitare il modulo ssl di Apache:
-
-{{{
-$ sudo a2enmod ssl
-Enabling module ssl.
-}}}
-
-2. Creare il certificato:
-
-{{{
-$ sudo make-ssl-cert generate-default-snakeoil --force-overwrite
-}}}
-
-Questo comando crea i due file _/etc/ssl/certs/ssl-cert-snakeoil.pem_ e _/etc/ssl/private/ssl-cert-snakeoil.key_.
-
-3. Scaricare il file _schoolmesh-ssl_, copiarlo nella directory di configurazione di _apache_, abilitare il sito e riavviare il server:
-
-<code language="sh">
-wget http://schoolmesh.googlecode.com/svn/trunk/utilities/ubuntu10.04LTS/apache2/schoolmesh-ssl -O /tmp/schoolmesh-ssl
-sudo mv /tmp/schoolmesh-ssl /etc/apache2/sites-available
-sudo chown root:root /etc/apache2/sites-available/schoolmesh-ssl
-sudo chmod 644 /etc/apache2/sites-available/schoolmesh-ssl
-sudo a2ensite schoolmesh-ssl
-sudo service apache2 restart
-</code>
