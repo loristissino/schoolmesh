@@ -3936,6 +3936,10 @@
         <source>Feedback</source>
         <target>Riscontri</target>
     </trans-unit>
+    <trans-unit id="995">
+        <source>No attachments.</source>
+        <target>Nessun allegato.</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
