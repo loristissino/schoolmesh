@@ -7,9 +7,9 @@ Qui di seguito viene dato per scontato che la directory in cui risiede il softwa
 
 Diamo per scontato che si voglia avere un file di configurazione specifico per !SchoolMesh. Ovviamente ognuno potrà personalizzare le cose come crede.
 
-== Scelta tra http e https ==
+== Scelta tra HTTP e HTTPS ==
 
-Come per tutte le applicazioni web, si può decidere se far funzionare !SchoolMesh con http o con https.
+Come per tutte le applicazioni web, si può decidere se far funzionare !SchoolMesh con http o con https. Scegliere tra le due opzioni qui sotto quella che si ritiene appropriata.
 
 === HTTP ===
 
@@ -24,7 +24,7 @@ sudo a2ensite schoolmesh
 sudo service apache2 restart
 </code>
 
-== SSL ==
+== HTTPS ==
 
 È possibile abilitare il modulo ssl di Apache in modo da poter avere connessioni sicure. In questo esempio vedremo come
 farlo con un certificato autofirmato.
