@@ -29,7 +29,7 @@ imagefill($img_handle, 0, 0, $back_color);
 
 $text=$_GET['text'];
 
-imagettftext($img_handle, 10, 90, 15, $ywidth-3, $txt_color, $font_path, $text);
+imagettftext($img_handle, 9, 90, 15, $ywidth-3, $txt_color, $font_path, $text);
 
 ImagePng ($img_handle); 
 ImageDestroy($img_handle);
