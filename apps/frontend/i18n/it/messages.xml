@@ -1810,7 +1810,7 @@
     </trans-unit>
     <trans-unit id="474">
         <source>Please ask the administrator to check the template.</source>
-        <target>Chiedi all'amministratore di controllare il template .</target>
+        <target>Chiedi all'amministratore di controllare il template.</target>
     </trans-unit>
     <trans-unit id="475">
         <source>Conversion failed.</source>
