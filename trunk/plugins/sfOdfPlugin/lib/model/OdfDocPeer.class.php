@@ -39,7 +39,7 @@ class OdfDocPeer
 	
 	static public function getIsUnoconvActive()
 	{
-		$command = 'pgrep -f "^soffice.bin.*accept=socket"';
+		$command = 'pgrep -f "soffice.bin.*accept=socket"';
 
 		try
 		{

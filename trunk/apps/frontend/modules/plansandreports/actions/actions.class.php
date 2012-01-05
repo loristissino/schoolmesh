@@ -434,7 +434,7 @@ public function executeBatch(sfWebRequest $request)
 		}
 		catch (Exception $e)
 		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.') . $e->getMessage());
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.'). ' ' . $e->getMessage());
 			$this->redirect('plansandreports/export?id='. $this->workplan->getId());
 		}
 		
@@ -447,7 +447,7 @@ public function executeBatch(sfWebRequest $request)
 		}
 		catch (Exception $e)
 		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Conversion failed.'));
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Conversion failed.'). ' ' . $e->getMessage());
 			$this->redirect('plansandreports/export?id='. $this->workplan->getId());
 		}
 		
