@@ -128,11 +128,12 @@ Il pacchetto _unoconv_ 3.6 presente nei repository ufficiali di Ubuntu 10.04LTS 
  e sostituire il file _/usr/bin/unoconv_ (e la relativa pagina di manuale).
 
 {{{
+cd /tmp
 wget http://dag.wieers.com/home-made/unoconv/unoconv-0.4.tar.bz2 
 tar xvjf unoconv-0.4.tar.bz2 
 sudo cp unoconv-0.4/unoconv /usr/bin/
-gzip docs/unoconv.1
-sudo cp docs/unoconv.1.gz  /usr/share/man/man1/
+gzip unoconv-0.4/docs/unoconv.1
+sudo cp unoconv-0.4/docs/unoconv.1.gz  /usr/share/man/man1/
 }}}
 
 Infine, è necessario che l'utente _www-data_ abbia diritti di scrittura nella sua home directory (!LibreOffice genera dei file temporanei in essa).
