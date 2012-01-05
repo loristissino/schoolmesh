@@ -17,6 +17,7 @@ Affinché le modifiche ai file abbiano effetto, è necessario impartire il coman
 
 {{{
 symfony cc
+
 }}}
   
 == Autenticazione ==
@@ -131,3 +132,9 @@ Piuttosto di cambiare questo, è preferibile creare un layout diverso e far punt
 I dati principali non frequentemente modificabili sono amministrabili con l'applicazione di backend.
 
 Vedi [Manuale Manuale d'uso]
+
+----
+
+Passo successivo: [Setup05ApplicationIntegration Integrazione Integrazione con Samba, Squid, ecc.]
+
+

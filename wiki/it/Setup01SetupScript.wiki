@@ -11,4 +11,10 @@ Scaricare lo script di installazione (disponibile all'URL http://schoolmesh.goog
 wget http://schoolmesh.googlecode.com/svn/trunk/utilities/ubuntu10.04LTS/setup.sh
 chmod +x setup.sh
 ./setup.sh
+
 }}}
+
+----
+
+Passo successivo: [Setup02ApacheSSL Configurazione di Apache]
+

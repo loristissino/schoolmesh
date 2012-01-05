@@ -9,3 +9,7 @@ L'applicazione è pensata per essere altamente configurabile, ma per il momento 
 
 Vale naturalmente il principio che, qualsiasi cosa vi succeda usando questa applicazione o le informazioni qui presenti, gli autori non potranno essere ritenuti responsabili.
 
+----
+
+Passo successivo: [Setup01SetupScript Setup di SchoolMesh]
+

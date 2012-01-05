@@ -17,18 +17,21 @@ Fondamentalmente, creare una directory per le chiavi di www-data e generare le s
 sudo mkdir /var/www/.ssh
 sudo chown www-data /var/www/.ssh
 sudo -u www-data ssh-keygen -t rsa
+
 }}}
 
 Poi, copiare la chiave pubblica di www-data sul server !SmoothWall e aggiungerla alle `authorized_keys`:
 
 {{{
 scp -P 222 /var/www/.ssh/id_rsa.pub root@192.168.0.100:/tmp/www-data-key
+
 }}}
 
 e, sul server !SmoothWall:
 
 {{{
 cat /tmp/www-data-key >> /root/.ssh/authorized_keys
+
 }}}
 
 == Autorizzazione all'esecuzione con _at_ ==
@@ -41,6 +44,7 @@ Creare, sulla macchina SmoothWall, due directory per contenere gli script e i fi
 
 {{{
 mkdir /etc/schoolmesh /root/schoolmesh
+
 }}}
 
 Copiare via scp dalla directory `utilities/smoothwall` di SchoolMesh, il file dello script da eseguire all'avvio e quello di configurazione nelle apposite directory, appena create.
@@ -80,7 +84,11 @@ Per fare in modo che il comando descritto precedentemente venga eseguito all'avv
 
 {{{
 /root/schoolmesh/schoolmesh_iptables
+
 }}}
 
 alla fine del file `/etc/rc.d/rc.sysinit` (ovviamente il percorso da indicare dovrà corrispondere a quello dello script predisposto).
+
+
+
 

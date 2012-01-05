@@ -5,9 +5,10 @@
 
 1. Accertarsi che il server MySQL sia in funzione:
 
-<code language="sh">
+{{{
 sudo service mysql status
-</code>
+
+}}}
 
 2. Creare, con l'interfaccia preferita (ad esempio con phpMyAdmin), un utente `schoolmesh` e un database `schoolmesh_prod`:
 
@@ -57,18 +58,20 @@ all:
 
 4. Creare la struttura del database:
 
-<code language="sh">
+{{{
 cd /var/schoolmesh
 schoolmesh_application_createtables prod
-</code>
+
+}}}
 
 5. Caricare i dati del demo nel database:
 
-<code language="sh">
+{{{
 cd /var/schoolmesh
 wget http://www.schoolmeshdemo.tuxfamily.org/schoolmeshbase.sql.gz -O /tmp/schoolmeshbase.sql.gz
 schoolmesh_application_importtables prod /tmp/schoolmeshbase.sql.gz
-</code>
+
+}}}
 
 6. Accedere con un browser alla pagina http://localhost/index.php o https://localhost/index.php e provare a fare il login con le credenziali indicate nella pagina http://www.schoolmesh.mattiussilab.net/demo
 
@@ -76,5 +79,11 @@ schoolmesh_application_importtables prod /tmp/schoolmeshbase.sql.gz
 
 {{{
 symfony schoolmesh:rebuild-indexes --application=frontend --env=prod
+
 }}}
+
+----
+
+Passo successivo: [Setup04Customization Modifiche locali e personalizzazioni]
+
 

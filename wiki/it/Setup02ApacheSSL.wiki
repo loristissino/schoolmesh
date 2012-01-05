@@ -15,14 +15,15 @@ Come per tutte le applicazioni web, si può decidere se far funzionare !SchoolMe
 
 Scaricare il file _schoolmesh_, aggiungerlo ai file di configurazione del server web e riavviare lo stesso:
 
-<code language="sh">
+{{{
 wget http://schoolmesh.googlecode.com/svn/trunk/utilities/ubuntu10.04LTS/apache2/schoolmesh -O /tmp/schoolmesh
 sudo mv /tmp/schoolmesh /etc/apache2/sites-available
 sudo chown root:root /etc/apache2/sites-available/schoolmesh
 sudo chmod 644 /etc/apache2/sites-available/schoolmesh
 sudo a2ensite schoolmesh
 sudo service apache2 restart
-</code>
+
+}}}
 
 === HTTPS ===
 
@@ -33,26 +34,29 @@ farlo con un certificato autofirmato.
 
 {{{
 $ sudo a2enmod ssl
+
 }}}
 
 2. Creare il certificato:
 
 {{{
 $ sudo make-ssl-cert generate-default-snakeoil --force-overwrite
+
 }}}
 
 Questo comando crea i due file _/etc/ssl/certs/ssl-cert-snakeoil.pem_ e _/etc/ssl/private/ssl-cert-snakeoil.key_.
 
 3. Scaricare il file _schoolmesh-ssl_, copiarlo nella directory di configurazione di _apache_, abilitare il sito e riavviare il server:
 
-<code language="sh">
+{{{
 wget http://schoolmesh.googlecode.com/svn/trunk/utilities/ubuntu10.04LTS/apache2/schoolmesh-ssl -O /tmp/schoolmesh-ssl
 sudo mv /tmp/schoolmesh-ssl /etc/apache2/sites-available
 sudo chown root:root /etc/apache2/sites-available/schoolmesh-ssl
 sudo chmod 644 /etc/apache2/sites-available/schoolmesh-ssl
 sudo a2ensite schoolmesh-ssl
 sudo service apache2 restart
-</code>
+
+}}}
 
 == Altre configurazioni (opzionali) ==
 
@@ -60,12 +64,14 @@ sudo service apache2 restart
 
 {{{
   RewriteRule ^(.*)$ /schoolmesh/index.php [QSA,L]
+
 }}} 
 
 2. (opzionale) Modificare i file di configurazione di PHP (_/etc/php5/apache2/php.ini_ e _/etc/php5/cli/php.ini_) in modo che contengano le seguenti impostazioni:
 
 {{{
 short_open_tag = Off
+
 }}}
 
 3. Riavviare il server apache.
@@ -74,6 +80,7 @@ Comando:
 
 {{{
 sudo service apache2 restart
+
 }}}
 
 4. Se lo si desidera, configurare _sudo_ in modo che l'utente _www-data_ abbia la delega per interrogare il sistema sugli utenti e le loro directory.
@@ -98,13 +105,19 @@ root    ALL=(ALL) ALL
 # Members of the admin group may gain root privileges
 %admin    ALL=(ALL) ALL
 WEBSERVER ALL=NOPASSWD: SCHOOLMESH_INFO, SCHOOLMESH_APPLY
+
 }}}
 
 Togliere il `#` sulla riga 
 
 {{{
 # Cmnd_Alias SCHOOLMESH_APPLY = /usr/local/bin/schoolmesh*
+
 }}}
 
 solo se si configura !SchoolMesh per l'esecuzione automatica degli script di gestione di sistema (*non raccomandabile per il momento*).
+
+----
+
+Passo successivo: [Setup03MySQL Configurazione di MySql]
 

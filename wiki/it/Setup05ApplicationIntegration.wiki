@@ -70,5 +70,12 @@ Se si imposta la modalità di spedizione _spool_, bisogna ricordarsi di impostar
 
 {{{
 symfony project:send-emails
+
 }}}
+
+----
+
+Passo successivo: [Setup06OpenOffice Template OpenOffice e conversione di documenti]
+
+
 
