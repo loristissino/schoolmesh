@@ -270,10 +270,10 @@ IMG;
     //        throw new OdfException('Error during file export');
     //    }
         if (! $this->file->addFromString('content.xml', $this->contentXml)) {
-            throw new OdfException('Error during file export (content)');
+            throw new OdfException('Error during file content.xml export');
         }
         if (! $this->file->addFromString('styles.xml', $this->stylesXml)) {
-            throw new OdfException('Error during file export (styles)');
+            throw new OdfException('Error during file styles.xml export');
         }
 		// end loris patch --
         foreach ($this->images as $imageKey => $imageValue) {
