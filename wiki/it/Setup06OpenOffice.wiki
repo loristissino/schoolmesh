@@ -103,9 +103,12 @@ Può essere utile salvare il documento generato e utilizzare l'utility `schoolme
 
 I documenti generati possono essere convertiti in formato PDF, Microsoft Word o RichTextFormat grazie all'utility di conversione _unoconv_ e a !LibreOffice.
 
+=== Installazione di !LibreOffice ===
+
 Per installare !LibreOffice su Ubuntu 10.04LTS-server seguire i seguenti passi:
 
 {{{
+sudo apt-get remove openoffice*
 sudo apt-get install python-software-properties
 sudo add-apt-repository ppa:libreoffice/ppa
 sudo apt-get update
@@ -118,11 +121,22 @@ Per installare !LibreOffice su Ubuntu 11.10-server seguire i seguenti passi:
 sudo apt-get install libreoffice libreoffice-l10n-it libreoffice-help-it unoconv
 }}}
 
-Fare in modo che all'avvio parta libreoffice in background, in modo da permettere le connessioni di _unoconv_. Dovrebbe essere sufficiente aggiungere in _/etc/rc.local_ la seguente riga, prima del comando `exit`:
+
+=== Avvio di !LibreOffice come processo in background ===
+
+Fare in modo che all'avvio parta !LibreOffice in background, in modo da permettere le connessioni di _unoconv_. Dovrebbe essere sufficiente aggiungere in _/etc/rc.local_ la seguente riga, prima del comando `exit`:
 
 {{{
+# per Ubuntu10.04LTS:
+unoconv --listener --port 2002 &
+}}}
+
+{{{
+# per Ubuntu11.10LTS:
 /usr/bin/soffice --accept="socket,host=127.0.0.1,port=2002,tcpNoDelay=1;urp;" --headless --nodefault --nofirststartwizard --nolockcheck --nologo --norestore
 }}}
+
+=== Versione aggiornata di Unoconv ===
 
 Il pacchetto _unoconv_ 3.6 presente nei repository ufficiali di Ubuntu 10.04LTS è bacato. Lo si può installare per soddisfare eventuali dipendenze, ma poi è meglio prendere la versione 4.0 presente in http://dag.wieers.com/home-made/unoconv/unoconv-0.4.tar.bz2
  e sostituire il file _/usr/bin/unoconv_ (e la relativa pagina di manuale).
@@ -137,16 +151,17 @@ sudo cp unoconv-0.4/docs/unoconv.1.gz  /usr/share/man/man1/
 
 }}}
 
-Infine, è necessario che l'utente _www-data_ abbia diritti di scrittura nella sua home directory (!LibreOffice genera dei file temporanei in essa).
+Infine, è necessario che l'utente _www-data_ abbia diritti di scrittura nella sua home directory (!LibreOffice genera dei file temporanei in essa) e nella directory _/var/schoolmesh/web/tmp_.
 
 {{{
-sudo chown www-data:root /var/www
-sudo chmod 775 /var/www
+sudo mkdir /var/schoolmesh/web/tmp
+sudo chown www-data:root /var/www /var/schoolmesh/web/tmp
+sudo chmod 775 /var/www /var/schoolmesh/web/tmp
 
 }}}
 
 ----
 
-Passo successivo: [Setup07SmoothWall Integratione con il firewall SmoothWall]
+Passo successivo: [Setup07SmoothWall Integrazione con il firewall SmoothWall]
 
 
