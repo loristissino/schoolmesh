@@ -102,7 +102,7 @@ class PclZipProxy implements ZipInterface
 			} 
 		}
     // Loris Tissino's note: in some cases, this doesn't work as expected, and we must return true anyway...
-    // return true;
+     return true;
     // (of course, this should be investigated further...)
 		return false;
 	}

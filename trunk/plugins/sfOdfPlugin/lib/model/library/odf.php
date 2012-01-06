@@ -265,12 +265,15 @@ IMG;
     {
     	$this->file->open($this->tmpfile);
         $this->_parse();
-        if (! $this->file->addFromString('content.xml', $this->contentXml)) {
-            throw new OdfException('Error during file export');
-        }
 		// begin loris patch --
+    //    if (! $this->file->addFromString('content.xml', $this->contentXml)) {
+    //        throw new OdfException('Error during file export');
+    //    }
+        if (! $this->file->addFromString('content.xml', $this->contentXml)) {
+            throw new OdfException('Error during file export (content)');
+        }
         if (! $this->file->addFromString('styles.xml', $this->stylesXml)) {
-            throw new OdfException('Error during file export');
+            throw new OdfException('Error during file export (styles)');
         }
 		// end loris patch --
         foreach ($this->images as $imageKey => $imageValue) {
