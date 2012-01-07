@@ -38,16 +38,10 @@ _L'applicazione di backend è disponibile via browser all'URL `http://.../school
 
 3. *Command Line Interface*: è l'interfaccia a riga di comando per lo svolgimento di alcune attività periodiche o di sistema. I comandi possono essere di due tipi:
 
-  a) script bash, tutti con prefisso `schoolmesh_`, posti nella directory _/usr/local/bin_. (vedi [ManPage pagina man]).
+  a) script bash, tutti con prefisso `schoolmesh_`, posti nella directory _/usr/local/bin_ (vedi [ManPage pagina man])
 
-  b) task di symfony, che possono essere eseguiti dalla directory del progetto
-
-{{{
-cd /var/schoolmesh
-symfony test:unit
-symfony schoolmesh:approve-workplans
-}}}
-
+  b) task di symfony, che possono essere eseguiti dalla directory del progetto (vedi [Tasks pagina relativa])
+  
 == Ambienti di esecuzione ==
 
 Per SchoolMesh, come è raccomandato per questo genere di progetti, sono impostati tre diversi _ambienti di esecuzione_:
@@ -193,19 +187,5 @@ La tabella seguente riassume alcuni dei controlli che vengono fatti:
 || _ldapnfs || l'utente ha un account ldapnfs? ||
 || _googleapps_ || l'utente ha un account Google Apps? ||
 || _moodle_ || l'utente ha un account Moodle? ||
-
-
-== Dati di prova ==
-
-I file _`data/fixtures/*yml`_ contengono i dati di prova che vengono caricati all'inizio per l'applicazione di test.
-
-Si può cominciare a lavorare con l'applicazione usando gli utenti:
-
-  * _john.test_ (docente)
-  * _antonio.d_ (dirigente scolastico)
-  * _gabriella.v (dsga)
-  * _loris.tissino_ (superadmin)
-  * _juri.domodossola_ (admin)
-
 
 

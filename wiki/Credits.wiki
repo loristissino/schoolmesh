@@ -31,6 +31,10 @@ We will list them here, trying to mention them all:
 
 5. _LibreOffice_ is registered by [http://www.documentfoundation.org/ The Document Foundation]
 
+6. _Samba_ 
+
+7. _SmoothWall_ is registered by [http://www.smoothwall.org SmoothWall Ltd.]
+
 == Licenses ==
 
 http://www.gnu.org/graphics/gplv3-88x31.png

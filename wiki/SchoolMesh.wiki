@@ -1,0 +1,17 @@
+#summary SchoolMesh wiki main page
+#labels Featured
+
+= !SchoolMesh =
+
+*SchoolMesh* is an application aimed to integrate different other applications in a school, and to offer some services to teachers and students.
+
+This wiki is here to help users on [Setup installation] and [Guide usage].
+
+The main site for the application is [http://www.schoolmesh.mattiussilab.net www.schoolmesh.mattiussilab.net].
+
+Thanks to [http://www.tuxfamily.org TuxFamily], there is also a [http://www.schoolmeshdemo.tuxfamily.org demo web site].
+
+== Credits, trademarks and licenses ==
+
+See the [Credits credits web page] for information about credits, trademarks, and licences.
+
