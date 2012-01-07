@@ -18,7 +18,7 @@ class schoolmeshImportSyllabusTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'import-syllabus';
-    $this->briefDescription = 'Import a syllabus from YML file into DB';
+    $this->briefDescription = 'Imports a syllabus from YML file into DB';
     $this->detailedDescription = "";
   }
 

@@ -34,7 +34,7 @@ class schoolmeshSendfileTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'send-file';
-    $this->briefDescription = 'Send a file by email';
+    $this->briefDescription = 'Sends a file by email';
     $this->detailedDescription = <<<EOF
 The [schoolmesh:send-file|INFO] task sends a file by email.
 Call it with:

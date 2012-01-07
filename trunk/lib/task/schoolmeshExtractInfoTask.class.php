@@ -39,36 +39,40 @@ class schoolmeshExtractInfoTask extends sfBaseTask
     $this->name             = 'extract-info';
     $this->briefDescription = 'Extract informarmation from the database';
     $this->detailedDescription = <<<EOF
-This is a general purpose task to be used to extract information from the database (different options will control the actual output).
+The [schoolmesh:extract-info|INFO] task can be used to to extract information from the database.
+Different options will control the actual output.
+
+Call it with:
+
+   symfony schoolmesh:add-attachment --application=frontend --env=prod --year year users|appointments|enrolments
+
+Examples:
+
+   symfony schoolmesh:add-attachment --application=frontend --env=prod --year 2011/12 users
+   # extract all users
+
+   symfony schoolmesh:add-attachment --application=frontend --env=prod --year 2011/12 --role allievi users
+   # extract all users which have a role with posix name "allievi"
+
+   symfony schoolmesh:add-attachment --application=frontend --env=prod --year 2011/12 --role docenti users
+   # extract all users which have a role with posix name "docenti"
+
+   symfony schoolmesh:add-attachment --application=frontend --env=prod --year 2011/12 appointments
+   # extract all teaching appointments
+
+   symfony schoolmesh:add-attachment --application=frontend --env=prod --year 2011/12 --teacher john.doe appointments
+   # extract all teaching appointments of teacher john.doe
+
+   symfony schoolmesh:add-attachment --application=frontend --env=prod --year 2011/12 enrolments
+   # extract all enrolments of students
+
+   symfony schoolmesh:add-attachment --application=frontend --env=prod --year 2011/12 --class 1AIG enrolments
+   # extract all enrolments of class 1AIG
+
 EOF;
+
   }
-
-/*
---year (default: current)
-
-{} users
-estrae tutti gli utenti
-
-{} users --role allievi
-estrae gli utenti con il ruolo principale 'allievi'
-
-{} users --role docenti
-estrae gli utenti con il ruolo principale 'docenti'
-
-{} appointments
-estrae tutti gli incarichi
-
-{} appointments --state 20
-estrae gli incarichi nello stato 20
-
-{} appointments --teacher mario.rossi
-estrae gli incarichi del docente mario.rossi
-
-{} enrolments --class 1AIG
-estrae tutti gli studenti della classe 1AIG
-
-*/
-
+  
   protected function execute($arguments = array(), $options = array())
   {
     // initialize the database connection
@@ -77,40 +81,6 @@ estrae tutti gli studenti della classe 1AIG
 
     // add your code here
 	
-/*	$items=WpmoduleItemPeer::doSelect(new Criteria());
-	foreach($items as $item)
-	{
-	//	if ($item->getRawContent()!=$item->getContent())
-		{
-			echo '### ' . $item->getId() . "\n";
-			echo 'RAW: «' . $item->getRawContent() . "»\n";
-//			echo 'STR: «' . $item->getContent() . "»\n";
-			echo "\n";
-//			$item->setContent($item->getContent());
-//			$item->save();
-		}
-	}
-	*/
-	/*
-	$infos=WpinfoPeer::doSelect(new Criteria());
-	foreach($infos as $info)
-	{
-		$newcontent=Generic::strip_tags_and_attributes($info->getContent(), '<br><em>');
-		if ($info->getContent()!=$newcontent)
-		{
-			echo '### ' . $info->getId() . "\n";
-			echo 'RAW: «' . $info->getContent() . "»\n";
-			echo 'STR: «' . $newcontent . "»\n";
-			echo "\n";
-			$info->setContent($newcontent);
-			$info->save();
-		}
-	}
-	
-	
-	
-	die();
-	*/
 	$year=YearPeer::retrieveByDescription($options['year']);
 	if (!$year)
 	{

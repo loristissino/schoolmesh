@@ -76,13 +76,11 @@ sudo mkdir -v "$INSTALLDIR"/data/lucene
 sudo chown -R $OWNER:www-data "$INSTALLDIR"
 sudo chown -R $OWNER:www-data "$CONFIGDIR"
 
-sudo chmod -R 770 "$INSTALLDIR"/{cache,log}
+sudo chmod -R 770 "$INSTALLDIR"/{cache,log,web}
 sudo chmod -R 777 "$INSTALLDIR"/data/lucene
 
 sudo chmod +x "$INSTALLDIR"/symfony
 sudo ln -sf "$INSTALLDIR"/symfony /usr/local/bin/symfony
-
-
 
 echo "SchoolMesh setup done."
 

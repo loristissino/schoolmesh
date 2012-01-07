@@ -13,10 +13,10 @@ class schoolmeshShowPermissionTask extends sfBaseTask
 {
   protected function configure()
   {
-    // // add your own arguments here
-    // $this->addArguments(array(
-    //   new sfCommandArgument('my_arg', sfCommandArgument::REQUIRED, 'My argument'),
-    // ));
+    $this->addArguments(array(
+       new sfCommandArgument('user', sfCommandArgument::REQUIRED, 'User'),
+       new sfCommandArgument('permission', sfCommandArgument::REQUIRED, 'Permission'),
+    ));
 
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
@@ -42,9 +42,15 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
 
-    // add your code here
-    
-	$user=sfGuardUserProfilePeer::retrieveByUsername('john.test');
-	$this->log('Has office permission? ' . ($user->getProfile()->hasPermission('office')?'yes':'no'));
+    $user=sfGuardUserProfilePeer::retrieveByUsername($arguments['user']);
+    if(!$user)
+    {
+      $this->logSection('user', sprintf('%s not found', $arguments['user']), null, 'ERROR'); 
+    }
+    else
+    {
+      $this->log(sprintf('Has %s permission? %s.', $arguments['permission'], ($user->getProfile()->hasPermission($arguments['permission'])?'yes':'no')));
+    }
+
   }
 }

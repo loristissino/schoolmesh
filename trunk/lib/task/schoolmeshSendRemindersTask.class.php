@@ -28,7 +28,7 @@ class schoolmeshSendRemindersTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'send-reminders';
-    $this->briefDescription = 'Send reminders about actions to perform';
+    $this->briefDescription = 'Sends reminders about actions to perform';
     $this->detailedDescription = <<<EOF
 The [schoolmesh:send-file|INFO] task sends reminders by email to the users that need to do something with the application.
 Call it with:

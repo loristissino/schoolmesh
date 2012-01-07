@@ -33,11 +33,13 @@ class schoolmeshChangeSyllabusRefsTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'change-syllabus-refs';
-    $this->briefDescription = 'Change syllabus references, after a new syllabus is imported';
+    $this->briefDescription = 'Changes syllabus references, after a new syllabus is imported';
     $this->detailedDescription = <<<EOF
-This task will can be used when a new syllabus is imported, updating a previous 
-one. All references to the old syllabus must be updated to meet the new one 
-(using refs to find the right items)
+The [schoolmesh:change-syllabus-refs|INFO] can be used when a new 
+syllabus is imported, updating a previous one. All references to the old
+syllabus must be updated to meet the new one (using refs to find the 
+right items).
+
 EOF;
   }
 

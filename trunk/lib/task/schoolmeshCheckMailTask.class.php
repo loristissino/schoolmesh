@@ -29,7 +29,7 @@ class schoolmeshCheckMailTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'check-mail';
-    $this->briefDescription = 'Check email of the SchoolMesh bot';
+    $this->briefDescription = 'Checks email of the SchoolMesh bot';
     $this->detailedDescription = <<<EOF
 This task will check incoming email, in order to perform mail-based actions.
 EOF;
