@@ -30,7 +30,14 @@ class schoolmeshCreateFoldersForTeachersTask extends sfBaseTask
     $this->name             = 'create-folders-for-teachers';
     $this->briefDescription = 'Creates folders for teachers\' materials to share with students';
     $this->detailedDescription = <<<EOF
-sd
+The [schoolmesh:create-folders-for-teachers|INFO] task can be used to folders in teachers' home directories that allow them
+to share documents with their students.
+It just generates on the standard output a bash script to execute.
+
+Call it with:
+
+   symfony schoolmesh:create-folders-for-teachers --application=frontend --env=prod > /tmp/myscript.sh
+
 EOF;
   }
 

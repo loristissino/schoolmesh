@@ -31,7 +31,7 @@ class schoolmeshGenerateHelpIndexTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'generate-help-index';
-    $this->briefDescription = 'Generate help index file from a template and a directory with properly commented html pages';
+    $this->briefDescription = 'Generates help index file from a template and a directory with properly commented html pages';
     $this->detailedDescription = "";
   }
 

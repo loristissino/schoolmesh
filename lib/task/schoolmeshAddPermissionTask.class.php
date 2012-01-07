@@ -13,10 +13,10 @@ class schoolmeshAddPermissionTask extends sfBaseTask
 {
   protected function configure()
   {
-    // // add your own arguments here
-    // $this->addArguments(array(
-    //   new sfCommandArgument('my_arg', sfCommandArgument::REQUIRED, 'My argument'),
-    // ));
+    $this->addArguments(array(
+       new sfCommandArgument('user', sfCommandArgument::REQUIRED, 'User'),
+       new sfCommandArgument('permission', sfCommandArgument::REQUIRED, 'Permission'),
+    ));
 
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
@@ -29,10 +29,16 @@ class schoolmeshAddPermissionTask extends sfBaseTask
     $this->name             = 'add-permission';
     $this->briefDescription = 'Adds a permission to a user';
     $this->detailedDescription = <<<EOF
-The [schoolmesh:hello|INFO] task does things.
+The [schoolmesh:add-permission|INFO] task can be used to add a permission to a user.
+
 Call it with:
 
-  [php symfony schoolmesh:addPermission|INFO]
+   symfony schoolmesh:add-permission --application=frontend --env=prod user permission
+
+Examples:
+
+   symfony schoolmesh:add-permission --application=frontend --env=prod john.doe proj_view
+
 EOF;
   }
 
@@ -42,11 +48,16 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
 
-    // add your code here
-    
-	$user=sfGuardUserProfilePeer::retrieveByUsername('john.test');
-    $this->log('Adding permission...');
-	$user->addPermissionByName('office');
+    $user=sfGuardUserProfilePeer::retrieveByUsername($arguments['user']);
+    if(!$user)
+    {
+      $this->logSection('user', sprintf('%s not found', $arguments['user']), null, 'ERROR'); 
+    }
+    else
+    {
+      $user->addPermissionByName($arguments['permission']);
+      $this->logSection('user', sprintf('Permission %s added', $arguments['permission']), null, 'NOTICE'); 
+    }
 
   }
 }

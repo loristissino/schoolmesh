@@ -13,16 +13,14 @@ class schoolmeshShowAccountsTask extends sfBaseTask
 {
   protected function configure()
   {
-    // // add your own arguments here
-    // $this->addArguments(array(
-    //   new sfCommandArgument('my_arg', sfCommandArgument::REQUIRED, 'My argument'),
-    // ));
+    $this->addArguments(array(
+      new sfCommandArgument('user', sfCommandArgument::REQUIRED, 'Username'),
+    ));
 
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      // add your own options here
     ));
 
     $this->namespace        = 'schoolmesh';
@@ -40,26 +38,27 @@ class schoolmeshShowAccountsTask extends sfBaseTask
 
     // add your code here
     
-	$user=sfGuardUserProfilePeer::retrieveByUsername('john.test');
-	
-	$accounts=$user->getProfile()->getAccounts();
-	
-	if (sizeof($accounts)>0)
-	{
-		
-		$i=0;
-		foreach($accounts as $account)
-		{
-			echo "Account # " .$i++ . "\n";
-			$account->sayHallo();
-			echo $account->getAccountType() . "\n";
-		}
-	}
-	else
-	{
-		echo "No accounts\n";
-	}
-
+    $user=sfGuardUserProfilePeer::retrieveByUsername($arguments['user']);
+    if(!$user)
+    {
+      $this->logSection('user', sprintf('%s not found', $arguments['user']), null, 'ERROR'); 
+    }
+    else
+    {
+      $accounts=$user->getProfile()->getAccounts();
+      if (sizeof($accounts)>0)
+      {
+        $i=0;
+        foreach($accounts as $account)
+        {
+          echo sprintf("Account # %d: %s\n", $i++, $account->getAccountType());
+        }
+      }
+      else
+      {
+        echo "No accounts.\n";
+      }
+    }
   }
   
 }

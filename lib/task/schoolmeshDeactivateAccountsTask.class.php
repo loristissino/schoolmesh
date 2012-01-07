@@ -31,7 +31,7 @@ class schoolmeshDeactivateAccountsTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'deactivate-accounts';
-    $this->briefDescription = 'Deactivate accounts for teachers with no-appointments and students not enrolled.';
+    $this->briefDescription = 'Deactivates accounts for teachers with no-appointments and students not enrolled.';
     $this->detailedDescription = <<<EOF
 This task will set is_active to false for teachers with no appointments and students not enrolled.
 EOF;

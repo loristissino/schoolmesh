@@ -3940,6 +3940,10 @@
         <source>No attachments.</source>
         <target>Nessun allegato.</target>
     </trans-unit>
+    <trans-unit id="996">
+        <source>Setup checks</source>
+        <target>Controlli dell'installazione</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

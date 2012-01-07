@@ -35,7 +35,7 @@ class schoolmeshGenerateLimesurveyTokensTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'generate-limesurvey-tokens';
-    $this->briefDescription = 'Generate Limesurvey tokens for all active users';
+    $this->briefDescription = 'Generates Limesurvey tokens for all active users';
     $this->detailedDescription = "";
   }
 

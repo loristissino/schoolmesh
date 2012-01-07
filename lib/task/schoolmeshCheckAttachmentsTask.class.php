@@ -25,7 +25,7 @@ class schoolmeshCheckAttachmentsTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'check-attachments';
-    $this->briefDescription = 'Check existance and md5 of attachments';
+    $this->briefDescription = 'Checks existance and md5 of attachments';
     $this->detailedDescription = <<<EOF
 This task checks whether the attachments are correctly stored.
 EOF;

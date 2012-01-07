@@ -30,7 +30,7 @@ class schoolmeshResetDBPasswordTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'reset-db-password';
-    $this->briefDescription = 'Reset the DB password of the user for the main Schoolmesh account';
+    $this->briefDescription = 'Resets the DB password of the user for the main Schoolmesh account';
     $this->detailedDescription = <<<EOF
 This task is useful only if you do not set an external authentication method.
 It is not secure, since we pass the password on the command line.

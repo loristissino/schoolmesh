@@ -27,7 +27,7 @@ class schoolmeshRebuildIndexesTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'rebuild-indexes';
-    $this->briefDescription = 'Rebuild Lucene indexes from scratch';
+    $this->briefDescription = 'Rebuilds Lucene indexes from scratch';
     $this->detailedDescription = <<<EOF
 This task will re-index all documents and users' data from scratch, removing 
 previous indexes.

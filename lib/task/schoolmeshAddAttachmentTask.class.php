@@ -8,18 +8,10 @@
  * @author     Loris Tissino
  * @license    GNU GPLv3 -- see license/gpl.txt for details
  */
-
-
-
 class schoolmeshAddAttachmentTask extends sfBaseTask
 {
   protected function configure()
   {
-    // // add your own arguments here
-    // $this->addArguments(array(
-    //   new sfCommandArgument('my_arg', sfCommandArgument::REQUIRED, 'My argument'),
-    // ));
-
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
@@ -33,10 +25,24 @@ class schoolmeshAddAttachmentTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'add-attachment';
-    $this->briefDescription = 'Add an attachment to an object';
+    $this->briefDescription = 'Adds an attachment to an object';
     $this->detailedDescription = <<<EOF
-This task can be used to attach files to objects of different kinds.
+The [schoolmesh:add-attachment|INFO] task can be used to attach files to objects of different kinds.
+Use it whenever you need to attach files to objects in a batch procedure.
+
+Call it with:
+
+   symfony schoolmesh:add-attachment --application=frontend --env=prod object-type object-id owner file-path
+
+Examples:
+
+   symfony schoolmesh:add-attachment --application=frontend --env=prod Appointment 145 john.doe /tmp/myfile.odt
+   symfony schoolmesh:add-attachment --application=frontend --env=prod Schoolproject 14 john.doe /tmp/myfile.odt
+   symfony schoolmesh:add-attachment --application=frontend --env=prod ProjDeadline 156 john.doe /tmp/myfile.odt
+
 EOF;
+
+
   }
 
   protected function execute($arguments = array(), $options = array())
@@ -44,8 +50,6 @@ EOF;
     // initialize the database connection
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
-
-//          $this->logSection('appoint.', sprintf('%d: fixed %d module(s)', $appointment->getId(), $count), null, 'COMMENT');
 
     if(!(file_exists($options['file']) && is_readable($options['file'])))
     {

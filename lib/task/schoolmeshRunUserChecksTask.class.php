@@ -26,7 +26,7 @@ class schoolmeshRunUserChecksTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'run-user-checks';
-    $this->briefDescription = 'Run user checks from command line, generating a script file.';
+    $this->briefDescription = 'Runs user checks from command line, generating a script file.';
     $this->detailedDescription = <<<EOF
 This task will run the user checks on all accounts, updating info on db and generating a script.
 EOF;

@@ -33,9 +33,9 @@ class schoolmeshFixAppointmentsTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'fix-appointments';
-    $this->briefDescription = 'Fix appointments, making all needed checks';
+    $this->briefDescription = 'Fixes appointments, making all needed checks';
     $this->detailedDescription = <<<EOF
-This task will be used for several general checks and fixes about appointments.
+This task can be used for several general checks and fixes about appointments.
 EOF;
   }
 
