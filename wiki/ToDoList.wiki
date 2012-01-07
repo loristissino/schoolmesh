@@ -25,7 +25,7 @@ There is a lot of things to do. Here we'll list them just to keep a reference.
   # add possibility to declare activities 
     * ~~before projects approval~~
     * with external (paper) book reference 
-  # web access management at logon
+  # ~~web access management at logon~~
 
 == Configuration ==
 
@@ -36,7 +36,7 @@ There is a lot of things to do. Here we'll list them just to keep a reference.
 == Documentation ==
 
   # General user's guide
-  # ~~Teacher's guide~~ done (Italian only, for Mattiussi's teachers: http://www.mattiussilab.net/help)
+  # ~~Teacher's guide~~ done (Italian only, http://www.schoolmeshdemo.tuxfamily.org/help)
 
 == Demo site ==
 

@@ -1,0 +1,18 @@
+#summary SchoolMesh Use - An introduzione
+#labels Phase-Deploy
+
+= Introduction to !SchoolMesh =
+
+(not yet in English, sorry)
+
+== What you cand do with !SchoolMesh ==
+
+(not yet in English, sorry)
+
+== Execution environments ==
+
+(not yet in English, sorry)
+
+== Users, groups, credentials and permissions ==
+
+(not yet in English, sorry)

@@ -22,7 +22,7 @@ Per ora lo sviluppo si è concentrato su due aspetti.
 
  * completa del workflow del lavoro di un docente in una classe (piano di lavoro e relazione finale) *4*
  * gestione della documentazione relativa al sistema Qualità *0*
- * gestione del workflow del lavoro relativo ai progetti scolastici *1*
+ * gestione del workflow del lavoro relativo ai progetti scolastici *3*
 
 == Frontend, Backend, Command Line Interface ==
 
