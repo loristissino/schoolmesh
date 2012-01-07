@@ -9,7 +9,7 @@ Questo wiki è qui per aiutare gli utenti nelle fasi di [Setup installazione] e 
 
 Il sito web principale è [http://www.schoolmesh.mattiussilab.net www.schoolmesh.mattiussilab.net].
 
-Grazie a [http://www.tuxfamily.org TuxFamily], è disponibile anche una [http://www.schoolmeshdemo.tuxfamily.org versione dimostrativa].
+Grazie a [http://www.tuxfamily.org TuxFamily], è disponibile anche una [http://www.schoolmeshdemo.tuxfamily.org/index.php versione dimostrativa].
 
 == Riconoscimenti, marchi legali e licenze ==
 
