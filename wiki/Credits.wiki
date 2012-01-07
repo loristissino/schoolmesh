@@ -1,13 +1,19 @@
 #summary Credits and Licenses
 #labels Phase-Deploy,Featured
 
-=Credits=
+= Credits =
 
-To develop SchoolMesh, we used some free softare and resources that it's right to mention:
+To develop !SchoolMesh, we used some free softare and resources that it's a right thing to mention:
 
-1. The symfony framework: http://www.symfony-project.org/
+1. The [http://www.symfony-project.org/ symfony framework]
 
-2. Some icons from open source collections, like _Crystal Clear_ http://commons.wikimedia.org/wiki/Crystal_Clear (GPL) and _FamFamFam Silk_ http://www.famfamfam.com/archive/silk-icon-set-released/ (CC Attribution 3.0). 
+2. Some code of the [http://framework.zend.com/ Zend libraries]
+
+3. The [http://www.odtphp.com/ odtPhp] code, for !OpenOffice/!LibreOffice document generation
+
+4. Some icons from open source collections, like [http://commons.wikimedia.org/wiki/Crystal_Clear Crystal Clear] (GPL) and [http://www.famfamfam.com/archive/silk-icon-set-released/ FamFamFam Silk] (CC Attribution 3.0)
+
+5. Some plugins and libraries, like [http://www.symfony-project.org/plugins/sfTCPDFPlugin sfTCPDFPlugin],  [http://www.tcpdf.org/ TCPDF], [http://www.symfony-project.org/plugins/sfJqueryReloadedPlugin sfJqueryReloadedPlugin], and [http://jquery.com/ jQuery]
 
 =Registered Trademarks=
 
@@ -15,18 +21,20 @@ Some trademarks used in the application and in the documentation are registered.
 
 We will list them here, trying to mention them all:
 
-1. _Google Apps Education Edition_ is registered by Google
+1. _Google Apps Education Edition_ is registered by [http://www.google.com Google, Inc.]
 
-2. _Apache_ is registered by the Apache Foundation
+2. _Apache_ is registered by the [http://www.apache.org/ Apache Software Foundation]
 
-(this must be completed) 
+3. _MySQL_ is registered by [http://www.oracle.com Oracle]
 
-=Licenses=
+4. _OpenOffice.org_ is registered by the [http://www.apache.org/ Apache Software Foundation]
+
+5. _LibreOffice_ is registered by [http://www.documentfoundation.org/ The Document Foundation]
+
+== Licenses ==
 
 http://www.gnu.org/graphics/gplv3-88x31.png
 
-SchoolMesh itself is released under the [http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v. 3]
+!SchoolMesh itself is released under the [http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v. 3]
 
 Some pieces of software are included as plugins and may have different licenses. See the sources for details.
-
-

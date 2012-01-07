@@ -151,12 +151,11 @@ sudo cp unoconv-0.4/docs/unoconv.1.gz  /usr/share/man/man1/
 
 }}}
 
-Infine, è necessario che l'utente _www-data_ abbia diritti di scrittura nella sua home directory (!LibreOffice genera dei file temporanei in essa) e nella directory _/var/schoolmesh/web/tmp_.
+Infine, è necessario che l'utente _www-data_ abbia diritti di scrittura nella sua home directory (!LibreOffice genera dei file temporanei in essa).
 
 {{{
-sudo mkdir /var/schoolmesh/web/tmp
-sudo chown www-data:root /var/www /var/schoolmesh/web/tmp
-sudo chmod 775 /var/www /var/schoolmesh/web/tmp
+sudo chown www-data:root /var/www
+sudo chmod 775 /var/www
 
 }}}
 
