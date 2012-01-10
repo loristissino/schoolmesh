@@ -11,6 +11,11 @@ class ProjUpshotForm extends BaseProjUpshotForm
 {
   public function configure()
   {
+    if(!$this->options['sf_context'])
+    {
+      throw new Exception('You must pass the context in the options array to use this form');
+    }
+    
     unset(
       $this['schoolproject_id']
       );
@@ -26,10 +31,12 @@ class ProjUpshotForm extends BaseProjUpshotForm
 	  $this['evaluation']->getWidget()->setAttribute('size', '10');
 
     $choices=array(0=>'---');
-    for($i=$project->getEvaluationMin(); $i<=$project->getEvaluationMax(); $i++)
+    $choices[1]=$this->options['sf_context']->getI18N()->__('%value% -- negative upshot - the activity failed', array('%value%'=>1));
+    for($i=$project->getEvaluationMin()+1; $i<$project->getEvaluationMax(); $i++)
     {
-      $choices[$i]=$i;
+      $choices[$i]=$this->options['sf_context']->getI18N()->__('%value% -- intermediate result upshot with value %value%', array('%value%'=>$i));
     }
+    $choices[$project->getEvaluationMax()]=$this->options['sf_context']->getI18N()->__('%value% -- really positive upshot - the activity completely succeeded', array('%value%'=>$project->getEvaluationMax()));
 
     $this->widgetSchema['evaluation'] = new sfWidgetFormSelect(array(
       'choices'=>$choices
