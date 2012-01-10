@@ -47,6 +47,9 @@ class ProjDeadlineForm extends BaseProjDeadlineForm
       case Workflow::PROJ_FINANCED:
         unset($this['original_deadline_date'], $this['description'], $this['needs_attachment']);
         break;
+      case Workflow::PROJ_CONFIRMED:
+        unset($this['original_deadline_date'], $this['description'], $this['needs_attachment']);
+        break;
       case Workflow::PROJ_FINISHED:
         unset($this['original_deadline_date'], $this['description'], $this['notes'], $this['current_deadline_date'], $this['completed']);
         break;

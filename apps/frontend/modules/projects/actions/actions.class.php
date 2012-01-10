@@ -754,7 +754,7 @@ class projectsActions extends sfActions
     $this->forward404Unless($this->upshot=ProjUpshotPeer::retrieveByPk($request->getParameter('id')));
     $this->forward404Unless($this->upshot->isEditableBy($this->getUser())); // the resource can be edited only by the owner or admins...
     
-    $this->form = new ProjUpshotForm($this->upshot);
+    $this->form = new ProjUpshotForm($this->upshot, array('sf_context'=>$this->getContext()));
     
     if(!$this->upshot->getScheduledDate())
     {

@@ -3944,6 +3944,26 @@
         <source>Setup checks</source>
         <target>Controlli dell'installazione</target>
     </trans-unit>
+    <trans-unit id="997">
+        <source>Documents concerning this deadline.</source>
+        <target>Documenti legati a questa scadenza.</target>
+    </trans-unit>
+    <trans-unit id="998">
+        <source>%value% -- negative upshot - the activity failed</source>
+        <target>%value% -- risultato negativo - l'attività è fallita</target>
+    </trans-unit>
+    <trans-unit id="999">
+        <source>%value% -- intermediate result upshot with value %value%</source>
+        <target>%value% -- risultato intermedio con valore %value%</target>
+    </trans-unit>
+    <trans-unit id="1000">
+        <source>%value% -- really positive upshot - the activity completely succeeded</source>
+        <target>%value% -- risultato molto positivo - l'attività ha avuto pienamente successo</target>
+    </trans-unit>
+    <trans-unit id="1001">
+        <source>scale: %min%-%max%</source>
+        <target>scala: %min%-%max%</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

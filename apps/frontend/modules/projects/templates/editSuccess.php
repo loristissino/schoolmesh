@@ -275,8 +275,12 @@
       <td><?php echo $upshot->getDescription() ?></td>
       <td><?php echo $upshot->getIndicator() ?></td>
       <?php if($project->getState()>Workflow::PROJ_SUBMITTED): ?>
-      <td><?php echo $upshot->getUpshot() ?></td>
-      <td><?php echo $upshot->getEvaluation() ?></td>
+        <td><?php echo $upshot->getUpshot() ?></td>
+        <td><?php echo $upshot->getEvaluation() ?> 
+        <?php if($upshot->getEvaluation()):?>
+          (<?php echo __('scale: %min%-%max%', array('%min%'=>$project->getEvaluationMin(), '%max%'=>$project->getEvaluationMax())) ?>)
+        <?php endif ?>
+        </td>
       <?php endif ?>
       <td>
       <ul class="sf_admin_td_actions">
