@@ -27,6 +27,7 @@ all:
     base_url: 'http://www.schoolmesh.example.com'
     lan_url: 'http://192.168.0.1/schoolmesh'
     wan_url: 'https://intranet.example.com/schoolmesh'
+    favicon_url: '/images/favicon.ico'
     local_addresses: '192.168.0.0/16'
     base_dir: '/var/schoolmesh'
 
@@ -40,8 +41,8 @@ all:
     class_teachersteam_prefix: cdc  # for the new team of teachers automatically created, and the name will be prefixed with this
     class_teachersteam_name: Class Council
     moodle_key: aSekRetTokEnShAred # used for quasi-SSO with Moodle
-    moodle_url: http://www.mattiussilab.net/moodle/
-    moodle_access: http://www.mattiussilab.net/intranet/moodle_schoolmesh.php
+    moodle_url: http://www.example.net/moodle/
+    moodle_access: http://www.example.net/intranet/moodle_schoolmesh.php
     accounts: [ posix, login, samba, googleapps ]
     googleapps_key: aNoThErSuPeRsEkReTkEy
     googleapps_domain: example.com
