@@ -99,12 +99,20 @@ Cmnd_Alias SCHOOLMESH_RESETLOGINPASSWORD = /usr/sbin/chpasswd
 
 # Cmnd_Alias SCHOOLMESH_APPLY = /usr/local/bin/schoolmesh*
 
+Cmnd_Alias SCHOOLMESH_UNLOCKSAMBAACCOUNT = /usr/bin/pdbedit
+
+Cmnd_Alias SCHOOLMESH_USERFOLDER = /usr/bin/find -L /home/users/*, /usr/bin/test -e /home/users/*, /usr/bin/stat /home/users/*, /usr/bin/file /home/users/*, /bin/cp /home/users/* /tmp/*schoolmesh, /bin/chmod 766 /tmp/*schoolmesh, /bin/cp /tmp/* /home/users/*, /bin/chmod 664 /home/users/*, /bin/rm /home/users/*, /bin/mkdir /home/users/*, /bin/rmdir /home/users/*
+
+
 # User privilege specification
 root    ALL=(ALL) ALL
 
 # Members of the admin group may gain root privileges
 %admin    ALL=(ALL) ALL
-WEBSERVER ALL=NOPASSWD: SCHOOLMESH_INFO, SCHOOLMESH_APPLY
+
+WEBSERVER ALL=NOPASSWD: SCHOOLMESH_INFO, SCHOOLMESH_APPLY, SCHOOLMESH_RESETSAMBAPASSWORD, SCHOOLMESH_UNLOCKSAMBAACCOUNT
+
+WEBSERVER ALL=(ALL)NOPASSWD: SCHOOLMESH_USERFOLDER
 
 }}}
 

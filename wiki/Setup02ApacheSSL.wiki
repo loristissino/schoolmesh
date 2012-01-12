@@ -61,12 +61,14 @@ Cmnd_Alias SCHOOLMESH_RESETLOGINPASSWORD = /usr/sbin/chpasswd
 
 # Cmnd_Alias SCHOOLMESH_APPLY = /usr/local/bin/schoolmesh*
 
+Cmnd_Alias SCHOOLMESH_POSIXFOLDER = /bin/cp /home/users/*, /bin/chmod, /usr/bin/test, /usr/bin/stat, /usr/bin/file, /usr/bin/find, /bin/mkdir, /bin/rm
+
 # User privilege specification
 root    ALL=(ALL) ALL
 
 # Members of the admin group may gain root privileges
 %admin    ALL=(ALL) ALL
-WEBSERVER ALL=NOPASSWD: SCHOOLMESH_INFO, SCHOOLMESH_APPLY
+WEBSERVER ALL=NOPASSWD: SCHOOLMESH_INFO, SCHOOLMESH_APPLY, SCHOOLMESH_POSIXFOLDER
 }}}
 
 Remove the symbol `#` from the line 
