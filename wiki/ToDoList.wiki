@@ -24,7 +24,7 @@ There is a lot of things to do. Here we'll list them just to keep a reference.
   # add common queries for users search
   # add possibility to declare activities 
     * ~~before projects approval~~
-    * with external (paper) book reference 
+    * ~~with external (paper) book reference~~ 
   # ~~web access management at logon~~
 
 == Configuration ==
