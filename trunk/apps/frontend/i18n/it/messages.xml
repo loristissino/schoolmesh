@@ -3964,6 +3964,26 @@
         <source>scale: %min%-%max%</source>
         <target>scala: %min%-%max%</target>
     </trans-unit>
+    <trans-unit id="1002">
+        <source>Paper log</source>
+        <target>Registro su carta</target>
+    </trans-unit>
+    <trans-unit id="1003">
+        <source>Performer</source>
+        <target>Realizzatore</target>
+    </trans-unit>
+    <trans-unit id="1004">
+        <source>Choose the performer</source>
+        <target>Scegli il realizzatore</target>
+    </trans-unit>
+    <trans-unit id="1005">
+        <source>Logged on paper</source>
+        <target>Informazioni su registro cartaceo</target>
+    </trans-unit>
+    <trans-unit id="1006">
+        <source>Prepare an email to the person who performed this activity</source>
+        <target>Prepara un'email per la persona che ha svolto questa attività</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

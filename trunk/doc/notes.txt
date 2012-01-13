@@ -1,3 +1,6 @@
+2012/01/12
+Added field paper_log in proj_activity table
+
 2011/12/26
 Added field "preferred culture" in sfGuardUserProfile table
 UPDATE `schoolmesh`.`sf_guard_user_profile` SET `preferred_culture` = 'it';

@@ -22,7 +22,7 @@ class ProjActivityForm extends BaseProjActivityForm
       
     $this->setWidget('beginning', new sfWidgetFormI18nDateTime(array('culture'=>'it')));
     $this->setWidget('proj_resource_id', new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)));
-
+    
     $this['notes']->getWidget()
       ->setAttributes(array('cols'=>'60', 'rows'=>'5'))
       ;
@@ -34,7 +34,8 @@ class ProjActivityForm extends BaseProjActivityForm
       'notes' => new sfValidatorString(array('trim' => true, 'min_length'=>4, 'required'=>true)),
       'quantity' => new sfValidatorNumber(array('min'=>0.5, 'required'=>true)),
       'proj_resource_id' => new sfValidatorPropelChoice(array('model'=>'ProjResource')),
-      'user_id' => new sfValidatorPropelChoice(array('model'=>'sfGuardUser'))
+      'user_id' => new sfValidatorPropelChoice(array('model'=>'sfGuardUser')),
+      'paper_log' => new sfValidatorBoolean(array('required'=>false)),
       ));
 
   }
@@ -45,7 +46,10 @@ class ProjActivityForm extends BaseProjActivityForm
       ->setLabel('Qty used (' . $resourceType->getMeasurementUnit() . ')')
       ->setAttributes(array('size'=>'5', 'style'=>'text-align: right'))
       ;
-    $this->setWidget('user_id', new sfWidgetFormPropelChoice(array('model'=>'sfGuardUserProfile', 'add_empty'=>'Choose a user', 'peer_method'=>'doSelect', 'criteria'=>$resource->getCriteriaForUserSelection()))); 
+    $this->setWidget('user_id', new sfWidgetFormPropelChoice(array('model'=>'sfGuardUserProfile', 'add_empty'=>'Choose the performer', 'peer_method'=>'doSelect', 'criteria'=>$resource->getCriteriaForUserSelection()))); 
+
+    $this['user_id']->getWidget()->setLabel('Performer');
+    
   }
   
   public function unsetUserId()

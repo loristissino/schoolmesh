@@ -80,6 +80,13 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	protected $added_by_coordinator;
 
 	/**
+	 * The value for the paper_log field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $paper_log;
+
+	/**
 	 * @var        ProjResource
 	 */
 	protected $aProjResource;
@@ -121,6 +128,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	public function applyDefaultValues()
 	{
 		$this->added_by_coordinator = false;
+		$this->paper_log = false;
 	}
 
 	/**
@@ -315,6 +323,16 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	public function getAddedByCoordinator()
 	{
 		return $this->added_by_coordinator;
+	}
+
+	/**
+	 * Get the [paper_log] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getPaperLog()
+	{
+		return $this->paper_log;
 	}
 
 	/**
@@ -617,6 +635,26 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	} // setAddedByCoordinator()
 
 	/**
+	 * Set the value of [paper_log] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     ProjActivity The current object (for fluent API support)
+	 */
+	public function setPaperLog($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->paper_log !== $v || $this->isNew()) {
+			$this->paper_log = $v;
+			$this->modifiedColumns[] = ProjActivityPeer::PAPER_LOG;
+		}
+
+		return $this;
+	} // setPaperLog()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -627,6 +665,10 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 	public function hasOnlyDefaultValues()
 	{
 			if ($this->added_by_coordinator !== false) {
+				return false;
+			}
+
+			if ($this->paper_log !== false) {
 				return false;
 			}
 
@@ -662,6 +704,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			$this->acknowledged_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
 			$this->acknowledger_user_id = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
 			$this->added_by_coordinator = ($row[$startcol + 9] !== null) ? (boolean) $row[$startcol + 9] : null;
+			$this->paper_log = ($row[$startcol + 10] !== null) ? (boolean) $row[$startcol + 10] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -671,7 +714,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 10; // 10 = ProjActivityPeer::NUM_COLUMNS - ProjActivityPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 11; // 11 = ProjActivityPeer::NUM_COLUMNS - ProjActivityPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjActivity object", $e);
@@ -1067,6 +1110,9 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			case 9:
 				return $this->getAddedByCoordinator();
 				break;
+			case 10:
+				return $this->getPaperLog();
+				break;
 			default:
 				return null;
 				break;
@@ -1098,6 +1144,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			$keys[7] => $this->getAcknowledgedAt(),
 			$keys[8] => $this->getAcknowledgerUserId(),
 			$keys[9] => $this->getAddedByCoordinator(),
+			$keys[10] => $this->getPaperLog(),
 		);
 		return $result;
 	}
@@ -1159,6 +1206,9 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 			case 9:
 				$this->setAddedByCoordinator($value);
 				break;
+			case 10:
+				$this->setPaperLog($value);
+				break;
 		} // switch()
 	}
 
@@ -1193,6 +1243,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[7], $arr)) $this->setAcknowledgedAt($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setAcknowledgerUserId($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setAddedByCoordinator($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setPaperLog($arr[$keys[10]]);
 	}
 
 	/**
@@ -1214,6 +1265,7 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProjActivityPeer::ACKNOWLEDGED_AT)) $criteria->add(ProjActivityPeer::ACKNOWLEDGED_AT, $this->acknowledged_at);
 		if ($this->isColumnModified(ProjActivityPeer::ACKNOWLEDGER_USER_ID)) $criteria->add(ProjActivityPeer::ACKNOWLEDGER_USER_ID, $this->acknowledger_user_id);
 		if ($this->isColumnModified(ProjActivityPeer::ADDED_BY_COORDINATOR)) $criteria->add(ProjActivityPeer::ADDED_BY_COORDINATOR, $this->added_by_coordinator);
+		if ($this->isColumnModified(ProjActivityPeer::PAPER_LOG)) $criteria->add(ProjActivityPeer::PAPER_LOG, $this->paper_log);
 
 		return $criteria;
 	}
@@ -1285,6 +1337,8 @@ abstract class BaseProjActivity extends BaseObject  implements Persistent {
 		$copyObj->setAcknowledgerUserId($this->acknowledger_user_id);
 
 		$copyObj->setAddedByCoordinator($this->added_by_coordinator);
+
+		$copyObj->setPaperLog($this->paper_log);
 
 
 		$copyObj->setNew(true);

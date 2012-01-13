@@ -16,8 +16,8 @@
   <thead>
     <tr>
       <th class="sf_admin_text"><?php echo __('Project') ?></th>
-      <th class="sf_admin_text"><?php echo __('Resource') ?></th>
-      <th class="sf_admin_text"><?php echo __('Beginning') ?></th>
+      <th class="sf_admin_text"><?php echo __('Resource/task') ?></th>
+      <th class="sf_admin_text" style="text-align: center"><?php echo __('Beginning') ?></th>
       <th class="sf_admin_text"><?php echo __('M.U.') ?></th>
       <th class="sf_admin_text"><?php echo __('Quantity') ?></th>
       <th class="sf_admin_text"><?php echo __('Notes') ?></th>
@@ -32,8 +32,15 @@
       <td><?php echo $activity->getProjResource()->getSchoolproject() ?></td>
       <td><?php echo $activity->getProjResource() ?></td>
       <td>
+        <?php if($activity->getPaperLog()): ?>
+        <?php echo image_tag(
+          'paper',
+          array('title'=>__('Logged on paper'), 'size'=>'16x16')
+          )
+        ?>
+      <?php endif ?>
         <?php echo $activity->getBeginning('d/m/y H:i') ?>
-        <?php if($activity->getBeginning('U')<$ending): ?>
+        <?php if(!$activity->getPaperLog() && $activity->getBeginning('U')<$ending): ?>
           <?php echo image_tag(
             'dubious',
             array(
@@ -46,7 +53,7 @@
       </td>
       <td><?php echo $mu=$activity->getProjResource()->getProjResourceType()->getMeasurementUnit() ?></td>
       <td style="text-align: right"><?php echo $activity->getQuantity() ?></td>
-      <td><?php $ending=$activity->getEnding('U') ?><?php echo $activity->getNotes() ?></td>
+      <td><?php if(!$activity->getPaperLog()) $ending=$activity->getEnding('U') ?><?php echo $activity->getNotes() ?></td>
       <td><?php include_partial('projects/acknowledgement', array('activity'=>$activity)) ?></td>
       <td>
       <ul class="sf_admin_td_actions">

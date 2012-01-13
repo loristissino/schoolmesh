@@ -24,6 +24,7 @@ abstract class BaseProjActivityForm extends BaseFormPropel
       'acknowledged_at'      => new sfWidgetFormDateTime(),
       'acknowledger_user_id' => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
       'added_by_coordinator' => new sfWidgetFormInputCheckbox(),
+      'paper_log'            => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -37,6 +38,7 @@ abstract class BaseProjActivityForm extends BaseFormPropel
       'acknowledged_at'      => new sfValidatorDateTime(array('required' => false)),
       'acknowledger_user_id' => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id', 'required' => false)),
       'added_by_coordinator' => new sfValidatorBoolean(array('required' => false)),
+      'paper_log'            => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('proj_activity[%s]');
