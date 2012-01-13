@@ -38,6 +38,7 @@ class ProjActivityPeer extends BaseProjActivityPeer {
       ->setAcknowledgerUserId($user_id)
       ->setAcknowledgedAt($added_by_coordinator? time() : null)
       ->setAddedByCoordinator($added_by_coordinator)
+      ->setPaperLog($params['paper_log'])
       ->save();
       
       $result['result']='notice';

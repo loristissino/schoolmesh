@@ -20,8 +20,8 @@
 <table cellspacing="0">
   <thead>
     <tr>
-      <th class="sf_admin_text"><?php echo __('User') ?></th>
-      <th class="sf_admin_text"><?php echo __('Beginning') ?></th>
+      <th class="sf_admin_text"><?php echo __('Performer') ?></th>
+      <th class="sf_admin_text" style='text-align: center'><?php echo __('Beginning') ?></th>
       <th class="sf_admin_text"><?php echo __('M.U.') ?></th>
       <th class="sf_admin_text"><?php echo __('Quantity') ?></th>
       <th class="sf_admin_text"><?php echo __('Notes') ?></th>
@@ -46,7 +46,14 @@
         ?>
       <?php endif ?>
       </td>
-      <td>
+      <td style='text-align: right'>
+      <?php if($activity->getPaperLog()): ?>
+        <?php echo image_tag(
+          'paper',
+          array('title'=>__('Logged on paper'), 'size'=>'16x16')
+          )
+        ?>
+      <?php endif ?>
       <?php echo $activity->getBeginning('d/m/Y h:i') ?>
       </td>
       <td>

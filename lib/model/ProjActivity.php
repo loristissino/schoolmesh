@@ -28,7 +28,7 @@ class ProjActivity extends BaseProjActivity {
   
   public function saveChanges($params=array())
   {
-    Generic::updateObjectFromForm($this, array('beginning', 'quantity', 'notes'), $params);
+    Generic::updateObjectFromForm($this, array('beginning', 'quantity', 'notes', 'paper_log'), $params);
     $this->save();
     $result['result']='notice';
     $result['message']='Activity information updated.';

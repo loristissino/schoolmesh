@@ -430,6 +430,7 @@ propel:
     acknowledged_at: timestamp
     acknowledger_user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
     added_by_coordinator: { type: boolean, default: false }
+    paper_log: { type: boolean, default: false }  # if set to true, this means that there is an alternative logging system for this activity
 
   proj_upshot:
     id: ~

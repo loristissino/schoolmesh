@@ -25,7 +25,7 @@ abstract class BaseProjActivityPeer {
 	const TM_CLASS = 'ProjActivityTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 10;
+	const NUM_COLUMNS = 11;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -60,6 +60,9 @@ abstract class BaseProjActivityPeer {
 	/** the column name for the ADDED_BY_COORDINATOR field */
 	const ADDED_BY_COORDINATOR = 'proj_activity.ADDED_BY_COORDINATOR';
 
+	/** the column name for the PAPER_LOG field */
+	const PAPER_LOG = 'proj_activity.PAPER_LOG';
+
 	/**
 	 * An identiy map to hold any loaded instances of ProjActivity objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
@@ -83,11 +86,11 @@ abstract class BaseProjActivityPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'ProjResourceId', 'UserId', 'Beginning', 'Quantity', 'Notes', 'CreatedAt', 'AcknowledgedAt', 'AcknowledgerUserId', 'AddedByCoordinator', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'projResourceId', 'userId', 'beginning', 'quantity', 'notes', 'createdAt', 'acknowledgedAt', 'acknowledgerUserId', 'addedByCoordinator', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::PROJ_RESOURCE_ID, self::USER_ID, self::BEGINNING, self::QUANTITY, self::NOTES, self::CREATED_AT, self::ACKNOWLEDGED_AT, self::ACKNOWLEDGER_USER_ID, self::ADDED_BY_COORDINATOR, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'proj_resource_id', 'user_id', 'beginning', 'quantity', 'notes', 'created_at', 'acknowledged_at', 'acknowledger_user_id', 'added_by_coordinator', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'ProjResourceId', 'UserId', 'Beginning', 'Quantity', 'Notes', 'CreatedAt', 'AcknowledgedAt', 'AcknowledgerUserId', 'AddedByCoordinator', 'PaperLog', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'projResourceId', 'userId', 'beginning', 'quantity', 'notes', 'createdAt', 'acknowledgedAt', 'acknowledgerUserId', 'addedByCoordinator', 'paperLog', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::PROJ_RESOURCE_ID, self::USER_ID, self::BEGINNING, self::QUANTITY, self::NOTES, self::CREATED_AT, self::ACKNOWLEDGED_AT, self::ACKNOWLEDGER_USER_ID, self::ADDED_BY_COORDINATOR, self::PAPER_LOG, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'proj_resource_id', 'user_id', 'beginning', 'quantity', 'notes', 'created_at', 'acknowledged_at', 'acknowledger_user_id', 'added_by_coordinator', 'paper_log', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -97,11 +100,11 @@ abstract class BaseProjActivityPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProjResourceId' => 1, 'UserId' => 2, 'Beginning' => 3, 'Quantity' => 4, 'Notes' => 5, 'CreatedAt' => 6, 'AcknowledgedAt' => 7, 'AcknowledgerUserId' => 8, 'AddedByCoordinator' => 9, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'projResourceId' => 1, 'userId' => 2, 'beginning' => 3, 'quantity' => 4, 'notes' => 5, 'createdAt' => 6, 'acknowledgedAt' => 7, 'acknowledgerUserId' => 8, 'addedByCoordinator' => 9, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PROJ_RESOURCE_ID => 1, self::USER_ID => 2, self::BEGINNING => 3, self::QUANTITY => 4, self::NOTES => 5, self::CREATED_AT => 6, self::ACKNOWLEDGED_AT => 7, self::ACKNOWLEDGER_USER_ID => 8, self::ADDED_BY_COORDINATOR => 9, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'proj_resource_id' => 1, 'user_id' => 2, 'beginning' => 3, 'quantity' => 4, 'notes' => 5, 'created_at' => 6, 'acknowledged_at' => 7, 'acknowledger_user_id' => 8, 'added_by_coordinator' => 9, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProjResourceId' => 1, 'UserId' => 2, 'Beginning' => 3, 'Quantity' => 4, 'Notes' => 5, 'CreatedAt' => 6, 'AcknowledgedAt' => 7, 'AcknowledgerUserId' => 8, 'AddedByCoordinator' => 9, 'PaperLog' => 10, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'projResourceId' => 1, 'userId' => 2, 'beginning' => 3, 'quantity' => 4, 'notes' => 5, 'createdAt' => 6, 'acknowledgedAt' => 7, 'acknowledgerUserId' => 8, 'addedByCoordinator' => 9, 'paperLog' => 10, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PROJ_RESOURCE_ID => 1, self::USER_ID => 2, self::BEGINNING => 3, self::QUANTITY => 4, self::NOTES => 5, self::CREATED_AT => 6, self::ACKNOWLEDGED_AT => 7, self::ACKNOWLEDGER_USER_ID => 8, self::ADDED_BY_COORDINATOR => 9, self::PAPER_LOG => 10, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'proj_resource_id' => 1, 'user_id' => 2, 'beginning' => 3, 'quantity' => 4, 'notes' => 5, 'created_at' => 6, 'acknowledged_at' => 7, 'acknowledger_user_id' => 8, 'added_by_coordinator' => 9, 'paper_log' => 10, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -181,6 +184,7 @@ abstract class BaseProjActivityPeer {
 		$criteria->addSelectColumn(ProjActivityPeer::ACKNOWLEDGED_AT);
 		$criteria->addSelectColumn(ProjActivityPeer::ACKNOWLEDGER_USER_ID);
 		$criteria->addSelectColumn(ProjActivityPeer::ADDED_BY_COORDINATOR);
+		$criteria->addSelectColumn(ProjActivityPeer::PAPER_LOG);
 	}
 
 	/**
