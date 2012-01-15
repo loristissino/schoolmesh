@@ -3984,6 +3984,10 @@
         <source>Prepare an email to the person who performed this activity</source>
         <target>Prepara un'email per la persona che ha svolto questa attività</target>
     </trans-unit>
+    <trans-unit id="1007">
+        <source>The username and/or password is invalid.</source>
+        <target>Nome utente e/o password non corretti.</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

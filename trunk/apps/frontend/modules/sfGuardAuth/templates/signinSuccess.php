@@ -9,7 +9,8 @@
     <?php $form->setDefault('username', $sf_request->getParameter('loginas', '')) ?>
     <?php $form->setDefault('password', $sf_request->getParameter('demopassword', '')) ?>
     <?php // this allows to set the username for an action (and also the password, for the demo website ?>
-    <?php echo $form ?>
+    <?php echo $form['username']->renderRow() ?>
+    <?php echo $form['password']->renderRow() ?>
   </table>
   <!--<a href="/schoolmesh/frontend_dev.php/request_password">Dimenticata la password?</a>-->
 
