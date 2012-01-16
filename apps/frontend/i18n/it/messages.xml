@@ -2133,8 +2133,8 @@
         <target>Scarica dati GoogleApps</target>
     </trans-unit>
     <trans-unit id="552">
-        <source>sign in</source>
-        <target>entra</target>
+        <source>Sign in</source>
+        <target>Entra</target>
     </trans-unit>
     <trans-unit id="553">
         <source>token</source>
@@ -3988,9 +3988,37 @@
         <source>The username and/or password is invalid.</source>
         <target>Nome utente e/o password non corretti.</target>
     </trans-unit>
+    <trans-unit id="1008">
+        <source>Expiry</source>
+        <target>Termine</target>
+    </trans-unit>
+    <trans-unit id="1009">
+        <source>You are changing the role of user %user%.</source>
+        <target>Stai cambiando il ruolo dell'utente %user%.</target>
+    </trans-unit>
+    <trans-unit id="1010">
+        <source>Role change</source>
+        <target>Cambio ruolo</target>
+    </trans-unit>
+    <trans-unit id="1011">
+        <source>Enrolments</source>
+        <target>Iscrizioni</target>
+    </trans-unit>
+    <trans-unit id="1012">
+        <source>Add enrolment</source>
+        <target>Aggiungi iscrizione</target>
+    </trans-unit>
+    <trans-unit id="1013">
+        <source>Unenrol</source>
+        <target>Disiscrivi</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
+
+
+
 
 
 

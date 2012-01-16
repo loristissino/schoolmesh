@@ -43,6 +43,12 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	protected $role_id;
 
 	/**
+	 * The value for the expiry field.
+	 * @var        string
+	 */
+	protected $expiry;
+
+	/**
 	 * @var        sfGuardUser
 	 */
 	protected $asfGuardUser;
@@ -113,6 +119,44 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	public function getRoleId()
 	{
 		return $this->role_id;
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [expiry] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getExpiry($format = 'Y-m-d')
+	{
+		if ($this->expiry === null) {
+			return null;
+		}
+
+
+		if ($this->expiry === '0000-00-00') {
+			// while technically this is not a default value of NULL,
+			// this seems to be closest in meaning.
+			return null;
+		} else {
+			try {
+				$dt = new DateTime($this->expiry);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->expiry, true), $x);
+			}
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
 	}
 
 	/**
@@ -208,6 +252,55 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	} // setRoleId()
 
 	/**
+	 * Sets the value of [expiry] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     UserTeam The current object (for fluent API support)
+	 */
+	public function setExpiry($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->expiry !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->expiry !== null && $tmpDt = new DateTime($this->expiry)) ? $tmpDt->format('Y-m-d') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->expiry = ($dt ? $dt->format('Y-m-d') : null);
+				$this->modifiedColumns[] = UserTeamPeer::EXPIRY;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setExpiry()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -243,6 +336,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			$this->user_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->team_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->role_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->expiry = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -252,7 +346,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 4; // 4 = UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 5; // 5 = UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating UserTeam object", $e);
@@ -622,6 +716,9 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			case 3:
 				return $this->getRoleId();
 				break;
+			case 4:
+				return $this->getExpiry();
+				break;
 			default:
 				return null;
 				break;
@@ -647,6 +744,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			$keys[1] => $this->getUserId(),
 			$keys[2] => $this->getTeamId(),
 			$keys[3] => $this->getRoleId(),
+			$keys[4] => $this->getExpiry(),
 		);
 		return $result;
 	}
@@ -690,6 +788,9 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			case 3:
 				$this->setRoleId($value);
 				break;
+			case 4:
+				$this->setExpiry($value);
+				break;
 		} // switch()
 	}
 
@@ -718,6 +819,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setUserId($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setTeamId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setRoleId($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setExpiry($arr[$keys[4]]);
 	}
 
 	/**
@@ -733,6 +835,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserTeamPeer::USER_ID)) $criteria->add(UserTeamPeer::USER_ID, $this->user_id);
 		if ($this->isColumnModified(UserTeamPeer::TEAM_ID)) $criteria->add(UserTeamPeer::TEAM_ID, $this->team_id);
 		if ($this->isColumnModified(UserTeamPeer::ROLE_ID)) $criteria->add(UserTeamPeer::ROLE_ID, $this->role_id);
+		if ($this->isColumnModified(UserTeamPeer::EXPIRY)) $criteria->add(UserTeamPeer::EXPIRY, $this->expiry);
 
 		return $criteria;
 	}
@@ -792,6 +895,8 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		$copyObj->setTeamId($this->team_id);
 
 		$copyObj->setRoleId($this->role_id);
+
+		$copyObj->setExpiry($this->expiry);
 
 
 		$copyObj->setNew(true);

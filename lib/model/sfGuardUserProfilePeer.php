@@ -419,7 +419,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 					$checkList->addCheck(new Check(Check::PASSED, sprintf('created user %s (%s)', $profile->getFullName(), $user->getUsername()), $groupName));
 				
         
-          // we do this now, because we could not before, since the object was yet saved
+          // we do this now, because we could not before, since the object was not yet saved
           switch($type)
           {
             case('T'):
@@ -439,18 +439,6 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 				{
 					case('T'):
 						// it's a teacher
-						$team=TeamPeer::retrieveByPosixName($group);
-						$role=RolePeer::retrieveByPosixName(sfConfig::get('app_config_default_teams_role'));
-						if($team && $role)
-						{
-							$profile->addToTeam($team, $role);
-							$checkList->addCheck(new Check(Check::PASSED, sprintf('added to team %s', $group), $groupName));
-						}
-						else
-						{
-							$profile->addSystemAlert('missing team');
-						}
-						
 						$guardgroup=sfGuardGroupProfilePeer::retrieveGuardGroupByName('teacher');
 						$profile->addToGuardGroup($guardgroup);
 						break;
@@ -458,7 +446,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 					case('S'):
 						// found a student
 						$schoolclass=SchoolclassPeer::retrieveByPK($group);
-            // FIXME... This could be cached...
+            // FIXME... This should be cached...
             
 						if($schoolclass)
 						{

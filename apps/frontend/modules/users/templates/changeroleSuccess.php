@@ -1,20 +1,16 @@
-<?php slot('title', __('User management')) ?>
-<?php slot('breadcrumbs',
-	link_to(__("User management"), 'users/index') . ' » ' .
-	link_to(__("User list"), 'users/list') . ' » ' .
-	link_to($current_user->getFullName(), 'users/edit?id=' . $current_user->getUserId()) . ' » '.
-	$team . ' » ' .
-	'Change role'
-	)
-	
-	?><h1><?php echo sprintf(__('Edit %s'), $team->__toString())?></h1>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'users/edit?id='.$current_user->getUserId()=>$current_user->__toString(),
+    '_team'=>$team->__toString(),
+    ),
+  'current'=>__('Role change'),
+  ))
+?>
 
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
+
+
+<p><?php echo __('You are changing the role of user %user%.', array('%user%'=>$current_user->getFullname())) ?></p>
 
 <form action="<?php echo url_for('users/changerole') ?>" method="post">
 

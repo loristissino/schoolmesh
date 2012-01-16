@@ -15,12 +15,14 @@ abstract class BaseUserTeamFormFilter extends BaseFormFilterPropel
       'user_id' => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
       'team_id' => new sfWidgetFormPropelChoice(array('model' => 'Team', 'add_empty' => true)),
       'role_id' => new sfWidgetFormPropelChoice(array('model' => 'Role', 'add_empty' => true)),
+      'expiry'  => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
     ));
 
     $this->setValidators(array(
       'user_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
       'team_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Team', 'column' => 'id')),
       'role_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Role', 'column' => 'id')),
+      'expiry'  => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
     ));
 
     $this->widgetSchema->setNameFormat('user_team_filters[%s]');
@@ -42,6 +44,7 @@ abstract class BaseUserTeamFormFilter extends BaseFormFilterPropel
       'user_id' => 'ForeignKey',
       'team_id' => 'ForeignKey',
       'role_id' => 'ForeignKey',
+      'expiry'  => 'Date',
     );
   }
 }

@@ -1,4 +1,5 @@
 <div id='enrolments'>
+<h2><?php echo __('Enrolments') ?></h2>
 <table>
 <thead>
 	<tr>

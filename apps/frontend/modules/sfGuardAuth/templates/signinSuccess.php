@@ -14,7 +14,7 @@
   </table>
   <!--<a href="/schoolmesh/frontend_dev.php/request_password">Dimenticata la password?</a>-->
 
-  <input type="submit" value="<?php echo __('sign in') ?>" />
+  <input type="submit" value="<?php echo __('Sign in') ?>" />
   <!--<a href="<?php echo url_for('@sf_guard_password') ?>"><?php echo __("Forgot your password?") ?></a>-->
 </form>
 

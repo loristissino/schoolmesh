@@ -54,7 +54,7 @@
 <?php foreach($components as $component): ?>
 	<tr>
 		<td>
-			<?php echo $component->getsfGuardUser()->getProfile()->getFullName() ?>
+			<?php echo link_to($component->getsfGuardUser()->getProfile()->getFullName(), 'users/edit?id='.$component->getsfGuardUser()->getId() . '#teams') ?>
 		</td>
 		<td>
 			<?php echo $component->getsfGuardUser()->getProfile()->getIsMale()? $component->getRole()->getMaleDescription() : $component->getRole()->getFemaleDescription() ?>
