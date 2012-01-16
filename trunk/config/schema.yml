@@ -14,13 +14,14 @@ propel:
   year:
     id:           { type: integer, required: true, primaryKey: true, autoIncrement: false }
     description:  { type: varchar(7), unique: true }
-    start_date: { type: date }
-    end_date: { type: date }
+    start_date:   { type: date }
+    end_date:     { type: date }
 
   term:
     id:           { type: varchar(10), primaryKey: true }
-    description: { type: varchar(100), required: true }
-    end_day:  { type: integer, required: true } # the number of days, following the start date of the year, when the term finishes (an approx. value, used for comparison between years if necessary)
+    description:  { type: varchar(100), required: true }
+    end_day:      { type: integer, required: true } 
+    # the number of days, following the start date of the year, when the term finishes (an approx. value, used for comparison between years if necessary)
     has_formal_evaluation: boolean
 
   subject:
@@ -32,14 +33,14 @@ propel:
   suggestion:
     id: ~
     shortcut:     { type: varchar(20), index: true, required: true, unique: true }
-    content:  { type: varchar(255), required: true }
+    content:      { type: varchar(255), required: true }
     is_selectable: boolean
-    rank:   integer
+    rank:          integer
 
   recuperation_hint:
     id: ~
     user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: false, onUpdate: cascade, onDelete: cascade, index:true }
-    content:  { type: varchar(255), required: true }
+    content:      { type: varchar(255), required: true }
     is_selectable: boolean
     rank:  integer
     
@@ -54,9 +55,9 @@ propel:
     pronunciation: varchar(100)
     info: longvarchar
     role_id:      ~
-    gender:      varchar(1)
+    gender:       varchar(1)
     email:        varchar(50)
-    email_state: { type: integer, default: 0 }
+    email_state:  { type: integer, default: 0 }
     email_verification_code: varchar(40)
     birthdate:    date
     birthplace:   varchar(50)
@@ -74,17 +75,17 @@ propel:
     id:
     name:           { type: varchar, size: 255, required: true, index: unique }
     description:    { type: longvarchar }
-    is_external:   { type: boolean, required: true }
+    is_external:    { type: boolean, required: true }
     rank:    integer
 
   account:
     id:   
-    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onUpdate: cascade, onDelete: cascade, index:true }
+    user_id:        { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onUpdate: cascade, onDelete: cascade, index:true }
     account_type_id: { type: integer, foreignTable: account_type, foreignReference: id, required: true, onDelete: restrict, index: true }
-    info:  longvarchar
-    settings: longvarchar
-    exists: boolean
-    is_locked: boolean
+    info:           longvarchar
+    settings:       longvarchar
+    exists:         boolean
+    is_locked:      boolean
     temporary_password: varchar(10)
     info_updated_at: timestamp
     last_known_login_at: timestamp
@@ -101,46 +102,46 @@ propel:
 
   reserved_username:
     id:   
-    username: { type: varchar(20), index: unique }
-    aliases_to: { type: varchar(20), index: true }
+    username:       { type: varchar(20), index: unique }
+    aliases_to:     { type: varchar(20), index: true }
 
 
   ticket_type:
     id: 
-    description: { type: varchar(50), required: true }
+    description:    { type: varchar(50), required: true }
 
   ticket:
     id:
-    referrer:  varchar(255)
+    referrer:       varchar(255)
     ticket_type_id: 
     updated_at:
-    state:  integer
+    state:          integer
 
   ticket_event:
     id:
     ticket_id: 
-    user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: restrict, onUpdate: cascade, index:true }
+    user_id:       { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: restrict, onUpdate: cascade, index:true }
     created_at: 
-    content:  { type: varchar(255), required: true }
+    content:       { type: varchar(255), required: true }
     state: integer
-    assignee_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: false, onDelete: restrict, onUpdate: cascade, index:true }
+    assignee_id:   { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: false, onDelete: restrict, onUpdate: cascade, index:true }
 
   syllabus:
     id: ~
-    name: varchar(50)
-    version: varchar(20)
-    author: varchar(50)
-    href: varchar(255)
-    is_active:  { type: boolean, default: true }
+    name:          varchar(50)
+    version:       varchar(20)
+    author:        varchar(50)
+    href:          varchar(255)
+    is_active:     { type: boolean, default: true }
     
   syllabus_item:
     syllabus_id: ~
     id: ~
-    rank: integer
-    ref: varchar(24)
-    level: integer
-    parent_id: { type: integer, foreignTable: syllabus_item, foreignReference: id, required: false, onDelete: restrict, onUpdate: cascade, index:true }
-    content: longvarchar
+    rank:          integer
+    ref:           varchar(24)
+    level:         integer
+    parent_id:     { type: integer, foreignTable: syllabus_item, foreignReference: id, required: false, onDelete: restrict, onUpdate: cascade, index:true }
+    content:       longvarchar
     is_selectable: { type: boolean, default: false }
     _uniques:
       ir: [syllabus_id, ref]
@@ -194,9 +195,10 @@ propel:
 
   user_team:
     id: ~
-    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    user_id:     { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     team_id:     { type: integer, foreignTable: team, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true  }
-    role_id:       { type: integer, foreignTable: role, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    role_id:     { type: integer, foreignTable: role, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    expiry:      { type: date }
     _uniques:
       utr: [user_id, team_id]
 

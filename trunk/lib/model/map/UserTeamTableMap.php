@@ -40,6 +40,7 @@ class UserTeamTableMap extends TableMap {
 		$this->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
 		$this->addForeignKey('TEAM_ID', 'TeamId', 'INTEGER', 'team', 'ID', true, null, null);
 		$this->addForeignKey('ROLE_ID', 'RoleId', 'INTEGER', 'role', 'ID', true, null, null);
+		$this->addColumn('EXPIRY', 'Expiry', 'DATE', false, null, null);
 		// validators
 	} // initialize()
 

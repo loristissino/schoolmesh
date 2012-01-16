@@ -895,7 +895,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			;
     }
 		
-		public function addToTeam(Team $team, Role $role)
+		public function addToTeam(Team $team, Role $role, $expiry=null)
 		{
 			if (!$this->getBelongsToTeam($team->getPosixName()))
 			{
@@ -906,6 +906,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 					->setUserId($this->getUserId())
 					->setTeam($team)
 					->setRole($role)
+          ->setExpiry($expiry)
 					->save();
 				}
 				catch(Exception $e)

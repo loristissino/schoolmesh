@@ -1,4 +1,5 @@
-<div>
+<div id="appointments">
+<h2><?php echo __('Appointments') ?></h2>
 <table>
 <thead>
 	<tr>

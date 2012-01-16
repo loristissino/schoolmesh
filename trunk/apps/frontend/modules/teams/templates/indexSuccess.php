@@ -8,7 +8,6 @@
 <table>
   <thead>
     <tr>
-      <th class="sf_admin_text"><?php echo __('Id') ?></th>
       <th class="sf_admin_text"><?php echo __('Description') ?></th>
       <th class="sf_admin_text"><?php echo __('Posix name') ?></th>
       <th class="sf_admin_text"><?php echo __('Quality code') ?></th>
@@ -19,8 +18,7 @@
   <tbody>
     <?php foreach ($Teams as $Team): ?>
     <tr>
-      <td><a href="<?php echo url_for('teams/show?id='.$Team->getId()) ?>"><?php echo $Team->getId() ?></a></td>
-      <td><?php echo $Team->getDescription() ?></td>
+      <td><?php echo link_to($Team->getDescription(), url_for('teams/show?id='.$Team->getId())) ?></td>
       <td><?php echo $Team->getPosixName() ?></td>
       <td><?php echo $Team->getQualityCode() ?></td>
       <td style="text-align: center"><?php echo $Team->getNeedsFolder()? __('Yes'): __('No') ?></td>
