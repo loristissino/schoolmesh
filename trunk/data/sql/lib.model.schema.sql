@@ -493,6 +493,7 @@ CREATE TABLE `role`
 	`quality_code` VARCHAR(10),
 	`posix_name` VARCHAR(20),
 	`may_be_main_role` TINYINT,
+	`needs_charge_letter` TINYINT,
 	`default_guardgroup` VARCHAR(20),
 	PRIMARY KEY (`id`)
 )Type=InnoDB;

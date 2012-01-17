@@ -191,6 +191,7 @@ propel:
     quality_code: varchar(10)        
     posix_name: varchar(20)
     may_be_main_role: boolean
+    needs_charge_letter: boolean
     default_guardgroup: varchar(20)
 
   user_team:
@@ -198,7 +199,7 @@ propel:
     user_id:     { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     team_id:     { type: integer, foreignTable: team, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true  }
     role_id:     { type: integer, foreignTable: role, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
-    expiry:      { type: date }
+    expiry:      { type: date }    
     _uniques:
       utr: [user_id, team_id]
 
