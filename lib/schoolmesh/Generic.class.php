@@ -344,6 +344,19 @@ class Generic{
       $s);
   }
   
+  public static function sanitizeString($s)
+  {
+    return str_replace(
+      array(
+        '&#039;',
+      ),
+      array(
+        "",
+      ),
+      $s);
+  }
+
+  
   public static function currentDate()
   {
     return mktime(18,0,0, date('n'), date('j')+1, date('Y'));
