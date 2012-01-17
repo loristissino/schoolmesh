@@ -38,6 +38,6 @@
 <hr />
 
 <?php if(isset($checkList)): ?>
-	<?php include_partial('content/checks', array('checkList'=>$checkList, 'start_closed'=>false)) ?>
+	<?php include_partial('content/checks', array('checkList'=>$checkList, 'start_closed'=>false, 'show_successes'=>true)) ?>
 <?php endif ?>
 

@@ -52,7 +52,6 @@ class CheckList{
 	public function addCheck(Check $check)
 		{
 			
-			
 			$this->_checks[$check->getGroup()]['checks'][]=$check;
 			@$this->_checks[$check->getGroup()][$check->getResult()]++;
 
@@ -75,7 +74,7 @@ class CheckList{
 
 		public function getGroupNames()
 		{
-			return array_keys($this->_checks);
+      return array_keys($this->_checks);
 		}
 		
 		
