@@ -41,7 +41,7 @@ all:
     class_teachersteam_prefix: cdc  # for the new team of teachers automatically created, and the name will be prefixed with this
     class_teachersteam_name: Class Council
     class_teachersteam_quality_code: CDC
-    departments_config: /etc/schoolmesh/departments.yml
+    organization_config: /etc/schoolmesh/organization.yml
     moodle_key: aSekRetTokEnShAred # used for quasi-SSO with Moodle
     moodle_url: http://www.example.net/moodle/
     moodle_access: http://www.example.net/intranet/moodle_schoolmesh.php

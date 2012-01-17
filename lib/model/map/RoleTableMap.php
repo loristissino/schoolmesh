@@ -42,6 +42,7 @@ class RoleTableMap extends TableMap {
 		$this->addColumn('QUALITY_CODE', 'QualityCode', 'VARCHAR', false, 10, null);
 		$this->addColumn('POSIX_NAME', 'PosixName', 'VARCHAR', false, 20, null);
 		$this->addColumn('MAY_BE_MAIN_ROLE', 'MayBeMainRole', 'BOOLEAN', false, null, null);
+		$this->addColumn('NEEDS_CHARGE_LETTER', 'NeedsChargeLetter', 'BOOLEAN', false, null, null);
 		$this->addColumn('DEFAULT_GUARDGROUP', 'DefaultGuardgroup', 'VARCHAR', false, 20, null);
 		// validators
 	} // initialize()

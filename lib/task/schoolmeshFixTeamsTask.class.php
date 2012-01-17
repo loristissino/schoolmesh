@@ -64,7 +64,7 @@ EOF;
     $description=sfConfig::get('app_config_class_teachersteam_name');
     $qualitycode=sfConfig::get('app_config_class_teachersteam_quality_code', strtoupper($prefix));
     
-    $depconfig=sfYaml::load(sfConfig::get('app_config_departments_config'));
+    $depconfig=sfYaml::load(sfConfig::get('app_config_organization_config'));
     if(!$depconfig['departments'])
     {
       throw new Exception('Missing or invalid departments configuration file');
