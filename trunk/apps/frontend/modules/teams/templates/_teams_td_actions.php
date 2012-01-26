@@ -1,4 +1,5 @@
 <ul class="sf_admin_td_actions">
+<?php if($sf_user->hasCredential('teams')): ?>
   <li class="sf_admin_action_edit">
   <?php echo link_to(
     __('Change role'),
@@ -14,4 +15,5 @@
     )
   ?>
   </li>
+<?php endif ?>
 </ul>

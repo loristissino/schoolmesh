@@ -72,6 +72,7 @@
 <p><?php echo __('This team has no members.') ?></p>
 <?php endif ?>
 
+<?php if($sf_user->hasCredential('teams')):?>
 <ul class="sf_admin_actions">
   <li class="sf_admin_action_edit">
   <?php echo link_to(
@@ -80,3 +81,4 @@
     ) ?>
   </li><br />
 </ul>
+<?php endif ?>

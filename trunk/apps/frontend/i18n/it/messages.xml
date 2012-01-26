@@ -4012,6 +4012,26 @@
         <source>Unenrol</source>
         <target>Disiscrivi</target>
     </trans-unit>
+    <trans-unit id="1014">
+        <source>Choose a team</source>
+        <target>Scegli un team</target>
+    </trans-unit>
+    <trans-unit id="1015">
+        <source>Accounts and teams</source>
+        <target>Account e team</target>
+    </trans-unit>
+    <trans-unit id="1016">
+        <source>Teams I belong to</source>
+        <target>Team di cui faccio parte</target>
+    </trans-unit>
+    <trans-unit id="1017">
+        <source>My teams</source>
+        <target>Team</target>
+    </trans-unit>
+    <trans-unit id="1018">
+        <source>This team has no members.</source>
+        <target>Questo team non ha componenti.</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

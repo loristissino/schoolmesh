@@ -11,7 +11,7 @@ class teamsActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->Teams = TeamPeer::doSelect(new Criteria());
+    $this->Teams = TeamPeer::retrieveAllSortedByDescription();
   }
 
   public function executeShow(sfWebRequest $request)
