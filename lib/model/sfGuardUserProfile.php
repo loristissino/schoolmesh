@@ -872,6 +872,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     {
       $c = new Criteria();
 			$c->add(UserTeamPeer::USER_ID, $this->getUserId());
+      $c->addAscendingOrderByColumn(TeamPeer::DESCRIPTION);
 			$t = UserTeamPeer::doSelectJoinAllExceptsfGuardUser($c);
 			return $t;
     }

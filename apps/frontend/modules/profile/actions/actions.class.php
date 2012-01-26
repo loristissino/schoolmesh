@@ -18,9 +18,14 @@ class profileActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->accounts=$this->getUser()->getProfile()->getAccounts();
+    $this->teams=$this->getUser()->getProfile()->getTeams();
     $this->getUser()->setCulture($this->getUser()->getProfile()->getPreferredCulture());
   }
   
+  public function executeTeams(sfWebRequest $request)
+  {
+    $this->Teams=$this->getUser()->getProfile()->getTeams();
+  }
   
   public function executePoll(sfWebRequest $request)
   {

@@ -46,33 +46,33 @@
 <?php endif ?>
 
 
-
-<?php if ($sf_user->hasCredential('filebrowsing')): ?>
-<h2><?php echo __('My files') ?></h2>
-<ul class="sf_admin_actions">
-    <li class="sf_admin_action_items"><?php echo link_to(__('Remote management of files on the server'), url_for('filebrowser/index')) ?></li>
-</ul>
-<?php endif ?>
-
-<?php if ($sf_user->hasCredential('internet')): ?>
+<?php if ($sf_user->hasCredential('internet') or $sf_user->hasCredential('filebrowsing')): ?>
 <h2><?php echo __('Local Area Network') ?></h2>
 <ul class="sf_admin_actions">
+  <?php if ($sf_user->hasCredential('internet')): ?>
     <li class="sf_admin_action_items"><?php echo link_to(__('Web access management'), url_for('lan/index')) ?></li>
+  <?php endif ?>
+  <?php if ($sf_user->hasCredential('filebrowsing')): ?>
+    <li class="sf_admin_action_items"><?php echo link_to(__('Remote management of files on the server'), url_for('filebrowser/index')) ?></li>
+  <?php endif ?>
 </ul>
 <?php endif ?>
 
-
-
-<h2><?php echo __('Accounts') ?></h2>
+<h2><?php echo __('Accounts and teams') ?></h2>
 
 <ul class="sf_admin_actions">
 <li class="sf_admin_action_schoolmesh"><strong><?php echo link_to(__('SchoolMesh main account'), url_for('profile/editprofile')) ?></strong></li><br />
 <?php if(sizeof($accounts)>0): ?>
-<?php foreach($accounts as $account): ?>
-<li class="sf_admin_action_<?php echo $account->getAccountType() ?>"><?php echo link_to(__($account->__toString()), url_for(('profile/viewaccount?type='. $account->getAccountType()))) ?></li><br />
-<?php endforeach ?>
+  <?php foreach($accounts as $account): ?>
+  <li class="sf_admin_action_<?php echo $account->getAccountType() ?>"><?php echo link_to(__($account->__toString()), url_for(('profile/viewaccount?type='. $account->getAccountType()))) ?></li><br />
+  <?php endforeach ?>
+<?php endif ?>
+<?php if(sizeof($teams)>0): ?>
+  <li class="sf_admin_action_users"><?php echo link_to(__('My teams'), url_for(('profile/teams')), array('title'=>__('Teams I belong to'))) ?></li><br />
 <?php endif ?>
 </ul>
+
+
 
 <?php /* better to keep this secret for users... */ /* 
 <h2><?php echo __('Credentials') ?></h2>
