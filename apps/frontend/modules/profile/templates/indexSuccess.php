@@ -50,10 +50,10 @@
 <h2><?php echo __('Local Area Network') ?></h2>
 <ul class="sf_admin_actions">
   <?php if ($sf_user->hasCredential('internet')): ?>
-    <li class="sf_admin_action_items"><?php echo link_to(__('Web access management'), url_for('lan/index')) ?></li>
+    <li class="sf_admin_action_items"><?php echo link_to(__('Web access management'), url_for('lan/index')) ?></li><br />
   <?php endif ?>
   <?php if ($sf_user->hasCredential('filebrowsing')): ?>
-    <li class="sf_admin_action_items"><?php echo link_to(__('Remote management of files on the server'), url_for('filebrowser/index')) ?></li>
+    <li class="sf_admin_action_items"><?php echo link_to(__('Remote management of files on the server'), url_for('filebrowser/index')) ?></li><br />
   <?php endif ?>
 </ul>
 <?php endif ?>
