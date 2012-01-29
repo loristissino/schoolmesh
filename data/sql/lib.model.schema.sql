@@ -475,6 +475,7 @@ CREATE TABLE `team`
 	`quality_code` VARCHAR(10),
 	`needs_folder` TINYINT default 0,
 	`needs_mailing_list` TINYINT default 0,
+	`is_public` TINYINT default 0,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 

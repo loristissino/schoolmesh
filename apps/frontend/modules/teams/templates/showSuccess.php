@@ -11,28 +11,16 @@
 <table>
   <tbody>
     <tr>
-      <th>Id:</th>
-      <td><?php echo $Team->getId() ?></td>
-    </tr>
-    <tr>
-      <th>Description:</th>
+      <th><?php echo __('Description') ?></th>
       <td><?php echo $Team->getDescription() ?></td>
     </tr>
     <tr>
-      <th>Posix name:</th>
+      <th><?php echo __('Posix name') ?></th>
       <td><?php echo $Team->getPosixName() ?></td>
     </tr>
     <tr>
-      <th>Quality code:</th>
+      <th><?php echo __('Quality code') ?></th>
       <td><?php echo $Team->getQualityCode() ?></td>
-    </tr>
-    <tr>
-      <th>Needs folder:</th>
-      <td><?php echo $Team->getNeedsFolder() ?></td>
-    </tr>
-    <tr>
-      <th>Needs mailing list:</th>
-      <td><?php echo $Team->getNeedsMailingList() ?></td>
     </tr>
   </tbody>
 </table>
@@ -41,6 +29,7 @@
 
 <div id='members'>
 <?php if(sizeof($components)>0): ?>
+<h2><?php echo __('Members') ?></h2>
 
 <table>
 <thead>
@@ -54,7 +43,7 @@
 <?php foreach($components as $component): ?>
 	<tr>
 		<td>
-			<?php echo link_to($component->getsfGuardUser()->getProfile()->getFullName(), 'users/edit?id='.$component->getsfGuardUser()->getId() . '#teams') ?>
+			<?php echo link_to_if($sf_user->hasCredential('admin'), $component->getsfGuardUser()->getProfile()->getFullName(), 'users/edit?id='.$component->getsfGuardUser()->getId() . '#teams') ?>
 		</td>
 		<td>
 			<?php echo $component->getsfGuardUser()->getProfile()->getIsMale()? $component->getRole()->getMaleDescription() : $component->getRole()->getFemaleDescription() ?>

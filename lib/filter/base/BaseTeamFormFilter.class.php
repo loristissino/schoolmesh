@@ -17,6 +17,7 @@ abstract class BaseTeamFormFilter extends BaseFormFilterPropel
       'quality_code'       => new sfWidgetFormFilterInput(),
       'needs_folder'       => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'needs_mailing_list' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'is_public'          => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
@@ -25,6 +26,7 @@ abstract class BaseTeamFormFilter extends BaseFormFilterPropel
       'quality_code'       => new sfValidatorPass(array('required' => false)),
       'needs_folder'       => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'needs_mailing_list' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'is_public'          => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
     $this->widgetSchema->setNameFormat('team_filters[%s]');
@@ -48,6 +50,7 @@ abstract class BaseTeamFormFilter extends BaseFormFilterPropel
       'quality_code'       => 'Text',
       'needs_folder'       => 'Boolean',
       'needs_mailing_list' => 'Boolean',
+      'is_public'          => 'Boolean',
     );
   }
 }

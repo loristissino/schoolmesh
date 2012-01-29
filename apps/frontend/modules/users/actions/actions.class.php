@@ -1014,7 +1014,8 @@ public function executeChangerole(sfWebRequest $request)
 				->changeRoleInTeam($this->userteam->getTeam(), $this->role);
 				
 				$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Role successfully changed.'));
-				$this->redirect('users/edit?id='. $params['id']);
+				//$this->redirect('users/edit?id='. $params['id']);
+        $this->redirect(Generic::b64_unserialize($request->getParameter('referer')));
 			}
 		}
 
@@ -1028,6 +1029,8 @@ public function executeChangerole(sfWebRequest $request)
 			'role'=> $this->userteam->getRoleId(),
 		)
 	);
+  
+  $this->referer= $request->getReferer();
 		
 	}
 

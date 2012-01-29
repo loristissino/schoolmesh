@@ -42,6 +42,7 @@ class TeamTableMap extends TableMap {
 		$this->addColumn('QUALITY_CODE', 'QualityCode', 'VARCHAR', false, 10, null);
 		$this->addColumn('NEEDS_FOLDER', 'NeedsFolder', 'BOOLEAN', false, null, false);
 		$this->addColumn('NEEDS_MAILING_LIST', 'NeedsMailingList', 'BOOLEAN', false, null, false);
+		$this->addColumn('IS_PUBLIC', 'IsPublic', 'BOOLEAN', false, null, false);
 		// validators
 	} // initialize()
 
