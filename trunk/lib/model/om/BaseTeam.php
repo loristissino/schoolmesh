@@ -57,6 +57,13 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 	protected $needs_mailing_list;
 
 	/**
+	 * The value for the is_public field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $is_public;
+
+	/**
 	 * @var        array Appointment[] Collection to store aggregation of Appointment objects.
 	 */
 	protected $collAppointments;
@@ -104,6 +111,7 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 	{
 		$this->needs_folder = false;
 		$this->needs_mailing_list = false;
+		$this->is_public = false;
 	}
 
 	/**
@@ -174,6 +182,16 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 	public function getNeedsMailingList()
 	{
 		return $this->needs_mailing_list;
+	}
+
+	/**
+	 * Get the [is_public] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsPublic()
+	{
+		return $this->is_public;
 	}
 
 	/**
@@ -297,6 +315,26 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 	} // setNeedsMailingList()
 
 	/**
+	 * Set the value of [is_public] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     Team The current object (for fluent API support)
+	 */
+	public function setIsPublic($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_public !== $v || $this->isNew()) {
+			$this->is_public = $v;
+			$this->modifiedColumns[] = TeamPeer::IS_PUBLIC;
+		}
+
+		return $this;
+	} // setIsPublic()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -311,6 +349,10 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 			}
 
 			if ($this->needs_mailing_list !== false) {
+				return false;
+			}
+
+			if ($this->is_public !== false) {
 				return false;
 			}
 
@@ -342,6 +384,7 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 			$this->quality_code = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->needs_folder = ($row[$startcol + 4] !== null) ? (boolean) $row[$startcol + 4] : null;
 			$this->needs_mailing_list = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
+			$this->is_public = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -351,7 +394,7 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 6; // 6 = TeamPeer::NUM_COLUMNS - TeamPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 7; // 7 = TeamPeer::NUM_COLUMNS - TeamPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Team object", $e);
@@ -703,6 +746,9 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 			case 5:
 				return $this->getNeedsMailingList();
 				break;
+			case 6:
+				return $this->getIsPublic();
+				break;
 			default:
 				return null;
 				break;
@@ -730,6 +776,7 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 			$keys[3] => $this->getQualityCode(),
 			$keys[4] => $this->getNeedsFolder(),
 			$keys[5] => $this->getNeedsMailingList(),
+			$keys[6] => $this->getIsPublic(),
 		);
 		return $result;
 	}
@@ -779,6 +826,9 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 			case 5:
 				$this->setNeedsMailingList($value);
 				break;
+			case 6:
+				$this->setIsPublic($value);
+				break;
 		} // switch()
 	}
 
@@ -809,6 +859,7 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setQualityCode($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setNeedsFolder($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setNeedsMailingList($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setIsPublic($arr[$keys[6]]);
 	}
 
 	/**
@@ -826,6 +877,7 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(TeamPeer::QUALITY_CODE)) $criteria->add(TeamPeer::QUALITY_CODE, $this->quality_code);
 		if ($this->isColumnModified(TeamPeer::NEEDS_FOLDER)) $criteria->add(TeamPeer::NEEDS_FOLDER, $this->needs_folder);
 		if ($this->isColumnModified(TeamPeer::NEEDS_MAILING_LIST)) $criteria->add(TeamPeer::NEEDS_MAILING_LIST, $this->needs_mailing_list);
+		if ($this->isColumnModified(TeamPeer::IS_PUBLIC)) $criteria->add(TeamPeer::IS_PUBLIC, $this->is_public);
 
 		return $criteria;
 	}
@@ -889,6 +941,8 @@ abstract class BaseTeam extends BaseObject  implements Persistent {
 		$copyObj->setNeedsFolder($this->needs_folder);
 
 		$copyObj->setNeedsMailingList($this->needs_mailing_list);
+
+		$copyObj->setIsPublic($this->is_public);
 
 
 		if ($deepCopy) {

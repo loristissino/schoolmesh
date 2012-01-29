@@ -232,3 +232,15 @@ function minutes_missing_to_restore()
   $datelastrestore=$info['mtime'];
   return max(0, sfConfig::get('app_demo_time_after') - floor((time()-$datelastrestore)/60));
 }
+
+
+function li_link_to_if($class_suffix, $condition, $name, $internal_uri, $options=array())
+{
+  if($condition)
+  {
+    return '<li "class="sf_admin_' . $class_suffix. '">' . 
+    link_to($name, $internal_uri, $options).
+    '</li>' . (substr($class_suffix, 0, 3)!='td_' ? '<br />': '');
+  }
+  
+}

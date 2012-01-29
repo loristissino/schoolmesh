@@ -25,7 +25,7 @@ abstract class BaseTeamPeer {
 	const TM_CLASS = 'TeamTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 6;
+	const NUM_COLUMNS = 7;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -47,6 +47,9 @@ abstract class BaseTeamPeer {
 
 	/** the column name for the NEEDS_MAILING_LIST field */
 	const NEEDS_MAILING_LIST = 'team.NEEDS_MAILING_LIST';
+
+	/** the column name for the IS_PUBLIC field */
+	const IS_PUBLIC = 'team.IS_PUBLIC';
 
 	/**
 	 * An identiy map to hold any loaded instances of Team objects.
@@ -71,11 +74,11 @@ abstract class BaseTeamPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'PosixName', 'QualityCode', 'NeedsFolder', 'NeedsMailingList', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'posixName', 'qualityCode', 'needsFolder', 'needsMailingList', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::POSIX_NAME, self::QUALITY_CODE, self::NEEDS_FOLDER, self::NEEDS_MAILING_LIST, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'posix_name', 'quality_code', 'needs_folder', 'needs_mailing_list', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'PosixName', 'QualityCode', 'NeedsFolder', 'NeedsMailingList', 'IsPublic', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'posixName', 'qualityCode', 'needsFolder', 'needsMailingList', 'isPublic', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::POSIX_NAME, self::QUALITY_CODE, self::NEEDS_FOLDER, self::NEEDS_MAILING_LIST, self::IS_PUBLIC, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'posix_name', 'quality_code', 'needs_folder', 'needs_mailing_list', 'is_public', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -85,11 +88,11 @@ abstract class BaseTeamPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'PosixName' => 2, 'QualityCode' => 3, 'NeedsFolder' => 4, 'NeedsMailingList' => 5, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'posixName' => 2, 'qualityCode' => 3, 'needsFolder' => 4, 'needsMailingList' => 5, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::POSIX_NAME => 2, self::QUALITY_CODE => 3, self::NEEDS_FOLDER => 4, self::NEEDS_MAILING_LIST => 5, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'posix_name' => 2, 'quality_code' => 3, 'needs_folder' => 4, 'needs_mailing_list' => 5, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'PosixName' => 2, 'QualityCode' => 3, 'NeedsFolder' => 4, 'NeedsMailingList' => 5, 'IsPublic' => 6, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'posixName' => 2, 'qualityCode' => 3, 'needsFolder' => 4, 'needsMailingList' => 5, 'isPublic' => 6, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::POSIX_NAME => 2, self::QUALITY_CODE => 3, self::NEEDS_FOLDER => 4, self::NEEDS_MAILING_LIST => 5, self::IS_PUBLIC => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'posix_name' => 2, 'quality_code' => 3, 'needs_folder' => 4, 'needs_mailing_list' => 5, 'is_public' => 6, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -165,6 +168,7 @@ abstract class BaseTeamPeer {
 		$criteria->addSelectColumn(TeamPeer::QUALITY_CODE);
 		$criteria->addSelectColumn(TeamPeer::NEEDS_FOLDER);
 		$criteria->addSelectColumn(TeamPeer::NEEDS_MAILING_LIST);
+		$criteria->addSelectColumn(TeamPeer::IS_PUBLIC);
 	}
 
 	/**

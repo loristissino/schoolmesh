@@ -476,3 +476,7 @@ font-weight: normal;
   text-decoration: underline;	
 }
 
+.highlighted
+{
+  font-weight: bold;
+}

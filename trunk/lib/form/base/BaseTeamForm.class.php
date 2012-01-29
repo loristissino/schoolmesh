@@ -20,6 +20,7 @@ abstract class BaseTeamForm extends BaseFormPropel
       'quality_code'       => new sfWidgetFormInputText(),
       'needs_folder'       => new sfWidgetFormInputCheckbox(),
       'needs_mailing_list' => new sfWidgetFormInputCheckbox(),
+      'is_public'          => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -29,6 +30,7 @@ abstract class BaseTeamForm extends BaseFormPropel
       'quality_code'       => new sfValidatorString(array('max_length' => 10, 'required' => false)),
       'needs_folder'       => new sfValidatorBoolean(array('required' => false)),
       'needs_mailing_list' => new sfValidatorBoolean(array('required' => false)),
+      'is_public'          => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('team[%s]');

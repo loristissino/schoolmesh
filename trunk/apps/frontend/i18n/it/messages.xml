@@ -4032,10 +4032,28 @@
         <source>This team has no members.</source>
         <target>Questo team non ha componenti.</target>
     </trans-unit>
+    <trans-unit id="1019">
+        <source>Members</source>
+        <target>Componenti</target>
+    </trans-unit>
+    <trans-unit id="1020">
+        <source>In this list you can see all public teams and the ones you belong to.</source>
+        <target>In questa lista appaiono tutti i team pubblici e quelli a cui appartieni.</target>
+    </trans-unit>
+    <trans-unit id="1021">
+        <source>This is the full list of teams.</source>
+        <target>Questa è la lista completa dei team.</target>
+    </trans-unit>
+    <trans-unit id="1022">
+        <source>Role successfully changed.</source>
+        <target>Ruolo correttamente cambiato.</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
 
+
+ 
 
 
 

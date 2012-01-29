@@ -9,10 +9,9 @@
 
 <?php include_partial('content/flashes'); ?>
 
-
 <p><?php echo __('You are changing the role of user %user%.', array('%user%'=>$current_user->getFullname())) ?></p>
 
-<form action="<?php echo url_for('users/changerole') ?>" method="post">
+<form action="<?php echo url_for('users/changerole?referer='.Generic::b64_serialize($referer)) ?>" method="post">
 
   <table>
 	<tr>

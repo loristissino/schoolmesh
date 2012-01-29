@@ -11,7 +11,14 @@ class teamsActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->Teams = TeamPeer::retrieveAllSortedByDescription();
+    if($this->getUser()->hasPermission('teams'))
+    {
+      $this->Teams = TeamPeer::retrieveAll();
+    }
+    else
+    {
+      $this->Teams = TeamPeer::retrievePublicOrJoined($this->getUser()->getProfile()->getUserId());
+    }
   }
 
   public function executeShow(sfWebRequest $request)
@@ -19,6 +26,7 @@ class teamsActions extends sfActions
     $this->Team = TeamPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->Team);
     $this->components=$this->Team->getComponents();
+    $this->forward404Unless($this->Team->getIsPublic() or $this->getUser()->getProfile()->getBelongsToTeam($this->Team->getPosixName()));
   }
 
   public function executeNew(sfWebRequest $request)
