@@ -868,12 +868,28 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $t;
     }
 
-    public function getTeams()
+    public function getTeams($options=array())
     {
       $c = new Criteria();
 			$c->add(UserTeamPeer::USER_ID, $this->getUserId());
       $c->addAscendingOrderByColumn(TeamPeer::DESCRIPTION);
 			$t = UserTeamPeer::doSelectJoinAllExceptsfGuardUser($c);
+      
+      
+      if(array_key_exists('astext', $options) and $options['astext'])
+      {
+        $teams=array();
+        foreach($t as $ut)
+        {
+          if($ut->getTeam()->getIsPublic() or (array_key_exists('privatetoo', $options) and $options['privatetoo']))
+          {
+            $teams[]=$ut->getTeam()->getPosixName();
+          }
+        }
+        return implode(',', $teams);
+      }
+      
+      
 			return $t;
     }
 				
@@ -1682,6 +1698,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     $doc->addField(Zend_Search_Lucene_Field::UnStored('importcode', $this->getImportCode(), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('accounts', $this->getAccounts(array('astext'=>true)), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('permissions', $this->getWebPermissions(array('astext'=>true)), 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('teams', $this->getTeams(array('astext'=>true, 'privatetoo'=>false)), 'utf-8'));
     if($posixAccount=$this->getAccountByType('posix'))
     {
       $doc->addField(Zend_Search_Lucene_Field::Text('blocksquota', $posixAccount->getBlocksQuotaPercentage(), 'utf-8'));

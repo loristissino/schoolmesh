@@ -257,5 +257,16 @@ class contentActions extends sfActions
   {
     $this->file=file('license/gpl.txt');
   }
+  
+  public function executeCommonqueries(sfWebRequest $request)
+  {
+    $this->referer= $request->getReferer();
+    $file=sfConfig::get('app_lucene_commonqueries_'.$request->getParameter('type'));
+
+    $this->forward404Unless(is_readable($file), 'Common queries file not specified in app.yml');
+    $this->info=sfYaml::load($file);
+    $this->forward404Unless(is_array($this->info), 'Not a valid YAML file');
+    
+  }
 
 }

@@ -80,6 +80,8 @@ all:
     # and so on (the names are made up with the object indexed and the environment) 
     # Be sure that the directory is readable and writeable by the web server user (www-data)
 
+    commonqueries_users: /etc/schoolmesh/commonqueries_users.yml
+
   sf_guard_plugin:
 #    check_password_callable: [Authentication, testOnly]
     success_signout_url: /index.php

@@ -4048,6 +4048,10 @@
         <source>Role successfully changed.</source>
         <target>Ruolo correttamente cambiato.</target>
     </trans-unit>
+    <trans-unit id="1023">
+        <source>Common queries</source>
+        <target>Ricerche comuni</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
