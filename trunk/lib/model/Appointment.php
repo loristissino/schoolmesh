@@ -1533,7 +1533,7 @@ public function getWorkflowLogs()
 		{
 			$letterNumber++;
 			$letters->student($selectedStudent_key);
-			$letters->teacher($teachertitle. $this->getSfGuardUser()->getProfile()->getFullName());
+			$letters->teacher($teachertitle. ' ' . $this->getSfGuardUser()->getProfile()->getFullName());
 			$letters->subject($this->getSubject()->getDescription());
 			$letters->schoolclass($this->getSchoolclass()->getShortcut());
 			$letters->term($term->getDescription());
