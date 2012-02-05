@@ -36,6 +36,7 @@
 	<tr>
 		<th class="sf_admin_text"><?php echo __('Name') ?></th>
 		<th class="sf_admin_text"><?php echo __('Role') ?></th>
+		<th class="sf_admin_text"><?php echo __('Expiry') ?></th>
 		<th class="sf_admin_text"><?php echo __('Actions') ?></th>
 	</tr>
 </thead>
@@ -49,7 +50,10 @@
 			<?php echo $component->getsfGuardUser()->getProfile()->getIsMale()? $component->getRole()->getMaleDescription() : $component->getRole()->getFemaleDescription() ?>
 		</td>
     <td>
-        <?php include_partial('teams/teams_td_actions', array('user'=>$component->getsfGuardUser()->getProfile(), 'team'=>$Team)) ?>
+      <?php echo $component->getExpiry('d/m/Y') ?>
+    </td>
+    <td>
+        <?php include_partial('teams/teams_td_actions', array('user'=>$component->getsfGuardUser()->getProfile(), 'team'=>$Team, 'referer'=>url_for('teams/show?id='.$Team->getId()))) ?>
     </td>
 	</tr>
 <?php endforeach ?>
@@ -71,3 +75,4 @@
   </li><br />
 </ul>
 <?php endif ?>
+

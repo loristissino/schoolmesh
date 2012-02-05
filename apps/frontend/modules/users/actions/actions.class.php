@@ -932,14 +932,18 @@ class usersActions extends sfActions
   public function executeRemovefromteam(sfWebRequest $request)
   {
 	
-	$this->forward404Unless($request->isMethod('delete'));
-	
-	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
-	$this->team = TeamPeer::retrieveByPK($request->getParameter('team'));
-	
-	$this->current_user->removeFromTeam($this->team);
-	$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('User successfully removed from team.'));
-	$this->redirect('users/edit?id='. $this->current_user->getUserId());
+    $this->forward404Unless($request->isMethod('delete'));
+    
+    $this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
+    $this->team = TeamPeer::retrieveByPK($request->getParameter('team'));
+    
+    $this->current_user->removeFromTeam($this->team);
+    $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('User successfully removed from team.'));
+    if($request->hasParameter('referer'))
+    {
+      $this->redirect(Generic::b64_unserialize($request->getParameter('referer')));
+    }
+    $this->redirect('users/edit?id='. $this->current_user->getUserId());
 	}
 
 
@@ -994,10 +998,10 @@ class usersActions extends sfActions
 	$this->redirect('users/edit?id='. $this->current_user->getUserId());
 	}
 
-public function executeChangerole(sfWebRequest $request)
+public function executeEditjoining(sfWebRequest $request)
   {
 
-	$this->form = new TeamChangeRoleForm();
+	$this->form = new TeamEditJoiningForm();
 	
 	if ($request->isMethod('post'))
 		{
@@ -1011,9 +1015,9 @@ public function executeChangerole(sfWebRequest $request)
 				$this->role=RolePeer::retrieveByPk($params['role']);
 				
 				$this->current_user
-				->changeRoleInTeam($this->userteam->getTeam(), $this->role);
+				->changeRoleInTeam($this->userteam->getTeam(), $this->role, $params['expiry']);
 				
-				$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Role successfully changed.'));
+				$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Team joining successfully changed.'));
 				//$this->redirect('users/edit?id='. $params['id']);
         $this->redirect(Generic::b64_unserialize($request->getParameter('referer')));
 			}
@@ -1027,6 +1031,7 @@ public function executeChangerole(sfWebRequest $request)
 			'id' => $this->current_user->getUserId(),
 			'team' => $this->team->getId(),
 			'role'=> $this->userteam->getRoleId(),
+      'expiry'=> $this->userteam->getExpiry(),
 		)
 	);
   
@@ -1199,7 +1204,9 @@ public function executeAddappointment(sfWebRequest $request)
   public function executeAddtoteam(sfWebRequest $request)
   {
     $this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('user'));
-	
+    
+    //$this->form= new UserTeamForm();
+    
     if ($request->isMethod('post'))
     {
 
@@ -1232,7 +1239,7 @@ public function executeAddappointment(sfWebRequest $request)
     {
       $this->roles[$role->getId()]=$this->current_user->getIsMale()? $role->getMaleDescription(): $role->getFemaleDescription();
     }
-
+    
 	}
 
   public function executeAddtoguardgroup(sfWebRequest $request)

@@ -26,6 +26,5 @@
 <?php echo selecttag('role', optionsforselect($roles, null)) ?>
 
 <?php echo submittag(__('Add'), 'save') ?>
-  
 </form>
 

@@ -1002,9 +1002,9 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $result;
 		}
 
-		public function changeRoleInTeam(Team $team, Role $role)
+		public function changeRoleInTeam(Team $team, Role $role, $expiry=null)
 		{
-	        $c = new Criteria();
+	    $c = new Criteria();
 			$c->add(UserTeamPeer::USER_ID, $this->getUserId());
 			$c->add(UserTeamPeer::TEAM_ID, $team->getId());
 			$t = UserTeamPeer::doSelectOne($c);
@@ -1012,6 +1012,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			{
 				$t
 				->setRoleId($role->getId())
+        ->setExpiry($expiry)
 				->save();
 			}
 			return $this;
