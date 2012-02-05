@@ -1,24 +1,16 @@
-<?php use_helper('Schoolmesh') ?>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'users/list' =>__("Users"),
+    'users/edit?id='.$current_user->getUserId() => $current_user->getFullName()
+    ),
+  'current'=>__('Add to team(s)'),
+  'title'=>__('Add %user% to team(s)', array('%user%'=>$current_user->getFullName()))
+  ))
+?>
 
-<?php slot('title', __('User management')) ?>
-<?php slot('breadcrumbs',
-	link_to(__("User management"), 'users/index') . ' » ' .
-	link_to(__("User list"), 'users/list') . ' » ' .
-	link_to($current_user->getFullName(), 'users/edit?id=' . $current_user->getUserId()) . ' » '.
-	'Add to team'
-	)
-	
-	?><h1><?php echo sprintf(__('Add %s to team'), $current_user->getFullName())?></h1>
-
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
 
 <form action="<?php echo url_for('users/addtoteam?user='. $current_user->getUserId()) ?>" method="post">
-
 
 <p>
 <?php foreach($teams as $team): ?>

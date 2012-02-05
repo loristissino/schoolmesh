@@ -67,6 +67,12 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	protected $default_guardgroup;
 
 	/**
+	 * The value for the rank field.
+	 * @var        int
+	 */
+	protected $rank;
+
+	/**
 	 * @var        array sfGuardUserProfile[] Collection to store aggregation of sfGuardUserProfile objects.
 	 */
 	protected $collsfGuardUserProfiles;
@@ -192,6 +198,16 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	public function getDefaultGuardgroup()
 	{
 		return $this->default_guardgroup;
+	}
+
+	/**
+	 * Get the [rank] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getRank()
+	{
+		return $this->rank;
 	}
 
 	/**
@@ -355,6 +371,26 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	} // setDefaultGuardgroup()
 
 	/**
+	 * Set the value of [rank] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Role The current object (for fluent API support)
+	 */
+	public function setRank($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->rank !== $v) {
+			$this->rank = $v;
+			$this->modifiedColumns[] = RolePeer::RANK;
+		}
+
+		return $this;
+	} // setRank()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -394,6 +430,7 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			$this->may_be_main_role = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
 			$this->needs_charge_letter = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
 			$this->default_guardgroup = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->rank = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -403,7 +440,7 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 8; // 8 = RolePeer::NUM_COLUMNS - RolePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 9; // 9 = RolePeer::NUM_COLUMNS - RolePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Role object", $e);
@@ -780,6 +817,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			case 7:
 				return $this->getDefaultGuardgroup();
 				break;
+			case 8:
+				return $this->getRank();
+				break;
 			default:
 				return null;
 				break;
@@ -809,6 +849,7 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			$keys[5] => $this->getMayBeMainRole(),
 			$keys[6] => $this->getNeedsChargeLetter(),
 			$keys[7] => $this->getDefaultGuardgroup(),
+			$keys[8] => $this->getRank(),
 		);
 		return $result;
 	}
@@ -864,6 +905,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			case 7:
 				$this->setDefaultGuardgroup($value);
 				break;
+			case 8:
+				$this->setRank($value);
+				break;
 		} // switch()
 	}
 
@@ -896,6 +940,7 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setMayBeMainRole($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setNeedsChargeLetter($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setDefaultGuardgroup($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setRank($arr[$keys[8]]);
 	}
 
 	/**
@@ -915,6 +960,7 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RolePeer::MAY_BE_MAIN_ROLE)) $criteria->add(RolePeer::MAY_BE_MAIN_ROLE, $this->may_be_main_role);
 		if ($this->isColumnModified(RolePeer::NEEDS_CHARGE_LETTER)) $criteria->add(RolePeer::NEEDS_CHARGE_LETTER, $this->needs_charge_letter);
 		if ($this->isColumnModified(RolePeer::DEFAULT_GUARDGROUP)) $criteria->add(RolePeer::DEFAULT_GUARDGROUP, $this->default_guardgroup);
+		if ($this->isColumnModified(RolePeer::RANK)) $criteria->add(RolePeer::RANK, $this->rank);
 
 		return $criteria;
 	}
@@ -982,6 +1028,8 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		$copyObj->setNeedsChargeLetter($this->needs_charge_letter);
 
 		$copyObj->setDefaultGuardgroup($this->default_guardgroup);
+
+		$copyObj->setRank($this->rank);
 
 
 		if ($deepCopy) {

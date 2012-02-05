@@ -496,6 +496,7 @@ CREATE TABLE `role`
 	`may_be_main_role` TINYINT,
 	`needs_charge_letter` TINYINT,
 	`default_guardgroup` VARCHAR(20),
+	`rank` INTEGER,
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
