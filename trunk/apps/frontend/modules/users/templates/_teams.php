@@ -22,7 +22,7 @@
     <?php include_partial('content/expiry', array('date'=>$team->getExpiry('U'))) ?>
     </td>
 		<td>
-    <?php include_partial('teams/teams_td_actions', array('user'=>$current_user, 'team'=>$team->getTeam())) ?>
+    <?php include_partial('teams/teams_td_actions', array('user'=>$current_user, 'team'=>$team->getTeam(), 'referer'=>url_for('users/edit?id=' . $current_user->getUserId()))) ?>
 		</td>
 	</tr>
 <?php endforeach ?>

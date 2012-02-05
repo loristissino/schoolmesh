@@ -3993,12 +3993,12 @@
         <target>Termine</target>
     </trans-unit>
     <trans-unit id="1009">
-        <source>You are changing the role of user %user%.</source>
-        <target>Stai cambiando il ruolo dell'utente %user%.</target>
+        <source>You are changing the joining of user %user% to team «%team%».</source>
+        <target>Stai cambiando l'appartenenza dell'utente %user% al team «%team%».</target>
     </trans-unit>
     <trans-unit id="1010">
-        <source>Role change</source>
-        <target>Cambio ruolo</target>
+        <source>Joining change</source>
+        <target>Modifica appartenenza</target>
     </trans-unit>
     <trans-unit id="1011">
         <source>Enrolments</source>
@@ -4045,8 +4045,8 @@
         <target>Questa è la lista completa dei team.</target>
     </trans-unit>
     <trans-unit id="1022">
-        <source>Role successfully changed.</source>
-        <target>Ruolo correttamente cambiato.</target>
+        <source>Team joining successfully changed.</source>
+        <target>Appartenenza al team correttamente cambiata.</target>
     </trans-unit>
     <trans-unit id="1023">
         <source>Common queries</source>
@@ -4067,6 +4067,26 @@
     <trans-unit id="1027">
         <source>User successfully added to selected teams.</source>
         <target>Utente inserito correttamente nei team selezionati.</target>
+    </trans-unit>
+    <trans-unit id="1028">
+        <source>Team joining change</source>
+        <target>Modifica appartenenza a team</target>
+    </trans-unit>
+    <trans-unit id="1029">
+        <source>Edit joining of %user% to team «%team%»</source>
+        <target>Modifica appartenenza di %user% al team «%team%»</target>
+    </trans-unit>
+    <trans-unit id="1030">
+        <source>Remove</source>
+        <target>Rimuovi</target>
+    </trans-unit>
+    <trans-unit id="1031">
+        <source>User successfully removed from team.</source>
+        <target>Utente correttamente rimossa dal team.</target>
+    </trans-unit>
+    <trans-unit id="1032">
+        <source>You are going to remove %user% from team «%team%».</source>
+        <target>Stai per rimuovere %user% dal team «%team%».</target>
     </trans-unit>
     </body>
   </file> 
