@@ -70,3 +70,5 @@
     </tr>
   </tbody>
 </table>
+
+</div>

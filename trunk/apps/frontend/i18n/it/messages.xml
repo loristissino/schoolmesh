@@ -4052,6 +4052,22 @@
         <source>Common queries</source>
         <target>Ricerche comuni</target>
     </trans-unit>
+    <trans-unit id="1024">
+        <source>Add to team(s)</source>
+        <target>Inserisci in uno o più team</target>
+    </trans-unit>
+    <trans-unit id="1025">
+        <source>Add %user% to team(s)</source>
+        <target>Inserisci %user% in uno o più team</target>
+    </trans-unit>
+    <trans-unit id="1026">
+        <source>Select a role</source>
+        <target>Seleziona un ruolo</target>
+    </trans-unit>
+    <trans-unit id="1027">
+        <source>User successfully added to selected teams.</source>
+        <target>Utente inserito correttamente nei team selezionati.</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

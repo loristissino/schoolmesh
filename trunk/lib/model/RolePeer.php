@@ -16,28 +16,34 @@ class RolePeer extends BaseRolePeer
 	{
 		$c=new Criteria();
 		$c->add(RolePeer::MAY_BE_MAIN_ROLE, true);
+    return self::retrieveAll($c);
+	}
+  
+	public static function retrieveAll($c=null)
+	{
+    if(!$c)
+    {
+      $c=new Criteria();
+    }
+    $c->addAscendingOrderByColumn(RolePeer::RANK);
     $c->addAscendingOrderByColumn(RolePeer::MALE_DESCRIPTION);
 		return self::doSelect($c);
 	}
 
 	public static function retrieveByDescription($description)
 	{
-	$c=new Criteria();
-	$c->add(self::DESCRIPTION, $description);
-	$t = self::doSelectOne($c);
-	return $t;
-	
-		
+    $c=new Criteria();
+    $c->add(self::DESCRIPTION, $description);
+    $t = self::doSelectOne($c);
+    return $t;
 	}
 
 	public static function retrieveByPosixName($value)
 	{
-	$c=new Criteria();
-	$c->add(self::POSIX_NAME, $value);
-	$t = self::doSelectOne($c);
-	return $t;
-	
-		
+    $c=new Criteria();
+    $c->add(self::POSIX_NAME, $value);
+    $t = self::doSelectOne($c);
+    return $t;
 	}
 
 

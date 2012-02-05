@@ -194,6 +194,7 @@ propel:
     may_be_main_role: boolean
     needs_charge_letter: boolean
     default_guardgroup: varchar(20)
+    rank: integer
 
   user_team:
     id: ~

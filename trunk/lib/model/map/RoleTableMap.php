@@ -44,6 +44,7 @@ class RoleTableMap extends TableMap {
 		$this->addColumn('MAY_BE_MAIN_ROLE', 'MayBeMainRole', 'BOOLEAN', false, null, null);
 		$this->addColumn('NEEDS_CHARGE_LETTER', 'NeedsChargeLetter', 'BOOLEAN', false, null, null);
 		$this->addColumn('DEFAULT_GUARDGROUP', 'DefaultGuardgroup', 'VARCHAR', false, 20, null);
+		$this->addColumn('RANK', 'Rank', 'INTEGER', false, null, null);
 		// validators
 	} // initialize()
 

@@ -1113,6 +1113,7 @@ public function executeEditappointment(sfWebRequest $request)
 		array(
 			'year' => $this->appointment->getYear()->getId(),
 			'class'=> $this->appointment->getSchoolclass(),
+			'team'=> $this->appointment->getTeamId(),
 			'subject'=> $this->appointment->getSubject()->getId(),
       'syllabus' => $this->appointment->getSyllabusId(),
 			'hours'=>$this->appointment->getHours()
@@ -1197,39 +1198,39 @@ public function executeAddappointment(sfWebRequest $request)
 
   public function executeAddtoteam(sfWebRequest $request)
   {
-	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('user'));
+    $this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('user'));
 	
-	if ($request->isMethod('post'))
-	{
+    if ($request->isMethod('post'))
+    {
 
-		if ($request->getParameter('role')==-1)
-		{
-			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select a role.'));
-			$this->redirect('users/addtoteam?user='. $this->current_user->getUserId());
-		}
+      if ($request->getParameter('role')==-1)
+      {
+        $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select a role.'));
+        $this->redirect('users/addtoteam?user='. $this->current_user->getUserId());
+      }
 
-		$this->forward404Unless($role=RolePeer::retrieveByPK($request->getParameter('role')));
+      $this->forward404Unless($role=RolePeer::retrieveByPK($request->getParameter('role')));
 
-		$ids=$request->getParameter('id');
+      $ids=$request->getParameter('id');
+      
+      foreach($ids as $id)
+      {
+        $team=TeamPeer::retrieveByPK($id);
+        $this->current_user->addToTeam($team, $role);
+      }
 		
-		foreach($ids as $id)
-		{
-			$team=TeamPeer::retrieveByPK($id);
-			$this->current_user->addToTeam($team, $role);
-		}
-		
-		$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('User successfully added to team.'));
-		$this->redirect('users/edit?id='. $this->current_user->getUserId());
-	}
+      $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('User successfully added to selected teams.'));
+      $this->redirect('users/edit?id='. $this->current_user->getUserId());
+    }
 
-	$this->teams=TeamPeer::doSelect(new Criteria());
-	
-	$roles=RolePeer::doSelect(new Criteria());
+    $this->teams=TeamPeer::retrieveAll();
+    
+    $roles=RolePeer::doSelect(new Criteria());
 
-	$this->roles=Array(-1=>'select one');
-	foreach($roles as $role)
-	{
-		$this->roles[$role->getId()]=$this->current_user->getIsMale()? $role->getMaleDescription(): $role->getFemaleDescription();
+    $this->roles=Array(-1=>$this->getContext()->getI18N()->__('Select a role'));
+    foreach($roles as $role)
+    {
+      $this->roles[$role->getId()]=$this->current_user->getIsMale()? $role->getMaleDescription(): $role->getFemaleDescription();
     }
 
 	}
