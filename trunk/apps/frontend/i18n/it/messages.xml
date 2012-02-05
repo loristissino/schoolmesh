@@ -4088,15 +4088,17 @@
         <source>You are going to remove %user% from team «%team%».</source>
         <target>Stai per rimuovere %user% dal team «%team%».</target>
     </trans-unit>
+    <trans-unit id="1033">
+        <source>Choose the team to add these users to:</source>
+        <target>Scegli il team in cui inserire questi utenti:</target>
+    </trans-unit>
+    <trans-unit id="1034">
+        <source>You must select a team and a role.</source>
+        <target>Devi selezionare un team e un ruolo.</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
-
-
- 
-
-
-
 
 
 

@@ -704,23 +704,31 @@ class usersActions extends sfActions
   public function executeConfirmadduserstoteam(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod('POST'));
-    $this->forward404Unless($this->team=TeamPeer::retrieveByPK($request->getParameter('team_id')));
-    $this->forward404Unless($this->role=RolePeer::retrieveByPK($request->getParameter('role_id')));
-    
+
+    $this->form=new ChooseTeamForm();
+    $this->form->bind($request->getParameter('info'));
+
     $this->ids=$this->_getIds($request);
-    $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
-    foreach($this->userlist as $user)
-    {
-      $user->addToTeam($this->team, $this->role);
-    }
-		
-		$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Users successfully added to team.'));
-		$this->redirect('users/list');
-
-
-
-
     
+    if ($this->form->isValid())
+    {
+			$params = $this->form->getValues();
+      $this->forward404Unless($this->team=TeamPeer::retrieveByPK($params['team_id']));
+      $this->forward404Unless($this->role=RolePeer::retrieveByPK($params['role_id']));
+      $this->expiry=$params['expiry'];
+    
+      $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
+      foreach($this->userlist as $user)
+      {
+        Generic::logMessage('team_in', $this->expiry);
+        $user->addToTeam($this->team, $this->role, $this->expiry);
+      }
+		
+      $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Users successfully added to team.'));
+      $this->redirect('users/list');
+    }
+    $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You must select a team and a role.'));
+    $this->redirect('users/adduserstoteam?ids='.implode(',', $this->ids));
   }
   
 

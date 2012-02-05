@@ -528,6 +528,13 @@ class Generic{
     return $timestamp+$seconds;
   }
 
-
+  public static function getNumbersBetweenAsOptionsArray($min, $max)
+  {
+    foreach(range($min, $max) as $v)
+			{
+				$values[$v]=$v;
+			}
+    return $values;
+  }
 
 }

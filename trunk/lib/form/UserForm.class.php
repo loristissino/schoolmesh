@@ -6,12 +6,7 @@
       
       $formats=sfConfig::get('app_opendocument_formats');
       
-			$years_min=sfConfig::get('app_config_current_year')-65;
-			$years_max=sfConfig::get('app_config_current_year')-13;
-			foreach(range($years_min, $years_max) as $year)
-			{
-				$years[$year]=$year;
-			}
+      $years=Generic::getNumbersBetweenAsOptionsArray(sfConfig::get('app_config_current_year')-70, sfConfig::get('app_config_current_year')-5);
       $emailstates=Workflow::getEmailVerificationStates();
 			
     $this->setWidgets(array(
