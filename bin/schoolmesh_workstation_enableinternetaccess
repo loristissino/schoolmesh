@@ -51,21 +51,30 @@ if [ $TOS -lt $NOWS ]; then
 	exit 91
 fi
 
+# we must delay executions via ssh, since firewall's ssh server
+# won't accept more than 10 simultaneous accesses;
+# the delay is chosen randomly, between zero and 9 seconds, thus
+# reducing the probability that more than 10 connections run 
+# in the same moment
+DELAY=$(rand --max 10 -s $$)
+
 # "end timeslot" command
 
 COMMAND="iptables -t $FIREWALL_TABLE -D $FIREWALL_CHAIN -s $IPADDRESS -j $FIREWALL_ACCEPTRULE -m comment --comment \'$FIREWALL_COMMENT $REQUESTER\'"
 
-echo "echo $COMMAND | ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS #schoolmesh,$IPADDRESS,$TO,off,$REQUESTER" | at $TO
+(echo "sleep $DELAY"; echo "echo $COMMAND | ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS #schoolmesh,$IPADDRESS,$TO,off,$REQUESTER") | at $TO
 
 # "begin timeslot" command
 
-COMMAND="iptables -t $FIREWALL_TABLE -I $FIREWALL_CHAIN 1 -s $IPADDRESS -j $FIREWALL_ACCEPTRULE -m comment --comment \"$FIREWALL_COMMENT $REQUESTER\""
-
 if [ $FROMS -lt $NOWS ]; then
+  COMMAND="iptables -t $FIREWALL_TABLE -I $FIREWALL_CHAIN 1 -s $IPADDRESS -j $FIREWALL_ACCEPTRULE -m comment --comment \"$FIREWALL_COMMENT $REQUESTER\""
   ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS "$COMMAND"
 else
-  echo "echo $COMMAND | ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS #schoolmesh,$IPADDRESS,$FROM,on,$REQUESTER" | at $FROM
+  COMMAND="iptables -t $FIREWALL_TABLE -I $FIREWALL_CHAIN 1 -s $IPADDRESS -j $FIREWALL_ACCEPTRULE -m comment --comment \'$FIREWALL_COMMENT $REQUESTER\'"
+  (echo "sleep $DELAY"; echo "echo $COMMAND | ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS #schoolmesh,$IPADDRESS,$FROM,on,$REQUESTER") | at $FROM
 fi
+# the difference between the two commands is only in the way quotes for the comment are managed
+# since we need different quotes for immediate execution and postponed execution
 
 exit
 
