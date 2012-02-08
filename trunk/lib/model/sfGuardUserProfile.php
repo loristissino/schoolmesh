@@ -875,7 +875,6 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
       $c->addAscendingOrderByColumn(TeamPeer::DESCRIPTION);
 			$t = UserTeamPeer::doSelectJoinAllExceptsfGuardUser($c);
       
-      
       if(array_key_exists('astext', $options) and $options['astext'])
       {
         $teams=array();
@@ -892,7 +891,26 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
       
 			return $t;
     }
-				
+
+    public function getKeyroles($options=array())
+    {
+      $c = new Criteria();
+			$c->add(UserTeamPeer::USER_ID, $this->getUserId());
+      $c->add(RolePeer::QUALITY_CODE, null, Criteria::ISNOTNULL);
+			$t = UserTeamPeer::doSelectJoinAllExceptsfGuardUser($c);
+      
+      if(array_key_exists('astext', $options) and $options['astext'])
+      {
+        $keyroles=array();
+        foreach($t as $ut)
+        {
+          $keyroles[]=$ut->getRole()->getQualityCode();
+        }
+        return sizeof($keyroles)?implode(',', $keyroles):false;
+      }
+			return $t;
+    }
+
     public function getBelongsToTeam($posixname)
     {
       $c = new Criteria();
@@ -1637,8 +1655,6 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 				$checks[]=new Check(true, "basefolder has immutable flag set", $this->getFullName());
 			}
 
-
-
 			return $checks;
 		}
     
@@ -1681,14 +1697,12 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     $doc->addField(Zend_Search_Lucene_Field::UnStored('roster', $this->getCurrentSchoolclassId(), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('grade', $this->getCurrentGrade(), 'utf-8'));
     
-    if($this->getRoleId())
-    {
-      $doc->addField(Zend_Search_Lucene_Field::UnStored('role', $this->getRole()->getPosixName(), 'utf-8'));
-    }
-    else
-    {
-      $doc->addField(Zend_Search_Lucene_Field::UnStored('role', 'undefined', 'utf-8'));
-    }
+    $mainrole=$this->getRoleId()?$this->getRole()->getPosixName():'undefined';
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('mainrole', $mainrole, 'utf-8'));
+    
+    $keyroles=$this->getKeyroles(array('astext'=>true));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('keyroles', $keyroles?$keyroles:'none', 'utf-8'));
+    
     $doc->addField(Zend_Search_Lucene_Field::UnStored('birthdate', $this->getBirthdate('%Y%m%d'), 'utf-8'));    
     $doc->addField(Zend_Search_Lucene_Field::UnStored('birthday', $this->getBirthdate('%m%d'), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('active', $this->getsfGuardUser()->getIsActive()?'true':'false', 'utf-8'));
