@@ -904,9 +904,9 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
         $keyroles=array();
         foreach($t as $ut)
         {
-          $keyroles[]=$ut->getRole()->getQualityCode();
+          $keyroles[$ut->getRole()->getQualityCode()]=$ut->getRole()->getId();
         }
-        return sizeof($keyroles)?implode(',', $keyroles):false;
+        return sizeof($keyroles)?implode(',', array_flip($keyroles)):false;
       }
 			return $t;
     }
