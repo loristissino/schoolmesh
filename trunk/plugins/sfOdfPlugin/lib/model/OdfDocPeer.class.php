@@ -19,8 +19,6 @@ class OdfDocPeer
 {
 	
 	const UNOCONV_PORT=2002;
-	//const UNOCONV_USER='loris';
-	const UNOCONV_DISPLAY=':0.0';
 	
 	static public function executeCommand($command)
 	{
@@ -35,7 +33,14 @@ class OdfDocPeer
 		
 		return $result;
 	}
-	
+  
+  static public function convertDocument($type, $source, $target)
+  {
+		$command=sprintf('unoconv  --port %d --stdout -f %s "%s" > "%s"', 
+      OdfDocPeer::UNOCONV_PORT,
+      $type, $source, $target);
+		self::executeCommand($command);
+  }
 	
 	static public function getIsUnoconvActive()
 	{

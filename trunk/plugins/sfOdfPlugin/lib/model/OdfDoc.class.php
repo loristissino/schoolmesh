@@ -74,12 +74,11 @@ class OdfDoc
 		try
 		{
 			$converted = substr($this->_file2serve, 0, -4). '.'. $filetype;
-			$command=sprintf('unoconv  --port %d --stdout -f %s "%s" > "%s"', 
-				OdfDocPeer::UNOCONV_PORT,
-				$filetype, $this->_file2serve, $converted);
-
-			OdfDocPeer::executeCommand($command);
-            
+      OdfDocPeer::convertDocument(
+        $filetype,
+        $this->_file2serve,
+        $converted
+        );
 		}
 		catch (Exception $e)
 		{

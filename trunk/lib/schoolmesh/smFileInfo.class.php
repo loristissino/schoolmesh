@@ -29,8 +29,19 @@ class smFileInfo extends SPLFileInfo
     $command=sprintf('file --brief --mime -L "%s"', $this->getPathName());
 
     exec($command, $result, $return_var);
-
+    
+    if(strpos($result[0], ';'))
+    {
+      // sometimes we get results like 'application/pdf; charset=binary'
+      list($main, $spec)=explode(';', $result[0]);
+      return $main;
+    }
     return $result[0];
+  }
+  
+  public function getMD5Sum()
+  {
+    return md5_file($this->getPathName());
   }
   
   public function getUsedPathname()
@@ -160,6 +171,7 @@ class smFileInfo extends SPLFileInfo
  {
    return ((time() - $this->getCTime()) > 120);
   }
+
   
   
 }

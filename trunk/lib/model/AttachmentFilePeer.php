@@ -39,6 +39,14 @@ class AttachmentFilePeer extends BaseAttachmentFilePeer {
     $c->add(self::BASE_ID, $id);
     return self::doSelect($c);
   }
+  
+  public static function retrieveByUniqId($uniqid)
+  {
+    $c=new Criteria();
+    $c->add(self::UNIQID, $uniqid);
+    return self::doSelectOne($c);
+  }
+  
 
 
   public static function addAttachment($con, $object, $prefix, $user_id, sfValidatedFile $file=null, $result=array(), $public=false)
