@@ -7,7 +7,7 @@
  *
  * @package    schoolmesh
  * @subpackage form
- * @author     Your name here
+ * @author     Loris Tissino <loris.tissino@gmail.com>
  */
 abstract class BaseWptoolItemTypeForm extends BaseFormPropel
 {

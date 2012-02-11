@@ -201,7 +201,8 @@ propel:
     user_id:     { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     team_id:     { type: integer, foreignTable: team, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true  }
     role_id:     { type: integer, foreignTable: role, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
-    expiry:      { type: date }    
+    expiry:      { type: date }  
+    notes:       longvarchar  
     _uniques:
       utr: [user_id, team_id]
 
