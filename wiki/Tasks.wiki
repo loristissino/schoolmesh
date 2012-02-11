@@ -17,10 +17,12 @@ Available tasks for the "schoolmesh" namespace:
   :change-syllabus-refs         Changes syllabus references, after a new syllabus is imported
   :check-attachments            Checks existance and md5 of attachments
   :check-mail                   Checks email of the SchoolMesh bot
+  :convert-attachment           Changes the format of an attachment, specified either by id or uniqid
   :create-folders-for-teachers  Creates folders for teachers' materials to share with students
   :deactivate-accounts          Deactivates accounts for teachers with no-appointments and students not enrolled.
   :extract-info                 Extract informarmation from the database
   :fix-appointments             Fixes appointments, making all needed checks
+  :fix-teams                    Fixes teams, removing expired items and creating new needed teams.
   :generate-db-script           Produces a script to use in order to backup the database, initialize it or restore it
   :generate-help-index          Generates help index file from a template and a directory with properly commented html pages
   :generate-limesurvey-tokens   Generates Limesurvey tokens for all active users
@@ -181,6 +183,26 @@ Description:
 
 }}}
 
+=== convert-attachment ===
+
+{{{
+Usage:
+ symfony schoolmesh:convert-attachment [--application="..."] [--env="..."] [--connection="..."] [--id[="..."]] [--uniqid[="..."]] [--format[="..."]] 
+
+Options:
+ --application  The application name
+ --env          The environment (default: dev)
+ --connection   The connection name (default: propel)
+ --id           The id of the attachment file (default: 0)
+ --uniqid       The unique identifier of the attachment file (default: )
+ --format       The format to use (default: pdf)
+
+Description:
+ This task will remove an attachment, placing in its place the equivalent 
+ in another format, and updating the db consequently.
+
+}}}
+
 === create-folders-for-teachers ===
 
 {{{
@@ -292,6 +314,23 @@ Options:
 
 Description:
  This task can be used for several general checks and fixes about appointments.
+
+}}}
+
+=== fix-teams ===
+
+{{{
+Usage:
+ symfony schoolmesh:fix-teams [--application="..."] [--env="..."] [--connection="..."] [--dry-run] 
+
+Options:
+ --application  The application name
+ --env          The environment (default: dev)
+ --connection   The connection name (default: propel)
+ --dry-run      Whether the command will be executed leaving the db intact
+
+Description:
+ This task will remove people for teams when expiry is reached and create/populate new teams if needed.
 
 }}}
 
