@@ -61,7 +61,7 @@ EOF;
       throw new Exception('Attachment not identified or not found');
     }
     
-    $this->logSection('test', $Attachment->getFilename() . $Attachment->getOriginalFileName());
+    $this->logSection('attachment' . $Attachment->getId(), $Attachment->getOriginalFileName(), 'COMMENT');
 
     try
     {
@@ -98,8 +98,8 @@ EOF;
         ;
         
         rename($oldfile, $oldfile. '.deleted');
-        $this->logSection('file-', $oldfile, null, 'NOTICE');
         $this->logSection('file+', $newfile, null, 'NOTICE');
+        $this->logSection('file-', $oldfile, null, 'NOTICE');
       }
       
     }
