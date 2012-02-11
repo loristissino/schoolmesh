@@ -5,7 +5,7 @@
  *
  * @package    schoolmesh
  * @subpackage filter
- * @author     Your name here
+ * @author     Loris Tissino <loris.tissino@gmail.com>
  */
 abstract class BaseWptoolAppointmentFormFilter extends BaseFormFilterPropel
 {

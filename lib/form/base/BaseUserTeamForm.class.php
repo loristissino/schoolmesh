@@ -7,7 +7,7 @@
  *
  * @package    schoolmesh
  * @subpackage form
- * @author     Your name here
+ * @author     Loris Tissino <loris.tissino@gmail.com>
  */
 abstract class BaseUserTeamForm extends BaseFormPropel
 {
@@ -19,6 +19,7 @@ abstract class BaseUserTeamForm extends BaseFormPropel
       'team_id' => new sfWidgetFormPropelChoice(array('model' => 'Team', 'add_empty' => false)),
       'role_id' => new sfWidgetFormPropelChoice(array('model' => 'Role', 'add_empty' => false)),
       'expiry'  => new sfWidgetFormDate(),
+      'notes'   => new sfWidgetFormTextarea(),
     ));
 
     $this->setValidators(array(
@@ -27,6 +28,7 @@ abstract class BaseUserTeamForm extends BaseFormPropel
       'team_id' => new sfValidatorPropelChoice(array('model' => 'Team', 'column' => 'id')),
       'role_id' => new sfValidatorPropelChoice(array('model' => 'Role', 'column' => 'id')),
       'expiry'  => new sfValidatorDate(array('required' => false)),
+      'notes'   => new sfValidatorString(array('required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(

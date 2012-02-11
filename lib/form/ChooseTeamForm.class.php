@@ -9,7 +9,6 @@
  */
 class ChooseTeamForm extends BaseForm
 {
-  // FIXME this class should be blended with TeamEditJoiningForm
   
   public function configure()
   {

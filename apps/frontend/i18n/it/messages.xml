@@ -4096,6 +4096,10 @@
         <source>You must select a team and a role.</source>
         <target>Devi selezionare un team e un ruolo.</target>
     </trans-unit>
+    <trans-unit id="1035">
+        <source>Expiry passed</source>
+        <target>Termine passato</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

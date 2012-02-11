@@ -25,7 +25,7 @@ abstract class BaseUserTeamPeer {
 	const TM_CLASS = 'UserTeamTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 6;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -44,6 +44,9 @@ abstract class BaseUserTeamPeer {
 
 	/** the column name for the EXPIRY field */
 	const EXPIRY = 'user_team.EXPIRY';
+
+	/** the column name for the NOTES field */
+	const NOTES = 'user_team.NOTES';
 
 	/**
 	 * An identiy map to hold any loaded instances of UserTeam objects.
@@ -68,11 +71,11 @@ abstract class BaseUserTeamPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'TeamId', 'RoleId', 'Expiry', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'teamId', 'roleId', 'expiry', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::TEAM_ID, self::ROLE_ID, self::EXPIRY, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'team_id', 'role_id', 'expiry', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'TeamId', 'RoleId', 'Expiry', 'Notes', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'teamId', 'roleId', 'expiry', 'notes', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::TEAM_ID, self::ROLE_ID, self::EXPIRY, self::NOTES, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'team_id', 'role_id', 'expiry', 'notes', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -82,11 +85,11 @@ abstract class BaseUserTeamPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'TeamId' => 2, 'RoleId' => 3, 'Expiry' => 4, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'teamId' => 2, 'roleId' => 3, 'expiry' => 4, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::TEAM_ID => 2, self::ROLE_ID => 3, self::EXPIRY => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'team_id' => 2, 'role_id' => 3, 'expiry' => 4, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'TeamId' => 2, 'RoleId' => 3, 'Expiry' => 4, 'Notes' => 5, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'teamId' => 2, 'roleId' => 3, 'expiry' => 4, 'notes' => 5, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::TEAM_ID => 2, self::ROLE_ID => 3, self::EXPIRY => 4, self::NOTES => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'team_id' => 2, 'role_id' => 3, 'expiry' => 4, 'notes' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -161,6 +164,7 @@ abstract class BaseUserTeamPeer {
 		$criteria->addSelectColumn(UserTeamPeer::TEAM_ID);
 		$criteria->addSelectColumn(UserTeamPeer::ROLE_ID);
 		$criteria->addSelectColumn(UserTeamPeer::EXPIRY);
+		$criteria->addSelectColumn(UserTeamPeer::NOTES);
 	}
 
 	/**

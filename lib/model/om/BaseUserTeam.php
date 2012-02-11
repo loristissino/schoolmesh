@@ -49,6 +49,12 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	protected $expiry;
 
 	/**
+	 * The value for the notes field.
+	 * @var        string
+	 */
+	protected $notes;
+
+	/**
 	 * @var        sfGuardUser
 	 */
 	protected $asfGuardUser;
@@ -157,6 +163,16 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		} else {
 			return $dt->format($format);
 		}
+	}
+
+	/**
+	 * Get the [notes] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getNotes()
+	{
+		return $this->notes;
 	}
 
 	/**
@@ -301,6 +317,26 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	} // setExpiry()
 
 	/**
+	 * Set the value of [notes] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     UserTeam The current object (for fluent API support)
+	 */
+	public function setNotes($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->notes !== $v) {
+			$this->notes = $v;
+			$this->modifiedColumns[] = UserTeamPeer::NOTES;
+		}
+
+		return $this;
+	} // setNotes()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -337,6 +373,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			$this->team_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->role_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->expiry = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->notes = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -346,7 +383,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 5; // 5 = UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 6; // 6 = UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating UserTeam object", $e);
@@ -719,6 +756,9 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			case 4:
 				return $this->getExpiry();
 				break;
+			case 5:
+				return $this->getNotes();
+				break;
 			default:
 				return null;
 				break;
@@ -745,6 +785,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			$keys[2] => $this->getTeamId(),
 			$keys[3] => $this->getRoleId(),
 			$keys[4] => $this->getExpiry(),
+			$keys[5] => $this->getNotes(),
 		);
 		return $result;
 	}
@@ -791,6 +832,9 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			case 4:
 				$this->setExpiry($value);
 				break;
+			case 5:
+				$this->setNotes($value);
+				break;
 		} // switch()
 	}
 
@@ -820,6 +864,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setTeamId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setRoleId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setExpiry($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setNotes($arr[$keys[5]]);
 	}
 
 	/**
@@ -836,6 +881,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserTeamPeer::TEAM_ID)) $criteria->add(UserTeamPeer::TEAM_ID, $this->team_id);
 		if ($this->isColumnModified(UserTeamPeer::ROLE_ID)) $criteria->add(UserTeamPeer::ROLE_ID, $this->role_id);
 		if ($this->isColumnModified(UserTeamPeer::EXPIRY)) $criteria->add(UserTeamPeer::EXPIRY, $this->expiry);
+		if ($this->isColumnModified(UserTeamPeer::NOTES)) $criteria->add(UserTeamPeer::NOTES, $this->notes);
 
 		return $criteria;
 	}
@@ -897,6 +943,8 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		$copyObj->setRoleId($this->role_id);
 
 		$copyObj->setExpiry($this->expiry);
+
+		$copyObj->setNotes($this->notes);
 
 
 		$copyObj->setNew(true);

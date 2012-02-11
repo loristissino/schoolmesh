@@ -1009,7 +1009,8 @@ class usersActions extends sfActions
 public function executeEditjoining(sfWebRequest $request)
   {
 
-	$this->form = new TeamEditJoiningForm();
+	$this->form = new UserTeamForm();
+  $values=false;
 	
 	if ($request->isMethod('post'))
 		{
@@ -1017,29 +1018,42 @@ public function executeEditjoining(sfWebRequest $request)
 			if ($this->form->isValid())
 			{
 				$params = $this->form->getValues();
-				$this->current_user=sfGuardUserProfilePeer::retrieveByPK($params['id']);
-        $this->team = TeamPeer::retrieveByPK($params['team']);
+				$this->current_user=sfGuardUserProfilePeer::retrieveByPK($params['user_id']);
+        $this->team = TeamPeer::retrieveByPK($params['team_id']);
 				$this->userteam=UserTeamPeer::retrieveUserTeam($this->current_user->getSfGuardUser(), $this->team);
-				$this->role=RolePeer::retrieveByPk($params['role']);
+				$this->role=RolePeer::retrieveByPk($params['role_id']);
 				
 				$this->current_user
-				->changeRoleInTeam($this->userteam->getTeam(), $this->role, $params['expiry']);
+				->changeRoleInTeam($this->userteam->getTeam(), $this->role, $params);
 				
 				$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Team joining successfully changed.'));
-				//$this->redirect('users/edit?id='. $params['id']);
         $this->redirect(Generic::b64_unserialize($request->getParameter('referer')));
 			}
+      else
+      {
+        Generic::logMessage('recupero i valori', 'here');
+        
+        $params=$request->getParameter('info');
+  
+        $this->current_user=sfGuardUserProfilePeer::retrieveByPk($params['user_id']);
+        $this->team = TeamPeer::retrieveByPK($params['team_id']);
+        $values=true;
+      }
 		}
 
-	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
-	$this->team = TeamPeer::retrieveByPK($request->getParameter('team'));
+  if(!$values)
+  {
+    $this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
+    $this->team = TeamPeer::retrieveByPK($request->getParameter('team'));
+  }
 	$this->userteam=UserTeamPeer::retrieveUserTeam($this->current_user->getSfGuardUser(), $this->team);
 	$this->form->setDefaults(
 		array(
-			'id' => $this->current_user->getUserId(),
-			'team' => $this->team->getId(),
-			'role'=> $this->userteam->getRoleId(),
+			'user_id' => $this->current_user->getUserId(),
+			'team_id' => $this->team->getId(),
+			'role_id'=> $this->userteam->getRoleId(),
       'expiry'=> $this->userteam->getExpiry(),
+      'notes'=>$this->userteam->getNotes(),
 		)
 	);
   
