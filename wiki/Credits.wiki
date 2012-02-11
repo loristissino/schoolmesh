@@ -35,10 +35,19 @@ We will list them here, trying to mention them all:
 
 7. _SmoothWall_ is registered by [http://www.smoothwall.org SmoothWall Ltd.]
 
-== Licenses ==
+= Licenses =
 
 http://www.gnu.org/graphics/gplv3-88x31.png
 
 !SchoolMesh itself is released under the [http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License v. 3]
 
 Some pieces of software are included as plugins and may have different licenses. See the sources for details.
+
+= Demo =
+
+http://www.schoolmesh.mattiussilab.net/_/rsrc/1322425120804/demo/logotfsmall.png
+
+The demo web site is hosted by [http://www.tuxfamily.org TuxFamily].
+
+Demo contents (workplans of Maths and Geography) have been kindly provided by Costanzo Da Ros and Luciana Turrin.
+
