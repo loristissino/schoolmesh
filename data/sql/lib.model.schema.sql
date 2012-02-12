@@ -495,6 +495,7 @@ CREATE TABLE `role`
 	`posix_name` VARCHAR(20),
 	`may_be_main_role` TINYINT,
 	`needs_charge_letter` TINYINT,
+	`is_key` TINYINT default 0,
 	`default_guardgroup` VARCHAR(20),
 	`rank` INTEGER,
 	PRIMARY KEY (`id`)

@@ -61,6 +61,13 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	protected $needs_charge_letter;
 
 	/**
+	 * The value for the is_key field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $is_key;
+
+	/**
 	 * The value for the default_guardgroup field.
 	 * @var        string
 	 */
@@ -119,6 +126,27 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	// symfony behavior
 	
 	const PEER = 'RolePeer';
+
+	/**
+	 * Applies default values to this object.
+	 * This method should be called from the object's constructor (or
+	 * equivalent initialization method).
+	 * @see        __construct()
+	 */
+	public function applyDefaultValues()
+	{
+		$this->is_key = false;
+	}
+
+	/**
+	 * Initializes internal state of BaseRole object.
+	 * @see        applyDefaults()
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
 
 	/**
 	 * Get the [id] column value.
@@ -188,6 +216,16 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	public function getNeedsChargeLetter()
 	{
 		return $this->needs_charge_letter;
+	}
+
+	/**
+	 * Get the [is_key] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsKey()
+	{
+		return $this->is_key;
 	}
 
 	/**
@@ -351,6 +389,26 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	} // setNeedsChargeLetter()
 
 	/**
+	 * Set the value of [is_key] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     Role The current object (for fluent API support)
+	 */
+	public function setIsKey($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_key !== $v || $this->isNew()) {
+			$this->is_key = $v;
+			$this->modifiedColumns[] = RolePeer::IS_KEY;
+		}
+
+		return $this;
+	} // setIsKey()
+
+	/**
 	 * Set the value of [default_guardgroup] column.
 	 * 
 	 * @param      string $v new value
@@ -400,6 +458,10 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->is_key !== false) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -429,8 +491,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			$this->posix_name = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->may_be_main_role = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
 			$this->needs_charge_letter = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
-			$this->default_guardgroup = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->rank = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
+			$this->is_key = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
+			$this->default_guardgroup = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->rank = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -440,7 +503,7 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 9; // 9 = RolePeer::NUM_COLUMNS - RolePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 10; // 10 = RolePeer::NUM_COLUMNS - RolePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Role object", $e);
@@ -815,9 +878,12 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 				return $this->getNeedsChargeLetter();
 				break;
 			case 7:
-				return $this->getDefaultGuardgroup();
+				return $this->getIsKey();
 				break;
 			case 8:
+				return $this->getDefaultGuardgroup();
+				break;
+			case 9:
 				return $this->getRank();
 				break;
 			default:
@@ -848,8 +914,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			$keys[4] => $this->getPosixName(),
 			$keys[5] => $this->getMayBeMainRole(),
 			$keys[6] => $this->getNeedsChargeLetter(),
-			$keys[7] => $this->getDefaultGuardgroup(),
-			$keys[8] => $this->getRank(),
+			$keys[7] => $this->getIsKey(),
+			$keys[8] => $this->getDefaultGuardgroup(),
+			$keys[9] => $this->getRank(),
 		);
 		return $result;
 	}
@@ -903,9 +970,12 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 				$this->setNeedsChargeLetter($value);
 				break;
 			case 7:
-				$this->setDefaultGuardgroup($value);
+				$this->setIsKey($value);
 				break;
 			case 8:
+				$this->setDefaultGuardgroup($value);
+				break;
+			case 9:
 				$this->setRank($value);
 				break;
 		} // switch()
@@ -939,8 +1009,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[4], $arr)) $this->setPosixName($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setMayBeMainRole($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setNeedsChargeLetter($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setDefaultGuardgroup($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setRank($arr[$keys[8]]);
+		if (array_key_exists($keys[7], $arr)) $this->setIsKey($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setDefaultGuardgroup($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setRank($arr[$keys[9]]);
 	}
 
 	/**
@@ -959,6 +1030,7 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RolePeer::POSIX_NAME)) $criteria->add(RolePeer::POSIX_NAME, $this->posix_name);
 		if ($this->isColumnModified(RolePeer::MAY_BE_MAIN_ROLE)) $criteria->add(RolePeer::MAY_BE_MAIN_ROLE, $this->may_be_main_role);
 		if ($this->isColumnModified(RolePeer::NEEDS_CHARGE_LETTER)) $criteria->add(RolePeer::NEEDS_CHARGE_LETTER, $this->needs_charge_letter);
+		if ($this->isColumnModified(RolePeer::IS_KEY)) $criteria->add(RolePeer::IS_KEY, $this->is_key);
 		if ($this->isColumnModified(RolePeer::DEFAULT_GUARDGROUP)) $criteria->add(RolePeer::DEFAULT_GUARDGROUP, $this->default_guardgroup);
 		if ($this->isColumnModified(RolePeer::RANK)) $criteria->add(RolePeer::RANK, $this->rank);
 
@@ -1026,6 +1098,8 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		$copyObj->setMayBeMainRole($this->may_be_main_role);
 
 		$copyObj->setNeedsChargeLetter($this->needs_charge_letter);
+
+		$copyObj->setIsKey($this->is_key);
 
 		$copyObj->setDefaultGuardgroup($this->default_guardgroup);
 

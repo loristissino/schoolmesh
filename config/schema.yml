@@ -193,6 +193,7 @@ propel:
     posix_name: varchar(20)
     may_be_main_role: boolean
     needs_charge_letter: boolean
+    is_key: { type: boolean, default: false }
     default_guardgroup: varchar(20)
     rank: integer
 

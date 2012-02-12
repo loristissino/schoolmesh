@@ -17,5 +17,15 @@ class organizationActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
+    // This is just a proof of concept, must be fixed...
+    
+    $this->list=array();
+    $this->keyroles=RolePeer::retrieveKeyRoles();
+    
+    foreach($this->keyroles as $keyrole)
+    {
+      $this->list[$keyrole->getId()]=array('keyrole'=>$keyrole, 'userteam'=>RolePeer::retrieveUsersPlayingRole($keyrole));
+    }
+    
   }
 }

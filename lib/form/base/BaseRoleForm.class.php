@@ -21,6 +21,7 @@ abstract class BaseRoleForm extends BaseFormPropel
       'posix_name'          => new sfWidgetFormInputText(),
       'may_be_main_role'    => new sfWidgetFormInputCheckbox(),
       'needs_charge_letter' => new sfWidgetFormInputCheckbox(),
+      'is_key'              => new sfWidgetFormInputCheckbox(),
       'default_guardgroup'  => new sfWidgetFormInputText(),
       'rank'                => new sfWidgetFormInputText(),
     ));
@@ -33,6 +34,7 @@ abstract class BaseRoleForm extends BaseFormPropel
       'posix_name'          => new sfValidatorString(array('max_length' => 20, 'required' => false)),
       'may_be_main_role'    => new sfValidatorBoolean(array('required' => false)),
       'needs_charge_letter' => new sfValidatorBoolean(array('required' => false)),
+      'is_key'              => new sfValidatorBoolean(array('required' => false)),
       'default_guardgroup'  => new sfValidatorString(array('max_length' => 20, 'required' => false)),
       'rank'                => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
     ));
