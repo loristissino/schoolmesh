@@ -19,6 +19,13 @@ class RolePeer extends BaseRolePeer
     return self::retrieveAll($c);
 	}
   
+	public static function retrieveKeyRoles()
+	{
+		$c=new Criteria();
+		$c->add(RolePeer::IS_KEY, true);
+    return self::retrieveAll($c);
+	}
+  
 	public static function retrieveAll($c=null)
 	{
     if(!$c)
@@ -45,6 +52,17 @@ class RolePeer extends BaseRolePeer
     $t = self::doSelectOne($c);
     return $t;
 	}
+  
+  public static function retrieveUsersPlayingRole(Role $Role)
+  {
+    $c=new Criteria();
+    $c->addJoin(RolePeer::ID, UserTeamPeer::ROLE_ID);
+    $c->addJoin(UserTeamPeer::USER_ID, sfGuardUserPeer::ID);
+    $c->add(RolePeer::ID, $Role->getId());
+    $c->setDistinct();
+    
+    return UserTeamPeer::doSelectJoinAll($c);
+  }
 
 
 

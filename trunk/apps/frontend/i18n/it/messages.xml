@@ -4100,9 +4100,23 @@
         <source>Expiry passed</source>
         <target>Termine passato</target>
     </trans-unit>
+    <trans-unit id="1036">
+        <source>Organization</source>
+        <target>Organizzazione</target>
+    </trans-unit>
+    <trans-unit id="1037">
+        <source>Organizational chart</source>
+        <target>Organigramma</target>
+    </trans-unit>
+    <trans-unit id="1038">
+        <source>Key roles index</source>
+        <target>Indice dei ruoli chiave</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
+
 
 
 
