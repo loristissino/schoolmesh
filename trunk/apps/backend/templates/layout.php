@@ -17,11 +17,7 @@
 </head>
 <body>
 <div id="container">
-<?php if (has_slot('breadcrumbs')): ?>
-<div id="breadcrumbs">
-<p><?php echo __('Where am I? ') . link_to(__("Home"), "@homepage") ?> » <?php include_slot('breadcrumbs') ?></p>
-</div>
-<?php endif ?>
+
 <?php echo $sf_content ?>
 </div>
 
@@ -30,18 +26,47 @@
       <div id="footer">
         <div class="content">
           <span class="schoolmesh">
-            <a href="http://schoolmesh.mattiussilab.net"><img src="/schoolmesh/images/schoolmesh-mini.png" /></a>
-            powered by <a href="http://www.symfony-project.org/">
-            <img src="/schoolmesh/images/symfony.gif" alt="symfony framework" /></a>
+            <?php echo link_to(
+              image_tag(
+                'schoolmesh-mini',
+                array(
+                  'title'=>'SchoolMesh',
+                  'size'=>'102x21',
+                  'alt'=>'SchooMesh',
+                  )
+                ),
+                'http://schoolmesh.mattiussilab.net'
+              )
+            ?>, written by 
+            <?php echo link_to(
+              'Loris Tissino',
+              'http://loris.tissino.it'
+              )
+            ?>, powered by 
+            <?php echo link_to(
+              image_tag(
+                'symfony.gif',
+                array(
+                  'title'=>'Symfony',
+                  'size'=>'50x15',
+                  'alt'=>'Symfony',
+                  )
+                ),
+                'http://www.symfony-project.org'
+              )
+            ?>
           </span>
+          <br />
+          <em>released under the <?php echo link_to('GNU General Public License', url_for('content/license')) ?></em>
 
         </div>
       </div>
       
 </div>
 
+<hr />
 
-
+<p><?php echo link_to(__('Back end home'), url_for('content/index')) ?></p>
 
 </body>
 </html>
