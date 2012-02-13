@@ -4109,8 +4109,8 @@
         <target>Organigramma</target>
     </trans-unit>
     <trans-unit id="1038">
-        <source>Key roles index</source>
-        <target>Indice dei ruoli chiave</target>
+        <source>Key role</source>
+        <target>Ruolo chiave</target>
     </trans-unit>
     </body>
   </file> 
