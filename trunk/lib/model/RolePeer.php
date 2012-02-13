@@ -58,6 +58,13 @@ class RolePeer extends BaseRolePeer
     $c=new Criteria();
     $c->addJoin(RolePeer::ID, UserTeamPeer::ROLE_ID);
     $c->addJoin(UserTeamPeer::USER_ID, sfGuardUserPeer::ID);
+    $c->addJoin(UserTeamPeer::TEAM_ID, TeamPeer::ID);
+    if($Role->getMayBeMainRole())
+    {
+      // this is the case of the principal, for instance
+      $c->add(TeamPeer::QUALITY_CODE, $Role->getQualityCode());
+    }
+
     $c->add(RolePeer::ID, $Role->getId());
     $c->setDistinct();
     
