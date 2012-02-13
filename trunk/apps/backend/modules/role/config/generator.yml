@@ -14,7 +14,7 @@ generator:
       actions: ~
       fields:  ~
       list:
-        max_per_page: 5
+        max_per_page: 50
       filter:  ~
       form:    ~
       edit:    ~
