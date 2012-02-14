@@ -130,8 +130,7 @@ EOF;
       if (!$account)
       {
         $account= new GoogleappsAccount();
-        $account
-        ->setUserId($user->getId());
+        $account->setUserId($user->getId());
         $added=true;
       }
       else
@@ -143,6 +142,7 @@ EOF;
       {
         $account
         ->updateInfoFromDataLine($data)
+        ->setExists(true)
         ->save();
         $this->logSection('account'.($added?'+':''), $user->getProfile()->getFullName(), null, 'INFO');
         $synchronized++;
