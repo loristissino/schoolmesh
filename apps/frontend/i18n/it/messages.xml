@@ -4112,6 +4112,10 @@
         <source>Key role</source>
         <target>Ruolo chiave</target>
     </trans-unit>
+    <trans-unit id="1039">
+        <source>No one in charge</source>
+        <target>Nessun incaricato</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
