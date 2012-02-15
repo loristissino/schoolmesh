@@ -26,5 +26,15 @@ class organizationActions extends sfActions     // $userteam=RolePeer::retrieveU
       $this->list[$keyrole->getId()]=array('keyrole'=>$keyrole, 'userteam'=>$keyrole->getUsersPlayingRole());
     }
     
+    $this->functionalroles=RolePeer::retrieveFunctionalRoles();
+    
   }
+
+  public function executeRole(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->role=RolePeer::retrieveByPK($request->getParameter('id')));
+    $this->userteam=$this->role->getUsersPlayingRole();
+  }
+  
+  
 }

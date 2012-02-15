@@ -25,6 +25,16 @@ class RolePeer extends BaseRolePeer
 		$c->add(RolePeer::IS_KEY, true);
     return self::retrieveAll($c);
 	}
+
+	public static function retrieveFunctionalRoles()
+	{
+		$c=new Criteria();
+		$c->add(RolePeer::IS_KEY, false);
+		$c->add(RolePeer::QUALITY_CODE, null, Criteria::ISNOTNULL);
+		$c->add(RolePeer::MAY_BE_MAIN_ROLE, false);
+    return self::retrieveAll($c);
+	}
+
   
 	public static function retrieveAll($c=null)
 	{

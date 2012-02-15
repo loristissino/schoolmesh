@@ -7,6 +7,8 @@
 
 <div class="sf_admin_list">
 
+<h2><?php echo __('Key roles') ?></h2>
+
 <table cellspacing="0">
   <thead>
     <tr>
@@ -22,13 +24,7 @@
     <?php foreach($list as $item): ?>
       <?php if($item['userteam']): ?>
         <?php foreach($item['userteam'] as $component): ?>
-          <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
-            <td><?php echo $item['keyrole']->getMaleDescription() ?></td>
-            <td><?php echo $item['keyrole']->getQualityCode() ?></td>
-            <td><?php echo link_to_if($sf_user->hasCredential('admin'), $component->getSfGuardUser()->getProfile()->getFullname(), url_for('users/edit?id=' . $component->getSfGuardUser()->getId()))?></td>
-            <td style="text-align: right"><?php include_partial('content/expiry', array('date'=>$component->getExpiry('U'))) ?></td>
-            <td><?php echo link_to_if($sf_user->hasCredential('teams'), $component->getTeam(), url_for('teams/show?id=' . $component->getTeam()->getId())) ?></td>
-          </tr>
+          <?php include_partial('tr_userteam', array('role'=>$item['keyrole'], 'component'=>$component)) ?>
         <?php endforeach ?>
         <?php else: ?>
           <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
@@ -40,4 +36,13 @@
     <?php endforeach ?>
   </tbody>
 </table>
+
+<h2><?php echo __('Functional roles') ?></h2>
+
+<ul class="sf_admin_actions">
+<?php foreach($functionalroles as $Role): ?>
+  <?php echo li_link_to_if('action_users', true, $Role->getMaleDescription(), url_for('organization/role?id='.$Role->getId())) ?>
+<?php endforeach ?>
+</ul>
+
 </div>

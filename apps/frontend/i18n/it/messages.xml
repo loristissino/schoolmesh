@@ -4113,8 +4113,20 @@
         <target>Ruolo chiave</target>
     </trans-unit>
     <trans-unit id="1039">
+        <source>Key roles</source>
+        <target>Ruoli chiave</target>
+    </trans-unit>
+    <trans-unit id="1040">
+        <source>Functional roles</source>
+        <target>Ruoli funzionali</target>
+    </trans-unit>
+    <trans-unit id="1041">
         <source>No one in charge</source>
         <target>Nessun incaricato</target>
+    </trans-unit>
+    <trans-unit id="1042">
+        <source>Functional role «%role%»</source>
+        <target>Ruolo funzionale «%role%»</target>
     </trans-unit>
     </body>
   </file> 

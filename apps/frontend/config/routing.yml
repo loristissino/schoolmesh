@@ -6,11 +6,9 @@ proj_resource_type:
     column:               id
     with_wildcard_routes: true
 
-#workplan_list:
-#  url:     /plansandreports/list/sortby:typ
-#  param:   { module: plansandreports, action: list }
-#  requirements:
-#    order: (class|teacher|subject|state)
+organization:
+  url: /organization
+  param: { module: organization, action: index }
 
 users_search:
   url: /users/list
