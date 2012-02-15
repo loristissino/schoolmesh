@@ -4,4 +4,9 @@ new:
 edit:
   credentials: [[ teams ]]
   
+delete:
+  credentials: [[ admin ]]  
   
+viewlogs:
+  credentials: [[ admin ]]  
+

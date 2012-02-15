@@ -29,6 +29,15 @@ class teamsActions extends sfActions
     $this->forward404Unless($this->getUser()->hasCredential('teams') or $this->Team->getIsPublic() or $this->getUser()->getProfile()->getBelongsToTeam($this->Team->getPosixName()));
   }
 
+  public function executeViewlogs(sfWebRequest $request)
+  {
+    $this->Team = TeamPeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($this->Team);
+    $this->wfevents=$this->Team->getWorkflowLogs();
+  }
+
+
+
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new TeamForm();

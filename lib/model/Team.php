@@ -118,4 +118,20 @@ class Team extends BaseTeam
     return $rows;
   }
 	
+  public function addWfevent($userId, $comment='', $i18n_subs, $state=0, $sf_context=null, $con=null)
+  {
+    Generic::addWfevent($this, $userId, $comment, $i18n_subs, $state, $sf_context);
+    return $this;
+  }
+  
+  public function getWorkflowLogs()
+	{
+		$t = WfeventPeer::retrieveByClassAndId('Team', $this->getId(), true);
+		if ($t)
+			return $t;
+		else
+			return NULL;
+	}
+
+  
 }

@@ -721,7 +721,7 @@ class usersActions extends sfActions
       foreach($this->userlist as $user)
       {
         Generic::logMessage('team_in', $this->expiry);
-        $user->addToTeam($this->team, $this->role, $this->expiry);
+        $user->addToTeam($this->getUser()->getProfile()->getUserId(), $this->team, $this->role, $this->expiry, $this->getContext());
       }
 		
       $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Users successfully added to team.'));
@@ -945,7 +945,7 @@ class usersActions extends sfActions
     $this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
     $this->team = TeamPeer::retrieveByPK($request->getParameter('team'));
     
-    $this->current_user->removeFromTeam($this->team);
+    $this->current_user->removeFromTeam($this->getUser()->getProfile()->getUserId(), $this->team, $this->getContext());
     $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('User successfully removed from team.'));
     if($request->hasParameter('referer'))
     {
@@ -1024,7 +1024,7 @@ public function executeEditjoining(sfWebRequest $request)
 				$this->role=RolePeer::retrieveByPk($params['role_id']);
 				
 				$this->current_user
-				->changeRoleInTeam($this->userteam->getTeam(), $this->role, $params);
+				->changeRoleInTeam($this->getUser()->getProfile()->getUserId(), $this->userteam->getTeam(), $this->role, $params, $this->getContext());
 				
 				$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Team joining successfully changed.'));
         $this->redirect(Generic::b64_unserialize($request->getParameter('referer')));
@@ -1245,7 +1245,7 @@ public function executeAddappointment(sfWebRequest $request)
       foreach($ids as $id)
       {
         $team=TeamPeer::retrieveByPK($id);
-        $this->current_user->addToTeam($team, $role);
+        $this->current_user->addToTeam($this->getUser()->getProfile()->getUserId(), $team, $role, null, $this->getContext());
       }
 		
       $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('User successfully added to selected teams.'));
