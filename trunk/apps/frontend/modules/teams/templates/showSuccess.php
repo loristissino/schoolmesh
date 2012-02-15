@@ -67,14 +67,19 @@
 <p><?php echo __('This team has no members.') ?></p>
 <?php endif ?>
 
-<?php if($sf_user->hasCredential('teams')):?>
+<?php if($sf_user->hasCredential('teams')): ?>
 <ul class="sf_admin_actions">
-  <li class="sf_admin_action_edit">
-  <?php echo link_to(
+  <?php echo li_link_to_if(
+    'action_edit',
+    $sf_user->hasCredential('teams'),
     __('Edit'),
     url_for('teams/edit?id='.$Team->getId())
     ) ?>
-  </li><br />
+  <?php echo li_link_to_if(
+    'action_log',
+    $sf_user->hasCredential('backadmin'),
+    __('Logs'),
+    url_for('teams/viewlogs?id='.$Team->getId())
+    ) ?>
 </ul>
 <?php endif ?>
-

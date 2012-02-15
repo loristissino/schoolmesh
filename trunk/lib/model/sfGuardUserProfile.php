@@ -930,10 +930,14 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			;
     }
 		
-		public function addToTeam(Team $team, Role $role, $expiry=null)
+		public function addToTeam($caller_id, Team $team, Role $role, $expiry=null, $sf_context)
 		{
 			if (!$this->getBelongsToTeam($team->getPosixName()))
 			{
+        
+        $con = Propel::getConnection(UserTeamPeer::DATABASE_NAME);
+        $con->beginTransaction();
+        
 				try
 				{
 					$userteam=new UserTeam();
@@ -942,11 +946,19 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 					->setTeam($team)
 					->setRole($role)
           ->setExpiry($expiry)
-					->save();
+					->save($con);
+          $team->addWfevent($caller_id,
+            'Added user %user% to team, with role «%role%» and expiry %expiry%',
+            array('%user%'=>$this->getFullname(), '%role%'=>$this->getIsMale()?$role->getMaleDescription():$role->getFemaleDescription(), '%expiry%'=>$expiry?$expiry:'-'),
+            0,
+            $sf_context,
+            $con
+            );
+          $con->commit();
 				}
 				catch(Exception $e)
 				{
-					$this->addSystemAlert(sprintf('user not added to team «%s»', $team->getPosixName()));
+          $con->rollback();
 				}
 			}
 			else
@@ -957,13 +969,31 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		}
 
 
-		public function removeFromTeam(Team $team)
+		public function removeFromTeam($caller_id, Team $team, $sf_context=null)
 		{
 			
 			$userteam=UserTeamPeer::retrieveUserTeam($this->getSfGuardUser(), $team);
 			if ($userteam)
 			{
-				$userteam->delete();
+        $con = Propel::getConnection(UserTeamPeer::DATABASE_NAME);
+        $con->beginTransaction();
+        try
+        {
+          $userteam->delete($con);
+          $userteam->getTeam()->addWfevent($caller_id,
+            'Removed user %user% from team',
+            array('%user%'=>$this->getFullname()),
+            0,
+            $sf_context,
+            $con
+            );
+
+          $con->commit();
+        }
+        catch (Exception $e)
+        {
+          $con->rollback();
+        }
 			}
 			
 			return $this;
@@ -1020,27 +1050,61 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $result;
 		}
 
-		public function changeRoleInTeam(Team $team, Role $role, $params=array())
+		public function changeRoleInTeam($caller_id, Team $team, Role $role, $params=array(), $sf_context=null)
 		{
+      
+      $con = Propel::getConnection(UserTeamPeer::DATABASE_NAME);
+		  $con->beginTransaction();
+      
 	    $c = new Criteria();
 			$c->add(UserTeamPeer::USER_ID, $this->getUserId());
 			$c->add(UserTeamPeer::TEAM_ID, $team->getId());
 			$t = UserTeamPeer::doSelectOne($c);
 			if ($t)
 			{
-				$t->setRoleId($role->getId());
+        $dirty=false;
+        if($t->getRoleId()!=$role->getId())
+        {
+          $t->setRoleId($role->getId());
+          $dirty=true;
+        }
         if(array_key_exists('expiry', $params))
         {
-          $t->setExpiry($params['expiry']);
+          if($t->getExpiry()!=$params['expiry'])
+          {
+            $t->setExpiry($params['expiry']);
+            $dirty=true;
+          }
         }
         if(array_key_exists('notes', $params))
         {
-          $t->setNotes($params['notes']);
+          if($t->getNotes()!=$params['notes'])
+          {
+            $t->setNotes($params['notes']);
+            $dirty=true;
+          }
         }
-        $t->save();
+        if($dirty)
+        {
+          try
+          {
+            $t->save($con);
+            $t->getTeam()->addWfevent($caller_id,
+              'Edited joining of %user%, set role to «%role%», with notes «%notes%»',
+              array('%user%'=>$this->getFullname(), '%role%'=>$this->getIsMale()?$t->getRole()->getMaleDescription():$t->getRole()->getFemaleDescription(), '%notes%'=>$t->getNotes()),
+              0,
+              $sf_context,
+              $con
+              );
+            $con->commit();
+          }
+          catch (Exception $e)
+          {
+            $con->rollback();
+          }  
+        }
 			}
 			return $this;
-			
 		}
 
 

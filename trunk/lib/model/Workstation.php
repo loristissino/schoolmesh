@@ -165,7 +165,6 @@ class Workstation extends BaseWorkstation
 
   public function addWfevent($userId, $comment='', $i18n_subs, $state=0, $sf_context=null)
   {
-    Generic::logMessage('wfevent', $state);
     Generic::addWfevent($this, $userId, $comment, $i18n_subs, $state, $sf_context);
     return $this;
   }

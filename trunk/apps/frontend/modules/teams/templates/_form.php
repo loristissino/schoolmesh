@@ -11,7 +11,7 @@
         <td colspan="2">
           &nbsp;<a href="<?php echo url_for('teams/index') ?>"><?php echo __('Back to list') ?></a>
           <?php if (!$form->getObject()->isNew()): ?>
-            &nbsp;<?php echo link_to(__('Delete'), 'teams/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?>
+            &nbsp;<?php if($sf_user->hasCredential('backadmin')): ?><?php echo link_to(__('Delete'), 'teams/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => __('Are you sure?'))) ?><?php endif ?>
           <?php endif; ?>
           <input type="submit" value="<?php echo __('Save') ?>" />
         </td>

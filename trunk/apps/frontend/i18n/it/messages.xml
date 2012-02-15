@@ -3905,8 +3905,8 @@
         <target>Registrazioni</target>
     </trans-unit>
     <trans-unit id="987">
-        <source>Logs</source>
-        <target>Registrazioni</target>
+        <source>Logs concerning the team «%team%»</source>
+        <target>Registrazioni riguardanti il team «%team%»</target>
     </trans-unit>
     <trans-unit id="988">
         <source>View LAN access logs for %user%</source>
@@ -4127,6 +4127,18 @@
     <trans-unit id="1042">
         <source>Functional role «%role%»</source>
         <target>Ruolo funzionale «%role%»</target>
+    </trans-unit>
+    <trans-unit id="1043">
+        <source>Edited joining of %user%, set role to «%role%», with notes «%notes%»</source>
+        <target>Modificata appartenenza di %user%, impostato ruolo a «%role%», con note «%notes%»</target>
+    </trans-unit>
+    <trans-unit id="1044">
+        <source>Removed user %user% from team</source>
+        <target>Rimosso utente %user% dal team</target>
+    </trans-unit>
+    <trans-unit id="1045">
+        <source>Added user %user% to team, with role «%role%» and expiry %expiry%</source>
+        <target>Aggiunto utente %user% al team, con ruolo «%role%» e termine %expiry%</target>
     </trans-unit>
     </body>
   </file> 
