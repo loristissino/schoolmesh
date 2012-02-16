@@ -361,11 +361,24 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       
       $usedtypes=array();
       
+      $externalResources=0;
+      
       foreach($project->getProjResources() as $Resource)
       {
         $ResourceType=$Resource->getProjResourceType();
         $letters->resources->resourceDescription($Resource->getDescription());
         $letters->resources->resourceType($ResourceType->getDescription());
+        
+        if(!$ResourceType->getRoleId())
+        {
+          $letters->resources->resourceNotes('*');
+          $externalResources++;
+        }
+        else
+        {
+          $letters->resources->resourceNotes('');
+        }
+        
         $letters->resources->resourceChargedUser($Resource->getChargedUserProfile());
         $letters->resources->resourceQuantity(OdfDocPeer::quantityvalue($Resource->getQuantityApproved(), $ResourceType->getMeasurementUnit()));
         $letters->resources->merge();
@@ -374,6 +387,14 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
           $usedtypes[$ResourceType->getId()]=$ResourceType;
         }
       }
+
+      $notes='The expense budgeted for this resource must be confirmed.';
+      if($context)
+      {
+        $notes=$context->getI18N()->__($notes);
+      }
+
+      $letters->letterResourceNotes($externalResources?'* '.$notes:'');
       
       foreach($project->getProjUpshots() as $Upshot)
       {

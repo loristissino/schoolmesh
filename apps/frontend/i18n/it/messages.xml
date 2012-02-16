@@ -4156,6 +4156,10 @@
         <source>Selected users</source>
         <target>Utenti selezionati</target>
     </trans-unit>
+    <trans-unit id="1050">
+        <source>The expense budgeted for this resource must be confirmed.</source>
+        <target>La spesa prevista per questa risorsa deve essere confermata.</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
