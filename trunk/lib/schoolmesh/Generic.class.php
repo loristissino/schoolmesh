@@ -330,6 +330,7 @@ class Generic{
     }
     
     $wfevent->save($con);
+    
   }
 
   public static function correctString($s)

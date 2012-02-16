@@ -4140,6 +4140,18 @@
         <source>Added user %user% to team, with role «%role%» and expiry %expiry%</source>
         <target>Aggiunto utente %user% al team, con ruolo «%role%» e termine %expiry%</target>
     </trans-unit>
+    <trans-unit id="1046">
+        <source>System execution</source>
+        <target>Esecuzione di sistema</target>
+    </trans-unit>
+    <trans-unit id="1047">
+        <source>Team «%team%» created, posix name «%posix_name%»</source>
+        <target>Team «%team%» creato, nome posix «%posix_name%»</target>
+    </trans-unit>
+    <trans-unit id="1048">
+        <source>Team «%team%» updated, posix name «%posix_name%»</source>
+        <target>Team «%team%» aggiornato, nome posix «%posix_name%»</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

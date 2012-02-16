@@ -45,5 +45,42 @@ class TeamPeer extends BaseTeamPeer
       $c->setDistinct();
 			return parent::doSelect($c);
     }
-
+    
+  static public function createTeam($caller_id, $params=array(), $sf_context, $con)
+    {
+      if(!$con)
+      {
+        $con = Propel::getConnection(TeamPeer::DATABASE_NAME);
+      }
+      $con->beginTransaction();
+      
+      try
+      {
+        $Team=new Team();
+        Generic::updateObjectFromForm(
+          $Team,
+          array('description', 'posix_name', 'quality_code', 'needs_folder', 'needs_mailing_list', 'is_public'),
+          $params
+          );
+        $Team->save($con);
+        $Team->addWfevent(
+          $caller_id,
+          'Team «%team%» created, posix name «%posix_name%»',
+          array('%team%'=>$Team->getDescription(), '%posix_name%'=>$Team->getPosixName()),
+          0,
+          $sf_context,
+          $con
+          );
+   
+        $con->commit();
+      }
+      catch (Exception $e)
+      {
+        throw $e;
+        //$con->rollback();
+      }
+      
+      return $Team;
+      
+    }
 }

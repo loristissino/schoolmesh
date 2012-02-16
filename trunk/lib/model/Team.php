@@ -120,7 +120,7 @@ class Team extends BaseTeam
 	
   public function addWfevent($userId, $comment='', $i18n_subs, $state=0, $sf_context=null, $con=null)
   {
-    Generic::addWfevent($this, $userId, $comment, $i18n_subs, $state, $sf_context);
+    Generic::addWfevent($this, $userId, $comment, $i18n_subs, $state, $sf_context, $con);
     return $this;
   }
   

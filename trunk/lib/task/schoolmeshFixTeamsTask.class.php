@@ -42,6 +42,8 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
 
+    $this->context = sfContext::createInstance($this->configuration);
+
     $con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
 		$con->beginTransaction();
 
@@ -95,22 +97,27 @@ EOF;
           $team=TeamPeer::retrieveByPosixName($teamname);
           if(!$team)
           {
-            $team=new Team();
-            $team
-            ->setPosixName($teamname)
-            ->setDescription($description. ' '. $appointment->getSchoolclass())
-            ->setQualityCode($qualitycode)
-            ->save($con)
-            ;
+            $team=TeamPeer::createTeam(null,
+              array(
+                'description'=>$description. ' '. $appointment->getSchoolclass(),
+                'posix_name'=>$teamname,
+                'quality_code'=>$qualitycode,
+              ),
+              $this->context,
+              $con
+              );
             $this->logSection('team+', $teamname, null, 'NOTICE');
             $teamscache[$teamname]=$team;
+            sleep(2);
+            // we wait in order to have a consistent log (otherwise, it may happen
+            // that users are "added" to a Team not yet existant)
           }
         }
         else
         {
           $team=$teamscache[$teamname];
         }
-				$profile->addToTeam($team, $role, $appointment->getYear()->getEndDate());
+				$profile->addToTeam(null, $team, $role, $appointment->getYear()->getEndDate(), $this->context);
         if(array_key_exists($appointment->getSubject()->getShortcut(), $depconfig['departments']['subjects']))
         {
           $departments[$depconfig['departments']['subjects'][$appointment->getSubject()->getShortcut()]]=1;
@@ -126,24 +133,31 @@ EOF;
             $team=TeamPeer::retrieveByPosixName($teamname);
             if(!$team)
             {
-              $team=new Team();
-              $team
-              ->setPosixName($teamname)
-              ->setDescription($depconfig['departments']['list'][$teamname]['description'])
-              ->setQualityCode($depconfig['departments']['config']['quality_code'])
-              ->setNeedsMailingList($depconfig['departments']['config']['needs_mailing_list'])
-              ->setNeedsFolder($depconfig['departments']['config']['needs_folder'])
-              ->save($con)
-              ;
+              $team=TeamPeer::createTeam(null,
+              array(
+                'description'=>$depconfig['departments']['list'][$teamname]['description'],
+                'posix_name'=>$teamname,
+                'quality_code'=>$depconfig['departments']['config']['quality_code'],
+                'needs_mailing_list'=>$depconfig['departments']['config']['needs_mailing_list'],
+                'needs_folder'=>$depconfig['departments']['config']['needs_folder']
+              ),
+              $this->context,
+              $con
+              );
+              
               $this->logSection('team+', $teamname, null, 'NOTICE');
               $teamscache[$teamname]=$team;
+              sleep(2);
+              // we wait in order to have a consistent log (otherwise, it may happen
+              // that users are "added" to a Team not yet existant)
+
             }
           }
           else
           {
             $team=$teamscache[$teamname];
           }
-          $profile->addToTeam($team, $role, $appointment->getYear()->getEndDate());
+          $profile->addToTeam(null, $team, $role, $appointment->getYear()->getEndDate(), $this->context);
           
         }
         

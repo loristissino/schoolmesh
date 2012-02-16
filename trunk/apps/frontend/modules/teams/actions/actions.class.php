@@ -87,6 +87,29 @@ class teamsActions extends sfActions
     if ($form->isValid())
     {
       $Team = $form->save();
+      // we don't know whether this is new or updated, so we just look at previous events...
+      if(!$Team->getWorkflowLogs())
+      {
+        $Team->addWfevent(
+          $this->getUser()->getProfile()->getUserId(),
+          'Team «%team%» created, posix name «%posix_name%»',
+          array('%team%'=>$Team->getDescription(), '%posix_name%'=>$Team->getPosixName()),
+          0,
+          $this->getContext(),
+          null
+          );
+      }
+      else
+      {
+        $Team->addWfevent(
+          $this->getUser()->getProfile()->getUserId(),
+          'Team «%team%» updated, posix name «%posix_name%»',
+          array('%team%'=>$Team->getDescription(), '%posix_name%'=>$Team->getPosixName()),
+          0,
+          $this->getContext(),
+          null
+          );
+      }
 
       $this->redirect('teams/edit?id='.$Team->getId());
     }
