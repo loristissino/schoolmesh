@@ -1,18 +1,14 @@
-<?php slot('title', __('User checks')) ?>
-	
-<?php slot('breadcrumbs',
-	link_to(__("User management"), 'users/index') . ' » ' .
-	__("User checks")
-	)
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'users/index' =>__('User management'),
+    'users/list'=>__('List/Search'),
+    'users/list?query='. $sf_user->getAttribute('currently_selected')=>__('Selected users'),
+    ),
+    'current'=>__("User checks")
+  ))
+?>
 
-?><h1><?php echo __("User checks")?></h1>
-
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
 
 <?php if(isset($checkList)): ?>
 

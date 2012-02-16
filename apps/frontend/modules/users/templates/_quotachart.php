@@ -25,7 +25,7 @@ $darkyellow = 'dddd00';
       )) ?>
 
 <?php if(!$personal_profile): ?>
-<td><?php echo $user->getFirstName() ?> <b><?php echo $user->getLastName() ?></b></td>
+<td<?php if(!$user->getSfGuardUser()->getIsActive()) echo ' class="notcurrent"' ?>><?php echo link_to_if($sf_user->hasCredential('admin'), $user->getFullName(), url_for('users/edit?id=' . $user->getUserId())) ?></td>
 <td style="text-align: right"><?php echo $stats[$user->getUsername()]['used_' . $chart] ?></td>
 <td>
 <?php else: ?>
@@ -79,35 +79,31 @@ $darkyellow = 'dddd00';
 <td>
   <ul class="sf_admin_td_actions">
   <?php if($sf_user->hasCredential('admin')):?>
-    <li class="sf_admin_action_edit">
-    <?php echo link_to(
-          __('Edit'),
-          'users/editaccount?id='. $stats[$user->getUsername()]['id'],
-          array('title'=>__('Edit posix account of %user%', array('%user%'=>$user->getFullName())))
-          )?>
-    </li>
-    <?php if ($stats[$user->getUsername()][$chart .'_settings_changed']): ?>
-    <li class="sf_admin_action_userchecks">
-    <?php echo link_to(
-          __('Run user checks'),
-          'users/runuserchecks?id='. $user->getId(),
-          array('title'=>__('Run user checks for %user%', array('%user%'=>$user->getProfile()->getFullName())))
-          )?>
-    </li>
-    <?php endif ?>
-    <?php if ($stats[$user->getUsername()]['setting_soft_' . $chart . '_quota']>=$max_used): ?>
-    <li class="sf_admin_action_applytoall">
-    <?php echo link_to(
-          __('Apply to all'),
-          'users/copyaccountsettings?settings=' . $chart . '&from='. $stats[$user->getUsername()]['id']. '&to='. $accounts,
-          array(
-            'title'=>__('Apply these settings to all selected users\' accounts'),
-            'method'=>'post', 
-            'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale())
-            )
-          )?>
-    </li>
-    <?php endif ?>
+    <?php echo li_link_to_if(
+      'action_edit',
+      $sf_user->hasCredential('admin'),
+      __('Edit'),
+      'users/editaccount?id='. $stats[$user->getUsername()]['id'],
+      array('title'=>__('Edit posix account of %user%', array('%user%'=>$user->getFullName())))
+      )?>
+    <?php echo li_link_to_if(
+      'action_userchecks',
+      $stats[$user->getUsername()][$chart .'_settings_changed'],
+      __('Run user checks'),
+      'users/runuserchecks?id='. $user->getId(),
+      array('title'=>__('Run user checks for %user%', array('%user%'=>$user->getFullName())))
+      )?>
+    <?php echo li_link_to_if(
+      'action_applytoall',
+      $stats[$user->getUsername()]['setting_soft_' . $chart . '_quota']>=$max_used,
+      __('Apply to all'),
+      'users/copyaccountsettings?settings=' . $chart . '&from='. $stats[$user->getUsername()]['id']. '&to='. $accounts,
+      array(
+        'title'=>__('Apply these settings to all selected users\' accounts'),
+        'method'=>'post', 
+        'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale())
+        )
+      )?>
   <?php endif ?>
   </ul>
 </td>
