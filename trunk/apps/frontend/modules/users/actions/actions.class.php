@@ -456,6 +456,7 @@ class usersActions extends sfActions
     $this->quota_warning=sfConfig::get('app_config_posix_quotawarning', .8);
     $this->ids=$this->_getIds($request);
     $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
+    $this->getUser()->setAttribute('currently_selected', 'pk:'.implode(' pk:', $this->ids));
 
     $result=AccountPeer::RetrieveAccountInfo('posix', $this->userlist);
     $this->max_blocks=$result['max_blocks'];
@@ -596,6 +597,8 @@ class usersActions extends sfActions
     set_time_limit(0);
     $this->ids=$this->_getIds($request);
     $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
+    $this->getUser()->setAttribute('currently_selected', 'pk:'.implode(' pk:', $this->ids));
+
     
     $this->checkList = new CheckList();
     

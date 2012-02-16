@@ -4152,6 +4152,10 @@
         <source>Team «%team%» updated, posix name «%posix_name%»</source>
         <target>Team «%team%» aggiornato, nome posix «%posix_name%»</target>
     </trans-unit>
+    <trans-unit id="1049">
+        <source>Selected users</source>
+        <target>Utenti selezionati</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
