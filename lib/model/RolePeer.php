@@ -30,7 +30,7 @@ class RolePeer extends BaseRolePeer
 	{
 		$c=new Criteria();
 		$c->add(RolePeer::IS_KEY, false);
-		$c->add(RolePeer::QUALITY_CODE, null, Criteria::ISNOTNULL);
+		$c->add(RolePeer::QUALITY_CODE, '', Criteria::NOT_EQUAL);
 		$c->add(RolePeer::MAY_BE_MAIN_ROLE, false);
     return self::retrieveAll($c);
 	}

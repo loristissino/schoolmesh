@@ -4,7 +4,7 @@
 		<li>
 			<?php echo  $event->getCreatedAt() ?>: 
 			<?php if ($event->getsfGuardUser()): ?>
-      <strong><?php echo  $event->getSfGuardUser()->getProfile()->getFullName() 	?></strong><?php else: ?><span style="color: red"><?php echo __('No user specified') ?></span><?php endif ?>: 
+      <strong><?php echo  $event->getSfGuardUser()->getProfile()->getFullName() 	?></strong><?php else: ?><span style="color: blue"><?php echo __('System execution') ?></span><?php endif ?>: 
 			<?php echo  $event->getComment() ?>
 		</li>
 	<?php endforeach ?>
