@@ -82,5 +82,48 @@ class RolePeer extends BaseRolePeer
   }
 
 
+  public static function getOrganizationalChartOdf($doctype, sfContext $sfContext=null, $template='')
+  {
+		if ($template=='')
+		{
+			$template='organizational_chart.odt';
+		}
+
+		$doctitle='Organizational Chart';
+    $unassigned='Unassigned';
+
+		if ($sfContext)
+		{
+			$doctitle=$sfContext->getI18n()->__($doctitle);
+      $unassigned=$sfContext->getI18n()->__($unassigned);
+		}
+
+		try
+		{
+			$odf=new OdfDoc($template, $doctitle . '.' .$doctype, $doctype);
+		}
+		catch (Exception $e)
+		{
+			throw $e;
+		}
+		
+		$odfdoc=$odf->getOdfDocument();
+    
+    foreach(self::retrieveKeyRoles() as $Role)
+    {
+      $users=array();
+      if($userteams=$Role->getUsersPlayingRole())
+      {
+        foreach($userteams as $userteam)
+        {
+          $users[$userteam->getSfGuardUser()->getProfile()->getFullName()]=$userteam->getSfGuardUser()->getProfile()->getId();
+        }
+      }
+      $text=sizeof($users) ? implode(', ', array_flip($users)): $unassigned;
+      $odfdoc->setVars($Role->getQualityCode(), $text);
+    }
+    return $odf;
+  }
+
 
 }

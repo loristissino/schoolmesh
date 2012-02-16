@@ -45,4 +45,10 @@
 <?php endforeach ?>
 </ul>
 
+<h2><?php echo __('Organizational chart') ?></h2>
+
+<ul class="sf_admin_actions">
+  <?php echo li_link_to_if('action_download', true, __('Get updated organizational chart'), url_for('organization/chart')) ?>
+</ul>
+
 </div>
