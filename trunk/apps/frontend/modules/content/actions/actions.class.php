@@ -55,7 +55,7 @@ class contentActions extends sfActions
   public function executeScript(sfWebRequest $request)
   {
     $this->_validateScript($request);
-    return $this->_doServe($this->filepath, 'command' . date('Ymd-hms').'.sh');
+    return $this->_doServe($this->filepath, 'command' . date('Ymd-his').'.sh');
   }
   
   
