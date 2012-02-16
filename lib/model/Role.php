@@ -24,7 +24,6 @@ class Role extends BaseRole
   public function getUsersPlayingRole()
   {
      $userteam=RolePeer::retrieveUsersPlayingRole($this);
-     if($this->getQualityCode()=='REDP') Generic::logMessage('get', $userteam);
      return sizeof($userteam) ? $userteam : false;
   }
 }

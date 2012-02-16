@@ -35,6 +35,33 @@ class organizationActions extends sfActions     // $userteam=RolePeer::retrieveU
     $this->forward404Unless($this->role=RolePeer::retrieveByPK($request->getParameter('id')));
     $this->userteam=$this->role->getUsersPlayingRole();
   }
+
+  public function executeChart(sfWebRequest $request)
+  {
+    try 
+    {
+      $odfdoc=RolePeer::getOrganizationalChartOdf($this->getUser()->getProfile()->getPreferredFormat(), $this->getContext(), $request->getParameter('template', ''));
+    }
+    catch (Exception $e)
+    {
+      $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.') . ' '. $e->getMessage());
+      $this->forward('organization', 'index');
+    }
+    
+    try
+    {
+      $odfdoc
+      ->saveFile()
+      ->setResponse($this->getContext()->getResponse());
+      return sfView::NONE;
+    }
+    catch (Exception $e)
+    {
+      $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Conversion failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the contents.'));
+      $this->forward('organization', 'index');
+    }
+
+  }
   
   
 }

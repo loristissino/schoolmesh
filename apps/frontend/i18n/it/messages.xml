@@ -4160,12 +4160,20 @@
         <source>The expense budgeted for this resource must be confirmed.</source>
         <target>La spesa prevista per questa risorsa deve essere confermata.</target>
     </trans-unit>
+    <trans-unit id="1051">
+        <source>Organizational Chart</source>
+        <target>Organigramma</target>
+    </trans-unit>
+    <trans-unit id="1051">
+        <source>Unassigned</source>
+        <target>Non assegnato</target>
+    </trans-unit>
+    <trans-unit id="1052">
+        <source>Get updated organizational chart</source>
+        <target>Scarica organigramma aggiornato</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
-
-
-
-
 
 
