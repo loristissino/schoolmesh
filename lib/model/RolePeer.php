@@ -122,6 +122,9 @@ class RolePeer extends BaseRolePeer
       $text=sizeof($users) ? implode(', ', array_flip($users)): $unassigned;
       $odfdoc->setVars($Role->getQualityCode(), $text);
     }
+    
+    $odfdoc->setVars('date', date('d/m/Y'));
+    
     return $odf;
   }
 
