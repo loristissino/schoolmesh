@@ -286,12 +286,12 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
   
 	public static function getChargeLetters($ids, $filetype='odt', $context=null)
 	{
-    return self::_getInfoLetters($ids, 'Charge letters', 'projects_charges.odt', $filetype, array('date'=>'current'), $context);
+    return self::_getInfoLetters($ids, 'Charge letters', 'projects_charges.odt', $filetype, array('date'=>'current', 'resources'=>'human'), $context);
 	}
 
 	public static function getSubmissionLetters($ids, $filetype='odt', $context=null)
 	{
-    return self::_getInfoLetters($ids, 'Submission letters', 'projects_submission.odt', $filetype, array('date'=>'submission'), $context);
+    return self::_getInfoLetters($ids, 'Submission letters', 'projects_submission.odt', $filetype, array('date'=>'submission', 'resources'=>'all'), $context);
 	}
 
 
@@ -363,22 +363,27 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       
       $externalResources=0;
       
-      foreach($project->getProjResources() as $Resource)
+      $c=new Criteria();
+      if ($options['resources']=='all')
+      {
+        // this is used for the submission letters, where we want all
+        // the resources declared, sorted by date
+        $c->addAscendingOrderByColumn(ProjResourcePeer::SCHEDULED_DEADLINE);
+      }
+      elseif ($options['resources']=='human')
+      {
+        // this is used for the project charges letters, where we want only
+        // human resources declared, sorted by role_id / rank
+        $c->add(ProjResourceTypePeer::ROLE_ID, null, Criteria::ISNOTNULL);
+        $c->addAscendingOrderByColumn(ProjResourceTypePeer::RANK);
+      }
+      
+      foreach($project->getProjResources($c) as $Resource)
       {
         $ResourceType=$Resource->getProjResourceType();
         $letters->resources->resourceDescription($Resource->getDescription());
         $letters->resources->resourceType($ResourceType->getDescription());
-        
-        if(!$ResourceType->getRoleId())
-        {
-          $letters->resources->resourceNotes('*');
-          $externalResources++;
-        }
-        else
-        {
-          $letters->resources->resourceNotes('');
-        }
-        
+                
         $letters->resources->resourceChargedUser($Resource->getChargedUserProfile());
         $letters->resources->resourceQuantity(OdfDocPeer::quantityvalue($Resource->getQuantityApproved(), $ResourceType->getMeasurementUnit()));
         $letters->resources->merge();
@@ -387,14 +392,6 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
           $usedtypes[$ResourceType->getId()]=$ResourceType;
         }
       }
-
-      $notes='The expense budgeted for this resource must be confirmed.';
-      if($context)
-      {
-        $notes=$context->getI18N()->__($notes);
-      }
-
-      $letters->letterResourceNotes($externalResources?'* '.$notes:'');
       
       foreach($project->getProjUpshots() as $Upshot)
       {
