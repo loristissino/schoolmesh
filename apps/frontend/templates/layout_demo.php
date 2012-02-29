@@ -52,7 +52,7 @@
   <div id="navigation">
     <ul>
        <li><?php echo link_to(__("Home"), '@homepage') ?></li>
-       <li><?php echo link_to_if($sf_user->hasCredential('admin'), __("Who's on line"), '@whosonline') ?></li>
+       <?php if($sf_user->hasCredential('admin')): ?><li><?php echo link_to(__("Who's on line"), '@whosonline') ?></li><?php endif ?>
        <li><?php echo link_to(__("My profile"), '@profile')  ?></li>
        <li><?php echo link_to(__("Documents"), url_for('content/documents'))  ?></li>
        <li><?php echo link_to(__("Organization"), '@organization'))  ?></li>

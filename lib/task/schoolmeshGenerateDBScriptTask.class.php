@@ -23,7 +23,7 @@ class schoolmeshGenerateDBScriptTask extends sfBaseTask
     ));
     
     $this->addArguments(array(
-      new sfCommandArgument('type', sfCommandArgument::REQUIRED, 'The type of script needed (initdb, backup, restore)'),
+      new sfCommandArgument('type', sfCommandArgument::REQUIRED, 'The type of script needed (init, backup, restore)'),
       new sfCommandArgument('scriptfile', sfCommandArgument::REQUIRED, 'The file to write the script to'),
     ));
 
