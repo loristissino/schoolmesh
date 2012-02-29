@@ -12,7 +12,9 @@
 
 <?php include_partial('content/history', array('div_id'=>'searches', 'title'=>'Recent searches:', 'name'=>'users_search_history', 'user'=>$sf_user)) ?>
 
+<?php if($pager->getNbResults()>0): ?>
 <?php include_partial('content/pagerhead', array('pager'=>$pager)) ?>
+<?php endif ?>
 
 <?php include_partial('content/pager', array('pager'=>$pager, 'link'=>'users/list', 'query'=>$query)) ?>
 
@@ -28,7 +30,9 @@
       <th class="sf_admin_text" style="text-align: right"><?php echo __('#') ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('G'), url_for( 'users/setsortlistpreference?sortby=gender&query='.$query)) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Username'), url_for( 'users/setsortlistpreference?sortby=username&query='.$query)) ?></th>
+      <?php /*
       <th class="sf_admin_text"><?php echo link_to(__('Import Code'), url_for( 'users/setsortlistpreference?sortby=importcode&query='.$query)) ?></th>
+      */?>
       <th class="sf_admin_text"><?php echo link_to(__('Role'), url_for( 'users/setsortlistpreference?sortby=role&query='.$query)) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('First name'), url_for('users/setsortlistpreference?sortby=firstname&query='.$query)) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Last name'), url_for( 'users/setsortlistpreference?sortby=lastname&query='.$query)) ?></th>
@@ -57,7 +61,9 @@
       ?>
       
       </td>
+      <?php /*
       <td><?php echo $user->getImportCode() ?></td>
+      */?>
       <td><?php echo $user->getRoleDescription() ?></td>
       <td><?php echo $user->getFirstName() ?></td>
       <td><?php echo $user->getLastName() ?></td>
