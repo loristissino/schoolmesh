@@ -244,3 +244,13 @@ function li_link_to_if($class_suffix, $condition, $name, $internal_uri, $options
   }
   
 }
+
+function customdir()
+{
+  $customdir=dirname($_SERVER['SCRIPT_NAME']);
+  if($customdir=='/')
+  {
+    $customdir='';
+  }
+  return $customdir . '/custom';
+}
