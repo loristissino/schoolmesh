@@ -8,7 +8,7 @@ echo "Updating the sources..."
 sudo apt-get update
 echo "Upgrading installed software..."
 sudo apt-get upgrade
-echo "Installed needed software..."
+echo "Installing needed software..."
 sudo apt-get install subversion gawk pandoc php5-common php5-cli php5-gd \
 php5-mcrypt libapache2-mod-php5 php5-ldap php5-mysql php5-xsl dialog \
 apache2 apache2-utils mysql-server libdbd-mysql-perl libdbi-perl \
@@ -61,12 +61,12 @@ for FILE in schoolmesh.rc databases.yml timeslots.yml; do
   sudo ln -s "$CONFIGDIR/config/$FILE" "$INSTALLDIR/config/$FILE"
 done
 
-for FILE in app.yml factories.yml; do
+for FILE in app.yml factories.yml settings.yml; do
   sudo cp -v "$INSTALLDIR/apps/frontend/config/$FILE-dist" "$CONFIGDIR/apps/frontend/config/$FILE"
   sudo ln -s "$CONFIGDIR/apps/frontend/config/$FILE" "$INSTALLDIR/apps/frontend/config/$FILE"
 done
 
-for FILE in app.yml; do
+for FILE in app.yml settings.yml; do
   sudo cp -v "$INSTALLDIR/apps/backend/config/$FILE-dist" "$CONFIGDIR/apps/backend/config/$FILE"
   sudo ln -s "$CONFIGDIR/apps/backend/config/$FILE" "$INSTALLDIR/apps/backend/config/$FILE"
 done
