@@ -922,6 +922,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 			$profiles->userFullName($user->getFullName());
 			$profiles->userFirstname($user->getFirstName());
 			$profiles->userLastname($user->getLastName());
+			$profiles->userImportCode($user->getImportCode());
 			$profiles->userBirthplace($user->getBirthplace());
 			$profiles->userBirthdate($user->getBirthdate('d/m/Y'));
       
