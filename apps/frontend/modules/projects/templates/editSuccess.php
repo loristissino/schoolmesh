@@ -7,7 +7,7 @@
 <?php if($breadcrumpstype=='projects/monitoring'):?>
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
-    'projects/monitor' => __("Projects monitoring"),
+    'projects/monitor' => __("Projects management"),
     ),
   'current'=>$project->getTitle()
   ))
@@ -284,21 +284,22 @@
       <?php endif ?>
       <td>
       <ul class="sf_admin_td_actions">
-        <?php if($project->getState()>=Workflow::PROJ_DRAFT): ?>
-        <li class="sf_admin_action_edit">
-        <?php echo link_to(
+        <?php echo li_link_to_if(
+            'td_action_edit',
+            $project->getState()>=Workflow::PROJ_DRAFT,
             __('Edit'),
             url_for('projects/editupshot?id='. $upshot->getId())
             )
-             ?></li>
-        <li class="sf_admin_action_delete">
-        <?php echo link_to(
+             ?>
+        <?php echo li_link_to_if(
+            'td_action_delete',
+            $project->getState()>=Workflow::PROJ_DRAFT,
             __('Delete'),
             url_for('projects/deleteupshot?id='. $upshot->getId()),
             array('method'=>'post', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))
             )
-             ?></li>
-        <?php endif ?>
+             ?>
+        
           
       </ul>
       </td>
@@ -359,21 +360,21 @@
       <td><?php include_partial('content/notes', array('notes'=>$deadline->getNotes())) ?></td>
       <td>
       <ul class="sf_admin_td_actions">
-        <?php if($project->getState()>=Workflow::PROJ_DRAFT): ?>
-        <li class="sf_admin_action_edit">
-        <?php echo link_to(
+        <?php echo li_link_to_if(
+            'td_action_edit',
+            $project->getState()>=Workflow::PROJ_DRAFT,
             __('Edit'),
             url_for('projects/editdeadline?id='. $deadline->getId())
             )
-             ?></li>
-        <li class="sf_admin_action_delete">
-        <?php echo link_to(
+             ?>
+        <?php echo li_link_to_if(
+            'td_action_delete',
+            $project->getState()>=Workflow::PROJ_DRAFT,
             __('Delete'),
             url_for('projects/deletedeadline?id='. $deadline->getId()),
             array('method'=>'post', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))
             )
-             ?></li>
-        <?php endif ?>
+             ?>
           
       </ul>
       </td>

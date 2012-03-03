@@ -355,6 +355,7 @@ propel:
     proj_financing_id: ~ 
     year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    team_id:          { type: integer, foreignTable: team, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }  # people delegated by the coordinator to do some of his/her activities
     title:        varchar(255)
     description:  longvarchar # what has to be done and how
     notes:        longvarchar

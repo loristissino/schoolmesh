@@ -45,6 +45,30 @@ class TeamPeer extends BaseTeamPeer
       $c->setDistinct();
 			return parent::doSelect($c);
     }
+
+  static public function retrieveJoined($user_id, $options=array())
+    {
+      /* retrieves teams which have the user identified by $user_id as component */
+			$c = new Criteria();
+      $c->addJoin(TeamPeer::ID, UserTeamPeer::TEAM_ID);
+			$c->add(UserTeamPeer::USER_ID, $user_id);
+			$c->addAscendingOrderByColumn(TeamPeer::DESCRIPTION);
+      $c->setDistinct();
+      
+      $result=parent::doSelect($c);
+      
+      $array=array();
+      if(isset($options['as_array']) && $options['as_array'])
+      {
+        foreach($result as $team)
+        {
+          $array[]=$team->getId();
+        }
+        return $array;
+      }
+      
+			return $result;
+    }
     
   static public function createTeam($caller_id, $params=array(), $sf_context, $con)
     {

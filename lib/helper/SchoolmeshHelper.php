@@ -238,9 +238,19 @@ function li_link_to_if($class_suffix, $condition, $name, $internal_uri, $options
 {
   if($condition)
   {
+    if(substr($class_suffix, 0, 3)=='td_')
+    {
+      $class_suffix=substr($class_suffix, 3);
+      $td=true;
+    }
+    else
+    {
+      $td=false;
+    }
+    
     return '<li class="sf_admin_' . $class_suffix. '">' . 
     link_to($name, $internal_uri, $options).
-    '</li>' . (substr($class_suffix, 0, 3)!='td_' ? '<br />': '');
+    '</li>' . (!$td ? '<br />': '');
   }
   
 }

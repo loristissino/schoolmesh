@@ -23,7 +23,7 @@ class ProjResource extends BaseProjResource {
       || 
       $user->hasCredential('proj_adm_ok')
       ||
-      $user->hasCredential('project') 
+      $user->getProfile()->getBelongsToTeamById($this->getSchoolproject()->getTeamId())   
       ;
   }
   
