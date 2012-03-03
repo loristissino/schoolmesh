@@ -39,6 +39,7 @@ class ProjDeadline extends BaseProjDeadline {
     $con = Propel::getConnection(ProjDeadlinePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
     // we need to check which ones are present, because it depends on the state
     Generic::updateObjectFromForm($this, array(
+      'user_id',
       'original_deadline_date',
       'current_deadline_date',
       'description',
@@ -79,6 +80,8 @@ class ProjDeadline extends BaseProjDeadline {
       $user->getProfile()->getUserId()===$this->getSchoolproject()->getUserId()
       || 
       $user->hasCredential('admin')
+      ||
+      $user->getProfile()->getBelongsToTeamById($this->getSchoolproject()->getTeamId())   
       ;
   }
 

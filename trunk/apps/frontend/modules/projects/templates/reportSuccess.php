@@ -1,7 +1,7 @@
 <?php if($breadcrumpstype=='projects/monitoring/viewasreport'): ?>
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
-    'projects/monitor' =>__("Projects monitoring")
+    'projects/monitor' =>__("Projects management")
     ),
   'current'=>__('Projects report')
   ))
@@ -10,7 +10,7 @@
 <?php if($breadcrumpstype=='projects/monitoring/project/view'): ?>
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
-    'projects/monitor' =>__("Projects monitoring"),
+    'projects/monitor' =>__("Projects management"),
     '_project' => __('Project «%title%»', array('%title%'=>$projects[0]))
     ),
   'current'=>__('Project view')

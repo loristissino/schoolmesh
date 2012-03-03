@@ -20,7 +20,7 @@ class projectsActions extends sfActions
   {
 
 //   $this->projects=SchoolprojectPeer::retrieveAllForYearAndUser(sfConfig::get('app_config_current_year'), $this->getUser()->getProfile()->getSfGuardUser()->getId());
-   $this->projects=SchoolprojectPeer::retrieveAllForUser($this->getUser()->getProfile()->getSfGuardUser()->getId());
+   $this->projects=SchoolprojectPeer::retrieveAllForUser($this->getUser()->getProfile()->getSfGuardUser()->getId(), array('delegated_too'=>true));
    $this->steps=Array();
 
    $this->setTemplate('index');
@@ -684,7 +684,7 @@ class projectsActions extends sfActions
 				
 				$this->deadline = ProjDeadlinePeer::retrieveByPK($params['id']);
 				
-				$result=$this->deadline->updateFromForm($params, $this->form->getValue('attachment'));
+				$result=$this->deadline->updateFromForm($params + array('user_id'=>$this->getUser()->getProfile()->getUserId()), $this->form->getValue('attachment'));
 				
 				$this->getUser()->setFlash($result['result'],
 					$this->getContext()->getI18N()->__($result['message'])

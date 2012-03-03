@@ -43,10 +43,21 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 		return self::doSelectJoinAll($c);
 	}
 
-  public static function retrieveAllForUser($user_id)
+  public static function retrieveAllForUser($user_id, $options=array())
 	{
 		$c=new Criteria();
-    $c->add(self::USER_ID, $user_id);
+    $coordinatorCriterion=$c->getNewCriterion(self::USER_ID, $user_id, Criteria::EQUAL);
+
+    if(isset($options['delegated_too']) && $options['delegated_too'])
+    {
+      $teams=TeamPeer::retrieveJoined($user_id, array('as_array'=>true));
+      $delegatedCriterion=$c->getNewCriterion(self::TEAM_ID, $teams, Criteria::IN);
+      
+      $coordinatorCriterion->addOr($delegatedCriterion); 
+      // see http://snippets.symfony-project.org/snippets/tagged/criteria/order_by/popularity
+    }
+
+    $c->add($coordinatorCriterion);
 		$c->addJoin(self::USER_ID, sfGuardUserPeer::ID);
 		$c->addDescendingOrderByColumn(self::YEAR_ID);
 		$c->addAscendingOrderByColumn(self::TITLE);

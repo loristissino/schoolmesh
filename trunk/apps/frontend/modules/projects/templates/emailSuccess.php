@@ -1,7 +1,7 @@
 <?php if($breadcrumpstype=='projects/monitoring/emailtocoordinator'): ?>
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
-    'projects/monitor' => __("Projects monitoring"),
+    'projects/monitor' => __("Projects management"),
     'projects/monitorview?id=' . $project->getId() => $project
     ),
   'current'=>__("Send an email"),

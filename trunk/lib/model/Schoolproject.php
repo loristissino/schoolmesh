@@ -32,6 +32,8 @@ class Schoolproject extends BaseSchoolproject {
       $user->getProfile()->getUserId()===$this->getUserId()
       || 
       $user->hasCredential('proj_adm_ok')
+      ||
+      $user->getProfile()->getBelongsToTeamById($this->getTeamId())   
       )
       &&
       $this->getState()<Workflow::PROJ_FINISHED;
@@ -56,6 +58,8 @@ class Schoolproject extends BaseSchoolproject {
       $user->hasCredential('proj_monitoring') 
       || 
       $user->hasCredential('admin')
+      ||
+      $user->getProfile()->getBelongsToTeamById($this->getTeamId())   
       ;
   }
   
@@ -347,6 +351,7 @@ class Schoolproject extends BaseSchoolproject {
       'goals',
       'final_report',
       'reference_number',
+      'team_id',
       ), $params);
     
     if($user && $user->getProfile()->getUserId()!=$this->getsfGuardUser())

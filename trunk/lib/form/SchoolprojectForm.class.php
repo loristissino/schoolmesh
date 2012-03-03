@@ -32,6 +32,7 @@ class SchoolprojectForm extends BaseSchoolprojectForm
   $this['description']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
   $this['final_report']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
   $this['proposals']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
+  $this['team_id']->getWidget()->addOption('add_empty', 'Choose a team')->addOption('peer_method', 'retrieveAll');
   
 /*
   $this->widgetSchema->setLabel('user_id', 'Coordinator');
@@ -89,12 +90,13 @@ class SchoolprojectForm extends BaseSchoolprojectForm
               $this['proj_financing_id']
             );
           }
-          if($user!=$this->schoolproject->getsfGuardUser())
+          if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
           {
             // the coordinator can change final notes
             unset(
               $this['final_report'],
-              $this['proposals']
+              $this['proposals'],
+              $this['team_id']
             );
           }
           
@@ -120,12 +122,14 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['goals'],
           $this['reference_number']
           );
-          if($user!=$this->schoolproject->getsfGuardUser())
+          if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
           {
             // the coordinator can change final notes
             unset(
               $this['final_report'],
-              $this['proposals']
+              $this['proposals'],
+              $this['team_id']
+
             );
           }
         break;
@@ -149,12 +153,13 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['goals'],
           $this['reference_number']
           );
-          if($user!=$this->schoolproject->getsfGuardUser())
+          if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
           {
             // the coordinator can change final notes
             unset(
               $this['final_report'],
-              $this['proposals']
+              $this['proposals'],
+              $this['team_id']
             );
           }
         break;
@@ -178,12 +183,13 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['goals'],
           $this['reference_number']
           );
-          if($user!=$this->schoolproject->getsfGuardUser())
+          if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
           {
             // the coordinator can change final notes
             unset(
               $this['final_report'],
-              $this['proposals']
+              $this['proposals'],
+              $this['team_id']
             );
           }
         break;
@@ -202,7 +208,9 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_notes'], 
           $this['financing_notes'],
           $this['confirmation_date'],
-          $this['reference_number']
+          $this['reference_number'],
+          $this['team_id']
+
           );
         break;
     }

@@ -929,6 +929,25 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			}
 			;
     }
+    
+    public function getBelongsToTeamById($team_id)
+    {
+      $c = new Criteria();
+			$c->add(UserTeamPeer::USER_ID, $this->getUserId());
+			$c->add(UserTeamPeer::TEAM_ID, $team_id);
+			$t = UserTeamPeer::doSelectOne($c);
+			
+			if ($t)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+			;
+    }
+    
 		
 		public function addToTeam($caller_id, Team $team, Role $role, $expiry=null, $sf_context)
 		{

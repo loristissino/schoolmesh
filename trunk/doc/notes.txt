@@ -1,3 +1,6 @@
+2012/03/03
+Added team_id field in schoolproject table
+
 2012/02/12
 Added field is_key (boolean) on role table
 

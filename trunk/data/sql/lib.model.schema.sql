@@ -975,6 +975,7 @@ CREATE TABLE `schoolproject`
 	`proj_financing_id` INTEGER,
 	`year_id` INTEGER  NOT NULL,
 	`user_id` INTEGER  NOT NULL,
+	`team_id` INTEGER,
 	`title` VARCHAR(255),
 	`description` TEXT,
 	`notes` TEXT,
@@ -1014,6 +1015,12 @@ CREATE TABLE `schoolproject`
 	CONSTRAINT `schoolproject_FK_4`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `schoolproject_FI_5` (`team_id`),
+	CONSTRAINT `schoolproject_FK_5`
+		FOREIGN KEY (`team_id`)
+		REFERENCES `team` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
 )Type=InnoDB;

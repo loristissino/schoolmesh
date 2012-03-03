@@ -1,6 +1,6 @@
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
-    'projects/monitor' =>__("Projects monitoring")
+    'projects/monitor' =>__("Projects management")
     ),
   'current'=>__('Compute budget'),
   'title'=>__('Budget computation'),
