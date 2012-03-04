@@ -1105,6 +1105,8 @@ CREATE TABLE `proj_resource_type`
 	`measurement_unit` VARCHAR(10),
 	`is_monetary` TINYINT default 1,
 	`rank` INTEGER,
+	`printed_in_submission_letters` TINYINT default 1,
+	`printed_in_charge_letters` TINYINT default 1,
 	PRIMARY KEY (`id`),
 	INDEX `proj_resource_type_FI_1` (`role_id`),
 	CONSTRAINT `proj_resource_type_FK_1`

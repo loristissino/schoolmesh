@@ -4172,8 +4172,18 @@
         <source>Get updated organizational chart</source>
         <target>Scarica organigramma aggiornato</target>
     </trans-unit>
+    <trans-unit id="1053">
+        <source>Printed in submission letters</source>
+        <target>Stampa in lettera di consegna</target>
+    </trans-unit>
+    <trans-unit id="1054">
+        <source>Printed in charge letters</source>
+        <target>Stampa in lettera di incarico</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
+
 
 

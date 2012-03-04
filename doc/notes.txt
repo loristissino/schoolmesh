@@ -1,3 +1,9 @@
+2012/03/4
+Added two boolean fields in proj_resource_type table:
+    printed_in_submission_letters: { type: boolean, default: true }
+    printed_in_charge_letters: { type: boolean, default: true }
+Now these ones are used to determinate whether a resource must be printed or not 
+
 2012/03/03
 Added team_id field in schoolproject table
 

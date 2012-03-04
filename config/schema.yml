@@ -411,6 +411,8 @@ propel:
     measurement_unit: varchar(10)
     is_monetary: { type: boolean, default: true }
     rank: integer
+    printed_in_submission_letters: { type: boolean, default: true }
+    printed_in_charge_letters: { type: boolean, default: true }
 
   proj_resource:
     id: ~

@@ -297,15 +297,13 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
   
 	public static function getChargeLetters($ids, $filetype='odt', $context=null)
 	{
-    return self::_getInfoLetters($ids, 'Charge letters', 'projects_charges.odt', $filetype, array('date'=>'current', 'resources'=>'human'), $context);
+    return self::_getInfoLetters($ids, 'Charge letters', 'projects_charges.odt', $filetype, array('date'=>'current', 'resources_query'=>'charge', 'resources_sort'=>'type'), $context);
 	}
 
 	public static function getSubmissionLetters($ids, $filetype='odt', $context=null)
 	{
-    return self::_getInfoLetters($ids, 'Submission letters', 'projects_submission.odt', $filetype, array('date'=>'submission', 'resources'=>'all'), $context);
+    return self::_getInfoLetters($ids, 'Submission letters', 'projects_submission.odt', $filetype, array('date'=>'submission', 'resources_query'=>'submission', 'resources_sort'=>'date'), $context);
 	}
-
-
 
 	private static function _getInfoLetters($ids, $filename, $templatename, $filetype='odt', $options=array(), $context=null)
 	{
@@ -375,18 +373,25 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       $externalResources=0;
       
       $c=new Criteria();
-      if ($options['resources']=='all')
+      
+      switch($options['resources_query'])
       {
-        // this is used for the submission letters, where we want all
-        // the resources declared, sorted by date
-        $c->addAscendingOrderByColumn(ProjResourcePeer::SCHEDULED_DEADLINE);
+        case 'submission':
+          $c->add(ProjResourceTypePeer::PRINTED_IN_SUBMISSION_LETTERS, true);
+          break;
+        case 'charge':
+          $c->add(ProjResourceTypePeer::PRINTED_IN_CHARGE_LETTERS, true);
+          break;
       }
-      elseif ($options['resources']=='human')
+
+      switch($options['resources_sort'])
       {
-        // this is used for the project charges letters, where we want only
-        // human resources declared, sorted by role_id / rank
-        $c->add(ProjResourceTypePeer::ROLE_ID, null, Criteria::ISNOTNULL);
-        $c->addAscendingOrderByColumn(ProjResourceTypePeer::RANK);
+        case 'date':
+          $c->addAscendingOrderByColumn(ProjResourcePeer::SCHEDULED_DEADLINE);
+          break;
+        case 'type':
+          $c->addAscendingOrderByColumn(ProjResourceTypePeer::RANK);
+          break;
       }
       
       foreach($project->getProjResources($c) as $Resource)
