@@ -62,6 +62,20 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	protected $rank;
 
 	/**
+	 * The value for the printed_in_submission_letters field.
+	 * Note: this column has a database default value of: true
+	 * @var        boolean
+	 */
+	protected $printed_in_submission_letters;
+
+	/**
+	 * The value for the printed_in_charge_letters field.
+	 * Note: this column has a database default value of: true
+	 * @var        boolean
+	 */
+	protected $printed_in_charge_letters;
+
+	/**
 	 * @var        Role
 	 */
 	protected $aRole;
@@ -103,6 +117,8 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	public function applyDefaultValues()
 	{
 		$this->is_monetary = true;
+		$this->printed_in_submission_letters = true;
+		$this->printed_in_charge_letters = true;
 	}
 
 	/**
@@ -183,6 +199,26 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	public function getRank()
 	{
 		return $this->rank;
+	}
+
+	/**
+	 * Get the [printed_in_submission_letters] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getPrintedInSubmissionLetters()
+	{
+		return $this->printed_in_submission_letters;
+	}
+
+	/**
+	 * Get the [printed_in_charge_letters] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getPrintedInChargeLetters()
+	{
+		return $this->printed_in_charge_letters;
 	}
 
 	/**
@@ -330,6 +366,46 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	} // setRank()
 
 	/**
+	 * Set the value of [printed_in_submission_letters] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     ProjResourceType The current object (for fluent API support)
+	 */
+	public function setPrintedInSubmissionLetters($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->printed_in_submission_letters !== $v || $this->isNew()) {
+			$this->printed_in_submission_letters = $v;
+			$this->modifiedColumns[] = ProjResourceTypePeer::PRINTED_IN_SUBMISSION_LETTERS;
+		}
+
+		return $this;
+	} // setPrintedInSubmissionLetters()
+
+	/**
+	 * Set the value of [printed_in_charge_letters] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     ProjResourceType The current object (for fluent API support)
+	 */
+	public function setPrintedInChargeLetters($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->printed_in_charge_letters !== $v || $this->isNew()) {
+			$this->printed_in_charge_letters = $v;
+			$this->modifiedColumns[] = ProjResourceTypePeer::PRINTED_IN_CHARGE_LETTERS;
+		}
+
+		return $this;
+	} // setPrintedInChargeLetters()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -340,6 +416,14 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	public function hasOnlyDefaultValues()
 	{
 			if ($this->is_monetary !== true) {
+				return false;
+			}
+
+			if ($this->printed_in_submission_letters !== true) {
+				return false;
+			}
+
+			if ($this->printed_in_charge_letters !== true) {
 				return false;
 			}
 
@@ -372,6 +456,8 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			$this->measurement_unit = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->is_monetary = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
 			$this->rank = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
+			$this->printed_in_submission_letters = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
+			$this->printed_in_charge_letters = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -381,7 +467,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 7; // 7 = ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 9; // 9 = ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjResourceType object", $e);
@@ -745,6 +831,12 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			case 6:
 				return $this->getRank();
 				break;
+			case 7:
+				return $this->getPrintedInSubmissionLetters();
+				break;
+			case 8:
+				return $this->getPrintedInChargeLetters();
+				break;
 			default:
 				return null;
 				break;
@@ -773,6 +865,8 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			$keys[4] => $this->getMeasurementUnit(),
 			$keys[5] => $this->getIsMonetary(),
 			$keys[6] => $this->getRank(),
+			$keys[7] => $this->getPrintedInSubmissionLetters(),
+			$keys[8] => $this->getPrintedInChargeLetters(),
 		);
 		return $result;
 	}
@@ -825,6 +919,12 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			case 6:
 				$this->setRank($value);
 				break;
+			case 7:
+				$this->setPrintedInSubmissionLetters($value);
+				break;
+			case 8:
+				$this->setPrintedInChargeLetters($value);
+				break;
 		} // switch()
 	}
 
@@ -856,6 +956,8 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[4], $arr)) $this->setMeasurementUnit($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setIsMonetary($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setRank($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setPrintedInSubmissionLetters($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setPrintedInChargeLetters($arr[$keys[8]]);
 	}
 
 	/**
@@ -874,6 +976,8 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProjResourceTypePeer::MEASUREMENT_UNIT)) $criteria->add(ProjResourceTypePeer::MEASUREMENT_UNIT, $this->measurement_unit);
 		if ($this->isColumnModified(ProjResourceTypePeer::IS_MONETARY)) $criteria->add(ProjResourceTypePeer::IS_MONETARY, $this->is_monetary);
 		if ($this->isColumnModified(ProjResourceTypePeer::RANK)) $criteria->add(ProjResourceTypePeer::RANK, $this->rank);
+		if ($this->isColumnModified(ProjResourceTypePeer::PRINTED_IN_SUBMISSION_LETTERS)) $criteria->add(ProjResourceTypePeer::PRINTED_IN_SUBMISSION_LETTERS, $this->printed_in_submission_letters);
+		if ($this->isColumnModified(ProjResourceTypePeer::PRINTED_IN_CHARGE_LETTERS)) $criteria->add(ProjResourceTypePeer::PRINTED_IN_CHARGE_LETTERS, $this->printed_in_charge_letters);
 
 		return $criteria;
 	}
@@ -939,6 +1043,10 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 		$copyObj->setIsMonetary($this->is_monetary);
 
 		$copyObj->setRank($this->rank);
+
+		$copyObj->setPrintedInSubmissionLetters($this->printed_in_submission_letters);
+
+		$copyObj->setPrintedInChargeLetters($this->printed_in_charge_letters);
 
 
 		if ($deepCopy) {
