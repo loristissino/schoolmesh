@@ -315,6 +315,11 @@
   background-color: #fa1;
 }
 
+#sf_admin_container tr:hover
+{
+  background-color: #ffffbf;
+}
+
 
 div.check_results
 {
