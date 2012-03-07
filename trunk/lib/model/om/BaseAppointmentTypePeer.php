@@ -25,7 +25,7 @@ abstract class BaseAppointmentTypePeer {
 	const TM_CLASS = 'AppointmentTypeTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 7;
+	const NUM_COLUMNS = 8;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -35,6 +35,9 @@ abstract class BaseAppointmentTypePeer {
 
 	/** the column name for the DESCRIPTION field */
 	const DESCRIPTION = 'appointment_type.DESCRIPTION';
+
+	/** the column name for the SHORTCUT field */
+	const SHORTCUT = 'appointment_type.SHORTCUT';
 
 	/** the column name for the RANK field */
 	const RANK = 'appointment_type.RANK';
@@ -74,11 +77,11 @@ abstract class BaseAppointmentTypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'Rank', 'IsActive', 'HasInfo', 'HasModules', 'HasTools', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'rank', 'isActive', 'hasInfo', 'hasModules', 'hasTools', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::RANK, self::IS_ACTIVE, self::HAS_INFO, self::HAS_MODULES, self::HAS_TOOLS, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'rank', 'is_active', 'has_info', 'has_modules', 'has_tools', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'Shortcut', 'Rank', 'IsActive', 'HasInfo', 'HasModules', 'HasTools', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'shortcut', 'rank', 'isActive', 'hasInfo', 'hasModules', 'hasTools', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::SHORTCUT, self::RANK, self::IS_ACTIVE, self::HAS_INFO, self::HAS_MODULES, self::HAS_TOOLS, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'shortcut', 'rank', 'is_active', 'has_info', 'has_modules', 'has_tools', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	/**
@@ -88,11 +91,11 @@ abstract class BaseAppointmentTypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'Rank' => 2, 'IsActive' => 3, 'HasInfo' => 4, 'HasModules' => 5, 'HasTools' => 6, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'isActive' => 3, 'hasInfo' => 4, 'hasModules' => 5, 'hasTools' => 6, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::RANK => 2, self::IS_ACTIVE => 3, self::HAS_INFO => 4, self::HAS_MODULES => 5, self::HAS_TOOLS => 6, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'is_active' => 3, 'has_info' => 4, 'has_modules' => 5, 'has_tools' => 6, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'Shortcut' => 2, 'Rank' => 3, 'IsActive' => 4, 'HasInfo' => 5, 'HasModules' => 6, 'HasTools' => 7, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'shortcut' => 2, 'rank' => 3, 'isActive' => 4, 'hasInfo' => 5, 'hasModules' => 6, 'hasTools' => 7, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::SHORTCUT => 2, self::RANK => 3, self::IS_ACTIVE => 4, self::HAS_INFO => 5, self::HAS_MODULES => 6, self::HAS_TOOLS => 7, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'shortcut' => 2, 'rank' => 3, 'is_active' => 4, 'has_info' => 5, 'has_modules' => 6, 'has_tools' => 7, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	/**
@@ -164,6 +167,7 @@ abstract class BaseAppointmentTypePeer {
 	{
 		$criteria->addSelectColumn(AppointmentTypePeer::ID);
 		$criteria->addSelectColumn(AppointmentTypePeer::DESCRIPTION);
+		$criteria->addSelectColumn(AppointmentTypePeer::SHORTCUT);
 		$criteria->addSelectColumn(AppointmentTypePeer::RANK);
 		$criteria->addSelectColumn(AppointmentTypePeer::IS_ACTIVE);
 		$criteria->addSelectColumn(AppointmentTypePeer::HAS_INFO);

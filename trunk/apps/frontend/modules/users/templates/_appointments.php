@@ -6,8 +6,7 @@
 		<th class="sf_admin_text"><?php echo __('Year') ?></th>
 		<th class="sf_admin_text"><?php echo __('Class') ?></th>
 		<th class="sf_admin_text"><?php echo __('Team') ?></th>
-		<th class="sf_admin_text"><?php echo __('Type') ?></th>
-		<th class="sf_admin_text"><?php echo __('Subject') ?></th>
+		<th class="sf_admin_text"><?php echo __('Type') ?>/<?php echo __('Subject') ?></th>
 		<th class="sf_admin_text"><?php echo __('Hours') ?></th>
 		<th class="sf_admin_text"><?php echo __('State') ?></th>
 		<th class="sf_admin_text"><?php echo __('Actions') ?></th>
@@ -24,10 +23,11 @@
 			<?php echo $appointment->getTeam() ?>
 		</td>
     <td>
-			<?php echo $appointment->getAppointmentType() ?>
-		</td>
-		<td>
-			<?php echo $appointment->getSubject() ?>
+      <?php if($appointment->getSubjectId()): ?>
+        <?php echo $appointment->getSubject() ?>
+      <?php else: ?>
+        <?php echo $appointment->getAppointmentType() ?>
+      <?php endif ?>
 		</td>
 		<td>
 			<?php echo $appointment->getHours() ?>

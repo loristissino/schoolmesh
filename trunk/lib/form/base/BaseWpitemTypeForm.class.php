@@ -28,6 +28,8 @@ abstract class BaseWpitemTypeForm extends BaseFormPropel
       'evaluation_max'             => new sfWidgetFormInputText(),
       'evaluation_min_description' => new sfWidgetFormInputText(),
       'evaluation_max_description' => new sfWidgetFormInputText(),
+      'grade_min'                  => new sfWidgetFormInputText(),
+      'grade_max'                  => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -45,6 +47,8 @@ abstract class BaseWpitemTypeForm extends BaseFormPropel
       'evaluation_max'             => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'evaluation_min_description' => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'evaluation_max_description' => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'grade_min'                  => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'grade_max'                  => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(

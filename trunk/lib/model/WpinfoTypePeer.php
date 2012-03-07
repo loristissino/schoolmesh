@@ -27,11 +27,14 @@ class WpinfoTypePeer extends BaseWpinfoTypePeer
 		return parent::doSelect($c);
 	}
 
-	static public function getAllNeededForState($state, $appointment_type_id)
+	static public function getAllNeededForAppointment(Appointment $appointment)
 	{
+    
 		$c=new Criteria();
-		$c->add(WpinfoTypePeer::STATE, $state);
-		$c->add(WpinfoTypePeer::APPOINTMENT_TYPE_ID, $appointment_type_id);
+		$c->add(WpinfoTypePeer::STATE, $appointment->getState());
+		$c->add(WpinfoTypePeer::APPOINTMENT_TYPE_ID, $appointment->getAppointmentTypeId());
+		$c->add(self::GRADE_MIN, $appointment->getSchoolclass()->getGrade(), Criteria::LESS_EQUAL);
+		$c->add(self::GRADE_MAX, $appointment->getSchoolclass()->getGrade(), Criteria::GREATER_EQUAL);
 		$c->addAscendingOrderByColumn(WpinfoTypePeer::RANK);
 		return parent::doSelect($c);
 	}

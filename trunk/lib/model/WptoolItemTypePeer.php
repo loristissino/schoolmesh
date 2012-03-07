@@ -19,11 +19,13 @@ class WptoolItemTypePeer extends BaseWptoolItemTypePeer
 		return parent::doSelectOne($c);
 	}
 
-	static public function getAllNeededForState($state, $appointment_type_id)
+	static public function getAllNeededForAppointment(Appointment $appointment)
 	{
 		$c=new Criteria();
 		$c->add(WptoolItemTypePeer::STATE, $state);
-		$c->add(WptoolItemTypePeer::APPOINTMENT_TYPE_ID, $appointment_type_id);
+		$c->add(WptoolItemTypePeer::APPOINTMENT_TYPE_ID, $appointment->getAppointmentTypeId());
+		$c->add(self::GRADE_MIN, $appointment->getSchoolclass()->getGrade(), Criteria::LESS_EQUAL);
+		$c->add(self::GRADE_MAX, $appointment->getSchoolclass()->getGrade(), Criteria::GREATER_EQUAL);
 		$c->addAscendingOrderByColumn(WptoolItemTypePeer::RANK);
 		return parent::doSelect($c);
 	}

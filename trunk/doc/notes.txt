@@ -1,6 +1,7 @@
 2012/03/07
 Added table appointment_type.
 Changed references for wpinfo, wpitem_type, wptools for appointments.
+Added fields grade_min and grade_max in the same tables.
 
 2012/03/4
 Added two boolean fields in proj_resource_type table:

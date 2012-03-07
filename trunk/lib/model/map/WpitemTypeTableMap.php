@@ -50,6 +50,8 @@ class WpitemTypeTableMap extends TableMap {
 		$this->addColumn('EVALUATION_MAX', 'EvaluationMax', 'INTEGER', false, null, null);
 		$this->addColumn('EVALUATION_MIN_DESCRIPTION', 'EvaluationMinDescription', 'VARCHAR', false, 50, null);
 		$this->addColumn('EVALUATION_MAX_DESCRIPTION', 'EvaluationMaxDescription', 'VARCHAR', false, 50, null);
+		$this->addColumn('GRADE_MIN', 'GradeMin', 'INTEGER', false, null, 1);
+		$this->addColumn('GRADE_MAX', 'GradeMax', 'INTEGER', false, null, 5);
 		// validators
 	} // initialize()
 

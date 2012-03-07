@@ -18,6 +18,8 @@ abstract class BaseWptoolItemTypeFormFilter extends BaseFormFilterPropel
       'state'               => new sfWidgetFormFilterInput(),
       'min_selected'        => new sfWidgetFormFilterInput(),
       'max_selected'        => new sfWidgetFormFilterInput(),
+      'grade_min'           => new sfWidgetFormFilterInput(),
+      'grade_max'           => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -27,6 +29,8 @@ abstract class BaseWptoolItemTypeFormFilter extends BaseFormFilterPropel
       'state'               => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'min_selected'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'max_selected'        => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'grade_min'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'grade_max'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('wptool_item_type_filters[%s]');
@@ -51,6 +55,8 @@ abstract class BaseWptoolItemTypeFormFilter extends BaseFormFilterPropel
       'state'               => 'Number',
       'min_selected'        => 'Number',
       'max_selected'        => 'Number',
+      'grade_min'           => 'Number',
+      'grade_max'           => 'Number',
     );
   }
 }

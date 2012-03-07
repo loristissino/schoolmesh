@@ -28,10 +28,12 @@ static function retrieveByRank($rank = 1)
   return self::doSelectOne($c); 
 }
  
-static function getAllByRank($appointment_type_id)
+static function getAllByRank(Appointment $appointment)
 {
   $c = new Criteria;
-  $c->add(self::APPOINTMENT_TYPE_ID, $appointment_type_id);
+  $c->add(self::APPOINTMENT_TYPE_ID, $appointment->getAppointmentTypeId());
+  $c->add(self::GRADE_MIN, $appointment->getSchoolclass()->getGrade(), Criteria::LESS_EQUAL);
+	$c->add(self::GRADE_MAX, $appointment->getSchoolclass()->getGrade(), Criteria::GREATER_EQUAL);
   $c->addAscendingOrderByColumn(self::RANK);
   return self::doSelect($c); 
 }

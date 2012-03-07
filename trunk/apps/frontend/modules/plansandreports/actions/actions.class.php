@@ -505,7 +505,7 @@ public function executeBatch(sfWebRequest $request)
 
 	$this->wfevents = $this->workplan->getWorkflowLogs();
 	$this->wpinfos = $this->workplan->getWpinfos();
-	$this->wpitemTypes=WpitemTypePeer::getAllByRank($this->workplan->getSyllabusId());
+	$this->wpitemTypes=WpitemTypePeer::getAllByRank($this->workplan);
 	$this->tools = $this->workplan->getTools(true);
 	$this->is_owner = $this->workplan->getUserId() == $whoIsViewing;
 

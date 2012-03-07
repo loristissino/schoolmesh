@@ -25,7 +25,7 @@ abstract class BaseWptoolItemTypePeer {
 	const TM_CLASS = 'WptoolItemTypeTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 7;
+	const NUM_COLUMNS = 9;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -51,6 +51,12 @@ abstract class BaseWptoolItemTypePeer {
 	/** the column name for the MAX_SELECTED field */
 	const MAX_SELECTED = 'wptool_item_type.MAX_SELECTED';
 
+	/** the column name for the GRADE_MIN field */
+	const GRADE_MIN = 'wptool_item_type.GRADE_MIN';
+
+	/** the column name for the GRADE_MAX field */
+	const GRADE_MAX = 'wptool_item_type.GRADE_MAX';
+
 	/**
 	 * An identiy map to hold any loaded instances of WptoolItemType objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
@@ -74,11 +80,11 @@ abstract class BaseWptoolItemTypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'Rank', 'AppointmentTypeId', 'State', 'MinSelected', 'MaxSelected', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'rank', 'appointmentTypeId', 'state', 'minSelected', 'maxSelected', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::RANK, self::APPOINTMENT_TYPE_ID, self::STATE, self::MIN_SELECTED, self::MAX_SELECTED, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'rank', 'appointment_type_id', 'state', 'min_selected', 'max_selected', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'Rank', 'AppointmentTypeId', 'State', 'MinSelected', 'MaxSelected', 'GradeMin', 'GradeMax', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'rank', 'appointmentTypeId', 'state', 'minSelected', 'maxSelected', 'gradeMin', 'gradeMax', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::RANK, self::APPOINTMENT_TYPE_ID, self::STATE, self::MIN_SELECTED, self::MAX_SELECTED, self::GRADE_MIN, self::GRADE_MAX, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'rank', 'appointment_type_id', 'state', 'min_selected', 'max_selected', 'grade_min', 'grade_max', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	/**
@@ -88,11 +94,11 @@ abstract class BaseWptoolItemTypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'Rank' => 2, 'AppointmentTypeId' => 3, 'State' => 4, 'MinSelected' => 5, 'MaxSelected' => 6, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'appointmentTypeId' => 3, 'state' => 4, 'minSelected' => 5, 'maxSelected' => 6, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::RANK => 2, self::APPOINTMENT_TYPE_ID => 3, self::STATE => 4, self::MIN_SELECTED => 5, self::MAX_SELECTED => 6, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'appointment_type_id' => 3, 'state' => 4, 'min_selected' => 5, 'max_selected' => 6, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'Rank' => 2, 'AppointmentTypeId' => 3, 'State' => 4, 'MinSelected' => 5, 'MaxSelected' => 6, 'GradeMin' => 7, 'GradeMax' => 8, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'appointmentTypeId' => 3, 'state' => 4, 'minSelected' => 5, 'maxSelected' => 6, 'gradeMin' => 7, 'gradeMax' => 8, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::RANK => 2, self::APPOINTMENT_TYPE_ID => 3, self::STATE => 4, self::MIN_SELECTED => 5, self::MAX_SELECTED => 6, self::GRADE_MIN => 7, self::GRADE_MAX => 8, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'appointment_type_id' => 3, 'state' => 4, 'min_selected' => 5, 'max_selected' => 6, 'grade_min' => 7, 'grade_max' => 8, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	/**
@@ -169,6 +175,8 @@ abstract class BaseWptoolItemTypePeer {
 		$criteria->addSelectColumn(WptoolItemTypePeer::STATE);
 		$criteria->addSelectColumn(WptoolItemTypePeer::MIN_SELECTED);
 		$criteria->addSelectColumn(WptoolItemTypePeer::MAX_SELECTED);
+		$criteria->addSelectColumn(WptoolItemTypePeer::GRADE_MIN);
+		$criteria->addSelectColumn(WptoolItemTypePeer::GRADE_MAX);
 	}
 
 	/**

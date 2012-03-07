@@ -43,6 +43,8 @@ class WptoolItemTypeTableMap extends TableMap {
 		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
 		$this->addColumn('MIN_SELECTED', 'MinSelected', 'INTEGER', false, null, null);
 		$this->addColumn('MAX_SELECTED', 'MaxSelected', 'INTEGER', false, null, null);
+		$this->addColumn('GRADE_MIN', 'GradeMin', 'INTEGER', false, null, 1);
+		$this->addColumn('GRADE_MAX', 'GradeMax', 'INTEGER', false, null, 5);
 		// validators
 	} // initialize()
 
