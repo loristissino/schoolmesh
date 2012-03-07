@@ -67,10 +67,10 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 	protected $is_required;
 
 	/**
-	 * The value for the syllabus_id field.
+	 * The value for the appointment_type_id field.
 	 * @var        int
 	 */
-	protected $syllabus_id;
+	protected $appointment_type_id;
 
 	/**
 	 * The value for the code field.
@@ -103,9 +103,9 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 	protected $evaluation_max_description;
 
 	/**
-	 * @var        Syllabus
+	 * @var        AppointmentType
 	 */
-	protected $aSyllabus;
+	protected $aAppointmentType;
 
 	/**
 	 * @var        array WpitemGroup[] Collection to store aggregation of WpitemGroup objects.
@@ -216,13 +216,13 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [syllabus_id] column value.
+	 * Get the [appointment_type_id] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getSyllabusId()
+	public function getAppointmentTypeId()
 	{
-		return $this->syllabus_id;
+		return $this->appointment_type_id;
 	}
 
 	/**
@@ -436,28 +436,28 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 	} // setIsRequired()
 
 	/**
-	 * Set the value of [syllabus_id] column.
+	 * Set the value of [appointment_type_id] column.
 	 * 
 	 * @param      int $v new value
 	 * @return     WpitemType The current object (for fluent API support)
 	 */
-	public function setSyllabusId($v)
+	public function setAppointmentTypeId($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
 		}
 
-		if ($this->syllabus_id !== $v) {
-			$this->syllabus_id = $v;
-			$this->modifiedColumns[] = WpitemTypePeer::SYLLABUS_ID;
+		if ($this->appointment_type_id !== $v) {
+			$this->appointment_type_id = $v;
+			$this->modifiedColumns[] = WpitemTypePeer::APPOINTMENT_TYPE_ID;
 		}
 
-		if ($this->aSyllabus !== null && $this->aSyllabus->getId() !== $v) {
-			$this->aSyllabus = null;
+		if ($this->aAppointmentType !== null && $this->aAppointmentType->getId() !== $v) {
+			$this->aAppointmentType = null;
 		}
 
 		return $this;
-	} // setSyllabusId()
+	} // setAppointmentTypeId()
 
 	/**
 	 * Set the value of [code] column.
@@ -599,7 +599,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			$this->rank = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
 			$this->state = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
 			$this->is_required = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
-			$this->syllabus_id = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
+			$this->appointment_type_id = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
 			$this->code = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->evaluation_min = ($row[$startcol + 10] !== null) ? (int) $row[$startcol + 10] : null;
 			$this->evaluation_max = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
@@ -637,8 +637,8 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
-		if ($this->aSyllabus !== null && $this->syllabus_id !== $this->aSyllabus->getId()) {
-			$this->aSyllabus = null;
+		if ($this->aAppointmentType !== null && $this->appointment_type_id !== $this->aAppointmentType->getId()) {
+			$this->aAppointmentType = null;
 		}
 	} // ensureConsistency
 
@@ -679,7 +679,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
-			$this->aSyllabus = null;
+			$this->aAppointmentType = null;
 			$this->collWpitemGroups = null;
 			$this->lastWpitemGroupCriteria = null;
 
@@ -796,11 +796,11 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
-			if ($this->aSyllabus !== null) {
-				if ($this->aSyllabus->isModified() || $this->aSyllabus->isNew()) {
-					$affectedRows += $this->aSyllabus->save($con);
+			if ($this->aAppointmentType !== null) {
+				if ($this->aAppointmentType->isModified() || $this->aAppointmentType->isNew()) {
+					$affectedRows += $this->aAppointmentType->save($con);
 				}
-				$this->setSyllabus($this->aSyllabus);
+				$this->setAppointmentType($this->aAppointmentType);
 			}
 
 			if ($this->isNew() ) {
@@ -904,9 +904,9 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			// method.  This object relates to these object(s) by a
 			// foreign key reference.
 
-			if ($this->aSyllabus !== null) {
-				if (!$this->aSyllabus->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aSyllabus->getValidationFailures());
+			if ($this->aAppointmentType !== null) {
+				if (!$this->aAppointmentType->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aAppointmentType->getValidationFailures());
 				}
 			}
 
@@ -982,7 +982,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 				return $this->getIsRequired();
 				break;
 			case 8:
-				return $this->getSyllabusId();
+				return $this->getAppointmentTypeId();
 				break;
 			case 9:
 				return $this->getCode();
@@ -1028,7 +1028,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 			$keys[5] => $this->getRank(),
 			$keys[6] => $this->getState(),
 			$keys[7] => $this->getIsRequired(),
-			$keys[8] => $this->getSyllabusId(),
+			$keys[8] => $this->getAppointmentTypeId(),
 			$keys[9] => $this->getCode(),
 			$keys[10] => $this->getEvaluationMin(),
 			$keys[11] => $this->getEvaluationMax(),
@@ -1090,7 +1090,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 				$this->setIsRequired($value);
 				break;
 			case 8:
-				$this->setSyllabusId($value);
+				$this->setAppointmentTypeId($value);
 				break;
 			case 9:
 				$this->setCode($value);
@@ -1139,7 +1139,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setRank($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setState($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setIsRequired($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setSyllabusId($arr[$keys[8]]);
+		if (array_key_exists($keys[8], $arr)) $this->setAppointmentTypeId($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setCode($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setEvaluationMin($arr[$keys[10]]);
 		if (array_key_exists($keys[11], $arr)) $this->setEvaluationMax($arr[$keys[11]]);
@@ -1164,7 +1164,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpitemTypePeer::RANK)) $criteria->add(WpitemTypePeer::RANK, $this->rank);
 		if ($this->isColumnModified(WpitemTypePeer::STATE)) $criteria->add(WpitemTypePeer::STATE, $this->state);
 		if ($this->isColumnModified(WpitemTypePeer::IS_REQUIRED)) $criteria->add(WpitemTypePeer::IS_REQUIRED, $this->is_required);
-		if ($this->isColumnModified(WpitemTypePeer::SYLLABUS_ID)) $criteria->add(WpitemTypePeer::SYLLABUS_ID, $this->syllabus_id);
+		if ($this->isColumnModified(WpitemTypePeer::APPOINTMENT_TYPE_ID)) $criteria->add(WpitemTypePeer::APPOINTMENT_TYPE_ID, $this->appointment_type_id);
 		if ($this->isColumnModified(WpitemTypePeer::CODE)) $criteria->add(WpitemTypePeer::CODE, $this->code);
 		if ($this->isColumnModified(WpitemTypePeer::EVALUATION_MIN)) $criteria->add(WpitemTypePeer::EVALUATION_MIN, $this->evaluation_min);
 		if ($this->isColumnModified(WpitemTypePeer::EVALUATION_MAX)) $criteria->add(WpitemTypePeer::EVALUATION_MAX, $this->evaluation_max);
@@ -1238,7 +1238,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 
 		$copyObj->setIsRequired($this->is_required);
 
-		$copyObj->setSyllabusId($this->syllabus_id);
+		$copyObj->setAppointmentTypeId($this->appointment_type_id);
 
 		$copyObj->setCode($this->code);
 
@@ -1310,24 +1310,24 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Declares an association between this object and a Syllabus object.
+	 * Declares an association between this object and a AppointmentType object.
 	 *
-	 * @param      Syllabus $v
+	 * @param      AppointmentType $v
 	 * @return     WpitemType The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function setSyllabus(Syllabus $v = null)
+	public function setAppointmentType(AppointmentType $v = null)
 	{
 		if ($v === null) {
-			$this->setSyllabusId(NULL);
+			$this->setAppointmentTypeId(NULL);
 		} else {
-			$this->setSyllabusId($v->getId());
+			$this->setAppointmentTypeId($v->getId());
 		}
 
-		$this->aSyllabus = $v;
+		$this->aAppointmentType = $v;
 
 		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the Syllabus object, it will not be re-added.
+		// If this object has already been added to the AppointmentType object, it will not be re-added.
 		if ($v !== null) {
 			$v->addWpitemType($this);
 		}
@@ -1337,25 +1337,25 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 
 
 	/**
-	 * Get the associated Syllabus object
+	 * Get the associated AppointmentType object
 	 *
 	 * @param      PropelPDO Optional Connection object.
-	 * @return     Syllabus The associated Syllabus object.
+	 * @return     AppointmentType The associated AppointmentType object.
 	 * @throws     PropelException
 	 */
-	public function getSyllabus(PropelPDO $con = null)
+	public function getAppointmentType(PropelPDO $con = null)
 	{
-		if ($this->aSyllabus === null && ($this->syllabus_id !== null)) {
-			$this->aSyllabus = SyllabusPeer::retrieveByPk($this->syllabus_id);
+		if ($this->aAppointmentType === null && ($this->appointment_type_id !== null)) {
+			$this->aAppointmentType = AppointmentTypePeer::retrieveByPk($this->appointment_type_id);
 			/* The following can be used additionally to
 			   guarantee the related object contains a reference
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->aSyllabus->addWpitemTypes($this);
+			   $this->aAppointmentType->addWpitemTypes($this);
 			 */
 		}
-		return $this->aSyllabus;
+		return $this->aAppointmentType;
 	}
 
 	/**
@@ -1579,7 +1579,7 @@ abstract class BaseWpitemType extends BaseObject  implements Persistent {
 		} // if ($deep)
 
 		$this->collWpitemGroups = null;
-			$this->aSyllabus = null;
+			$this->aAppointmentType = null;
 	}
 
 } // BaseWpitemType

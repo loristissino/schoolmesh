@@ -48,6 +48,11 @@ class schoolmeshGenerateHelpIndexTask extends sfBaseTask
     
     $template=sfYaml::load($arguments['templatefile']);
     
+    if(!is_array($template))
+    {
+      throw new Exception('Could not read template: ' . $arguments['templatefile']);
+    }
+    
     $found=array();
     $fragments=array();
     

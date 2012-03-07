@@ -146,19 +146,24 @@ class Appointment extends BaseAppointment
   
 	public function __toString()
 	{
-    return sprintf('%s (%s %s)', $this->getSubject(), $this->getSchoolclass(), $this->getYear());
+    return sprintf('%s (%s %s)', $this->getTitle(), $this->getSchoolclass(), $this->getYear());
 	}
 
 	public function getShortDescription()
 	{
-    return $this->getSchoolclass() . ': '. $this->getSubject();
+    return $this->getSchoolclass() . ': '. $this->getTitle();
 	}
 
   public function getDescription()
 	{
-			return $this->getFullName() . ' » ' . $this->getSubject() . ' (' . $this->getSchoolclass() . ', ' . $this->getYear() . ')';
+			return $this->getFullName() . ' » ' . $this->getTitle() . ' (' . $this->getSchoolclass() . ', ' . $this->getYear() . ')';
 
 	}
+
+  public function getTitle()
+  {
+    return $this->getSubjectId()?$this->getSubject():$this->getAppointmentType();
+  }
 
 
     public function getLastLog()
@@ -459,271 +464,276 @@ $con->query($sql);
 
 		$checkList=new CheckList();
 
-		$wpinfotypes=WpinfoTypePeer::getAllNeededForState($this->getState());
+    if($this->getAppointmentType()->getHasInfo())
+    {
+        $wpinfotypes=WpinfoTypePeer::getAllNeededForState($this->getState(), $this->getAppointmentTypeId());	
+        
+        foreach($wpinfotypes as $wpinfotype)
+          {
+            $flash='error_info';
+            $wpinfo=WpinfoPeer::retrieveByAppointmentIdAndType($this->getId(), $wpinfotype->getId());
+            if (!$wpinfo)
+              {
+                $wpinfo= new Wpinfo();
+                $wpinfo->setAppointmentId($this->getId());
+                $wpinfo->setWpinfoTypeId($wpinfotype->getId());
+                $wpinfo->save($con);
+              }
+              
+            if ($wpinfotype->getIsRequired())
+                {
+                  if ($wpinfo->getContent()=='')
+                    {
+                    $checkList->addCheck(new Check(
+                    Check::FAILED,
+                    'Content cannot be empty',
+                    $wpinfotype->getDescription(),
+                    array('link_to'=>'wpinfo/edit?id=' . $wpinfo->getId())));
+
+                    }
+                  elseif (!$wpinfo->checkContentAgainstTemplate($wpinfo->getContent(), $wpinfotype->getTemplate()))
+                    {
+                      $ckeckList->addCheck(new Check(
+                        Check::FAILED,
+                        'Content doesn\'t match template',
+                        $wpinfotype->getDescription(),
+                        array('link_to'=>'wpinfo/edit?id=' . $wpinfo->getId())));
+
+                    }
+                  else
+                    {
+                      $checkList->addCheck(new Check(
+                        Check::PASSED,
+                        'Filled',
+                        $wpinfotype->getDescription()));
+                    }
+                  }
+          }
+      
+    }
+
 	
+    if($this->getAppointmentType()->getHasModules())
+    {
+      
+      
+        $modules=$this->getWpmodules();
+        
+        if (sizeof($modules)==0)
+          {
+            $checkList->addCheck(new Check(
+                Check::FAILED,
+                'There must be at least one module',
+                'Modules'));
+                /*
+                array(
+                  'link_to'=>'plansandreports/fill?id=' . $this->getId()
+                  )
+                ));*/
+              
+          }
+          
+        else
+        {
+          
+          $neededItemTypes=WpitemTypePeer::getAllByRank($this->getAppointmentTypeId()); 
+          
+          $titles=Array('---', '');
+          $count=0;
+          
+          foreach($modules as $wpmodule)
+            {
+              $moduleIsOk=true;
+              $count++;
+              
+              $groupname=sprintf('Mod. %d) %s', $count, $wpmodule->getTitle());
+              if(in_array($wpmodule->getTitle(), $titles))
+                {
+                  $checkList->addCheck(new Check(
+                    Check::FAILED,
+                    'Invalid or duplicate title for module',
+                    $groupname,
+                    array('link_to'=>'wpmodule/view?id=' . $wpmodule->getId())
+                    ));
+                    /*
+                      $wpmodule->getTitle(),
+                      array(
+                        'link_to'=>'wpmodule/view?id=' . $wpmodule->getId()
+                      )
+                      ));*/
+                  $moduleIsOk=false;
+                }
+              else
+                {
+                  array_push($titles, $wpmodule->getTitle());
+                  // There can't be two modules with the same title.
+                  // If we make the check here instead of on the database level we let the user have an
+                  // inconsistent situation until they submit the workplan...
+                }
+              if(($wpmodule->getPeriod()=='---'||$wpmodule->getPeriod()==''))
+                {
+                  $checkList->addCheck(new Check(
+                    Check::FAILED,
+                    'Invalid period specification for module',
+                    $groupname,
+                    array('link_to'=>'wpmodule/view?id=' . $wpmodule->getId())
+                    ));
+                    /*
+                      $wpmodule->getTitle(),
+                      array(
+                        'link_to'=>'wpmodule/view?id=' . $wpmodule->getId()
+                        )
+                      ));*/
+                    $moduleIsOk=false;
+                }
+                
+              foreach ($neededItemTypes as $it)
+                {
+                  $groupname=sprintf('Mod. %d) %s » %s', $count, $wpmodule->getTitle(), $it->getTitle());
+                  if ($it->getState()>$this->getState())
+                    {
+                      continue;
+                    }
+                  $group=WpitemGroupPeer::retrieveByModuleAndType($wpmodule->getId(), $it->getId());
+                  if (!$group)
+                    {
+                      $group=new WpitemGroup();
+                      $group->setWpitemTypeId($it->getId());
+                      $group->setWpmoduleId($wpmodule->getId());
+                      $group->save($con);
+                      
+                      $checkList->addCheck(new Check(
+                        Check::FAILED,
+                        sprintf('Missing group %s', $it->getTitle()),
+                        $groupname));
+                        /*
+                        
+                        , $it->getTitle()),
+                              $wpmodule->getTitle(),
+                              array(
+                                'link_to'=>'wpmodule/view?id=' . $wpmodule->getId()
+                                )
+                              ));*/
+                        $moduleIsOk=false;
+                        
+                    }
+                  else
+                    {
+                      $items=$group->getWpmoduleItems();	
+                      if (sizeof($items)==0 && $it->getIsRequired())
+                        {
+                          $wpmoduleItem = new WpmoduleItem();
+                          $wpmoduleItem->setContent('---');
+                          $wpmoduleItem->setIsEditable(true);
+                          $wpmoduleItem->setWpitemGroupId($group->getId());
+                          $wpmoduleItem->setEvaluation(null);
+                          $wpmoduleItem->save($con);
+                          
+                          $checkList->addCheck(new Check(
+                            Check::FAILED,
+                            sprintf('There must be at least an item in group «%s»', $it->getTitle()),
+                            $groupname));
+                            /*
+                            
+                                  array(
+                                    'link_to'=>'wpmodule/view?id=' . $wpmodule->getId()
+                                    )
+                                  ));*/
+                                  $moduleIsOk=false;
+                            
+                        }
+                      else
+                        {
+                          foreach($items as $item)
+                            {
+                              $groupname=sprintf('Mod. %d) %s » %s :: %s', $count, $wpmodule->getTitle(), $it->getTitle(), $item->getContent());
+
+                              if(($item->getContent()=='---'||$item->getContent()==''))
+                              {
+                                $checkList->addCheck(new Check(
+                                  Check::FAILED,
+                                  'Invalid text',
+                                  $groupname,
+                                  array('link_to'=>'wpmodule/view?id=' . $wpmodule->getId())
+                                  
+                                  ));
+                                  /*
+                                    array(
+                                      'link_to'=>'wpmodule/view?id=' . $wpmodule->getId(),
+                                      'flash'=>'error'. $group->getId(),
+                                      'fragment'=>$group->getId()
+                                      )
+                                    ));*/
+                                    $moduleIsOk=false;
+
+                              };
+                            
+                            if($it->getEvaluationMax()>0 && (($item->getEvaluation()==null)&&$this->getState()==Workflow::IR_DRAFT))
+                              {
+                                $checkList->addCheck(new Check(
+                                  Check::FAILED,
+                                  'Missing evaluation',
+                                  $groupname,
+                                  array('link_to'=>'wpmodule/view?id=' . $wpmodule->getId())
+
+                                  ));
+                                  /*
+                                    array(
+                                      'link_to'=>'wpmodule/view?id=' . $wpmodule->getId(). '#' . $group->getId(),
+                                      'flash'=>'error'. $group->getId(),
+                                      'fragment'=>$group->getId()
+                                      )
+                                    ));*/
+                                    $moduleIsOk=false;
+                            }
+                          }
+                        }
+                    }
+                }
+                
+              if ($moduleIsOk)
+                {
+                  $checkList->addCheck(new Check(
+                    Check::PASSED,
+                    'Module accepted',
+                    sprintf('Mod. %d) %s', $count, $wpmodule->getTitle())
+                    ));
+                }
+                
+            } // end foreach (modules)
+        } //end if (modules are present)
+    
+    }  //end if (appointment-type has modules)
+    
+    
+    
+		if($this->getAppointmentType()->getHasTools())
+    {
+      $wptoolItemTypes=WptoolItemTypePeer::getAllNeededForState($this->getState(), $this->getAppointmentTypeId());
+      
+      foreach ($wptoolItemTypes as $type)
+        {
+          $flash='error_aux'.$type->getId();
+
+          if ($this->countToolsOfType($type->getId())>=$type->getMinSelected())
+            {
+              $checkList->addCheck(new Check(
+                Check::PASSED,
+                'Tools selected',
+                $type->getDescription()));
+            }
+          else
+            {
+              $checkList->addCheck(new Check(
+                Check::FAILED,
+                'Missing selection of tools',
+                $type->getDescription(),
+                array('link_to'=>'plansandreports/fill?id=' . $this->getId())
+                ));
+            }
+        }
+      }
 				
-		foreach($wpinfotypes as $wpinfotype)
-			{
-				$flash='error_info';
-				$wpinfo=WpinfoPeer::retrieveByAppointmentIdAndType($this->getId(), $wpinfotype->getId());
-				if (!$wpinfo)
-					{
-						$wpinfo= new Wpinfo();
-						$wpinfo->setAppointmentId($this->getId());
-						$wpinfo->setWpinfoTypeId($wpinfotype->getId());
-						$wpinfo->save($con);
-					}
-					
-				if ($wpinfotype->getIsRequired())
-						{
-							if ($wpinfo->getContent()=='')
-								{
-								$checkList->addCheck(new Check(
-								Check::FAILED,
-								'Content cannot be empty',
-								$wpinfotype->getDescription(),
-								array('link_to'=>'wpinfo/edit?id=' . $wpinfo->getId())));
-
-								}
-							elseif (!$wpinfo->checkContentAgainstTemplate($wpinfo->getContent(), $wpinfotype->getTemplate()))
-								{
-									$ckeckList->addCheck(new Check(
-										Check::FAILED,
-										'Content doesn\'t match template',
-										$wpinfotype->getDescription(),
-										array('link_to'=>'wpinfo/edit?id=' . $wpinfo->getId())));
-
-								}
-							else
-								{
-									$checkList->addCheck(new Check(
-										Check::PASSED,
-										'Filled',
-										$wpinfotype->getDescription()));
-								}
-							}
-			}
-	
-		$modules=$this->getWpmodules();
-		
-		if (sizeof($modules)==0)
-			{
-				$checkList->addCheck(new Check(
-						Check::FAILED,
-						'There must be at least one module',
-						'Modules'));
-						/*
-						array(
-							'link_to'=>'plansandreports/fill?id=' . $this->getId()
-							)
-						));*/
-					
-			}
-			
-		else
-		{
-			
-			$neededItemTypes=WpitemTypePeer::getAllByRank($this->getSyllabusId());
-			
-			$titles=Array('---', '');
-			$count=0;
-			
-			foreach($modules as $wpmodule)
-				{
-					$moduleIsOk=true;
-					$count++;
-					
-					$groupname=sprintf('Mod. %d) %s', $count, $wpmodule->getTitle());
-					if(in_array($wpmodule->getTitle(), $titles))
-						{
-							$checkList->addCheck(new Check(
-								Check::FAILED,
-								'Invalid or duplicate title for module',
-								$groupname,
-								array('link_to'=>'wpmodule/view?id=' . $wpmodule->getId())
-								));
-								/*
-									$wpmodule->getTitle(),
-									array(
-										'link_to'=>'wpmodule/view?id=' . $wpmodule->getId()
-									)
-									));*/
-							$moduleIsOk=false;
-						}
-					else
-						{
-							array_push($titles, $wpmodule->getTitle());
-							// There can't be two modules with the same title.
-							// If we make the check here instead of on the database level we let the user have an
-							// inconsistent situation until they submit the workplan...
-						}
-					if(($wpmodule->getPeriod()=='---'||$wpmodule->getPeriod()==''))
-						{
-							$checkList->addCheck(new Check(
-								Check::FAILED,
-								'Invalid period specification for module',
-								$groupname,
-								array('link_to'=>'wpmodule/view?id=' . $wpmodule->getId())
-								));
-								/*
-									$wpmodule->getTitle(),
-									array(
-										'link_to'=>'wpmodule/view?id=' . $wpmodule->getId()
-										)
-									));*/
-								$moduleIsOk=false;
-						}
-						
-					foreach ($neededItemTypes as $it)
-						{
-							$groupname=sprintf('Mod. %d) %s » %s', $count, $wpmodule->getTitle(), $it->getTitle());
-							if ($it->getState()>$this->getState())
-								{
-									continue;
-								}
-							$group=WpitemGroupPeer::retrieveByModuleAndType($wpmodule->getId(), $it->getId());
-							if (!$group)
-								{
-									$group=new WpitemGroup();
-									$group->setWpitemTypeId($it->getId());
-									$group->setWpmoduleId($wpmodule->getId());
-									$group->save($con);
-									
-									$checkList->addCheck(new Check(
-										Check::FAILED,
-										sprintf('Missing group %s', $it->getTitle()),
-										$groupname));
-										/*
-										
-										, $it->getTitle()),
-													$wpmodule->getTitle(),
-													array(
-														'link_to'=>'wpmodule/view?id=' . $wpmodule->getId()
-														)
-													));*/
-										$moduleIsOk=false;
-										
-								}
-							else
-								{
-									$items=$group->getWpmoduleItems();	
-									if (sizeof($items)==0 && $it->getIsRequired())
-										{
-											$wpmoduleItem = new WpmoduleItem();
-											$wpmoduleItem->setContent('---');
-											$wpmoduleItem->setIsEditable(true);
-											$wpmoduleItem->setWpitemGroupId($group->getId());
-											$wpmoduleItem->setEvaluation(null);
-											$wpmoduleItem->save($con);
-											
-											$checkList->addCheck(new Check(
-												Check::FAILED,
-												sprintf('There must be at least an item in group «%s»', $it->getTitle()),
-												$groupname));
-												/*
-												
-															array(
-																'link_to'=>'wpmodule/view?id=' . $wpmodule->getId()
-																)
-															));*/
-															$moduleIsOk=false;
-												
-										}
-									else
-										{
-											foreach($items as $item)
-												{
-													$groupname=sprintf('Mod. %d) %s » %s :: %s', $count, $wpmodule->getTitle(), $it->getTitle(), $item->getContent());
-
-													if(($item->getContent()=='---'||$item->getContent()==''))
-													{
-														$checkList->addCheck(new Check(
-															Check::FAILED,
-															'Invalid text',
-															$groupname,
-															array('link_to'=>'wpmodule/view?id=' . $wpmodule->getId())
-															
-															));
-															/*
-																array(
-																	'link_to'=>'wpmodule/view?id=' . $wpmodule->getId(),
-																	'flash'=>'error'. $group->getId(),
-																	'fragment'=>$group->getId()
-																	)
-																));*/
-																$moduleIsOk=false;
-
-													};
-												
-												if($it->getEvaluationMax()>0 && (($item->getEvaluation()==null)&&$this->getState()==Workflow::IR_DRAFT))
-													{
-														$checkList->addCheck(new Check(
-															Check::FAILED,
-															'Missing evaluation',
-															$groupname,
-															array('link_to'=>'wpmodule/view?id=' . $wpmodule->getId())
-
-															));
-															/*
-																array(
-																	'link_to'=>'wpmodule/view?id=' . $wpmodule->getId(). '#' . $group->getId(),
-																	'flash'=>'error'. $group->getId(),
-																	'fragment'=>$group->getId()
-																	)
-																));*/
-																$moduleIsOk=false;
-												}
-											}
-										}
-								}
-						}
-						
-					if ($moduleIsOk)
-						{
-							$checkList->addCheck(new Check(
-								Check::PASSED,
-								'Module accepted',
-								sprintf('Mod. %d) %s', $count, $wpmodule->getTitle())
-								));
-						}
-						
-				} // end foreach (modules)
-		} //end if (modules are present)
-		
-		$wptoolItemTypes=WptoolItemTypePeer::getAllNeededForState($this->getState());
-		
-		foreach ($wptoolItemTypes as $type)
-			{
-				$flash='error_aux'.$type->getId();
-
-				if ($this->countToolsOfType($type->getId())>=$type->getMinSelected())
-					{
-						$checkList->addCheck(new Check(
-							Check::PASSED,
-							'Tools selected',
-							$type->getDescription()));
-					}
-				else
-					{
-						$checkList->addCheck(new Check(
-							Check::FAILED,
-							'Missing selection of tools',
-							$type->getDescription(),
-							array('link_to'=>'plansandreports/fill?id=' . $this->getId())
-							));
-							/*
-									array(
-										'link_to'=>'plansandreports/fill?id=' . $this->getId(),
-										'flash'=>$flash, 
-										'fragment'=>'wpaux')
-									));
-*/
-					}
-						
-				
-			}
-				
-		
 		return $checkList;
 		
 	}

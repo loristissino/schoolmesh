@@ -37,6 +37,12 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 	protected $rank;
 
 	/**
+	 * The value for the appointment_type_id field.
+	 * @var        int
+	 */
+	protected $appointment_type_id;
+
+	/**
 	 * The value for the state field.
 	 * @var        int
 	 */
@@ -53,6 +59,11 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 	 * @var        int
 	 */
 	protected $max_selected;
+
+	/**
+	 * @var        AppointmentType
+	 */
+	protected $aAppointmentType;
 
 	/**
 	 * @var        array WptoolItem[] Collection to store aggregation of WptoolItem objects.
@@ -110,6 +121,16 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 	public function getRank()
 	{
 		return $this->rank;
+	}
+
+	/**
+	 * Get the [appointment_type_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getAppointmentTypeId()
+	{
+		return $this->appointment_type_id;
 	}
 
 	/**
@@ -201,6 +222,30 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setRank()
+
+	/**
+	 * Set the value of [appointment_type_id] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     WptoolItemType The current object (for fluent API support)
+	 */
+	public function setAppointmentTypeId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->appointment_type_id !== $v) {
+			$this->appointment_type_id = $v;
+			$this->modifiedColumns[] = WptoolItemTypePeer::APPOINTMENT_TYPE_ID;
+		}
+
+		if ($this->aAppointmentType !== null && $this->aAppointmentType->getId() !== $v) {
+			$this->aAppointmentType = null;
+		}
+
+		return $this;
+	} // setAppointmentTypeId()
 
 	/**
 	 * Set the value of [state] column.
@@ -297,9 +342,10 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->description = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->rank = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->state = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
-			$this->min_selected = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
-			$this->max_selected = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->appointment_type_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->state = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+			$this->min_selected = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->max_selected = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -309,7 +355,7 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 6; // 6 = WptoolItemTypePeer::NUM_COLUMNS - WptoolItemTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 7; // 7 = WptoolItemTypePeer::NUM_COLUMNS - WptoolItemTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WptoolItemType object", $e);
@@ -332,6 +378,9 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
+		if ($this->aAppointmentType !== null && $this->appointment_type_id !== $this->aAppointmentType->getId()) {
+			$this->aAppointmentType = null;
+		}
 	} // ensureConsistency
 
 	/**
@@ -371,6 +420,7 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
+			$this->aAppointmentType = null;
 			$this->collWptoolItems = null;
 			$this->lastWptoolItemCriteria = null;
 
@@ -482,6 +532,18 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 		if (!$this->alreadyInSave) {
 			$this->alreadyInSave = true;
 
+			// We call the save method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aAppointmentType !== null) {
+				if ($this->aAppointmentType->isModified() || $this->aAppointmentType->isNew()) {
+					$affectedRows += $this->aAppointmentType->save($con);
+				}
+				$this->setAppointmentType($this->aAppointmentType);
+			}
+
 			if ($this->isNew() ) {
 				$this->modifiedColumns[] = WptoolItemTypePeer::ID;
 			}
@@ -578,6 +640,18 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 			$failureMap = array();
 
 
+			// We call the validate method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aAppointmentType !== null) {
+				if (!$this->aAppointmentType->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aAppointmentType->getValidationFailures());
+				}
+			}
+
+
 			if (($retval = WptoolItemTypePeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
@@ -634,12 +708,15 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 				return $this->getRank();
 				break;
 			case 3:
-				return $this->getState();
+				return $this->getAppointmentTypeId();
 				break;
 			case 4:
-				return $this->getMinSelected();
+				return $this->getState();
 				break;
 			case 5:
+				return $this->getMinSelected();
+				break;
+			case 6:
 				return $this->getMaxSelected();
 				break;
 			default:
@@ -666,9 +743,10 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getDescription(),
 			$keys[2] => $this->getRank(),
-			$keys[3] => $this->getState(),
-			$keys[4] => $this->getMinSelected(),
-			$keys[5] => $this->getMaxSelected(),
+			$keys[3] => $this->getAppointmentTypeId(),
+			$keys[4] => $this->getState(),
+			$keys[5] => $this->getMinSelected(),
+			$keys[6] => $this->getMaxSelected(),
 		);
 		return $result;
 	}
@@ -710,12 +788,15 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 				$this->setRank($value);
 				break;
 			case 3:
-				$this->setState($value);
+				$this->setAppointmentTypeId($value);
 				break;
 			case 4:
-				$this->setMinSelected($value);
+				$this->setState($value);
 				break;
 			case 5:
+				$this->setMinSelected($value);
+				break;
+			case 6:
 				$this->setMaxSelected($value);
 				break;
 		} // switch()
@@ -745,9 +826,10 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setDescription($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setRank($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setState($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setMinSelected($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setMaxSelected($arr[$keys[5]]);
+		if (array_key_exists($keys[3], $arr)) $this->setAppointmentTypeId($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setState($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setMinSelected($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setMaxSelected($arr[$keys[6]]);
 	}
 
 	/**
@@ -762,6 +844,7 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WptoolItemTypePeer::ID)) $criteria->add(WptoolItemTypePeer::ID, $this->id);
 		if ($this->isColumnModified(WptoolItemTypePeer::DESCRIPTION)) $criteria->add(WptoolItemTypePeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(WptoolItemTypePeer::RANK)) $criteria->add(WptoolItemTypePeer::RANK, $this->rank);
+		if ($this->isColumnModified(WptoolItemTypePeer::APPOINTMENT_TYPE_ID)) $criteria->add(WptoolItemTypePeer::APPOINTMENT_TYPE_ID, $this->appointment_type_id);
 		if ($this->isColumnModified(WptoolItemTypePeer::STATE)) $criteria->add(WptoolItemTypePeer::STATE, $this->state);
 		if ($this->isColumnModified(WptoolItemTypePeer::MIN_SELECTED)) $criteria->add(WptoolItemTypePeer::MIN_SELECTED, $this->min_selected);
 		if ($this->isColumnModified(WptoolItemTypePeer::MAX_SELECTED)) $criteria->add(WptoolItemTypePeer::MAX_SELECTED, $this->max_selected);
@@ -822,6 +905,8 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 		$copyObj->setDescription($this->description);
 
 		$copyObj->setRank($this->rank);
+
+		$copyObj->setAppointmentTypeId($this->appointment_type_id);
 
 		$copyObj->setState($this->state);
 
@@ -886,6 +971,55 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 			self::$peer = new WptoolItemTypePeer();
 		}
 		return self::$peer;
+	}
+
+	/**
+	 * Declares an association between this object and a AppointmentType object.
+	 *
+	 * @param      AppointmentType $v
+	 * @return     WptoolItemType The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setAppointmentType(AppointmentType $v = null)
+	{
+		if ($v === null) {
+			$this->setAppointmentTypeId(NULL);
+		} else {
+			$this->setAppointmentTypeId($v->getId());
+		}
+
+		$this->aAppointmentType = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the AppointmentType object, it will not be re-added.
+		if ($v !== null) {
+			$v->addWptoolItemType($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated AppointmentType object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     AppointmentType The associated AppointmentType object.
+	 * @throws     PropelException
+	 */
+	public function getAppointmentType(PropelPDO $con = null)
+	{
+		if ($this->aAppointmentType === null && ($this->appointment_type_id !== null)) {
+			$this->aAppointmentType = AppointmentTypePeer::retrieveByPk($this->appointment_type_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aAppointmentType->addWptoolItemTypes($this);
+			 */
+		}
+		return $this->aAppointmentType;
 	}
 
 	/**
@@ -1062,6 +1196,7 @@ abstract class BaseWptoolItemType extends BaseObject  implements Persistent {
 		} // if ($deep)
 
 		$this->collWptoolItems = null;
+			$this->aAppointmentType = null;
 	}
 
 } // BaseWptoolItemType

@@ -317,7 +317,7 @@
 
 #sf_admin_container tr:hover
 {
-  background-color: #ffffbf;
+  background-color: #C1F9D0;
 }
 
 
@@ -491,5 +491,10 @@ font-weight: normal;
   background: #FEFFC2;
 }
 
+.description
+{
+  font-style: italic;
+  font-weight: normal;
+}
   
 }

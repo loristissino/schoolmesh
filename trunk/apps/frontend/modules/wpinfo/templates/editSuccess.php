@@ -176,7 +176,7 @@ editor_selector : \"mceAdvanced\"
     </tr>
   </thead>
 			<tr class="sf_admin_row odd">
-				<td><?php echo html_entity_decode($example); ?></td>
+				<td><?php echo nl2br(html_entity_decode($example)) ?></td>
 				<td>
 						<ul class="sf_admin_td_actions">
 						<li class="sf_admin_action_replace">

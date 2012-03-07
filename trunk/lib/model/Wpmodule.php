@@ -286,7 +286,7 @@ $number=$resultset->number;
 	public function createWpitemGroups()
 
 {
-		$groups=WpitemTypePeer::getAllByRank($this->getAppointment()->getSyllabusId());
+		$groups=WpitemTypePeer::getAllByRank($this->getAppointment()->getAppointmentTypeId());
 		foreach($groups as $group)
 			{
 				$newgroup=new WpitemGroup();

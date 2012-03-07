@@ -33,6 +33,7 @@ CREATE TABLE `schoolclass`
 	`section` VARCHAR(3)  NOT NULL,
 	`track_id` INTEGER,
 	`description` VARCHAR(255),
+	`is_active` TINYINT default 1,
 	PRIMARY KEY (`id`),
 	INDEX `schoolclass_FI_1` (`track_id`),
 	CONSTRAINT `schoolclass_FK_1`
@@ -364,6 +365,26 @@ CREATE TABLE `syllabus_item`
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- appointment_type
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `appointment_type`;
+
+
+CREATE TABLE `appointment_type`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`description` VARCHAR(255),
+	`rank` INTEGER,
+	`is_active` TINYINT default 1,
+	`has_info` TINYINT default 0,
+	`has_modules` TINYINT default 0,
+	`has_tools` TINYINT default 0,
+	PRIMARY KEY (`id`),
+	KEY `appointment_type_I_1`(`rank`)
+)Type=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- appointment
 #-----------------------------------------------------------------------------
 
@@ -374,19 +395,20 @@ CREATE TABLE `appointment`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`user_id` INTEGER  NOT NULL,
-	`subject_id` INTEGER  NOT NULL,
-	`schoolclass_id` VARCHAR(5)  NOT NULL,
+	`subject_id` INTEGER,
+	`schoolclass_id` VARCHAR(5),
 	`team_id` INTEGER,
 	`year_id` INTEGER  NOT NULL,
 	`state` INTEGER,
 	`hours` INTEGER default 0,
 	`is_public` TINYINT,
 	`syllabus_id` INTEGER,
+	`appointment_type_id` INTEGER,
 	`created_at` DATETIME,
 	`updated_at` DATETIME,
 	`import_code` VARCHAR(20),
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `ussy` (`user_id`, `subject_id`, `schoolclass_id`, `year_id`),
+	UNIQUE KEY `usasy` (`user_id`, `subject_id`, `appointment_type_id`, `schoolclass_id`, `year_id`),
 	CONSTRAINT `appointment_FK_1`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
@@ -419,7 +441,11 @@ CREATE TABLE `appointment`
 	INDEX `appointment_FI_6` (`syllabus_id`),
 	CONSTRAINT `appointment_FK_6`
 		FOREIGN KEY (`syllabus_id`)
-		REFERENCES `syllabus` (`id`)
+		REFERENCES `syllabus` (`id`),
+	INDEX `appointment_FI_7` (`appointment_type_id`),
+	CONSTRAINT `appointment_FK_7`
+		FOREIGN KEY (`appointment_type_id`)
+		REFERENCES `appointment_type` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -580,7 +606,13 @@ CREATE TABLE `wpinfo_type`
 	`example` TEXT,
 	`is_required` TINYINT,
 	`is_confidential` TINYINT,
-	PRIMARY KEY (`id`)
+	`appointment_type_id` INTEGER,
+	PRIMARY KEY (`id`),
+	KEY `wpinfo_type_I_1`(`rank`),
+	INDEX `wpinfo_type_FI_1` (`appointment_type_id`),
+	CONSTRAINT `wpinfo_type_FK_1`
+		FOREIGN KEY (`appointment_type_id`)
+		REFERENCES `appointment_type` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -620,10 +652,17 @@ CREATE TABLE `wptool_item_type`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`description` VARCHAR(50),
 	`rank` INTEGER,
+	`appointment_type_id` INTEGER,
 	`state` INTEGER,
 	`min_selected` INTEGER,
 	`max_selected` INTEGER,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	KEY `wptool_item_type_I_1`(`rank`),
+	KEY `wptool_item_type_I_2`(`state`),
+	INDEX `wptool_item_type_FI_1` (`appointment_type_id`),
+	CONSTRAINT `wptool_item_type_FK_1`
+		FOREIGN KEY (`appointment_type_id`)
+		REFERENCES `appointment_type` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -720,18 +759,18 @@ CREATE TABLE `wpitem_type`
 	`rank` INTEGER  NOT NULL,
 	`state` INTEGER,
 	`is_required` TINYINT,
-	`syllabus_id` INTEGER,
+	`appointment_type_id` INTEGER,
 	`code` VARCHAR(20),
 	`evaluation_min` INTEGER,
 	`evaluation_max` INTEGER,
 	`evaluation_min_description` VARCHAR(50),
 	`evaluation_max_description` VARCHAR(50),
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `sc` (`syllabus_id`, `code`),
+	UNIQUE KEY `sc` (`appointment_type_id`, `code`),
 	KEY `wpitem_type_I_1`(`code`),
 	CONSTRAINT `wpitem_type_FK_1`
-		FOREIGN KEY (`syllabus_id`)
-		REFERENCES `syllabus` (`id`)
+		FOREIGN KEY (`appointment_type_id`)
+		REFERENCES `appointment_type` (`id`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------

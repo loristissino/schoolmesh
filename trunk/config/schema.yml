@@ -10,6 +10,7 @@ propel:
     section:      { type: varchar(3), required: true }
     track_id:   
     description:  { type: varchar(255), required: false }
+    is_active:    { type: boolean, default: true }
 
   year:
     id:           { type: integer, required: true, primaryKey: true, autoIncrement: false }
@@ -146,22 +147,33 @@ propel:
     _uniques:
       ir: [syllabus_id, ref]
       
+
+  appointment_type:
+    id: ~
+    description:      { type: varchar(255) } 
+    rank:             { type: integer, index: true }
+    is_active:        { type: boolean, default: true }
+    has_info:         { type: boolean, default: false }
+    has_modules:      { type: boolean, default: false }
+    has_tools:        { type: boolean, default: false }
+
   appointment:
     id: ~
     user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
-    subject_id:       { type: integer, foreignTable: subject, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
-    schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    subject_id:       { type: integer, foreignTable: subject, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
+    schoolclass_id:   { type: varchar(5), foreignTable: schoolclass, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
     team_id:          { type: integer, foreignTable: team, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
     year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     state:             { type: integer }
     hours:            { type: integer, default: 0 }
     is_public:         { type: boolean }
     syllabus_id: ~
+    appointment_type_id: ~
     created_at:   
     updated_at:
     import_code:  varchar(20)
     _uniques:
-      ussy: [user_id, subject_id, schoolclass_id, year_id]
+      usasy: [user_id, subject_id, appointment_type_id, schoolclass_id, year_id]
 
   enrolment:
     id: ~
@@ -217,15 +229,16 @@ propel:
     state:  integer
 
   wpinfo_type:
-    id:          ~
-    title:        varchar(50)
-    description:  varchar(255)
-    rank:    { type: integer, required: true }
-    state:  integer
-    template:     longvarchar
-    example:     longvarchar
-    is_required:  boolean
-    is_confidential: boolean
+    id:                  ~
+    title:               varchar(50)
+    description:         varchar(255)
+    rank:                { type: integer, required: true, index: true }
+    state:               integer
+    template:            longvarchar
+    example:             longvarchar
+    is_required:         boolean
+    is_confidential:     boolean
+    appointment_type_id: ~
 # state indicates in which of workplan's state this item type should be shown
 # is_confidential indicates that this field should not be published and should be seen only by the schoolmaster 
 
@@ -237,12 +250,13 @@ propel:
     content:   longvarchar
 
   wptool_item_type:
-    id:         ~
-    description:  varchar(50)
-    rank:   integer
-    state: integer
-    min_selected: integer
-    max_selected: integer
+    id:                  ~
+    description:         varchar(50)
+    rank:                { type: integer, index: true }
+    appointment_type_id: ~
+    state:               { type: integer, index: true }
+    min_selected:        integer
+    max_selected:        integer
 
   wptool_item:
     id:   ~
@@ -275,7 +289,7 @@ propel:
     rank:    { type: integer, required: true }
     state:  integer
     is_required: boolean
-    syllabus_id: ~
+    appointment_type_id: ~
     code: { type: varchar(20), index: true }
     evaluation_min:  integer
     evaluation_max:  integer
@@ -284,7 +298,7 @@ propel:
 # state indicates in which of workplan's state this item type should be shown
 # code is needed to make it possible copying similar items where the syllabus is not the same
     _uniques:
-      sc: [syllabus_id, code]
+      sc: [appointment_type_id, code]
 
 
   wpitem_group:

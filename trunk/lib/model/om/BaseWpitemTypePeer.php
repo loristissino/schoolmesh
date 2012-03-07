@@ -54,8 +54,8 @@ abstract class BaseWpitemTypePeer {
 	/** the column name for the IS_REQUIRED field */
 	const IS_REQUIRED = 'wpitem_type.IS_REQUIRED';
 
-	/** the column name for the SYLLABUS_ID field */
-	const SYLLABUS_ID = 'wpitem_type.SYLLABUS_ID';
+	/** the column name for the APPOINTMENT_TYPE_ID field */
+	const APPOINTMENT_TYPE_ID = 'wpitem_type.APPOINTMENT_TYPE_ID';
 
 	/** the column name for the CODE field */
 	const CODE = 'wpitem_type.CODE';
@@ -95,10 +95,10 @@ abstract class BaseWpitemTypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Singular', 'Description', 'Style', 'Rank', 'State', 'IsRequired', 'SyllabusId', 'Code', 'EvaluationMin', 'EvaluationMax', 'EvaluationMinDescription', 'EvaluationMaxDescription', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'singular', 'description', 'style', 'rank', 'state', 'isRequired', 'syllabusId', 'code', 'evaluationMin', 'evaluationMax', 'evaluationMinDescription', 'evaluationMaxDescription', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::SINGULAR, self::DESCRIPTION, self::STYLE, self::RANK, self::STATE, self::IS_REQUIRED, self::SYLLABUS_ID, self::CODE, self::EVALUATION_MIN, self::EVALUATION_MAX, self::EVALUATION_MIN_DESCRIPTION, self::EVALUATION_MAX_DESCRIPTION, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'singular', 'description', 'style', 'rank', 'state', 'is_required', 'syllabus_id', 'code', 'evaluation_min', 'evaluation_max', 'evaluation_min_description', 'evaluation_max_description', ),
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Singular', 'Description', 'Style', 'Rank', 'State', 'IsRequired', 'AppointmentTypeId', 'Code', 'EvaluationMin', 'EvaluationMax', 'EvaluationMinDescription', 'EvaluationMaxDescription', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'singular', 'description', 'style', 'rank', 'state', 'isRequired', 'appointmentTypeId', 'code', 'evaluationMin', 'evaluationMax', 'evaluationMinDescription', 'evaluationMaxDescription', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::SINGULAR, self::DESCRIPTION, self::STYLE, self::RANK, self::STATE, self::IS_REQUIRED, self::APPOINTMENT_TYPE_ID, self::CODE, self::EVALUATION_MIN, self::EVALUATION_MAX, self::EVALUATION_MIN_DESCRIPTION, self::EVALUATION_MAX_DESCRIPTION, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'singular', 'description', 'style', 'rank', 'state', 'is_required', 'appointment_type_id', 'code', 'evaluation_min', 'evaluation_max', 'evaluation_min_description', 'evaluation_max_description', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
@@ -109,10 +109,10 @@ abstract class BaseWpitemTypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Singular' => 2, 'Description' => 3, 'Style' => 4, 'Rank' => 5, 'State' => 6, 'IsRequired' => 7, 'SyllabusId' => 8, 'Code' => 9, 'EvaluationMin' => 10, 'EvaluationMax' => 11, 'EvaluationMinDescription' => 12, 'EvaluationMaxDescription' => 13, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'singular' => 2, 'description' => 3, 'style' => 4, 'rank' => 5, 'state' => 6, 'isRequired' => 7, 'syllabusId' => 8, 'code' => 9, 'evaluationMin' => 10, 'evaluationMax' => 11, 'evaluationMinDescription' => 12, 'evaluationMaxDescription' => 13, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::SINGULAR => 2, self::DESCRIPTION => 3, self::STYLE => 4, self::RANK => 5, self::STATE => 6, self::IS_REQUIRED => 7, self::SYLLABUS_ID => 8, self::CODE => 9, self::EVALUATION_MIN => 10, self::EVALUATION_MAX => 11, self::EVALUATION_MIN_DESCRIPTION => 12, self::EVALUATION_MAX_DESCRIPTION => 13, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'singular' => 2, 'description' => 3, 'style' => 4, 'rank' => 5, 'state' => 6, 'is_required' => 7, 'syllabus_id' => 8, 'code' => 9, 'evaluation_min' => 10, 'evaluation_max' => 11, 'evaluation_min_description' => 12, 'evaluation_max_description' => 13, ),
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Singular' => 2, 'Description' => 3, 'Style' => 4, 'Rank' => 5, 'State' => 6, 'IsRequired' => 7, 'AppointmentTypeId' => 8, 'Code' => 9, 'EvaluationMin' => 10, 'EvaluationMax' => 11, 'EvaluationMinDescription' => 12, 'EvaluationMaxDescription' => 13, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'singular' => 2, 'description' => 3, 'style' => 4, 'rank' => 5, 'state' => 6, 'isRequired' => 7, 'appointmentTypeId' => 8, 'code' => 9, 'evaluationMin' => 10, 'evaluationMax' => 11, 'evaluationMinDescription' => 12, 'evaluationMaxDescription' => 13, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::SINGULAR => 2, self::DESCRIPTION => 3, self::STYLE => 4, self::RANK => 5, self::STATE => 6, self::IS_REQUIRED => 7, self::APPOINTMENT_TYPE_ID => 8, self::CODE => 9, self::EVALUATION_MIN => 10, self::EVALUATION_MAX => 11, self::EVALUATION_MIN_DESCRIPTION => 12, self::EVALUATION_MAX_DESCRIPTION => 13, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'singular' => 2, 'description' => 3, 'style' => 4, 'rank' => 5, 'state' => 6, 'is_required' => 7, 'appointment_type_id' => 8, 'code' => 9, 'evaluation_min' => 10, 'evaluation_max' => 11, 'evaluation_min_description' => 12, 'evaluation_max_description' => 13, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
@@ -191,7 +191,7 @@ abstract class BaseWpitemTypePeer {
 		$criteria->addSelectColumn(WpitemTypePeer::RANK);
 		$criteria->addSelectColumn(WpitemTypePeer::STATE);
 		$criteria->addSelectColumn(WpitemTypePeer::IS_REQUIRED);
-		$criteria->addSelectColumn(WpitemTypePeer::SYLLABUS_ID);
+		$criteria->addSelectColumn(WpitemTypePeer::APPOINTMENT_TYPE_ID);
 		$criteria->addSelectColumn(WpitemTypePeer::CODE);
 		$criteria->addSelectColumn(WpitemTypePeer::EVALUATION_MIN);
 		$criteria->addSelectColumn(WpitemTypePeer::EVALUATION_MAX);
@@ -443,7 +443,7 @@ abstract class BaseWpitemTypePeer {
 	}
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Syllabus table
+	 * Returns the number of rows matching criteria, joining the related AppointmentType table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -451,7 +451,7 @@ abstract class BaseWpitemTypePeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinSyllabus(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinAppointmentType(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -478,7 +478,7 @@ abstract class BaseWpitemTypePeer {
 			$con = Propel::getConnection(WpitemTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(WpitemTypePeer::SYLLABUS_ID, SyllabusPeer::ID, $join_behavior);
+		$criteria->addJoin(WpitemTypePeer::APPOINTMENT_TYPE_ID, AppointmentTypePeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -493,7 +493,7 @@ abstract class BaseWpitemTypePeer {
 
 
 	/**
-	 * Selects a collection of WpitemType objects pre-filled with their Syllabus objects.
+	 * Selects a collection of WpitemType objects pre-filled with their AppointmentType objects.
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
@@ -501,7 +501,7 @@ abstract class BaseWpitemTypePeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinSyllabus(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinAppointmentType(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -512,9 +512,9 @@ abstract class BaseWpitemTypePeer {
 
 		WpitemTypePeer::addSelectColumns($criteria);
 		$startcol = (WpitemTypePeer::NUM_COLUMNS - WpitemTypePeer::NUM_LAZY_LOAD_COLUMNS);
-		SyllabusPeer::addSelectColumns($criteria);
+		AppointmentTypePeer::addSelectColumns($criteria);
 
-		$criteria->addJoin(WpitemTypePeer::SYLLABUS_ID, SyllabusPeer::ID, $join_behavior);
+		$criteria->addJoin(WpitemTypePeer::APPOINTMENT_TYPE_ID, AppointmentTypePeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
@@ -534,19 +534,19 @@ abstract class BaseWpitemTypePeer {
 				WpitemTypePeer::addInstanceToPool($obj1, $key1);
 			} // if $obj1 already loaded
 
-			$key2 = SyllabusPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			$key2 = AppointmentTypePeer::getPrimaryKeyHashFromRow($row, $startcol);
 			if ($key2 !== null) {
-				$obj2 = SyllabusPeer::getInstanceFromPool($key2);
+				$obj2 = AppointmentTypePeer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$cls = SyllabusPeer::getOMClass(false);
+					$cls = AppointmentTypePeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol);
-					SyllabusPeer::addInstanceToPool($obj2, $key2);
+					AppointmentTypePeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
 				
-				// Add the $obj1 (WpitemType) to $obj2 (Syllabus)
+				// Add the $obj1 (WpitemType) to $obj2 (AppointmentType)
 				$obj2->addWpitemType($obj1);
 
 			} // if joined row was not null
@@ -594,7 +594,7 @@ abstract class BaseWpitemTypePeer {
 			$con = Propel::getConnection(WpitemTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(WpitemTypePeer::SYLLABUS_ID, SyllabusPeer::ID, $join_behavior);
+		$criteria->addJoin(WpitemTypePeer::APPOINTMENT_TYPE_ID, AppointmentTypePeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -629,10 +629,10 @@ abstract class BaseWpitemTypePeer {
 		WpitemTypePeer::addSelectColumns($criteria);
 		$startcol2 = (WpitemTypePeer::NUM_COLUMNS - WpitemTypePeer::NUM_LAZY_LOAD_COLUMNS);
 
-		SyllabusPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (SyllabusPeer::NUM_COLUMNS - SyllabusPeer::NUM_LAZY_LOAD_COLUMNS);
+		AppointmentTypePeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (AppointmentTypePeer::NUM_COLUMNS - AppointmentTypePeer::NUM_LAZY_LOAD_COLUMNS);
 
-		$criteria->addJoin(WpitemTypePeer::SYLLABUS_ID, SyllabusPeer::ID, $join_behavior);
+		$criteria->addJoin(WpitemTypePeer::APPOINTMENT_TYPE_ID, AppointmentTypePeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
@@ -651,21 +651,21 @@ abstract class BaseWpitemTypePeer {
 				WpitemTypePeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-			// Add objects for joined Syllabus rows
+			// Add objects for joined AppointmentType rows
 
-			$key2 = SyllabusPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			$key2 = AppointmentTypePeer::getPrimaryKeyHashFromRow($row, $startcol2);
 			if ($key2 !== null) {
-				$obj2 = SyllabusPeer::getInstanceFromPool($key2);
+				$obj2 = AppointmentTypePeer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$cls = SyllabusPeer::getOMClass(false);
+					$cls = AppointmentTypePeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					SyllabusPeer::addInstanceToPool($obj2, $key2);
+					AppointmentTypePeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 loaded
 
-				// Add the $obj1 (WpitemType) to the collection in $obj2 (Syllabus)
+				// Add the $obj1 (WpitemType) to the collection in $obj2 (AppointmentType)
 				$obj2->addWpitemType($obj1);
 			} // if joined row not null
 
@@ -976,7 +976,7 @@ abstract class BaseWpitemTypePeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array(array('syllabus_id', 'code'));
+	  return array(array('appointment_type_id', 'code'));
 	}
 
 } // BaseWpitemTypePeer

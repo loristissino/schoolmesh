@@ -1,37 +1,39 @@
 <?php
 
 /**
- * Schoolclass form base class.
+ * AppointmentType form base class.
  *
- * @method Schoolclass getObject() Returns the current form's model object
+ * @method AppointmentType getObject() Returns the current form's model object
  *
  * @package    schoolmesh
  * @subpackage form
  * @author     Loris Tissino <loris.tissino@gmail.com>
  */
-abstract class BaseSchoolclassForm extends BaseFormPropel
+abstract class BaseAppointmentTypeForm extends BaseFormPropel
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'          => new sfWidgetFormInputHidden(),
-      'grade'       => new sfWidgetFormInputText(),
-      'section'     => new sfWidgetFormInputText(),
-      'track_id'    => new sfWidgetFormPropelChoice(array('model' => 'Track', 'add_empty' => true)),
       'description' => new sfWidgetFormInputText(),
+      'rank'        => new sfWidgetFormInputText(),
       'is_active'   => new sfWidgetFormInputCheckbox(),
+      'has_info'    => new sfWidgetFormInputCheckbox(),
+      'has_modules' => new sfWidgetFormInputCheckbox(),
+      'has_tools'   => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
       'id'          => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
-      'grade'       => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647)),
-      'section'     => new sfValidatorString(array('max_length' => 3)),
-      'track_id'    => new sfValidatorPropelChoice(array('model' => 'Track', 'column' => 'id', 'required' => false)),
       'description' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'rank'        => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'is_active'   => new sfValidatorBoolean(array('required' => false)),
+      'has_info'    => new sfValidatorBoolean(array('required' => false)),
+      'has_modules' => new sfValidatorBoolean(array('required' => false)),
+      'has_tools'   => new sfValidatorBoolean(array('required' => false)),
     ));
 
-    $this->widgetSchema->setNameFormat('schoolclass[%s]');
+    $this->widgetSchema->setNameFormat('appointment_type[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -40,7 +42,7 @@ abstract class BaseSchoolclassForm extends BaseFormPropel
 
   public function getModelName()
   {
-    return 'Schoolclass';
+    return 'AppointmentType';
   }
 
 

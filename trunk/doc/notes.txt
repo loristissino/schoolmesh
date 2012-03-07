@@ -1,3 +1,7 @@
+2012/03/07
+Added table appointment_type.
+Changed references for wpinfo, wpitem_type, wptools for appointments.
+
 2012/03/4
 Added two boolean fields in proj_resource_type table:
     printed_in_submission_letters: { type: boolean, default: true }
