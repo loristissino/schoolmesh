@@ -23,6 +23,8 @@ abstract class BaseWpinfoTypeForm extends BaseFormPropel
       'example'             => new sfWidgetFormTextarea(),
       'is_required'         => new sfWidgetFormInputCheckbox(),
       'is_confidential'     => new sfWidgetFormInputCheckbox(),
+      'grade_min'           => new sfWidgetFormInputText(),
+      'grade_max'           => new sfWidgetFormInputText(),
       'appointment_type_id' => new sfWidgetFormPropelChoice(array('model' => 'AppointmentType', 'add_empty' => true)),
     ));
 
@@ -36,6 +38,8 @@ abstract class BaseWpinfoTypeForm extends BaseFormPropel
       'example'             => new sfValidatorString(array('required' => false)),
       'is_required'         => new sfValidatorBoolean(array('required' => false)),
       'is_confidential'     => new sfValidatorBoolean(array('required' => false)),
+      'grade_min'           => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'grade_max'           => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'appointment_type_id' => new sfValidatorPropelChoice(array('model' => 'AppointmentType', 'column' => 'id', 'required' => false)),
     ));
 

@@ -25,6 +25,8 @@ abstract class BaseWpitemTypeFormFilter extends BaseFormFilterPropel
       'evaluation_max'             => new sfWidgetFormFilterInput(),
       'evaluation_min_description' => new sfWidgetFormFilterInput(),
       'evaluation_max_description' => new sfWidgetFormFilterInput(),
+      'grade_min'                  => new sfWidgetFormFilterInput(),
+      'grade_max'                  => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -41,6 +43,8 @@ abstract class BaseWpitemTypeFormFilter extends BaseFormFilterPropel
       'evaluation_max'             => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'evaluation_min_description' => new sfValidatorPass(array('required' => false)),
       'evaluation_max_description' => new sfValidatorPass(array('required' => false)),
+      'grade_min'                  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'grade_max'                  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
     $this->widgetSchema->setNameFormat('wpitem_type_filters[%s]');
@@ -72,6 +76,8 @@ abstract class BaseWpitemTypeFormFilter extends BaseFormFilterPropel
       'evaluation_max'             => 'Number',
       'evaluation_min_description' => 'Text',
       'evaluation_max_description' => 'Text',
+      'grade_min'                  => 'Number',
+      'grade_max'                  => 'Number',
     );
   }
 }

@@ -466,7 +466,7 @@ $con->query($sql);
 
     if($this->getAppointmentType()->getHasInfo())
     {
-        $wpinfotypes=WpinfoTypePeer::getAllNeededForState($this->getState(), $this->getAppointmentTypeId());	
+        $wpinfotypes=WpinfoTypePeer::getAllNeededForAppointment($this);	
         
         foreach($wpinfotypes as $wpinfotype)
           {
@@ -536,7 +536,7 @@ $con->query($sql);
         else
         {
           
-          $neededItemTypes=WpitemTypePeer::getAllByRank($this->getAppointmentTypeId()); 
+          $neededItemTypes=WpitemTypePeer::getAllByRank($this); 
           
           $titles=Array('---', '');
           $count=0;
@@ -709,7 +709,7 @@ $con->query($sql);
     
 		if($this->getAppointmentType()->getHasTools())
     {
-      $wptoolItemTypes=WptoolItemTypePeer::getAllNeededForState($this->getState(), $this->getAppointmentTypeId());
+      $wptoolItemTypes=WptoolItemTypePeer::getAllNeededForAppointment($this);
       
       foreach ($wptoolItemTypes as $type)
         {
@@ -1137,7 +1137,7 @@ public function getWorkflowLogs()
 
 	public function getOdf($doctype, sfContext $sfContext=null, $template='', $complete=true)
 	{
-		$activesyllabus=$this->getSyllabus()->getIsActive();
+		$activesyllabus=$this->getSyllabus() && $this->getSyllabus()->getIsActive();
     
 		if ($template=='')
 		{
@@ -1182,7 +1182,7 @@ public function getWorkflowLogs()
 //		$odfdoc->setVars('doctype',  $state);
 		$odfdoc->setVars('year',  $this->getYear()->__toString());
 		$odfdoc->setVars('teacher',  $teachertitle . ' ' . $this->getSfGuardUser()->getProfile()->getFullName());
-		$odfdoc->setVars('subject', $this->getSubject()->getDescription());
+		$odfdoc->setVars('subject', $this->getTitle());
 		$odfdoc->setVars('year',  $this->getYear()->__toString());
 		$odfdoc->setVars('schoolclass',  $this->getSchoolclassId());
 				
@@ -2091,7 +2091,9 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
       $s=$context->getI18N()->__($s);
     }
     
-    return sprintf('%s_%s_%s (%s)%d', $this->getFullname(), $this->getSchoolclass()->getId(), $this->getSubject()->getShortcut(), $s, $this->getState());
+    $shortcut = $this->getSubjectId() ? $this->getSubject()->getShortcut() : $this->getAppointmentType()->getShortcut();
+    
+    return sprintf('%s_%s_%s (%s)%d', $this->getFullname(), $this->getSchoolclass()->getId(), $shortcut, $s, $this->getState());
     
   }
   

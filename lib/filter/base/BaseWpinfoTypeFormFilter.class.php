@@ -20,6 +20,8 @@ abstract class BaseWpinfoTypeFormFilter extends BaseFormFilterPropel
       'example'             => new sfWidgetFormFilterInput(),
       'is_required'         => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'is_confidential'     => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'grade_min'           => new sfWidgetFormFilterInput(),
+      'grade_max'           => new sfWidgetFormFilterInput(),
       'appointment_type_id' => new sfWidgetFormPropelChoice(array('model' => 'AppointmentType', 'add_empty' => true)),
     ));
 
@@ -32,6 +34,8 @@ abstract class BaseWpinfoTypeFormFilter extends BaseFormFilterPropel
       'example'             => new sfValidatorPass(array('required' => false)),
       'is_required'         => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'is_confidential'     => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'grade_min'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'grade_max'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'appointment_type_id' => new sfValidatorPropelChoice(array('required' => false, 'model' => 'AppointmentType', 'column' => 'id')),
     ));
 
@@ -59,6 +63,8 @@ abstract class BaseWpinfoTypeFormFilter extends BaseFormFilterPropel
       'example'             => 'Text',
       'is_required'         => 'Boolean',
       'is_confidential'     => 'Boolean',
+      'grade_min'           => 'Number',
+      'grade_max'           => 'Number',
       'appointment_type_id' => 'ForeignKey',
     );
   }

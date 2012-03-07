@@ -38,6 +38,7 @@ class AppointmentTypeTableMap extends TableMap {
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
 		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 255, null);
+		$this->addColumn('SHORTCUT', 'Shortcut', 'VARCHAR', false, 10, null);
 		$this->addColumn('RANK', 'Rank', 'INTEGER', false, null, null);
 		$this->addColumn('IS_ACTIVE', 'IsActive', 'BOOLEAN', false, null, true);
 		$this->addColumn('HAS_INFO', 'HasInfo', 'BOOLEAN', false, null, false);

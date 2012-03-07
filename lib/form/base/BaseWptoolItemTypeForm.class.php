@@ -21,6 +21,8 @@ abstract class BaseWptoolItemTypeForm extends BaseFormPropel
       'state'               => new sfWidgetFormInputText(),
       'min_selected'        => new sfWidgetFormInputText(),
       'max_selected'        => new sfWidgetFormInputText(),
+      'grade_min'           => new sfWidgetFormInputText(),
+      'grade_max'           => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -31,6 +33,8 @@ abstract class BaseWptoolItemTypeForm extends BaseFormPropel
       'state'               => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'min_selected'        => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'max_selected'        => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'grade_min'           => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'grade_max'           => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('wptool_item_type[%s]');

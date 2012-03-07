@@ -21,11 +21,7 @@
 	<?php if($state >= $wpinfo->getWpinfoType()->getState()): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <th>
-        <?php echo $wpinfo->getWpinfoType()->getTitle() ?>
-        <br />
-        <span class="description">
-        <?php echo $wpinfo->getWpinfoType()->getDescription() ?>
-        </span>
+        <?php echo $wpinfo->getWpinfoType()->getTitle() ?>&nbsp;<abbr title="<?php echo $wpinfo->getWpinfoType()->getDescription() ?>">&nbsp;</abbr>
       </th>
       <td><?php echo Generic::datetime($wpinfo->getUpdatedAt('U'), $sf_context) ?></td>
       <td>

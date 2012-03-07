@@ -31,6 +31,12 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 	protected $description;
 
 	/**
+	 * The value for the shortcut field.
+	 * @var        string
+	 */
+	protected $shortcut;
+
+	/**
 	 * The value for the rank field.
 	 * @var        int
 	 */
@@ -167,6 +173,16 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Get the [shortcut] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getShortcut()
+	{
+		return $this->shortcut;
+	}
+
+	/**
 	 * Get the [rank] column value.
 	 * 
 	 * @return     int
@@ -255,6 +271,26 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setDescription()
+
+	/**
+	 * Set the value of [shortcut] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     AppointmentType The current object (for fluent API support)
+	 */
+	public function setShortcut($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->shortcut !== $v) {
+			$this->shortcut = $v;
+			$this->modifiedColumns[] = AppointmentTypePeer::SHORTCUT;
+		}
+
+		return $this;
+	} // setShortcut()
 
 	/**
 	 * Set the value of [rank] column.
@@ -406,11 +442,12 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->description = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-			$this->rank = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->is_active = ($row[$startcol + 3] !== null) ? (boolean) $row[$startcol + 3] : null;
-			$this->has_info = ($row[$startcol + 4] !== null) ? (boolean) $row[$startcol + 4] : null;
-			$this->has_modules = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
-			$this->has_tools = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
+			$this->shortcut = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->rank = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->is_active = ($row[$startcol + 4] !== null) ? (boolean) $row[$startcol + 4] : null;
+			$this->has_info = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
+			$this->has_modules = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
+			$this->has_tools = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -420,7 +457,7 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 7; // 7 = AppointmentTypePeer::NUM_COLUMNS - AppointmentTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 8; // 8 = AppointmentTypePeer::NUM_COLUMNS - AppointmentTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating AppointmentType object", $e);
@@ -799,18 +836,21 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 				return $this->getDescription();
 				break;
 			case 2:
-				return $this->getRank();
+				return $this->getShortcut();
 				break;
 			case 3:
-				return $this->getIsActive();
+				return $this->getRank();
 				break;
 			case 4:
-				return $this->getHasInfo();
+				return $this->getIsActive();
 				break;
 			case 5:
-				return $this->getHasModules();
+				return $this->getHasInfo();
 				break;
 			case 6:
+				return $this->getHasModules();
+				break;
+			case 7:
 				return $this->getHasTools();
 				break;
 			default:
@@ -836,11 +876,12 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getDescription(),
-			$keys[2] => $this->getRank(),
-			$keys[3] => $this->getIsActive(),
-			$keys[4] => $this->getHasInfo(),
-			$keys[5] => $this->getHasModules(),
-			$keys[6] => $this->getHasTools(),
+			$keys[2] => $this->getShortcut(),
+			$keys[3] => $this->getRank(),
+			$keys[4] => $this->getIsActive(),
+			$keys[5] => $this->getHasInfo(),
+			$keys[6] => $this->getHasModules(),
+			$keys[7] => $this->getHasTools(),
 		);
 		return $result;
 	}
@@ -879,18 +920,21 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 				$this->setDescription($value);
 				break;
 			case 2:
-				$this->setRank($value);
+				$this->setShortcut($value);
 				break;
 			case 3:
-				$this->setIsActive($value);
+				$this->setRank($value);
 				break;
 			case 4:
-				$this->setHasInfo($value);
+				$this->setIsActive($value);
 				break;
 			case 5:
-				$this->setHasModules($value);
+				$this->setHasInfo($value);
 				break;
 			case 6:
+				$this->setHasModules($value);
+				break;
+			case 7:
 				$this->setHasTools($value);
 				break;
 		} // switch()
@@ -919,11 +963,12 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setDescription($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setRank($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setIsActive($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setHasInfo($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setHasModules($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setHasTools($arr[$keys[6]]);
+		if (array_key_exists($keys[2], $arr)) $this->setShortcut($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setRank($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setIsActive($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setHasInfo($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setHasModules($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setHasTools($arr[$keys[7]]);
 	}
 
 	/**
@@ -937,6 +982,7 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(AppointmentTypePeer::ID)) $criteria->add(AppointmentTypePeer::ID, $this->id);
 		if ($this->isColumnModified(AppointmentTypePeer::DESCRIPTION)) $criteria->add(AppointmentTypePeer::DESCRIPTION, $this->description);
+		if ($this->isColumnModified(AppointmentTypePeer::SHORTCUT)) $criteria->add(AppointmentTypePeer::SHORTCUT, $this->shortcut);
 		if ($this->isColumnModified(AppointmentTypePeer::RANK)) $criteria->add(AppointmentTypePeer::RANK, $this->rank);
 		if ($this->isColumnModified(AppointmentTypePeer::IS_ACTIVE)) $criteria->add(AppointmentTypePeer::IS_ACTIVE, $this->is_active);
 		if ($this->isColumnModified(AppointmentTypePeer::HAS_INFO)) $criteria->add(AppointmentTypePeer::HAS_INFO, $this->has_info);
@@ -997,6 +1043,8 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setDescription($this->description);
+
+		$copyObj->setShortcut($this->shortcut);
 
 		$copyObj->setRank($this->rank);
 

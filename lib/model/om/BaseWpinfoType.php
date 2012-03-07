@@ -62,15 +62,31 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 
 	/**
 	 * The value for the is_required field.
+	 * Note: this column has a database default value of: true
 	 * @var        boolean
 	 */
 	protected $is_required;
 
 	/**
 	 * The value for the is_confidential field.
+	 * Note: this column has a database default value of: false
 	 * @var        boolean
 	 */
 	protected $is_confidential;
+
+	/**
+	 * The value for the grade_min field.
+	 * Note: this column has a database default value of: 1
+	 * @var        int
+	 */
+	protected $grade_min;
+
+	/**
+	 * The value for the grade_max field.
+	 * Note: this column has a database default value of: 5
+	 * @var        int
+	 */
+	protected $grade_max;
 
 	/**
 	 * The value for the appointment_type_id field.
@@ -110,6 +126,30 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	// symfony behavior
 	
 	const PEER = 'WpinfoTypePeer';
+
+	/**
+	 * Applies default values to this object.
+	 * This method should be called from the object's constructor (or
+	 * equivalent initialization method).
+	 * @see        __construct()
+	 */
+	public function applyDefaultValues()
+	{
+		$this->is_required = true;
+		$this->is_confidential = false;
+		$this->grade_min = 1;
+		$this->grade_max = 5;
+	}
+
+	/**
+	 * Initializes internal state of BaseWpinfoType object.
+	 * @see        applyDefaults()
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
 
 	/**
 	 * Get the [id] column value.
@@ -199,6 +239,26 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	public function getIsConfidential()
 	{
 		return $this->is_confidential;
+	}
+
+	/**
+	 * Get the [grade_min] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getGradeMin()
+	{
+		return $this->grade_min;
+	}
+
+	/**
+	 * Get the [grade_max] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getGradeMax()
+	{
+		return $this->grade_max;
 	}
 
 	/**
@@ -363,7 +423,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$v = (boolean) $v;
 		}
 
-		if ($this->is_required !== $v) {
+		if ($this->is_required !== $v || $this->isNew()) {
 			$this->is_required = $v;
 			$this->modifiedColumns[] = WpinfoTypePeer::IS_REQUIRED;
 		}
@@ -383,13 +443,53 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$v = (boolean) $v;
 		}
 
-		if ($this->is_confidential !== $v) {
+		if ($this->is_confidential !== $v || $this->isNew()) {
 			$this->is_confidential = $v;
 			$this->modifiedColumns[] = WpinfoTypePeer::IS_CONFIDENTIAL;
 		}
 
 		return $this;
 	} // setIsConfidential()
+
+	/**
+	 * Set the value of [grade_min] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     WpinfoType The current object (for fluent API support)
+	 */
+	public function setGradeMin($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->grade_min !== $v || $this->isNew()) {
+			$this->grade_min = $v;
+			$this->modifiedColumns[] = WpinfoTypePeer::GRADE_MIN;
+		}
+
+		return $this;
+	} // setGradeMin()
+
+	/**
+	 * Set the value of [grade_max] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     WpinfoType The current object (for fluent API support)
+	 */
+	public function setGradeMax($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->grade_max !== $v || $this->isNew()) {
+			$this->grade_max = $v;
+			$this->modifiedColumns[] = WpinfoTypePeer::GRADE_MAX;
+		}
+
+		return $this;
+	} // setGradeMax()
 
 	/**
 	 * Set the value of [appointment_type_id] column.
@@ -425,6 +525,22 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->is_required !== true) {
+				return false;
+			}
+
+			if ($this->is_confidential !== false) {
+				return false;
+			}
+
+			if ($this->grade_min !== 1) {
+				return false;
+			}
+
+			if ($this->grade_max !== 5) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -456,7 +572,9 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$this->example = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->is_required = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
 			$this->is_confidential = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
-			$this->appointment_type_id = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
+			$this->grade_min = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
+			$this->grade_max = ($row[$startcol + 10] !== null) ? (int) $row[$startcol + 10] : null;
+			$this->appointment_type_id = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -466,7 +584,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 10; // 10 = WpinfoTypePeer::NUM_COLUMNS - WpinfoTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 12; // 12 = WpinfoTypePeer::NUM_COLUMNS - WpinfoTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WpinfoType object", $e);
@@ -837,6 +955,12 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 				return $this->getIsConfidential();
 				break;
 			case 9:
+				return $this->getGradeMin();
+				break;
+			case 10:
+				return $this->getGradeMax();
+				break;
+			case 11:
 				return $this->getAppointmentTypeId();
 				break;
 			default:
@@ -869,7 +993,9 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$keys[6] => $this->getExample(),
 			$keys[7] => $this->getIsRequired(),
 			$keys[8] => $this->getIsConfidential(),
-			$keys[9] => $this->getAppointmentTypeId(),
+			$keys[9] => $this->getGradeMin(),
+			$keys[10] => $this->getGradeMax(),
+			$keys[11] => $this->getAppointmentTypeId(),
 		);
 		return $result;
 	}
@@ -929,6 +1055,12 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 				$this->setIsConfidential($value);
 				break;
 			case 9:
+				$this->setGradeMin($value);
+				break;
+			case 10:
+				$this->setGradeMax($value);
+				break;
+			case 11:
 				$this->setAppointmentTypeId($value);
 				break;
 		} // switch()
@@ -964,7 +1096,9 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setExample($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setIsRequired($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setIsConfidential($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setAppointmentTypeId($arr[$keys[9]]);
+		if (array_key_exists($keys[9], $arr)) $this->setGradeMin($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setGradeMax($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setAppointmentTypeId($arr[$keys[11]]);
 	}
 
 	/**
@@ -985,6 +1119,8 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpinfoTypePeer::EXAMPLE)) $criteria->add(WpinfoTypePeer::EXAMPLE, $this->example);
 		if ($this->isColumnModified(WpinfoTypePeer::IS_REQUIRED)) $criteria->add(WpinfoTypePeer::IS_REQUIRED, $this->is_required);
 		if ($this->isColumnModified(WpinfoTypePeer::IS_CONFIDENTIAL)) $criteria->add(WpinfoTypePeer::IS_CONFIDENTIAL, $this->is_confidential);
+		if ($this->isColumnModified(WpinfoTypePeer::GRADE_MIN)) $criteria->add(WpinfoTypePeer::GRADE_MIN, $this->grade_min);
+		if ($this->isColumnModified(WpinfoTypePeer::GRADE_MAX)) $criteria->add(WpinfoTypePeer::GRADE_MAX, $this->grade_max);
 		if ($this->isColumnModified(WpinfoTypePeer::APPOINTMENT_TYPE_ID)) $criteria->add(WpinfoTypePeer::APPOINTMENT_TYPE_ID, $this->appointment_type_id);
 
 		return $criteria;
@@ -1055,6 +1191,10 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		$copyObj->setIsRequired($this->is_required);
 
 		$copyObj->setIsConfidential($this->is_confidential);
+
+		$copyObj->setGradeMin($this->grade_min);
+
+		$copyObj->setGradeMax($this->grade_max);
 
 		$copyObj->setAppointmentTypeId($this->appointment_type_id);
 

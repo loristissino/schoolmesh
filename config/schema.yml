@@ -150,7 +150,8 @@ propel:
 
   appointment_type:
     id: ~
-    description:      { type: varchar(255) } 
+    description:      { type: varchar(255) }
+    shortcut:         { type: varchar(10) }
     rank:             { type: integer, index: true }
     is_active:        { type: boolean, default: true }
     has_info:         { type: boolean, default: false }
@@ -236,8 +237,10 @@ propel:
     state:               integer
     template:            longvarchar
     example:             longvarchar
-    is_required:         boolean
-    is_confidential:     boolean
+    is_required:         { type: boolean, default: true }
+    is_confidential:     { type: boolean, default: false }
+    grade_min:           { type: integer, default: 1 }
+    grade_max:           { type: integer, default: 5 }
     appointment_type_id: ~
 # state indicates in which of workplan's state this item type should be shown
 # is_confidential indicates that this field should not be published and should be seen only by the schoolmaster 
@@ -257,6 +260,8 @@ propel:
     state:               { type: integer, index: true }
     min_selected:        integer
     max_selected:        integer
+    grade_min:           { type: integer, default: 1 }
+    grade_max:           { type: integer, default: 5 }
 
   wptool_item:
     id:   ~
@@ -297,6 +302,8 @@ propel:
     evaluation_max_description: varchar(50)
 # state indicates in which of workplan's state this item type should be shown
 # code is needed to make it possible copying similar items where the syllabus is not the same
+    grade_min:            { type: integer, default: 1 }
+    grade_max:            { type: integer, default: 5 }
     _uniques:
       sc: [appointment_type_id, code]
 

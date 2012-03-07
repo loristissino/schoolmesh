@@ -43,8 +43,10 @@ class WpinfoTypeTableMap extends TableMap {
 		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
 		$this->addColumn('TEMPLATE', 'Template', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('EXAMPLE', 'Example', 'LONGVARCHAR', false, null, null);
-		$this->addColumn('IS_REQUIRED', 'IsRequired', 'BOOLEAN', false, null, null);
-		$this->addColumn('IS_CONFIDENTIAL', 'IsConfidential', 'BOOLEAN', false, null, null);
+		$this->addColumn('IS_REQUIRED', 'IsRequired', 'BOOLEAN', false, null, true);
+		$this->addColumn('IS_CONFIDENTIAL', 'IsConfidential', 'BOOLEAN', false, null, false);
+		$this->addColumn('GRADE_MIN', 'GradeMin', 'INTEGER', false, null, 1);
+		$this->addColumn('GRADE_MAX', 'GradeMax', 'INTEGER', false, null, 5);
 		$this->addForeignKey('APPOINTMENT_TYPE_ID', 'AppointmentTypeId', 'INTEGER', 'appointment_type', 'ID', false, null, null);
 		// validators
 	} // initialize()
