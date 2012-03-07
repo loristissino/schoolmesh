@@ -12,17 +12,18 @@
 class WptoolItemTypePeer extends BaseWptoolItemTypePeer
 {
 	
-		static public function getByDescription($description)
+  static public function getByDescription($description)
 	{
 		$c=new Criteria();
-	    $c->add(parent::DESCRIPTION, $description);
+    $c->add(parent::DESCRIPTION, $description);
 		return parent::doSelectOne($c);
 	}
 
-	static public function getAllNeededForState($state)
+	static public function getAllNeededForState($state, $appointment_type_id)
 	{
 		$c=new Criteria();
 		$c->add(WptoolItemTypePeer::STATE, $state);
+		$c->add(WptoolItemTypePeer::APPOINTMENT_TYPE_ID, $appointment_type_id);
 		$c->addAscendingOrderByColumn(WptoolItemTypePeer::RANK);
 		return parent::doSelect($c);
 	}

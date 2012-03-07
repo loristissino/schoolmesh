@@ -714,7 +714,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 		}
 		
-		public function modifyAppointment($appointmentId, $schoolclassId, $yearId, $subjectId, $syllabusId, $hours, $teamId)
+		public function modifyAppointment($appointmentId, $params)
 		{
 			
 			$result=array();
@@ -722,14 +722,12 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$appointment=AppointmentPeer::retrieveByPK($appointmentId);
 			try
 			{
-				$appointment
-				->setSchoolclassId($schoolclassId)
-        ->setTeamId($teamId)
-				->setYearId($yearId)
-				->setSubjectId($subjectId)
-        ->setSyllabusId($syllabusId)
-				->setHours($hours)
-				->save();
+				Generic::updateObjectFromForm(
+          $appointment,
+          array('schoolclass_id', 'year_id', 'subject_id', 'appointment_type_id', 'syllabus_id', 'hours'),
+          $params);
+          
+        $appointment->save();
 				
 				$result['result']='notice';
 				$result['message']='Appointment successfully saved.';
@@ -775,28 +773,25 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $result;
 			
 		}
-	public function addAppointment($schoolclassId, $yearId, $subjectId, $hours, $syllabus_id)
+	public function addAppointment($params)
 		{
 			
 			$result=array();
 			
 			$appointment=new Appointment();
-/*			$year=YearPeer::retrieveByPk($yearId);
-			$schoolclass=SchoolclassPeer::retrieveByPk($schoolclassId);
-			$subject=SubjectPeer::retrieveByPk($subjectId);
-*/
 			try
 			{
+        
+        Generic::updateObjectFromForm(
+          $appointment, 
+          array('schoolclass_id', 'year_id', 'subject_id', 'appointment_type_id', 'syllabus_id', 'hours'),
+          $params
+          );
 				$appointment
 				->setUserId($this->getUserId())
-				->setSchoolclassId($schoolclassId)
-				->setYearId($yearId)
-				->setSubjectId($subjectId)
-				->setHours($hours)
-				->setState(Workflow::AP_ASSIGNED)
-        ->setSyllabusId($syllabus_id)
-				->save();
-				
+        ->setState(Workflow::AP_ASSIGNED)
+        ->save();
+								
 				$result['result']='notice';
 				$result['message']='Appointment successfully saved.';
 			}

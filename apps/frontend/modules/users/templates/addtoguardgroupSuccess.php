@@ -1,20 +1,16 @@
-<?php use_helper('Schoolmesh') ?>
-<?php slot('title', __('User management')) ?>
-<?php slot('breadcrumbs',
-	link_to(__("User management"), 'users/index') . ' » ' .
-	link_to(__("User list"), 'users/list') . ' » ' .
-	link_to($current_user->getFullName(), 'users/edit?id=' . $current_user->getUserId()) . ' » '.
-	'Add to guardgroup'
-	)
-	
-	?><h1><?php echo sprintf(__('Add %s to guardgroup'), $current_user->getFullName())?></h1>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'users/index' =>__('Users'),
+    'users/list' => __('List/Search'),
+    'users/edit?id=' . $current_user->getUserId() =>$current_user->getFullname(),
+    ),
+  'current'=>__('Add to GuardGroups'),
+  ))
+?>
 
-<?php if ($sf_user->hasFlash('notice')): ?>
-  <div class="notice"><?php echo $sf_user->getFlash('notice')?></div>
-<?php endif; ?>
-<?php if ($sf_user->hasFlash('error')): ?>
-  <div class="error"><?php echo $sf_user->getFlash('error')?></div>
-<?php endif; ?>
+<?php include_partial('content/flashes'); ?>
+
+<p><?php echo __('You are going to add %user% to the selected GuardGroups.', array('%user%'=>$current_user->getFullname())) ?></p>
 
 <form action="<?php echo url_for('users/addtoguardgroup?user='. $current_user->getUserId()) ?>" method="post">
 

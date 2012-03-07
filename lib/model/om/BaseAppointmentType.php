@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Base class that represents a row from the 'year' table.
+ * Base class that represents a row from the 'appointment_type' table.
  *
  * 
  *
  * @package    lib.model.om
  */
-abstract class BaseYear extends BaseObject  implements Persistent {
+abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 
 
 	/**
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        YearPeer
+	 * @var        AppointmentTypePeer
 	 */
 	protected static $peer;
 
@@ -31,16 +31,38 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	protected $description;
 
 	/**
-	 * The value for the start_date field.
-	 * @var        string
+	 * The value for the rank field.
+	 * @var        int
 	 */
-	protected $start_date;
+	protected $rank;
 
 	/**
-	 * The value for the end_date field.
-	 * @var        string
+	 * The value for the is_active field.
+	 * Note: this column has a database default value of: true
+	 * @var        boolean
 	 */
-	protected $end_date;
+	protected $is_active;
+
+	/**
+	 * The value for the has_info field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $has_info;
+
+	/**
+	 * The value for the has_modules field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $has_modules;
+
+	/**
+	 * The value for the has_tools field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $has_tools;
 
 	/**
 	 * @var        array Appointment[] Collection to store aggregation of Appointment objects.
@@ -53,24 +75,34 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	private $lastAppointmentCriteria = null;
 
 	/**
-	 * @var        array Enrolment[] Collection to store aggregation of Enrolment objects.
+	 * @var        array WpinfoType[] Collection to store aggregation of WpinfoType objects.
 	 */
-	protected $collEnrolments;
+	protected $collWpinfoTypes;
 
 	/**
-	 * @var        Criteria The criteria used to select the current contents of collEnrolments.
+	 * @var        Criteria The criteria used to select the current contents of collWpinfoTypes.
 	 */
-	private $lastEnrolmentCriteria = null;
+	private $lastWpinfoTypeCriteria = null;
 
 	/**
-	 * @var        array Schoolproject[] Collection to store aggregation of Schoolproject objects.
+	 * @var        array WptoolItemType[] Collection to store aggregation of WptoolItemType objects.
 	 */
-	protected $collSchoolprojects;
+	protected $collWptoolItemTypes;
 
 	/**
-	 * @var        Criteria The criteria used to select the current contents of collSchoolprojects.
+	 * @var        Criteria The criteria used to select the current contents of collWptoolItemTypes.
 	 */
-	private $lastSchoolprojectCriteria = null;
+	private $lastWptoolItemTypeCriteria = null;
+
+	/**
+	 * @var        array WpitemType[] Collection to store aggregation of WpitemType objects.
+	 */
+	protected $collWpitemTypes;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collWpitemTypes.
+	 */
+	private $lastWpitemTypeCriteria = null;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -88,7 +120,31 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 
 	// symfony behavior
 	
-	const PEER = 'YearPeer';
+	const PEER = 'AppointmentTypePeer';
+
+	/**
+	 * Applies default values to this object.
+	 * This method should be called from the object's constructor (or
+	 * equivalent initialization method).
+	 * @see        __construct()
+	 */
+	public function applyDefaultValues()
+	{
+		$this->is_active = true;
+		$this->has_info = false;
+		$this->has_modules = false;
+		$this->has_tools = false;
+	}
+
+	/**
+	 * Initializes internal state of BaseAppointmentType object.
+	 * @see        applyDefaults()
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
 
 	/**
 	 * Get the [id] column value.
@@ -111,86 +167,60 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [optionally formatted] temporal [start_date] column value.
+	 * Get the [rank] column value.
 	 * 
-	 *
-	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
-	 *							If format is NULL, then the raw DateTime object will be returned.
-	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
-	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 * @return     int
 	 */
-	public function getStartDate($format = 'Y-m-d')
+	public function getRank()
 	{
-		if ($this->start_date === null) {
-			return null;
-		}
-
-
-		if ($this->start_date === '0000-00-00') {
-			// while technically this is not a default value of NULL,
-			// this seems to be closest in meaning.
-			return null;
-		} else {
-			try {
-				$dt = new DateTime($this->start_date);
-			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->start_date, true), $x);
-			}
-		}
-
-		if ($format === null) {
-			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
-			return $dt;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $dt->format('U'));
-		} else {
-			return $dt->format($format);
-		}
+		return $this->rank;
 	}
 
 	/**
-	 * Get the [optionally formatted] temporal [end_date] column value.
+	 * Get the [is_active] column value.
 	 * 
-	 *
-	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
-	 *							If format is NULL, then the raw DateTime object will be returned.
-	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
-	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 * @return     boolean
 	 */
-	public function getEndDate($format = 'Y-m-d')
+	public function getIsActive()
 	{
-		if ($this->end_date === null) {
-			return null;
-		}
+		return $this->is_active;
+	}
 
+	/**
+	 * Get the [has_info] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getHasInfo()
+	{
+		return $this->has_info;
+	}
 
-		if ($this->end_date === '0000-00-00') {
-			// while technically this is not a default value of NULL,
-			// this seems to be closest in meaning.
-			return null;
-		} else {
-			try {
-				$dt = new DateTime($this->end_date);
-			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->end_date, true), $x);
-			}
-		}
+	/**
+	 * Get the [has_modules] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getHasModules()
+	{
+		return $this->has_modules;
+	}
 
-		if ($format === null) {
-			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
-			return $dt;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $dt->format('U'));
-		} else {
-			return $dt->format($format);
-		}
+	/**
+	 * Get the [has_tools] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getHasTools()
+	{
+		return $this->has_tools;
 	}
 
 	/**
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     Year The current object (for fluent API support)
+	 * @return     AppointmentType The current object (for fluent API support)
 	 */
 	public function setId($v)
 	{
@@ -200,7 +230,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = YearPeer::ID;
+			$this->modifiedColumns[] = AppointmentTypePeer::ID;
 		}
 
 		return $this;
@@ -210,7 +240,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	 * Set the value of [description] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     Year The current object (for fluent API support)
+	 * @return     AppointmentType The current object (for fluent API support)
 	 */
 	public function setDescription($v)
 	{
@@ -220,109 +250,111 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 
 		if ($this->description !== $v) {
 			$this->description = $v;
-			$this->modifiedColumns[] = YearPeer::DESCRIPTION;
+			$this->modifiedColumns[] = AppointmentTypePeer::DESCRIPTION;
 		}
 
 		return $this;
 	} // setDescription()
 
 	/**
-	 * Sets the value of [start_date] column to a normalized version of the date/time value specified.
+	 * Set the value of [rank] column.
 	 * 
-	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
-	 *						be treated as NULL for temporal objects.
-	 * @return     Year The current object (for fluent API support)
+	 * @param      int $v new value
+	 * @return     AppointmentType The current object (for fluent API support)
 	 */
-	public function setStartDate($v)
+	public function setRank($v)
 	{
-		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
-		// -- which is unexpected, to say the least.
-		if ($v === null || $v === '') {
-			$dt = null;
-		} elseif ($v instanceof DateTime) {
-			$dt = $v;
-		} else {
-			// some string/numeric value passed; we normalize that so that we can
-			// validate it.
-			try {
-				if (is_numeric($v)) { // if it's a unix timestamp
-					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
-					// We have to explicitly specify and then change the time zone because of a
-					// DateTime bug: http://bugs.php.net/bug.php?id=43003
-					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
-				} else {
-					$dt = new DateTime($v);
-				}
-			} catch (Exception $x) {
-				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
-			}
+		if ($v !== null) {
+			$v = (int) $v;
 		}
 
-		if ( $this->start_date !== null || $dt !== null ) {
-			// (nested ifs are a little easier to read in this case)
-
-			$currNorm = ($this->start_date !== null && $tmpDt = new DateTime($this->start_date)) ? $tmpDt->format('Y-m-d') : null;
-			$newNorm = ($dt !== null) ? $dt->format('Y-m-d') : null;
-
-			if ( ($currNorm !== $newNorm) // normalized values don't match 
-					)
-			{
-				$this->start_date = ($dt ? $dt->format('Y-m-d') : null);
-				$this->modifiedColumns[] = YearPeer::START_DATE;
-			}
-		} // if either are not null
+		if ($this->rank !== $v) {
+			$this->rank = $v;
+			$this->modifiedColumns[] = AppointmentTypePeer::RANK;
+		}
 
 		return $this;
-	} // setStartDate()
+	} // setRank()
 
 	/**
-	 * Sets the value of [end_date] column to a normalized version of the date/time value specified.
+	 * Set the value of [is_active] column.
 	 * 
-	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
-	 *						be treated as NULL for temporal objects.
-	 * @return     Year The current object (for fluent API support)
+	 * @param      boolean $v new value
+	 * @return     AppointmentType The current object (for fluent API support)
 	 */
-	public function setEndDate($v)
+	public function setIsActive($v)
 	{
-		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
-		// -- which is unexpected, to say the least.
-		if ($v === null || $v === '') {
-			$dt = null;
-		} elseif ($v instanceof DateTime) {
-			$dt = $v;
-		} else {
-			// some string/numeric value passed; we normalize that so that we can
-			// validate it.
-			try {
-				if (is_numeric($v)) { // if it's a unix timestamp
-					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
-					// We have to explicitly specify and then change the time zone because of a
-					// DateTime bug: http://bugs.php.net/bug.php?id=43003
-					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
-				} else {
-					$dt = new DateTime($v);
-				}
-			} catch (Exception $x) {
-				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
-			}
+		if ($v !== null) {
+			$v = (boolean) $v;
 		}
 
-		if ( $this->end_date !== null || $dt !== null ) {
-			// (nested ifs are a little easier to read in this case)
-
-			$currNorm = ($this->end_date !== null && $tmpDt = new DateTime($this->end_date)) ? $tmpDt->format('Y-m-d') : null;
-			$newNorm = ($dt !== null) ? $dt->format('Y-m-d') : null;
-
-			if ( ($currNorm !== $newNorm) // normalized values don't match 
-					)
-			{
-				$this->end_date = ($dt ? $dt->format('Y-m-d') : null);
-				$this->modifiedColumns[] = YearPeer::END_DATE;
-			}
-		} // if either are not null
+		if ($this->is_active !== $v || $this->isNew()) {
+			$this->is_active = $v;
+			$this->modifiedColumns[] = AppointmentTypePeer::IS_ACTIVE;
+		}
 
 		return $this;
-	} // setEndDate()
+	} // setIsActive()
+
+	/**
+	 * Set the value of [has_info] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     AppointmentType The current object (for fluent API support)
+	 */
+	public function setHasInfo($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->has_info !== $v || $this->isNew()) {
+			$this->has_info = $v;
+			$this->modifiedColumns[] = AppointmentTypePeer::HAS_INFO;
+		}
+
+		return $this;
+	} // setHasInfo()
+
+	/**
+	 * Set the value of [has_modules] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     AppointmentType The current object (for fluent API support)
+	 */
+	public function setHasModules($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->has_modules !== $v || $this->isNew()) {
+			$this->has_modules = $v;
+			$this->modifiedColumns[] = AppointmentTypePeer::HAS_MODULES;
+		}
+
+		return $this;
+	} // setHasModules()
+
+	/**
+	 * Set the value of [has_tools] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     AppointmentType The current object (for fluent API support)
+	 */
+	public function setHasTools($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->has_tools !== $v || $this->isNew()) {
+			$this->has_tools = $v;
+			$this->modifiedColumns[] = AppointmentTypePeer::HAS_TOOLS;
+		}
+
+		return $this;
+	} // setHasTools()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -334,6 +366,22 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->is_active !== true) {
+				return false;
+			}
+
+			if ($this->has_info !== false) {
+				return false;
+			}
+
+			if ($this->has_modules !== false) {
+				return false;
+			}
+
+			if ($this->has_tools !== false) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -358,8 +406,11 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->description = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-			$this->start_date = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-			$this->end_date = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->rank = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->is_active = ($row[$startcol + 3] !== null) ? (boolean) $row[$startcol + 3] : null;
+			$this->has_info = ($row[$startcol + 4] !== null) ? (boolean) $row[$startcol + 4] : null;
+			$this->has_modules = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
+			$this->has_tools = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -369,10 +420,10 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 4; // 4 = YearPeer::NUM_COLUMNS - YearPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 7; // 7 = AppointmentTypePeer::NUM_COLUMNS - AppointmentTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating Year object", $e);
+			throw new PropelException("Error populating AppointmentType object", $e);
 		}
 	}
 
@@ -415,13 +466,13 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(YearPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(AppointmentTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		// We don't need to alter the object instance pool; we're just modifying this instance
 		// already in the pool.
 
-		$stmt = YearPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+		$stmt = AppointmentTypePeer::doSelectStmt($this->buildPkeyCriteria(), $con);
 		$row = $stmt->fetch(PDO::FETCH_NUM);
 		$stmt->closeCursor();
 		if (!$row) {
@@ -434,11 +485,14 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 			$this->collAppointments = null;
 			$this->lastAppointmentCriteria = null;
 
-			$this->collEnrolments = null;
-			$this->lastEnrolmentCriteria = null;
+			$this->collWpinfoTypes = null;
+			$this->lastWpinfoTypeCriteria = null;
 
-			$this->collSchoolprojects = null;
-			$this->lastSchoolprojectCriteria = null;
+			$this->collWptoolItemTypes = null;
+			$this->lastWptoolItemTypeCriteria = null;
+
+			$this->collWpitemTypes = null;
+			$this->lastWpitemTypeCriteria = null;
 
 		} // if (deep)
 	}
@@ -459,14 +513,14 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(YearPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(AppointmentTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
 		try {
 			$ret = $this->preDelete($con);
 			if ($ret) {
-				YearPeer::doDelete($this, $con);
+				AppointmentTypePeer::doDelete($this, $con);
 				$this->postDelete($con);
 				$this->setDeleted(true);
 				$con->commit();
@@ -499,7 +553,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(YearPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(AppointmentTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
@@ -519,7 +573,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 					$this->postUpdate($con);
 				}
 				$this->postSave($con);
-				YearPeer::addInstanceToPool($this);
+				AppointmentTypePeer::addInstanceToPool($this);
 			} else {
 				$affectedRows = 0;
 			}
@@ -548,18 +602,23 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 		if (!$this->alreadyInSave) {
 			$this->alreadyInSave = true;
 
+			if ($this->isNew() ) {
+				$this->modifiedColumns[] = AppointmentTypePeer::ID;
+			}
 
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = YearPeer::doInsert($this, $con);
+					$pk = AppointmentTypePeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
 
+					$this->setId($pk);  //[IMV] update autoincrement primary key
+
 					$this->setNew(false);
 				} else {
-					$affectedRows += YearPeer::doUpdate($this, $con);
+					$affectedRows += AppointmentTypePeer::doUpdate($this, $con);
 				}
 
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
@@ -573,16 +632,24 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collEnrolments !== null) {
-				foreach ($this->collEnrolments as $referrerFK) {
+			if ($this->collWpinfoTypes !== null) {
+				foreach ($this->collWpinfoTypes as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
 				}
 			}
 
-			if ($this->collSchoolprojects !== null) {
-				foreach ($this->collSchoolprojects as $referrerFK) {
+			if ($this->collWptoolItemTypes !== null) {
+				foreach ($this->collWptoolItemTypes as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collWpitemTypes !== null) {
+				foreach ($this->collWpitemTypes as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -655,7 +722,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 			$failureMap = array();
 
 
-			if (($retval = YearPeer::doValidate($this, $columns)) !== true) {
+			if (($retval = AppointmentTypePeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
@@ -668,16 +735,24 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collEnrolments !== null) {
-					foreach ($this->collEnrolments as $referrerFK) {
+				if ($this->collWpinfoTypes !== null) {
+					foreach ($this->collWpinfoTypes as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
 					}
 				}
 
-				if ($this->collSchoolprojects !== null) {
-					foreach ($this->collSchoolprojects as $referrerFK) {
+				if ($this->collWptoolItemTypes !== null) {
+					foreach ($this->collWptoolItemTypes as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collWpitemTypes !== null) {
+					foreach ($this->collWpitemTypes as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -702,7 +777,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = YearPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = AppointmentTypePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		$field = $this->getByPosition($pos);
 		return $field;
 	}
@@ -724,10 +799,19 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				return $this->getDescription();
 				break;
 			case 2:
-				return $this->getStartDate();
+				return $this->getRank();
 				break;
 			case 3:
-				return $this->getEndDate();
+				return $this->getIsActive();
+				break;
+			case 4:
+				return $this->getHasInfo();
+				break;
+			case 5:
+				return $this->getHasModules();
+				break;
+			case 6:
+				return $this->getHasTools();
 				break;
 			default:
 				return null;
@@ -748,12 +832,15 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
 	{
-		$keys = YearPeer::getFieldNames($keyType);
+		$keys = AppointmentTypePeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getDescription(),
-			$keys[2] => $this->getStartDate(),
-			$keys[3] => $this->getEndDate(),
+			$keys[2] => $this->getRank(),
+			$keys[3] => $this->getIsActive(),
+			$keys[4] => $this->getHasInfo(),
+			$keys[5] => $this->getHasModules(),
+			$keys[6] => $this->getHasTools(),
 		);
 		return $result;
 	}
@@ -770,7 +857,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = YearPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = AppointmentTypePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -792,10 +879,19 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				$this->setDescription($value);
 				break;
 			case 2:
-				$this->setStartDate($value);
+				$this->setRank($value);
 				break;
 			case 3:
-				$this->setEndDate($value);
+				$this->setIsActive($value);
+				break;
+			case 4:
+				$this->setHasInfo($value);
+				break;
+			case 5:
+				$this->setHasModules($value);
+				break;
+			case 6:
+				$this->setHasTools($value);
 				break;
 		} // switch()
 	}
@@ -819,12 +915,15 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = YearPeer::getFieldNames($keyType);
+		$keys = AppointmentTypePeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setDescription($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setStartDate($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setEndDate($arr[$keys[3]]);
+		if (array_key_exists($keys[2], $arr)) $this->setRank($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setIsActive($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setHasInfo($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setHasModules($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setHasTools($arr[$keys[6]]);
 	}
 
 	/**
@@ -834,12 +933,15 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(YearPeer::DATABASE_NAME);
+		$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(YearPeer::ID)) $criteria->add(YearPeer::ID, $this->id);
-		if ($this->isColumnModified(YearPeer::DESCRIPTION)) $criteria->add(YearPeer::DESCRIPTION, $this->description);
-		if ($this->isColumnModified(YearPeer::START_DATE)) $criteria->add(YearPeer::START_DATE, $this->start_date);
-		if ($this->isColumnModified(YearPeer::END_DATE)) $criteria->add(YearPeer::END_DATE, $this->end_date);
+		if ($this->isColumnModified(AppointmentTypePeer::ID)) $criteria->add(AppointmentTypePeer::ID, $this->id);
+		if ($this->isColumnModified(AppointmentTypePeer::DESCRIPTION)) $criteria->add(AppointmentTypePeer::DESCRIPTION, $this->description);
+		if ($this->isColumnModified(AppointmentTypePeer::RANK)) $criteria->add(AppointmentTypePeer::RANK, $this->rank);
+		if ($this->isColumnModified(AppointmentTypePeer::IS_ACTIVE)) $criteria->add(AppointmentTypePeer::IS_ACTIVE, $this->is_active);
+		if ($this->isColumnModified(AppointmentTypePeer::HAS_INFO)) $criteria->add(AppointmentTypePeer::HAS_INFO, $this->has_info);
+		if ($this->isColumnModified(AppointmentTypePeer::HAS_MODULES)) $criteria->add(AppointmentTypePeer::HAS_MODULES, $this->has_modules);
+		if ($this->isColumnModified(AppointmentTypePeer::HAS_TOOLS)) $criteria->add(AppointmentTypePeer::HAS_TOOLS, $this->has_tools);
 
 		return $criteria;
 	}
@@ -854,9 +956,9 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(YearPeer::DATABASE_NAME);
+		$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
 
-		$criteria->add(YearPeer::ID, $this->id);
+		$criteria->add(AppointmentTypePeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -887,20 +989,24 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of Year (or compatible) type.
+	 * @param      object $copyObj An object of AppointmentType (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setId($this->id);
-
 		$copyObj->setDescription($this->description);
 
-		$copyObj->setStartDate($this->start_date);
+		$copyObj->setRank($this->rank);
 
-		$copyObj->setEndDate($this->end_date);
+		$copyObj->setIsActive($this->is_active);
+
+		$copyObj->setHasInfo($this->has_info);
+
+		$copyObj->setHasModules($this->has_modules);
+
+		$copyObj->setHasTools($this->has_tools);
 
 
 		if ($deepCopy) {
@@ -914,15 +1020,21 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				}
 			}
 
-			foreach ($this->getEnrolments() as $relObj) {
+			foreach ($this->getWpinfoTypes() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addEnrolment($relObj->copy($deepCopy));
+					$copyObj->addWpinfoType($relObj->copy($deepCopy));
 				}
 			}
 
-			foreach ($this->getSchoolprojects() as $relObj) {
+			foreach ($this->getWptoolItemTypes() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addSchoolproject($relObj->copy($deepCopy));
+					$copyObj->addWptoolItemType($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getWpitemTypes() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addWpitemType($relObj->copy($deepCopy));
 				}
 			}
 
@@ -930,6 +1042,8 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 
 
 		$copyObj->setNew(true);
+
+		$copyObj->setId(NULL); // this is a auto-increment column, so set to default value
 
 	}
 
@@ -942,7 +1056,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     Year Clone of current object.
+	 * @return     AppointmentType Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -961,12 +1075,12 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     YearPeer
+	 * @return     AppointmentTypePeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new YearPeer();
+			self::$peer = new AppointmentTypePeer();
 		}
 		return self::$peer;
 	}
@@ -1003,8 +1117,8 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	 * Gets an array of Appointment objects which contain a foreign key that references this object.
 	 *
 	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Year has previously been saved, it will retrieve
-	 * related Appointments from storage. If this Year is new, it will return
+	 * Otherwise if this AppointmentType has previously been saved, it will retrieve
+	 * related Appointments from storage. If this AppointmentType is new, it will return
 	 * an empty collection or the current collection, the criteria is ignored on a new object.
 	 *
 	 * @param      PropelPDO $con
@@ -1015,7 +1129,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	public function getAppointments($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
+			$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -1027,7 +1141,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 			   $this->collAppointments = array();
 			} else {
 
-				$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
+				$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
 
 				AppointmentPeer::addSelectColumns($criteria);
 				$this->collAppointments = AppointmentPeer::doSelect($criteria, $con);
@@ -1040,7 +1154,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				// one, just return the collection.
 
 
-				$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
+				$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
 
 				AppointmentPeer::addSelectColumns($criteria);
 				if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
@@ -1064,7 +1178,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	public function countAppointments(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
+			$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
 		} else {
 			$criteria = clone $criteria;
 		}
@@ -1080,7 +1194,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				$count = 0;
 			} else {
 
-				$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
+				$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
 
 				$count = AppointmentPeer::doCount($criteria, false, $con);
 			}
@@ -1092,7 +1206,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				// one, just return count of the collection.
 
 
-				$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
+				$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
 
 				if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
 					$count = AppointmentPeer::doCount($criteria, false, $con);
@@ -1121,7 +1235,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 		}
 		if (!in_array($l, $this->collAppointments, true)) { // only add it if the **same** object is not already associated
 			array_push($this->collAppointments, $l);
-			$l->setYear($this);
+			$l->setAppointmentType($this);
 		}
 	}
 
@@ -1129,18 +1243,18 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	/**
 	 * If this collection has already been initialized with
 	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Year is new, it will return
-	 * an empty collection; or if this Year has previously
+	 * Otherwise if this AppointmentType is new, it will return
+	 * an empty collection; or if this AppointmentType has previously
 	 * been saved, it will retrieve related Appointments from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Year.
+	 * actually need in AppointmentType.
 	 */
 	public function getAppointmentsJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
+			$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -1152,7 +1266,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				$this->collAppointments = array();
 			} else {
 
-				$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
+				$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
 
 				$this->collAppointments = AppointmentPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
 			}
@@ -1161,7 +1275,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 			// called for.  If the criteria is the same as the last
 			// one, just return the collection.
 
-			$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
+			$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
 
 			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
 				$this->collAppointments = AppointmentPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
@@ -1176,18 +1290,18 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	/**
 	 * If this collection has already been initialized with
 	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Year is new, it will return
-	 * an empty collection; or if this Year has previously
+	 * Otherwise if this AppointmentType is new, it will return
+	 * an empty collection; or if this AppointmentType has previously
 	 * been saved, it will retrieve related Appointments from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Year.
+	 * actually need in AppointmentType.
 	 */
 	public function getAppointmentsJoinSubject($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
+			$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -1199,7 +1313,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				$this->collAppointments = array();
 			} else {
 
-				$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
+				$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
 
 				$this->collAppointments = AppointmentPeer::doSelectJoinSubject($criteria, $con, $join_behavior);
 			}
@@ -1208,7 +1322,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 			// called for.  If the criteria is the same as the last
 			// one, just return the collection.
 
-			$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
+			$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
 
 			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
 				$this->collAppointments = AppointmentPeer::doSelectJoinSubject($criteria, $con, $join_behavior);
@@ -1223,18 +1337,18 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	/**
 	 * If this collection has already been initialized with
 	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Year is new, it will return
-	 * an empty collection; or if this Year has previously
+	 * Otherwise if this AppointmentType is new, it will return
+	 * an empty collection; or if this AppointmentType has previously
 	 * been saved, it will retrieve related Appointments from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Year.
+	 * actually need in AppointmentType.
 	 */
 	public function getAppointmentsJoinSchoolclass($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
+			$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -1246,7 +1360,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				$this->collAppointments = array();
 			} else {
 
-				$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
+				$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
 
 				$this->collAppointments = AppointmentPeer::doSelectJoinSchoolclass($criteria, $con, $join_behavior);
 			}
@@ -1255,7 +1369,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 			// called for.  If the criteria is the same as the last
 			// one, just return the collection.
 
-			$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
+			$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
 
 			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
 				$this->collAppointments = AppointmentPeer::doSelectJoinSchoolclass($criteria, $con, $join_behavior);
@@ -1270,18 +1384,18 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	/**
 	 * If this collection has already been initialized with
 	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Year is new, it will return
-	 * an empty collection; or if this Year has previously
+	 * Otherwise if this AppointmentType is new, it will return
+	 * an empty collection; or if this AppointmentType has previously
 	 * been saved, it will retrieve related Appointments from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Year.
+	 * actually need in AppointmentType.
 	 */
 	public function getAppointmentsJoinTeam($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
+			$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -1293,7 +1407,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				$this->collAppointments = array();
 			} else {
 
-				$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
+				$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
 
 				$this->collAppointments = AppointmentPeer::doSelectJoinTeam($criteria, $con, $join_behavior);
 			}
@@ -1302,7 +1416,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 			// called for.  If the criteria is the same as the last
 			// one, just return the collection.
 
-			$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
+			$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
 
 			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
 				$this->collAppointments = AppointmentPeer::doSelectJoinTeam($criteria, $con, $join_behavior);
@@ -1317,18 +1431,65 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 	/**
 	 * If this collection has already been initialized with
 	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Year is new, it will return
-	 * an empty collection; or if this Year has previously
+	 * Otherwise if this AppointmentType is new, it will return
+	 * an empty collection; or if this AppointmentType has previously
 	 * been saved, it will retrieve related Appointments from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Year.
+	 * actually need in AppointmentType.
+	 */
+	public function getAppointmentsJoinYear($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAppointments === null) {
+			if ($this->isNew()) {
+				$this->collAppointments = array();
+			} else {
+
+				$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
+
+				$this->collAppointments = AppointmentPeer::doSelectJoinYear($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
+
+			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
+				$this->collAppointments = AppointmentPeer::doSelectJoinYear($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastAppointmentCriteria = $criteria;
+
+		return $this->collAppointments;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this AppointmentType is new, it will return
+	 * an empty collection; or if this AppointmentType has previously
+	 * been saved, it will retrieve related Appointments from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in AppointmentType.
 	 */
 	public function getAppointmentsJoinSyllabus($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
+			$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
@@ -1340,7 +1501,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				$this->collAppointments = array();
 			} else {
 
-				$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
+				$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
 
 				$this->collAppointments = AppointmentPeer::doSelectJoinSyllabus($criteria, $con, $join_behavior);
 			}
@@ -1349,7 +1510,7 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 			// called for.  If the criteria is the same as the last
 			// one, just return the collection.
 
-			$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
+			$criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->id);
 
 			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
 				$this->collAppointments = AppointmentPeer::doSelectJoinSyllabus($criteria, $con, $join_behavior);
@@ -1360,113 +1521,66 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 		return $this->collAppointments;
 	}
 
-
 	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Year is new, it will return
-	 * an empty collection; or if this Year has previously
-	 * been saved, it will retrieve related Appointments from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Year.
-	 */
-	public function getAppointmentsJoinAppointmentType($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collAppointments === null) {
-			if ($this->isNew()) {
-				$this->collAppointments = array();
-			} else {
-
-				$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
-
-				$this->collAppointments = AppointmentPeer::doSelectJoinAppointmentType($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(AppointmentPeer::YEAR_ID, $this->id);
-
-			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
-				$this->collAppointments = AppointmentPeer::doSelectJoinAppointmentType($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastAppointmentCriteria = $criteria;
-
-		return $this->collAppointments;
-	}
-
-	/**
-	 * Clears out the collEnrolments collection (array).
+	 * Clears out the collWpinfoTypes collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
 	 * them to be refetched by subsequent calls to accessor method.
 	 *
 	 * @return     void
-	 * @see        addEnrolments()
+	 * @see        addWpinfoTypes()
 	 */
-	public function clearEnrolments()
+	public function clearWpinfoTypes()
 	{
-		$this->collEnrolments = null; // important to set this to NULL since that means it is uninitialized
+		$this->collWpinfoTypes = null; // important to set this to NULL since that means it is uninitialized
 	}
 
 	/**
-	 * Initializes the collEnrolments collection (array).
+	 * Initializes the collWpinfoTypes collection (array).
 	 *
-	 * By default this just sets the collEnrolments collection to an empty array (like clearcollEnrolments());
+	 * By default this just sets the collWpinfoTypes collection to an empty array (like clearcollWpinfoTypes());
 	 * however, you may wish to override this method in your stub class to provide setting appropriate
 	 * to your application -- for example, setting the initial array to the values stored in database.
 	 *
 	 * @return     void
 	 */
-	public function initEnrolments()
+	public function initWpinfoTypes()
 	{
-		$this->collEnrolments = array();
+		$this->collWpinfoTypes = array();
 	}
 
 	/**
-	 * Gets an array of Enrolment objects which contain a foreign key that references this object.
+	 * Gets an array of WpinfoType objects which contain a foreign key that references this object.
 	 *
 	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Year has previously been saved, it will retrieve
-	 * related Enrolments from storage. If this Year is new, it will return
+	 * Otherwise if this AppointmentType has previously been saved, it will retrieve
+	 * related WpinfoTypes from storage. If this AppointmentType is new, it will return
 	 * an empty collection or the current collection, the criteria is ignored on a new object.
 	 *
 	 * @param      PropelPDO $con
 	 * @param      Criteria $criteria
-	 * @return     array Enrolment[]
+	 * @return     array WpinfoType[]
 	 * @throws     PropelException
 	 */
-	public function getEnrolments($criteria = null, PropelPDO $con = null)
+	public function getWpinfoTypes($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
+			$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collEnrolments === null) {
+		if ($this->collWpinfoTypes === null) {
 			if ($this->isNew()) {
-			   $this->collEnrolments = array();
+			   $this->collWpinfoTypes = array();
 			} else {
 
-				$criteria->add(EnrolmentPeer::YEAR_ID, $this->id);
+				$criteria->add(WpinfoTypePeer::APPOINTMENT_TYPE_ID, $this->id);
 
-				EnrolmentPeer::addSelectColumns($criteria);
-				$this->collEnrolments = EnrolmentPeer::doSelect($criteria, $con);
+				WpinfoTypePeer::addSelectColumns($criteria);
+				$this->collWpinfoTypes = WpinfoTypePeer::doSelect($criteria, $con);
 			}
 		} else {
 			// criteria has no effect for a new object
@@ -1476,31 +1590,31 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				// one, just return the collection.
 
 
-				$criteria->add(EnrolmentPeer::YEAR_ID, $this->id);
+				$criteria->add(WpinfoTypePeer::APPOINTMENT_TYPE_ID, $this->id);
 
-				EnrolmentPeer::addSelectColumns($criteria);
-				if (!isset($this->lastEnrolmentCriteria) || !$this->lastEnrolmentCriteria->equals($criteria)) {
-					$this->collEnrolments = EnrolmentPeer::doSelect($criteria, $con);
+				WpinfoTypePeer::addSelectColumns($criteria);
+				if (!isset($this->lastWpinfoTypeCriteria) || !$this->lastWpinfoTypeCriteria->equals($criteria)) {
+					$this->collWpinfoTypes = WpinfoTypePeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastEnrolmentCriteria = $criteria;
-		return $this->collEnrolments;
+		$this->lastWpinfoTypeCriteria = $criteria;
+		return $this->collWpinfoTypes;
 	}
 
 	/**
-	 * Returns the number of related Enrolment objects.
+	 * Returns the number of related WpinfoType objects.
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct
 	 * @param      PropelPDO $con
-	 * @return     int Count of related Enrolment objects.
+	 * @return     int Count of related WpinfoType objects.
 	 * @throws     PropelException
 	 */
-	public function countEnrolments(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	public function countWpinfoTypes(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
+			$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
 		} else {
 			$criteria = clone $criteria;
 		}
@@ -1511,14 +1625,14 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 
 		$count = null;
 
-		if ($this->collEnrolments === null) {
+		if ($this->collWpinfoTypes === null) {
 			if ($this->isNew()) {
 				$count = 0;
 			} else {
 
-				$criteria->add(EnrolmentPeer::YEAR_ID, $this->id);
+				$criteria->add(WpinfoTypePeer::APPOINTMENT_TYPE_ID, $this->id);
 
-				$count = EnrolmentPeer::doCount($criteria, false, $con);
+				$count = WpinfoTypePeer::doCount($criteria, false, $con);
 			}
 		} else {
 			// criteria has no effect for a new object
@@ -1528,193 +1642,99 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				// one, just return count of the collection.
 
 
-				$criteria->add(EnrolmentPeer::YEAR_ID, $this->id);
+				$criteria->add(WpinfoTypePeer::APPOINTMENT_TYPE_ID, $this->id);
 
-				if (!isset($this->lastEnrolmentCriteria) || !$this->lastEnrolmentCriteria->equals($criteria)) {
-					$count = EnrolmentPeer::doCount($criteria, false, $con);
+				if (!isset($this->lastWpinfoTypeCriteria) || !$this->lastWpinfoTypeCriteria->equals($criteria)) {
+					$count = WpinfoTypePeer::doCount($criteria, false, $con);
 				} else {
-					$count = count($this->collEnrolments);
+					$count = count($this->collWpinfoTypes);
 				}
 			} else {
-				$count = count($this->collEnrolments);
+				$count = count($this->collWpinfoTypes);
 			}
 		}
 		return $count;
 	}
 
 	/**
-	 * Method called to associate a Enrolment object to this object
-	 * through the Enrolment foreign key attribute.
+	 * Method called to associate a WpinfoType object to this object
+	 * through the WpinfoType foreign key attribute.
 	 *
-	 * @param      Enrolment $l Enrolment
+	 * @param      WpinfoType $l WpinfoType
 	 * @return     void
 	 * @throws     PropelException
 	 */
-	public function addEnrolment(Enrolment $l)
+	public function addWpinfoType(WpinfoType $l)
 	{
-		if ($this->collEnrolments === null) {
-			$this->initEnrolments();
+		if ($this->collWpinfoTypes === null) {
+			$this->initWpinfoTypes();
 		}
-		if (!in_array($l, $this->collEnrolments, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collEnrolments, $l);
-			$l->setYear($this);
+		if (!in_array($l, $this->collWpinfoTypes, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collWpinfoTypes, $l);
+			$l->setAppointmentType($this);
 		}
 	}
 
-
 	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Year is new, it will return
-	 * an empty collection; or if this Year has previously
-	 * been saved, it will retrieve related Enrolments from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Year.
-	 */
-	public function getEnrolmentsJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEnrolments === null) {
-			if ($this->isNew()) {
-				$this->collEnrolments = array();
-			} else {
-
-				$criteria->add(EnrolmentPeer::YEAR_ID, $this->id);
-
-				$this->collEnrolments = EnrolmentPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(EnrolmentPeer::YEAR_ID, $this->id);
-
-			if (!isset($this->lastEnrolmentCriteria) || !$this->lastEnrolmentCriteria->equals($criteria)) {
-				$this->collEnrolments = EnrolmentPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastEnrolmentCriteria = $criteria;
-
-		return $this->collEnrolments;
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Year is new, it will return
-	 * an empty collection; or if this Year has previously
-	 * been saved, it will retrieve related Enrolments from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Year.
-	 */
-	public function getEnrolmentsJoinSchoolclass($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collEnrolments === null) {
-			if ($this->isNew()) {
-				$this->collEnrolments = array();
-			} else {
-
-				$criteria->add(EnrolmentPeer::YEAR_ID, $this->id);
-
-				$this->collEnrolments = EnrolmentPeer::doSelectJoinSchoolclass($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(EnrolmentPeer::YEAR_ID, $this->id);
-
-			if (!isset($this->lastEnrolmentCriteria) || !$this->lastEnrolmentCriteria->equals($criteria)) {
-				$this->collEnrolments = EnrolmentPeer::doSelectJoinSchoolclass($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastEnrolmentCriteria = $criteria;
-
-		return $this->collEnrolments;
-	}
-
-	/**
-	 * Clears out the collSchoolprojects collection (array).
+	 * Clears out the collWptoolItemTypes collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
 	 * them to be refetched by subsequent calls to accessor method.
 	 *
 	 * @return     void
-	 * @see        addSchoolprojects()
+	 * @see        addWptoolItemTypes()
 	 */
-	public function clearSchoolprojects()
+	public function clearWptoolItemTypes()
 	{
-		$this->collSchoolprojects = null; // important to set this to NULL since that means it is uninitialized
+		$this->collWptoolItemTypes = null; // important to set this to NULL since that means it is uninitialized
 	}
 
 	/**
-	 * Initializes the collSchoolprojects collection (array).
+	 * Initializes the collWptoolItemTypes collection (array).
 	 *
-	 * By default this just sets the collSchoolprojects collection to an empty array (like clearcollSchoolprojects());
+	 * By default this just sets the collWptoolItemTypes collection to an empty array (like clearcollWptoolItemTypes());
 	 * however, you may wish to override this method in your stub class to provide setting appropriate
 	 * to your application -- for example, setting the initial array to the values stored in database.
 	 *
 	 * @return     void
 	 */
-	public function initSchoolprojects()
+	public function initWptoolItemTypes()
 	{
-		$this->collSchoolprojects = array();
+		$this->collWptoolItemTypes = array();
 	}
 
 	/**
-	 * Gets an array of Schoolproject objects which contain a foreign key that references this object.
+	 * Gets an array of WptoolItemType objects which contain a foreign key that references this object.
 	 *
 	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Year has previously been saved, it will retrieve
-	 * related Schoolprojects from storage. If this Year is new, it will return
+	 * Otherwise if this AppointmentType has previously been saved, it will retrieve
+	 * related WptoolItemTypes from storage. If this AppointmentType is new, it will return
 	 * an empty collection or the current collection, the criteria is ignored on a new object.
 	 *
 	 * @param      PropelPDO $con
 	 * @param      Criteria $criteria
-	 * @return     array Schoolproject[]
+	 * @return     array WptoolItemType[]
 	 * @throws     PropelException
 	 */
-	public function getSchoolprojects($criteria = null, PropelPDO $con = null)
+	public function getWptoolItemTypes($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
+			$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collSchoolprojects === null) {
+		if ($this->collWptoolItemTypes === null) {
 			if ($this->isNew()) {
-			   $this->collSchoolprojects = array();
+			   $this->collWptoolItemTypes = array();
 			} else {
 
-				$criteria->add(SchoolprojectPeer::YEAR_ID, $this->id);
+				$criteria->add(WptoolItemTypePeer::APPOINTMENT_TYPE_ID, $this->id);
 
-				SchoolprojectPeer::addSelectColumns($criteria);
-				$this->collSchoolprojects = SchoolprojectPeer::doSelect($criteria, $con);
+				WptoolItemTypePeer::addSelectColumns($criteria);
+				$this->collWptoolItemTypes = WptoolItemTypePeer::doSelect($criteria, $con);
 			}
 		} else {
 			// criteria has no effect for a new object
@@ -1724,31 +1744,31 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				// one, just return the collection.
 
 
-				$criteria->add(SchoolprojectPeer::YEAR_ID, $this->id);
+				$criteria->add(WptoolItemTypePeer::APPOINTMENT_TYPE_ID, $this->id);
 
-				SchoolprojectPeer::addSelectColumns($criteria);
-				if (!isset($this->lastSchoolprojectCriteria) || !$this->lastSchoolprojectCriteria->equals($criteria)) {
-					$this->collSchoolprojects = SchoolprojectPeer::doSelect($criteria, $con);
+				WptoolItemTypePeer::addSelectColumns($criteria);
+				if (!isset($this->lastWptoolItemTypeCriteria) || !$this->lastWptoolItemTypeCriteria->equals($criteria)) {
+					$this->collWptoolItemTypes = WptoolItemTypePeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastSchoolprojectCriteria = $criteria;
-		return $this->collSchoolprojects;
+		$this->lastWptoolItemTypeCriteria = $criteria;
+		return $this->collWptoolItemTypes;
 	}
 
 	/**
-	 * Returns the number of related Schoolproject objects.
+	 * Returns the number of related WptoolItemType objects.
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct
 	 * @param      PropelPDO $con
-	 * @return     int Count of related Schoolproject objects.
+	 * @return     int Count of related WptoolItemType objects.
 	 * @throws     PropelException
 	 */
-	public function countSchoolprojects(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	public function countWptoolItemTypes(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
+			$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
 		} else {
 			$criteria = clone $criteria;
 		}
@@ -1759,14 +1779,14 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 
 		$count = null;
 
-		if ($this->collSchoolprojects === null) {
+		if ($this->collWptoolItemTypes === null) {
 			if ($this->isNew()) {
 				$count = 0;
 			} else {
 
-				$criteria->add(SchoolprojectPeer::YEAR_ID, $this->id);
+				$criteria->add(WptoolItemTypePeer::APPOINTMENT_TYPE_ID, $this->id);
 
-				$count = SchoolprojectPeer::doCount($criteria, false, $con);
+				$count = WptoolItemTypePeer::doCount($criteria, false, $con);
 			}
 		} else {
 			// criteria has no effect for a new object
@@ -1776,225 +1796,191 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 				// one, just return count of the collection.
 
 
-				$criteria->add(SchoolprojectPeer::YEAR_ID, $this->id);
+				$criteria->add(WptoolItemTypePeer::APPOINTMENT_TYPE_ID, $this->id);
 
-				if (!isset($this->lastSchoolprojectCriteria) || !$this->lastSchoolprojectCriteria->equals($criteria)) {
-					$count = SchoolprojectPeer::doCount($criteria, false, $con);
+				if (!isset($this->lastWptoolItemTypeCriteria) || !$this->lastWptoolItemTypeCriteria->equals($criteria)) {
+					$count = WptoolItemTypePeer::doCount($criteria, false, $con);
 				} else {
-					$count = count($this->collSchoolprojects);
+					$count = count($this->collWptoolItemTypes);
 				}
 			} else {
-				$count = count($this->collSchoolprojects);
+				$count = count($this->collWptoolItemTypes);
 			}
 		}
 		return $count;
 	}
 
 	/**
-	 * Method called to associate a Schoolproject object to this object
-	 * through the Schoolproject foreign key attribute.
+	 * Method called to associate a WptoolItemType object to this object
+	 * through the WptoolItemType foreign key attribute.
 	 *
-	 * @param      Schoolproject $l Schoolproject
+	 * @param      WptoolItemType $l WptoolItemType
 	 * @return     void
 	 * @throws     PropelException
 	 */
-	public function addSchoolproject(Schoolproject $l)
+	public function addWptoolItemType(WptoolItemType $l)
 	{
-		if ($this->collSchoolprojects === null) {
-			$this->initSchoolprojects();
+		if ($this->collWptoolItemTypes === null) {
+			$this->initWptoolItemTypes();
 		}
-		if (!in_array($l, $this->collSchoolprojects, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collSchoolprojects, $l);
-			$l->setYear($this);
+		if (!in_array($l, $this->collWptoolItemTypes, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collWptoolItemTypes, $l);
+			$l->setAppointmentType($this);
 		}
 	}
 
+	/**
+	 * Clears out the collWpitemTypes collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addWpitemTypes()
+	 */
+	public function clearWpitemTypes()
+	{
+		$this->collWpitemTypes = null; // important to set this to NULL since that means it is uninitialized
+	}
 
 	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Year is new, it will return
-	 * an empty collection; or if this Year has previously
-	 * been saved, it will retrieve related Schoolprojects from storage.
+	 * Initializes the collWpitemTypes collection (array).
 	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Year.
+	 * By default this just sets the collWpitemTypes collection to an empty array (like clearcollWpitemTypes());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
 	 */
-	public function getSchoolprojectsJoinProjCategory($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function initWpitemTypes()
+	{
+		$this->collWpitemTypes = array();
+	}
+
+	/**
+	 * Gets an array of WpitemType objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this AppointmentType has previously been saved, it will retrieve
+	 * related WpitemTypes from storage. If this AppointmentType is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array WpitemType[]
+	 * @throws     PropelException
+	 */
+	public function getWpitemTypes($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
+			$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
 		}
 		elseif ($criteria instanceof Criteria)
 		{
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collSchoolprojects === null) {
+		if ($this->collWpitemTypes === null) {
 			if ($this->isNew()) {
-				$this->collSchoolprojects = array();
+			   $this->collWpitemTypes = array();
 			} else {
 
-				$criteria->add(SchoolprojectPeer::YEAR_ID, $this->id);
+				$criteria->add(WpitemTypePeer::APPOINTMENT_TYPE_ID, $this->id);
 
-				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinProjCategory($criteria, $con, $join_behavior);
+				WpitemTypePeer::addSelectColumns($criteria);
+				$this->collWpitemTypes = WpitemTypePeer::doSelect($criteria, $con);
 			}
 		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
 
-			$criteria->add(SchoolprojectPeer::YEAR_ID, $this->id);
 
-			if (!isset($this->lastSchoolprojectCriteria) || !$this->lastSchoolprojectCriteria->equals($criteria)) {
-				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinProjCategory($criteria, $con, $join_behavior);
+				$criteria->add(WpitemTypePeer::APPOINTMENT_TYPE_ID, $this->id);
+
+				WpitemTypePeer::addSelectColumns($criteria);
+				if (!isset($this->lastWpitemTypeCriteria) || !$this->lastWpitemTypeCriteria->equals($criteria)) {
+					$this->collWpitemTypes = WpitemTypePeer::doSelect($criteria, $con);
+				}
 			}
 		}
-		$this->lastSchoolprojectCriteria = $criteria;
-
-		return $this->collSchoolprojects;
+		$this->lastWpitemTypeCriteria = $criteria;
+		return $this->collWpitemTypes;
 	}
 
-
 	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Year is new, it will return
-	 * an empty collection; or if this Year has previously
-	 * been saved, it will retrieve related Schoolprojects from storage.
+	 * Returns the number of related WpitemType objects.
 	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Year.
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related WpitemType objects.
+	 * @throws     PropelException
 	 */
-	public function getSchoolprojectsJoinProjFinancing($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function countWpitemTypes(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
+			$criteria = new Criteria(AppointmentTypePeer::DATABASE_NAME);
+		} else {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collSchoolprojects === null) {
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collWpitemTypes === null) {
 			if ($this->isNew()) {
-				$this->collSchoolprojects = array();
+				$count = 0;
 			} else {
 
-				$criteria->add(SchoolprojectPeer::YEAR_ID, $this->id);
+				$criteria->add(WpitemTypePeer::APPOINTMENT_TYPE_ID, $this->id);
 
-				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinProjFinancing($criteria, $con, $join_behavior);
+				$count = WpitemTypePeer::doCount($criteria, false, $con);
 			}
 		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
 
-			$criteria->add(SchoolprojectPeer::YEAR_ID, $this->id);
 
-			if (!isset($this->lastSchoolprojectCriteria) || !$this->lastSchoolprojectCriteria->equals($criteria)) {
-				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinProjFinancing($criteria, $con, $join_behavior);
+				$criteria->add(WpitemTypePeer::APPOINTMENT_TYPE_ID, $this->id);
+
+				if (!isset($this->lastWpitemTypeCriteria) || !$this->lastWpitemTypeCriteria->equals($criteria)) {
+					$count = WpitemTypePeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collWpitemTypes);
+				}
+			} else {
+				$count = count($this->collWpitemTypes);
 			}
 		}
-		$this->lastSchoolprojectCriteria = $criteria;
-
-		return $this->collSchoolprojects;
+		return $count;
 	}
 
-
 	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Year is new, it will return
-	 * an empty collection; or if this Year has previously
-	 * been saved, it will retrieve related Schoolprojects from storage.
+	 * Method called to associate a WpitemType object to this object
+	 * through the WpitemType foreign key attribute.
 	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Year.
+	 * @param      WpitemType $l WpitemType
+	 * @return     void
+	 * @throws     PropelException
 	 */
-	public function getSchoolprojectsJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function addWpitemType(WpitemType $l)
 	{
-		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
+		if ($this->collWpitemTypes === null) {
+			$this->initWpitemTypes();
 		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
+		if (!in_array($l, $this->collWpitemTypes, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collWpitemTypes, $l);
+			$l->setAppointmentType($this);
 		}
-
-		if ($this->collSchoolprojects === null) {
-			if ($this->isNew()) {
-				$this->collSchoolprojects = array();
-			} else {
-
-				$criteria->add(SchoolprojectPeer::YEAR_ID, $this->id);
-
-				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(SchoolprojectPeer::YEAR_ID, $this->id);
-
-			if (!isset($this->lastSchoolprojectCriteria) || !$this->lastSchoolprojectCriteria->equals($criteria)) {
-				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastSchoolprojectCriteria = $criteria;
-
-		return $this->collSchoolprojects;
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Year is new, it will return
-	 * an empty collection; or if this Year has previously
-	 * been saved, it will retrieve related Schoolprojects from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Year.
-	 */
-	public function getSchoolprojectsJoinTeam($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(YearPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collSchoolprojects === null) {
-			if ($this->isNew()) {
-				$this->collSchoolprojects = array();
-			} else {
-
-				$criteria->add(SchoolprojectPeer::YEAR_ID, $this->id);
-
-				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinTeam($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(SchoolprojectPeer::YEAR_ID, $this->id);
-
-			if (!isset($this->lastSchoolprojectCriteria) || !$this->lastSchoolprojectCriteria->equals($criteria)) {
-				$this->collSchoolprojects = SchoolprojectPeer::doSelectJoinTeam($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastSchoolprojectCriteria = $criteria;
-
-		return $this->collSchoolprojects;
 	}
 
 	/**
@@ -2014,21 +2000,27 @@ abstract class BaseYear extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collEnrolments) {
-				foreach ((array) $this->collEnrolments as $o) {
+			if ($this->collWpinfoTypes) {
+				foreach ((array) $this->collWpinfoTypes as $o) {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collSchoolprojects) {
-				foreach ((array) $this->collSchoolprojects as $o) {
+			if ($this->collWptoolItemTypes) {
+				foreach ((array) $this->collWptoolItemTypes as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
+			if ($this->collWpitemTypes) {
+				foreach ((array) $this->collWpitemTypes as $o) {
 					$o->clearAllReferences($deep);
 				}
 			}
 		} // if ($deep)
 
 		$this->collAppointments = null;
-		$this->collEnrolments = null;
-		$this->collSchoolprojects = null;
+		$this->collWpinfoTypes = null;
+		$this->collWptoolItemTypes = null;
+		$this->collWpitemTypes = null;
 	}
 
-} // BaseYear
+} // BaseAppointmentType

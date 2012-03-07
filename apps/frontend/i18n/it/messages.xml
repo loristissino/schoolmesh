@@ -388,12 +388,12 @@
         <target>[0]Indicazioni completate|[1]Manca un'indicazione|[1,+Inf]Mancano %1% indicazioni</target>
       </trans-unit>
       <trans-unit id="122">
-        <source>A new item was inserted</source>
-        <target>Un nuovo elemento &#xE8; stato inserito</target>
+        <source>A new item has been inserted</source>
+        <target>Un nuovo elemento è stato inserito</target>
       </trans-unit>
       <trans-unit id="123">
         <source>The item was deleted</source>
-        <target>L'elemento &#xE8; stato eliminato</target>
+        <target>L'elemento è stato eliminato</target>
       </trans-unit>
       <trans-unit id="125">
         <source>The items were switched</source>
@@ -4180,10 +4180,62 @@
         <source>Printed in charge letters</source>
         <target>Stampa in lettera di incarico</target>
     </trans-unit>
+    <trans-unit id="1055">
+        <source>Choose a class</source>
+        <target>Scegli una classe</target>
+    </trans-unit>
+    <trans-unit id="1056">
+        <source>Choose a subject</source>
+        <target>Scegli una materia</target>
+    </trans-unit>
+    <trans-unit id="1057">
+        <source>Choose a syllabus</source>
+        <target>Scegli un syllabus</target>
+    </trans-unit>
+    <trans-unit id="1058">
+        <source>Choose an appointment type</source>
+        <target>Scegli un tipo di incarico</target>
+    </trans-unit>
+    <trans-unit id="1059">
+        <source>Appointment type</source>
+        <target>Tipo di incarico</target>
+    </trans-unit>
+    <trans-unit id="1060">
+        <source>Appointment confirmed.</source>
+        <target>Incarico confermato.</target>
+    </trans-unit>
+    <trans-unit id="1061">
+        <source>Choose a year</source>
+        <target>Scegli un anno</target>
+    </trans-unit>
+    <trans-unit id="1062">
+        <source>You are going to add an appointment for %user%.</source>
+        <target>Stai per aggiungere un incarico per %user%.</target>
+    </trans-unit>
+    <trans-unit id="1063">
+        <source>You are going to add a credential for %user%.</source>
+        <target>Stai per aggiungere una credenziale per %user%.</target>
+    </trans-unit>
+    <trans-unit id="1064">
+        <source>You are going to add an enrolment for %user%.</source>
+        <target>Stai per aggiungere un'iscrizione per %user%.</target>
+    </trans-unit>
+    <trans-unit id="1065">
+        <source>You are going to add %user% to the selected GuardGroups.</source>
+        <target>Stai per aggiungere %user% ai GuardGroup selezionati.</target>
+    </trans-unit>
+    <trans-unit id="1066">
+        <source>Add to GuardGroups</source>
+        <target>Aggiungi a GuardGroup</target>
+    </trans-unit>
+    <trans-unit id="1067">
+        <source>Type: </source>
+        <target>Tipo: </target>
+    </trans-unit>
+    <trans-unit id="1068">
+        <source>Subject: </source>
+        <target>Materia: </target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
-
-
-
-

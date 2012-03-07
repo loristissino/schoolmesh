@@ -49,6 +49,13 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 	protected $description;
 
 	/**
+	 * The value for the is_active field.
+	 * Note: this column has a database default value of: true
+	 * @var        boolean
+	 */
+	protected $is_active;
+
+	/**
 	 * @var        Track
 	 */
 	protected $aTrack;
@@ -90,6 +97,27 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 	// symfony behavior
 	
 	const PEER = 'SchoolclassPeer';
+
+	/**
+	 * Applies default values to this object.
+	 * This method should be called from the object's constructor (or
+	 * equivalent initialization method).
+	 * @see        __construct()
+	 */
+	public function applyDefaultValues()
+	{
+		$this->is_active = true;
+	}
+
+	/**
+	 * Initializes internal state of BaseSchoolclass object.
+	 * @see        applyDefaults()
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
 
 	/**
 	 * Get the [id] column value.
@@ -139,6 +167,16 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 	public function getDescription()
 	{
 		return $this->description;
+	}
+
+	/**
+	 * Get the [is_active] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsActive()
+	{
+		return $this->is_active;
 	}
 
 	/**
@@ -246,6 +284,26 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 	} // setDescription()
 
 	/**
+	 * Set the value of [is_active] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     Schoolclass The current object (for fluent API support)
+	 */
+	public function setIsActive($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_active !== $v || $this->isNew()) {
+			$this->is_active = $v;
+			$this->modifiedColumns[] = SchoolclassPeer::IS_ACTIVE;
+		}
+
+		return $this;
+	} // setIsActive()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -255,6 +313,10 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->is_active !== true) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -282,6 +344,7 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 			$this->section = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->track_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->description = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->is_active = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -291,7 +354,7 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 5; // 5 = SchoolclassPeer::NUM_COLUMNS - SchoolclassPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 6; // 6 = SchoolclassPeer::NUM_COLUMNS - SchoolclassPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Schoolclass object", $e);
@@ -663,6 +726,9 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 			case 4:
 				return $this->getDescription();
 				break;
+			case 5:
+				return $this->getIsActive();
+				break;
 			default:
 				return null;
 				break;
@@ -689,6 +755,7 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 			$keys[2] => $this->getSection(),
 			$keys[3] => $this->getTrackId(),
 			$keys[4] => $this->getDescription(),
+			$keys[5] => $this->getIsActive(),
 		);
 		return $result;
 	}
@@ -735,6 +802,9 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 			case 4:
 				$this->setDescription($value);
 				break;
+			case 5:
+				$this->setIsActive($value);
+				break;
 		} // switch()
 	}
 
@@ -764,6 +834,7 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setSection($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setTrackId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setDescription($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setIsActive($arr[$keys[5]]);
 	}
 
 	/**
@@ -780,6 +851,7 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SchoolclassPeer::SECTION)) $criteria->add(SchoolclassPeer::SECTION, $this->section);
 		if ($this->isColumnModified(SchoolclassPeer::TRACK_ID)) $criteria->add(SchoolclassPeer::TRACK_ID, $this->track_id);
 		if ($this->isColumnModified(SchoolclassPeer::DESCRIPTION)) $criteria->add(SchoolclassPeer::DESCRIPTION, $this->description);
+		if ($this->isColumnModified(SchoolclassPeer::IS_ACTIVE)) $criteria->add(SchoolclassPeer::IS_ACTIVE, $this->is_active);
 
 		return $criteria;
 	}
@@ -843,6 +915,8 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 		$copyObj->setTrackId($this->track_id);
 
 		$copyObj->setDescription($this->description);
+
+		$copyObj->setIsActive($this->is_active);
 
 
 		if ($deepCopy) {
@@ -1338,6 +1412,53 @@ abstract class BaseSchoolclass extends BaseObject  implements Persistent {
 
 			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
 				$this->collAppointments = AppointmentPeer::doSelectJoinSyllabus($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastAppointmentCriteria = $criteria;
+
+		return $this->collAppointments;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Schoolclass is new, it will return
+	 * an empty collection; or if this Schoolclass has previously
+	 * been saved, it will retrieve related Appointments from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Schoolclass.
+	 */
+	public function getAppointmentsJoinAppointmentType($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SchoolclassPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collAppointments === null) {
+			if ($this->isNew()) {
+				$this->collAppointments = array();
+			} else {
+
+				$criteria->add(AppointmentPeer::SCHOOLCLASS_ID, $this->id);
+
+				$this->collAppointments = AppointmentPeer::doSelectJoinAppointmentType($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(AppointmentPeer::SCHOOLCLASS_ID, $this->id);
+
+			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
+				$this->collAppointments = AppointmentPeer::doSelectJoinAppointmentType($criteria, $con, $join_behavior);
 			}
 		}
 		$this->lastAppointmentCriteria = $criteria;

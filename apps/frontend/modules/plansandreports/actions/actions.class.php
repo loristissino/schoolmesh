@@ -150,7 +150,7 @@ public function executeBatch(sfWebRequest $request)
 	public function executeSetsortlistpreference(sfWebRequest $request)
 	{
 		$sortby = $request->getParameter('sortby');
-		$this->forward404Unless(in_array($sortby, array('', 'class', 'teacher', 'subject', 'state', 'hours')));
+		$this->forward404Unless(in_array($sortby, array('', 'class', 'type', 'teacher', 'subject', 'state', 'hours')));
 		$this->getUser()->setAttribute('sortby', $sortby);
 		$this->redirect('plansandreports/list');
 	}

@@ -22,7 +22,7 @@ abstract class BaseWpitemTypeForm extends BaseFormPropel
       'rank'                       => new sfWidgetFormInputText(),
       'state'                      => new sfWidgetFormInputText(),
       'is_required'                => new sfWidgetFormInputCheckbox(),
-      'syllabus_id'                => new sfWidgetFormPropelChoice(array('model' => 'Syllabus', 'add_empty' => true)),
+      'appointment_type_id'        => new sfWidgetFormPropelChoice(array('model' => 'AppointmentType', 'add_empty' => true)),
       'code'                       => new sfWidgetFormInputText(),
       'evaluation_min'             => new sfWidgetFormInputText(),
       'evaluation_max'             => new sfWidgetFormInputText(),
@@ -39,7 +39,7 @@ abstract class BaseWpitemTypeForm extends BaseFormPropel
       'rank'                       => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647)),
       'state'                      => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'is_required'                => new sfValidatorBoolean(array('required' => false)),
-      'syllabus_id'                => new sfValidatorPropelChoice(array('model' => 'Syllabus', 'column' => 'id', 'required' => false)),
+      'appointment_type_id'        => new sfValidatorPropelChoice(array('model' => 'AppointmentType', 'column' => 'id', 'required' => false)),
       'code'                       => new sfValidatorString(array('max_length' => 20, 'required' => false)),
       'evaluation_min'             => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'evaluation_max'             => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
@@ -48,7 +48,7 @@ abstract class BaseWpitemTypeForm extends BaseFormPropel
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorPropelUnique(array('model' => 'WpitemType', 'column' => array('syllabus_id', 'code')))
+      new sfValidatorPropelUnique(array('model' => 'WpitemType', 'column' => array('appointment_type_id', 'code')))
     );
 
     $this->widgetSchema->setNameFormat('wpitem_type[%s]');

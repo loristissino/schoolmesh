@@ -25,7 +25,7 @@ abstract class BaseWptoolItemTypePeer {
 	const TM_CLASS = 'WptoolItemTypeTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 6;
+	const NUM_COLUMNS = 7;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -38,6 +38,9 @@ abstract class BaseWptoolItemTypePeer {
 
 	/** the column name for the RANK field */
 	const RANK = 'wptool_item_type.RANK';
+
+	/** the column name for the APPOINTMENT_TYPE_ID field */
+	const APPOINTMENT_TYPE_ID = 'wptool_item_type.APPOINTMENT_TYPE_ID';
 
 	/** the column name for the STATE field */
 	const STATE = 'wptool_item_type.STATE';
@@ -71,11 +74,11 @@ abstract class BaseWptoolItemTypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'Rank', 'State', 'MinSelected', 'MaxSelected', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'rank', 'state', 'minSelected', 'maxSelected', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::RANK, self::STATE, self::MIN_SELECTED, self::MAX_SELECTED, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'rank', 'state', 'min_selected', 'max_selected', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'Rank', 'AppointmentTypeId', 'State', 'MinSelected', 'MaxSelected', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'rank', 'appointmentTypeId', 'state', 'minSelected', 'maxSelected', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::RANK, self::APPOINTMENT_TYPE_ID, self::STATE, self::MIN_SELECTED, self::MAX_SELECTED, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'rank', 'appointment_type_id', 'state', 'min_selected', 'max_selected', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -85,11 +88,11 @@ abstract class BaseWptoolItemTypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'Rank' => 2, 'State' => 3, 'MinSelected' => 4, 'MaxSelected' => 5, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'state' => 3, 'minSelected' => 4, 'maxSelected' => 5, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::RANK => 2, self::STATE => 3, self::MIN_SELECTED => 4, self::MAX_SELECTED => 5, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'state' => 3, 'min_selected' => 4, 'max_selected' => 5, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'Rank' => 2, 'AppointmentTypeId' => 3, 'State' => 4, 'MinSelected' => 5, 'MaxSelected' => 6, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'appointmentTypeId' => 3, 'state' => 4, 'minSelected' => 5, 'maxSelected' => 6, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::RANK => 2, self::APPOINTMENT_TYPE_ID => 3, self::STATE => 4, self::MIN_SELECTED => 5, self::MAX_SELECTED => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'appointment_type_id' => 3, 'state' => 4, 'min_selected' => 5, 'max_selected' => 6, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -162,6 +165,7 @@ abstract class BaseWptoolItemTypePeer {
 		$criteria->addSelectColumn(WptoolItemTypePeer::ID);
 		$criteria->addSelectColumn(WptoolItemTypePeer::DESCRIPTION);
 		$criteria->addSelectColumn(WptoolItemTypePeer::RANK);
+		$criteria->addSelectColumn(WptoolItemTypePeer::APPOINTMENT_TYPE_ID);
 		$criteria->addSelectColumn(WptoolItemTypePeer::STATE);
 		$criteria->addSelectColumn(WptoolItemTypePeer::MIN_SELECTED);
 		$criteria->addSelectColumn(WptoolItemTypePeer::MAX_SELECTED);
@@ -409,6 +413,240 @@ abstract class BaseWptoolItemTypePeer {
 		$stmt->closeCursor();
 		return $results;
 	}
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related AppointmentType table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAppointmentType(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(WptoolItemTypePeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			WptoolItemTypePeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(WptoolItemTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(WptoolItemTypePeer::APPOINTMENT_TYPE_ID, AppointmentTypePeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Selects a collection of WptoolItemType objects pre-filled with their AppointmentType objects.
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of WptoolItemType objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAppointmentType(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		WptoolItemTypePeer::addSelectColumns($criteria);
+		$startcol = (WptoolItemTypePeer::NUM_COLUMNS - WptoolItemTypePeer::NUM_LAZY_LOAD_COLUMNS);
+		AppointmentTypePeer::addSelectColumns($criteria);
+
+		$criteria->addJoin(WptoolItemTypePeer::APPOINTMENT_TYPE_ID, AppointmentTypePeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = WptoolItemTypePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WptoolItemTypePeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+
+				$cls = WptoolItemTypePeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				WptoolItemTypePeer::addInstanceToPool($obj1, $key1);
+			} // if $obj1 already loaded
+
+			$key2 = AppointmentTypePeer::getPrimaryKeyHashFromRow($row, $startcol);
+			if ($key2 !== null) {
+				$obj2 = AppointmentTypePeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = AppointmentTypePeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol);
+					AppointmentTypePeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 already loaded
+				
+				// Add the $obj1 (WptoolItemType) to $obj2 (AppointmentType)
+				$obj2->addWptoolItemType($obj1);
+
+			} // if joined row was not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining all related tables
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAll(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(WptoolItemTypePeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			WptoolItemTypePeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(WptoolItemTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(WptoolItemTypePeer::APPOINTMENT_TYPE_ID, AppointmentTypePeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+	/**
+	 * Selects a collection of WptoolItemType objects pre-filled with all related objects.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of WptoolItemType objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAll(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		WptoolItemTypePeer::addSelectColumns($criteria);
+		$startcol2 = (WptoolItemTypePeer::NUM_COLUMNS - WptoolItemTypePeer::NUM_LAZY_LOAD_COLUMNS);
+
+		AppointmentTypePeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (AppointmentTypePeer::NUM_COLUMNS - AppointmentTypePeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(WptoolItemTypePeer::APPOINTMENT_TYPE_ID, AppointmentTypePeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = WptoolItemTypePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = WptoolItemTypePeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = WptoolItemTypePeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				WptoolItemTypePeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+			// Add objects for joined AppointmentType rows
+
+			$key2 = AppointmentTypePeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			if ($key2 !== null) {
+				$obj2 = AppointmentTypePeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = AppointmentTypePeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					AppointmentTypePeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 loaded
+
+				// Add the $obj1 (WptoolItemType) to the collection in $obj2 (AppointmentType)
+				$obj2->addWptoolItemType($obj1);
+			} // if joined row not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
 	/**
 	 * Returns the TableMap related to this peer.
 	 * This method is not needed for general use but a specific application could have a need.

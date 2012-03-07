@@ -5,7 +5,7 @@
     'plansandreports/fill?id=' . $appointment->getId() => $appointment
     ),
   'current'=>__('Class composition'),
-  'title'=>$schoolclass_id . ' (' . $appointment->getSubject() . ') - ' . __('class composition')
+  'title'=>sprintf('%s (%s) - %s', $schoolclass_id, $appointment->getTitle(), __('class composition'))#91FBAF
   ))
 ?>
 <?php endif ?>
@@ -83,7 +83,7 @@
   </tbody>  
 </table>  
 
-<?php if(isset($appointment)): ?>
+<?php if(isset($appointment) && $appointment->getAppointmentType()->getHasModules()): ?>
 
 <?php include_partial('plansandreports/checkalljs') ?>
  <ul class="sf_admin_actions">

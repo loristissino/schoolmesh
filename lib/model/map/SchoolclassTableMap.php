@@ -41,6 +41,7 @@ class SchoolclassTableMap extends TableMap {
 		$this->addColumn('SECTION', 'Section', 'VARCHAR', true, 3, null);
 		$this->addForeignKey('TRACK_ID', 'TrackId', 'INTEGER', 'track', 'ID', false, null, null);
 		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 255, null);
+		$this->addColumn('IS_ACTIVE', 'IsActive', 'BOOLEAN', false, null, true);
 		// validators
 	} // initialize()
 

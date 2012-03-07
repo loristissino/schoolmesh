@@ -76,16 +76,6 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 	private $lastAppointmentCriteria = null;
 
 	/**
-	 * @var        array WpitemType[] Collection to store aggregation of WpitemType objects.
-	 */
-	protected $collWpitemTypes;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collWpitemTypes.
-	 */
-	private $lastWpitemTypeCriteria = null;
-
-	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -423,9 +413,6 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 			$this->collAppointments = null;
 			$this->lastAppointmentCriteria = null;
 
-			$this->collWpitemTypes = null;
-			$this->lastWpitemTypeCriteria = null;
-
 		} // if (deep)
 	}
 
@@ -572,14 +559,6 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collWpitemTypes !== null) {
-				foreach ($this->collWpitemTypes as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			$this->alreadyInSave = false;
 
 		}
@@ -661,14 +640,6 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 
 				if ($this->collAppointments !== null) {
 					foreach ($this->collAppointments as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collWpitemTypes !== null) {
-					foreach ($this->collWpitemTypes as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -928,12 +899,6 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 			foreach ($this->getAppointments() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addAppointment($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getWpitemTypes() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addWpitemType($relObj->copy($deepCopy));
 				}
 			}
 
@@ -1574,48 +1539,19 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 		return $this->collAppointments;
 	}
 
-	/**
-	 * Clears out the collWpitemTypes collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addWpitemTypes()
-	 */
-	public function clearWpitemTypes()
-	{
-		$this->collWpitemTypes = null; // important to set this to NULL since that means it is uninitialized
-	}
 
 	/**
-	 * Initializes the collWpitemTypes collection (array).
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Syllabus is new, it will return
+	 * an empty collection; or if this Syllabus has previously
+	 * been saved, it will retrieve related Appointments from storage.
 	 *
-	 * By default this just sets the collWpitemTypes collection to an empty array (like clearcollWpitemTypes());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Syllabus.
 	 */
-	public function initWpitemTypes()
-	{
-		$this->collWpitemTypes = array();
-	}
-
-	/**
-	 * Gets an array of WpitemType objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Syllabus has previously been saved, it will retrieve
-	 * related WpitemTypes from storage. If this Syllabus is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array WpitemType[]
-	 * @throws     PropelException
-	 */
-	public function getWpitemTypes($criteria = null, PropelPDO $con = null)
+	public function getAppointmentsJoinAppointmentType($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(SyllabusPeer::DATABASE_NAME);
@@ -1625,107 +1561,29 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collWpitemTypes === null) {
+		if ($this->collAppointments === null) {
 			if ($this->isNew()) {
-			   $this->collWpitemTypes = array();
+				$this->collAppointments = array();
 			} else {
 
-				$criteria->add(WpitemTypePeer::SYLLABUS_ID, $this->id);
+				$criteria->add(AppointmentPeer::SYLLABUS_ID, $this->id);
 
-				WpitemTypePeer::addSelectColumns($criteria);
-				$this->collWpitemTypes = WpitemTypePeer::doSelect($criteria, $con);
+				$this->collAppointments = AppointmentPeer::doSelectJoinAppointmentType($criteria, $con, $join_behavior);
 			}
 		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
 
+			$criteria->add(AppointmentPeer::SYLLABUS_ID, $this->id);
 
-				$criteria->add(WpitemTypePeer::SYLLABUS_ID, $this->id);
-
-				WpitemTypePeer::addSelectColumns($criteria);
-				if (!isset($this->lastWpitemTypeCriteria) || !$this->lastWpitemTypeCriteria->equals($criteria)) {
-					$this->collWpitemTypes = WpitemTypePeer::doSelect($criteria, $con);
-				}
+			if (!isset($this->lastAppointmentCriteria) || !$this->lastAppointmentCriteria->equals($criteria)) {
+				$this->collAppointments = AppointmentPeer::doSelectJoinAppointmentType($criteria, $con, $join_behavior);
 			}
 		}
-		$this->lastWpitemTypeCriteria = $criteria;
-		return $this->collWpitemTypes;
-	}
+		$this->lastAppointmentCriteria = $criteria;
 
-	/**
-	 * Returns the number of related WpitemType objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related WpitemType objects.
-	 * @throws     PropelException
-	 */
-	public function countWpitemTypes(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(SyllabusPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collWpitemTypes === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(WpitemTypePeer::SYLLABUS_ID, $this->id);
-
-				$count = WpitemTypePeer::doCount($criteria, false, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(WpitemTypePeer::SYLLABUS_ID, $this->id);
-
-				if (!isset($this->lastWpitemTypeCriteria) || !$this->lastWpitemTypeCriteria->equals($criteria)) {
-					$count = WpitemTypePeer::doCount($criteria, false, $con);
-				} else {
-					$count = count($this->collWpitemTypes);
-				}
-			} else {
-				$count = count($this->collWpitemTypes);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a WpitemType object to this object
-	 * through the WpitemType foreign key attribute.
-	 *
-	 * @param      WpitemType $l WpitemType
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addWpitemType(WpitemType $l)
-	{
-		if ($this->collWpitemTypes === null) {
-			$this->initWpitemTypes();
-		}
-		if (!in_array($l, $this->collWpitemTypes, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collWpitemTypes, $l);
-			$l->setSyllabus($this);
-		}
+		return $this->collAppointments;
 	}
 
 	/**
@@ -1750,16 +1608,10 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collWpitemTypes) {
-				foreach ((array) $this->collWpitemTypes as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
 		} // if ($deep)
 
 		$this->collSyllabusItems = null;
 		$this->collAppointments = null;
-		$this->collWpitemTypes = null;
 	}
 
 } // BaseSyllabus

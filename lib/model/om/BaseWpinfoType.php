@@ -73,6 +73,17 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	protected $is_confidential;
 
 	/**
+	 * The value for the appointment_type_id field.
+	 * @var        int
+	 */
+	protected $appointment_type_id;
+
+	/**
+	 * @var        AppointmentType
+	 */
+	protected $aAppointmentType;
+
+	/**
 	 * @var        array Wpinfo[] Collection to store aggregation of Wpinfo objects.
 	 */
 	protected $collWpinfos;
@@ -188,6 +199,16 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	public function getIsConfidential()
 	{
 		return $this->is_confidential;
+	}
+
+	/**
+	 * Get the [appointment_type_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getAppointmentTypeId()
+	{
+		return $this->appointment_type_id;
 	}
 
 	/**
@@ -371,6 +392,30 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	} // setIsConfidential()
 
 	/**
+	 * Set the value of [appointment_type_id] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     WpinfoType The current object (for fluent API support)
+	 */
+	public function setAppointmentTypeId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->appointment_type_id !== $v) {
+			$this->appointment_type_id = $v;
+			$this->modifiedColumns[] = WpinfoTypePeer::APPOINTMENT_TYPE_ID;
+		}
+
+		if ($this->aAppointmentType !== null && $this->aAppointmentType->getId() !== $v) {
+			$this->aAppointmentType = null;
+		}
+
+		return $this;
+	} // setAppointmentTypeId()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -411,6 +456,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$this->example = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->is_required = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
 			$this->is_confidential = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
+			$this->appointment_type_id = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -420,7 +466,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 9; // 9 = WpinfoTypePeer::NUM_COLUMNS - WpinfoTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 10; // 10 = WpinfoTypePeer::NUM_COLUMNS - WpinfoTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WpinfoType object", $e);
@@ -443,6 +489,9 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
+		if ($this->aAppointmentType !== null && $this->appointment_type_id !== $this->aAppointmentType->getId()) {
+			$this->aAppointmentType = null;
+		}
 	} // ensureConsistency
 
 	/**
@@ -482,6 +531,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
+			$this->aAppointmentType = null;
 			$this->collWpinfos = null;
 			$this->lastWpinfoCriteria = null;
 
@@ -593,6 +643,18 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		if (!$this->alreadyInSave) {
 			$this->alreadyInSave = true;
 
+			// We call the save method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aAppointmentType !== null) {
+				if ($this->aAppointmentType->isModified() || $this->aAppointmentType->isNew()) {
+					$affectedRows += $this->aAppointmentType->save($con);
+				}
+				$this->setAppointmentType($this->aAppointmentType);
+			}
+
 			if ($this->isNew() ) {
 				$this->modifiedColumns[] = WpinfoTypePeer::ID;
 			}
@@ -689,6 +751,18 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$failureMap = array();
 
 
+			// We call the validate method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aAppointmentType !== null) {
+				if (!$this->aAppointmentType->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aAppointmentType->getValidationFailures());
+				}
+			}
+
+
 			if (($retval = WpinfoTypePeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
@@ -762,6 +836,9 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			case 8:
 				return $this->getIsConfidential();
 				break;
+			case 9:
+				return $this->getAppointmentTypeId();
+				break;
 			default:
 				return null;
 				break;
@@ -792,6 +869,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$keys[6] => $this->getExample(),
 			$keys[7] => $this->getIsRequired(),
 			$keys[8] => $this->getIsConfidential(),
+			$keys[9] => $this->getAppointmentTypeId(),
 		);
 		return $result;
 	}
@@ -850,6 +928,9 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			case 8:
 				$this->setIsConfidential($value);
 				break;
+			case 9:
+				$this->setAppointmentTypeId($value);
+				break;
 		} // switch()
 	}
 
@@ -883,6 +964,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setExample($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setIsRequired($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setIsConfidential($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setAppointmentTypeId($arr[$keys[9]]);
 	}
 
 	/**
@@ -903,6 +985,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpinfoTypePeer::EXAMPLE)) $criteria->add(WpinfoTypePeer::EXAMPLE, $this->example);
 		if ($this->isColumnModified(WpinfoTypePeer::IS_REQUIRED)) $criteria->add(WpinfoTypePeer::IS_REQUIRED, $this->is_required);
 		if ($this->isColumnModified(WpinfoTypePeer::IS_CONFIDENTIAL)) $criteria->add(WpinfoTypePeer::IS_CONFIDENTIAL, $this->is_confidential);
+		if ($this->isColumnModified(WpinfoTypePeer::APPOINTMENT_TYPE_ID)) $criteria->add(WpinfoTypePeer::APPOINTMENT_TYPE_ID, $this->appointment_type_id);
 
 		return $criteria;
 	}
@@ -973,6 +1056,8 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 
 		$copyObj->setIsConfidential($this->is_confidential);
 
+		$copyObj->setAppointmentTypeId($this->appointment_type_id);
+
 
 		if ($deepCopy) {
 			// important: temporarily setNew(false) because this affects the behavior of
@@ -1030,6 +1115,55 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			self::$peer = new WpinfoTypePeer();
 		}
 		return self::$peer;
+	}
+
+	/**
+	 * Declares an association between this object and a AppointmentType object.
+	 *
+	 * @param      AppointmentType $v
+	 * @return     WpinfoType The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setAppointmentType(AppointmentType $v = null)
+	{
+		if ($v === null) {
+			$this->setAppointmentTypeId(NULL);
+		} else {
+			$this->setAppointmentTypeId($v->getId());
+		}
+
+		$this->aAppointmentType = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the AppointmentType object, it will not be re-added.
+		if ($v !== null) {
+			$v->addWpinfoType($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated AppointmentType object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     AppointmentType The associated AppointmentType object.
+	 * @throws     PropelException
+	 */
+	public function getAppointmentType(PropelPDO $con = null)
+	{
+		if ($this->aAppointmentType === null && ($this->appointment_type_id !== null)) {
+			$this->aAppointmentType = AppointmentTypePeer::retrieveByPk($this->appointment_type_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aAppointmentType->addWpinfoTypes($this);
+			 */
+		}
+		return $this->aAppointmentType;
 	}
 
 	/**
@@ -1253,6 +1387,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		} // if ($deep)
 
 		$this->collWpinfos = null;
+			$this->aAppointmentType = null;
 	}
 
 } // BaseWpinfoType

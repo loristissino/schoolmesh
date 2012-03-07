@@ -45,6 +45,7 @@ class WpinfoTypeTableMap extends TableMap {
 		$this->addColumn('EXAMPLE', 'Example', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('IS_REQUIRED', 'IsRequired', 'BOOLEAN', false, null, null);
 		$this->addColumn('IS_CONFIDENTIAL', 'IsConfidential', 'BOOLEAN', false, null, null);
+		$this->addForeignKey('APPOINTMENT_TYPE_ID', 'AppointmentTypeId', 'INTEGER', 'appointment_type', 'ID', false, null, null);
 		// validators
 	} // initialize()
 
@@ -53,6 +54,7 @@ class WpinfoTypeTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
+    $this->addRelation('AppointmentType', 'AppointmentType', RelationMap::MANY_TO_ONE, array('appointment_type_id' => 'id', ), null, null);
     $this->addRelation('Wpinfo', 'Wpinfo', RelationMap::ONE_TO_MANY, array('id' => 'wpinfo_type_id', ), null, null);
 	} // buildRelations()
 

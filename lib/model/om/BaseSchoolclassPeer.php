@@ -25,7 +25,7 @@ abstract class BaseSchoolclassPeer {
 	const TM_CLASS = 'SchoolclassTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 6;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -44,6 +44,9 @@ abstract class BaseSchoolclassPeer {
 
 	/** the column name for the DESCRIPTION field */
 	const DESCRIPTION = 'schoolclass.DESCRIPTION';
+
+	/** the column name for the IS_ACTIVE field */
+	const IS_ACTIVE = 'schoolclass.IS_ACTIVE';
 
 	/**
 	 * An identiy map to hold any loaded instances of Schoolclass objects.
@@ -68,11 +71,11 @@ abstract class BaseSchoolclassPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Grade', 'Section', 'TrackId', 'Description', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'grade', 'section', 'trackId', 'description', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::GRADE, self::SECTION, self::TRACK_ID, self::DESCRIPTION, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'grade', 'section', 'track_id', 'description', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Grade', 'Section', 'TrackId', 'Description', 'IsActive', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'grade', 'section', 'trackId', 'description', 'isActive', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::GRADE, self::SECTION, self::TRACK_ID, self::DESCRIPTION, self::IS_ACTIVE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'grade', 'section', 'track_id', 'description', 'is_active', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -82,11 +85,11 @@ abstract class BaseSchoolclassPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Grade' => 1, 'Section' => 2, 'TrackId' => 3, 'Description' => 4, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'grade' => 1, 'section' => 2, 'trackId' => 3, 'description' => 4, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::GRADE => 1, self::SECTION => 2, self::TRACK_ID => 3, self::DESCRIPTION => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'grade' => 1, 'section' => 2, 'track_id' => 3, 'description' => 4, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Grade' => 1, 'Section' => 2, 'TrackId' => 3, 'Description' => 4, 'IsActive' => 5, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'grade' => 1, 'section' => 2, 'trackId' => 3, 'description' => 4, 'isActive' => 5, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::GRADE => 1, self::SECTION => 2, self::TRACK_ID => 3, self::DESCRIPTION => 4, self::IS_ACTIVE => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'grade' => 1, 'section' => 2, 'track_id' => 3, 'description' => 4, 'is_active' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -161,6 +164,7 @@ abstract class BaseSchoolclassPeer {
 		$criteria->addSelectColumn(SchoolclassPeer::SECTION);
 		$criteria->addSelectColumn(SchoolclassPeer::TRACK_ID);
 		$criteria->addSelectColumn(SchoolclassPeer::DESCRIPTION);
+		$criteria->addSelectColumn(SchoolclassPeer::IS_ACTIVE);
 	}
 
 	/**

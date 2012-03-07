@@ -320,7 +320,8 @@ if (isset($content['workplan_report']['tools']))
 	{
 		$c= new Criteria();
 		$c->addJoin(AppointmentPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
-		$c->addJoin(AppointmentPeer::SUBJECT_ID, SubjectPeer::ID);
+		$c->addJoin(AppointmentPeer::SUBJECT_ID, SubjectPeer::ID, Criteria::LEFT_JOIN);
+		$c->addJoin(AppointmentPeer::APPOINTMENT_TYPE_ID, AppointmentTypePeer::ID);
 		$c->add(AppointmentPeer::YEAR_ID, $year);
 
 		if ($filter_id>=0)
@@ -341,6 +342,7 @@ if (isset($content['workplan_report']['tools']))
 				$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
 				$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
 				break;
+      case 'type': $c->addAscendingOrderByColumn(AppointmentTypePeer::RANK); break;
 			case 'subject': $c->addAscendingOrderByColumn(SubjectPeer::DESCRIPTION); break;
 			case 'hours': $c->addAscendingOrderByColumn(AppointmentPeer::HOURS); break;
 			case 'state': $c->addAscendingOrderByColumn(AppointmentPeer::STATE); break;

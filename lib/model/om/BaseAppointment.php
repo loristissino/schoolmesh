@@ -80,6 +80,12 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	protected $syllabus_id;
 
 	/**
+	 * The value for the appointment_type_id field.
+	 * @var        int
+	 */
+	protected $appointment_type_id;
+
+	/**
 	 * The value for the created_at field.
 	 * @var        string
 	 */
@@ -126,6 +132,11 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	 * @var        Syllabus
 	 */
 	protected $aSyllabus;
+
+	/**
+	 * @var        AppointmentType
+	 */
+	protected $aAppointmentType;
 
 	/**
 	 * @var        array Wpinfo[] Collection to store aggregation of Wpinfo objects.
@@ -324,6 +335,16 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	public function getSyllabusId()
 	{
 		return $this->syllabus_id;
+	}
+
+	/**
+	 * Get the [appointment_type_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getAppointmentTypeId()
+	{
+		return $this->appointment_type_id;
 	}
 
 	/**
@@ -637,6 +658,30 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 	} // setSyllabusId()
 
 	/**
+	 * Set the value of [appointment_type_id] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Appointment The current object (for fluent API support)
+	 */
+	public function setAppointmentTypeId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->appointment_type_id !== $v) {
+			$this->appointment_type_id = $v;
+			$this->modifiedColumns[] = AppointmentPeer::APPOINTMENT_TYPE_ID;
+		}
+
+		if ($this->aAppointmentType !== null && $this->aAppointmentType->getId() !== $v) {
+			$this->aAppointmentType = null;
+		}
+
+		return $this;
+	} // setAppointmentTypeId()
+
+	/**
 	 * Sets the value of [created_at] column to a normalized version of the date/time value specified.
 	 * 
 	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
@@ -800,9 +845,10 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			$this->hours = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
 			$this->is_public = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
 			$this->syllabus_id = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
-			$this->created_at = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
-			$this->updated_at = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
-			$this->import_code = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
+			$this->appointment_type_id = ($row[$startcol + 10] !== null) ? (int) $row[$startcol + 10] : null;
+			$this->created_at = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->updated_at = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
+			$this->import_code = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -812,7 +858,7 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 13; // 13 = AppointmentPeer::NUM_COLUMNS - AppointmentPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 14; // 14 = AppointmentPeer::NUM_COLUMNS - AppointmentPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Appointment object", $e);
@@ -852,6 +898,9 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 		}
 		if ($this->aSyllabus !== null && $this->syllabus_id !== $this->aSyllabus->getId()) {
 			$this->aSyllabus = null;
+		}
+		if ($this->aAppointmentType !== null && $this->appointment_type_id !== $this->aAppointmentType->getId()) {
+			$this->aAppointmentType = null;
 		}
 	} // ensureConsistency
 
@@ -898,6 +947,7 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			$this->aTeam = null;
 			$this->aYear = null;
 			$this->aSyllabus = null;
+			$this->aAppointmentType = null;
 			$this->collWpinfos = null;
 			$this->lastWpinfoCriteria = null;
 
@@ -1083,6 +1133,13 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 				$this->setSyllabus($this->aSyllabus);
 			}
 
+			if ($this->aAppointmentType !== null) {
+				if ($this->aAppointmentType->isModified() || $this->aAppointmentType->isNew()) {
+					$affectedRows += $this->aAppointmentType->save($con);
+				}
+				$this->setAppointmentType($this->aAppointmentType);
+			}
+
 			if ($this->isNew() ) {
 				$this->modifiedColumns[] = AppointmentPeer::ID;
 			}
@@ -1260,6 +1317,12 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->aAppointmentType !== null) {
+				if (!$this->aAppointmentType->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aAppointmentType->getValidationFailures());
+				}
+			}
+
 
 			if (($retval = AppointmentPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
@@ -1378,12 +1441,15 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 				return $this->getSyllabusId();
 				break;
 			case 10:
-				return $this->getCreatedAt();
+				return $this->getAppointmentTypeId();
 				break;
 			case 11:
-				return $this->getUpdatedAt();
+				return $this->getCreatedAt();
 				break;
 			case 12:
+				return $this->getUpdatedAt();
+				break;
+			case 13:
 				return $this->getImportCode();
 				break;
 			default:
@@ -1417,9 +1483,10 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			$keys[7] => $this->getHours(),
 			$keys[8] => $this->getIsPublic(),
 			$keys[9] => $this->getSyllabusId(),
-			$keys[10] => $this->getCreatedAt(),
-			$keys[11] => $this->getUpdatedAt(),
-			$keys[12] => $this->getImportCode(),
+			$keys[10] => $this->getAppointmentTypeId(),
+			$keys[11] => $this->getCreatedAt(),
+			$keys[12] => $this->getUpdatedAt(),
+			$keys[13] => $this->getImportCode(),
 		);
 		return $result;
 	}
@@ -1482,12 +1549,15 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 				$this->setSyllabusId($value);
 				break;
 			case 10:
-				$this->setCreatedAt($value);
+				$this->setAppointmentTypeId($value);
 				break;
 			case 11:
-				$this->setUpdatedAt($value);
+				$this->setCreatedAt($value);
 				break;
 			case 12:
+				$this->setUpdatedAt($value);
+				break;
+			case 13:
 				$this->setImportCode($value);
 				break;
 		} // switch()
@@ -1524,9 +1594,10 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[7], $arr)) $this->setHours($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setIsPublic($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setSyllabusId($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setCreatedAt($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setUpdatedAt($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setImportCode($arr[$keys[12]]);
+		if (array_key_exists($keys[10], $arr)) $this->setAppointmentTypeId($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setCreatedAt($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setUpdatedAt($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setImportCode($arr[$keys[13]]);
 	}
 
 	/**
@@ -1548,6 +1619,7 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(AppointmentPeer::HOURS)) $criteria->add(AppointmentPeer::HOURS, $this->hours);
 		if ($this->isColumnModified(AppointmentPeer::IS_PUBLIC)) $criteria->add(AppointmentPeer::IS_PUBLIC, $this->is_public);
 		if ($this->isColumnModified(AppointmentPeer::SYLLABUS_ID)) $criteria->add(AppointmentPeer::SYLLABUS_ID, $this->syllabus_id);
+		if ($this->isColumnModified(AppointmentPeer::APPOINTMENT_TYPE_ID)) $criteria->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $this->appointment_type_id);
 		if ($this->isColumnModified(AppointmentPeer::CREATED_AT)) $criteria->add(AppointmentPeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(AppointmentPeer::UPDATED_AT)) $criteria->add(AppointmentPeer::UPDATED_AT, $this->updated_at);
 		if ($this->isColumnModified(AppointmentPeer::IMPORT_CODE)) $criteria->add(AppointmentPeer::IMPORT_CODE, $this->import_code);
@@ -1622,6 +1694,8 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 		$copyObj->setIsPublic($this->is_public);
 
 		$copyObj->setSyllabusId($this->syllabus_id);
+
+		$copyObj->setAppointmentTypeId($this->appointment_type_id);
 
 		$copyObj->setCreatedAt($this->created_at);
 
@@ -2010,6 +2084,55 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			 */
 		}
 		return $this->aSyllabus;
+	}
+
+	/**
+	 * Declares an association between this object and a AppointmentType object.
+	 *
+	 * @param      AppointmentType $v
+	 * @return     Appointment The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setAppointmentType(AppointmentType $v = null)
+	{
+		if ($v === null) {
+			$this->setAppointmentTypeId(NULL);
+		} else {
+			$this->setAppointmentTypeId($v->getId());
+		}
+
+		$this->aAppointmentType = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the AppointmentType object, it will not be re-added.
+		if ($v !== null) {
+			$v->addAppointment($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated AppointmentType object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     AppointmentType The associated AppointmentType object.
+	 * @throws     PropelException
+	 */
+	public function getAppointmentType(PropelPDO $con = null)
+	{
+		if ($this->aAppointmentType === null && ($this->appointment_type_id !== null)) {
+			$this->aAppointmentType = AppointmentTypePeer::retrieveByPk($this->appointment_type_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aAppointmentType->addAppointments($this);
+			 */
+		}
+		return $this->aAppointmentType;
 	}
 
 	/**
@@ -3556,6 +3679,7 @@ abstract class BaseAppointment extends BaseObject  implements Persistent {
 			$this->aTeam = null;
 			$this->aYear = null;
 			$this->aSyllabus = null;
+			$this->aAppointmentType = null;
 	}
 
 } // BaseAppointment

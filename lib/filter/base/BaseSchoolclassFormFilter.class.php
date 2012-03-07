@@ -16,6 +16,7 @@ abstract class BaseSchoolclassFormFilter extends BaseFormFilterPropel
       'section'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'track_id'    => new sfWidgetFormPropelChoice(array('model' => 'Track', 'add_empty' => true)),
       'description' => new sfWidgetFormFilterInput(),
+      'is_active'   => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
     ));
 
     $this->setValidators(array(
@@ -23,6 +24,7 @@ abstract class BaseSchoolclassFormFilter extends BaseFormFilterPropel
       'section'     => new sfValidatorPass(array('required' => false)),
       'track_id'    => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Track', 'column' => 'id')),
       'description' => new sfValidatorPass(array('required' => false)),
+      'is_active'   => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
     ));
 
     $this->widgetSchema->setNameFormat('schoolclass_filters[%s]');
@@ -45,6 +47,7 @@ abstract class BaseSchoolclassFormFilter extends BaseFormFilterPropel
       'section'     => 'Text',
       'track_id'    => 'ForeignKey',
       'description' => 'Text',
+      'is_active'   => 'Boolean',
     );
   }
 }

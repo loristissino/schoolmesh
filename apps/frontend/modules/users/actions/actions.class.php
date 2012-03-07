@@ -1123,7 +1123,7 @@ public function executeEditappointment(sfWebRequest $request)
 				$params = $this->form->getValues();
 				$current_user=$this->appointment->getsfGuardUser()->getProfile();
 				
-				$result=$current_user->modifyAppointment($this->appointment->getId(), $params['class'], $params['year'], $params['subject'], $params['syllabus'], $params['hours'], $params['team']);
+				$result=$current_user->modifyAppointment($this->appointment->getId(), $params);
 				
 				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 				
@@ -1141,11 +1141,12 @@ public function executeEditappointment(sfWebRequest $request)
 
 	$this->form->setDefaults(
 		array(
-			'year' => $this->appointment->getYear()->getId(),
-			'class'=> $this->appointment->getSchoolclass(),
-			'team'=> $this->appointment->getTeamId(),
-			'subject'=> $this->appointment->getSubject()->getId(),
-      'syllabus' => $this->appointment->getSyllabusId(),
+			'year_id' => $this->appointment->getYear()->getId(),
+			'schoolclass_id'=> $this->appointment->getSchoolclass(),
+			'team_id'=> $this->appointment->getTeamId(),
+			'subject_id'=> $this->appointment->getSubject()->getId(),
+      'syllabus_id' => $this->appointment->getSyllabusId(),
+      'appointment_type_id' => $this->appointment->getAppointmentTypeId(),
 			'hours'=>$this->appointment->getHours()
 		)
 	);
@@ -1200,7 +1201,7 @@ public function executeAddappointment(sfWebRequest $request)
 			if ($this->form->isValid())
 			{
 				$params = $this->form->getValues();
-				$result=$this->current_user->addAppointment($params['class'], $params['year'], $params['subject'], $params['hours'], $params['syllabus']);
+				$result=$this->current_user->addAppointment($params);
 				$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 				
 				if ($result['result']=='notice')
@@ -1219,7 +1220,7 @@ public function executeAddappointment(sfWebRequest $request)
 
 	$this->form->setDefaults(
 		array(
-			'year' => sfConfig::get('app_config_current_year')
+			'year_id' => sfConfig::get('app_config_current_year')
 		)
 	);
 		

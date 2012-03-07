@@ -16,6 +16,8 @@ class SchoolclassPeer extends BaseSchoolclassPeer
 	{
 		/* FIXME
 			this should return only classes with students currently enrolled...
+      * 
+      * probably we should use the newer retrieveActive method, see below.
 		*/
 		
     if ($year==0)
@@ -33,6 +35,15 @@ class SchoolclassPeer extends BaseSchoolclassPeer
 
 		return self::doSelect($c);
 	}
+  
+  public static function retrieveActive()
+  {
+    $c= new Criteria();
+    $c->add(self::IS_ACTIVE, true);
+    $c->addAscendingOrderByColumn(self::ID);
+    return self::doSelect($c);
+  }
+  
 
 	public static function importFromCSVFile($file)
 	{

@@ -14,7 +14,7 @@
     <tr>
       <th class="sf_admin_text"><?php echo __('Year') ?></th>
       <th class="sf_admin_text"><?php echo __('Class') ?></th>
-      <th class="sf_admin_text"><?php echo __('Subject') ?></th>
+      <th class="sf_admin_text"><?php echo __('Type') ?>/<?php echo __('Subject') ?></th>
       <th class="sf_admin_text"><?php echo __('Modules') ?></th>
       <th class="sf_admin_text"><?php echo __('Hours') ?></th>
       <th class="sf_admin_text"><?php echo __('Syllabus') ?></th>
@@ -29,7 +29,7 @@
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
       <?php include_partial('content/td_year', array('year'=>$workplan->getYear())) ?>
       <td><?php echo $workplan->getSchoolclass() ?></td>
-      <td><?php echo $workplan->getSubject() ?></td>
+      <td><?php echo $workplan->getTitle() ?></td>
 	  <td><?php echo $workplan->countWpmodules() ?></td>
 	  <td><?php echo $workplan->getHours() ?></td>
 	  <td><?php echo $workplan->getSyllabus() ?></td>

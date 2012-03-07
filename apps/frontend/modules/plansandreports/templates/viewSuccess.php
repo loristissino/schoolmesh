@@ -10,21 +10,25 @@
 
 <?php include_partial('basicinfo', array('workplan' => $workplan, 'steps' =>$steps)) ?>
 
-<h2><?php echo __('General information') ?></h2>
-
-<?php include_partial('infos_shown', array('wpinfos' => $wpinfos, 'state'=>$workplan->getState())) ?>
-
-<h2><?php echo __("Modules") ?></h2>
-
-<?php if ($workplan->getState()>=Workflow::IR_DRAFT): ?>
-	<?php include_partial('wpmodule/legenda', array('wpitemTypes' => $wpitemTypes)) ?>
+<?php if($workplan->getAppointmentType()->getHasInfo()): ?>
+  <h2><?php echo __('General information') ?></h2>
+  <?php include_partial('infos_shown', array('wpinfos' => $wpinfos, 'state'=>$workplan->getState())) ?>
 <?php endif ?>
 
-<?php include_partial('modules_shown', array('workplan' => $workplan, 'is_owner' => $is_owner)) ?>
+<?php if($workplan->getAppointmentType()->getHasModules()): ?>
+  <h2><?php echo __("Modules") ?></h2>
 
-<h2><?php echo __("Aux") ?></h2>
+  <?php if ($workplan->getState()>=Workflow::IR_DRAFT): ?>
+    <?php include_partial('wpmodule/legenda', array('wpitemTypes' => $wpitemTypes)) ?>
+  <?php endif ?>
 
-<?php include_partial('aux_shown', array('workplan' => $workplan, 'tools' => $tools)) ?>
+  <?php include_partial('modules_shown', array('workplan' => $workplan, 'is_owner' => $is_owner)) ?>
+<?php endif ?>
+
+<?php if($workplan->getAppointmentType()->getHasTools()): ?>
+  <h2><?php echo __("Aux") ?></h2>
+  <?php include_partial('aux_shown', array('workplan' => $workplan, 'tools' => $tools)) ?>
+<?php endif ?>
 
 <?php if ($is_owner): ?>
 

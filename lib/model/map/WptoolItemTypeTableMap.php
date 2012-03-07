@@ -39,6 +39,7 @@ class WptoolItemTypeTableMap extends TableMap {
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
 		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 50, null);
 		$this->addColumn('RANK', 'Rank', 'INTEGER', false, null, null);
+		$this->addForeignKey('APPOINTMENT_TYPE_ID', 'AppointmentTypeId', 'INTEGER', 'appointment_type', 'ID', false, null, null);
 		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
 		$this->addColumn('MIN_SELECTED', 'MinSelected', 'INTEGER', false, null, null);
 		$this->addColumn('MAX_SELECTED', 'MaxSelected', 'INTEGER', false, null, null);
@@ -50,6 +51,7 @@ class WptoolItemTypeTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
+    $this->addRelation('AppointmentType', 'AppointmentType', RelationMap::MANY_TO_ONE, array('appointment_type_id' => 'id', ), null, null);
     $this->addRelation('WptoolItem', 'WptoolItem', RelationMap::ONE_TO_MANY, array('id' => 'wptool_item_type_id', ), null, null);
 	} // buildRelations()
 

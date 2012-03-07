@@ -20,6 +20,7 @@
 	  <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
 
       <th class="sf_admin_text"><?php echo link_to(__('Class'), url_for( 'plansandreports/setsortlistpreference?sortby=class')) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Type'), url_for( 'plansandreports/setsortlistpreference?sortby=type')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Subject'), url_for('plansandreports/setsortlistpreference?sortby=subject')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Teacher'), url_for( 'plansandreports/setsortlistpreference?sortby=teacher')) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Hours'), url_for( 'plansandreports/setsortlistpreference?sortby=hours'))  ?></th>
@@ -37,7 +38,8 @@
 </td>
 
       <td><?php echo $workplan->getSchoolclassId() ?></td>
-      <td><?php echo $workplan->getSubject()->getDescription() ?></td>
+      <td><?php echo $workplan->getAppointmentType() ?></td>
+      <td><?php if($workplan->getSubject()): ?><?php echo $workplan->getSubject()->getDescription() ?><?php endif ?></td>
       <td>
       <?php if($sf_user->hasCredential('admin')): ?>
         <?php echo link_to(
