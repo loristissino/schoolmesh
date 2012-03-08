@@ -34,8 +34,11 @@ class ProjDeadline extends BaseProjDeadline {
   
   
   
-  public function updateFromForm($params, sfValidatedFile $file=null)
+  public function updateFromForm($params, sfValidatedFile $file=null, $sf_context=null)
   {
+    
+    $was_completed=$this->getCompleted();
+    
     $con = Propel::getConnection(ProjDeadlinePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
     // we need to check which ones are present, because it depends on the state
     Generic::updateObjectFromForm($this, array(
@@ -53,18 +56,48 @@ class ProjDeadline extends BaseProjDeadline {
       $this->setCurrentDeadlineDate($this->getOriginalDeadlineDate());
     }
 
-    $result['result']='notice';
-    $result['message']='Deadline successfully updated.';
-    
-    if($file)
+    try
     {
-      $result=AttachmentFilePeer::addAttachment($con, $this, 'deadline', $this->getUserId(), $file, $result);
-    }
-    else
-    {
-      $this->save();
-    }
+      if($file)
+      {
+        $result=AttachmentFilePeer::addAttachment($con, $this, 'deadline', $this->getUserId(), $file, $result);
+      }
+      $this->save($con);
+      if($was_completed or $params['completed'])
+      {
+        $logged=false;
+        if($was_completed and !$params['completed'])
+        {
+          $msg='Deadline «%deadline%» marked as not completed';
+          $logged=true;
+        }
+        if(!$was_completed and $params['completed'])
+        {
+          $msg='Deadline «%deadline%» marked as completed';
+          $logged=true;
+        }
         
+        if($logged)
+        {
+          $this->getSchoolproject()->addWfevent($params['user_id'],
+            $msg, 
+            array('%deadline%'=>$this->getDescription()),
+            null,
+            $sf_context,
+            $con);
+        }
+      }
+      
+      $con->commit();
+      $result['result']='notice';
+      $result['message']='Deadline successfully updated.';
+    }
+    catch(Exception $e)
+    {
+      $result['result']='error';
+      $result['message']='Deadline not updated, some error occured.';
+    }
+      
     return $result;
   }
   

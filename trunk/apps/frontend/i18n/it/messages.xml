@@ -4236,6 +4236,18 @@
         <source>Subject: </source>
         <target>Materia: </target>
     </trans-unit>
+    <trans-unit id="1069">
+        <source>[0]Filler|[1]Filler</source>
+        <target>[0]Compilatrice|[1]Compilatore</target>
+    </trans-unit>
+    <trans-unit id="1070">
+        <source>Deadline «%deadline%» marked as completed</source>
+        <target>Scadenza di monitoraggio «%deadline%» marcata come completata</target>
+    </trans-unit>
+    <trans-unit id="1071">
+        <source>Deadline «%deadline%» marked as not completed</source>
+        <target>Scadenza di monitoraggio «%deadline%» marcata come non completata</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
