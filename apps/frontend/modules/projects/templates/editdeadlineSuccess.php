@@ -21,6 +21,12 @@
 <h2><?php echo __('Basic information') ?></h2>
 
   <table>
+  <?php if(!isset($form['user_id'])): ?>
+  <tr>
+    <th><label for="proj_deadline_original_user"><?php echo format_number_choice(__('[0]Filler|[1]Filler'), null, $deadline->getsfGuardUser()->getProfile()->getIsMale()) ?></label></th>
+    <td><?php echo $deadline->getsfGuardUser()->getProfile() ?></td>
+  </tr>
+  <?php endif ?>
   <?php if(!isset($form['original_deadline_date'])): ?>
   <tr>
     <th><label for="proj_deadline_original_deadline_date"><?php echo __('Original deadline date') ?></label></th>

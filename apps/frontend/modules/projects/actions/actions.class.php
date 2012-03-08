@@ -684,7 +684,7 @@ class projectsActions extends sfActions
 				
 				$this->deadline = ProjDeadlinePeer::retrieveByPK($params['id']);
 				
-				$result=$this->deadline->updateFromForm($params + array('user_id'=>$this->getUser()->getProfile()->getUserId()), $this->form->getValue('attachment'));
+				$result=$this->deadline->updateFromForm($params + array('user_id'=>$this->getUser()->getProfile()->getUserId()), $this->form->getValue('attachment'), $this->getContext());
 				
 				$this->getUser()->setFlash($result['result'],
 					$this->getContext()->getI18N()->__($result['message'])
