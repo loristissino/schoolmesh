@@ -1139,15 +1139,19 @@ public function getWorkflowLogs()
 	{
 		$activesyllabus=$this->getSyllabus() && $this->getSyllabus()->getIsActive();
     
+    /*
 		if ($template=='')
 		{
       // if the syllabus is active we use a different template
-      /* templates should have a name like
+      // templates should have a name like
          workplan20_s.odt for workplans with active syllabi
          workplan20_n.odt for workplans without active syllabi
-      */
+      //
 			$template='workplan' . $this->getState() . '_' . ($activesyllabus?'s':'n') .'.odt';
 		}
+    */
+    
+    $template=sprintf('appointment_%s_%d.odt', $this->getAppointmentType()->getShortcut(), $this->getState());
 		
 		$teachertitle=$this->getSfGuardUser()->getProfile()->getLettertitle();
 
@@ -1182,175 +1186,187 @@ public function getWorkflowLogs()
 //		$odfdoc->setVars('doctype',  $state);
 		$odfdoc->setVars('year',  $this->getYear()->__toString());
 		$odfdoc->setVars('teacher',  $teachertitle . ' ' . $this->getSfGuardUser()->getProfile()->getFullName());
-		$odfdoc->setVars('subject', $this->getTitle());
+    
+    if($this->getSubject())
+    {
+      $odfdoc->setVars('subject', $this->getSubject());
+    }
 		$odfdoc->setVars('year',  $this->getYear()->__toString());
 		$odfdoc->setVars('schoolclass',  $this->getSchoolclassId());
-				
-		$wpinfos=$this->getWpinfos();
+    $odfdoc->setVars('date', date('d/m/Y'));
 		
-		$infos=$odfdoc->setSegment('infos');
-		foreach($wpinfos as $wpinfo)
-		{
-      $include=$this->isWorkplan() ? 
-         $wpinfo->getWpinfoType()->getState() <= $this->getState()
-         :
-         $wpinfo->getWpinfoType()->getState() >= Workflow::IR_DRAFT
-         ;
-         
-			if (
-//				$wpinfo->getWpinfoType()->getState()<=$this->getState()
-// FIXME: we need to have two limits in the db, upper and lower
-				//$wpinfo->getWpinfoType()->getState() < $this->getState()
-        
-        $include
-				&&
-				$wpinfo->getContent()
-				&&
-				(!$wpinfo->getWpinfoType()->getIsConfidential() || $complete)
-				)
-			{
-				$infos->infoTitle($wpinfo->getWpinfoType()->getTitle());
-				$infos->infoDescription($wpinfo->getWpinfoType()->getDescription());
-				$infos->infoContent($wpinfo->getContent());
-				$infos->merge();
-			}
-		}
-		
-		$odfdoc->mergeSegment($infos);
-    $wpmodules=$this->getWpmodules();
-    if ($this->getState()>=Workflow::IR_DRAFT)
-    /* report, not workplan: only selected items must be listed */
-    
+    if($this->getAppointmentType()->getHasInfo())
     {
-		
-      $selectedModules=array();
-      
-      foreach($wpmodules as $wpmodule)
+      $wpinfos=$this->getWpinfos();
+      $infos=$odfdoc->setSegment('infos');
+      foreach($wpinfos as $wpinfo)
       {
-        foreach($wpmodule->getWpitemGroups() as $wpitemgroup)
+        $include=$this->isWorkplan() ? 
+           $wpinfo->getWpinfoType()->getState() <= $this->getState()
+           :
+           $wpinfo->getWpinfoType()->getState() >= Workflow::IR_DRAFT
+           ;
+           
+        if (        
+          $include
+          &&
+          $wpinfo->getContent()
+          &&
+          (!$wpinfo->getWpinfoType()->getIsConfidential() || $complete)
+          )
         {
-          $wpitems=$wpitemgroup->getWpmoduleItems();
-          if (($wpitemgroup->getWpitemType()->getState()<=$this->getState())&&(sizeof($wpitems)>0))
-          {					
-            foreach($wpitems as $wpitem)
-            {
-              // evaluation could be null (e.g. for notes, or before report state), 
-              // so first we check if it exists, then we test the value
-              if(!$wpitem->getEvaluation() || $wpitem->getEvaluation()>1)
-              
+          $infos->infoTitle($wpinfo->getWpinfoType()->getTitle());
+          $infos->infoDescription($wpinfo->getWpinfoType()->getDescription());
+          $infos->infoContent($wpinfo->getContent());
+          $infos->merge();
+        }
+      }
+      
+      $odfdoc->mergeSegment($infos);
+      
+    }
+    
+    if($this->getAppointmentType()->getHasModules())
+    {
+      $wpmodules=$this->getWpmodules();
+      if ($this->getState()>=Workflow::IR_DRAFT)
+      /* report, not workplan: only selected items must be listed */
+      
+      {
+      
+        $selectedModules=array();
+        
+        foreach($wpmodules as $wpmodule)
+        {
+          foreach($wpmodule->getWpitemGroups() as $wpitemgroup)
+          {
+            $wpitems=$wpitemgroup->getWpmoduleItems();
+            if (($wpitemgroup->getWpitemType()->getState()<=$this->getState())&&(sizeof($wpitems)>0))
+            {					
+              foreach($wpitems as $wpitem)
               {
-                $text=array();
-                $text['content']=$wpitem->getContent();
-                if ($wpitem->getEvaluation())
+                // evaluation could be null (e.g. for notes, or before report state), 
+                // so first we check if it exists, then we test the value
+                if(!$wpitem->getEvaluation() || $wpitem->getEvaluation()>1)
+                
                 {
-                  $text['evaluation']=$wpitem->getEvaluation();
+                  $text=array();
+                  $text['content']=$wpitem->getContent();
+                  if ($wpitem->getEvaluation())
+                  {
+                    $text['evaluation']=$wpitem->getEvaluation();
+                  }
+                  $selectedModules[$wpmodule->getTitle()][$wpitemgroup->getWpitemType()->getTitle()][]=$text;
                 }
-                $selectedModules[$wpmodule->getTitle()][$wpitemgroup->getWpitemType()->getTitle()][]=$text;
               }
             }
           }
         }
-      }
-            
-      $modules=$odfdoc->setSegment('modules');
-      
-      $moduleNumber=0;
-      
-      foreach($selectedModules as $selectedModule_key=>$selectedModule)
-      {
-        $modules->moduleTitle($selectedModule_key);
-        $modules->moduleNumber(++$moduleNumber);
-					foreach($selectedModule as $selectedGroup_key=>$selectedGroup)
-					{
-						$modules->group->groupTitle($selectedGroup_key);
-						foreach($selectedGroup as $selectedItem)
-						{
-							$modules->group->item->itemContent($selectedItem['content']);
-              if($this->getState()>=Workflow::IR_DRAFT)
-              {
-                //$modules->group->item->itemEvaluation($selectedItem['evaluation']);
-              }
-							$modules->group->item->merge();
-						}
-						$modules->group->merge();
-					}
+              
+        $modules=$odfdoc->setSegment('modules');
         
-        $pagebreak=($moduleNumber<sizeof($wpmodules))?'<pagebreak>':'';
-        $modules->pagebreak($pagebreak);
+        $moduleNumber=0;
+        
+        foreach($selectedModules as $selectedModule_key=>$selectedModule)
+        {
+          $modules->moduleTitle($selectedModule_key);
+          $modules->moduleNumber(++$moduleNumber);
+            foreach($selectedModule as $selectedGroup_key=>$selectedGroup)
+            {
+              $modules->group->groupTitle($selectedGroup_key);
+              foreach($selectedGroup as $selectedItem)
+              {
+                $modules->group->item->itemContent($selectedItem['content']);
+                if($this->getState()>=Workflow::IR_DRAFT)
+                {
+                  //$modules->group->item->itemEvaluation($selectedItem['evaluation']);
+                }
+                $modules->group->item->merge();
+              }
+              $modules->group->merge();
+            }
+          
+          $pagebreak=($moduleNumber<sizeof($wpmodules))?'<pagebreak>':'';
+          $modules->pagebreak($pagebreak);
 
-        $modules->merge();
+          $modules->merge();
+        }
+        
+        $odfdoc->mergeSegment($modules);
       }
+      else // state: workplan, not report (all items must be listed)
       
-      $odfdoc->mergeSegment($modules);
+      {
+
+        $modules=$odfdoc->setSegment('modules');
+        
+        $moduleNumber=0;
+        
+        foreach($wpmodules as $wpmodule)
+        {
+          $modules->moduleTitle($wpmodule->getTitle());
+          $modules->moduleNumber(++$moduleNumber);
+          $modules->modulePeriod($wpmodule->getPeriod());
+          
+          foreach($wpmodule->getWpitemGroups() as $wpitemgroup)
+          {
+            $wpitems=$wpitemgroup->getWpmoduleItems();
+            if (($wpitemgroup->getWpitemType()->getState()<=$this->getState())&&(sizeof($wpitems)>0))
+            {
+              $modules->group->groupTitle($wpitemgroup->getWpitemType()->getTitle());
+              
+              foreach($wpitems as $wpitem)
+              {
+                $modules->group->item->itemContent($wpitem->getContent());
+                $modules->group->item->merge();
+              }
+              $modules->group->merge();
+            }
+          }
+          if($activesyllabus)
+          {
+            foreach($wpmodule->getSyllabusContributionsWithRefs() as $ref=>$contribution)
+            {
+              $modules->syllabus->syllabusRef($ref);
+              $modules->syllabus->syllabusContent($contribution['content'] . ' (' . $contrib_descriptions[$contribution['contribution']] . ')');
+              $modules->syllabus->merge();
+            }
+          }
+          
+          $pagebreak=($moduleNumber<sizeof($wpmodules))?'<pagebreak>':'';
+          $modules->pagebreak($pagebreak);
+
+          $modules->merge();
+        }
+        
+        $odfdoc->mergeSegment($modules);
+
+      }
     }
-    else // state: workplan, not report (all items must be listed)
     
+    if($this->getAppointmentType()->getHasTools())
     {
 
-      $modules=$odfdoc->setSegment('modules');
-      
-      $moduleNumber=0;
-      
-      foreach($wpmodules as $wpmodule)
-      {
-        $modules->moduleTitle($wpmodule->getTitle());
-        $modules->moduleNumber(++$moduleNumber);
-        $modules->modulePeriod($wpmodule->getPeriod());
-        
-        foreach($wpmodule->getWpitemGroups() as $wpitemgroup)
-        {
-          $wpitems=$wpitemgroup->getWpmoduleItems();
-          if (($wpitemgroup->getWpitemType()->getState()<=$this->getState())&&(sizeof($wpitems)>0))
-          {
-            $modules->group->groupTitle($wpitemgroup->getWpitemType()->getTitle());
-            
-            foreach($wpitems as $wpitem)
+      $tools=$this->getTools(true);
+
+      $toolgroups=$odfdoc->setSegment('toolgroups');
+    
+      if(sizeof($tools)>0)
+        foreach($tools as $toolGroup)
+          if (@sizeof($toolGroup['elements'])>0)
             {
-              $modules->group->item->itemContent($wpitem->getContent());
-              $modules->group->item->merge();
+            $toolgroups->toolgroupTitle($toolGroup['description']);
+            foreach($toolGroup['elements'] as $element)
+              {
+                $toolgroups->tool->toolContent($element['description']);
+                $toolgroups->tool->merge();
+              }
+            $toolgroups->merge();
             }
-            $modules->group->merge();
-          }
-        }
-        if($activesyllabus)
-        {
-          foreach($wpmodule->getSyllabusContributionsWithRefs() as $ref=>$contribution)
-          {
-            $modules->syllabus->syllabusRef($ref);
-            $modules->syllabus->syllabusContent($contribution['content'] . ' (' . $contrib_descriptions[$contribution['contribution']] . ')');
-            $modules->syllabus->merge();
-          }
-        }
-        
-        $pagebreak=($moduleNumber<sizeof($wpmodules))?'<pagebreak>':'';
-        $modules->pagebreak($pagebreak);
-
-        $modules->merge();
-      }
-      
-      $odfdoc->mergeSegment($modules);
-
+      $odfdoc->mergeSegment($toolgroups);
     }
-
-
-		$tools=$this->getTools(true);
-
-		$toolgroups=$odfdoc->setSegment('toolgroups');
-	
-		if(sizeof($tools)>0)
-			foreach($tools as $toolGroup)
-				if (@sizeof($toolGroup['elements'])>0)
-					{
-					$toolgroups->toolgroupTitle($toolGroup['description']);
-					foreach($toolGroup['elements'] as $element)
-						{
-							$toolgroups->tool->toolContent($element['description']);
-							$toolgroups->tool->merge();
-						}
-					$toolgroups->merge();
-					}
-		$odfdoc->mergeSegment($toolgroups);
-		
+    
+    
 		return $odf;
 	}
 

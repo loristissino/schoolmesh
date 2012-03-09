@@ -1,3 +1,7 @@
+2012/03/09
+Added has_attachments field in appointment_type table
+Added code in wpinfo_type table
+
 2012/03/07
 Added table appointment_type.
 Changed references for wpinfo, wpitem_type, wptools for appointments.

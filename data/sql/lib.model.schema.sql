@@ -381,8 +381,10 @@ CREATE TABLE `appointment_type`
 	`has_info` TINYINT default 0,
 	`has_modules` TINYINT default 0,
 	`has_tools` TINYINT default 0,
+	`has_attachments` TINYINT default 0,
 	PRIMARY KEY (`id`),
-	KEY `appointment_type_I_1`(`rank`)
+	KEY `appointment_type_I_1`(`shortcut`),
+	KEY `appointment_type_I_2`(`rank`)
 )Type=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -602,6 +604,7 @@ CREATE TABLE `wpinfo_type`
 	`title` VARCHAR(50),
 	`description` VARCHAR(255),
 	`rank` INTEGER  NOT NULL,
+	`code` VARCHAR(20),
 	`state` INTEGER,
 	`template` TEXT,
 	`example` TEXT,
@@ -612,6 +615,7 @@ CREATE TABLE `wpinfo_type`
 	`appointment_type_id` INTEGER,
 	PRIMARY KEY (`id`),
 	KEY `wpinfo_type_I_1`(`rank`),
+	KEY `wpinfo_type_I_2`(`code`),
 	INDEX `wpinfo_type_FI_1` (`appointment_type_id`),
 	CONSTRAINT `wpinfo_type_FK_1`
 		FOREIGN KEY (`appointment_type_id`)

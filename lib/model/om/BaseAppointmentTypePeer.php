@@ -25,7 +25,7 @@ abstract class BaseAppointmentTypePeer {
 	const TM_CLASS = 'AppointmentTypeTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 9;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -54,6 +54,9 @@ abstract class BaseAppointmentTypePeer {
 	/** the column name for the HAS_TOOLS field */
 	const HAS_TOOLS = 'appointment_type.HAS_TOOLS';
 
+	/** the column name for the HAS_ATTACHMENTS field */
+	const HAS_ATTACHMENTS = 'appointment_type.HAS_ATTACHMENTS';
+
 	/**
 	 * An identiy map to hold any loaded instances of AppointmentType objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
@@ -77,11 +80,11 @@ abstract class BaseAppointmentTypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'Shortcut', 'Rank', 'IsActive', 'HasInfo', 'HasModules', 'HasTools', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'shortcut', 'rank', 'isActive', 'hasInfo', 'hasModules', 'hasTools', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::SHORTCUT, self::RANK, self::IS_ACTIVE, self::HAS_INFO, self::HAS_MODULES, self::HAS_TOOLS, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'shortcut', 'rank', 'is_active', 'has_info', 'has_modules', 'has_tools', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'Shortcut', 'Rank', 'IsActive', 'HasInfo', 'HasModules', 'HasTools', 'HasAttachments', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'shortcut', 'rank', 'isActive', 'hasInfo', 'hasModules', 'hasTools', 'hasAttachments', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::SHORTCUT, self::RANK, self::IS_ACTIVE, self::HAS_INFO, self::HAS_MODULES, self::HAS_TOOLS, self::HAS_ATTACHMENTS, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'shortcut', 'rank', 'is_active', 'has_info', 'has_modules', 'has_tools', 'has_attachments', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	/**
@@ -91,11 +94,11 @@ abstract class BaseAppointmentTypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'Shortcut' => 2, 'Rank' => 3, 'IsActive' => 4, 'HasInfo' => 5, 'HasModules' => 6, 'HasTools' => 7, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'shortcut' => 2, 'rank' => 3, 'isActive' => 4, 'hasInfo' => 5, 'hasModules' => 6, 'hasTools' => 7, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::SHORTCUT => 2, self::RANK => 3, self::IS_ACTIVE => 4, self::HAS_INFO => 5, self::HAS_MODULES => 6, self::HAS_TOOLS => 7, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'shortcut' => 2, 'rank' => 3, 'is_active' => 4, 'has_info' => 5, 'has_modules' => 6, 'has_tools' => 7, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'Shortcut' => 2, 'Rank' => 3, 'IsActive' => 4, 'HasInfo' => 5, 'HasModules' => 6, 'HasTools' => 7, 'HasAttachments' => 8, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'shortcut' => 2, 'rank' => 3, 'isActive' => 4, 'hasInfo' => 5, 'hasModules' => 6, 'hasTools' => 7, 'hasAttachments' => 8, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::SHORTCUT => 2, self::RANK => 3, self::IS_ACTIVE => 4, self::HAS_INFO => 5, self::HAS_MODULES => 6, self::HAS_TOOLS => 7, self::HAS_ATTACHMENTS => 8, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'shortcut' => 2, 'rank' => 3, 'is_active' => 4, 'has_info' => 5, 'has_modules' => 6, 'has_tools' => 7, 'has_attachments' => 8, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	/**
@@ -173,6 +176,7 @@ abstract class BaseAppointmentTypePeer {
 		$criteria->addSelectColumn(AppointmentTypePeer::HAS_INFO);
 		$criteria->addSelectColumn(AppointmentTypePeer::HAS_MODULES);
 		$criteria->addSelectColumn(AppointmentTypePeer::HAS_TOOLS);
+		$criteria->addSelectColumn(AppointmentTypePeer::HAS_ATTACHMENTS);
 	}
 
 	/**

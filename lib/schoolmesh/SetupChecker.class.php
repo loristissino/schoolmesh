@@ -111,33 +111,25 @@ class SetupChecker
     }
 
 
-    foreach(array(
+    $templates_needed=array(
       'projects_charges.odt',
       'projects_submission.odt',
       'recuperation.odt',
       'teachers_signs.odt',
-      'workplan20_n.odt',
-      'workplan20_s.odt',
-      'workplan30_n.odt',
-      'workplan30_s.odt',
-      'workplan40_n.odt',
-      'workplan40_s.odt',
-      'workplan41_n.odt',
-      'workplan41_s.odt',
-      'workplan50_n.odt',
-      'workplan50_s.odt',
-      'workplan60_n.odt',
-      'workplan60_s.odt',
-      'workplan70_n.odt',
-      'workplan70_s.odt',
-      'workplan80_n.odt',
-      'workplan80_s.odt',
-      'workplan90_n.odt',
-      'workplan90_s.odt',
-      ) as $file)
+    );
+
+    foreach (AppointmentTypePeer::retrieveActive() as $appointment_type)
+    {
+      foreach(array('20', '30', '40', '41', '50', '60', '70', '80', '90') as $state)
+      {
+        $templates_needed[]=sprintf('appointment_%s_%d.odt', $appointment_type->getShortcut(), $state);
+      }
+    }
+
+    foreach($templates_needed as $file)
     {
       $path=sfConfig::get('app_opendocument_template_directory'). '/' . $file;
-      if(file_exists($path))
+      if(file_exists($path) && is_readable($path))
       {
         $checkList->addCheck(new Check(
           Check::PASSED,
@@ -149,7 +141,7 @@ class SetupChecker
       {
         $checkList->addCheck(new Check(
           Check::FAILED,
-          sprintf('File «%s» does not exist', $path),
+          sprintf('File «%s» does not exist or is not readable', $path),
           'opendocument templates'
           ));
       }
