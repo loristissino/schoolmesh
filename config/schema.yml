@@ -297,7 +297,7 @@ propel:
     state:  integer
     is_required: boolean
     appointment_type_id: ~
-    code: { type: varchar(20), index: true }
+    code: { type: varchar(30), index: true }
     evaluation_min:  integer
     evaluation_max:  integer
     evaluation_min_description: varchar(50)
