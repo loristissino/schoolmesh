@@ -42,7 +42,7 @@ abstract class BaseWpitemTypeForm extends BaseFormPropel
       'state'                      => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'is_required'                => new sfValidatorBoolean(array('required' => false)),
       'appointment_type_id'        => new sfValidatorPropelChoice(array('model' => 'AppointmentType', 'column' => 'id', 'required' => false)),
-      'code'                       => new sfValidatorString(array('max_length' => 20, 'required' => false)),
+      'code'                       => new sfValidatorString(array('max_length' => 30, 'required' => false)),
       'evaluation_min'             => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'evaluation_max'             => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'evaluation_min_description' => new sfValidatorString(array('max_length' => 50, 'required' => false)),

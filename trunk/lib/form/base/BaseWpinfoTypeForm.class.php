@@ -34,7 +34,7 @@ abstract class BaseWpinfoTypeForm extends BaseFormPropel
       'title'               => new sfValidatorString(array('max_length' => 50, 'required' => false)),
       'description'         => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'rank'                => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647)),
-      'code'                => new sfValidatorString(array('max_length' => 20, 'required' => false)),
+      'code'                => new sfValidatorString(array('max_length' => 30, 'required' => false)),
       'state'               => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'template'            => new sfValidatorString(array('required' => false)),
       'example'             => new sfValidatorString(array('required' => false)),
