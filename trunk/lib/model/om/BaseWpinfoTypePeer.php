@@ -25,7 +25,7 @@ abstract class BaseWpinfoTypePeer {
 	const TM_CLASS = 'WpinfoTypeTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 12;
+	const NUM_COLUMNS = 13;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -41,6 +41,9 @@ abstract class BaseWpinfoTypePeer {
 
 	/** the column name for the RANK field */
 	const RANK = 'wpinfo_type.RANK';
+
+	/** the column name for the CODE field */
+	const CODE = 'wpinfo_type.CODE';
 
 	/** the column name for the STATE field */
 	const STATE = 'wpinfo_type.STATE';
@@ -89,11 +92,11 @@ abstract class BaseWpinfoTypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Description', 'Rank', 'State', 'Template', 'Example', 'IsRequired', 'IsConfidential', 'GradeMin', 'GradeMax', 'AppointmentTypeId', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'description', 'rank', 'state', 'template', 'example', 'isRequired', 'isConfidential', 'gradeMin', 'gradeMax', 'appointmentTypeId', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::DESCRIPTION, self::RANK, self::STATE, self::TEMPLATE, self::EXAMPLE, self::IS_REQUIRED, self::IS_CONFIDENTIAL, self::GRADE_MIN, self::GRADE_MAX, self::APPOINTMENT_TYPE_ID, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'description', 'rank', 'state', 'template', 'example', 'is_required', 'is_confidential', 'grade_min', 'grade_max', 'appointment_type_id', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Description', 'Rank', 'Code', 'State', 'Template', 'Example', 'IsRequired', 'IsConfidential', 'GradeMin', 'GradeMax', 'AppointmentTypeId', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'description', 'rank', 'code', 'state', 'template', 'example', 'isRequired', 'isConfidential', 'gradeMin', 'gradeMax', 'appointmentTypeId', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::DESCRIPTION, self::RANK, self::CODE, self::STATE, self::TEMPLATE, self::EXAMPLE, self::IS_REQUIRED, self::IS_CONFIDENTIAL, self::GRADE_MIN, self::GRADE_MAX, self::APPOINTMENT_TYPE_ID, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'description', 'rank', 'code', 'state', 'template', 'example', 'is_required', 'is_confidential', 'grade_min', 'grade_max', 'appointment_type_id', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	/**
@@ -103,11 +106,11 @@ abstract class BaseWpinfoTypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Description' => 2, 'Rank' => 3, 'State' => 4, 'Template' => 5, 'Example' => 6, 'IsRequired' => 7, 'IsConfidential' => 8, 'GradeMin' => 9, 'GradeMax' => 10, 'AppointmentTypeId' => 11, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'state' => 4, 'template' => 5, 'example' => 6, 'isRequired' => 7, 'isConfidential' => 8, 'gradeMin' => 9, 'gradeMax' => 10, 'appointmentTypeId' => 11, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::DESCRIPTION => 2, self::RANK => 3, self::STATE => 4, self::TEMPLATE => 5, self::EXAMPLE => 6, self::IS_REQUIRED => 7, self::IS_CONFIDENTIAL => 8, self::GRADE_MIN => 9, self::GRADE_MAX => 10, self::APPOINTMENT_TYPE_ID => 11, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'state' => 4, 'template' => 5, 'example' => 6, 'is_required' => 7, 'is_confidential' => 8, 'grade_min' => 9, 'grade_max' => 10, 'appointment_type_id' => 11, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Description' => 2, 'Rank' => 3, 'Code' => 4, 'State' => 5, 'Template' => 6, 'Example' => 7, 'IsRequired' => 8, 'IsConfidential' => 9, 'GradeMin' => 10, 'GradeMax' => 11, 'AppointmentTypeId' => 12, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'code' => 4, 'state' => 5, 'template' => 6, 'example' => 7, 'isRequired' => 8, 'isConfidential' => 9, 'gradeMin' => 10, 'gradeMax' => 11, 'appointmentTypeId' => 12, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::DESCRIPTION => 2, self::RANK => 3, self::CODE => 4, self::STATE => 5, self::TEMPLATE => 6, self::EXAMPLE => 7, self::IS_REQUIRED => 8, self::IS_CONFIDENTIAL => 9, self::GRADE_MIN => 10, self::GRADE_MAX => 11, self::APPOINTMENT_TYPE_ID => 12, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'rank' => 3, 'code' => 4, 'state' => 5, 'template' => 6, 'example' => 7, 'is_required' => 8, 'is_confidential' => 9, 'grade_min' => 10, 'grade_max' => 11, 'appointment_type_id' => 12, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
 	);
 
 	/**
@@ -181,6 +184,7 @@ abstract class BaseWpinfoTypePeer {
 		$criteria->addSelectColumn(WpinfoTypePeer::TITLE);
 		$criteria->addSelectColumn(WpinfoTypePeer::DESCRIPTION);
 		$criteria->addSelectColumn(WpinfoTypePeer::RANK);
+		$criteria->addSelectColumn(WpinfoTypePeer::CODE);
 		$criteria->addSelectColumn(WpinfoTypePeer::STATE);
 		$criteria->addSelectColumn(WpinfoTypePeer::TEMPLATE);
 		$criteria->addSelectColumn(WpinfoTypePeer::EXAMPLE);

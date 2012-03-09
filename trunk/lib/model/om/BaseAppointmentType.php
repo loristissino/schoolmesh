@@ -71,6 +71,13 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 	protected $has_tools;
 
 	/**
+	 * The value for the has_attachments field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $has_attachments;
+
+	/**
 	 * @var        array Appointment[] Collection to store aggregation of Appointment objects.
 	 */
 	protected $collAppointments;
@@ -140,6 +147,7 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 		$this->has_info = false;
 		$this->has_modules = false;
 		$this->has_tools = false;
+		$this->has_attachments = false;
 	}
 
 	/**
@@ -230,6 +238,16 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 	public function getHasTools()
 	{
 		return $this->has_tools;
+	}
+
+	/**
+	 * Get the [has_attachments] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getHasAttachments()
+	{
+		return $this->has_attachments;
 	}
 
 	/**
@@ -393,6 +411,26 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 	} // setHasTools()
 
 	/**
+	 * Set the value of [has_attachments] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     AppointmentType The current object (for fluent API support)
+	 */
+	public function setHasAttachments($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->has_attachments !== $v || $this->isNew()) {
+			$this->has_attachments = $v;
+			$this->modifiedColumns[] = AppointmentTypePeer::HAS_ATTACHMENTS;
+		}
+
+		return $this;
+	} // setHasAttachments()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -415,6 +453,10 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 			}
 
 			if ($this->has_tools !== false) {
+				return false;
+			}
+
+			if ($this->has_attachments !== false) {
 				return false;
 			}
 
@@ -448,6 +490,7 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 			$this->has_info = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
 			$this->has_modules = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
 			$this->has_tools = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
+			$this->has_attachments = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -457,7 +500,7 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 8; // 8 = AppointmentTypePeer::NUM_COLUMNS - AppointmentTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 9; // 9 = AppointmentTypePeer::NUM_COLUMNS - AppointmentTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating AppointmentType object", $e);
@@ -853,6 +896,9 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 			case 7:
 				return $this->getHasTools();
 				break;
+			case 8:
+				return $this->getHasAttachments();
+				break;
 			default:
 				return null;
 				break;
@@ -882,6 +928,7 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 			$keys[5] => $this->getHasInfo(),
 			$keys[6] => $this->getHasModules(),
 			$keys[7] => $this->getHasTools(),
+			$keys[8] => $this->getHasAttachments(),
 		);
 		return $result;
 	}
@@ -937,6 +984,9 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 			case 7:
 				$this->setHasTools($value);
 				break;
+			case 8:
+				$this->setHasAttachments($value);
+				break;
 		} // switch()
 	}
 
@@ -969,6 +1019,7 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setHasInfo($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setHasModules($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setHasTools($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setHasAttachments($arr[$keys[8]]);
 	}
 
 	/**
@@ -988,6 +1039,7 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(AppointmentTypePeer::HAS_INFO)) $criteria->add(AppointmentTypePeer::HAS_INFO, $this->has_info);
 		if ($this->isColumnModified(AppointmentTypePeer::HAS_MODULES)) $criteria->add(AppointmentTypePeer::HAS_MODULES, $this->has_modules);
 		if ($this->isColumnModified(AppointmentTypePeer::HAS_TOOLS)) $criteria->add(AppointmentTypePeer::HAS_TOOLS, $this->has_tools);
+		if ($this->isColumnModified(AppointmentTypePeer::HAS_ATTACHMENTS)) $criteria->add(AppointmentTypePeer::HAS_ATTACHMENTS, $this->has_attachments);
 
 		return $criteria;
 	}
@@ -1055,6 +1107,8 @@ abstract class BaseAppointmentType extends BaseObject  implements Persistent {
 		$copyObj->setHasModules($this->has_modules);
 
 		$copyObj->setHasTools($this->has_tools);
+
+		$copyObj->setHasAttachments($this->has_attachments);
 
 
 		if ($deepCopy) {

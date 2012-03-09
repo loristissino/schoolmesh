@@ -22,7 +22,7 @@ class WptoolItemTypePeer extends BaseWptoolItemTypePeer
 	static public function getAllNeededForAppointment(Appointment $appointment)
 	{
 		$c=new Criteria();
-		$c->add(WptoolItemTypePeer::STATE, $state);
+		$c->add(WptoolItemTypePeer::STATE, $appointment->getState());
 		$c->add(WptoolItemTypePeer::APPOINTMENT_TYPE_ID, $appointment->getAppointmentTypeId());
 		$c->add(self::GRADE_MIN, $appointment->getSchoolclass()->getGrade(), Criteria::LESS_EQUAL);
 		$c->add(self::GRADE_MAX, $appointment->getSchoolclass()->getGrade(), Criteria::GREATER_EQUAL);

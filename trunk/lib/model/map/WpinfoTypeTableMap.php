@@ -40,6 +40,7 @@ class WpinfoTypeTableMap extends TableMap {
 		$this->addColumn('TITLE', 'Title', 'VARCHAR', false, 50, null);
 		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 255, null);
 		$this->addColumn('RANK', 'Rank', 'INTEGER', true, null, null);
+		$this->addColumn('CODE', 'Code', 'VARCHAR', false, 20, null);
 		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
 		$this->addColumn('TEMPLATE', 'Template', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('EXAMPLE', 'Example', 'LONGVARCHAR', false, null, null);

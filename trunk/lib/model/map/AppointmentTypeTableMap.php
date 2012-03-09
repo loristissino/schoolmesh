@@ -44,6 +44,7 @@ class AppointmentTypeTableMap extends TableMap {
 		$this->addColumn('HAS_INFO', 'HasInfo', 'BOOLEAN', false, null, false);
 		$this->addColumn('HAS_MODULES', 'HasModules', 'BOOLEAN', false, null, false);
 		$this->addColumn('HAS_TOOLS', 'HasTools', 'BOOLEAN', false, null, false);
+		$this->addColumn('HAS_ATTACHMENTS', 'HasAttachments', 'BOOLEAN', false, null, false);
 		// validators
 	} // initialize()
 
