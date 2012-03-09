@@ -42,6 +42,7 @@ class LanlogPeer extends BaseLanlogPeer
 	{
     $c=new Criteria();
     $c->add(LanlogPeer::IS_ONLINE, true);
+    $c->add(LanlogPeer::CREATED_AT, date('Y-m-d'), Criteria::GREATER_EQUAL);
     $c->addDescendingOrderByColumn(self::UPDATED_AT);
     $t = LanlogPeer::doSelectJoinAll($c);
     return $t;
