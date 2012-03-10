@@ -7,6 +7,9 @@ registerlogon:
 registerlogoff:
   is_secure: false
 
+viewonline:
+  is_secure: false
+
 list:
   credentials: [ admin ]
 
@@ -16,5 +19,3 @@ viewbyuser:
 viewbyworkstation:
   credentials: [ admin ]
   
-viewonline:
-  is_secure: false

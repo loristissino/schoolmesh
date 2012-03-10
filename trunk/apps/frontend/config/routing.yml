@@ -131,7 +131,7 @@ whosonline:
 
 
 viewonline:
-  url:   /lanlog/viewonline/token/:token/:sf_format
+  url:   /viewonline/token/:token/:sf_format
   param: { module: lanlog, action: viewonline, sf_format: html }
   requirements:
     sf_format: (?:html|atom|txt)
