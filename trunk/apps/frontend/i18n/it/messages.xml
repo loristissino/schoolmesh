@@ -388,8 +388,8 @@
         <target>[0]Indicazioni completate|[1]Manca un'indicazione|[1,+Inf]Mancano %1% indicazioni</target>
       </trans-unit>
       <trans-unit id="122">
-        <source>A new item has been inserted</source>
-        <target>Un nuovo elemento è stato inserito</target>
+        <source>A new item has been inserted.</source>
+        <target>Un nuovo elemento è stato inserito.</target>
       </trans-unit>
       <trans-unit id="123">
         <source>The item was deleted</source>
@@ -973,7 +973,7 @@
       </trans-unit>
       <trans-unit id="273">
         <source>A confirmation message has been sent to your address %email%.</source>
-        <target>Un messaggio di conferma ti &#xE8; stato spedito all'indirizzo %email%.</target>
+        <target>Un messaggio di conferma ti è stato spedito all'indirizzo %email%.</target>
       </trans-unit>
       <trans-unit id="274">
         <source>Content replaced.</source>
@@ -3242,7 +3242,7 @@
     </trans-unit>
     <trans-unit id="822">
         <source>You cannot have carriage returns in this text. Consider using the "Quick list edit" action instead.</source>
-        <target>Non puoi avere ritorni a capo in questo testo. Considera la possibilità di usare l'azione "Modifica rapida della lista".</target>
+        <target>Non puoi avere ritorni capoversi in questo testo. Considera la possibilità di usare l'azione "Modifica rapida della lista".</target>
     </trans-unit>
     <trans-unit id="823">
         <source>Time slots</source>

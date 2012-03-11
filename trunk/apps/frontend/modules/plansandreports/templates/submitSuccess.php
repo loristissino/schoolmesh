@@ -18,7 +18,7 @@
 <?php echo __('It must now be administratively checked and then approved by the schoolmaster.') ?><br />
 
 <?php if($sf_user->hasFlash('mail_sent_to')): ?>
-<?php echo __('A confirmation message has been sent to your address %email%', array('%email%'=>$sf_user->getFlash('mail_sent_to'))) ?>
+<?php echo __('A confirmation message has been sent to your address %email%.', array('%email%'=>$sf_user->getFlash('mail_sent_to'))) ?>
 <?php endif ?>
 </p>
 

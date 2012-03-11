@@ -38,7 +38,6 @@ class SchoolprojectTableMap extends TableMap {
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
 		$this->addForeignKey('PROJ_CATEGORY_ID', 'ProjCategoryId', 'INTEGER', 'proj_category', 'ID', false, null, null);
-		$this->addForeignKey('PROJ_FINANCING_ID', 'ProjFinancingId', 'INTEGER', 'proj_financing', 'ID', false, null, null);
 		$this->addForeignKey('YEAR_ID', 'YearId', 'INTEGER', 'year', 'ID', true, null, null);
 		$this->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
 		$this->addForeignKey('TEAM_ID', 'TeamId', 'INTEGER', 'team', 'ID', false, null, null);
@@ -71,7 +70,6 @@ class SchoolprojectTableMap extends TableMap {
 	public function buildRelations()
 	{
     $this->addRelation('ProjCategory', 'ProjCategory', RelationMap::MANY_TO_ONE, array('proj_category_id' => 'id', ), null, null);
-    $this->addRelation('ProjFinancing', 'ProjFinancing', RelationMap::MANY_TO_ONE, array('proj_financing_id' => 'id', ), null, null);
     $this->addRelation('Year', 'Year', RelationMap::MANY_TO_ONE, array('year_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('sfGuardUser', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Team', 'Team', RelationMap::MANY_TO_ONE, array('team_id' => 'id', ), 'RESTRICT', 'CASCADE');

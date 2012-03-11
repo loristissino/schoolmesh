@@ -74,6 +74,7 @@ EOF;
         ->setState(Workflow::IR_DRAFT)
         ->save($con)
         ;
+        
         $con->commit();
       }
       else

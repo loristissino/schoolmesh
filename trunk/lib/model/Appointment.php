@@ -129,14 +129,14 @@ class Appointment extends BaseAppointment
 
 	public function getWpinfos($criteria = null, PropelPDO $con = null)
 	{
-          if (is_null($criteria))
-          {
-            $criteria = new Criteria();
-          }
-          else
-          {
-            $criteria = clone $criteria;
-          }
+    if (is_null($criteria))
+    {
+      $criteria = new Criteria();
+    }
+    else
+    {
+      $criteria = clone $criteria;
+    }
 
 		$criteria->addJoin(WpinfoTypePeer::ID, WpinfoPeer::WPINFO_TYPE_ID);
 		$criteria->addAscendingOrderByColumn(WpinfoTypePeer::RANK);
@@ -590,10 +590,12 @@ $con->query($sql);
               foreach ($neededItemTypes as $it)
                 {
                   $groupname=sprintf('Mod. %d) %s » %s', $count, $wpmodule->getTitle(), $it->getTitle());
-                  if ($it->getState()>$this->getState())
+                  /*
+                   * if ($it->getState()>$this->getState())
                     {
                       continue;
                     }
+                    */
                   $group=WpitemGroupPeer::retrieveByModuleAndType($wpmodule->getId(), $it->getId());
                   if (!$group)
                     {
@@ -875,10 +877,10 @@ $con->query($sql);
 
 	if ($at)
 	{
-		if ($this->getState()!=$at->getWptoolItem()->getWptoolItemType()->getState())
+		if (($this->getState()>$at->getWptoolItem()->getWptoolItemType()->getStateMax()) or ($this->getState()<$at->getWptoolItem()->getWptoolItemType()->getStateMin()))
 			{
 				$result['result']='error_aux';
-				$result['message']='This action is not allowed for a workplan/report in this state';
+				$result['message']='This action is not allowed for a document in this state.';
 				return $result;
 			}
 
@@ -894,7 +896,7 @@ $con->query($sql);
 	}
 
 	$result['result']='notice_aux';
-	$result['message']='The tool was removed';
+	$result['message']='The tool has been removed.';
 
 	return $result;
 	
@@ -914,7 +916,7 @@ $con->query($sql);
 
 	$tool=WptoolItemPeer::retrieveByPK($tool_id);
 
-	if ($this->getState()!=$tool->getWptoolItemType()->getState())
+	if (($this->getState() > $tool->getWptoolItemType()->getStateMax()) or ($this->getState()<$tool->getWptoolItemType()->getStateMin()))
 		{
 			$result['result']='error_aux';
 			$result['message']='This action is not allowed for a workplan/report in this state';
@@ -938,7 +940,7 @@ $con->query($sql);
 	}
 
 	$result['result']='notice_aux';
-	$result['message']='The tool was added';
+	$result['message']='The tool has been added.';
 
 	return $result;
 	
@@ -988,53 +990,52 @@ public function getWorkflowLogs()
 	public function getTools($onlyChosen=false)
 	{
 
-	$c=new Criteria();
-	$c->addAscendingOrderByColumn(WptoolItemTypePeer::RANK);
-	$c->addAscendingOrderByColumn(WptoolItemPeer::ID);
-	$t = WptoolItemPeer::doSelectJoinWptoolItemType($c);
+    $group=array();
+
+    $t=WptoolItemTypePeer::getAllNeededForAppointment($this);  // the types
 	
-	$chosenTools=$this->getWptoolAppointments();
-
-	foreach($chosenTools as $chosenTool)
-		{
-				$chosen[]=$chosenTool->getWptoolItemId();
-		}
-	
-
-	foreach($t as $item)
-		{
-
-// FIXME we need a limit for the state
-//		if ($item->getWptoolItemType()->getState()>$this->getState())
-		if ($item->getWptoolItemType()->getState() > $this->getState())//Workflow::WP_DRAFT)
+    $ids=array();
+    foreach($t as $it)
     {
-      continue;
+      $ids[]=$it->getId();
+      $group[$it->getId()]=array(
+        'description'=>$it->getDescription(),
+        'min_selected'=>$it->getMinSelected(),
+        'id'=>$it->getId()
+        );
     }
-    if (!$this->isWorkplan() && $item->getWptoolItemType()->getState() < Workflow::IR_DRAFT)
+    
+    $c=new Criteria();
+    $c->addJoin(WptoolItemPeer::WPTOOL_ITEM_TYPE_ID, WptoolItemTypePeer::ID);
+    $c->add(WptoolItemTypePeer::ID, $ids, Criteria::IN);
+    $c->setDistinct();
+    
+    $tools=WptoolItemPeer::doSelect($c);
+    
+    $list=array();
+    $chosen=$this->getWptoolAppointments();
+    foreach($chosen as $item)
     {
-      continue;
+      $list[]=$item->getWptoolItem()->getId();
     }
-			
-		$group[$item->getWptoolItemTypeId()]['description']=$item->getWptoolItemType()->getDescription();
-		$group[$item->getWptoolItemTypeId()]['min_selected']=$item->getWptoolItemType()->getMinSelected();
-		$group[$item->getWptoolItemTypeId()]['state']=$item->getWptoolItemType()->getState();
-		$group[$item->getWptoolItemTypeId()]['id']=$item->getWptoolItemType()->getId();
+        
+    foreach($tools as $tool)
+    {
+      if($onlyChosen)
+      {
+        if(in_array($tool->getId(), $list))
+        {
+          $group[$tool->getWptoolItemTypeId()]['elements'][$tool->getId()]['description']=$tool->getDescription();
+        }
+      }
+      else
+      {
+        $group[$tool->getWptoolItemTypeId()]['elements'][$tool->getId()]['description']=$tool->getDescription();
+        $group[$tool->getWptoolItemTypeId()]['elements'][$tool->getId()]['chosen']=in_array($tool->getId(), $list);
+      }
+    }
 		
-		$isChosen=@in_array($item->getId(), $chosen);
-		if (!$onlyChosen)
-			{
-			$group[$item->getWptoolItemTypeId()]['elements'][$item->getId()]['description']=$item->getDescription();
-			$group[$item->getWptoolItemTypeId()]['elements'][$item->getId()]['chosen']=$isChosen;
-			}
-		else
-			if ($isChosen)
-				{
-				$group[$item->getWptoolItemTypeId()]['elements'][$item->getId()]['description']=$item->getDescription();
-				$group[$item->getWptoolItemTypeId()]['elements'][$item->getId()]['chosen']=$isChosen;
-				}
-		}
-		
-	return $group;
+    return $group;
 
 	}
 	
@@ -1138,20 +1139,11 @@ public function getWorkflowLogs()
 	public function getOdf($doctype, sfContext $sfContext=null, $template='', $complete=true)
 	{
 		$activesyllabus=$this->getSyllabus() && $this->getSyllabus()->getIsActive();
-    
-    /*
-		if ($template=='')
-		{
-      // if the syllabus is active we use a different template
-      // templates should have a name like
-         workplan20_s.odt for workplans with active syllabi
-         workplan20_n.odt for workplans without active syllabi
-      //
-			$template='workplan' . $this->getState() . '_' . ($activesyllabus?'s':'n') .'.odt';
-		}
-    */
-    
+        
     $template=sprintf('appointment_%s_%d.odt', $this->getAppointmentType()->getShortcut(), $this->getState());
+    
+    Generic::logMessage('using template', $template);
+    Generic::logMessage('creating odf for appointment', $this->getId());
 		
 		$teachertitle=$this->getSfGuardUser()->getProfile()->getLettertitle();
 
@@ -1201,11 +1193,7 @@ public function getWorkflowLogs()
       $infos=$odfdoc->setSegment('infos');
       foreach($wpinfos as $wpinfo)
       {
-        $include=$this->isWorkplan() ? 
-           $wpinfo->getWpinfoType()->getState() <= $this->getState()
-           :
-           $wpinfo->getWpinfoType()->getState() >= Workflow::IR_DRAFT
-           ;
+        $include=$wpinfo->isCurrentlyVisible();
            
         if (        
           $include
@@ -1241,7 +1229,7 @@ public function getWorkflowLogs()
           foreach($wpmodule->getWpitemGroups() as $wpitemgroup)
           {
             $wpitems=$wpitemgroup->getWpmoduleItems();
-            if (($wpitemgroup->getWpitemType()->getState()<=$this->getState())&&(sizeof($wpitems)>0))
+            if (($this->getState() >= $wpitemgroup->getWpitemType()->getStateMin())&&(sizeof($wpitems)>0))
             {					
               foreach($wpitems as $wpitem)
               {
@@ -1311,7 +1299,7 @@ public function getWorkflowLogs()
           foreach($wpmodule->getWpitemGroups() as $wpitemgroup)
           {
             $wpitems=$wpitemgroup->getWpmoduleItems();
-            if (($wpitemgroup->getWpitemType()->getState()<=$this->getState())&&(sizeof($wpitems)>0))
+            if (($this->getState() >= $wpitemgroup->getWpitemType()->getStateMin())&&(sizeof($wpitems)>0))
             {
               $modules->group->groupTitle($wpitemgroup->getWpitemType()->getTitle());
               
@@ -1366,7 +1354,7 @@ public function getWorkflowLogs()
       $odfdoc->mergeSegment($toolgroups);
     }
     
-    
+    Generic::logMessage('document', 'prepared');
 		return $odf;
 	}
 
@@ -1670,9 +1658,10 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 		foreach ($this->getWfevents() as $item)
 			$item->delete();
 		
-		foreach ($this->getWpinfos() as $item)
+		/*foreach ($this->getWpinfos() as $item)
 			$item->delete();
-		
+		*/
+    
 		foreach ($this->getWptoolAppointments() as $item)
 			$item->delete();
 
@@ -1758,17 +1747,43 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 
 	protected function copyWpinfosFrom($iworkplan)
 	{
-
-		$wpinfos = $iworkplan->getWpinfos();
-		foreach($wpinfos as $wpinfo)
-			{
-				$newwpinfo = new Wpinfo();
-				$newwpinfo->setAppointmentId($this->getId());
-				$newwpinfo->setWpinfoTypeId($wpinfo->getWpinfoTypeId());
-				$newwpinfo->setContent($wpinfo->getContent());
-				$newwpinfo->save();
-				
-			}
+    
+    // This is not the cleanest solution, but it works.
+    
+    $myinfos=$this->getWpinfos();
+    
+    $codes=array();
+    
+    foreach($myinfos as $info)
+    {
+      $codes[]=$info->getWpinfoType()->getCode();
+    }
+    
+    $c=new Criteria();
+    
+    $c->add(WpinfoTypePeer::CODE, $codes, Criteria::IN);
+    $c->add(WpinfoTypePeer::IS_CONFIDENTIAL, false);
+    
+		$iinfos = $iworkplan->getWpinfos($c);
+    
+    $available=array();
+    
+		foreach($iinfos as $iinfo)
+    {
+      $available[$iinfo->getWpinfoType()->getCode()]=$iinfo;
+    }
+    
+		foreach($myinfos as $info)
+    {
+      if(array_key_exists($info->getWpinfoType()->getCode(), $available))
+      {
+        $info
+        ->setContent($available[$info->getWpinfoType()->getCode()]->getContent())
+        ->save()
+        ;
+      }
+      
+    }
 	}
 
 	protected function copyWptoolsFrom($iworkplan)
@@ -1790,12 +1805,12 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 		$wpmodules = $iworkplan->getWpmodules();
 		foreach($wpmodules as $wpmodule)
 			{
-				$this->importWpmodule($wpmodule, $this->getSyllabusId());
+				$this->importWpmodule($wpmodule);
 			}
 	}
 
 
-  public function importWpmodule($wpmodule, $syllabusId)
+  public function importWpmodule($wpmodule)
 	{
 		try
     {
@@ -1813,14 +1828,14 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 						$newgroup = new WpitemGroup();
 						$newgroup->setWpmoduleId($newwpmodule->getId());
             
-            $WpitemType=WpitemTypePeer::retrieveByCodeAndSyllabus($group->getWpitemType()->getCode(), $syllabusId);
+            $WpitemType=WpitemTypePeer::retrieveByCodeAndAppointmentType($group->getWpitemType()->getCode(), $this->getAppointmentTypeId());
             if (!$WpitemType)
             {
               continue; // we import the module anyway, but this item won't be there...
               //throw new Exception(sprintf('No correspondence for syllabus %d and wpitemtype «%s»', $syllabusId, $group->getWpitemType()->getCode()));
             }
             
-            if ($WpitemType->getState() > Workflow::WP_DRAFT)
+            if ($WpitemType->getStateMin() > Workflow::WP_DRAFT)
             {
               continue; // we do not want to import final notes and such...
             }
@@ -1873,9 +1888,12 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 		try
     {
       $this->removeEverything();
+      $this->getChecks(); // we create what we need...
+
       $this->copyWpinfosFrom($iworkplan);
       $this->copyWpmodulesFrom($iworkplan);
       $this->copyWptoolsFrom($iworkplan);
+      
     }
     catch (Exception $e)
     {

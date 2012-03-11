@@ -40,7 +40,8 @@ class WptoolItemTypeTableMap extends TableMap {
 		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 50, null);
 		$this->addColumn('RANK', 'Rank', 'INTEGER', false, null, null);
 		$this->addForeignKey('APPOINTMENT_TYPE_ID', 'AppointmentTypeId', 'INTEGER', 'appointment_type', 'ID', false, null, null);
-		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
+		$this->addColumn('STATE_MIN', 'StateMin', 'INTEGER', false, null, 10);
+		$this->addColumn('STATE_MAX', 'StateMax', 'INTEGER', false, null, 10);
 		$this->addColumn('MIN_SELECTED', 'MinSelected', 'INTEGER', false, null, null);
 		$this->addColumn('MAX_SELECTED', 'MaxSelected', 'INTEGER', false, null, null);
 		$this->addColumn('GRADE_MIN', 'GradeMin', 'INTEGER', false, null, 1);

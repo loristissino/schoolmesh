@@ -25,7 +25,7 @@ abstract class BaseWpitemTypePeer {
 	const TM_CLASS = 'WpitemTypeTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 16;
+	const NUM_COLUMNS = 17;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -48,8 +48,11 @@ abstract class BaseWpitemTypePeer {
 	/** the column name for the RANK field */
 	const RANK = 'wpitem_type.RANK';
 
-	/** the column name for the STATE field */
-	const STATE = 'wpitem_type.STATE';
+	/** the column name for the STATE_MIN field */
+	const STATE_MIN = 'wpitem_type.STATE_MIN';
+
+	/** the column name for the STATE_MAX field */
+	const STATE_MAX = 'wpitem_type.STATE_MAX';
 
 	/** the column name for the IS_REQUIRED field */
 	const IS_REQUIRED = 'wpitem_type.IS_REQUIRED';
@@ -101,11 +104,11 @@ abstract class BaseWpitemTypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Singular', 'Description', 'Style', 'Rank', 'State', 'IsRequired', 'AppointmentTypeId', 'Code', 'EvaluationMin', 'EvaluationMax', 'EvaluationMinDescription', 'EvaluationMaxDescription', 'GradeMin', 'GradeMax', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'singular', 'description', 'style', 'rank', 'state', 'isRequired', 'appointmentTypeId', 'code', 'evaluationMin', 'evaluationMax', 'evaluationMinDescription', 'evaluationMaxDescription', 'gradeMin', 'gradeMax', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::SINGULAR, self::DESCRIPTION, self::STYLE, self::RANK, self::STATE, self::IS_REQUIRED, self::APPOINTMENT_TYPE_ID, self::CODE, self::EVALUATION_MIN, self::EVALUATION_MAX, self::EVALUATION_MIN_DESCRIPTION, self::EVALUATION_MAX_DESCRIPTION, self::GRADE_MIN, self::GRADE_MAX, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'singular', 'description', 'style', 'rank', 'state', 'is_required', 'appointment_type_id', 'code', 'evaluation_min', 'evaluation_max', 'evaluation_min_description', 'evaluation_max_description', 'grade_min', 'grade_max', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Singular', 'Description', 'Style', 'Rank', 'StateMin', 'StateMax', 'IsRequired', 'AppointmentTypeId', 'Code', 'EvaluationMin', 'EvaluationMax', 'EvaluationMinDescription', 'EvaluationMaxDescription', 'GradeMin', 'GradeMax', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'singular', 'description', 'style', 'rank', 'stateMin', 'stateMax', 'isRequired', 'appointmentTypeId', 'code', 'evaluationMin', 'evaluationMax', 'evaluationMinDescription', 'evaluationMaxDescription', 'gradeMin', 'gradeMax', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::SINGULAR, self::DESCRIPTION, self::STYLE, self::RANK, self::STATE_MIN, self::STATE_MAX, self::IS_REQUIRED, self::APPOINTMENT_TYPE_ID, self::CODE, self::EVALUATION_MIN, self::EVALUATION_MAX, self::EVALUATION_MIN_DESCRIPTION, self::EVALUATION_MAX_DESCRIPTION, self::GRADE_MIN, self::GRADE_MAX, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'singular', 'description', 'style', 'rank', 'state_min', 'state_max', 'is_required', 'appointment_type_id', 'code', 'evaluation_min', 'evaluation_max', 'evaluation_min_description', 'evaluation_max_description', 'grade_min', 'grade_max', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, )
 	);
 
 	/**
@@ -115,11 +118,11 @@ abstract class BaseWpitemTypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Singular' => 2, 'Description' => 3, 'Style' => 4, 'Rank' => 5, 'State' => 6, 'IsRequired' => 7, 'AppointmentTypeId' => 8, 'Code' => 9, 'EvaluationMin' => 10, 'EvaluationMax' => 11, 'EvaluationMinDescription' => 12, 'EvaluationMaxDescription' => 13, 'GradeMin' => 14, 'GradeMax' => 15, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'singular' => 2, 'description' => 3, 'style' => 4, 'rank' => 5, 'state' => 6, 'isRequired' => 7, 'appointmentTypeId' => 8, 'code' => 9, 'evaluationMin' => 10, 'evaluationMax' => 11, 'evaluationMinDescription' => 12, 'evaluationMaxDescription' => 13, 'gradeMin' => 14, 'gradeMax' => 15, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::SINGULAR => 2, self::DESCRIPTION => 3, self::STYLE => 4, self::RANK => 5, self::STATE => 6, self::IS_REQUIRED => 7, self::APPOINTMENT_TYPE_ID => 8, self::CODE => 9, self::EVALUATION_MIN => 10, self::EVALUATION_MAX => 11, self::EVALUATION_MIN_DESCRIPTION => 12, self::EVALUATION_MAX_DESCRIPTION => 13, self::GRADE_MIN => 14, self::GRADE_MAX => 15, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'singular' => 2, 'description' => 3, 'style' => 4, 'rank' => 5, 'state' => 6, 'is_required' => 7, 'appointment_type_id' => 8, 'code' => 9, 'evaluation_min' => 10, 'evaluation_max' => 11, 'evaluation_min_description' => 12, 'evaluation_max_description' => 13, 'grade_min' => 14, 'grade_max' => 15, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Singular' => 2, 'Description' => 3, 'Style' => 4, 'Rank' => 5, 'StateMin' => 6, 'StateMax' => 7, 'IsRequired' => 8, 'AppointmentTypeId' => 9, 'Code' => 10, 'EvaluationMin' => 11, 'EvaluationMax' => 12, 'EvaluationMinDescription' => 13, 'EvaluationMaxDescription' => 14, 'GradeMin' => 15, 'GradeMax' => 16, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'singular' => 2, 'description' => 3, 'style' => 4, 'rank' => 5, 'stateMin' => 6, 'stateMax' => 7, 'isRequired' => 8, 'appointmentTypeId' => 9, 'code' => 10, 'evaluationMin' => 11, 'evaluationMax' => 12, 'evaluationMinDescription' => 13, 'evaluationMaxDescription' => 14, 'gradeMin' => 15, 'gradeMax' => 16, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::SINGULAR => 2, self::DESCRIPTION => 3, self::STYLE => 4, self::RANK => 5, self::STATE_MIN => 6, self::STATE_MAX => 7, self::IS_REQUIRED => 8, self::APPOINTMENT_TYPE_ID => 9, self::CODE => 10, self::EVALUATION_MIN => 11, self::EVALUATION_MAX => 12, self::EVALUATION_MIN_DESCRIPTION => 13, self::EVALUATION_MAX_DESCRIPTION => 14, self::GRADE_MIN => 15, self::GRADE_MAX => 16, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'singular' => 2, 'description' => 3, 'style' => 4, 'rank' => 5, 'state_min' => 6, 'state_max' => 7, 'is_required' => 8, 'appointment_type_id' => 9, 'code' => 10, 'evaluation_min' => 11, 'evaluation_max' => 12, 'evaluation_min_description' => 13, 'evaluation_max_description' => 14, 'grade_min' => 15, 'grade_max' => 16, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, )
 	);
 
 	/**
@@ -195,7 +198,8 @@ abstract class BaseWpitemTypePeer {
 		$criteria->addSelectColumn(WpitemTypePeer::DESCRIPTION);
 		$criteria->addSelectColumn(WpitemTypePeer::STYLE);
 		$criteria->addSelectColumn(WpitemTypePeer::RANK);
-		$criteria->addSelectColumn(WpitemTypePeer::STATE);
+		$criteria->addSelectColumn(WpitemTypePeer::STATE_MIN);
+		$criteria->addSelectColumn(WpitemTypePeer::STATE_MAX);
 		$criteria->addSelectColumn(WpitemTypePeer::IS_REQUIRED);
 		$criteria->addSelectColumn(WpitemTypePeer::APPOINTMENT_TYPE_ID);
 		$criteria->addSelectColumn(WpitemTypePeer::CODE);

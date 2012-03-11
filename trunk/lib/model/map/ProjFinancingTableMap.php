@@ -47,7 +47,6 @@ class ProjFinancingTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Schoolproject', 'Schoolproject', RelationMap::ONE_TO_MANY, array('id' => 'proj_financing_id', ), null, null);
 	} // buildRelations()
 
 	/**

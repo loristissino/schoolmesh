@@ -74,7 +74,7 @@
     
     </li>
     
-    <?php if ($workplan->countWpmodules() and $workplan->getSyllabus()->getIsActive()): ?>
+    <?php if ($workplan->countWpmodules() and $workplan->getSyllabus() && $workplan->getSyllabus()->getIsActive()): ?>
     <li class="sf_admin_action_syllabus">
     <?php echo link_to(
           __('Syllabus'),

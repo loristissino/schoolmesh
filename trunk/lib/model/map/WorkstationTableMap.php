@@ -41,6 +41,9 @@ class WorkstationTableMap extends TableMap {
 		$this->addColumn('IP_CIDR', 'IpCidr', 'VARCHAR', true, 20, null);
 		$this->addColumn('MAC_ADDRESS', 'MacAddress', 'VARCHAR', false, 17, null);
 		$this->addColumn('IS_ENABLED', 'IsEnabled', 'BOOLEAN', false, null, false);
+		$this->addColumn('IS_ACTIVE', 'IsActive', 'BOOLEAN', false, null, false);
+		$this->addColumn('LOCATION_X', 'LocationX', 'FLOAT', false, null, null);
+		$this->addColumn('LOCATION_Y', 'LocationY', 'FLOAT', false, null, null);
 		$this->addForeignKey('SUBNET_ID', 'SubnetId', 'INTEGER', 'subnet', 'ID', false, null, null);
 		// validators
 	} // initialize()

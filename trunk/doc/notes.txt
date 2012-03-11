@@ -1,3 +1,6 @@
+2012/03/11
+Huge refactoring in appointments management, added state_min and state_max in subtables.
+
 2012/03/09
 Added has_attachments field in appointment_type table
 Added code in wpinfo_type table

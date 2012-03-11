@@ -209,38 +209,35 @@ public function executeBatch(sfWebRequest $request)
 	public function executeImport(sfWebRequest $request)
 	{
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
-	$this->user=$this->getUser();
+	  $this->user=$this->getUser();
     $this->forward404Unless($this->workplan);
     $this->forward404Unless($this->workplan->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId()));
+    $this->forward404Unless($this->workplan->getState()==Workflow::WP_DRAFT);
+    $this->forward404Unless($this->workplan->countWpmodules()==0);
 
-	$this->steps = Workflow::getWpfrSteps();
+	  $this->steps = Workflow::getWpfrSteps();
 	
-	if ($this->workplan->getState()!=Workflow::WP_DRAFT)
-		{
-		$this->redirect('plansandreports/view?id='.$this->workplan->getId());
-		}
-
-	$this->c_workplans = $this->workplan->retrieveImportableWorkplansOfColleagues();
-	$this->s_workplans = $this->workplan->retrieveOtherWorkplansOfSameTeacher();
+	  $this->c_workplans = $this->workplan->retrieveImportableWorkplansOfColleagues();
+	  $this->s_workplans = $this->workplan->retrieveOtherWorkplansOfSameTeacher();
 
 	}
 
 	public function executeImportmodule(sfWebRequest $request)
 	{
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
-	$this->user=$this->getUser();
+	  $this->user=$this->getUser();
     $this->forward404Unless($this->workplan);
     $this->forward404Unless($this->workplan->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId()));
 
-	$this->steps = Workflow::getWpfrSteps();
+	  $this->steps = Workflow::getWpfrSteps();
   
-  $this->allsubjects=$request->getParameter('allsubjects')=='true';
+    $this->allsubjects=$request->getParameter('allsubjects')=='true';
 	
-	$this->c_modules = $this->workplan->retrieveImportableModulesOfColleagues(
-    $this->workplan->getSchoolclass()->getGrade(),
-    $this->allsubjects?null:$this->workplan->getSubjectId()
-    );
-	$this->s_modules = $this->workplan->retrieveOtherModulesOfSameTeacher();
+  	$this->c_modules = $this->workplan->retrieveImportableModulesOfColleagues(
+      $this->workplan->getSchoolclass()->getGrade(),
+      $this->allsubjects?null:$this->workplan->getSubjectId()
+      );
+	  $this->s_modules = $this->workplan->retrieveOtherModulesOfSameTeacher();
   
 
 	}
@@ -258,11 +255,11 @@ public function executeBatch(sfWebRequest $request)
     $this->forward404Unless($this->iworkplan);
     $this->forward404Unless(($this->iworkplan->isViewableBy($this->user->getProfile()->getSfGuardUser()->getId())));
 	
-	$result=$this->workplan->importFromDB($this->getContext(), $this->iworkplan);
+    $result=$this->workplan->importFromDB($this->getContext(), $this->iworkplan);
 
-	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
+  	$this->getUser()->setFlash($result['result'], $this->getContext()->getI18N()->__($result['message']));
 	
-	$this->redirect('plansandreports/fill?id='.$this->workplan->getId());
+  	$this->redirect('plansandreports/fill?id='.$this->workplan->getId());
 
 	}
 
@@ -483,31 +480,32 @@ public function executeBatch(sfWebRequest $request)
     $this->workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->workplan);
 	
-	$whoIsViewing = $this->getUser()->getProfile()->getSfGuardUser()->getId();
+	  $whoIsViewing = $this->getUser()->getProfile()->getSfGuardUser()->getId();
 	
     $this->forward404Unless($this->workplan->isViewableBy($whoIsViewing));
 	
-	$this->steps = Workflow::getWpfrSteps();
+    $this->steps = Workflow::getWpfrSteps();
 
-	if ($request->getParameter('layout')=='popup')
+    if ($request->getParameter('layout')=='popup')
 		{
 			$this->setLayout('popup_layout');
 		};
 
-	switch($request->getRequestFormat())
+    switch($request->getRequestFormat())
 		{
-				case 'yaml': 
+       case 'yaml': 
 					$this->setLayout(false);
 					$this->getResponse()->setContentType('text/plain');
 					return $this->renderText(sfYaml::dump($this->workplan->getCompleteContentAsArray(), 10));
 					
 		}
 
-	$this->wfevents = $this->workplan->getWorkflowLogs();
-	$this->wpinfos = $this->workplan->getWpinfos();
-	$this->wpitemTypes=WpitemTypePeer::getAllByRank($this->workplan);
-	$this->tools = $this->workplan->getTools(true);
-	$this->is_owner = $this->workplan->getUserId() == $whoIsViewing;
+    $this->wfevents = $this->workplan->getWorkflowLogs();
+    $this->wpinfos = $this->workplan->getWpinfos();
+    
+    $this->wpitemTypes=WpitemTypePeer::getAllByRank($this->workplan);
+    $this->tools = $this->workplan->getTools(true);
+    $this->is_owner = $this->workplan->getUserId() == $whoIsViewing;
 
   }
 

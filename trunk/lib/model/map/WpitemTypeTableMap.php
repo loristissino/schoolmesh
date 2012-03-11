@@ -42,7 +42,8 @@ class WpitemTypeTableMap extends TableMap {
 		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 200, null);
 		$this->addColumn('STYLE', 'Style', 'VARCHAR', false, 50, null);
 		$this->addColumn('RANK', 'Rank', 'INTEGER', true, null, null);
-		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
+		$this->addColumn('STATE_MIN', 'StateMin', 'INTEGER', false, null, 10);
+		$this->addColumn('STATE_MAX', 'StateMax', 'INTEGER', false, null, 10);
 		$this->addColumn('IS_REQUIRED', 'IsRequired', 'BOOLEAN', false, null, null);
 		$this->addForeignKey('APPOINTMENT_TYPE_ID', 'AppointmentTypeId', 'INTEGER', 'appointment_type', 'ID', false, null, null);
 		$this->addColumn('CODE', 'Code', 'VARCHAR', false, 30, null);
