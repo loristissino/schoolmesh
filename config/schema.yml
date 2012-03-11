@@ -54,7 +54,9 @@ propel:
     middle_name:  varchar(50)
     last_name:    varchar(50)
     pronunciation: varchar(100)
-    info: longvarchar
+    city:         varchar(100)
+    address:      varchar(100)
+    info:         longvarchar
     role_id:      ~
     gender:       varchar(1)
     email:        varchar(50)
@@ -236,13 +238,14 @@ propel:
     description:         varchar(255)
     rank:                { type: integer, required: true, index: true }
     code:                { type: varchar(30), index: true }
-    state:               integer
+    state_min:           { type: integer, default: 10, index: true }
+    state_max:           { type: integer, default: 10, index: true }
     template:            longvarchar
     example:             longvarchar
     is_required:         { type: boolean, default: true }
     is_confidential:     { type: boolean, default: false }
-    grade_min:           { type: integer, default: 1 }
-    grade_max:           { type: integer, default: 5 }
+    grade_min:           { type: integer, default: 1, index: true }
+    grade_max:           { type: integer, default: 5, index: true }
     appointment_type_id: ~
 # state indicates in which of workplan's state this item type should be shown
 # is_confidential indicates that this field should not be published and should be seen only by the schoolmaster 
@@ -259,7 +262,8 @@ propel:
     description:         varchar(50)
     rank:                { type: integer, index: true }
     appointment_type_id: ~
-    state:               { type: integer, index: true }
+    state_min:           { type: integer, default: 10, index: true }
+    state_max:           { type: integer, default: 10, index: true }
     min_selected:        integer
     max_selected:        integer
     grade_min:           { type: integer, default: 1 }
@@ -294,7 +298,8 @@ propel:
     description:  varchar(200)
     style:       varchar(50)
     rank:    { type: integer, required: true }
-    state:  integer
+    state_min:           { type: integer, default: 10, index: true }
+    state_max:           { type: integer, default: 10, index: true }
     is_required: boolean
     appointment_type_id: ~
     code: { type: varchar(30), index: true }
@@ -375,7 +380,6 @@ propel:
   schoolproject:
     id: ~
     proj_category_id: ~
-    proj_financing_id: ~ 
     year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     team_id:          { type: integer, foreignTable: team, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }  # people delegated by the coordinator to do some of his/her activities
@@ -485,6 +489,9 @@ propel:
     ip_cidr:   { type: varchar(20), required: true, unique: true }
     mac_address: { type: varchar(17), required: false, unique: true }
     is_enabled: { type: boolean, default: false }
+    is_active:  { type: boolean, default: false }
+    location_x: { type: float }
+    location_y: { type: float }
     subnet_id: ~
 
   lanlog:

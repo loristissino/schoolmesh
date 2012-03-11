@@ -146,6 +146,8 @@ CREATE TABLE `sf_guard_user_profile`
 	`middle_name` VARCHAR(50),
 	`last_name` VARCHAR(50),
 	`pronunciation` VARCHAR(100),
+	`city` VARCHAR(100),
+	`address` VARCHAR(100),
 	`info` TEXT,
 	`role_id` INTEGER,
 	`gender` VARCHAR(1),
@@ -605,7 +607,8 @@ CREATE TABLE `wpinfo_type`
 	`description` VARCHAR(255),
 	`rank` INTEGER  NOT NULL,
 	`code` VARCHAR(30),
-	`state` INTEGER,
+	`state_min` INTEGER default 10,
+	`state_max` INTEGER default 10,
 	`template` TEXT,
 	`example` TEXT,
 	`is_required` TINYINT default 1,
@@ -616,6 +619,10 @@ CREATE TABLE `wpinfo_type`
 	PRIMARY KEY (`id`),
 	KEY `wpinfo_type_I_1`(`rank`),
 	KEY `wpinfo_type_I_2`(`code`),
+	KEY `wpinfo_type_I_3`(`state_min`),
+	KEY `wpinfo_type_I_4`(`state_max`),
+	KEY `wpinfo_type_I_5`(`grade_min`),
+	KEY `wpinfo_type_I_6`(`grade_max`),
 	INDEX `wpinfo_type_FI_1` (`appointment_type_id`),
 	CONSTRAINT `wpinfo_type_FK_1`
 		FOREIGN KEY (`appointment_type_id`)
@@ -660,14 +667,16 @@ CREATE TABLE `wptool_item_type`
 	`description` VARCHAR(50),
 	`rank` INTEGER,
 	`appointment_type_id` INTEGER,
-	`state` INTEGER,
+	`state_min` INTEGER default 10,
+	`state_max` INTEGER default 10,
 	`min_selected` INTEGER,
 	`max_selected` INTEGER,
 	`grade_min` INTEGER default 1,
 	`grade_max` INTEGER default 5,
 	PRIMARY KEY (`id`),
 	KEY `wptool_item_type_I_1`(`rank`),
-	KEY `wptool_item_type_I_2`(`state`),
+	KEY `wptool_item_type_I_2`(`state_min`),
+	KEY `wptool_item_type_I_3`(`state_max`),
 	INDEX `wptool_item_type_FI_1` (`appointment_type_id`),
 	CONSTRAINT `wptool_item_type_FK_1`
 		FOREIGN KEY (`appointment_type_id`)
@@ -766,7 +775,8 @@ CREATE TABLE `wpitem_type`
 	`description` VARCHAR(200),
 	`style` VARCHAR(50),
 	`rank` INTEGER  NOT NULL,
-	`state` INTEGER,
+	`state_min` INTEGER default 10,
+	`state_max` INTEGER default 10,
 	`is_required` TINYINT,
 	`appointment_type_id` INTEGER,
 	`code` VARCHAR(30),
@@ -778,7 +788,9 @@ CREATE TABLE `wpitem_type`
 	`grade_max` INTEGER default 5,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `sc` (`appointment_type_id`, `code`),
-	KEY `wpitem_type_I_1`(`code`),
+	KEY `wpitem_type_I_1`(`state_min`),
+	KEY `wpitem_type_I_2`(`state_max`),
+	KEY `wpitem_type_I_3`(`code`),
 	CONSTRAINT `wpitem_type_FK_1`
 		FOREIGN KEY (`appointment_type_id`)
 		REFERENCES `appointment_type` (`id`)
@@ -1022,7 +1034,6 @@ CREATE TABLE `schoolproject`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`proj_category_id` INTEGER,
-	`proj_financing_id` INTEGER,
 	`year_id` INTEGER  NOT NULL,
 	`user_id` INTEGER  NOT NULL,
 	`team_id` INTEGER,
@@ -1051,24 +1062,20 @@ CREATE TABLE `schoolproject`
 	CONSTRAINT `schoolproject_FK_1`
 		FOREIGN KEY (`proj_category_id`)
 		REFERENCES `proj_category` (`id`),
-	INDEX `schoolproject_FI_2` (`proj_financing_id`),
+	INDEX `schoolproject_FI_2` (`year_id`),
 	CONSTRAINT `schoolproject_FK_2`
-		FOREIGN KEY (`proj_financing_id`)
-		REFERENCES `proj_financing` (`id`),
-	INDEX `schoolproject_FI_3` (`year_id`),
-	CONSTRAINT `schoolproject_FK_3`
 		FOREIGN KEY (`year_id`)
 		REFERENCES `year` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
-	INDEX `schoolproject_FI_4` (`user_id`),
-	CONSTRAINT `schoolproject_FK_4`
+	INDEX `schoolproject_FI_3` (`user_id`),
+	CONSTRAINT `schoolproject_FK_3`
 		FOREIGN KEY (`user_id`)
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
-	INDEX `schoolproject_FI_5` (`team_id`),
-	CONSTRAINT `schoolproject_FK_5`
+	INDEX `schoolproject_FI_4` (`team_id`),
+	CONSTRAINT `schoolproject_FK_4`
 		FOREIGN KEY (`team_id`)
 		REFERENCES `team` (`id`)
 		ON UPDATE CASCADE
@@ -1295,6 +1302,9 @@ CREATE TABLE `workstation`
 	`ip_cidr` VARCHAR(20)  NOT NULL,
 	`mac_address` VARCHAR(17),
 	`is_enabled` TINYINT default 0,
+	`is_active` TINYINT default 0,
+	`location_x` FLOAT,
+	`location_y` FLOAT,
 	`subnet_id` INTEGER,
 	PRIMARY KEY (`id`),
 	KEY `workstation_I_1`(`name`),

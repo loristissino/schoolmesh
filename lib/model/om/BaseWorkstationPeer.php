@@ -25,7 +25,7 @@ abstract class BaseWorkstationPeer {
 	const TM_CLASS = 'WorkstationTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 6;
+	const NUM_COLUMNS = 9;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -44,6 +44,15 @@ abstract class BaseWorkstationPeer {
 
 	/** the column name for the IS_ENABLED field */
 	const IS_ENABLED = 'workstation.IS_ENABLED';
+
+	/** the column name for the IS_ACTIVE field */
+	const IS_ACTIVE = 'workstation.IS_ACTIVE';
+
+	/** the column name for the LOCATION_X field */
+	const LOCATION_X = 'workstation.LOCATION_X';
+
+	/** the column name for the LOCATION_Y field */
+	const LOCATION_Y = 'workstation.LOCATION_Y';
 
 	/** the column name for the SUBNET_ID field */
 	const SUBNET_ID = 'workstation.SUBNET_ID';
@@ -71,11 +80,11 @@ abstract class BaseWorkstationPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'IpCidr', 'MacAddress', 'IsEnabled', 'SubnetId', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'ipCidr', 'macAddress', 'isEnabled', 'subnetId', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::NAME, self::IP_CIDR, self::MAC_ADDRESS, self::IS_ENABLED, self::SUBNET_ID, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'ip_cidr', 'mac_address', 'is_enabled', 'subnet_id', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'IpCidr', 'MacAddress', 'IsEnabled', 'IsActive', 'LocationX', 'LocationY', 'SubnetId', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'ipCidr', 'macAddress', 'isEnabled', 'isActive', 'locationX', 'locationY', 'subnetId', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::NAME, self::IP_CIDR, self::MAC_ADDRESS, self::IS_ENABLED, self::IS_ACTIVE, self::LOCATION_X, self::LOCATION_Y, self::SUBNET_ID, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'ip_cidr', 'mac_address', 'is_enabled', 'is_active', 'location_x', 'location_y', 'subnet_id', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	/**
@@ -85,11 +94,11 @@ abstract class BaseWorkstationPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'IpCidr' => 2, 'MacAddress' => 3, 'IsEnabled' => 4, 'SubnetId' => 5, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'ipCidr' => 2, 'macAddress' => 3, 'isEnabled' => 4, 'subnetId' => 5, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NAME => 1, self::IP_CIDR => 2, self::MAC_ADDRESS => 3, self::IS_ENABLED => 4, self::SUBNET_ID => 5, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'ip_cidr' => 2, 'mac_address' => 3, 'is_enabled' => 4, 'subnet_id' => 5, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'IpCidr' => 2, 'MacAddress' => 3, 'IsEnabled' => 4, 'IsActive' => 5, 'LocationX' => 6, 'LocationY' => 7, 'SubnetId' => 8, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'ipCidr' => 2, 'macAddress' => 3, 'isEnabled' => 4, 'isActive' => 5, 'locationX' => 6, 'locationY' => 7, 'subnetId' => 8, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NAME => 1, self::IP_CIDR => 2, self::MAC_ADDRESS => 3, self::IS_ENABLED => 4, self::IS_ACTIVE => 5, self::LOCATION_X => 6, self::LOCATION_Y => 7, self::SUBNET_ID => 8, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'ip_cidr' => 2, 'mac_address' => 3, 'is_enabled' => 4, 'is_active' => 5, 'location_x' => 6, 'location_y' => 7, 'subnet_id' => 8, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
 	);
 
 	/**
@@ -164,6 +173,9 @@ abstract class BaseWorkstationPeer {
 		$criteria->addSelectColumn(WorkstationPeer::IP_CIDR);
 		$criteria->addSelectColumn(WorkstationPeer::MAC_ADDRESS);
 		$criteria->addSelectColumn(WorkstationPeer::IS_ENABLED);
+		$criteria->addSelectColumn(WorkstationPeer::IS_ACTIVE);
+		$criteria->addSelectColumn(WorkstationPeer::LOCATION_X);
+		$criteria->addSelectColumn(WorkstationPeer::LOCATION_Y);
 		$criteria->addSelectColumn(WorkstationPeer::SUBNET_ID);
 	}
 

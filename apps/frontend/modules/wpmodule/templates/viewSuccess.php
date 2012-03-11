@@ -37,7 +37,7 @@
 <table>
 <tr>
 <?php foreach($item_groups as $item_group): ?>
-	<?php if($wpstate>=$item_group->getWpitemType()->getState()): ?>
+	<?php if($wpstate>=$item_group->getWpitemType()->getStateMin()): ?>
 		<?php include_partial('group_head', array('item_group' => $item_group, 'wpstate' => $wpstate, 'size'=>sizeof($item_groups))) ?>
 	<?php endif ?>
 <?php endforeach ?>
@@ -45,12 +45,12 @@
 </table>
 
 <?php foreach($item_groups as $item_group): ?>
-	<?php if($wpstate>=$item_group->getWpitemType()->getState()): ?>
+	<?php if($wpstate>=$item_group->getWpitemType()->getStateMin()): ?>
 		<?php include_partial('group_boxes', array('item_group' => $item_group, 'wpstate' => $wpstate)) ?>
 	<?php endif ?>
 <?php endforeach ?>
 
-<?php if($workplan->isWorkplan() && $workplan->getSyllabus()->getIsActive()): ?>
+<?php if($workplan->isWorkplan() && $workplan->getSyllabus() && $workplan->getSyllabus()->getIsActive()): ?>
 <h2><?php echo __('Syllabus links') ?></h2>
 
 <ul class="sf_admin_actions">

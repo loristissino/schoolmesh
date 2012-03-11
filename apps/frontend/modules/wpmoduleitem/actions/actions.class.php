@@ -66,7 +66,7 @@ class wpmoduleitemActions extends sfActions
 	$newitem= new WpmoduleItem();
 	$newitem->setWpitemGroupId($group->getId());
 	$newitem->save();
-	$this->getUser()->setFlash('notice'.$group->getId(), $this->getContext()->getI18N()->__('A new item was inserted'));
+	$this->getUser()->setFlash('notice'.$group->getId(), $this->getContext()->getI18N()->__('A new item has been inserted.'));
 	$this->redirect('wpmodule/view?id='.$group->getWpmoduleId().'#'.$group->getId());
 
    }

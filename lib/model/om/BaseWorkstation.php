@@ -50,6 +50,25 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 	protected $is_enabled;
 
 	/**
+	 * The value for the is_active field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $is_active;
+
+	/**
+	 * The value for the location_x field.
+	 * @var        double
+	 */
+	protected $location_x;
+
+	/**
+	 * The value for the location_y field.
+	 * @var        double
+	 */
+	protected $location_y;
+
+	/**
 	 * The value for the subnet_id field.
 	 * @var        int
 	 */
@@ -97,6 +116,7 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 	public function applyDefaultValues()
 	{
 		$this->is_enabled = false;
+		$this->is_active = false;
 	}
 
 	/**
@@ -157,6 +177,36 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 	public function getIsEnabled()
 	{
 		return $this->is_enabled;
+	}
+
+	/**
+	 * Get the [is_active] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsActive()
+	{
+		return $this->is_active;
+	}
+
+	/**
+	 * Get the [location_x] column value.
+	 * 
+	 * @return     double
+	 */
+	public function getLocationX()
+	{
+		return $this->location_x;
+	}
+
+	/**
+	 * Get the [location_y] column value.
+	 * 
+	 * @return     double
+	 */
+	public function getLocationY()
+	{
+		return $this->location_y;
 	}
 
 	/**
@@ -270,6 +320,66 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 	} // setIsEnabled()
 
 	/**
+	 * Set the value of [is_active] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     Workstation The current object (for fluent API support)
+	 */
+	public function setIsActive($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_active !== $v || $this->isNew()) {
+			$this->is_active = $v;
+			$this->modifiedColumns[] = WorkstationPeer::IS_ACTIVE;
+		}
+
+		return $this;
+	} // setIsActive()
+
+	/**
+	 * Set the value of [location_x] column.
+	 * 
+	 * @param      double $v new value
+	 * @return     Workstation The current object (for fluent API support)
+	 */
+	public function setLocationX($v)
+	{
+		if ($v !== null) {
+			$v = (double) $v;
+		}
+
+		if ($this->location_x !== $v) {
+			$this->location_x = $v;
+			$this->modifiedColumns[] = WorkstationPeer::LOCATION_X;
+		}
+
+		return $this;
+	} // setLocationX()
+
+	/**
+	 * Set the value of [location_y] column.
+	 * 
+	 * @param      double $v new value
+	 * @return     Workstation The current object (for fluent API support)
+	 */
+	public function setLocationY($v)
+	{
+		if ($v !== null) {
+			$v = (double) $v;
+		}
+
+		if ($this->location_y !== $v) {
+			$this->location_y = $v;
+			$this->modifiedColumns[] = WorkstationPeer::LOCATION_Y;
+		}
+
+		return $this;
+	} // setLocationY()
+
+	/**
 	 * Set the value of [subnet_id] column.
 	 * 
 	 * @param      int $v new value
@@ -307,6 +417,10 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 				return false;
 			}
 
+			if ($this->is_active !== false) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -334,7 +448,10 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 			$this->ip_cidr = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->mac_address = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->is_enabled = ($row[$startcol + 4] !== null) ? (boolean) $row[$startcol + 4] : null;
-			$this->subnet_id = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->is_active = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
+			$this->location_x = ($row[$startcol + 6] !== null) ? (double) $row[$startcol + 6] : null;
+			$this->location_y = ($row[$startcol + 7] !== null) ? (double) $row[$startcol + 7] : null;
+			$this->subnet_id = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -344,7 +461,7 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 6; // 6 = WorkstationPeer::NUM_COLUMNS - WorkstationPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 9; // 9 = WorkstationPeer::NUM_COLUMNS - WorkstationPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Workstation object", $e);
@@ -703,6 +820,15 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 				return $this->getIsEnabled();
 				break;
 			case 5:
+				return $this->getIsActive();
+				break;
+			case 6:
+				return $this->getLocationX();
+				break;
+			case 7:
+				return $this->getLocationY();
+				break;
+			case 8:
 				return $this->getSubnetId();
 				break;
 			default:
@@ -731,7 +857,10 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 			$keys[2] => $this->getIpCidr(),
 			$keys[3] => $this->getMacAddress(),
 			$keys[4] => $this->getIsEnabled(),
-			$keys[5] => $this->getSubnetId(),
+			$keys[5] => $this->getIsActive(),
+			$keys[6] => $this->getLocationX(),
+			$keys[7] => $this->getLocationY(),
+			$keys[8] => $this->getSubnetId(),
 		);
 		return $result;
 	}
@@ -779,6 +908,15 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 				$this->setIsEnabled($value);
 				break;
 			case 5:
+				$this->setIsActive($value);
+				break;
+			case 6:
+				$this->setLocationX($value);
+				break;
+			case 7:
+				$this->setLocationY($value);
+				break;
+			case 8:
 				$this->setSubnetId($value);
 				break;
 		} // switch()
@@ -810,7 +948,10 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setIpCidr($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setMacAddress($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setIsEnabled($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setSubnetId($arr[$keys[5]]);
+		if (array_key_exists($keys[5], $arr)) $this->setIsActive($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setLocationX($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setLocationY($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setSubnetId($arr[$keys[8]]);
 	}
 
 	/**
@@ -827,6 +968,9 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WorkstationPeer::IP_CIDR)) $criteria->add(WorkstationPeer::IP_CIDR, $this->ip_cidr);
 		if ($this->isColumnModified(WorkstationPeer::MAC_ADDRESS)) $criteria->add(WorkstationPeer::MAC_ADDRESS, $this->mac_address);
 		if ($this->isColumnModified(WorkstationPeer::IS_ENABLED)) $criteria->add(WorkstationPeer::IS_ENABLED, $this->is_enabled);
+		if ($this->isColumnModified(WorkstationPeer::IS_ACTIVE)) $criteria->add(WorkstationPeer::IS_ACTIVE, $this->is_active);
+		if ($this->isColumnModified(WorkstationPeer::LOCATION_X)) $criteria->add(WorkstationPeer::LOCATION_X, $this->location_x);
+		if ($this->isColumnModified(WorkstationPeer::LOCATION_Y)) $criteria->add(WorkstationPeer::LOCATION_Y, $this->location_y);
 		if ($this->isColumnModified(WorkstationPeer::SUBNET_ID)) $criteria->add(WorkstationPeer::SUBNET_ID, $this->subnet_id);
 
 		return $criteria;
@@ -889,6 +1033,12 @@ abstract class BaseWorkstation extends BaseObject  implements Persistent {
 		$copyObj->setMacAddress($this->mac_address);
 
 		$copyObj->setIsEnabled($this->is_enabled);
+
+		$copyObj->setIsActive($this->is_active);
+
+		$copyObj->setLocationX($this->location_x);
+
+		$copyObj->setLocationY($this->location_y);
 
 		$copyObj->setSubnetId($this->subnet_id);
 

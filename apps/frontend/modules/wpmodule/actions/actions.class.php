@@ -330,7 +330,7 @@ class wpmoduleActions extends sfActions
 	$newwpmodule->save();
 	$newwpmodule->createWpitemGroups();
 	
-	$this->getUser()->setFlash('notice_modules', $this->getContext()->getI18N()->__('A new item has been inserted'));
+	$this->getUser()->setFlash('notice_modules', $this->getContext()->getI18N()->__('A new item has been inserted.'));
 	return $this->redirect('plansandreports/fill?id='.$workplan->getId(). '#wpmodules');
 
   }

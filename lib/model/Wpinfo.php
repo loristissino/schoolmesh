@@ -42,31 +42,72 @@ class Wpinfo extends BaseWpinfo
 
 			return preg_match($template, $content);
 		}
+    
+  public function isCurrentlyEditable()
+  {
+		return ($this->getAppointment()->getState()==$this->getWpinfoType()->getStateMin());
+  }
+
+  public function isCurrentlyVisible()
+  {
+		if ($this->getAppointment()->getState() <= $this->getWpinfoType()->getStateMax() and $this->getAppointment()->getState() >= $this->getWpinfoType()->getStateMin())
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+  
+  public function isViewableBy($sf_user)
+  {
+    if($this->getContent()=='')
+    {
+      return false;
+    }
+    
+    if(!$this->getWpinfoType()->getIsConfidential())
+    {
+      return true;
+    }
+    else
+    {
+      if($sf_user->hasCredential('wp_sm_ok') || $sf_user->hasCredential('wp_adm_ok'))
+      {
+        return true;
+      }
+      if($sf_user->getProfile()->getUserId()==$this->getAppointment()->getUserId())
+      {
+        return true;
+      }
+    }
+    
+    return false;
+    
+  }
+  
 	
 	public function setCheckedContent($user, $v)
 	{
 		
 		$user_id=$user->getProfile()->getSfGuardUser()->getId();
 		
-		if ($this->getAppointment()->getState()!=$this->getWpinfoType()->getState() && !($user->hasCredential('backadmin')))
+		if (!$this->isCurrentlyEditable() && !($user->hasCredential('backadmin')))
 		{
 					$result['result']='error_info';
 					$result['message']='This content is not editable in this state.';
 					return $result;
 		}
 		
-
 		if ($this->getAppointment()->getUserId()!=$user_id && !($user->hasCredential('backadmin')))
 		{
 					$result['result']='error_info';
-					$result['message']='This content is editable only by the owner';
+					$result['message']='This content is editable only by the owner.';
 					return $result;
 		}
 
-
-		$v=str_replace('</p>', '<br />',$v);
-		$v=str_replace('<br/>', '<br />',$v);
-		$v=str_replace('<br>', '<br />',$v);
+		$v=str_replace(array('</p>', '<br/>', '<br>'), '<br />', $v);
 
 		$v=html_entity_decode(Generic::strip_tags_and_attributes($v, '<br><em>'));
 				
@@ -152,7 +193,7 @@ class Wpinfo extends BaseWpinfo
 	    $c = new Criteria();
 		$c->add(WpinfoPeer::APPOINTMENT_ID, $this->getAppointmentId());
 		$c->addJoin(WpinfoTypePeer::ID, WpinfoPeer::WPINFO_TYPE_ID); 
-		$c->add(WpinfoTypePeer::STATE, $this->getAppointment()->getState());
+		$c->add(WpinfoTypePeer::STATE_MIN, $this->getAppointment()->getState());
 		$c->addAscendingOrderByColumn(WpinfoTypePeer::RANK);
 		$c->add(WpinfoTypePeer::RANK, $this->getWpinfoType()->getRank(), Criteria::GREATER_THAN);
 		$t=WpinfoPeer::doSelectOne($c);

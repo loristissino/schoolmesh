@@ -49,10 +49,18 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	protected $code;
 
 	/**
-	 * The value for the state field.
+	 * The value for the state_min field.
+	 * Note: this column has a database default value of: 10
 	 * @var        int
 	 */
-	protected $state;
+	protected $state_min;
+
+	/**
+	 * The value for the state_max field.
+	 * Note: this column has a database default value of: 10
+	 * @var        int
+	 */
+	protected $state_max;
 
 	/**
 	 * The value for the template field.
@@ -141,6 +149,8 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	 */
 	public function applyDefaultValues()
 	{
+		$this->state_min = 10;
+		$this->state_max = 10;
 		$this->is_required = true;
 		$this->is_confidential = false;
 		$this->grade_min = 1;
@@ -208,13 +218,23 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [state] column value.
+	 * Get the [state_min] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getState()
+	public function getStateMin()
 	{
-		return $this->state;
+		return $this->state_min;
+	}
+
+	/**
+	 * Get the [state_max] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getStateMax()
+	{
+		return $this->state_max;
 	}
 
 	/**
@@ -388,24 +408,44 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	} // setCode()
 
 	/**
-	 * Set the value of [state] column.
+	 * Set the value of [state_min] column.
 	 * 
 	 * @param      int $v new value
 	 * @return     WpinfoType The current object (for fluent API support)
 	 */
-	public function setState($v)
+	public function setStateMin($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
 		}
 
-		if ($this->state !== $v) {
-			$this->state = $v;
-			$this->modifiedColumns[] = WpinfoTypePeer::STATE;
+		if ($this->state_min !== $v || $this->isNew()) {
+			$this->state_min = $v;
+			$this->modifiedColumns[] = WpinfoTypePeer::STATE_MIN;
 		}
 
 		return $this;
-	} // setState()
+	} // setStateMin()
+
+	/**
+	 * Set the value of [state_max] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     WpinfoType The current object (for fluent API support)
+	 */
+	public function setStateMax($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->state_max !== $v || $this->isNew()) {
+			$this->state_max = $v;
+			$this->modifiedColumns[] = WpinfoTypePeer::STATE_MAX;
+		}
+
+		return $this;
+	} // setStateMax()
 
 	/**
 	 * Set the value of [template] column.
@@ -561,6 +601,14 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->state_min !== 10) {
+				return false;
+			}
+
+			if ($this->state_max !== 10) {
+				return false;
+			}
+
 			if ($this->is_required !== true) {
 				return false;
 			}
@@ -604,14 +652,15 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$this->description = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->rank = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->code = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->state = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
-			$this->template = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->example = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->is_required = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
-			$this->is_confidential = ($row[$startcol + 9] !== null) ? (boolean) $row[$startcol + 9] : null;
-			$this->grade_min = ($row[$startcol + 10] !== null) ? (int) $row[$startcol + 10] : null;
-			$this->grade_max = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
-			$this->appointment_type_id = ($row[$startcol + 12] !== null) ? (int) $row[$startcol + 12] : null;
+			$this->state_min = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->state_max = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
+			$this->template = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->example = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->is_required = ($row[$startcol + 9] !== null) ? (boolean) $row[$startcol + 9] : null;
+			$this->is_confidential = ($row[$startcol + 10] !== null) ? (boolean) $row[$startcol + 10] : null;
+			$this->grade_min = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
+			$this->grade_max = ($row[$startcol + 12] !== null) ? (int) $row[$startcol + 12] : null;
+			$this->appointment_type_id = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -621,7 +670,7 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 13; // 13 = WpinfoTypePeer::NUM_COLUMNS - WpinfoTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 14; // 14 = WpinfoTypePeer::NUM_COLUMNS - WpinfoTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WpinfoType object", $e);
@@ -980,27 +1029,30 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 				return $this->getCode();
 				break;
 			case 5:
-				return $this->getState();
+				return $this->getStateMin();
 				break;
 			case 6:
-				return $this->getTemplate();
+				return $this->getStateMax();
 				break;
 			case 7:
-				return $this->getExample();
+				return $this->getTemplate();
 				break;
 			case 8:
-				return $this->getIsRequired();
+				return $this->getExample();
 				break;
 			case 9:
-				return $this->getIsConfidential();
+				return $this->getIsRequired();
 				break;
 			case 10:
-				return $this->getGradeMin();
+				return $this->getIsConfidential();
 				break;
 			case 11:
-				return $this->getGradeMax();
+				return $this->getGradeMin();
 				break;
 			case 12:
+				return $this->getGradeMax();
+				break;
+			case 13:
 				return $this->getAppointmentTypeId();
 				break;
 			default:
@@ -1029,14 +1081,15 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 			$keys[2] => $this->getDescription(),
 			$keys[3] => $this->getRank(),
 			$keys[4] => $this->getCode(),
-			$keys[5] => $this->getState(),
-			$keys[6] => $this->getTemplate(),
-			$keys[7] => $this->getExample(),
-			$keys[8] => $this->getIsRequired(),
-			$keys[9] => $this->getIsConfidential(),
-			$keys[10] => $this->getGradeMin(),
-			$keys[11] => $this->getGradeMax(),
-			$keys[12] => $this->getAppointmentTypeId(),
+			$keys[5] => $this->getStateMin(),
+			$keys[6] => $this->getStateMax(),
+			$keys[7] => $this->getTemplate(),
+			$keys[8] => $this->getExample(),
+			$keys[9] => $this->getIsRequired(),
+			$keys[10] => $this->getIsConfidential(),
+			$keys[11] => $this->getGradeMin(),
+			$keys[12] => $this->getGradeMax(),
+			$keys[13] => $this->getAppointmentTypeId(),
 		);
 		return $result;
 	}
@@ -1084,27 +1137,30 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 				$this->setCode($value);
 				break;
 			case 5:
-				$this->setState($value);
+				$this->setStateMin($value);
 				break;
 			case 6:
-				$this->setTemplate($value);
+				$this->setStateMax($value);
 				break;
 			case 7:
-				$this->setExample($value);
+				$this->setTemplate($value);
 				break;
 			case 8:
-				$this->setIsRequired($value);
+				$this->setExample($value);
 				break;
 			case 9:
-				$this->setIsConfidential($value);
+				$this->setIsRequired($value);
 				break;
 			case 10:
-				$this->setGradeMin($value);
+				$this->setIsConfidential($value);
 				break;
 			case 11:
-				$this->setGradeMax($value);
+				$this->setGradeMin($value);
 				break;
 			case 12:
+				$this->setGradeMax($value);
+				break;
+			case 13:
 				$this->setAppointmentTypeId($value);
 				break;
 		} // switch()
@@ -1136,14 +1192,15 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setDescription($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setRank($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setCode($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setState($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setTemplate($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setExample($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setIsRequired($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setIsConfidential($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setGradeMin($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setGradeMax($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setAppointmentTypeId($arr[$keys[12]]);
+		if (array_key_exists($keys[5], $arr)) $this->setStateMin($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setStateMax($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setTemplate($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setExample($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setIsRequired($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setIsConfidential($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setGradeMin($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setGradeMax($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setAppointmentTypeId($arr[$keys[13]]);
 	}
 
 	/**
@@ -1160,7 +1217,8 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(WpinfoTypePeer::DESCRIPTION)) $criteria->add(WpinfoTypePeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(WpinfoTypePeer::RANK)) $criteria->add(WpinfoTypePeer::RANK, $this->rank);
 		if ($this->isColumnModified(WpinfoTypePeer::CODE)) $criteria->add(WpinfoTypePeer::CODE, $this->code);
-		if ($this->isColumnModified(WpinfoTypePeer::STATE)) $criteria->add(WpinfoTypePeer::STATE, $this->state);
+		if ($this->isColumnModified(WpinfoTypePeer::STATE_MIN)) $criteria->add(WpinfoTypePeer::STATE_MIN, $this->state_min);
+		if ($this->isColumnModified(WpinfoTypePeer::STATE_MAX)) $criteria->add(WpinfoTypePeer::STATE_MAX, $this->state_max);
 		if ($this->isColumnModified(WpinfoTypePeer::TEMPLATE)) $criteria->add(WpinfoTypePeer::TEMPLATE, $this->template);
 		if ($this->isColumnModified(WpinfoTypePeer::EXAMPLE)) $criteria->add(WpinfoTypePeer::EXAMPLE, $this->example);
 		if ($this->isColumnModified(WpinfoTypePeer::IS_REQUIRED)) $criteria->add(WpinfoTypePeer::IS_REQUIRED, $this->is_required);
@@ -1230,7 +1288,9 @@ abstract class BaseWpinfoType extends BaseObject  implements Persistent {
 
 		$copyObj->setCode($this->code);
 
-		$copyObj->setState($this->state);
+		$copyObj->setStateMin($this->state_min);
+
+		$copyObj->setStateMax($this->state_max);
 
 		$copyObj->setTemplate($this->template);
 

@@ -42,6 +42,8 @@ class sfGuardUserProfileTableMap extends TableMap {
 		$this->addColumn('MIDDLE_NAME', 'MiddleName', 'VARCHAR', false, 50, null);
 		$this->addColumn('LAST_NAME', 'LastName', 'VARCHAR', false, 50, null);
 		$this->addColumn('PRONUNCIATION', 'Pronunciation', 'VARCHAR', false, 100, null);
+		$this->addColumn('CITY', 'City', 'VARCHAR', false, 100, null);
+		$this->addColumn('ADDRESS', 'Address', 'VARCHAR', false, 100, null);
 		$this->addColumn('INFO', 'Info', 'LONGVARCHAR', false, null, null);
 		$this->addForeignKey('ROLE_ID', 'RoleId', 'INTEGER', 'role', 'ID', false, null, null);
 		$this->addColumn('GENDER', 'Gender', 'VARCHAR', false, 1, null);

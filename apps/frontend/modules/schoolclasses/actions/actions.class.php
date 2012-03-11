@@ -140,7 +140,7 @@ class schoolclassesActions extends sfActions
       }
       catch (Exception $e)
       {
-        $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Conversion failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the contents.'));
+        $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Conversion failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the contents.' . $e->getMessage()));
         $this->forward('schoolclasses', 'redirect');
       }
     

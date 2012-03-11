@@ -30,13 +30,13 @@
       <?php include_partial('content/td_year', array('year'=>$workplan->getYear())) ?>
       <td><?php echo $workplan->getSchoolclass() ?></td>
       <td><?php echo $workplan->getTitle() ?></td>
-	  <td><?php echo $workplan->countWpmodules() ?></td>
+	  <td><?php echo $nb_modules=$workplan->countWpmodules() ?></td>
 	  <td><?php echo $workplan->getHours() ?></td>
 	  <td><?php echo $workplan->getSyllabus() ?></td>
 	  <?php /*<?php $lastlog=$workplan->getLastLog() ?>  
 	  <td><?php echo $lastlog?$lastlog->getCreatedAt():'' ?></td>*/ ?>
 	  <td><?php include_partial('state', array('state' => $workplan->getState(), 'steps' => $steps, 'size'=>'r')) ?></td>
-	  <td><?php include_partial('action', array('workplan' => $workplan, 'steps' => $steps)) ?></td>
+	  <td><?php include_partial('action', array('workplan' => $workplan, 'steps' => $steps, 'nb_modules'=>$nb_modules)) ?></td>
  	
 	</td>
     </tr>
