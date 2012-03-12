@@ -58,12 +58,6 @@
     <td><?php echo $project->getProjCategory() ?></td>
   </tr>
   <?php endif ?>
-  <?php if(!isset($form['proj_financing_id'])): ?>
-  <tr>
-    <th><label for="schoolproject_financing"><?php echo __('Financing') ?></label></th>
-    <td><?php echo $project->getProjFinancing() ?></td>
-  </tr>
-  <?php endif ?>
   <?php if(!isset($form['purposes'])): ?>
   <tr>
     <th><label for="schoolproject_purposes"><?php echo __('Purposes') ?></label></th>

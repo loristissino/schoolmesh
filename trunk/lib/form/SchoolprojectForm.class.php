@@ -24,7 +24,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
 	$this['user_id']->getWidget()->setOption('add_empty', 'Choose a user');
 */	
 	$this->widgetSchema->setLabel('proj_category_id', 'Category');
-	$this->widgetSchema->setLabel('proj_financing_id', 'Financing');
   $this['notes']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
   $this['addressees']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
   $this['purposes']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
@@ -84,10 +83,9 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           );
           if(!$user->hasCredential('proj_adm_ok'))
           {
-            // in the office they can change ref numbers and financing types
+            // in the office they can change ref numbers
             unset(
-              $this['reference_number'],
-              $this['proj_financing_id']
+              $this['reference_number']
             );
           }
           if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
@@ -109,7 +107,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['description'],
           $this['notes'],
           $this['proj_category_id'],
-          $this['proj_financing_id'],
           $this['submission_date'],
           $this['approval_date'],
           $this['confirmation_date'],
@@ -140,7 +137,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['description'],
           $this['notes'],
           $this['proj_category_id'],
-          $this['proj_financing_id'],
           $this['submission_date'],
           $this['approval_date'],
           $this['financing_date'],
@@ -170,7 +166,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['description'],
           $this['notes'],
           $this['proj_category_id'],
-          $this['proj_financing_id'],
           $this['submission_date'],
           $this['approval_date'],
           $this['financing_date'],
@@ -200,7 +195,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['description'],
           $this['notes'],
           $this['proj_category_id'],
-          $this['proj_financing_id'],
           $this['submission_date'],
           $this['approval_date'],
           $this['financing_date'],
