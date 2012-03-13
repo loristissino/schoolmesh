@@ -79,15 +79,15 @@
 			<?php echo $current_user->hasPermission($available_account)?__('enabled'):__('disabled') ?>
 		</td>
 		<td>
-			<?php echo $current_user->hasAccountOfType($available_account)?__('yes'):__('no') ?>
+			<?php echo get_partial('content/list_field_boolean', array('value' => $current_user->hasAccountOfType($available_account))) ?>
 		</td>
 		<?php if($current_user->hasAccountOfType($available_account)): ?>
 		<?php $account=$current_user->getAccountByType($available_account) ?>
 		<td>
-			<?php echo $account->getExists()?__('yes'):__('no') ?>
+			<?php echo get_partial('content/list_field_boolean', array('value' => $account->getExists())) ?>
 		</td>
 		<td>
-			<?php echo $account->getIsLocked()?__('yes'):__('no') ?>
+			<?php echo get_partial('content/list_field_boolean', array('value' => $account->getIsLocked())) ?>
 		</td>
 		<td>
 			<?php echo Generic::datetime($account->getInfoUpdatedAt('U'), $sf_context) ?>

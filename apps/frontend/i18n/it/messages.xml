@@ -4248,6 +4248,38 @@
         <source>Deadline «%deadline%» marked as not completed</source>
         <target>Scadenza di monitoraggio «%deadline%» marcata come non completata</target>
     </trans-unit>
+    <trans-unit id="1072">
+        <source>Edit appointment type</source>
+        <target>Modifica tipo di incarico</target>
+    </trans-unit>
+    <trans-unit id="1073">
+        <source>New appointment type</source>
+        <target>Nuovo tipo di incarico</target>
+    </trans-unit>
+    <trans-unit id="1074">
+        <source>Appointment types</source>
+        <target>Tipi di incarico</target>
+    </trans-unit>
+    <trans-unit id="1075">
+        <source>Info?</source>
+        <target>Info?</target>
+    </trans-unit>
+    <trans-unit id="1076">
+        <source>Modules?</source>
+        <target>Moduli?</target>
+    </trans-unit>
+    <trans-unit id="1077">
+        <source>Tools?</source>
+        <target>Strumenti?</target>
+    </trans-unit>
+    <trans-unit id="1078">
+        <source>Attachments?</source>
+        <target>Allegati?</target>
+    </trans-unit>
+    <trans-unit id="1079">
+        <source>Shortcut</source>
+        <target>Abbreviazione</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

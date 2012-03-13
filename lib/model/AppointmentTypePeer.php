@@ -14,10 +14,18 @@ class AppointmentTypePeer extends BaseAppointmentTypePeer {
   {
     $c= new Criteria();
     $c->add(self::IS_ACTIVE, true);
+    return self::retrieveAll($c);
+  }
+
+  public static function retrieveAll(Criteria $c=null)
+  {
+    if(!$c)
+    {
+      $c= new Criteria();
+    }
     $c->addAscendingOrderByColumn(self::RANK);
     return self::doSelect($c);
   }
-
 
 
 } // AppointmentTypePeer
