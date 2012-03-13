@@ -45,13 +45,11 @@
 </div>
 
 <ul class="sf_admin_actions">
-
-  <li class="sf_admin_action_new">
-    <?php echo link_to(
+    <?php echo li_link_to_if(
+    'action_new',
+    true,
 		__('New project'),
 		'projects/new',
 		array('title'=>__('Prepare a new project'))
 		)?>
-		</li>
-
 </ul>
