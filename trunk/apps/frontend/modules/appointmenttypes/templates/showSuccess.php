@@ -46,7 +46,18 @@
     <tr>
       <th><?php echo __('Modules?') ?></th>
       <td><?php echo get_partial('content/list_field_boolean', array('value' => $AppointmentType->getHasModules())) ?></td>
-      <td></td>
+      <td>
+        <?php if(sizeof($WpitemTypes) and !$AppointmentType->getHasModules()): ?>
+          <?php echo image_tag('dubious') ?>
+          <?php echo __('This appointment type has some didactic module fields associated with, but it looks like it should not.') ?>
+        <?php endif ?>
+
+        <?php if(!sizeof($WpitemTypes) and $AppointmentType->getHasModules()): ?>
+          <?php echo image_tag('dubious') ?>
+          <?php echo __('This appointment type does not have didactic module fields associated with, but it looks like it should.') ?>
+        <?php endif ?>
+
+      </td>
     </tr>
     <tr>
       <th><?php echo __('Tools?') ?></th>
