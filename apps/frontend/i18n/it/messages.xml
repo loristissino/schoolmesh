@@ -4280,6 +4280,40 @@
         <source>Shortcut</source>
         <target>Abbreviazione</target>
     </trans-unit>
+    <trans-unit id="1080">
+        <source>Appointment type «%description%»</source>
+        <target>Incarico di tipo «%description%»</target>
+    </trans-unit>
+    <trans-unit id="1081">
+        <source>Show</source>
+        <target>Mostra</target>
+    </trans-unit>
+    <trans-unit id="1082">
+        <source>Edit this appointment type</source>
+        <target>Modifica questo tipo di incarico</target>
+    </trans-unit>
+    <trans-unit id="1083">
+        <source>Show information concerning this appointment type</source>
+        <target>Mostra informazioni su questo tipo di incarico</target>
+    </trans-unit>
+    <trans-unit id="1084">
+        <source>True</source>
+        <target>Vero</target>
+    </trans-unit>
+    <trans-unit id="1085">
+        <source>False</source>
+        <target>Falso</target>
+    </trans-unit>
+    <trans-unit id="1086">
+        <source>Confidential?</source>
+        <target>Riservato?</target>
+    </trans-unit>
+    <trans-unit id="1087">
+        <source>Code</source>
+        <target>Codice</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
+

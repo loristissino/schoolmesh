@@ -18,6 +18,10 @@ class appointmenttypesActions extends sfActions
   {
     $this->AppointmentType = AppointmentTypePeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->AppointmentType);
+    
+    $this->WpinfoTypes=$this->AppointmentType->getWpinfoTypes();
+    $this->WpitemTypes=$this->AppointmentType->getWpitemTypes();
+    //$this->WptoolTypes=$this->AppointmentType->getWptoolTypes();
   }
 
   public function executeNew(sfWebRequest $request)
