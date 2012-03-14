@@ -4317,7 +4317,7 @@
         <target>Questo tipo di incarico ha alcuni campi informativi associati, ma a quanto pare non dovrebbe averne.</target>
     </trans-unit>
     <trans-unit id="1089">
-        <source>This appointment type does not have info fields associated with, but should.</source>
+        <source>This appointment type does not have info fields associated with, but it looks like it should.</source>
         <target>Questo tipo di incarico non ha campi informativi associati, ma a quanto pare dovrebbe averne.</target>
     </trans-unit>
     <trans-unit id="1090">
@@ -4359,6 +4359,14 @@
     <trans-unit id="1099">
         <source>New didactic module field type</source>
         <target>Nuovo campo per i moduli didattici</target>
+    </trans-unit>
+    <trans-unit id="1089">
+        <source>This appointment type has some didactic module fields associated with, but it looks like it should not.</source>
+        <target>Questo tipo di incarico ha alcuni campi di moduli didattici associati, ma a quanto pare non dovrebbe averne.</target>
+    </trans-unit>
+    <trans-unit id="1090">
+        <source>This appointment type does not have didactic module fields associated with, but it looks like it should.</source>
+        <target>Questo tipo di incarico non ha campi di moduli didattici associati, ma a quanto pare dovrebbe averne.</target>
     </trans-unit>
     </body>
   </file> 
