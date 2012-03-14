@@ -29,8 +29,10 @@
       <td colspan="2"><?php echo get_partial('content/list_field_boolean', array('value' => $AppointmentType->getIsActive())) ?></td>
     </tr>
     <tr>
-      <th><?php echo __('Info?') ?></th>
-      <td><?php echo get_partial('content/list_field_boolean', array('value' => $AppointmentType->getHasInfo())) ?></td>
+      <th><a href="#info"><?php echo __('Info?') ?></a></th>
+      <td>
+        <?php echo get_partial('content/list_field_boolean', array('value' => $AppointmentType->getHasInfo())) ?>
+      </td>
       <td>
         <?php if(sizeof($WpinfoTypes) and !$AppointmentType->getHasInfo()): ?>
           <?php echo image_tag('dubious') ?>
@@ -44,7 +46,7 @@
       </td>
     </tr>
     <tr>
-      <th><?php echo __('Modules?') ?></th>
+      <th><a href="#modules"><?php echo __('Modules?') ?></a></th>
       <td><?php echo get_partial('content/list_field_boolean', array('value' => $AppointmentType->getHasModules())) ?></td>
       <td>
         <?php if(sizeof($WpitemTypes) and !$AppointmentType->getHasModules()): ?>
@@ -56,13 +58,23 @@
           <?php echo image_tag('dubious') ?>
           <?php echo __('This appointment type does not have didactic module fields associated with, but it looks like it should.') ?>
         <?php endif ?>
-
       </td>
     </tr>
     <tr>
-      <th><?php echo __('Tools?') ?></th>
+      <th><a href="#tools"><?php echo __('Tools?') ?></a></th>
       <td><?php echo get_partial('content/list_field_boolean', array('value' => $AppointmentType->getHasTools())) ?></td>
-      <td></td>
+      <td>
+        <?php if(sizeof($WptoolItemTypes) and !$AppointmentType->getHasTools()): ?>
+          <?php echo image_tag('dubious') ?>
+          <?php echo __('This appointment type has some group of tools/methodologies associated with, but it looks like it should not.') ?>
+        <?php endif ?>
+
+        <?php if(!sizeof($WptoolItemTypes) and $AppointmentType->getHasTools()): ?>
+          <?php echo image_tag('dubious') ?>
+          <?php echo __('This appointment type does not have groups of tools/methodologies associated with, but it looks like it should.') ?>
+        <?php endif ?>
+
+      </td>
     </tr>
     <tr>
       <th><?php echo __('Attachments?') ?></th>
@@ -96,24 +108,44 @@
 		'wpitemtypes/new?appointmenttype='. $AppointmentType->getId(),
 		array('title'=>__('Create a new didactic module item field type'))
 		)?>
+  <?php echo li_link_to_if(
+    'action_new',
+    $AppointmentType->getHasTools(),
+		__('New group of tools/methodologies'),
+		'wptooltypes/new?appointmenttype='. $AppointmentType->getId(),
+		array('title'=>__('Create a new group of tools/methodologies'))
+		)?>
 
 </ul>
 
+<?php if(sizeof($WpinfoTypes)): ?>
 <hr />
-
-<h2><?php echo __('General information') ?></h2>
+<h2 id="info"><?php echo __('General information') ?></h2>
 
 <?php foreach($WpinfoTypes as $WpinfoType): ?>
   <?php include_partial('wpinfotypes/information', array('WpinfoType'=>$WpinfoType)) ?>
 <?php endforeach ?>
 
+<?php endif ?>
+
+<?php if(sizeof($WpitemTypes)): ?>
 <hr />
 
-<h2><?php echo __('Modules') ?></h2>
+<h2 id="modules"><?php echo __('Modules') ?></h2>
 
 <?php foreach($WpitemTypes as $WpitemType): ?>
   <?php include_partial('wpitemtypes/information', array('WpitemType'=>$WpitemType)) ?>
 <?php endforeach ?>
 
+<?php endif ?>
+
+<?php if(sizeof($WptoolItemTypes)): ?>
 <hr />
 
+<h2 id="tools"><?php echo __('Tools and methodologies') ?></h2>
+
+<?php foreach($WptoolItemTypes as $WptoolItemType): ?>
+  <?php include_partial('wptooltypes/information', array('WptoolItemType'=>$WptoolItemType)) ?>
+<?php endforeach ?>
+
+<?php endif ?>

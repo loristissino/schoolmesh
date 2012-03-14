@@ -1,4 +1,4 @@
-<h4><?php echo $WpitemType->getTitle() ?></h4>
+<h3><?php echo $WpitemType->getTitle() ?></h3>
 <?php echo link_to(__('Edit'), url_for('wpitemtypes/edit?id=' . $WpitemType->getId())) ?>
 
 <ul>

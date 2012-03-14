@@ -4350,7 +4350,7 @@
     </trans-unit>
     <trans-unit id="1097">
         <source>New didactic module item field type</source>
-        <target>Nuovo campo per i moduli didattici</target>
+        <target>Nuovo tipo di campo per i moduli didattici</target>
     </trans-unit>
     <trans-unit id="1098">
         <source>Create a new didactic module item field type</source>
@@ -4368,10 +4368,45 @@
         <source>This appointment type does not have didactic module fields associated with, but it looks like it should.</source>
         <target>Questo tipo di incarico non ha campi di moduli didattici associati, ma a quanto pare dovrebbe averne.</target>
     </trans-unit>
+    <trans-unit id="1091">
+        <source>Tools and methodologies</source>
+        <target>Strumenti e metodologie</target>
+    </trans-unit>
+    <trans-unit id="1092">
+        <source>New group of tools/methodologies</source>
+        <target>Nuovo gruppo di strumenti/metodologie</target>
+    </trans-unit>
+    <trans-unit id="1093">
+        <source>Create a new group of tools/methodologies</source>
+        <target>Crea un nuovo gruppo di strumenti/metodologie</target>
+    </trans-unit>
+    <trans-unit id="1094">
+        <source>Create a new group of tools/methodologies</source>
+        <target>Crea un nuovo gruppo di strumenti/metodologie</target>
+    </trans-unit>
+    <trans-unit id="1095">
+        <source>New group of tools/methodologies</source>
+        <target>Nuovo gruppo di strumenti/metodologie</target>
+    </trans-unit>
+    <trans-unit id="1096">
+        <source>Items</source>
+        <target>Elementi</target>
+    </trans-unit>
+    <trans-unit id="1097">
+        <source>This appointment type has some group of tools/methodologies associated with, but it looks like it should not.</source>
+        <target>Questo tipo di incarico ha alcuni gruppi di strumenti/metodologie associati, ma a quanto pare non dovrebbe averne.</target>
+    </trans-unit>
+    <trans-unit id="1098">
+        <source>This appointment type does not have groups of tools/methodologies associated with, but it looks like it should.</source>
+        <target>Questo tipo di incarico non ha gruppi di strumenti/metodologie associati, ma a quanto pare dovrebbe averne.</target>
+    </trans-unit>
     </body>
   </file> 
   
 </xliff>
+
+
+
 
 
 
