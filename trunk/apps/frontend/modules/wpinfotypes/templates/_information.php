@@ -11,7 +11,7 @@
 <li><strong><?php echo __('State Max') ?>:</strong> <?php echo $WpinfoType->getStateMax() ?></li>
 <li><strong><?php echo __('Grade Min') ?>:</strong> <?php echo $WpinfoType->getGradeMin() ?></li>
 <li><strong><?php echo __('Grade Max') ?>:</strong> <?php echo $WpinfoType->getGradeMax() ?></li>
-<li><strong><?php echo __('Required?') ?>:</strong> <?php echo get_partial('content/text_field_boolean', array('value'=>$WpinfoType->getIsRequired())) ?></li>
-<li><strong><?php echo __('Confidential?') ?>:</strong> <?php echo get_partial('content/text_field_boolean', array('value'=>$WpinfoType->getIsConfidential())) ?></li>
+<li><strong><?php echo __('Required?') ?></strong> <?php echo get_partial('content/text_field_boolean', array('value'=>$WpinfoType->getIsRequired())) ?></li>
+<li><strong><?php echo __('Confidential?') ?></strong> <?php echo get_partial('content/text_field_boolean', array('value'=>$WpinfoType->getIsConfidential())) ?></li>
 </ul>
 

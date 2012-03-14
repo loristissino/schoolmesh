@@ -4312,8 +4312,61 @@
         <source>Code</source>
         <target>Codice</target>
     </trans-unit>
+    <trans-unit id="1088">
+        <source>This appointment type has some info fields associated with, but it looks like it should not.</source>
+        <target>Questo tipo di incarico ha alcuni campi informativi associati, ma a quanto pare non dovrebbe averne.</target>
+    </trans-unit>
+    <trans-unit id="1089">
+        <source>This appointment type does not have info fields associated with, but should.</source>
+        <target>Questo tipo di incarico non ha campi informativi associati, ma a quanto pare dovrebbe averne.</target>
+    </trans-unit>
+    <trans-unit id="1090">
+        <source>Template</source>
+        <target>Modello</target>
+    </trans-unit>
+    <trans-unit id="1091">
+        <source>Complete list</source>
+        <target>Elenco completo</target>
+    </trans-unit>
+    <trans-unit id="1092">
+        <source>Info fields types</source>
+        <target>Tipi di campi informativi</target>
+    </trans-unit>
+    <trans-unit id="1093">
+        <source>New info field type</source>
+        <target>Nuovo tipo di campo informativo</target>
+    </trans-unit>
+    <trans-unit id="1094">
+        <source>Singular</source>
+        <target>Singolare</target>
+    </trans-unit>
+    <trans-unit id="1095">
+        <source>Style</source>
+        <target>Stile</target>
+    </trans-unit>
+    <trans-unit id="1096">
+        <source>Didactic modules fields types</source>
+        <target>Tipi di campi per i moduli didattici</target>
+    </trans-unit>
+    <trans-unit id="1097">
+        <source>New didactic module item field type</source>
+        <target>Nuovo campo per i moduli didattici</target>
+    </trans-unit>
+    <trans-unit id="1098">
+        <source>Create a new didactic module item field type</source>
+        <target>Crea un nuovo campo per i moduli didattici</target>
+    </trans-unit>
+    <trans-unit id="1099">
+        <source>New didactic module field type</source>
+        <target>Nuovo campo per i moduli didattici</target>
+    </trans-unit>
     </body>
   </file> 
+  
 </xliff>
+
+
+
+
 
 
