@@ -1,4 +1,4 @@
-<h4><?php echo $WpinfoType->getTitle() ?></h4>
+<h3><?php echo $WpinfoType->getTitle() ?></h3>
 <?php echo link_to(__('Edit'), url_for('wpinfotypes/edit?id=' . $WpinfoType->getId())) ?>
 
 <ul>

@@ -21,7 +21,7 @@ class appointmenttypesActions extends sfActions
     
     $this->WpinfoTypes=$this->AppointmentType->getWpinfoTypes();
     $this->WpitemTypes=$this->AppointmentType->getWpitemTypes();
-    //$this->WptoolTypes=$this->AppointmentType->getWptoolTypes();
+    $this->WptoolItemTypes=$this->AppointmentType->getWptoolItemTypes();
   }
 
   public function executeNew(sfWebRequest $request)
