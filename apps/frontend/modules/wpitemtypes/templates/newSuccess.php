@@ -1,9 +1,9 @@
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
-    'wpinfotypes/index' => __('Info fields types'),
+    'wpitemtypes/index' => __('Didactic modules fields types'),
     ),
   'current'=>__('New'),
-  'title'=>__('New info field type')
+  'title'=>__('New didactic module field type')
   ))
 ?>
 

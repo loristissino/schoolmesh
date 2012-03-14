@@ -9,11 +9,11 @@
     <tfoot>
       <tr>
         <td colspan="2">
-          &nbsp;<a href="<?php echo url_for('wpinfotypes/index') ?>">Back to list</a>
+          <?php echo link_to(__('Complete list'), url_for('wpinfotypes/index')) ?>
           <?php if (!$form->getObject()->isNew()): ?>
-            &nbsp;<?php echo link_to('Delete', 'wpinfotypes/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => 'Are you sure?')) ?>
+            &nbsp;<?php echo link_to(__('Delete'), 'wpinfotypes/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))) ?>
           <?php endif; ?>
-          <input type="submit" value="Save" />
+          <input type="submit" value="<?php echo __('Save') ?>" />
         </td>
       </tr>
     </tfoot>

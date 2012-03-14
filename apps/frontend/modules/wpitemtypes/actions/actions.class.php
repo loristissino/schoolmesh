@@ -1,41 +1,42 @@
 <?php
 
 /**
- * wpinfotypes actions.
+ * wpitemtypes actions.
  *
  * @package    schoolmesh
- * @subpackage wpinfotypes
+ * @subpackage wpitemtypes
  * @author     Loris Tissino <loris.tissino@gmail.com>
  */
-class wpinfotypesActions extends sfActions
+class wpitemtypesActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->WpinfoTypes = WpinfoTypePeer::doSelect(new Criteria());
+    $this->WpitemTypes = WpitemTypePeer::doSelect(new Criteria());
   }
 
   /*
   public function executeShow(sfWebRequest $request)
   {
-    $this->WpinfoType = WpinfoTypePeer::retrieveByPk($request->getParameter('id'));
-    $this->forward404Unless($this->WpinfoType);
+    $this->WpitemType = WpitemTypePeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($this->WpitemType);
   }
   */
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new WpinfoTypeForm();
+    $this->form = new WpitemTypeForm();
     if($request->hasParameter('appointmenttype'))
     {
       $this->form->setDefault('appointment_type_id', $request->getParameter('appointmenttype'));
     }
+
   }
 
   public function executeCreate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
-    $this->form = new WpinfoTypeForm();
+    $this->form = new WpitemTypeForm();
 
     $this->processForm($request, $this->form);
 
@@ -44,15 +45,15 @@ class wpinfotypesActions extends sfActions
 
   public function executeEdit(sfWebRequest $request)
   {
-    $this->forward404Unless($WpinfoType = WpinfoTypePeer::retrieveByPk($request->getParameter('id')), sprintf('Object WpinfoType does not exist (%s).', $request->getParameter('id')));
-    $this->form = new WpinfoTypeForm($WpinfoType);
+    $this->forward404Unless($WpitemType = WpitemTypePeer::retrieveByPk($request->getParameter('id')), sprintf('Object WpitemType does not exist (%s).', $request->getParameter('id')));
+    $this->form = new WpitemTypeForm($WpitemType);
   }
 
   public function executeUpdate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
-    $this->forward404Unless($WpinfoType = WpinfoTypePeer::retrieveByPk($request->getParameter('id')), sprintf('Object WpinfoType does not exist (%s).', $request->getParameter('id')));
-    $this->form = new WpinfoTypeForm($WpinfoType);
+    $this->forward404Unless($WpitemType = WpitemTypePeer::retrieveByPk($request->getParameter('id')), sprintf('Object WpitemType does not exist (%s).', $request->getParameter('id')));
+    $this->form = new WpitemTypeForm($WpitemType);
 
     $this->processForm($request, $this->form);
 
@@ -63,10 +64,10 @@ class wpinfotypesActions extends sfActions
   {
     $request->checkCSRFProtection();
 
-    $this->forward404Unless($WpinfoType = WpinfoTypePeer::retrieveByPk($request->getParameter('id')), sprintf('Object WpinfoType does not exist (%s).', $request->getParameter('id')));
-    $WpinfoType->delete();
+    $this->forward404Unless($WpitemType = WpitemTypePeer::retrieveByPk($request->getParameter('id')), sprintf('Object WpitemType does not exist (%s).', $request->getParameter('id')));
+    $WpitemType->delete();
 
-    $this->redirect('wpinfotypes/index');
+    $this->redirect('wpitemtypes/index');
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
@@ -74,9 +75,9 @@ class wpinfotypesActions extends sfActions
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
     {
-      $WpinfoType = $form->save();
+      $WpitemType = $form->save();
 
-      $this->redirect('wpinfotypes/edit?id='.$WpinfoType->getId());
+      $this->redirect('wpitemtypes/edit?id='.$WpitemType->getId());
     }
   }
 }
