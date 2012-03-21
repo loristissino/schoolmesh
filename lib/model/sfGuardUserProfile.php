@@ -724,7 +724,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			{
 				Generic::updateObjectFromForm(
           $appointment,
-          array('schoolclass_id', 'year_id', 'subject_id', 'appointment_type_id', 'syllabus_id', 'hours'),
+          array('schoolclass_id', 'year_id', 'subject_id', 'appointment_type_id', 'team_id', 'syllabus_id', 'hours'),
           $params);
           
         $appointment->save();

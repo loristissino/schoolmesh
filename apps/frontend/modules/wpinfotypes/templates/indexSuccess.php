@@ -38,7 +38,7 @@
       <td><?php echo get_partial('content/list_field_boolean', array('value' => $WpinfoType->getIsConfidential())) ?></td>
       <td><?php echo $WpinfoType->getGradeMin() ?></td>
       <td><?php echo $WpinfoType->getGradeMax() ?></td>
-      <td><?php echo link_to($WpinfoType->getAppointmentType()->getShortCut(), url_for('appointmenttypes/show?id='.$WpinfoType->getAppointmentTypeId()))  ?></td>
+      <td><?php if($WpinfoType->getAppointmentTypeId()): ?><?php echo link_to($WpinfoType->getAppointmentType()->getShortCut(), url_for('appointmenttypes/show?id='.$WpinfoType->getAppointmentTypeId()))  ?><?php endif ?></td>
     </tr>
     <?php endforeach; ?>
   </tbody>
