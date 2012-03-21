@@ -29,6 +29,8 @@
 	<?php echo li_link_to_if('action_users', $sf_user->hasCredential('admin'), __('Users management'), url_for('users')) ?>
 	<?php echo li_link_to_if('action_users', $sf_user->hasCredential('teams'), __('Teams management'), url_for('teams/index')) ?>
 	<?php echo li_link_to_if('action_items', $sf_user->hasCredential('backadmin'), __('Appointment types'), url_for('appointmenttypes/index')) ?>
+  <?php echo li_link_to_if('action_items', $sf_user->hasCredential('backadmin'), __('Setup checks'), url_for('content/checksetup')) ?>
+
 </ul>
 <?php endif ?>
 

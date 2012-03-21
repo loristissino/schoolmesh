@@ -114,8 +114,10 @@ class SetupChecker
     $templates_needed=array(
       'projects_charges.odt',
       'projects_submission.odt',
+      'projects_staffsynthesis.odt',
       'recuperation.odt',
       'teachers_signs.odt',
+      'organizational_chart.odt',
     );
 
     foreach (AppointmentTypePeer::retrieveActive() as $appointment_type)
