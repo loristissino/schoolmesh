@@ -55,7 +55,7 @@
        <?php if($sf_user->hasCredential('admin')): ?><li><?php echo link_to(__("Who's on line"), '@whosonline') ?></li><?php endif ?>
        <li><?php echo link_to(__("My profile"), '@profile')  ?></li>
        <li><?php echo link_to(__("Documents"), url_for('content/documents'))  ?></li>
-       <li><?php echo link_to(__("Organization"), '@organization'))  ?></li>
+       <li><?php echo link_to(__("Organization"), '@organization')  ?></li>
     </ul>
 </div>
 
