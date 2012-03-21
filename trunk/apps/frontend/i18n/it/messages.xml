@@ -3474,7 +3474,7 @@
     </trans-unit>
     <trans-unit id="879">
         <source>You do not seem to be logged on in the local area network.</source>
-        <target>Sembra che tu non stia lavorando su un calcolatore della rete locale.</target>
+        <target>A quanto pare, non stai lavorando su un calcolatore della rete locale.</target>
     </trans-unit>
     <trans-unit id="880">
         <source>Get signs for parent-teaching consulting</source>
@@ -4399,6 +4399,10 @@
     <trans-unit id="1098">
         <source>This appointment type does not have groups of tools/methodologies associated with, but it looks like it should.</source>
         <target>Questo tipo di incarico non ha gruppi di strumenti/metodologie associati, ma a quanto pare dovrebbe averne.</target>
+    </trans-unit>
+    <trans-unit id="1099">
+        <source>This appointment type</source>
+        <target>Questo tipo di incarico</target>
     </trans-unit>
     </body>
   </file> 

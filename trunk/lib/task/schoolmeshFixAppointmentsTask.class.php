@@ -106,7 +106,7 @@ EOF;
             $dirty=true;
           }
           
-          if($wpinfo->getContent() && $wpinfo->getWpinfoType()->getState()>$appointment->getState())
+          if($wpinfo->getContent() && $wpinfo->getWpinfoType()->getStateMin()>$appointment->getState())
           {
             $this->logSection('wpinfo-', sprintf('%d, removed content «%s» ', $wpinfo->getId(), $new), null, 'INFO');
             $wpinfo->setContent('');
@@ -187,7 +187,7 @@ EOF;
           
           foreach($wpmodule->getWpItemGroups() as $WpitemGroup)
           {
-            if($WpitemGroup->getWpitemType()->getState()>$appointment->getState())
+            if($WpitemGroup->getWpitemType()->getStateMin()>$appointment->getState())
             {
               // imported by error
               if($WpitemGroup->countWpmoduleItems())
