@@ -561,25 +561,6 @@ class Schoolproject extends BaseSchoolproject {
         ));
     }
 
-    if(!$this->getProjFinancingId())
-    {
-      $checkList->addCheck(new Check(
-				Check::FAILED,
-				'No financing set',
-				'Project',
-        array(
-          'link_to'=>'projects/edit?id=' . $this->getId()
-          )
-        ));
-    }
-    else
-    {
-      $checkList->addCheck(new Check(
-				Check::PASSED,
-				'Financing set',
-				'Project'
-        ));
-    }
 
     if(!$this->getTitle())
     {
