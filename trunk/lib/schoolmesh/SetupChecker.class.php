@@ -116,6 +116,7 @@ class SetupChecker
       'projects_submission.odt',
       'projects_staffsynthesis.odt',
       'recuperation.odt',
+      'syllabus_subjects.odt',
       'teachers_signs.odt',
       'organizational_chart.odt',
     );
