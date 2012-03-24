@@ -2,6 +2,8 @@
   'current'=>sfConfig::get('app_school_name'),
   ))
 ?>
+<?php $sf_user->setFlash('helpmodule', 'authentication') ?>
+
 <p><?php echo __("You need to login to access the page you requested.") ?></p>
 
 <form action="<?php echo url_for('@sf_guard_signin') ?>" method="post" id="loginbox">
