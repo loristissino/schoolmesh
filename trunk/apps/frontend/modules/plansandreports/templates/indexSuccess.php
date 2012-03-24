@@ -30,8 +30,8 @@
       <?php include_partial('content/td_year', array('year'=>$workplan->getYear())) ?>
       <td><?php echo $workplan->getSchoolclass() ?></td>
       <td><?php echo $workplan->getTitle() ?></td>
-	  <td><?php echo $nb_modules=$workplan->countWpmodules() ?></td>
-	  <td><?php echo $workplan->getHours() ?></td>
+	  <td><?php if($workplan->getAppointmentType()->getHasModules()): ?><?php echo $nb_modules=$workplan->countWpmodules() ?><?php endif ?></td>
+	  <td><?php if($workplan->getAppointmentType()->getHasModules()): ?><?php echo $workplan->getHours() ?><?php endif ?></td>
 	  <td><?php echo $workplan->getSyllabus() ?></td>
 	  <?php /*<?php $lastlog=$workplan->getLastLog() ?>  
 	  <td><?php echo $lastlog?$lastlog->getCreatedAt():'' ?></td>*/ ?>
