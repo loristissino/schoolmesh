@@ -34,6 +34,9 @@ class ProjectConfiguration extends sfProjectConfiguration
     $this->enableAllPluginsExcept(array('sfDoctrinePlugin'));
 	
 	  //$this->getEventDispatcher()->connect('application.log', array('sfGuardUserProfilePeer', 'registerLogin'));
+
+    session_save_path(dirname(getcwd()).'/data/session');
+    // we need this in case we use a multihosting platform
 	
   }
 
