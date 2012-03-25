@@ -41,6 +41,11 @@ default:
           username:   user@example.com
           password:   aSecretPassword123
 
+  storage:
+    class: sfSessionStorage
+    param:
+      session_name: schoolmesh
+
 #all:
 #  controller:
 #    class: sfFrontWebController
