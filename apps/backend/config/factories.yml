@@ -24,6 +24,11 @@ test:
     param:
       session_path: %SF_TEST_CACHE_DIR%/sessions
 
+  storage:
+    class: sfSessionStorage
+    param:
+      session_name: schoolmesh
+
 #all:
 #  controller:
 #    class: sfFrontWebController
