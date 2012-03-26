@@ -3425,8 +3425,8 @@
         <target>Scegli un incaricato</target>
     </trans-unit>
     <trans-unit id="867">
-        <source>This task belongs to a project not yet financed</source>
-        <target>Questo compito è definito per un progetto non ancora approvato dal Consiglio di Istituto</target>
+        <source>This task belongs to a project not yet confirmed</source>
+        <target>Questo compito è definito per un progetto non ancora confermato</target>
     </trans-unit>
     <trans-unit id="868">
         <source>Task</source>
