@@ -1534,7 +1534,7 @@
       </trans-unit>
 	  <trans-unit id="409">
         <source>[0]Just edit your SchoolMesh account information.|[1]Just edit your SchoolMesh account information.</source>
-        <target>[0]È sufficiente modificare le informazioni associate al tuo account SchoolMesh.[1]È sufficiente modificare le informazioni associate al tuo account SchoolMesh.</target>
+        <target>[0]È sufficiente modificare le informazioni associate al tuo account SchoolMesh.|[1]È sufficiente modificare le informazioni associate al tuo account SchoolMesh.</target>
       </trans-unit>
 	  <trans-unit id="410">
         <source>Thank you.</source>
