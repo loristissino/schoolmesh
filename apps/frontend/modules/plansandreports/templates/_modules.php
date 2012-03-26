@@ -119,7 +119,7 @@
     <?php endforeach; ?>
 	<tr>
 		<td colspan="5"></td>
-		<td>
+		<td style="text-align: right">
 			<?php if ($hours_sum>0): ?>
 				<?php echo $hours_sum ?>
 			<?php endif ?>
