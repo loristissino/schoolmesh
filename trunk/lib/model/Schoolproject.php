@@ -354,7 +354,7 @@ class Schoolproject extends BaseSchoolproject {
       'team_id',
       ), $params);
     
-    if($user && $user->getProfile()->getUserId()!=$this->getsfGuardUser())
+    if($user && $user->getProfile()->getUserId()!=$this->getsfGuardUser()->getId())
     {
       foreach($changedfields as $field)
       {
