@@ -57,6 +57,8 @@ all:
     default_male_teachertitle: Prof.
     default_female_teachertitle: Prof.ssa
 
+    default_maxsubjects_per_class: 14
+    # this should be consistent with the number of columns specified in the syllabus_subjects.odt template
 
     currency_symbol: €
     currency_decimals: 2
