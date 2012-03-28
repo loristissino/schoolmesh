@@ -19,7 +19,7 @@
 	'&backcolor='.$backcolor.'&textcolor=0-0-0&ywidth=250',
 			array(
 				'alt' => $appointment->getSubject()->getDescription(),
-				'title' => $appointment->getSubject()->getDescription() . ($appointment->getTeamId()? sprintf(' (%s)', __('this appointment is set only for some of the students')): ''),
+				'title' => $appointment->getSubject()->getDescription() . ($appointment->getTeamId()? sprintf(' (%s)', __('this appointment is set only for some of the students')): '') . ' - ' . $appointment->getTeacherNameWithTitle(),
         'size' => '20x250')
 				)
 			?></th>

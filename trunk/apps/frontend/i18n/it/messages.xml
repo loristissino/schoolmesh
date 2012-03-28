@@ -4404,6 +4404,10 @@
         <source>This appointment type</source>
         <target>Questo tipo di incarico</target>
     </trans-unit>
+    <trans-unit id="1100">
+        <source>Content does not match template</source>
+        <target>Contenuto che non corrisponde al modello</target>
+    </trans-unit>
     </body>
   </file> 
   

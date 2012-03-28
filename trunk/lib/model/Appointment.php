@@ -19,17 +19,22 @@ class Appointment extends BaseAppointment
     
     public function getFirstName()
     {
-		return $this->getOwner()->getProfile()->getFirstName();    
+      return $this->getOwner()->getProfile()->getFirstName();    
     }
 
     public function getLastName()
     {
-    return $this->getOwner()->getProfile()->getLastName();    
+      return $this->getOwner()->getProfile()->getLastName();    
     }
 
     public function getFullName()
     {
-    return $this->getFirstName(). ' ' . $this->getLastName();    
+      return $this->getFirstName(). ' ' . $this->getLastName();    
+    }
+    
+    public function getTeacherNameWithTitle()
+    {
+      return sprintf('%s %s', $this->getOwner()->getProfile()->getLetterTitle(), $this->getFullName());
     }
 
 	public function retrieveImportableWorkplansOfColleagues()
@@ -487,16 +492,16 @@ $con->query($sql);
                     $checkList->addCheck(new Check(
                     Check::FAILED,
                     'Content cannot be empty',
-                    $wpinfotype->getDescription(),
+                    $wpinfotype->getTitle(),
                     array('link_to'=>'wpinfo/edit?id=' . $wpinfo->getId())));
 
                     }
                   elseif (!$wpinfo->checkContentAgainstTemplate($wpinfo->getContent(), $wpinfotype->getTemplate()))
                     {
-                      $ckeckList->addCheck(new Check(
+                      $checkList->addCheck(new Check(
                         Check::FAILED,
-                        'Content doesn\'t match template',
-                        $wpinfotype->getDescription(),
+                        'Content does not match template',
+                        $wpinfotype->getTitle(),
                         array('link_to'=>'wpinfo/edit?id=' . $wpinfo->getId())));
 
                     }
