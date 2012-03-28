@@ -1,0 +1,15 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+USERNAME=$1
+FULLNAME=$2
+
+checkString $USERNAME
+checkString $FULLNAME
+
+sudo pdbedit -r -u $USERNAME -f "$FULLNAME" > /dev/null && msg_ok "changed fullname: $USERNAME ($FULLNAME)"  && exit 0
+
+unexpectedError $@

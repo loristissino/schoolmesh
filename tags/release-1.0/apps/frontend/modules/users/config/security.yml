@@ -1,0 +1,5 @@
+default:
+  credentials: admin
+  
+getlist:
+  credentials: [[ admin, wpfr_submission ]]

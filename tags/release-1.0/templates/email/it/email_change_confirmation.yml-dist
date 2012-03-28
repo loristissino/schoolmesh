@@ -1,0 +1,16 @@
+message:
+  subject: Conferma indirizzo email
+  salutation: true
+  tagline: false
+  body: |
+
+    a quanto pare hai impostato un indirizzo di posta elettronica da usare
+    in abbinamento all'applicazione SchoolMesh.
+
+    Per confermare la correttezza dell'indirizzo, segui il seguente link:
+
+    http://..../index.php/content/checkemail/user/%username%/code/%verification_code%
+
+    Grazie.
+
+       Lo staff

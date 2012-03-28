@@ -1,0 +1,21 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           ProjFinancing
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ProjFinancing
+    plural:                ProjFinancings
+    route_prefix:          proj_financing
+    with_propel_route:     1
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:    ~
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:     ~

@@ -1,0 +1,3 @@
+default:
+  credentials: [[ admin, samba_resetpwd ]]
+  

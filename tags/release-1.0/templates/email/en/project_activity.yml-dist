@@ -1,0 +1,15 @@
+message:
+  subject: Activity «%activity_notes%» - notes
+  salutation: true
+  body: |
+  
+    I am writing to you about the activity «%activity_notes%» performed on %activity_date%.
+    
+    
+
+    Greetings,
+
+        %sender_fullname%
+        %sender_email%
+
+

@@ -1,0 +1,14 @@
+message:
+  subject: Attività «%activity_notes%» - comunicazioni
+  salutation: true
+  body: |
+  
+    Ti scrivo in merito all'attività «%activity_notes%» del giorno %activity_date%.
+    
+    
+
+    Cordiali saluti,
+
+        %sender_fullname%
+        %sender_email%
+
