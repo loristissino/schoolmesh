@@ -155,9 +155,11 @@ EOF;
 			{
 				echo implode(':', array(
 					$appointment->getId(), 
-					$appointment->getOwner()->getUsername(), 
-					$appointment->getSubject()->getShortcut(),
+					$appointment->getOwner()->getUsername(),
+          $appointment->getAppointmentType()->getShortcut(),
+					($appointment->getSubjectId() ? $appointment->getSubject()->getShortcut(): ''),
 					$appointment->getSchoolclassId(),
+          $appointment->getTeamId(),
 					$appointment->getState()
 					)) . "\n";
 			}
