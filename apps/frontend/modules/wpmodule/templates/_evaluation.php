@@ -13,7 +13,7 @@
 </li>
 <?php endfor ?>
 <?php if ($dbvalue!=null): ?>
-<li class="sf_admin_action_reset">
+<li class="sf_admin_action_unset">
 	<?php echo jq_link_to_remote(__('unset'), array(
             'update'   => 'item_evaluation_'.$id,
             'url'      => 'wpmoduleitem/evaluate?id='.$id.'&evaluation=',
