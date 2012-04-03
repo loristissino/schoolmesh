@@ -17,6 +17,11 @@ all:
     template_directory: /var/schoolmesh/templates/email
     
   config:
+    accept_gpl_license: false
+    # You must accept the license, available in the file doc/gpl-3.0.txt,
+    # in order to have the application working.
+    # By setting this to true, you declare to accept the license.
+
     enable_checks:  true
     current_year:   2011 # only the first of the two years of a scholastic/academic year
     current_term:   Term1

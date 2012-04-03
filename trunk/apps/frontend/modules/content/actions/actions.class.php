@@ -25,6 +25,13 @@ class contentActions extends sfActions
     public function executeIndex(sfWebRequest $request)
   {
 	
+  //return $this->renderText(sfConfig::get('app_config_accept_gpl_license', false));
+  
+    if(sfConfig::get('app_config_accept_gpl_license', false)!=true)
+    {
+      return sfView::ERROR;
+    }
+  
 //	$this->availableaccounts=sfConfig::get('app_config_accounts');
 
   }
