@@ -269,7 +269,7 @@
       </trans-unit>
       <trans-unit id="90">
         <source>unset</source>
-        <target><![CDATA[elimina&nbsp;indicazione]]></target>
+        <target>azzera</target>
       </trans-unit>
       <trans-unit id="91">
         <source>Module Items</source>
