@@ -272,6 +272,8 @@ propel:
   wptool_item:
     id:   ~
     description: varchar(50);
+    rank:                { type: integer, index: true }
+    code:                { type: varchar(30), index: true }    
     wptool_item_type_id: ~
 
   wptool_appointment:

@@ -38,6 +38,8 @@ class WptoolItemTableMap extends TableMap {
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
 		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 50, null);
+		$this->addColumn('RANK', 'Rank', 'INTEGER', false, null, null);
+		$this->addColumn('CODE', 'Code', 'VARCHAR', false, 30, null);
 		$this->addForeignKey('WPTOOL_ITEM_TYPE_ID', 'WptoolItemTypeId', 'INTEGER', 'wptool_item_type', 'ID', false, null, null);
 		// validators
 	} // initialize()

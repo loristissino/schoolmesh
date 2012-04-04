@@ -25,7 +25,7 @@ abstract class BaseWptoolItemPeer {
 	const TM_CLASS = 'WptoolItemTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 3;
+	const NUM_COLUMNS = 5;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -35,6 +35,12 @@ abstract class BaseWptoolItemPeer {
 
 	/** the column name for the DESCRIPTION field */
 	const DESCRIPTION = 'wptool_item.DESCRIPTION';
+
+	/** the column name for the RANK field */
+	const RANK = 'wptool_item.RANK';
+
+	/** the column name for the CODE field */
+	const CODE = 'wptool_item.CODE';
 
 	/** the column name for the WPTOOL_ITEM_TYPE_ID field */
 	const WPTOOL_ITEM_TYPE_ID = 'wptool_item.WPTOOL_ITEM_TYPE_ID';
@@ -62,11 +68,11 @@ abstract class BaseWptoolItemPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'WptoolItemTypeId', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'wptoolItemTypeId', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::WPTOOL_ITEM_TYPE_ID, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'wptool_item_type_id', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'Rank', 'Code', 'WptoolItemTypeId', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'rank', 'code', 'wptoolItemTypeId', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::RANK, self::CODE, self::WPTOOL_ITEM_TYPE_ID, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'rank', 'code', 'wptool_item_type_id', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -76,11 +82,11 @@ abstract class BaseWptoolItemPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'WptoolItemTypeId' => 2, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'wptoolItemTypeId' => 2, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::WPTOOL_ITEM_TYPE_ID => 2, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'wptool_item_type_id' => 2, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'Rank' => 2, 'Code' => 3, 'WptoolItemTypeId' => 4, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'code' => 3, 'wptoolItemTypeId' => 4, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::RANK => 2, self::CODE => 3, self::WPTOOL_ITEM_TYPE_ID => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'rank' => 2, 'code' => 3, 'wptool_item_type_id' => 4, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -152,6 +158,8 @@ abstract class BaseWptoolItemPeer {
 	{
 		$criteria->addSelectColumn(WptoolItemPeer::ID);
 		$criteria->addSelectColumn(WptoolItemPeer::DESCRIPTION);
+		$criteria->addSelectColumn(WptoolItemPeer::RANK);
+		$criteria->addSelectColumn(WptoolItemPeer::CODE);
 		$criteria->addSelectColumn(WptoolItemPeer::WPTOOL_ITEM_TYPE_ID);
 	}
 

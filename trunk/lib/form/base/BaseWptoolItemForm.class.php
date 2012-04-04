@@ -16,6 +16,8 @@ abstract class BaseWptoolItemForm extends BaseFormPropel
     $this->setWidgets(array(
       'id'                      => new sfWidgetFormInputHidden(),
       'description'             => new sfWidgetFormInputText(),
+      'rank'                    => new sfWidgetFormInputText(),
+      'code'                    => new sfWidgetFormInputText(),
       'wptool_item_type_id'     => new sfWidgetFormPropelChoice(array('model' => 'WptoolItemType', 'add_empty' => true)),
       'wptool_appointment_list' => new sfWidgetFormPropelChoice(array('multiple' => true, 'model' => 'Appointment')),
     ));
@@ -23,6 +25,8 @@ abstract class BaseWptoolItemForm extends BaseFormPropel
     $this->setValidators(array(
       'id'                      => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
       'description'             => new sfValidatorString(array('max_length' => 50, 'required' => false)),
+      'rank'                    => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'code'                    => new sfValidatorString(array('max_length' => 30, 'required' => false)),
       'wptool_item_type_id'     => new sfValidatorPropelChoice(array('model' => 'WptoolItemType', 'column' => 'id', 'required' => false)),
       'wptool_appointment_list' => new sfValidatorPropelChoice(array('multiple' => true, 'model' => 'Appointment', 'required' => false)),
     ));

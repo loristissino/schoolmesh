@@ -13,12 +13,16 @@ abstract class BaseWptoolItemFormFilter extends BaseFormFilterPropel
   {
     $this->setWidgets(array(
       'description'             => new sfWidgetFormFilterInput(),
+      'rank'                    => new sfWidgetFormFilterInput(),
+      'code'                    => new sfWidgetFormFilterInput(),
       'wptool_item_type_id'     => new sfWidgetFormPropelChoice(array('model' => 'WptoolItemType', 'add_empty' => true)),
       'wptool_appointment_list' => new sfWidgetFormPropelChoice(array('model' => 'Appointment', 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
       'description'             => new sfValidatorPass(array('required' => false)),
+      'rank'                    => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'code'                    => new sfValidatorPass(array('required' => false)),
       'wptool_item_type_id'     => new sfValidatorPropelChoice(array('required' => false, 'model' => 'WptoolItemType', 'column' => 'id')),
       'wptool_appointment_list' => new sfValidatorPropelChoice(array('model' => 'Appointment', 'required' => false)),
     ));
@@ -65,6 +69,8 @@ abstract class BaseWptoolItemFormFilter extends BaseFormFilterPropel
     return array(
       'id'                      => 'Number',
       'description'             => 'Text',
+      'rank'                    => 'Number',
+      'code'                    => 'Text',
       'wptool_item_type_id'     => 'ForeignKey',
       'wptool_appointment_list' => 'ManyKey',
     );

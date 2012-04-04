@@ -12,5 +12,10 @@ class WptoolItemForm extends BaseWptoolItemForm
 {
   public function configure()
   {
+    unset(
+      $this['wptool_item_type_id'],
+      $this['wptool_appointment_list']
+      );
+    
   }
 }
