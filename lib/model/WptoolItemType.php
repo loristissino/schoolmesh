@@ -17,6 +17,11 @@ class WptoolItemType extends BaseWptoolItemType
 		return $this->getDescription();
 	}
   
+  public function getDescriptioWithGroup()
+  {
+    return sprintf('%s - %s', $this->getAppointmentType(), $this->getDescription());
+  }
+  
   public function getWptoolItems($criteria = null, PropelPDO $con = null)
   {
     $criteria=new Criteria();

@@ -30,5 +30,5 @@ class WptoolItemTypePeer extends BaseWptoolItemTypePeer
 		$c->addAscendingOrderByColumn(WptoolItemTypePeer::RANK);
 		return parent::doSelect($c);
 	}
-	
+
 }

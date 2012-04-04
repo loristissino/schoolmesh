@@ -10,11 +10,11 @@
       <tr>
         <td colspan="2">
           <?php echo $form->renderHiddenFields(false) ?>
-          &nbsp;<a href="<?php echo url_for('wptoolitems/index') ?>">Back to list</a>
+          <?php if($form->getObject()->getWptoolItemTypeId()): ?><?php echo link_to(__('Back to list'), url_for('wptoolitems/list?type='. $form->getObject()->getWptoolItemTypeId())) ?><?php endif ?>
           <?php if (!$form->getObject()->isNew()): ?>
-            &nbsp;<?php echo link_to('Delete', 'wptoolitems/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => 'Are you sure?')) ?>
+            &nbsp;<?php echo link_to(__('Delete'), 'wptoolitems/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))) ?>
           <?php endif; ?>
-          <input type="submit" value="Save" />
+          <input type="submit" value="<?php echo __('Save') ?>" />
         </td>
       </tr>
     </tfoot>
