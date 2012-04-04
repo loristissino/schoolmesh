@@ -31,4 +31,12 @@
   </tbody>
 </table>
 
-  <a href="<?php echo url_for('wptoolitems/new') ?>">New</a>
+<ul class="sf_admin_actions">
+    <?php echo li_link_to_if(
+    'action_new',
+    true,
+		__('New item'),
+		'wptoolitems/new?type='.$WptoolItemType->getId(),
+		array('title'=>__('Create a new item for this type'))
+		)?>
+</ul>

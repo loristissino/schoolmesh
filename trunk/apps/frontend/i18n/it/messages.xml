@@ -4416,11 +4416,30 @@
         <source>List of items for «%type%»</source>
         <target>Elenco degli elementi per «%type%»</target>
     </trans-unit>
+    <trans-unit id="1103">
+        <source>Edit item</source>
+        <target>Modifica elemento</target>
+    </trans-unit>
+    <trans-unit id="1104">
+        <source>Edit item with id %id%</source>
+        <target>Modifica elemento con id %id%</target>
+    </trans-unit>
+    <trans-unit id="1105">
+        <source>Choose a group</source>
+        <target>Scegli un gruppo</target>
+    </trans-unit>
+    <trans-unit id="1106">
+        <source>Group</source>
+        <target>Gruppo</target>
+    </trans-unit>
+    <trans-unit id="1107">
+        <source>New item</source>
+        <target>Nuovo elemento</target>
+    </trans-unit>
     </body>
   </file> 
   
 </xliff>
-
 
 
 

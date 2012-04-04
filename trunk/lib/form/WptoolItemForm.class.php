@@ -13,9 +13,26 @@ class WptoolItemForm extends BaseWptoolItemForm
   public function configure()
   {
     unset(
-      $this['wptool_item_type_id'],
       $this['wptool_appointment_list']
       );
+
+    $this['wptool_item_type_id']->getWidget()->setLabel('Group');      
+    
+    $this['wptool_item_type_id']->getWidget()
+    ->setOption('method','getDescriptioWithGroup')
+    ->setOption('add_empty', 'Choose a group')
+    ;      
+      
+    $this['description']->getWidget()->setAttributes(array(
+      'size'=>100
+      ));
+
+    $this['rank']->getWidget()->setAttributes(array(
+      'size'=>5,
+      'style'=>'text-align: right',
+      ));
+      
+      
     
   }
 }
