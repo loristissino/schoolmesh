@@ -31,6 +31,18 @@ abstract class BaseWptoolItem extends BaseObject  implements Persistent {
 	protected $description;
 
 	/**
+	 * The value for the rank field.
+	 * @var        int
+	 */
+	protected $rank;
+
+	/**
+	 * The value for the code field.
+	 * @var        string
+	 */
+	protected $code;
+
+	/**
 	 * The value for the wptool_item_type_id field.
 	 * @var        int
 	 */
@@ -90,6 +102,26 @@ abstract class BaseWptoolItem extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Get the [rank] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getRank()
+	{
+		return $this->rank;
+	}
+
+	/**
+	 * Get the [code] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getCode()
+	{
+		return $this->code;
+	}
+
+	/**
 	 * Get the [wptool_item_type_id] column value.
 	 * 
 	 * @return     int
@@ -138,6 +170,46 @@ abstract class BaseWptoolItem extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setDescription()
+
+	/**
+	 * Set the value of [rank] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     WptoolItem The current object (for fluent API support)
+	 */
+	public function setRank($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->rank !== $v) {
+			$this->rank = $v;
+			$this->modifiedColumns[] = WptoolItemPeer::RANK;
+		}
+
+		return $this;
+	} // setRank()
+
+	/**
+	 * Set the value of [code] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     WptoolItem The current object (for fluent API support)
+	 */
+	public function setCode($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->code !== $v) {
+			$this->code = $v;
+			$this->modifiedColumns[] = WptoolItemPeer::CODE;
+		}
+
+		return $this;
+	} // setCode()
 
 	/**
 	 * Set the value of [wptool_item_type_id] column.
@@ -197,7 +269,9 @@ abstract class BaseWptoolItem extends BaseObject  implements Persistent {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->description = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-			$this->wptool_item_type_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->rank = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->code = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->wptool_item_type_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -207,7 +281,7 @@ abstract class BaseWptoolItem extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 3; // 3 = WptoolItemPeer::NUM_COLUMNS - WptoolItemPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 5; // 5 = WptoolItemPeer::NUM_COLUMNS - WptoolItemPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating WptoolItem object", $e);
@@ -557,6 +631,12 @@ abstract class BaseWptoolItem extends BaseObject  implements Persistent {
 				return $this->getDescription();
 				break;
 			case 2:
+				return $this->getRank();
+				break;
+			case 3:
+				return $this->getCode();
+				break;
+			case 4:
 				return $this->getWptoolItemTypeId();
 				break;
 			default:
@@ -582,7 +662,9 @@ abstract class BaseWptoolItem extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getDescription(),
-			$keys[2] => $this->getWptoolItemTypeId(),
+			$keys[2] => $this->getRank(),
+			$keys[3] => $this->getCode(),
+			$keys[4] => $this->getWptoolItemTypeId(),
 		);
 		return $result;
 	}
@@ -621,6 +703,12 @@ abstract class BaseWptoolItem extends BaseObject  implements Persistent {
 				$this->setDescription($value);
 				break;
 			case 2:
+				$this->setRank($value);
+				break;
+			case 3:
+				$this->setCode($value);
+				break;
+			case 4:
 				$this->setWptoolItemTypeId($value);
 				break;
 		} // switch()
@@ -649,7 +737,9 @@ abstract class BaseWptoolItem extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setDescription($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setWptoolItemTypeId($arr[$keys[2]]);
+		if (array_key_exists($keys[2], $arr)) $this->setRank($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setCode($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setWptoolItemTypeId($arr[$keys[4]]);
 	}
 
 	/**
@@ -663,6 +753,8 @@ abstract class BaseWptoolItem extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(WptoolItemPeer::ID)) $criteria->add(WptoolItemPeer::ID, $this->id);
 		if ($this->isColumnModified(WptoolItemPeer::DESCRIPTION)) $criteria->add(WptoolItemPeer::DESCRIPTION, $this->description);
+		if ($this->isColumnModified(WptoolItemPeer::RANK)) $criteria->add(WptoolItemPeer::RANK, $this->rank);
+		if ($this->isColumnModified(WptoolItemPeer::CODE)) $criteria->add(WptoolItemPeer::CODE, $this->code);
 		if ($this->isColumnModified(WptoolItemPeer::WPTOOL_ITEM_TYPE_ID)) $criteria->add(WptoolItemPeer::WPTOOL_ITEM_TYPE_ID, $this->wptool_item_type_id);
 
 		return $criteria;
@@ -719,6 +811,10 @@ abstract class BaseWptoolItem extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setDescription($this->description);
+
+		$copyObj->setRank($this->rank);
+
+		$copyObj->setCode($this->code);
 
 		$copyObj->setWptoolItemTypeId($this->wptool_item_type_id);
 

@@ -16,4 +16,12 @@ class WptoolItemType extends BaseWptoolItemType
 	{
 		return $this->getDescription();
 	}
+  
+  public function getWptoolItems($criteria = null, PropelPDO $con = null)
+  {
+    $criteria=new Criteria();
+    $criteria->addAscendingOrderByColumn(WptoolItemPeer::RANK);
+    return parent::getWptoolItems($criteria, $con);
+  }
+  
 }

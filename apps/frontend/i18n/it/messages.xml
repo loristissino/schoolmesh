@@ -4408,10 +4408,19 @@
         <source>Content does not match template</source>
         <target>Contenuto che non corrisponde al modello</target>
     </trans-unit>
+    <trans-unit id="1101">
+        <source>edit</source>
+        <target>modifica</target>
+    </trans-unit>
+    <trans-unit id="1102">
+        <source>List of items for «%type%»</source>
+        <target>Elenco degli elementi per «%type%»</target>
+    </trans-unit>
     </body>
   </file> 
   
 </xliff>
+
 
 
 

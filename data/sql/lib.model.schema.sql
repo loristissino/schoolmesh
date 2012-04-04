@@ -694,8 +694,12 @@ CREATE TABLE `wptool_item`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`description` VARCHAR(50),
+	`rank` INTEGER,
+	`code` VARCHAR(30),
 	`wptool_item_type_id` INTEGER,
 	PRIMARY KEY (`id`),
+	KEY `wptool_item_I_1`(`rank`),
+	KEY `wptool_item_I_2`(`code`),
 	INDEX `wptool_item_FI_1` (`wptool_item_type_id`),
 	CONSTRAINT `wptool_item_FK_1`
 		FOREIGN KEY (`wptool_item_type_id`)

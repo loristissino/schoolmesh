@@ -10,7 +10,7 @@
 <li><strong><?php echo __('Grade Max') ?>:</strong> <?php echo $WptoolItemType->getGradeMax() ?></li>
 <li><strong><?php echo __('Min selected') ?>:</strong> <?php echo $WptoolItemType->getMinSelected() ?></li>
 <li><strong><?php echo __('Max selected') ?>:</strong> <?php echo $WptoolItemType->getMaxSelected() ?></li>
-<li><strong><?php echo __('Items') ?>:</strong>
+<li><strong><?php echo __('Items') ?></strong> (<?php echo link_to(__('edit'), url_for('wptoolitems/list?type='.$WptoolItemType->getId())) ?>)<strong>:</strong>
   <ul>
     <?php foreach($WptoolItemType->getWptoolItems() as $WptoolItem): ?>
       <li><?php echo $WptoolItem->getDescription() ?></li>
