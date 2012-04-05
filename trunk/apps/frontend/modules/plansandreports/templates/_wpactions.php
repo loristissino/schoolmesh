@@ -6,7 +6,8 @@
 				'plansandreports/view?id='.$workplan->getId(),
 				array('title'=>__('Show this document in a single page'))
 				)?>
-	</li><br />
+  <br />
+	</li>
 	<?php if (isset($show_fill) && ($show_fill==true)): ?>
 		<li class="sf_admin_action_fill">
 				<?php echo link_to(
@@ -14,9 +15,10 @@
 				'plansandreports/fill?id='.$workplan->getId(),
 				array('title'=>__('Fill this document'))
 				)?>
-	</li><br />
+  <br />
+	</li>
 	<?php endif ?>
-	<?php include_partial('export', array('workplan' => $workplan, 'steps'=>$steps)) ?><br />
+	<?php include_partial('export', array('workplan' => $workplan, 'steps'=>$steps)) ?>
 	<?php if($workplan->getState()==Workflow::WP_DRAFT): ?>
     <?php if(!$workplan->getIsPublic()): ?>
       <li class="sf_admin_action_publish">
@@ -28,7 +30,8 @@
               'title' => __('Make the whole document public before submission, so that your colleagues can see it')
               )
             )?>
-      </li><br />
+      <br />
+      </li>
     <?php else: ?>
       <li class="sf_admin_action_unpublish">
             <?php echo link_to(
@@ -39,7 +42,8 @@
               'title' => __('Set the whole document to private')
               )
             )?>
-      </li><br />
+      <br />
+      </li>
     <?php endif ?>
 	<?php endif ?>
 	<?php if($workplan->getState()==Workflow::WP_DRAFT || $workplan->getState()==Workflow::IR_DRAFT): ?>
@@ -53,7 +57,8 @@
 				  'title' => __($steps[$workplan->getState()]['owner']['submitDisplayedAction']) . '. ' . __('It will be then administratively checked and approved by the schoolmaster')
           )
 				)?>
-	</li><br />
+  <br />
+	</li>
 	<?php endif ?>
 		<li class="sf_admin_action_back">
 				<?php echo link_to(
@@ -61,5 +66,6 @@
 				'@plansandreports',
 				array('title'=>__('Back to my workplans and reports'))
 				)?>
-	</li><br />
+  <br />
+	</li>
 	</ul>

@@ -38,7 +38,6 @@
 	  <td><?php include_partial('state', array('state' => $workplan->getState(), 'steps' => $steps, 'size'=>'r')) ?></td>
 	  <td><?php include_partial('action', array('workplan' => $workplan, 'steps' => $steps, 'nb_modules'=>$workplan->getAppointmentType()->getHasModules()?$nb_modules: 0)) ?></td>
  	
-	</td>
     </tr>
     <?php endforeach; ?>
   </tbody>

@@ -1013,7 +1013,7 @@ public function getWorkflowLogs()
     $c=new Criteria();
     $c->addJoin(WptoolItemPeer::WPTOOL_ITEM_TYPE_ID, WptoolItemTypePeer::ID);
     $c->add(WptoolItemTypePeer::ID, $ids, Criteria::IN);
-    $c->addJoin(WptoolItemPeer::ID, WptoolAppointmentPeer::WPTOOL_ITEM_ID);
+    $c->addJoin(WptoolItemPeer::ID, WptoolAppointmentPeer::WPTOOL_ITEM_ID, Criteria::LEFT_JOIN);
     $c->addAscendingOrderByColumn(WptoolItemPeer::RANK);
     $c->setDistinct();
     

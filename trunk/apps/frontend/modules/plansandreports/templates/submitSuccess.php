@@ -34,7 +34,6 @@
 
 <?php include_partial('wpactions', array('workplan'=>$workplan, 'steps'=>$steps, 'show_fill'=>true)) ?>
 
-</div>
 <hr />
 
 <?php if(isset($checkList)): ?>

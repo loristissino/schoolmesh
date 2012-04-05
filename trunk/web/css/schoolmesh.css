@@ -20,6 +20,21 @@
   background: url(../images/evaluate.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_evaluate_min a
+{
+  background: url(../images/evaluate_min.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_evaluate_middle a
+{
+  background: url(../images/evaluate_middle.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_evaluate_max a
+{
+  background: url(../images/evaluate_max.png) no-repeat 0 0;
+}
+
 #sf_admin_container ul li.sf_admin_action_items a
 {
   background: url(../images/items.png) no-repeat 0 0;
@@ -303,6 +318,11 @@
 #sf_admin_container ul li.sf_admin_action_reassign a
 {
   background: url(../images/reassign.png) no-repeat 0 0;
+}
+
+#sf_admin_container ul li.sf_admin_action_reset a
+{
+  background: url(../images/reset.png) no-repeat 0 0;
 }
 
 #sf_admin_container .alert

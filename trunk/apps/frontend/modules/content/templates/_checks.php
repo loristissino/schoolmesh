@@ -21,14 +21,14 @@
 	<p>
 	<strong>
 	<?php echo jq_link_to_function(
-	image_tag($checkList->getResultsByGroupName($groupname, Check::FAILED)>0? 'stop': 'go'),
-  jq_visual_effect('slideToggle', '#' .md5($groupname))
+	image_tag($checkList->getResultsByGroupName($groupname, Check::FAILED)>0? 'stop': 'go', array('alt'=>'')),
+  jq_visual_effect('slideToggle', '#r' .md5($groupname))
 ) ?> &nbsp;<?php echo __($groupname) ?></strong>  (<?php echo check_count($checkList, $groupname) ?>)</p>
 
-		<div class='check_results' id="<?php echo md5($groupname) ?>" style="display:<?php  echo ($show_successes or (!$start_closed and ($checkList->getResultsByGroupName($groupname, Check::FAILED)+$checkList->getResultsByGroupName($groupname, Check::WARNING))>0))? 'visible': 'none' ?>">
+		<div class='check_results' id="r<?php echo md5($groupname) ?>" style="display:<?php  echo ($show_successes or (!$start_closed and ($checkList->getResultsByGroupName($groupname, Check::FAILED)+$checkList->getResultsByGroupName($groupname, Check::WARNING))>0))? 'visible': 'none' ?>">
 		<?php foreach($checkList->getChecksByGroupName($groupname) as $check): ?>
 		<p>
-			<?php echo image_tag($check->getImageTag(), 'title=' . $check->getImageTitle()); ?>
+			<?php echo image_tag($check->getImageTag(), array('title'=>$check->getImageTitle(), 'alt'=>$check->getImageTitle())); ?>
 			<?php echo __($check->getMessage()) ?>
 			<?php if ($check->getLinkTo()): ?>
 				<?php echo link_to(image_tag('fill', array('alt'=>__('Fill'))), $check->getLinkTo(), array('title'=>__('Fill'))) ?>
@@ -42,11 +42,11 @@
 <?php if($sf_request->getReferer()): ?>
 <h2><?php echo __('Actions') ?></h2>
 	<ul class="sf_admin_actions">
-	<li class="sf_admin_action_back">
-    <?php echo link_to(
+    <?php echo li_link_to_if(
+      'action_back',
+      true,
       __('Back'),
       $sf_request->getReferer()
       )?>
-  </li>
   </ul>
 <?php endif ?>
