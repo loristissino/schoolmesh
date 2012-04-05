@@ -4448,15 +4448,21 @@
         <source>Import items for «%type%»</source>
         <target>Importa elementi per «%type%»</target>
     </trans-unit>
+    <trans-unit id="1111">
+        <source>The content of this field, previously filled, is shown for reference.</source>
+        <target>Il contenuto di questo campo, compilato precedentemente, viene mostrato per riferimento.</target>
+    </trans-unit>
+    <trans-unit id="1112">
+        <source>Unabridged document</source>
+        <target>Versione integrale</target>
+    </trans-unit>
+    <trans-unit id="1113">
+        <source>Abridged document</source>
+        <target>Versione ridotta</target>
+    </trans-unit>
      </body>
   </file> 
-  
-  
 </xliff>
-
-
-
-
 
 
 

@@ -25,10 +25,17 @@
       </th>
       <td><?php echo Generic::datetime($wpinfo->getUpdatedAt('U'), $sf_context) ?></td>
       <td>
+        <?php if($wpinfo->getContent() && $wpinfo->getWpinfoType()->getStateMin()<$state): ?>
+          <em class="keptforreferencenotice"><?php echo __('The content of this field, previously filled, is shown for reference.') ?></em>
+          <br />
+        <?php endif ?>
+
 		  <?php if ($wpinfo->getContent()=='' and $wpinfo->getWpinfoType()->getIsRequired()): ?>
 			<?php echo image_tag('notdone', array('title'=>__('This content is required and is currently missing'))) ?>
 	  <?php endif ?>
-	<?php echo  html_entity_decode($wpinfo->getContent()) ?></td>
+	<?php echo  html_entity_decode($wpinfo->getContent()) ?>
+  
+  </td>
       <td>
 		<ul class="sf_admin_td_actions">
 			<?php if ($wpinfo->getWpinfoType()->getStateMin()==$state || $sf_user->hasCredential('backadmin')): ?>

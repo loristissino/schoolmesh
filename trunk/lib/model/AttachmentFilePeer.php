@@ -106,6 +106,7 @@ class AttachmentFilePeer extends BaseAttachmentFilePeer {
           $con->rollBack();
           $result['result']='error';
           $result['message']='This file was already uploaded.';
+          Generic::logMessage('e1', $result['message']);
         }
       }
       else
@@ -114,6 +115,7 @@ class AttachmentFilePeer extends BaseAttachmentFilePeer {
         $con->rollBack();
         $result['result']='error';
         $result['message']='Could not save the uploaded file.';
+        Generic::logMessage('e2', $result['message']);
       }
         
     }
