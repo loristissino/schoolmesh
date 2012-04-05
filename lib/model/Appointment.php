@@ -1145,6 +1145,8 @@ public function getWorkflowLogs()
 
 	public function getOdf($doctype, sfContext $sfContext=null, $template='', $complete=true)
 	{
+    $documentversion=$complete? 'Unabridged document': 'Abridged document';
+    
 		$activesyllabus=$this->getSyllabus() && $this->getSyllabus()->getIsActive();
         
     $template=sprintf('appointment_%s_%d.odt', $this->getAppointmentType()->getShortcut(), $this->getState());
@@ -1165,6 +1167,7 @@ public function getWorkflowLogs()
 		if ($sfContext)
 		{
 			$state=$sfContext->getI18n()->__($state);
+      $documentversion=$sfContext->getI18n()->__($documentversion);
       foreach($contrib_descriptions as $key=>$description)
       {
         $contrib_descriptions[$key]=$sfContext->getI18n()->__($description);
@@ -1182,7 +1185,7 @@ public function getWorkflowLogs()
 		
 		$odfdoc=$odf->getOdfDocument();
 		
-//		$odfdoc->setVars('doctype',  $state);
+		$odfdoc->setVars('documentversion',  $documentversion);
 		$odfdoc->setVars('year',  $this->getYear()->__toString());
 		$odfdoc->setVars('teacher',  $teachertitle . ' ' . $this->getSfGuardUser()->getProfile()->getFullName());
     
@@ -2089,14 +2092,17 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
     return AttachmentFilePeer::retrieveByClassAndId(get_class($this), $this->getId());
   }
   
-  public function addAttachment(sfValidatedFile $file=null, $public=false)
+  public function addAttachment(sfValidatedFile $file=null, $public=false, $con=null)
   {
-    $con = Propel::getConnection(AppointmentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+    if(!$con)
+    {
+      $con = Propel::getConnection(AppointmentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+    }
     return AttachmentFilePeer::addAttachment($con, $this, 'appointment', $this->getUserId(), $file, array(), $public);
   }
 
 
-  public function createAttachment($complete=false, sfContext $context=null, $format='odt')
+  public function createAttachment($complete=false, sfContext $context=null, $format='odt', $con=null)
   {
     try 
 		{
@@ -2110,8 +2116,11 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 		try
 		{
 			$odfdoc->saveFile();
+      
+      Generic::logMessage('filetitle', $this->getFileTitle($complete, $context) . '.'. $format);
+      
       $vfile=Generic::getValidatedFile($odfdoc->getFilename(), $this->getFileTitle($complete, $context) . '.'. $format);
-      $this->addAttachment($vfile, !$complete);
+      $this->addAttachment($vfile, !$complete, $con);
       //if the workplan is complete, we don't want it to be public...
       unset($odfdoc);
       unset($vfile);

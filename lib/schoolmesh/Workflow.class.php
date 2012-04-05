@@ -18,7 +18,7 @@ class Workflow
 	const 	WP_WSMC = 40;
   const   WP_APPROVED = 41;
   /* 
-   * this code 41 is just needed to generate attachments from the task,
+   * the code 41 is just needed to generate attachments from the task,
    * since we need to consider the appointment in 'planning state'
    * to choose the correct template
    *
@@ -27,6 +27,12 @@ class Workflow
 	const 	IR_WSMC = 60;
 	const 	FR_WADMC = 70;
 	const 	FR_WSMC = 80;
+  const   FR_APPROVED = 81;
+  /* 
+   * the code 81 is just needed to generate attachments from the task,
+   * since we want to publish the document only once
+   *
+  */
 	const 	FR_ARCHIVED = 90;
   const   AP_NOTDONE = 100;
   
@@ -234,7 +240,7 @@ class Workflow
 				'submitDisplayedAction'=>'Approve&nbsp;report',
 				'submitDoneAction'=>'Report approved.',
 				'submitExtraActions'=>array(),
-				'submitNextState'=>self::FR_ARCHIVED,
+				'submitNextState'=>self::FR_APPROVED,
 				'logMessageCode'=>'FR_APPROVED',
         'makeAttachments'=>false,
         'sendEmail'=>true,
@@ -252,8 +258,23 @@ class Workflow
 		)
 	),
 
+	self::FR_APPROVED=>Array(
+		'stateDescription'=>"Final report approved",
+		'owner' => Array(
+			'viewAction'=>"view",
+			'exportActionTip'=>'Export the report in one of the available formats',
+			'displayedAction'=>'View',
+			'submitAction'=>"",
+			'submitDisplayedAction'=>'',
+			'submitDoneAction'=>'',
+			'submitNextState'=>self::FR_ARCHIVED,
+			'logMessageCode'=>'FR_APPROVED',
+			),
+		'actions' => Array()
+	),
+
 	self::FR_ARCHIVED=>Array(
-		'stateDescription'=>"Final report approved and archived",
+		'stateDescription'=>"Final report archived",
 		'owner' => Array(
 			'viewAction'=>"view",
 			'exportActionTip'=>'Export the report in one of the available formats',
@@ -266,6 +287,7 @@ class Workflow
 			),
 		'actions' => Array()
 	),
+
 
 	);
 	

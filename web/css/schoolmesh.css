@@ -452,6 +452,11 @@ font-weight: normal;
 	background-color: gray;
 }
 
+em.keptforreferencenotice
+{
+	background-color: #eee;
+}
+
 #mytree ul
 {	
 	list-style-type: none;	

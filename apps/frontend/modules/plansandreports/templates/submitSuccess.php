@@ -32,9 +32,10 @@
   <div class="error"><?php echo $sf_user->getFlash('error')?></div>
 <?php endif; ?>
 
-<?php include_partial('wpactions', array('workplan'=>$workplan, 'steps'=>$steps, 'show_fill'=>true)) ?>
-
-<hr />
+<?php if($sf_user->hasFlash('notice')): ?>
+  <?php include_partial('wpactions', array('workplan'=>$workplan, 'steps'=>$steps, 'show_fill'=>true)) ?>
+  <hr />
+<?php endif ?>
 
 <?php if(isset($checkList)): ?>
 	<?php include_partial('content/checks', array('checkList'=>$checkList, 'start_closed'=>false, 'show_successes'=>true)) ?>
