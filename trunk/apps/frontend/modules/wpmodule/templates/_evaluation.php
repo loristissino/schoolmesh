@@ -5,7 +5,7 @@
 <ul class="sf_admin_td_actions">
 
 <?php for($v=$min; $v<=$max; $v++): ?>
-<li class="sf_admin_action_<?php echo ($dbvalue==$v)? ($dbvalue==$min? 'evaluate_min': ($dbvalue==$max? 'evaluate_max': 'evaluate_middle')): 'reset' ?>">
+<li class="sf_admin_action_<?php echo ($dbvalue==$v)? 'evaluate_' . (floor(($dbvalue-$min)*9/($max-$min))): 'reset' ?>">
 <?php echo jq_link_to_remote($v, array(
             'update'   => 'item_evaluation_'.$id,
             'url'      => 'wpmoduleitem/evaluate?id='.$id.'&evaluation='.$v,

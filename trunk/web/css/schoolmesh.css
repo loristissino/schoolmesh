@@ -20,20 +20,53 @@
   background: url(../images/evaluate.png) no-repeat 0 0;
 }
 
-#sf_admin_container ul li.sf_admin_action_evaluate_min a
+#sf_admin_container ul li.sf_admin_action_evaluate_0 a
 {
-  background: url(../images/evaluate_min.png) no-repeat 0 0;
+  background: url(../images/evaluate_0.png) no-repeat 0 0;
 }
 
-#sf_admin_container ul li.sf_admin_action_evaluate_middle a
+#sf_admin_container ul li.sf_admin_action_evaluate_0 a
 {
-  background: url(../images/evaluate_middle.png) no-repeat 0 0;
+  background: url(../images/evaluate_0.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_evaluate_1 a
+{
+  background: url(../images/evaluate_1.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_evaluate_2 a
+{
+  background: url(../images/evaluate_2.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_evaluate_3 a
+{
+  background: url(../images/evaluate_3.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_evaluate_4 a
+{
+  background: url(../images/evaluate_4.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_evaluate_5 a
+{
+  background: url(../images/evaluate_5.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_evaluate_6 a
+{
+  background: url(../images/evaluate_6.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_evaluate_7 a
+{
+  background: url(../images/evaluate_7.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_evaluate_8 a
+{
+  background: url(../images/evaluate_8.png) no-repeat 0 0;
+}
+#sf_admin_container ul li.sf_admin_action_evaluate_9 a
+{
+  background: url(../images/evaluate_9.png) no-repeat 0 0;
 }
 
-#sf_admin_container ul li.sf_admin_action_evaluate_max a
-{
-  background: url(../images/evaluate_max.png) no-repeat 0 0;
-}
+
 
 #sf_admin_container ul li.sf_admin_action_items a
 {
