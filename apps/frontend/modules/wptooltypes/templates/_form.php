@@ -9,6 +9,7 @@
     <tfoot>
       <tr>
         <td colspan="2">
+          <?php echo link_to(__('Items'), url_for('wptoolitems/list?type=' . $form->getObject()->getId())) ?> 
           <?php echo link_to(__('Complete list'), url_for('wptooltypes/index')) ?>
           <?php if (!$form->getObject()->isNew()): ?>
             &nbsp;<?php echo link_to(__('Delete'), 'wptooltypes/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))) ?>

@@ -17,6 +17,7 @@
       <th><?php echo __('Description') ?></th>
       <th><?php echo __('Rank') ?></th>
       <th><?php echo __('Code') ?></th>
+      <th><?php echo __('Actions') ?></th>
     </tr>
   </thead>
   <tbody>
@@ -26,6 +27,7 @@
       <td><?php echo $WptoolItem->getDescription() ?></td>
       <td><?php echo $WptoolItem->getRank() ?></td>
       <td><?php echo $WptoolItem->getCode() ?></td>
+      <td><?php include_partial('actionitem', array('wptool_item'=>$WptoolItem)) ?></td>
     </tr>
     <?php endforeach; ?>
   </tbody>
@@ -38,5 +40,12 @@
 		__('New item'),
 		'wptoolitems/new?type='.$WptoolItemType->getId(),
 		array('title'=>__('Create a new item for this type'))
+		)?>
+    <?php echo li_link_to_if(
+    'action_import',
+    true,
+		__('Import items'),
+		'wptoolitems/import?type='.$WptoolItemType->getId(),
+		array('title'=>__('Import items for this type from another group'))
 		)?>
 </ul>

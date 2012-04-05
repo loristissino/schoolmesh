@@ -57,9 +57,11 @@ class wptooltypesActions extends sfActions
     $request->checkCSRFProtection();
 
     $this->forward404Unless($WptoolItemType = WptoolItemTypePeer::retrieveByPk($request->getParameter('id')), sprintf('Object WptoolItemType does not exist (%s).', $request->getParameter('id')));
+    
+    $appointment_type_id=$WptoolItemType->getAppointmentTypeId();
     $WptoolItemType->delete();
 
-    $this->redirect('wptooltypes/index');
+    $this->redirect('appointmenttypes/show?id='. $appointment_type_id);
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
