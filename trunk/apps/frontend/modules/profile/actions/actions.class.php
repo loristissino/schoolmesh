@@ -17,6 +17,11 @@ class profileActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
+    if(sfConfig::get('app_config_accept_gpl_license', false)!=true)
+    {
+      $this->redirect('@homepage');
+    }
+    
     $this->accounts=$this->getUser()->getProfile()->getAccounts();
     $this->teams=$this->getUser()->getProfile()->getTeams();
     $this->getUser()->setCulture($this->getUser()->getProfile()->getPreferredCulture());

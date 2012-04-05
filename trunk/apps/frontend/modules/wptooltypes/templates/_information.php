@@ -13,7 +13,12 @@
 <li><strong><?php echo __('Items') ?></strong> (<?php echo link_to(__('edit'), url_for('wptoolitems/list?type='.$WptoolItemType->getId())) ?>)<strong>:</strong>
   <ul>
     <?php foreach($WptoolItemType->getWptoolItems() as $WptoolItem): ?>
-      <li><?php echo $WptoolItem->getDescription() ?></li>
+      <li>
+        <?php echo $WptoolItem->getDescription() ?>
+        <?php if($WptoolItem->getCode()):?>
+          (<em><?php echo $WptoolItem->getCode() ?></em>)
+        <?php endif ?>
+      </li>
     <?php endforeach ?>
   </ul>
 </li>

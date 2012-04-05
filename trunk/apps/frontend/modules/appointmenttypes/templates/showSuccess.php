@@ -34,46 +34,21 @@
         <?php echo get_partial('content/list_field_boolean', array('value' => $AppointmentType->getHasInfo())) ?>
       </td>
       <td>
-        <?php if(sizeof($WpinfoTypes) and !$AppointmentType->getHasInfo()): ?>
-          <?php echo image_tag('dubious') ?>
-          <?php echo __('This appointment type has some info fields associated with, but it looks like it should not.') ?>
-        <?php endif ?>
-
-        <?php if(!sizeof($WpinfoTypes) and $AppointmentType->getHasInfo()): ?>
-          <?php echo image_tag('dubious') ?>
-          <?php echo __('This appointment type does not have info fields associated with, but it looks like it should.') ?>
-        <?php endif ?>
+        <?php echo get_partial('warnings_info', array('AppointmentType'=>$AppointmentType, 'WpinfoTypes'=>$WpinfoTypes, 'with_text'=>true)) ?>
       </td>
     </tr>
     <tr>
       <th><a href="#modules"><?php echo __('Modules?') ?></a></th>
       <td><?php echo get_partial('content/list_field_boolean', array('value' => $AppointmentType->getHasModules())) ?></td>
       <td>
-        <?php if(sizeof($WpitemTypes) and !$AppointmentType->getHasModules()): ?>
-          <?php echo image_tag('dubious') ?>
-          <?php echo __('This appointment type has some didactic module fields associated with, but it looks like it should not.') ?>
-        <?php endif ?>
-
-        <?php if(!sizeof($WpitemTypes) and $AppointmentType->getHasModules()): ?>
-          <?php echo image_tag('dubious') ?>
-          <?php echo __('This appointment type does not have didactic module fields associated with, but it looks like it should.') ?>
-        <?php endif ?>
+        <?php echo get_partial('warnings_modules', array('AppointmentType'=>$AppointmentType, 'WpitemTypes'=>$WpitemTypes, 'with_text'=>true)) ?>
       </td>
     </tr>
     <tr>
       <th><a href="#tools"><?php echo __('Tools?') ?></a></th>
       <td><?php echo get_partial('content/list_field_boolean', array('value' => $AppointmentType->getHasTools())) ?></td>
       <td>
-        <?php if(sizeof($WptoolItemTypes) and !$AppointmentType->getHasTools()): ?>
-          <?php echo image_tag('dubious') ?>
-          <?php echo __('This appointment type has some group of tools/methodologies associated with, but it looks like it should not.') ?>
-        <?php endif ?>
-
-        <?php if(!sizeof($WptoolItemTypes) and $AppointmentType->getHasTools()): ?>
-          <?php echo image_tag('dubious') ?>
-          <?php echo __('This appointment type does not have groups of tools/methodologies associated with, but it looks like it should.') ?>
-        <?php endif ?>
-
+        <?php echo get_partial('warnings_tools', array('AppointmentType'=>$AppointmentType, 'WptoolItemTypes'=>$WptoolItemTypes, 'with_text'=>true)) ?>
       </td>
     </tr>
     <tr>

@@ -21,6 +21,22 @@ class wptoolitemsActions extends sfActions
     $this->WptoolItems = $this->WptoolItemType->getWptoolItems();
   }
 
+  public function executeImport(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->CurrentType=WptoolItemTypePeer::retrieveByPK($request->getParameter('type')));
+    
+    if($request->isMethod(sfRequest::POST))
+    {
+      $this->CurrentType->importItems($request->getParameter('from'));
+      $this->redirect('wptoolitems/list?type=' . $this->CurrentType->getId());
+    }
+
+    $c=new Criteria();
+    $c->add(WptoolItemTypePeer::ID, $this->CurrentType->getId(), Criteria::NOT_EQUAL);
+    $this->WptoolItemTypes = WptoolItemTypePeer::doSelect($c);
+  }
+
+
   public function executeShow(sfWebRequest $request)
   {
     $this->WptoolItem = WptoolItemPeer::retrieveByPk($request->getParameter('id'));
@@ -75,9 +91,11 @@ class wptoolitemsActions extends sfActions
     $request->checkCSRFProtection();
 
     $this->forward404Unless($WptoolItem = WptoolItemPeer::retrieveByPk($request->getParameter('id')), sprintf('Object WptoolItem does not exist (%s).', $request->getParameter('id')));
+    
+    $type_id=$WptoolItem->getWptoolItemTypeId();
     $WptoolItem->delete();
 
-    $this->redirect('wptoolitems/index');
+    $this->redirect('wptoolitems/list?type=' . $type_id);
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)

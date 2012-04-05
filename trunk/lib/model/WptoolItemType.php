@@ -29,4 +29,38 @@ class WptoolItemType extends BaseWptoolItemType
     return parent::getWptoolItems($criteria, $con);
   }
   
+  public function importItems($from)
+  {
+    $Source=WptoolItemTypePeer::retrieveByPK($from);
+    if($Source)
+    {
+      $count=0;
+      foreach($Source->getWptoolItems() as $SourceWptoolItem)
+      {
+        try
+        {
+          $WptoolItem=new WptoolItem();
+          $WptoolItem
+          ->setDescription($SourceWptoolItem->getDescription())
+          ->setRank($SourceWptoolItem->getRank())
+          ->setCode($SourceWptoolItem->getCode())
+          ->setWptoolItemTypeId($this->getId())
+          ->save()
+          ;
+          $count++;
+        }
+        catch (Exception $e)
+        {
+          // reserved
+        }
+      }
+      return $this;
+    }
+    
+    $criteria=new Criteria();
+    $criteria->addAscendingOrderByColumn(WptoolItemPeer::RANK);
+    return parent::getWptoolItems($criteria, $con);
+  }
+  
+  
 }

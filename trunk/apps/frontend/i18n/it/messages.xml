@@ -4436,8 +4436,21 @@
         <source>New item</source>
         <target>Nuovo elemento</target>
     </trans-unit>
-    </body>
+    <trans-unit id="1108">
+        <source>Import items</source>
+        <target>Importa elementi</target>
+    </trans-unit>
+    <trans-unit id="1109">
+        <source>Import items for this type from another group</source>
+        <target>Importa elementi per questo tipo da un altro gruppo</target>
+    </trans-unit>
+    <trans-unit id="1110">
+        <source>Import items for «%type%»</source>
+        <target>Importa elementi per «%type%»</target>
+    </trans-unit>
+     </body>
   </file> 
+  
   
 </xliff>
 

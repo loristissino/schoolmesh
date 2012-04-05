@@ -1,8 +1,10 @@
 <?php include_partial('content/breadcrumps', array(
-  'current'=>__('Info fields types'),
+  'breadcrumps'=>array(
+    'appointmenttypes/index' => __('Appointment types'),
+    ),
+  'current'=>__('Info fields types')
   ))
 ?>
-
 <table>
   <thead>
     <tr>
