@@ -198,24 +198,6 @@ class SetupChecker
       }
     }
 
-    $dirname='.';  // this is var/schoolmesh/web or something similar
-    if(file_exists($dirname) && is_dir($dirname) && is_writable($dirname))
-    {
-      $checkList->addCheck(new Check(
-        Check::PASSED,
-        sprintf('Directory «%s» exists and is writable', $dirname),
-        'directories'
-        ));
-      }
-    else
-    {
-      $checkList->addCheck(new Check(
-        Check::FAILED,
-        sprintf('Directory «%s» does not exist or is not writable', $dirname),
-        'directories'
-        ));
-    }
-
     return $checkList;
     
   }
