@@ -9,6 +9,8 @@
 
 <?php include_partial('content/flashes'); ?>
 
+<?php include_component('profile', 'gravatar', array('profile'=>$current_user, 'size'=>96)) ?>
+
 <form action="<?php echo url_for('users/edit?id='. $current_user->getSfGuardUser()->getId()) ?>" method="post">
 
 <h2><?php echo __('Basic information') ?></h2>

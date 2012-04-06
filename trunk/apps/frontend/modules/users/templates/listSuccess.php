@@ -28,6 +28,9 @@
     <tr>
 	  <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
       <th class="sf_admin_text" style="text-align: right"><?php echo __('#') ?></th>
+      <?php if(sfConfig::get('app_gravatar_use')): ?>
+        <th class="sf_admin_text"><?php echo __('Avatar') ?></th>
+      <?php endif ?>
       <th class="sf_admin_text"><?php echo link_to(__('G'), url_for( 'users/setsortlistpreference?sortby=gender&query='.$query)) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Username'), url_for( 'users/setsortlistpreference?sortby=username&query='.$query)) ?></th>
       <?php /*
@@ -50,6 +53,12 @@
   <input type="checkbox" name="ids[]" value="<?php echo $user->getUserId() ?>" class="sf_admin_batch_checkbox" />
 </td>
       <td style="text-align: right"><?php echo $i ?></td>
+      
+      <?php if(sfConfig::get('app_gravatar_use')): ?>
+          <td><?php include_component('profile', 'gravatar', array('profile'=>$user, 'size'=>16)) ?></td>
+      <?php endif ?>
+
+      
       <td><?php include_partial('gender', array('gender'=>$user->getGender())) ?></td>
       <td<?php if(!$user->getSfGuardUser()->getIsActive()) echo ' class="notcurrent"' ?>>
       

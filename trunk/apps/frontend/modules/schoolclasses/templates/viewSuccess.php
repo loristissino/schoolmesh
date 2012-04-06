@@ -38,6 +38,9 @@
 <?php if(isset($appointment)): ?>
     <th class="sf_admin_text"></th>
 <?php endif ?>
+<?php if(sfConfig::get('app_gravatar_use')): ?>
+    <th class="sf_admin_text"><?php echo __('Avatar') ?></th>
+<?php endif ?>
       <th class="sf_admin_text"><?php echo __('Gender') ?></th>
       <th class="sf_admin_text"><?php echo __('First name') ?></th>
       <th class="sf_admin_text"><?php echo __('Last name') ?></th>
@@ -72,8 +75,9 @@
     <?php endif ?>
     </td>
 <?php endif ?>
-
-
+      <?php if(sfConfig::get('app_gravatar_use')): ?>
+          <td><?php include_component('profile', 'gravatar', array('profile'=>$enrolment->getsfGuardUser()->getProfile(), 'size'=>16)) ?></td>
+      <?php endif ?>
       <td><?php include_partial('users/gender', array('gender'=>$enrolment->getsfGuardUser()->getProfile()->getGender())) ?></td>
       <td><?php echo $enrolment->getsfGuardUser()->getProfile()->getFirstName() ?></td>
       <td><?php echo $enrolment->getsfGuardUser()->getProfile()->getLastName() ?></td>
