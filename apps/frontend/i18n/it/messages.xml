@@ -4472,6 +4472,10 @@
         <source>Final report archived</source>
         <target>Relazione finale archiviata</target>
       </trans-unit>
+      <trans-unit id="1117">
+        <source>Avatar</source>
+        <target>Avatar</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>

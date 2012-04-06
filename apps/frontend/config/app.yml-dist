@@ -79,6 +79,12 @@ all:
     logfile: /var/schoolmesh/log/schoolmeshlog.txt
     debug: true
 
+  gravatar:
+    use: false
+    # choose one of the following:
+    url: https://secure.gravatar.com/avatar/%hash%?d=mm&s=%size%
+    #url: https://secure.gravatar.com/avatar/%hash%?d=mm&s=%size%
+
   lucene:
     directory: /var/schoolmesh/data/lucene
     # Where Lucene index binary files will be put

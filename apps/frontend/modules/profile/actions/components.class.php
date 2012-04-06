@@ -36,4 +36,20 @@ class profileComponents extends sfComponents
 //  $this->softuser = softUser::getSoftUsername();
 //  $this->fullname = softUser::getFullname();
   }
+  
+  
+  public function executeGravatar()
+  {
+    if(!sfConfig::get('app_gravatar_use', false))
+    {
+      return sfView::NONE;
+    }
+    $this->hash=md5(strtolower(trim($this->profile->getValidatedEmail())));
+    $this->url=str_replace(
+      array('%hash%', '%size%'),
+      array($this->hash, $this->size),
+      sfConfig::get('app_gravatar_url')
+    );
+  }
+
 }
