@@ -1,12 +1,27 @@
+<?php if($breadcrumpstype=='plansandreport/appointment/export'): ?>
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
-    '@plansandreports' => "Plans and Reports",
+    '@plansandreports' => __('Plans and Reports'),
     'plansandreports/fill?id='.$workplan->getId() => $workplan
     ),
   'current'=>__('Export'),
   'title'=>$workplan,
   ))
 ?>  
+<?php endif ?>
+<?php if($breadcrumpstype=='plansandreports/list/appointment/export'): ?>
+<?php include_partial('content/breadcrumps', array(
+  'breadcrumps'=>array(
+    'plansandreports/list' => __('Plans and Reports'),
+    '_plansandreports/' => $workplan
+    ),
+  'current'=>__('Export'),
+  'title'=>$workplan,
+  ))
+?>  
+<?php endif ?>
+
+
 
 <h2><?php echo __("General information") ?></h2>
 <ul>

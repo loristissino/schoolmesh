@@ -4460,6 +4460,18 @@
         <source>Abridged document</source>
         <target>Versione ridotta</target>
     </trans-unit>
+      <trans-unit id="1114">
+        <source>Report submitted for approval.</source>
+        <target>Relazione consegnato.</target>
+      </trans-unit>
+      <trans-unit id="1115">
+        <source>Final report approved</source>
+        <target>Relazione finale approvata</target>
+      </trans-unit>
+      <trans-unit id="1116">
+        <source>Final report archived</source>
+        <target>Relazione finale archiviata</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>
