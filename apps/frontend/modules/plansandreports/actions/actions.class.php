@@ -308,13 +308,13 @@ public function executeBatch(sfWebRequest $request)
 		
     $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
 	
-	$result=$workplan->removeTool($this->getUser()->getProfile()->getSfGuardUser()->getId(), $request->getParameter('tool'));
-	
-	$this->getUser()->setFlash($result['result'], $result['message']);
-	
-	$tools=$workplan->getTools();
+    $result=$workplan->removeTool($this->getUser()->getProfile()->getSfGuardUser()->getId(), $request->getParameter('tool'));
+    
+    $this->getUser()->setFlash($result['result'], $result['message']);
+    
+    $tools=$workplan->getTools();
 
-	return $this->renderPartial('aux', array('tools'=>$tools, 'workplan'=>$workplan));
+    return $this->renderPartial('aux', array('tools'=>$tools, 'workplan'=>$workplan));
 
 	}
 
@@ -324,13 +324,13 @@ public function executeBatch(sfWebRequest $request)
 		
     $workplan = AppointmentPeer::retrieveByPk($request->getParameter('id'));
 	
-	$result=$workplan->addTool($this->getUser()->getProfile()->getSfGuardUser()->getId(), $request->getParameter('tool'));
-	
-	$this->getUser()->setFlash($result['result'], $result['message']);
-	
-	$tools=$workplan->getTools();
+    $result=$workplan->addTool($this->getUser()->getProfile()->getSfGuardUser()->getId(), $request->getParameter('tool'));
+    
+    $this->getUser()->setFlash($result['result'], $result['message']);
+    
+    $tools=$workplan->getTools();
 
-	return $this->renderPartial('aux', array('tools'=>$tools, 'workplan'=>$workplan));
+    return $this->renderPartial('aux', array('tools'=>$tools, 'workplan'=>$workplan));
 
 	}
 
@@ -521,6 +521,17 @@ public function executeBatch(sfWebRequest $request)
     $this->attachments=$this->workplan->getAttachmentFiles();
 
     $this->unoconv_active=OdfDocPeer::getIsUnoconvActive();
+    
+    if($request->getParameter('back','')=='monitor')
+    {
+      $this->breadcrumpstype='plansandreports/list/appointment/export';
+    }
+    else
+    {
+      $this->breadcrumpstype='plansandreport/appointment/export';
+    }
+
+    
 
   }
 

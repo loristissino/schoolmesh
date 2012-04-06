@@ -123,7 +123,7 @@ class SetupChecker
 
     foreach (AppointmentTypePeer::retrieveActive() as $appointment_type)
     {
-      foreach(array('20', '30', '40', '41', '50', '60', '70', '80', '90') as $state)
+      foreach(array('20', '30', '40', '41', '50', '60', '70', '80', '81', '90') as $state)
       {
         $templates_needed[]=sprintf('appointment_%s_%d.odt', $appointment_type->getShortcut(), $state);
       }
