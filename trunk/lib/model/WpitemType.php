@@ -69,13 +69,13 @@ class WpitemType extends BaseWpitemType
  
 public function delete(PropelPDO $con = null)
 {  
-  $con = Propel::getConnection(PagePeer::DATABASE_NAME);
+  $con = Propel::getConnection(WpitemTypePeer::DATABASE_NAME);
   try
   {
     $con->beginTransaction();
  
     // decrease all the ranks of the page records of the same category with higher rank 
-    $sql = 'UPDATE '.WptemTypePeer::TABLE_NAME.' SET '.WpitemTypePeer::RANK.' = '.WpitemTypePeer::RANK.' - 1 WHERE '.WpitemTypePeer::RANK.' > '.$this->getRank();
+    $sql = 'UPDATE '.WpitemTypePeer::TABLE_NAME.' SET '.WpitemTypePeer::RANK.' = '.WpitemTypePeer::RANK.' - 1 WHERE '.WpitemTypePeer::RANK.' > '.$this->getRank();
     $con->executeQuery($sql);
     // delete the item
     parent::delete();
