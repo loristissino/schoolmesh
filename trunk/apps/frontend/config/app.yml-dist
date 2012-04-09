@@ -130,6 +130,13 @@ all:
 
   opendocument:
     template_directory: /var/schoolmesh/templates/oo  
+    changedir: true
+    # If this is set to true, the OdfDoc plugin will change current dir
+    # to whatever is returned by sys_get_temp_dir()
+    # usually it is safe, and needed when we want documents converted
+    # in other formats (since we need write permissions to the directory)
+    # It must be set to false when, like on tuxfamily.org demo version,
+    # we cannot change directory.
     formats:
       odt: OpenDocument (odt)
       pdf: Portable Document Format (pdf)
