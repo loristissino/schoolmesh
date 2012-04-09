@@ -17,7 +17,10 @@ class OdfDoc
 
 	public function __construct($template, $filename='Untitled Document', $type='odt')
 		{
-      chdir(sys_get_temp_dir());
+      if(sfConfig::get('app_opendocument_changedir', false)==true)
+      {
+        chdir(sys_get_temp_dir());
+      }
 			$name=tempnam('/tmp', 'oo_');
 			unlink($name);
 			$this->_file2serve=$name.'.odt';
