@@ -803,10 +803,6 @@
         <source>Invalid text</source>
         <target>Testo illecito</target>
       </trans-unit>
-      <trans-unit id="229">
-        <source>Missing evaluation for item &#xAB;%s&#xBB; in group &#xAB;%s&#xBB;</source>
-        <target>Manca l'indicazione di realizzazione per l'elemento &#xAB;%s&#xBB; nel gruppo &#xAB;%s&#xBB;</target>
-      </trans-unit>
       <trans-unit id="230">
         <source>Module accepted</source>
         <target>Modulo accettato</target>
@@ -819,7 +815,7 @@
         <source>Missing selection of tools</source>
         <target>Selezione degli strumenti mancante</target>
       </trans-unit>
-      <trans-unit id="233">
+      <trans-unit id="1">
         <source>Some errors prevented the submission of the document.</source>
         <target>Alcuni errori hanno impedito la consegna del documento.</target>
       </trans-unit>
@@ -1027,7 +1023,7 @@
         <source>The item was imported</source>
         <target>L'elemento &#xE8; stato importato</target>
       </trans-unit>
-      <trans-unit id="286">
+      <trans-unit id="2">
         <source>Submit this report</source>
         <target>Consegna questa relazione</target>
       </trans-unit>
@@ -1047,7 +1043,7 @@
         <source>Edit heading</source>
         <target>Modifica l'intestazione</target>
       </trans-unit>
-      <trans-unit id="290">
+      <trans-unit id="8">
         <source>Hours estimated</source>
         <target>Ore necessarie</target>
       </trans-unit>
@@ -1107,7 +1103,7 @@
         <source>Appointments and projects</source>
         <target>Incarichi di docenza e progetti</target>
       </trans-unit>
-      <trans-unit id="304">
+      <trans-unit id="9">
         <source>My appointments</source>
         <target>Incarichi di docenza</target>
       </trans-unit>
@@ -1199,7 +1195,7 @@
         <source>Appointments management</source>
         <target>Gestione incarichi di docenza</target>
       </trans-unit>
-      <trans-unit id="326">
+      <trans-unit id="10">
         <source>Schoolmaster's actions</source>
         <target>Attività del Dirigente Scolastico</target>
       </trans-unit>
@@ -1580,7 +1576,7 @@
         <source>Projects</source>
         <target>Progetti</target>
       </trans-unit>
-	  <trans-unit id="420">
+	  <trans-unit id="1119">
         <source>No deadline defined.</source>
         <target>Nessuna scadenza definita.</target>
       </trans-unit>
@@ -1604,7 +1600,7 @@
         <source>Not yet over</source>
         <target>Scadenza non ancora passata</target>
     </trans-unit>
-    <trans-unit id="425">
+    <trans-unit id="1119">
         <source>Not yet over</source>
         <target>Scadenza non ancora passata</target>
     </trans-unit>
@@ -1640,7 +1636,7 @@
         <source>Edit deadline</source>
         <target>Modifica scadenza</target>
     </trans-unit>
-    <trans-unit id="433">
+    <trans-unit id="1120">
         <source>Edit project</source>
         <target>Modifica progetto</target>
     </trans-unit>
@@ -1708,7 +1704,7 @@
         <source>Send</source>
         <target>Invia</target>
     </trans-unit>
-    <trans-unit id="449">
+    <trans-unit id="1121">
         <source>Send an email to the coordinator of this project</source>
         <target>Spedisci un'email al coordinatore di questo progetto</target>
     </trans-unit>
@@ -1868,7 +1864,7 @@
         <source>Role</source>
         <target>Ruolo</target>
     </trans-unit>
-    <trans-unit id="488">
+    <trans-unit id="1122">
         <source>Import Code</source>
         <target>Codice imp.</target>
     </trans-unit>
@@ -1876,7 +1872,7 @@
         <source>On line help</source>
         <target>Guida in linea</target>
     </trans-unit>
-    <trans-unit id="489">
+    <trans-unit id="1123">
         <source>Search</source>
         <target>Cerca</target>
     </trans-unit>
@@ -1960,7 +1956,7 @@
         <source>Blocks usage</source>
         <target>Uso di blocchi</target>
     </trans-unit>
-    <trans-unit id="509">
+    <trans-unit id="1124">
         <source>Files usage</source>
         <target>Uso di file (i-node)</target>
     </trans-unit>
@@ -2504,7 +2500,7 @@
         <source>New activity</source>
         <target>Nuova attività</target>
     </trans-unit>
-    <trans-unit id="644">
+    <trans-unit id="1125">
         <source>New activity within the project «%project%»</source>
         <target>Nuova attività nell'ambito del progetto «%project%»</target>
     </trans-unit>
@@ -2544,11 +2540,11 @@
         <source>Activities view</source>
         <target>Vista attività</target>
     </trans-unit>
-    <trans-unit id="653">
+    <trans-unit id="1126">
         <source>Project «%project%»</source>
         <target>Progetto «%project%»</target>
     </trans-unit>
-    <trans-unit id="653">
+    <trans-unit id="1127">
         <source>Activities within the resource/task «%resource%»</source>
         <target>Attività nell'ambito della risorsa/compito «%resource%»</target>
     </trans-unit>
@@ -2844,7 +2840,7 @@
         <source>Scheduled date</source>
         <target>Data prevista</target>
     </trans-unit>
-    <trans-unit id="726">
+    <trans-unit id="1128">
         <source>Upshot #%id%</source>
         <target>Esito n. %id%</target>
     </trans-unit>
@@ -3220,15 +3216,15 @@
         <source>Email sent</source>
         <target>Email inviata</target>
     </trans-unit>
-    <trans-unit id="819">
+    <trans-unit id="1130">
         <source>Your email address is faulty.</source>
         <target>Il tuo indirizzo email risulta errato.</target>
     </trans-unit>
-    <trans-unit id="819">
+    <trans-unit id="1131">
         <source>Check your profile for information.</source>
         <target>Controlla il tuo profilo per informazioni.</target>
     </trans-unit>
-    <trans-unit id="819">
+    <trans-unit id="1132">
         <source>Your email address has not been validated yet.</source>
         <target>Il tuo indirizzo email non è stato ancora convalidato.</target>
     </trans-unit>
@@ -3411,10 +3407,6 @@
     <trans-unit id="864">
         <source>Purposes set</source>
         <target>Finalità definite</target>
-    </trans-unit>
-    <trans-unit id="865">
-        <source>Addressees set</source>
-        <target>Destinatari definiti</target>
     </trans-unit>
     <trans-unit id="865">
         <source>Addressees set</source>
@@ -3872,7 +3864,7 @@
         <source>Legend</source>
         <target>Legenda</target>
     </trans-unit>
-    <trans-unit id="979">
+    <trans-unit id="1118">
         <source>No workflow logs available for this item.</source>
         <target>Non sono presenti voci relative al workflow per questo elemento.</target>
     </trans-unit>
@@ -4164,7 +4156,7 @@
         <source>Organizational Chart</source>
         <target>Organigramma</target>
     </trans-unit>
-    <trans-unit id="1051">
+    <trans-unit id="1150">
         <source>Unassigned</source>
         <target>Non assegnato</target>
     </trans-unit>
@@ -4360,47 +4352,47 @@
         <source>New didactic module field type</source>
         <target>Nuovo campo per i moduli didattici</target>
     </trans-unit>
-    <trans-unit id="1089">
+    <trans-unit id="1289">
         <source>This appointment type has some didactic module fields associated with, but it looks like it should not.</source>
         <target>Questo tipo di incarico ha alcuni campi di moduli didattici associati, ma a quanto pare non dovrebbe averne.</target>
     </trans-unit>
-    <trans-unit id="1090">
+    <trans-unit id="1290">
         <source>This appointment type does not have didactic module fields associated with, but it looks like it should.</source>
         <target>Questo tipo di incarico non ha campi di moduli didattici associati, ma a quanto pare dovrebbe averne.</target>
     </trans-unit>
-    <trans-unit id="1091">
+    <trans-unit id="1291">
         <source>Tools and methodologies</source>
         <target>Strumenti e metodologie</target>
     </trans-unit>
-    <trans-unit id="1092">
+    <trans-unit id="1292">
         <source>New group of tools/methodologies</source>
         <target>Nuovo gruppo di strumenti/metodologie</target>
     </trans-unit>
-    <trans-unit id="1093">
+    <trans-unit id="1293">
         <source>Create a new group of tools/methodologies</source>
         <target>Crea un nuovo gruppo di strumenti/metodologie</target>
     </trans-unit>
-    <trans-unit id="1094">
+    <trans-unit id="1294">
         <source>Create a new group of tools/methodologies</source>
         <target>Crea un nuovo gruppo di strumenti/metodologie</target>
     </trans-unit>
-    <trans-unit id="1095">
+    <trans-unit id="1295">
         <source>New group of tools/methodologies</source>
         <target>Nuovo gruppo di strumenti/metodologie</target>
     </trans-unit>
-    <trans-unit id="1096">
+    <trans-unit id="1296">
         <source>Items</source>
         <target>Elementi</target>
     </trans-unit>
-    <trans-unit id="1097">
+    <trans-unit id="1297">
         <source>This appointment type has some group of tools/methodologies associated with, but it looks like it should not.</source>
         <target>Questo tipo di incarico ha alcuni gruppi di strumenti/metodologie associati, ma a quanto pare non dovrebbe averne.</target>
     </trans-unit>
-    <trans-unit id="1098">
+    <trans-unit id="1298">
         <source>This appointment type does not have groups of tools/methodologies associated with, but it looks like it should.</source>
         <target>Questo tipo di incarico non ha gruppi di strumenti/metodologie associati, ma a quanto pare dovrebbe averne.</target>
     </trans-unit>
-    <trans-unit id="1099">
+    <trans-unit id="1299">
         <source>This appointment type</source>
         <target>Questo tipo di incarico</target>
     </trans-unit>
@@ -4475,6 +4467,14 @@
       <trans-unit id="1117">
         <source>Avatar</source>
         <target>Avatar</target>
+      </trans-unit>
+      <trans-unit id="1300">
+        <source>Plurals</source>
+        <target>Plurali</target>
+      </trans-unit>
+      <trans-unit id="1301">
+        <source>[0]There are no files|[1]There is one file|(1,+Inf]There are %number% files</source>
+        <target>[0]Non ci sono file|[1]C'è un file|(1,+Inf]Ci sono %number% file</target>
       </trans-unit>
      </body>
   </file> 
