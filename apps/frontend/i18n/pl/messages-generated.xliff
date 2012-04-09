@@ -93,7 +93,7 @@
       </trans-unit>
       <trans-unit id="42">
         <source>Dashboard</source>
-        <target>Tablica</target>
+        <target>Dashboard</target>
       </trans-unit>
       <trans-unit id="43">
         <source>you were recognized as user &lt;b&gt;%username%&lt;/b&gt;  (%fullname%) by means of network logs. &lt;!--male--&gt;</source>
@@ -149,7 +149,7 @@
       </trans-unit>
       <trans-unit id="60">
         <source>Plans and Reports</source>
-        <target>Plany i Raporty</target>
+        <target>Plany i raporty</target>
       </trans-unit>
       <trans-unit id="61">
         <source>Office</source>
@@ -425,7 +425,7 @@
       </trans-unit>
       <trans-unit id="134">
         <source>Where am I? </source>
-        <target>Gdzie ja jestem? </target>
+        <target>Gdzie ja jestem?</target>
       </trans-unit>
       <trans-unit id="135">
         <source>Content did not match the template.</source>
@@ -477,7 +477,7 @@
       </trans-unit>
       <trans-unit id="147">
         <source>Year</source>
-        <target>Rok</target>
+        <target>rok</target>
       </trans-unit>
       <trans-unit id="148">
         <source>Class</source>
@@ -633,7 +633,7 @@
       </trans-unit>
       <trans-unit id="186">
         <source>OpenOffice.org document</source>
-        <target>Dokument OpenOffice.org</target>
+        <target>dokument OpenOffice.org</target>
       </trans-unit>
       <trans-unit id="187">
         <source>Microsoft Word document</source>
@@ -693,11 +693,11 @@
       </trans-unit>
       <trans-unit id="201">
         <source>[0]Optional choice|[1]Select at least one item|(1,+Inf]Select at least %1% items</source>
-        <target><![CDATA[[0]Opcjonalny wybór|[1]Wybierz co najmniej jeden element|{n: n % 10 > 1 && n % 10 < 5 && ( n < 11 || n > 14 ) && ( n % 100 < 11 || n % 100 > 14 ) }Wybierz co najmniej %1% elementy|[5,+Inf]Wybierz co najmniej %1% elementów]]></target>
+        <target>[0] Opcjonalny wybór | [1] Wybierz co najmniej jeden element | (1, + inf] Wybierz co najmniej %1% przedmiotów</target>
       </trans-unit>
       <trans-unit id="202">
         <source>▣ %s</source>
-        <target>▣ %s</target>
+        <target></target>
       </trans-unit>
       <trans-unit id="203">
         <source>▢ %s</source>
@@ -1453,11 +1453,11 @@
       </trans-unit>
       <trans-unit id="390">
         <source>User profile information updated.</source>
-        <target>Profil informacje o użytkowniku aktualizowana.</target>
+        <target>profil Informacje o użytkowniku aktualizowana.</target>
       </trans-unit>
       <trans-unit id="391">
         <source>An email was sent to you to verify your email address.</source>
-        <target>E-mail został wysłany do Ciebie, aby sprawdzić swój adres e-mail.</target>
+        <target>e-mail został wysłany do Ciebie, aby sprawdzić swój adres e-mail.</target>
       </trans-unit>
       <trans-unit id="392">
         <source>Sorry, the email address could not be validated.</source>
@@ -1942,7 +1942,7 @@
       </trans-unit>
       <trans-unit id="506">
         <source>The message has been correctly sent.</source>
-        <target>Wiadomość została poprawnie wysłana.</target>
+        <target>wiadomość została poprawnie wysłana.</target>
       </trans-unit>
       <trans-unit id="507">
         <source>Undelete</source>
@@ -1954,11 +1954,11 @@
       </trans-unit>
       <trans-unit id="509">
         <source>Blocks usage</source>
-        <target>Użytkowania bloki</target>
+        <target>użytkowania Bloki</target>
       </trans-unit>
       <trans-unit id="1124">
         <source>Files usage</source>
-        <target>Użytkowania pliki</target>
+        <target>użytkowania Pliki</target>
       </trans-unit>
       <trans-unit id="510">
         <source>%name% is using %usedspace% out of %availablespace% available.</source>
@@ -2318,11 +2318,11 @@
       </trans-unit>
       <trans-unit id="599">
         <source>Total for the project «%title%»</source>
-        <target>Razem dla projektu «%title%»</target>
+        <target>Razem dla projektu &quot;%title%»</target>
       </trans-unit>
       <trans-unit id="600">
         <source>[1]Grand total for the project selected|[1,+Inf]Grand total for the %number% projects selected</source>
-        <target>[1]Ogółem dla wybranego projektu|[1,+Inf]Ogółem dla %number% wybranych projektów</target>
+        <target>[1] Ogółem dla wybranego projektu | [1, + Inf] Ogółem w %number% projektów wybranych</target>
       </trans-unit>
       <trans-unit id="601">
         <source>Budget computation</source>
@@ -4298,7 +4298,7 @@
       </trans-unit>
       <trans-unit id="1086">
         <source>Confidential?</source>
-        <target>Poufne?</target>
+        <target>poufne?</target>
       </trans-unit>
       <trans-unit id="1087">
         <source>Code</source>
@@ -4467,14 +4467,6 @@
       <trans-unit id="1117">
         <source>Avatar</source>
         <target>Avatar</target>
-      </trans-unit>
-      <trans-unit id="1300">
-        <source>Plurals</source>
-        <target>Liczba mnoga</target>
-      </trans-unit>
-      <trans-unit id="1301">
-        <source>[0]There are no files|[1]There is one file|(1,+Inf]There are %number% files</source>
-        <target><![CDATA[[0]Nie ma plików|[1]Jest jeden plik|{n: n % 10 > 1 && n % 10 < 5 && ( n < 11 || n > 14 ) && ( n % 100 < 11 || n % 100 > 14 ) }Są %number% pliki|[5,+Inf]Jest %number% plików]]></target>
       </trans-unit>
      </body>
   </file> 

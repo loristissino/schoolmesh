@@ -275,5 +275,10 @@ class contentActions extends sfActions
     $this->forward404Unless(is_array($this->info), 'Not a valid YAML file');
     
   }
+  
+  public function executeTestplurals(sfWebRequest $request)
+  {
+    
+  }
 
 }
