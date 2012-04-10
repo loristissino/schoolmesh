@@ -7,14 +7,30 @@ SchoolMesh is a web application aimed to allow the governance of a school. It is
 
 == How an Italian school is organized ==
 
-Probably a brief about how an Italian school is organized may be useful if you want to use SchoolMesh in another country.
-Please let us know if there are big differences in your country.
+Probably a quick introduction about how an Italian school is organized may be useful if you want to use SchoolMesh in another country. Please let us know if there are big differences in your country.
 
-Italian schools have students, subjects, teachers and other staff.
+|| *year* || *students' age* || *kind of school* ||
+|| 1 || 6 || primary school ||
+|| 2 || 7 || primary school ||
+|| 3 || 8 || primary school ||
+|| 4 || 9 || primary school ||
+|| 5 || 10 || primary school ||
+|| 6 || 11 || secondary school, first level ||
+|| 7 || 12 || secondary school, first level ||
+|| 8 || 13 || secondary school, first level ||
+|| 9 || 14 || secondary school, second level, first two-year period ||
+|| 10 || 15 || secondary school, second level, first two-year period ||
+|| 11 || 16 || secondary school, second level, second two-year period ||
+|| 12 || 17 || secondary school, second level, second two-year period ||
+|| 13 || 18 || secondary school, second level, pre-university year ||
+
+The examples below refer to a secondary school, second level.
+
+In a typical Italian secondary school you find students, teachers and other staff.
 
 Students are grouped in _classes_, of more or less 25-30 people. For most activities, the students of the same class do the same thing together: they all have history lessons, or maths, etc. Classes have usually a name composed with the grade, the section and the track.
 
-For instance, if 50 students of the first grade (14 years old, usually) are enrolled to follow the 'linguistic' track of a school, they might be divided in two classes, 1AL and 1BL.
+For instance, if 50 students of the first grade are enrolled to follow the 'linguistic' track of a school, they might be divided in two classes, 1AL and 1BL.
 
 Schools have typically from 500 to 2000 students, and therefore from about 15 to 70 classes.
 
