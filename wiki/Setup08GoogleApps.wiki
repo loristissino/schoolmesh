@@ -1,0 +1,27 @@
+#summary GoogleApps integration
+#labels Phase-Deploy
+
+= Google Apps Education Edition =
+
+The basic idea of SchoolMesh is to use existing resources, if possible.
+
+One interesting resource available for schools is [http://www.google.com/apps/intl/en/edu/ Google Apps Education Edition], which is offered for free by Google Inc.
+
+SchoolMesh aims to be fully integrated with Google Apps, in order to use features like shared documents, email, calendar, tasks, etc.
+
+The integration is only partial at the moment:
+
+  # it is easy to export teachers' and students' data to a spreadsheet in the format needed by Google Apps to perform a bulk upload
+  # it is possible for people who have a google apps account to keep in sync the passwords with Google's servers
+  # it is easy to send email from within the application using a Google Apps account
+
+Projects for the future are as follows:
+
+  # to setup a [http://code.google.com/intl/it/googleapps/domain/sso/saml_reference_implementation.html Single-Sign-On] infrastructure to be able to login only once for both systems
+  # to integrate due dates for projects and other activities in Google calendar
+  # to use Google Apps APIs to keep data in sync
+  # to create groups automatically, based on internal groups, like classes or departments
+  
+Since !SchoolMesh is written in PHP, most of these things will be done using [http://framework.zend.com/manual/en/zend.gdata.gapps.html Zend GData] and, probably, [http://simplesamlphp.org/ SimpleSAMLphp].
+
+If you have any ideas or comments on this topic, please [http://www.schoolmesh.mattiussilab.net/en/contacts contact us]. Thank you.

@@ -7,7 +7,7 @@
 
 This wiki is here to help users on [Setup installation] and [Guide usage].
 
-The main site for the application is [http://www.schoolmesh.mattiussilab.net www.schoolmesh.mattiussilab.net].
+The main site for the application is [http://www.schoolmesh.mattiussilab.net/en www.schoolmesh.mattiussilab.net].
 
 Thanks to [http://www.tuxfamily.org TuxFamily], there is also a [http://www.schoolmeshdemo.tuxfamily.org/index.php demo web site].
 

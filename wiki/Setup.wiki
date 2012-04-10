@@ -21,4 +21,5 @@
 
 8. [Setup07SmoothWall Integration with SmoothWall firewall]
 
+9. [Setup08GoogleApps Integration with Google Apps Education Edition]
 
