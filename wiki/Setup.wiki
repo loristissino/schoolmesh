@@ -23,3 +23,4 @@
 
 9. [Setup08GoogleApps Integration with Google Apps Education Edition]
 
+10. [Setup09SchoolTool Integration with SchoolTool]
