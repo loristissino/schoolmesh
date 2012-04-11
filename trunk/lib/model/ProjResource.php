@@ -123,13 +123,28 @@ class ProjResource extends BaseProjResource {
   {
     return self::countProjActivitys($criteria, $distinct, $con);
   }
+  
   public function getProjActivities($criteria = null, PropelPDO $con = null)
   {
-    $c=new Criteria();
-    $c->addAscendingOrderByColumn(ProjActivityPeer::BEGINNING);
-    $c->add(ProjActivityPeer::PROJ_RESOURCE_ID, $this->getId());
-    return self::getProjActivitys($c, $con);
+    if(!$criteria)
+    {
+      $criteria=new Criteria();
+    }
+    $criteria->addAscendingOrderByColumn(ProjActivityPeer::BEGINNING);
+    $criteria->add(ProjActivityPeer::PROJ_RESOURCE_ID, $this->getId());
+    return self::getProjActivitys($criteria, $con);
   }
+  
+  public function getAcknowledgedActivities($criteria = null, PropelPDO $con = null)
+  {
+    if(!$criteria)
+    {
+      $criteria=new Criteria();
+    }
+    $criteria->add(ProjActivityPeer::ACKNOWLEDGED_AT, null, Criteria::ISNOTNULL);
+    return self::getProjActivitys($criteria, $con);
+  }
+  
 
   public function acknowledgeActivity($user_id, ProjActivity $activity)
   {

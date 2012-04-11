@@ -494,8 +494,8 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		{
 				return $this->getFullName();
 		}
-        public function getFullName($maxLength=0)
-        {
+    public function getFullName($maxLength=0)
+    {
 			if ($maxLength==0)
 			{
                 return $this->getFirstName() . ' ' . $this->getLastName();
@@ -509,11 +509,11 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 				
 			$try=substr($this->getFirstName(), 0, 1) . '. '. $this->getLastName();
 			if (strlen($try)<=$maxLength)
-				{
-					return $try;
-				}
+      {
+        return $try;
+      }
 			return substr($try, 0, $maxLength-1) . '…';
-        }
+    }
 		
 		public function getSalutation($sfContext=null)
 		{
@@ -530,20 +530,29 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 			return $greeting;
 		}
+    
+    public function getFullNameWithTitle()
+    {
+      if (!$this->getLetterTitle())
+      {
+        return $this->getFullName();
+      }
+      return $this->getLetterTitle() . ' ' . $this->getFullName();
+    }
 		
-        public function getUsername()
-        {
-                return $this->getsfGuardUser()->getUsername();
-        }
+    public function getUsername()
+    {
+            return $this->getsfGuardUser()->getUsername();
+    }
 
-        public function getRoleDescription()
-        {
+    public function getRoleDescription()
+    {
 			if ($this->getRole())
 			{
 				return $this->getRole()->getRoleDescriptionByGender($this->getIsMale());
 			}
                 return null;
-        }
+    }
 
 
 		public function getIsDeletable()
@@ -806,15 +815,18 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 		}
 
-    public function getCurrentAppointments($sortcolumns=array())
+    public function getCurrentAppointments($criteria=null, $sortcolumns=array())
     {
-      $c = new Criteria();
-			$c->add(AppointmentPeer::USER_ID, $this->getUserId());
-			$c->add(AppointmentPeer::STATE, Workflow::AP_ASSIGNED, Criteria::GREATER_THAN);
-			$c->add(AppointmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
+      if(!$criteria)
+      {
+        $criteria = new Criteria();
+      }
+			$criteria->add(AppointmentPeer::USER_ID, $this->getUserId());
+			$criteria->add(AppointmentPeer::STATE, Workflow::AP_ASSIGNED, Criteria::GREATER_THAN);
+			$criteria->add(AppointmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
       if(sizeof($sortcolumns)==0)
       {
-        $c->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID);
+        $criteria->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID);
       }
       else
       {
@@ -822,16 +834,23 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
         {
           if($ascending)
           {
-            $c->addAscendingOrderByColumn($sortcolumn);
+            $criteria->addAscendingOrderByColumn($sortcolumn);
           }
           else
           {
-            $c->addDescendingOrderByColumn($sortcolumn);
+            $criteria->addDescendingOrderByColumn($sortcolumn);
           }
         }
       }
-			$t = AppointmentPeer::doSelectJoinAllExceptsfGuardUser($c);
+			$t = AppointmentPeer::doSelectJoinAllExceptsfGuardUser($criteria);
 			return $t;
+    }
+
+    public function getCurrentAppointmentsWithTeachingHours()
+    {
+      $criteria=new Criteria();
+			$criteria->add(AppointmentPeer::HOURS, 0, Criteria::GREATER_THAN);
+			return self::getCurrentAppointments($criteria);
     }
 		
     public function getCurrentSchoolclasses()

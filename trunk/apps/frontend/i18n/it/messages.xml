@@ -4476,6 +4476,14 @@
         <source>[0]There are no files|[1]There is one file|(1,+Inf]There are %number% files</source>
         <target>[0]Non ci sono file|[1]C'è un file|(1,+Inf]Ci sono %number% file</target>
       </trans-unit>
+      <trans-unit id="1302">
+        <source>Used</source>
+        <target>Usata</target>
+      </trans-unit>
+      <trans-unit id="1303">
+        <source>not yet acknowledged</source>
+        <target>non ancora riconosciuta</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>
