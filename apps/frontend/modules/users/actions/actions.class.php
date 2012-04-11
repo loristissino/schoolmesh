@@ -384,6 +384,38 @@ class usersActions extends sfActions
 
   }
 
+  public function executeGetkeyrolechargeletter(sfWebRequest $request)
+  {
+
+		set_time_limit(0);
+    $ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
+
+		$result=sfGuardUserProfilePeer::getKeyRolesChargeLetter($ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
+		
+		if ($result['result']=='error')
+		{
+			$this->getUser()->setFlash('error', $result['message']);
+			$this->redirect('users/list');
+		}
+		
+		$odfdoc=$result['content'];
+		if (is_object($odfdoc))
+		{
+			$odfdoc
+			->saveFile()
+			->setResponse($this->getContext()->getResponse());
+			return sfView::NONE;
+
+		}
+		else
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.'));
+			$this->redirect('users/list');
+		}
+
+  }
+
+
 
   public function executeGetgoogleappsletter(sfWebRequest $request)
   {

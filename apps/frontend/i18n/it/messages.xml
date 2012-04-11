@@ -4484,10 +4484,17 @@
         <source>not yet acknowledged</source>
         <target>non ancora riconosciuta</target>
       </trans-unit>
+      <trans-unit id="1304">
+        <source>Get teaching appointments letter</source>
+        <target>Scarica lettere di incarico per docenza</target>
+      </trans-unit>
+      <trans-unit id="1305">
+        <source>Get key role charge letters</source>
+        <target>Scarica lettera di incarico per ruoli chiave</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>
-
 
 
 

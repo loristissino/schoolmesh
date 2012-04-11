@@ -44,7 +44,7 @@
 			</p>
 		<?php endif ?>
 
-		<?php if ($sf_user->getProfile()->getEmailState()==sfGuardUserProfilePeer::EMAIL_WAITINGVALIDATION): ?>
+		<?php if ($sf_user->getProfile()->getEmailState()==sfGuardUserProfilePeer::EMAIL_UNVERIFIED): ?>
 			<p class="schoolmesh_profile_notices">
 			<?php echo __('Your email address has not been validated yet.') ?>
 			<?php echo link_to(

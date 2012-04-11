@@ -114,8 +114,8 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
       {
         case sfGuardUserProfilePeer::EMAIL_UNDEFINED:
           return 'undefined';
-        case sfGuardUserProfilePeer::EMAIL_WAITINGVALIDATION:
-          return 'waitingvalidation';
+        case sfGuardUserProfilePeer::EMAIL_UNVERIFIED:
+          return 'unverified';
         case sfGuardUserProfilePeer::EMAIL_VERIFIED:
           return 'verified';
         case sfGuardUserProfilePeer::EMAIL_FAULTY:
@@ -852,6 +852,37 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$criteria->add(AppointmentPeer::HOURS, 0, Criteria::GREATER_THAN);
 			return self::getCurrentAppointments($criteria);
     }
+
+    public function getCurrentCharges()
+    {
+      return array();
+      $criteria = new Criteria();
+			$criteria->add(AppointmentPeer::USER_ID, $this->getUserId());
+			$criteria->add(AppointmentPeer::STATE, Workflow::AP_ASSIGNED, Criteria::GREATER_THAN);
+			$criteria->add(AppointmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
+      if(sizeof($sortcolumns)==0)
+      {
+        $criteria->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID);
+      }
+      else
+      {
+        foreach($sortcolumns as $sortcolumn=>$ascending)
+        {
+          if($ascending)
+          {
+            $criteria->addAscendingOrderByColumn($sortcolumn);
+          }
+          else
+          {
+            $criteria->addDescendingOrderByColumn($sortcolumn);
+          }
+        }
+      }
+			$t = AppointmentPeer::doSelectJoinAllExceptsfGuardUser($criteria);
+			return $t;
+    }
+
+
 		
     public function getCurrentSchoolclasses()
     {
@@ -908,9 +939,16 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
     public function getKeyroles($options=array())
     {
+      
       $c = new Criteria();
 			$c->add(UserTeamPeer::USER_ID, $this->getUserId());
       $c->add(RolePeer::QUALITY_CODE, null, Criteria::ISNOTNULL);
+
+      if(array_key_exists('chargeletter_needed', $options) and $options['chargeletter_needed'])
+      {
+        $c->add(RolePeer::NEEDS_CHARGE_LETTER, true);
+      }
+
 			$t = UserTeamPeer::doSelectJoinAllExceptsfGuardUser($c);
       
       if(array_key_exists('astext', $options) and $options['astext'])
@@ -918,9 +956,12 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
         $keyroles=array();
         foreach($t as $ut)
         {
-          $keyroles[$ut->getRole()->getQualityCode()]=$ut->getRole()->getId();
+          if($ut->getRole()->getQualityCode())
+          {
+            $keyroles[$ut->getRole()->getId()]=$ut->getRole()->getQualityCode();
+          }
         }
-        return sizeof($keyroles)?implode(',', array_flip($keyroles)):false;
+        return sizeof($keyroles)?implode(',', $keyroles):false;
       }
 			return $t;
     }
@@ -1804,6 +1845,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     $doc->addField(Zend_Search_Lucene_Field::UnStored('mainrole', $mainrole, 'utf-8'));
     
     $keyroles=$this->getKeyroles(array('astext'=>true));
+    
     $doc->addField(Zend_Search_Lucene_Field::UnStored('keyroles', $keyroles?$keyroles:'none', 'utf-8'));
     
     $doc->addField(Zend_Search_Lucene_Field::UnStored('birthdate', $this->getBirthdate('%Y%m%d'), 'utf-8'));    

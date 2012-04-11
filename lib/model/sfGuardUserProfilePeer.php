@@ -14,7 +14,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 {
 	
 	const EMAIL_UNDEFINED=0;
-	const EMAIL_WAITINGVALIDATION=1;
+	const EMAIL_UNVERIFIED=1;
 	const EMAIL_VERIFIED=2;
   const EMAIL_FAULTY=3;
 	
@@ -736,6 +736,80 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 			$letters->year($currentYear->__toString());
 			$letters->letterDate(date('d/m/Y'));
 			$letters->hoursTotal($hoursTotal);
+      $letters->schoolPrincipal(sfConfig::get('app_school_principal', 'missing Principal name in config file'));
+      
+			$pagebreak=($count<sizeof($users))?'<pagebreak>':'';
+			$letters->pagebreak($pagebreak);
+			$letters->merge();
+		}
+		
+		$odfdoc->mergeSegment($letters);
+
+		$result['content']=$odf;
+		$result['result']='notice';
+		return $result;
+
+	}
+
+
+	public static function getKeyRolesChargeLetter($ids, $filetype='odt', $context=null)
+	{
+		$result=Array();
+
+		$users=self::retrieveByPksSortedByLastnames($ids);
+		
+		try
+		{
+			$templatename='keyroleschargeletter.odt';
+			$odf=new OdfDoc($templatename, 'Key roles charge letter', $filetype);
+		}
+		catch (Exception $e)
+		{
+			if ($e InstanceOf OdfDocTemplateException)
+			{
+				$result['result']='error';
+				$result['message']='Template not found or not readable: '. $templatename;
+				return $result;
+			}
+			
+			if ($e InstanceOf OdfException)
+			{
+				$result['result']='error';
+				$result['message']='Template not valid: '. $templatename;
+				return $result;
+			}
+			
+			throw $e;
+		}
+		
+    $currentYear=YearPeer::retrieveByPK(sfConfig::get('app_config_current_year'));
+    
+		$odfdoc=$odf->getOdfDocument();
+		$letters=$odfdoc->setSegment('letters');
+		$count=0;
+		foreach($users as $user)
+		{
+			$count++;
+      
+      $charges=$user->getKeyroles(array('chargeletter_needed'=>true));  // we get an array of UserTeam objects
+      if(sizeof($charges)==0)
+      {
+        continue;
+      }
+      
+      foreach($charges as $charge)
+      {
+        $letters->charges->chargeDescription($user->getIsMale()?$charge->getRole()->getMaleDescription():$charge->getRole()->getFemaleDescription());
+        $letters->charges->chargeContext($charge->getTeam()->getDescription());
+        $letters->charges->chargeExpiry($charge->getExpiry('d/m/Y'));
+        $letters->charges->chargeNotes($charge->getNotes());
+        $letters->charges->merge();
+      }
+			
+			$letters->userTitle($user->getLetterTitle());
+			$letters->userFullName($user->getFullName());
+			$letters->year($currentYear->__toString());
+			$letters->letterDate(date('d/m/Y'));
       $letters->schoolPrincipal(sfConfig::get('app_school_principal', 'missing Principal name in config file'));
       
 			$pagebreak=($count<sizeof($users))?'<pagebreak>':'';
