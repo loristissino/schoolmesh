@@ -672,6 +672,86 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		return $result;
 
 	}
+
+
+	public static function getTeachingAppointmentsLetter($ids, $filetype='odt', $context=null)
+	{
+		$result=Array();
+
+		$users=self::retrieveByPksSortedByLastnames($ids);
+		
+		try
+		{
+			$templatename='teachingappointmentsletter.odt';
+			$odf=new OdfDoc($templatename, 'Teaching appointments letter', $filetype);
+		}
+		catch (Exception $e)
+		{
+			if ($e InstanceOf OdfDocTemplateException)
+			{
+				$result['result']='error';
+				$result['message']='Template not found or not readable: '. $templatename;
+				return $result;
+			}
+			
+			if ($e InstanceOf OdfException)
+			{
+				$result['result']='error';
+				$result['message']='Template not valid: '. $templatename;
+				return $result;
+			}
+			
+			throw $e;
+		}
+		
+    $currentYear=YearPeer::retrieveByPK(sfConfig::get('app_config_current_year'));
+    
+		$odfdoc=$odf->getOdfDocument();
+		$letters=$odfdoc->setSegment('letters');
+		$count=0;
+		foreach($users as $user)
+		{
+			$count++;
+      
+      $hoursTotal=0;
+
+      $appointments=$user->getCurrentAppointmentsWithTeachingHours();
+      if(sizeof($appointments)==0)
+      {
+        continue;
+      }
+      foreach($appointments as $appointment)
+      {
+        $letters->appointments->appointmentClass($appointment->getSchoolclass()->getDescription());
+        $letters->appointments->appointmentSubject($appointment->getSubject()->getDescription());
+        $letters->appointments->appointmentType($appointment->getAppointmentType()->getDescription());
+        $hours=$appointment->getWeeklyHours();
+        $hoursTotal+=$hours;
+        $letters->appointments->appointmentHours($hours);
+        $letters->appointments->merge();
+      }
+			
+			$letters->userTitle($user->getLetterTitle());
+			$letters->userFullName($user->getFullName());
+			$letters->year($currentYear->__toString());
+			$letters->letterDate(date('d/m/Y'));
+			$letters->hoursTotal($hoursTotal);
+      $letters->schoolPrincipal(sfConfig::get('app_school_principal', 'missing Principal name in config file'));
+      
+			$pagebreak=($count<sizeof($users))?'<pagebreak>':'';
+			$letters->pagebreak($pagebreak);
+			$letters->merge();
+		}
+		
+		$odfdoc->mergeSegment($letters);
+
+		$result['content']=$odf;
+		$result['result']='notice';
+		return $result;
+
+	}
+
+
 	
 	public static function getGoogleAppsLetter($ids, $filetype='odt', $context=null)
 	{
@@ -820,7 +900,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		{
 			$count++;
 
-      $appointments=$user->getCurrentAppointments(array(AppointmentPeer::SUBJECT_ID=>true));
+      $appointments=$user->getCurrentAppointments(null, array(AppointmentPeer::SUBJECT_ID=>true));
 
 			$signs->userTitle($user->getLettertitle());
 			$signs->userFirstName($user->getFirstName());

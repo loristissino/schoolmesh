@@ -112,6 +112,7 @@ class SetupChecker
 
 
     $templates_needed=array(
+      'teachingappointmentsletter.odt',
       'projects_charges.odt',
       'projects_submission.odt',
       'projects_staffsynthesis.odt',

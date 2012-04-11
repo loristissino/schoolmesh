@@ -15,7 +15,9 @@
       <li><?php echo __('Approved') ?>: <strong><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getQuantityApproved() ?></strong></li>
       <?php endif ?>
       <?php if($resource->getTotalQuantityForAcknowledgedActivities()>0): ?>
-      <li><?php echo __('Used') ?>: <strong><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getTotalQuantityForAcknowledgedActivities() ?></strong></li>
+      <li><?php echo __('Used') ?>: <strong><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getTotalQuantityForAcknowledgedActivities() ?></strong><br/ >
+      <?php include_component('projects', 'resourceactivities', array('resource'=>$resource)) ?>
+      </li>
       <?php endif ?>
     <?php endif ?>
 	</ul>

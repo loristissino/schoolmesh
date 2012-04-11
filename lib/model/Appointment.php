@@ -2171,5 +2171,10 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
     return SyllabusItemPeer::doSelect($c);
   }
   
+  public function getWeeklyHours()
+  {
+    return floor($this->getHours() / sfConfig::get('app_config_year_weeks', '33'));
+  }
+
 
 }

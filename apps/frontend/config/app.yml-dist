@@ -57,6 +57,8 @@ all:
     googleapps_admin_credentials: [ schoolmeshadmin@example.com, NoReAsOnToTeLlYoU ]
     googleapps_url: http://webmail.example.com
 
+    year_weeks: 33
+
     major_age: 18
     
     default_male_teachertitle: Prof.
