@@ -1,0 +1,16 @@
+message:
+  subject: Email address confirmation
+  salutation: true
+  tagline: false
+  body: |
+
+    looks like you set up a new email address to use with the SchoolMesh
+    application.
+    
+    To confirm that the address is correct, please follow this link:
+
+    http://..../index.php/content/checkemail/user/%username%/code/%verification_code%
+
+    Thank you.
+
+       The staff

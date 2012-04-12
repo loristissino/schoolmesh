@@ -1,0 +1,8 @@
+default:
+  credentials: [[ internet, admin ]]
+
+userenableinternetaccess:
+  credentials: [[ internet, admin ]]
+
+adminenableinternetaccess:
+  credentials: [[ admin ]]

@@ -1,0 +1,31 @@
+# This file contains settings for schoolmesh-related shell scripts (schoolmesh_*).
+# It must be sourced in order to have a common configuration.
+
+if [ $# -eq 0 ]
+	then
+		echo "This script is a wrapper. See schoolmesh(1) for details."
+		exit 1
+	fi
+
+CONFIG_READ=1
+POSIX_HOMEDIR=/home/homeschoolmesh
+POSIX_HOMEDIR_USERS="$POSIX_HOMEDIR/users"
+POSIX_HOMEDIR_TEAMS="$POSIX_HOMEDIR/teams"
+POSIX_BASEFOLDER=Mattiussi
+POSIX_BASEFOLDER_OWNER=root:root
+POSIX_DEFAULT_QUOTA_SBQ=2000
+POSIX_DEFAULT_QUOTA_HBQ=3000
+POSIX_DEFAULT_QUOTA_SFQ=1000
+POSIX_DEFAULT_QUOTA_HFQ=1500
+
+FIREWALL_ADDRESS=127.0.0.1
+FIREWALL_SSH_PORT=222   # default for SmoothWall 
+FIREWALL_SSH_USER=root
+# password is not stored; use ssh-keygen to guarantee your access to the 
+# firewall machine for www-data (or other users that may need it)
+FIREWALL_CHAIN=schoolmesh
+FIREWALL_COMMENT=schoolmeshrule
+
+# DO NET EDIT PASS THIS LINE
+
+source /var/schoolmesh/config/schoolmesh.bashfunctions

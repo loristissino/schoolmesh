@@ -1,0 +1,127 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - start, stop or show the status of Unoconv Odf converter
+#@
+#@ # SYNOPSIS
+#@
+#@ {} start | stop | status
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to start or stop Unoconv Odf converter.
+#@
+#@ # WARNINGS
+#@
+#@ This should be used by an unprivileged user with a minimal X configuration 
+#@ and little privileges
+#@
+#@ # EXAMPLES
+#@
+#@ {-} start
+#@ {-} stop
+
+OPTION=$1
+
+checkOneOf $OPTION start stop status
+
+function do_start()
+{
+	
+	TEMPFILE=$(mktemp)
+	$0 status > $TEMPFILE
+	
+	if grep 'found=1' $TEMPFILE > /dev/null; then
+		msg_failed 'OpenOffice converter already active'
+		rm $TEMPFILE
+		exit 1
+	fi
+	
+	echo -n 'starting Unoconv...'
+	unoconv --listener --port 2002 2>/dev/null &
+	sleep 2
+	echo ' done'
+	
+	$0 status > $TEMPFILE
+	
+	if grep 'found=0' $TEMPFILE > /dev/null; then
+		msg_failed 'Could not start OpenOffice converter'
+		rm $TEMPFILE
+		exit 4
+	else
+		msg_ok 'OpenOffice converter started'
+	fi
+	rm $TEMPFILE
+
+}
+
+function do_status()
+{
+	PID=$(pgrep -f '^soffice.bin.*accept=socket')
+	if [[ -z $PID ]]; then
+		echo found=0
+		exit
+	fi
+	echo found=1
+	echo pid=$PID
+	
+	CMDLINE=$(ps -o "%a" $PID | tail -1)
+	echo cmdline=$CMDLINE
+
+	USER=$(ps -o "%U" $PID | tail -1)
+	echo user=$USER
+	
+	TTY=$(ps -o "%y" $PID | tail -1)
+	echo tty=$TTY
+
+}
+
+
+function do_stop()
+{
+	TEMPFILE=$(mktemp)
+	$0 status > $TEMPFILE
+	
+	if grep 'found=0' $TEMPFILE > /dev/null; then
+		msg_failed 'No OpenOffice instance to stop'
+		rm $TEMPFILE
+		exit 2
+	fi
+		
+	PID=$(grep 'pid=' $TEMPFILE | cut -d= -f2)
+	echo -n 'killing process ' $PID '...'
+	kill $PID 
+	echo 'done'
+	
+	$0 status > $TEMPFILE
+	
+	if grep 'found=1' $TEMPFILE > /dev/null; then
+		msg_failed 'Could not stop OpenOffice converter'
+		rm $TEMPFILE
+		exit 5
+	else
+		msg_ok 'OpenOffice converter stopped'
+	fi
+	rm $TEMPFILE
+}
+
+case $OPTION in
+	start)
+		do_start
+		;;
+	stop)
+		do_stop
+		;;
+	status)
+		do_status
+		;;
+
+esac
+
+
+

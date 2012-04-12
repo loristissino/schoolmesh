@@ -1,0 +1,1117 @@
+3 Nie pamiętasz hasła?
+4 Zintegrowane środowisko do zastosowań szkolnych
+5 Obecny profil (rok §)
+6 Co uczę
+7 Które grupy należę do
+11 § wylogowany
+12 Zaloguj się status § (<strong> § </ strong>) ze stacji roboczej § (§):
+13 Zaloguj czas: §
+14 Wyloguj czas: §
+15 § zalogowany
+16 Ostatni raz widziałem: §
+17 lista Uprawnienia
+27 Nie masz wymaganego pozwolenia, aby uzyskać dostęp do tej strony.
+28 Workstation Internet-aktywna
+29 Workstation Internet-disabled
+30 Miękkie uwierzytelniania:
+32 nie zostały rozpoznane.
+33 Normalne uwierzytelnianie:
+34 jesteś zalogowany jako użytkownik <b> § </ b> (§).
+36 sprawdzone
+37 Możesz zalogować
+39 Możesz wylogować
+42 Dashboard
+43 zostałeś uznany za użytkownika <b> § </ b> (§) za pomocą logów sieciowych. <- Męski ->
+44 zostałeś uznany za użytkownika <b> § </ b> (§) za pomocą logów sieciowych. <- Kobieta ->
+45 Wydaje się, że jesteś gość z §. <- Męski ->
+46 Wydaje się, że jesteś gość z §. <- Kobieta ->
+Profil 47 § 's
+48 §: mój profil
+49 Używasz% § swojego przypisanego miejsca na dysku.
+50 Ostatnia kontrola była na §.
+51 Home
+52 Kto jest on-line
+53 Mój profil
+54 Workstation lista
+55 Musisz się zalogować, aby uzyskać dostęp żądanej strony.
+60 Plany i raporty
+61 Biuro
+62 Schoolmaster
+63 Zobacz
+64 Zatwierdzanie planu pracy
+65 Odrzucenie planu pracy
+66 zatwierdza sprawozdanie
+67 Odrzucić sprawozdanie
+68 Przenieś w górę
+69 ruch w dół
+70 Plan pracy:
+71 Informacje ogólne
+72 Nauczyciel:
+73 Klasa:
+74 Rok produkcji:
+75 moduły
+76 Workflow
+77 Aktualny status
+78 Ostatnia aktualizacja
+79 Historia
+80 Edycja
+81 Usuń
+82 Czy na pewno?
+83 Brak informacji dostępna
+84 Przełącz
+85 min
+86 max
+87 edycja tekstu bogatych
+88 Nowy
+89 Powrót do pracy są / raport% s
+90 unset
+91 Moduł Przedmioty
+92 nie ustawiony
+93 Nr wybór zrobić.
+94 Moduł #% d:
+95 Okres:% s
+96 (Ocena:% d)
+97 Informacje ogólne
+98 Aux
+99 Napełnij
+100 planach roboczych i raporty
+101 Tak:% s
+102 nr:% s
+103 Podstawowe informacje
+104 Aktualny stan
+105 Pokaż ten dokument
+106 Eksportuj jako zwykły tekst (YAML)
+108 Zapisz
+109 Dokument przekazany
+111 Dla każdego typu elementu, ocena wyrażona jest przy minimum i maksimum w następujący sposób:
+112 Edit Wpinfo
+113 plany robocze zatwierdzony
+114 Wyślij ten dokument do zatwierdzenia
+115 Ranking
+116 Okres
+117 Tytuł
+118 oceny
+119 Akcje
+120 [0] Ocena zrealizowane | [1] Brak jedną ocenę z § | [1, + inf] Brakujące § Oceny się z §
+121 [0] Ocena zakończone | [1] brakuje jednej oceny | [1 Znaki + inf] Brakujące § oceny
+122 nowy element został wstawiony.
+123 poz został usunięty
+125 Pozycje zostały włączone
+126 pozycja nie może być usunięty
+127 poz został zaktualizowany
+128 moduł
+130 Tytuł:
+131 Okres:
+132 Moduł widok:% s
+134 Gdzie ja jestem?
+135 Zawartość nie pasuje do szablonu.
+136 Zawartość zapisany.
+137 Projekt Plan pracy
+138 Instytucja Pośrednicząca / raport końcowy
+Pomoc 139
+140 możliwych stanów planach roboczych i raporty są następujące:
+141 Plan pracy czeka na kontroli administracyjnej
+142 Plan pracy czeka na nauczyciela pliku `s zatwierdzenia
+143 sprawozdanie okresowe czeka na nauczyciela pliku `oceny s
+144 Raport końcowy czeka na kontroli administracyjnej
+145 Raport końcowy czeka na nauczyciela pliku `oceny s
+146 Raport końcowy zatwierdzony i archiwizowane
+147 rok
+148 Klasa
+149 Temat
+150 Ostatnia akcja
+151 State
+152 akcji
+153 Szybkie edytuj lista
+154 Plan pracy z nauczycielem% s
+155 Eksport
+156 Dostępne formaty na eksport
+157 YAML
+158 ODT
+159 DOC
+160 RTF
+161 PDF
+162 Zawartość
+163 [0] Czy na pewno |? [1] Czy na pewno?
+164 Dokumenty złożone nie mogą być modyfikowane więcej.
+165 Zapisz i wróć do planu pracy
+166 Zapisz i przejdź do następnego elementu
+167 Wskazówki
+168 dodaje się zdanie zostały wykorzystane w innych planach roboczych:
+169 Używane w "S%»
+170 Brak podpowiedzi Dostępne w dla tej pozycji
+171 Przykład
+172 można oprzeć swój tekst na poniższym przykładzie:
+173 Żaden przykład dostepny dla tej pozycji.
+174 Wymagany?
+175 Submitted
+176 przeszedł
+177 nie
+178 niezbędne do wypełnienia
+179 Zawartość nie może być puste
+180 Zawartość doesn \ 't szablon mecz
+181 Wypełniona
+182 pozycja została opublikowana
+183 pozycja jest poufna
+184 poz było odłączone
+185 Moduł:
+186 dokument OpenOffice.org
+187 dokument Word Microsoft
+188 Rich Text Format
+189 Pełny widok
+190 publiczna?
+191 publicznych
+192 prywatnych
+193 Wypełnij ten moduł określający zawartość, cele, umiejętności, kompetencji, itp.
+194 Usuń ten moduł
+195 pozostać prywatne
+196 nie wolno dopuścić, innych nauczycieli, aby zobaczyć i korzystać z tego modułu (do planu pracy zostanie złożony)
+197 Publish
+198 Pozwól innym nauczycielom, aby zobaczyć i korzystać z tego modułu
+199 Odłączanie
+200 usuń ten moduł z tego planu pracy, ale zachować go jako dostepny dla innych te
+201 [0] Opcjonalny wybór | [1] Wybierz co najmniej jeden element | (1, + inf] Wybierz co najmniej § przedmiotów
+202% ▣ s
+203 ▢% s
+204 Wypełnienie tego pola (wymagane)
+205 Wypełnienie tego pola (opcjonalnie)
+206 dokumentów przedłożenie
+207 Utwórz nowy moduł
+208 importu
+209 Pokaż ten dokument na jednej stronie
+210 § Przedmiot #
+211 Tutaj możesz zarządzać wszystkie elementy z tej grupy w postaci listy ust (może to być przydatne do kopiuj i wklej operacji z dokumentów starszych).
+212 Ta zawartość musi być zgodna z szablonu. Można oprzeć się na przykładzie podanym poniżej.
+213 Zapisz to co napisałeś do tej pory
+214 Zapisz i wróć do głównego dokumentu
+215 Zapisz te treści i wrócić do głównego dokumentu
+216 Zapisz i rozpocząć edycję następnego elementu, że dzieje się «s%»
+217 Informacje
+218 append
+219 Dołącz tę treść tego co napisałeś i zapisywane
+220 Używaj
+221 Wymień co napisałeś o tej treści
+222 Eksport planu pracy w jednym z dostępnych formatów
+223 musi być co najmniej jeden moduł
+224 Nieprawidłowy lub duplikat tytuł dla modułu
+225 Nieprawidłowe określenie terminu dla modułu
+226 Missing grupa% s
+227 musi być co najmniej pozycja w grupie "% s»
+228 Niepoprawny tekst
+230 Moduł akceptowane
+231 Narzędzia wybranych
+232 Brakujące dobór narzędzi
+1 Niektóre błędy uniemożliwiły złożenie dokumentu.
+233 pozycje zostały zastąpione.
+234 Importuj plan pracy z pliku lub z bazy danych
+235 zaimportować ten plan pracy z bazy danych, zastępując całą zawartość "S%»
+236 import Plan pracy
+237 Importuj jeden z twoich planach roboczych
+238 Importowanie plan pracy kolegi
+239 Nauczyciel
+240 Importuj z pliku
+241 Jeszcze nie zaimplementowane
+243 Działanie to będzie zastąpić całą zawartość planu pracy.
+245 (otwiera się w nowym oknie)
+246 brakuje?
+247 Ta zawartość jest wymagane, a obecnie brakuje
+248 plan pracy został prawidłowo zaimportowany.
+249 Użytkownik zarządzanie
+250 pozycja była związana
+251 import module Plan pracy
+252% di ów plan pracy
+253 Importuj jeden z modułów
+254 Importuj moduł kolegi
+255 Pokaż ten moduł
+256 zaimportować ten moduł z bazy danych
+257 Łącze
+258 Link do tego modułu do planu pracy
+259 Zapisz te treści i wrócić do modułu
+260 Zapisz i wróć do modułu
+261 Zapisz te elementy i powrócić do modułu
+262 Jesteś teraz wypełniając pole "% S".
+263 Zapisz i przejdź do następnego elementu, "% s»
+264 sierota moduł
+265 Pozycja ta nie jest prawidłowo wypełniony.
+266 Należy następnie administracyjnie sprawdzone i zatwierdzone przez nauczyciela
+267 Powrót do moich planach roboczych i raporty
+269 ​​Składanie sukces
+270 Gratulacje!
+271 dokument "% s» został przesłany pomyślnie.
+272 musi być teraz administracyjnie sprawdzane a następnie zatwierdzone przez nauczyciela.
+273 komunikat potwierdzający został wysłany na adres §.
+274 Zawartość wymienić.
+275 Zawartość dołączona.
+276 Wyślij ten plan pracy do zatwierdzenia
+277 Plan pracy / Sprawozdanie:
+278 Powrót do dokumentu "% s»
+Dokument 279:
+280 plany robocze złożone
+281 Ta akcja nie jest dozwolona dla dokumentu w tym stanie.
+282 Plan pracy przedłożony do zatwierdzenia.
+283 Dzisiaj
+284 Wczoraj,
+285 Ukryj
+286 pozycja została przywieziona
+2 przedstawia to sprawozdanie
+287 [0] Pani § s
+288 wypełnione na% s
+289 Wypełnienie tego dokumentu
+290 Edycja pozycji
+8 godzin oszacowano
+291 moduł Edytuj nagłówek
+292 Godziny szacuje:
+293 [0] No wyboru nie. | [1] Jeden sprawdzić nie. | (1, + Inf] Łącznie% 1 kontroli nieudanych.
+294 [0] No sprawdzić przeszedł. | [1] Jeden sprawdzić przeszedł. | (1, + Inf] Łącznie% 1 kontroli minęły.
+295 [0] Nie było żadnych ostrzeżeń. | [1] Nie było jedno ostrzeżenie. | (1, + Inf] Były% 1 ostrzeżenia.
+296 [0] ok | [1] jedno nie | (1, + Inf]% 1 nie powiodło się
+297 [0] wszystko źle | [1] jeden czek przekazany | (1, + Inf]% 1 przekazywane
+298 [0] OK | [1] jedno ostrzegawcze | (1, znak + Inf]% 1 ostrzeżenia
+299 Prawidłowy tytuł
+300 Kontrole
+301 [0] Brak wyboru dokonano. | [1] Jedna kontrola została wykonana. | (1, + Inf] Łącznie% 1 kontrole zostały zrobione.
+302 Godzin
+303 Powołanie nie potwierdzone
+304 Terminy i projekty
+9 Moje nominacje
+305 Moje klasy
+306 Imię
+307 Nazwisko
+308 Numer
+309 Płeć
+310 wymowa
+311 Klasy
+312 Klasa% s
+313 Opis
+314 [0] Brak przedmioty | [1] jedno z zastrzeżeniem | (1, + inf] § tematy
+315 [0] No wynik znalezionych | [1]. Jednym z rezultatów znalezionych |. (1, + inf] § wyników.
+316 Wyświetlanie wyników § d.
+317 plan prac i monitorowanie reports '
+318 Monitorowanie
+319 Zatwierdź
+320 Odrzuć
+321 Powołanie Potwierdź
+322 Zatwierdź plan pracy
+323 Odrzuć plan pracy
+324 Zobacz wydarzenia
+325 biurowy działania
+326 zarządzanie Nominacje
+10 Działania nauczyciela
+327 Rozrachunki
+328 SchoolMesh główny rachunek
+329 Zmień hasło
+330 Hasło
+331 Hasło ponownie
+332 Komentarz
+333 Odrzuć dokumentu
+334 Imię i nazwisko
+335 Host
+336 podsieci
+337 Online od
+338 Godziny pracy:
+339 Importowanie modułu wcześniej przygotowane
+340 Sporządzono z modułem.
+341 Nie można dodać ten sam element dwukrotnie.
+342 Nie można dodać ten sam element dwukrotnie.
+343 Filtry
+344 Wszystkie państwa
+345 Wszyscy nauczyciele
+346 Wszystkie przedmioty
+347 Wszystkie klasy
+348 pokaż tylko te dokumenty
+349 zestaw filtrów.
+350 filtr był ustawiony.
+351 żądane działania zostały przeprowadzone.
+352 p.
+353 p.
+354 § Drogi
+355 § Drogi
+356 Obserwacja siatki do «§» (klasa §)
+357 Wybrane studentów
+358 Odwróć zaznaczenie dla wszystkich studentów
+359 Wszyscy wybrani uczniowie
+360 [0] Aktualnie wybrana | [1] aktualnie wybrany
+361 [0] Obecnie nie wybrano | [1] nie jest aktualnie wybrany
+362 Zobacz klasa
+363 Prepare sieci
+364 Wybierz akcję
+365 Sugestie
+366 Przygotuj litery
+367 Należy wybrać co najmniej jeden uczeń.
+368 Należy wybrać akcję.
+369 Fill sieci rekuperacja
+370 Get litery rekuperacyjne
+371 dokument PDF
+Litery 372 rekuperacji dla «§» (klasa §)
+373 Proponowane warunki do wypoczynku
+374 Dodaj nową wskazówkę
+375 rekuperacji sugestie
+376 Kategoria
+377 Uwagi
+378 Godziny zatwierdzony
+379 Termin
+380 Zakończono
+381 Zadanie cesjonariusz
+382 Oryginalne termin
+383 Obecny termin
+384 Projekt informacje aktualizowane.
+385 Koordynator
+386 § Termin #
+387 Dodaj Termin monitoring
+388 § Szanowni Państwo,
+389 § Szanowni Państwo,
+390 profil Informacje o użytkowniku aktualizowana.
+391 e-mail został wysłany do Ciebie, aby sprawdzić swój adres e-mail.
+392 Przepraszamy, adres e-mail nie mogła zostać zatwierdzone.
+393 Problem z e-mail potwierdzenia adresu
+394 Adres email zatwierdzone
+395 Twój e-mail § została pomyślnie zweryfikowane.
+396 E-mail walidacji
+397 Data urodzenia
+398 miejsce urodzenia
+399 E-mail stanu
+400 Drugie imię
+401 Tak
+402 nr
+403 Aby potwierdzić swój adres e-mail, musisz edytować swój SchoolMesh głównego konta.
+
+404 Aktualne hasło
+405 Zasób niedostępny
+406 Wygląda na to żądanie zasobu, który nie jest dostępny, lub dla których nie ma uprawnień.
+407 [0] Proszę ustawić adres e-mail w swoim profilu. | [1] Proszę ustawić adres e-mail w swoim profilu.
+408 [0] To będzie łatwiej bieżąco informowany o aktualizacjach na temat korzystania z tej aplikacji. | [1]] To będzie łatwiej bieżąco informowany o aktualizacjach na temat korzystania z tej aplikacji.
+409 [0] Wystarczy zmienić swój SchoolMesh informacji dotyczących konta. | [1] Wystarczy zmienić swój SchoolMesh informacji o koncie.
+410 Dziękuję.
+411 Brak adresu e-mail został ustawiony.
+412 Twój adres email § została już z powodzeniem sprawdzony.
+413 Adres e-mail już zatwierdzone
+414 zaległych
+415 zakończony
+416 jeszcze się nie skończył
+417 jeszcze się nie skończył
+418 Oryginalny termin
+419 Aktualny termin
+420 Projekty
+1119 Nr termin określony.
+421 Missing ocena
+422 Ankieta
+423 Moodle platforma e-learningowa
+424 Przeterminowane
+425 jeszcze się nie skończył
+1119 jeszcze się nie skończył
+426 Zadanie zakończone
+427 Zobacz jak raport
+428 Monitorowanie terminów
+429 Przedsięwzięcia dotyczące zarządzania
+430 projekty Pl
+431 Moje pliki
+432 Zdalne zarządzanie plikami na serwerze
+433 termin Edytuj
+1120 projekt Edytuj
+434 W tym terminie zakończenia zadania potrzebuje plik udokumentowania wyników.
+435 Załącznik
+436 Nieprawidłowy.
+437 Załączniki
+438 Załączniki
+439 Typ
+440 Nazwa pliku
+441 Rozmiar
+442 wprowadza informacje o tym projekcie
+443 Zobacz raport dla tego projektu
+444 Przygotowanie i wysłać e-mail do koordynatora tego projektu
+445 W
+446 Temat wiadomości
+447 Ciało
+448 Ciało
+449 Wyślij
+1121 Wyślij e-mail do koordynatora tego projektu
+450 drobne
+451 major
+452 Pokaż wszystkie tematy
+453 Pokaż tylko mój temat
+454 można importować jeden z następujących modułów publicznych.
+455 Moduły są uznawane za publiczne, gdy: a) należą do planu pracy został już zatwierdzony, lub b) gdy są one jawnie opublikowany przez właściciela przed jego zatwierdzeniem planu pracy.
+456 Nr plan pracy znaleźć.
+457 Nr moduł znaleźć.
+458 Dokumenty
+459 Obecnie pracujesz na rok §, a nie na rok bieżący.
+460 Brak projekty zdefiniowane.
+461 załączników Potrzeby
+462 Nowy projekt
+463 Przygotowanie nowego projektu
+464 Rok ustawiony §.
+465 kompletna
+466 zmniejszona
+467 zatwierdzanie wybranych dokumentów
+468 Plan pracy przyjęty.
+469 Plan pracy odrzucone.
+470 Dokumenty dotyczące tego powołania.
+471 Dane są eksportowane przy użyciu bieżącego szablonu i ustawienia.
+472 Jeśli potrzebujesz oryginalną wersję, użyj załączniki poniżej.
+473 Operacja nie powiodła się.
+474 Proszę skontaktować się z administratorem, by sprawdzić szablon.
+475 Konwersja nie powiodła się.
+476 Korzystając z tego konta, użytkownik zgadza się przestrzegać zasad określonych w dokumencie on-line dostępnego w §.
+477 Regulamin
+478 Synchronizacja hasła
+479 Zaakceptuj warunki
+480 Musisz zaakceptować warunki świadczenia usług, aby kontynuować.
+481 hasło nie może być zsynchronizowany z powodu błędu uwierzytelniania.
+482 Hasło zostało zsynchronizowane.
+483 Uaktywnij konto
+484 Wniosek data
+485 Zaakceptuj warunki datę
+486 Idź do strony logowania
+487 Wymagany.
+488 Rola
+1122 Kodeks importu
+489 Na temat wiersza
+1123 Szukaj
+490 pomocy Pokaż stronę o zapytań
+491 otwiera się w osobnym oknie
+492 Wstaw niektóre słowa kluczowe
+493 Edytuj konto "§» z §
+494 Informacje o § Edytuj
+495 § Undelete
+496 mężczyzn
+497 kobiet
+498 Działania
+499 Zarządzanie użytkownikami
+500 Administracja
+501 G
+502 #
+503 Wpisy
+504 Żadna wiadomość mogła zostać wysłana.
+505 Liczba wiadomości poprawnie wysłany: §.
+506 wiadomość została poprawnie wysłana.
+507 Undelete
+508 statystyki kwot dyskowych
+509 użytkowania Bloki
+1124 użytkowania Pliki
+510 § § korzysta z § dostępna.
+511 Korzystasz z § § dostępna.
+512 użytkowników sprawdzeń w §
+513 użytkowników sprawdzeń
+514 Edycja konta posix z §
+515 Rzeczywista kwota miękkie bloki: §
+516 Rzeczywista ciężko kontyngent bloki: §
+517 Zestaw miękki kontyngentu bloki: §
+518 Set ciężko kontyngentu bloki: §
+519 Powrót
+520 użytkowników sprawdzeń dla wszystkich użytkowników wymienionych na tej stronie
+521 Używasz § pliki z § dostępna.
+522 § używa § pliki z § dostępna.
+523 Zastosuj do wszystkich
+524 Zastosuj te ustawienia do wszystkich innych rachunków wybranych użytkowników
+525 Rzeczywista miękki kontyngent plików: §
+526 Rzeczywista ciężko kontyngent plików: §
+527 Zestaw miękki kontyngent plików: §
+528 Set ciężko kontyngent plików: §
+529 Ustawienia pomyślnie skopiowany.
+530 użytkowników
+531 Używane bloki
+532 używane pliki
+533 Wykres
+Suma 534
+535 kontyngentu bloki
+536 kontyngentu Pliki
+537 Sugerowane polecenia
+538 Execute
+539 Pobierz skrypt
+540 Preview skrypt
+541 Script podgląd
+542 może po prostu wykonać te polecenia, kopiując je na terminalu.
+543 użytkownik sprawdza
+544 Usuwanie wybranych użytkowników
+545 Napisz e-mail
+546 Pokaż statystyki kwot
+547 Nowy użytkownik
+548 Get list powitalny
+549 Get lista wyboru szablonu
+550 Get list GoogleApps
+551 Get GoogleApps danych
+552 Zarejestruj się
+553 tokena
+554 wydarzenie Edytuj
+555 wydarzeń Edit
+556 § Event
+557 Wydarzenia
+558 Dodaj wydarzenie
+559 sygn.
+560 pkt
+561 Wkład
+562 Syllabus linki
+563 Wyłączony Obecny wkład moduł do tego celu jego osiągnięcia
+564 Zestaw aktualny moduł częściowy wkład do osiągnięcia tego celu jest
+565 Zestaw aktualny moduł ukierunkowany wkład do osiągnięcia tego celu jest
+566 Kliknij aby edytować tytuł
+567 Kliknij aby edytować termin
+568 Kliknij aby edytować oszacowanie godzin pracy niezbędnych
+569 Przynajmniej jeden moduł koncentruje się na ten cel
+570 Nr moduł koncentruje się na ten cel
+571 Brak oferty moduł z tym celem
+Profil 572 § 's
+573 Przełącz Obecny wkład moduł do tego celu jest osiągnięcie
+574 Przełącz moduł «§» wkład do osiągnięcia tego celu jest
+575 Syllabus widok
+576 Zobacz jak raport
+577 Zobacz jak stół
+578 Termin §
+579 Finansowanie
+580 M.U.
+581 Ilość szacuje (€)
+582 Ilość zatwierdzony (€)
+583 Ilość szacuje (h)
+584 Ilość zatwierdzony (h)
+585 Szacowanie
+586 Efekt końcowy (€)
+587 Efekt końcowy (h)
+588 zadań, zasoby, harmonogram
+589 projektów
+590 Zatwierdzenie
+591 zarządzanie Zespoły
+592 Wyślij projekt
+593 Dodaj resource / zadanie
+594 zatwierdzenie Ustaw datę
+595 Finansowanie Ustaw datę
+596 budżet Compute
+597 Koszt
+598 Kwota
+599 Razem dla projektu "§»
+600 [1] Ogółem dla wybranego projektu | [1, + Inf] Ogółem w § projektów wybranych
+601 Budżet obliczenie
+602 typ zasobów
+603 Powrót do projektu
+604 § zasobów #
+Zasób 605 pomyślnie zaktualizowane.
+606 Projekt informacje zapisane.
+607 Brak terminy zdefiniowane.
+608 Nr resource / zadanie zdefiniowane.
+609 Termin został dodany. Należy postępować w wypełnieniu niezbędnych informacji.
+610 resource / zadanie zostało dodane. Należy postępować w wypełnieniu niezbędnych informacji.
+611 Termin pomyślnie zaktualizowane.
+612 resource / zadanie pomyślnie zaktualizowane.
+613 projekt został złożony.
+614 Zatwierdzenie data
+615 Finansowanie data
+616 Zatwierdzenie notatki
+617 Finansowanie zauważa
+618 Informacje o projekty zostały zaktualizowane.
+619 Termin został usunięty.
+620 resource / zadanie zostało usunięte.
+621 Terminy
+622 Nr zestaw opis
+623 Nie zdefiniowano termin
+624 Nr resource / zadanie określone
+625 koordynator nie posiada zatwierdzonego adres e-mail
+626 koordynator ma zatwierdzoną adres e-mail
+627 Nr zestaw kategorii
+628 kategoria ta jest ustawiona
+629 Nr zestaw finansowanie
+630 Nr zestaw tytuł
+631 Tytuł zestaw
+632 Nr zestaw opis
+633 Opis zestaw
+634 ilość określoną dla zasobu nie jest ustawiona
+635 Przynajmniej resource / zadaniem jest zdefiniowana
+636 Nie zdefiniowano termin
+637 No data zdefiniowana dla terminu
+638 Brak opisu zdefiniowane dla terminu
+639 Przynajmniej termin jest zdefiniowany
+640 Zatwierdzone
+641 Raport Projekty
+642 Ilość używanych (h)
+643 zasób / zadania
+644 Nowy rodzaj działalności
+1125 Nowy rodzaj działalności w ramach projektu «§»
+645 Początku
+646 Wybierz projekt (i zadanie), które wykonywane swoją działalność za:
+647 Ilość
+648 Potwierdzenie
+649 nie został jeszcze potwierdzony
+650 Działalność ta została acknoweledged
+651 Działalność ta nie została jeszcze acknoweledged
+652 [0] Brak działania, które uznają | [1] Jest jedna działalność, aby potwierdzić | (1, + Inf] Istnieją § działalność do uznania
+653 Działania widok
+1126 Projekt «§»
+1127 Działania w ramach zasobów / zadania «§»
+654 Potwierdzenie
+655 Całkowita wielkość przyznał
+656 działalność została uznana.
+657 aktywności już potwierdzone.
+658 działalność nie może być uznane.
+659 aktywności został zapisany.
+660 Aktywny informacje aktualizowane.
+661 Działalność została usunięta.
+662 aktywności Edytuj
+663 aktywności Edytuj w ramach projektu «§»
+664 Działalność ta pokrywa się poprzedni
+665 ilość uznawana jest większa niż finansowanego
+666 Całkowita wielkość finansowania
+667 Potwierdzenie prowadzenie tej działalności
+668 Moje działania
+669 Wykorzystanie
+670 Należy określić akcję.
+671 Należy wybrać co najmniej jeden projekt.
+672 ustawiania daty zatwierdzenia dla następujących projektów:
+673 ustawiasz datę finansowania następujących projektów:
+674 Brak aktywności oświadczył.
+675 Wybierz użytkownika
+676 Dodaj przyznał działalność
+677 Dodaj uznaną działalność innego użytkownika do tego zadania
+678 Działalność ta została dodana bezpośrednio przez koordynatora
+679 Projekt Projekt
+680 Projekt przedłożony
+681 Projekt zatwierdzony
+682 Projekt finansowany
+683 projektów gotowych
+684 Finansowanie zestaw
+685 z potwierdzeniem tej działalności, nie będzie przekroczenie kosztów
+686 Data wydarzenia
+687 Aktualizacja stanu
+688 zdarzenie zostało pomyślnie zapisane.
+689 Nowe zdarzenie zapisane.
+690 Państwo:
+691 Zdarzenie pomyślnie usunięty.
+692 Projekt stworzył
+693 Państwo ustawiony na "zatwierdziła»
+694 Państwo ustawiony na "finansowany»
+695 Zatwierdzenie data ustawiona § (§)
+696 Finansowanie data ustawiona § (§)
+697 Aktualizacja ilość zatwierdzony do zasobu «§» ustaw z §
+698 Projekt «§»
+699 Widok projektu
+700 Set data
+701 ustawienie Data
+702 Eksportuj jako arkusza kalkulacyjnego
+703 Brak połączenia program nauczania określony.
+704 Standardowy koszt
+705 Pomiar jednostka
+706 Standardowe koszty aktualizacji.
+707 Nr normy aktualizacja koszt potrzebne.
+708 standardowe koszty Aktualizacja
+709 Aktualizacja standardowy koszt zasobu «§», na «§» (monetarnej? §)
+710 Projekty definicje typów zasobów
+711 częściowy
+712 skoncentrowany
+713 Adresaci
+714 Cele
+715 goli
+716 Charged użytkownik
+717 Planowana termin
+718 Raport końcowy
+719 Działalność ta nie została uznana przez naładowaną użytkownika
+720 Oczekiwane upshots
+721 Wskaźnik
+722 wynik
+723 Dodaj wynik
+724 Dodaj nową oczekiwany efekt do tego projektu
+725 Brak upshots zdefiniowane.
+726 Planowana data
+1128 Skutek # §
+727 W rezultacie został dodany. Należy postępować w wypełnieniu niezbędnych informacji.
+728 Uzyskane upshots
+729 Tabela widok
+730 Widok drzewa
+731 sylabusów linki Pokaż na drzewie
+732 sylabusów linki Pokaż w tabeli
+733 Compute synteza danych (komplet)
+734 Projekty obliczeń dane synteza
+735 Łączna kwota
+736 sumy z
+737 Nie jesteś odpowiedzialny za to zadanie
+738 Zajęcia dla zadania "§»
+739 Dodaj
+740 Zerowanie do projektu
+741 Wszystkie wybrane projekty zostały poprawnie przywrócić do stanu projektu.
+742 Nie można zresetować do projektów finansowanych projektów już.
+743 Zobacz listę studentów zapisanych w tej klasie
+744 Zobacz inne wkład do tego programu nauczania dla tej klasy
+745 Nazwa
+746 Credential
+747 Konto
+748 naprawdę istnieje?
+749 jest zablokowana?
+750 Ostatnia synchronizacja
+751 Ostatnia znana login
+752 Kontyngent
+753 Resetowanie hasła
+754 Resetowanie hasła dla tego konta
+755 odblokować konto
+756 Unlock konto
+757 Edycja informacji o tym koncie
+758 yes
+759 nie
+760 włączone
+761 osób niepełnosprawnych
+762 załącznika potrzeby?
+763 Deklarują działalności wykonywanej do tego zadania
+764 [0] To jest zadanie, które są odpowiedzialne za | [1] To jest zadanie, które są odpowiedzialne za
+765 Online pomocy na działania «§ / §»
+766 Get nauczyciela nagłówki rejestrów szkolnych
+767 Wyłącz dostęp do sieci dla stacji roboczej § do godziny jedenastej
+768 Dostęp do Internetu Enable dla stacji roboczej §
+769 Dostęp do Internetu Enable
+770 Web off (dni)
+771 stacji roboczych
+772 Enabled?
+773 Projekt «§»
+774 Projekt powraca do projektu
+775 stacji roboczych podsieci «§»
+776 Propozycje
+777 Ostatnie wyszukiwania:
+778 Wyczyść historię
+779 Syllabus «§»
+780 wersja
+781 Autor
+782 Lista
+783 opracowanymi programami
+784 Brak poświadczenia
+785 Nie masz potrzebną poświadczeń do korzystania z konta typu "§".
+786 Fix GoogleApps poświadczenia
+787 Poświadczenia stałe (liczba działań potrzebne: §).
+788 Get litery ładowania
+789 Preferuje RichText
+790 Numer
+791 Edytuj informacje administracyjne o tym projekcie
+792 Eksport dokumentacji z tego projektu
+793 Charge litery
+794 Wszystkie moduły
+795 Zmień wszystkie wkład moduły do ​​tego celu jest osiągnięcie
+796 Wszystkie moduły tego planu pracy
+797 Stosunek jakości do pola "§» ustawić «§»
+798 dokument został prawidłowo wykonany prywatnych.
+799 Dodać cały dokument urzędowy, przed złożeniem, dzięki czemu współpracownicy mogą go zobaczyć
+800 Ustawienie całego dokumentu do prywatnych
+801 bit publiczna nie może być zmieniona dla dokumentu w tym stanie.
+802 dokument został prawidłowo opublikowany. Należy pamiętać, że to jest teraz widoczne przez swoich kolegów, ale nie złożone.
+803 dokument został prawidłowo wykonany prywatnych.
+804 Żądane działanie nie może być wykonana.
+805 sylabusów składki ustanowione dla wszystkich modułów tego planu pracy
+806 Plan pracy administracyjnie sprawdzone.
+807 Moje poświadczenia
+808 § 's poświadczenia
+809 Indywidualne
+810 dziedziczone
+811 odwołać poświadczeń dla% s
+812 Dodaj poświadczeń
+813 nieokreślone
+814 waitingvalidation
+815 sprawdzone
+816 uszkodzony
+817 e-mail weryfikacja została wysłana do §.
+818 Wyślij kolejnego kodu weryfikacyjnego
+819 wysłany e-mail
+1130 Twój adres email jest uszkodzony.
+1131 Sprawdź swój profil do informacji.
+1132 Twój adres e-mail nie został zatwierdzony jeszcze.
+820 Klasa skład
+821 klasa skład
+822 Nie można mieć powrotu karetki w tym tekście. Zastanów się nad wykorzystaniem "Quick Edytuj listę" akcji zamiast.
+823 szczelinach czasowych
+824 Jest to stacja robocza używasz
+825 Web off (ts)
+826 Web na (dzień)
+827 Web na (ts)
+828 Wyłącz dostęp do sieci dla stacji roboczej § bieżącego szczelinie
+829 Brak stacji roboczych zdefiniowana.
+830 Web Access Enable dla stacji roboczej § bieżącego szczelinie
+831 Web Access Enable dla stacji roboczej § do godziny jedenastej
+832 Web Access Harmonogram
+833 Web Access Enable w bieżącym przedziale czasowym
+834 Wyłącz dostęp do sieci w bieżącym przedziale czasowym
+835 Web Access Enable do godziny jedenastej
+836 Switched podsieć.
+837 Obecnie pracujesz na podsieci §, a nie na tej, którą faktycznie zalogowanego użytkownika.
+Dostęp do internetu 838 włączona dla stacji roboczej.
+839 Web Access nie może zostać włączona dla stacji roboczej.
+840 Wszystko planowanie zrobić.
+841 Brak planowania zrobić.
+842 Niektóre planowanie zrobić.
+843 Web Access włączona dla wszystkich stacji roboczych wybranych.
+844 Web Access nie może zostać włączony do żadnego z wybranych stacji roboczych.
+845 Web Access może być włączona tylko dla niektórych stanowisk wybranych.
+846 Web Access wyłączone dla wszystkich stacji roboczych wybranych.
+847 Web Access nie może zostać wyłączona z jednego z wybranych stacji roboczych.
+848 Web Access może zostać wyłączona tylko dla niektórych stanowisk wybranych.
+849 Web Access Harmonogram
+850 dostęp planowania WWW dla podsieci «§»
+851 Planując dostęp do sieci dla stacji roboczych następujących:
+852 Harmonogram
+853 Kiedy
+854 akcja Potwierdź
+855 Będziesz włączyć Web Access dla bieżącego szczelinie na następujących stanowiskach:
+856 Będziesz wyłączyć dostęp do sieci dla bieżącego szczelinie na następujących stanowiskach:
+857 Będziesz aby umożliwić dostęp do sieci dla następujących stanowisk pracy do końca dnia:
+858 Powrót do LAN administracji
+859 Wracaj do sieci lokalnej administracji strony
+860 Potwierdź
+861 typ zasobu nie jest ustawiona
+862 Brak upshots zdefiniowane
+863 Cele określone
+864 celów określonych
+865 Adresaci ustawić
+866 Wybierz naładowany osobę
+867 Zadanie to należy do projektu nie są jeszcze potwierdzone
+868 zadań
+869 [0] Charged użytkownika <- kobieta -> | <! - Męski -> [1] Charged użytkownik
+870 Local Area Network
+871 dostęp zarządzanie Web
+872 Główna rola
+873 Email stan
+874 Nominacje
+875 Dodać termin
+876 jest aktywny
+877 Importuj kod
+878 użytkownik Edytuj §
+879 Nie wydaje się być zalogowany w sieci lokalnej.
+880 Get znaki dla rodziców i nauczycieli konsultingu
+881 Eksport do §
+882 Eksport tego dokumentu w określonym formacie
+883 Wybierz rolę
+884 Preferowany format
+885 Państwo zestaw do «potwierdzone»
+886 potwierdzenie Ustaw datę
+887 ustawiasz datę potwierdzenia dla następujących projektów:
+888 Potwierdzenie daty
+889 Potwierdzenie zauważa
+890 Potwierdzenie data ustawiona § (§)
+891 Daty
+892 Projekt potwierdza
+893 Kwota est (€)
+894 zrefinansowane ext.lly (€)
+895 Aktualizacja kwoty finansowane zewnętrznie do zasób «§» ustaw z § (§)
+896 Kwota int
+897 Kwota w.
+898 Finansowanie zewnętrzne niezdefiniowane
+899 Plan pracy zatwierdzony
+900 Czy monetarnej
+901 Lista Projectresourcetypes
+902 Projectresourcetypes Edit
+903 wyeksportować raport w jednym z dostępnych formatów
+904 [0] baza danych zostanie zresetowany do ustawień w kilka sekund. | [1] baza danych zostanie zresetowany do ustawień w ciągu jednej minuty. | (1, + Inf] baza danych zostanie zresetowany do ustawień w § minut.
+905 to href="http://www.schoolmesh.mattiussilab.net/demo"> <a wersja demo </ a>, a zawartość muszą być czyszczone co godzinę.
+906 Ta wiadomość została wysłana do:
+907 Nie ma żadnego zestawu terminu.
+908 Compute synteza danych (personel tylko)
+909 Compute synteza danych
+910 Get pracowników syntetyczny dokument
+911 Pracownicy Syntetyczne dane
+912 Zespoły
+913 Zmiana roli
+914 § Usuń z tym zespołem
+915 Dodaj do zespołu
+916 GuardGroups
+917 § Usuń z tym GuardGroup
+918 Dodaj do listy GuardGroup
+919 Poświadczenia
+920 Edytuj spotkanie
+921 Użytkownicy
+922 List / Szukaj
+923 Informacje o użytkowniku aktualizowana.
+924 Być może trzeba uruchomić Sprawdza użytkownika w celu zastosowania zmian.
+925 Dodaj nowego użytkownika
+926 Zarządzanie użytkownikami
+927 Administracja systemem
+928 Klasy Upload
+929 nominacje Upload
+930 zespołów sprawdzeń
+931 lat, Role, podmioty, zastrzeżone nazwy użytkowników i śladami mogą być zarządzane tylko w tylnej wniosku końcowego.
+932 nazwa Posix
+933 nazwa Posix
+934 nazwa Posix
+935 Jakość kodu
+936 Folder Potrzeby
+937 Potrzeby lista mailingowa
+938 Nowy zespół
+940 Utwórz nowy zespół
+941 Powrót do listy
+942 Użytkownicy pomyślnie dodane do zespołu.
+943 Dodaj wybranych użytkowników do zespołu
+944 Powołanie pomyślnie zapisany.
+945 użytkownicy Upload
+946 § należy do zespołu twój spotkania jest ustawiony na
+Ustawienia 947 użytkowników
+948 Resetowanie hasła
+949 W tej stronie można zresetować hasło studentów, które mogły zapomniałem.
+950 nauczycieli i personelu hasła może być regulowany tylko przez administratora.
+951 Wybierz typ konta
+952 Wybierz
+953 Potwierdź resetowania hasła
+954 Masz zamiar zresetować hasło dla tego konta.
+955 Czy można kontynuować?
+956 § użytkownika nie ma konta typu §
+957 Nie masz wymaganego poświadczenia resetowania haseł użytkownika §
+958 Należy wybrać użytkownika.
+959 You Don \ 't mieć wymaganą poświadczeń do resetowania haseł typu §.
+960 Hasło zostało zresetowane.
+961 Resetowanie hasła przez §
+962 Anuluj
+963 Przeadresuj
+964 Zmiana nauczyciel dla tej nominacji
+965 przypisać spotkanie
+966 Powołanie realokacja
+967 Będziesz przypisać spotkanie «§», że obecnie § opłata z, do innego nauczyciela.
+968 Działanie to zmienić właściciela planu pracy / raportu, ale nie wydarzenia z tym związane.
+969 Zwykle trzeba to zrobić, gdy substition zaczyna się lub kończy.
+970 Wybierz nauczyciela
+971 spotkanie w tym stanie nie może być przeniesiony.
+972 Powołanie przeniesiony (z § do §)
+973 Powołanie powodzeniem przeniesiony.
+974 mianowanie nie może zostać zmienione.
+975 Powołanie pozostaje bez zmian.
+976 Nominacja ta jest tylko dla niektórych uczniów
+977 skoncentrowany wkład
+978 częściowy wkład
+979 Legenda
+1118 Nr workflow dzienniki dla tego produktu.
+980 Wiedza i umiejętności z Syllabus
+981 Nie wybrano elementu
+982 [0] Wygląda na to, § nie jest przypisany więcej | [1] Wygląda na to, § nie jest przypisany więcej
+983 Logowania LAN i wylogowania
+984 Logowania LAN i wylogowania, by user
+985 Logowania LAN i wylogowania, przez stację roboczą
+986 Dzienniki
+987 Dzienniki dotyczące zespołu «§»
+988 Zobacz dostęp do sieci LAN loguje się do §
+989 Zobacz dostęp do sieci LAN loguje się do stacji roboczej §
+990 Ostatnia wizyta
+991 plan prac roku §
+992 Język interfejsu
+993 Ta aplikacja jest w stanie aktywnego rozwoju. Proszę otwarte kwestie dotyczące nieprawidłowości bądź pisząc do § lub wypełniając stronę internetową emisyjnej na www.schoolmesh.mattiussilab.net. Dziękuję.
+994 opinie
+995 Brak załączników.
+996 instalacyjny sprawdza
+997 Dokumenty dotyczące tego terminu.
+998 § - ujemny wynik - działalność nie
+999 § - średni wynik wynik z wartością §
+1000 § - naprawdę pozytywny efekt - działanie całkowicie udało
+1001 skala: § - §
+1002 Papier log
+1003 Performer
+1004 Wybierz wykonawcę
+1005 Zapisane na papierze
+1006 Przygotowanie e-mail do osoby, która w wykonaniu tej czynności
+1007 nazwa użytkownika i / lub hasło jest nieprawidłowe.
+1008 Wygaśnięcie
+1009 Zmieniasz łączenia użytkownika § do zespołu "§".
+1010 zmiana Przystąpienie
+1011 Zapisy
+1012 Dodaj rekrutacja
+1013 Unenrol
+1014 Wybierz drużynę
+1015 kont i zespoły
+1016 Zespoły należę do
+1017 Moje zespoły
+1018 Ten zespół nie ma członków.
+1019 użytkowników
+1020 Na tej liście można zobaczyć wszystkie publiczne zespoły i te należysz.
+1021 to pełna lista zespołów.
+1022 Zespół dołączył pomyślnie zmienione.
+1023 Typowe zapytania
+1024 Dodaj do zespołu (-ów)
+1025 § Dodaj do zespołu (-ów)
+1026 Wybierz rolę
+1027 Użytkownik został dodany do wybranych zespołów.
+1028 Zespół dołączył zmiany
+1029 Edit łączenia § do zespołu «§»
+1030 Usuń
+1031 Użytkownik został usunięty z zespołu.
+1032 Będziesz usunąć § od zespołu "§".
+1033 Wybierz zespół, aby dodać te użytkownikom:
+1034 Musisz wybrać drużynę i roli.
+1035 Ważny minęło
+1036 Organizacja
+1037 Schemat organizacyjny
+1038 Kluczowa rola
+1039 Główne role
+1040 funkcjonalne role
+1041 Nikt za
+1042 Funkcjonalna rola «§»
+1043 Edytowane łączenia §, roli wyznaczonym do «§», z nutami «§»
+1044 Usunięty użytkownik § od zespołu
+1045 Dodane użytkownika § do zespołu, z rolą "§" i wygaśnięcie §
+1046 Execution System
+1047 Zespół «§» tworzone, nazwa posix «§»
+1048 Zespół «§» aktualizowane, nazwa posix «§»
+1049 Wybrane użytkownicy
+1050 wydatki w budżecie na tego zasobu musi być potwierdzone.
+1051 Schemat organizacyjny
+1150 nieprzypisane
+1052 aktualizowane schemat organizacyjny
+1053 Wydrukowano w listach składania
+1054 Wydrukowano w listach ładowania
+1055 Wybierz klasę
+1056 Wybierz temat
+1057 Wybierz program nauczania
+1058 Wybierz typ mianowania
+1059 Powołanie typ
+1060 Powołanie potwierdzone.
+1061 Wybierz rok
+1062 Będziesz dodać termin do §.
+1063 Będziesz dodać poświadczenia dla §.
+1064 Będziesz dodać rejestracji dla §.
+1065 Będziesz dodać § do wybranych GuardGroups.
+1066 Dodaj do GuardGroups
+1067 Typ:
+1068 Temat:
+1069 [0] Filler | [1] Filler
+1070 Termin «§» oznaczone jako zakończone
+1071 Termin «§» oznaczony nie jako ukończony
+1072 nominacja typ Edytuj
+1073 Nowy typ powołanie
+1074 Powołanie typy
+1075 Info?
+1076 modułów?
+1077 Narzędzia?
+1078 Załączniki?
+1079 Skrót
+1080 Powołanie typ «§»
+1081 Show
+1082 Edycja tego typu nominacji
+1083 Pokaż informacje dotyczące tego typu nominacji
+1084 Prawdziwa
+1085 Fałsz
+1086 poufne?
+1087 Kodeksu
+1088 Tego typu spotkanie ma pewne pola info związane z, ale wygląda na to, że nie powinien.
+1089 Tego typu spotkanie nie ma pola info związane z, ale wygląda tak jak powinien.
+1090 Szablon
+1091 Pełna lista
+1092 typy pól Informacje
+1093 Nowy typ pola informacji
+1094 Singular
+1095 Style
+1096 dydaktyczne moduły pola typy
+1097 Nowy moduł dydaktyczny poz rodzaj pola
+1098 Utworzenie nowego elementu dydaktycznego modułu typ pola
+1099 Nowy moduł dydaktyczny typ pola
+1289 Tego typu spotkanie ma kilka modułów dydaktycznych pola związane, ale wygląda na to, że nie powinien.
+1290 Tego typu spotkanie nie ma pola modułów dydaktycznych związanych z, ale wygląda tak jak powinien.
+1291 Narzędzia i metodologie
+1292 Nowa grupa narzędzi / metodyk
+1293 Tworzenie nowej grupy narzędzi / metodyk
+1294 Tworzenie nowej grupy narzędzi / metodyk
+1295 Nowa grupa narzędzi / metodyk
+1296 Items
+1297 Tego typu spotkanie ma pewną grupę narzędzi, metod związanych z, ale wygląda na to, że nie powinien.
+1298 Tego typu spotkanie nie ma grup narzędzi, metod związanych z, ale wygląda tak jak powinien.
+1299 Ten rodzaj powołania
+1100 Zawartość nie odpowiada szablon
+1101 edytuj
+1102 Wykaz informacji do «§»
+1103 pozycja Edit
+1104 Edytuj element z id §
+1105 Wybierz grupę
+1106 Grupa
+1107 Nowy element
+1108 importowania elementów
+1109 Importuj elementy do tego typu z innej grupy
+1110 Importuj elementy do «§»
+1111 Zawartość tego pola, wcześniej wypełnione, jest pokazany w celach informacyjnych.
+1112 Unabridged dokument
+1113 Skrócona dokument
+1114 Raport przedłożony do zatwierdzenia.
+1115 Raport końcowy zatwierdzony
+1116 Finał archiwizowane raport
+1117 Avatar

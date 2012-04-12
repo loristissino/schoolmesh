@@ -1,0 +1,23 @@
+message:
+  subject: Project «%project_title%» - inquiry
+  salutation: true
+  body: |
+  
+    one or more of the deadlines for the project «%project_title%» are passed:
+    
+    %deadlines_list%
+    On the website of the school you may:
+    
+    * insert information about the activities performed
+    * set some goals as "done"
+    * postpone some deadlines, if needed
+    * attach files to document the activities performed
+
+    The address is:
+
+    http://www..../index.php/projects/edit/id/%id%
+
+    Greetings,
+
+        %sender_fullname%
+        %sender_email%
