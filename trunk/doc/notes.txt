@@ -1,8 +1,13 @@
+2012/04/12
+Release: 1.01
+Prepared charge letters module
+Changed update.sh script in order to take note of the svn revision of this file in doc/lastrevision.txt
+
 2012/04/04
 Added code and rank fields in wptool_item table
 
 2012/03/28
-Release-1.0!
+Release: 1.0
 #svn copy  https://schoolmesh.googlecode.com/svn/trunk/ https://schoolmesh.googlecode.com/svn/tags/release-1.0
 
 2012/03/11
