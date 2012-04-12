@@ -859,5 +859,22 @@ class Schoolproject extends BaseSchoolproject {
       return '_______';
     }
   }
+  
+  public function getCriteriaForTeamSelection()
+  {
+    $c=new Criteria();
+    $userteams=$this->getCoordinatorProfile()->getTeams();
+    
+    $ids=array();
+    foreach($userteams as $userteam)
+    {
+      $ids[]=$userteam->getTeamId();
+    }
+
+    Generic::logMessage('teams', $ids);
+    
+    $c->add(TeamPeer::ID, $ids, Criteria::IN);
+    return $c;
+  }
 
 } // Schoolproject

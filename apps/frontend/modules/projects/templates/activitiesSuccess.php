@@ -29,7 +29,7 @@
 	<?php $i=0; $ending=0 ?>
     <?php foreach ($activities as $activity): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
-      <td><?php echo $activity->getProjResource()->getSchoolproject() ?></td>
+      <td><?php echo link_to_if($activity->getProjResource()->getSchoolproject()->isEditableBy($sf_user), $activity->getProjResource()->getSchoolproject(), url_for('projects/edit?id='.$activity->getProjResource()->getSchoolprojectId()).'#resources' ) ?></td>
       <td><?php echo $activity->getProjResource() ?></td>
       <td>
         <?php if($activity->getPaperLog()): ?>

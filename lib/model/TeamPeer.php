@@ -21,9 +21,12 @@ class TeamPeer extends BaseTeamPeer
 			return parent::doSelectOne($c);
 		}
     
-  static public function retrieveAll()
+  static public function retrieveAll($c=null)
     {
-			$c = new Criteria();
+      if(!$c)
+      {
+        $c=new Criteria();
+      }
 			$c->addAscendingOrderByColumn(TeamPeer::DESCRIPTION);
 			return parent::doSelect($c);
     }
