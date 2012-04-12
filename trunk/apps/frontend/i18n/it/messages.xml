@@ -4492,6 +4492,10 @@
         <source>Get key role charge letters</source>
         <target>Scarica lettera di incarico per ruoli chiave</target>
       </trans-unit>
+      <trans-unit id="1306">
+        <source>Choose a team of co-coordinators</source>
+        <target>Scegli un team di co-coordinatori</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>

@@ -54,7 +54,7 @@
           )
         ?>
       <?php endif ?>
-      <?php echo $activity->getBeginning('d/m/Y h:i') ?>
+      <?php echo $activity->getBeginning('d/m/Y H:i') ?>
       </td>
       <td>
       <?php echo $mu=$resource->getProjResourceType()->getMeasurementUnit() ?>

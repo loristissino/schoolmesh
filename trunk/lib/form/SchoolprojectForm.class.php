@@ -31,7 +31,10 @@ class SchoolprojectForm extends BaseSchoolprojectForm
   $this['description']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
   $this['final_report']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
   $this['proposals']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
-  $this['team_id']->getWidget()->addOption('add_empty', 'Choose a team')->addOption('peer_method', 'retrieveAll');
+  $this['team_id']->getWidget()
+    ->addOption('add_empty', 'Choose a team of co-coordinators')
+    ->addOption('peer_method', 'retrieveAll')
+    ->addOption('criteria', $this->schoolproject->getCriteriaForTeamSelection());
   
 /*
   $this->widgetSchema->setLabel('user_id', 'Coordinator');
