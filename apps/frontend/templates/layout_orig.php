@@ -96,6 +96,8 @@
           </span>
           <br />
           <em>released under the <?php echo link_to('GNU General Public License', url_for('content/license')) ?></em>
+          
+          <?php if(is_readable(sfConfig::get('app_config_lastrevisionfile', ''))):?> - <?php readfile(sfConfig::get('app_config_lastrevisionfile')) ?><?php endif ?>
 
         </div>
       </div>
