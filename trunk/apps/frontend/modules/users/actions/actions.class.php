@@ -1392,7 +1392,7 @@ public function executeAddappointment(sfWebRequest $request)
 		$this->redirect('users/edit?id='. $this->current_user->getUserId());
 	}
 
-	$this->credentials=GuardSecurity::retrieveAllSorted();
+	$this->credentials=GuardSecurity::retrieveAllPermissionsSorted();
 	
 	}
 

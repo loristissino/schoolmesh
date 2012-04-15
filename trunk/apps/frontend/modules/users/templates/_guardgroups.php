@@ -1,4 +1,6 @@
 <div id='guardgroups'>
+<h2><?php echo __('GuardGroups') ?></h2>
+
 <table>
 <thead>
 	<tr>

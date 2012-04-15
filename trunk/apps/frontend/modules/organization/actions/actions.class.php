@@ -62,6 +62,11 @@ class organizationActions extends sfActions     // $userteam=RolePeer::retrieveU
     }
 
   }
+
+  public function executeWhocandowhat(sfWebRequest $request)
+  {
+    $this->credentials=GuardSecurity::retrieveAllPermissionsSorted();
+  }
   
   
 }

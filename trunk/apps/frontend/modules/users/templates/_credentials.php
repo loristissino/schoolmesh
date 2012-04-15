@@ -1,4 +1,5 @@
 <div id='credentials'>
+<h2><?php echo __('Credentials') ?></h2>
 <table>
 <thead>
 	<tr>
