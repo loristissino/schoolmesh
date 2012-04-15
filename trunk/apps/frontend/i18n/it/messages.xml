@@ -3185,8 +3185,8 @@
         <target>Revoca questa credenziale per %s</target>
     </trans-unit>
     <trans-unit id="812">
-        <source>Add credential</source>
-        <target>Aggiungi credenziale</target>
+        <source>Grant credential</source>
+        <target>Accorda credenziale</target>
     </trans-unit>
     <trans-unit id="813">
         <source>undefined</source>
@@ -4205,8 +4205,8 @@
         <target>Stai per aggiungere un incarico per %user%.</target>
     </trans-unit>
     <trans-unit id="1063">
-        <source>You are going to add a credential for %user%.</source>
-        <target>Stai per aggiungere una credenziale per %user%.</target>
+        <source>You are going to grant one or more credentials to %user%.</source>
+        <target>Stai per accordare una o più credenziali all'utente %user%.</target>
     </trans-unit>
     <trans-unit id="1064">
         <source>You are going to add an enrolment for %user%.</source>
@@ -4496,10 +4496,24 @@
         <source>Choose a team of co-coordinators</source>
         <target>Scegli un team di co-coordinatori</target>
       </trans-unit>
+      <trans-unit id="1307">
+        <source>This user already has this credential</source>
+        <target>Questo utente gode già di questa credenziale</target>
+      </trans-unit>
+      <trans-unit id="1308">
+        <source>Selected credentials successfully granted to the user.</source>
+        <target>Credenziali selezionate correttamente accordate all'utente.</target>
+      </trans-unit>
+      <trans-unit id="1309">
+        <source>Grant a new credential</source>
+        <target>Accorda una nuova credenziale</target>
+      </trans-unit>
+      <trans-unit id="1310">
+        <source>Credential successfully removed.</source>
+        <target>Credenziale correttamente rimossa.</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>
-
-
 
 

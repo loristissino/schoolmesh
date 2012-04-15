@@ -1067,7 +1067,7 @@ class usersActions extends sfActions
 	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
 	
 	$this->current_user->revokeUserPermission($request->getParameter('permission'));
-	$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Permission successfully removed.'));
+	$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Credential successfully removed.'));
 	$this->redirect('users/edit?id='. $this->current_user->getUserId());
 	}
 
@@ -1372,11 +1372,11 @@ public function executeAddappointment(sfWebRequest $request)
 			$this->current_user->addUserPermission($credential->getName());
 		}
 		
-		$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Credential successfully given to user.'));
+		$this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Selected credentials successfully granted to the user.'));
 		$this->redirect('users/edit?id='. $this->current_user->getUserId());
 	}
 
-	$this->credentials=sfGuardPermissionPeer::doSelect(new Criteria());
+	$this->credentials=GuardSecurity::retrieveAllSorted();
 	
 	}
 
