@@ -45,7 +45,7 @@
 <li class="sf_admin_action_new">
 <?php
 echo link_to(
-__('Add credential'),
+__('Grant a new credential'),
 url_for('users/addcredential?user='.$current_user->getUserId())
 ) ?>
 </li>

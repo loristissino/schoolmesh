@@ -1,7 +1,7 @@
 <?php
 
 /**
- * GoogleappsAccount class.
+ * Authentication class.
  *
  * @package    schoolmesh
  * @subpackage lib.schoolmesh
