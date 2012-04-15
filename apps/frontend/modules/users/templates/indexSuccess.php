@@ -30,9 +30,11 @@
 	<li class="sf_admin_action_upload">
 		<?php echo link_to(__('Upload appointments'), url_for('users/upload?what=appointments'), array('title'=>__(SentencePeer::getSentence('users_bulk_upload_appointments'))))?>
 	</li><br />
+  <?php /*
 	<li class="sf_admin_action_userchecks">
 		<?php echo link_to(__('Run team checks'), 'users/runteamchecks', array('title'=>__(SentencePeer::getSentence('run_team_checks')))) ?>
 	</li><br />
+  */ ?>
 	</ul>
 
 <p><?php echo image_tag('star') ?> <?php echo __('Years, Roles, Subjects, Reserved usernames, and Tracks can be managed only in the back end application.') ?></p>

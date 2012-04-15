@@ -358,6 +358,12 @@
   background: url(../images/reset.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_schoolmesh a
+{
+  background: url(../images/favicon.png) no-repeat 0 0;
+}
+
+
 #sf_admin_container .alert
 {
   margin: 4px 0;

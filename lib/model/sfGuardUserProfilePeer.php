@@ -483,12 +483,18 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	
 	public static function retrieveOnLine()
 	{
+    /*
+    Generic::logMessage('logdir', session_save_path());
+    $dir=scandir(session_save_path());
+    */
 		$c=new Criteria();
 		$timelimit=time() - 3*60;
 		$c->add(sfGuardUserProfilePeer::LAST_ACTION_AT, $timelimit, Criteria::GREATER_THAN);
 		return parent::doSelect($c);
-		
 	}
+  
+  
+  
 	/*
 	public static function getListdocument($ids, $filetype='odt', $templatename, $context=null)
   {
