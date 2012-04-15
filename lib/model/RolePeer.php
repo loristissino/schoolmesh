@@ -11,7 +11,7 @@
 
 class RolePeer extends BaseRolePeer
 {
-	
+  
 	public static function retrieveMainRoles()
 	{
 		$c=new Criteria();
@@ -35,6 +35,13 @@ class RolePeer extends BaseRolePeer
     return self::retrieveAll($c);
 	}
 
+	public static function retrieveRolesWithChargeLetterNeeded()
+	{
+		$c=new Criteria();
+		$c->add(RolePeer::NEEDS_CHARGE_LETTER, true);
+    $c->add(RolePeer::QUALITY_CODE, '', Criteria::NOT_EQUAL);
+    return self::retrieveAll($c);
+	}
   
 	public static function retrieveAll($c=null)
 	{

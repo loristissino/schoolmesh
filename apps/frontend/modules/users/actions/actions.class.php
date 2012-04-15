@@ -384,13 +384,28 @@ class usersActions extends sfActions
 
   }
 
-  public function executeGetkeyrolechargeletter(sfWebRequest $request)
+  public function executeGetresponsibilityrolechargeletter(sfWebRequest $request)
+  {
+    
+    $this->_changePostToGet($request, 'getresponsibilityrolechargeletter');
+    
+    $this->ids=$this->_getIds($request);
+    $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
+
+    $this->roles=RolePeer::retrieveRolesWithChargeLetterNeeded();
+  }
+
+  public function executeConfirmgetresponsibilityrolechargeletter(sfWebRequest $request)
   {
 
 		set_time_limit(0);
-    $ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
+    
+    $this->ids=$this->_getIds($request);
+    $this->role_ids=$request->getParameter('roleids');
+    
+//    $ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
 
-		$result=sfGuardUserProfilePeer::getKeyRolesChargeLetter($ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
+		$result=sfGuardUserProfilePeer::getResponsibilityRolesChargeLetter($this->ids, $this->role_ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
 		
 		if ($result['result']=='error')
 		{
@@ -603,13 +618,14 @@ class usersActions extends sfActions
   
   public function executeGetlist(sfWebRequest $request)
   {
-		set_time_limit(0);
+    set_time_limit(0);
 
-    $ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
-		
-		$this->userlist=sfGuardUserProfilePeer::retrieveByPKs($ids);
-    
     $this->template = $this->getUser()->getAttribute('template', $request->getParameter('template', null));
+    
+    $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
+
+    $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
+    $this->getUser()->setAttribute('currently_selected', 'pk:'.implode(' pk:', $this->ids));
     
     if(!$this->template)
     {
@@ -630,7 +646,7 @@ class usersActions extends sfActions
       // the user must choose a template
     }
     
-    $result=sfGuardUserProfilePeer::getUserlistDocument($this->template, $ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
+    $result=sfGuardUserProfilePeer::getUserlistDocument($this->template, $this->ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
     
     
     $odfdoc=$result['content'];
