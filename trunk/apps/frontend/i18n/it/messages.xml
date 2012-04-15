@@ -4489,8 +4489,8 @@
         <target>Scarica lettere di incarico per docenza</target>
       </trans-unit>
       <trans-unit id="1305">
-        <source>Get key role charge letters</source>
-        <target>Scarica lettera di incarico per ruoli chiave</target>
+        <source>Get responsibility role charge letters</source>
+        <target>Scarica lettera di incarico per ruoli di responsabilità</target>
       </trans-unit>
       <trans-unit id="1306">
         <source>Choose a team of co-coordinators</source>
@@ -4512,8 +4512,42 @@
         <source>Credential successfully removed.</source>
         <target>Credenziale correttamente rimossa.</target>
       </trans-unit>
+      <trans-unit id="1311">
+        <source>Please choose a custom template for your list:</source>
+        <target>Scegli un modello di documento personalizzato per la tua lista:</target>
+      </trans-unit>
+      <trans-unit id="1312">
+        <source>Choose a custom template</source>
+        <target>Scegli il modello personalizzato</target>
+      </trans-unit>
+      <trans-unit id="1313">
+        <source>Looks like there are no custom templates available.</source>
+        <target>A quanto pare, non ci sono modelli personalizzati.</target>
+      </trans-unit>
+      <trans-unit id="1314">
+        <source>You must select some users.</source>
+        <target>Devi selezionare almeno un utente.</target>
+      </trans-unit>
+      <trans-unit id="1315">
+        <source>Responsibility role charge letters</source>
+        <target>Lettere di incarico per ruoli di responsabilità</target>
+      </trans-unit>
+      <trans-unit id="1316">
+        <source>You are going to get the responsibility roles for the following users:</source>
+        <target>Stai per scaricare le lettere di incarico per i seguenti utenti:</target>
+      </trans-unit>
+      <trans-unit id="1317">
+        <source>Please select the roles for which you want the letters to be generated:</source>
+        <target>Seleziona i ruoli per i quali desideri che vengano generate le lettere:</target>
+      </trans-unit>
+      <trans-unit id="1318">
+        <source>Get the letters</source>
+        <target>Scarica le lettere</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>
+
+
 
 

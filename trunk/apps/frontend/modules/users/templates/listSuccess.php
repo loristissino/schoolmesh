@@ -117,7 +117,7 @@
   'getwelcomeletter' => __('Get welcome letter'),
   'getgoogleappsletter' => __('Get GoogleApps letter'),
   'getteachingappointmentsletter' => __('Get teaching appointments letter'),
-  'getkeyrolechargeletter' => __('Get key role charge letters'),
+  'getresponsibilityrolechargeletter' => __('Get responsibility role charge letters'),
   'getgoogleappsdata' => __('Get GoogleApps data'),
   'fixgoogleappscredentials' => __('Fix GoogleApps credentials'),
   'getlist' => __('Get list choosing a template'),

@@ -752,7 +752,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	}
 
 
-	public static function getKeyRolesChargeLetter($ids, $filetype='odt', $context=null)
+	public static function getResponsibilityRolesChargeLetter($ids, $role_ids, $filetype='odt', $context=null)
 	{
 		$result=Array();
 
@@ -760,7 +760,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		
 		try
 		{
-			$templatename='keyroleschargeletter.odt';
+			$templatename='responsibilityroleschargeletter.odt';
 			$odf=new OdfDoc($templatename, 'Key roles charge letter', $filetype);
 		}
 		catch (Exception $e)
@@ -791,7 +791,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		{
 			$count++;
       
-      $charges=$user->getKeyroles(array('chargeletter_needed'=>true));  // we get an array of UserTeam objects
+      $charges=$user->getRolesPlayed(array('ids'=>$role_ids));  // we get an array of UserTeam objects
       if(sizeof($charges)==0)
       {
         continue;

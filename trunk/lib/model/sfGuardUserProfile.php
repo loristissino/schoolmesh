@@ -937,16 +937,16 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $t;
     }
 
-    public function getKeyroles($options=array())
+    public function getRolesPlayed($options=array())
     {
       
       $c = new Criteria();
 			$c->add(UserTeamPeer::USER_ID, $this->getUserId());
       $c->add(RolePeer::QUALITY_CODE, null, Criteria::ISNOTNULL);
-
-      if(array_key_exists('chargeletter_needed', $options) and $options['chargeletter_needed'])
+      
+      if(array_key_exists('ids', $options))
       {
-        $c->add(RolePeer::NEEDS_CHARGE_LETTER, true);
+        $c->add(RolePeer::ID, $options['ids'], Criteria::IN);
       }
 
 			$t = UserTeamPeer::doSelectJoinAllExceptsfGuardUser($c);
@@ -1844,9 +1844,9 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     $mainrole=$this->getRoleId()?$this->getRole()->getPosixName():'undefined';
     $doc->addField(Zend_Search_Lucene_Field::UnStored('mainrole', $mainrole, 'utf-8'));
     
-    $keyroles=$this->getKeyroles(array('astext'=>true));
+    $keyroles=$this->getRolesPlayed(array('astext'=>true));
     
-    $doc->addField(Zend_Search_Lucene_Field::UnStored('keyroles', $keyroles?$keyroles:'none', 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('roles', $keyroles?$keyroles:'none', 'utf-8'));
     
     $doc->addField(Zend_Search_Lucene_Field::UnStored('birthdate', $this->getBirthdate('%Y%m%d'), 'utf-8'));    
     $doc->addField(Zend_Search_Lucene_Field::UnStored('birthday', $this->getBirthdate('%m%d'), 'utf-8'));
