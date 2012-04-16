@@ -25,7 +25,7 @@
 	<?php $i=0 ?>
   <?php foreach($credentials as $credential): ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
-      <th><?php echo link_to_if($sf_user->hasCredential('users'), $credential->getName(), url_for('users/list?query=permissions:'.$credential->getName())) ?></th>
+      <th><?php echo link_to_if($sf_user->hasCredential('users'), $credential->getName(), url_for('users/list?query=permissions:'.$credential->getName(). ' and active:true')) ?></th>
       <td><?php echo $credential->getDescription() ?></td>
       <td><?php include_partial('userpermissions', array('userpermissions'=>$credential->getsfGuardUserPermissions())) ?></td>
       <td><?php include_partial('grouppermissions', array('grouppermissions'=>$credential->getsfGuardGroupPermissions())) ?></td>
