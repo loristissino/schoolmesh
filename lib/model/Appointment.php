@@ -2074,15 +2074,15 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 				
     if ($state==Workflow::WP_DRAFT)
     {
-      $this->markSubItems('true');
+      $this->markSubItemsAsEditable(array('newstate'=>'true'));
     }
     if ($state==Workflow::WP_DRAFT)
     {
-      $this->markSubItems('true');
+      $this->markSubItemsAsEditable(array('newstate'=>'true'));
     }
     if ($state==Workflow::IR_DRAFT)
     {
-      $this->markSubItems('false');
+      $this->markSubItemsAsEditable(array('newstate'=>'false'));
     }
 
   }

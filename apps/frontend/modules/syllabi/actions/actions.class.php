@@ -19,6 +19,13 @@ class syllabiActions extends sfActions
     $this->syllabus = SyllabusPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->syllabus);
     $this->maxlevel=$request->getParameter('maxlevel', 1000);
+    
+    if($request->getParameter('format', '')=='markdown')
+    {
+      $this->setTemplate('markdown');
+      $this->getResponse()->setContentType('text/plain; Charset: utf-8');
+      $this->setLayout(false);
+    }
   }
 
   public function executeNew(sfWebRequest $request)
