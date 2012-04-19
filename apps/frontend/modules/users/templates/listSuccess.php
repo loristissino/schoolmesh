@@ -39,8 +39,12 @@
       <th class="sf_admin_text"><?php echo link_to(__('Role'), url_for( 'users/setsortlistpreference?sortby=role&query='.$query)) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('First name'), url_for('users/setsortlistpreference?sortby=firstname&query='.$query)) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Last name'), url_for( 'users/setsortlistpreference?sortby=lastname&query='.$query)) ?></th>
-      <th class="sf_admin_text"><?php echo link_to(__('Alerts'), url_for('users/setsortlistpreference?sortby=alerts&query='.$query)) ?></th>
-      <th class="sf_admin_text"><?php echo __('Accounts') ?></th>
+      <?php if($sf_user->hasCredential('admin')): ?>
+        <th class="sf_admin_text"><?php echo link_to(__('Alerts'), url_for('users/setsortlistpreference?sortby=alerts&query='.$query)) ?></th>
+      <?php endif ?>
+      <?php if($sf_user->hasCredential('admin')): ?>
+        <th class="sf_admin_text"><?php echo __('Accounts') ?></th>
+      <?php endif ?>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
@@ -76,12 +80,17 @@
       <td><?php echo $user->getRoleDescription() ?></td>
       <td><?php echo $user->getFirstName() ?></td>
       <td><?php echo $user->getLastName() ?></td>
-	  <td>
+	  
+    <?php if($sf_user->hasCredential('admin')): ?>
+    <td>
 		<?php if($user->getSystemAlerts()!=''): ?>
 			<?php echo image_tag('error', 'title=' . $user->getSystemAlerts()) ?>
 		<?php endif ?>
 	  </td>
-	  <td>
+    <?php endif ?>
+	  
+    <?php if($sf_user->hasCredential('admin')): ?>
+    <td>
 		<?php foreach ($user->getAccounts() as $account): ?>
 			<?php echo link_to(
         image_tag($account->getAccountType()),
@@ -94,7 +103,8 @@
             )))
         ) ?>
 		<?php endforeach ?>
-	 </td>
+    </td>
+    <?php endif ?>
 	<td><?php include_partial('actions', array('user'=>$user)) ?></td>
  	
 

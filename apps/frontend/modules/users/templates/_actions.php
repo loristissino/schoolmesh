@@ -15,6 +15,7 @@
 				)?>
 				</li>
 				<?php endif ?>
+        <?php if($sf_user->hasCredential('admin')): ?>
 				<li class="sf_admin_action_log">
 					<?php echo link_to(
 				__('Logs'),
@@ -22,4 +23,5 @@
 				array('title'=>__('View LAN access logs for %user%', array('%user%'=>$user->getFullName())))
 				)?>
 				</li>
+        <?php endif ?>
 			</ul>
