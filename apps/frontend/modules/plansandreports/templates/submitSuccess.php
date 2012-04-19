@@ -15,7 +15,7 @@
 <h2><?php echo __($sf_user->getFlash('notice')) ?></h2>
 <p><strong><?php echo __('Congratulations.') ?></strong>
 <p><?php echo sprintf(__('The document «%s» was successfully submitted.'), $workplan) ?><br />
-<?php echo __('It must now be administratively checked and then approved by the schoolmaster.') ?><br />
+<?php echo __('It must now be administratively checked and then approved by the principal.') ?><br />
 
 <?php if($sf_user->hasFlash('mail_sent_to')): ?>
 <?php echo __('A confirmation message has been sent to your address %email%.', array('%email%'=>$sf_user->getFlash('mail_sent_to'))) ?>

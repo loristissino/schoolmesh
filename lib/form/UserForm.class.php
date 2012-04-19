@@ -24,13 +24,17 @@
       'prefers_richtext' => new sfWidgetFormInputCheckbox(),
       'preferred_format' => new sfWidgetFormSelect(array('choices' =>array_merge(array('---'), $formats))),
       'email' => new sfWidgetFormInputText(),
-      'email_state' => new sfWidgetFormSelect(array('choices' =>$emailstates)),  
+      'email_state' => new sfWidgetFormSelect(array('choices' =>$emailstates)),
+      'website' => new sfWidgetFormInputText(array(), array('size'=>70)),
+      'office' => new sfWidgetFormInputText(array(), array('size'=>40)),
+      'ptn_notes' => new sfWidgetFormInputText(array(), array('size'=>70)),
       'birthdate' => new sfWidgetFormI18nDate(array('culture'=>'it', 'years'=>$years)),  
       'birthplace' => new sfWidgetFormInputText(array(), array('size'=>50)),  
       'main_role' => new sfWidgetFormPropelChoice(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
             ));
 
     $this['lettertitle']->getWidget()->setLabel('Title');
+    $this['ptn_notes']->getWidget()->setLabel('PTN notes');
 
 
 			if(isset($this->options['new']))
@@ -59,7 +63,10 @@
 				'pronunciation'  => new sfValidatorString(array('trim' => true, 'required' => false, 'max_length'=>100)),
 				'gender' => new sfValidatorInteger(array('min'=>0, 'max'=>2)),
 				'email'   => new sfValidatorEmail(array('trim' => true, 'required'=>false)),
-				'email_state' => new sfValidatorInteger(array('min'=>0, 'max'=>sizeof($emailstates)-1)),  
+				'email_state' => new sfValidatorInteger(array('min'=>0, 'max'=>sizeof($emailstates)-1)), 
+        'website'  => new sfValidatorUrl(array('protocols'=>array('http','https'), 'trim' => true, 'required' => false, 'max_length'=>255)), 
+				'office'  => new sfValidatorString(array('trim' => true, 'required' => false, 'max_length'=>255)),
+				'ptn_notes'  => new sfValidatorString(array('trim' => true, 'required' => false, 'max_length'=>255)),
 				'birthdate' => new sfValidatorDate(array('required'=>false)),
 				'birthplace' => new sfValidatorString(array('trim'=>true, 'required'=>false)),
 				'main_role' => new sfValidatorPropelChoice(array('model'=>'role')),

@@ -62,6 +62,9 @@ propel:
     email:        varchar(50)
     email_state:  { type: integer, default: 0 }
     email_verification_code: varchar(40)
+    website:      { type: varchar(255), default: null }
+    office:       { type: varchar(255), default: null }
+    ptn_notes:    { type: varchar(255), default: null }  # parent-teacher-night
     birthdate:    date
     birthplace:   varchar(50)
     import_code:  varchar(20)

@@ -54,7 +54,7 @@
 				array(
           'method' => 'put',
           'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()) . ' ' . __('Documents submitted cannot be modified anymore.'),
-				  'title' => __($steps[$workplan->getState()]['owner']['submitDisplayedAction']) . '. ' . __('It will be then administratively checked and approved by the schoolmaster')
+				  'title' => __($steps[$workplan->getState()]['owner']['submitDisplayedAction']) . '. ' . __('It will be then administratively checked and approved by the principal')
           )
 				)?>
   <br />

@@ -50,6 +50,9 @@ class sfGuardUserProfileTableMap extends TableMap {
 		$this->addColumn('EMAIL', 'Email', 'VARCHAR', false, 50, null);
 		$this->addColumn('EMAIL_STATE', 'EmailState', 'INTEGER', false, null, 0);
 		$this->addColumn('EMAIL_VERIFICATION_CODE', 'EmailVerificationCode', 'VARCHAR', false, 40, null);
+		$this->addColumn('WEBSITE', 'Website', 'VARCHAR', false, 255, null);
+		$this->addColumn('OFFICE', 'Office', 'VARCHAR', false, 255, null);
+		$this->addColumn('PTN_NOTES', 'PtnNotes', 'VARCHAR', false, 255, null);
 		$this->addColumn('BIRTHDATE', 'Birthdate', 'DATE', false, null, null);
 		$this->addColumn('BIRTHPLACE', 'Birthplace', 'VARCHAR', false, 50, null);
 		$this->addColumn('IMPORT_CODE', 'ImportCode', 'VARCHAR', false, 20, null);

@@ -255,6 +255,7 @@ class profileActions extends sfActions
         ->setPrefersRichtext($params['prefers_richtext'])
         ->setPreferredFormat($params['preferred_format'])
         ->setPreferredCulture($params['preferred_culture'])
+        ->setWebsite($params['website'])
 				->setEmail($params['email']);
 				
 				$email_warning='';
@@ -289,6 +290,7 @@ class profileActions extends sfActions
 			array(
 				'pronunciation'=>$this->profile->getPronunciation(),
 				'email'=>$this->profile->getEmail(),
+				'website'=>$this->profile->getWebsite(),
         'prefers_richtext'=>$this->profile->getPrefersRichtext(),
         'preferred_format'=>$this->profile->getPreferredFormat(),
         'preferred_culture'=>$this->profile->getPreferredCulture(),

@@ -1,3 +1,6 @@
+2012/04/18
+Added three fields in profile table (website, office and ptn_notes)
+
 2012/04/12
 Release: 1.01
 Prepared charge letters module
