@@ -12,7 +12,8 @@ class ProfileForm extends BaseForm
         'prefers_richtext' => new sfWidgetFormInputCheckbox(),
         'preferred_format' => new sfWidgetFormSelect(array('choices' =>array_merge(array('---'), $formats))),
         'preferred_culture' => new sfWidgetFormSelect(array('choices' =>array_merge(array('---'), $cultures))),
-        'email' => new sfWidgetFormInputText(),
+        'website' => new sfWidgetFormInputText(array(), array('size'=>70)),
+        'email' => new sfWidgetFormInputText(array(), array('size'=>30)),
       ));
 
 			$this->widgetSchema->setNameFormat('userinfo[%s]');
@@ -24,6 +25,7 @@ class ProfileForm extends BaseForm
         'prefers_richtext' => new sfValidatorBoolean(),
         'preferred_format' => new sfValidatorChoice(array('choices' => array_keys($formats), 'multiple'=>false)),
         'preferred_culture' => new sfValidatorChoice(array('choices' => array_keys($cultures), 'multiple'=>false)),
+				'website'  => new sfValidatorUrl(array('protocols'=>array('http','https'), 'trim' => true, 'required' => false, 'max_length'=>255)),
 			));
 			
 		}

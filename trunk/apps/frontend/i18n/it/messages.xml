@@ -153,10 +153,10 @@
       </trans-unit>
       <trans-unit id="61">
         <source>Office</source>
-        <target>Segreteria</target>
+        <target>Ufficio</target>
       </trans-unit>
       <trans-unit id="62">
-        <source>Schoolmaster</source>
+        <source>Principal</source>
         <target>Dirigente scolastico</target>
       </trans-unit>
       <trans-unit id="63">
@@ -456,11 +456,11 @@
         <target>Piano di lavoro in attesa di controlli amministrativi</target>
       </trans-unit>
       <trans-unit id="142">
-        <source>Workplan waiting for schoolmaster`s approval</source>
+        <source>Workplan waiting for principal's approval</source>
         <target>Piano di lavoro in attesa di approvazione dal parte del DS</target>
       </trans-unit>
       <trans-unit id="143">
-        <source>Intermediate report waiting for schoolmaster`s evaluation</source>
+        <source>Intermediate report waiting for principal's evaluation</source>
         <target>Relazione intermedia in attesa di valutazione da parte del DS</target>
       </trans-unit>
       <trans-unit id="144">
@@ -468,7 +468,7 @@
         <target>Relazione finale in attesa di controlli amministrativi</target>
       </trans-unit>
       <trans-unit id="145">
-        <source>Final report waiting for schoolmaster`s evaluation</source>
+        <source>Final report waiting for principal's evaluation</source>
         <target>Relazione finale in attesa di approvazione dal parte del DS</target>
       </trans-unit>
       <trans-unit id="146">
@@ -944,7 +944,7 @@
         <target>Questo elemento non &#xE8; stato compilato correttamente</target>
       </trans-unit>
       <trans-unit id="266">
-        <source>It will be then administratively checked and approved by the schoolmaster</source>
+        <source>It will be then administratively checked and approved by the principal</source>
         <target>Verr&#xE0; successivamente controllato dal punto di vista amministrativo e approvato dal Dirigente Scolastico</target>
       </trans-unit>
       <trans-unit id="267">
@@ -964,7 +964,7 @@
         <target>Il documento &#xAB;%s&#xBB; &#xE8; stato consegnato correttamente.</target>
       </trans-unit>
       <trans-unit id="272">
-        <source>It must now be administratively checked and then approved by the schoolmaster.</source>
+        <source>It must now be administratively checked and then approved by the principal.</source>
         <target>Dovr&#xE0; essere controllato dal punto di vista amministrativo e successivamente approvato dal Dirigente Scolastico.</target>
       </trans-unit>
       <trans-unit id="273">
@@ -4548,6 +4548,12 @@
         <source>«Who can do what» matrix</source>
         <target>Matrice «chi può fare cosa»</target>
       </trans-unit>
+      <trans-unit id="1320">
+        <source>PTN notes</source>
+        <target>Note ric. gen.</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>
+
+

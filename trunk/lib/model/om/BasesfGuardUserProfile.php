@@ -104,6 +104,24 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $email_verification_code;
 
 	/**
+	 * The value for the website field.
+	 * @var        string
+	 */
+	protected $website;
+
+	/**
+	 * The value for the office field.
+	 * @var        string
+	 */
+	protected $office;
+
+	/**
+	 * The value for the ptn_notes field.
+	 * @var        string
+	 */
+	protected $ptn_notes;
+
+	/**
 	 * The value for the birthdate field.
 	 * @var        string
 	 */
@@ -354,6 +372,36 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	public function getEmailVerificationCode()
 	{
 		return $this->email_verification_code;
+	}
+
+	/**
+	 * Get the [website] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getWebsite()
+	{
+		return $this->website;
+	}
+
+	/**
+	 * Get the [office] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getOffice()
+	{
+		return $this->office;
+	}
+
+	/**
+	 * Get the [ptn_notes] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getPtnNotes()
+	{
+		return $this->ptn_notes;
 	}
 
 	/**
@@ -829,6 +877,66 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	} // setEmailVerificationCode()
 
 	/**
+	 * Set the value of [website] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     sfGuardUserProfile The current object (for fluent API support)
+	 */
+	public function setWebsite($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->website !== $v) {
+			$this->website = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::WEBSITE;
+		}
+
+		return $this;
+	} // setWebsite()
+
+	/**
+	 * Set the value of [office] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     sfGuardUserProfile The current object (for fluent API support)
+	 */
+	public function setOffice($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->office !== $v) {
+			$this->office = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::OFFICE;
+		}
+
+		return $this;
+	} // setOffice()
+
+	/**
+	 * Set the value of [ptn_notes] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     sfGuardUserProfile The current object (for fluent API support)
+	 */
+	public function setPtnNotes($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->ptn_notes !== $v) {
+			$this->ptn_notes = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::PTN_NOTES;
+		}
+
+		return $this;
+	} // setPtnNotes()
+
+	/**
 	 * Sets the value of [birthdate] column to a normalized version of the date/time value specified.
 	 * 
 	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
@@ -1173,16 +1281,19 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->email = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
 			$this->email_state = ($row[$startcol + 12] !== null) ? (int) $row[$startcol + 12] : null;
 			$this->email_verification_code = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
-			$this->birthdate = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
-			$this->birthplace = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
-			$this->import_code = ($row[$startcol + 16] !== null) ? (string) $row[$startcol + 16] : null;
-			$this->system_alerts = ($row[$startcol + 17] !== null) ? (string) $row[$startcol + 17] : null;
-			$this->is_scheduled_for_deletion = ($row[$startcol + 18] !== null) ? (boolean) $row[$startcol + 18] : null;
-			$this->prefers_richtext = ($row[$startcol + 19] !== null) ? (boolean) $row[$startcol + 19] : null;
-			$this->preferred_format = ($row[$startcol + 20] !== null) ? (string) $row[$startcol + 20] : null;
-			$this->preferred_culture = ($row[$startcol + 21] !== null) ? (string) $row[$startcol + 21] : null;
-			$this->last_action_at = ($row[$startcol + 22] !== null) ? (string) $row[$startcol + 22] : null;
-			$this->last_login_at = ($row[$startcol + 23] !== null) ? (string) $row[$startcol + 23] : null;
+			$this->website = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
+			$this->office = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
+			$this->ptn_notes = ($row[$startcol + 16] !== null) ? (string) $row[$startcol + 16] : null;
+			$this->birthdate = ($row[$startcol + 17] !== null) ? (string) $row[$startcol + 17] : null;
+			$this->birthplace = ($row[$startcol + 18] !== null) ? (string) $row[$startcol + 18] : null;
+			$this->import_code = ($row[$startcol + 19] !== null) ? (string) $row[$startcol + 19] : null;
+			$this->system_alerts = ($row[$startcol + 20] !== null) ? (string) $row[$startcol + 20] : null;
+			$this->is_scheduled_for_deletion = ($row[$startcol + 21] !== null) ? (boolean) $row[$startcol + 21] : null;
+			$this->prefers_richtext = ($row[$startcol + 22] !== null) ? (boolean) $row[$startcol + 22] : null;
+			$this->preferred_format = ($row[$startcol + 23] !== null) ? (string) $row[$startcol + 23] : null;
+			$this->preferred_culture = ($row[$startcol + 24] !== null) ? (string) $row[$startcol + 24] : null;
+			$this->last_action_at = ($row[$startcol + 25] !== null) ? (string) $row[$startcol + 25] : null;
+			$this->last_login_at = ($row[$startcol + 26] !== null) ? (string) $row[$startcol + 26] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1192,7 +1303,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 24; // 24 = sfGuardUserProfilePeer::NUM_COLUMNS - sfGuardUserProfilePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 27; // 27 = sfGuardUserProfilePeer::NUM_COLUMNS - sfGuardUserProfilePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating sfGuardUserProfile object", $e);
@@ -1571,33 +1682,42 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				return $this->getEmailVerificationCode();
 				break;
 			case 14:
-				return $this->getBirthdate();
+				return $this->getWebsite();
 				break;
 			case 15:
-				return $this->getBirthplace();
+				return $this->getOffice();
 				break;
 			case 16:
-				return $this->getImportCode();
+				return $this->getPtnNotes();
 				break;
 			case 17:
-				return $this->getSystemAlerts();
+				return $this->getBirthdate();
 				break;
 			case 18:
-				return $this->getIsScheduledForDeletion();
+				return $this->getBirthplace();
 				break;
 			case 19:
-				return $this->getPrefersRichtext();
+				return $this->getImportCode();
 				break;
 			case 20:
-				return $this->getPreferredFormat();
+				return $this->getSystemAlerts();
 				break;
 			case 21:
-				return $this->getPreferredCulture();
+				return $this->getIsScheduledForDeletion();
 				break;
 			case 22:
-				return $this->getLastActionAt();
+				return $this->getPrefersRichtext();
 				break;
 			case 23:
+				return $this->getPreferredFormat();
+				break;
+			case 24:
+				return $this->getPreferredCulture();
+				break;
+			case 25:
+				return $this->getLastActionAt();
+				break;
+			case 26:
 				return $this->getLastLoginAt();
 				break;
 			default:
@@ -1635,16 +1755,19 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$keys[11] => $this->getEmail(),
 			$keys[12] => $this->getEmailState(),
 			$keys[13] => $this->getEmailVerificationCode(),
-			$keys[14] => $this->getBirthdate(),
-			$keys[15] => $this->getBirthplace(),
-			$keys[16] => $this->getImportCode(),
-			$keys[17] => $this->getSystemAlerts(),
-			$keys[18] => $this->getIsScheduledForDeletion(),
-			$keys[19] => $this->getPrefersRichtext(),
-			$keys[20] => $this->getPreferredFormat(),
-			$keys[21] => $this->getPreferredCulture(),
-			$keys[22] => $this->getLastActionAt(),
-			$keys[23] => $this->getLastLoginAt(),
+			$keys[14] => $this->getWebsite(),
+			$keys[15] => $this->getOffice(),
+			$keys[16] => $this->getPtnNotes(),
+			$keys[17] => $this->getBirthdate(),
+			$keys[18] => $this->getBirthplace(),
+			$keys[19] => $this->getImportCode(),
+			$keys[20] => $this->getSystemAlerts(),
+			$keys[21] => $this->getIsScheduledForDeletion(),
+			$keys[22] => $this->getPrefersRichtext(),
+			$keys[23] => $this->getPreferredFormat(),
+			$keys[24] => $this->getPreferredCulture(),
+			$keys[25] => $this->getLastActionAt(),
+			$keys[26] => $this->getLastLoginAt(),
 		);
 		return $result;
 	}
@@ -1719,33 +1842,42 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 				$this->setEmailVerificationCode($value);
 				break;
 			case 14:
-				$this->setBirthdate($value);
+				$this->setWebsite($value);
 				break;
 			case 15:
-				$this->setBirthplace($value);
+				$this->setOffice($value);
 				break;
 			case 16:
-				$this->setImportCode($value);
+				$this->setPtnNotes($value);
 				break;
 			case 17:
-				$this->setSystemAlerts($value);
+				$this->setBirthdate($value);
 				break;
 			case 18:
-				$this->setIsScheduledForDeletion($value);
+				$this->setBirthplace($value);
 				break;
 			case 19:
-				$this->setPrefersRichtext($value);
+				$this->setImportCode($value);
 				break;
 			case 20:
-				$this->setPreferredFormat($value);
+				$this->setSystemAlerts($value);
 				break;
 			case 21:
-				$this->setPreferredCulture($value);
+				$this->setIsScheduledForDeletion($value);
 				break;
 			case 22:
-				$this->setLastActionAt($value);
+				$this->setPrefersRichtext($value);
 				break;
 			case 23:
+				$this->setPreferredFormat($value);
+				break;
+			case 24:
+				$this->setPreferredCulture($value);
+				break;
+			case 25:
+				$this->setLastActionAt($value);
+				break;
+			case 26:
 				$this->setLastLoginAt($value);
 				break;
 		} // switch()
@@ -1786,16 +1918,19 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[11], $arr)) $this->setEmail($arr[$keys[11]]);
 		if (array_key_exists($keys[12], $arr)) $this->setEmailState($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setEmailVerificationCode($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setBirthdate($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setBirthplace($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setImportCode($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setSystemAlerts($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setIsScheduledForDeletion($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setPrefersRichtext($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setPreferredFormat($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setPreferredCulture($arr[$keys[21]]);
-		if (array_key_exists($keys[22], $arr)) $this->setLastActionAt($arr[$keys[22]]);
-		if (array_key_exists($keys[23], $arr)) $this->setLastLoginAt($arr[$keys[23]]);
+		if (array_key_exists($keys[14], $arr)) $this->setWebsite($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setOffice($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setPtnNotes($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setBirthdate($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setBirthplace($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setImportCode($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setSystemAlerts($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setIsScheduledForDeletion($arr[$keys[21]]);
+		if (array_key_exists($keys[22], $arr)) $this->setPrefersRichtext($arr[$keys[22]]);
+		if (array_key_exists($keys[23], $arr)) $this->setPreferredFormat($arr[$keys[23]]);
+		if (array_key_exists($keys[24], $arr)) $this->setPreferredCulture($arr[$keys[24]]);
+		if (array_key_exists($keys[25], $arr)) $this->setLastActionAt($arr[$keys[25]]);
+		if (array_key_exists($keys[26], $arr)) $this->setLastLoginAt($arr[$keys[26]]);
 	}
 
 	/**
@@ -1821,6 +1956,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::EMAIL)) $criteria->add(sfGuardUserProfilePeer::EMAIL, $this->email);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::EMAIL_STATE)) $criteria->add(sfGuardUserProfilePeer::EMAIL_STATE, $this->email_state);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::EMAIL_VERIFICATION_CODE)) $criteria->add(sfGuardUserProfilePeer::EMAIL_VERIFICATION_CODE, $this->email_verification_code);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::WEBSITE)) $criteria->add(sfGuardUserProfilePeer::WEBSITE, $this->website);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::OFFICE)) $criteria->add(sfGuardUserProfilePeer::OFFICE, $this->office);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::PTN_NOTES)) $criteria->add(sfGuardUserProfilePeer::PTN_NOTES, $this->ptn_notes);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::BIRTHDATE)) $criteria->add(sfGuardUserProfilePeer::BIRTHDATE, $this->birthdate);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::BIRTHPLACE)) $criteria->add(sfGuardUserProfilePeer::BIRTHPLACE, $this->birthplace);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::IMPORT_CODE)) $criteria->add(sfGuardUserProfilePeer::IMPORT_CODE, $this->import_code);
@@ -1912,6 +2050,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$copyObj->setEmailState($this->email_state);
 
 		$copyObj->setEmailVerificationCode($this->email_verification_code);
+
+		$copyObj->setWebsite($this->website);
+
+		$copyObj->setOffice($this->office);
+
+		$copyObj->setPtnNotes($this->ptn_notes);
 
 		$copyObj->setBirthdate($this->birthdate);
 

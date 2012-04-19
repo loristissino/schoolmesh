@@ -966,6 +966,9 @@ class usersActions extends sfActions
 				->setEmailState($params['email_state'])
         ->setPrefersRichtext($params['prefers_richtext'])
         ->setPreferredFormat($params['preferred_format'])
+        ->setWebsite($params['website'])
+        ->setOffice($params['office'])
+        ->setPtnNotes($params['ptn_notes'])
 				->setSystemAlerts('')
 				->save();
 				$this->current_user
@@ -1008,6 +1011,9 @@ class usersActions extends sfActions
 			'gender'=>$this->current_user->getGenderChoice(),
 			'email'=>$this->current_user->getEmail(),
 			'email_state'=>$this->current_user->getEmailState(),
+      'website'=>$this->current_user->getWebsite(),
+      'office'=>$this->current_user->getOffice(),
+      'ptn_notes'=>$this->current_user->getPtnNotes(),
 			'birthdate' => $this->current_user->getBirthdate(),
 			'birthplace' => $this->current_user->getBirthplace(),
 			'main_role'=>$this->current_user->getRoleId(),

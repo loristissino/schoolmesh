@@ -25,7 +25,7 @@ abstract class BasesfGuardUserProfilePeer {
 	const TM_CLASS = 'sfGuardUserProfileTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 24;
+	const NUM_COLUMNS = 27;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -71,6 +71,15 @@ abstract class BasesfGuardUserProfilePeer {
 
 	/** the column name for the EMAIL_VERIFICATION_CODE field */
 	const EMAIL_VERIFICATION_CODE = 'sf_guard_user_profile.EMAIL_VERIFICATION_CODE';
+
+	/** the column name for the WEBSITE field */
+	const WEBSITE = 'sf_guard_user_profile.WEBSITE';
+
+	/** the column name for the OFFICE field */
+	const OFFICE = 'sf_guard_user_profile.OFFICE';
+
+	/** the column name for the PTN_NOTES field */
+	const PTN_NOTES = 'sf_guard_user_profile.PTN_NOTES';
 
 	/** the column name for the BIRTHDATE field */
 	const BIRTHDATE = 'sf_guard_user_profile.BIRTHDATE';
@@ -125,11 +134,11 @@ abstract class BasesfGuardUserProfilePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('UserId', 'Lettertitle', 'FirstName', 'MiddleName', 'LastName', 'Pronunciation', 'City', 'Address', 'Info', 'RoleId', 'Gender', 'Email', 'EmailState', 'EmailVerificationCode', 'Birthdate', 'Birthplace', 'ImportCode', 'SystemAlerts', 'IsScheduledForDeletion', 'PrefersRichtext', 'PreferredFormat', 'PreferredCulture', 'LastActionAt', 'LastLoginAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('userId', 'lettertitle', 'firstName', 'middleName', 'lastName', 'pronunciation', 'city', 'address', 'info', 'roleId', 'gender', 'email', 'emailState', 'emailVerificationCode', 'birthdate', 'birthplace', 'importCode', 'systemAlerts', 'isScheduledForDeletion', 'prefersRichtext', 'preferredFormat', 'preferredCulture', 'lastActionAt', 'lastLoginAt', ),
-		BasePeer::TYPE_COLNAME => array (self::USER_ID, self::LETTERTITLE, self::FIRST_NAME, self::MIDDLE_NAME, self::LAST_NAME, self::PRONUNCIATION, self::CITY, self::ADDRESS, self::INFO, self::ROLE_ID, self::GENDER, self::EMAIL, self::EMAIL_STATE, self::EMAIL_VERIFICATION_CODE, self::BIRTHDATE, self::BIRTHPLACE, self::IMPORT_CODE, self::SYSTEM_ALERTS, self::IS_SCHEDULED_FOR_DELETION, self::PREFERS_RICHTEXT, self::PREFERRED_FORMAT, self::PREFERRED_CULTURE, self::LAST_ACTION_AT, self::LAST_LOGIN_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('user_id', 'lettertitle', 'first_name', 'middle_name', 'last_name', 'pronunciation', 'city', 'address', 'info', 'role_id', 'gender', 'email', 'email_state', 'email_verification_code', 'birthdate', 'birthplace', 'import_code', 'system_alerts', 'is_scheduled_for_deletion', 'prefers_richtext', 'preferred_format', 'preferred_culture', 'last_action_at', 'last_login_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, )
+		BasePeer::TYPE_PHPNAME => array ('UserId', 'Lettertitle', 'FirstName', 'MiddleName', 'LastName', 'Pronunciation', 'City', 'Address', 'Info', 'RoleId', 'Gender', 'Email', 'EmailState', 'EmailVerificationCode', 'Website', 'Office', 'PtnNotes', 'Birthdate', 'Birthplace', 'ImportCode', 'SystemAlerts', 'IsScheduledForDeletion', 'PrefersRichtext', 'PreferredFormat', 'PreferredCulture', 'LastActionAt', 'LastLoginAt', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('userId', 'lettertitle', 'firstName', 'middleName', 'lastName', 'pronunciation', 'city', 'address', 'info', 'roleId', 'gender', 'email', 'emailState', 'emailVerificationCode', 'website', 'office', 'ptnNotes', 'birthdate', 'birthplace', 'importCode', 'systemAlerts', 'isScheduledForDeletion', 'prefersRichtext', 'preferredFormat', 'preferredCulture', 'lastActionAt', 'lastLoginAt', ),
+		BasePeer::TYPE_COLNAME => array (self::USER_ID, self::LETTERTITLE, self::FIRST_NAME, self::MIDDLE_NAME, self::LAST_NAME, self::PRONUNCIATION, self::CITY, self::ADDRESS, self::INFO, self::ROLE_ID, self::GENDER, self::EMAIL, self::EMAIL_STATE, self::EMAIL_VERIFICATION_CODE, self::WEBSITE, self::OFFICE, self::PTN_NOTES, self::BIRTHDATE, self::BIRTHPLACE, self::IMPORT_CODE, self::SYSTEM_ALERTS, self::IS_SCHEDULED_FOR_DELETION, self::PREFERS_RICHTEXT, self::PREFERRED_FORMAT, self::PREFERRED_CULTURE, self::LAST_ACTION_AT, self::LAST_LOGIN_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('user_id', 'lettertitle', 'first_name', 'middle_name', 'last_name', 'pronunciation', 'city', 'address', 'info', 'role_id', 'gender', 'email', 'email_state', 'email_verification_code', 'website', 'office', 'ptn_notes', 'birthdate', 'birthplace', 'import_code', 'system_alerts', 'is_scheduled_for_deletion', 'prefers_richtext', 'preferred_format', 'preferred_culture', 'last_action_at', 'last_login_at', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, )
 	);
 
 	/**
@@ -139,11 +148,11 @@ abstract class BasesfGuardUserProfilePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('UserId' => 0, 'Lettertitle' => 1, 'FirstName' => 2, 'MiddleName' => 3, 'LastName' => 4, 'Pronunciation' => 5, 'City' => 6, 'Address' => 7, 'Info' => 8, 'RoleId' => 9, 'Gender' => 10, 'Email' => 11, 'EmailState' => 12, 'EmailVerificationCode' => 13, 'Birthdate' => 14, 'Birthplace' => 15, 'ImportCode' => 16, 'SystemAlerts' => 17, 'IsScheduledForDeletion' => 18, 'PrefersRichtext' => 19, 'PreferredFormat' => 20, 'PreferredCulture' => 21, 'LastActionAt' => 22, 'LastLoginAt' => 23, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('userId' => 0, 'lettertitle' => 1, 'firstName' => 2, 'middleName' => 3, 'lastName' => 4, 'pronunciation' => 5, 'city' => 6, 'address' => 7, 'info' => 8, 'roleId' => 9, 'gender' => 10, 'email' => 11, 'emailState' => 12, 'emailVerificationCode' => 13, 'birthdate' => 14, 'birthplace' => 15, 'importCode' => 16, 'systemAlerts' => 17, 'isScheduledForDeletion' => 18, 'prefersRichtext' => 19, 'preferredFormat' => 20, 'preferredCulture' => 21, 'lastActionAt' => 22, 'lastLoginAt' => 23, ),
-		BasePeer::TYPE_COLNAME => array (self::USER_ID => 0, self::LETTERTITLE => 1, self::FIRST_NAME => 2, self::MIDDLE_NAME => 3, self::LAST_NAME => 4, self::PRONUNCIATION => 5, self::CITY => 6, self::ADDRESS => 7, self::INFO => 8, self::ROLE_ID => 9, self::GENDER => 10, self::EMAIL => 11, self::EMAIL_STATE => 12, self::EMAIL_VERIFICATION_CODE => 13, self::BIRTHDATE => 14, self::BIRTHPLACE => 15, self::IMPORT_CODE => 16, self::SYSTEM_ALERTS => 17, self::IS_SCHEDULED_FOR_DELETION => 18, self::PREFERS_RICHTEXT => 19, self::PREFERRED_FORMAT => 20, self::PREFERRED_CULTURE => 21, self::LAST_ACTION_AT => 22, self::LAST_LOGIN_AT => 23, ),
-		BasePeer::TYPE_FIELDNAME => array ('user_id' => 0, 'lettertitle' => 1, 'first_name' => 2, 'middle_name' => 3, 'last_name' => 4, 'pronunciation' => 5, 'city' => 6, 'address' => 7, 'info' => 8, 'role_id' => 9, 'gender' => 10, 'email' => 11, 'email_state' => 12, 'email_verification_code' => 13, 'birthdate' => 14, 'birthplace' => 15, 'import_code' => 16, 'system_alerts' => 17, 'is_scheduled_for_deletion' => 18, 'prefers_richtext' => 19, 'preferred_format' => 20, 'preferred_culture' => 21, 'last_action_at' => 22, 'last_login_at' => 23, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, )
+		BasePeer::TYPE_PHPNAME => array ('UserId' => 0, 'Lettertitle' => 1, 'FirstName' => 2, 'MiddleName' => 3, 'LastName' => 4, 'Pronunciation' => 5, 'City' => 6, 'Address' => 7, 'Info' => 8, 'RoleId' => 9, 'Gender' => 10, 'Email' => 11, 'EmailState' => 12, 'EmailVerificationCode' => 13, 'Website' => 14, 'Office' => 15, 'PtnNotes' => 16, 'Birthdate' => 17, 'Birthplace' => 18, 'ImportCode' => 19, 'SystemAlerts' => 20, 'IsScheduledForDeletion' => 21, 'PrefersRichtext' => 22, 'PreferredFormat' => 23, 'PreferredCulture' => 24, 'LastActionAt' => 25, 'LastLoginAt' => 26, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('userId' => 0, 'lettertitle' => 1, 'firstName' => 2, 'middleName' => 3, 'lastName' => 4, 'pronunciation' => 5, 'city' => 6, 'address' => 7, 'info' => 8, 'roleId' => 9, 'gender' => 10, 'email' => 11, 'emailState' => 12, 'emailVerificationCode' => 13, 'website' => 14, 'office' => 15, 'ptnNotes' => 16, 'birthdate' => 17, 'birthplace' => 18, 'importCode' => 19, 'systemAlerts' => 20, 'isScheduledForDeletion' => 21, 'prefersRichtext' => 22, 'preferredFormat' => 23, 'preferredCulture' => 24, 'lastActionAt' => 25, 'lastLoginAt' => 26, ),
+		BasePeer::TYPE_COLNAME => array (self::USER_ID => 0, self::LETTERTITLE => 1, self::FIRST_NAME => 2, self::MIDDLE_NAME => 3, self::LAST_NAME => 4, self::PRONUNCIATION => 5, self::CITY => 6, self::ADDRESS => 7, self::INFO => 8, self::ROLE_ID => 9, self::GENDER => 10, self::EMAIL => 11, self::EMAIL_STATE => 12, self::EMAIL_VERIFICATION_CODE => 13, self::WEBSITE => 14, self::OFFICE => 15, self::PTN_NOTES => 16, self::BIRTHDATE => 17, self::BIRTHPLACE => 18, self::IMPORT_CODE => 19, self::SYSTEM_ALERTS => 20, self::IS_SCHEDULED_FOR_DELETION => 21, self::PREFERS_RICHTEXT => 22, self::PREFERRED_FORMAT => 23, self::PREFERRED_CULTURE => 24, self::LAST_ACTION_AT => 25, self::LAST_LOGIN_AT => 26, ),
+		BasePeer::TYPE_FIELDNAME => array ('user_id' => 0, 'lettertitle' => 1, 'first_name' => 2, 'middle_name' => 3, 'last_name' => 4, 'pronunciation' => 5, 'city' => 6, 'address' => 7, 'info' => 8, 'role_id' => 9, 'gender' => 10, 'email' => 11, 'email_state' => 12, 'email_verification_code' => 13, 'website' => 14, 'office' => 15, 'ptn_notes' => 16, 'birthdate' => 17, 'birthplace' => 18, 'import_code' => 19, 'system_alerts' => 20, 'is_scheduled_for_deletion' => 21, 'prefers_richtext' => 22, 'preferred_format' => 23, 'preferred_culture' => 24, 'last_action_at' => 25, 'last_login_at' => 26, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, )
 	);
 
 	/**
@@ -227,6 +236,9 @@ abstract class BasesfGuardUserProfilePeer {
 		$criteria->addSelectColumn(sfGuardUserProfilePeer::EMAIL);
 		$criteria->addSelectColumn(sfGuardUserProfilePeer::EMAIL_STATE);
 		$criteria->addSelectColumn(sfGuardUserProfilePeer::EMAIL_VERIFICATION_CODE);
+		$criteria->addSelectColumn(sfGuardUserProfilePeer::WEBSITE);
+		$criteria->addSelectColumn(sfGuardUserProfilePeer::OFFICE);
+		$criteria->addSelectColumn(sfGuardUserProfilePeer::PTN_NOTES);
 		$criteria->addSelectColumn(sfGuardUserProfilePeer::BIRTHDATE);
 		$criteria->addSelectColumn(sfGuardUserProfilePeer::BIRTHPLACE);
 		$criteria->addSelectColumn(sfGuardUserProfilePeer::IMPORT_CODE);

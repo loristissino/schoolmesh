@@ -156,8 +156,8 @@
         <target>Biuro</target>
       </trans-unit>
       <trans-unit id="62">
-        <source>Schoolmaster</source>
-        <target>Schoolmaster</target>
+        <source>Principal</source>
+        <target>Principal</target>
       </trans-unit>
       <trans-unit id="63">
         <source>View</source>
@@ -456,11 +456,11 @@
         <target>Plan pracy czeka na kontroli administracyjnej</target>
       </trans-unit>
       <trans-unit id="142">
-        <source>Workplan waiting for schoolmaster`s approval</source>
+        <source>Workplan waiting for principal's approval</source>
         <target>Plan pracy czeka na nauczyciela pliku `s zatwierdzenia</target>
       </trans-unit>
       <trans-unit id="143">
-        <source>Intermediate report waiting for schoolmaster`s evaluation</source>
+        <source>Intermediate report waiting for principal's evaluation</source>
         <target>sprawozdanie okresowe czeka na nauczyciela pliku `oceny s</target>
       </trans-unit>
       <trans-unit id="144">
@@ -468,7 +468,7 @@
         <target>Raport końcowy czeka na kontroli administracyjnej</target>
       </trans-unit>
       <trans-unit id="145">
-        <source>Final report waiting for schoolmaster`s evaluation</source>
+        <source>Final report waiting for principal's evaluation</source>
         <target>Raport końcowy czeka na nauczyciela pliku `oceny s</target>
       </trans-unit>
       <trans-unit id="146">
@@ -944,7 +944,7 @@
         <target>Pozycja ta nie jest prawidłowo wypełniony.</target>
       </trans-unit>
       <trans-unit id="266">
-        <source>It will be then administratively checked and approved by the schoolmaster</source>
+        <source>It will be then administratively checked and approved by the principal</source>
         <target>Należy następnie administracyjnie sprawdzone i zatwierdzone przez nauczyciela</target>
       </trans-unit>
       <trans-unit id="267">
@@ -964,7 +964,7 @@
         <target>Dokument &quot;% s» został przesłany pomyślnie.</target>
       </trans-unit>
       <trans-unit id="272">
-        <source>It must now be administratively checked and then approved by the schoolmaster.</source>
+        <source>It must now be administratively checked and then approved by the principal.</source>
         <target>musi być teraz administracyjnie sprawdzane a następnie zatwierdzone przez nauczyciela.</target>
       </trans-unit>
       <trans-unit id="273">
@@ -1196,7 +1196,7 @@
         <target>zarządzanie Nominacje</target>
       </trans-unit>
       <trans-unit id="10">
-        <source>Schoolmaster&#039;s actions</source>
+        <source>Principal's actions</source>
         <target>Działania nauczyciela</target>
       </trans-unit>
       <trans-unit id="327">
