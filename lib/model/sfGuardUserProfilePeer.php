@@ -985,6 +985,8 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 			$signs->userTitle($user->getLettertitle());
 			$signs->userFirstName($user->getFirstName());
 			$signs->userLastName($user->getLastName());
+      $signs->userOffice($user->getOffice());
+      $signs->userPtnNotes($user->getPtnNotes());
 			
       $oldsubject='';
       
