@@ -9,7 +9,7 @@
 
 <?php include_partial('content/flashes'); ?>
 
-<form action="<?php echo url_for('users/create') ?>" method="POST">
+<form action="<?php echo url_for('users/prenew') ?>" method="POST">
 
 <h2><?php echo __('Basic information') ?></h2>
 

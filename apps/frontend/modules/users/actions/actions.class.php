@@ -907,10 +907,39 @@ class usersActions extends sfActions
 */
 	}
 
+  public function executePrenew(sfWebRequest $request)
+	{
+		$this->userform = new UserForm(array(), array('prenew'=>true));
+    
+  	if ($request->isMethod('post'))
+		{
+			$this->userform->bind($request->getParameter('userinfo'));
+			if ($this->userform->isValid())
+			{
+				$params = $this->userform->getValues();
+        
+        $profile=new sfGuardUserProfile();
+        $profile
+        ->setFirstName($params['first_name'])
+        ->setLastName($params['last_name'])
+        ;
+        
+        $data = $profile->findGoodUsername();
+        
+        $this->getUser()->setAttribute('first_name', $params['first_name']);
+        $this->getUser()->setAttribute('last_name', $params['last_name']);
+        
+				$this->redirect('users/new?username='. $data['username']);
+			}
+    }
+	}
+
   public function executeNew(sfWebRequest $request)
 	{
 		$this->userform = new UserForm(array(), array('new'=>true));
-	}  
+    $this->userform->setDefault('username', $request->getParameter('username', ''));
+    
+	}
 
   public function executeCreate(sfWebRequest $request)
   {
@@ -926,82 +955,96 @@ class usersActions extends sfActions
 
   public function executeEdit(sfWebRequest $request)
   {
-	$this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
-	$this->accounts = $this->current_user->getAccounts();
-	$this->available_accounts=sfConfig::get('app_config_accounts');
+    $this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('id'));
+    
+    if($this->getUser()->hasAttribute('first_name'))
+    // this happens when a new user is created with users/prenew action
+    {
+      $this->current_user
+      ->setFirstName($this->getUser()->getAttribute('first_name'))
+      ->setLastName($this->getUser()->getAttribute('last_name'))
+      ->setPreferredFormat('odt')
+      ->save();
+      $this->getUser()->setAttribute('first_name', false);
+      $this->getUser()->setAttribute('last_name', false);
+    }
+      
+    $this->accounts = $this->current_user->getAccounts();
+    $this->available_accounts=sfConfig::get('app_config_accounts');
 	
-	$this->userform = new UserForm();
+    $this->userform = new UserForm();
 	
-	if ($request->isMethod('post'))
-		{
-			$this->userform->bind($request->getParameter('userinfo'));
-			if ($this->userform->isValid())
-			{
-				$params = $this->userform->getValues();
-				$this->current_user=sfGuardUserProfilePeer::retrieveByPk($params['id']);
-				if($this->current_user->getIsDeletable()&&$request->getParameter('delete'))
-				{
-					$this->current_user
-					->setIsScheduledForDeletion(true);
-				}
-				
-				if($request->getParameter('undelete'))
-				{
-					$this->current_user
-					->setIsScheduledForDeletion(false);
-				}
+    if ($request->isMethod('post'))
+      {
+        $this->userform->bind($request->getParameter('userinfo'));
+        if ($this->userform->isValid())
+        {
+          $params = $this->userform->getValues();
+          $this->current_user=sfGuardUserProfilePeer::retrieveByPk($params['id']);
+          if($this->current_user->getIsDeletable()&&$request->getParameter('delete'))
+          {
+            $this->current_user
+            ->setIsScheduledForDeletion(true);
+          }
+          
+          if($request->getParameter('undelete'))
+          {
+            $this->current_user
+            ->setIsScheduledForDeletion(false);
+          }
 
-				$this->current_user
-        ->updateFromForm($params, $this->getUser(), $this->getContext())
-				->setSystemAlerts('')
-				->save();
-				
-				$role=RolePeer::retrieveByPK($params['role_id']);
-				if ($role->getDefaultGuardGroup())
-				{
-					$group=sfGuardGroupProfilePeer::retrieveGuardGroupByName($role->getDefaultGuardGroup());
-					$this->current_user->addToGuardGroup($group);
-				}
+          $this->current_user
+          ->updateFromForm($params, $this->getUser(), $this->getContext())
+          ->setSystemAlerts('')
+          ->save();
+          
+          $role=RolePeer::retrieveByPK($params['role_id']);
+          if ($role->getDefaultGuardGroup())
+          {
+            $group=sfGuardGroupProfilePeer::retrieveGuardGroupByName($role->getDefaultGuardGroup());
+            $this->current_user->addToGuardGroup($group);
+          }
 
-				$this->getUser()->setFlash('notice',
-					$this->getContext()->getI18N()->__('User information updated.') . ' ' .
-					$this->getContext()->getI18N()->__('You might need to run User Checks in order to apply the changes.')
-					);
-					
-				$this->redirect('users/edit?id='. $params['id']);
+          $this->getUser()->setFlash('notice',
+            $this->getContext()->getI18N()->__('User information updated.') . ' ' .
+            $this->getContext()->getI18N()->__('You might need to run User Checks in order to apply the changes.')
+            );
+            
+          $this->redirect('users/edit?id='. $params['id']);
 
-				
-			}
-			
-			
-		}
+          
+        }
+        
+        
+      }
 
-	$this->userform->setDefaults(
-		array(
-			'id' => $this->current_user->getUserId(),
-      'lettertitle' => $this->current_user->getLetterTitle(),
-			'username' => $this->current_user->getUsername(),
-			'is_active'=> $this->current_user->getsfGuardUser()->getIsActive(),
-			'old_username' => $this->current_user->getUsername(),
-      'import_code' => $this->current_user->getImportCode(),
-			'first_name'=>$this->current_user->getFirstName(),
-			'middle_name'=>$this->current_user->getMiddleName(),
-			'last_name'=>$this->current_user->getLastName(),
-			'pronunciation'=>$this->current_user->getPronunciation(),
-			'gender'=>$this->current_user->getGenderChoice(),
-			'email'=>$this->current_user->getEmail(),
-			'email_state'=>$this->current_user->getEmailState(),
-      'website'=>$this->current_user->getWebsite(),
-      'office'=>$this->current_user->getOffice(),
-      'ptn_notes'=>$this->current_user->getPtnNotes(),
-			'birthdate' => $this->current_user->getBirthdate(),
-			'birthplace' => $this->current_user->getBirthplace(),
-			'role_id'=>$this->current_user->getRoleId(),
-      'preferred_format'=>$this->current_user->getPreferredFormat(),
-      'prefers_richtext'=>$this->current_user->getPrefersRichtext(),
-		)
-	);
-	
+      $this->userform->setDefaults(
+        array(
+          'id' => $this->current_user->getUserId(),
+          'lettertitle' => $this->current_user->getLetterTitle(),
+          'username' => $this->current_user->getUsername(),
+          'is_active'=> $this->current_user->getsfGuardUser()->getIsActive(),
+          'old_username' => $this->current_user->getUsername(),
+          'import_code' => $this->current_user->getImportCode(),
+          'first_name'=>$this->current_user->getFirstName(),
+          'middle_name'=>$this->current_user->getMiddleName(),
+          'last_name'=>$this->current_user->getLastName(),
+          'pronunciation'=>$this->current_user->getPronunciation(),
+          'gender'=>$this->current_user->getGenderChoice(),
+          'email'=>$this->current_user->getEmail(),
+          'email_state'=>$this->current_user->getEmailState(),
+          'website'=>$this->current_user->getWebsite(),
+          'office'=>$this->current_user->getOffice(),
+          'ptn_notes'=>$this->current_user->getPtnNotes(),
+          'birthdate' => $this->current_user->getBirthdate(),
+          'birthplace' => $this->current_user->getBirthplace(),
+          'role_id'=>$this->current_user->getRoleId(),
+          'preferred_format'=>$this->current_user->getPreferredFormat(),
+          'prefers_richtext'=>$this->current_user->getPrefersRichtext(),
+        )
+      );
+      
+  
   }
 
   public function executeRemovefromteam(sfWebRequest $request)
@@ -1435,7 +1478,7 @@ public function executeAddappointment(sfWebRequest $request)
 		  $current_sfuser->save();
 		  $current_user = new sfGuardUserProfile();
 		  $current_user->setUserId($current_sfuser->getId())
-		  ->setRoleId($params['main_role'])
+		  ->setRoleId($params['role_id'])
 		  ->save();
 
 		  $this->redirect('users/edit?id='.$current_user->getUserId());

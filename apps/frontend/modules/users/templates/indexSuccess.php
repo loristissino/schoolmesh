@@ -14,7 +14,7 @@
 		<?php echo link_to(__('List/Search'), 'users/list') ?>
 	</li><br />
 	<li class="sf_admin_action_new">
-		<?php echo link_to(__('Add a new user'), 'users/new', array('title'=>__(SentencePeer::getSentence('users_new'))))?>
+		<?php echo link_to(__('Add a new user'), 'users/prenew', array('title'=>__(SentencePeer::getSentence('users_new'))))?>
 	</li><br />
 	</ul>
 

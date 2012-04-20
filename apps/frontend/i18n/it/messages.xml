@@ -4564,6 +4564,10 @@
         <source>Website</source>
         <target>Sito web</target>
       </trans-unit>
+      <trans-unit id="1324">
+        <source>Continue</source>
+        <target>Continua</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>
