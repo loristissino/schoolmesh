@@ -30,18 +30,19 @@
       'ptn_notes' => new sfWidgetFormInputText(array(), array('size'=>70)),
       'birthdate' => new sfWidgetFormI18nDate(array('culture'=>'it', 'years'=>$years)),  
       'birthplace' => new sfWidgetFormInputText(array(), array('size'=>50)),  
-      'main_role' => new sfWidgetFormPropelChoice(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
+      'role_id' => new sfWidgetFormPropelChoice(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
             ));
 
     $this['lettertitle']->getWidget()->setLabel('Title');
     $this['ptn_notes']->getWidget()->setLabel('PTN notes');
+    $this['role_id']->getWidget()->setLabel('Main role');
 
 
 			if(isset($this->options['new']))
 			{
             $this->setWidgets(array(
 			  'username' => new sfWidgetFormInputText(array(), array('size'=>25)),
-			  'main_role' => new sfWidgetFormPropelChoice(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
+			  'role_id' => new sfWidgetFormPropelChoice(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
             ));
 			}
 			$this->widgetSchema->setNameFormat('userinfo[%s]');
@@ -69,7 +70,7 @@
 				'ptn_notes'  => new sfValidatorString(array('trim' => true, 'required' => false, 'max_length'=>255)),
 				'birthdate' => new sfValidatorDate(array('required'=>false)),
 				'birthplace' => new sfValidatorString(array('trim'=>true, 'required'=>false)),
-				'main_role' => new sfValidatorPropelChoice(array('model'=>'role')),
+				'role_id' => new sfValidatorPropelChoice(array('model'=>'role')),
         'prefers_richtext' => new sfValidatorBoolean(),
         'preferred_format' => new sfValidatorChoice(array('choices' => array_keys($formats), 'multiple'=>false)),
 
