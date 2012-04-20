@@ -4552,8 +4552,22 @@
         <source>PTN notes</source>
         <target>Note ric. gen.</target>
       </trans-unit>
+      <trans-unit id="1321">
+        <source>Events view</source>
+        <target>Visualizzazione eventi</target>
+      </trans-unit>
+      <trans-unit id="1322">
+        <source>Events concerning %user%</source>
+        <target>Eventi riguardanti %user%</target>
+      </trans-unit>
+      <trans-unit id="1323">
+        <source>Website</source>
+        <target>Sito web</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>
+
+
 
 

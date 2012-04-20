@@ -17,7 +17,9 @@ class WfeventPeer extends BaseWfeventPeer {
     SCHOOLPROJECT=2,
     APPOINTMENT=3,
     WORKSTATION=4,
-    TEAM=5
+    TEAM=5,
+    SFGUARD_USER_PROFILE=6,
+    SFGUARD_USER=7
     ;
   
   static private $basenames=Array(
@@ -26,6 +28,8 @@ class WfeventPeer extends BaseWfeventPeer {
     self::APPOINTMENT=>'Appointment',
     self::WORKSTATION=>'Workstation',
     self::TEAM=>'Team',
+    self::SFGUARD_USER_PROFILE=>'sfGuardUserProfile',
+    self::SFGUARD_USER=>'sfGuardUser',
     );
 
   public static function getBaseTableId($classname)

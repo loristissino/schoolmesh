@@ -952,31 +952,11 @@ class usersActions extends sfActions
 				}
 
 				$this->current_user
-        ->setLettertitle($params['lettertitle'])
-				->setFirstName($params['first_name'])
-				->setMiddleName($params['middle_name'])
-				->setLastName($params['last_name'])
-        ->setImportCode($params['import_code'])
-				->setPronunciation($params['pronunciation'])
-				->setGenderChoice($params['gender'])
-				->setEmail($params['email'])
-				->setBirthdate($params['birthdate'])
-				->setBirthplace($params['birthplace'])
-				->setRoleId($params['main_role'])
-				->setEmailState($params['email_state'])
-        ->setPrefersRichtext($params['prefers_richtext'])
-        ->setPreferredFormat($params['preferred_format'])
-        ->setWebsite($params['website'])
-        ->setOffice($params['office'])
-        ->setPtnNotes($params['ptn_notes'])
+        ->updateFromForm($params, $this->getUser(), $this->getContext())
 				->setSystemAlerts('')
 				->save();
-				$this->current_user
-				->getSfGuardUser()->setUsername($params['username'])
-				->setIsActive($params['is_active'])
-				->save();
 				
-				$role=RolePeer::retrieveByPK($params['main_role']);
+				$role=RolePeer::retrieveByPK($params['role_id']);
 				if ($role->getDefaultGuardGroup())
 				{
 					$group=sfGuardGroupProfilePeer::retrieveGuardGroupByName($role->getDefaultGuardGroup());
@@ -1016,7 +996,7 @@ class usersActions extends sfActions
       'ptn_notes'=>$this->current_user->getPtnNotes(),
 			'birthdate' => $this->current_user->getBirthdate(),
 			'birthplace' => $this->current_user->getBirthplace(),
-			'main_role'=>$this->current_user->getRoleId(),
+			'role_id'=>$this->current_user->getRoleId(),
       'preferred_format'=>$this->current_user->getPreferredFormat(),
       'prefers_richtext'=>$this->current_user->getPrefersRichtext(),
 		)
@@ -1436,6 +1416,14 @@ public function executeAddappointment(sfWebRequest $request)
 	$this->account->setFormDefaults($this->form);
   }
 
+  public function executeEvents(sfWebRequest $request)
+  {
+    $this->current_user=sfGuardUserProfilePeer::retrieveByPk($request->getParameter('user'));
+	  $this->wfevents=$this->current_user->getWorkflowLogs();
+  }
+
+
+
 	protected function processForm(sfWebRequest $request, sfForm $form)
 	  {
 		$form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
@@ -1453,6 +1441,8 @@ public function executeAddappointment(sfWebRequest $request)
 		  $this->redirect('users/edit?id='.$current_user->getUserId());
 		}
 	}
+
+
 
 
 }

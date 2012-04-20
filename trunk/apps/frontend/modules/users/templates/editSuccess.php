@@ -72,7 +72,6 @@
   <?php include_partial('credentials', array('current_user'=>$current_user)) ?>
 <?php endif ?>
 
-
 <h2><?php echo __('Actions') ?></h2>
 
 	<ul class="sf_admin_actions">
@@ -82,5 +81,12 @@
 	<li class="sf_admin_action_log">
 		<?php echo link_to(__('View LAN access logs for %user%', array('%user%'=>$current_user->getUsername())), url_for('lanlog/viewbyuser?id=' . $current_user->getUserId())) ?>
 	</li><br />
+  <li class="sf_admin_action_log">
+  <?php echo link_to(
+    __('View events'),
+    'users/events?user='.$current_user->getUserId(),
+    array('title'=>__('View events'))
+    )?>
+  </li><br />
 	</ul>
 

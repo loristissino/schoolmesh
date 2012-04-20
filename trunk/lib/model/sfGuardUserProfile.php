@@ -501,6 +501,18 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			}
 			return $this;
 		}
+    
+    public function getGenderValueFromParameter($parameter)
+    {
+			switch($parameter)
+			{
+				case 1: return 'M';
+				case 0: return 'F';
+				default: return null;
+			}
+    }
+    
+    
 		public function __toString()
 		{
 				return $this->getFullName();
@@ -1831,6 +1843,70 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     return false;  // everything was OK, no fix was done
   }
 
+  public function updateFromForm($params, $user=null, $sf_context=null)
+  {
+    
+    if(array_key_exists('gender', $params))
+    {
+      $params['gender']=$this->getGenderValueFromParameter($params['gender']);
+    }
+    
+    $changedfields = Generic::updateObjectFromForm($this, array(
+      'lettertitle',
+			'first_name',
+			'middle_name',
+			'last_name',
+      'import_code',
+			'pronunciation',
+			'gender',
+			'email',
+			'birthdate',
+			'birthplace',
+			'role_id',
+			'email_state',
+      'prefers_richtext',
+      'preferred_format',
+      'website',
+      'office',
+      'ptn_notes',
+      ), $params);
+
+    $changedfields2 = Generic::updateObjectFromForm($this->getSfGuardUser(), array(
+      'username', 
+      'is_active'
+      ), $params);
+      
+    $changedfields += $changedfields2;
+    
+    if($user && $user->getProfile()->getUserId()!=$this->getUserId())
+    {
+      foreach($changedfields as $field)
+      {
+        $this->addWfevent($user->getProfile()->getUserId(), 
+          'Value for field «%fieldname%» set to «%value%»', 
+          array('%fieldname%'=>$field, '%value%'=>$params[$field]),
+          null,
+          $sf_context);
+      }
+    }
+    
+    return $this;
+  }
+
+  public function getWorkflowLogs()
+	{
+		$t = WfeventPeer::retrieveByClassAndId('sfGuardUserProfile', $this->getId(), true);
+		if ($t)
+			return $t;
+		else
+			return NULL;
+	}
+
+  public function addWfevent($userId, $comment='', $i18n_subs, $state=0, $sf_context=null, $con=null)
+  {
+    Generic::addWfevent($this, $userId, $comment, $i18n_subs, $state, $sf_context, $con);
+    return $this;
+  }
 
   public function updateLuceneIndex()
   {
