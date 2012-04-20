@@ -1,52 +1,37 @@
 <?php
   class UserForm extends BaseForm
   {
-    public function configure()
+    
+    private function configureDefaultForm()
     {
-      
-      $formats=sfConfig::get('app_opendocument_formats');
-      
-      $years=Generic::getNumbersBetweenAsOptionsArray(sfConfig::get('app_config_current_year')-70, sfConfig::get('app_config_current_year')-5);
-      $emailstates=Workflow::getEmailVerificationStates();
-			
-    $this->setWidgets(array(
-      'id'  => new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
-      'old_username' =>  new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
-      'username' => new sfWidgetFormInputText(array(), array('size'=>25)),
-      'import_code' => new sfWidgetFormInputText(array(), array('size'=>20)),
-      'is_active'=> new sfWidgetFormSelect(array('choices' =>array('no', 'yes'))),
-      'lettertitle' => new sfWidgetFormInputText(array(), array('size'=>20)), 
-      'first_name'    => new sfWidgetFormInputText(array(), array('size'=>50)),
-      'middle_name'   => new sfWidgetFormInputText(array(), array('size'=>15)),
-      'last_name' => new sfWidgetFormInputText(array(), array('size'=>50)),
-      'pronunciation' => new sfWidgetFormInputText(array(), array('size'=>70)),
-      'gender' => new sfWidgetFormSelect(array('choices' =>array('F', 'M', 'unknown'))),
-      'prefers_richtext' => new sfWidgetFormInputCheckbox(),
-      'preferred_format' => new sfWidgetFormSelect(array('choices' =>array_merge(array('---'), $formats))),
-      'email' => new sfWidgetFormInputText(),
-      'email_state' => new sfWidgetFormSelect(array('choices' =>$emailstates)),
-      'website' => new sfWidgetFormInputText(array(), array('size'=>70)),
-      'office' => new sfWidgetFormInputText(array(), array('size'=>40)),
-      'ptn_notes' => new sfWidgetFormInputText(array(), array('size'=>70)),
-      'birthdate' => new sfWidgetFormI18nDate(array('culture'=>'it', 'years'=>$years)),  
-      'birthplace' => new sfWidgetFormInputText(array(), array('size'=>50)),  
-      'role_id' => new sfWidgetFormPropelChoice(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
-            ));
+      $this->setWidgets(array(
+        'id'  => new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
+        'old_username' =>  new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
+        'username' => new sfWidgetFormInputText(array(), array('size'=>25)),
+        'import_code' => new sfWidgetFormInputText(array(), array('size'=>20)),
+        'is_active'=> new sfWidgetFormSelect(array('choices' =>array('no', 'yes'))),
+        'lettertitle' => new sfWidgetFormInputText(array(), array('size'=>20)), 
+        'first_name'    => new sfWidgetFormInputText(array(), array('size'=>50)),
+        'middle_name'   => new sfWidgetFormInputText(array(), array('size'=>15)),
+        'last_name' => new sfWidgetFormInputText(array(), array('size'=>50)),
+        'pronunciation' => new sfWidgetFormInputText(array(), array('size'=>70)),
+        'gender' => new sfWidgetFormSelect(array('choices' =>array('F', 'M', 'unknown'))),
+        'prefers_richtext' => new sfWidgetFormInputCheckbox(),
+        'preferred_format' => new sfWidgetFormSelect(array('choices' =>array_merge(array('---'), $this->formats))),
+        'email' => new sfWidgetFormInputText(),
+        'email_state' => new sfWidgetFormSelect(array('choices' =>$this->emailstates)),
+        'website' => new sfWidgetFormInputText(array(), array('size'=>70)),
+        'office' => new sfWidgetFormInputText(array(), array('size'=>40)),
+        'ptn_notes' => new sfWidgetFormInputText(array(), array('size'=>70)),
+        'birthdate' => new sfWidgetFormI18nDate(array('culture'=>'it', 'years'=>$this->years)),  
+        'birthplace' => new sfWidgetFormInputText(array(), array('size'=>50)),  
+        'role_id' => new sfWidgetFormPropelChoice(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
+              ));
 
-    $this['lettertitle']->getWidget()->setLabel('Title');
-    $this['ptn_notes']->getWidget()->setLabel('PTN notes');
-    $this['role_id']->getWidget()->setLabel('Main role');
+      $this['lettertitle']->getWidget()->setLabel('Title');
+      $this['ptn_notes']->getWidget()->setLabel('PTN notes');
+      $this['role_id']->getWidget()->setLabel('Main role');
 
-
-			if(isset($this->options['new']))
-			{
-            $this->setWidgets(array(
-			  'username' => new sfWidgetFormInputText(array(), array('size'=>25)),
-			  'role_id' => new sfWidgetFormPropelChoice(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
-            ));
-			}
-			$this->widgetSchema->setNameFormat('userinfo[%s]');
-			
 			$this->setValidators(array(
 				'username' => new sfValidatorAnd(array(
 					new sfValidatorString(array('trim' => true, 'min_length'=>4, 'max_length'=>20)),
@@ -64,7 +49,7 @@
 				'pronunciation'  => new sfValidatorString(array('trim' => true, 'required' => false, 'max_length'=>100)),
 				'gender' => new sfValidatorInteger(array('min'=>0, 'max'=>2)),
 				'email'   => new sfValidatorEmail(array('trim' => true, 'required'=>false)),
-				'email_state' => new sfValidatorInteger(array('min'=>0, 'max'=>sizeof($emailstates)-1)), 
+				'email_state' => new sfValidatorInteger(array('min'=>0, 'max'=>sizeof($this->emailstates)-1)), 
         'website'  => new sfValidatorUrl(array('protocols'=>array('http','https'), 'trim' => true, 'required' => false, 'max_length'=>255)), 
 				'office'  => new sfValidatorString(array('trim' => true, 'required' => false, 'max_length'=>255)),
 				'ptn_notes'  => new sfValidatorString(array('trim' => true, 'required' => false, 'max_length'=>255)),
@@ -72,63 +57,77 @@
 				'birthplace' => new sfValidatorString(array('trim'=>true, 'required'=>false)),
 				'role_id' => new sfValidatorPropelChoice(array('model'=>'role')),
         'prefers_richtext' => new sfValidatorBoolean(),
-        'preferred_format' => new sfValidatorChoice(array('choices' => array_keys($formats), 'multiple'=>false)),
+        'preferred_format' => new sfValidatorChoice(array('choices' => array_keys($this->formats), 'multiple'=>false)),
 
 			));
-			
-			if(isset($this->options['new']))
-			{
-				$this->setValidators(array(
-					'username' => new sfValidatorAnd(array(
-						new sfValidatorString(array('trim' => true, 'min_length'=>4, 'max_length'=>20)),
-						new sfValidatorRegex(array('pattern'=>'/^[a-z.0-9]*$/')),
-				)),
-					'main_role' => new sfValidatorPropelChoice(array('model'=>'role')),  
-				));
-			}
-			
-		$this->validatorSchema->setPostValidator(
+
+      $this->validatorSchema->setPostValidator(
 				new sfValidatorOr(array(
 					new sfValidatorSchemaCompare('username', sfValidatorSchemaCompare::EQUAL, 'old_username'),
 					new smValidatorUsername('username')))
 				);
-        
+
+      
+    }
     
-		/* KEPT FOR REFERENCE 
-		$this->validatorSchema->setPostValidator(
-			new sfValidatorAnd(array(
-				new sfValidatorOr(array(
-					new sfValidatorSchemaCompare('username', sfValidatorSchemaCompare::EQUAL, 'old_username'),
-					new smValidatorUsername('username'))),
-				new sfValidatorSchemaCompare('soft_blocks_quota',
-					sfValidatorSchemaCompare::LESS_THAN_EQUAL, 'hard_blocks_quota',
-					array(),
-					array('invalid' => 'The soft blocks quota ("%left_field%") must be less than the hard blocks quota ("%right_field%").')
-				),
-				new sfValidatorSchemaCompare('soft_files_quota',
-					sfValidatorSchemaCompare::LESS_THAN_EQUAL, 'hard_files_quota',
-					array(),
-					array('invalid' => 'The soft files quota ("%left_field%") must be less than the hard files quota ("%right_field%").')
-				)
-			))
-		);
-*/
-/*
+    public function configure()
+    {
+      
+      $this->formats=sfConfig::get('app_opendocument_formats');
+      
+      $this->years=Generic::getNumbersBetweenAsOptionsArray(sfConfig::get('app_config_current_year')-70, sfConfig::get('app_config_current_year')-5);
+      $this->emailstates=Workflow::getEmailVerificationStates();
 
-This seems to work only for new records, not when updating.
-
-see http://groups.google.com/group/symfony-users/browse_thread/thread/7592a2a80dd1385
-
-
-			$this->validatorSchema->setPostValidator(new sfValidatorAnd(array(
-					new sfValidatorPropelUnique(
-						array('model'=>'ReservedUsername', 'column'=>'username', 'primary_key'=>'user_id'),
-						array('invalid'=>'This is a reserved username')),
-					new sfValidatorPropelUnique(
-						array('model'=>'sfGuardUser', 'column'=>'username', 'field'=>'username'))
-						))
-					);
-*/
+			if(isset($this->options['new']))
+			{
+        $this->setWidgets(array(
+          'username' => new sfWidgetFormInputText(array(), array('size'=>25)),
+          'role_id' => new sfWidgetFormPropelChoice(array('model'=>'role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveMainRoles')),
+            ));
+            
+ 				$this->setValidators(array(
+					'username' => new sfValidatorAnd(array(
+						new sfValidatorString(array('trim' => true, 'min_length'=>4, 'max_length'=>20)),
+						new sfValidatorRegex(array('pattern'=>'/^[a-z.0-9]*$/')),
+				)),
+					'role_id' => new sfValidatorPropelChoice(array('model'=>'role')),  
+				));
 			}
+      else
+      {
+        $this->configureDefaultForm();
+      }
+
+			$this->widgetSchema->setNameFormat('userinfo[%s]');
+
+
+			if(isset($this->options['prenew']))
+      {
+        unset(
+          $this['id'],
+          $this['old_username'],
+          $this['username'],
+          $this['middle_name'],
+          $this['import_code'],
+          $this['is_active'],
+          $this['lettertitle'],
+          $this['pronunciation'],
+          $this['gender'],
+          $this['prefers_richtext'],
+          $this['preferred_format'],
+          $this['email'],
+          $this['email_state'],
+          $this['website'],
+          $this['office'],
+          $this['ptn_notes'],
+          $this['birthdate'],
+          $this['birthplace'],
+          $this['role_id']
+        );
+        
+      }
+      
+      
+    }
 
 	}
