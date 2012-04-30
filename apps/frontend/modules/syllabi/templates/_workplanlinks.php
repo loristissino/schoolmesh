@@ -2,11 +2,12 @@
 <td>
 <?php echo $syllabus_item->getRef() ?>
 </td>
-<?php $ids=array(); foreach($workplan->getWpmodules() as $wpmodule): $ids[]=$wpmodule->getId() ?>
+<?php $ids=array(); foreach($wpmodules as $wpmodule): $ids[]=$wpmodule->getId() ?>
 <td>
 <?php if($syllabus_item->getIsSelectable()): ?>
-  <?php $syllabus_contributions=$wpmodule->getSyllabusContributionsAsArray()->getRawValue() ?>
+  <?php $syllabus_contributions=$syllabus_contributions_cache[$wpmodule->getId()]->getRawValue() ?>
   <?php $link='▢'; if(array_key_exists($syllabus_item->getId(), $syllabus_contributions)) $link=$syllabus_contributions[$syllabus_item->getId()]==WpmoduleSyllabusItemPeer::PARTIAL_CONTRIBUTION ? '◪': '▣' ?>
+  <?php if($workplan->getState()==Workflow::WP_DRAFT): ?>
   <?php echo jq_link_to_remote($link,
       array(
         'update' => 'syllabus_' . $syllabus_item->getId(),
@@ -16,11 +17,14 @@
           'title'=>__('Toggle module «%moduletitle%» contribution to this goal\'s achievement', array('%moduletitle%'=>$wpmodule->getTitle()))
             )
           ) ?>
+  <?php else: ?>
+    <?php echo $link ?>
+  <?php endif ?>
 <?php endif ?>
 </td>
 <?php endforeach ?>
 <td>
-<?php if($syllabus_item->getIsSelectable()): ?>
+<?php if($syllabus_item->getIsSelectable() and $workplan->getState()==Workflow::WP_DRAFT): ?>
   <?php echo jq_link_to_remote('◌',
       array(
         'update' => 'syllabus_' . $syllabus_item->getId(),
@@ -39,6 +43,20 @@
   <?php echo image_tag('loader.gif', array('style'=>'vertical-align: middle; display: none', 'id'=>'loader_s'. $syllabus_item->getId())) ?>
 <?php else: ?>
   <strong><?php echo $syllabus_item->getContent()?></strong>
+<?php endif ?>
+<?php if($workplan->getState()==Workflow::IR_DRAFT): ?>
+  <td>
+    <?php if($syllabus_item->getIsSelectable()): ?>
+      <?php $id=$syllabus_item->getFirstValidId($ids) ?>
+      <?php include_partial('syllabi/evaluation', array(
+			'id'=>$id,
+			'dbvalue'=>$syllabus_item->getEvaluationForItem($id),  
+			'textvalue'=>'',//$syllabus_item->getEvaluationForItem($id),
+			'min'=>1, //$item_group->getWpitemType()->getEvaluationMin(), 
+			'max'=>4, //$item_group->getWpitemType()->getEvaluationMax())
+      )) ?>
+    <?php endif ?>
+  </td>
 <?php endif ?>
 </div>
 </td>

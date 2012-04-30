@@ -639,8 +639,15 @@ public function executeRemovewfevent(sfWebRequest $request)
     $this->forward404Unless($this->workplan->isViewableBy($whoIsViewing));
     
     $this->syllabus=$this->workplan->getSyllabus();
+    $this->wpmodules=$this->workplan->getWpmodules();
+    
+    $this->syllabus_contributions=array();
+    foreach($this->wpmodules as $wpmodule)
+    {
+      $this->syllabus_contributions[$wpmodule->getId()]=$wpmodule->getSyllabusContributionsAsArray();
+    }
+    
     //$this->syllabus_contributions=array();
-
   }
   
   

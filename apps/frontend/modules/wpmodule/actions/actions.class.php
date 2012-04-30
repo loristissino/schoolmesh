@@ -286,9 +286,19 @@ class wpmoduleActions extends sfActions
     
     if($request->getParameter('partial')=='workplanlinks')
     {
+      $this->workplan=$this->wpmodule->getAppointment();
+      $this->wpmodules=$this->wpmodule->getAppointment()->getWpmodules();
+      $this->syllabus_contributions=array();
+      foreach($this->wpmodules as $wpmodule)
+      {
+        $this->syllabus_contributions[$wpmodule->getId()]=$wpmodule->getSyllabusContributionsAsArray();
+      }
+      
       return $this->renderPartial('syllabi/workplanlinks', array(
         'syllabus_item'=>$syllabus_item,
-        'workplan'=>$this->wpmodule->getAppointment(),
+        'workplan'=>$this->workplan,
+        'wpmodules'=>$this->wpmodules,
+        'syllabus_contributions_cache'=>$this->syllabus_contributions,
         )
       );
     };
