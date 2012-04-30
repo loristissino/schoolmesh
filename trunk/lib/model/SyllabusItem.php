@@ -74,8 +74,35 @@ class SyllabusItem extends BaseSyllabusItem {
 		return (StudentSyllabusItemPeer::doCount($c)==1);
 	}
 
+  public function getEvaluationForItem($id)
+  {
+    $c= new Criteria();
+    $c->add(WpmoduleSyllabusItemPeer::ID, $id);
+    $s=WpmoduleSyllabusItemPeer::doSelectOne($c);
+    if($s)
+    {
+      return $s->getEvaluation();
+    }
+    else
+    {
+      return null;
+    }
+  }
 
-
-  
+  public function getFirstValidId($wpmodules_ids=array())
+  {
+    $c= new Criteria();
+    $c->add(WpmoduleSyllabusItemPeer::SYLLABUS_ITEM_ID, $this->getId());
+    $c->add(WpmoduleSyllabusItemPeer::WPMODULE_ID, $wpmodules_ids, Criteria::IN);
+    $s=WpmoduleSyllabusItemPeer::doSelect($c);
+    if($s)
+    {
+      return $s[0]->getId();
+    }
+    else
+    {
+      return null;
+    }
+  }
 
 } // SyllabusItem

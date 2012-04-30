@@ -60,6 +60,24 @@ class syllabiActions extends sfActions
 
     $this->setTemplate('edit');
   }
+  
+  public function executeEvaluate(sfWebRequest $request)
+  {
+    $this->wpmodulesyllabusitem = WpmoduleSyllabusItemPeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($this->wpmodulesyllabusitem);
+	
+	// FIXME We should check the owner and the value here...
+	
+    $min=1; //$type->getEvaluationMin();
+    $max=4; //$type->getEvaluationMax();
+    
+    $evaluation=$request->getParameter('evaluation');
+    $dbvalue=$evaluation==''? NULL: $evaluation;
+    $this->wpmodulesyllabusitem->setEvaluation($dbvalue);
+    $this->wpmodulesyllabusitem->save();
+    return $this->renderPartial('syllabi/evaluation', array('id'=>$this->wpmodulesyllabusitem->getId(), 'dbvalue'=>$dbvalue, 'textvalue'=>'', 'min'=>$min, 'max'=>$max));
+    
+  }
 
   public function executeDelete(sfWebRequest $request)
   {

@@ -11,7 +11,7 @@
 <table>
 <tr>
 <th><?php echo __('Ref.') ?></th>
-<?php foreach($workplan->getWpmodules() as $wpmodule): ?>
+<?php foreach($wpmodules as $wpmodule): ?>
 	<th width="10"><?php echo link_to(
     image_tag('vertical.php?text='. urlencode($wpmodule->getTitle()) .
     '&backcolor=255-255-255&textcolor=0-0-0&ywidth=250',
@@ -33,11 +33,17 @@
 				)
 			?></th>
 <th><?php echo __('Item') ?></th>
+<?php if($workplan->getState()==Workflow::IR_DRAFT): ?>
+  <th style="width:200px"><?php echo __('Evaluation') ?></th>
+<?php endif ?>
 </tr>
 <?php foreach($syllabus->getSyllabusItems() as $syllabus_item): ?>
-  <tr id="syllabus_<?php echo $syllabus_item->getId() ?>">
-  <?php include_partial('syllabi/workplanlinks', array('syllabus'=>$syllabus, 'workplan'=>$workplan, 'syllabus_item'=>$syllabus_item)) ?>
-  </tr>
+  <?php $found=false; foreach($wpmodules as $wpmodule) {if (array_key_exists($syllabus_item->getId(), $syllabus_contributions[$wpmodule->getId()]->getRawValue())) $found=true; } ?>
+  <?php if($found or !$syllabus_item->getIsSelectable()): ?>
+    <tr id="syllabus_<?php echo $syllabus_item->getId() ?>">
+    <?php include_partial('syllabi/workplanlinks', array('syllabus'=>$syllabus, 'workplan'=>$workplan, 'syllabus_item'=>$syllabus_item, 'wpmodules'=>$wpmodules, 'syllabus_contributions_cache'=>$syllabus_contributions)) ?>
+    </tr>
+  <?php endif ?>
 <?php endforeach ?>
 
 </table>
