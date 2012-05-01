@@ -774,8 +774,6 @@ $con->query($sql);
 		
 	}
 
-
-
   public function getSyllabusItemsToEvaluate()
   {
     // we need to extract all the syllabus items of this appointment, 
@@ -801,6 +799,28 @@ $con->query($sql);
     return $result;
   }
   
+
+  public function getSyllabusItemsToBeEvaluated()
+  {
+    // this is ugly, but it's not worth to write a different qwery right now...
+    return sizeof($this->getSyllabusItemsToEvaluate());
+  }
+  
+  public function getSyllabusItemsUnevaluated()
+  {
+    // this is ugly, but it's not worth to write a different qwery right now...
+    $items=$this->getSyllabusItemsToEvaluate();
+    $count=0;
+    foreach($items as $item)
+    {
+      if(!$item->getEvaluation())
+      {
+        $count++;
+      }
+      // FIXME Using array_walk could be better...
+    }
+    return $count;
+  }
 
 	public function countToolsOfType($typeId)
 		{
