@@ -107,7 +107,7 @@ class Workflow
 		),
 	
 	self::WP_WSMC=>Array(
-		'stateDescription'=>"Workplan waiting for schoolmaster`s approval",
+		'stateDescription'=>"Workplan waiting for principal`s approval",
 		'owner' => Array(
 			'viewAction'=>"view",
 			'exportActionTip'=>'Export the workplan in one of the available formats',
@@ -175,7 +175,7 @@ class Workflow
 	),
 	
 	self::IR_WSMC=>Array(
-		'stateDescription'=>"Intermediate report waiting for schoolmaster`s evaluation",
+		'stateDescription'=>"Intermediate report waiting for principal`s evaluation",
 		'owner' => Array(
 			'viewAction'=>"view",
 			'exportActionTip'=>'Export the report in one of the available formats',
@@ -224,7 +224,7 @@ class Workflow
 	),
 
 	self::FR_WSMC=>Array(
-		'stateDescription'=>"Final report waiting for schoolmaster`s evaluation",
+		'stateDescription'=>"Final report waiting for principal`s evaluation",
 		'owner' => Array(
 			'viewAction'=>"view",
 			'exportActionTip'=>'Export the report in one of the available formats',

@@ -81,6 +81,18 @@
           'plansandreports/syllabus?id='.$workplan->getId(),
           array('title'=>__('Set syllabus contributions for all modules of this workplan'))
           )?>
+    <?php if ($workplan->getState()>Workflow::WP_DRAFT): ?>      
+      <?php $missing=$workplan->getSyllabusItemsUnevaluated() ?>
+      <?php if ($missing>0): ?>
+        <?php echo image_tag('notdone') ?>
+      <?php else: ?>
+        <?php echo image_tag('done') ?>
+      <?php endif; ?>
+      <?php echo
+        format_number_choice('[0]Evaluation completed|[1]Missing one evaluation out of %2%|[1,+Inf]Missing %1% evaluations out of %2%',
+          array('%1%'=>$missing, '%2%'=>$workplan->getSyllabusItemsToBeEvaluated()), $missing) ?>
+    <?php endif ?>      
+          
     </li>
     <?php endif ?>
     

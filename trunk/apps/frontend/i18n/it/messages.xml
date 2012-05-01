@@ -456,11 +456,11 @@
         <target>Piano di lavoro in attesa di controlli amministrativi</target>
       </trans-unit>
       <trans-unit id="142">
-        <source>Workplan waiting for principal's approval</source>
+        <source>Workplan waiting for principal`s approval</source>
         <target>Piano di lavoro in attesa di approvazione dal parte del DS</target>
       </trans-unit>
       <trans-unit id="143">
-        <source>Intermediate report waiting for principal's evaluation</source>
+        <source>Intermediate report waiting for principal`s evaluation</source>
         <target>Relazione intermedia in attesa di valutazione da parte del DS</target>
       </trans-unit>
       <trans-unit id="144">
@@ -468,7 +468,7 @@
         <target>Relazione finale in attesa di controlli amministrativi</target>
       </trans-unit>
       <trans-unit id="145">
-        <source>Final report waiting for principal's evaluation</source>
+        <source>Final report waiting for principal`s evaluation</source>
         <target>Relazione finale in attesa di approvazione dal parte del DS</target>
       </trans-unit>
       <trans-unit id="146">
