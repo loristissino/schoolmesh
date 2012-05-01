@@ -4568,6 +4568,10 @@
         <source>Continue</source>
         <target>Continua</target>
       </trans-unit>
+      <trans-unit id="1325">
+        <source>Evaluation completed</source>
+        <target>Compilazione delle indicazioni di realizzazione completata</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>

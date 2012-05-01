@@ -675,7 +675,7 @@ $con->query($sql);
 
                               };
                             
-                            if($it->getEvaluationMax()>0 && (($item->getEvaluation()==null)&&$this->getState()==Workflow::IR_DRAFT))
+                            if($it->getEvaluationMax()>0 && (($item->getEvaluation()==null) && $this->getState()==Workflow::IR_DRAFT))
                               {
                                 $checkList->addCheck(new Check(
                                   Check::FAILED,
@@ -708,6 +708,35 @@ $con->query($sql);
                 }
                 
             } // end foreach (modules)
+            
+            
+            if($this->getState()==Workflow::IR_DRAFT && $this->getSyllabus() && $this->getSyllabus()->getIsActive())
+            {
+               $SyllabusItemsToEvaluate=$this->getSyllabusItemsToEvaluate();
+               $syllabusIsOk=true;
+               foreach($SyllabusItemsToEvaluate as $SyllabusItemToEvaluate)
+               {
+                 if(!$SyllabusItemToEvaluate->getEvaluation())
+                 {
+                  $checkList->addCheck(new Check(
+                    Check::FAILED,
+                    'Missing evaluation',
+                    'Syllabus',
+                    array('link_to'=>'plansandreports/syllabus?id=' . $this->getId())
+                    ));
+                    $syllabusIsOk=false;
+                  }
+               } // endfor (syllabus items)
+               if($syllabusIsOk)
+               {
+                  $checkList->addCheck(new Check(
+                    Check::PASSED,
+                    'Evaluation completed',
+                    'Syllabus'
+                    ));                 
+               }
+            }
+            
         } //end if (modules are present)
     
     }  //end if (appointment-type has modules)
@@ -745,6 +774,33 @@ $con->query($sql);
 		
 	}
 
+
+
+  public function getSyllabusItemsToEvaluate()
+  {
+    // we need to extract all the syllabus items of this appointment, 
+    // taking the first one if it is referenced in more than one module
+    
+    $c=new Criteria();
+    $c->addJoin(WpmoduleSyllabusItemPeer::WPMODULE_ID, WpmodulePeer::ID);
+    $c->addJoin(WpmodulePeer::APPOINTMENT_ID, $this->getId());
+    $c->addAscendingOrderByColumn(WpmoduleSyllabusItemPeer::WPMODULE_ID);
+    $list=WpmoduleSyllabusItemPeer::doSelect($c);
+    
+    $seen=array();
+    $result=array();
+    
+    foreach($list as $item)
+    {
+      if(!in_array($item->getSyllabusItemId(), $seen))
+      {
+        $result[]=$item;
+        $seen[]=$item->getSyllabusItemId();
+      }
+    }
+    return $result;
+  }
+  
 
 	public function countToolsOfType($typeId)
 		{

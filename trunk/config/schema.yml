@@ -139,7 +139,11 @@ propel:
     author:        varchar(50)
     href:          varchar(255)
     is_active:     { type: boolean, default: true }
-    
+    evaluation_min:  integer
+    evaluation_max:  integer
+    evaluation_min_description: varchar(50)
+    evaluation_max_description: varchar(50)
+
   syllabus_item:
     syllabus_id: ~
     id: ~

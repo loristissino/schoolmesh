@@ -336,6 +336,10 @@ CREATE TABLE `syllabus`
 	`author` VARCHAR(50),
 	`href` VARCHAR(255),
 	`is_active` TINYINT default 1,
+	`evaluation_min` INTEGER,
+	`evaluation_max` INTEGER,
+	`evaluation_min_description` VARCHAR(50),
+	`evaluation_max_description` VARCHAR(50),
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
