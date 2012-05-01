@@ -327,6 +327,7 @@ $number=$resultset->number;
     $c->addSelectColumn(SyllabusItemPeer::REF);
     $c->addSelectColumn(SyllabusItemPeer::CONTENT);
     $c->addSelectColumn(WpmoduleSyllabusItemPeer::CONTRIBUTION);
+    $c->addSelectColumn(WpmoduleSyllabusItemPeer::EVALUATION);
     $c->addSelectColumn(WpmoduleSyllabusItemPeer::ID);
     $c->setDistinct();
     
@@ -335,7 +336,7 @@ $number=$resultset->number;
     $contributions=array();
     while($row = $stmt->fetch(PDO::FETCH_OBJ))
     {
-        $contributions[$row->REF]=array('contribution'=>$row->CONTRIBUTION, 'content'=>$row->CONTENT, 'id'=>$row->ID);
+        $contributions[$row->REF]=array('contribution'=>$row->CONTRIBUTION, 'content'=>$row->CONTENT, 'id'=>$row->ID, 'evaluation'=>$row->EVALUATION);
     };
 
     return $contributions;

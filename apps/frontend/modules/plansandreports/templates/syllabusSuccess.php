@@ -34,7 +34,12 @@
 			?></th>
 <th><?php echo __('Item') ?></th>
 <?php if($workplan->getState()==Workflow::IR_DRAFT): ?>
-  <th style="width:200px"><?php echo __('Evaluation') ?></th>
+  <th style="width:200px"><?php include_partial('content/evaluation_th_description', array(
+        'min_value'=>$workplan->getSyllabus()->getEvaluationMin(),
+        'min_description'=>$workplan->getSyllabus()->getEvaluationMinDescription(),
+        'max_value'=>$workplan->getSyllabus()->getEvaluationMax(),
+        'max_description'=>$workplan->getSyllabus()->getEvaluationMaxDescription(),
+        )) ?></th>
 <?php endif ?>
 </tr>
 <?php foreach($syllabus->getSyllabusItems() as $syllabus_item): ?>

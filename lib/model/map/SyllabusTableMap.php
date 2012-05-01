@@ -42,6 +42,10 @@ class SyllabusTableMap extends TableMap {
 		$this->addColumn('AUTHOR', 'Author', 'VARCHAR', false, 50, null);
 		$this->addColumn('HREF', 'Href', 'VARCHAR', false, 255, null);
 		$this->addColumn('IS_ACTIVE', 'IsActive', 'BOOLEAN', false, null, true);
+		$this->addColumn('EVALUATION_MIN', 'EvaluationMin', 'INTEGER', false, null, null);
+		$this->addColumn('EVALUATION_MAX', 'EvaluationMax', 'INTEGER', false, null, null);
+		$this->addColumn('EVALUATION_MIN_DESCRIPTION', 'EvaluationMinDescription', 'VARCHAR', false, 50, null);
+		$this->addColumn('EVALUATION_MAX_DESCRIPTION', 'EvaluationMaxDescription', 'VARCHAR', false, 50, null);
 		// validators
 	} // initialize()
 

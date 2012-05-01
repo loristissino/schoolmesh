@@ -56,6 +56,30 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 	protected $is_active;
 
 	/**
+	 * The value for the evaluation_min field.
+	 * @var        int
+	 */
+	protected $evaluation_min;
+
+	/**
+	 * The value for the evaluation_max field.
+	 * @var        int
+	 */
+	protected $evaluation_max;
+
+	/**
+	 * The value for the evaluation_min_description field.
+	 * @var        string
+	 */
+	protected $evaluation_min_description;
+
+	/**
+	 * The value for the evaluation_max_description field.
+	 * @var        string
+	 */
+	protected $evaluation_max_description;
+
+	/**
 	 * @var        array SyllabusItem[] Collection to store aggregation of SyllabusItem objects.
 	 */
 	protected $collSyllabusItems;
@@ -172,6 +196,46 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 	public function getIsActive()
 	{
 		return $this->is_active;
+	}
+
+	/**
+	 * Get the [evaluation_min] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getEvaluationMin()
+	{
+		return $this->evaluation_min;
+	}
+
+	/**
+	 * Get the [evaluation_max] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getEvaluationMax()
+	{
+		return $this->evaluation_max;
+	}
+
+	/**
+	 * Get the [evaluation_min_description] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getEvaluationMinDescription()
+	{
+		return $this->evaluation_min_description;
+	}
+
+	/**
+	 * Get the [evaluation_max_description] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getEvaluationMaxDescription()
+	{
+		return $this->evaluation_max_description;
 	}
 
 	/**
@@ -295,6 +359,86 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 	} // setIsActive()
 
 	/**
+	 * Set the value of [evaluation_min] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Syllabus The current object (for fluent API support)
+	 */
+	public function setEvaluationMin($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->evaluation_min !== $v) {
+			$this->evaluation_min = $v;
+			$this->modifiedColumns[] = SyllabusPeer::EVALUATION_MIN;
+		}
+
+		return $this;
+	} // setEvaluationMin()
+
+	/**
+	 * Set the value of [evaluation_max] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Syllabus The current object (for fluent API support)
+	 */
+	public function setEvaluationMax($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->evaluation_max !== $v) {
+			$this->evaluation_max = $v;
+			$this->modifiedColumns[] = SyllabusPeer::EVALUATION_MAX;
+		}
+
+		return $this;
+	} // setEvaluationMax()
+
+	/**
+	 * Set the value of [evaluation_min_description] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Syllabus The current object (for fluent API support)
+	 */
+	public function setEvaluationMinDescription($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->evaluation_min_description !== $v) {
+			$this->evaluation_min_description = $v;
+			$this->modifiedColumns[] = SyllabusPeer::EVALUATION_MIN_DESCRIPTION;
+		}
+
+		return $this;
+	} // setEvaluationMinDescription()
+
+	/**
+	 * Set the value of [evaluation_max_description] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Syllabus The current object (for fluent API support)
+	 */
+	public function setEvaluationMaxDescription($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->evaluation_max_description !== $v) {
+			$this->evaluation_max_description = $v;
+			$this->modifiedColumns[] = SyllabusPeer::EVALUATION_MAX_DESCRIPTION;
+		}
+
+		return $this;
+	} // setEvaluationMaxDescription()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -336,6 +480,10 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 			$this->author = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
 			$this->href = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->is_active = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
+			$this->evaluation_min = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
+			$this->evaluation_max = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
+			$this->evaluation_min_description = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->evaluation_max_description = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -345,7 +493,7 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 6; // 6 = SyllabusPeer::NUM_COLUMNS - SyllabusPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 10; // 10 = SyllabusPeer::NUM_COLUMNS - SyllabusPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Syllabus object", $e);
@@ -697,6 +845,18 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 			case 5:
 				return $this->getIsActive();
 				break;
+			case 6:
+				return $this->getEvaluationMin();
+				break;
+			case 7:
+				return $this->getEvaluationMax();
+				break;
+			case 8:
+				return $this->getEvaluationMinDescription();
+				break;
+			case 9:
+				return $this->getEvaluationMaxDescription();
+				break;
 			default:
 				return null;
 				break;
@@ -724,6 +884,10 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 			$keys[3] => $this->getAuthor(),
 			$keys[4] => $this->getHref(),
 			$keys[5] => $this->getIsActive(),
+			$keys[6] => $this->getEvaluationMin(),
+			$keys[7] => $this->getEvaluationMax(),
+			$keys[8] => $this->getEvaluationMinDescription(),
+			$keys[9] => $this->getEvaluationMaxDescription(),
 		);
 		return $result;
 	}
@@ -773,6 +937,18 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 			case 5:
 				$this->setIsActive($value);
 				break;
+			case 6:
+				$this->setEvaluationMin($value);
+				break;
+			case 7:
+				$this->setEvaluationMax($value);
+				break;
+			case 8:
+				$this->setEvaluationMinDescription($value);
+				break;
+			case 9:
+				$this->setEvaluationMaxDescription($value);
+				break;
 		} // switch()
 	}
 
@@ -803,6 +979,10 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setAuthor($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setHref($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setIsActive($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setEvaluationMin($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setEvaluationMax($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setEvaluationMinDescription($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setEvaluationMaxDescription($arr[$keys[9]]);
 	}
 
 	/**
@@ -820,6 +1000,10 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SyllabusPeer::AUTHOR)) $criteria->add(SyllabusPeer::AUTHOR, $this->author);
 		if ($this->isColumnModified(SyllabusPeer::HREF)) $criteria->add(SyllabusPeer::HREF, $this->href);
 		if ($this->isColumnModified(SyllabusPeer::IS_ACTIVE)) $criteria->add(SyllabusPeer::IS_ACTIVE, $this->is_active);
+		if ($this->isColumnModified(SyllabusPeer::EVALUATION_MIN)) $criteria->add(SyllabusPeer::EVALUATION_MIN, $this->evaluation_min);
+		if ($this->isColumnModified(SyllabusPeer::EVALUATION_MAX)) $criteria->add(SyllabusPeer::EVALUATION_MAX, $this->evaluation_max);
+		if ($this->isColumnModified(SyllabusPeer::EVALUATION_MIN_DESCRIPTION)) $criteria->add(SyllabusPeer::EVALUATION_MIN_DESCRIPTION, $this->evaluation_min_description);
+		if ($this->isColumnModified(SyllabusPeer::EVALUATION_MAX_DESCRIPTION)) $criteria->add(SyllabusPeer::EVALUATION_MAX_DESCRIPTION, $this->evaluation_max_description);
 
 		return $criteria;
 	}
@@ -883,6 +1067,14 @@ abstract class BaseSyllabus extends BaseObject  implements Persistent {
 		$copyObj->setHref($this->href);
 
 		$copyObj->setIsActive($this->is_active);
+
+		$copyObj->setEvaluationMin($this->evaluation_min);
+
+		$copyObj->setEvaluationMax($this->evaluation_max);
+
+		$copyObj->setEvaluationMinDescription($this->evaluation_min_description);
+
+		$copyObj->setEvaluationMaxDescription($this->evaluation_max_description);
 
 
 		if ($deepCopy) {

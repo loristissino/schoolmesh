@@ -36,14 +36,13 @@
       <th class="sf_admin_text" colspan="3"><?php echo __('Rank') ?></th>
       <th class="sf_admin_text"><?php echo $item_group->getWpitemType()->getSingular() ?></th>
 	<?php if(($wpstate==Workflow::IR_DRAFT) && ($item_group->getWpitemType()->getEvaluationMax()>=0)): ?>
-      <th class="sf_admin_text"><?php echo __('Evaluation') ?><br />
-	
-	<span class="sf_admin_description">
-		<?php echo __('min') .': '. $item_group->getWpitemType()->getEvaluationMin() ?> = <em><?php echo $item_group->getWpitemType()->getEvaluationMinDescription() ?></em> <br />
-		<?php echo __('max') .': '. $item_group->getWpitemType()->getEvaluationMax() ?> = <em><?php echo $item_group->getWpitemType()->getEvaluationMaxDescription() ?></em> <br />
-	</span>
-	
-	</th>
+      <th class="sf_admin_text"><?php include_partial('content/evaluation_th_description', array(
+        'min_value'=>$item_group->getWpitemType()->getEvaluationMin(),
+        'min_description'=>$item_group->getWpitemType()->getEvaluationMinDescription(),
+        'max_value'=>$item_group->getWpitemType()->getEvaluationMax(),
+        'max_description'=>$item_group->getWpitemType()->getEvaluationMaxDescription(),
+        )) ?>
+      </th>
 	<?php endif ?>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>

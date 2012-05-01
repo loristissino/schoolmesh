@@ -25,7 +25,7 @@ abstract class BaseSyllabusPeer {
 	const TM_CLASS = 'SyllabusTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 6;
+	const NUM_COLUMNS = 10;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -47,6 +47,18 @@ abstract class BaseSyllabusPeer {
 
 	/** the column name for the IS_ACTIVE field */
 	const IS_ACTIVE = 'syllabus.IS_ACTIVE';
+
+	/** the column name for the EVALUATION_MIN field */
+	const EVALUATION_MIN = 'syllabus.EVALUATION_MIN';
+
+	/** the column name for the EVALUATION_MAX field */
+	const EVALUATION_MAX = 'syllabus.EVALUATION_MAX';
+
+	/** the column name for the EVALUATION_MIN_DESCRIPTION field */
+	const EVALUATION_MIN_DESCRIPTION = 'syllabus.EVALUATION_MIN_DESCRIPTION';
+
+	/** the column name for the EVALUATION_MAX_DESCRIPTION field */
+	const EVALUATION_MAX_DESCRIPTION = 'syllabus.EVALUATION_MAX_DESCRIPTION';
 
 	/**
 	 * An identiy map to hold any loaded instances of Syllabus objects.
@@ -71,11 +83,11 @@ abstract class BaseSyllabusPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'Version', 'Author', 'Href', 'IsActive', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'version', 'author', 'href', 'isActive', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::NAME, self::VERSION, self::AUTHOR, self::HREF, self::IS_ACTIVE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'version', 'author', 'href', 'is_active', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'Version', 'Author', 'Href', 'IsActive', 'EvaluationMin', 'EvaluationMax', 'EvaluationMinDescription', 'EvaluationMaxDescription', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'version', 'author', 'href', 'isActive', 'evaluationMin', 'evaluationMax', 'evaluationMinDescription', 'evaluationMaxDescription', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::NAME, self::VERSION, self::AUTHOR, self::HREF, self::IS_ACTIVE, self::EVALUATION_MIN, self::EVALUATION_MAX, self::EVALUATION_MIN_DESCRIPTION, self::EVALUATION_MAX_DESCRIPTION, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'version', 'author', 'href', 'is_active', 'evaluation_min', 'evaluation_max', 'evaluation_min_description', 'evaluation_max_description', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	/**
@@ -85,11 +97,11 @@ abstract class BaseSyllabusPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'Version' => 2, 'Author' => 3, 'Href' => 4, 'IsActive' => 5, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'version' => 2, 'author' => 3, 'href' => 4, 'isActive' => 5, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NAME => 1, self::VERSION => 2, self::AUTHOR => 3, self::HREF => 4, self::IS_ACTIVE => 5, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'version' => 2, 'author' => 3, 'href' => 4, 'is_active' => 5, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'Version' => 2, 'Author' => 3, 'Href' => 4, 'IsActive' => 5, 'EvaluationMin' => 6, 'EvaluationMax' => 7, 'EvaluationMinDescription' => 8, 'EvaluationMaxDescription' => 9, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'version' => 2, 'author' => 3, 'href' => 4, 'isActive' => 5, 'evaluationMin' => 6, 'evaluationMax' => 7, 'evaluationMinDescription' => 8, 'evaluationMaxDescription' => 9, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NAME => 1, self::VERSION => 2, self::AUTHOR => 3, self::HREF => 4, self::IS_ACTIVE => 5, self::EVALUATION_MIN => 6, self::EVALUATION_MAX => 7, self::EVALUATION_MIN_DESCRIPTION => 8, self::EVALUATION_MAX_DESCRIPTION => 9, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'version' => 2, 'author' => 3, 'href' => 4, 'is_active' => 5, 'evaluation_min' => 6, 'evaluation_max' => 7, 'evaluation_min_description' => 8, 'evaluation_max_description' => 9, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	/**
@@ -165,6 +177,10 @@ abstract class BaseSyllabusPeer {
 		$criteria->addSelectColumn(SyllabusPeer::AUTHOR);
 		$criteria->addSelectColumn(SyllabusPeer::HREF);
 		$criteria->addSelectColumn(SyllabusPeer::IS_ACTIVE);
+		$criteria->addSelectColumn(SyllabusPeer::EVALUATION_MIN);
+		$criteria->addSelectColumn(SyllabusPeer::EVALUATION_MAX);
+		$criteria->addSelectColumn(SyllabusPeer::EVALUATION_MIN_DESCRIPTION);
+		$criteria->addSelectColumn(SyllabusPeer::EVALUATION_MAX_DESCRIPTION);
 	}
 
 	/**
