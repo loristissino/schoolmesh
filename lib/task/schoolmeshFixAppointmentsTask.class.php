@@ -28,7 +28,7 @@ class schoolmeshFixAppointmentsTask extends sfBaseTask
 	    new sfCommandOption('subject', null, sfCommandOption::PARAMETER_REQUIRED, 'Subject shortcut', ''), 
       new sfCommandOption('dry-run', null, sfCommandOption::PARAMETER_NONE, 'Whether the command will be executed leaving the db intact'),
       new sfCommandOption('also-not-submitted', null, sfCommandOption::PARAMETER_NONE, 'Whether the documents not yet submitted must be considered'),
-
+      new sfCommandOption('replace-wrong-contents', null, sfCommandOption::PARAMETER_NONE, 'Whether some common errors in contents must be fixed'),
     ));
 
     $this->namespace        = 'schoolmesh';
@@ -57,8 +57,6 @@ EOF;
 
     $c=new Criteria();
     $c->add(AppointmentPeer::YEAR_ID, $year);
-//    $c->add(AppointmentPeer::STATE, Workflow::WP_WSMC, Criteria::GREATER_THAN);
-
 
     $appointments=AppointmentPeer::doSelect($c);
     foreach($appointments as $appointment)
@@ -90,82 +88,85 @@ EOF;
       if($options['also-not-submitted'] || $appointment->getState()>Workflow::WP_DRAFT)
       {
         $count=0;
-
-        foreach($appointment->getWpinfos() as $wpinfo)
+        if($options['replace-wrong-contents'])
         {
-          $dirty=false;
-          
-          $date=$wpinfo->getUpdatedAt();
-          
-          
-          $old=$wpinfo->getContent();
-          $new=ltrim(rtrim($old));
-          if($old!=$new)
+
+          foreach($appointment->getWpinfos() as $wpinfo)
           {
-            $wpinfo->setContent($new);
-            $dirty=true;
+            $dirty=false;
+            
+            $date=$wpinfo->getUpdatedAt();
+            
+            
+            $old=$wpinfo->getContent();
+            $new=ltrim(rtrim($old));
+            if($old!=$new)
+            {
+              $wpinfo->setContent($new);
+              $dirty=true;
+            }
+            
+            if($wpinfo->getContent() && $wpinfo->getWpinfoType()->getStateMin()>$appointment->getState())
+            {
+              $this->logSection('wpinfo-', sprintf('%d, removed content «%s» ', $wpinfo->getId(), $new), null, 'INFO');
+              $wpinfo->setContent('');
+              $dirty=true;
+            }
+            
+            if($dirty)
+            {
+              $wpinfo->save($con);
+              $wpinfo
+              ->setUpdatedAt($date)
+              ->save($con)
+              ;
+            }
+            
           }
-          
-          if($wpinfo->getContent() && $wpinfo->getWpinfoType()->getStateMin()>$appointment->getState())
-          {
-            $this->logSection('wpinfo-', sprintf('%d, removed content «%s» ', $wpinfo->getId(), $new), null, 'INFO');
-            $wpinfo->setContent('');
-            $dirty=true;
-          }
-          
-          if($dirty)
-          {
-            $wpinfo->save($con);
-            $wpinfo
-            ->setUpdatedAt($date)
-            ->save($con)
-            ;
-          }
-          
-        }
 
 
-        foreach($appointment->getWpmodules() as $wpmodule)
-        {
-          $date=$wpmodule->getUpdatedAt();
-          
-          $dirtyW=false;
-          
-          if(strpos($wpmodule->getTitle(), '---')!==false)
+          foreach($appointment->getWpmodules() as $wpmodule)
           {
+            $date=$wpmodule->getUpdatedAt();
+            
+            $dirtyW=false;
+            
+            if(strpos($wpmodule->getTitle(), '---')!==false)
+            {
+              $old=$wpmodule->getTitle();
+              $new=str_replace('---', '', $old);
+              $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
+              $wpmodule->setTitle($new);
+              $dirtyW=true;
+            }
+            
             $old=$wpmodule->getTitle();
-            $new=str_replace('---', '', $old);
-            $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
-            $wpmodule->setTitle($new);
-            $dirtyW=true;
-          }
-          
-          $old=$wpmodule->getTitle();
-          $new=ltrim(rtrim($old));
-          if($old!=$new)
-          {
-            $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
-            $wpmodule->setTitle($new);
-            $dirtyW=true;
-          }
+            $new=ltrim(rtrim($old));
+            if($old!=$new)
+            {
+              $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
+              $wpmodule->setTitle($new);
+              $dirtyW=true;
+            }
 
 
-          if(strpos($wpmodule->getPeriod(), '---')!==false)
-          {
-            $old=$wpmodule->getPeriod();
-            $new=str_replace('---', '', $old);
-            $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
-            $wpmodule->setPeriod($new);
-            $dirtyW=true;
-          }
-          if($dirtyW)
-          {
-            $wpmodule->save($con);
-            $wpmodule
-            ->setUpdatedAt($date)
-            ->save($con)
-            ;
-          }
+            if(strpos($wpmodule->getPeriod(), '---')!==false)
+            {
+              $old=$wpmodule->getPeriod();
+              $new=str_replace('---', '', $old);
+              $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
+              $wpmodule->setPeriod($new);
+              $dirtyW=true;
+            }
+            if($dirtyW)
+            {
+              $wpmodule->save($con);
+              $wpmodule
+              ->setUpdatedAt($date)
+              ->save($con)
+              ;
+            }
+          } // end if replace-wrong-contents?
           
           if($appointment->getState()>=Workflow::IR_DRAFT)
           {
@@ -196,27 +197,31 @@ EOF;
                 $WpitemGroup->deleteItems($con);
               }
             }
-            
-            foreach($WpitemGroup->getWpmoduleItems() as $Wpitem)
-            {
-              $old=$Wpitem->getContent();
-              $new=$old;
-              $new=str_replace('---', '', $new);
-              $new=str_replace(array("\r\n", "\n", "\r", '  '), ' ', $new);
 
-              if($new!=$old)
+            if($options['replace-wrong-contents'])
+            {
+            
+              foreach($WpitemGroup->getWpmoduleItems() as $Wpitem)
               {
-                $Wpitem
-                ->setContent($new)
-                ->save($con);
-                $this->logSection('wpitem ' . $Wpitem->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
-                echo "»»» OLD TEXT «««\n";
-                echo $old . "\n";
-                echo "»»» NEW TEXT «««\n";
-                echo $new . "\n";
-                echo "^^^^^^^^^^^^^^^^\n";
+                $old=$Wpitem->getContent();
+                $new=$old;
+                $new=str_replace('---', '', $new);
+                $new=str_replace(array("\r\n", "\n", "\r", '  '), ' ', $new);
+
+                if($new!=$old)
+                {
+                  $Wpitem
+                  ->setContent($new)
+                  ->save($con);
+                  $this->logSection('wpitem ' . $Wpitem->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
+                  echo "»»» OLD TEXT «««\n";
+                  echo $old . "\n";
+                  echo "»»» NEW TEXT «««\n";
+                  echo $new . "\n";
+                  echo "^^^^^^^^^^^^^^^^\n";
+                }
               }
-            }
+            } // end if replace-wrong-contents
           }
         }
         if($count>0)
