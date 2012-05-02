@@ -21,4 +21,16 @@ class WpinfoPeer extends BaseWpinfoPeer
 			$t = WpinfoPeer::doSelectOne($c);
 			return $t;
 		}
+    
+    
+	public static function retrieveByAppointmentIdAndCode($appointmentId, $code)
+		{
+			$c=new Criteria();
+			$c->add(WpinfoPeer::APPOINTMENT_ID, $appointmentId);
+			$c->addJoin(WpinfoPeer::WPINFO_TYPE_ID, WpinfoTypePeer::ID);
+			$c->add(WpinfoTypePeer::CODE, $code);
+			$t = WpinfoPeer::doSelectOne($c);
+			return $t;
+		}
+
 }

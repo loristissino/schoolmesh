@@ -479,10 +479,25 @@ $con->query($sql);
             $wpinfo=WpinfoPeer::retrieveByAppointmentIdAndType($this->getId(), $wpinfotype->getId());
             if (!$wpinfo)
               {
-                $wpinfo= new Wpinfo();
-                $wpinfo->setAppointmentId($this->getId());
-                $wpinfo->setWpinfoTypeId($wpinfotype->getId());
-                $wpinfo->save($con);
+                
+                $wpinfo=WpinfoPeer::retrieveByAppointmentIdAndCode($this->getId(), $wpinfotype->getCode());
+                // it could happen that the appointment type was changed afterwards... so we retrieve items
+                // that share the same code.
+                
+                if($wpinfo)
+                {
+                  $wpinfo
+                  ->setWpinfoTypeId($wpinfotype->getId())
+                  ->save();
+                }
+                else
+                {
+                  // if we don't find anything, we make a new one.
+                  $wpinfo= new Wpinfo();
+                  $wpinfo->setAppointmentId($this->getId());
+                  $wpinfo->setWpinfoTypeId($wpinfotype->getId());
+                  $wpinfo->save($con);
+                }
               }
               
             if ($wpinfotype->getIsRequired())
