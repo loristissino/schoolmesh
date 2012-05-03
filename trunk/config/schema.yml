@@ -382,7 +382,7 @@ propel:
     wpmodule_id: ~
     syllabus_item_id: ~
     contribution: integer  # 1 for partial contribution, 2 for focussed contribution
-    evaluation: { type: integer, required: false } 
+    evaluation: { type: integer, required: false }   # set to -1 for not to be evaluated (duplicates)
     _uniques:
       ws: [wpmodule_id, syllabus_item_id]
 

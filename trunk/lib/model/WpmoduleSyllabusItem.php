@@ -11,4 +11,9 @@
 
 class WpmoduleSyllabusItem extends BaseWpmoduleSyllabusItem {
 
+  public function __toString()
+  {
+    return (string)$this->getId();
+  }
+
 } // WpmoduleSyllabusItem

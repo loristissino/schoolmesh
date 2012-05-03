@@ -23,39 +23,38 @@ class wpitemgroupActions extends sfActions
   public function executeManage(sfWebRequest $request)
   {
 	
-	$this->wpitemGroup = WpitemGroupPeer::retrieveByPk($request->getParameter('id'));
+    $this->wpitemGroup = WpitemGroupPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->wpitemGroup);
 
-	$this->wpmodule = $this->wpitemGroup->getWpmodule();
+    $this->wpmodule = $this->wpitemGroup->getWpmodule();
 
-	$this->wpitemType = $this->wpitemGroup->getWpitemType();
-	$this->wp = $this->wpmodule->getAppointment();
-	$this->user=$this->getUser();
+    $this->wpitemType = $this->wpitemGroup->getWpitemType();
+    $this->wp = $this->wpmodule->getAppointment();
+    $this->user=$this->getUser();
 
     $this->forward404Unless($this->wp->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId()));
-	
   }
 
   public function executeUpdate(sfWebRequest $request)
   {
 	
-	$this->wpitemGroup = WpitemGroupPeer::retrieveByPk($request->getParameter('id'));
+    $this->wpitemGroup = WpitemGroupPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->wpitemGroup);
 
-	$this->wpmodule = $this->wpitemGroup->getWpmodule();
+    $this->wpmodule = $this->wpitemGroup->getWpmodule();
 
-	$this->wpitemType = $this->wpitemGroup->getWpitemType();
-	$this->wp = $this->wpmodule->getAppointment();
-  $this->user=$this->getUser();
-	$this->forward404Unless($this->wp->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId()));
-	$this->forward404Unless($this->wp->getState()==Workflow::WP_DRAFT);
+    $this->wpitemType = $this->wpitemGroup->getWpitemType();
+    $this->wp = $this->wpmodule->getAppointment();
+    $this->user=$this->getUser();
+    $this->forward404Unless($this->wp->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId()));
+    $this->forward404Unless($this->wp->getState()==Workflow::WP_DRAFT);
 		
-	$result=$this->wpitemGroup->replaceItems($request->getParameter('value'));
+    $result=$this->wpitemGroup->replaceItems($request->getParameter('value'));
 	
-	$this->text=$result;
+    $this->text=$result;
 	
-	$this->getUser()->setFlash($result['result'].$this->wpitemGroup->getId(), $this->getContext()->getI18N()->__($result['message']));
-	$this->redirect('wpmodule/view?id=' . $this->wpmodule->getId().'#'.$this->wpitemGroup->getId());
+    $this->getUser()->setFlash($result['result'].$this->wpitemGroup->getId(), $this->getContext()->getI18N()->__($result['message']));
+    $this->redirect('wpmodule/view?id=' . $this->wpmodule->getId().'#'.$this->wpitemGroup->getId());
 
 
   }

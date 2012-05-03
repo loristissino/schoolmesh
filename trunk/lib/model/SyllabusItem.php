@@ -76,33 +76,32 @@ class SyllabusItem extends BaseSyllabusItem {
 
   public function getEvaluationForItem($id)
   {
-    $c= new Criteria();
-    $c->add(WpmoduleSyllabusItemPeer::ID, $id);
-    $s=WpmoduleSyllabusItemPeer::doSelectOne($c);
-    if($s)
+    $i=WpmoduleSyllabusItemPeer::retrieveByPK($id);
+    if($i)
     {
-      return $s->getEvaluation();
+      return $i->getEvaluation();
     }
     else
     {
       return null;
     }
+    
   }
 
-  public function getFirstValidId($wpmodules_ids=array())
+  public function getEvaluatableForAppointment($appointment_id)
   {
     $c= new Criteria();
     $c->add(WpmoduleSyllabusItemPeer::SYLLABUS_ITEM_ID, $this->getId());
-    $c->add(WpmoduleSyllabusItemPeer::WPMODULE_ID, $wpmodules_ids, Criteria::IN);
-    $s=WpmoduleSyllabusItemPeer::doSelect($c);
-    if($s)
-    {
-      return $s[0]->getId();
-    }
-    else
-    {
-      return null;
-    }
+    $c->addJoin(WpmoduleSyllabusItemPeer::WPMODULE_ID, WpmodulePeer::ID);
+    $c->add(WpmodulePeer::APPOINTMENT_ID, $appointment_id);
+    
+    $c1=$c->getNewCriterion(WpmoduleSyllabusItemPeer::EVALUATION, -1, Criteria::NOT_EQUAL);
+    $c2=$c->getNewCriterion(WpmoduleSyllabusItemPeer::EVALUATION, null, Criteria::ISNULL);
+    $c1->addOr($c2);
+    
+    $c->add($c1);
+    $s=WpmoduleSyllabusItemPeer::doSelectOne($c);
+    return $s;
   }
 
 } // SyllabusItem

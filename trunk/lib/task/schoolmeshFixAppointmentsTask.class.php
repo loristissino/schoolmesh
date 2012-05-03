@@ -28,7 +28,7 @@ class schoolmeshFixAppointmentsTask extends sfBaseTask
 	    new sfCommandOption('subject', null, sfCommandOption::PARAMETER_REQUIRED, 'Subject shortcut', ''), 
       new sfCommandOption('dry-run', null, sfCommandOption::PARAMETER_NONE, 'Whether the command will be executed leaving the db intact'),
       new sfCommandOption('also-not-submitted', null, sfCommandOption::PARAMETER_NONE, 'Whether the documents not yet submitted must be considered'),
-      new sfCommandOption('replace-wrong-contents', null, sfCommandOption::PARAMETER_NONE, 'Whether some common errors in contents must be fixed'),
+      new sfCommandOption('replace-bad-formatted-contents', null, sfCommandOption::PARAMETER_NONE, 'Whether some common errors in contents formatting must be fixed'),
     ));
 
     $this->namespace        = 'schoolmesh';
@@ -82,46 +82,44 @@ EOF;
           $appointment
           ->setUpdatedAt($dateA)
           ->save($con);
-          $this->logSection('appoint. '.$appointment->getId(), 'fixed public bit', null, 'COMMENT');
+          $this->logSection('appoint. '.$appointment->getId(), 'fixed public bit', null, 'NOTICE');
         }
       }
       if($options['also-not-submitted'] || $appointment->getState()>Workflow::WP_DRAFT)
       {
         $count=0;
-        if($options['replace-wrong-contents'])
-        {
 
           foreach($appointment->getWpinfos() as $wpinfo)
           {
-            $dirty=false;
-            
             $date=$wpinfo->getUpdatedAt();
-            
-            
-            $old=$wpinfo->getContent();
-            $new=ltrim(rtrim($old));
-            if($old!=$new)
+            if($options['replace-bad-formatted-contents'])
             {
-              $wpinfo->setContent($new);
-              $dirty=true;
-            }
+              $dirty=false;
+              
+              $old=$wpinfo->getContent();
+              $new=ltrim(rtrim($old));
+              if($old!=$new)
+              {
+                $wpinfo->setContent($new);
+                $dirty=true;
+              }
             
-            if($wpinfo->getContent() && $wpinfo->getWpinfoType()->getStateMin()>$appointment->getState())
-            {
-              $this->logSection('wpinfo-', sprintf('%d, removed content «%s» ', $wpinfo->getId(), $new), null, 'INFO');
-              $wpinfo->setContent('');
-              $dirty=true;
-            }
+              if($wpinfo->getContent() && $wpinfo->getWpinfoType()->getStateMin()>$appointment->getState())
+              {
+                $this->logSection('wpinfo-', sprintf('%d, removed content «%s» ', $wpinfo->getId(), $new), null, 'INFO');
+                $wpinfo->setContent('');
+                $dirty=true;
+              }
             
-            if($dirty)
-            {
-              $wpinfo->save($con);
-              $wpinfo
-              ->setUpdatedAt($date)
-              ->save($con)
-              ;
-            }
-            
+              if($dirty)
+              {
+                $wpinfo->save($con);
+                $wpinfo
+                ->setUpdatedAt($date)
+                ->save($con)
+                ;
+              }
+            } // end if replace wrong-contents
           }
 
 
@@ -129,44 +127,46 @@ EOF;
           {
             $date=$wpmodule->getUpdatedAt();
             
-            $dirtyW=false;
-            
-            if(strpos($wpmodule->getTitle(), '---')!==false)
+            if($options['replace-bad-formatted-contents'])
             {
+              $dirtyW=false;
+              
+              if(strpos($wpmodule->getTitle(), '---')!==false)
+              {
+                $old=$wpmodule->getTitle();
+                $new=str_replace('---', '', $old);
+                $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'NOTICE');
+                $wpmodule->setTitle($new);
+                $dirtyW=true;
+              }
+              
               $old=$wpmodule->getTitle();
-              $new=str_replace('---', '', $old);
-              $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
-              $wpmodule->setTitle($new);
-              $dirtyW=true;
-            }
-            
-            $old=$wpmodule->getTitle();
-            $new=ltrim(rtrim($old));
-            if($old!=$new)
-            {
-              $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
-              $wpmodule->setTitle($new);
-              $dirtyW=true;
-            }
+              $new=ltrim(rtrim($old));
+              if($old!=$new)
+              {
+                $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'NOTICE');
+                $wpmodule->setTitle($new);
+                $dirtyW=true;
+              }
 
 
-            if(strpos($wpmodule->getPeriod(), '---')!==false)
-            {
-              $old=$wpmodule->getPeriod();
-              $new=str_replace('---', '', $old);
-              $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
-              $wpmodule->setPeriod($new);
-              $dirtyW=true;
-            }
-            if($dirtyW)
-            {
-              $wpmodule->save($con);
-              $wpmodule
-              ->setUpdatedAt($date)
-              ->save($con)
-              ;
-            }
-          } // end if replace-wrong-contents?
+              if(strpos($wpmodule->getPeriod(), '---')!==false)
+              {
+                $old=$wpmodule->getPeriod();
+                $new=str_replace('---', '', $old);
+                $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'NOTICE');
+                $wpmodule->setPeriod($new);
+                $dirtyW=true;
+              }
+              if($dirtyW)
+              {
+                $wpmodule->save($con);
+                $wpmodule
+                ->setUpdatedAt($date)
+                ->save($con)
+                ;
+              }
+            } // end if replace-bad-formatted-contents
           
           if($appointment->getState()>=Workflow::IR_DRAFT)
           {
@@ -182,8 +182,18 @@ EOF;
               ->save($con)
               ;
               
-              $this->logSection('wpmodule ' . $wpmodule->getId(), 'fixed public bit', null, 'COMMENT'); 
+              $this->logSection('wpmodule ' . $wpmodule->getId(), 'fixed public bit', null, 'NOTICE'); 
             }
+          }
+
+          if($wpmodule->getUserId()!=$appointment->getUserId())
+          {
+            // It was reassigned...
+            $wpmodule
+            ->setUserId($appointment->getUserId())
+            ->save($con)
+            ;
+            $this->logSection('wpmodule ' . $wpmodule->getId(), sprintf('changed owner to %s', $appointment->getOwner()), null, 'NOTICE'); 
           }
           
           foreach($wpmodule->getWpItemGroups() as $WpitemGroup)
@@ -198,7 +208,7 @@ EOF;
               }
             }
 
-            if($options['replace-wrong-contents'])
+            if($options['replace-bad-formatted-contents'])
             {
             
               foreach($WpitemGroup->getWpmoduleItems() as $Wpitem)
@@ -213,7 +223,7 @@ EOF;
                   $Wpitem
                   ->setContent($new)
                   ->save($con);
-                  $this->logSection('wpitem ' . $Wpitem->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'COMMENT');
+                  $this->logSection('wpitem ' . $Wpitem->getId(), sprintf('replaced «%s» with «%s»', $old, $new), null, 'NOTICE');
                   echo "»»» OLD TEXT «««\n";
                   echo $old . "\n";
                   echo "»»» NEW TEXT «««\n";
@@ -226,10 +236,43 @@ EOF;
         }
         if($count>0)
         {
-          $this->logSection('appoint.', sprintf('%d: fixed %d module(s)', $appointment->getId(), $count), null, 'COMMENT');
+          $this->logSection('appoint.'.$appointment->getId(), sprintf('fixed %d module(s)', $count), null, 'NOTICE');
         }
       }
-      
+
+      if($appointment->getState()>=Workflow::IR_DRAFT)
+        {
+          $seen=array();
+          foreach($appointment->getWpmoduleSyllabusItems() as $wpmoduleSyllabusItem)
+          {
+            //echo "wmsi:      ". $wpmoduleSyllabusItem->getId() . "\n";
+            //echo "wmsi_siid: ". $wpmoduleSyllabusItem->getSyllabusItemId() . "\n";
+            if($wpmoduleSyllabusItem->getEvaluation()==-1)
+            {
+              //echo "value -1, skipped\n";
+              continue;
+            }
+            if (!in_array($wpmoduleSyllabusItem->getSyllabusItemId(), $seen))
+            {
+              $seen[]=$wpmoduleSyllabusItem->getSyllabusItemId();
+              //echo "Seen: \n"; print_r($seen);
+            }
+            else
+            {
+              if($wpmoduleSyllabusItem->getEvaluation()!=-1)
+              {
+                $wpmoduleSyllabusItem
+                ->setEvaluation(-1)
+                ->save($con);
+                $this->logSection('appoint. '.$appointment->getId(), sprintf('set syllabus item %d to unused', $wpmoduleSyllabusItem->getId()), null, 'NOTICE');
+              }
+              else
+              {
+                //echo "Left untouched\n";
+              }
+            }
+          }
+        }
       
       $checkList=$appointment->getChecks($con);
       

@@ -47,14 +47,15 @@
 <?php if($workplan->getState()==Workflow::IR_DRAFT): ?>
   <td>
     <?php if($syllabus_item->getIsSelectable()): ?>
-      <?php $id=$syllabus_item->getFirstValidId($ids) ?>
-      <?php include_partial('syllabi/evaluation', array(
-			'id'=>$id,
-			'dbvalue'=>$syllabus_item->getEvaluationForItem($id),  
-			'textvalue'=>'',//$syllabus_item->getEvaluationForItem($id),
-			'min'=>1, //$item_group->getWpitemType()->getEvaluationMin(), 
-			'max'=>4, //$item_group->getWpitemType()->getEvaluationMax())
-      )) ?>
+      <?php if($wpsi): ?>
+        <?php include_partial('syllabi/evaluation', array(
+        'id'=>$wpsi->getId(),
+        'dbvalue'=>$syllabus_item->getEvaluationForItem($wpsi->getId()),  
+        'textvalue'=>'',//$syllabus_item->getEvaluationForItem($id),
+        'min'=>$workplan->getSyllabus()->getEvaluationMin(), 
+        'max'=>$workplan->getSyllabus()->getEvaluationMax(), 
+        )) ?>
+      <?php endif ?>
     <?php endif ?>
   </td>
 <?php endif ?>

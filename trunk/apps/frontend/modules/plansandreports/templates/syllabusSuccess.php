@@ -43,10 +43,10 @@
 <?php endif ?>
 </tr>
 <?php foreach($syllabus->getSyllabusItems() as $syllabus_item): ?>
-  <?php $found=false; if($workplan->getState()==Workflow::WP_DRAFT) {$found=true; } else {foreach($wpmodules as $wpmodule) {if (array_key_exists($syllabus_item->getId(), $syllabus_contributions[$wpmodule->getId()]->getRawValue())) $found=true; }} ?>
-  <?php if($found or !$syllabus_item->getIsSelectable()): ?>
+  <?php $wpsi=$syllabus_item->getEvaluatableForAppointment($workplan->getId()) ?>
+  <?php if($workplan->getState()==Workflow::WP_DRAFT or !$syllabus_item->getIsSelectable() or ($wpsi and $wpsi->getEvaluation()!=-1)): ?>
     <tr id="syllabus_<?php echo $syllabus_item->getId() ?>">
-    <?php include_partial('syllabi/workplanlinks', array('syllabus'=>$syllabus, 'workplan'=>$workplan, 'syllabus_item'=>$syllabus_item, 'wpmodules'=>$wpmodules, 'syllabus_contributions_cache'=>$syllabus_contributions)) ?>
+    <?php include_partial('syllabi/workplanlinks', array('syllabus'=>$syllabus, 'workplan'=>$workplan, 'syllabus_item'=>$syllabus_item, 'wpmodules'=>$wpmodules, 'syllabus_contributions_cache'=>$syllabus_contributions, 'wpsi'=>$wpsi)) ?>
     </tr>
   <?php endif ?>
 <?php endforeach ?>
