@@ -791,50 +791,38 @@ $con->query($sql);
 
   public function getSyllabusItemsToEvaluate()
   {
-    // we need to extract all the syllabus items of this appointment, 
-    // taking the first one if it is referenced in more than one module
-    
     $c=new Criteria();
-    $c->addJoin(WpmoduleSyllabusItemPeer::WPMODULE_ID, WpmodulePeer::ID);
-    $c->addJoin(WpmodulePeer::APPOINTMENT_ID, $this->getId());
-    $c->addAscendingOrderByColumn(WpmoduleSyllabusItemPeer::WPMODULE_ID);
-    $list=WpmoduleSyllabusItemPeer::doSelect($c);
-    
-    $seen=array();
-    $result=array();
-    
-    foreach($list as $item)
-    {
-      if(!in_array($item->getSyllabusItemId(), $seen))
-      {
-        $result[]=$item;
-        $seen[]=$item->getSyllabusItemId();
-      }
-    }
-    return $result;
+    $c1=$c->getNewCriterion(WpmoduleSyllabusItemPeer::EVALUATION, 0, Criteria::GREATER_THAN);
+    $c2=$c->getNewCriterion(WpmoduleSyllabusItemPeer::EVALUATION, null, Criteria::ISNULL);
+    $c1->addOr($c2);
+    $c->add($c1);
+    return $this->getWpmoduleSyllabusItems($c);
   }
-  
 
-  public function getSyllabusItemsToBeEvaluated()
+  public function countSyllabusItemsToBeEvaluated()
   {
-    // this is ugly, but it's not worth to write a different qwery right now...
     return sizeof($this->getSyllabusItemsToEvaluate());
   }
   
-  public function getSyllabusItemsUnevaluated()
+  public function countSyllabusItemsUnevaluated()
   {
-    // this is ugly, but it's not worth to write a different qwery right now...
-    $items=$this->getSyllabusItemsToEvaluate();
-    $count=0;
-    foreach($items as $item)
+    $c=new Criteria();
+    $c->add(WpmoduleSyllabusItemPeer::EVALUATION, null, Criteria::ISNULL);
+    return sizeof($this->getWpmoduleSyllabusItems($c));
+  }
+
+  public function getWpmoduleSyllabusItems($c=null)
+  {
+    if(!$c)
     {
-      if(!$item->getEvaluation())
-      {
-        $count++;
-      }
-      // FIXME Using array_walk could be better...
+      $c=new Criteria();
     }
-    return $count;
+    $c->addJoin(AppointmentPeer::ID, WpmodulePeer::APPOINTMENT_ID);
+    $c->addJoin(WpmodulePeer::ID, WpmoduleSyllabusItemPeer::WPMODULE_ID);
+    $c->addJoin(WpmoduleSyllabusItemPeer::SYLLABUS_ITEM_ID, SyllabusItemPeer::ID);
+    $c->add(AppointmentPeer::ID, $this->getId());
+    $c->addAscendingOrderByColumn(SyllabusItemPeer::RANK);
+    return WpmoduleSyllabusItemPeer::doSelect($c);
   }
 
 	public function countToolsOfType($typeId)
@@ -2258,9 +2246,11 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
     $c->addJoin(WpmoduleSyllabusItemPeer::SYLLABUS_ITEM_ID, SyllabusItemPeer::ID);
     $c->add(AppointmentPeer::ID, $this->getId());
     $c->setDistinct();
-    $c->addAscendingOrderByColumn(SyllabusItemPeer::ID);
+    $c->addAscendingOrderByColumn(SyllabusItemPeer::RANK);
     return SyllabusItemPeer::doSelect($c);
   }
+  
+
   
   public function getWeeklyHours()
   {

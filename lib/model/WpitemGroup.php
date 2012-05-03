@@ -23,10 +23,11 @@ class WpitemGroup extends BaseWpitemGroup
 		
 		$text = '';
 		foreach($items as $item)
-			{
-				$text .= $item->getContent() . '<br />';
-			}
+    {
+      $text .= $item->getContent() . '<br />';
+    }
 
+    $text=str_replace('---', '', $text);
 		return $text;
 		
 	}
