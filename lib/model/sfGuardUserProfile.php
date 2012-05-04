@@ -1028,7 +1028,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     }
     
 		
-		public function addToTeam($caller_id, Team $team, Role $role, $expiry=null, $sf_context)
+		public function addToTeam($caller_id, Team $team, Role $role, $expiry=null, $notes='', $sf_context)
 		{
 			if (!$this->getBelongsToTeam($team->getPosixName()))
 			{
@@ -1044,6 +1044,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 					->setTeam($team)
 					->setRole($role)
           ->setExpiry($expiry)
+          ->setNotes($notes)
 					->save($con);
           $team->addWfevent($caller_id,
             'Added user %user% to team, with role «%role%» and expiry %expiry%',

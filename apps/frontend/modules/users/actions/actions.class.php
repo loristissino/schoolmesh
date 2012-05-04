@@ -797,12 +797,13 @@ class usersActions extends sfActions
       $this->forward404Unless($this->team=TeamPeer::retrieveByPK($params['team_id']));
       $this->forward404Unless($this->role=RolePeer::retrieveByPK($params['role_id']));
       $this->expiry=$params['expiry'];
+      $this->notes=$params['notes'];
     
       $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
       foreach($this->userlist as $user)
       {
         Generic::logMessage('team_in', $this->expiry);
-        $user->addToTeam($this->getUser()->getProfile()->getUserId(), $this->team, $this->role, $this->expiry, $this->getContext());
+        $user->addToTeam($this->getUser()->getProfile()->getUserId(), $this->team, $this->role, $this->expiry, $this->notes, $this->getContext());
       }
 		
       $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Users successfully added to team.'));

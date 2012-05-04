@@ -18,6 +18,7 @@ class ChooseTeamForm extends BaseForm
     $this->setWidgets(array(
       'team_id' => new sfWidgetFormPropelChoice(array('model'=>'Team', 'add_empty'=>'Choose a team', 'peer_method'=>'retrieveAll', )),
       'role_id' => new sfWidgetFormPropelChoice(array('model'=>'Role', 'add_empty'=>'Choose a role', 'peer_method'=>'retrieveAll', )),
+      'notes' => new sfWidgetFormInputText(array(), array('size'=>100)),
       'expiry' => new sfWidgetFormI18nDate(array('culture'=>sfConfig::get('sf_default_culture'), 'years'=>$years)),  
       )); 
     
@@ -26,6 +27,7 @@ class ChooseTeamForm extends BaseForm
     $this->setValidators(array(
         'team_id' => new sfValidatorPropelChoice(array('model'=>'Team', 'required'=>true)),
         'role_id' => new sfValidatorPropelChoice(array('model'=>'Role', 'required'=>true)),
+        'notes' => new sfValidatorString(array('required'=>false)),
         'expiry' => new sfValidatorDate(array('required'=>false)),
 			));
     
