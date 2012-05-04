@@ -4572,6 +4572,10 @@
         <source>Evaluation completed</source>
         <target>Compilazione delle indicazioni di realizzazione completata</target>
       </trans-unit>
+      <trans-unit id="1326">
+        <source>Find these people in users management module</source>
+        <target>Trova queste persone nel modulo di gestione degli utenti</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>

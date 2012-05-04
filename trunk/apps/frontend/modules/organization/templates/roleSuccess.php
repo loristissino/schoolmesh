@@ -30,6 +30,10 @@
   </tbody>
 </table>
 
+<ul class="sf_admin_actions">
+<?php echo li_link_to_if('action_users', $sf_user->hasCredential('users'), __('Find these people in users management module'), url_for('users/list?query=roles:'.$role->getQualityCode())) ?> 
+</ul>
+
 <?php else: ?>
 
 <p><?php echo __('No one in charge') ?></p>
