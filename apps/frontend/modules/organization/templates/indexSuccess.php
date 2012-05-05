@@ -55,7 +55,7 @@
 <h2><?php echo __('SchoolMesh') ?></h2>
 
 <ul class="sf_admin_actions">
-  <?php echo li_link_to_if('action_schoolmesh', true, __('«Who can do what» matrix'), url_for('organization/whocandowhat')) ?>
+  <?php echo li_link_to_if('action_schoolmesh', true, __('Authorizations'), url_for('organization/authorizations')) ?>
 </ul>
 <?php endif ?>
 

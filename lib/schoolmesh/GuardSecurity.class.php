@@ -28,6 +28,21 @@ class GuardSecurity {
     return sfGuardPermissionPeer::doSelectJoinAll($c);
   }
 
+  static function upcmp($a, $b)
+  {
+    $profile_a=sfGuardUserProfilePeer::retrieveByPK($a->getUserId());
+    $profile_b=sfGuardUserProfilePeer::retrieveByPK($b->getUserId());
+    return $profile_a->getLastName().$profile_a->getFirstName() > $profile_b->getLastName().$profile_b->getFirstName();
+  }
 
+  static function getsfGuardUserPermissions(sfGuardPermission $credential)
+  {
+    $userpermissions=$credential->getsfGuardUserPermissions();
+    // this are not by users' last names, but the method is in the plugin and we won't touch it directly...
+    // highly inefficient, but this function is used very seldom...
+    uasort($userpermissions, 'self::upcmp');
+
+    return $userpermissions;
+  }
  
 }

@@ -63,10 +63,14 @@ class organizationActions extends sfActions     // $userteam=RolePeer::retrieveU
 
   }
 
-  public function executeWhocandowhat(sfWebRequest $request)
+  public function executeAuthorizations(sfWebRequest $request)
   {
     $this->credentials=GuardSecurity::retrieveAllPermissionsSorted();
   }
   
+  public function executeCredential(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->credential=sfGuardPermissionPeer::retrieveByPK($request->getParameter('id')));
+  }
   
 }
