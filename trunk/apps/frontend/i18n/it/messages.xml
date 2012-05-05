@@ -4545,8 +4545,8 @@
         <target>Scarica le lettere</target>
       </trans-unit>
       <trans-unit id="1319">
-        <source>«Who can do what» matrix</source>
-        <target>Matrice «chi può fare cosa»</target>
+        <source>Authorizations</source>
+        <target>Autorizzazioni</target>
       </trans-unit>
       <trans-unit id="1320">
         <source>PTN notes</source>
@@ -4575,6 +4575,26 @@
       <trans-unit id="1326">
         <source>Find these people in users management module</source>
         <target>Trova queste persone nel modulo di gestione degli utenti</target>
+      </trans-unit>
+      <trans-unit id="1327">
+        <source>Find</source>
+        <target>Trova</target>
+      </trans-unit>
+      <trans-unit id="1328">
+        <source>Find all active users that are granted this credential (individually or inherited)</source>
+        <target>Trova tutti gli utenti attivi che godono di questa credenziale (individualmente o avendola ereditata)</target>
+      </trans-unit>
+      <trans-unit id="1329">
+        <source>Credential «%name%»</source>
+        <target>Credenziale «%name%»</target>
+      </trans-unit>
+      <trans-unit id="1330">
+        <source>The following users have been individually granted this credential:</source>
+        <target>I seguenti utenti godono di questa credenziale con assegnazione individuale:</target>
+      </trans-unit>
+      <trans-unit id="1331">
+        <source>[1]... and one more|[1,+Inf]... and %number% more</source>
+        <target>[1]... e un altro|[1,+Inf]... e altri %number%</target>
       </trans-unit>
      </body>
   </file> 
