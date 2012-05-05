@@ -1,5 +1,5 @@
 <?php if(sizeof($userpermissions)): $count=0; $andmore=false?>
-<ul>
+<ul class="simple_list">
 <?php foreach($userpermissions as $userpermission): $profile=sfGuardUserProfilePeer::retrieveByPK($userpermission->getUserId())?>
   <li><?php $count++; echo link_to_if($sf_user->hasCredential('users'), $profile, url_for('users/edit?id='.$profile->getUserId())) ?></li>
   <?php if(!$all && $count>=sfConfig::get('app_config_authorizations_max_users_per_page', 5)): ?>

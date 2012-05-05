@@ -560,5 +560,15 @@ em.keptforreferencenotice
   font-style: italic;
   font-weight: normal;
 }
-  
+
+ul.simple_list
+{
+  margin: 0;
+  margin-bottom: 2px;
+  border: none;
+}
+
+ul.simple_list li
+{
+  list-style: none;
 }
