@@ -1,0 +1,19 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+TEAM=$1
+
+checkDirectory "$POSIX_HOMEDIR_TEAMS"
+checkGroup "$TEAM"
+
+FOLDER="$POSIX_HOMEDIR_TEAMS/$TEAM"
+
+checkNotFile "$FOLDER"
+
+sudo mkdir "$FOLDER" && msg_ok "created folder: $TEAM ($FOLDER)"  || unexpectedError $@
+sudo chown root:$TEAM "$FOLDER" && msg_ok "assigned group to folder: $TEAM ($FOLDER)"  || unexpectedError $@
+sudo chmod 3770 "$FOLDER" && msg_ok "assigned permissions 3770 to folder: $TEAM ($FOLDER)"  || unexpectedError $@
+

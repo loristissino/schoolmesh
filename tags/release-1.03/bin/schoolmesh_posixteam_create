@@ -1,0 +1,13 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+TEAM=$1
+
+checkDirectory "$POSIX_HOMEDIR_TEAMS"
+checkNotGroup "$TEAM"
+
+sudo groupadd "$TEAM" && msg_ok "group added: $TEAM" || unexpectedError $@
+schoolmesh_posixteam_foldercreate "$TEAM"

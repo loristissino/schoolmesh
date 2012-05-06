@@ -1,0 +1,26 @@
+StudentSituation:
+  student_situation1:
+    term_id: term1
+    wpmodule_item_id:   module_item_v1
+    user_id:  	vincenzo.decarolis
+    evaluation:  1
+  student_situation2:
+    term_id: term1
+    wpmodule_item_id:   module_item_v1
+    user_id:  	helen.abram
+    evaluation:  1
+  student_situation3:
+    term_id: term1
+    wpmodule_item_id:   module_item_v1
+    user_id:  	marcis.decarrabas
+    evaluation:  1
+  student_situation4:
+    term_id: term1
+    wpmodule_item_id:   module_item_v2
+    user_id:  	vincenzo.decarolis
+    evaluation:  1
+  student_situation5:
+    term_id: term2
+    wpmodule_item_id:   module_item_v1
+    user_id:  	vincenzo.decarolis
+    evaluation:  1

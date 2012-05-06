@@ -1,0 +1,19 @@
+message:
+  subject: Document approval confirmation
+  salutation: true
+  tagline: false
+  body: |
+    
+    this message confirms the approval of the following document:
+
+    description: %document_description%
+    current state: %document_state%
+    id: %document_id%
+
+      Greetings.
+
+        The staff
+
+
+
+

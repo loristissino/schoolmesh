@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="propel" defaultIdMethod="native" package="lib.model">
+
+  <table name="track">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="shortcut" type="varchar" size="3" />
+    <index>
+      <index-column name="shortcut" />
+    </index>
+    <column name="description" type="varchar" required="true" size="255" />
+  </table>
+
+  <table name="schoolclass">
+    <column name="id" type="varchar" primaryKey="true" size="5" />
+    <column name="grade" type="integer" required="true" />
+    <column name="section" type="varchar" required="true" size="3" />
+    <column name="track_id" type="integer" />
+    <foreign-key foreignTable="track">
+      <reference local="track_id" foreign="id" />
+    </foreign-key>
+    <column name="description" type="varchar" required="false" size="255" />
+  </table>
+
+  <table name="year">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="false" />
+    <column name="description" type="varchar" size="7" />
+    <column name="start_date" type="date" />
+    <column name="end_date" type="date" />
+  </table>
+
+  <table name="term">
+    <column name="id" type="varchar" primaryKey="true" size="10" />
+    <column name="description" type="varchar" required="true" size="100" />
+    <column name="end_day" type="integer" required="true" />
+    <column name="has_formal_evaluation" type="boolean" />
+  </table>
+
+  <table name="subject">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="shortcut" type="varchar" required="true" size="3" />
+    <index>
+      <index-column name="shortcut" />
+    </index>
+    <column name="description" type="varchar" required="true" size="255" />
+    <column name="rank" type="integer" />
+  </table>
+
+  <table name="suggestion">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="shortcut" type="varchar" required="true" size="20" />
+    <index>
+      <index-column name="shortcut" />
+    </index>
+    <column name="content" type="varchar" required="true" size="255" />
+    <column name="is_selectable" type="boolean" />
+    <column name="rank" type="integer" />
+  </table>
+
+  <table name="recuperation_hint">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="user_id" type="integer" required="false" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="cascade" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <index>
+      <index-column name="user_id" />
+    </index>
+    <column name="content" type="varchar" required="true" size="255" />
+    <column name="is_selectable" type="boolean" />
+    <column name="rank" type="integer" />
+  </table>
+
+  <table name="sf_guard_user_profile" phpName="sfGuardUserProfile">
+    <column name="user_id" type="integer" required="true" primaryKey="true" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="cascade" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="lettertitle" type="varchar" size="10" />
+    <column name="first_name" type="varchar" size="50" />
+    <column name="middle_name" type="varchar" size="50" />
+    <column name="last_name" type="varchar" size="50" />
+    <column name="pronunciation" type="varchar" size="100" />
+    <column name="info" type="longvarchar" />
+    <column name="role_id" type="integer" />
+    <foreign-key foreignTable="role">
+      <reference local="role_id" foreign="id" />
+    </foreign-key>
+    <column name="gender" type="varchar" size="1" />
+    <column name="email" type="varchar" size="50" />
+    <column name="email_state" type="integer" default="0" />
+    <column name="email_verification_code" type="varchar" size="40" />
+    <column name="birthdate" type="date" />
+    <column name="birthplace" type="varchar" size="50" />
+    <column name="import_code" type="varchar" size="20" />
+    <column name="system_alerts" type="varchar" size="255" />
+    <column name="is_scheduled_for_deletion" type="boolean" default="" />
+    <column name="prefers_richtext" type="boolean" default="1" />
+    <column name="preferred_format" type="varchar" size="5" />
+    <column name="last_action_at" type="timestamp" />
+    <column name="last_login_at" type="timestamp" />
+  </table>
+
+  <table name="account_type">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="name" type="varchar" size="255" required="true" />
+    <unique>
+      <unique-column name="name" />
+    </unique>
+    <column name="description" type="longvarchar" />
+    <column name="is_external" type="boolean" required="true" />
+    <column name="rank" type="integer" />
+  </table>
+
+  <table name="account">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="user_id" type="integer" required="true" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="cascade" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <index>
+      <index-column name="user_id" />
+    </index>
+    <column name="account_type_id" type="integer" required="true" />
+    <foreign-key foreignTable="account_type" onDelete="restrict">
+      <reference local="account_type_id" foreign="id" />
+    </foreign-key>
+    <index>
+      <index-column name="account_type_id" />
+    </index>
+    <column name="info" type="longvarchar" />
+    <column name="settings" type="longvarchar" />
+    <column name="exists" type="boolean" />
+    <column name="is_locked" type="boolean" />
+    <column name="temporary_password" type="varchar" size="10" />
+    <column name="info_updated_at" type="timestamp" />
+    <column name="last_known_login_at" type="timestamp" />
+    <column name="quota_percentage" type="integer" />
+    <column name="updated_at" type="timestamp" />
+    <column name="created_at" type="timestamp" />
+    <unique name="ua">
+      <unique-column name="user_id" />
+      <unique-column name="account_type_id" />
+    </unique>
+  </table>
+
+  <table name="reserved_username">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="username" type="varchar" size="20" />
+    <unique>
+      <unique-column name="username" />
+    </unique>
+    <column name="aliases_to" type="varchar" size="20" />
+    <index>
+      <index-column name="aliases_to" />
+    </index>
+  </table>
+
+  <table name="ticket_type">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="description" type="varchar" required="true" size="50" />
+  </table>
+
+  <table name="ticket">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="referrer" type="varchar" size="255" />
+    <column name="ticket_type_id" type="integer" />
+    <foreign-key foreignTable="ticket_type">
+      <reference local="ticket_type_id" foreign="id" />
+    </foreign-key>
+    <column name="updated_at" type="timestamp" />
+    <column name="state" type="integer" />
+  </table>
+
+  <table name="ticket_event">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="ticket_id" type="integer" />
+    <foreign-key foreignTable="ticket">
+      <reference local="ticket_id" foreign="id" />
+    </foreign-key>
+    <column name="user_id" type="integer" required="true" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <index>
+      <index-column name="user_id" />
+    </index>
+    <column name="created_at" type="timestamp" />
+    <column name="content" type="varchar" required="true" size="255" />
+    <column name="state" type="integer" />
+    <column name="assignee_id" type="integer" required="false" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="assignee_id" foreign="id" />
+    </foreign-key>
+    <index>
+      <index-column name="assignee_id" />
+    </index>
+  </table>
+
+  <table name="syllabus">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="name" type="varchar" size="50" />
+    <column name="version" type="varchar" size="20" />
+    <column name="author" type="varchar" size="50" />
+    <column name="href" type="varchar" size="255" />
+    <column name="is_active" type="boolean" default="1" />
+  </table>
+
+  <table name="syllabus_item">
+    <column name="syllabus_id" type="integer" />
+    <foreign-key foreignTable="syllabus">
+      <reference local="syllabus_id" foreign="id" />
+    </foreign-key>
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="rank" type="integer" />
+    <column name="ref" type="varchar" size="24" />
+    <column name="level" type="integer" />
+    <column name="parent_id" type="integer" required="false" />
+    <foreign-key foreignTable="syllabus_item" onDelete="restrict" onUpdate="cascade">
+      <reference local="parent_id" foreign="id" />
+    </foreign-key>
+    <index>
+      <index-column name="parent_id" />
+    </index>
+    <column name="content" type="longvarchar" />
+    <column name="is_selectable" type="boolean" default="" />
+    <unique name="ir">
+      <unique-column name="syllabus_id" />
+      <unique-column name="ref" />
+    </unique>
+  </table>
+
+  <table name="appointment">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="user_id" type="integer" required="true" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="subject_id" type="integer" required="true" />
+    <foreign-key foreignTable="subject" onDelete="restrict" onUpdate="cascade">
+      <reference local="subject_id" foreign="id" />
+    </foreign-key>
+    <column name="schoolclass_id" type="varchar" required="true" size="5" />
+    <foreign-key foreignTable="schoolclass" onDelete="restrict" onUpdate="cascade">
+      <reference local="schoolclass_id" foreign="id" />
+    </foreign-key>
+    <column name="team_id" type="integer" required="false" />
+    <foreign-key foreignTable="team" onDelete="restrict" onUpdate="cascade">
+      <reference local="team_id" foreign="id" />
+    </foreign-key>
+    <column name="year_id" type="integer" required="true" />
+    <foreign-key foreignTable="year" onDelete="restrict" onUpdate="cascade">
+      <reference local="year_id" foreign="id" />
+    </foreign-key>
+    <column name="state" type="integer" />
+    <column name="hours" type="integer" default="0" />
+    <column name="is_public" type="boolean" />
+    <column name="syllabus_id" type="integer" />
+    <foreign-key foreignTable="syllabus">
+      <reference local="syllabus_id" foreign="id" />
+    </foreign-key>
+    <column name="created_at" type="timestamp" />
+    <column name="updated_at" type="timestamp" />
+    <column name="import_code" type="varchar" size="20" />
+    <unique name="ussy">
+      <unique-column name="user_id" />
+      <unique-column name="subject_id" />
+      <unique-column name="schoolclass_id" />
+      <unique-column name="year_id" />
+    </unique>
+  </table>
+
+  <table name="enrolment">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="user_id" type="integer" required="true" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="schoolclass_id" type="varchar" required="true" size="5" />
+    <foreign-key foreignTable="schoolclass" onDelete="restrict" onUpdate="cascade">
+      <reference local="schoolclass_id" foreign="id" />
+    </foreign-key>
+    <column name="year_id" type="integer" required="true" />
+    <foreign-key foreignTable="year" onDelete="restrict" onUpdate="cascade">
+      <reference local="year_id" foreign="id" />
+    </foreign-key>
+    <column name="info" type="longvarchar" />
+    <column name="created_at" type="timestamp" />
+    <column name="updated_at" type="timestamp" />
+    <column name="import_code" type="varchar" size="20" />
+    <unique name="usy">
+      <unique-column name="user_id" />
+      <unique-column name="year_id" />
+    </unique>
+  </table>
+
+  <table name="team">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="description" type="varchar" size="100" />
+    <column name="posix_name" type="varchar" size="20" />
+    <column name="quality_code" type="varchar" size="10" />
+    <column name="needs_folder" type="boolean" default="" />
+    <column name="needs_mailing_list" type="boolean" default="" />
+  </table>
+
+  <table name="role">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="male_description" type="varchar" size="100" />
+    <column name="female_description" type="varchar" size="100" />
+    <column name="quality_code" type="varchar" size="10" />
+    <column name="posix_name" type="varchar" size="20" />
+    <column name="may_be_main_role" type="boolean" />
+    <column name="default_guardgroup" type="varchar" size="20" />
+  </table>
+
+  <table name="user_team">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="user_id" type="integer" required="true" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="team_id" type="integer" required="true" />
+    <foreign-key foreignTable="team" onDelete="restrict" onUpdate="cascade">
+      <reference local="team_id" foreign="id" />
+    </foreign-key>
+    <column name="role_id" type="integer" required="true" />
+    <foreign-key foreignTable="role" onDelete="restrict" onUpdate="cascade">
+      <reference local="role_id" foreign="id" />
+    </foreign-key>
+    <unique name="utr">
+      <unique-column name="user_id" />
+      <unique-column name="team_id" />
+    </unique>
+  </table>
+
+  <table name="wfevent">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="base_table" type="integer" />
+    <column name="base_id" type="integer" />
+    <column name="created_at" type="timestamp" />
+    <column name="user_id" type="integer" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="comment" type="varchar" size="255" />
+    <column name="state" type="integer" />
+  </table>
+
+  <table name="wpinfo_type">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="title" type="varchar" size="50" />
+    <column name="description" type="varchar" size="255" />
+    <column name="rank" type="integer" required="true" />
+    <column name="state" type="integer" />
+    <column name="template" type="longvarchar" />
+    <column name="example" type="longvarchar" />
+    <column name="is_required" type="boolean" />
+    <column name="is_confidential" type="boolean" />
+  </table>
+
+  <table name="wpinfo">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="appointment_id" type="integer" />
+    <foreign-key foreignTable="appointment">
+      <reference local="appointment_id" foreign="id" />
+    </foreign-key>
+    <column name="wpinfo_type_id" type="integer" />
+    <foreign-key foreignTable="wpinfo_type">
+      <reference local="wpinfo_type_id" foreign="id" />
+    </foreign-key>
+    <column name="updated_at" type="timestamp" />
+    <column name="content" type="longvarchar" />
+  </table>
+
+  <table name="wptool_item_type">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="description" type="varchar" size="50" />
+    <column name="rank" type="integer" />
+    <column name="state" type="integer" />
+    <column name="min_selected" type="integer" />
+    <column name="max_selected" type="integer" />
+  </table>
+
+  <table name="wptool_item">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="description" type="varchar" size="50" />
+    <column name="wptool_item_type_id" type="integer" />
+    <foreign-key foreignTable="wptool_item_type">
+      <reference local="wptool_item_type_id" foreign="id" />
+    </foreign-key>
+  </table>
+
+  <table name="wptool_appointment">
+    <column name="appointment_id" type="integer" required="true" primaryKey="true" />
+    <foreign-key foreignTable="appointment" onDelete="cascade" onUpdate="cascade">
+      <reference local="appointment_id" foreign="id" />
+    </foreign-key>
+    <column name="wptool_item_id" type="integer" required="true" primaryKey="true" />
+    <foreign-key foreignTable="wptool_item" onDelete="restrict" onUpdate="cascade">
+      <reference local="wptool_item_id" foreign="id" />
+    </foreign-key>
+  </table>
+
+  <table name="wpmodule">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="user_id" type="integer" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="cascade" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="title" type="varchar" size="255" />
+    <column name="period" type="varchar" size="255" />
+    <column name="hours_estimated" type="integer" default="0" />
+    <column name="hours_used" type="integer" default="0" />
+    <column name="appointment_id" type="integer" />
+    <foreign-key foreignTable="appointment">
+      <reference local="appointment_id" foreign="id" />
+    </foreign-key>
+    <column name="rank" type="integer" />
+    <column name="is_public" type="boolean" />
+    <column name="created_at" type="timestamp" />
+    <column name="updated_at" type="timestamp" />
+  </table>
+
+  <table name="wpitem_type">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="title" type="varchar" size="50" />
+    <column name="singular" type="varchar" size="50" />
+    <column name="description" type="varchar" size="200" />
+    <column name="style" type="varchar" size="50" />
+    <column name="rank" type="integer" required="true" />
+    <column name="state" type="integer" />
+    <column name="is_required" type="boolean" />
+    <column name="syllabus_id" type="integer" />
+    <foreign-key foreignTable="syllabus">
+      <reference local="syllabus_id" foreign="id" />
+    </foreign-key>
+    <column name="code" type="varchar" size="20" />
+    <index>
+      <index-column name="code" />
+    </index>
+    <column name="evaluation_min" type="integer" />
+    <column name="evaluation_max" type="integer" />
+    <column name="evaluation_min_description" type="varchar" size="50" />
+    <column name="evaluation_max_description" type="varchar" size="50" />
+    <unique name="sc">
+      <unique-column name="syllabus_id" />
+      <unique-column name="code" />
+    </unique>
+  </table>
+
+  <table name="wpitem_group">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="wpitem_type_id" type="integer" />
+    <foreign-key foreignTable="wpitem_type">
+      <reference local="wpitem_type_id" foreign="id" />
+    </foreign-key>
+    <column name="wpmodule_id" type="integer" required="true" />
+    <foreign-key foreignTable="wpmodule" onDelete="cascade" onUpdate="cascade">
+      <reference local="wpmodule_id" foreign="id" />
+    </foreign-key>
+    <unique name="iti_mi">
+      <unique-column name="wpitem_type_id" />
+      <unique-column name="wpmodule_id" />
+    </unique>
+  </table>
+
+  <table name="wpmodule_item">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="wpitem_group_id" type="integer" required="true" />
+    <foreign-key foreignTable="wpitem_group" onDelete="cascade" onUpdate="cascade">
+      <reference local="wpitem_group_id" foreign="id" />
+    </foreign-key>
+    <column name="rank" type="integer" required="true" />
+    <column name="content" type="longvarchar" />
+    <column name="evaluation" type="integer" required="false" />
+    <column name="is_editable" type="boolean" />
+    <unique name="id_pos">
+      <unique-column name="id" />
+      <unique-column name="rank" />
+    </unique>
+  </table>
+
+  <table name="student_situation">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="term_id" type="varchar" required="true" size="10" />
+    <foreign-key foreignTable="term" onDelete="restrict" onUpdate="cascade">
+      <reference local="term_id" foreign="id" />
+    </foreign-key>
+    <column name="wpmodule_item_id" type="integer" required="true" />
+    <foreign-key foreignTable="wpmodule_item" onDelete="cascade" onUpdate="cascade">
+      <reference local="wpmodule_item_id" foreign="id" />
+    </foreign-key>
+    <column name="user_id" type="integer" required="true" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="evaluation" type="integer" />
+    <unique name="twu">
+      <unique-column name="term_id" />
+      <unique-column name="wpmodule_item_id" />
+      <unique-column name="user_id" />
+    </unique>
+  </table>
+
+  <table name="student_suggestion">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="term_id" type="varchar" required="true" size="10" />
+    <foreign-key foreignTable="term" onDelete="restrict" onUpdate="cascade">
+      <reference local="term_id" foreign="id" />
+    </foreign-key>
+    <column name="appointment_id" type="integer" required="true" primaryKey="true" />
+    <foreign-key foreignTable="appointment" onDelete="cascade" onUpdate="cascade">
+      <reference local="appointment_id" foreign="id" />
+    </foreign-key>
+    <column name="user_id" type="integer" required="true" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="suggestion_id" type="integer" />
+    <foreign-key foreignTable="suggestion">
+      <reference local="suggestion_id" foreign="id" />
+    </foreign-key>
+    <unique name="taus">
+      <unique-column name="term_id" />
+      <unique-column name="appointment_id" />
+      <unique-column name="user_id" />
+      <unique-column name="suggestion_id" />
+    </unique>
+  </table>
+
+  <table name="student_hint">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="term_id" type="varchar" required="true" size="10" />
+    <foreign-key foreignTable="term" onDelete="restrict" onUpdate="cascade">
+      <reference local="term_id" foreign="id" />
+    </foreign-key>
+    <column name="appointment_id" type="integer" required="true" primaryKey="true" />
+    <foreign-key foreignTable="appointment" onDelete="cascade" onUpdate="cascade">
+      <reference local="appointment_id" foreign="id" />
+    </foreign-key>
+    <column name="user_id" type="integer" required="true" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="recuperation_hint_id" type="integer" />
+    <foreign-key foreignTable="recuperation_hint">
+      <reference local="recuperation_hint_id" foreign="id" />
+    </foreign-key>
+    <unique name="taur">
+      <unique-column name="term_id" />
+      <unique-column name="appointment_id" />
+      <unique-column name="user_id" />
+      <unique-column name="recuperation_hint_id" />
+    </unique>
+  </table>
+
+  <table name="wpmodule_syllabus_item">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="wpmodule_id" type="integer" />
+    <foreign-key foreignTable="wpmodule">
+      <reference local="wpmodule_id" foreign="id" />
+    </foreign-key>
+    <column name="syllabus_item_id" type="integer" />
+    <foreign-key foreignTable="syllabus_item">
+      <reference local="syllabus_item_id" foreign="id" />
+    </foreign-key>
+    <column name="contribution" type="integer" />
+    <column name="evaluation" type="integer" required="false" />
+    <unique name="ws">
+      <unique-column name="wpmodule_id" />
+      <unique-column name="syllabus_item_id" />
+    </unique>
+  </table>
+
+  <table name="schoolproject">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="proj_category_id" type="integer" />
+    <foreign-key foreignTable="proj_category">
+      <reference local="proj_category_id" foreign="id" />
+    </foreign-key>
+    <column name="proj_financing_id" type="integer" />
+    <foreign-key foreignTable="proj_financing">
+      <reference local="proj_financing_id" foreign="id" />
+    </foreign-key>
+    <column name="year_id" type="integer" required="true" />
+    <foreign-key foreignTable="year" onDelete="restrict" onUpdate="cascade">
+      <reference local="year_id" foreign="id" />
+    </foreign-key>
+    <column name="user_id" type="integer" required="true" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="title" type="varchar" size="255" />
+    <column name="description" type="longvarchar" />
+    <column name="notes" type="longvarchar" />
+    <column name="addressees" type="longvarchar" />
+    <column name="purposes" type="longvarchar" />
+    <column name="goals" type="longvarchar" />
+    <column name="final_report" type="longvarchar" />
+    <column name="proposals" type="longvarchar" />
+    <column name="hours_approved" type="integer" />
+    <column name="state" type="integer" />
+    <column name="submission_date" type="date" />
+    <column name="reference_number" type="varchar" size="20" />
+    <column name="approval_date" type="date" />
+    <column name="approval_notes" type="longvarchar" />
+    <column name="financing_date" type="date" />
+    <column name="financing_notes" type="longvarchar" />
+    <column name="confirmation_date" type="date" />
+    <column name="confirmation_notes" type="longvarchar" />
+    <column name="evaluation_min" type="integer" />
+    <column name="evaluation_max" type="integer" />
+  </table>
+
+  <table name="proj_category">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="title" type="varchar" size="255" />
+    <column name="rank" type="integer" required="true" />
+    <column name="resources" type="integer" />
+  </table>
+
+  <table name="proj_deadline">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="schoolproject_id" type="integer" />
+    <foreign-key foreignTable="schoolproject">
+      <reference local="schoolproject_id" foreign="id" />
+    </foreign-key>
+    <column name="user_id" type="integer" required="true" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="original_deadline_date" type="date" />
+    <column name="current_deadline_date" type="date" />
+    <column name="description" type="varchar" size="255" />
+    <column name="notes" type="longvarchar" />
+    <column name="completed" type="boolean" />
+    <column name="needs_attachment" type="boolean" />
+    <column name="created_at" type="timestamp" />
+    <column name="updated_at" type="timestamp" />
+  </table>
+
+  <table name="proj_financing">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="description" type="varchar" size="255" />
+    <column name="rank" type="integer" required="true" />
+  </table>
+
+  <table name="proj_resource_type">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="description" type="varchar" size="255" />
+    <column name="role_id" type="integer" />
+    <foreign-key foreignTable="role">
+      <reference local="role_id" foreign="id" />
+    </foreign-key>
+    <column name="standard_cost" type="decimal" size="10" scale="2" />
+    <column name="measurement_unit" type="varchar" size="10" />
+    <column name="is_monetary" type="boolean" default="1" />
+  </table>
+
+  <table name="proj_resource">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="schoolproject_id" type="integer" />
+    <foreign-key foreignTable="schoolproject">
+      <reference local="schoolproject_id" foreign="id" />
+    </foreign-key>
+    <column name="proj_resource_type_id" type="integer" />
+    <foreign-key foreignTable="proj_resource_type">
+      <reference local="proj_resource_type_id" foreign="id" />
+    </foreign-key>
+    <column name="description" type="varchar" size="255" />
+    <column name="charged_user_id" type="integer" required="false" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="charged_user_id" foreign="id" />
+    </foreign-key>
+    <column name="quantity_estimated" type="decimal" size="10" scale="2" />
+    <column name="quantity_approved" type="decimal" size="10" scale="2" />
+    <column name="amount_funded_externally" type="decimal" size="10" scale="2" />
+    <column name="financing_notes" type="varchar" size="255" />
+    <column name="quantity_final" type="decimal" size="10" scale="2" />
+    <column name="standard_cost" type="decimal" size="10" scale="2" />
+    <column name="is_monetary" type="boolean" default="1" />
+    <column name="scheduled_deadline" type="date" />
+  </table>
+
+  <table name="proj_activity">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="proj_resource_id" type="integer" />
+    <foreign-key foreignTable="proj_resource">
+      <reference local="proj_resource_id" foreign="id" />
+    </foreign-key>
+    <column name="user_id" type="integer" required="true" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="beginning" type="timestamp" />
+    <column name="quantity" type="decimal" size="10" scale="2" />
+    <column name="notes" type="longvarchar" />
+    <column name="created_at" type="timestamp" />
+    <column name="acknowledged_at" type="timestamp" />
+    <column name="acknowledger_user_id" type="integer" required="false" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="acknowledger_user_id" foreign="id" />
+    </foreign-key>
+    <column name="added_by_coordinator" type="boolean" default="" />
+  </table>
+
+  <table name="proj_upshot">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="schoolproject_id" type="integer" />
+    <foreign-key foreignTable="schoolproject">
+      <reference local="schoolproject_id" foreign="id" />
+    </foreign-key>
+    <column name="description" type="varchar" size="255" />
+    <column name="indicator" type="varchar" size="255" />
+    <column name="upshot" type="varchar" size="255" />
+    <column name="evaluation" type="integer" />
+    <column name="scheduled_date" type="date" />
+  </table>
+
+  <table name="subnet">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="name" type="varchar" size="40" />
+    <index>
+      <index-column name="name" />
+    </index>
+    <column name="ip_cidr" type="varchar" required="false" size="20" />
+  </table>
+
+  <table name="workstation">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="name" type="varchar" size="40" />
+    <index>
+      <index-column name="name" />
+    </index>
+    <column name="ip_cidr" type="varchar" required="true" size="20" />
+    <column name="mac_address" type="varchar" required="false" size="17" />
+    <column name="is_enabled" type="boolean" default="" />
+    <column name="subnet_id" type="integer" />
+    <foreign-key foreignTable="subnet">
+      <reference local="subnet_id" foreign="id" />
+    </foreign-key>
+  </table>
+
+  <table name="lanlog">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="user_id" type="integer" required="true" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="workstation_id" type="integer" required="true" />
+    <foreign-key foreignTable="workstation" onDelete="restrict" onUpdate="cascade">
+      <reference local="workstation_id" foreign="id" />
+    </foreign-key>
+    <column name="created_at" type="timestamp" />
+    <column name="updated_at" type="timestamp" />
+    <column name="is_online" type="boolean" required="true" default="" />
+    <column name="os_used" type="varchar" size="100" />
+  </table>
+
+  <table name="attachment_file">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="user_id" type="integer" required="true" />
+    <foreign-key foreignTable="sf_guard_user" onDelete="restrict" onUpdate="cascade">
+      <reference local="user_id" foreign="id" />
+    </foreign-key>
+    <column name="base_table" type="integer" />
+    <column name="base_id" type="integer" />
+    <column name="internet_media_type" type="varchar" />
+    <column name="original_file_name" type="varchar" />
+    <column name="uniqid" type="varchar" required="true" size="50" />
+    <unique>
+      <unique-column name="uniqid" />
+    </unique>
+    <column name="file_size" type="bigint" />
+    <column name="is_public" type="boolean" default="" />
+    <column name="md5sum" type="varchar" size="32" />
+    <unique name="tim">
+      <unique-column name="base_table" />
+      <unique-column name="base_id" />
+      <unique-column name="md5sum" />
+    </unique>
+  </table>
+
+  <table name="system_message" isI18N="true" i18nTable="system_message_i18n">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="key" type="varchar" size="30" />
+    <unique name="key">
+      <unique-column name="key" />
+    </unique>
+  </table>
+
+  <table name="system_message_i18n">
+    <column name="content" type="varchar" size="255" />
+    <column name="id" type="integer" required="true" primaryKey="true" />
+    <foreign-key foreignTable="system_message" onDelete="cascade">
+      <reference local="id" foreign="id" />
+    </foreign-key>
+    <column name="culture" isCulture="true" type="varchar" size="7" required="true" primaryKey="true" />
+  </table>
+
+</database>
