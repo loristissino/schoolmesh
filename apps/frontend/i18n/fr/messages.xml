@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
   <file source-language="EN" target-language="it" datatype="plaintext" original="messages" date="2009-07-23T14:10:48Z" product-name="messages">
-<!-- localization by Loris Tissino loris.tissino@gmail.com -->
+<!-- localization done with the help of crowdin.net contributors -->
     <body>
       <trans-unit id="3">
         <source>Forgot your password?</source>
@@ -1100,7 +1100,7 @@
       </trans-unit>
       <trans-unit id="303">
         <source>Appointment not confirmed</source>
-        <target>Rendez-vous non confirm&#xE9;</target>
+        <target>Nomination non confirm&#xE9;</target>
       </trans-unit>
       <trans-unit id="304">
         <source>Appointments and projects</source>
@@ -3698,13 +3698,10 @@
       <trans-unit id="945">
         <source>Upload users</source>
         <target>Envois des utilisateurs</target>
-        <alt-trans>
-          <target xml:lang="fr">Envoi des utilisateurs</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="946">
         <source>%name% belongs to the team your appointment is set for</source>
-        <target>%name% appartient &#xE0; l'&#xE9;quipe que votre rendez-vous est fix&#xE9;</target>
+        <target>%name% appartient &#xE0; l'&#xE9;quipe que votre nomination est fix&#xE9;</target>
       </trans-unit>
       <trans-unit id="947">
         <source>Users' settings</source>
