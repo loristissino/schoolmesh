@@ -295,10 +295,6 @@
         <source>(Evaluation: %d)</source>
         <target>(Ocena:% d)</target>
       </trans-unit>
-      <trans-unit id="97">
-        <source>General information</source>
-        <target>Informacje ogólne</target>
-      </trans-unit>
       <trans-unit id="98">
         <source>Aux</source>
         <target>Aux</target>
@@ -456,19 +452,19 @@
         <target>Plan pracy czeka na kontroli administracyjnej</target>
       </trans-unit>
       <trans-unit id="142">
-        <source>Workplan waiting for principal's approval</source>
+        <source>Workplan waiting for principal`s approval</source>
         <target>Plan pracy czeka na nauczyciela pliku `s zatwierdzenia</target>
       </trans-unit>
       <trans-unit id="143">
-        <source>Intermediate report waiting for principal's evaluation</source>
-        <target>sprawozdanie okresowe czeka na nauczyciela pliku `oceny s</target>
+        <source>Intermediate report waiting for principal`s evaluation</source>
+        <target>sprawozdanie okresowe czeka na nauczyciela pliku oceny s</target>
       </trans-unit>
       <trans-unit id="144">
         <source>Final report waiting for administrative check</source>
         <target>Raport końcowy czeka na kontroli administracyjnej</target>
       </trans-unit>
       <trans-unit id="145">
-        <source>Final report waiting for principal's evaluation</source>
+        <source>Final report waiting for principal`s evaluation</source>
         <target>Raport końcowy czeka na nauczyciela pliku `oceny s</target>
       </trans-unit>
       <trans-unit id="146">
@@ -803,6 +799,10 @@
         <source>Invalid text</source>
         <target>Niepoprawny tekst</target>
       </trans-unit>
+      <trans-unit id="229">
+        <source>Missing evaluation for item «%s» in group «%s»</source>
+        <target>Missing evaluation for item «%s» in group «%s»</target>
+      </trans-unit>
       <trans-unit id="230">
         <source>Module accepted</source>
         <target>Moduł akceptowane</target>
@@ -1020,7 +1020,7 @@
         <target>Ukryj</target>
       </trans-unit>
       <trans-unit id="286">
-        <source>The item was imported</source>
+        <source>The item has been imported</source>
         <target>pozycja została przywieziona</target>
       </trans-unit>
       <trans-unit id="2">
@@ -1129,7 +1129,7 @@
       </trans-unit>
       <trans-unit id="310">
         <source>Pronunciation</source>
-        <target>wymowa</target>
+        <target>Wymowa</target>
       </trans-unit>
       <trans-unit id="311">
         <source>Classes</source>
@@ -1260,8 +1260,8 @@
         <target>Nie można dodać ten sam element dwukrotnie.</target>
       </trans-unit>
       <trans-unit id="342">
-        <source>You cannot add the same item twice.</source>
-        <target>Nie można dodać ten sam element dwukrotnie.</target>
+        <source>You cannot remove the same item twice.</source>
+        <target>Nie można usunąć ten sam element dwukrotnie.</target>
       </trans-unit>
       <trans-unit id="343">
         <source>Filters</source>
@@ -1560,10 +1560,6 @@
         <source>not yet over</source>
         <target>jeszcze się nie skończył</target>
       </trans-unit>
-      <trans-unit id="417">
-        <source>not yet over</source>
-        <target>jeszcze się nie skończył</target>
-      </trans-unit>
       <trans-unit id="418">
         <source>Original deadline</source>
         <target>Oryginalny termin</target>
@@ -1597,10 +1593,6 @@
         <target>Przeterminowane</target>
       </trans-unit>
       <trans-unit id="425">
-        <source>Not yet over</source>
-        <target>jeszcze się nie skończył</target>
-      </trans-unit>
-      <trans-unit id="1119">
         <source>Not yet over</source>
         <target>jeszcze się nie skończył</target>
       </trans-unit>
@@ -1656,10 +1648,6 @@
         <source>Attachments</source>
         <target>Załączniki</target>
       </trans-unit>
-      <trans-unit id="438">
-        <source>Attachments</source>
-        <target>Załączniki</target>
-      </trans-unit>
       <trans-unit id="439">
         <source>Type</source>
         <target>Typ</target>
@@ -1693,10 +1681,6 @@
         <target>Temat wiadomości</target>
       </trans-unit>
       <trans-unit id="447">
-        <source>Body</source>
-        <target>Ciało</target>
-      </trans-unit>
-      <trans-unit id="448">
         <source>Body</source>
         <target>Ciało</target>
       </trans-unit>
@@ -2448,10 +2432,6 @@
         <source>Title set</source>
         <target>Tytuł zestaw</target>
       </trans-unit>
-      <trans-unit id="632">
-        <source>No description set</source>
-        <target>Nr zestaw opis</target>
-      </trans-unit>
       <trans-unit id="633">
         <source>Description set</source>
         <target>Opis zestaw</target>
@@ -2463,10 +2443,6 @@
       <trans-unit id="635">
         <source>At least a resource/task is defined</source>
         <target>Przynajmniej resource / zadaniem jest zdefiniowana</target>
-      </trans-unit>
-      <trans-unit id="636">
-        <source>No deadline defined</source>
-        <target>Nie zdefiniowano termin</target>
       </trans-unit>
       <trans-unit id="637">
         <source>No date defined for deadline</source>
@@ -3028,10 +3004,6 @@
         <source>Enabled?</source>
         <target>Enabled?</target>
       </trans-unit>
-      <trans-unit id="773">
-        <source>Project «%title%»</source>
-        <target>Projekt «%title%»</target>
-      </trans-unit>
       <trans-unit id="774">
         <source>Project reset to draft</source>
         <target>Projekt powraca do projektu</target>
@@ -3148,10 +3120,6 @@
         <source>The document has been correctly published. Please note that it is now viewable by your colleagues, but not submitted.</source>
         <target>dokument został prawidłowo opublikowany. Należy pamiętać, że to jest teraz widoczne przez swoich kolegów, ale nie złożone.</target>
       </trans-unit>
-      <trans-unit id="803">
-        <source>The document has been correctly made private.</source>
-        <target>dokument został prawidłowo wykonany prywatnych.</target>
-      </trans-unit>
       <trans-unit id="804">
         <source>The requested action could not be performed.</source>
         <target>Żądane działanie nie może być wykonana.</target>
@@ -3185,7 +3153,7 @@
         <target>odwołać poświadczeń dla% s</target>
       </trans-unit>
       <trans-unit id="812">
-        <source>Add credential</source>
+        <source>Grant credential</source>
         <target>Dodaj poświadczeń</target>
       </trans-unit>
       <trans-unit id="813">
@@ -3276,7 +3244,7 @@
         <source>Enable web access for workstation %name% until the eleventh hour</source>
         <target>Web Access Enable dla stacji roboczej %name% do godziny jedenastej</target>
       </trans-unit>
-      <trans-unit id="832">
+      <trans-unit id="849">
         <source>Schedule web access</source>
         <target>Web Access Harmonogram</target>
       </trans-unit>
@@ -3343,10 +3311,6 @@
       <trans-unit id="848">
         <source>Web access could be disabled only for some of the workstations selected.</source>
         <target>Web Access może zostać wyłączona tylko dla niektórych stanowisk wybranych.</target>
-      </trans-unit>
-      <trans-unit id="849">
-        <source>Schedule web access</source>
-        <target>Web Access Harmonogram</target>
       </trans-unit>
       <trans-unit id="850">
         <source>Web access scheduling for subnet «%name%»</source>
@@ -3652,10 +3616,6 @@
         <source>Add a new user</source>
         <target>Dodaj nowego użytkownika</target>
       </trans-unit>
-      <trans-unit id="926">
-        <source>Users management</source>
-        <target>Zarządzanie użytkownikami</target>
-      </trans-unit>
       <trans-unit id="927">
         <source>System administration</source>
         <target>Administracja systemem</target>
@@ -3677,14 +3637,6 @@
         <target>lat, Role, podmioty, zastrzeżone nazwy użytkowników i śladami mogą być zarządzane tylko w tylnej wniosku końcowego.</target>
       </trans-unit>
       <trans-unit id="932">
-        <source>Posix name</source>
-        <target>nazwa Posix</target>
-      </trans-unit>
-      <trans-unit id="933">
-        <source>Posix name</source>
-        <target>nazwa Posix</target>
-      </trans-unit>
-      <trans-unit id="934">
         <source>Posix name</source>
         <target>nazwa Posix</target>
       </trans-unit>
@@ -3878,7 +3830,7 @@
       </trans-unit>
       <trans-unit id="982">
         <source>[0]Looks like %studentname% is not enrolled anymore|[1]Looks like %studentname% is not enrolled anymore</source>
-        <target>[0] Wygląda na to, %studentname% nie jest przypisany więcej | [1] Wygląda na to, %studentname% nie jest przypisany więcej</target>
+        <target>[0]Wygląda na to, %studentname% nie jest przypisany więcej|[1] Wygląda na to, %studentname% nie jest przypisany więcej</target>
       </trans-unit>
       <trans-unit id="983">
         <source>LAN Logons and logoffs</source>
@@ -4205,7 +4157,7 @@
         <target>Będziesz dodać termin do %user%.</target>
       </trans-unit>
       <trans-unit id="1063">
-        <source>You are going to add a credential for %user%.</source>
+        <source>You are going to grant one or more credentials to %user%.</source>
         <target>Będziesz dodać poświadczenia dla %user%.</target>
       </trans-unit>
       <trans-unit id="1064">
@@ -4372,14 +4324,6 @@
         <source>Create a new group of tools/methodologies</source>
         <target>Tworzenie nowej grupy narzędzi / metodyk</target>
       </trans-unit>
-      <trans-unit id="1294">
-        <source>Create a new group of tools/methodologies</source>
-        <target>Tworzenie nowej grupy narzędzi / metodyk</target>
-      </trans-unit>
-      <trans-unit id="1295">
-        <source>New group of tools/methodologies</source>
-        <target>Nowa grupa narzędzi / metodyk</target>
-      </trans-unit>
       <trans-unit id="1296">
         <source>Items</source>
         <target>Items</target>
@@ -4475,6 +4419,126 @@
       <trans-unit id="1301">
         <source>[0]There are no files|[1]There is one file|(1,+Inf]There are %number% files</source>
         <target><![CDATA[[0]Nie ma plików|[1]Jest jeden plik|{n: n % 10 > 1 && n % 10 < 5 && ( n < 11 || n > 14 ) && ( n % 100 < 11 || n % 100 > 14 ) }Są %number% pliki|[5,+Inf]Jest %number% plików]]></target>
+      </trans-unit>
+      <trans-unit id="1302">
+        <source>Used</source>
+        <target>Używany</target>
+      </trans-unit>
+      <trans-unit id="1303">
+        <source>not yet acknowledged</source>
+        <target>nie został jeszcze potwierdzony</target>
+      </trans-unit>
+      <trans-unit id="1304">
+        <source>Get teaching appointments letter</source>
+        <target>Pobierz nauczania nominacji list</target>
+      </trans-unit>
+      <trans-unit id="1305">
+        <source>Get responsibility role charge letters</source>
+        <target>Get listy ról odpowiedzialności ładowania</target>
+      </trans-unit>
+      <trans-unit id="1306">
+        <source>Choose a team of co-coordinators</source>
+        <target>Wybierz zespół współpracowników koordynatorów</target>
+      </trans-unit>
+      <trans-unit id="1307">
+        <source>This user already has this credential</source>
+        <target>Ten użytkownik ma już tego poświadczenia</target>
+      </trans-unit>
+      <trans-unit id="1308">
+        <source>Selected credentials successfully granted to the user.</source>
+        <target>Wybrane poświadczenia skutecznie udzielone użytkownikowi.</target>
+      </trans-unit>
+      <trans-unit id="1309">
+        <source>Grant a new credential</source>
+        <target>Daj nowego poświadczenia</target>
+      </trans-unit>
+      <trans-unit id="1310">
+        <source>Credential successfully removed.</source>
+        <target>Credential pomyślnie usunięty.</target>
+      </trans-unit>
+      <trans-unit id="1311">
+        <source>Please choose a custom template for your list:</source>
+        <target>Wybierz niestandardowy szablon dla swojej listy:</target>
+      </trans-unit>
+      <trans-unit id="1312">
+        <source>Choose a custom template</source>
+        <target>Wybierz dowolny</target>
+      </trans-unit>
+      <trans-unit id="1313">
+        <source>Looks like there are no custom templates available.</source>
+        <target>Wygląda na to, nie ma niestandardowe szablony dostępne.</target>
+      </trans-unit>
+      <trans-unit id="1314">
+        <source>You must select some users.</source>
+        <target>Musisz wybrać niektórych użytkowników.</target>
+      </trans-unit>
+      <trans-unit id="1315">
+        <source>Responsibility role charge letters</source>
+        <target>rola litery Odpowiedzialność ładowania</target>
+      </trans-unit>
+      <trans-unit id="1316">
+        <source>You are going to get the responsibility roles for the following users:</source>
+        <target>Będziesz dostać role odpowiedzialny za następujące użytkowników:</target>
+      </trans-unit>
+      <trans-unit id="1317">
+        <source>Please select the roles for which you want the letters to be generated:</source>
+        <target>Wybierz role, dla których chcesz litery być generowane:</target>
+      </trans-unit>
+      <trans-unit id="1318">
+        <source>Get the letters</source>
+        <target>Pobierz litery</target>
+      </trans-unit>
+      <trans-unit id="1319">
+        <source>Authorizations</source>
+        <target>Autoryzacje</target>
+      </trans-unit>
+      <trans-unit id="1320">
+        <source>PTN notes</source>
+        <target>zauważa PTN</target>
+      </trans-unit>
+      <trans-unit id="1321">
+        <source>Events view</source>
+        <target>Widok Wydarzenia</target>
+      </trans-unit>
+      <trans-unit id="1322">
+        <source>Events concerning %user%</source>
+        <target>wydarzenia dotyczące %user%</target>
+      </trans-unit>
+      <trans-unit id="1323">
+        <source>Website</source>
+        <target>WWW</target>
+      </trans-unit>
+      <trans-unit id="1324">
+        <source>Continue</source>
+        <target>dalej</target>
+      </trans-unit>
+      <trans-unit id="1325">
+        <source>Evaluation completed</source>
+        <target>Ocena zakończony</target>
+      </trans-unit>
+      <trans-unit id="1326">
+        <source>Find these people in users management module</source>
+        <target>Znajdź tych ludzi w moduł zarządzania użytkownikami</target>
+      </trans-unit>
+      <trans-unit id="1327">
+        <source>Find</source>
+        <target>Znajdź</target>
+      </trans-unit>
+      <trans-unit id="1328">
+        <source>Find all active users that are granted this credential (individually or inherited)</source>
+        <target>Znajdź wszystkie aktywnych użytkowników, które są przyznane tej poświadczeń (indywidualnie lub dziedziczone)</target>
+      </trans-unit>
+      <trans-unit id="1329">
+        <source>Credential «%name%»</source>
+        <target>Credential «%name%»</target>
+      </trans-unit>
+      <trans-unit id="1330">
+        <source>The following users have been individually granted this credential:</source>
+        <target>Następujący użytkownicy zostały indywidualnie udzielana poświadczenia:</target>
+      </trans-unit>
+      <trans-unit id="1331">
+        <source>[1]... and one more|[1,+Inf]... and %number% more</source>
+        <target>[1] ... i jeden więcej | [1, + Inf] ... oraz %number% więcej</target>
       </trans-unit>
      </body>
   </file> 

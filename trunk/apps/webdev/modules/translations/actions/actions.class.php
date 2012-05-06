@@ -96,7 +96,7 @@ class translationsActions extends sfActions
         'target'=>'',
         'machine'=>'',
         'matches'=>'',
-        'warnings'=>'',
+        'warnings'=>array(),
         );
       }
 

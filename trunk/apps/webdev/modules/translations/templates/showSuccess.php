@@ -33,3 +33,16 @@
 
 <?php echo link_to('Clean template', url_for('translations/show?lang='.$lang . '&template=clean')) ?><br />
 <?php echo link_to('Xliff template', url_for('translations/show?lang='.$lang . '&template=xliff')) ?>
+
+<hr />
+<pre>
+<?php foreach($units as $id => $unit): ?>
+<?php if($unit['lsource']!=$unit['rsource']): ?>
+      &lt;trans-unit id="<?php echo $id ?>"&gt;
+        &lt;source&gt;<?php echo $unit['rsource'] ?>&lt;/source&gt;
+        &lt;target&gt;<?php echo $unit['rsource'] ?>&lt;/target&gt;
+      &lt;/trans-unit&gt;
+<?php endif ?>
+<?php endforeach ?>
+
+</pre>

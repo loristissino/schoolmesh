@@ -1,8 +1,8 @@
 <h1><?php echo $lang ?></h1>
 
 <pre>
-<?php foreach($units as $unit): ?>
-<?php echo $unit['id'] ?> <?php echo $unit['newsource'] . PHP_EOL  ?>
+<?php foreach($units as $id=>$unit): ?>
+<?php echo $id ?> <?php if(isset($unit['newsource'])): ?><?php echo $unit['newsource'] ?><?php else: ?><?php echo $unit['rsource'] ?><?php endif ?><?php echo PHP_EOL  ?>
 <?php endforeach ?>
 </pre>
 
