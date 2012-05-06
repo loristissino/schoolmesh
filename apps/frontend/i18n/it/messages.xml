@@ -25,11 +25,11 @@
       </trans-unit>
       <trans-unit id="11">
         <source>%fullname% logged out</source>
-        <target/>
+        <target>%fullname% si è disconnesso</target>
       </trans-unit>
       <trans-unit id="12">
         <source>Login status of %fullname% (&lt;strong&gt;%username%&lt;/strong&gt;) from workstation %workstation% (%ip%): </source>
-        <target/>
+        <target>Stato di connessione di %fullname% (&lt;strong&gt;%username%&lt;/strong&gt;) dal calcolatore %workstation% (%ip%): </target>
       </trans-unit>
       <trans-unit id="13">
         <source>Login time: %timestamp%</source>
@@ -81,7 +81,7 @@
       </trans-unit>
       <trans-unit id="36">
         <source>Checked</source>
-        <target/>
+        <target>Controllato</target>
       </trans-unit>
       <trans-unit id="37">
         <source>You may login</source>
@@ -249,11 +249,11 @@
       </trans-unit>
       <trans-unit id="85">
         <source>min</source>
-        <target/>
+        <target>min</target>
       </trans-unit>
       <trans-unit id="86">
         <source>max</source>
-        <target/>
+        <target>max</target>
       </trans-unit>
       <trans-unit id="87">
         <source>rich text edit</source>
@@ -294,10 +294,6 @@
       <trans-unit id="96">
         <source>(Evaluation: %d)</source>
         <target>(Indicazione realizzazione: %d)</target>
-      </trans-unit>
-      <trans-unit id="97">
-        <source>General information</source>
-        <target>Parte generale</target>
       </trans-unit>
       <trans-unit id="98">
         <source>Aux</source>
@@ -803,6 +799,10 @@
         <source>Invalid text</source>
         <target>Testo illecito</target>
       </trans-unit>
+      <trans-unit id="229">
+        <source>Missing evaluation for item &#xAB;%s&#xBB; in group &#xAB;%s&#xBB;</source>
+        <target>Indicatore di risultato mancante per l'elemento &#xAB;%s&#xBB; nel groppo &#xAB;%s&#xBB;</target>
+      </trans-unit>
       <trans-unit id="230">
         <source>Module accepted</source>
         <target>Modulo accettato</target>
@@ -1020,7 +1020,7 @@
         <target>Nascondi</target>
       </trans-unit>
       <trans-unit id="286">
-        <source>The item was imported</source>
+        <source>The item has been imported</source>
         <target>L'elemento &#xE8; stato importato</target>
       </trans-unit>
       <trans-unit id="2">
@@ -1196,7 +1196,7 @@
         <target>Gestione incarichi di docenza</target>
       </trans-unit>
       <trans-unit id="10">
-        <source>Schoolmaster's actions</source>
+        <source>Principal's actions</source>
         <target>Attività del Dirigente Scolastico</target>
       </trans-unit>
       <trans-unit id="327">
@@ -1260,7 +1260,7 @@
         <target>Non è possibile inserire lo stesso elemento due volte.</target>
       </trans-unit>
       <trans-unit id="342">
-        <source>You cannot add the same item twice.</source>
+        <source>You cannot remove the same item twice.</source>
         <target>Non è possibile rimuovere lo stesso elemento due volte.</target>
       </trans-unit>
       <trans-unit id="343">
@@ -1560,10 +1560,6 @@
         <source>not yet over</source>
         <target>scadenza non ancora passata</target>
       </trans-unit>
-	  <trans-unit id="417">
-        <source>not yet over</source>
-        <target>scadenza non ancora passata</target>
-      </trans-unit>
 	  <trans-unit id="418">
         <source>Original deadline</source>
         <target>Scadenza originale</target>
@@ -1597,10 +1593,6 @@
         <target>Scadenza passata</target>
     </trans-unit>
     <trans-unit id="425">
-        <source>Not yet over</source>
-        <target>Scadenza non ancora passata</target>
-    </trans-unit>
-    <trans-unit id="1119">
         <source>Not yet over</source>
         <target>Scadenza non ancora passata</target>
     </trans-unit>
@@ -1656,10 +1648,6 @@
         <source>Attachments</source>
         <target>Allegati</target>
     </trans-unit>
-    <trans-unit id="438">
-        <source>Attachments</source>
-        <target>Allegati</target>
-    </trans-unit>
     <trans-unit id="439">
         <source>Type</source>
         <target>Tipo</target>
@@ -1693,10 +1681,6 @@
         <target>Oggetto</target>
     </trans-unit>
     <trans-unit id="447">
-        <source>Body</source>
-        <target>Testo</target>
-    </trans-unit>
-    <trans-unit id="448">
         <source>Body</source>
         <target>Testo</target>
     </trans-unit>
@@ -2448,10 +2432,6 @@
         <source>Title set</source>
         <target>Titolo impostato</target>
     </trans-unit>
-    <trans-unit id="632">
-        <source>No description set</source>
-        <target>Descrizione non impostata</target>
-    </trans-unit>
     <trans-unit id="633">
         <source>Description set</source>
         <target>Descrizione impostata</target>
@@ -2463,10 +2443,6 @@
     <trans-unit id="635">
         <source>At least a resource/task is defined</source>
         <target>Almeno un elemento di tipo risorsa/compito è definito</target>
-    </trans-unit>
-    <trans-unit id="636">
-        <source>No deadline defined</source>
-        <target>Nessuna scadenza definita</target>
     </trans-unit>
     <trans-unit id="637">
         <source>No date defined for deadline</source>
@@ -3028,10 +3004,6 @@
         <source>Enabled?</source>
         <target>Abilitato?</target>
     </trans-unit>
-    <trans-unit id="773">
-        <source>Project «%title%»</source>
-        <target>Progetto «%title%»</target>
-    </trans-unit>
     <trans-unit id="774">
         <source>Project reset to draft</source>
         <target>Progetto reimpostato a bozza</target>
@@ -3147,10 +3119,6 @@
     <trans-unit id="802">
         <source>The document has been correctly published. Please note that it is now viewable by your colleagues, but not submitted.</source>
         <target>Il documento è stato correttamente pubblicato. Nota che è ora visibile dai tuoi colleghi, ma non è stato ancora consegnato.</target>
-    </trans-unit>
-    <trans-unit id="803">
-        <source>The document has been correctly made private.</source>
-        <target>Il documento è stato correttamente reso privato.</target>
     </trans-unit>
     <trans-unit id="804">
         <source>The requested action could not be performed.</source>
@@ -3275,10 +3243,6 @@
     <trans-unit id="831">
         <source>Enable web access for workstation %name% until the eleventh hour</source>
         <target>Abilita l'accesso web per il calcolatore %name% fino alla fine della giornata</target>
-    </trans-unit>
-    <trans-unit id="832">
-        <source>Schedule web access</source>
-        <target>Pianifica orario accesso al web</target>
     </trans-unit>
     <trans-unit id="833">
         <source>Enable web access for the current time slot</source>
@@ -3652,10 +3616,6 @@
         <source>Add a new user</source>
         <target>Aggiungi un nuovo utente</target>
     </trans-unit>
-    <trans-unit id="926">
-        <source>Users management</source>
-        <target>Gestione utenti</target>
-    </trans-unit>
     <trans-unit id="927">
         <source>System administration</source>
         <target>Amministrazione di sistema</target>
@@ -3677,14 +3637,6 @@
         <target>Anni, ruoli, materie, nomi utente riservati e indirizzi possono essere gestiti solo nell'applicazione di back end</target>
     </trans-unit>
     <trans-unit id="932">
-        <source>Posix name</source>
-        <target>Nome posix</target>
-    </trans-unit>
-    <trans-unit id="933">
-        <source>Posix name</source>
-        <target>Nome posix</target>
-    </trans-unit>
-    <trans-unit id="934">
         <source>Posix name</source>
         <target>Nome posix</target>
     </trans-unit>
@@ -4371,14 +4323,6 @@
     <trans-unit id="1293">
         <source>Create a new group of tools/methodologies</source>
         <target>Crea un nuovo gruppo di strumenti/metodologie</target>
-    </trans-unit>
-    <trans-unit id="1294">
-        <source>Create a new group of tools/methodologies</source>
-        <target>Crea un nuovo gruppo di strumenti/metodologie</target>
-    </trans-unit>
-    <trans-unit id="1295">
-        <source>New group of tools/methodologies</source>
-        <target>Nuovo gruppo di strumenti/metodologie</target>
     </trans-unit>
     <trans-unit id="1296">
         <source>Items</source>
