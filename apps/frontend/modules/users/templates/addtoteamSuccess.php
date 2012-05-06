@@ -15,9 +15,9 @@
 <p>
 <?php foreach($teams as $team): ?>
 <?php if ($current_user->getBelongsToTeam($team->getPosixName())): ?>
-	<strong><?php echo $team->getDescription() ?></strong>
+	<strong><?php echo link_to($team->getDescription(), url_for('teams/show?id='. $team->getId())) ?></strong>
 <?php else: ?>
-	<?php echo checkboxtag('id[]', $team->getId(), false) ?>&nbsp;<?php echo $team->getDescription() ?>
+	<?php echo checkboxtag('id[]', $team->getId(), false) ?>&nbsp;<?php echo link_to($team->getDescription(), url_for('teams/show?id='. $team->getId())) ?>
 <?php endif ?>
 <br />
 <?php endforeach ?>

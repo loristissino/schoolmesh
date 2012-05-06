@@ -798,12 +798,13 @@ class usersActions extends sfActions
       $this->forward404Unless($this->role=RolePeer::retrieveByPK($params['role_id']));
       $this->expiry=$params['expiry'];
       $this->notes=$params['notes'];
+      $this->reference_number=$params['reference_number'];
     
       $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
       foreach($this->userlist as $user)
       {
         Generic::logMessage('team_in', $this->expiry);
-        $user->addToTeam($this->getUser()->getProfile()->getUserId(), $this->team, $this->role, $this->expiry, $this->notes, $this->getContext());
+        $user->addToTeam($this->getUser()->getProfile()->getUserId(), $this->team, $this->role, $this->expiry, $this->notes, $this->reference_number, $this->getContext());
       }
 		
       $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Users successfully added to team.'));
@@ -1165,6 +1166,7 @@ public function executeEditjoining(sfWebRequest $request)
 			'role_id'=> $this->userteam->getRoleId(),
       'expiry'=> $this->userteam->getExpiry(),
       'notes'=>$this->userteam->getNotes(),
+      'reference_number'=>$this->userteam->getReferenceNumber(),
 		)
 	);
   
@@ -1357,7 +1359,7 @@ public function executeAddappointment(sfWebRequest $request)
       foreach($ids as $id)
       {
         $team=TeamPeer::retrieveByPK($id);
-        $this->current_user->addToTeam($this->getUser()->getProfile()->getUserId(), $team, $role, null, $this->getContext());
+        $this->current_user->addToTeam($this->getUser()->getProfile()->getUserId(), $team, $role, null, null, null, $this->getContext());
       }
 		
       $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('User successfully added to selected teams.'));

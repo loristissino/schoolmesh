@@ -1,4 +1,4 @@
-<?php include_partial('content/breadcrumps', array(
+  <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     '@organization'=>__('Organization'),
   ),
@@ -19,7 +19,10 @@
       <th class="sf_admin_text"><?php echo __('Quality code') ?></th>
       <th class="sf_admin_text"><?php echo __('Charged user') ?></th>
       <th class="sf_admin_text"><?php echo __('Expiry') ?></th>
-      <th class="sf_admin_text"><?php echo __('Team') ?></th>
+      <?php if($sf_user->hasCredential('teams')): ?>
+        <th class="sf_admin_text"><?php echo __('Reference number') ?></th>
+        <th class="sf_admin_text"><?php echo __('Team') ?></th>
+      <?php endif ?>
     </tr>
   </thead>
   <tbody>

@@ -802,13 +802,19 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
       {
         continue;
       }
-      
+
+      $reference_numbers=array();
+
       foreach($charges as $charge)
       {
         $letters->charges->chargeDescription($user->getIsMale()?$charge->getRole()->getMaleDescription():$charge->getRole()->getFemaleDescription());
         $letters->charges->chargeContext($charge->getTeam()->getDescription());
         $letters->charges->chargeExpiry($charge->getExpiry('d/m/Y'));
         $letters->charges->chargeNotes($charge->getNotes());
+        if($charge->getReferenceNumber())
+        {
+          $reference_numbers[]=$charge->getReferenceNumber();
+        }
         $letters->charges->merge();
       }
 			
@@ -817,6 +823,9 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 			$letters->year($currentYear->__toString());
 			$letters->letterDate(date('d/m/Y'));
       $letters->schoolPrincipal(sfConfig::get('app_school_principal', 'missing Principal name in config file'));
+      
+      natsort($reference_numbers);
+      $letters->referenceNumber(sizeof($reference_numbers)?implode(', ', $reference_numbers):'____');
       
 			$pagebreak=($count<sizeof($users))?'<pagebreak>':'';
 			$letters->pagebreak($pagebreak);

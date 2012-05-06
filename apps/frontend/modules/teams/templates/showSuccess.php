@@ -38,6 +38,7 @@
 		<th class="sf_admin_text"><?php echo __('Role') ?></th>
 		<th class="sf_admin_text"><?php echo __('Expiry') ?></th>
 		<th class="sf_admin_text"><?php echo __('Notes') ?></th>
+		<th class="sf_admin_text"><?php echo __('Reference number') ?></th>
 		<th class="sf_admin_text"><?php echo __('Actions') ?></th>
 	</tr>
 </thead>
@@ -48,12 +49,13 @@
 			<?php echo link_to_if($sf_user->hasCredential('admin'), $component->getsfGuardUser()->getProfile()->getFullName(), 'users/edit?id='.$component->getsfGuardUser()->getId() . '#teams') ?>
 		</td>
 		<td>
-			<?php echo $component->getsfGuardUser()->getProfile()->getIsMale()? $component->getRole()->getMaleDescription() : $component->getRole()->getFemaleDescription() ?>
+			<?php echo link_to($component->getsfGuardUser()->getProfile()->getIsMale()? $component->getRole()->getMaleDescription() : $component->getRole()->getFemaleDescription(), url_for('organization/role?id='.$component->getRoleId()))  ?>
 		</td>
     <td style="text-align: right">
       <?php include_partial('content/expiry', array('date'=>$component->getExpiry('U'))) ?>
     </td>
     <td><?php include_partial('content/notes', array('notes'=>$component->getNotes())) ?></td>
+    <td><?php echo $component->getReferenceNumber() ?></td>
     <td>
         <?php include_partial('teams/teams_td_actions', array('user'=>$component->getsfGuardUser()->getProfile(), 'team'=>$Team, 'referer'=>url_for('teams/show?id='.$Team->getId()))) ?>
     </td>

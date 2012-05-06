@@ -992,6 +992,10 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
     public function getBelongsToTeam($posixname)
     {
+      if(!$posixname)
+      {
+        return false;
+      }
       $c = new Criteria();
 			$c->add(UserTeamPeer::USER_ID, $this->getUserId());
 			$c->addJoin(UserTeamPeer::TEAM_ID, TeamPeer::ID);
@@ -1028,7 +1032,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     }
     
 		
-		public function addToTeam($caller_id, Team $team, Role $role, $expiry=null, $notes='', $sf_context)
+		public function addToTeam($caller_id, Team $team, Role $role, $expiry=null, $notes='', $reference_number='',  $sf_context=null)
 		{
 			if (!$this->getBelongsToTeam($team->getPosixName()))
 			{
@@ -1045,6 +1049,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 					->setRole($role)
           ->setExpiry($expiry)
           ->setNotes($notes)
+          ->setReferenceNumber($reference_number)
 					->save($con);
           $team->addWfevent($caller_id,
             'Added user %user% to team, with role «%role%» and expiry %expiry%',
@@ -1180,6 +1185,14 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
           if($t->getNotes()!=$params['notes'])
           {
             $t->setNotes($params['notes']);
+            $dirty=true;
+          }
+        }
+        if(array_key_exists('reference_number', $params))
+        {
+          if($t->getReferenceNumber()!=$params['reference_number'])
+          {
+            $t->setReferenceNumber($params['reference_number']);
             $dirty=true;
           }
         }

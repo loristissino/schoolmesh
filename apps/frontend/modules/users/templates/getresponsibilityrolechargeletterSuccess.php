@@ -37,7 +37,7 @@
     <?php echo $role->getQualityCode() ?>
     </td>
     <td>
-    <?php echo $role->getMaleDescription() ?>
+    <?php echo link_to_if($sf_user->hasCredential('teams'), $role->getMaleDescription(), url_for('organization/role?id='.$role->getId())) ?>
     </td>
   </th>
   <?php endforeach ?>
