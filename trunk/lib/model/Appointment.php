@@ -1958,7 +1958,7 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
         }
         
         $result['result']='notice';
-        $result['message']='The item was imported';
+        $result['message']='The item has been imported';
 
     }
     catch (Exception $e)

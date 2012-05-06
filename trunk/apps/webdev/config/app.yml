@@ -3,3 +3,12 @@
 
 # default values
 #all:
+
+# REMEMBER TO CLEAR YOUR CACHE AFTER EDITING THIS FILE!
+# Run: 
+# symfony cc
+
+all:
+  config:
+    logfile: /var/schoolmesh/log/schoolmeshlog.txt
+    debug: true

@@ -474,7 +474,7 @@ class Generic{
     }
     
     echo "\n";
-    $f=fopen(sfConfig::get('app_config_logfile'), 'a');
+    $f=fopen(sfConfig::get('app_config_logfile', '/tmp/logschoolmesh.txt'), 'a');
     fwrite($f, ob_get_contents());
     fclose($f);
     ob_end_clean();
