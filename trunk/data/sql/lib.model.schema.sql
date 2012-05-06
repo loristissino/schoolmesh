@@ -554,6 +554,7 @@ CREATE TABLE `user_team`
 	`role_id` INTEGER  NOT NULL,
 	`expiry` DATE,
 	`notes` TEXT,
+	`reference_number` VARCHAR(20),
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `utr` (`user_id`, `team_id`),
 	CONSTRAINT `user_team_FK_1`

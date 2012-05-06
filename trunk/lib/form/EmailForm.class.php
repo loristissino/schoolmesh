@@ -14,7 +14,7 @@ class EmailForm extends BaseForm
 
     $this->setValidators(array(
       'send'          => new sfValidatorBoolean(),
-      'email_subject' => new sfValidatorString(array('required'=>true)),
+      'email_subject' => new sfValidatorString(array('required'=>true, 'trim'=>true)),
       'body'          => new sfValidatorString(array('required'=>true))
     ));
   }

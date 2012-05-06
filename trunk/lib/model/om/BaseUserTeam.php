@@ -55,6 +55,12 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	protected $notes;
 
 	/**
+	 * The value for the reference_number field.
+	 * @var        string
+	 */
+	protected $reference_number;
+
+	/**
 	 * @var        sfGuardUser
 	 */
 	protected $asfGuardUser;
@@ -173,6 +179,16 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	public function getNotes()
 	{
 		return $this->notes;
+	}
+
+	/**
+	 * Get the [reference_number] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getReferenceNumber()
+	{
+		return $this->reference_number;
 	}
 
 	/**
@@ -337,6 +353,26 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	} // setNotes()
 
 	/**
+	 * Set the value of [reference_number] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     UserTeam The current object (for fluent API support)
+	 */
+	public function setReferenceNumber($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->reference_number !== $v) {
+			$this->reference_number = $v;
+			$this->modifiedColumns[] = UserTeamPeer::REFERENCE_NUMBER;
+		}
+
+		return $this;
+	} // setReferenceNumber()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -374,6 +410,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			$this->role_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->expiry = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->notes = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->reference_number = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -383,7 +420,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 6; // 6 = UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 7; // 7 = UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating UserTeam object", $e);
@@ -759,6 +796,9 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			case 5:
 				return $this->getNotes();
 				break;
+			case 6:
+				return $this->getReferenceNumber();
+				break;
 			default:
 				return null;
 				break;
@@ -786,6 +826,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			$keys[3] => $this->getRoleId(),
 			$keys[4] => $this->getExpiry(),
 			$keys[5] => $this->getNotes(),
+			$keys[6] => $this->getReferenceNumber(),
 		);
 		return $result;
 	}
@@ -835,6 +876,9 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			case 5:
 				$this->setNotes($value);
 				break;
+			case 6:
+				$this->setReferenceNumber($value);
+				break;
 		} // switch()
 	}
 
@@ -865,6 +909,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setRoleId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setExpiry($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setNotes($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setReferenceNumber($arr[$keys[6]]);
 	}
 
 	/**
@@ -882,6 +927,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserTeamPeer::ROLE_ID)) $criteria->add(UserTeamPeer::ROLE_ID, $this->role_id);
 		if ($this->isColumnModified(UserTeamPeer::EXPIRY)) $criteria->add(UserTeamPeer::EXPIRY, $this->expiry);
 		if ($this->isColumnModified(UserTeamPeer::NOTES)) $criteria->add(UserTeamPeer::NOTES, $this->notes);
+		if ($this->isColumnModified(UserTeamPeer::REFERENCE_NUMBER)) $criteria->add(UserTeamPeer::REFERENCE_NUMBER, $this->reference_number);
 
 		return $criteria;
 	}
@@ -945,6 +991,8 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		$copyObj->setExpiry($this->expiry);
 
 		$copyObj->setNotes($this->notes);
+
+		$copyObj->setReferenceNumber($this->reference_number);
 
 
 		$copyObj->setNew(true);

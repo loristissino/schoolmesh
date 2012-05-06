@@ -1,3 +1,7 @@
+2012/05/06
+Release: 1.03
+Added field reference_number in user_team table
+
 2012/05/01
 Release: 1.02
 Added fields in syllabus table

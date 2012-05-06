@@ -30,7 +30,8 @@ class UserTeamForm extends BaseUserTeamForm
       'team_id' => new sfValidatorPropelChoice(array('model'=>'Team')),
       'role_id' => new sfValidatorPropelChoice(array('model'=>'Role')), 
       'expiry' => new sfValidatorDate(array('required'=>false)),
-      'notes' => new sfValidatorString(array('required'=>false)), 
+      'notes' => new sfValidatorString(array('required'=>false, 'trim'=>true)),
+      'reference_number' => new sfValidatorString(array('required'=>false, 'trim'=>true))
     ));
 
     
