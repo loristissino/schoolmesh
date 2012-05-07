@@ -140,7 +140,7 @@ editor_selector : \"mceAdvanced\"
 							<?php echo link_to(
 							__('Use it'),
 							'wpinfo/replace?id='.$wpinfo->getId() . '&app='.$hint->getId(),
-							array('method' => 'put',  'title'=>__('Replace what you wrote with this content')) 
+							array('method' => 'put',  'title'=>__('Replace what you wrote with this content'), 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()). ' ' . __('This action will delete the content currently present.')) 
 							)?>
 						</li>
 					</ul>
