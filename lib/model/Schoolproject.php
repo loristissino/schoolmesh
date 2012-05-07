@@ -858,14 +858,140 @@ class Schoolproject extends BaseSchoolproject {
     
     elseif($this->getState()==Workflow::PROJ_CONFIRMED)
     {
-      $checkList->addCheck(new Check(
-				Check::FAILED,
-				'Final report submission not yet implemented (coming soon...)',
-				'Project',
-        array(
-          'link_to'=>'projects/edit?id='.$this->getId(),
-          )
-        ));
+      if(!$this->getFinalReport())
+      {
+        $checkList->addCheck(new Check(
+          Check::FAILED,
+          'No final report filled',
+          'Project',
+          array(
+            'link_to'=>'projects/edit?id=' . $this->getId()
+            )
+          ));
+      }
+      else
+      {
+        $checkList->addCheck(new Check(
+          Check::PASSED,
+          'Final report filled',
+          'Project'
+          ));
+      }
+      
+      $prc=new Criteria();
+      $prc->add(ProjResourcePeer::STANDARD_COST, 0, Criteria::GREATER_THAN);
+      $resources=$this->getProjResources($prc);
+      // we need only the resources for which activities could be declared
+      
+      $budget=0;
+      $expenses=0;  
+      
+      //$logbudget='';
+      //$logexpenses='';
+      
+      foreach($resources as $resource)
+      {
+        $budget+=$resource->getQuantityApproved()*$resource->getStandardCost();
+        //$logbudget.=$resource->getQuantityApproved(). ' * ' . $resource->getStandardCost(). "\n";
+        foreach($resource->getProjActivities() as $activity)
+        {
+          $expenses+=$activity->getQuantity()*$resource->getStandardCost();
+          //$logexpenses.=$activity->getQuantity() . ' * ' . $resource->getStandardCost(). "\n";
+        }
+      }
+
+      //Generic::logMessage('budget', $logbudget);
+      //Generic::logMessage('expenses', $logexpenses);
+      
+      if($expenses > $budget)
+      {
+        $checkList->addCheck(new Check(
+          Check::FAILED,
+          'The quantity of activities declared is greater than the one approved',
+          'Tasks, resources, schedule',
+          array(
+            'link_to'=>'projects/edit?id=' . $this->getId() . '#resources'
+            )
+          )) ;
+      }
+      else
+      {
+        $checkList->addCheck(new Check(
+          Check::PASSED,
+          'The quantity of activities declared is compatible with the one approved',
+          'Tasks, resources, schedule'
+          )) ;
+      }
+
+
+      $upshots=$this->getProjUpshots();
+      foreach($upshots as $upshot)
+      {
+        if(!$upshot->getUpshot())
+        {
+          $checkList->addCheck(new Check(
+            Check::FAILED,
+            'No obtained upshot declared',
+            'Obtained upshots',
+            array(
+              'link_to'=>'projects/editupshot?id=' . $upshot->getId(),
+              )
+            ));
+        }
+        else
+        {
+          $checkList->addCheck(new Check(
+            Check::PASSED,
+            'Obtained upshot declared',
+            'Obtained upshots'
+            ));
+        }
+        if(!$upshot->getEvaluation())
+        {
+          $checkList->addCheck(new Check(
+            Check::FAILED,
+            'No evaluation declared for upshot',
+            'Obtained upshots',
+            array(
+              'link_to'=>'projects/editupshot?id=' . $upshot->getId(),
+              )
+            ));
+        }
+        else
+        {
+          $checkList->addCheck(new Check(
+            Check::PASSED,
+            'Evaluation declared for upshot',
+            'Obtained upshots'
+            ));
+        }
+      }
+
+      $deadlines=$this->getProjDeadlines();
+      foreach($deadlines as $deadline)
+      {
+        if(!$deadline->getCompleted())
+        {
+          $checkList->addCheck(new Check(
+            Check::FAILED,
+            'Deadline not marked as completed',
+            'Deadlines',
+            array(
+              'link_to'=>'projects/editdeadline?id=' . $deadline->getId(),
+              )
+            ));
+        }
+        else
+        {
+          $checkList->addCheck(new Check(
+            Check::PASSED,
+            'Deadline marked as completed',
+            'Deadlines'
+            ));
+        }
+      }
+      
+        
     } // end if project state == PROJ_CONFIRMED
 
     return $checkList;

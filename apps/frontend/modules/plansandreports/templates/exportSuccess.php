@@ -32,12 +32,8 @@
 
 <?php include_partial('content/flashes'); ?>
 
-<h2><?php echo __('Available formats for export') ?></h2>
+<h2><?php echo __('Export this document using current data') ?></h2>
 
-<p>
-<?php echo __('Data are exported using current template and settings.') ?> 
-<?php echo __('If you need the original version, please use the attachments below.') ?> 
-</p>
 <?php /* FIXME: I should use a different CSS class in order to avoid <br> tags here... */ ?>
 <ul class="sf_admin_actions">
 	<?php /* we should update this
@@ -45,5 +41,9 @@
   */ ?>
 <?php echo export_action_links($sf_user, 'plansandreports/servedoc?id='.$workplan->getId(), $sf_context) ?>
 </ul>
+<p>
+<?php echo __('Data are exported using current template and settings.') ?> 
+<?php echo __('If you need the document originally submitted, please download one of the attachments below.') ?> 
+</p>
 
-<?php include_partial('content/attachments', array('attachments'=>$attachments, 'description'=>'Documents concerning this appointment.')) ?>
+<?php include_partial('content/attachments', array('attachments'=>$attachments, 'description'=>'Download one of the documents concerning this appointment.')) ?>

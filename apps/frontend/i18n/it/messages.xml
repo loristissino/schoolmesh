@@ -1781,8 +1781,8 @@
         <target>I dati vengono esportati usando il modello e le impostazioni correnti.</target>
     </trans-unit>
     <trans-unit id="472">
-        <source>If you need the original version, please use the attachments below.</source>
-        <target>Se necessiti della versione originale, usa gli allegati elencati qui sotto.</target>
+        <source>If you need the document originally submitted, please download one of the attachments below.</source>
+        <target>Se necessiti del documento originariamente consegnato, scarica uno degli allegati elencati qui sotto.</target>
     </trans-unit>
     <trans-unit id="473">
         <source>Operation failed.</source>
@@ -4398,7 +4398,7 @@
     </trans-unit>
       <trans-unit id="1114">
         <source>Report submitted for approval.</source>
-        <target>Relazione consegnato.</target>
+        <target>Relazione consegnata.</target>
       </trans-unit>
       <trans-unit id="1115">
         <source>Final report approved</source>
@@ -4552,10 +4552,64 @@
         <source>The document could not be submitted for an unkwnow reason.</source>
         <target>La consegna non è avvenuta correttamente per un motivo sconosciuto.</target>
       </trans-unit>
+      <trans-unit id="1335">
+        <source>Export this document using current data</source>
+        <target>Esporta questo documento usando i dati attualmente presenti</target>
+      </trans-unit>
+      <trans-unit id="1336">
+        <source>Download one of the documents concerning this appointment.</source>
+        <target>Scarica uno dei documenti collegati a questo incarico di insegnamento.</target>
+      </trans-unit>
+      <trans-unit id="1337">
+        <source>This action will delete the content currently present.</source>
+        <target>Con questa azione verrà cancellato il contenuto attualmente presente.</target>
+      </trans-unit>
+      <trans-unit id="1338">
+        <source>No final report filled</source>
+        <target>Relazione finale non compilata</target>
+      </trans-unit>
+      <trans-unit id="1339">
+        <source>Final report filled</source>
+        <target>Relazione finale compilata</target>
+      </trans-unit>
+      <trans-unit id="1340">
+        <source>The quantity of activities declared is greater than the one approved</source>
+        <target>La quantità di attività dichiarate è maggiore di quella approvata</target>
+      </trans-unit>
+      <trans-unit id="1341">
+        <source>The quantity of activities declared is compatible with the one approved</source>
+        <target>La quantità di attività dichiarate è compatibile con quella approvata</target>
+      </trans-unit>
+      <trans-unit id="1342">
+        <source>No obtained upshot declared</source>
+        <target>Nessun risultato dichiatato</target>
+      </trans-unit>
+      <trans-unit id="1343">
+        <source>Obtained upshot declared</source>
+        <target>Risultato dichiarato</target>
+      </trans-unit>
+      <trans-unit id="1344">
+        <source>No evaluation declared for upshot</source>
+        <target>Nessuna valutazione del risultato</target>
+      </trans-unit>
+      <trans-unit id="1345">
+        <source>Evaluation declared for upshot</source>
+        <target>Valutazione del risultato effettuata</target>
+      </trans-unit>
+      <trans-unit id="1346">
+        <source>Deadline not marked as completed</source>
+        <target>Scadenza di monitoraggio non contrassegnata come completata</target>
+      </trans-unit>
+      <trans-unit id="1347">
+        <source>Deadline marked as completed</source>
+        <target>Scadenza di monitoraggio contrassegnata come completata</target>
+      </trans-unit>
+      <trans-unit id="1348">
+        <source>The report has been submitted.</source>
+        <target>La relazione è stata consegnata.</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>
-
-
 
 
