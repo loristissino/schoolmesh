@@ -456,30 +456,55 @@ class Schoolproject extends BaseSchoolproject {
         $con = Propel::getConnection(SchoolprojectPeer::DATABASE_NAME);
         $con->beginTransaction();
         
-        $this
-        ->setState(Workflow::PROJ_SUBMITTED)
-        ->setSubmissionDate(time())
-        ->save($con);
-        foreach($this->getProjResources() as $resource)
+        if($this->getState()==Workflow::PROJ_DRAFT)
         {
-          $resource
-          ->setQuantityApproved($resource->getQuantityEstimated())
-          ->setStandardCost($resource->getProjResourceType()->getStandardCost())
+          $this
+          ->setState(Workflow::PROJ_SUBMITTED)
+          ->setSubmissionDate(time())
           ->save($con);
+          foreach($this->getProjResources() as $resource)
+          {
+            $resource
+            ->setQuantityApproved($resource->getQuantityEstimated())
+            ->setStandardCost($resource->getProjResourceType()->getStandardCost())
+            ->save($con);
+          }
+          $result['result']='notice';
+          $result['message']='The project has been submitted.';
+          
+          $this->addWfevent(
+            $user_id,
+            'Project submitted',
+            null,
+            Workflow::PROJ_SUBMITTED,
+            $sf_context,
+            $con
+          );
+          
+          $con->commit();
         }
-        $result['result']='notice';
-        $result['message']='The project has been submitted.';
         
-        $this->addWfevent(
-          $user_id,
-          'Project submitted',
-          null,
-          Workflow::PROJ_SUBMITTED,
-          $sf_context,
-          $con
-        );
-        
-        $con->commit();
+        elseif($this->getState()==Workflow::PROJ_CONFIRMED)
+        {
+          $this
+          ->setState(Workflow::PROJ_FINISHED)
+          ->setSubmissionDate(time())
+          ->save($con);
+          $result['result']='notice';
+          $result['message']='The report has been submitted.';
+          
+          $this->addWfevent(
+            $user_id,
+            'Report submitted',
+            null,
+            Workflow::PROJ_FINISHED,
+            $sf_context,
+            $con
+          );
+          
+          $con->commit();
+          
+        }
         
         $steps=Workflow::getProjSteps();
         
@@ -502,7 +527,7 @@ class Schoolproject extends BaseSchoolproject {
       catch(Exception $e)
       {
         $result['result']='error';
-        $result['message']='The project could not be submitted for an unkwnow reason.';
+        $result['message']='The document could not be submitted for an unkwnow reason.';
         $con->rollback();
 
       }
@@ -517,9 +542,27 @@ class Schoolproject extends BaseSchoolproject {
     }
   }
   
+  public function isSubmittable()
+  {
+    return $this->getState()==Workflow::PROJ_DRAFT or $this->getState()==Workflow::PROJ_CONFIRMED;
+  }
+  
   public function getChecks()
   {
     $checkList=new CheckList();
+    
+    if(!$this->isSubmittable())
+    {
+      $checkList->addCheck(new Check(
+				Check::FAILED,
+				'The document cannot be submitted when it is in this state',
+				'Project',
+        array(
+          'link_to'=>'projects/edit?id='.$this->getId(),
+          )
+        ));
+      return $checkList;
+    }
     
     if(!$this->getsfGuardUser()->getProfile()->getHasValidatedEmail())
     {
@@ -541,274 +584,289 @@ class Schoolproject extends BaseSchoolproject {
         ));
     }
     
-    if(!$this->getProjCategoryId())
+    if($this->getState()==Workflow::PROJ_DRAFT)
     {
-      $checkList->addCheck(new Check(
-				Check::FAILED,
-				'No category set',
-				'Project',
-        array(
-          'link_to'=>'projects/edit?id=' . $this->getId()
-          )
-        ));
-    }
-    else
-    {
-      $checkList->addCheck(new Check(
-				Check::PASSED,
-				'The category is set',
-				'Project'
-        ));
-    }
-
-
-    if(!$this->getTitle())
-    {
-      $checkList->addCheck(new Check(
-				Check::FAILED,
-				'No title set',
-				'Project',
-        array(
-          'link_to'=>'projects/edit?id=' . $this->getId()
-          )
-        ));
-    }
-    else
-    {
-      $checkList->addCheck(new Check(
-				Check::PASSED,
-				'Title set',
-				'Project'
-        ));
-    }
-
-    if(!$this->getDescription())
-    {
-      $checkList->addCheck(new Check(
-				Check::FAILED,
-				'No description set',
-				'Project',
-        array(
-          'link_to'=>'projects/edit?id=' . $this->getId()
-          )
-        ));
-    }
-    else
-    {
-      $checkList->addCheck(new Check(
-				Check::PASSED,
-				'Description set',
-				'Project'
-        ));
-    }
-
-    if(!$this->getAddressees())
-    {
-      $checkList->addCheck(new Check(
-				Check::FAILED,
-				'No addressees set',
-				'Project',
-        array(
-          'link_to'=>'projects/edit?id=' . $this->getId()
-          )
-        ));
-    }
-    else
-    {
-      $checkList->addCheck(new Check(
-				Check::PASSED,
-				'Addressees set',
-				'Project'
-        ));
-    }
-
-
-    if(!$this->getPurposes())
-    {
-      $checkList->addCheck(new Check(
-				Check::FAILED,
-				'No purposes set',
-				'Project',
-        array(
-          'link_to'=>'projects/edit?id=' . $this->getId()
-          )
-        ));
-    }
-    else
-    {
-      $checkList->addCheck(new Check(
-				Check::PASSED,
-				'Purposes set',
-				'Project'
-        ));
-    }
-
-    if(!$this->getGoals())
-    {
-      $checkList->addCheck(new Check(
-				Check::FAILED,
-				'No goals set',
-				'Project',
-        array(
-          'link_to'=>'projects/edit?id=' . $this->getId()
-          )
-        ));
-    }
-    else
-    {
-      $checkList->addCheck(new Check(
-				Check::PASSED,
-				'Goals set',
-				'Project'
-        ));
-    }
-
-    $resources=$this->getProjResources();
-    if(sizeof($resources)==0)
-    {
-      if($this->mustHaveResources())
+    
+      if(!$this->getProjCategoryId())
       {
-      $checkList->addCheck(new Check(
-				Check::FAILED,
-				'No resource/task defined',
-				'Tasks, resources, schedule',
-        array(
-          'link_to'=>'projects/edit?id=' . $this->getId() . '#resources'
-          )
-        )) ;
+        $checkList->addCheck(new Check(
+          Check::FAILED,
+          'No category set',
+          'Project',
+          array(
+            'link_to'=>'projects/edit?id=' . $this->getId()
+            )
+          ));
       }
-    }
-    else
-    {
-      foreach($resources as $resource)
+      else
       {
-        if(!$resource->getQuantityEstimated()>0)
-        {
-          $checkList->addCheck(new Check(
-            Check::FAILED,
-            'The quantity defined for the resource is not set',
-            'Tasks, resources, schedule',
-            array(
-              'link_to'=>'projects/editresource?id=' . $resource->getId(),
-              )
-            ));
-        }
-        if(!$resource->getProjResourceTypeId())
-        {
-          $checkList->addCheck(new Check(
-            Check::FAILED,
-            'The resource type is not set',
-            'Tasks, resources, schedule',
-            array(
-              'link_to'=>'projects/editresource?id=' . $resource->getId(),
-              )
-            ));
-        }
-        
+        $checkList->addCheck(new Check(
+          Check::PASSED,
+          'The category is set',
+          'Project'
+          ));
       }
-      $checkList->addCheck(new Check(
-				Check::PASSED,
-				'At least a resource/task is defined',
-				'Tasks, resources, schedule'
-        )) ;
- 
-    }
 
 
-    $upshots=$this->getProjUpshots();
-    if(sizeof($upshots)==0)
-    {
-      $checkList->addCheck(new Check(
-				Check::FAILED,
-				'No upshots defined',
-				'Expected upshots',
-        array(
-          'link_to'=>'projects/edit?id=' . $this->getId() . '#upshots'
-          )
-        ));
-    }
-    else
-    {
-      foreach($upshots as $upshot)
+      if(!$this->getTitle())
       {
-        if(!$upshot->getDescription())
+        $checkList->addCheck(new Check(
+          Check::FAILED,
+          'No title set',
+          'Project',
+          array(
+            'link_to'=>'projects/edit?id=' . $this->getId()
+            )
+          ));
+      }
+      else
+      {
+        $checkList->addCheck(new Check(
+          Check::PASSED,
+          'Title set',
+          'Project'
+          ));
+      }
+
+      if(!$this->getDescription())
+      {
+        $checkList->addCheck(new Check(
+          Check::FAILED,
+          'No description set',
+          'Project',
+          array(
+            'link_to'=>'projects/edit?id=' . $this->getId()
+            )
+          ));
+      }
+      else
+      {
+        $checkList->addCheck(new Check(
+          Check::PASSED,
+          'Description set',
+          'Project'
+          ));
+      }
+
+      if(!$this->getAddressees())
+      {
+        $checkList->addCheck(new Check(
+          Check::FAILED,
+          'No addressees set',
+          'Project',
+          array(
+            'link_to'=>'projects/edit?id=' . $this->getId()
+            )
+          ));
+      }
+      else
+      {
+        $checkList->addCheck(new Check(
+          Check::PASSED,
+          'Addressees set',
+          'Project'
+          ));
+      }
+
+
+      if(!$this->getPurposes())
+      {
+        $checkList->addCheck(new Check(
+          Check::FAILED,
+          'No purposes set',
+          'Project',
+          array(
+            'link_to'=>'projects/edit?id=' . $this->getId()
+            )
+          ));
+      }
+      else
+      {
+        $checkList->addCheck(new Check(
+          Check::PASSED,
+          'Purposes set',
+          'Project'
+          ));
+      }
+
+      if(!$this->getGoals())
+      {
+        $checkList->addCheck(new Check(
+          Check::FAILED,
+          'No goals set',
+          'Project',
+          array(
+            'link_to'=>'projects/edit?id=' . $this->getId()
+            )
+          ));
+      }
+      else
+      {
+        $checkList->addCheck(new Check(
+          Check::PASSED,
+          'Goals set',
+          'Project'
+          ));
+      }
+
+      $resources=$this->getProjResources();
+      if(sizeof($resources)==0)
+      {
+        if($this->mustHaveResources())
         {
-          $checkList->addCheck(new Check(
-            Check::FAILED,
-            'No description defined for upshot',
-            'Expected upshots',
-            array(
-              'link_to'=>'projects/editupshot?id=' . $upshot->getId(),
-              )
-            ));
-        }
-        if(!$upshot->getIndicator())
-        {
-          $checkList->addCheck(new Check(
-            Check::FAILED,
-            'No indicator defined for upshot',
-            'Expected upshots',
-            array(
-              'link_to'=>'projects/editupshot?id=' . $upshot->getId(),
-              )
-            ));
+        $checkList->addCheck(new Check(
+          Check::FAILED,
+          'No resource/task defined',
+          'Tasks, resources, schedule',
+          array(
+            'link_to'=>'projects/edit?id=' . $this->getId() . '#resources'
+            )
+          )) ;
         }
       }
-      $checkList->addCheck(new Check(
-				Check::PASSED,
-				'At least an upshot is defined',
-				'Expected upshots'
-        )) ;
+      else
+      {
+        foreach($resources as $resource)
+        {
+          if(!$resource->getQuantityEstimated()>0)
+          {
+            $checkList->addCheck(new Check(
+              Check::FAILED,
+              'The quantity defined for the resource is not set',
+              'Tasks, resources, schedule',
+              array(
+                'link_to'=>'projects/editresource?id=' . $resource->getId(),
+                )
+              ));
+          }
+          if(!$resource->getProjResourceTypeId())
+          {
+            $checkList->addCheck(new Check(
+              Check::FAILED,
+              'The resource type is not set',
+              'Tasks, resources, schedule',
+              array(
+                'link_to'=>'projects/editresource?id=' . $resource->getId(),
+                )
+              ));
+          }
+          
+        }
+        $checkList->addCheck(new Check(
+          Check::PASSED,
+          'At least a resource/task is defined',
+          'Tasks, resources, schedule'
+          )) ;
+   
+      }
 
-    }
+
+      $upshots=$this->getProjUpshots();
+      if(sizeof($upshots)==0)
+      {
+        $checkList->addCheck(new Check(
+          Check::FAILED,
+          'No upshots defined',
+          'Expected upshots',
+          array(
+            'link_to'=>'projects/edit?id=' . $this->getId() . '#upshots'
+            )
+          ));
+      }
+      else
+      {
+        foreach($upshots as $upshot)
+        {
+          if(!$upshot->getDescription())
+          {
+            $checkList->addCheck(new Check(
+              Check::FAILED,
+              'No description defined for upshot',
+              'Expected upshots',
+              array(
+                'link_to'=>'projects/editupshot?id=' . $upshot->getId(),
+                )
+              ));
+          }
+          if(!$upshot->getIndicator())
+          {
+            $checkList->addCheck(new Check(
+              Check::FAILED,
+              'No indicator defined for upshot',
+              'Expected upshots',
+              array(
+                'link_to'=>'projects/editupshot?id=' . $upshot->getId(),
+                )
+              ));
+          }
+        }
+        $checkList->addCheck(new Check(
+          Check::PASSED,
+          'At least an upshot is defined',
+          'Expected upshots'
+          )) ;
+
+      }
 
 
-    $deadlines=$this->getProjDeadlines();
-    if(sizeof($deadlines)==0)
+      $deadlines=$this->getProjDeadlines();
+      if(sizeof($deadlines)==0)
+      {
+        $checkList->addCheck(new Check(
+          Check::FAILED,
+          'No deadline defined',
+          'Deadlines',
+          array(
+            'link_to'=>'projects/edit?id=' . $this->getId() . '#deadlines'
+            )
+          ));
+      }
+      else
+      {
+        foreach($deadlines as $deadline)
+        {
+          if(!$deadline->getOriginalDeadlineDate())
+          {
+            $checkList->addCheck(new Check(
+              Check::FAILED,
+              'No date defined for deadline',
+              'Deadlines',
+              array(
+                'link_to'=>'projects/editdeadline?id=' . $deadline->getId(),
+                )
+              ));
+          }
+          if(!$deadline->getDescription())
+          {
+            $checkList->addCheck(new Check(
+              Check::FAILED,
+              'No description defined for deadline',
+              'Deadlines',
+              array(
+                'link_to'=>'projects/editdeadline?id=' . $deadline->getId(),
+                )
+              ));
+          }
+        }
+        $checkList->addCheck(new Check(
+          Check::PASSED,
+          'At least a deadline is defined',
+          'Deadlines'
+          )) ;
+      }
+    } // end if project state == PROJ_DRAFT
+    
+    elseif($this->getState()==Workflow::PROJ_CONFIRMED)
     {
       $checkList->addCheck(new Check(
 				Check::FAILED,
-				'No deadline defined',
-				'Deadlines',
+				'Final report submission not yet implemented (coming soon...)',
+				'Project',
         array(
-          'link_to'=>'projects/edit?id=' . $this->getId() . '#deadlines'
+          'link_to'=>'projects/edit?id='.$this->getId(),
           )
         ));
-    }
-    else
-    {
-      foreach($deadlines as $deadline)
-      {
-        if(!$deadline->getOriginalDeadlineDate())
-        {
-          $checkList->addCheck(new Check(
-            Check::FAILED,
-            'No date defined for deadline',
-            'Deadlines',
-            array(
-              'link_to'=>'projects/editdeadline?id=' . $deadline->getId(),
-              )
-            ));
-        }
-        if(!$deadline->getDescription())
-        {
-          $checkList->addCheck(new Check(
-            Check::FAILED,
-            'No description defined for deadline',
-            'Deadlines',
-            array(
-              'link_to'=>'projects/editdeadline?id=' . $deadline->getId(),
-              )
-            ));
-        }
-      }
-      $checkList->addCheck(new Check(
-				Check::PASSED,
-				'At least a deadline is defined',
-				'Deadlines'
-        )) ;
-
-    }
+    } // end if project state == PROJ_CONFIRMED
 
     return $checkList;
     

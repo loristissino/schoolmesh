@@ -4540,6 +4540,18 @@
         <source>[1]... and one more|[1,+Inf]... and %number% more</source>
         <target>[1]... e un altro|[1,+Inf]... e altri %number%</target>
       </trans-unit>
+      <trans-unit id="1332">
+        <source>Submit report</source>
+        <target>Consegna la relazione</target>
+      </trans-unit>
+      <trans-unit id="1333">
+        <source>Submit the report, confirming the data inserted</source>
+        <target>Consegna la relazione, confermando i dati inseriti</target>
+      </trans-unit>
+      <trans-unit id="1334">
+        <source>The document could not be submitted for an unkwnow reason.</source>
+        <target>La consegna non è avvenuta correttamente per un motivo sconosciuto.</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>
