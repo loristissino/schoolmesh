@@ -395,21 +395,35 @@
 <?php endif ?>
 
 
-<?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
+<?php if($project->isSubmittable()): ?>
 
 <h2><?php echo __('Actions') ?></h2>
 <ul class="sf_admin_actions">
-	<li class="sf_admin_action_submit">
-	<?php echo link_to(
-				__('Submit project'),
-				'projects/submit?id='. $project->getId(),
-				array(
-          'method' => 'post', 
-          'title'=>__('Submit the project for approval'),
-          'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()) . ' ' . __('Documents submitted cannot be modified anymore.')
-          ) 
-				) ?>
-  </li>
+  <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
+	<?php echo li_link_to_if(
+    'action_submit',
+    true,
+    __('Submit project'),
+    'projects/submit?id='. $project->getId(),
+    array(
+      'method' => 'post', 
+      'title'=>__('Submit the project for approval'),
+      'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()) . ' ' . __('Documents submitted cannot be modified anymore.')
+      ) 
+    ) ?>
+  <?php elseif($project->getState()==Workflow::PROJ_CONFIRMED): ?>
+	<?php echo li_link_to_if(
+    'action_submit',
+    true,
+    __('Submit report'),
+    'projects/submit?id='. $project->getId(),
+    array(
+      'method' => 'post', 
+      'title'=>__('Submit the report, confirming the data inserted'),
+      'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()) . ' ' . __('Documents submitted cannot be modified anymore.')
+      ) 
+    ) ?>
+  <?php endif ?>
 </ul>
 <?php endif ?>
 
