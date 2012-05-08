@@ -23,6 +23,7 @@ abstract class BaseAttachmentFileForm extends BaseFormPropel
       'uniqid'              => new sfWidgetFormInputText(),
       'file_size'           => new sfWidgetFormInputText(),
       'is_public'           => new sfWidgetFormInputCheckbox(),
+      'created_at'          => new sfWidgetFormDateTime(),
       'md5sum'              => new sfWidgetFormInputText(),
     ));
 
@@ -36,6 +37,7 @@ abstract class BaseAttachmentFileForm extends BaseFormPropel
       'uniqid'              => new sfValidatorString(array('max_length' => 50)),
       'file_size'           => new sfValidatorInteger(array('min' => -9.2233720368548E+18, 'max' => 9.2233720368548E+18, 'required' => false)),
       'is_public'           => new sfValidatorBoolean(array('required' => false)),
+      'created_at'          => new sfValidatorDateTime(array('required' => false)),
       'md5sum'              => new sfValidatorString(array('max_length' => 32, 'required' => false)),
     ));
 

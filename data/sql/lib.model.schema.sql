@@ -1375,6 +1375,7 @@ CREATE TABLE `attachment_file`
 	`uniqid` VARCHAR(50)  NOT NULL,
 	`file_size` BIGINT,
 	`is_public` TINYINT default 0,
+	`created_at` DATETIME,
 	`md5sum` VARCHAR(32),
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `attachment_file_U_1` (`uniqid`),

@@ -523,6 +523,7 @@ propel:
     uniqid: { type: varchar(50), required: true, index: unique }
     file_size: bigint
     is_public: { type: boolean, default: false }
+    created_at: ~
     md5sum: varchar(32)
     _uniques:
       tim: [base_table, base_id, md5sum]

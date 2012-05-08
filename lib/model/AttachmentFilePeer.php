@@ -37,6 +37,7 @@ class AttachmentFilePeer extends BaseAttachmentFilePeer {
     $c=new Criteria();
     $c->add(self::BASE_TABLE, self::getBaseTableId($classname));
     $c->add(self::BASE_ID, $id);
+    $c->addAscendingOrderByColumn(self::CREATED_AT);
     return self::doSelect($c);
   }
   

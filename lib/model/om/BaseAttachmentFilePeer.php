@@ -25,7 +25,7 @@ abstract class BaseAttachmentFilePeer {
 	const TM_CLASS = 'AttachmentFileTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 10;
+	const NUM_COLUMNS = 11;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -57,6 +57,9 @@ abstract class BaseAttachmentFilePeer {
 	/** the column name for the IS_PUBLIC field */
 	const IS_PUBLIC = 'attachment_file.IS_PUBLIC';
 
+	/** the column name for the CREATED_AT field */
+	const CREATED_AT = 'attachment_file.CREATED_AT';
+
 	/** the column name for the MD5SUM field */
 	const MD5SUM = 'attachment_file.MD5SUM';
 
@@ -83,11 +86,11 @@ abstract class BaseAttachmentFilePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'BaseTable', 'BaseId', 'InternetMediaType', 'OriginalFileName', 'Uniqid', 'FileSize', 'IsPublic', 'Md5sum', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'baseTable', 'baseId', 'internetMediaType', 'originalFileName', 'uniqid', 'fileSize', 'isPublic', 'md5sum', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::BASE_TABLE, self::BASE_ID, self::INTERNET_MEDIA_TYPE, self::ORIGINAL_FILE_NAME, self::UNIQID, self::FILE_SIZE, self::IS_PUBLIC, self::MD5SUM, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'base_table', 'base_id', 'internet_media_type', 'original_file_name', 'uniqid', 'file_size', 'is_public', 'md5sum', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'BaseTable', 'BaseId', 'InternetMediaType', 'OriginalFileName', 'Uniqid', 'FileSize', 'IsPublic', 'CreatedAt', 'Md5sum', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'baseTable', 'baseId', 'internetMediaType', 'originalFileName', 'uniqid', 'fileSize', 'isPublic', 'createdAt', 'md5sum', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::BASE_TABLE, self::BASE_ID, self::INTERNET_MEDIA_TYPE, self::ORIGINAL_FILE_NAME, self::UNIQID, self::FILE_SIZE, self::IS_PUBLIC, self::CREATED_AT, self::MD5SUM, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'base_table', 'base_id', 'internet_media_type', 'original_file_name', 'uniqid', 'file_size', 'is_public', 'created_at', 'md5sum', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -97,11 +100,11 @@ abstract class BaseAttachmentFilePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'BaseTable' => 2, 'BaseId' => 3, 'InternetMediaType' => 4, 'OriginalFileName' => 5, 'Uniqid' => 6, 'FileSize' => 7, 'IsPublic' => 8, 'Md5sum' => 9, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'baseTable' => 2, 'baseId' => 3, 'internetMediaType' => 4, 'originalFileName' => 5, 'uniqid' => 6, 'fileSize' => 7, 'isPublic' => 8, 'md5sum' => 9, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::BASE_TABLE => 2, self::BASE_ID => 3, self::INTERNET_MEDIA_TYPE => 4, self::ORIGINAL_FILE_NAME => 5, self::UNIQID => 6, self::FILE_SIZE => 7, self::IS_PUBLIC => 8, self::MD5SUM => 9, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'base_table' => 2, 'base_id' => 3, 'internet_media_type' => 4, 'original_file_name' => 5, 'uniqid' => 6, 'file_size' => 7, 'is_public' => 8, 'md5sum' => 9, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'BaseTable' => 2, 'BaseId' => 3, 'InternetMediaType' => 4, 'OriginalFileName' => 5, 'Uniqid' => 6, 'FileSize' => 7, 'IsPublic' => 8, 'CreatedAt' => 9, 'Md5sum' => 10, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'baseTable' => 2, 'baseId' => 3, 'internetMediaType' => 4, 'originalFileName' => 5, 'uniqid' => 6, 'fileSize' => 7, 'isPublic' => 8, 'createdAt' => 9, 'md5sum' => 10, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::BASE_TABLE => 2, self::BASE_ID => 3, self::INTERNET_MEDIA_TYPE => 4, self::ORIGINAL_FILE_NAME => 5, self::UNIQID => 6, self::FILE_SIZE => 7, self::IS_PUBLIC => 8, self::CREATED_AT => 9, self::MD5SUM => 10, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'base_table' => 2, 'base_id' => 3, 'internet_media_type' => 4, 'original_file_name' => 5, 'uniqid' => 6, 'file_size' => 7, 'is_public' => 8, 'created_at' => 9, 'md5sum' => 10, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -180,6 +183,7 @@ abstract class BaseAttachmentFilePeer {
 		$criteria->addSelectColumn(AttachmentFilePeer::UNIQID);
 		$criteria->addSelectColumn(AttachmentFilePeer::FILE_SIZE);
 		$criteria->addSelectColumn(AttachmentFilePeer::IS_PUBLIC);
+		$criteria->addSelectColumn(AttachmentFilePeer::CREATED_AT);
 		$criteria->addSelectColumn(AttachmentFilePeer::MD5SUM);
 	}
 
