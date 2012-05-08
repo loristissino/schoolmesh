@@ -1125,26 +1125,36 @@ public function getWorkflowLogs()
 
 	}
 	
-   public function isViewableBy($userId)
+  public function isViewableBy($userId)
 	{
-		
-	if ($this->isOwnedBy($userId))
-		return true;
-		
-	if ($this->getState()>Workflow::WP_DRAFT)
-		return true;	
-  
-  if ($this->getIsPublic())
-    return true;
+    if ($this->isOwnedBy($userId))
+      return true;
+      
+    if ($this->getState()>Workflow::WP_DRAFT)
+      return true;	
+    
+    if ($this->getIsPublic())
+      return true;
 
-	return false;
+    return false;
 	}
 	
-	
-   public function isOwnedBy($userId)
+  public function isExportableBy($userId)
 	{
-		
-	return  ($this->getUserId()==$userId);
+    if ($this->isOwnedBy($userId))
+      return true;
+      
+    if ($this->getState()==Workflow::WP_APPROVED or $this->getState()==Workflow::FR_APPROVED)
+      return true;
+    // the document is exportable only when it has just been approved (and not yet published)
+
+    return false;
+	}
+
+	
+  public function isOwnedBy($userId)
+	{
+    return  ($this->getUserId()==$userId);
 	}
 
 

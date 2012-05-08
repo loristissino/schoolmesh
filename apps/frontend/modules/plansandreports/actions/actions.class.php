@@ -425,9 +425,11 @@ public function executeBatch(sfWebRequest $request)
 		$this->doctype=$request->getParameter('doctype');
 		$this->forward404Unless(in_array($this->doctype, array('odt', 'doc', 'pdf', 'rtf')));
 		
+    $complete=$request->getParameter('edition','A')=='U'?true:false;
+    
 		try 
 		{
-			$odfdoc=$this->workplan->getOdf($this->doctype, $this->getContext(), $request->getParameter('template', ''), true);
+			$odfdoc=$this->workplan->getOdf($this->doctype, $this->getContext(), $request->getParameter('template', ''), $complete);
 		}
 		catch (Exception $e)
 		{
@@ -517,6 +519,8 @@ public function executeBatch(sfWebRequest $request)
     $whoIsViewing = $this->getUser()->getProfile()->getSfGuardUser()->getId();
 	
     $this->forward404Unless($this->workplan->isViewableBy($whoIsViewing));
+    $this->form=new AppointmentExportForm();
+    $this->form->setDefaults(array('doctype'=>'odt', 'edition'=>'U'));
     
     $this->attachments=$this->workplan->getAttachmentFiles();
 

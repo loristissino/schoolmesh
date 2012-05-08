@@ -1777,8 +1777,8 @@
         <target>Documenti riguardanti questo incarico di insegnamento.</target>
     </trans-unit>
     <trans-unit id="471">
-        <source>Data are exported using current template and settings.</source>
-        <target>I dati vengono esportati usando il modello e le impostazioni correnti.</target>
+        <source>The document is exported using current data, template and settings.</source>
+        <target>Il documento viene esportato usando i dati, il modello e le impostazioni correnti.</target>
     </trans-unit>
     <trans-unit id="472">
         <source>If you need the document originally submitted, please download one of the attachments below.</source>
@@ -4611,6 +4611,18 @@
       <trans-unit id="1349">
         <source>This item will not be placed in the published document</source>
         <target>Questo elemento non comparirà nel documento pubblicato</target>
+      </trans-unit>
+      <trans-unit id="1350">
+        <source>Format</source>
+        <target>Formato</target>
+      </trans-unit>
+      <trans-unit id="1351">
+        <source>Edition</source>
+        <target>Edizione</target>
+      </trans-unit>
+      <trans-unit id="1352">
+        <source>This document is currently exportable only by the owner.</source>
+        <target>Questo documento è al momento esportabile solo dal proprietario.</target>
       </trans-unit>
      </body>
   </file> 
