@@ -20,6 +20,7 @@ abstract class BaseAttachmentFileFormFilter extends BaseFormFilterPropel
       'uniqid'              => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'file_size'           => new sfWidgetFormFilterInput(),
       'is_public'           => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
+      'created_at'          => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'md5sum'              => new sfWidgetFormFilterInput(),
     ));
 
@@ -32,6 +33,7 @@ abstract class BaseAttachmentFileFormFilter extends BaseFormFilterPropel
       'uniqid'              => new sfValidatorPass(array('required' => false)),
       'file_size'           => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'is_public'           => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
+      'created_at'          => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'md5sum'              => new sfValidatorPass(array('required' => false)),
     ));
 
@@ -59,6 +61,7 @@ abstract class BaseAttachmentFileFormFilter extends BaseFormFilterPropel
       'uniqid'              => 'Text',
       'file_size'           => 'Number',
       'is_public'           => 'Boolean',
+      'created_at'          => 'Date',
       'md5sum'              => 'Text',
     );
   }

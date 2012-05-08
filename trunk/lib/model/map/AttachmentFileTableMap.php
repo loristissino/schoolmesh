@@ -45,6 +45,7 @@ class AttachmentFileTableMap extends TableMap {
 		$this->addColumn('UNIQID', 'Uniqid', 'VARCHAR', true, 50, null);
 		$this->addColumn('FILE_SIZE', 'FileSize', 'BIGINT', false, null, null);
 		$this->addColumn('IS_PUBLIC', 'IsPublic', 'BOOLEAN', false, null, false);
+		$this->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null, null);
 		$this->addColumn('MD5SUM', 'Md5sum', 'VARCHAR', false, 32, null);
 		// validators
 	} // initialize()
@@ -67,6 +68,7 @@ class AttachmentFileTableMap extends TableMap {
 	{
 		return array(
 			'symfony' => array('form' => 'true', 'filter' => 'true', ),
+			'symfony_timestampable' => array('create_column' => 'created_at', ),
 		);
 	} // getBehaviors()
 

@@ -1,3 +1,8 @@
+2012/05/08
+Release: 1.04
+Added field created_at (datetime) in attachment table
+stat -c 'UPDATE `attachment_file` SET `created_at`=FROM_UNIXTIME(%Y) WHERE `uniqid`="%n";' *
+
 2012/05/06
 Release: 1.03
 Added field reference_number in user_team table

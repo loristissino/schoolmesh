@@ -74,6 +74,12 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 	protected $is_public;
 
 	/**
+	 * The value for the created_at field.
+	 * @var        string
+	 */
+	protected $created_at;
+
+	/**
 	 * The value for the md5sum field.
 	 * @var        string
 	 */
@@ -211,6 +217,44 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 	public function getIsPublic()
 	{
 		return $this->is_public;
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [created_at] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getCreatedAt($format = 'Y-m-d H:i:s')
+	{
+		if ($this->created_at === null) {
+			return null;
+		}
+
+
+		if ($this->created_at === '0000-00-00 00:00:00') {
+			// while technically this is not a default value of NULL,
+			// this seems to be closest in meaning.
+			return null;
+		} else {
+			try {
+				$dt = new DateTime($this->created_at);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->created_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
 	}
 
 	/**
@@ -408,6 +452,55 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 	} // setIsPublic()
 
 	/**
+	 * Sets the value of [created_at] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     AttachmentFile The current object (for fluent API support)
+	 */
+	public function setCreatedAt($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->created_at !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->created_at !== null && $tmpDt = new DateTime($this->created_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->created_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = AttachmentFilePeer::CREATED_AT;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setCreatedAt()
+
+	/**
 	 * Set the value of [md5sum] column.
 	 * 
 	 * @param      string $v new value
@@ -472,7 +565,8 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 			$this->uniqid = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->file_size = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
 			$this->is_public = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
-			$this->md5sum = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->created_at = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->md5sum = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -482,7 +576,7 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 10; // 10 = AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 11; // 11 = AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating AttachmentFile object", $e);
@@ -614,8 +708,16 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 		$isInsert = $this->isNew();
 		try {
 			$ret = $this->preSave($con);
+			// symfony_timestampable behavior
+			
 			if ($isInsert) {
 				$ret = $ret && $this->preInsert($con);
+				// symfony_timestampable behavior
+				if (!$this->isColumnModified(AttachmentFilePeer::CREATED_AT))
+				{
+				  $this->setCreatedAt(time());
+				}
+
 			} else {
 				$ret = $ret && $this->preUpdate($con);
 			}
@@ -834,6 +936,9 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 				return $this->getIsPublic();
 				break;
 			case 9:
+				return $this->getCreatedAt();
+				break;
+			case 10:
 				return $this->getMd5sum();
 				break;
 			default:
@@ -866,7 +971,8 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 			$keys[6] => $this->getUniqid(),
 			$keys[7] => $this->getFileSize(),
 			$keys[8] => $this->getIsPublic(),
-			$keys[9] => $this->getMd5sum(),
+			$keys[9] => $this->getCreatedAt(),
+			$keys[10] => $this->getMd5sum(),
 		);
 		return $result;
 	}
@@ -926,6 +1032,9 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 				$this->setIsPublic($value);
 				break;
 			case 9:
+				$this->setCreatedAt($value);
+				break;
+			case 10:
 				$this->setMd5sum($value);
 				break;
 		} // switch()
@@ -961,7 +1070,8 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setUniqid($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setFileSize($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setIsPublic($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setMd5sum($arr[$keys[9]]);
+		if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setMd5sum($arr[$keys[10]]);
 	}
 
 	/**
@@ -982,6 +1092,7 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(AttachmentFilePeer::UNIQID)) $criteria->add(AttachmentFilePeer::UNIQID, $this->uniqid);
 		if ($this->isColumnModified(AttachmentFilePeer::FILE_SIZE)) $criteria->add(AttachmentFilePeer::FILE_SIZE, $this->file_size);
 		if ($this->isColumnModified(AttachmentFilePeer::IS_PUBLIC)) $criteria->add(AttachmentFilePeer::IS_PUBLIC, $this->is_public);
+		if ($this->isColumnModified(AttachmentFilePeer::CREATED_AT)) $criteria->add(AttachmentFilePeer::CREATED_AT, $this->created_at);
 		if ($this->isColumnModified(AttachmentFilePeer::MD5SUM)) $criteria->add(AttachmentFilePeer::MD5SUM, $this->md5sum);
 
 		return $criteria;
@@ -1052,6 +1163,8 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 		$copyObj->setFileSize($this->file_size);
 
 		$copyObj->setIsPublic($this->is_public);
+
+		$copyObj->setCreatedAt($this->created_at);
 
 		$copyObj->setMd5sum($this->md5sum);
 

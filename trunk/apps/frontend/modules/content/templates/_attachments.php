@@ -11,6 +11,7 @@
       <th class="sf_admin_text"><?php echo __('File name') ?></th>
       <th class="sf_admin_text"><?php echo __('Size') ?></th>
       <th class="sf_admin_text"><?php echo __('Public?') ?></th>
+      <th class="sf_admin_text"><?php echo __('Date') ?></th>
       <th class="sf_admin_text"><?php echo __('Actions') ?></th>
     </tr>
   </thead>
@@ -22,6 +23,7 @@
       <td><?php echo $attachment->getOriginalFileName() ?></td>
       <td style="text-align: right"><?php echo Generic::getHumanReadableSize($attachment->getFileSize()) ?></td>
   <?php include_partial('content/td_public', array('object'=>$attachment, 'owner'=>null)) ?>
+      <td><?php echo $attachment->getCreatedAt('d/m/Y') ?></td>
       <td>
       <ul class="sf_admin_td_actions">
       <?php if($attachment->isViewableBy($sf_user)): ?>
