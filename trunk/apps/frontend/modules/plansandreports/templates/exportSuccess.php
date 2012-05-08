@@ -33,17 +33,23 @@
 <?php include_partial('content/flashes'); ?>
 
 <h2><?php echo __('Export this document using current data') ?></h2>
+<?php if($workplan->isExportableBy($sf_user->getProfile()->getUserId())): ?>
+<form action="<?php echo url_for('plansandreports/servedoc?id='.$workplan->getId()) ?>" method="get">
+<table>
+<?php echo $form ?>
+<td colspan="2" style="text-align:right">
+  <input type="submit" name="export" value="<?php echo __('Export') ?>">
+</td>
+</table>
+</form>
 
-<?php /* FIXME: I should use a different CSS class in order to avoid <br> tags here... */ ?>
-<ul class="sf_admin_actions">
-	<?php /* we should update this
-  <li class="sf_admin_action_yaml"><?php echo link_to(__("YAML"), 'plansandreports/view?id='.$workplan->getId().'&sf_format=yaml') ?> <?php echo __('(Useful for personal backup)') ?><br /></li>
-  */ ?>
-<?php echo export_action_links($sf_user, 'plansandreports/servedoc?id='.$workplan->getId(), $sf_context) ?>
-</ul>
 <p>
-<?php echo __('Data are exported using current template and settings.') ?> 
+<?php echo __('The document is exported using current data, template and settings.') ?> 
 <?php echo __('If you need the document originally submitted, please download one of the attachments below.') ?> 
 </p>
+<?php else: ?>
+<p><?php echo __('This document is currently exportable only by the owner.') ?></p>
+<?php endif ?>
+
 
 <?php include_partial('content/attachments', array('attachments'=>$attachments, 'description'=>'Download one of the documents concerning this appointment.')) ?>
