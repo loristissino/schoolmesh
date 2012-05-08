@@ -20,5 +20,8 @@
         )) ?>
 </li>
 <?php endif ?>
+<?php if($dbvalue==$min): ?>
+  <?php echo image_tag('item_not_considered', array('title'=>__('This item will not be placed in the published document'), 'alt'=>__('This item will not be placed in the published document'))) ?>
+<?php endif ?>
 </ul>
 </div>
