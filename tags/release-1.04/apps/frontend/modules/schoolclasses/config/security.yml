@@ -1,0 +1,3 @@
+default:
+  credentials: [[ wpfr_submission, wp_sm_ok, admin ]]
+

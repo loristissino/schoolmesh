@@ -1,0 +1,34 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+TEAMNAME=$1
+checkString "$TEAMNAME"
+
+checkDirectory "$POSIX_HOMEDIR_TEAMS"
+
+FOLDER="$POSIX_HOMEDIR_TEAMS/$TEAMNAME"
+
+INFO=$(getent group $TEAMNAME 2>/dev/null)
+
+if [[ $? -ne 0 ]]
+	then
+		echo found=0
+		exit 0
+fi
+
+echo found=1
+echo teamname=$(echo $INFO | cut -d: -f1)
+
+if [[ -d "$FOLDER" ]]
+	then
+		echo folder_found=1
+		echo folder_name="$FOLDER"
+		echo folder_user=$(stat -c '%U' "$FOLDER")
+		echo folder_group=$(stat -c '%G' "$FOLDER")
+		echo folder_permissions=$(stat -c '%a' "$FOLDER")
+	else
+		echo folder_found=0
+fi

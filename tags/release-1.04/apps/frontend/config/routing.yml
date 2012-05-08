@@ -1,0 +1,186 @@
+proj_resource_type:
+  class: sfPropelRouteCollection
+  options:
+    model:                ProjResourceType
+    module:               projectresourcetypes
+    column:               id
+    with_wildcard_routes: true
+
+organization:
+  url: /organization
+  param: { module: organization, action: index }
+
+users_search:
+  url: /users/list
+  param: { module: users, action: list }
+
+help:
+  url: help
+  param: { module: help, action: index } 
+
+wpfrview:
+  url: plansandreports/:id/view.:sf_format
+  param: { module: plansandreports, action: view }
+  requirements:
+    sf_format: (?:html|yaml)  
+
+#submit:
+#  url: plansandreports/:id/submit.html
+#  param: { module: plansandreports, action: wpsubmit } 
+#  options:
+#    module:              plansandreports
+#    prefix_path:        plansandreports
+
+addtool:
+  url: plansandreports/addtool/:id/tool/:tool
+  param: { module: plansandreports, action: addtool } 
+  options:
+    module:              plansandreports
+    prefix_path:        plansandreports
+
+removetool:
+  url: plansandreports/removetool/:id/tool/:tool
+  param: { module: plansandreports, action: removetool } 
+  options:
+    module:              plansandreports
+    prefix_path:        plansandreports
+
+
+lanlogon:
+  url:   /lanlogon/*
+  param: { module: lanlog, action: registerlogon } 
+
+lanlogoff:
+  url:   /lanlogoff/*
+  param: { module: lanlog, action: registerlogoff }  
+
+profile:
+  url:  /profile
+  param: {module: profile, action: index }
+
+sf_guard_user_profile:
+  class: sfPropelRouteCollection
+  options:
+    model:               sfGuardUserProfile
+    module:              sf_guard_user_profile
+    prefix_path:         sf_guard_user_profile
+    column:              user_id
+    with_wildcard_routes: true
+
+subnet:
+  class: sfPropelRouteCollection
+  options:
+    model:               Subnet
+    module:              subnet
+    prefix_path:         subnet
+    column:              id
+    with_wildcard_routes: true
+
+role:
+  class: sfPropelRouteCollection
+  options:
+    model:               Role
+    module:              role
+    prefix_path:         role
+    column:              id
+    with_wildcard_routes: true
+
+workstation:
+  class: sfPropelRouteCollection
+  options:
+    model:               Workstation
+    module:              workstation
+    prefix_path:         workstation
+    column:              id
+    with_wildcard_routes: true
+
+
+#plansandreports:
+#  class: sfPropelRouteCollection
+#  options:
+#    model:               Appointment
+#    module:              plansandreports
+#    prefix_path:        plansandreports
+#    column:              id
+#    with_wildcard_routes: true
+
+plansandreports:
+  url: plansandreports
+  param: { module: plansandreports, action: index } 
+
+
+users:
+  url: users
+  param: { module: users, action: index } 
+
+service:
+  class: sfPropelRouteCollection
+  options:
+    model:               Service
+    module:              service
+    prefix_path:         service
+    column:              id
+    with_wildcard_routes: true
+
+
+whosonline:
+  url:   /whosonline/:sf_format
+  param: { module: lanlog, action: index, sf_format: html }
+  requirements:
+    sf_format: (?:html|atom|txt)
+
+
+viewonline:
+  url:   /viewonline/token/:token/:sf_format
+  param: { module: lanlog, action: viewonline, sf_format: html }
+  requirements:
+    sf_format: (?:html|atom|txt)
+
+listlogons:
+  url:   /listlogons/userid/:id/token/:token/:sf_format
+  param: { module: lanlog, action: listlogons, sf_format: html }
+  requirements:
+    sf_format: (?:html|atom|txt)
+
+userchecks:
+  url: /users/runuserchecks/:sf_format
+  param: { module: users, action: runuserchecks, sf_format:html }
+  requirements:
+    sf_format: (?:html|txt)
+
+googleappsdata:
+  url: /users/getgoogleappsdata/:sf_format
+  param: { module: users, action: getgoogleappsdata, sf_format:txt }
+  requirements:
+    sf_format: (?:txt)
+
+sf_guard_signin:
+  url:   /login
+  param: { module: sfGuardAuth, action: signin }
+ 
+sf_guard_signout:
+  url:   /logout
+  param: { module: sfGuardAuth, action: signout }
+ 
+sf_guard_password:
+  url:   /request_password
+  param: { module: sfGuardAuth, action: password }
+
+
+# default rules
+
+homepage:
+  url:   /
+  param: { module: content, action: index }
+
+default_symfony:
+  url:   /symfony/:action/*
+  param: { module: default }
+
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*
+  

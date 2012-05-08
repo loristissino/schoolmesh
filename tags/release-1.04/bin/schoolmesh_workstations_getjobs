@@ -1,0 +1,27 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Get the list of jobs scheduled for all the workstations
+#@
+#@ # SYNOPSIS
+#@
+#@ {} go
+#@
+#@ # DESCRIPTION
+#@
+#@ This script outputs a list of events, separated by commas, scheduled for the 
+#@ workstations. The jobs are in time order.
+#@ 
+#@ # EXAMPLES
+#@
+#@ {-} go
+
+(for JOB in $(atq -q a| cut -f1); do
+  echo $JOB=$(at -c $JOB | grep "#schoolmesh" | sed -e 's/^.*#schoolmesh,//')
+done) | sort -k 2 -t ','
+

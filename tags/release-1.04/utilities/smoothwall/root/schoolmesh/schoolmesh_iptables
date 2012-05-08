@@ -1,0 +1,23 @@
+#/bin/bash
+
+CONFIG=/etc/schoolmesh/schoolmesh_iptables.rc
+
+source $CONFIG
+
+if [ -z $CHAIN ]; then
+	echo "Error in reading configuration file $CONFIG"
+	exit 1
+fi
+
+iptables -t $TABLE -N $CHAIN || exit 2
+
+for ADDRESS in $ALWAYS_ACCEPTED; do
+        iptables -t $TABLE -A $CHAIN -s $ADDRESS -j $ACCEPT_RULE -m comment --comment "$COMMENT" || exit 3
+done
+
+iptables -t $TABLE -A $CHAIN $DEFAULT_CONDITION -j $DEFAULT_RULE || exit 4
+iptables -t $TABLE -I $BASICCHAIN  1 -j $CHAIN || exit 5
+
+echo "Everything ok. Done."
+exit 0
+

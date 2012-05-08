@@ -1,0 +1,44 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Make a directory in a user's home (sub)directory
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username* *path*
+#@
+#@ # DESCRIPTION
+#@
+#@ This script makes a directory in a user's directory.
+#@ The user must exist.
+#@ The path is relative to user's home directory.
+#@ 
+#@ # WARNINGS
+#@
+#@ The user who runs this (typically, www-data or apache) must be allowed
+#@ to run commands on behalf of other users (through sudo).
+#@
+#@ # EXAMPLES
+#@
+#@ {-} john.test '/mydocs/my letters'
+
+USERNAME=$1
+FILEPATH=$2
+
+FULLPATH="$POSIX_HOMEDIR_USERS/$USERNAME$FILEPATH"
+
+checkUsername $USERNAME
+
+sudo -u $USERNAME /bin/mkdir "$FULLPATH"
+
+if [[ $? -eq 0 ]]; then
+	echo CREATED=1
+else
+	echo CREATED=0
+	exit 1
+fi
