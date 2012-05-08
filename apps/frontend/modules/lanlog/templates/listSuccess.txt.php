@@ -1,6 +1,7 @@
 <?php foreach ($lanlog_list as $lanlog): ?>
-<?php echo sprintf("%s:%s:%s:%s:%s:%s\n",
+<?php echo sprintf("%s:%s:%s:%s:%s:%s:%s\n",
   $lanlog->getsfGuardUser()->getUsername(),
+  $lanlog->getsfGuardUser()->getId(),
   $lanlog->getsfGuardUser()->getProfile()->getFullname(),
   $lanlog->getWorkstation(),
   $lanlog->getWorkstation()->getIpCidr(),
