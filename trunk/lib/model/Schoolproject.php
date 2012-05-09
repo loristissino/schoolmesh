@@ -389,6 +389,21 @@ class Schoolproject extends BaseSchoolproject {
     $criteria->addJoin(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID, ProjResourceTypePeer::ID);
 		return parent::getProjResources($criteria);
 	}
+  
+  
+  public function getActivitiesPerformed()
+  {
+    $c=new Criteria();
+    $c->addJoin(ProjActivityPeer::PROJ_RESOURCE_ID, ProjResourcePeer::ID);
+    $c->addJoin(ProjActivityPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
+    $c->addJoin(ProjResourcePeer::SCHOOLPROJECT_ID, SchoolProjectPeer::ID);
+    $c->addJoin(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID, ProjResourceTypePeer::ID);
+    $c->add(SchoolProjectPeer::ID, $this->getId());
+    $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+    $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
+    $c->addAscendingOrderByColumn(ProjActivityPeer::BEGINNING);
+    return ProjActivityPeer::doSelect($c);
+  }
 
 	public function getProjUpshots($criteria = null, PropelPDO $con = null)
 	{
