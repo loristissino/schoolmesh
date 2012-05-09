@@ -137,10 +137,12 @@ viewonline:
     sf_format: (?:html|atom|txt)
 
 listlogons:
-  url:   /listlogons/userid/:id/token/:token/:sf_format
+  url:   /listlogons/username/:username/token/:token/:sf_format
   param: { module: lanlog, action: listlogons, sf_format: html }
   requirements:
     sf_format: (?:html|atom|txt)
+  options:
+    segment_separators: [/]
 
 userchecks:
   url: /users/runuserchecks/:sf_format
