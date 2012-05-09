@@ -352,6 +352,7 @@ class Schoolproject extends BaseSchoolproject {
       'final_report',
       'reference_number',
       'team_id',
+      'no_activity_confirm',
       ), $params);
     
     if($user && $user->getProfile()->getUserId()!=$this->getsfGuardUser()->getId())
@@ -878,30 +879,9 @@ class Schoolproject extends BaseSchoolproject {
           ));
       }
       
-      $prc=new Criteria();
-      $prc->add(ProjResourcePeer::STANDARD_COST, 0, Criteria::GREATER_THAN);
-      $resources=$this->getProjResources($prc);
-      // we need only the resources for which activities could be declared
-      
-      $budget=0;
-      $expenses=0;  
-      
-      //$logbudget='';
-      //$logexpenses='';
-      
-      foreach($resources as $resource)
-      {
-        $budget+=$resource->getQuantityApproved()*$resource->getStandardCost();
-        //$logbudget.=$resource->getQuantityApproved(). ' * ' . $resource->getStandardCost(). "\n";
-        foreach($resource->getProjActivities() as $activity)
-        {
-          $expenses+=$activity->getQuantity()*$resource->getStandardCost();
-          //$logexpenses.=$activity->getQuantity() . ' * ' . $resource->getStandardCost(). "\n";
-        }
-      }
-
-      //Generic::logMessage('budget', $logbudget);
-      //Generic::logMessage('expenses', $logexpenses);
+      $be=$this->getBudgetAndExpensesForDeclarableActivities();
+      $budget=$be['budget'];
+      $expenses=$be['expenses'];
       
       if($expenses > $budget)
       {
@@ -914,7 +894,31 @@ class Schoolproject extends BaseSchoolproject {
             )
           )) ;
       }
-      else
+      elseif($expenses==0 and $budget>0)  // no activity has been declared, but should have
+      {
+        if($this->getNoActivityConfirm()) // confirmation flag checked
+        {
+          $checkList->addCheck(new Check(
+            Check::PASSED,
+            'No activity declared, and confirmation box has been checked',
+            'Tasks, resources, schedule'
+            )) ;
+        }
+        else
+        {
+          $checkList->addCheck(new Check(
+            Check::FAILED,
+            'No activity declared (you must either declare some, or check the «no activity confirmation» box)',
+            'Tasks, resources, schedule',
+            array(
+              'link_to'=>'projects/edit?id=' . $this->getId() . '#resources'
+            )
+
+            )) ;
+        }
+      }
+        
+      else // some activities have been declared and confirmed
       {
         $checkList->addCheck(new Check(
           Check::PASSED,
@@ -922,7 +926,7 @@ class Schoolproject extends BaseSchoolproject {
           'Tasks, resources, schedule'
           )) ;
       }
-
+      
 
       $upshots=$this->getProjUpshots();
       foreach($upshots as $upshot)
@@ -997,6 +1001,37 @@ class Schoolproject extends BaseSchoolproject {
     return $checkList;
     
   }
+
+  public function getBudgetAndExpensesForDeclarableActivities()
+  {
+    $prc=new Criteria();
+    $prc->add(ProjResourcePeer::STANDARD_COST, 0, Criteria::GREATER_THAN);
+    $resources=$this->getProjResources($prc);
+    // we need only the resources for which activities could be declared
+    
+    $budget=0;
+    $expenses=0;  
+    
+    //$logbudget='';
+    //$logexpenses='';
+    
+    foreach($resources as $resource)
+    {
+      $budget+=$resource->getQuantityApproved()*$resource->getStandardCost();
+      //$logbudget.=$resource->getQuantityApproved(). ' * ' . $resource->getStandardCost(). "\n";
+      foreach($resource->getProjActivities() as $activity)
+      {
+        $expenses+=$activity->getQuantity()*$resource->getStandardCost();
+        //$logexpenses.=$activity->getQuantity() . ' * ' . $resource->getStandardCost(). "\n";
+      }
+    }
+  
+    return array(
+      'budget'=>$budget,
+      'expenses'=>$expenses,
+      );
+  }
+
   
   public function addWfevent($userId, $comment='', $i18n_subs, $state=0, $sf_context=null, $con=null)
   {

@@ -61,6 +61,8 @@ class SchoolprojectTableMap extends TableMap {
 		$this->addColumn('CONFIRMATION_NOTES', 'ConfirmationNotes', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('EVALUATION_MIN', 'EvaluationMin', 'INTEGER', false, null, null);
 		$this->addColumn('EVALUATION_MAX', 'EvaluationMax', 'INTEGER', false, null, null);
+		$this->addColumn('NO_ACTIVITY_CONFIRM', 'NoActivityConfirm', 'BOOLEAN', false, null, false);
+		$this->addColumn('CREATED_AT', 'CreatedAt', 'TIMESTAMP', false, null, null);
 		// validators
 	} // initialize()
 
@@ -88,6 +90,7 @@ class SchoolprojectTableMap extends TableMap {
 	{
 		return array(
 			'symfony' => array('form' => 'true', 'filter' => 'true', ),
+			'symfony_timestampable' => array('create_column' => 'created_at', ),
 		);
 	} // getBehaviors()
 
