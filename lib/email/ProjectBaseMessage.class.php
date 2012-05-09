@@ -161,8 +161,10 @@ EOF
     ->setBody($body)
     ;
 
-
-    $this->setTagline($config['message']['tagline']);
+    if(isset($config['message']['tagline']))
+    {
+      $this->setTagline($config['message']['tagline']);
+    }
 
     return $this;
   

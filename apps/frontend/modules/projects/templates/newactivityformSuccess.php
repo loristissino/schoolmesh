@@ -23,6 +23,18 @@
     <th><label for="schoolproject_resource"><?php echo __('Task') ?></label></th>
     <td><?php echo $resource->getDescription() ?></td>
   </tr>
+  <?php if($resource->getQuantityApproved()): ?>
+    <tr>
+      <th><label for="schoolproject_resource_committment"><?php echo __('Committment') ?></label></th>
+      <td><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getQuantityApproved() ?></td>
+    </tr>
+  <?php endif ?>
+  <?php if($resource->getTotalQuantityForAcknowledgedActivities()): ?>
+    <tr>
+      <th><label for="schoolproject_resource_acknowledgement"><?php echo __('Acknowledgement') ?></label></th>
+      <td><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getTotalQuantityForAcknowledgedActivities() ?></td>
+    </tr>
+  <?php endif ?>
   <tr>
     <th><label for="schoolproject_charged_user">
     <?php if($resource->getChargedUserProfile()): ?>
