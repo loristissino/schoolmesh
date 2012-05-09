@@ -418,30 +418,54 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
           $c->addAscendingOrderByColumn(ProjResourceTypePeer::RANK);
           break;
       }
-      
-      foreach($project->getProjResources($c) as $Resource)
+
+
+      if($project->getState()<Workflow::PROJ_FINISHED)
       {
-        $ResourceType=$Resource->getProjResourceType();
-        
-        if($project->getState()<Workflow::PROJ_FINISHED)
+        foreach($project->getProjResources($c) as $Resource)
         {
-          $letters->resources->resourceDescription($Resource->getDescription());
-          $letters->resources->resourceType($ResourceType->getDescription());
-                  
-          $letters->resources->resourceChargedUser($Resource->getChargedUserProfile());
-          $letters->resources->resourceQuantity(OdfDocPeer::quantityvalue($Resource->getQuantityApproved(), $ResourceType->getMeasurementUnit()));
-          $letters->resources->merge();
-          if($ResourceType->getRoleId())
+          $ResourceType=$Resource->getProjResourceType();
+          
+          if($project->getState()<Workflow::PROJ_FINISHED)
           {
-            $usedtypes[$ResourceType->getId()]=$ResourceType;
+            $letters->resources->resourceDescription($Resource->getDescription());
+            $letters->resources->resourceType($ResourceType->getDescription());
+                    
+            $letters->resources->resourceChargedUser($Resource->getChargedUserProfile());
+            $letters->resources->resourceQuantity(OdfDocPeer::quantityvalue($Resource->getQuantityApproved(), $ResourceType->getMeasurementUnit()));
+            $letters->resources->merge();
+            if($ResourceType->getRoleId())
+            {
+              $usedtypes[$ResourceType->getId()]=$ResourceType;
+            }
           }
         }
-        else
+      }
+      else // it is a final report, we need a log for each person that performed an activity...
+      {
+        
+        $oldname='';
+        $activities=$project->getActivitiesPerformed();
+        foreach($activities as $activity)
         {
-          // ... we must find the activities declared
+          $fullname=$activity->getPerformerProfile()->getFullName();
+          if($oldname!=$fullname)
+          {
+            if($oldname!='')
+            {
+              $letters->performers->merge();
+            }
+            $oldname=$fullname;
+            $letters->performers->performerFullName($fullname);
+          }
+          $letters->performers->activities->activityBeginning($activity->getBeginning('d/m/y h:i'));
+          $letters->performers->activities->activityQuantity(OdfDocPeer::quantityvalue($activity->getQuantity(), $activity->getProjResource()->getProjResourceType()->getMeasurementUnit()));
+          $letters->performers->activities->activityDescription($activity->getNotes());
+          $letters->performers->activities->activityPaperLog($activity->getPaperLog()?$context->getI18N()->__('yes'):$context->getI18N()->__('no'));
+          $letters->performers->activities->merge();
         }
-        
-        
+        $letters->performers->merge();
+          
       }
       
       foreach($project->getProjUpshots() as $Upshot)

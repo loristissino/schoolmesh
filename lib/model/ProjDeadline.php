@@ -109,7 +109,7 @@ class ProjDeadline extends BaseProjDeadline {
   
   public function hasAttachmentFiles()
   {
-    return sizeof($this->getAttachmentFiles()>0);
+    return sizeof($this->getAttachmentFiles())>0;
   }
 
   public function isEditableBy($user)
