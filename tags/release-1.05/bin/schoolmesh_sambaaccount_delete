@@ -1,0 +1,27 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Delete a samba account for a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to delete a samba account.
+#@
+#@ # EXAMPLES
+#@
+#@ {-} john
+
+USERNAME=$1
+
+checkUsername $USERNAME
+
+sudo pdbedit -x -u $USERNAME > /dev/null && msg_ok "deleted user: $USERNAME" || unexpectedError $@

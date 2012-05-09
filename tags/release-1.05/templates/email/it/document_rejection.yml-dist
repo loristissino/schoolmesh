@@ -1,0 +1,22 @@
+message:
+  subject: Avviso di mancata approvazione documento
+  salutation: true
+  tagline: false
+  body: |
+
+    siamo spiacenti di doverti avvisare che il seguente documento:
+
+    descrizione: %document_description%
+    stato corrente: %document_state%
+    id: %document_id%
+
+    non è stato approvato con la seguente motivazione:
+    %message%
+
+      Saluti.
+
+        Lo staff
+
+
+
+
