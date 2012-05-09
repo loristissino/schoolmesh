@@ -4632,13 +4632,21 @@
         <source>No activity&lt;br /&gt;confirmation</source>
         <target>Conferma&lt;br /&gt;mancanza attività</target>
       </trans-unit>
-      <trans-unit id="1354">
+      <trans-unit id="1355">
         <source>No activity declared, and confirmation box has been checked</source>
         <target>Nessuna attività dichiarata, e conferma impostata</target>
       </trans-unit>
-      <trans-unit id="1354">
+      <trans-unit id="1356">
         <source>No activity declared (you must either declare some, or check the «no activity confirmation» box)</source>
         <target>Nessuna attività dichiarata (devi dichiararne qualcuna, oppure contrassegnare la casella «conferma mancanza attività»)</target>
+      </trans-unit>
+      <trans-unit id="1357">
+        <source>Committment</source>
+        <target>Impegno</target>
+      </trans-unit>
+      <trans-unit id="1358">
+        <source>Send an email to the person who performed this activity</source>
+        <target>Invia un messaggio alla persona che ha svolto questa attività</target>
       </trans-unit>
      </body>
   </file> 
