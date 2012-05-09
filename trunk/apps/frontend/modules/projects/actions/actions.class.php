@@ -975,7 +975,14 @@ class projectsActions extends sfActions
     
     $this->ids=array($schoolproject->getId());
 
-		$result=SchoolprojectPeer::getSubmissionLetters($this->ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
+    switch($schoolproject->getState())
+    {
+      case Workflow::PROJ_FINISHED:
+        $result=SchoolprojectPeer::getFinalReportLetters($this->ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
+        break;
+      default:
+        $result=SchoolprojectPeer::getSubmissionLetters($this->ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
+    }
 		
 		if ($result['result']=='error')
 		{

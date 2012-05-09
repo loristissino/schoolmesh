@@ -304,6 +304,11 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 	{
     return self::_getInfoLetters($ids, 'Submission letters', 'projects_submission.odt', $filetype, array('date'=>'submission', 'resources_query'=>'submission', 'resources_sort'=>'date'), $context);
 	}
+  
+	public static function getFinalReportLetters($ids, $filetype='odt', $context=null)
+	{
+    return self::_getInfoLetters($ids, 'Final reports', 'projects_report.odt', $filetype, array('date'=>'report', 'resources_query'=>'submission', 'resources_sort'=>'date'), $context);
+	}
 
 	private static function _getInfoLetters($ids, $filename, $templatename, $filetype='odt', $options=array(), $context=null)
 	{
@@ -353,7 +358,21 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       $letters->confirmationDate($project->getConfirmationDate('d/m/Y'));
 			$letters->schoolPrincipal(sfConfig::get('app_school_principal', 'missing Principal name in config file'));
       
-      $letters->referenceNumber($project->getReferenceNumberOrDefault()); 
+      $letters->referenceNumber($project->getReferenceNumberOrDefault());
+      
+      if($project->getState()>=Workflow::PROJ_FINISHED)
+      {
+        $letters->projectFinalReport(OdfDocPeer::textvalue2odt($project->getFinalReport()));
+        if($project->getProposals())
+        {
+          $proposals=OdfDocPeer::textvalue2odt($project->getProposals());
+        }
+        else
+        {
+          $proposals=$context->getI18N()->__('No proposals made.');
+        }
+        $letters->projectProposals($proposals);
+      }
       
       switch($options['date'])
       {
@@ -362,6 +381,9 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
           break;
         case 'submission':
           $letters->letterDate($project->getLastEventDate(Workflow::PROJ_SUBMITTED, 'd/m/Y'));
+          break;
+        case 'report':
+          $letters->letterDate($project->getLastEventDate(Workflow::PROJ_FINISHED, 'd/m/Y'));
           break;
         default:
           $letters->letterDate('_______');
@@ -382,6 +404,9 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
         case 'charge':
           $c->add(ProjResourceTypePeer::PRINTED_IN_CHARGE_LETTERS, true);
           break;
+        case 'report':
+          $c->add(ProjResourceTypePeer::PRINTED_IN_CHARGE_LETTERS, true);
+          break;
       }
 
       switch($options['resources_sort'])
@@ -397,22 +422,38 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       foreach($project->getProjResources($c) as $Resource)
       {
         $ResourceType=$Resource->getProjResourceType();
-        $letters->resources->resourceDescription($Resource->getDescription());
-        $letters->resources->resourceType($ResourceType->getDescription());
-                
-        $letters->resources->resourceChargedUser($Resource->getChargedUserProfile());
-        $letters->resources->resourceQuantity(OdfDocPeer::quantityvalue($Resource->getQuantityApproved(), $ResourceType->getMeasurementUnit()));
-        $letters->resources->merge();
-        if($ResourceType->getRoleId())
+        
+        if($project->getState()<Workflow::PROJ_FINISHED)
         {
-          $usedtypes[$ResourceType->getId()]=$ResourceType;
+          $letters->resources->resourceDescription($Resource->getDescription());
+          $letters->resources->resourceType($ResourceType->getDescription());
+                  
+          $letters->resources->resourceChargedUser($Resource->getChargedUserProfile());
+          $letters->resources->resourceQuantity(OdfDocPeer::quantityvalue($Resource->getQuantityApproved(), $ResourceType->getMeasurementUnit()));
+          $letters->resources->merge();
+          if($ResourceType->getRoleId())
+          {
+            $usedtypes[$ResourceType->getId()]=$ResourceType;
+          }
         }
+        else
+        {
+          // ... we must find the activities declared
+        }
+        
+        
       }
       
       foreach($project->getProjUpshots() as $Upshot)
       {
         $letters->upshots->upshotDescription($Upshot->getDescription());
         $letters->upshots->upshotIndicator($Upshot->getIndicator());
+        if($project->getState()>=Workflow::PROJ_FINISHED)
+        {
+          $letters->upshots->upshotUpshot($Upshot->getUpshot());
+          $letters->upshots->upshotEvaluation(sprintf('%d (%d-%d)', $Upshot->getEvaluation(), $project->getEvaluationMin(), $project->getEvaluationMax()));
+        }
+        
         $letters->upshots->merge();
       }
 
@@ -420,14 +461,26 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       {
         $letters->deadlines->deadlineDate($Deadline->getOriginalDeadlineDate('d/m/y'));
         $letters->deadlines->deadlineDescription($Deadline->getDescription());
+        
+        if($project->getState()>=Workflow::PROJ_FINISHED)
+        {
+          $letters->deadlines->deadlineDate($Deadline->getCurrentDeadlineDate('d/m/y'));
+          $letters->deadlines->deadlineNotes($Deadline->getNotes());
+          $attachments=$Deadline->hasAttachmentFiles()?$context->getI18N()->__('yes'):$context->getI18N()->__('no');
+          $letters->deadlines->deadlineAttachment($attachments);
+        }
+        
         $letters->deadlines->merge();
       }
-      
-      foreach($usedtypes as $ResourceType)
+ 
+      if($project->getState()<=Workflow::PROJ_FINISHED)
       {
-        $letters->resourcetypes->rtDescription($ResourceType->getDescription());
-        $letters->resourcetypes->rtStandardCost(OdfDocPeer::quantityvalue($ResourceType->getStandardCost(), sfConfig::get('app_config_currency_symbol')));
-        $letters->resourcetypes->merge();
+        foreach($usedtypes as $ResourceType)
+        {
+          $letters->resourcetypes->rtDescription($ResourceType->getDescription());
+          $letters->resourcetypes->rtStandardCost(OdfDocPeer::quantityvalue($ResourceType->getStandardCost(), sfConfig::get('app_config_currency_symbol')));
+          $letters->resourcetypes->merge();
+        }
       }
 
 			$pagebreak=($count<sizeof($projects))?'<pagebreak>':'';

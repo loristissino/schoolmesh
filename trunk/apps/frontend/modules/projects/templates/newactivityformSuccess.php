@@ -26,7 +26,7 @@
   <?php if($resource->getQuantityApproved()): ?>
     <tr>
       <th><label for="schoolproject_resource_committment"><?php echo __('Committment') ?></label></th>
-      <td><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getQuantityApproved() ?></td>
+      <td><?php echo quantityvalue($resource->getQuantityApproved(), $resource->getProjResourceType()->getMeasurementUnit()) ?></td>
     </tr>
   <?php endif ?>
   <?php if($resource->getTotalQuantityForAcknowledgedActivities()): ?>

@@ -106,6 +106,11 @@ class ProjDeadline extends BaseProjDeadline {
   {
     return AttachmentFilePeer::retrieveByClassAndId(get_class($this), $this->getId());
   }
+  
+  public function hasAttachmentFiles()
+  {
+    return sizeof($this->getAttachmentFiles()>0);
+  }
 
   public function isEditableBy($user)
   {
