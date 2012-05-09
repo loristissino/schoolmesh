@@ -4648,6 +4648,10 @@
         <source>Send an email to the person who performed this activity</source>
         <target>Invia un messaggio alla persona che ha svolto questa attività</target>
       </trans-unit>
+      <trans-unit id="1359">
+        <source>No proposals made.</source>
+        <target>Nessuna proposta avanzata.</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>

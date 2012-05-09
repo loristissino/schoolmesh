@@ -458,6 +458,11 @@ font-weight: normal;
 	background-color: gray;
 }
 
+.workflow_finished
+{
+  background-color: #7FFD8B; 
+}
+
 em.keptforreferencenotice
 {
 	background-color: #eee;

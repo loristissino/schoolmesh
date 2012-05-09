@@ -350,6 +350,7 @@ class Schoolproject extends BaseSchoolproject {
       'addressees',
       'goals',
       'final_report',
+      'proposals',
       'reference_number',
       'team_id',
       'no_activity_confirm',
@@ -396,52 +397,6 @@ class Schoolproject extends BaseSchoolproject {
 		return parent::getProjUpshots($criteria);
 	}
 
-/* DEPRECATED
-	public function getOdf($doctype, sfContext $sfContext=null, $template='', $complete=true)
-	{
-		
-		if ($template=='')
-		{
-			$template='project_resume.odt';
-		}
-			
-		try
-		{
-			$odf=new OdfDoc($template, $this->__toString(). '.' . $doctype, $doctype);
-		}
-		catch (Exception $e)
-		{
-			throw $e;
-		}
-		
-		$odfdoc=$odf->getOdfDocument();
-		
-		$owner=$this->getSfGuardUser()->getProfile();
-		
-		$odfdoc->setVars('salutation', $this->getSfGuardUser()->getProfile()->getSalutation($sfContext));
-		$odfdoc->setVars('year',  $this->getYear()->__toString());
-		$odfdoc->setVars('coordinator',  $this->getSfGuardUser()->getProfile()->getFullName());
-		$odfdoc->setVars('title', $this->getTitle());
-		$odfdoc->setVars('category',  $this->getProjCategory()->getTitle());
-		$odfdoc->setVars('hours_approved', $this->getHoursApproved());
-		
-		$projDeadlines=$this->getProjDeadlines();
-		
-		$deadlines=$odfdoc->setSegment('deadlines');
-		foreach($projDeadlines as $projDeadline)
-		{
-			$deadlines->infoDescription($projDeadline->getDescription());
-			$deadlines->infoDeadlineDate($projDeadline->getOriginalDeadlineDate('d/m/Y'));
-			$deadlines->infoAssignee($projDeadline->getsfGuardUser()->getProfile()->getFullName());
-			$deadlines->merge();
-		}
-		
-		$odfdoc->mergeSegment($deadlines);
-		
-		return $odf;
-	}
-  
-*/
   public function submit($user_id, $sf_context=null)
   {
     // we need the user_id because the project could be started by someone
@@ -1069,7 +1024,7 @@ class Schoolproject extends BaseSchoolproject {
 
   public function getReferenceNumberOrDefault()
   {
-    if ($this->getReferenceNumber())
+    if ($this->getState()<Workflow::PROJ_FINISHED or $this->getReferenceNumber())
     {
       return $this->getReferenceNumber();
     }

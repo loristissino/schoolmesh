@@ -66,6 +66,11 @@ class OdfDocPeer
 		return $result;
 	}
 	
+  public static function textvalue2odt($text)
+  {
+    return str_replace(array(chr(10), chr(13)), '', nl2br($text));
+  }
+  
   public static function quantityvalue($value, $mu='')
   // this is close to the one present in the helper
   {

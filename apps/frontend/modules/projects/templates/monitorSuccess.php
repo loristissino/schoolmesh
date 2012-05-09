@@ -36,7 +36,7 @@
       <?php include_partial('content/td_year', array('year'=>$project->getYear())) ?>
       <td><strong><?php echo $project->getTitle() ?></strong></td>
       <td><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></td>
-      <td><?php include_partial('state', array('project'=>$project)) ?></td>
+      <td<?php if($project->getState()==Workflow::PROJ_FINISHED) echo ' class="workflow_finished"' ?>><?php include_partial('state', array('project'=>$project)) ?></td>
       <td><?php echo $project->getReferenceNumber() ?></td>
       <td><?php include_partial('dates', array('project'=>$project)) ?></td>
       <td>
