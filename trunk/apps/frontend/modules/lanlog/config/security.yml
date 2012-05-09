@@ -10,6 +10,9 @@ registerlogoff:
 viewonline:
   is_secure: false
 
+listlogons:
+  is_secure: false
+
 list:
   credentials: [ admin ]
 
