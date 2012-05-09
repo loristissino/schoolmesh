@@ -1069,6 +1069,8 @@ CREATE TABLE `schoolproject`
 	`confirmation_notes` TEXT,
 	`evaluation_min` INTEGER,
 	`evaluation_max` INTEGER,
+	`no_activity_confirm` TINYINT default 0,
+	`created_at` DATETIME,
 	PRIMARY KEY (`id`),
 	INDEX `schoolproject_FI_1` (`proj_category_id`),
 	CONSTRAINT `schoolproject_FK_1`

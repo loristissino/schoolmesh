@@ -13,39 +13,51 @@ class SchoolprojectForm extends BaseSchoolprojectForm
   public function configure()
   {
     
-  $this->schoolproject=$this->getObject();
-  
-  unset($this['user_id'], $this['year_id'], $this['state']);
+    $this->schoolproject=$this->getObject();
     
-	$this['title']->getWidget()->setAttribute('size', '80');
+    unset($this['user_id'], $this['year_id'], $this['state']);
+      
+    $this['title']->getWidget()->setAttribute('size', '80');
 
-/*	$this['user_id']->getWidget()->setOption('model', 'sfGuardUserProfile');
-	$this['user_id']->getWidget()->setOption('peer_method', 'retrieveAllButStudents');
-	$this['user_id']->getWidget()->setOption('add_empty', 'Choose a user');
-*/	
-	$this->widgetSchema->setLabel('proj_category_id', 'Category');
-  $this['notes']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
-  $this['addressees']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
-  $this['purposes']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
-  $this['goals']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
-  $this['description']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
-  $this['final_report']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
-  $this['proposals']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
-  $this['team_id']->getWidget()
-    ->addOption('add_empty', 'Choose a team of co-coordinators')
-    ->addOption('peer_method', 'retrieveAll')
-    ->addOption('criteria', $this->schoolproject->getCriteriaForTeamSelection());
-  
-/*
-  $this->widgetSchema->setLabel('user_id', 'Coordinator');
-*/	
+    /*	$this['user_id']->getWidget()->setOption('model', 'sfGuardUserProfile');
+      $this['user_id']->getWidget()->setOption('peer_method', 'retrieveAllButStudents');
+      $this['user_id']->getWidget()->setOption('add_empty', 'Choose a user');
+    */	
+    $this->widgetSchema->setLabel('proj_category_id', 'Category');
+    $this['notes']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
+    $this['addressees']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
+    $this['purposes']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
+    $this['goals']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
+    $this['description']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
+    $this['final_report']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
+    $this['proposals']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
+    $this['team_id']->getWidget()
+      ->addOption('add_empty', 'Choose a team of co-coordinators')
+      ->addOption('peer_method', 'retrieveAll')
+      ->addOption('criteria', $this->schoolproject->getCriteriaForTeamSelection());
+    
+    /*
+      $this->widgetSchema->setLabel('user_id', 'Coordinator');
+    */	
+    
+      
+    $this['no_activity_confirm']->getWidget()->setLabel('No activity<br />confirmation');
+
+    if($this->schoolproject->getState()==Workflow::PROJ_CONFIRMED)
+    {
+      $be=$this->schoolproject->getBudgetAndExpensesForDeclarableActivities();
+      $this->budget=$be['budget'];
+      $this->expenses=$be['expenses'];
+    }
+    
   }
   
   public function addUserDependentConfiguration($user)
   {
     unset(
       $this['evaluation_min'],
-      $this['evaluation_max']
+      $this['evaluation_max'],
+      $this['created_at']
       );
     
     switch($this->schoolproject->getState())
@@ -63,7 +75,8 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['notes'],
           $this['final_report'],
           $this['proposals'],
-          $this['reference_number']
+          $this['reference_number'],
+          $this['no_activity_confirm']
           );
         break;
       case Workflow::PROJ_SUBMITTED:
@@ -82,7 +95,8 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['confirmation_notes'],
           $this['addressees'],
           $this['purposes'],
-          $this['goals']
+          $this['goals'],
+          $this['no_activity_confirm']
           );
           if(!$user->hasCredential('proj_adm_ok'))
           {
@@ -120,7 +134,8 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['addressees'],
           $this['purposes'],
           $this['goals'],
-          $this['reference_number']
+          $this['reference_number'],
+          $this['no_activity_confirm']
           );
           if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
           {
@@ -150,7 +165,8 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['addressees'],
           $this['purposes'],
           $this['goals'],
-          $this['reference_number']
+          $this['reference_number'],
+          $this['no_activity_confirm']
           );
           if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
           {
@@ -183,12 +199,29 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           );
           if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
           {
-            // the coordinator can change final notes
+            // only the coordinator can change final notes
             unset(
               $this['final_report'],
               $this['proposals'],
-              $this['team_id']
+              $this['team_id'],
+              $this['no_activity_confirm']
             );
+          }
+          else
+          {
+            if(
+              $this->schoolproject->getProjCategory()->getResources()!=0
+              // this kind of project may or must have resources
+                and
+              $this->budget > 0
+              // there are some resources required
+                and
+              $this->expenses > 0
+              // some activity has been declared and confirmed
+              )
+            {
+              unset($this['no_activity_confirm']);
+            }
           }
         break;
       case Workflow::PROJ_FINISHED:

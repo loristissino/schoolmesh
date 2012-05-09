@@ -413,6 +413,9 @@ propel:
     confirmation_notes: longvarchar
     evaluation_min: integer  # the minimum value for evaluations of upshots of this project
     evaluation_max: integer  # the minimum value for evaluations of upshots of this project
+    no_activity_confirm: { type: boolean, default: false }
+    created_at: ~
+    
 
   proj_category:
     id: ~

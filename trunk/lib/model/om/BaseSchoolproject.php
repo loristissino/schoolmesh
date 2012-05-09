@@ -169,6 +169,19 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	protected $evaluation_max;
 
 	/**
+	 * The value for the no_activity_confirm field.
+	 * Note: this column has a database default value of: false
+	 * @var        boolean
+	 */
+	protected $no_activity_confirm;
+
+	/**
+	 * The value for the created_at field.
+	 * @var        string
+	 */
+	protected $created_at;
+
+	/**
 	 * @var        ProjCategory
 	 */
 	protected $aProjCategory;
@@ -235,6 +248,27 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	// symfony behavior
 	
 	const PEER = 'SchoolprojectPeer';
+
+	/**
+	 * Applies default values to this object.
+	 * This method should be called from the object's constructor (or
+	 * equivalent initialization method).
+	 * @see        __construct()
+	 */
+	public function applyDefaultValues()
+	{
+		$this->no_activity_confirm = false;
+	}
+
+	/**
+	 * Initializes internal state of BaseSchoolproject object.
+	 * @see        applyDefaults()
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
 
 	/**
 	 * Get the [id] column value.
@@ -596,6 +630,54 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	public function getEvaluationMax()
 	{
 		return $this->evaluation_max;
+	}
+
+	/**
+	 * Get the [no_activity_confirm] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getNoActivityConfirm()
+	{
+		return $this->no_activity_confirm;
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [created_at] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getCreatedAt($format = 'Y-m-d H:i:s')
+	{
+		if ($this->created_at === null) {
+			return null;
+		}
+
+
+		if ($this->created_at === '0000-00-00 00:00:00') {
+			// while technically this is not a default value of NULL,
+			// this seems to be closest in meaning.
+			return null;
+		} else {
+			try {
+				$dt = new DateTime($this->created_at);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->created_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
 	}
 
 	/**
@@ -1231,6 +1313,75 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	} // setEvaluationMax()
 
 	/**
+	 * Set the value of [no_activity_confirm] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     Schoolproject The current object (for fluent API support)
+	 */
+	public function setNoActivityConfirm($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->no_activity_confirm !== $v || $this->isNew()) {
+			$this->no_activity_confirm = $v;
+			$this->modifiedColumns[] = SchoolprojectPeer::NO_ACTIVITY_CONFIRM;
+		}
+
+		return $this;
+	} // setNoActivityConfirm()
+
+	/**
+	 * Sets the value of [created_at] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     Schoolproject The current object (for fluent API support)
+	 */
+	public function setCreatedAt($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->created_at !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->created_at !== null && $tmpDt = new DateTime($this->created_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->created_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = SchoolprojectPeer::CREATED_AT;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setCreatedAt()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -1240,6 +1391,10 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->no_activity_confirm !== false) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -1287,6 +1442,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$this->confirmation_notes = ($row[$startcol + 22] !== null) ? (string) $row[$startcol + 22] : null;
 			$this->evaluation_min = ($row[$startcol + 23] !== null) ? (int) $row[$startcol + 23] : null;
 			$this->evaluation_max = ($row[$startcol + 24] !== null) ? (int) $row[$startcol + 24] : null;
+			$this->no_activity_confirm = ($row[$startcol + 25] !== null) ? (boolean) $row[$startcol + 25] : null;
+			$this->created_at = ($row[$startcol + 26] !== null) ? (string) $row[$startcol + 26] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1296,7 +1453,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 25; // 25 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 27; // 27 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Schoolproject object", $e);
@@ -1449,8 +1606,16 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		$isInsert = $this->isNew();
 		try {
 			$ret = $this->preSave($con);
+			// symfony_timestampable behavior
+			
 			if ($isInsert) {
 				$ret = $ret && $this->preInsert($con);
+				// symfony_timestampable behavior
+				if (!$this->isColumnModified(SchoolprojectPeer::CREATED_AT))
+				{
+				  $this->setCreatedAt(time());
+				}
+
 			} else {
 				$ret = $ret && $this->preUpdate($con);
 			}
@@ -1803,6 +1968,12 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			case 24:
 				return $this->getEvaluationMax();
 				break;
+			case 25:
+				return $this->getNoActivityConfirm();
+				break;
+			case 26:
+				return $this->getCreatedAt();
+				break;
 			default:
 				return null;
 				break;
@@ -1849,6 +2020,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$keys[22] => $this->getConfirmationNotes(),
 			$keys[23] => $this->getEvaluationMin(),
 			$keys[24] => $this->getEvaluationMax(),
+			$keys[25] => $this->getNoActivityConfirm(),
+			$keys[26] => $this->getCreatedAt(),
 		);
 		return $result;
 	}
@@ -1955,6 +2128,12 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			case 24:
 				$this->setEvaluationMax($value);
 				break;
+			case 25:
+				$this->setNoActivityConfirm($value);
+				break;
+			case 26:
+				$this->setCreatedAt($value);
+				break;
 		} // switch()
 	}
 
@@ -2004,6 +2183,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[22], $arr)) $this->setConfirmationNotes($arr[$keys[22]]);
 		if (array_key_exists($keys[23], $arr)) $this->setEvaluationMin($arr[$keys[23]]);
 		if (array_key_exists($keys[24], $arr)) $this->setEvaluationMax($arr[$keys[24]]);
+		if (array_key_exists($keys[25], $arr)) $this->setNoActivityConfirm($arr[$keys[25]]);
+		if (array_key_exists($keys[26], $arr)) $this->setCreatedAt($arr[$keys[26]]);
 	}
 
 	/**
@@ -2040,6 +2221,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SchoolprojectPeer::CONFIRMATION_NOTES)) $criteria->add(SchoolprojectPeer::CONFIRMATION_NOTES, $this->confirmation_notes);
 		if ($this->isColumnModified(SchoolprojectPeer::EVALUATION_MIN)) $criteria->add(SchoolprojectPeer::EVALUATION_MIN, $this->evaluation_min);
 		if ($this->isColumnModified(SchoolprojectPeer::EVALUATION_MAX)) $criteria->add(SchoolprojectPeer::EVALUATION_MAX, $this->evaluation_max);
+		if ($this->isColumnModified(SchoolprojectPeer::NO_ACTIVITY_CONFIRM)) $criteria->add(SchoolprojectPeer::NO_ACTIVITY_CONFIRM, $this->no_activity_confirm);
+		if ($this->isColumnModified(SchoolprojectPeer::CREATED_AT)) $criteria->add(SchoolprojectPeer::CREATED_AT, $this->created_at);
 
 		return $criteria;
 	}
@@ -2141,6 +2324,10 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		$copyObj->setEvaluationMin($this->evaluation_min);
 
 		$copyObj->setEvaluationMax($this->evaluation_max);
+
+		$copyObj->setNoActivityConfirm($this->no_activity_confirm);
+
+		$copyObj->setCreatedAt($this->created_at);
 
 
 		if ($deepCopy) {
