@@ -64,12 +64,16 @@ class LanlogPeer extends BaseLanlogPeer
     return LanlogPeer::doSelectJoinAll($c);
 	}
 
-	public static function retrieveByUsername($username)
+	public static function retrieveByUsername($username, $limit=0)
 	{
     $c=new Criteria();
     $c->addJoin(LanlogPeer::USER_ID, sfGuardUserPeer::ID);
     $c->add(sfGuardUserPeer::USERNAME, $username);
     $c->addDescendingOrderByColumn(self::UPDATED_AT);
+    if($limit>0)
+    {
+      $c->setLimit($limit);
+    }
     return LanlogPeer::doSelectJoinAll($c);
 	}
 
