@@ -441,7 +441,7 @@
       </trans-unit>
       <trans-unit id="139">
         <source>Help</source>
-        <target></target>
+        <target>Pomoc</target>
       </trans-unit>
       <trans-unit id="140">
         <source>The possible states of workplans/reports are as follows:</source>
@@ -1777,12 +1777,12 @@
         <target>Dokumenty dotyczące tego powołania.</target>
       </trans-unit>
       <trans-unit id="471">
-        <source>Data are exported using current template and settings.</source>
-        <target>Dane są eksportowane przy użyciu bieżącego szablonu i ustawienia.</target>
+        <source>The document is exported using current data, template and settings.</source>
+        <target>Dokument jest eksportowane za pomocą bieżących danych, szablony i ustawienia.</target>
       </trans-unit>
       <trans-unit id="472">
-        <source>If you need the original version, please use the attachments below.</source>
-        <target>Jeśli potrzebujesz oryginalną wersję, użyj załączniki poniżej.</target>
+        <source>If you need the document originally submitted, please download one of the attachments below.</source>
+        <target>Jeśli potrzebujesz dokument pierwotnie przedstawiony, pobierz jeden z załączników poniżej.</target>
       </trans-unit>
       <trans-unit id="473">
         <source>Operation failed.</source>
@@ -2042,7 +2042,7 @@
       </trans-unit>
       <trans-unit id="534">
         <source>Sum</source>
-        <target></target>
+        <target>Suma</target>
       </trans-unit>
       <trans-unit id="535">
         <source>Blocks quota</source>
@@ -2326,7 +2326,7 @@
       </trans-unit>
       <trans-unit id="605">
         <source>Resource successfully updated.</source>
-        <target></target>
+        <target>Zasobów pomyślnie zaktualizowane.</target>
       </trans-unit>
       <trans-unit id="606">
         <source>Project information saved.</source>
@@ -3686,7 +3686,7 @@
       </trans-unit>
       <trans-unit id="947">
         <source>Users&#039; settings</source>
-        <target></target>
+        <target>Ustawienia użytkowników</target>
       </trans-unit>
       <trans-unit id="948">
         <source>Password reset</source>
@@ -4539,6 +4539,118 @@
       <trans-unit id="1331">
         <source>[1]... and one more|[1,+Inf]... and %number% more</source>
         <target>[1] ... i jeden więcej | [1, + Inf] ... oraz %number% więcej</target>
+      </trans-unit>
+      <trans-unit id="1332">
+        <source>Submit report</source>
+        <target>Submit report</target>
+      </trans-unit>
+      <trans-unit id="1333">
+        <source>Submit the report, confirming the data inserted</source>
+        <target>Submit the report, confirming the data inserted</target>
+      </trans-unit>
+      <trans-unit id="1334">
+        <source>The document could not be submitted for an unkwnow reason.</source>
+        <target>The document could not be submitted for an unkwnow reason.</target>
+      </trans-unit>
+      <trans-unit id="1335">
+        <source>Export this document using current data</source>
+        <target>Export this document using current data</target>
+      </trans-unit>
+      <trans-unit id="1336">
+        <source>Download one of the documents concerning this appointment.</source>
+        <target>Download one of the documents concerning this appointment.</target>
+      </trans-unit>
+      <trans-unit id="1337">
+        <source>This action will delete the content currently present.</source>
+        <target>This action will delete the content currently present.</target>
+      </trans-unit>
+      <trans-unit id="1338">
+        <source>No final report filled</source>
+        <target>No final report filled</target>
+      </trans-unit>
+      <trans-unit id="1339">
+        <source>Final report filled</source>
+        <target>Final report filled</target>
+      </trans-unit>
+      <trans-unit id="1340">
+        <source>The quantity of activities declared is greater than the one approved</source>
+        <target>The quantity of activities declared is greater than the one approved</target>
+      </trans-unit>
+      <trans-unit id="1341">
+        <source>The quantity of activities declared is compatible with the one approved</source>
+        <target>The quantity of activities declared is compatible with the one approved</target>
+      </trans-unit>
+      <trans-unit id="1342">
+        <source>No obtained upshot declared</source>
+        <target>No obtained upshot declared</target>
+      </trans-unit>
+      <trans-unit id="1343">
+        <source>Obtained upshot declared</source>
+        <target>Obtained upshot declared</target>
+      </trans-unit>
+      <trans-unit id="1344">
+        <source>No evaluation declared for upshot</source>
+        <target>No evaluation declared for upshot</target>
+      </trans-unit>
+      <trans-unit id="1345">
+        <source>Evaluation declared for upshot</source>
+        <target>Evaluation declared for upshot</target>
+      </trans-unit>
+      <trans-unit id="1346">
+        <source>Deadline not marked as completed</source>
+        <target>Deadline not marked as completed</target>
+      </trans-unit>
+      <trans-unit id="1347">
+        <source>Deadline marked as completed</source>
+        <target>Deadline marked as completed</target>
+      </trans-unit>
+      <trans-unit id="1348">
+        <source>The report has been submitted.</source>
+        <target>The report has been submitted.</target>
+      </trans-unit>
+      <trans-unit id="1349">
+        <source>This item will not be placed in the published document</source>
+        <target>This item will not be placed in the published document</target>
+      </trans-unit>
+      <trans-unit id="1350">
+        <source>Format</source>
+        <target>Format</target>
+      </trans-unit>
+      <trans-unit id="1351">
+        <source>Edition</source>
+        <target>Edition</target>
+      </trans-unit>
+      <trans-unit id="1352">
+        <source>This document is currently exportable only by the owner.</source>
+        <target>This document is currently exportable only by the owner.</target>
+      </trans-unit>
+      <trans-unit id="1353">
+        <source>Date</source>
+        <target>Date</target>
+      </trans-unit>
+      <trans-unit id="1354">
+        <source>No activity&lt;br /&gt;confirmation</source>
+        <target>No activity&lt;br /&gt;confirmation</target>
+      </trans-unit>
+      <trans-unit id="1355">
+        <source>No activity declared, and confirmation box has been checked</source>
+        <target>No activity declared, and confirmation box has been checked</target>
+      </trans-unit>
+      <trans-unit id="1356">
+        <source>No activity declared (you must either declare some, or check the «no activity confirmation» box)</source>
+        <target>No activity declared (you must either declare some, or check the «no activity confirmation» box)</target>
+      </trans-unit>
+      <trans-unit id="1357">
+        <source>Committment</source>
+        <target>Committment</target>
+      </trans-unit>
+      <trans-unit id="1358">
+        <source>Send an email to the person who performed this activity</source>
+        <target>Send an email to the person who performed this activity</target>
+      </trans-unit>
+      <trans-unit id="1359">
+        <source>No proposals made.</source>
+        <target>No proposals made.</target>
       </trans-unit>
      </body>
   </file> 
