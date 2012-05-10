@@ -30,10 +30,9 @@ class lanlogActions extends sfActions
   public function executeListlogons(sfWebRequest $request)
   {
     $this->forward404Unless($request->getParameter('token')==sfConfig::get('app_authentication_token'));
-    $this->lanlog_list = LanlogPeer::retrieveByUsername($request->getParameter('username'));
+    $this->lanlog_list = LanlogPeer::retrieveByUsername($request->getParameter('username'), $request->getParameter('limit'), 0);
     $this->setTemplate('list');
   }
-
   
   public function executeViewbyuser(sfWebRequest $request)
   {
