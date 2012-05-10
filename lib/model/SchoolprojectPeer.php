@@ -362,6 +362,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       
       if($project->getState()>=Workflow::PROJ_FINISHED)
       {
+        $letters->projectScale($project->getEvaluationScale());
         $letters->projectFinalReport(OdfDocPeer::textvalue2odt($project->getFinalReport()));
         if($project->getProposals())
         {
@@ -445,6 +446,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       {
         
         $oldname='';
+        $quantity=0;
         $activities=$project->getActivitiesPerformed();
         foreach($activities as $activity)
         {
@@ -453,17 +455,26 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
           {
             if($oldname!='')
             {
+              $letters->performers->performerQuantity($quantity);
               $letters->performers->merge();
+              $quantity=0;
             }
             $oldname=$fullname;
             $letters->performers->performerFullName($fullname);
           }
-          $letters->performers->activities->activityBeginning($activity->getBeginning('d/m/y h:i'));
+          $letters->performers->activities->activityBeginning(
+            $activity->getPaperLog()?
+              $context->getI18N()->__('paper log')
+              :
+              $activity->getBeginning('d/m/y h:i')
+          );
           $letters->performers->activities->activityQuantity(OdfDocPeer::quantityvalue($activity->getQuantity(), $activity->getProjResource()->getProjResourceType()->getMeasurementUnit()));
+          $letters->performers->activities->activityResourceType($activity->getProjResource()->getProjResourceType()->getDescription());
           $letters->performers->activities->activityDescription($activity->getNotes());
-          $letters->performers->activities->activityPaperLog($activity->getPaperLog()?$context->getI18N()->__('yes'):$context->getI18N()->__('no'));
           $letters->performers->activities->merge();
+          $quantity+=$activity->getQuantity();
         }
+        $letters->performers->performerQuantity($quantity);
         $letters->performers->merge();
           
       }
@@ -475,7 +486,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
         if($project->getState()>=Workflow::PROJ_FINISHED)
         {
           $letters->upshots->upshotUpshot($Upshot->getUpshot());
-          $letters->upshots->upshotEvaluation(sprintf('%d (%d-%d)', $Upshot->getEvaluation(), $project->getEvaluationMin(), $project->getEvaluationMax()));
+          $letters->upshots->upshotEvaluation($Upshot->getEvaluation());
         }
         
         $letters->upshots->merge();

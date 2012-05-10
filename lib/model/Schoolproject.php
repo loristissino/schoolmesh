@@ -1049,6 +1049,11 @@ class Schoolproject extends BaseSchoolproject {
     }
   }
   
+  public function getEvaluationScale()
+  {
+    return sprintf('%d - %d', $this->getEvaluationMin(), $this->getEvaluationMax());
+  }
+  
   public function getCriteriaForTeamSelection()
   {
     $c=new Criteria();
