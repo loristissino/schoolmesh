@@ -39,8 +39,8 @@
 <?php foreach($units as $id => $unit): ?>
 <?php if($unit['lsource']!=$unit['rsource']): ?>
       &lt;trans-unit id="<?php echo $id ?>"&gt;
-        &lt;source&gt;<?php echo $unit['rsource'] ?>&lt;/source&gt;
-        &lt;target&gt;<?php echo $unit['rsource'] ?>&lt;/target&gt;
+        &lt;source&gt;<?php echo htmlspecialchars($unit['rsource']) ?>&lt;/source&gt;
+        &lt;target&gt;<?php echo htmlspecialchars($unit['rsource']) ?>&lt;/target&gt;
       &lt;/trans-unit&gt;
 <?php endif ?>
 <?php endforeach ?>
