@@ -33,7 +33,7 @@
 <?php include_partial('content/flashes'); ?>
 
 <h2><?php echo __('Export this document using current data') ?></h2>
-<?php if($workplan->isExportableBy($sf_user->getProfile()->getUserId())): ?>
+<?php if($workplan->isExportableBy($sf_user->getProfile()->getUserId()) or $sf_user->hasCredential('backadmin')): ?>
 <form action="<?php echo url_for('plansandreports/servedoc?id='.$workplan->getId()) ?>" method="get">
 <table>
 <?php echo $form ?>
