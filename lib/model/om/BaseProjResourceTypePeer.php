@@ -25,7 +25,7 @@ abstract class BaseProjResourceTypePeer {
 	const TM_CLASS = 'ProjResourceTypeTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 9;
+	const NUM_COLUMNS = 10;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -35,6 +35,9 @@ abstract class BaseProjResourceTypePeer {
 
 	/** the column name for the DESCRIPTION field */
 	const DESCRIPTION = 'proj_resource_type.DESCRIPTION';
+
+	/** the column name for the SHORTCUT field */
+	const SHORTCUT = 'proj_resource_type.SHORTCUT';
 
 	/** the column name for the ROLE_ID field */
 	const ROLE_ID = 'proj_resource_type.ROLE_ID';
@@ -80,11 +83,11 @@ abstract class BaseProjResourceTypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'RoleId', 'StandardCost', 'MeasurementUnit', 'IsMonetary', 'Rank', 'PrintedInSubmissionLetters', 'PrintedInChargeLetters', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'roleId', 'standardCost', 'measurementUnit', 'isMonetary', 'rank', 'printedInSubmissionLetters', 'printedInChargeLetters', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::ROLE_ID, self::STANDARD_COST, self::MEASUREMENT_UNIT, self::IS_MONETARY, self::RANK, self::PRINTED_IN_SUBMISSION_LETTERS, self::PRINTED_IN_CHARGE_LETTERS, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'role_id', 'standard_cost', 'measurement_unit', 'is_monetary', 'rank', 'printed_in_submission_letters', 'printed_in_charge_letters', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', 'Shortcut', 'RoleId', 'StandardCost', 'MeasurementUnit', 'IsMonetary', 'Rank', 'PrintedInSubmissionLetters', 'PrintedInChargeLetters', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', 'shortcut', 'roleId', 'standardCost', 'measurementUnit', 'isMonetary', 'rank', 'printedInSubmissionLetters', 'printedInChargeLetters', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, self::SHORTCUT, self::ROLE_ID, self::STANDARD_COST, self::MEASUREMENT_UNIT, self::IS_MONETARY, self::RANK, self::PRINTED_IN_SUBMISSION_LETTERS, self::PRINTED_IN_CHARGE_LETTERS, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'description', 'shortcut', 'role_id', 'standard_cost', 'measurement_unit', 'is_monetary', 'rank', 'printed_in_submission_letters', 'printed_in_charge_letters', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	/**
@@ -94,11 +97,11 @@ abstract class BaseProjResourceTypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'RoleId' => 2, 'StandardCost' => 3, 'MeasurementUnit' => 4, 'IsMonetary' => 5, 'Rank' => 6, 'PrintedInSubmissionLetters' => 7, 'PrintedInChargeLetters' => 8, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'roleId' => 2, 'standardCost' => 3, 'measurementUnit' => 4, 'isMonetary' => 5, 'rank' => 6, 'printedInSubmissionLetters' => 7, 'printedInChargeLetters' => 8, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::ROLE_ID => 2, self::STANDARD_COST => 3, self::MEASUREMENT_UNIT => 4, self::IS_MONETARY => 5, self::RANK => 6, self::PRINTED_IN_SUBMISSION_LETTERS => 7, self::PRINTED_IN_CHARGE_LETTERS => 8, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'role_id' => 2, 'standard_cost' => 3, 'measurement_unit' => 4, 'is_monetary' => 5, 'rank' => 6, 'printed_in_submission_letters' => 7, 'printed_in_charge_letters' => 8, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, 'Shortcut' => 2, 'RoleId' => 3, 'StandardCost' => 4, 'MeasurementUnit' => 5, 'IsMonetary' => 6, 'Rank' => 7, 'PrintedInSubmissionLetters' => 8, 'PrintedInChargeLetters' => 9, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, 'shortcut' => 2, 'roleId' => 3, 'standardCost' => 4, 'measurementUnit' => 5, 'isMonetary' => 6, 'rank' => 7, 'printedInSubmissionLetters' => 8, 'printedInChargeLetters' => 9, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, self::SHORTCUT => 2, self::ROLE_ID => 3, self::STANDARD_COST => 4, self::MEASUREMENT_UNIT => 5, self::IS_MONETARY => 6, self::RANK => 7, self::PRINTED_IN_SUBMISSION_LETTERS => 8, self::PRINTED_IN_CHARGE_LETTERS => 9, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, 'shortcut' => 2, 'role_id' => 3, 'standard_cost' => 4, 'measurement_unit' => 5, 'is_monetary' => 6, 'rank' => 7, 'printed_in_submission_letters' => 8, 'printed_in_charge_letters' => 9, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	/**
@@ -170,6 +173,7 @@ abstract class BaseProjResourceTypePeer {
 	{
 		$criteria->addSelectColumn(ProjResourceTypePeer::ID);
 		$criteria->addSelectColumn(ProjResourceTypePeer::DESCRIPTION);
+		$criteria->addSelectColumn(ProjResourceTypePeer::SHORTCUT);
 		$criteria->addSelectColumn(ProjResourceTypePeer::ROLE_ID);
 		$criteria->addSelectColumn(ProjResourceTypePeer::STANDARD_COST);
 		$criteria->addSelectColumn(ProjResourceTypePeer::MEASUREMENT_UNIT);
@@ -956,7 +960,7 @@ abstract class BaseProjResourceTypePeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return array(array('shortcut'));
 	}
 
 } // BaseProjResourceTypePeer

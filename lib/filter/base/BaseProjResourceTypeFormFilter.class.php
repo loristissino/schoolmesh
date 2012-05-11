@@ -13,6 +13,7 @@ abstract class BaseProjResourceTypeFormFilter extends BaseFormFilterPropel
   {
     $this->setWidgets(array(
       'description'                   => new sfWidgetFormFilterInput(),
+      'shortcut'                      => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'role_id'                       => new sfWidgetFormPropelChoice(array('model' => 'Role', 'add_empty' => true)),
       'standard_cost'                 => new sfWidgetFormFilterInput(),
       'measurement_unit'              => new sfWidgetFormFilterInput(),
@@ -24,6 +25,7 @@ abstract class BaseProjResourceTypeFormFilter extends BaseFormFilterPropel
 
     $this->setValidators(array(
       'description'                   => new sfValidatorPass(array('required' => false)),
+      'shortcut'                      => new sfValidatorPass(array('required' => false)),
       'role_id'                       => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Role', 'column' => 'id')),
       'standard_cost'                 => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
       'measurement_unit'              => new sfValidatorPass(array('required' => false)),
@@ -50,6 +52,7 @@ abstract class BaseProjResourceTypeFormFilter extends BaseFormFilterPropel
     return array(
       'id'                            => 'Number',
       'description'                   => 'Text',
+      'shortcut'                      => 'Text',
       'role_id'                       => 'ForeignKey',
       'standard_cost'                 => 'Number',
       'measurement_unit'              => 'Text',

@@ -1171,6 +1171,7 @@ CREATE TABLE `proj_resource_type`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`description` VARCHAR(255),
+	`shortcut` VARCHAR(5)  NOT NULL,
 	`role_id` INTEGER,
 	`standard_cost` DECIMAL(10,2),
 	`measurement_unit` VARCHAR(10),
@@ -1179,6 +1180,7 @@ CREATE TABLE `proj_resource_type`
 	`printed_in_submission_letters` TINYINT default 1,
 	`printed_in_charge_letters` TINYINT default 1,
 	PRIMARY KEY (`id`),
+	UNIQUE KEY `s` (`shortcut`),
 	INDEX `proj_resource_type_FI_1` (`role_id`),
 	CONSTRAINT `proj_resource_type_FK_1`
 		FOREIGN KEY (`role_id`)

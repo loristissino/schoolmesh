@@ -4652,6 +4652,14 @@
         <source>No proposals made.</source>
         <target>Nessuna proposta avanzata.</target>
       </trans-unit>
+      <trans-unit id="1360">
+        <source>Total for %shortcut% (%description%): %quantity%</source>
+        <target>Totale per %shortcut% (%description%): %quantity%</target>
+      </trans-unit>
+      <trans-unit id="1361">
+        <source>paper log</source>
+        <target>registro cartaceo</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>

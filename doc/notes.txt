@@ -1,3 +1,7 @@
+2012/05/11
+Release: 1.06
+Added field shortcut in proj_resource_type table (unique)
+
 2012/05/09
 Release: 1.05
 Added fields created_at and no_activity_confirm in schoolproject table
