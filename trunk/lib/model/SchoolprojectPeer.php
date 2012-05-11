@@ -446,7 +446,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       {
         
         $oldname='';
-        $quantity=0;
+        $quantities=array();
         $activities=$project->getActivitiesPerformed();
         foreach($activities as $activity)
         {
@@ -455,9 +455,9 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
           {
             if($oldname!='')
             {
-              $letters->performers->performerQuantity($quantity);
+              $letters->performers->performerQuantity(self::_quantitiesToString($quantities, $context));
               $letters->performers->merge();
-              $quantity=0;
+              $quantities=array();
             }
             $oldname=$fullname;
             $letters->performers->performerFullName($fullname);
@@ -469,12 +469,18 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
               $activity->getBeginning('d/m/y h:i')
           );
           $letters->performers->activities->activityQuantity(OdfDocPeer::quantityvalue($activity->getQuantity(), $activity->getProjResource()->getProjResourceType()->getMeasurementUnit()));
-          $letters->performers->activities->activityResourceType($activity->getProjResource()->getProjResourceType()->getDescription());
+          $letters->performers->activities->activityResourceType($activity->getProjResource()->getProjResourceType()->getShortcut());
           $letters->performers->activities->activityDescription($activity->getNotes());
           $letters->performers->activities->merge();
-          $quantity+=$activity->getQuantity();
+          if (!isset($quantities['quantities'][$activity->getProjResource()->getProjResourceType()->getShortcut()]))
+          {
+            $quantities['quantities'][$activity->getProjResource()->getProjResourceType()->getShortcut()]=0;
+          }
+          $quantities['quantities'][$activity->getProjResource()->getProjResourceType()->getShortcut()]+=$activity->getQuantity();
+          $quantities['descriptions'][$activity->getProjResource()->getProjResourceType()->getShortcut()]=$activity->getProjResource()->getProjResourceType()->getDescription();
+          $quantities['mu'][$activity->getProjResource()->getProjResourceType()->getShortcut()]=$activity->getProjResource()->getProjResourceType()->getMeasurementUnit();
         }
-        $letters->performers->performerQuantity($quantity);
+        $letters->performers->performerQuantity(self::_quantitiesToString($quantities, $context));
         $letters->performers->merge();
           
       }
@@ -646,5 +652,26 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 
 	}
 
+  private static function _quantitiesToString($quantities=array(), $sf_context=null)
+  {
+    // $quantities is an array like
+    // ['descriptions']['TA']="Teachers' activities"
+    // ['descriptions']['JA']="Janitors' activities"
+    // ['quantities']['TA']=20
+    // ['quantities']['JA']=40
+    // ['mu']['TA']="h"
+    // ['mu']['JA']="h"
+    
+    $text='';
+    foreach($quantities['quantities'] as $key=>$value)
+    {
+      $text.=$sf_context->getI18N()->__('Total for %shortcut% (%description%): %quantity%', array(
+        '%shortcut%'=>$key,
+        '%description%'=>$quantities['descriptions'][$key],
+        '%quantity%'=>OdfDocPeer::quantityvalue($quantities['quantities'][$key], $quantities['mu'][$key]
+        ))) . '<br />';
+    }
+    return $text;
+  }
 
 } // SchoolprojectPeer

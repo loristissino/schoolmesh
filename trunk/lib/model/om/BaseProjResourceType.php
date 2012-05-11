@@ -31,6 +31,12 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	protected $description;
 
 	/**
+	 * The value for the shortcut field.
+	 * @var        string
+	 */
+	protected $shortcut;
+
+	/**
 	 * The value for the role_id field.
 	 * @var        int
 	 */
@@ -152,6 +158,16 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Get the [shortcut] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getShortcut()
+	{
+		return $this->shortcut;
+	}
+
+	/**
 	 * Get the [role_id] column value.
 	 * 
 	 * @return     int
@@ -260,6 +276,26 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setDescription()
+
+	/**
+	 * Set the value of [shortcut] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     ProjResourceType The current object (for fluent API support)
+	 */
+	public function setShortcut($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->shortcut !== $v) {
+			$this->shortcut = $v;
+			$this->modifiedColumns[] = ProjResourceTypePeer::SHORTCUT;
+		}
+
+		return $this;
+	} // setShortcut()
 
 	/**
 	 * Set the value of [role_id] column.
@@ -451,13 +487,14 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->description = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-			$this->role_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->standard_cost = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->measurement_unit = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-			$this->is_monetary = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
-			$this->rank = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
-			$this->printed_in_submission_letters = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
-			$this->printed_in_charge_letters = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
+			$this->shortcut = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->role_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->standard_cost = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->measurement_unit = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+			$this->is_monetary = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
+			$this->rank = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
+			$this->printed_in_submission_letters = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
+			$this->printed_in_charge_letters = ($row[$startcol + 9] !== null) ? (boolean) $row[$startcol + 9] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -467,7 +504,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 9; // 9 = ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 10; // 10 = ProjResourceTypePeer::NUM_COLUMNS - ProjResourceTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjResourceType object", $e);
@@ -817,24 +854,27 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 				return $this->getDescription();
 				break;
 			case 2:
-				return $this->getRoleId();
+				return $this->getShortcut();
 				break;
 			case 3:
-				return $this->getStandardCost();
+				return $this->getRoleId();
 				break;
 			case 4:
-				return $this->getMeasurementUnit();
+				return $this->getStandardCost();
 				break;
 			case 5:
-				return $this->getIsMonetary();
+				return $this->getMeasurementUnit();
 				break;
 			case 6:
-				return $this->getRank();
+				return $this->getIsMonetary();
 				break;
 			case 7:
-				return $this->getPrintedInSubmissionLetters();
+				return $this->getRank();
 				break;
 			case 8:
+				return $this->getPrintedInSubmissionLetters();
+				break;
+			case 9:
 				return $this->getPrintedInChargeLetters();
 				break;
 			default:
@@ -860,13 +900,14 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getDescription(),
-			$keys[2] => $this->getRoleId(),
-			$keys[3] => $this->getStandardCost(),
-			$keys[4] => $this->getMeasurementUnit(),
-			$keys[5] => $this->getIsMonetary(),
-			$keys[6] => $this->getRank(),
-			$keys[7] => $this->getPrintedInSubmissionLetters(),
-			$keys[8] => $this->getPrintedInChargeLetters(),
+			$keys[2] => $this->getShortcut(),
+			$keys[3] => $this->getRoleId(),
+			$keys[4] => $this->getStandardCost(),
+			$keys[5] => $this->getMeasurementUnit(),
+			$keys[6] => $this->getIsMonetary(),
+			$keys[7] => $this->getRank(),
+			$keys[8] => $this->getPrintedInSubmissionLetters(),
+			$keys[9] => $this->getPrintedInChargeLetters(),
 		);
 		return $result;
 	}
@@ -905,24 +946,27 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 				$this->setDescription($value);
 				break;
 			case 2:
-				$this->setRoleId($value);
+				$this->setShortcut($value);
 				break;
 			case 3:
-				$this->setStandardCost($value);
+				$this->setRoleId($value);
 				break;
 			case 4:
-				$this->setMeasurementUnit($value);
+				$this->setStandardCost($value);
 				break;
 			case 5:
-				$this->setIsMonetary($value);
+				$this->setMeasurementUnit($value);
 				break;
 			case 6:
-				$this->setRank($value);
+				$this->setIsMonetary($value);
 				break;
 			case 7:
-				$this->setPrintedInSubmissionLetters($value);
+				$this->setRank($value);
 				break;
 			case 8:
+				$this->setPrintedInSubmissionLetters($value);
+				break;
+			case 9:
 				$this->setPrintedInChargeLetters($value);
 				break;
 		} // switch()
@@ -951,13 +995,14 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setDescription($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setRoleId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setStandardCost($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setMeasurementUnit($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setIsMonetary($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setRank($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setPrintedInSubmissionLetters($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setPrintedInChargeLetters($arr[$keys[8]]);
+		if (array_key_exists($keys[2], $arr)) $this->setShortcut($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setRoleId($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setStandardCost($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setMeasurementUnit($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setIsMonetary($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setRank($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setPrintedInSubmissionLetters($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setPrintedInChargeLetters($arr[$keys[9]]);
 	}
 
 	/**
@@ -971,6 +1016,7 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(ProjResourceTypePeer::ID)) $criteria->add(ProjResourceTypePeer::ID, $this->id);
 		if ($this->isColumnModified(ProjResourceTypePeer::DESCRIPTION)) $criteria->add(ProjResourceTypePeer::DESCRIPTION, $this->description);
+		if ($this->isColumnModified(ProjResourceTypePeer::SHORTCUT)) $criteria->add(ProjResourceTypePeer::SHORTCUT, $this->shortcut);
 		if ($this->isColumnModified(ProjResourceTypePeer::ROLE_ID)) $criteria->add(ProjResourceTypePeer::ROLE_ID, $this->role_id);
 		if ($this->isColumnModified(ProjResourceTypePeer::STANDARD_COST)) $criteria->add(ProjResourceTypePeer::STANDARD_COST, $this->standard_cost);
 		if ($this->isColumnModified(ProjResourceTypePeer::MEASUREMENT_UNIT)) $criteria->add(ProjResourceTypePeer::MEASUREMENT_UNIT, $this->measurement_unit);
@@ -1033,6 +1079,8 @@ abstract class BaseProjResourceType extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setDescription($this->description);
+
+		$copyObj->setShortcut($this->shortcut);
 
 		$copyObj->setRoleId($this->role_id);
 

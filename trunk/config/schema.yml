@@ -446,6 +446,7 @@ propel:
   proj_resource_type:
     id: ~
     description: varchar(255)
+    shortcut: { type: varchar(5), required: true }
     role_id: ~
     standard_cost: { type: decimal, size: 10, scale: 2 }
     measurement_unit: varchar(10)
@@ -453,6 +454,8 @@ propel:
     rank: integer
     printed_in_submission_letters: { type: boolean, default: true }
     printed_in_charge_letters: { type: boolean, default: true }
+    _uniques:
+      s: [ shortcut ]
 
   proj_resource:
     id: ~
