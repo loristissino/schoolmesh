@@ -1,0 +1,20 @@
+basedir: /var/schoolmesh/data/documents/
+sections:
+  section1:
+    title:  Allegati
+    links:
+      1:
+        title:  Primo titolo
+        file: foo.pdf
+        date:  Jan 26 13:26:32 2010
+      2:
+        title:   Secondo titolo
+        file: bar.doc
+        date: Jan 26 13:26:32 2010
+  section2:
+    title:   Documenti
+    links:
+      1:
+        title:  Test
+        file: foo.doc
+        date: Jan 26 13:26:32 2010

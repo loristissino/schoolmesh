@@ -1,0 +1,14 @@
+message:
+  subject: Consegna progetto «%project_title%»
+  salutation: true
+  body: |
+  
+    È stato consegnato on-line da %project_coordinator% il progetto in oggetto.
+    Deve essere, come di consueto, stampato e protocollato.
+    
+    Cordiali saluti,
+
+        SchoolMesh Bot
+
+  tagline: |
+    Questo messaggio è stato generato automaticamente.

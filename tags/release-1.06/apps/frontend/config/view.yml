@@ -1,0 +1,17 @@
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    title:        SchoolMesh, applicazione web per la gestione delle attività scolastiche
+    #description:  symfony project
+    #keywords:     symfony, project
+    language:     it
+    robots:        index, follow
+
+  stylesheets:    [fluid, schoolmesh]
+
+  #javascripts:    [%SF_PROTOTYPE_WEB_DIR%/web/js/scriptaculous, %SF_PROTOTYPE_WEB_DIR%/web/js/prototype]
+
+  has_layout:     true
+  layout:         layout

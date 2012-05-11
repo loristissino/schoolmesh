@@ -1,0 +1,22 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           Schoolclass
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          schoolclass
+    with_propel_route:     1
+
+    config:
+      actions: ~
+      fields:   ~
+      list:
+        title: Classes List
+        display: [Id, Description]
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:     ~

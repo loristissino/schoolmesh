@@ -1,0 +1,125 @@
+sfGuardPermission:
+  backadmin:
+    name:           backadmin
+    description:   Amministrazione di backend
+  admin:
+    name:           admin
+    description:    Amministrazione generale
+  planning:
+    name:           planning
+    description:    Pianificazione didattica
+  schoolmaster:
+    name:           schoolmaster
+    description:    Permessi del Dirigente Scolastico
+  office:
+    name:           office
+    description:    Permessi della Segreteria didattica
+  internet:
+    name:           internet
+    description:    Gestione accesso a Internet
+  filebrowsing:
+    name:           filebrowsing
+    description:   Possibilità di gestire la propria home directory via web
+  quality_pub:
+    name:           quality_pub
+    description:    Gestione documentazione qualità
+  quality_rev:
+    name:           quality_rev
+    description:    Revisione documentazione qualità
+  project:
+    name:           project
+    description:    Progettazione attività scolastiche
+  posix:
+    name:           posix
+    description:   Home directory
+  login:
+    name:           login
+    description:   Accesso al sistema da terminale
+  samba:
+    name:           samba
+    description:   Autenticazione SAMBA e accesso alla home directory
+  ldapnfs:
+    name:           ldapnfs
+    description:   Autenticazione LDAP e accesso alla home directory
+  moodle:
+    name:           moodle
+    description:   Accesso alla piattaforma di e-learning Moodle
+  googleapps:
+    name:           googleapps
+    description:   Accesso ai servizi Google Apps
+  login_resetpwd:
+    name:           login_resetpwd
+    description:   Possibilità di reimpostare una nuova password per gli account di tipo "login"
+  samba_resetpwd:
+    name:           samba_resetpwd
+    description:   Possibilità di reimpostare una nuova password per gli account di tipo "samba"
+  ldapnfs_resetpwd:
+    name:           ldapnfs_resetpwd
+    description:   Possibilità di reimpostare una nuova password per gli account di tipo "ldapnfs"
+  moodle_resetpwd:
+    name:           moodle_resetpwd
+    description:   Possibilità di reimpostare una nuova password per gli account di tipo "moodle"
+  googleapps_resetpwd:
+    name:           googleapps_resetpwd
+    description:   Possibilità di reimpostare una nuova password per gli account di tipo "googleapps"
+
+sfGuardGroup:
+  admin:
+    name:           admin
+    description:    Gruppo Amministratori
+  teacher:
+    name:           teacher
+    description:    Gruppo Docenti
+  technician:
+    name:           technician
+    description:    Gruppo Personale Tecnico e Amministrativo
+  student:
+    name:           student
+    description:    Gruppo Studenti
+  quality_rev:
+    name:           quality_rev
+    description:    Gruppo Revisori Documentazione Qualità
+  quality_pub:
+    name:           quality_pub
+    description:    Gruppo Gestori Documentazione Qualità
+  schoolmasterteam:
+    name:           schoolmasterteam
+    description:   Gruppo Collaboratori del Dirigente Scolastico
+  officeteam:
+    name:           officeteam
+    description:   Segreteria didattica
+
+sfGuardGroupPermission:
+  admin:
+    group_id:       admin
+    permission_id:  admin
+  teacher_planning:
+    group_id:       teacher
+    permission_id:  planning
+  teacher_internet:
+    group_id:       teacher
+    permission_id:  internet
+  teacher_posix:
+    group_id:       teacher
+    permission_id:  posix
+  teacher_samba:
+    group_id:       teacher
+    permission_id:  samba
+  technician_internet:
+    group_id:       technician
+    permission_id:  internet
+  technician_project:
+    group_id:       technician
+    permission_id:  project
+  smt_schoolmaster:
+    group_id:       schoolmasterteam
+    permission_id:  schoolmaster
+  office_office:
+    group_id:      officeteam
+    permission_id:  office
+  student_posix:
+    group_id:       student
+    permission_id:  posix
+  student_samba:
+    group_id:       student
+    permission_id:  samba

@@ -1,0 +1,16 @@
+sections:
+  section1:
+    title: Progetto Qualità
+    links:
+      1:
+        title: Documentazione della Qualità
+        link: quality
+      2:
+        title: Moduli da compilare
+        link: forms
+  section2:
+    title: Piani di lavoro
+    links:
+      1:
+        title: Piani di lavoro dei docenti
+        link: documents/index/workplans
