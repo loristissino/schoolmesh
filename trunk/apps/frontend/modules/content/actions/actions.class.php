@@ -276,6 +276,15 @@ class contentActions extends sfActions
     
   }
   
+  public function executeListattachments(sfWebRequest $request)
+  {
+    $this->id=$request->getParameter('id');
+    $this->basetable=$request->getParameter('object');
+    $this->object=AttachmentFilePeer::retrieveObject($this->basetable, $this->id);
+    $this->attachments=$this->object->getAttachmentFiles(true);
+  }
+  
+  
   public function executeTestplurals(sfWebRequest $request)
   {
     

@@ -5,7 +5,7 @@
     'plansandreports/fill?id=' . $appointment->getId() => $appointment
     ),
   'current'=>__('Class composition'),
-  'title'=>sprintf('%s (%s) - %s', $schoolclass_id, $appointment->getTitle(), __('class composition'))#91FBAF
+  'title'=>sprintf('%s (%s) - %s', $schoolclass_id, $appointment->getTitle(), __('class composition'))
   ))
 ?>
 <?php endif ?>
@@ -121,3 +121,8 @@
 <?php endif ?>
 
 
+<hr />
+<h2><?php echo __('Other actions concerning this class') ?></h2>
+<ul class="sf_admin_actions">
+<?php echo li_link_to_if('action_view', true, __('List appointments'), url_for('schoolclasses/appointments?id='.$schoolclass_id)) ?>
+</ul>

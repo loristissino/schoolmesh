@@ -10,6 +10,10 @@ organization:
   url: /organization
   param: { module: organization, action: index }
 
+attachments:
+  url: /attachments/object/:object/id/:id
+  param: { module: content, action: listattachments }
+
 users_search:
   url: /users/list
   param: { module: users, action: list }

@@ -27,16 +27,26 @@ class AttachmentFilePeer extends BaseAttachmentFilePeer {
     }
   }
   
+  public static function retrieveObject($classname, $id)
+  {
+    $peerclass=$classname . 'Peer';
+    return $peerclass::retrieveByPk($id);
+  }
+  
   public static function getPrefix($classname)
   {
     return strtolower($classname);
   }
 
-  public static function retrieveByClassAndId($classname, $id)
+  public static function retrieveByClassAndId($classname, $id, $public_only=false)
   {
     $c=new Criteria();
     $c->add(self::BASE_TABLE, self::getBaseTableId($classname));
     $c->add(self::BASE_ID, $id);
+    if($public_only)
+    {
+      $c->add(self::IS_PUBLIC, true);
+    }
     $c->addAscendingOrderByColumn(self::CREATED_AT);
     return self::doSelect($c);
   }
