@@ -1254,7 +1254,7 @@ public function executeEditappointment(sfWebRequest $request)
 			'year_id' => $this->appointment->getYear()->getId(),
 			'schoolclass_id'=> $this->appointment->getSchoolclass(),
 			'team_id'=> $this->appointment->getTeamId(),
-			'subject_id'=> $this->appointment->getSubject()->getId(),
+			'subject_id'=> $this->appointment->getSubjectId() ? $this->appointment->getSubjectId() : null,
       'syllabus_id' => $this->appointment->getSyllabusId(),
       'appointment_type_id' => $this->appointment->getAppointmentTypeId(),
 			'hours'=>$this->appointment->getHours()

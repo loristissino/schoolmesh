@@ -384,7 +384,14 @@ class schoolclassesActions extends sfActions
   {
     $this->forward404Unless($this->Schoolclass=SchoolclassPeer::retrieveByPK($request->getParameter('id')));
     
-    $this->Appointments=$this->Schoolclass->getCurrentAppointments();
+    $this->appointment_type_id=$request->getParameter('type', false);
+    
+    if($this->appointment_type_id)
+    {
+      $this->forward404Unless($this->AppointmentType=AppointmentTypePeer::retrieveByPK($this->appointment_type_id));
+    }
+    
+    $this->Appointments=$this->Schoolclass->getCurrentAppointments($this->appointment_type_id);
     if(sizeof($this->Appointments)==0)
     {
       return sfView::ERROR;
