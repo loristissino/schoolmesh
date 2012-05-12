@@ -2176,9 +2176,14 @@ public function getWfevents($criteria = null, PropelPDO $con = null)
 
   }
   
-  public function getAttachmentFiles()
+  public function getAttachmentFiles($public_only=false)
   {
-    return AttachmentFilePeer::retrieveByClassAndId(get_class($this), $this->getId());
+    return AttachmentFilePeer::retrieveByClassAndId(get_class($this), $this->getId(), $public_only);
+  }
+  
+  public function hasAttachments()
+  {
+    return sizeof($this->getAttachmentFiles());
   }
   
   public function addAttachment(sfValidatedFile $file=null, $public=false, $con=null)

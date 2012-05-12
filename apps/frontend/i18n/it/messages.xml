@@ -4660,8 +4660,26 @@
         <source>paper log</source>
         <target>registro cartaceo</target>
       </trans-unit>
+      <trans-unit id="1362">
+        <source>Only public attachments related to this object are listed.</source>
+        <target>Solo gli allegati pubblici legati a questo elemento sono elencati.</target>
+      </trans-unit>
+      <trans-unit id="1363">
+        <source>List appointments</source>
+        <target>Elenco incarichi di docenza</target>
+      </trans-unit>
+      <trans-unit id="1364">
+        <source>Other actions concerning this class</source>
+        <target>Altre azioni legati a questa classe</target>
+      </trans-unit>
+      <trans-unit id="1365">
+        <source>Appointments for class %schoolclass%</source>
+        <target>Incarichi di docenza per la classe %schoolclass%</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>
+
+
 
 
