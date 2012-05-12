@@ -363,6 +363,11 @@
   background: url(../images/favicon.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_filter a
+{
+  background: url(../images/filter.png) no-repeat 0 0;
+}
+
 
 #sf_admin_container .alert
 {

@@ -4676,9 +4676,22 @@
         <source>Appointments for class %schoolclass%</source>
         <target>Incarichi di docenza per la classe %schoolclass%</target>
       </trans-unit>
+      <trans-unit id="1366">
+        <source>Only appointments of type «%type%» are listed.</source>
+        <target>Solo gli incarichi di tipo «%type%» sono elencati.</target>
+      </trans-unit>
+      <trans-unit id="1367">
+        <source>Show all appointments</source>
+        <target>Mostra tutti gli incarichi</target>
+      </trans-unit>
+      <trans-unit id="1368">
+        <source>Filter</source>
+        <target>Filtra</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>
+
 
 
 

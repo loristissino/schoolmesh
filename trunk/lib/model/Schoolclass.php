@@ -41,14 +41,18 @@ class Schoolclass extends BaseSchoolclass
 		return EnrolmentPeer::doSelectJoinAll($c);
 	}
 
-	public function getCurrentAppointments()
+	public function getCurrentAppointments($appointment_type_id=null)
 	{
 		
 		$c=new Criteria();
 		$c->add(AppointmentPeer::SCHOOLCLASS_ID, $this->getId());
 		$c->add(AppointmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
+    if($appointment_type_id)
+    {
+      $c->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $appointment_type_id);
+    }
 		$c->addAscendingOrderByColumn(SubjectPeer::RANK);
-		$c->addJoin(AppointmentPeer::SUBJECT_ID, SubjectPeer::ID);
+		$c->addJoin(AppointmentPeer::SUBJECT_ID, SubjectPeer::ID, Criteria::LEFT_JOIN);
 		return AppointmentPeer::doSelectJoinAll($c);
 	}
 
