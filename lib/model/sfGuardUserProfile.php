@@ -347,6 +347,26 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		}
 		
 		
+    public function canViewConfidentialInfo()
+    {
+      return $this->hasOneOfPermissions(array('wp_adm_ok', 'fr_adm_ok', 'wp_sm_ok', 'fr_sm_no'));
+    }
+    
+    public function hasOneOfPermissions($permissions_required=array())
+    {
+      foreach($this->getWebPermissions() as $permission_available)
+      {
+        foreach($permissions_required as $permission_required)
+        {
+          if($permission_required==$permission_available)
+          {
+            return true;
+          }
+        }
+      }
+      return false;
+    }    
+    
 		public function addUserPermission($value)
 		{
 			$this->getSfGuardUser()->addPermissionByName($value);

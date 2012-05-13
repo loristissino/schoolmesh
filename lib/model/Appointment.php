@@ -194,14 +194,10 @@ class Appointment extends BaseAppointment
 	
 	public function getWpinfo($id)
 	{
-	
 		$c=new Criteria();
-//		echo "Cerco con WPINFO con ID=$id e APPOINTMENTID=" . $this->getId() . "\n";
-	    $c->add(WpinfoPeer::APPOINTMENT_ID, $this->getId());
-	    $c->add(WpinfoPeer::WPINFO_TYPE_ID, $id);
+    $c->add(WpinfoPeer::APPOINTMENT_ID, $this->getId());
+    $c->add(WpinfoPeer::WPINFO_TYPE_ID, $id);
 		return WpinfoPeer::doSelectOne($c);
-
-		
 	}
 
 	public function markSubItemsAsEditable($parameters=array(), $con=null)

@@ -37,7 +37,7 @@
   <input type="checkbox" name="ids[]" value="<?php echo $workplan->getId() ?>" class="sf_admin_batch_checkbox" />
 </td>
 
-      <td><?php echo $workplan->getSchoolclassId() ?></td>
+      <td><?php echo link_to($workplan->getSchoolclassId(), url_for('schoolclasses/appointments?id=' . $workplan->getSchoolclassId() . '&type=' . $workplan->getAppointmentTypeId())) ?></td>
       <td><?php echo $workplan->getAppointmentType() ?></td>
       <td><?php if($workplan->getSubject()): ?><?php echo $workplan->getSubject()->getDescription() ?><?php endif ?></td>
       <td>

@@ -117,6 +117,8 @@ class SetupChecker
       'projects_charges.odt',
       'projects_submission.odt',
       'projects_staffsynthesis.odt',
+      'projects_report.odt',
+      'schoolclass_info.odt',
       'recuperation.odt',
       'syllabus_subjects.odt',
       'teachers_signs.odt',
