@@ -4666,7 +4666,7 @@
       </trans-unit>
       <trans-unit id="1363">
         <source>List appointments</source>
-        <target>Elenco incarichi di docenza</target>
+        <target>Elenca incarichi di docenza</target>
       </trans-unit>
       <trans-unit id="1364">
         <source>Other actions concerning this class</source>
@@ -4674,19 +4674,27 @@
       </trans-unit>
       <trans-unit id="1365">
         <source>Appointments for class %schoolclass%</source>
-        <target>Incarichi di docenza per la classe %schoolclass%</target>
+        <target>Incarichi relativi alla classe %schoolclass%</target>
       </trans-unit>
       <trans-unit id="1366">
         <source>Only appointments of type «%type%» are listed.</source>
         <target>Solo gli incarichi di tipo «%type%» sono elencati.</target>
       </trans-unit>
       <trans-unit id="1367">
-        <source>Show all appointments</source>
-        <target>Mostra tutti gli incarichi</target>
+        <source>List all appointments</source>
+        <target>Elenca tutti gli incarichi</target>
       </trans-unit>
       <trans-unit id="1368">
         <source>Filter</source>
         <target>Filtra</target>
+      </trans-unit>
+      <trans-unit id="1369">
+        <source>List only the appointments of type «%type%»</source>
+        <target>Elenca solo gli incarichi di docenza di tipo «%type%»</target>
+      </trans-unit>
+      <trans-unit id="1370">
+        <source>Fields</source>
+        <target>Campi</target>
       </trans-unit>
      </body>
   </file> 

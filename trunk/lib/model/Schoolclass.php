@@ -92,5 +92,53 @@ class Schoolclass extends BaseSchoolclass
 
   }
 
+	public function getOdf($doctype, sfContext $sfContext=null, $params=array())
+	{
+    $template=sprintf('schoolclass_info.odt');
+    
+    Generic::logMessage('using template', $template);
+    Generic::logMessage('creating odf for schoolclass', $this->getId());
+
+		try
+		{
+			$odf=new OdfDoc($template, $this->__toString(). '.' . $doctype, $doctype);
+		}
+		catch (Exception $e)
+		{
+			throw $e;
+		}
+		
+		$odfdoc=$odf->getOdfDocument();
+		
+		$odfdoc->setVars('schoolclass',  $this->getId());
+    $odfdoc->setVars('date', date('d/m/Y'));
+    
+    $infos=$odfdoc->setSegment('infos');
+    foreach($params['wpinfotypes'] as $wpinfotype)
+    {
+      $infos->infoTitle($wpinfotype->getTitle());
+      $infos->infoDescription($wpinfotype->getDescription());
+      
+      foreach($params['appointments'] as $appointment)
+      {
+        $wpinfo=$appointment->getWpinfo($wpinfotype->getId());
+        if(!$wpinfo or !$wpinfo->getContent() or $appointment->getState() <= $wpinfotype->getStateMin())
+        {
+          continue;
+        }
+        $infos->appointments->appointmentSubject($appointment->getSubject());
+        $infos->appointments->appointmentTeacher($appointment->getTeacherNameWithTitle());
+        $infos->appointments->appointmentContent($wpinfo);
+        $infos->appointments->merge();
+      }
+      
+      $infos->merge();
+    }
+
+    $odfdoc->mergeSegment($infos);
+    
+    Generic::logMessage('document', 'prepared');
+		return $odf;
+	}
 
 }

@@ -389,6 +389,8 @@ class schoolclassesActions extends sfActions
     if($this->appointment_type_id)
     {
       $this->forward404Unless($this->AppointmentType=AppointmentTypePeer::retrieveByPK($this->appointment_type_id));
+      $this->form= new SchoolclassDocumentForm(array(), array('AppointmentType'=>$this->AppointmentType, 'confidential'=>$this->getUser()->getProfile()->canViewConfidentialInfo()));
+      $this->form->setDefault('doctype', $this->getUser()->getProfile()->getPreferredFormat());
     }
     
     $this->Appointments=$this->Schoolclass->getCurrentAppointments($this->appointment_type_id);
@@ -398,6 +400,76 @@ class schoolclassesActions extends sfActions
     }
     
   }
+  
+  public function executeServedoc(sfWebRequest $request)
+	{
+		$this->schoolclass = SchoolclassPeer::retrieveByPk($request->getParameter('id'));
+		$this->forward404Unless($this->schoolclass);
+
+    $this->appointmenttype=$request->getParameter('type');
+
+    $this->parameters=$request->getParameter('info');
+		$this->doctype=$this->parameters['doctype'];
+    
+		$this->forward404Unless(in_array($this->doctype, array('odt', 'doc', 'pdf', 'rtf')));
+		
+    $appointments=AppointmentPeer::retrieveByPKs($this->parameters['ids']);
+    
+    if(!sizeof($appointments))
+    {
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('No appointments selected.'));
+			$this->redirect('schoolclasses/appointments?id='. $this->schoolclass->getId() . '&type=' . $this->appointmenttype);
+    }
+    
+    $wpinfotypes=WpinfoTypePeer::retrieveByPKs($this->parameters['wpinfotypes']);
+    if(!sizeof($wpinfotypes))
+    {
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('No info fields selected.'));
+			$this->redirect('schoolclasses/appointments?id='. $this->schoolclass->getId() . '&type=' . $this->appointmenttype);
+    }
+    
+    if(!$this->getUser()->getProfile()->canViewConfidentialInfo())
+    {
+      foreach($wpinfotypes as $wpinfotype)
+      {
+        if($wpinfotype->getIsConfidential())
+        {
+          $this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('You are not allowed to access confidential fields.'));
+          $this->redirect('schoolclasses/appointments?id='. $this->schoolclass->getId() . '&type=' . $this->appointmenttype);
+        }
+      }
+    }
+    
+
+		try 
+		{
+			$odfdoc=$this->schoolclass->getOdf($this->doctype, $this->getContext(), array(
+        'schoolclass'=>$this->schoolclass,
+        'appointments'=>$appointments,
+        'wpinfotypes'=>$wpinfotypes,
+        ));
+		}
+		catch (Exception $e)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.'). ' ' . $e->getMessage());
+			$this->redirect('schoolclasses/appointments?id='. $this->schoolclass->getId() . '&type=' . $this->appointmenttype);
+		}
+		
+		try
+		{
+			$odfdoc
+			->saveFile()
+			->setResponse($this->getContext()->getResponse());
+			return sfView::NONE;
+		}
+		catch (Exception $e)
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Conversion failed.'). ' ' . $e->getMessage());
+			$this->redirect('schoolclasses/appointments?id='. $this->schoolclass->getId() . '&type=' . $this->appointmenttype);
+		}
+		
+	}
+
   
   
 }

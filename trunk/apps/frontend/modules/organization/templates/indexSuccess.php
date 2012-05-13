@@ -16,7 +16,10 @@
       <th class="sf_admin_text"><?php echo __('Quality code') ?></th>
       <th class="sf_admin_text"><?php echo __('Charged user') ?></th>
       <th class="sf_admin_text"><?php echo __('Expiry') ?></th>
-      <th class="sf_admin_text"><?php echo __('Team') ?></th>
+      <?php if($sf_user->hasCredential('teams')): ?>
+        <th class="sf_admin_text"><?php echo __('Reference number') ?></th>
+        <th class="sf_admin_text"><?php echo __('Team') ?></th>
+      <?php endif ?>
     </tr>
   </thead>
   <tbody>
@@ -30,7 +33,7 @@
           <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
             <td class="warning"><?php echo $item['keyrole']->getMaleDescription() ?></td>
             <td class="warning"><?php echo $item['keyrole']->getQualityCode() ?></td>
-            <td colspan="3" class="highlighted warning"><?php echo __('No one in charge') ?></td>
+            <td colspan="4" class="highlighted warning"><?php echo __('No one in charge') ?></td>
           </tr>
       <?php endif ?>
     <?php endforeach ?>

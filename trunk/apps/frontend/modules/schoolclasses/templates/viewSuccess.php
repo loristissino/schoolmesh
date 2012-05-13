@@ -21,11 +21,13 @@
 
 <?php if(sizeof($enrolments)>0): ?>
 
+<?php include_partial('content/flashes'); ?>
+
+
 <?php if(isset($appointment)): ?>
 	<form action="<?php echo url_for('schoolclasses/batch?id=' . $schoolclass_id . '&appointment=' . $appointment->getId()) ?>" method="get">
 <?php endif ?>
 
-<?php include_partial('content/flashes'); ?>
 
 <table cellspacing="0">
   <thead>
@@ -125,4 +127,5 @@
 <h2><?php echo __('Other actions concerning this class') ?></h2>
 <ul class="sf_admin_actions">
 <?php echo li_link_to_if('action_view', true, __('List appointments'), url_for('schoolclasses/appointments?id='.$schoolclass_id)) ?>
+<?php echo li_link_to_if('action_users', $sf_user->hasCredential('users'), __('Find these people in users management module'), url_for('users/list?query=roster:'.$schoolclass_id)) ?> 
 </ul>
