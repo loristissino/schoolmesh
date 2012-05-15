@@ -811,7 +811,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
         $letters->charges->chargeContext($charge->getTeam()->getDescription());
         $letters->charges->chargeExpiry($charge->getExpiry('d/m/Y'));
         $letters->charges->chargeNotes($charge->getNotes());
-        if($charge->getReferenceNumber())
+        if($charge->getReferenceNumber() && !in_array($charge->getReferenceNumber(), $reference_numbers))
         {
           $reference_numbers[]=$charge->getReferenceNumber();
         }
