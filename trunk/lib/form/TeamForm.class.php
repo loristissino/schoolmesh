@@ -16,7 +16,7 @@ class TeamForm extends BaseTeamForm
       'description'   => new sfValidatorString(array('required'=>true, 'trim'=>true)),
       'posix_name'    => new sfValidatorString(array('required'=>true, 'trim'=>true)),
       'quality_code'  => new sfValidatorString(array('required'=>false, 'trim'=>true)),
-      'id'            => new sfValidatorInteger(),
+      'id'            => new sfValidatorInteger(array('required'=>false)), //we do not have it when it is new...
       'needs_folder'  => new sfValidatorBoolean(array('required'=>false)),
       'needs_mailing_list'  => new sfValidatorBoolean(array('required'=>false)),
       'is_public'     => new sfValidatorBoolean(array('required'=>false)),

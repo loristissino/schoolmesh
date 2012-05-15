@@ -453,11 +453,20 @@
       </trans-unit>
       <trans-unit id="142">
         <source>Workplan waiting for principal`s approval</source>
-        <target>Plan de travail attend l'accord du directeur</target>
+        <target>Plan de travail en attente pour l'accord du directeur</target>
+        <alt-trans>
+          <target xml:lang="fr">Plan de travail en attente l'accord du directeur</target>
+        </alt-trans>
+        <alt-trans>
+          <target xml:lang="fr">Plan de travail attend l'accord du directeur</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="143">
         <source>Intermediate report waiting for principal`s evaluation</source>
-        <target>Rapport interm&#xE9;diaire attend l'&#xE9;valuation du directeur</target>
+        <target>Rapport interm&#xE9;diaire en attente pour l'&#xE9;valuation du directeur</target>
+        <alt-trans>
+          <target xml:lang="fr">Rapport interm&#xE9;diaire attend l'&#xE9;valuation du directeur</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="144">
         <source>Final report waiting for administrative check</source>
@@ -465,7 +474,10 @@
       </trans-unit>
       <trans-unit id="145">
         <source>Final report waiting for principal`s evaluation</source>
-        <target>Rapport final attend l'&#xE9;valuation du directeur</target>
+        <target>Rapport final en attente pour l'&#xE9;valuation du directeur</target>
+        <alt-trans>
+          <target xml:lang="fr">Rapport final attend l'&#xE9;valuation du directeur</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="146">
         <source>Final report approved and archived</source>
@@ -1108,7 +1120,10 @@
       </trans-unit>
       <trans-unit id="9">
         <source>My appointments</source>
-        <target>Mes rendez-vous</target>
+        <target>Mes nominations</target>
+        <alt-trans>
+          <target xml:lang="fr">Mes rendez-vous</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="305">
         <source>My classes</source>
@@ -4670,8 +4685,8 @@
         <target>No activity declared, and confirmation box has been checked</target>
       </trans-unit>
       <trans-unit id="1356">
-        <source>No activity declared (you must either declare some, or check the «no activity confirmation» box)</source>
-        <target>No activity declared (you must either declare some, or check the «no activity confirmation» box)</target>
+        <source>No activity declared (you must either declare some, or check the &#xAB;no activity confirmation&#xBB; box)</source>
+        <target>No activity declared (you must either declare some, or check the &#xAB;no activity confirmation&#xBB; box)</target>
       </trans-unit>
       <trans-unit id="1357">
         <source>Committment</source>
@@ -4684,6 +4699,7 @@
       <trans-unit id="1359">
         <source>No proposals made.</source>
         <target>No proposals made.</target>
-      </trans-unit>    </body>
+      </trans-unit>
+    </body>
   </file>
 </xliff>
