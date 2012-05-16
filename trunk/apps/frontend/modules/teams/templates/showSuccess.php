@@ -83,5 +83,8 @@
     __('Logs'),
     url_for('teams/viewlogs?id='.$Team->getId())
     ) ?>
+  <?php echo li_link_to_if('action_users', $sf_user->hasCredential('users') && $Team->getIsPublic(), __('Find these people in users management module'), url_for('users/list?query=teams:'.$Team->getPosixName())) ?> 
 </ul>
 <?php endif ?>
+
+

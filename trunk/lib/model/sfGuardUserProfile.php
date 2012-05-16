@@ -1981,6 +1981,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     $doc->addField(Zend_Search_Lucene_Field::UnStored('accounts', $this->getAccounts(array('astext'=>true)), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('permissions', $this->getWebPermissions(array('astext'=>true)), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('teams', $this->getTeams(array('astext'=>true, 'privatetoo'=>false)), 'utf-8'));
+    
     $doc->addField(Zend_Search_Lucene_Field::UnStored('guardgroups', $this->getGuardGroups(array('astext'=>true)), 'utf-8'));
     
     if($posixAccount=$this->getAccountByType('posix'))
