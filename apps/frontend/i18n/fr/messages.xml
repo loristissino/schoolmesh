@@ -2804,7 +2804,7 @@
       </trans-unit>
       <trans-unit id="716">
         <source>Charged user</source>
-        <target>Charged user</target>
+        <target>Utilisateur charg&#xE9;</target>
       </trans-unit>
       <trans-unit id="717">
         <source>Scheduled deadline</source>
@@ -3092,7 +3092,7 @@
       </trans-unit>
       <trans-unit id="788">
         <source>Get charge letters</source>
-        <target>Get charge letters</target>
+        <target>Obtenir des lettres de charge</target>
       </trans-unit>
       <trans-unit id="789">
         <source>Prefers richtext</source>
@@ -3112,7 +3112,7 @@
       </trans-unit>
       <trans-unit id="793">
         <source>Charge letters</source>
-        <target>Charge letters</target>
+        <target>Lettres de charge</target>
       </trans-unit>
       <trans-unit id="794">
         <source>All modules</source>
@@ -3722,6 +3722,9 @@
       <trans-unit id="946">
         <source>%name% belongs to the team your appointment is set for</source>
         <target>%name% appartient &#xE0; l'&#xE9;quipe que votre rendez-vous est fix&#xE9;</target>
+        <alt-trans>
+          <target xml:lang="fr">%name% appartient &#xE0; l'&#xE9;quipe de votre nomination</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="947">
         <source>Users' settings</source>
@@ -4167,7 +4170,10 @@
       </trans-unit>
       <trans-unit id="1054">
         <source>Printed in charge letters</source>
-        <target>Imprim&#xE9; en lettres gratuitement</target>
+        <target>Imprim&#xE9; en lettres de charge</target>
+        <alt-trans>
+          <target xml:lang="fr">Imprim&#xE9; en lettres gratuitement</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="1055">
         <source>Choose a class</source>
@@ -4352,10 +4358,16 @@
       <trans-unit id="1289">
         <source>This appointment type has some didactic module fields associated with, but it looks like it should not.</source>
         <target>Ce genre de rendez-vous est associ&#xE9; &#xE0; des champs de module didactique, m&#xEA;me s'il semble qu'il ne devrait pas &#xEA;tre ainsi.</target>
+        <alt-trans>
+          <target xml:lang="fr">Ce genre de nomination est associ&#xE9; &#xE0; des champs de module didactique, m&#xEA;me s'il semble qu'il ne devrait pas &#xEA;tre ainsi.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="1290">
         <source>This appointment type does not have didactic module fields associated with, but it looks like it should.</source>
         <target>Ce genre de rendez-vous n'est pas associ&#xE9; &#xE0; des champs de module didactique, m&#xEA;me si cela semble n&#xE9;cessaire.</target>
+        <alt-trans>
+          <target xml:lang="fr">Ce genre de nomination n'est pas associ&#xE9; &#xE0; des champs de module didactique, m&#xEA;me si cela semble n&#xE9;cessaire.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="1291">
         <source>Tools and methodologies</source>
@@ -4376,14 +4388,23 @@
       <trans-unit id="1297">
         <source>This appointment type has some group of tools/methodologies associated with, but it looks like it should not.</source>
         <target>Ce genre de rendez-vous est associ&#xE9; &#xE0; certains groupes d'outils/m&#xE9;thodes, m&#xEA;me si cela semble incorrect.</target>
+        <alt-trans>
+          <target xml:lang="fr">Ce genre de nomination est associ&#xE9; &#xE0; certains groupes d'outils/m&#xE9;thodes, m&#xEA;me si cela semble incorrect.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="1298">
         <source>This appointment type does not have groups of tools/methodologies associated with, but it looks like it should.</source>
         <target>Ce genre de rendez-vous n'est pas associ&#xE9; &#xE0; des groupes d'outils/m&#xE9;thodes, m&#xEA;me si cela semble n&#xE9;cessaire.</target>
+        <alt-trans>
+          <target xml:lang="fr">Ce genre de nomination n'est pas associ&#xE9; &#xE0; des groupes d'outils/m&#xE9;thodes, m&#xEA;me si cela semble n&#xE9;cessaire.</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="1299">
         <source>This appointment type</source>
         <target>Ce genre de rendez-vous</target>
+        <alt-trans>
+          <target xml:lang="fr">Ce genre de nomination</target>
+        </alt-trans>
         <alt-trans>
           <target xml:lang="fr">Ce type de nomination</target>
         </alt-trans>
@@ -4522,7 +4543,7 @@
       </trans-unit>
       <trans-unit id="1315">
         <source>Responsibility role charge letters</source>
-        <target>Responsibility role charge letters</target>
+        <target>Lettres de charge pour les r&#xF4;les de responsabilit&#xE9;</target>
       </trans-unit>
       <trans-unit id="1316">
         <source>You are going to get the responsibility roles for the following users:</source>
