@@ -989,7 +989,7 @@ class Schoolproject extends BaseSchoolproject {
     {
       $budget+=$resource->getQuantityApproved()*$resource->getStandardCost();
       //$logbudget.=$resource->getQuantityApproved(). ' * ' . $resource->getStandardCost(). "\n";
-      foreach($resource->getProjActivities() as $activity)
+      foreach($resource->getAcknowledgedActivities() as $activity)
       {
         $expenses+=$activity->getQuantity()*$resource->getStandardCost();
         //$logexpenses.=$activity->getQuantity() . ' * ' . $resource->getStandardCost(). "\n";
