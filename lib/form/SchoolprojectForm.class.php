@@ -203,26 +203,29 @@ class SchoolprojectForm extends BaseSchoolprojectForm
             unset(
               $this['final_report'],
               $this['proposals'],
-              $this['team_id'],
-              $this['no_activity_confirm']
+              $this['team_id']
             );
           }
-          else
+          
+          if(
+            $this->schoolproject->getProjCategory()->getResources()!=0
+            // this kind of project may or must have resources
+              and
+            $this->budget > 0
+            // there are some resources required
+              and
+            $this->expenses > 0
+            // some activity has been declared and confirmed
+            )
           {
-            if(
-              $this->schoolproject->getProjCategory()->getResources()!=0
-              // this kind of project may or must have resources
-                and
-              $this->budget > 0
-              // there are some resources required
-                and
-              $this->expenses > 0
-              // some activity has been declared and confirmed
-              )
-            {
-              unset($this['no_activity_confirm']);
-            }
+            unset($this['no_activity_confirm']);
           }
+          
+          if($this->schoolproject->getProjCategory()->getResources()==0)
+          {
+            unset($this['no_activity_confirm']);
+          }
+          
         break;
       case Workflow::PROJ_FINISHED:
         unset(

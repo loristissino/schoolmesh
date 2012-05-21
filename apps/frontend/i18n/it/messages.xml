@@ -2881,8 +2881,8 @@
         <target>Tutti i progetti selezionati sono stati correttamente reimpostati a bozza.</target>
     </trans-unit>
     <trans-unit id="742">
-        <source>You cannot reset to draft projects already financed.</source>
-        <target>Non è possibile reimpostare a bozza progetti già approvati dal Consiglio di Istituto.</target>
+        <source>You cannot reset to draft projects already confirmed.</source>
+        <target>Non è possibile reimpostare a bozza progetti già confermati.</target>
     </trans-unit>
     <trans-unit id="743">
         <source>View the list of students enrolled in this class</source>
@@ -4597,12 +4597,12 @@
         <target>Valutazione del risultato effettuata</target>
       </trans-unit>
       <trans-unit id="1346">
-        <source>Deadline not marked as completed</source>
-        <target>Scadenza di monitoraggio non contrassegnata come completata</target>
+        <source>Deadline not marked as completed or not postponed</source>
+        <target>Scadenza di monitoraggio non contrassegnata come completata o non posposta</target>
       </trans-unit>
       <trans-unit id="1347">
-        <source>Deadline marked as completed</source>
-        <target>Scadenza di monitoraggio contrassegnata come completata</target>
+        <source>Deadline marked as completed or not yet over</source>
+        <target>Scadenza di monitoraggio contrassegnata come completata o non ancora raggiunta</target>
       </trans-unit>
       <trans-unit id="1348">
         <source>The report has been submitted.</source>
@@ -4696,10 +4696,33 @@
         <source>Fields</source>
         <target>Campi</target>
       </trans-unit>
+      <trans-unit id="1371">
+        <source>This kind of project may not have resources</source>
+        <target>Per questo tipo di progetto non sono previste risorse</target>
+      </trans-unit>
+      <trans-unit id="1372">
+        <source>The selected user is not allowed to coordinate projects.</source>
+        <target>L'utente selezionato non è abilitato al coordinamento di progetti.</target>
+      </trans-unit>
+      <trans-unit id="1373">
+        <source>The selected user is not active.</source>
+        <target>L'utente selezionato non è attivo.</target>
+      </trans-unit>
+      <trans-unit id="1374">
+        <source>Reassigned to %user%</source>
+        <target>Riassegnato a %user%</target>
+      </trans-unit>
+      <trans-unit id="1375">
+        <source>Projects reassignment</source>
+        <target>Riassegnazione progetti</target>
+      </trans-unit>
+      <trans-unit id="1376">
+        <source>You are going to change the coordinator of the following projects:</source>
+        <target>Stai per cambiare il coordinatore dei seguenti progetti:</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>
-
 
 
 

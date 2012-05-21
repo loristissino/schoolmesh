@@ -1349,5 +1349,12 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
     }
     return $users;
   }
+  
+  public static function retrieveUsersAllowedToProject()
+  {
+    
+    //FIXME We should select some of these users...
+    return self::retrieveAllButStudents();
+  }
 
 }

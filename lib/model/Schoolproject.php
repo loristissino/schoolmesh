@@ -944,11 +944,11 @@ class Schoolproject extends BaseSchoolproject {
       $deadlines=$this->getProjDeadlines();
       foreach($deadlines as $deadline)
       {
-        if(!$deadline->getCompleted())
+        if(!$deadline->isAcceptable())
         {
           $checkList->addCheck(new Check(
             Check::FAILED,
-            'Deadline not marked as completed',
+            'Deadline not marked as completed or not postponed',
             'Deadlines',
             array(
               'link_to'=>'projects/editdeadline?id=' . $deadline->getId(),
@@ -959,7 +959,7 @@ class Schoolproject extends BaseSchoolproject {
         {
           $checkList->addCheck(new Check(
             Check::PASSED,
-            'Deadline marked as completed',
+            'Deadline marked as completed or not yet over',
             'Deadlines'
             ));
         }

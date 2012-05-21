@@ -73,6 +73,47 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 		return self::doSelectOne($c);
 	}
 
+  public static function reassign($user, $params, $sf_context=null, $options=array())
+  {
+    $ids=$user->getAttribute('ids');
+    $user_id=$user->getProfile()->getId();
+
+    $profile=sfGuardUserProfilePeer::retrieveByPK($params['user_id']);
+    if(!$profile->getIsActive())
+    {
+      $result['result']='error';
+      $result['message']='The selected user is not active.';
+      return $result;
+    }
+
+    if(!$profile->hasPermission('proj_coordination'))
+    {
+      $result['result']='error';
+      $result['message']='The selected user is not allowed to coordinate projects.';
+      return $result;
+    }
+
+    $projects = SchoolprojectPeer::retrieveByPKs($ids);
+    foreach($projects as $project)
+    {
+      $project
+      ->setUserId($params['user_id'])
+      ;
+      $project->addWfevent(
+          $user_id,
+          'Reassigned to %user%',
+          array('%user%'=>$profile->getFullName()),
+          null,
+          $sf_context
+        );
+      $project->save();
+    }
+    $result['result']='notice';
+    $result['message']='Projects information have been updated.';
+    return $result;
+    
+  }
+
   private static function _setGenericDate($user, $params, $sf_context=null, $options=array())
   {
     $ids=$user->getAttribute('ids');

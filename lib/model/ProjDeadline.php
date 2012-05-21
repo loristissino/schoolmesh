@@ -27,6 +27,27 @@ class ProjDeadline extends BaseProjDeadline {
 		
 	}
   
+  public function isAcceptable()
+  {
+    // a deadline is considered acceptable (when the report is submitted)
+    // when it is completed, or its original date is not yet over, or its
+    // current date is not yet over and there are some notes
+    
+		if ($this->getCompleted())
+		{
+			return true;
+		}
+		if ($this->getOriginalDeadlineDate('U') > time())
+		{
+			return true;
+		}
+		if ($this->getCurrentDeadlineDate('U') > time() and $this->getNotes())
+		{
+			return true;
+		}
+    return false;
+  }
+  
   public function getDeadlineDate($format)
   {
     return $this->getCurrentDeadlineDate() ? $this->getCurrentDeadlineDate($format) : $this->getOriginalDeadlineDate($format);

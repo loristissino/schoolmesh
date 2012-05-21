@@ -27,6 +27,12 @@ setapprovaldate:
 
 setfinancingdate:
   credentials: proj_adm_ok
+
+setconfirmationdate:
+  credentials: proj_adm_ok
+
+reassign:
+  credentials: proj_adm_ok
   
 computebudget:
   credentials: [[ proj_view, proj_adm_ok, proj_monitoring ]]

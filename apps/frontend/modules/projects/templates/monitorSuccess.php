@@ -34,7 +34,10 @@
       <input type="checkbox" name="ids[]" value="<?php echo $project->getId() ?>" class="sf_admin_batch_checkbox" />
       </td>
       <?php include_partial('content/td_year', array('year'=>$project->getYear())) ?>
-      <td><strong><?php echo $project->getTitle() ?></strong></td>
+      <td>
+        <strong><?php echo $project->getTitle() ?></strong><br />
+        <?php include_partial('category', array('category'=>$project->getProjCategory())) ?>
+      </td>
       <td><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></td>
       <td<?php if($project->getState()==Workflow::PROJ_FINISHED) echo ' class="workflow_finished"' ?>><?php include_partial('state', array('project'=>$project)) ?></td>
       <td><?php echo $project->getReferenceNumber() ?></td>
@@ -69,6 +72,7 @@
   'updatestandardcosts' => __('Update standard costs'),
   'getchargeletters' => __('Get charge letters'),
   'resettodraft' => __('Reset to draft'),
+  'reassign' => __('Reassign'),
   'spreadsheet' => __('Export as spreadsheet'),
 ), 0) ?>
   </select>
