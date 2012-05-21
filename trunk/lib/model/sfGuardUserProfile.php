@@ -18,6 +18,11 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			return $this->getUserId();
 		}
     
+    public function getIsActive()
+    {
+      return $this->getsfGuardUser()->getIsActive();
+    }
+    
     public function getAgeStatus()
     {
       

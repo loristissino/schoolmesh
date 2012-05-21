@@ -38,11 +38,15 @@
         (<?php echo $project->getProjCategory() ?>)<br />
         <em><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></em>
       </td>
-      <?php $value=$resources[0]->getAmountEstimated()-$resources[0]->getAmountFundedExternally() ?>
-      <?php $external=$resources[0]->getAmountFundedExternally() ?>
-      <?php $total+=$value ?>
-      <?php $etotal+=$external ?>
-      <?php include_partial('resourcebudget', array('resource'=>$resources[0], 'value'=>$value, 'external'=>$external)) ?>
+      <?php if(sizeof($resources)): ?>
+        <?php $value=sizeof($resources)?$resources[0]->getAmountEstimated()-$resources[0]->getAmountFundedExternally():0 ?>
+        <?php $external=sizeof($resources)?$resources[0]->getAmountFundedExternally():0 ?>
+        <?php $total+=$value ?>
+        <?php $etotal+=$external ?>
+        <?php include_partial('resourcebudget', array('resource'=>$resources[0], 'value'=>$value, 'external'=>$external)) ?>
+      <?php else: ?>
+        <td colspan="9"></td>
+      <?php endif ?>
     </tr>
     <?php for($i=1; $i<sizeof($resources); $i++): ?>
     <tr>
@@ -53,14 +57,17 @@
       <?php include_partial('resourcebudget', array('resource'=>$resources[$i], 'value'=>$value, 'external'=>$external)) ?>
     </tr>
     <?php endfor ?>
-    <tr>
-    <th colspan="6"><?php echo __('Total for the project «%title%»', array('%title%'=>$project->getTitle())) ?></th>
-    <?php $grandtotal+=$total ?>
-    <?php $egrandtotal+=$etotal ?>
-    <td style="text-align: right; font-weight: bold" class="amount"><?php echo currencyvalue($total) ?></td>
-    <td style="text-align: right; font-weight: bold" class="amount"><?php echo currencyvalue($etotal) ?></td>
-    <th></th>
-    </tr>
+    <?php if(sizeof($resources)): ?>
+      <tr>
+      <th colspan="6"><?php echo __('Total for the project «%title%»', array('%title%'=>$project->getTitle())) ?></th>
+      <?php $grandtotal+=$total ?>
+      <?php $egrandtotal+=$etotal ?>
+      <td style="text-align: right; font-weight: bold" class="amount"><?php echo currencyvalue($total) ?></td>
+      <td style="text-align: right; font-weight: bold" class="amount"><?php echo currencyvalue($etotal) ?></td>
+      <th></th>
+      </tr>
+    <?php endif ?>
+    
     <?php endforeach; ?>
     <tr>
     <th colspan="7"><?php echo format_number_choice(__('[1]Grand total for the project selected|[1,+Inf]Grand total for the %number% projects selected'), array('%number%'=>sizeof($projects)), sizeof($projects)) ?></th>

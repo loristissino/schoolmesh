@@ -297,6 +297,45 @@ class projectsActions extends sfActions
   }
 
 
+  public function executeReassign(sfWebRequest $request)
+  {
+		if ($request->isMethod('post'))
+    {
+      $this->form = new ChooseUserForm();
+
+      Generic::logMessage('passed here', null);
+			$this->form->bind($request->getParameter('info'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+        Generic::logMessage('params', $params);
+				$result=SchoolprojectPeer::reassign($this->getUser(), $params, $this->getContext());
+        
+				$this->getUser()->setFlash($result['result'],
+					$this->getContext()->getI18N()->__($result['message'])
+					);
+        return $this->redirect('projects/monitor');
+			}
+      else
+      {
+        return $this->renderText('invalid data');
+      }
+		}
+
+    $this->form = new ChooseUserForm(array(), array('peer_method'=>'retrieveUsersAllowedToProject'));
+
+    if($this->getUser()->hasAttribute('ids'))
+    {
+      $this->ids=$this->getUser()->getAttribute('ids');
+    }
+    else
+    {
+      $this->ids=$this->_getIds($request);
+    }
+    $this->projects=SchoolprojectPeer::retrieveByPks($this->ids);
+
+  }
+
   
   public function executeComputebudget(sfWebRequest $request)
   {
@@ -414,7 +453,7 @@ class projectsActions extends sfActions
     
     foreach($projects as $project)
     {
-      $possible = $possible && ($project->getState()<Workflow::PROJ_FINANCED);
+      $possible = $possible && ($project->getState()<Workflow::PROJ_CONFIRMED);
     }
     
     if ($possible)
@@ -424,7 +463,7 @@ class projectsActions extends sfActions
     else
     {
       $result['result']='error';
-      $result['message']='You cannot reset to draft projects already financed.';
+      $result['message']='You cannot reset to draft projects already confirmed.';
     }
         
     $this->getUser()->setFlash($result['result'],
