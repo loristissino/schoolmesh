@@ -20,11 +20,11 @@ rm -rf "$STARTDIR/bin/schoolmesh_application_importtables"
 # we copy the other ones
 sudo cp -v "$STARTDIR"/bin/schoolmesh* /usr/local/bin
   
-STARTDIR="$STARTDIR/lib"
+LIBDIR="$STARTDIR/lib"
 for DIR in account  email  filter  form  helper  model  schoolmesh  task  test
   do
-    cd "$STARTDIR/$DIR"
-    echo "Updating $STARTDIR/$DIR..."
+    cd "$LIBDIR/$DIR"
+    echo "Updating $LIBDIR/$DIR..."
     svn update
   done
 
