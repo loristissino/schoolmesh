@@ -4720,6 +4720,10 @@
         <source>You are going to change the coordinator of the following projects:</source>
         <target>Stai per cambiare il coordinatore dei seguenti progetti:</target>
       </trans-unit>
+      <trans-unit id="1377">
+        <source>N/A -- not applicable (the activity has not been performed)</source>
+        <target>N/A -- non applicabile (l'attività non è stata realizzata)</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>
