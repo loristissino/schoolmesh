@@ -37,6 +37,7 @@ class ProjUpshotForm extends BaseProjUpshotForm
       $choices[$i]=$this->options['sf_context']->getI18N()->__('%value% -- intermediate result upshot with value %value%', array('%value%'=>$i));
     }
     $choices[$project->getEvaluationMax()]=$this->options['sf_context']->getI18N()->__('%value% -- really positive upshot - the activity completely succeeded', array('%value%'=>$project->getEvaluationMax()));
+    $choices[-1]=$this->options['sf_context']->getI18N()->__('N/A -- not applicable (the activity has not been performed)');
 
     $this->widgetSchema['evaluation'] = new sfWidgetFormSelect(array(
       'choices'=>$choices
