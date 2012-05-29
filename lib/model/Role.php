@@ -26,4 +26,11 @@ class Role extends BaseRole
      $userteam=RolePeer::retrieveUsersPlayingRole($this);
      return sizeof($userteam) ? $userteam : false;
   }
+
+  public function countUsersPlayingRole()
+  {
+     $userteam=RolePeer::retrieveUsersPlayingRole($this);
+     return sizeof($userteam);
+  }
+
 }
