@@ -42,11 +42,31 @@
 
 <h2><?php echo __('Functional roles') ?></h2>
 
-<ul class="sf_admin_actions">
-<?php foreach($functionalroles as $Role): ?>
-  <?php echo li_link_to_if('action_users', true, $Role->getMaleDescription(), url_for('organization/role?id='.$Role->getId())) ?>
-<?php endforeach ?>
-</ul>
+<table>
+  <tr>
+    <th class="sf_admin_text"><?php echo __('Role') ?></th>
+    <th class="sf_admin_text"><?php echo __('Quality code') ?></th>
+    <th class="sf_admin_text"><?php echo __('Number') ?></th>
+    <th class="sf_admin_text"><?php echo __('Actions') ?></th>
+  </tr>
+  <?php foreach($functionalroles as $Role): ?>
+    <tr>
+      <?php if(($number=$Role->countUsersPlayingRole()) > 0): ?>
+        <td><?php echo $Role->getMaleDescription() ?></td>
+        <td><?php echo $Role->getQualityCode() ?></td>
+        <td style="text-align:right"><?php echo $number ?></td>
+        <td>
+          <ul class="sf_admin_td_actions">
+            <?php echo li_link_to_if('td_action_view', true, __('View'), url_for('organization/role?id='.$Role->getId())) ?>
+          </ul>
+        </td>
+      <?php else: ?>
+        <td class="warning"><?php echo link_to($Role->getMaleDescription(), url_for('organization/role?id='.$Role->getId())) ?></td>
+        <td class="warning"><?php echo $Role->getQualityCode() ?></td>
+        <td colspan="2" class="highlighted warning"><?php echo __('No one in charge') ?></td>
+      <?php endif ?>
+  <?php endforeach ?>
+</table>
 
 <h2><?php echo __('Organizational chart') ?></h2>
 
