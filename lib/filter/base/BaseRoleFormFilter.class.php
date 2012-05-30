@@ -20,6 +20,8 @@ abstract class BaseRoleFormFilter extends BaseFormFilterPropel
       'needs_charge_letter' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'is_key'              => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'default_guardgroup'  => new sfWidgetFormFilterInput(),
+      'min'                 => new sfWidgetFormFilterInput(),
+      'max'                 => new sfWidgetFormFilterInput(),
       'rank'                => new sfWidgetFormFilterInput(),
     ));
 
@@ -32,6 +34,8 @@ abstract class BaseRoleFormFilter extends BaseFormFilterPropel
       'needs_charge_letter' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'is_key'              => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'default_guardgroup'  => new sfValidatorPass(array('required' => false)),
+      'min'                 => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'max'                 => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'rank'                => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
@@ -59,6 +63,8 @@ abstract class BaseRoleFormFilter extends BaseFormFilterPropel
       'needs_charge_letter' => 'Boolean',
       'is_key'              => 'Boolean',
       'default_guardgroup'  => 'Text',
+      'min'                 => 'Number',
+      'max'                 => 'Number',
       'rank'                => 'Number',
     );
   }

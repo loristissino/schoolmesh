@@ -1,3 +1,7 @@
+2012/05/30
+Release: 1.07
+Added fields min and max in role table
+
 2012/05/11
 Release: 1.06
 Added field shortcut in proj_resource_type table (unique)

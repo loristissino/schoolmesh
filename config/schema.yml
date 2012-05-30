@@ -218,6 +218,10 @@ propel:
     needs_charge_letter: boolean
     is_key: { type: boolean, default: false }
     default_guardgroup: varchar(20)
+    min: { type: integer, default: 0 }
+    # the minimum number of assignees for this role (0 to not set)
+    max:  { type: integer, default: 0 }
+    # the maximum number of assignees for this role (0 to not set)
     rank: integer
 
   user_team:
