@@ -4724,10 +4724,66 @@
         <source>N/A -- not applicable (the activity has not been performed)</source>
         <target>N/A -- non applicabile (l'attività non è stata realizzata)</target>
       </trans-unit>
+      <trans-unit id="1378">
+        <source>Roles</source>
+        <target>Ruoli</target>
+      </trans-unit>
+      <trans-unit id="1379">
+        <source>Main?</source>
+        <target>Principale?</target>
+      </trans-unit>
+      <trans-unit id="1380">
+        <source>Charge letter?</source>
+        <target>Lettera incarico?</target>
+      </trans-unit>
+      <trans-unit id="1381">
+        <source>Key?</source>
+        <target>Chiave?</target>
+      </trans-unit>
+      <trans-unit id="1382">
+        <source>May be main role</source>
+        <target>Può essere princ.</target>
+      </trans-unit>
+      <trans-unit id="1383">
+        <source>Needs charge letter</source>
+        <target>Lettera incarico</target>
+      </trans-unit>
+      <trans-unit id="1384">
+        <source>Is key</source>
+        <target>È chiave</target>
+      </trans-unit>
+      <trans-unit id="1385">
+        <source>Default guardgroup</source>
+        <target>Guardgroup predef.</target>
+      </trans-unit>
+      <trans-unit id="1386">
+        <source>Male description</source>
+        <target>Descr. maschile</target>
+      </trans-unit>
+      <trans-unit id="1387">
+        <source>Female description</source>
+        <target>Descr. femminile</target>
+      </trans-unit>
+      <trans-unit id="1388">
+        <source>Edit role «%description%»</source>
+        <target>Modifica ruolo «%description%»</target>
+      </trans-unit>
+      <trans-unit id="1389">
+        <source>New role</source>
+        <target>Nuovo ruolo</target>
+      </trans-unit>
+      <trans-unit id="1390">
+        <source>Create a new role</source>
+        <target>Crea un nuovo ruolo</target>
+      </trans-unit>
+      <trans-unit id="1391">
+        <source>Minimun number of assignees unreached</source>
+        <target>Numero minimo di incaricati non raggiunto</target>
+      </trans-unit>
+      <trans-unit id="1392">
+        <source>Maximum number of assignees exceeded</source>
+        <target>Massimo numero di incaricati superato</target>
+      </trans-unit>
      </body>
   </file> 
 </xliff>
-
-
-
-

@@ -27,7 +27,7 @@
     <?php foreach($list as $item): ?>
       <?php if($item['userteam']): ?>
         <?php foreach($item['userteam'] as $component): ?>
-          <?php include_partial('tr_userteam', array('role'=>$item['keyrole'], 'component'=>$component)) ?>
+          <?php include_partial('tr_userteam', array('role'=>$item['keyrole'], 'component'=>$component, 'number'=>sizeof($item['userteam']))) ?>
         <?php endforeach ?>
         <?php else: ?>
           <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
@@ -51,10 +51,13 @@
   </tr>
   <?php foreach($functionalroles as $Role): ?>
     <tr>
-      <?php if(($number=$Role->countUsersPlayingRole()) > 0): ?>
+      <?php if(($number=$Role->countUsersPlayingRole()) > 0 or $Role->getMin()==0): ?>
         <td><?php echo $Role->getMaleDescription() ?></td>
         <td><?php echo $Role->getQualityCode() ?></td>
-        <td style="text-align:right"><?php echo $number ?></td>
+        <td style="text-align:right">
+          <?php include_partial('roles/minmaxcheck', array('Role'=>$Role, 'number'=>$number)) ?>
+          <?php echo $number ?>
+        </td>
         <td>
           <ul class="sf_admin_td_actions">
             <?php echo li_link_to_if('td_action_view', true, __('View'), url_for('organization/role?id='.$Role->getId())) ?>

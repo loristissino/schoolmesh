@@ -74,6 +74,20 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	protected $default_guardgroup;
 
 	/**
+	 * The value for the min field.
+	 * Note: this column has a database default value of: 0
+	 * @var        int
+	 */
+	protected $min;
+
+	/**
+	 * The value for the max field.
+	 * Note: this column has a database default value of: 0
+	 * @var        int
+	 */
+	protected $max;
+
+	/**
 	 * The value for the rank field.
 	 * @var        int
 	 */
@@ -136,6 +150,8 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	public function applyDefaultValues()
 	{
 		$this->is_key = false;
+		$this->min = 0;
+		$this->max = 0;
 	}
 
 	/**
@@ -236,6 +252,26 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	public function getDefaultGuardgroup()
 	{
 		return $this->default_guardgroup;
+	}
+
+	/**
+	 * Get the [min] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getMin()
+	{
+		return $this->min;
+	}
+
+	/**
+	 * Get the [max] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getMax()
+	{
+		return $this->max;
 	}
 
 	/**
@@ -429,6 +465,46 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	} // setDefaultGuardgroup()
 
 	/**
+	 * Set the value of [min] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Role The current object (for fluent API support)
+	 */
+	public function setMin($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->min !== $v || $this->isNew()) {
+			$this->min = $v;
+			$this->modifiedColumns[] = RolePeer::MIN;
+		}
+
+		return $this;
+	} // setMin()
+
+	/**
+	 * Set the value of [max] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Role The current object (for fluent API support)
+	 */
+	public function setMax($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->max !== $v || $this->isNew()) {
+			$this->max = $v;
+			$this->modifiedColumns[] = RolePeer::MAX;
+		}
+
+		return $this;
+	} // setMax()
+
+	/**
 	 * Set the value of [rank] column.
 	 * 
 	 * @param      int $v new value
@@ -459,6 +535,14 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	public function hasOnlyDefaultValues()
 	{
 			if ($this->is_key !== false) {
+				return false;
+			}
+
+			if ($this->min !== 0) {
+				return false;
+			}
+
+			if ($this->max !== 0) {
 				return false;
 			}
 
@@ -493,7 +577,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			$this->needs_charge_letter = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
 			$this->is_key = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
 			$this->default_guardgroup = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-			$this->rank = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
+			$this->min = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
+			$this->max = ($row[$startcol + 10] !== null) ? (int) $row[$startcol + 10] : null;
+			$this->rank = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -503,7 +589,7 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 10; // 10 = RolePeer::NUM_COLUMNS - RolePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 12; // 12 = RolePeer::NUM_COLUMNS - RolePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Role object", $e);
@@ -884,6 +970,12 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 				return $this->getDefaultGuardgroup();
 				break;
 			case 9:
+				return $this->getMin();
+				break;
+			case 10:
+				return $this->getMax();
+				break;
+			case 11:
 				return $this->getRank();
 				break;
 			default:
@@ -916,7 +1008,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			$keys[6] => $this->getNeedsChargeLetter(),
 			$keys[7] => $this->getIsKey(),
 			$keys[8] => $this->getDefaultGuardgroup(),
-			$keys[9] => $this->getRank(),
+			$keys[9] => $this->getMin(),
+			$keys[10] => $this->getMax(),
+			$keys[11] => $this->getRank(),
 		);
 		return $result;
 	}
@@ -976,6 +1070,12 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 				$this->setDefaultGuardgroup($value);
 				break;
 			case 9:
+				$this->setMin($value);
+				break;
+			case 10:
+				$this->setMax($value);
+				break;
+			case 11:
 				$this->setRank($value);
 				break;
 		} // switch()
@@ -1011,7 +1111,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setNeedsChargeLetter($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setIsKey($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setDefaultGuardgroup($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setRank($arr[$keys[9]]);
+		if (array_key_exists($keys[9], $arr)) $this->setMin($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setMax($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setRank($arr[$keys[11]]);
 	}
 
 	/**
@@ -1032,6 +1134,8 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RolePeer::NEEDS_CHARGE_LETTER)) $criteria->add(RolePeer::NEEDS_CHARGE_LETTER, $this->needs_charge_letter);
 		if ($this->isColumnModified(RolePeer::IS_KEY)) $criteria->add(RolePeer::IS_KEY, $this->is_key);
 		if ($this->isColumnModified(RolePeer::DEFAULT_GUARDGROUP)) $criteria->add(RolePeer::DEFAULT_GUARDGROUP, $this->default_guardgroup);
+		if ($this->isColumnModified(RolePeer::MIN)) $criteria->add(RolePeer::MIN, $this->min);
+		if ($this->isColumnModified(RolePeer::MAX)) $criteria->add(RolePeer::MAX, $this->max);
 		if ($this->isColumnModified(RolePeer::RANK)) $criteria->add(RolePeer::RANK, $this->rank);
 
 		return $criteria;
@@ -1102,6 +1206,10 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		$copyObj->setIsKey($this->is_key);
 
 		$copyObj->setDefaultGuardgroup($this->default_guardgroup);
+
+		$copyObj->setMin($this->min);
+
+		$copyObj->setMax($this->max);
 
 		$copyObj->setRank($this->rank);
 
