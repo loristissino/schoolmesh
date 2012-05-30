@@ -1,0 +1,83 @@
+Subnet:
+
+  lab1:
+    name:   Laboratorio 1
+    ip_cidr:  192.168.1.0/16
+
+  lab2:
+    name:   Laboratorio 2
+    ip_cidr:  192.168.2.0/16
+
+Workstation:
+
+  biegacz:
+    name:   biegacz
+    ip_cidr:  127.0.0.1
+    subnet_id: lab1
+    mac_address: 00:14:7C:BD:E5:9B
+
+  pc1labinf1:
+    name:    pc1labinf1
+    ip_cidr:   192.168.1.21
+    subnet_id: lab1
+
+<?php for($i=2;$i<=20;$i++): ?>
+  pc<?php echo $i ?>labinf1:
+    name:    pc<?php echo $i ?>labinf1
+    ip_cidr:   192.168.1.<?php echo "$i\n" ?>
+    subnet_id: lab1
+<?php endfor; ?>
+
+  pc1labinf2:
+    name:    pc1labinf2
+    ip_cidr:   192.168.2.1
+    subnet_id: lab2
+    is_enabled: true
+
+  pc2labinf2:
+    name:    pc2labinf2
+    ip_cidr:   192.168.2.1
+    subnet_id: lab2
+
+Service:
+  http_tcp:
+    name: http
+    port:   80
+    is_enabled_by_default: true
+
+  http_udp:
+    name: http
+    port:   80
+    is_udp: true
+    is_enabled_by_default: true
+
+  ftp:
+    name: ftp
+    port:   21
+    is_enabled_by_default: false
+
+  ftp_data:
+    name: ftp_data
+    port:   20
+    is_enabled_by_default: false
+
+  pop3:
+    name: pop3
+    port:   110
+    is_enabled_by_default: false
+
+  imap:
+    name: imap
+    port:   143
+    is_enabled_by_default: false
+
+  ssh_tcp:
+    name: ssh
+    port:   22
+    is_enabled_by_default: false
+
+  ssh_udp:
+    name: ssh
+    port:   22
+    is_udp: true
+    is_enabled_by_default: false

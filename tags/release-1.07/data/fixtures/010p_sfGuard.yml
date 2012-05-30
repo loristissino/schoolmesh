@@ -1,0 +1,16 @@
+sfGuardUser:
+  loris:
+    username:       loris.tissino
+    password:       lorisp
+    is_superadmin:  false
+
+sfGuardUserGroup:
+  loris:
+    group_id:       admin
+    user_id:        loris
+  
+sfGuardUserPermission:
+  loris_backadmin:
+    user_id:      loris
+    permission_id:  backadmin
+  

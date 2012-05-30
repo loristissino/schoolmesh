@@ -1,0 +1,51 @@
+grace:
+  before: 2
+  after: 2
+
+# if a timeslot begins at 9:10, we'll open the communication at 9:10 - "before" minutes
+# if a timeslot ends at 9:10, we'll cut the communication at 9:10 + "after" minutes
+
+timeslots:
+  mattino:
+    1:
+      begin: 8:10
+      end: 9:10
+      description: 1^ ora
+    2:
+      begin: 9:10
+      end: 10:10
+      description: 2^ ora
+    3:
+      begin: 10:10
+      end: 11:10
+      description: 3^ ora
+    4:
+      begin: 11:10
+      end: 12:10
+      description: 4^ ora
+    5:
+      begin: 12:10
+      end: 13:10
+      description: 5^ ora
+  pranzo:
+    p: 
+      begin: 13:10
+      end: 14:00
+      description: pausa pranzo
+  pomeriggio:
+    6:
+      begin: 14:00
+      end: 15:00
+      description: 6^ ora
+    7:
+      begin: 15:00
+      end: 16:00
+      description: 7^ ora
+    8:
+      begin: 16:00
+      end: 17:00
+      description: 8^ ora
+    s:
+      begin: 17:00
+      end: 20:00
+      description: lezioni serali
