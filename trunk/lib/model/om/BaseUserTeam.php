@@ -55,10 +55,16 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	protected $notes;
 
 	/**
-	 * The value for the reference_number field.
+	 * The value for the charge_reference_number field.
 	 * @var        string
 	 */
-	protected $reference_number;
+	protected $charge_reference_number;
+
+	/**
+	 * The value for the confirmation_reference_number field.
+	 * @var        string
+	 */
+	protected $confirmation_reference_number;
 
 	/**
 	 * @var        sfGuardUser
@@ -182,13 +188,23 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [reference_number] column value.
+	 * Get the [charge_reference_number] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getReferenceNumber()
+	public function getChargeReferenceNumber()
 	{
-		return $this->reference_number;
+		return $this->charge_reference_number;
+	}
+
+	/**
+	 * Get the [confirmation_reference_number] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getConfirmationReferenceNumber()
+	{
+		return $this->confirmation_reference_number;
 	}
 
 	/**
@@ -353,24 +369,44 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	} // setNotes()
 
 	/**
-	 * Set the value of [reference_number] column.
+	 * Set the value of [charge_reference_number] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     UserTeam The current object (for fluent API support)
 	 */
-	public function setReferenceNumber($v)
+	public function setChargeReferenceNumber($v)
 	{
 		if ($v !== null) {
 			$v = (string) $v;
 		}
 
-		if ($this->reference_number !== $v) {
-			$this->reference_number = $v;
-			$this->modifiedColumns[] = UserTeamPeer::REFERENCE_NUMBER;
+		if ($this->charge_reference_number !== $v) {
+			$this->charge_reference_number = $v;
+			$this->modifiedColumns[] = UserTeamPeer::CHARGE_REFERENCE_NUMBER;
 		}
 
 		return $this;
-	} // setReferenceNumber()
+	} // setChargeReferenceNumber()
+
+	/**
+	 * Set the value of [confirmation_reference_number] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     UserTeam The current object (for fluent API support)
+	 */
+	public function setConfirmationReferenceNumber($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->confirmation_reference_number !== $v) {
+			$this->confirmation_reference_number = $v;
+			$this->modifiedColumns[] = UserTeamPeer::CONFIRMATION_REFERENCE_NUMBER;
+		}
+
+		return $this;
+	} // setConfirmationReferenceNumber()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -410,7 +446,8 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			$this->role_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->expiry = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
 			$this->notes = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->reference_number = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->charge_reference_number = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->confirmation_reference_number = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -420,7 +457,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 7; // 7 = UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 8; // 8 = UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating UserTeam object", $e);
@@ -797,7 +834,10 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 				return $this->getNotes();
 				break;
 			case 6:
-				return $this->getReferenceNumber();
+				return $this->getChargeReferenceNumber();
+				break;
+			case 7:
+				return $this->getConfirmationReferenceNumber();
 				break;
 			default:
 				return null;
@@ -826,7 +866,8 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			$keys[3] => $this->getRoleId(),
 			$keys[4] => $this->getExpiry(),
 			$keys[5] => $this->getNotes(),
-			$keys[6] => $this->getReferenceNumber(),
+			$keys[6] => $this->getChargeReferenceNumber(),
+			$keys[7] => $this->getConfirmationReferenceNumber(),
 		);
 		return $result;
 	}
@@ -877,7 +918,10 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 				$this->setNotes($value);
 				break;
 			case 6:
-				$this->setReferenceNumber($value);
+				$this->setChargeReferenceNumber($value);
+				break;
+			case 7:
+				$this->setConfirmationReferenceNumber($value);
 				break;
 		} // switch()
 	}
@@ -909,7 +953,8 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[3], $arr)) $this->setRoleId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setExpiry($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setNotes($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setReferenceNumber($arr[$keys[6]]);
+		if (array_key_exists($keys[6], $arr)) $this->setChargeReferenceNumber($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setConfirmationReferenceNumber($arr[$keys[7]]);
 	}
 
 	/**
@@ -927,7 +972,8 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UserTeamPeer::ROLE_ID)) $criteria->add(UserTeamPeer::ROLE_ID, $this->role_id);
 		if ($this->isColumnModified(UserTeamPeer::EXPIRY)) $criteria->add(UserTeamPeer::EXPIRY, $this->expiry);
 		if ($this->isColumnModified(UserTeamPeer::NOTES)) $criteria->add(UserTeamPeer::NOTES, $this->notes);
-		if ($this->isColumnModified(UserTeamPeer::REFERENCE_NUMBER)) $criteria->add(UserTeamPeer::REFERENCE_NUMBER, $this->reference_number);
+		if ($this->isColumnModified(UserTeamPeer::CHARGE_REFERENCE_NUMBER)) $criteria->add(UserTeamPeer::CHARGE_REFERENCE_NUMBER, $this->charge_reference_number);
+		if ($this->isColumnModified(UserTeamPeer::CONFIRMATION_REFERENCE_NUMBER)) $criteria->add(UserTeamPeer::CONFIRMATION_REFERENCE_NUMBER, $this->confirmation_reference_number);
 
 		return $criteria;
 	}
@@ -992,7 +1038,9 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 
 		$copyObj->setNotes($this->notes);
 
-		$copyObj->setReferenceNumber($this->reference_number);
+		$copyObj->setChargeReferenceNumber($this->charge_reference_number);
+
+		$copyObj->setConfirmationReferenceNumber($this->confirmation_reference_number);
 
 
 		$copyObj->setNew(true);

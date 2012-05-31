@@ -25,7 +25,7 @@ abstract class BaseUserTeamPeer {
 	const TM_CLASS = 'UserTeamTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 7;
+	const NUM_COLUMNS = 8;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -48,8 +48,11 @@ abstract class BaseUserTeamPeer {
 	/** the column name for the NOTES field */
 	const NOTES = 'user_team.NOTES';
 
-	/** the column name for the REFERENCE_NUMBER field */
-	const REFERENCE_NUMBER = 'user_team.REFERENCE_NUMBER';
+	/** the column name for the CHARGE_REFERENCE_NUMBER field */
+	const CHARGE_REFERENCE_NUMBER = 'user_team.CHARGE_REFERENCE_NUMBER';
+
+	/** the column name for the CONFIRMATION_REFERENCE_NUMBER field */
+	const CONFIRMATION_REFERENCE_NUMBER = 'user_team.CONFIRMATION_REFERENCE_NUMBER';
 
 	/**
 	 * An identiy map to hold any loaded instances of UserTeam objects.
@@ -74,11 +77,11 @@ abstract class BaseUserTeamPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'TeamId', 'RoleId', 'Expiry', 'Notes', 'ReferenceNumber', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'teamId', 'roleId', 'expiry', 'notes', 'referenceNumber', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::TEAM_ID, self::ROLE_ID, self::EXPIRY, self::NOTES, self::REFERENCE_NUMBER, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'team_id', 'role_id', 'expiry', 'notes', 'reference_number', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'TeamId', 'RoleId', 'Expiry', 'Notes', 'ChargeReferenceNumber', 'ConfirmationReferenceNumber', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'teamId', 'roleId', 'expiry', 'notes', 'chargeReferenceNumber', 'confirmationReferenceNumber', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::TEAM_ID, self::ROLE_ID, self::EXPIRY, self::NOTES, self::CHARGE_REFERENCE_NUMBER, self::CONFIRMATION_REFERENCE_NUMBER, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'team_id', 'role_id', 'expiry', 'notes', 'charge_reference_number', 'confirmation_reference_number', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	/**
@@ -88,11 +91,11 @@ abstract class BaseUserTeamPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'TeamId' => 2, 'RoleId' => 3, 'Expiry' => 4, 'Notes' => 5, 'ReferenceNumber' => 6, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'teamId' => 2, 'roleId' => 3, 'expiry' => 4, 'notes' => 5, 'referenceNumber' => 6, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::TEAM_ID => 2, self::ROLE_ID => 3, self::EXPIRY => 4, self::NOTES => 5, self::REFERENCE_NUMBER => 6, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'team_id' => 2, 'role_id' => 3, 'expiry' => 4, 'notes' => 5, 'reference_number' => 6, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'TeamId' => 2, 'RoleId' => 3, 'Expiry' => 4, 'Notes' => 5, 'ChargeReferenceNumber' => 6, 'ConfirmationReferenceNumber' => 7, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'teamId' => 2, 'roleId' => 3, 'expiry' => 4, 'notes' => 5, 'chargeReferenceNumber' => 6, 'confirmationReferenceNumber' => 7, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::TEAM_ID => 2, self::ROLE_ID => 3, self::EXPIRY => 4, self::NOTES => 5, self::CHARGE_REFERENCE_NUMBER => 6, self::CONFIRMATION_REFERENCE_NUMBER => 7, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'team_id' => 2, 'role_id' => 3, 'expiry' => 4, 'notes' => 5, 'charge_reference_number' => 6, 'confirmation_reference_number' => 7, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	/**
@@ -168,7 +171,8 @@ abstract class BaseUserTeamPeer {
 		$criteria->addSelectColumn(UserTeamPeer::ROLE_ID);
 		$criteria->addSelectColumn(UserTeamPeer::EXPIRY);
 		$criteria->addSelectColumn(UserTeamPeer::NOTES);
-		$criteria->addSelectColumn(UserTeamPeer::REFERENCE_NUMBER);
+		$criteria->addSelectColumn(UserTeamPeer::CHARGE_REFERENCE_NUMBER);
+		$criteria->addSelectColumn(UserTeamPeer::CONFIRMATION_REFERENCE_NUMBER);
 	}
 
 	/**

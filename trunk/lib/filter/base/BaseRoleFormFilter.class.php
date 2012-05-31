@@ -22,6 +22,9 @@ abstract class BaseRoleFormFilter extends BaseFormFilterPropel
       'default_guardgroup'  => new sfWidgetFormFilterInput(),
       'min'                 => new sfWidgetFormFilterInput(),
       'max'                 => new sfWidgetFormFilterInput(),
+      'forfait_pay'         => new sfWidgetFormFilterInput(),
+      'charge_notes'        => new sfWidgetFormFilterInput(),
+      'confirmation_notes'  => new sfWidgetFormFilterInput(),
       'rank'                => new sfWidgetFormFilterInput(),
     ));
 
@@ -36,6 +39,9 @@ abstract class BaseRoleFormFilter extends BaseFormFilterPropel
       'default_guardgroup'  => new sfValidatorPass(array('required' => false)),
       'min'                 => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'max'                 => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
+      'forfait_pay'         => new sfValidatorSchemaFilter('text', new sfValidatorNumber(array('required' => false))),
+      'charge_notes'        => new sfValidatorPass(array('required' => false)),
+      'confirmation_notes'  => new sfValidatorPass(array('required' => false)),
       'rank'                => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
     ));
 
@@ -65,6 +71,9 @@ abstract class BaseRoleFormFilter extends BaseFormFilterPropel
       'default_guardgroup'  => 'Text',
       'min'                 => 'Number',
       'max'                 => 'Number',
+      'forfait_pay'         => 'Number',
+      'charge_notes'        => 'Text',
+      'confirmation_notes'  => 'Text',
       'rank'                => 'Number',
     );
   }

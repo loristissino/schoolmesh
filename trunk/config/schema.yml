@@ -222,6 +222,9 @@ propel:
     # the minimum number of assignees for this role (0 to not set)
     max:  { type: integer, default: 0 }
     # the maximum number of assignees for this role (0 to not set)
+    forfait_pay: { type: decimal, size: 10, scale: 2 }
+    charge_notes: longvarchar
+    confirmation_notes: longvarchar
     rank: integer
 
   user_team:
@@ -231,7 +234,8 @@ propel:
     role_id:     { type: integer, foreignTable: role, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     expiry:      { type: date }  
     notes:       longvarchar
-    reference_number: { type: varchar(20), default: null } 
+    charge_reference_number: { type: varchar(20), default: null } 
+    confirmation_reference_number: { type: varchar(20), default: null } 
     _uniques:
       utr: [user_id, team_id]
 

@@ -394,6 +394,18 @@ class usersActions extends sfActions
 
     $this->roles=RolePeer::retrieveRolesWithChargeLetterNeeded();
   }
+  
+  public function executeGetresponsibilityroleconfirmationletter(sfWebRequest $request)
+  {
+    
+    $this->_changePostToGet($request, 'getresponsibilityroleconfirmationletter');
+    
+    $this->ids=$this->_getIds($request);
+    $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
+
+    $this->roles=RolePeer::retrieveRolesWithChargeLetterNeeded();
+  }
+  
 
   public function executeConfirmgetresponsibilityrolechargeletter(sfWebRequest $request)
   {
@@ -429,6 +441,42 @@ class usersActions extends sfActions
 		}
 
   }
+
+  public function executeConfirmgetresponsibilityroleconfirmationletter(sfWebRequest $request)
+  {
+
+		set_time_limit(0);
+    
+    $this->ids=$this->_getIds($request);
+    $this->role_ids=$request->getParameter('roleids');
+    
+//    $ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
+
+		$result=sfGuardUserProfilePeer::getResponsibilityRolesConfirmationLetter($this->ids, $this->role_ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
+		
+		if ($result['result']=='error')
+		{
+			$this->getUser()->setFlash('error', $result['message']);
+			$this->redirect('users/list');
+		}
+		
+		$odfdoc=$result['content'];
+		if (is_object($odfdoc))
+		{
+			$odfdoc
+			->saveFile()
+			->setResponse($this->getContext()->getResponse());
+			return sfView::NONE;
+
+		}
+		else
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.'));
+			$this->redirect('users/list');
+		}
+
+  }
+
 
 
 
@@ -798,13 +846,14 @@ class usersActions extends sfActions
       $this->forward404Unless($this->role=RolePeer::retrieveByPK($params['role_id']));
       $this->expiry=$params['expiry'];
       $this->notes=$params['notes'];
-      $this->reference_number=$params['reference_number'];
+      $this->charge_reference_number=$params['charge_reference_number'];
+      $this->confirmation_reference_number=$params['confirmation_reference_number'];
     
       $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
       foreach($this->userlist as $user)
       {
-        Generic::logMessage('team_in', $this->expiry);
-        $user->addToTeam($this->getUser()->getProfile()->getUserId(), $this->team, $this->role, $this->expiry, $this->notes, $this->reference_number, $this->getContext());
+        //Generic::logMessage('team_in', $this->expiry);
+        $user->addToTeam($this->getUser()->getProfile()->getUserId(), $this->team, $this->role, $this->expiry, $this->notes, $this->charge_reference_number, $this->confirmation_reference_number, $this->getContext());
       }
 		
       $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('Users successfully added to team.'));
@@ -1166,7 +1215,8 @@ public function executeEditjoining(sfWebRequest $request)
 			'role_id'=> $this->userteam->getRoleId(),
       'expiry'=> $this->userteam->getExpiry(),
       'notes'=>$this->userteam->getNotes(),
-      'reference_number'=>$this->userteam->getReferenceNumber(),
+      'charge_reference_number'=>$this->userteam->getChargeReferenceNumber(),
+      'confirmation_reference_number'=>$this->userteam->getConfirmationReferenceNumber(),
 		)
 	);
   

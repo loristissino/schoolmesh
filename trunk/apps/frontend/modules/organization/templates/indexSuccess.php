@@ -17,7 +17,8 @@
       <th class="sf_admin_text"><?php echo __('Charged user') ?></th>
       <th class="sf_admin_text"><?php echo __('Expiry') ?></th>
       <?php if($sf_user->hasCredential('teams')): ?>
-        <th class="sf_admin_text"><?php echo __('Reference number') ?></th>
+        <th class="sf_admin_text"><?php echo __('Charge R.N.') ?></th>
+        <th class="sf_admin_text"><?php echo __('Confirmation R.N.') ?></th>
         <th class="sf_admin_text"><?php echo __('Team') ?></th>
       <?php endif ?>
     </tr>
@@ -33,7 +34,7 @@
           <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
             <td class="warning"><?php echo link_to_if($sf_user->hasCredential('admin'), $item['keyrole']->getMaleDescription(), url_for('roles/edit?id='.$item['keyrole']->getId()), array('title'=>__('Edit the role «%description%»', array('%description%'=>$item['keyrole']->getMaleDescription())))) ?></td>
             <td class="warning"><?php echo $item['keyrole']->getQualityCode() ?></td>
-            <td colspan="4" class="highlighted warning"><?php echo __('No one in charge') ?><?php include_partial('content/dubious', array('text'=>__('Minimun number of assignees (%number%) unreached', array('%number%'=>$item['keyrole']->getMin())))) ?></td>
+            <td colspan="5" class="highlighted warning"><?php echo __('No one in charge') ?><?php include_partial('content/dubious', array('text'=>__('Minimun number of assignees (%number%) unreached', array('%number%'=>$item['keyrole']->getMin())))) ?></td>
           </tr>
       <?php endif ?>
     <?php endforeach ?>

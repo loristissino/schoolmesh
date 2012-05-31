@@ -38,7 +38,8 @@
 		<th class="sf_admin_text"><?php echo __('Role') ?></th>
 		<th class="sf_admin_text"><?php echo __('Expiry') ?></th>
 		<th class="sf_admin_text"><?php echo __('Notes') ?></th>
-		<th class="sf_admin_text"><?php echo __('Reference number') ?></th>
+		<th class="sf_admin_text"><?php echo __('Charge R.N.') ?></th>
+		<th class="sf_admin_text"><?php echo __('Confirmation R.N.') ?></th>
 		<th class="sf_admin_text"><?php echo __('Actions') ?></th>
 	</tr>
 </thead>
@@ -55,7 +56,8 @@
       <?php include_partial('content/expiry', array('date'=>$component->getExpiry('U'))) ?>
     </td>
     <td><?php include_partial('content/notes', array('notes'=>$component->getNotes())) ?></td>
-    <td><?php echo $component->getReferenceNumber() ?></td>
+    <td><?php echo $component->getChargeReferenceNumber() ?></td>
+    <td><?php echo $component->getConfirmationReferenceNumber() ?></td>
     <td>
         <?php include_partial('teams/teams_td_actions', array('user'=>$component->getsfGuardUser()->getProfile(), 'team'=>$Team, 'referer'=>url_for('teams/show?id='.$Team->getId()))) ?>
     </td>
