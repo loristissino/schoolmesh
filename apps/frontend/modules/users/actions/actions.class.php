@@ -1409,7 +1409,7 @@ public function executeAddappointment(sfWebRequest $request)
       foreach($ids as $id)
       {
         $team=TeamPeer::retrieveByPK($id);
-        $this->current_user->addToTeam($this->getUser()->getProfile()->getUserId(), $team, $role, null, null, null, $this->getContext());
+        $this->current_user->addToTeam($this->getUser()->getProfile()->getUserId(), $team, $role, null, null, null, null, $this->getContext());
       }
 		
       $this->getUser()->setFlash('notice', $this->getContext()->getI18N()->__('User successfully added to selected teams.'));
