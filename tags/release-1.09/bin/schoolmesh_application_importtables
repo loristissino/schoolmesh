@@ -1,0 +1,49 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Import data from a backup sql file
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *environment* *inputfile*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to import data into the database. The input file
+#@ SQL must be in gzipped format.
+#@ The output of *schoolmesh_application_dumptables(8)* should be
+#@ adequate.
+#@
+#@ # WARNINGS
+#@ 
+#@ The database should have the tables, but empty. It's possible to re-create 
+#@ the tables with *schoolmesh_application_createtables(8)*.
+#@
+#@ # EXAMPLES
+#@
+#@ {-} prod /var/backups/myfile.sql.gz
+
+ENVIRONMENT=$1
+INFILE=$2
+
+checkOneOf $ENVIRONMENT dev prod test
+checkFile $INFILE
+
+SCRIPT=$(mktemp)
+
+php symfony schoolmesh:generate-db-script --application=frontend --env=$ENVIRONMENT --backupfile=$INFILE restore $SCRIPT > /dev/null
+
+chmod +x $SCRIPT
+
+$SCRIPT
+
+rm -f $SCRIPT
+
+
+
+

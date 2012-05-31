@@ -1,0 +1,157 @@
+Team:
+  cdc3ap:
+    description:  Consiglio di classe 3AP
+    posix_name:   cdc3ap
+    needs_folder: true
+    needs_mailing_list: true
+
+  cdc4ap:
+    description:  Consiglio di classe 4AP
+    posix_name:   cdc4ap
+    needs_folder: true
+    needs_mailing_list: false
+    
+  cdc5ap:
+    description:  Consiglio di classe 5AP
+    posix_name:   cdc5ap
+    needs_folder: false
+    needs_mailing_list: true
+
+  cdc3bp:
+    description:  Consiglio di classe 3BP
+    posix_name:   cdc3bp
+    needs_folder: true
+    needs_mailing_list: true
+
+  cdc4bp:
+    description:  Consiglio di classe 4BP
+    posix_name:   cdc4bp
+    needs_folder: true
+    needs_mailing_list: false
+    
+  cdc5bp:
+    description:  Consiglio di classe 5BP
+    posix_name:   cdc5bp
+    needs_folder: false
+    needs_mailing_list: true
+
+  quality:
+    description:  Progetto Qualità
+    posix_name:   quality
+    needs_folder: true
+    needs_mailing_list: true
+    
+  deplit:
+    description: Dipartimento di Lettere
+    posix_name:  diplettere
+    needs_folder: false
+    needs_mailing_list: false
+
+  depmath:
+    description: Dipartimento di Matematica e Fisica
+    posix_name:  dipmatfis
+    needs_folder: true
+    needs_mailing_list: true
+
+  depsci:
+    description: Dipartimento di Scienze
+    posix_name:  dipscienze
+    needs_folder: true
+    needs_mailing_list: true
+
+  deplaw:
+    description: Dipartimento di Diritto, Economia politica e Scienza delle finanze
+    posix_name:  dipdirfin
+    needs_folder: true
+    needs_mailing_list: true
+
+  depeng:
+    description: Dipartimento di Lingua Inglese
+    posix_name:  dipinglese
+    needs_folder: true
+    needs_mailing_list: true
+  depfre:
+    description: Dipartimento di Lingua Francese
+    posix_name:  dipfrancese
+    needs_folder: true
+    needs_mailing_list: true
+  depger:
+    description: Dipartimento di Lingua Tedesca
+    posix_name:  diptedesco
+    needs_folder: true
+    needs_mailing_list: true
+  depspa:
+    description: Dipartimento di Lingua Spagnola
+    posix_name:  dipspagnolo
+    needs_folder: true
+    needs_mailing_list: true
+
+  depcs:
+    description: Dipartimento di Informatica
+    posix_name:  dipinfo
+    needs_folder: true
+    needs_mailing_list: true
+
+  depbiz:
+    description: Dipartimento di Economia aziendale
+    posix_name:  dipeconomaz
+    needs_folder: true
+    needs_mailing_list: true
+
+  deppe:
+    description: Dipartimento di Scienze motorie
+    posix_name:  dipscmotorie
+    needs_folder: true
+    needs_mailing_list: true
+
+  depecdl:
+    description: Dipartimento di Trattamento testi e dati
+    posix_name:  dipttd
+    needs_folder: true
+    needs_mailing_list: true
+
+  deprel:
+    description: Dipartimento di Insegnamento della Religione cattolica
+    posix_name:  dipirc
+    needs_folder: true
+    needs_mailing_list: true
+  deph:
+    description: Dipartimento per il Sostegno all'Handicap
+    posix_name:  dipsostegno
+    needs_folder: true
+    needs_mailing_list: true
+
+UserTeam:
+  loris_3ap_scc:
+    user_id:      loris
+    team_id: cdc3ap
+    role_id:      scc
+  loris_quality_dev:
+    user_id:      loris
+    team_id: quality
+    role_id:      doc
+
+  flavia_3ap_doc:
+    user_id:      flavia
+    team_id: cdc3ap
+    role_id:      doc
+  bianca_3ap_ccc:
+    user_id:      bianca
+    team_id: cdc3ap
+    role_id:      ccc
+  juri:
+    user_id:      juri
+    team_id: quality
+    role_id:      risq
+  francesco:
+    user_id:      francesco
+    team_id: quality
+    role_id:      rsq
+  antonio_q:
+    user_id:      antonio
+    team_id: quality
+    role_id:      ds
+  gabriella_q:
+    user_id:      gabriella
+    team_id: quality
+    role_id:      dsga
