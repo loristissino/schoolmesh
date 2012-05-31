@@ -31,9 +31,9 @@
         <?php endforeach ?>
         <?php else: ?>
           <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
-            <td class="warning"><?php echo $item['keyrole']->getMaleDescription() ?></td>
+            <td class="warning"><?php echo link_to_if($sf_user->hasCredential('admin'), $item['keyrole']->getMaleDescription(), url_for('roles/edit?id='.$item['keyrole']->getId()), array('title'=>__('Edit the role «%description%»', array('%description%'=>$item['keyrole']->getMaleDescription())))) ?></td>
             <td class="warning"><?php echo $item['keyrole']->getQualityCode() ?></td>
-            <td colspan="4" class="highlighted warning"><?php echo __('No one in charge') ?></td>
+            <td colspan="4" class="highlighted warning"><?php echo __('No one in charge') ?><?php include_partial('content/dubious', array('text'=>__('Minimun number of assignees (%number%) unreached', array('%number%'=>$item['keyrole']->getMin())))) ?></td>
           </tr>
       <?php endif ?>
     <?php endforeach ?>
@@ -52,7 +52,7 @@
   <?php foreach($functionalroles as $Role): ?>
     <tr>
       <?php if(($number=$Role->countUsersPlayingRole()) > 0 or $Role->getMin()==0): ?>
-        <td><?php echo $Role->getMaleDescription() ?></td>
+        <td><?php echo link_to_if($sf_user->hasCredential('admin'), $Role->getMaleDescription(), url_for('roles/edit?id='.$Role->getId()), array('title'=>__('Edit the role «%description%»', array('%description%'=>$Role->getMaleDescription())))) ?></td>
         <td><?php echo $Role->getQualityCode() ?></td>
         <td style="text-align:right">
           <?php include_partial('roles/minmaxcheck', array('Role'=>$Role, 'number'=>$number)) ?>
@@ -60,14 +60,15 @@
         </td>
         <td>
           <ul class="sf_admin_td_actions">
-            <?php echo li_link_to_if('td_action_view', true, __('View'), url_for('organization/role?id='.$Role->getId())) ?>
+            <?php echo li_link_to_if('td_action_users', $number>0, __('List'), url_for('organization/role?id='.$Role->getId())) ?>
           </ul>
         </td>
       <?php else: ?>
-        <td class="warning"><?php echo link_to($Role->getMaleDescription(), url_for('organization/role?id='.$Role->getId())) ?></td>
+        <td class="warning"><?php echo link_to_if($sf_user->hasCredential('admin'), $Role->getMaleDescription(), url_for('roles/edit?id='.$Role->getId()), array('title'=>__('Edit the role «%description%»', array('%description%'=>$Role->getMaleDescription())))) ?></td>
         <td class="warning"><?php echo $Role->getQualityCode() ?></td>
-        <td colspan="2" class="highlighted warning"><?php echo __('No one in charge') ?></td>
+        <td colspan="2" class="highlighted warning"><?php echo __('No one in charge') ?><?php include_partial('content/dubious', array('text'=>__('Minimun number of assignees (%number%) unreached', array('%number%'=>$Role->getMin())))) ?></td>
       <?php endif ?>
+    </tr>
   <?php endforeach ?>
 </table>
 

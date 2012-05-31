@@ -28,7 +28,7 @@
   <tbody>
 	<?php $i=0 ?>
   <?php foreach($userteam as $component): ?>
-    <?php include_partial('tr_userteam', array('role'=>$role, 'component'=>$component)) ?>
+    <?php include_partial('tr_userteam', array('role'=>$role, 'component'=>$component, 'number'=>sizeof($userteam))) ?>
   <?php endforeach ?>
   </tbody>
 </table>

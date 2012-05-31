@@ -4777,12 +4777,12 @@
         <target>Crea un nuovo ruolo</target>
       </trans-unit>
       <trans-unit id="1391">
-        <source>Minimun number of assignees unreached</source>
-        <target>Numero minimo di incaricati non raggiunto</target>
+        <source>Minimun number of assignees (%number%) unreached</source>
+        <target>Numero minimo di incaricati (%number%) non raggiunto</target>
       </trans-unit>
       <trans-unit id="1392">
-        <source>Maximum number of assignees exceeded</source>
-        <target>Massimo numero di incaricati superato</target>
+        <source>Maximum number of assignees (%number%) exceeded</source>
+        <target>Massimo numero di incaricati (%number%) superato</target>
       </trans-unit>
      </body>
   </file> 

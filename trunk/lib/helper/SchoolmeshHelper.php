@@ -251,6 +251,10 @@ function li_link_to_if($class_suffix, $condition, $name, $internal_uri, $options
     return '<li class="sf_admin_' . $class_suffix. '">' . 
     link_to($name, $internal_uri, $options).(!$td ? '<br />': '').'</li>';
   }
+  else
+  {
+    return '<li></li>'; // this is needed to avoid <ul> element to be empty
+  }
   
 }
 

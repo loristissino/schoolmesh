@@ -1,6 +1,7 @@
 <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
   <td>
-    <?php echo $component->getSfGuardUser()->getProfile()->getIsMale()?$role->getMaleDescription():$role->getFemaleDescription() ?>
+    <?php echo link_to_if($sf_user->hasCredential('admin'), $component->getSfGuardUser()->getProfile()->getIsMale()?$role->getMaleDescription():$role->getFemaleDescription(), url_for('roles/edit?id='.$role->getId()), array('title'=>__('Edit the role «%description%»', array('%description%'=>$role->getMaleDescription()))))
+    ?>
     <?php include_partial('roles/minmaxcheck', array('Role'=>$role, 'number'=>$number)) ?>
   </td>
   <td><?php echo $role->getQualityCode() ?></td>
