@@ -87,6 +87,26 @@ class RolePeer extends BaseRolePeer
     
     return UserTeamPeer::doSelectJoinAll($c);
   }
+  
+  public static function countUsersPlayingRole(Role $Role)
+  {
+    $c=new Criteria();
+    $c->addJoin(RolePeer::ID, UserTeamPeer::ROLE_ID);
+    if($Role->getMayBeMainRole())
+    {
+      // this is the case of the principal, for instance
+      $c->add(TeamPeer::QUALITY_CODE, $Role->getQualityCode());
+    }
+    $c->add(RolePeer::ID, $Role->getId());
+    $c->clearSelectColumns();
+    $c->setDistinct();
+    $c->addAsColumn('TOTALQUANTITY', 'COUNT( DISTINCT ' . UserTeamPeer::USER_ID . ')');
+    $stmt=UserTeamPeer::doSelectStmt($c);
+    $row = $stmt->fetch(PDO::FETCH_OBJ);
+    return $row->TOTALQUANTITY;
+    
+  }
+  
 
 
   public static function getOrganizationalChartOdf($doctype, sfContext $sfContext=null, $template='')
