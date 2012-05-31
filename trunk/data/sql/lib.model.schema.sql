@@ -537,7 +537,7 @@ CREATE TABLE `role`
 	`default_guardgroup` VARCHAR(20),
 	`min` INTEGER default 0,
 	`max` INTEGER default 0,
-	`forfait_pay` DECIMAL(10,2),
+	`forfait_retribution` DECIMAL(10,2),
 	`charge_notes` TEXT,
 	`confirmation_notes` TEXT,
 	`rank` INTEGER,

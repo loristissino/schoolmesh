@@ -4816,6 +4816,10 @@
         <source>Charge notes</source>
         <target>Note sull'incarico</target>
     </trans-unit>
+    <trans-unit id="1401">
+        <source>Forfait retribution</source>
+        <target>Compenso forfetario</target>
+    </trans-unit>
      </body>
   </file> 
 </xliff>

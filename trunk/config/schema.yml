@@ -222,7 +222,7 @@ propel:
     # the minimum number of assignees for this role (0 to not set)
     max:  { type: integer, default: 0 }
     # the maximum number of assignees for this role (0 to not set)
-    forfait_pay: { type: decimal, size: 10, scale: 2 }
+    forfait_retribution: { type: decimal, size: 10, scale: 2 }
     charge_notes: longvarchar
     confirmation_notes: longvarchar
     rank: integer

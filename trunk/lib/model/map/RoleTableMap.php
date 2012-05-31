@@ -47,7 +47,7 @@ class RoleTableMap extends TableMap {
 		$this->addColumn('DEFAULT_GUARDGROUP', 'DefaultGuardgroup', 'VARCHAR', false, 20, null);
 		$this->addColumn('MIN', 'Min', 'INTEGER', false, null, 0);
 		$this->addColumn('MAX', 'Max', 'INTEGER', false, null, 0);
-		$this->addColumn('FORFAIT_PAY', 'ForfaitPay', 'DECIMAL', false, 10, null);
+		$this->addColumn('FORFAIT_RETRIBUTION', 'ForfaitRetribution', 'DECIMAL', false, 10, null);
 		$this->addColumn('CHARGE_NOTES', 'ChargeNotes', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('CONFIRMATION_NOTES', 'ConfirmationNotes', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('RANK', 'Rank', 'INTEGER', false, null, null);
