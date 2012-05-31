@@ -757,16 +757,21 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
 	}
 
-
-	public static function getResponsibilityRolesChargeLetter($ids, $role_ids, $filetype='odt', $context=null)
+	private static function _getResponsibilityRolesGenericLetter($type, $ids, $role_ids, $filetype='odt', $context=null)
 	{
+    
+    if(!in_array($type, array('charge', 'confirmation')))
+    {
+      throw new Exception('Not a valid type');
+    }
+    
 		$result=Array();
 
 		$users=self::retrieveByPksSortedByLastnames($ids);
 		
 		try
 		{
-			$templatename='responsibilityroleschargeletter.odt';
+			$templatename=sprintf('responsibilityroles%sletter.odt', $type);
 			$odf=new OdfDoc($templatename, 'Key roles charge letter', $filetype);
 		}
 		catch (Exception $e)
@@ -804,6 +809,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
       }
 
       $reference_numbers=array();
+      $final_notes=array();
 
       foreach($charges as $charge)
       {
@@ -811,9 +817,25 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
         $letters->charges->chargeContext($charge->getTeam()->getDescription());
         $letters->charges->chargeExpiry($charge->getExpiry('d/m/Y'));
         $letters->charges->chargeNotes($charge->getNotes());
-        if($charge->getReferenceNumber() && !in_array($charge->getReferenceNumber(), $reference_numbers))
+        
+        switch($type)
         {
-          $reference_numbers[]=$charge->getReferenceNumber();
+          case 'charge':
+            $rn=$charge->getChargeReferenceNumber();
+            break;
+          case 'confirmation':
+            $rn=$charge->getConfirmationReferenceNumber();
+            $notes=$charge->getRole()->getConfirmationNotes();
+            if($notes && !in_array($notes, $final_notes))
+            {
+              $final_notes[]=$notes;
+            }
+            break;
+        }
+        
+        if($rn && !in_array($rn, $reference_numbers))
+        {
+          $reference_numbers[]=$rn;
         }
         $letters->charges->merge();
       }
@@ -826,6 +848,11 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
       
       natsort($reference_numbers);
       $letters->referenceNumber(sizeof($reference_numbers)?implode(', ', $reference_numbers):'____');
+
+      if($type=='confirmation')
+      {
+        $letters->finalNotes(sizeof($final_notes)?implode('<br />', $final_notes):'');
+      }
       
 			$pagebreak=($count<sizeof($users))?'<pagebreak>':'';
 			$letters->pagebreak($pagebreak);
@@ -841,6 +868,17 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	}
 
 
+
+	public static function getResponsibilityRolesChargeLetter($ids, $role_ids, $filetype='odt', $context=null)
+	{
+    return self::_getResponsibilityRolesGenericLetter('charge', $ids, $role_ids, $filetype, $context);
+	}
+
+
+	public static function getResponsibilityRolesConfirmationLetter($ids, $role_ids, $filetype='odt', $context=null)
+	{
+    return self::_getResponsibilityRolesGenericLetter('confirmation', $ids, $role_ids, $filetype, $context);
+  }
 	
 	public static function getGoogleAppsLetter($ids, $filetype='odt', $context=null)
 	{

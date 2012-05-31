@@ -4,19 +4,19 @@
     'users/list' => __('List/Search'),
     'users/list?query='. $sf_user->getAttribute('currently_selected')=>__('Selected users'),
     ),
-  'current'=>__('Responsibility role charge letters')
+  'current'=>__('Responsibility role confirmation letters')
   ))
 ?>
 
 <?php include_partial('content/flashes'); ?>
 
-<p><?php echo __('You are going to get the charge letters for the following users:') ?></p>
+<p><?php echo __('You are going to get the confirmation letters for the following users:') ?></p>
 
 <?php include_partial('userlist', array('userlist'=>$userlist)) ?>
 
 <p><?php echo __('Please select the roles for which you want the letters to be generated:') ?></p>
 
-<form action="<?php echo url_for('users/confirmgetresponsibilityrolechargeletter?ids=' . $sf_request->getParameter('ids')) ?>" method="post">
+<form action="<?php echo url_for('users/confirmgetresponsibilityroleconfirmationletter?ids=' . $sf_request->getParameter('ids')) ?>" method="post">
 
 <table>
 <thead>

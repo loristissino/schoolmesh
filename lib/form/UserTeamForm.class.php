@@ -22,6 +22,9 @@ class UserTeamForm extends BaseUserTeamForm
     
     $this['role_id']->getWidget()->setOption('peer_method', 'retrieveAll');
   	$this['role_id']->getWidget()->setOption('add_empty', 'Choose a role');
+
+  	$this['charge_reference_number']->getWidget()->setLabel('Charge<br />reference number');
+  	$this['confirmation_reference_number']->getWidget()->setLabel('Confirmation<br />reference number');
     
     $this->widgetSchema->setNameFormat('info[%s]');
     
@@ -31,7 +34,8 @@ class UserTeamForm extends BaseUserTeamForm
       'role_id' => new sfValidatorPropelChoice(array('model'=>'Role')), 
       'expiry' => new sfValidatorDate(array('required'=>false)),
       'notes' => new sfValidatorString(array('required'=>false, 'trim'=>true)),
-      'reference_number' => new sfValidatorString(array('required'=>false, 'trim'=>true))
+      'charge_reference_number' => new sfValidatorString(array('required'=>false, 'trim'=>true)),
+      'confirmation_reference_number' => new sfValidatorString(array('required'=>false, 'trim'=>true))
     ));
 
     

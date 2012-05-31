@@ -25,6 +25,9 @@ abstract class BaseRoleForm extends BaseFormPropel
       'default_guardgroup'  => new sfWidgetFormInputText(),
       'min'                 => new sfWidgetFormInputText(),
       'max'                 => new sfWidgetFormInputText(),
+      'forfait_pay'         => new sfWidgetFormInputText(),
+      'charge_notes'        => new sfWidgetFormTextarea(),
+      'confirmation_notes'  => new sfWidgetFormTextarea(),
       'rank'                => new sfWidgetFormInputText(),
     ));
 
@@ -40,6 +43,9 @@ abstract class BaseRoleForm extends BaseFormPropel
       'default_guardgroup'  => new sfValidatorString(array('max_length' => 20, 'required' => false)),
       'min'                 => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
       'max'                 => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'forfait_pay'         => new sfValidatorNumber(array('required' => false)),
+      'charge_notes'        => new sfValidatorString(array('required' => false)),
+      'confirmation_notes'  => new sfValidatorString(array('required' => false)),
       'rank'                => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
     ));
 

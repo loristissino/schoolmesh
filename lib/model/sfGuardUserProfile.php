@@ -1057,7 +1057,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     }
     
 		
-		public function addToTeam($caller_id, Team $team, Role $role, $expiry=null, $notes='', $reference_number='',  $sf_context=null)
+		public function addToTeam($caller_id, Team $team, Role $role, $expiry=null, $notes='', $charge_reference_number='', $confirmation_reference_number,  $sf_context=null)
 		{
 			if (!$this->getBelongsToTeam($team->getPosixName()))
 			{
@@ -1074,7 +1074,8 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 					->setRole($role)
           ->setExpiry($expiry)
           ->setNotes($notes)
-          ->setReferenceNumber($reference_number)
+          ->setChargeReferenceNumber($charge_reference_number)
+          ->setConfirmationReferenceNumber($confirmation_reference_number)
 					->save($con);
           $team->addWfevent($caller_id,
             'Added user %user% to team, with role «%role%» and expiry %expiry%',
@@ -1213,11 +1214,19 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
             $dirty=true;
           }
         }
-        if(array_key_exists('reference_number', $params))
+        if(array_key_exists('charge_reference_number', $params))
         {
-          if($t->getReferenceNumber()!=$params['reference_number'])
+          if($t->getChargeReferenceNumber()!=$params['charge_reference_number'])
           {
-            $t->setReferenceNumber($params['reference_number']);
+            $t->setChargeReferenceNumber($params['charge_reference_number']);
+            $dirty=true;
+          }
+        }
+        if(array_key_exists('confirmation_reference_number', $params))
+        {
+          if($t->getConfirmationReferenceNumber()!=$params['confirmation_reference_number'])
+          {
+            $t->setConfirmationReferenceNumber($params['confirmation_reference_number']);
             $dirty=true;
           }
         }

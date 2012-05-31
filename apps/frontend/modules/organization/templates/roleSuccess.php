@@ -20,7 +20,8 @@
       <th class="sf_admin_text"><?php echo __('Charged user') ?></th>
       <th class="sf_admin_text"><?php echo __('Expiry') ?></th>
       <?php if($sf_user->hasCredential('teams')): ?>
-        <th class="sf_admin_text"><?php echo __('Reference number') ?></th>
+        <th class="sf_admin_text"><?php echo __('Charge R.N.') ?></th>
+        <th class="sf_admin_text"><?php echo __('Confirmation R.N.') ?></th>
         <th class="sf_admin_text"><?php echo __('Team') ?></th>
       <?php endif ?>
     </tr>

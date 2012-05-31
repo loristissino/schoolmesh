@@ -3470,7 +3470,7 @@
     </trans-unit>
     <trans-unit id="889">
         <source>Confirmation notes</source>
-        <target>Note</target>
+        <target>Note sulla conferma</target>
     </trans-unit>
     <trans-unit id="890">
         <source>Confirmation date set to %date% (%comment%)</source>
@@ -4477,7 +4477,7 @@
         <target>Lettere di incarico per ruoli di responsabilità</target>
       </trans-unit>
       <trans-unit id="1316">
-        <source>You are going to get the responsibility roles for the following users:</source>
+        <source>You are going to get the charge letters for the following users:</source>
         <target>Stai per scaricare le lettere di incarico per i seguenti utenti:</target>
       </trans-unit>
       <trans-unit id="1317">
@@ -4784,6 +4784,41 @@
         <source>Maximum number of assignees (%number%) exceeded</source>
         <target>Massimo numero di incaricati (%number%) superato</target>
       </trans-unit>
+      <trans-unit id="1393">
+        <source>Charge&lt;br /&gt;reference number</source>
+        <target>Numero protocollo&lt;br /&gt;incarico</target>
+      </trans-unit>
+      <trans-unit id="1394">
+        <source>Confirmation&lt;br /&gt;reference number</source>
+        <target>Numero protocollo&lt;br /&gt;conferma</target>
+      </trans-unit>
+      <trans-unit id="1395">
+        <source>Charge R.N.</source>
+        <target>Prot. incarico</target>
+      </trans-unit>
+      <trans-unit id="1396">
+        <source>Confirmation R.N.</source>
+        <target>Prot. conferma</target>
+      </trans-unit>
+      <trans-unit id="1397">
+        <source>Get responsibility role confirmation letters</source>
+        <target>Scarica lettera di conferma per ruoli di responsabilità</target>
+      </trans-unit>
+      <trans-unit id="1398">
+        <source>Responsibility role confirmation letters</source>
+        <target>Lettere di conferma per ruoli di responsabilità</target>
+      </trans-unit>
+      <trans-unit id="1399">
+        <source>You are going to get the confirmation letters for the following users:</source>
+        <target>Stai per scaricare le lettere di conferma per i seguenti utenti:</target>
+      </trans-unit>
+    <trans-unit id="1400">
+        <source>Charge notes</source>
+        <target>Note sull'incarico</target>
+    </trans-unit>
      </body>
   </file> 
 </xliff>
+
+
+

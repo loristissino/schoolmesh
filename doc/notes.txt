@@ -1,3 +1,14 @@
+2012/05/31
+Release: 1.08
+Changed field name in userteam table:
+  reference_number -> charge_reference_number 
+Added field in userteam table:
+  confirmation_reference_number: { type: varchar(20), default: null } 
+Added three fields in role table:
+  forfait_pay: { type: decimal, size: 10, scale: 2 }
+  charge_notes: longvarchar
+  confirmation_notes: longvarchar
+
 2012/05/30
 Release: 1.07
 Added fields min and max in role table

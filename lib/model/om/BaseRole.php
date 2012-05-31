@@ -88,6 +88,24 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	protected $max;
 
 	/**
+	 * The value for the forfait_pay field.
+	 * @var        string
+	 */
+	protected $forfait_pay;
+
+	/**
+	 * The value for the charge_notes field.
+	 * @var        string
+	 */
+	protected $charge_notes;
+
+	/**
+	 * The value for the confirmation_notes field.
+	 * @var        string
+	 */
+	protected $confirmation_notes;
+
+	/**
 	 * The value for the rank field.
 	 * @var        int
 	 */
@@ -272,6 +290,36 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	public function getMax()
 	{
 		return $this->max;
+	}
+
+	/**
+	 * Get the [forfait_pay] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getForfaitPay()
+	{
+		return $this->forfait_pay;
+	}
+
+	/**
+	 * Get the [charge_notes] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getChargeNotes()
+	{
+		return $this->charge_notes;
+	}
+
+	/**
+	 * Get the [confirmation_notes] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getConfirmationNotes()
+	{
+		return $this->confirmation_notes;
 	}
 
 	/**
@@ -505,6 +553,66 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	} // setMax()
 
 	/**
+	 * Set the value of [forfait_pay] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Role The current object (for fluent API support)
+	 */
+	public function setForfaitPay($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->forfait_pay !== $v) {
+			$this->forfait_pay = $v;
+			$this->modifiedColumns[] = RolePeer::FORFAIT_PAY;
+		}
+
+		return $this;
+	} // setForfaitPay()
+
+	/**
+	 * Set the value of [charge_notes] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Role The current object (for fluent API support)
+	 */
+	public function setChargeNotes($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->charge_notes !== $v) {
+			$this->charge_notes = $v;
+			$this->modifiedColumns[] = RolePeer::CHARGE_NOTES;
+		}
+
+		return $this;
+	} // setChargeNotes()
+
+	/**
+	 * Set the value of [confirmation_notes] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Role The current object (for fluent API support)
+	 */
+	public function setConfirmationNotes($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->confirmation_notes !== $v) {
+			$this->confirmation_notes = $v;
+			$this->modifiedColumns[] = RolePeer::CONFIRMATION_NOTES;
+		}
+
+		return $this;
+	} // setConfirmationNotes()
+
+	/**
 	 * Set the value of [rank] column.
 	 * 
 	 * @param      int $v new value
@@ -579,7 +687,10 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			$this->default_guardgroup = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
 			$this->min = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
 			$this->max = ($row[$startcol + 10] !== null) ? (int) $row[$startcol + 10] : null;
-			$this->rank = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
+			$this->forfait_pay = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->charge_notes = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
+			$this->confirmation_notes = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
+			$this->rank = ($row[$startcol + 14] !== null) ? (int) $row[$startcol + 14] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -589,7 +700,7 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 12; // 12 = RolePeer::NUM_COLUMNS - RolePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 15; // 15 = RolePeer::NUM_COLUMNS - RolePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Role object", $e);
@@ -976,6 +1087,15 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 				return $this->getMax();
 				break;
 			case 11:
+				return $this->getForfaitPay();
+				break;
+			case 12:
+				return $this->getChargeNotes();
+				break;
+			case 13:
+				return $this->getConfirmationNotes();
+				break;
+			case 14:
 				return $this->getRank();
 				break;
 			default:
@@ -1010,7 +1130,10 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			$keys[8] => $this->getDefaultGuardgroup(),
 			$keys[9] => $this->getMin(),
 			$keys[10] => $this->getMax(),
-			$keys[11] => $this->getRank(),
+			$keys[11] => $this->getForfaitPay(),
+			$keys[12] => $this->getChargeNotes(),
+			$keys[13] => $this->getConfirmationNotes(),
+			$keys[14] => $this->getRank(),
 		);
 		return $result;
 	}
@@ -1076,6 +1199,15 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 				$this->setMax($value);
 				break;
 			case 11:
+				$this->setForfaitPay($value);
+				break;
+			case 12:
+				$this->setChargeNotes($value);
+				break;
+			case 13:
+				$this->setConfirmationNotes($value);
+				break;
+			case 14:
 				$this->setRank($value);
 				break;
 		} // switch()
@@ -1113,7 +1245,10 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[8], $arr)) $this->setDefaultGuardgroup($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setMin($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setMax($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setRank($arr[$keys[11]]);
+		if (array_key_exists($keys[11], $arr)) $this->setForfaitPay($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setChargeNotes($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setConfirmationNotes($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setRank($arr[$keys[14]]);
 	}
 
 	/**
@@ -1136,6 +1271,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RolePeer::DEFAULT_GUARDGROUP)) $criteria->add(RolePeer::DEFAULT_GUARDGROUP, $this->default_guardgroup);
 		if ($this->isColumnModified(RolePeer::MIN)) $criteria->add(RolePeer::MIN, $this->min);
 		if ($this->isColumnModified(RolePeer::MAX)) $criteria->add(RolePeer::MAX, $this->max);
+		if ($this->isColumnModified(RolePeer::FORFAIT_PAY)) $criteria->add(RolePeer::FORFAIT_PAY, $this->forfait_pay);
+		if ($this->isColumnModified(RolePeer::CHARGE_NOTES)) $criteria->add(RolePeer::CHARGE_NOTES, $this->charge_notes);
+		if ($this->isColumnModified(RolePeer::CONFIRMATION_NOTES)) $criteria->add(RolePeer::CONFIRMATION_NOTES, $this->confirmation_notes);
 		if ($this->isColumnModified(RolePeer::RANK)) $criteria->add(RolePeer::RANK, $this->rank);
 
 		return $criteria;
@@ -1210,6 +1348,12 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		$copyObj->setMin($this->min);
 
 		$copyObj->setMax($this->max);
+
+		$copyObj->setForfaitPay($this->forfait_pay);
+
+		$copyObj->setChargeNotes($this->charge_notes);
+
+		$copyObj->setConfirmationNotes($this->confirmation_notes);
 
 		$copyObj->setRank($this->rank);
 
