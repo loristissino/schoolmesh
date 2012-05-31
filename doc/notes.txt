@@ -1,4 +1,9 @@
 2012/05/31
+Release: 1.09
+Changed field name in role table:
+  forfait_pay -> forfait_retribution 
+
+2012/05/31
 Release: 1.08
 Changed field name in userteam table:
   reference_number -> charge_reference_number 
