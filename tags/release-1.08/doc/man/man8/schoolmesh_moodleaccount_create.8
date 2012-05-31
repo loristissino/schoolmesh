@@ -1,0 +1,33 @@
+.TH SCHOOLMESH_MOODLEACCOUNT_CREATE 8 "December 2011" "Schoolmesh User Manuals"
+.SH NAME
+.PP
+schoolmesh_moodleaccount_create - Create a moodle account for a
+user
+.SH SYNOPSIS
+.PP
+schoolmesh_moodleaccount_create \f[I]username\f[]
+\f[I]firstname\f[] \f[I]lastname\f[] \f[I]password\f[]
+\f[I]institution\f[] \f[I]department\f[] \f[I]email\f[]
+.SH DESCRIPTION
+.PP
+Use this script to create a moodle account.
+Some checks are done before the creation.
+.SH EXAMPLES
+.PP
+schoolmesh_moodleaccount_create john `John' `Doe' ck33LmrdH_45
+john.doe\@example.com
+.SH TO DO
+.PP
+Passwords should not be passed on the command line.
+This must be modified,probably by passing a file name containing
+the password.
+.SH BUGS
+.PP
+Probably many.
+.SH SEE ALSO
+.PP
+The SchoolMesh project is described at
+<http://www.schoolmesh.mattiussilab.net/>.
+.SH AUTHORS
+Loris Tissino (loris.tissino\@gmail.com).
+

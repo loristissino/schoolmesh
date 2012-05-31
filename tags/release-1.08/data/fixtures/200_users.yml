@@ -1,0 +1,89 @@
+sfGuardUserProfile:
+  loris:
+    user_id:        loris
+    first_name:     Loris
+    last_name:      Tissino
+    gender:            M
+    role_id:       doc
+    import_code:  TSSLRS
+
+  test.teacher:
+    user_id:        john.test
+    first_name:     John
+    last_name:      Test
+    gender:            M
+    email:     john@example.com
+    role_id:       doc
+    import_code:  TCHTST
+    
+  francesco:
+    user_id:        francesco
+    first_name:     Francesco
+    last_name:      Genova
+    gender:            M
+    role_id:       doc
+    import_code:  GNVFRN
+
+  flavia:
+    user_id:        flavia
+    first_name:     Flavia
+    last_name:      Gemona
+    gender:            F
+    role_id:       doc
+
+  bianca:
+    user_id:        bianca
+    first_name:     Bianca
+    last_name:      Brindisi
+    gender:            F
+    role_id:       doc
+    import_code:  BRNBNC
+    system_alerts: test alert
+
+  juri:
+    user_id:        juri
+    first_name:     Juri
+    last_name:      Domodossola
+    gender:            M
+    role_id:       at
+  antonio:
+    user_id:        antonio
+    first_name:     Antonio
+    last_name:      Danubio
+    gender:            M
+    role_id:       ds
+    
+  gabriella:
+    user_id:        gabriella
+    first_name:     Gabriella
+    last_name:      Vicenza
+    gender:            F
+    role_id:       dsga
+
+
+  guest:
+    user_id:     guest
+    first_name:   Stefano
+    last_name:    Ospite
+    gender:      M
+
+
+  lucia.d:
+    user_id:        lucia.d
+    first_name:     Lucia
+    last_name:      Di Donati
+    gender:            F
+
+  giulia.d:
+    user_id:        giulia.d
+    first_name:     Giulia
+    last_name:      Di Donati
+    gender:            F
+
+
+  vinicio:
+    user_id:        vinicio
+    first_name:    Vinicio
+    last_name:    Grimaldi
+    gender:            M
+    role_id:        ds

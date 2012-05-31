@@ -1,0 +1,33 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Disable Internet access for a workstation 
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *ipaddress* *user*
+#@
+#@ # DESCRIPTION
+#@
+#@ This script disables Internet access for a workstation.
+#@
+#@ # EXAMPLES
+#@
+#@ {-} 192.168.1.3 john
+
+IPADDRESS=$1
+REQUESTER=$2
+
+checkString $IPADDRESS
+checkString $REQUESTER
+
+COMMAND="iptables -t $FIREWALL_TABLE -D $FIREWALL_CHAIN -s $IPADDRESS -j $FIREWALL_ACCEPTRULE -m comment --comment \"$FIREWALL_COMMENT $REQUESTER\""
+
+ssh -p $FIREWALL_SSH_PORT $FIREWALL_SSH_USER@$FIREWALL_ADDRESS "$COMMAND" 2>/dev/null && msg_ok "internet access disabled: $IPADDRESS" && exit 0
+
+msg_failed "internet access not disabled: $IPADDRESS, $REQUESTER" && exit 1

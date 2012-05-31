@@ -1,0 +1,30 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Lock a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to lock a user.
+#@
+#@ # EXAMPLES
+#@
+#@ {-} john
+
+
+USERNAME=$1
+
+checkUsername $USERNAME
+
+sudo usermod -L $USERNAME && sudo chage -E 1 $USERNAME && msg_ok "locked user: $USER" && exit 0
+
+unexpectedError $@

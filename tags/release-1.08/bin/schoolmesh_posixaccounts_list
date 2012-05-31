@@ -1,0 +1,57 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Get a list of posix users belonging to a specified group
+#@
+#@ # SYNOPSIS
+#@
+#@ {} primary | secondary | all *group*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to get a list of users belonging to a specified group. 
+#@ You can decide to check only primary groups, only secondary, or both.
+#@
+#@ # EXAMPLES
+#@
+#@ {-} primary students  
+#@ {-} secondary students  
+#@ {-} all students
+
+TYPE=$1
+GROUP=$2
+
+checkString $TYPE "Type"
+
+checkOneOf $TYPE primary secondary all
+
+checkGroup $GROUP
+
+GID=$(getent group | gawk "BEGIN { FS=\":\" } { if (\$1==\"$GROUP\") print \$3 }" | head -1)
+
+if [[ "$TYPE" = "primary" ]]
+	then
+		getent passwd | gawk "BEGIN { FS=\":\" } { if (\$4==\"$GID\") print \$1 }" | sort | uniq
+fi
+
+if [[ "$TYPE" = "all" ]]
+	then
+		for USERNAME in $(getent passwd | cut -d: -f1 | sort | uniq )
+			do
+				userBelongsToGroup $USERNAME $GROUP
+				if [[ $BELONGS -eq 1 ]]
+					then
+						echo $USERNAME
+				fi
+			done
+fi
+
+if [[ "$TYPE" = "secondary" ]]
+	then
+		msg_failed "Not implemented yet"
+fi

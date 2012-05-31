@@ -1,0 +1,21 @@
+message:
+  subject: Workplans waiting for approval
+  salutation: true
+  tagline: false
+  body: |
+
+    some workplans (to be precise, %number%) are waiting for
+    the approval.
+    
+    They can be approved by accessing the following page:
+    
+    http://...index.php/plansandreports/list
+    
+    %addressees%
+    The complete list of workplans waiting follows:
+    
+    %appointments%
+
+      Greetings.
+
+        The staff

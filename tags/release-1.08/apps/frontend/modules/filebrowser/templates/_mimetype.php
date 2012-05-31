@@ -1,0 +1,1 @@
+<?php echo image_tag('mimetypes/' . str_replace('/', '_', $mimetype) . '.png', array('alt'=>$mimetype, 'title'=>$mimetype)) ?>
