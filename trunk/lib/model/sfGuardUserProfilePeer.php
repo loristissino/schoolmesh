@@ -765,6 +765,19 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
       throw new Exception('Not a valid type');
     }
     
+    switch($type)
+    {
+      case 'charge':
+        $filename='Responsibility role charge letters';
+        break;
+      case 'confirmation':
+        $filename='Responsibility role confirmation letters';
+    }
+    if($context)
+    {
+      $filename=$context->getI18N()->__($filename);
+    }
+    
 		$result=Array();
 
 		$users=self::retrieveByPksSortedByLastnames($ids);
@@ -772,7 +785,8 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		try
 		{
 			$templatename=sprintf('responsibilityroles%sletter.odt', $type);
-			$odf=new OdfDoc($templatename, 'Key roles charge letter', $filetype);
+      
+			$odf=new OdfDoc($templatename, $filename, $filetype);
 		}
 		catch (Exception $e)
 		{
