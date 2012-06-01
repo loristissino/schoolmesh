@@ -538,4 +538,9 @@ class Generic{
     return $values;
   }
 
+  public static function todayAtMidnight()
+  {
+    return mktime(0, 0, 0, date('n'), date('j'), date('Y'));
+  }
+
 }
