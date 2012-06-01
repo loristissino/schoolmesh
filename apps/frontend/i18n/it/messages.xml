@@ -4820,6 +4820,10 @@
         <source>Forfait retribution</source>
         <target>Compenso forfetario</target>
     </trans-unit>
+    <trans-unit id="1402">
+        <source>Edit the role «%description%»</source>
+        <target>Modifica il ruolo «%description%»</target>
+    </trans-unit>
      </body>
   </file> 
 </xliff>

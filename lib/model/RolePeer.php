@@ -98,6 +98,7 @@ class RolePeer extends BaseRolePeer
       $c->add(TeamPeer::QUALITY_CODE, $Role->getQualityCode());
     }
     $c->add(RolePeer::ID, $Role->getId());
+    $c->add(UserTeamPeer::EXPIRY, Generic::todayAtMidnight(), Criteria::GREATER_EQUAL);
     $c->clearSelectColumns();
     $c->setDistinct();
     $c->addAsColumn('TOTALQUANTITY', 'COUNT( DISTINCT ' . UserTeamPeer::USER_ID . ')');
