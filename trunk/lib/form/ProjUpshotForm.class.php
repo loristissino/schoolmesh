@@ -74,6 +74,13 @@ class ProjUpshotForm extends BaseProjUpshotForm
           $this['scheduled_date']
           );
         break;
+      case Workflow::PROJ_CONFIRMED:
+        unset(
+          $this['description'],
+          $this['indicator'],
+          $this['scheduled_date']
+          );
+        break;
         
     }
 
