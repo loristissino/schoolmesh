@@ -53,7 +53,7 @@
   <li class="sf_admin_action_<?php echo $account->getAccountType() ?>"><?php echo link_to(__($account->__toString()), url_for(('profile/viewaccount?type='. $account->getAccountType()))) ?><br /></li>
   <?php endforeach ?>
 <?php endif ?>
-<?php echo li_link_to_if('action_users', sizeof($teams)>0, __('My teams'), url_for(('profile/teams')), array('title'=>__('Teams I belong to'))) ?>
+<?php echo li_link_to_if('action_users', sizeof($teams)>0, __('My teams, my roles, my charges'), url_for(('profile/teams')), array('title'=>__('Teams I belong to, roles I play, and charges I have'))) ?>
 
 </ul>
 

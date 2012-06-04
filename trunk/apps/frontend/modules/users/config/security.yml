@@ -2,4 +2,4 @@ default:
   credentials: users
   
 getlist:
-  credentials: [[ admin, wpfr_submission ]]
+  credentials: [[ admin, wpfr_submission, users ]]
