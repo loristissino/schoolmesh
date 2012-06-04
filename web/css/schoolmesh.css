@@ -463,6 +463,12 @@ font-weight: normal;
 	background-color: gray;
 }
 
+.notimportant
+{
+	background-color: #eee;
+}
+
+
 .workflow_finished
 {
   background-color: #7FFD8B; 

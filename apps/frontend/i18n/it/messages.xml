@@ -3965,12 +3965,12 @@
         <target>Account e team</target>
     </trans-unit>
     <trans-unit id="1016">
-        <source>Teams I belong to</source>
-        <target>Team di cui faccio parte</target>
+        <source>Teams I belong to, roles I play, and charges I have</source>
+        <target>Team di cui faccio parte, ruoli che rivesto, incarichi affidatimi</target>
     </trans-unit>
     <trans-unit id="1017">
-        <source>My teams</source>
-        <target>Team</target>
+        <source>My teams, my roles, my charges</source>
+        <target>Team, ruoli, incarichi</target>
     </trans-unit>
     <trans-unit id="1018">
         <source>This team has no members.</source>
@@ -4824,9 +4824,14 @@
         <source>Edit the role «%description%»</source>
         <target>Modifica il ruolo «%description%»</target>
     </trans-unit>
+    <trans-unit id="1403">
+        <source>These are the teams you currently belong to, with the role you play within them.</source>
+        <target>Questi sono i team a cui appartieni, con il ruolo rivestito al loro interno.</target>
+    </trans-unit>
+    <trans-unit id="1404">
+        <source>Looks like this charge has not been approved yet</source>
+        <target>A quanto pare, questo incarico non è ancora stato attribuito in via definitiva</target>
+    </trans-unit>
      </body>
   </file> 
 </xliff>
-
-
-
