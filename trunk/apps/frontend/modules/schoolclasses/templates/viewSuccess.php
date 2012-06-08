@@ -82,7 +82,7 @@
       <?php endif ?>
       <td><?php include_partial('users/gender', array('gender'=>$enrolment->getsfGuardUser()->getProfile()->getGender())) ?></td>
       <td><?php echo $enrolment->getsfGuardUser()->getProfile()->getFirstName() ?></td>
-      <td><?php echo $enrolment->getsfGuardUser()->getProfile()->getLastName() ?></td>
+      <td><span class="lastname"><?php echo $enrolment->getsfGuardUser()->getProfile()->getLastName() ?></span></td>
       <td><?php echo $enrolment->getsfGuardUser()->getProfile()->getPronunciation() ?></td>
     </tr>
     <?php endforeach; ?>

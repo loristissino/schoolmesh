@@ -588,3 +588,9 @@ ul.simple_list li
 {
   list-style: none;
 }
+
+.lastname
+{
+  font-weight: bold;
+  #text-transform: uppercase;
+}
