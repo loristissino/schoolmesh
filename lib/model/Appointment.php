@@ -1232,14 +1232,14 @@ public function getWorkflowLogs()
 	{
     $documentversion=$complete? 'Unabridged document': 'Abridged document';
     
-		$activesyllabus=$this->getSyllabus() && $this->getSyllabus()->getIsActive();
+    $activesyllabus=$this->getSyllabus() && $this->getSyllabus()->getIsActive();
         
     $template=sprintf('appointment_%s_%d.odt', $this->getAppointmentType()->getShortcut(), $this->getState());
     
-    Generic::logMessage('using template', $template);
-    Generic::logMessage('creating odf for appointment', $this->getId());
+    //Generic::logMessage('using template', $template);
+    //Generic::logMessage('creating odf for appointment', $this->getId());
 		
-		$teachertitle=$this->getSfGuardUser()->getProfile()->getLettertitle();
+    $teachertitle=$this->getSfGuardUser()->getProfile()->getLettertitle();
 
     $steps = Workflow::getWpfrSteps();
     $state=$steps[$this->getState()]['stateDescription'];
@@ -1252,11 +1252,11 @@ public function getWorkflowLogs()
 		if ($sfContext)
 		{
 			$state=$sfContext->getI18n()->__($state);
-      $documentversion=$sfContext->getI18n()->__($documentversion);
-      foreach($contrib_descriptions as $key=>$description)
-      {
-        $contrib_descriptions[$key]=$sfContext->getI18n()->__($description);
-      }
+            $documentversion=$sfContext->getI18n()->__($documentversion);
+    	      foreach($contrib_descriptions as $key=>$description)
+			  {
+				 $contrib_descriptions[$key]=$sfContext->getI18n()->__($description);
+			  }
 		}
 	
 		try
@@ -1321,6 +1321,8 @@ public function getWorkflowLogs()
         
         foreach($wpmodules as $wpmodule)
         {
+		  $printableItems=0;
+		  // this will count the items evaluated 
           foreach($wpmodule->getWpitemGroups() as $wpitemgroup)
           {
             $wpitems=$wpitemgroup->getWpmoduleItems();
@@ -1330,21 +1332,28 @@ public function getWorkflowLogs()
               {
                 // evaluation could be null (e.g. for notes, or before report state), 
                 // so first we check if it exists, then we test the value
-                if(!$wpitem->getEvaluation() || $wpitem->getEvaluation()>1)
-                
+                if(!$wpitem->getEvaluation() || $wpitem->getEvaluation()>$wpitemgroup->getWpitemType()->getEvaluationMin())
                 {
                   $text=array();
                   $text['content']=$wpitem->getContent();
                   if ($wpitem->getEvaluation())
                   {
                     $text['evaluation']=$wpitem->getEvaluation();
+                    $printableItems++;
                   }
                   $selectedModules[$wpmodule->getTitle()][$wpitemgroup->getWpitemType()->getTitle()][]=$text;
                 }
               }
             }
           }
+          if($printableItems==0)
+          {
+			// all items are evaluated at the minimum, so we remove the whole module
+			unset($selectedModules[$wpmodule->getTitle()]);
+		  }
         }
+        
+        Generic::logMessage('modules', $selectedModules);
               
         $modules=$odfdoc->setSegment('modules');
         
