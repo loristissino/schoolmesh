@@ -1,10 +1,11 @@
 <?php use_helper('jQuery') ?>
 <?php $sits=$wpmodule_item->getStudentsSituationsAsArray($sf_user->getAttribute('ids')->getRawValue(), $term_id)->getRawValue() ?>
 <td width="10">&nbsp;</td>
-<td><?php echo html_entity_decode($wpmodule_item->getContent()) ?></td>
+<td><?php include_partial('wpmodule/itemcontent', array('wpmodule_item'=>$wpmodule_item, 'evaluation_min'=>isset($evaluation_min)?$evaluation_min:0)) ?></td>
 
 <td width="20"><?php echo image_tag('loader.gif', array('style'=>'vertical-align: middle; display: none', 'id'=>'loader'. $wpmodule_item->getId())) ?></td>
 <?php $count=0 ?>
+<?php if($wpmodule_item->getEvaluation()!==$evaluation_min): ?>
 <?php foreach ($students as $student): ?>
 <td>
 		<?php $link='▢'; if(in_array($student->getUserId(), $sits)) {$link='▣'; $count++; } ?>
@@ -46,3 +47,6 @@
 		</li>
 	</ul>
 </td>
+<?php else: // evaluation is set to the minimum ?>
+<td colspan="<?php echo sizeof($students)+1 ?>"></td>
+<?php endif ?>

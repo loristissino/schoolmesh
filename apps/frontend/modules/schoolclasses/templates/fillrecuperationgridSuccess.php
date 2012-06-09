@@ -37,7 +37,7 @@
 
 		<?php foreach($wpitem_group->getWpmoduleItems() as $wpmodule_item): ?>
 			<tr id="<?php echo 'ticks_' . $wpmodule_item->getId() ?>">
-				<?php include_partial('wpmoduleitem', array('students'=>$students, 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id)) ?>
+				<?php include_partial('wpmoduleitem', array('students'=>$students, 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id, 'evaluation_min'=>$wpitem_group->getWpItemType()->getEvaluationMin())) ?>
 			</tr>
 		<?php endforeach ?>
 

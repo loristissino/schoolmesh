@@ -3,15 +3,14 @@
 		<?php if($wpitem_group->countWpmoduleItems()): ?>
 
 			<h4><?php echo $wpitem_group->getWpitemType()->getTitle() ?></h4>
-      <?php $ev_min=$wpitem_group->getWpitemType()->getEvaluationMin() ?>
+            <?php $ev_min=$wpitem_group->getWpitemType()->getEvaluationMin() ?>
 				<?php if($wpitem_group->countWpmoduleItems()): ?>
 					
 					<ul>
 						<?php foreach($wpitem_group->getWpmoduleItems() as $wpmodule_item): ?>
 							<?php /* if (!$wpmodule_item->getIsEditable()): */?>
 							<li>
-              <?php if($ev_min===$wpmodule_item->getEvaluation()):?><strike><?php endif ?>
-              <?php echo html_entity_decode($wpmodule_item->getContent()) ?><?php if($ev_min===$wpmodule_item->getEvaluation()):?></strike><?php endif ?>
+                            <?php include_partial('wpmodule/itemcontent', array('wpmodule_item'=>$wpmodule_item, 'evaluation_min'=>$ev_min)) ?>
 							<?php if (isset($workplan) && ($workplan->getState()>=Workflow::IR_DRAFT) && ($wpmodule_item->getEvaluation()>0)): ?>
 								<?php /*
 <?php for($i=0;$i<$wpmodule_item->getEvaluation(); $i++): ?>
