@@ -181,7 +181,7 @@ class schoolclassesActions extends sfActions
 		}
 
 
- 	    return $this->renderPartial('wpmoduleitem', array('students'=>$this->students, 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id, 'evaluation_min'=>-1 // we don't really need this last value in this context, it's here for compatibility));
+ 	    return $this->renderPartial('wpmoduleitem', array('students'=>$this->students, 'wpmodule_item'=>$wpmodule_item, 'term_id'=>$term_id, 'evaluation_min'=>-1 /* we don't really need this last value in this context, it's here for compatibility */));
 
 	}
 	
