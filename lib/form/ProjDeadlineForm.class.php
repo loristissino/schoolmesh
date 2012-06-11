@@ -12,6 +12,9 @@ class ProjDeadlineForm extends BaseProjDeadlineForm
 {
   public function configure()
   {
+      
+    $this->deadline=$this->getObject();
+          
 	unset($this['user_id'], $this['schoolproject_id'], $this['created_at'], $this['updated_at']);
 
 	$this->widgetSchema['original_deadline_date'] = new sfWidgetFormI18nDate(array('culture'=>'it'));  
@@ -80,6 +83,11 @@ class ProjDeadlineForm extends BaseProjDeadlineForm
   
   public function containsValidatedFile($validator, $values)
   {
+    if($this->deadline->hasAttachmentFiles())
+    {
+        return $values;
+    }
+      
     // thanks to alex gilbert for the idea:
     // http://www.mail-archive.com/symfony-users@googlegroups.com/msg20341.html
     if (!$values['attachment'] instanceof sfValidatedFile)
