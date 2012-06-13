@@ -2,7 +2,7 @@
 
 
 /**
- * This class defines the structure of the 'ticket' table.
+ * This class defines the structure of the 'ticket_type' table.
  *
  *
  *
@@ -11,14 +11,14 @@
  * ORDER BY clause to know whether it needs to apply SQL to make the ORDER BY case-insensitive
  * (i.e. if it's a text column type).
  *
- * @package    lib.model.map
+ * @package    plugins.sfTicketsManagerPlugin.lib.model.map
  */
-class TicketTableMap extends TableMap {
+class TicketTypeTableMap extends TableMap {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.TicketTableMap';
+	const CLASS_NAME = 'plugins.sfTicketsManagerPlugin.lib.model.map.TicketTypeTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators
@@ -30,17 +30,14 @@ class TicketTableMap extends TableMap {
 	public function initialize()
 	{
 	  // attributes
-		$this->setName('ticket');
-		$this->setPhpName('Ticket');
-		$this->setClassname('Ticket');
-		$this->setPackage('lib.model');
+		$this->setName('ticket_type');
+		$this->setPhpName('TicketType');
+		$this->setClassname('TicketType');
+		$this->setPackage('plugins.sfTicketsManagerPlugin.lib.model');
 		$this->setUseIdGenerator(true);
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
-		$this->addColumn('REFERRER', 'Referrer', 'VARCHAR', false, 255, null);
-		$this->addForeignKey('TICKET_TYPE_ID', 'TicketTypeId', 'INTEGER', 'ticket_type', 'ID', false, null, null);
-		$this->addColumn('UPDATED_AT', 'UpdatedAt', 'TIMESTAMP', false, null, null);
-		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
+		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', true, 50, null);
 		// validators
 	} // initialize()
 
@@ -49,8 +46,7 @@ class TicketTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('TicketType', 'TicketType', RelationMap::MANY_TO_ONE, array('ticket_type_id' => 'id', ), null, null);
-    $this->addRelation('TicketEvent', 'TicketEvent', RelationMap::ONE_TO_MANY, array('id' => 'ticket_id', ), null, null);
+    $this->addRelation('Ticket', 'Ticket', RelationMap::ONE_TO_MANY, array('id' => 'ticket_type_id', ), null, null);
 	} // buildRelations()
 
 	/**
@@ -63,8 +59,7 @@ class TicketTableMap extends TableMap {
 	{
 		return array(
 			'symfony' => array('form' => 'true', 'filter' => 'true', ),
-			'symfony_timestampable' => array('update_column' => 'updated_at', ),
 		);
 	} // getBehaviors()
 
-} // TicketTableMap
+} // TicketTypeTableMap

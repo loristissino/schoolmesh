@@ -101,26 +101,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	private $lastAccountCriteria = null;
 
 	/**
-	 * @var        array TicketEvent[] Collection to store aggregation of TicketEvent objects.
-	 */
-	protected $collTicketEventsRelatedByUserId;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collTicketEventsRelatedByUserId.
-	 */
-	private $lastTicketEventRelatedByUserIdCriteria = null;
-
-	/**
-	 * @var        array TicketEvent[] Collection to store aggregation of TicketEvent objects.
-	 */
-	protected $collTicketEventsRelatedByAssigneeId;
-
-	/**
-	 * @var        Criteria The criteria used to select the current contents of collTicketEventsRelatedByAssigneeId.
-	 */
-	private $lastTicketEventRelatedByAssigneeIdCriteria = null;
-
-	/**
 	 * @var        array Appointment[] Collection to store aggregation of Appointment objects.
 	 */
 	protected $collAppointments;
@@ -309,6 +289,26 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	 * @var        Criteria The criteria used to select the current contents of collsfGuardRememberKeys.
 	 */
 	private $lastsfGuardRememberKeyCriteria = null;
+
+	/**
+	 * @var        array TicketEvent[] Collection to store aggregation of TicketEvent objects.
+	 */
+	protected $collTicketEventsRelatedByUserId;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collTicketEventsRelatedByUserId.
+	 */
+	private $lastTicketEventRelatedByUserIdCriteria = null;
+
+	/**
+	 * @var        array TicketEvent[] Collection to store aggregation of TicketEvent objects.
+	 */
+	protected $collTicketEventsRelatedByAssigneeId;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collTicketEventsRelatedByAssigneeId.
+	 */
+	private $lastTicketEventRelatedByAssigneeIdCriteria = null;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -867,12 +867,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$this->collAccounts = null;
 			$this->lastAccountCriteria = null;
 
-			$this->collTicketEventsRelatedByUserId = null;
-			$this->lastTicketEventRelatedByUserIdCriteria = null;
-
-			$this->collTicketEventsRelatedByAssigneeId = null;
-			$this->lastTicketEventRelatedByAssigneeIdCriteria = null;
-
 			$this->collAppointments = null;
 			$this->lastAppointmentCriteria = null;
 
@@ -929,6 +923,12 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 			$this->collsfGuardRememberKeys = null;
 			$this->lastsfGuardRememberKeyCriteria = null;
+
+			$this->collTicketEventsRelatedByUserId = null;
+			$this->lastTicketEventRelatedByUserIdCriteria = null;
+
+			$this->collTicketEventsRelatedByAssigneeId = null;
+			$this->lastTicketEventRelatedByAssigneeIdCriteria = null;
 
 		} // if (deep)
 	}
@@ -1090,22 +1090,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collTicketEventsRelatedByUserId !== null) {
-				foreach ($this->collTicketEventsRelatedByUserId as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
-			if ($this->collTicketEventsRelatedByAssigneeId !== null) {
-				foreach ($this->collTicketEventsRelatedByAssigneeId as $referrerFK) {
-					if (!$referrerFK->isDeleted()) {
-						$affectedRows += $referrerFK->save($con);
-					}
-				}
-			}
-
 			if ($this->collAppointments !== null) {
 				foreach ($this->collAppointments as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -1258,6 +1242,22 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collTicketEventsRelatedByUserId !== null) {
+				foreach ($this->collTicketEventsRelatedByUserId as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collTicketEventsRelatedByAssigneeId !== null) {
+				foreach ($this->collTicketEventsRelatedByAssigneeId as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -1345,22 +1345,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 				if ($this->collAccounts !== null) {
 					foreach ($this->collAccounts as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collTicketEventsRelatedByUserId !== null) {
-					foreach ($this->collTicketEventsRelatedByUserId as $referrerFK) {
-						if (!$referrerFK->validate($columns)) {
-							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
-						}
-					}
-				}
-
-				if ($this->collTicketEventsRelatedByAssigneeId !== null) {
-					foreach ($this->collTicketEventsRelatedByAssigneeId as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1513,6 +1497,22 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 				if ($this->collsfGuardRememberKeys !== null) {
 					foreach ($this->collsfGuardRememberKeys as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collTicketEventsRelatedByUserId !== null) {
+					foreach ($this->collTicketEventsRelatedByUserId as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collTicketEventsRelatedByAssigneeId !== null) {
+					foreach ($this->collTicketEventsRelatedByAssigneeId as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1813,18 +1813,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			foreach ($this->getTicketEventsRelatedByUserId() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addTicketEventRelatedByUserId($relObj->copy($deepCopy));
-				}
-			}
-
-			foreach ($this->getTicketEventsRelatedByAssigneeId() as $relObj) {
-				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addTicketEventRelatedByAssigneeId($relObj->copy($deepCopy));
-				}
-			}
-
 			foreach ($this->getAppointments() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addAppointment($relObj->copy($deepCopy));
@@ -1936,6 +1924,18 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			foreach ($this->getsfGuardRememberKeys() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addsfGuardRememberKey($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getTicketEventsRelatedByUserId() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addTicketEventRelatedByUserId($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getTicketEventsRelatedByAssigneeId() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addTicketEventRelatedByAssigneeId($relObj->copy($deepCopy));
 				}
 			}
 
@@ -2375,408 +2375,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->lastAccountCriteria = $criteria;
 
 		return $this->collAccounts;
-	}
-
-	/**
-	 * Clears out the collTicketEventsRelatedByUserId collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addTicketEventsRelatedByUserId()
-	 */
-	public function clearTicketEventsRelatedByUserId()
-	{
-		$this->collTicketEventsRelatedByUserId = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collTicketEventsRelatedByUserId collection (array).
-	 *
-	 * By default this just sets the collTicketEventsRelatedByUserId collection to an empty array (like clearcollTicketEventsRelatedByUserId());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initTicketEventsRelatedByUserId()
-	{
-		$this->collTicketEventsRelatedByUserId = array();
-	}
-
-	/**
-	 * Gets an array of TicketEvent objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
-	 * related TicketEventsRelatedByUserId from storage. If this sfGuardUser is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array TicketEvent[]
-	 * @throws     PropelException
-	 */
-	public function getTicketEventsRelatedByUserId($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collTicketEventsRelatedByUserId === null) {
-			if ($this->isNew()) {
-			   $this->collTicketEventsRelatedByUserId = array();
-			} else {
-
-				$criteria->add(TicketEventPeer::USER_ID, $this->id);
-
-				TicketEventPeer::addSelectColumns($criteria);
-				$this->collTicketEventsRelatedByUserId = TicketEventPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(TicketEventPeer::USER_ID, $this->id);
-
-				TicketEventPeer::addSelectColumns($criteria);
-				if (!isset($this->lastTicketEventRelatedByUserIdCriteria) || !$this->lastTicketEventRelatedByUserIdCriteria->equals($criteria)) {
-					$this->collTicketEventsRelatedByUserId = TicketEventPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastTicketEventRelatedByUserIdCriteria = $criteria;
-		return $this->collTicketEventsRelatedByUserId;
-	}
-
-	/**
-	 * Returns the number of related TicketEvent objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related TicketEvent objects.
-	 * @throws     PropelException
-	 */
-	public function countTicketEventsRelatedByUserId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collTicketEventsRelatedByUserId === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(TicketEventPeer::USER_ID, $this->id);
-
-				$count = TicketEventPeer::doCount($criteria, false, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(TicketEventPeer::USER_ID, $this->id);
-
-				if (!isset($this->lastTicketEventRelatedByUserIdCriteria) || !$this->lastTicketEventRelatedByUserIdCriteria->equals($criteria)) {
-					$count = TicketEventPeer::doCount($criteria, false, $con);
-				} else {
-					$count = count($this->collTicketEventsRelatedByUserId);
-				}
-			} else {
-				$count = count($this->collTicketEventsRelatedByUserId);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a TicketEvent object to this object
-	 * through the TicketEvent foreign key attribute.
-	 *
-	 * @param      TicketEvent $l TicketEvent
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addTicketEventRelatedByUserId(TicketEvent $l)
-	{
-		if ($this->collTicketEventsRelatedByUserId === null) {
-			$this->initTicketEventsRelatedByUserId();
-		}
-		if (!in_array($l, $this->collTicketEventsRelatedByUserId, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collTicketEventsRelatedByUserId, $l);
-			$l->setsfGuardUserRelatedByUserId($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this sfGuardUser is new, it will return
-	 * an empty collection; or if this sfGuardUser has previously
-	 * been saved, it will retrieve related TicketEventsRelatedByUserId from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in sfGuardUser.
-	 */
-	public function getTicketEventsRelatedByUserIdJoinTicket($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collTicketEventsRelatedByUserId === null) {
-			if ($this->isNew()) {
-				$this->collTicketEventsRelatedByUserId = array();
-			} else {
-
-				$criteria->add(TicketEventPeer::USER_ID, $this->id);
-
-				$this->collTicketEventsRelatedByUserId = TicketEventPeer::doSelectJoinTicket($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(TicketEventPeer::USER_ID, $this->id);
-
-			if (!isset($this->lastTicketEventRelatedByUserIdCriteria) || !$this->lastTicketEventRelatedByUserIdCriteria->equals($criteria)) {
-				$this->collTicketEventsRelatedByUserId = TicketEventPeer::doSelectJoinTicket($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastTicketEventRelatedByUserIdCriteria = $criteria;
-
-		return $this->collTicketEventsRelatedByUserId;
-	}
-
-	/**
-	 * Clears out the collTicketEventsRelatedByAssigneeId collection (array).
-	 *
-	 * This does not modify the database; however, it will remove any associated objects, causing
-	 * them to be refetched by subsequent calls to accessor method.
-	 *
-	 * @return     void
-	 * @see        addTicketEventsRelatedByAssigneeId()
-	 */
-	public function clearTicketEventsRelatedByAssigneeId()
-	{
-		$this->collTicketEventsRelatedByAssigneeId = null; // important to set this to NULL since that means it is uninitialized
-	}
-
-	/**
-	 * Initializes the collTicketEventsRelatedByAssigneeId collection (array).
-	 *
-	 * By default this just sets the collTicketEventsRelatedByAssigneeId collection to an empty array (like clearcollTicketEventsRelatedByAssigneeId());
-	 * however, you may wish to override this method in your stub class to provide setting appropriate
-	 * to your application -- for example, setting the initial array to the values stored in database.
-	 *
-	 * @return     void
-	 */
-	public function initTicketEventsRelatedByAssigneeId()
-	{
-		$this->collTicketEventsRelatedByAssigneeId = array();
-	}
-
-	/**
-	 * Gets an array of TicketEvent objects which contain a foreign key that references this object.
-	 *
-	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
-	 * related TicketEventsRelatedByAssigneeId from storage. If this sfGuardUser is new, it will return
-	 * an empty collection or the current collection, the criteria is ignored on a new object.
-	 *
-	 * @param      PropelPDO $con
-	 * @param      Criteria $criteria
-	 * @return     array TicketEvent[]
-	 * @throws     PropelException
-	 */
-	public function getTicketEventsRelatedByAssigneeId($criteria = null, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collTicketEventsRelatedByAssigneeId === null) {
-			if ($this->isNew()) {
-			   $this->collTicketEventsRelatedByAssigneeId = array();
-			} else {
-
-				$criteria->add(TicketEventPeer::ASSIGNEE_ID, $this->id);
-
-				TicketEventPeer::addSelectColumns($criteria);
-				$this->collTicketEventsRelatedByAssigneeId = TicketEventPeer::doSelect($criteria, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return the collection.
-
-
-				$criteria->add(TicketEventPeer::ASSIGNEE_ID, $this->id);
-
-				TicketEventPeer::addSelectColumns($criteria);
-				if (!isset($this->lastTicketEventRelatedByAssigneeIdCriteria) || !$this->lastTicketEventRelatedByAssigneeIdCriteria->equals($criteria)) {
-					$this->collTicketEventsRelatedByAssigneeId = TicketEventPeer::doSelect($criteria, $con);
-				}
-			}
-		}
-		$this->lastTicketEventRelatedByAssigneeIdCriteria = $criteria;
-		return $this->collTicketEventsRelatedByAssigneeId;
-	}
-
-	/**
-	 * Returns the number of related TicketEvent objects.
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct
-	 * @param      PropelPDO $con
-	 * @return     int Count of related TicketEvent objects.
-	 * @throws     PropelException
-	 */
-	public function countTicketEventsRelatedByAssigneeId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		} else {
-			$criteria = clone $criteria;
-		}
-
-		if ($distinct) {
-			$criteria->setDistinct();
-		}
-
-		$count = null;
-
-		if ($this->collTicketEventsRelatedByAssigneeId === null) {
-			if ($this->isNew()) {
-				$count = 0;
-			} else {
-
-				$criteria->add(TicketEventPeer::ASSIGNEE_ID, $this->id);
-
-				$count = TicketEventPeer::doCount($criteria, false, $con);
-			}
-		} else {
-			// criteria has no effect for a new object
-			if (!$this->isNew()) {
-				// the following code is to determine if a new query is
-				// called for.  If the criteria is the same as the last
-				// one, just return count of the collection.
-
-
-				$criteria->add(TicketEventPeer::ASSIGNEE_ID, $this->id);
-
-				if (!isset($this->lastTicketEventRelatedByAssigneeIdCriteria) || !$this->lastTicketEventRelatedByAssigneeIdCriteria->equals($criteria)) {
-					$count = TicketEventPeer::doCount($criteria, false, $con);
-				} else {
-					$count = count($this->collTicketEventsRelatedByAssigneeId);
-				}
-			} else {
-				$count = count($this->collTicketEventsRelatedByAssigneeId);
-			}
-		}
-		return $count;
-	}
-
-	/**
-	 * Method called to associate a TicketEvent object to this object
-	 * through the TicketEvent foreign key attribute.
-	 *
-	 * @param      TicketEvent $l TicketEvent
-	 * @return     void
-	 * @throws     PropelException
-	 */
-	public function addTicketEventRelatedByAssigneeId(TicketEvent $l)
-	{
-		if ($this->collTicketEventsRelatedByAssigneeId === null) {
-			$this->initTicketEventsRelatedByAssigneeId();
-		}
-		if (!in_array($l, $this->collTicketEventsRelatedByAssigneeId, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collTicketEventsRelatedByAssigneeId, $l);
-			$l->setsfGuardUserRelatedByAssigneeId($this);
-		}
-	}
-
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this sfGuardUser is new, it will return
-	 * an empty collection; or if this sfGuardUser has previously
-	 * been saved, it will retrieve related TicketEventsRelatedByAssigneeId from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in sfGuardUser.
-	 */
-	public function getTicketEventsRelatedByAssigneeIdJoinTicket($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		if ($criteria === null) {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collTicketEventsRelatedByAssigneeId === null) {
-			if ($this->isNew()) {
-				$this->collTicketEventsRelatedByAssigneeId = array();
-			} else {
-
-				$criteria->add(TicketEventPeer::ASSIGNEE_ID, $this->id);
-
-				$this->collTicketEventsRelatedByAssigneeId = TicketEventPeer::doSelectJoinTicket($criteria, $con, $join_behavior);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(TicketEventPeer::ASSIGNEE_ID, $this->id);
-
-			if (!isset($this->lastTicketEventRelatedByAssigneeIdCriteria) || !$this->lastTicketEventRelatedByAssigneeIdCriteria->equals($criteria)) {
-				$this->collTicketEventsRelatedByAssigneeId = TicketEventPeer::doSelectJoinTicket($criteria, $con, $join_behavior);
-			}
-		}
-		$this->lastTicketEventRelatedByAssigneeIdCriteria = $criteria;
-
-		return $this->collTicketEventsRelatedByAssigneeId;
 	}
 
 	/**
@@ -7257,6 +6855,408 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collTicketEventsRelatedByUserId collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addTicketEventsRelatedByUserId()
+	 */
+	public function clearTicketEventsRelatedByUserId()
+	{
+		$this->collTicketEventsRelatedByUserId = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collTicketEventsRelatedByUserId collection (array).
+	 *
+	 * By default this just sets the collTicketEventsRelatedByUserId collection to an empty array (like clearcollTicketEventsRelatedByUserId());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initTicketEventsRelatedByUserId()
+	{
+		$this->collTicketEventsRelatedByUserId = array();
+	}
+
+	/**
+	 * Gets an array of TicketEvent objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related TicketEventsRelatedByUserId from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array TicketEvent[]
+	 * @throws     PropelException
+	 */
+	public function getTicketEventsRelatedByUserId($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collTicketEventsRelatedByUserId === null) {
+			if ($this->isNew()) {
+			   $this->collTicketEventsRelatedByUserId = array();
+			} else {
+
+				$criteria->add(TicketEventPeer::USER_ID, $this->id);
+
+				TicketEventPeer::addSelectColumns($criteria);
+				$this->collTicketEventsRelatedByUserId = TicketEventPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(TicketEventPeer::USER_ID, $this->id);
+
+				TicketEventPeer::addSelectColumns($criteria);
+				if (!isset($this->lastTicketEventRelatedByUserIdCriteria) || !$this->lastTicketEventRelatedByUserIdCriteria->equals($criteria)) {
+					$this->collTicketEventsRelatedByUserId = TicketEventPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastTicketEventRelatedByUserIdCriteria = $criteria;
+		return $this->collTicketEventsRelatedByUserId;
+	}
+
+	/**
+	 * Returns the number of related TicketEvent objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related TicketEvent objects.
+	 * @throws     PropelException
+	 */
+	public function countTicketEventsRelatedByUserId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collTicketEventsRelatedByUserId === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(TicketEventPeer::USER_ID, $this->id);
+
+				$count = TicketEventPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(TicketEventPeer::USER_ID, $this->id);
+
+				if (!isset($this->lastTicketEventRelatedByUserIdCriteria) || !$this->lastTicketEventRelatedByUserIdCriteria->equals($criteria)) {
+					$count = TicketEventPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collTicketEventsRelatedByUserId);
+				}
+			} else {
+				$count = count($this->collTicketEventsRelatedByUserId);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a TicketEvent object to this object
+	 * through the TicketEvent foreign key attribute.
+	 *
+	 * @param      TicketEvent $l TicketEvent
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addTicketEventRelatedByUserId(TicketEvent $l)
+	{
+		if ($this->collTicketEventsRelatedByUserId === null) {
+			$this->initTicketEventsRelatedByUserId();
+		}
+		if (!in_array($l, $this->collTicketEventsRelatedByUserId, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collTicketEventsRelatedByUserId, $l);
+			$l->setsfGuardUserRelatedByUserId($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related TicketEventsRelatedByUserId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getTicketEventsRelatedByUserIdJoinTicket($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collTicketEventsRelatedByUserId === null) {
+			if ($this->isNew()) {
+				$this->collTicketEventsRelatedByUserId = array();
+			} else {
+
+				$criteria->add(TicketEventPeer::USER_ID, $this->id);
+
+				$this->collTicketEventsRelatedByUserId = TicketEventPeer::doSelectJoinTicket($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(TicketEventPeer::USER_ID, $this->id);
+
+			if (!isset($this->lastTicketEventRelatedByUserIdCriteria) || !$this->lastTicketEventRelatedByUserIdCriteria->equals($criteria)) {
+				$this->collTicketEventsRelatedByUserId = TicketEventPeer::doSelectJoinTicket($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastTicketEventRelatedByUserIdCriteria = $criteria;
+
+		return $this->collTicketEventsRelatedByUserId;
+	}
+
+	/**
+	 * Clears out the collTicketEventsRelatedByAssigneeId collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addTicketEventsRelatedByAssigneeId()
+	 */
+	public function clearTicketEventsRelatedByAssigneeId()
+	{
+		$this->collTicketEventsRelatedByAssigneeId = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collTicketEventsRelatedByAssigneeId collection (array).
+	 *
+	 * By default this just sets the collTicketEventsRelatedByAssigneeId collection to an empty array (like clearcollTicketEventsRelatedByAssigneeId());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initTicketEventsRelatedByAssigneeId()
+	{
+		$this->collTicketEventsRelatedByAssigneeId = array();
+	}
+
+	/**
+	 * Gets an array of TicketEvent objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related TicketEventsRelatedByAssigneeId from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array TicketEvent[]
+	 * @throws     PropelException
+	 */
+	public function getTicketEventsRelatedByAssigneeId($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collTicketEventsRelatedByAssigneeId === null) {
+			if ($this->isNew()) {
+			   $this->collTicketEventsRelatedByAssigneeId = array();
+			} else {
+
+				$criteria->add(TicketEventPeer::ASSIGNEE_ID, $this->id);
+
+				TicketEventPeer::addSelectColumns($criteria);
+				$this->collTicketEventsRelatedByAssigneeId = TicketEventPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(TicketEventPeer::ASSIGNEE_ID, $this->id);
+
+				TicketEventPeer::addSelectColumns($criteria);
+				if (!isset($this->lastTicketEventRelatedByAssigneeIdCriteria) || !$this->lastTicketEventRelatedByAssigneeIdCriteria->equals($criteria)) {
+					$this->collTicketEventsRelatedByAssigneeId = TicketEventPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastTicketEventRelatedByAssigneeIdCriteria = $criteria;
+		return $this->collTicketEventsRelatedByAssigneeId;
+	}
+
+	/**
+	 * Returns the number of related TicketEvent objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related TicketEvent objects.
+	 * @throws     PropelException
+	 */
+	public function countTicketEventsRelatedByAssigneeId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collTicketEventsRelatedByAssigneeId === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(TicketEventPeer::ASSIGNEE_ID, $this->id);
+
+				$count = TicketEventPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(TicketEventPeer::ASSIGNEE_ID, $this->id);
+
+				if (!isset($this->lastTicketEventRelatedByAssigneeIdCriteria) || !$this->lastTicketEventRelatedByAssigneeIdCriteria->equals($criteria)) {
+					$count = TicketEventPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collTicketEventsRelatedByAssigneeId);
+				}
+			} else {
+				$count = count($this->collTicketEventsRelatedByAssigneeId);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a TicketEvent object to this object
+	 * through the TicketEvent foreign key attribute.
+	 *
+	 * @param      TicketEvent $l TicketEvent
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addTicketEventRelatedByAssigneeId(TicketEvent $l)
+	{
+		if ($this->collTicketEventsRelatedByAssigneeId === null) {
+			$this->initTicketEventsRelatedByAssigneeId();
+		}
+		if (!in_array($l, $this->collTicketEventsRelatedByAssigneeId, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collTicketEventsRelatedByAssigneeId, $l);
+			$l->setsfGuardUserRelatedByAssigneeId($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related TicketEventsRelatedByAssigneeId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getTicketEventsRelatedByAssigneeIdJoinTicket($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collTicketEventsRelatedByAssigneeId === null) {
+			if ($this->isNew()) {
+				$this->collTicketEventsRelatedByAssigneeId = array();
+			} else {
+
+				$criteria->add(TicketEventPeer::ASSIGNEE_ID, $this->id);
+
+				$this->collTicketEventsRelatedByAssigneeId = TicketEventPeer::doSelectJoinTicket($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(TicketEventPeer::ASSIGNEE_ID, $this->id);
+
+			if (!isset($this->lastTicketEventRelatedByAssigneeIdCriteria) || !$this->lastTicketEventRelatedByAssigneeIdCriteria->equals($criteria)) {
+				$this->collTicketEventsRelatedByAssigneeId = TicketEventPeer::doSelectJoinTicket($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastTicketEventRelatedByAssigneeIdCriteria = $criteria;
+
+		return $this->collTicketEventsRelatedByAssigneeId;
+	}
+
+	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -7278,16 +7278,6 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			}
 			if ($this->collAccounts) {
 				foreach ((array) $this->collAccounts as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
-			if ($this->collTicketEventsRelatedByUserId) {
-				foreach ((array) $this->collTicketEventsRelatedByUserId as $o) {
-					$o->clearAllReferences($deep);
-				}
-			}
-			if ($this->collTicketEventsRelatedByAssigneeId) {
-				foreach ((array) $this->collTicketEventsRelatedByAssigneeId as $o) {
 					$o->clearAllReferences($deep);
 				}
 			}
@@ -7386,13 +7376,21 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collTicketEventsRelatedByUserId) {
+				foreach ((array) $this->collTicketEventsRelatedByUserId as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
+			if ($this->collTicketEventsRelatedByAssigneeId) {
+				foreach ((array) $this->collTicketEventsRelatedByAssigneeId as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} // if ($deep)
 
 		$this->collRecuperationHints = null;
 		$this->singlesfGuardUserProfile = null;
 		$this->collAccounts = null;
-		$this->collTicketEventsRelatedByUserId = null;
-		$this->collTicketEventsRelatedByAssigneeId = null;
 		$this->collAppointments = null;
 		$this->collEnrolments = null;
 		$this->collUserTeams = null;
@@ -7412,6 +7410,8 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->collsfGuardUserPermissions = null;
 		$this->collsfGuardUserGroups = null;
 		$this->collsfGuardRememberKeys = null;
+		$this->collTicketEventsRelatedByUserId = null;
+		$this->collTicketEventsRelatedByAssigneeId = null;
 	}
 
 } // BasesfGuardUser

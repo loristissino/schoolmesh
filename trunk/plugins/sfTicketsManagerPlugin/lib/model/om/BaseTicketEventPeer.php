@@ -5,7 +5,7 @@
  *
  * 
  *
- * @package    lib.model.om
+ * @package    plugins.sfTicketsManagerPlugin.lib.model.om
  */
 abstract class BaseTicketEventPeer {
 
@@ -19,7 +19,7 @@ abstract class BaseTicketEventPeer {
 	const OM_CLASS = 'TicketEvent';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.TicketEvent';
+	const CLASS_DEFAULT = 'plugins.sfTicketsManagerPlugin.lib.model.TicketEvent';
 
 	/** the related TableMap class for this table */
 	const TM_CLASS = 'TicketEventTableMap';

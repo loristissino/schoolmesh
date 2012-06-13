@@ -17,7 +17,7 @@ CREATE TABLE `track`
 	`description` VARCHAR(255)  NOT NULL,
 	PRIMARY KEY (`id`),
 	KEY `track_I_1`(`shortcut`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- schoolclass
@@ -39,7 +39,7 @@ CREATE TABLE `schoolclass`
 	CONSTRAINT `schoolclass_FK_1`
 		FOREIGN KEY (`track_id`)
 		REFERENCES `track` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- year
@@ -55,7 +55,7 @@ CREATE TABLE `year`
 	`start_date` DATE,
 	`end_date` DATE,
 	PRIMARY KEY (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- term
@@ -71,7 +71,7 @@ CREATE TABLE `term`
 	`end_day` INTEGER  NOT NULL,
 	`has_formal_evaluation` TINYINT,
 	PRIMARY KEY (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- subject
@@ -88,7 +88,7 @@ CREATE TABLE `subject`
 	`rank` INTEGER,
 	PRIMARY KEY (`id`),
 	KEY `subject_I_1`(`shortcut`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- suggestion
@@ -106,7 +106,7 @@ CREATE TABLE `suggestion`
 	`rank` INTEGER,
 	PRIMARY KEY (`id`),
 	KEY `suggestion_I_1`(`shortcut`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- recuperation_hint
@@ -129,7 +129,7 @@ CREATE TABLE `recuperation_hint`
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- sf_guard_user_profile
@@ -177,7 +177,7 @@ CREATE TABLE `sf_guard_user_profile`
 	CONSTRAINT `sf_guard_user_profile_FK_2`
 		FOREIGN KEY (`role_id`)
 		REFERENCES `role` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- account_type
@@ -195,7 +195,7 @@ CREATE TABLE `account_type`
 	`rank` INTEGER,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `account_type_U_1` (`name`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- account
@@ -232,7 +232,7 @@ CREATE TABLE `account`
 		FOREIGN KEY (`account_type_id`)
 		REFERENCES `account_type` (`id`)
 		ON DELETE RESTRICT
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- reserved_username
@@ -249,77 +249,7 @@ CREATE TABLE `reserved_username`
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `reserved_username_U_1` (`username`),
 	KEY `reserved_username_I_1`(`aliases_to`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- ticket_type
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `ticket_type`;
-
-
-CREATE TABLE `ticket_type`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`description` VARCHAR(50)  NOT NULL,
-	PRIMARY KEY (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- ticket
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `ticket`;
-
-
-CREATE TABLE `ticket`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`referrer` VARCHAR(255),
-	`ticket_type_id` INTEGER,
-	`updated_at` DATETIME,
-	`state` INTEGER,
-	PRIMARY KEY (`id`),
-	INDEX `ticket_FI_1` (`ticket_type_id`),
-	CONSTRAINT `ticket_FK_1`
-		FOREIGN KEY (`ticket_type_id`)
-		REFERENCES `ticket_type` (`id`)
-)Type=InnoDB;
-
-#-----------------------------------------------------------------------------
-#-- ticket_event
-#-----------------------------------------------------------------------------
-
-DROP TABLE IF EXISTS `ticket_event`;
-
-
-CREATE TABLE `ticket_event`
-(
-	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`ticket_id` INTEGER,
-	`user_id` INTEGER  NOT NULL,
-	`created_at` DATETIME,
-	`content` VARCHAR(255)  NOT NULL,
-	`state` INTEGER,
-	`assignee_id` INTEGER,
-	PRIMARY KEY (`id`),
-	KEY `ticket_event_I_1`(`user_id`),
-	KEY `ticket_event_I_2`(`assignee_id`),
-	INDEX `ticket_event_FI_1` (`ticket_id`),
-	CONSTRAINT `ticket_event_FK_1`
-		FOREIGN KEY (`ticket_id`)
-		REFERENCES `ticket` (`id`),
-	CONSTRAINT `ticket_event_FK_2`
-		FOREIGN KEY (`user_id`)
-		REFERENCES `sf_guard_user` (`id`)
-		ON UPDATE CASCADE
-		ON DELETE RESTRICT,
-	CONSTRAINT `ticket_event_FK_3`
-		FOREIGN KEY (`assignee_id`)
-		REFERENCES `sf_guard_user` (`id`)
-		ON UPDATE CASCADE
-		ON DELETE RESTRICT
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- syllabus
@@ -341,7 +271,7 @@ CREATE TABLE `syllabus`
 	`evaluation_min_description` VARCHAR(50),
 	`evaluation_max_description` VARCHAR(50),
 	PRIMARY KEY (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- syllabus_item
@@ -371,7 +301,7 @@ CREATE TABLE `syllabus_item`
 		REFERENCES `syllabus_item` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- appointment_type
@@ -394,7 +324,7 @@ CREATE TABLE `appointment_type`
 	PRIMARY KEY (`id`),
 	KEY `appointment_type_I_1`(`shortcut`),
 	KEY `appointment_type_I_2`(`rank`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- appointment
@@ -458,7 +388,7 @@ CREATE TABLE `appointment`
 	CONSTRAINT `appointment_FK_7`
 		FOREIGN KEY (`appointment_type_id`)
 		REFERENCES `appointment_type` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- enrolment
@@ -496,7 +426,7 @@ CREATE TABLE `enrolment`
 		REFERENCES `year` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- team
@@ -515,7 +445,7 @@ CREATE TABLE `team`
 	`needs_mailing_list` TINYINT default 0,
 	`is_public` TINYINT default 0,
 	PRIMARY KEY (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- role
@@ -542,7 +472,7 @@ CREATE TABLE `role`
 	`confirmation_notes` TEXT,
 	`rank` INTEGER,
 	PRIMARY KEY (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- user_team
@@ -580,7 +510,7 @@ CREATE TABLE `user_team`
 		REFERENCES `role` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- wfevent
@@ -605,7 +535,7 @@ CREATE TABLE `wfevent`
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- wpinfo_type
@@ -641,7 +571,7 @@ CREATE TABLE `wpinfo_type`
 	CONSTRAINT `wpinfo_type_FK_1`
 		FOREIGN KEY (`appointment_type_id`)
 		REFERENCES `appointment_type` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- wpinfo
@@ -666,7 +596,7 @@ CREATE TABLE `wpinfo`
 	CONSTRAINT `wpinfo_FK_2`
 		FOREIGN KEY (`wpinfo_type_id`)
 		REFERENCES `wpinfo_type` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- wptool_item_type
@@ -695,7 +625,7 @@ CREATE TABLE `wptool_item_type`
 	CONSTRAINT `wptool_item_type_FK_1`
 		FOREIGN KEY (`appointment_type_id`)
 		REFERENCES `appointment_type` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- wptool_item
@@ -718,7 +648,7 @@ CREATE TABLE `wptool_item`
 	CONSTRAINT `wptool_item_FK_1`
 		FOREIGN KEY (`wptool_item_type_id`)
 		REFERENCES `wptool_item_type` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- wptool_appointment
@@ -743,7 +673,7 @@ CREATE TABLE `wptool_appointment`
 		REFERENCES `wptool_item` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- wpmodule
@@ -776,7 +706,7 @@ CREATE TABLE `wpmodule`
 	CONSTRAINT `wpmodule_FK_2`
 		FOREIGN KEY (`appointment_id`)
 		REFERENCES `appointment` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- wpitem_type
@@ -812,7 +742,7 @@ CREATE TABLE `wpitem_type`
 	CONSTRAINT `wpitem_type_FK_1`
 		FOREIGN KEY (`appointment_type_id`)
 		REFERENCES `appointment_type` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- wpitem_group
@@ -837,7 +767,7 @@ CREATE TABLE `wpitem_group`
 		REFERENCES `wpmodule` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- wpmodule_item
@@ -862,7 +792,7 @@ CREATE TABLE `wpmodule_item`
 		REFERENCES `wpitem_group` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE CASCADE
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- student_situation
@@ -897,7 +827,7 @@ CREATE TABLE `student_situation`
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- student_suggestion
@@ -936,7 +866,7 @@ CREATE TABLE `student_suggestion`
 	CONSTRAINT `student_suggestion_FK_4`
 		FOREIGN KEY (`suggestion_id`)
 		REFERENCES `suggestion` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- student_hint
@@ -975,7 +905,7 @@ CREATE TABLE `student_hint`
 	CONSTRAINT `student_hint_FK_4`
 		FOREIGN KEY (`recuperation_hint_id`)
 		REFERENCES `recuperation_hint` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- student_syllabus_item
@@ -1014,7 +944,7 @@ CREATE TABLE `student_syllabus_item`
 	CONSTRAINT `student_syllabus_item_FK_4`
 		FOREIGN KEY (`syllabus_item_id`)
 		REFERENCES `syllabus_item` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- wpmodule_syllabus_item
@@ -1039,7 +969,7 @@ CREATE TABLE `wpmodule_syllabus_item`
 	CONSTRAINT `wpmodule_syllabus_item_FK_2`
 		FOREIGN KEY (`syllabus_item_id`)
 		REFERENCES `syllabus_item` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- schoolproject
@@ -1100,7 +1030,7 @@ CREATE TABLE `schoolproject`
 		REFERENCES `team` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- proj_category
@@ -1116,7 +1046,7 @@ CREATE TABLE `proj_category`
 	`rank` INTEGER  NOT NULL,
 	`resources` INTEGER,
 	PRIMARY KEY (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- proj_deadline
@@ -1149,7 +1079,7 @@ CREATE TABLE `proj_deadline`
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- proj_financing
@@ -1164,7 +1094,7 @@ CREATE TABLE `proj_financing`
 	`description` VARCHAR(255),
 	`rank` INTEGER  NOT NULL,
 	PRIMARY KEY (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- proj_resource_type
@@ -1191,7 +1121,7 @@ CREATE TABLE `proj_resource_type`
 	CONSTRAINT `proj_resource_type_FK_1`
 		FOREIGN KEY (`role_id`)
 		REFERENCES `role` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- proj_resource
@@ -1230,7 +1160,7 @@ CREATE TABLE `proj_resource`
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- proj_activity
@@ -1269,7 +1199,7 @@ CREATE TABLE `proj_activity`
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- proj_upshot
@@ -1292,7 +1222,7 @@ CREATE TABLE `proj_upshot`
 	CONSTRAINT `proj_upshot_FK_1`
 		FOREIGN KEY (`schoolproject_id`)
 		REFERENCES `schoolproject` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- subnet
@@ -1308,7 +1238,7 @@ CREATE TABLE `subnet`
 	`ip_cidr` VARCHAR(20),
 	PRIMARY KEY (`id`),
 	KEY `subnet_I_1`(`name`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- workstation
@@ -1334,7 +1264,7 @@ CREATE TABLE `workstation`
 	CONSTRAINT `workstation_FK_1`
 		FOREIGN KEY (`subnet_id`)
 		REFERENCES `subnet` (`id`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- lanlog
@@ -1365,7 +1295,7 @@ CREATE TABLE `lanlog`
 		REFERENCES `workstation` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- attachment_file
@@ -1396,7 +1326,7 @@ CREATE TABLE `attachment_file`
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- system_message
@@ -1411,7 +1341,7 @@ CREATE TABLE `system_message`
 	`key` VARCHAR(30),
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `key` (`key`)
-)Type=InnoDB;
+)Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
 #-- system_message_i18n
@@ -1430,7 +1360,7 @@ CREATE TABLE `system_message_i18n`
 		FOREIGN KEY (`id`)
 		REFERENCES `system_message` (`id`)
 		ON DELETE CASCADE
-)Type=InnoDB;
+)Engine=InnoDB;
 
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

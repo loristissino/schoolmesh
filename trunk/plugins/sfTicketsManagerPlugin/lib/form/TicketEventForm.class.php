@@ -3,10 +3,9 @@
 /**
  * TicketEvent form.
  *
- * @package    schoolmesh
+ * @package    ##PROJECT_NAME##
  * @subpackage form
- * @author     Loris Tissino
- * @version    SVN: $Id: sfPropelFormTemplate.php 10377 2008-07-21 07:10:32Z dwhittle $
+ * @author     ##AUTHOR_NAME##
  */
 class TicketEventForm extends BaseTicketEventForm
 {

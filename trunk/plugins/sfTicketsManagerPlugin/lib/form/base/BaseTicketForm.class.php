@@ -5,9 +5,9 @@
  *
  * @method Ticket getObject() Returns the current form's model object
  *
- * @package    schoolmesh
+ * @package    ##PROJECT_NAME##
  * @subpackage form
- * @author     Loris Tissino <loris.tissino@gmail.com>
+ * @author     ##AUTHOR_NAME##
  */
 abstract class BaseTicketForm extends BaseFormPropel
 {
