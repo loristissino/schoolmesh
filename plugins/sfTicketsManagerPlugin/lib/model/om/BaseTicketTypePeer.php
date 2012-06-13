@@ -1,55 +1,46 @@
 <?php
 
 /**
- * Base static class for performing query and update operations on the 'ticket' table.
+ * Base static class for performing query and update operations on the 'ticket_type' table.
  *
  * 
  *
- * @package    lib.model.om
+ * @package    plugins.sfTicketsManagerPlugin.lib.model.om
  */
-abstract class BaseTicketPeer {
+abstract class BaseTicketTypePeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'ticket';
+	const TABLE_NAME = 'ticket_type';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'Ticket';
+	const OM_CLASS = 'TicketType';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.Ticket';
+	const CLASS_DEFAULT = 'plugins.sfTicketsManagerPlugin.lib.model.TicketType';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'TicketTableMap';
+	const TM_CLASS = 'TicketTypeTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 2;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'ticket.ID';
+	const ID = 'ticket_type.ID';
 
-	/** the column name for the REFERRER field */
-	const REFERRER = 'ticket.REFERRER';
-
-	/** the column name for the TICKET_TYPE_ID field */
-	const TICKET_TYPE_ID = 'ticket.TICKET_TYPE_ID';
-
-	/** the column name for the UPDATED_AT field */
-	const UPDATED_AT = 'ticket.UPDATED_AT';
-
-	/** the column name for the STATE field */
-	const STATE = 'ticket.STATE';
+	/** the column name for the DESCRIPTION field */
+	const DESCRIPTION = 'ticket_type.DESCRIPTION';
 
 	/**
-	 * An identiy map to hold any loaded instances of Ticket objects.
+	 * An identiy map to hold any loaded instances of TicketType objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array Ticket[]
+	 * @var        array TicketType[]
 	 */
 	public static $instances = array();
 
@@ -68,11 +59,11 @@ abstract class BaseTicketPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Referrer', 'TicketTypeId', 'UpdatedAt', 'State', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'referrer', 'ticketTypeId', 'updatedAt', 'state', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::REFERRER, self::TICKET_TYPE_ID, self::UPDATED_AT, self::STATE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'referrer', 'ticket_type_id', 'updated_at', 'state', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Description', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'description', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::DESCRIPTION, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'description', ),
+		BasePeer::TYPE_NUM => array (0, 1, )
 	);
 
 	/**
@@ -82,11 +73,11 @@ abstract class BaseTicketPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Referrer' => 1, 'TicketTypeId' => 2, 'UpdatedAt' => 3, 'State' => 4, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'referrer' => 1, 'ticketTypeId' => 2, 'updatedAt' => 3, 'state' => 4, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::REFERRER => 1, self::TICKET_TYPE_ID => 2, self::UPDATED_AT => 3, self::STATE => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'referrer' => 1, 'ticket_type_id' => 2, 'updated_at' => 3, 'state' => 4, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Description' => 1, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'description' => 1, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DESCRIPTION => 1, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'description' => 1, ),
+		BasePeer::TYPE_NUM => array (0, 1, )
 	);
 
 	/**
@@ -135,12 +126,12 @@ abstract class BaseTicketPeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. TicketPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. TicketTypePeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(TicketPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(TicketTypePeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -156,11 +147,8 @@ abstract class BaseTicketPeer {
 	 */
 	public static function addSelectColumns(Criteria $criteria)
 	{
-		$criteria->addSelectColumn(TicketPeer::ID);
-		$criteria->addSelectColumn(TicketPeer::REFERRER);
-		$criteria->addSelectColumn(TicketPeer::TICKET_TYPE_ID);
-		$criteria->addSelectColumn(TicketPeer::UPDATED_AT);
-		$criteria->addSelectColumn(TicketPeer::STATE);
+		$criteria->addSelectColumn(TicketTypePeer::ID);
+		$criteria->addSelectColumn(TicketTypePeer::DESCRIPTION);
 	}
 
 	/**
@@ -179,21 +167,21 @@ abstract class BaseTicketPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(TicketPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(TicketTypePeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			TicketPeer::addSelectColumns($criteria);
+			TicketTypePeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 		$criteria->setDbName(self::DATABASE_NAME); // Set the correct dbName
 
 		if ($con === null) {
-			$con = Propel::getConnection(TicketPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(TicketTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 		// BasePeer returns a PDOStatement
 		$stmt = BasePeer::doCount($criteria, $con);
@@ -211,7 +199,7 @@ abstract class BaseTicketPeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PropelPDO $con
-	 * @return     Ticket
+	 * @return     TicketType
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -219,7 +207,7 @@ abstract class BaseTicketPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = TicketPeer::doSelect($critcopy, $con);
+		$objects = TicketTypePeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -236,7 +224,7 @@ abstract class BaseTicketPeer {
 	 */
 	public static function doSelect(Criteria $criteria, PropelPDO $con = null)
 	{
-		return TicketPeer::populateObjects(TicketPeer::doSelectStmt($criteria, $con));
+		return TicketTypePeer::populateObjects(TicketTypePeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -254,12 +242,12 @@ abstract class BaseTicketPeer {
 	public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(TicketPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(TicketTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		if (!$criteria->hasSelectClause()) {
 			$criteria = clone $criteria;
-			TicketPeer::addSelectColumns($criteria);
+			TicketTypePeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -277,10 +265,10 @@ abstract class BaseTicketPeer {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      Ticket $value A Ticket object.
+	 * @param      TicketType $value A TicketType object.
 	 * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
 	 */
-	public static function addInstanceToPool(Ticket $obj, $key = null)
+	public static function addInstanceToPool(TicketType $obj, $key = null)
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
@@ -298,18 +286,18 @@ abstract class BaseTicketPeer {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A Ticket object or a primary key value.
+	 * @param      mixed $value A TicketType object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
-			if (is_object($value) && $value instanceof Ticket) {
+			if (is_object($value) && $value instanceof TicketType) {
 				$key = (string) $value->getId();
 			} elseif (is_scalar($value)) {
 				// assume we've been passed a primary key
 				$key = (string) $value;
 			} else {
-				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Ticket object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or TicketType object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
 				throw $e;
 			}
 
@@ -324,7 +312,7 @@ abstract class BaseTicketPeer {
 	 * a multi-column primary key, a serialize()d version of the primary key will be returned.
 	 *
 	 * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-	 * @return     Ticket Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+	 * @return     TicketType Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
 	 * @see        getPrimaryKeyHash()
 	 */
 	public static function getInstanceFromPool($key)
@@ -348,7 +336,7 @@ abstract class BaseTicketPeer {
 	}
 	
 	/**
-	 * Method to invalidate the instance pool of all tables related to ticket
+	 * Method to invalidate the instance pool of all tables related to ticket_type
 	 * by a foreign key with ON DELETE CASCADE
 	 */
 	public static function clearRelatedInstancePool()
@@ -386,11 +374,11 @@ abstract class BaseTicketPeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = TicketPeer::getOMClass(false);
+		$cls = TicketTypePeer::getOMClass(false);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = TicketPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj = TicketPeer::getInstanceFromPool($key))) {
+			$key = TicketTypePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj = TicketTypePeer::getInstanceFromPool($key))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj->hydrate($row, 0, true); // rehydrate
@@ -399,246 +387,12 @@ abstract class BaseTicketPeer {
 				$obj = new $cls();
 				$obj->hydrate($row);
 				$results[] = $obj;
-				TicketPeer::addInstanceToPool($obj, $key);
+				TicketTypePeer::addInstanceToPool($obj, $key);
 			} // if key exists
 		}
 		$stmt->closeCursor();
 		return $results;
 	}
-
-	/**
-	 * Returns the number of rows matching criteria, joining the related TicketType table
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     int Number of matching rows.
-	 */
-	public static function doCountJoinTicketType(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		// we're going to modify criteria, so copy it first
-		$criteria = clone $criteria;
-
-		// We need to set the primary table name, since in the case that there are no WHERE columns
-		// it will be impossible for the BasePeer::createSelectSql() method to determine which
-		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(TicketPeer::TABLE_NAME);
-
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			TicketPeer::addSelectColumns($criteria);
-		}
-		
-		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-		
-		// Set the correct dbName
-		$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(TicketPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-
-		$criteria->addJoin(TicketPeer::TICKET_TYPE_ID, TicketTypePeer::ID, $join_behavior);
-
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; // no rows returned; we infer that means 0 matches.
-		}
-		$stmt->closeCursor();
-		return $count;
-	}
-
-
-	/**
-	 * Selects a collection of Ticket objects pre-filled with their TicketType objects.
-	 * @param      Criteria  $criteria
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of Ticket objects.
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function doSelectJoinTicketType(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$criteria = clone $criteria;
-
-		// Set the correct dbName if it has not been overridden
-		if ($criteria->getDbName() == Propel::getDefaultDB()) {
-			$criteria->setDbName(self::DATABASE_NAME);
-		}
-
-		TicketPeer::addSelectColumns($criteria);
-		$startcol = (TicketPeer::NUM_COLUMNS - TicketPeer::NUM_LAZY_LOAD_COLUMNS);
-		TicketTypePeer::addSelectColumns($criteria);
-
-		$criteria->addJoin(TicketPeer::TICKET_TYPE_ID, TicketTypePeer::ID, $join_behavior);
-
-		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = TicketPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = TicketPeer::getInstanceFromPool($key1))) {
-				// We no longer rehydrate the object, since this can cause data loss.
-				// See http://propel.phpdb.org/trac/ticket/509
-				// $obj1->hydrate($row, 0, true); // rehydrate
-			} else {
-
-				$cls = TicketPeer::getOMClass(false);
-
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				TicketPeer::addInstanceToPool($obj1, $key1);
-			} // if $obj1 already loaded
-
-			$key2 = TicketTypePeer::getPrimaryKeyHashFromRow($row, $startcol);
-			if ($key2 !== null) {
-				$obj2 = TicketTypePeer::getInstanceFromPool($key2);
-				if (!$obj2) {
-
-					$cls = TicketTypePeer::getOMClass(false);
-
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol);
-					TicketTypePeer::addInstanceToPool($obj2, $key2);
-				} // if obj2 already loaded
-				
-				// Add the $obj1 (Ticket) to $obj2 (TicketType)
-				$obj2->addTicket($obj1);
-
-			} // if joined row was not null
-
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
-	}
-
-
-	/**
-	 * Returns the number of rows matching criteria, joining all related tables
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     int Number of matching rows.
-	 */
-	public static function doCountJoinAll(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		// we're going to modify criteria, so copy it first
-		$criteria = clone $criteria;
-
-		// We need to set the primary table name, since in the case that there are no WHERE columns
-		// it will be impossible for the BasePeer::createSelectSql() method to determine which
-		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(TicketPeer::TABLE_NAME);
-
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			TicketPeer::addSelectColumns($criteria);
-		}
-		
-		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-		
-		// Set the correct dbName
-		$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(TicketPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-
-		$criteria->addJoin(TicketPeer::TICKET_TYPE_ID, TicketTypePeer::ID, $join_behavior);
-
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; // no rows returned; we infer that means 0 matches.
-		}
-		$stmt->closeCursor();
-		return $count;
-	}
-
-	/**
-	 * Selects a collection of Ticket objects pre-filled with all related objects.
-	 *
-	 * @param      Criteria  $criteria
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of Ticket objects.
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function doSelectJoinAll(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$criteria = clone $criteria;
-
-		// Set the correct dbName if it has not been overridden
-		if ($criteria->getDbName() == Propel::getDefaultDB()) {
-			$criteria->setDbName(self::DATABASE_NAME);
-		}
-
-		TicketPeer::addSelectColumns($criteria);
-		$startcol2 = (TicketPeer::NUM_COLUMNS - TicketPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		TicketTypePeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (TicketTypePeer::NUM_COLUMNS - TicketTypePeer::NUM_LAZY_LOAD_COLUMNS);
-
-		$criteria->addJoin(TicketPeer::TICKET_TYPE_ID, TicketTypePeer::ID, $join_behavior);
-
-		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = TicketPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = TicketPeer::getInstanceFromPool($key1))) {
-				// We no longer rehydrate the object, since this can cause data loss.
-				// See http://propel.phpdb.org/trac/ticket/509
-				// $obj1->hydrate($row, 0, true); // rehydrate
-			} else {
-				$cls = TicketPeer::getOMClass(false);
-
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				TicketPeer::addInstanceToPool($obj1, $key1);
-			} // if obj1 already loaded
-
-			// Add objects for joined TicketType rows
-
-			$key2 = TicketTypePeer::getPrimaryKeyHashFromRow($row, $startcol2);
-			if ($key2 !== null) {
-				$obj2 = TicketTypePeer::getInstanceFromPool($key2);
-				if (!$obj2) {
-
-					$cls = TicketTypePeer::getOMClass(false);
-
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol2);
-					TicketTypePeer::addInstanceToPool($obj2, $key2);
-				} // if obj2 loaded
-
-				// Add the $obj1 (Ticket) to the collection in $obj2 (TicketType)
-				$obj2->addTicket($obj1);
-			} // if joined row not null
-
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
-	}
-
 	/**
 	 * Returns the TableMap related to this peer.
 	 * This method is not needed for general use but a specific application could have a need.
@@ -656,10 +410,10 @@ abstract class BaseTicketPeer {
 	 */
 	public static function buildTableMap()
 	{
-	  $dbMap = Propel::getDatabaseMap(BaseTicketPeer::DATABASE_NAME);
-	  if (!$dbMap->hasTable(BaseTicketPeer::TABLE_NAME))
+	  $dbMap = Propel::getDatabaseMap(BaseTicketTypePeer::DATABASE_NAME);
+	  if (!$dbMap->hasTable(BaseTicketTypePeer::TABLE_NAME))
 	  {
-	    $dbMap->addTableObject(new TicketTableMap());
+	    $dbMap->addTableObject(new TicketTypeTableMap());
 	  }
 	}
 
@@ -676,13 +430,13 @@ abstract class BaseTicketPeer {
 	 */
 	public static function getOMClass($withPrefix = true)
 	{
-		return $withPrefix ? TicketPeer::CLASS_DEFAULT : TicketPeer::OM_CLASS;
+		return $withPrefix ? TicketTypePeer::CLASS_DEFAULT : TicketTypePeer::OM_CLASS;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a Ticket or Criteria object.
+	 * Method perform an INSERT on the database, given a TicketType or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Ticket object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or TicketType object containing data that is used to create the INSERT statement.
 	 * @param      PropelPDO $con the PropelPDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -691,17 +445,17 @@ abstract class BaseTicketPeer {
 	public static function doInsert($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(TicketPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(TicketTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from Ticket object
+			$criteria = $values->buildCriteria(); // build Criteria from TicketType object
 		}
 
-		if ($criteria->containsKey(TicketPeer::ID) && $criteria->keyContainsValue(TicketPeer::ID) ) {
-			throw new PropelException('Cannot insert a value for auto-increment primary key ('.TicketPeer::ID.')');
+		if ($criteria->containsKey(TicketTypePeer::ID) && $criteria->keyContainsValue(TicketTypePeer::ID) ) {
+			throw new PropelException('Cannot insert a value for auto-increment primary key ('.TicketTypePeer::ID.')');
 		}
 
 
@@ -723,9 +477,9 @@ abstract class BaseTicketPeer {
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a Ticket or Criteria object.
+	 * Method perform an UPDATE on the database, given a TicketType or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Ticket object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or TicketType object containing data that is used to create the UPDATE statement.
 	 * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -734,7 +488,7 @@ abstract class BaseTicketPeer {
 	public static function doUpdate($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(TicketPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(TicketTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		$selectCriteria = new Criteria(self::DATABASE_NAME);
@@ -742,10 +496,10 @@ abstract class BaseTicketPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(TicketPeer::ID);
-			$selectCriteria->add(TicketPeer::ID, $criteria->remove(TicketPeer::ID), $comparison);
+			$comparison = $criteria->getComparison(TicketTypePeer::ID);
+			$selectCriteria->add(TicketTypePeer::ID, $criteria->remove(TicketTypePeer::ID), $comparison);
 
-		} else { // $values is Ticket object
+		} else { // $values is TicketType object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -757,26 +511,26 @@ abstract class BaseTicketPeer {
 	}
 
 	/**
-	 * Method to DELETE all rows from the ticket table.
+	 * Method to DELETE all rows from the ticket_type table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
 	public static function doDeleteAll($con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(TicketPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(TicketTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		$affectedRows = 0; // initialize var to track total num of affected rows
 		try {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(TicketPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(TicketTypePeer::TABLE_NAME, $con);
 			// Because this db requires some delete cascade/set null emulation, we have to
 			// clear the cached instance *after* the emulation has happened (since
 			// instances get re-added by the select statement contained therein).
-			TicketPeer::clearInstancePool();
-			TicketPeer::clearRelatedInstancePool();
+			TicketTypePeer::clearInstancePool();
+			TicketTypePeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -786,9 +540,9 @@ abstract class BaseTicketPeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a Ticket or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a TicketType or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or Ticket object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or TicketType object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PropelPDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -799,27 +553,27 @@ abstract class BaseTicketPeer {
 	 public static function doDelete($values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(TicketPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(TicketTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			TicketPeer::clearInstancePool();
+			TicketTypePeer::clearInstancePool();
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof Ticket) { // it's a model object
+		} elseif ($values instanceof TicketType) { // it's a model object
 			// invalidate the cache for this single object
-			TicketPeer::removeInstanceFromPool($values);
+			TicketTypePeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(TicketPeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(TicketTypePeer::ID, (array) $values, Criteria::IN);
 			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				TicketPeer::removeInstanceFromPool($singleval);
+				TicketTypePeer::removeInstanceFromPool($singleval);
 			}
 		}
 
@@ -834,7 +588,7 @@ abstract class BaseTicketPeer {
 			$con->beginTransaction();
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
-			TicketPeer::clearRelatedInstancePool();
+			TicketTypePeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -844,24 +598,24 @@ abstract class BaseTicketPeer {
 	}
 
 	/**
-	 * Validates all modified columns of given Ticket object.
+	 * Validates all modified columns of given TicketType object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      Ticket $obj The object to validate.
+	 * @param      TicketType $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(Ticket $obj, $cols = null)
+	public static function doValidate(TicketType $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(TicketPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(TicketPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(TicketTypePeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(TicketTypePeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -877,7 +631,7 @@ abstract class BaseTicketPeer {
 
 		}
 
-		return BasePeer::doValidate(TicketPeer::DATABASE_NAME, TicketPeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(TicketTypePeer::DATABASE_NAME, TicketTypePeer::TABLE_NAME, $columns);
 	}
 
 	/**
@@ -885,23 +639,23 @@ abstract class BaseTicketPeer {
 	 *
 	 * @param      int $pk the primary key.
 	 * @param      PropelPDO $con the connection to use
-	 * @return     Ticket
+	 * @return     TicketType
 	 */
 	public static function retrieveByPK($pk, PropelPDO $con = null)
 	{
 
-		if (null !== ($obj = TicketPeer::getInstanceFromPool((string) $pk))) {
+		if (null !== ($obj = TicketTypePeer::getInstanceFromPool((string) $pk))) {
 			return $obj;
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(TicketPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(TicketTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria = new Criteria(TicketPeer::DATABASE_NAME);
-		$criteria->add(TicketPeer::ID, $pk);
+		$criteria = new Criteria(TicketTypePeer::DATABASE_NAME);
+		$criteria->add(TicketTypePeer::ID, $pk);
 
-		$v = TicketPeer::doSelect($criteria, $con);
+		$v = TicketTypePeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -917,16 +671,16 @@ abstract class BaseTicketPeer {
 	public static function retrieveByPKs($pks, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(TicketPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(TicketTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		$objs = null;
 		if (empty($pks)) {
 			$objs = array();
 		} else {
-			$criteria = new Criteria(TicketPeer::DATABASE_NAME);
-			$criteria->add(TicketPeer::ID, $pks, Criteria::IN);
-			$objs = TicketPeer::doSelect($criteria, $con);
+			$criteria = new Criteria(TicketTypePeer::DATABASE_NAME);
+			$criteria->add(TicketTypePeer::ID, $pks, Criteria::IN);
+			$objs = TicketTypePeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
@@ -943,9 +697,9 @@ abstract class BaseTicketPeer {
 	  return array();
 	}
 
-} // BaseTicketPeer
+} // BaseTicketTypePeer
 
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BaseTicketPeer::buildTableMap();
+BaseTicketTypePeer::buildTableMap();
 

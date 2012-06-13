@@ -112,26 +112,6 @@ propel:
     aliases_to:     { type: varchar(20), index: true }
 
 
-  ticket_type:
-    id: 
-    description:    { type: varchar(50), required: true }
-
-  ticket:
-    id:
-    referrer:       varchar(255)
-    ticket_type_id: 
-    updated_at:
-    state:          integer
-
-  ticket_event:
-    id:
-    ticket_id: 
-    user_id:       { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: restrict, onUpdate: cascade, index:true }
-    created_at: 
-    content:       { type: varchar(255), required: true }
-    state: integer
-    assignee_id:   { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: false, onDelete: restrict, onUpdate: cascade, index:true }
-
   syllabus:
     id: ~
     name:          varchar(50)

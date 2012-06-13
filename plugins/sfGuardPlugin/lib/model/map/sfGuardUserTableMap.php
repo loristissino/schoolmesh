@@ -56,8 +56,6 @@ class sfGuardUserTableMap extends TableMap {
     $this->addRelation('RecuperationHint', 'RecuperationHint', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('sfGuardUserProfile', 'sfGuardUserProfile', RelationMap::ONE_TO_ONE, array('id' => 'user_id', ), 'CASCADE', 'CASCADE');
     $this->addRelation('Account', 'Account', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'CASCADE', 'CASCADE');
-    $this->addRelation('TicketEventRelatedByUserId', 'TicketEvent', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('TicketEventRelatedByAssigneeId', 'TicketEvent', RelationMap::ONE_TO_MANY, array('id' => 'assignee_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Appointment', 'Appointment', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Enrolment', 'Enrolment', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('UserTeam', 'UserTeam', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
@@ -77,6 +75,8 @@ class sfGuardUserTableMap extends TableMap {
     $this->addRelation('sfGuardUserPermission', 'sfGuardUserPermission', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'CASCADE', null);
     $this->addRelation('sfGuardUserGroup', 'sfGuardUserGroup', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'CASCADE', null);
     $this->addRelation('sfGuardRememberKey', 'sfGuardRememberKey', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'CASCADE', null);
+    $this->addRelation('TicketEventRelatedByUserId', 'TicketEvent', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('TicketEventRelatedByAssigneeId', 'TicketEvent', RelationMap::ONE_TO_MANY, array('id' => 'assignee_id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
 	/**

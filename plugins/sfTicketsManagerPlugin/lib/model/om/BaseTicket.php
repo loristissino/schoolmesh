@@ -5,7 +5,7 @@
  *
  * 
  *
- * @package    lib.model.om
+ * @package    plugins.sfTicketsManagerPlugin.lib.model.om
  */
 abstract class BaseTicket extends BaseObject  implements Persistent {
 
