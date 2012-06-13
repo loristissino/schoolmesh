@@ -16,4 +16,19 @@ require 'plugins/sfTicketsManagerPlugin/lib/model/om/BaseTicket.php';
  */
 class Ticket extends BaseTicket {
 
+    public function __toString()
+    {
+        return sprintf('%d - %s', $this->getId(), $this->getLimitedContent(20));
+    }
+    
+    public function getLimitedContent($maxchars)
+	{
+        $content=$this->getContent();
+        if(strlen($content)<=$maxchars)
+        {
+            return $content;
+        }
+		return substr($content, 0, $maxchars). '...';
+	}
+
 } // Ticket

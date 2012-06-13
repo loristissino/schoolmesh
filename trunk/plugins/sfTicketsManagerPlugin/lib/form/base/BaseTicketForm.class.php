@@ -17,6 +17,7 @@ abstract class BaseTicketForm extends BaseFormPropel
       'id'             => new sfWidgetFormInputHidden(),
       'referrer'       => new sfWidgetFormInputText(),
       'ticket_type_id' => new sfWidgetFormPropelChoice(array('model' => 'TicketType', 'add_empty' => true)),
+      'content'        => new sfWidgetFormTextarea(),
       'updated_at'     => new sfWidgetFormDateTime(),
       'state'          => new sfWidgetFormInputText(),
     ));
@@ -25,6 +26,7 @@ abstract class BaseTicketForm extends BaseFormPropel
       'id'             => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
       'referrer'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'ticket_type_id' => new sfValidatorPropelChoice(array('model' => 'TicketType', 'column' => 'id', 'required' => false)),
+      'content'        => new sfValidatorString(array('required' => false)),
       'updated_at'     => new sfValidatorDateTime(array('required' => false)),
       'state'          => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
     ));

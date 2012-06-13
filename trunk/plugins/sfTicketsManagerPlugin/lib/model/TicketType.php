@@ -16,4 +16,9 @@ require 'plugins/sfTicketsManagerPlugin/lib/model/om/BaseTicketType.php';
  */
 class TicketType extends BaseTicketType {
 
+    public function __toString()
+    {
+        return $this->getDescription();
+    }
+
 } // TicketType

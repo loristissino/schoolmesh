@@ -16,4 +16,12 @@ require 'plugins/sfTicketsManagerPlugin/lib/model/om/BaseTicketPeer.php';
  */
 class TicketPeer extends BaseTicketPeer {
 
+    public static function retrieveOpen()
+    {
+        $c= new Criteria();
+        // FIXME we should retrieve only open tickets...
+        $c->addJoin(TicketPeer::TICKET_TYPE_ID, TicketTypePeer::ID);
+        return self::doSelectJoinAll($c);
+    }
+
 } // TicketPeer

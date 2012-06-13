@@ -37,6 +37,12 @@ abstract class BaseTicket extends BaseObject  implements Persistent {
 	protected $ticket_type_id;
 
 	/**
+	 * The value for the content field.
+	 * @var        string
+	 */
+	protected $content;
+
+	/**
 	 * The value for the updated_at field.
 	 * @var        string
 	 */
@@ -109,6 +115,16 @@ abstract class BaseTicket extends BaseObject  implements Persistent {
 	public function getTicketTypeId()
 	{
 		return $this->ticket_type_id;
+	}
+
+	/**
+	 * Get the [content] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getContent()
+	{
+		return $this->content;
 	}
 
 	/**
@@ -224,6 +240,26 @@ abstract class BaseTicket extends BaseObject  implements Persistent {
 	} // setTicketTypeId()
 
 	/**
+	 * Set the value of [content] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Ticket The current object (for fluent API support)
+	 */
+	public function setContent($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->content !== $v) {
+			$this->content = $v;
+			$this->modifiedColumns[] = TicketPeer::CONTENT;
+		}
+
+		return $this;
+	} // setContent()
+
+	/**
 	 * Sets the value of [updated_at] column to a normalized version of the date/time value specified.
 	 * 
 	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
@@ -327,8 +363,9 @@ abstract class BaseTicket extends BaseObject  implements Persistent {
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->referrer = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->ticket_type_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->updated_at = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->state = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+			$this->content = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->updated_at = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->state = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -338,7 +375,7 @@ abstract class BaseTicket extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 5; // 5 = TicketPeer::NUM_COLUMNS - TicketPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 6; // 6 = TicketPeer::NUM_COLUMNS - TicketPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Ticket object", $e);
@@ -699,9 +736,12 @@ abstract class BaseTicket extends BaseObject  implements Persistent {
 				return $this->getTicketTypeId();
 				break;
 			case 3:
-				return $this->getUpdatedAt();
+				return $this->getContent();
 				break;
 			case 4:
+				return $this->getUpdatedAt();
+				break;
+			case 5:
 				return $this->getState();
 				break;
 			default:
@@ -728,8 +768,9 @@ abstract class BaseTicket extends BaseObject  implements Persistent {
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getReferrer(),
 			$keys[2] => $this->getTicketTypeId(),
-			$keys[3] => $this->getUpdatedAt(),
-			$keys[4] => $this->getState(),
+			$keys[3] => $this->getContent(),
+			$keys[4] => $this->getUpdatedAt(),
+			$keys[5] => $this->getState(),
 		);
 		return $result;
 	}
@@ -771,9 +812,12 @@ abstract class BaseTicket extends BaseObject  implements Persistent {
 				$this->setTicketTypeId($value);
 				break;
 			case 3:
-				$this->setUpdatedAt($value);
+				$this->setContent($value);
 				break;
 			case 4:
+				$this->setUpdatedAt($value);
+				break;
+			case 5:
 				$this->setState($value);
 				break;
 		} // switch()
@@ -803,8 +847,9 @@ abstract class BaseTicket extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setReferrer($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setTicketTypeId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setUpdatedAt($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setState($arr[$keys[4]]);
+		if (array_key_exists($keys[3], $arr)) $this->setContent($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setUpdatedAt($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setState($arr[$keys[5]]);
 	}
 
 	/**
@@ -819,6 +864,7 @@ abstract class BaseTicket extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(TicketPeer::ID)) $criteria->add(TicketPeer::ID, $this->id);
 		if ($this->isColumnModified(TicketPeer::REFERRER)) $criteria->add(TicketPeer::REFERRER, $this->referrer);
 		if ($this->isColumnModified(TicketPeer::TICKET_TYPE_ID)) $criteria->add(TicketPeer::TICKET_TYPE_ID, $this->ticket_type_id);
+		if ($this->isColumnModified(TicketPeer::CONTENT)) $criteria->add(TicketPeer::CONTENT, $this->content);
 		if ($this->isColumnModified(TicketPeer::UPDATED_AT)) $criteria->add(TicketPeer::UPDATED_AT, $this->updated_at);
 		if ($this->isColumnModified(TicketPeer::STATE)) $criteria->add(TicketPeer::STATE, $this->state);
 
@@ -878,6 +924,8 @@ abstract class BaseTicket extends BaseObject  implements Persistent {
 		$copyObj->setReferrer($this->referrer);
 
 		$copyObj->setTicketTypeId($this->ticket_type_id);
+
+		$copyObj->setContent($this->content);
 
 		$copyObj->setUpdatedAt($this->updated_at);
 

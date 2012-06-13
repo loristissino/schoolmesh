@@ -39,6 +39,7 @@ class TicketTableMap extends TableMap {
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
 		$this->addColumn('REFERRER', 'Referrer', 'VARCHAR', false, 255, null);
 		$this->addForeignKey('TICKET_TYPE_ID', 'TicketTypeId', 'INTEGER', 'ticket_type', 'ID', false, null, null);
+		$this->addColumn('CONTENT', 'Content', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('UPDATED_AT', 'UpdatedAt', 'TIMESTAMP', false, null, null);
 		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
 		// validators
