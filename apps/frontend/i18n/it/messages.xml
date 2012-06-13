@@ -4832,6 +4832,32 @@
         <source>Looks like this charge has not been approved yet</source>
         <target>A quanto pare, questo incarico non è ancora stato attribuito in via definitiva</target>
     </trans-unit>
+    <trans-unit id="1405">
+        <source>Choose a ticket type</source>
+        <target>Scegli un tipo di ticket</target>
+    </trans-unit>
+    <trans-unit id="1406">
+        <source>Tickets</source>
+        <target>Ticket</target>
+    </trans-unit>
+    <trans-unit id="1407">
+        <source>Ticket type</source>
+        <target>Tipo di ticket</target>
+    </trans-unit>
+    <trans-unit id="1408">
+        <source>New ticket</source>
+        <target>Nuovo ticket</target>
+    </trans-unit>
+    <trans-unit id="1409">
+        <source>Back to the action</source>
+        <target>Torna all'azione</target>
+    </trans-unit>
+    <trans-unit id="1410">
+        <source>Edit ticket</source>
+        <target>Modifica ticket</target>
+    </trans-unit>
      </body>
   </file> 
 </xliff>
+
+

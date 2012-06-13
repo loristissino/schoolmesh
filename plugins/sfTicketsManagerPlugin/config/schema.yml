@@ -9,6 +9,7 @@ propel:
     id:
     referrer:       varchar(255)
     ticket_type_id: 
+    content:        longvarchar
     updated_at:
     state:          integer
 
@@ -18,6 +19,6 @@ propel:
     user_id:       { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onDelete: restrict, onUpdate: cascade, index:true }
     created_at: 
     content:       { type: varchar(255), required: true }
-    state: integer
+    state:         integer
     assignee_id:   { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: false, onDelete: restrict, onUpdate: cascade, index:true }
 

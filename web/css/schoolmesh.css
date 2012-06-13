@@ -514,9 +514,27 @@ em.keptforreferencenotice
   list-style: none;*/
   display: inline;
 	font-weight: bold;
+  /*	background: url(../images/help.png) no-repeat 0 0;*/
+	
+}
+
+#help ul li.help
+{
+	/*list-style-type: none;	
+  list-style: none;*/
 	background: url(../images/help.png) no-repeat 0 0;
 	
 }
+
+
+#help ul li.ticket
+{
+	/*list-style-type: none;	
+  list-style: none;*/
+	background: url(../images/ticket.png) no-repeat 0 0;
+	
+}
+
 #help ul li a
 {
   text-decoration: none;

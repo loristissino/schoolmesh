@@ -25,7 +25,7 @@ abstract class BaseTicketPeer {
 	const TM_CLASS = 'TicketTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 6;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -38,6 +38,9 @@ abstract class BaseTicketPeer {
 
 	/** the column name for the TICKET_TYPE_ID field */
 	const TICKET_TYPE_ID = 'ticket.TICKET_TYPE_ID';
+
+	/** the column name for the CONTENT field */
+	const CONTENT = 'ticket.CONTENT';
 
 	/** the column name for the UPDATED_AT field */
 	const UPDATED_AT = 'ticket.UPDATED_AT';
@@ -68,11 +71,11 @@ abstract class BaseTicketPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Referrer', 'TicketTypeId', 'UpdatedAt', 'State', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'referrer', 'ticketTypeId', 'updatedAt', 'state', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::REFERRER, self::TICKET_TYPE_ID, self::UPDATED_AT, self::STATE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'referrer', 'ticket_type_id', 'updated_at', 'state', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Referrer', 'TicketTypeId', 'Content', 'UpdatedAt', 'State', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'referrer', 'ticketTypeId', 'content', 'updatedAt', 'state', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::REFERRER, self::TICKET_TYPE_ID, self::CONTENT, self::UPDATED_AT, self::STATE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'referrer', 'ticket_type_id', 'content', 'updated_at', 'state', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -82,11 +85,11 @@ abstract class BaseTicketPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Referrer' => 1, 'TicketTypeId' => 2, 'UpdatedAt' => 3, 'State' => 4, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'referrer' => 1, 'ticketTypeId' => 2, 'updatedAt' => 3, 'state' => 4, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::REFERRER => 1, self::TICKET_TYPE_ID => 2, self::UPDATED_AT => 3, self::STATE => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'referrer' => 1, 'ticket_type_id' => 2, 'updated_at' => 3, 'state' => 4, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Referrer' => 1, 'TicketTypeId' => 2, 'Content' => 3, 'UpdatedAt' => 4, 'State' => 5, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'referrer' => 1, 'ticketTypeId' => 2, 'content' => 3, 'updatedAt' => 4, 'state' => 5, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::REFERRER => 1, self::TICKET_TYPE_ID => 2, self::CONTENT => 3, self::UPDATED_AT => 4, self::STATE => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'referrer' => 1, 'ticket_type_id' => 2, 'content' => 3, 'updated_at' => 4, 'state' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -159,6 +162,7 @@ abstract class BaseTicketPeer {
 		$criteria->addSelectColumn(TicketPeer::ID);
 		$criteria->addSelectColumn(TicketPeer::REFERRER);
 		$criteria->addSelectColumn(TicketPeer::TICKET_TYPE_ID);
+		$criteria->addSelectColumn(TicketPeer::CONTENT);
 		$criteria->addSelectColumn(TicketPeer::UPDATED_AT);
 		$criteria->addSelectColumn(TicketPeer::STATE);
 	}

@@ -29,6 +29,7 @@ CREATE TABLE `ticket`
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`referrer` VARCHAR(255),
 	`ticket_type_id` INTEGER,
+	`content` TEXT,
 	`updated_at` DATETIME,
 	`state` INTEGER,
 	PRIMARY KEY (`id`),
