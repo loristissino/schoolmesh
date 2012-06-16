@@ -167,6 +167,19 @@ function quantityvalue($value, $mu='')
     $mu=$mu . '&nbsp;';
   }
   
+  if($mu=='h&nbsp;' and $value)
+  {
+      $hours=floor($value);
+      $minutes=round(($value-$hours)*60);
+      
+      return sprintf('%s%d%s%02d',
+        $mu,
+        $hours,
+        sfConfig::get('app_config_hoursminutessep', ':'),
+        $minutes
+      );
+  }
+  
   if ($value)
   {
   return 

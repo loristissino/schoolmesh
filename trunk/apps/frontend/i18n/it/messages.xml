@@ -4834,19 +4834,19 @@
     </trans-unit>
     <trans-unit id="1405">
         <source>Choose a ticket type</source>
-        <target>Scegli un tipo di ticket</target>
+        <target>Scegli un tipo di richiesta di intervento</target>
     </trans-unit>
     <trans-unit id="1406">
         <source>Tickets</source>
-        <target>Ticket</target>
+        <target>Richieste di intervento</target>
     </trans-unit>
     <trans-unit id="1407">
         <source>Ticket type</source>
-        <target>Tipo di ticket</target>
+        <target>Tipo di richiesta di intervento</target>
     </trans-unit>
     <trans-unit id="1408">
         <source>New ticket</source>
-        <target>Nuovo ticket</target>
+        <target>Nuova richiesta di intervento</target>
     </trans-unit>
     <trans-unit id="1409">
         <source>Back to the action</source>
@@ -4854,7 +4854,7 @@
     </trans-unit>
     <trans-unit id="1410">
         <source>Edit ticket</source>
-        <target>Modifica ticket</target>
+        <target>Modifica richiesta di intervento</target>
     </trans-unit>
      </body>
   </file> 

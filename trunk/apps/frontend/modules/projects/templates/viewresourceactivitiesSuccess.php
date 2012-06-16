@@ -22,7 +22,6 @@
     <tr>
       <th class="sf_admin_text"><?php echo __('Performer') ?></th>
       <th class="sf_admin_text" style='text-align: center'><?php echo __('Beginning') ?></th>
-      <th class="sf_admin_text"><?php echo __('M.U.') ?></th>
       <th class="sf_admin_text"><?php echo __('Quantity') ?></th>
       <th class="sf_admin_text"><?php echo __('Notes') ?></th>
       <th class="sf_admin_text"><?php echo __('Acknowledgement') ?></th>
@@ -56,9 +55,6 @@
       <?php endif ?>
       <?php echo $activity->getBeginning('d/m/Y H:i') ?>
       </td>
-      <td>
-      <?php echo $mu=$resource->getProjResourceType()->getMeasurementUnit() ?>
-      </td>
       <td style="text-align: right">
       <?php if(!$activity->getAcknowledgedAt() && $resource->getTotalQuantityForAcknowledgedActivities()+$activity->getQuantity()>$resource->getQuantityApproved()): ?>
         <?php echo image_tag(
@@ -70,7 +66,7 @@
           )
         ?>
       <?php endif ?>
-     <?php echo $activity->getQuantity() ?>
+     <?php echo quantityvalue($activity->getQuantity(), $mu=$resource->getProjResourceType()->getMeasurementUnit()) ?>
       </td>
       <td>
       <?php echo $activity->getNotes() ?>
@@ -115,7 +111,6 @@
     <?php endforeach; ?>
     <tr>
     <th colspan="2"><?php echo __('Total quantity acknowledged') ?></th>
-    <td style="font-weight: bold"><?php echo $mu ?></td>
     <td style="text-align: right; font-weight: bold">
       <?php if($resource->getTotalQuantityForAcknowledgedActivities()>$resource->getQuantityApproved()): ?>
         <?php echo image_tag(
@@ -128,14 +123,13 @@
         ?>
       <?php endif ?>
 
-      <?php printf('%01.2f', $resource->getTotalQuantityForAcknowledgedActivities()) ?>
+      <?php echo quantityvalue($resource->getTotalQuantityForAcknowledgedActivities(), $mu) ?>
     </td>
     <td colspan="3"></td>
     </tr>
     <tr>
     <th colspan="2"><?php echo __('Total quantity financed') ?></th>
-    <td><?php echo $mu ?></td>
-    <td style="font-style: italic; text-align: right"><?php printf('%01.2f', $resource->getQuantityApproved()) ?></td>
+    <td style="font-style: italic; text-align: right"><?php echo quantityvalue($resource->getQuantityApproved(), $mu) ?></td>
     <td colspan="3"></td>
     </tr>
   </tbody>
