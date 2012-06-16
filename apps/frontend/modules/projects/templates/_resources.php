@@ -10,13 +10,13 @@
 		<li><?php echo __('Resource type') ?>: <strong><?php echo $resource->getProjResourceType() ?></strong></li>
 		<li><?php echo __('Charged user') ?>: <strong><?php echo $resource->getChargedUserProfile() ?></strong></li>
     <?php if ($resource->getProjResourceTypeId()): ?>
-      <li><?php echo __('Estimation') ?>: <strong><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getQuantityEstimated() ?></strong></li>
+      <li><?php echo __('Estimation') ?>: <strong><?php echo quantityvalue($resource->getQuantityEstimated(), $resource->getProjResourceType()->getMeasurementUnit()) ?></strong></li>
       <?php if($project->getState()>Workflow::PROJ_SUBMITTED): ?>
-      <li><?php echo __('Approved') ?>: <strong><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getQuantityApproved() ?></strong></li>
+      <li><?php echo __('Approved') ?>: <strong><?php echo quantityvalue($resource->getQuantityApproved(), $resource->getProjResourceType()->getMeasurementUnit()) ?></strong></li>
       <?php endif ?>
       <?php if($resource->getTotalQuantityForAcknowledgedActivities()>0): ?>
-      <li><?php echo __('Used') ?>: <strong><?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>&nbsp;<?php echo $resource->getTotalQuantityForAcknowledgedActivities() ?></strong><br/ >
-      <?php include_component('projects', 'resourceactivities', array('resource'=>$resource)) ?>
+      <li><?php echo __('Used') ?>: <strong><?php echo quantityvalue($resource->getTotalQuantityForAcknowledgedActivities(), $resource->getProjResourceType()->getMeasurementUnit()) ?></strong><br/ >
+      <?php include_component('projects', 'resourceactivities', array('resource'=>$resource, 'mu'=>$resource->getProjResourceType()->getMeasurementUnit())) ?>
       </li>
       <?php endif ?>
     <?php endif ?>

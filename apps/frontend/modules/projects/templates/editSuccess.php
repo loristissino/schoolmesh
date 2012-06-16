@@ -101,7 +101,6 @@
       <th class="sf_admin_text"><?php echo __('Type') ?></th>
       <th class="sf_admin_text"><?php echo __('Charged user') ?></th>
       <th class="sf_admin_text"><?php echo __('Description') ?></th>
-      <th class="sf_admin_text"><?php echo __('M.U.') ?></th>
       <th class="sf_admin_text">
       <?php if($project->getState()<Workflow::PROJ_APPROVED): ?>
         <?php echo __('Estimation') ?>
@@ -133,16 +132,11 @@
         <?php echo $resource->getChargedUserProfile() ?>
       </td>
       <td><?php echo $resource->getDescription() ?></td>
-      <td>
-        <?php if ($resource->getProjResourceType()): ?>
-          <?php echo $resource->getProjResourceType()->getMeasurementUnit() ?>
-        <?php endif ?>
-      </td>
       <td style="text-align: right">
       <?php if($project->getState()<Workflow::PROJ_APPROVED): ?>
-        <?php echo quantityvalue($resource->getQuantityEstimated()) ?>
+        <?php echo quantityvalue($resource->getQuantityEstimated(), $resource->getProjResourceType()->getMeasurementUnit()) ?>
       <?php else: ?>
-        <?php echo quantityvalue($resource->getQuantityApproved()) ?>
+        <?php echo quantityvalue($resource->getQuantityApproved(), $resource->getProjResourceType()->getMeasurementUnit()) ?>
       <?php endif ?>
       </td>
       <?php if($project->getState()>Workflow::PROJ_DRAFT): ?>
@@ -157,7 +151,7 @@
           )
         ?>
       <?php endif ?>
-      <?php echo quantityvalue($resource->getTotalQuantityForAcknowledgedActivities()) ?>
+      <?php echo quantityvalue($resource->getTotalQuantityForAcknowledgedActivities(),$resource->getProjResourceType()->getMeasurementUnit()) ?>
       </td>
       <td style="text-align: right">
       <?php if($resource->getProjResourceType()->getRoleId()): ?>
