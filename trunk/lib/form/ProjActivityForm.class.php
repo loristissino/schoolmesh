@@ -50,6 +50,16 @@ class ProjActivityForm extends BaseProjActivityForm
 
     $this['user_id']->getWidget()->setLabel('Performer');
     
+    if($resourceType->getMeasurementUnit()=='h')
+    {      
+      $this->validatorSchema['quantity'] = new sfValidatorCallback(array(
+      'callback'  => array($this, 'hours_validator_callback'),
+      'required' => true,
+      'arguments' => array('separator' => sfConfig::get('app_config_hoursminutessep', ':')),
+      ));
+      
+      $this->setDefault('quantity', Generic::getHoursAsString($this->getObject()->getQuantity(), sfConfig::get('app_config_hoursminutessep', ':')));
+    }
   }
   
   public function unsetUserId()
@@ -58,6 +68,18 @@ class ProjActivityForm extends BaseProjActivityForm
     unset(
       $this['user_id']
       );
+  }
+  
+  
+  public function hours_validator_callback($validator, $value, $arguments)
+  {
+    $value=Generic::getHoursAsNumber($value, $arguments['separator']);
+    if($value==-1)
+    {
+      throw new sfValidatorError($validator, 'invalid');
+    }
+   
+    return $value;
   }
   
 }

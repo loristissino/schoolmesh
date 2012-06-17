@@ -91,6 +91,26 @@ class ProjResourceForm extends BaseProjResourceForm
         $this['charged_user_id']
         );
       }
+      
+      if($resourceType->getMeasurementUnit()=='h')
+      {
+        
+        $this->validatorSchema['quantity_estimated'] = new sfValidatorCallback(array(
+          'callback'  => array($this, 'hours_validator_callback'),
+          'required' => true,
+          'arguments' => array('separator' => sfConfig::get('app_config_hoursminutessep', ':')),
+          ));
+        
+        $k=Generic::getHoursAsString($resource->getQuantityEstimated(), sfConfig::get('app_config_hoursminutessep', ':'));
+        Generic::logMessage('default got', $k);
+        
+        $this->setDefault('quantity_estimated', $k);
+        
+        Generic::logMessage('default set', $this->getDefault('quantity_estimated'));
+        
+        $this->setDefault('quantity_approved', Generic::getHoursAsString($resource->getQuantityApproved(), sfConfig::get('app_config_hoursminutessep', ':')));
+      }
+      
 
     }
     
@@ -152,5 +172,16 @@ class ProjResourceForm extends BaseProjResourceForm
   
   }
 
+
+  public function hours_validator_callback($validator, $value, $arguments)
+  {
+    $value=Generic::getHoursAsNumber($value, $arguments['separator']);
+    if($value==-1)
+    {
+      throw new sfValidatorError($validator, 'invalid');
+    }
+   
+    return $value;
+  }
   
 }
