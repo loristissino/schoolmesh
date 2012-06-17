@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../bootstrap/unit.php';
  
-$t = new lime_test(87, new lime_output_color());
+$t = new lime_test(104, new lime_output_color());
 
 $t->diag('::datetime()');
 
@@ -221,3 +221,28 @@ foreach(array(
 {
   $t->is(Generic::netMatch('192.168.1.0/24', $value), $upshot, '::netMatch() works for ' . $value);
 }
+
+
+foreach(array(
+  'foo'=>false,
+  '12'=>12,
+  '32'=>32,
+  '10:30'=>10.5,
+  '10:45'=>10.75,
+  '10:45:00'=>false,
+  '10:65'=>false,
+  '10:60'=>false,
+  '10:6'=>false,
+  '10:06'=>10.1,
+  '10:-10'=>false,
+  '1:15'=>1.25,
+  '0:15'=>0.25,
+  '0:20'=>0.33333333333333333,
+  '0'=>0,
+  '-2'=>false,
+  '-2:30'=>false,
+  ) as $value=>$upshot)
+{
+  $t->is(Generic::getHoursAsNumber($value, ':'), $upshot, '::getHoursAsNumber() works for ' . $value);
+}
+

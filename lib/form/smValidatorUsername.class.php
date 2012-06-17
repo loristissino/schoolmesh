@@ -1,7 +1,7 @@
 <?php
 
 /*
- 	 * sfValidatorUsername validates a string as a username, checking against one or more databases.
+ 	 * smValidatorUsername validates a string as a username, checking against one or more databases.
 */
 
 class smValidatorUsername extends sfValidatorSchema

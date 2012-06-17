@@ -18,7 +18,6 @@
       <th class="sf_admin_text"><?php echo __('Project') ?></th>
       <th class="sf_admin_text"><?php echo __('Resource/task') ?></th>
       <th class="sf_admin_text" style="text-align: center"><?php echo __('Beginning') ?></th>
-      <th class="sf_admin_text"><?php echo __('M.U.') ?></th>
       <th class="sf_admin_text"><?php echo __('Quantity') ?></th>
       <th class="sf_admin_text"><?php echo __('Notes') ?></th>
       <th class="sf_admin_text"><?php echo __('Acknowledgement') ?></th>
@@ -51,8 +50,7 @@
           ?>
         <?php endif ?>
       </td>
-      <td><?php echo $mu=$activity->getProjResource()->getProjResourceType()->getMeasurementUnit() ?></td>
-      <td style="text-align: right"><?php echo $activity->getQuantity() ?></td>
+      <td style="text-align: right"><?php echo quantityvalue($activity->getQuantity(), $mu=$activity->getProjResource()->getProjResourceType()->getMeasurementUnit())  ?></td>
       <td><?php if(!$activity->getPaperLog()) $ending=$activity->getEnding('U') ?><?php echo $activity->getNotes() ?></td>
       <td><?php include_partial('projects/acknowledgement', array('activity'=>$activity)) ?></td>
       <td>

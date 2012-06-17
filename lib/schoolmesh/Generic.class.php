@@ -542,5 +542,55 @@ class Generic{
   {
     return mktime(0, 0, 0, date('n'), date('j'), date('Y'));
   }
+  
+  public static function getHoursAsNumber($value, $separator)
+  {
+    if(!strpos($value, $separator))
+    {
+      $h=(int)$value;
+      if(is_int($h) and $h>0)
+      {
+        return $h;
+      }
+      return -1;
+    }
+    
+    
+    $parts=explode($separator, $value);
+    
+    if(sizeof($parts)!=2)
+    {
+      return -1;
+    }
+    
+    list($hours, $minutes)=$parts;
+    
+    if(strlen($minutes)!=2)
+    {
+      return -1;
+    }
+    
+    $hours=(int)$hours;
+    $minutes=(int)$minutes;
+    if(!is_int($hours) or !is_int($minutes))
+    {
+      return -1;
+    }
+    
+    if(($minutes>59) or ($hours<0) or ($minutes<0))
+    {
+      return -1;
+    }
+    
+    return $hours+$minutes/60;
+  }
+
+  public static function getHoursAsString($value, $separator=':')
+  {
+    $h=floor($value);
+    $m=round(($value-$h)*60);
+    return sprintf('%d%s%02d', floor($value), $separator, $m);
+  }
+
 
 }
