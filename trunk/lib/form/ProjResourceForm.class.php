@@ -101,7 +101,8 @@ class ProjResourceForm extends BaseProjResourceForm
           'arguments' => array('separator' => sfConfig::get('app_config_hoursminutessep', ':')),
           ));
         
-        $k=Generic::getHoursAsString($resource->getQuantityEstimated(), sfConfig::get('app_config_hoursminutessep', ':'));
+        /*
+         * $k=Generic::getHoursAsString($resource->getQuantityEstimated(), sfConfig::get('app_config_hoursminutessep', ':'));
         Generic::logMessage('default got', $k);
         
         $this->setDefault('quantity_estimated', $k);
@@ -109,6 +110,7 @@ class ProjResourceForm extends BaseProjResourceForm
         Generic::logMessage('default set', $this->getDefault('quantity_estimated'));
         
         $this->setDefault('quantity_approved', Generic::getHoursAsString($resource->getQuantityApproved(), sfConfig::get('app_config_hoursminutessep', ':')));
+        */
       }
       
 

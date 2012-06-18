@@ -751,12 +751,23 @@ class projectsActions extends sfActions
     
     $this->form = new ProjResourceForm($this->resource,  array('culture' => $this->getUser()->getCulture()));
     
-    if(!$this->resource->getScheduledDeadline())
+    
+    if($this->resource->getProjResourceType() and $this->resource->getProjResourceType()->getMeasurementUnit()=='h')
+    {
+      /* For some inexplicable reason, in this form the default does not work if called in the configure() function */
+      
+      $this->form->setDefault('quantity_estimated', Generic::getHoursAsString($this->resource->getQuantityEstimated(), sfConfig::get('app_config_hoursminutessep', ':')));
+      $this->form->setDefault('quantity_approved', Generic::getHoursAsString($this->resource->getQuantityApproved(), sfConfig::get('app_config_hoursminutessep', ':')));
+    }
+    /*
+     * if(!$this->resource->getScheduledDeadline())
     {
       $this->form->setDefault('scheduled_deadline', time());
     }
+    */
 
-    $this->form->setDefault('charged_user_id', $this->resource->getChargedUserId());
+    //$this->form->setDefault('charged_user_id', $this->resource->getChargedUserId());
+    //$this->form->setDefault('quantity_estimated', 'bla');
 
     if ($request->isMethod('post'))
 		{
