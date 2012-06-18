@@ -72,6 +72,7 @@ all:
     currency_decimals: 2
     currency_decpoint: ','
     currency_thousandssep: '.'
+    hoursminutessep: ':'
 
     projects_evaluation_min: 1
     projects_evaluation_max: 4

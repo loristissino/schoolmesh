@@ -17,7 +17,6 @@
       <th class="sf_admin_text"><?php echo __('Project') ?></th>
       <th class="sf_admin_text"><?php echo __('Description') ?></th>
       <th class="sf_admin_text"><?php echo __('Charged user') ?></th>
-      <th class="sf_admin_text" style="text-align: right"><?php echo __('M.U.') ?></th>
       <th class="sf_admin_text"><?php echo __('Estimation') ?></th>
       <th class="sf_admin_text"><?php echo __('Approval') ?></th>
       <th class="sf_admin_text"><?php echo __('Cost') ?></th>
