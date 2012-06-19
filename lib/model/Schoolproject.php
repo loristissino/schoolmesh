@@ -36,7 +36,7 @@ class Schoolproject extends BaseSchoolproject {
       $user->getProfile()->getBelongsToTeamById($this->getTeamId())   
       )
       &&
-      $this->getState()<Workflow::PROJ_FINISHED;
+      $this->getState()<Workflow::PROJ_ARCHIVED;
       
   }
   
@@ -1082,7 +1082,7 @@ class Schoolproject extends BaseSchoolproject {
   
   public function hasBudget()
   {
-    return ($this->mayHaveResources() and $this->getState()<Workflow::PROJ_FINISHED);
+    return ($this->mayHaveResources() and $this->getState()<Workflow::PROJ_ARCHIVED);
   }
 
 } // Schoolproject
