@@ -994,6 +994,8 @@ class Schoolproject extends BaseSchoolproject {
       //$logbudget.=$resource->getQuantityApproved(). ' * ' . $resource->getStandardCost(). "\n";
       $list[$resource->getId()]['description']=$resource->getDescription();
       $list[$resource->getId()]['budget']=$bv;
+      $list[$resource->getId()]['amount_funded_externally']=$resource->getAmountFundedExternally();
+      $list[$resource->getId()]['financing_notes']=$resource->getFinancingNotes();
       
       foreach($resource->getAcknowledgedActivities() as $activity)
       {
