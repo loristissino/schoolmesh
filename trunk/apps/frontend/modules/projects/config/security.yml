@@ -89,7 +89,7 @@ editupshot:
   credentials: proj_coordination
 
 viewresourceactivities:
-  credentials: proj_coordination
+  credentials: [[ proj_coordination, proj_adm_ok, proj_monitoring ]]
 
 acknowledgeactivity:
   credentials: proj_coordination
