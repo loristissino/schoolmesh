@@ -105,6 +105,15 @@ class projectsActions extends sfActions
       
 	}
 
+  public function executeCheckbudgetcompatibility(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPK($request->getParameter('id')));
+    $this->forward404Unless($this->project->isEditableBy($this->getUser()));
+    
+    $this->be=$this->project->getBudgetAndExpensesForDeclarableActivities();
+      
+	}
+
 
 
 

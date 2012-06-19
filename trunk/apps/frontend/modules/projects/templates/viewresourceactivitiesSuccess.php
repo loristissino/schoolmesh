@@ -135,7 +135,7 @@
   </tbody>
 </table>
 <?php else: ?>
-<p><?php echo __('No activities defined.') ?></p>
+<p><?php echo __('No activity declared.') ?></p>
 <?php endif ?>
 
 <ul class="sf_admin_actions">

@@ -4582,7 +4582,7 @@
       </trans-unit>
       <trans-unit id="1342">
         <source>No obtained upshot declared</source>
-        <target>Nessun risultato dichiatato</target>
+        <target>Nessun risultato dichiarato</target>
       </trans-unit>
       <trans-unit id="1343">
         <source>Obtained upshot declared</source>
@@ -4856,7 +4856,27 @@
         <source>Edit ticket</source>
         <target>Modifica richiesta di intervento</target>
     </trans-unit>
-     </body>
+    <trans-unit id="1411">
+        <source>Ticket</source>
+        <target>Richiesta di intervento</target>
+    </trans-unit>
+    <trans-unit id="1412">
+        <source>Budget compatibility check</source>
+        <target>Controllo della compatibilità con il budget</target>
+    </trans-unit>
+    <trans-unit id="1413">
+        <source>Check budget compatibility</source>
+        <target>Controlla la compatibilità con il budget</target>
+    </trans-unit>
+    <trans-unit id="1414">
+        <source>Expenses</source>
+        <target>Spese</target>
+    </trans-unit>
+    <trans-unit id="1415">
+        <source>Difference</source>
+        <target>Differenza</target>
+    </trans-unit>
+    </body>
   </file> 
 </xliff>
 

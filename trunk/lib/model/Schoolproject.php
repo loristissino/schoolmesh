@@ -985,13 +985,21 @@ class Schoolproject extends BaseSchoolproject {
     //$logbudget='';
     //$logexpenses='';
     
+    $list=array();
+    
     foreach($resources as $resource)
     {
-      $budget+=$resource->getQuantityApproved()*$resource->getStandardCost();
+      $bv=$resource->getQuantityApproved()*$resource->getStandardCost();
+      $budget+=$bv;
       //$logbudget.=$resource->getQuantityApproved(). ' * ' . $resource->getStandardCost(). "\n";
+      $list[$resource->getId()]['description']=$resource->getDescription();
+      $list[$resource->getId()]['budget']=$bv;
+      
       foreach($resource->getAcknowledgedActivities() as $activity)
       {
-        $expenses+=$activity->getQuantity()*$resource->getStandardCost();
+        $av=$activity->getQuantity()*$resource->getStandardCost();
+        $expenses+=$av;
+        $list[$resource->getId()]['activities'][$activity->getId()]=$av;
         //$logexpenses.=$activity->getQuantity() . ' * ' . $resource->getStandardCost(). "\n";
       }
     }
@@ -999,6 +1007,7 @@ class Schoolproject extends BaseSchoolproject {
     return array(
       'budget'=>$budget,
       'expenses'=>$expenses,
+      'list'=>$list,
       );
   }
 
@@ -1069,6 +1078,11 @@ class Schoolproject extends BaseSchoolproject {
     
     $c->add(TeamPeer::ID, $ids, Criteria::IN);
     return $c;
+  }
+  
+  public function hasBudget()
+  {
+    return ($this->mayHaveResources() and $this->getState()<Workflow::PROJ_FINISHED);
   }
 
 } // Schoolproject
