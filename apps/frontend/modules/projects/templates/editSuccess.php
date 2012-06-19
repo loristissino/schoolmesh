@@ -403,6 +403,15 @@
     ) ?>
   <?php elseif($project->getState()==Workflow::PROJ_CONFIRMED): ?>
 	<?php echo li_link_to_if(
+    'action_budget',
+    true,
+    __('Check budget compatibility'),
+    'projects/checkbudgetcompatibility?id='. $project->getId(),
+    array(
+      'title'=>__('Check whether the amounts of activities recognized is compatible with the ones approved'),
+      ) 
+    ) ?>
+	<?php echo li_link_to_if(
     'action_submit',
     true,
     __('Submit report'),

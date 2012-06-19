@@ -280,3 +280,17 @@ function customdir()
   }
   return $customdir . '/custom';
 }
+
+
+function budgetcolor($amount, $budget)
+{
+  if($amount==$budget)
+  {
+    return 'blue';
+  }
+  if($amount>$budget)
+  {
+    return 'red';
+  }
+  return 'green';
+}
