@@ -1,7 +1,7 @@
 <?php
 
 /**
- * schoolmeshGenerateWorkplansIndexTask class.
+ * schoolmeshGenerateAppointmentDocsIndexTask class.
  *
  * @package    schoolmesh
  * @subpackage lib.task
@@ -9,11 +9,12 @@
  * @license    GNU GPLv3 -- see license/gpl.txt for details
  */
 
-class schoolmeshGenerateWorkplansIndexTask extends sfBaseTask
+class schoolmeshGenerateAppointmentDocsIndexTask extends sfBaseTask
 {
   protected function configure()
   {
     $this->addArguments(array(
+       new sfCommandArgument('type', sfCommandArgument::REQUIRED, 'wp=workplan or fr=report'),
        new sfCommandArgument('outputfile', sfCommandArgument::REQUIRED, 'Output file'),
        new sfCommandArgument('directory', sfCommandArgument::REQUIRED, 'Directory for symlinks'),
      ));
@@ -29,8 +30,8 @@ class schoolmeshGenerateWorkplansIndexTask extends sfBaseTask
     ));
 
     $this->namespace        = 'schoolmesh';
-    $this->name             = 'generate-workplans-index';
-    $this->briefDescription = 'Generate workplans index file from attachments';
+    $this->name             = 'generate-appointment-docs-index';
+    $this->briefDescription = 'Generate appointment docs index file from attachments';
     $this->detailedDescription = "";
   }
 
@@ -52,14 +53,34 @@ class schoolmeshGenerateWorkplansIndexTask extends sfBaseTask
       return false;
     }
 
+    $type=strtoupper($arguments['type']);
+    switch($type)
+    {
+      case 'W':
+      case 'WP':
+        $title=$this->context->getI18N()->__('Workplans of year %year%', array('%year%'=>$year->getDescription()));
+        $state=(string)Workflow::WP_APPROVED;
+        break;
+      case 'R':
+      case 'FR':
+        $title=$this->context->getI18N()->__('Final reports of year %year%', array('%year%'=>$year->getDescription()));
+        $state=(string)Workflow::FR_APPROVED;
+        break;
+      default:
+        $this->log($this->formatter->format('Not a valid type specified ' . $arguments['type'], 'ERROR'));
+        return false;
+    }
+
+
     $dirname=$arguments['directory'];
+    
 
     $symlinksdir=sfConfig::get('app_documents_main_directory').'/'.$dirname;
     $attachmentsdir=sfConfig::get('app_documents_attachments');
     
     $yaml=array();
     $yaml['basedir']=sfConfig::get('app_documents_main_directory') . '/';
-    $yaml['title']=$this->context->getI18N()->__('Workplans of year %year%', array('%year%'=>$year->getDescription()));
+    $yaml['title']=$title;
 
     if(!file_exists($symlinksdir))
     {
@@ -71,7 +92,8 @@ class schoolmeshGenerateWorkplansIndexTask extends sfBaseTask
     {
       foreach($Appointment->getAttachmentFiles() as $AttachmentFile)
       {
-        if($AttachmentFile->getIsPublic())
+        if($AttachmentFile->getIsPublic() && strpos($AttachmentFile->getOriginalFileName(), $state))
+        // FIXME -- we should put the state in the DB, attachments table...
         {
           $count++;
           $linkpath=$symlinksdir.'/'.$AttachmentFile->getOriginalFileName();
