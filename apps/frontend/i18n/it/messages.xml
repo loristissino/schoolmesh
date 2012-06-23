@@ -4876,6 +4876,10 @@
         <source>Difference</source>
         <target>Differenza</target>
     </trans-unit>
+    <trans-unit id="1416">
+        <source>Final reports of year %year%</source>
+        <target>Relazioni finali dell'anno %year%</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
