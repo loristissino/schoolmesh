@@ -91,7 +91,7 @@ class PosixAccount extends Account
 		
 		$role=RolePeer::retrieveByPK($this->getProfile()->getRoleId());
 		
-		if ($this->getAccountInfo('found')==0)
+		if ($this->getAccountInfo('found')==0 and $this->getProfile()->getIsActive())
 		{
 			$checkList->addCheck(new Check(Check::FAILED, 'posix: account not found', $checkGroup, array(
 				'command'=>sprintf('schoolmesh_posixaccount_create %s %s "%s"',
@@ -225,8 +225,10 @@ class PosixAccount extends Account
 				),
 			);
 
-
-		$this->makeComparisons($checkList, $checks, $checkGroup);
+    if($this->getProfile()->getIsActive())
+    {
+      $this->makeComparisons($checkList, $checks, $checkGroup);
+    }
 
 		$this->save();
 		return $this;
