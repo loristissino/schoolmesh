@@ -1517,7 +1517,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 							new Check(Check::FAILED, sprintf('schoolmesh: user not active, but with %d account(s)', sizeof($currentAccounts)), $checkGroup)
 							);
 					}
-				return $this;
+				//return $this;
 			}
 	
 			foreach($availableAccounts as $availableAccount)
@@ -1878,12 +1878,17 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
   public function fixCredentialForAccount($accountType)
   {
     $account=$this->getAccountByType($accountType);
+    if(!$account)
+    {
+      return;
+    }
     if($account->getCredentialShouldBeAdded() and !$this->hasPermission($accountType))
     {
       $this->addUserPermission($accountType);
       return true;
     }
-    elseif(!$account->getCredentialShouldBeAdded() and $this->hasPermission($accountType))
+    
+    if(!$account->getCredentialShouldBeAdded() and $this->hasPermission($accountType))
     {
       $this->revokeUserPermission($accountType);
       return true;

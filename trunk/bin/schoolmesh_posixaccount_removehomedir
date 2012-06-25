@@ -1,0 +1,34 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+	
+#@ # NAME
+#@
+#@ {} - Remove the home directory for a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to completely remove the home directory of a user.
+#@ The home directory is expected to be in the directory specified in 
+#@ _schoolmesh.rc_.
+#@
+#@ # EXAMPLES
+#@
+#@ {-} john
+
+USERNAME=$1
+HOMEDIR="$POSIX_HOMEDIR_USERS/$USERNAME"
+
+checkUsername $USERNAME
+
+sudo mv "$HOMEDIR" /tmp && msg_ok "removed homedir: $USERNAME ($HOMEDIR)"  && exit 0
+
+# we will just move the directory to /tmp for now
+
+unexpectedError $@

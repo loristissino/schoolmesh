@@ -128,7 +128,7 @@ class GoogleappsAccount extends Account
   
   public function getCredentialShouldBeAdded()
   {
-    return $this->getAccountSetting('request_date')!=null;
+    return !($this->getAccountSetting('request_date')==null);
   }
 
   public function changePassword($password, $is_reset=false)
