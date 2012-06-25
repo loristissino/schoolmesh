@@ -1371,7 +1371,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
   public static function fixCredentialsForAccounts($profiles, $accountType)
   {
-    $todo=sizeof($profile);
+    $todo=sizeof($profiles);
     $done=0;
     foreach($profiles as $profile)
     {
