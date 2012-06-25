@@ -27,7 +27,7 @@ HOMEDIR="$POSIX_HOMEDIR_USERS/$USERNAME"
 
 checkUsername $USERNAME
 
-sudo mv "$HOMEDIR" /tmp && msg_ok "removed homedir: $USERNAME ($HOMEDIR)"  && exit 0
+sudo mv -v "$HOMEDIR" /tmp && msg_ok "removed homedir: $USERNAME ($HOMEDIR)"  && exit 0
 
 # we will just move the directory to /tmp for now
 
