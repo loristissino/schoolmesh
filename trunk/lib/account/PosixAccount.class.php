@@ -106,7 +106,7 @@ class PosixAccount extends Account
 		if ($this->getAccountInfo('found')==1 and !$this->getProfile()->getIsActive())
 		{
 			$checkList->addCheck(new Check(Check::FAILED, 'posix: account found', $checkGroup, array(
-				'command'=>sprintf('schoolmesh_posixaccount_removehomedir %s"',
+				'command'=>sprintf('schoolmesh_posixaccount_removehomedir %s',
 					$this->getUsername()
           )
 				)));
