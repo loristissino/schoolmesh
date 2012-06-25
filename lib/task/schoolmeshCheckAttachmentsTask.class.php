@@ -44,16 +44,25 @@ EOF;
     
     foreach($AttachmentFiles as $AttachmentFile)
     {
-      $md5=md5_file($AttachmentFile->getFilename());
-      if($md5==$AttachmentFile->getMd5sum())
+      if(is_readable($AttachmentFile->getFilename()))
       {
-        $this->logSection('attachment ' . $AttachmentFile->getId(), $AttachmentFile->getOriginalFileName(), null, 'INFO');
-        $ok++;
+        $md5=md5_file($AttachmentFile->getFilename());
+        if($md5==$AttachmentFile->getMd5sum())
+        {
+          $this->logSection('attachment ' . $AttachmentFile->getId(), $AttachmentFile->getOriginalFileName(), null, 'INFO');
+          $ok++;
+        }
+        else
+        {
+          $this->logSection('attachment ' . $AttachmentFile->getId(), $AttachmentFile->getOriginalFileName(), null, 'ERROR');
+          echo sprintf("Got %s, expected %s\n", $md5, $AttachmentFile->getMd5sum());
+          $failed++;
+        }
       }
       else
       {
         $this->logSection('attachment ' . $AttachmentFile->getId(), $AttachmentFile->getOriginalFileName(), null, 'ERROR');
-        echo sprintf("Got %s, expected %s\n", $md5, $AttachmentFile->getMd5sum());
+        echo sprintf("File %s is not readable\n", $AttachmentFile->getFilename());
         $failed++;
       }
     }
