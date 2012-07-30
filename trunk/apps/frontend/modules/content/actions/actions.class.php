@@ -289,5 +289,20 @@ class contentActions extends sfActions
   {
     
   }
+  
+  public function executeSSOUserinfo(sfWebRequest $request)
+  {
+    
+    $sso=new SSO();
+    $this->forward404Unless($sso->getAuthKey($request->getParameter('app'))==$request->getParameter('authkey'));
+    
+    $this->forward404Unless($profile=sfGuardUserProfilePeer::retrieveByPK($request->getParameter('userid')));
+    return $this->renderText(sprintf('%d:%s:%s',
+      $profile->getUserId(),
+      $profile->getUsername(),
+      $profile->getFullName()
+      ));
+  }
+  
 
 }

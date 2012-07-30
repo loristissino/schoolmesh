@@ -319,6 +319,7 @@ class profileActions extends sfActions
     $this->redirect($sso->getRedirection($request, $this->getUser()->getProfile()->getUsername()));
   }
   
+  
 }
 
 
