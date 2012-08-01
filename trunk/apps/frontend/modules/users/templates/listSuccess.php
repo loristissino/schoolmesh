@@ -33,9 +33,11 @@
       <?php endif ?>
       <th class="sf_admin_text"><?php echo link_to(__('G'), url_for( 'users/setsortlistpreference?sortby=gender&query='.$query)) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Username'), url_for( 'users/setsortlistpreference?sortby=username&query='.$query)) ?></th>
-      <?php /*
-      <th class="sf_admin_text"><?php echo link_to(__('Import Code'), url_for( 'users/setsortlistpreference?sortby=importcode&query='.$query)) ?></th>
-      */?>
+      
+      <?php if(sfConfig::get('app_config_users_show_import_code', false)): ?>
+        <th class="sf_admin_text"><?php echo link_to(__('Import Code'), url_for( 'users/setsortlistpreference?sortby=importcode&query='.$query)) ?></th>
+      <?php endif ?>
+      
       <th class="sf_admin_text"><?php echo link_to(__('Role'), url_for( 'users/setsortlistpreference?sortby=role&query='.$query)) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('First name'), url_for('users/setsortlistpreference?sortby=firstname&query='.$query)) ?></th>
       <th class="sf_admin_text"><?php echo link_to(__('Last name'), url_for( 'users/setsortlistpreference?sortby=lastname&query='.$query)) ?></th>
@@ -74,9 +76,11 @@
       ?>
       
       </td>
-      <?php /*
-      <td><?php echo $user->getImportCode() ?></td>
-      */?>
+
+      <?php if(sfConfig::get('app_config_users_show_import_code', false)): ?>
+        <td><?php echo $user->getImportCode() ?></td>
+      <?php endif ?>
+      
       <td><?php echo $user->getRoleDescription() ?></td>
       <td><?php echo $user->getFirstName() ?></td>
       <td><?php echo $user->getLastName() ?></td>
