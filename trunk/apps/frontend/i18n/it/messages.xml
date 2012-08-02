@@ -4880,8 +4880,22 @@
         <source>Final reports of year %year%</source>
         <target>Relazioni finali dell'anno %year%</target>
     </trans-unit>
+    <trans-unit id="1417">
+        <source>You successfully logged out from SchoolMesh.</source>
+        <target>Disconnessione da SchoolMesh avvenuta con successo.</target>
+    </trans-unit>
+    <trans-unit id="1418">
+        <source>Please note that if you logged in other applications using SchoolMesh's single sign-on, you will need to logout separately, by following the links below (or just by closing your browser).</source>
+        <target>Attenzione: se hai fatto il login in altre applicazioni usando il single sign-on di SchoolMesh, potresti dover fare il logout separatamente, seguendo i link qui sotto (o semplicemente chiudendo il browser).</target>
+    </trans-unit>
+    <trans-unit id="1419">
+        <source>Logout from %application%</source>
+        <target>Disconnessione da %application%</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
+
 
 

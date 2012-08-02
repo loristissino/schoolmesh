@@ -12539,3 +12539,307 @@ Jul 30 17:34:50 simplesamlphp DEBUG [1289c1b492] Session: Valid session found wi
 Jul 30 17:34:50 simplesamlphp DEBUG [1289c1b492] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/dictionaries/status]
 Jul 30 17:34:50 simplesamlphp DEBUG [1289c1b492] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/dictionaries/attributes]
 Jul 30 17:34:50 simplesamlphp DEBUG [1289c1b492] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 01 19:03:20 simplesamlphp DEBUG [4d7fd46718] Session: 'admin' not valid because we are not authenticated.
+Aug 01 19:03:20 simplesamlphp DEBUG [4d7fd46718] Session: 'login-admin' not valid because we are not authenticated.
+Aug 01 19:03:20 simplesamlphp DEBUG [4d7fd46718] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 01 19:03:20 simplesamlphp DEBUG [4d7fd46718] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 01 19:03:22 simplesamlphp DEBUG [4d7fd46718] Session: 'admin' not valid because we are not authenticated.
+Aug 01 19:03:22 simplesamlphp DEBUG [4d7fd46718] Session: 'login-admin' not valid because we are not authenticated.
+Aug 01 19:03:22 simplesamlphp DEBUG [4d7fd46718] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 01 19:03:22 simplesamlphp DEBUG [4d7fd46718] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 01 19:03:25 simplesamlphp DEBUG [4d7fd46718] Called Simple: 'schoolmesh'
+Aug 01 19:03:25 simplesamlphp DEBUG [4d7fd46718] Session: 'schoolmesh' not valid because we are not authenticated.
+Aug 01 19:03:25 simplesamlphp DEBUG [4d7fd46718] Saved state: '_824d20dbc09cbd3b2a331d6b94e67edfd30741761e:http://192.168.1.6/saml/module.php/core/as_login.php?AuthId=schoolmesh&ReturnTo=http%3A%2F%2F192.168.1.6%2Fsaml%2Fmodule.php%2Fcore%2Fauthenticate.php%3Fas%3Dschoolmesh'
+Aug 01 19:03:25 simplesamlphp ERROR [4d7fd46718] SimpleSAML_Error_Exception: Error 8 - Undefined variable: ReturnTo
+Aug 01 19:03:25 simplesamlphp ERROR [4d7fd46718] Backtrace:
+Aug 01 19:03:25 simplesamlphp ERROR [4d7fd46718] 5 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 01 19:03:25 simplesamlphp ERROR [4d7fd46718] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:188 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 01 19:03:25 simplesamlphp ERROR [4d7fd46718] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 01 19:03:25 simplesamlphp ERROR [4d7fd46718] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 01 19:03:25 simplesamlphp ERROR [4d7fd46718] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 01 19:03:25 simplesamlphp ERROR [4d7fd46718] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 01 19:03:33 simplesamlphp DEBUG [4d7fd46718] Called Simple: 'schoolmesh'
+Aug 01 19:03:33 simplesamlphp DEBUG [4d7fd46718] Session: 'schoolmesh' not valid because we are not authenticated.
+Aug 01 19:03:33 simplesamlphp DEBUG [4d7fd46718] Session: doLogin("schoolmesh")
+Aug 01 19:03:33 simplesamlphp DEBUG [4d7fd46718] Called Simple: 'schoolmesh'
+Aug 01 19:03:33 simplesamlphp DEBUG [4d7fd46718] Session: Valid session found with 'schoolmesh'.
+Aug 01 19:03:33 simplesamlphp DEBUG [4d7fd46718] Session: Valid session found with 'schoolmesh'.
+Aug 01 19:03:33 simplesamlphp DEBUG [4d7fd46718] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/dictionaries/status]
+Aug 01 19:03:33 simplesamlphp DEBUG [4d7fd46718] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/dictionaries/attributes]
+Aug 01 19:03:33 simplesamlphp DEBUG [4d7fd46718] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:13:33 simplesamlphp DEBUG [5f493bfbc1] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:13:33 simplesamlphp DEBUG [5f493bfbc1] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:13:33 simplesamlphp DEBUG [5f493bfbc1] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:13:33 simplesamlphp DEBUG [5f493bfbc1] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:13:34 simplesamlphp DEBUG [5f493bfbc1] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:13:34 simplesamlphp DEBUG [5f493bfbc1] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:13:34 simplesamlphp DEBUG [5f493bfbc1] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:13:34 simplesamlphp DEBUG [5f493bfbc1] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:13:36 simplesamlphp DEBUG [5f493bfbc1] Called Simple: 'schoolmesh'
+Aug 02 09:13:36 simplesamlphp DEBUG [5f493bfbc1] Session: 'schoolmesh' not valid because we are not authenticated.
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] SimpleSAML_Error_Exception: Error 8 - Undefined offset: 2
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] Backtrace:
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 6 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 5 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:89 (sspmod_schoolmesh_Auth_Source_External::getUser)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:118 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] SimpleSAML_Error_Exception: Error 8 - Undefined offset: 1
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] Backtrace:
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 6 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 5 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:89 (sspmod_schoolmesh_Auth_Source_External::getUser)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:118 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 02 09:13:36 simplesamlphp DEBUG [5f493bfbc1] Saved state: '_7dfeaf7c4a33f5a2330ff6bd9fb6e01fd7000fe338:http://192.168.1.6/saml/module.php/core/as_login.php?AuthId=schoolmesh&ReturnTo=http%3A%2F%2F192.168.1.6%2Fsaml%2Fmodule.php%2Fcore%2Fauthenticate.php%3Fas%3Dschoolmesh'
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] SimpleSAML_Error_Exception: Error 8 - Undefined variable: ReturnTo
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] Backtrace:
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 5 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:188 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 02 09:13:36 simplesamlphp ERROR [5f493bfbc1] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 02 09:14:08 simplesamlphp DEBUG [228db4120b] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:14:08 simplesamlphp DEBUG [228db4120b] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:14:08 simplesamlphp DEBUG [228db4120b] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:14:08 simplesamlphp DEBUG [228db4120b] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:14:10 simplesamlphp DEBUG [228db4120b] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:14:10 simplesamlphp DEBUG [228db4120b] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:14:10 simplesamlphp DEBUG [228db4120b] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:14:10 simplesamlphp DEBUG [228db4120b] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:14:12 simplesamlphp DEBUG [228db4120b] Called Simple: 'schoolmesh'
+Aug 02 09:14:12 simplesamlphp DEBUG [228db4120b] Session: 'schoolmesh' not valid because we are not authenticated.
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] SimpleSAML_Error_Exception: Error 8 - Undefined offset: 2
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] Backtrace:
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 6 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 5 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:89 (sspmod_schoolmesh_Auth_Source_External::getUser)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:118 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] SimpleSAML_Error_Exception: Error 8 - Undefined offset: 1
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] Backtrace:
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 6 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 5 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:89 (sspmod_schoolmesh_Auth_Source_External::getUser)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:118 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 02 09:14:12 simplesamlphp DEBUG [228db4120b] Saved state: '_8430d95e24b7431524f5e63c4bf09543d86adde9f8:http://192.168.1.6/saml/module.php/core/as_login.php?AuthId=schoolmesh&ReturnTo=http%3A%2F%2F192.168.1.6%2Fsaml%2Fmodule.php%2Fcore%2Fauthenticate.php%3Fas%3Dschoolmesh'
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] SimpleSAML_Error_Exception: Error 8 - Undefined variable: ReturnTo
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] Backtrace:
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 5 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:188 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 02 09:14:12 simplesamlphp ERROR [228db4120b] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 02 09:22:14 simplesamlphp DEBUG [6c5752450e] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:22:14 simplesamlphp DEBUG [6c5752450e] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:22:14 simplesamlphp DEBUG [6c5752450e] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:22:15 simplesamlphp DEBUG [6c5752450e] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:22:16 simplesamlphp DEBUG [6c5752450e] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:22:16 simplesamlphp DEBUG [6c5752450e] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:22:16 simplesamlphp DEBUG [6c5752450e] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:22:16 simplesamlphp DEBUG [6c5752450e] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:22:18 simplesamlphp DEBUG [6c5752450e] Called Simple: 'schoolmesh'
+Aug 02 09:22:18 simplesamlphp DEBUG [6c5752450e] Session: 'schoolmesh' not valid because we are not authenticated.
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] SimpleSAML_Error_Exception: Error 8 - Undefined offset: 2
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] Backtrace:
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 6 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 5 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:89 (sspmod_schoolmesh_Auth_Source_External::getUser)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:118 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] SimpleSAML_Error_Exception: Error 8 - Undefined offset: 1
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] Backtrace:
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 6 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 5 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:89 (sspmod_schoolmesh_Auth_Source_External::getUser)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:118 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 02 09:22:18 simplesamlphp DEBUG [6c5752450e] Saved state: '_e17f3f209b3a67a000c935d3f72ab96513dc38fea9:http://192.168.1.6/saml/module.php/core/as_login.php?AuthId=schoolmesh&ReturnTo=http%3A%2F%2F192.168.1.6%2Fsaml%2Fmodule.php%2Fcore%2Fauthenticate.php%3Fas%3Dschoolmesh'
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] SimpleSAML_Error_Exception: Error 8 - Undefined variable: ReturnTo
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] Backtrace:
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 5 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:188 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 02 09:22:18 simplesamlphp ERROR [6c5752450e] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 02 09:22:59 simplesamlphp DEBUG [169075dc2b] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:22:59 simplesamlphp DEBUG [169075dc2b] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:22:59 simplesamlphp DEBUG [169075dc2b] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:22:59 simplesamlphp DEBUG [169075dc2b] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:23:00 simplesamlphp DEBUG [169075dc2b] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:23:00 simplesamlphp DEBUG [169075dc2b] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:23:00 simplesamlphp DEBUG [169075dc2b] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:23:00 simplesamlphp DEBUG [169075dc2b] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:23:02 simplesamlphp DEBUG [169075dc2b] Called Simple: 'schoolmesh'
+Aug 02 09:23:02 simplesamlphp DEBUG [169075dc2b] Session: 'schoolmesh' not valid because we are not authenticated.
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] SimpleSAML_Error_Exception: Error 8 - Undefined offset: 2
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] Backtrace:
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 6 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 5 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:89 (sspmod_schoolmesh_Auth_Source_External::getUser)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:118 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] SimpleSAML_Error_Exception: Error 8 - Undefined offset: 1
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] Backtrace:
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 6 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 5 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:89 (sspmod_schoolmesh_Auth_Source_External::getUser)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:118 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 02 09:23:02 simplesamlphp DEBUG [169075dc2b] Saved state: '_d3e2b846a358af9cb3ea3ac2e33fdd78fa4472b695:http://192.168.1.6/saml/module.php/core/as_login.php?AuthId=schoolmesh&ReturnTo=http%3A%2F%2F192.168.1.6%2Fsaml%2Fmodule.php%2Fcore%2Fauthenticate.php%3Fas%3Dschoolmesh'
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] SimpleSAML_Error_Exception: Error 8 - Undefined variable: ReturnTo
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] Backtrace:
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 5 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:188 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 02 09:23:02 simplesamlphp ERROR [169075dc2b] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 02 09:37:23 simplesamlphp DEBUG [72027ef428] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:37:23 simplesamlphp DEBUG [72027ef428] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:37:23 simplesamlphp DEBUG [72027ef428] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:37:23 simplesamlphp DEBUG [72027ef428] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:37:24 simplesamlphp DEBUG [72027ef428] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:37:24 simplesamlphp DEBUG [72027ef428] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:37:24 simplesamlphp DEBUG [72027ef428] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:37:24 simplesamlphp DEBUG [72027ef428] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:37:26 simplesamlphp DEBUG [72027ef428] Called Simple: 'schoolmesh'
+Aug 02 09:37:26 simplesamlphp DEBUG [72027ef428] Session: 'schoolmesh' not valid because we are not authenticated.
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] SimpleSAML_Error_Exception: Error 8 - Undefined offset: 2
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] Backtrace:
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 6 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 5 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:89 (sspmod_schoolmesh_Auth_Source_External::getUser)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:118 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] SimpleSAML_Error_Exception: Error 8 - Undefined offset: 1
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] Backtrace:
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 6 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 5 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:89 (sspmod_schoolmesh_Auth_Source_External::getUser)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:118 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 02 09:37:26 simplesamlphp DEBUG [72027ef428] Saved state: '_fa046be3ccfb784e1a27a4fdf79ee49358d5ce296d:http://192.168.1.6/saml/module.php/core/as_login.php?AuthId=schoolmesh&ReturnTo=http%3A%2F%2F192.168.1.6%2Fsaml%2Fmodule.php%2Fcore%2Fauthenticate.php%3Fas%3Dschoolmesh'
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] SimpleSAML_Error_Exception: Error 8 - Undefined variable: ReturnTo
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] Backtrace:
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 5 /var/schoolmesh/lib/vendor/simplesamlphp/www/_include.php:70 (SimpleSAML_error_handler)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 4 /var/schoolmesh/lib/vendor/simplesamlphp/modules/schoolmesh/lib/Auth/Source/External.php:188 (sspmod_schoolmesh_Auth_Source_External::authenticate)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 3 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Default.php:58 (SimpleSAML_Auth_Default::initLogin)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 2 /var/schoolmesh/lib/vendor/simplesamlphp/lib/SimpleSAML/Auth/Simple.php:141 (SimpleSAML_Auth_Simple::login)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 1 /var/schoolmesh/lib/vendor/simplesamlphp/modules/core/www/authenticate.php:45 (require)
+Aug 02 09:37:26 simplesamlphp ERROR [72027ef428] 0 /var/schoolmesh/lib/vendor/simplesamlphp/www/module.php:135 (N/A)
+Aug 02 09:37:44 simplesamlphp DEBUG [0e07e172a3] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:37:44 simplesamlphp DEBUG [0e07e172a3] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:37:44 simplesamlphp DEBUG [0e07e172a3] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:37:44 simplesamlphp DEBUG [0e07e172a3] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:37:46 simplesamlphp DEBUG [0e07e172a3] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:37:46 simplesamlphp DEBUG [0e07e172a3] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:37:46 simplesamlphp DEBUG [0e07e172a3] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:37:46 simplesamlphp DEBUG [0e07e172a3] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:40:09 simplesamlphp DEBUG [0e07e172a3] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:40:09 simplesamlphp DEBUG [0e07e172a3] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:40:09 simplesamlphp DEBUG [0e07e172a3] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:40:09 simplesamlphp DEBUG [0e07e172a3] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:40:10 simplesamlphp DEBUG [0e07e172a3] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:40:10 simplesamlphp DEBUG [0e07e172a3] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:40:10 simplesamlphp DEBUG [0e07e172a3] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:40:10 simplesamlphp DEBUG [0e07e172a3] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:40:12 simplesamlphp DEBUG [0e07e172a3] Called Simple: 'schoolmesh'
+Aug 02 09:40:12 simplesamlphp DEBUG [0e07e172a3] Session: 'schoolmesh' not valid because we are not authenticated.
+Aug 02 09:40:12 simplesamlphp DEBUG [0e07e172a3] Session: doLogin("schoolmesh")
+Aug 02 09:40:12 simplesamlphp DEBUG [0e07e172a3] Called Simple: 'schoolmesh'
+Aug 02 09:40:12 simplesamlphp DEBUG [0e07e172a3] Session: Valid session found with 'schoolmesh'.
+Aug 02 09:40:12 simplesamlphp DEBUG [0e07e172a3] Session: Valid session found with 'schoolmesh'.
+Aug 02 09:40:12 simplesamlphp DEBUG [0e07e172a3] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/dictionaries/status]
+Aug 02 09:40:12 simplesamlphp DEBUG [0e07e172a3] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/dictionaries/attributes]
+Aug 02 09:40:12 simplesamlphp DEBUG [0e07e172a3] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:43:18 simplesamlphp DEBUG [6926734053] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:43:18 simplesamlphp DEBUG [6926734053] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:43:18 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:43:18 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:43:19 simplesamlphp DEBUG [6926734053] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:43:19 simplesamlphp DEBUG [6926734053] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:43:19 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:43:19 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:43:22 simplesamlphp DEBUG [6926734053] Called Simple: 'schoolmesh'
+Aug 02 09:43:22 simplesamlphp DEBUG [6926734053] Session: 'schoolmesh' not valid because we are not authenticated.
+Aug 02 09:43:22 simplesamlphp DEBUG [6926734053] Session: doLogin("schoolmesh")
+Aug 02 09:43:22 simplesamlphp DEBUG [6926734053] Called Simple: 'schoolmesh'
+Aug 02 09:43:22 simplesamlphp DEBUG [6926734053] Session: Valid session found with 'schoolmesh'.
+Aug 02 09:43:22 simplesamlphp DEBUG [6926734053] Session: Valid session found with 'schoolmesh'.
+Aug 02 09:43:22 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/dictionaries/status]
+Aug 02 09:43:22 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/dictionaries/attributes]
+Aug 02 09:43:22 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:43:25 simplesamlphp DEBUG [6926734053] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:43:25 simplesamlphp DEBUG [6926734053] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:43:25 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:43:25 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:43:26 simplesamlphp DEBUG [6926734053] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:43:26 simplesamlphp DEBUG [6926734053] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:43:26 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:43:26 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:43:26 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/dictionaries/admin]
+Aug 02 09:43:29 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/dictionaries/admin]
+Aug 02 09:43:52 simplesamlphp DEBUG [6926734053] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:43:52 simplesamlphp DEBUG [6926734053] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:43:52 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:43:52 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:43:53 simplesamlphp DEBUG [6926734053] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:43:53 simplesamlphp DEBUG [6926734053] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:43:53 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:43:53 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:43:55 simplesamlphp DEBUG [6926734053] Called Simple: 'schoolmesh'
+Aug 02 09:43:55 simplesamlphp DEBUG [6926734053] Session: Valid session found with 'schoolmesh'.
+Aug 02 09:43:55 simplesamlphp DEBUG [6926734053] Session: Valid session found with 'schoolmesh'.
+Aug 02 09:43:55 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/dictionaries/status]
+Aug 02 09:43:55 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/dictionaries/attributes]
+Aug 02 09:43:55 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:44:04 simplesamlphp DEBUG [6926734053] Called Simple: 'schoolmesh'
+Aug 02 09:44:04 simplesamlphp DEBUG [6926734053] Session: Valid session found with 'schoolmesh'.
+Aug 02 09:44:04 simplesamlphp DEBUG [6926734053] Session: doLogout('schoolmesh')
+Aug 02 09:44:04 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/dictionaries/logout]
+Aug 02 09:44:30 simplesamlphp DEBUG [6926734053] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:44:30 simplesamlphp DEBUG [6926734053] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:44:30 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:44:30 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:44:31 simplesamlphp DEBUG [6926734053] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:44:31 simplesamlphp DEBUG [6926734053] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:44:31 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:44:31 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:44:33 simplesamlphp DEBUG [6926734053] Called Simple: 'schoolmesh'
+Aug 02 09:44:33 simplesamlphp DEBUG [6926734053] Session: 'schoolmesh' not valid because we are not authenticated.
+Aug 02 09:44:33 simplesamlphp DEBUG [6926734053] Session: doLogin("schoolmesh")
+Aug 02 09:44:33 simplesamlphp DEBUG [6926734053] Called Simple: 'schoolmesh'
+Aug 02 09:44:33 simplesamlphp DEBUG [6926734053] Session: Valid session found with 'schoolmesh'.
+Aug 02 09:44:33 simplesamlphp DEBUG [6926734053] Session: Valid session found with 'schoolmesh'.
+Aug 02 09:44:33 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/dictionaries/status]
+Aug 02 09:44:33 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/dictionaries/attributes]
+Aug 02 09:44:33 simplesamlphp DEBUG [6926734053] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:46:47 simplesamlphp DEBUG [e93f92751b] Session: 'admin' not valid because we are not authenticated.
+Aug 02 09:46:47 simplesamlphp DEBUG [e93f92751b] Session: 'login-admin' not valid because we are not authenticated.
+Aug 02 09:46:47 simplesamlphp DEBUG [e93f92751b] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]
+Aug 02 09:46:47 simplesamlphp DEBUG [e93f92751b] Template: Reading [/var/schoolmesh/lib/vendor/simplesamlphp/modules/core/dictionaries/frontpage]

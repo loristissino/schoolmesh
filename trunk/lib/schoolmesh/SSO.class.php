@@ -44,20 +44,49 @@ class SSO
   
   public function removeCookie($application)
   {
-    
-    Generic::logMessage('removing cookie...', $application);
-    
     if(array_key_exists($application, $this->config['sso']['applications']))
     {
       if(array_key_exists('cookie_name', $this->config['sso']['applications'][$application]))
       {
-        $save_path = session_save_path();
-        $file=$save_path . '/sess_' . $_COOKIE[$this->config['sso']['applications'][$application]['cookie_name']];
-        unlink($file);
-        Generic::logMessage('removing cookie...', $file);
+        $cookie_name = $this->config['sso']['applications'][$application]['cookie_name'];
 
-        return true;
+        if(array_key_exists($cookie_name, $_COOKIE))
+        {
+          $save_path = session_save_path();
+          $file=$save_path . '/sess_' . $_COOKIE[$cookie_name];
+          if(file_exists($file))
+          {
+            unlink($file);
+            return true;
+          }
+        }
       }
+    }
+    return false;
+  }
+
+  public function sessionExists($application)
+  {
+    if(array_key_exists($application, $this->config['sso']['applications']))
+    {
+      if(array_key_exists('cookie_name', $this->config['sso']['applications'][$application]))
+      {
+        $cookie_name = $this->config['sso']['applications'][$application]['cookie_name'];
+
+        if(array_key_exists($cookie_name, $_COOKIE))
+        {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  public function getFederatedApps($application)
+  {
+    if(array_key_exists($application, $this->config['sso']['applications']))
+    {
+      return $this->config['sso']['applications'][$application]['federated_apps'];
     }
     return false;
   }
