@@ -1,0 +1,213 @@
+proj_financing:
+  class: sfPropelRouteCollection
+  options:
+    model:                ProjFinancing
+    module:               proj_financing
+    prefix_path:          /proj_financing
+    column:               id
+    with_wildcard_routes: true
+
+proj_category:
+  class: sfPropelRouteCollection
+  options:
+    model:                ProjCategory
+    module:               proj_category
+    prefix_path:          /proj_category
+    column:               id
+    with_wildcard_routes: true
+
+wptool_item:
+  class: sfPropelRouteCollection
+  options:
+    model:               WptoolItem
+    module:              wptool_item
+    prefix_path:         wptool_item
+    column:              id
+    with_wildcard_routes: true
+
+reserved_username:
+  class: sfPropelRouteCollection
+  options:
+    model:               ReservedUsername
+    module:              reserved_username
+    prefix_path:         reserved_username
+    column:              id
+    with_wildcard_routes: true
+
+track:
+  class: sfPropelRouteCollection
+  options:
+    model:               Track
+    module:              track
+    prefix_path:         track
+    column:              id
+    with_wildcard_routes: true
+
+wpitem_type:
+  class: sfPropelRouteCollection
+  options:
+    model:               WpitemType
+    module:              wpitem_type
+    prefix_path:         wpitem_type
+    column:              id
+    with_wildcard_routes: true
+
+wptool_item_type:
+  class: sfPropelRouteCollection
+  options:
+    model:               WptoolItemType
+    module:              wptool_item_type
+    prefix_path:         wptool_item_type
+    column:              id
+    with_wildcard_routes: true
+
+wpinfo_type:
+  class: sfPropelRouteCollection
+  options:
+    model:               WpinfoType
+    module:              wpinfo_type
+    prefix_path:         wpinfo_type
+    column:              id
+    with_wildcard_routes: true
+
+workstation:
+  class: sfPropelRouteCollection
+  options:
+    model:               Workstation
+    module:              workstation
+    prefix_path:         workstation
+    column:              id
+    with_wildcard_routes: true
+
+sf_guard_user_profile:
+  class: sfPropelRouteCollection
+  options:
+    model:               sfGuardUserProfile
+    module:              sf_guard_user_profile
+    prefix_path:         sf_guard_user_profile
+    column:              user_id
+    with_wildcard_routes: true
+
+user_team:
+  class: sfPropelRouteCollection
+  options:
+    model:               UserTeam
+    module:              user_team
+    prefix_path:         user_team
+    column:              id
+    with_wildcard_routes: true
+
+appointment:
+  class: sfPropelRouteCollection
+  options:
+    model:               Appointment
+    module:              appointment
+    prefix_path:         appointment
+    column:              id
+    with_wildcard_routes: true
+
+enrolment:
+  class: sfPropelRouteCollection
+  options:
+    model:               Enrolment
+    module:              enrolment
+    prefix_path:         enrolment
+    column:              id
+    with_wildcard_routes: true
+
+
+
+lanlog:
+  class: sfPropelRouteCollection
+  options:
+    model:               Lanlog
+    module:              lanlog
+    prefix_path:         lanlog
+    column:              user_id
+    with_wildcard_routes: true
+
+
+subnet:
+  class: sfPropelRouteCollection
+  options:
+    model:               Subnet
+    module:              subnet
+    prefix_path:         subnet
+    column:              id
+    with_wildcard_routes: true
+
+
+role:
+  class: sfPropelRouteCollection
+  options:
+    model:               Role
+    module:              role
+    prefix_path:         role
+    column:              id
+    with_wildcard_routes: true
+
+schoolclass:
+  class: sfPropelRouteCollection
+  options:
+    model:               Schoolclass
+    module:              schoolclass
+    prefix_path:         schoolclass
+    column:              id
+    with_wildcard_routes: true
+
+subject:
+  class: sfPropelRouteCollection
+  options:
+    model:               Subject
+    module:              subject
+    prefix_path:         subject
+    column:              id
+    with_wildcard_routes: true
+
+year:
+  class: sfPropelRouteCollection
+  options:
+    model:               Year
+    module:              year
+    prefix_path:         year
+    column:              id
+    with_wildcard_routes: true
+
+team:
+  class: sfPropelRouteCollection
+  options:
+    model:               Team
+    module:              team
+    prefix_path:         team
+    column:              id
+    with_wildcard_routes: true
+
+sf_guard_signin:
+  url:   /login
+  param: { module: sfGuardAuth, action: signin }
+ 
+sf_guard_signout:
+  url:   /logout
+  param: { module: sfGuardAuth, action: signout }
+ 
+sf_guard_password:
+  url:   /request_password
+  param: { module: sfGuardAuth, action: password }
+
+# default rules
+
+homepage:
+  url:   /
+  param: { module: content, action: index }
+
+default_symfony:
+  url:   /symfony/:action/*
+  param: { module: default }
+
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*
+

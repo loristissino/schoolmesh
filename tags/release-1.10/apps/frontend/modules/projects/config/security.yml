@@ -1,0 +1,107 @@
+index:
+  credentials: proj_coordination
+  
+activities:
+  credentials: proj_activity
+  
+newactivity:
+  credentials: proj_activity
+
+addacknowledgedactivity:
+  credentials: proj_coordination
+
+editactivity:
+  credentials: proj_activity
+
+deleteactivity:
+  credentials: proj_activity
+
+batch:
+  credentials: [[ proj_view, proj_monitoring ]]
+
+monitor:
+  credentials: proj_monitoring
+
+setapprovaldate:
+  credentials: proj_adm_ok
+
+setfinancingdate:
+  credentials: proj_adm_ok
+
+setconfirmationdate:
+  credentials: proj_adm_ok
+
+reassign:
+  credentials: proj_adm_ok
+  
+computebudget:
+  credentials: [[ proj_view, proj_adm_ok, proj_monitoring ]]
+  
+spreadsheet:
+  credentials: [[ proj_view, proj_adm_ok, proj_monitoring ]]
+
+updatestandardcosts:
+  credentials: proj_adm_ok
+
+viewasreport:
+  credentials: [[ proj_view, proj_adm_ok, proj_monitoring, proj_coordination ]]
+
+view:
+  credentials: [[ proj_view, proj_adm_ok, proj_monitoring, proj_coordination ]]
+
+monitorview:
+  credentials: [[ proj_view, proj_adm_ok, proj_monitoring ]]
+
+email:
+  credentials: [[ proj_coordination, proj_adm_ok, proj_monitoring ]]
+
+activityemail:
+  credentials: proj_coordination
+  
+letters:
+  credentials: proj_monitoring
+  
+adddeadline:
+  credentials: proj_coordination
+
+addresource:
+  credentials: proj_coordination
+
+addupshot:
+  credentials: proj_coordination
+
+deletedeadline:
+  credentials: proj_coordination
+
+deleteresource:
+  credentials: proj_coordination
+
+deleteupshot:
+  credentials: proj_coordination
+
+editdeadline:
+  credentials: proj_coordination
+
+editresource:
+  credentials: [[ proj_coordination, proj_adm_ok, proj_monitoring ]]
+
+editupshot:
+  credentials: proj_coordination
+
+viewresourceactivities:
+  credentials: [[ proj_coordination, proj_adm_ok, proj_monitoring ]]
+
+acknowledgeactivity:
+  credentials: proj_coordination
+
+edit:
+  credentials: [[ proj_coordination, proj_adm_ok ]]
+
+submit:
+  credentials: proj_coordination
+
+new:
+  credentials: proj_coordination
+
+default:
+  credentials: [[ proj_coordination, proj_activity, proj_view, proj_adm_ok, proj_monitoring ]]

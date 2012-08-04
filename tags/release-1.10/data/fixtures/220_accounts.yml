@@ -1,0 +1,41 @@
+Account:
+  loris_posix:
+    user_id:        loris
+    account_type_id:     posix
+  loris_samba:
+    user_id:        loris
+    account_type_id:    samba
+  loris_login:
+    user_id:        loris
+    account_type_id:     login
+  loris_googleapps:
+    user_id:        loris
+    account_type_id:   googleapps
+  loris_ldapnfs:
+    user_id:        loris
+    account_type_id:   ldapnfs
+
+  juri_posix:
+    user_id:        juri
+    account_type_id:     posix
+  juri_login:
+    user_id:        juri
+    account_type_id:     login
+  juri_samba:
+    user_id:        juri
+    account_type_id:    samba
+
+  john.test_posix:
+    user_id:       john.test
+    account_type_id:     posix
+  john.test_samba:
+    user_id:       john.test
+    account_type_id:     samba
+
+  giulia.d_posix:
+    user_id:       giulia.d
+    account_type_id:     posix
+  giulia.d_samba:
+    user_id:       giulia.d
+    account_type_id:     samba
+
