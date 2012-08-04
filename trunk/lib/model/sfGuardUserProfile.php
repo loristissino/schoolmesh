@@ -1057,7 +1057,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     }
     
 		
-		public function addToTeam($caller_id, Team $team, Role $role, $expiry=null, $notes='', $charge_reference_number='', $confirmation_reference_number,  $sf_context=null)
+		public function addToTeam($caller_id, Team $team, Role $role, $expiry=null, $notes='', $charge_reference_number='', $confirmation_reference_number='',  $sf_context=null)
 		{
 			if (!$this->getBelongsToTeam($team->getPosixName()))
 			{

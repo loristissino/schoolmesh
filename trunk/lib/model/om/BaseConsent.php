@@ -1,20 +1,20 @@
 <?php
 
 /**
- * Base class that represents a row from the 'user_team' table.
+ * Base class that represents a row from the 'consent' table.
  *
  * 
  *
  * @package    lib.model.om
  */
-abstract class BaseUserTeam extends BaseObject  implements Persistent {
+abstract class BaseConsent extends BaseObject  implements Persistent {
 
 
 	/**
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        UserTeamPeer
+	 * @var        ConsentPeer
 	 */
 	protected static $peer;
 
@@ -31,22 +31,22 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	protected $user_id;
 
 	/**
-	 * The value for the team_id field.
+	 * The value for the informativecontent_id field.
 	 * @var        int
 	 */
-	protected $team_id;
+	protected $informativecontent_id;
 
 	/**
-	 * The value for the role_id field.
-	 * @var        int
-	 */
-	protected $role_id;
-
-	/**
-	 * The value for the expiry field.
+	 * The value for the given_at field.
 	 * @var        string
 	 */
-	protected $expiry;
+	protected $given_at;
+
+	/**
+	 * The value for the method field.
+	 * @var        int
+	 */
+	protected $method;
 
 	/**
 	 * The value for the notes field.
@@ -55,37 +55,14 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	protected $notes;
 
 	/**
-	 * The value for the details field.
-	 * @var        string
-	 */
-	protected $details;
-
-	/**
-	 * The value for the charge_reference_number field.
-	 * @var        string
-	 */
-	protected $charge_reference_number;
-
-	/**
-	 * The value for the confirmation_reference_number field.
-	 * @var        string
-	 */
-	protected $confirmation_reference_number;
-
-	/**
 	 * @var        sfGuardUser
 	 */
 	protected $asfGuardUser;
 
 	/**
-	 * @var        Team
+	 * @var        Informativecontent
 	 */
-	protected $aTeam;
-
-	/**
-	 * @var        Role
-	 */
-	protected $aRole;
+	protected $aInformativecontent;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -103,7 +80,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 
 	// symfony behavior
 	
-	const PEER = 'UserTeamPeer';
+	const PEER = 'ConsentPeer';
 
 	/**
 	 * Get the [id] column value.
@@ -126,50 +103,40 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [team_id] column value.
+	 * Get the [informativecontent_id] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getTeamId()
+	public function getInformativecontentId()
 	{
-		return $this->team_id;
+		return $this->informativecontent_id;
 	}
 
 	/**
-	 * Get the [role_id] column value.
-	 * 
-	 * @return     int
-	 */
-	public function getRoleId()
-	{
-		return $this->role_id;
-	}
-
-	/**
-	 * Get the [optionally formatted] temporal [expiry] column value.
+	 * Get the [optionally formatted] temporal [given_at] column value.
 	 * 
 	 *
 	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
 	 *							If format is NULL, then the raw DateTime object will be returned.
-	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
 	 * @throws     PropelException - if unable to parse/validate the date/time value.
 	 */
-	public function getExpiry($format = 'Y-m-d')
+	public function getGivenAt($format = 'Y-m-d H:i:s')
 	{
-		if ($this->expiry === null) {
+		if ($this->given_at === null) {
 			return null;
 		}
 
 
-		if ($this->expiry === '0000-00-00') {
+		if ($this->given_at === '0000-00-00 00:00:00') {
 			// while technically this is not a default value of NULL,
 			// this seems to be closest in meaning.
 			return null;
 		} else {
 			try {
-				$dt = new DateTime($this->expiry);
+				$dt = new DateTime($this->given_at);
 			} catch (Exception $x) {
-				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->expiry, true), $x);
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->given_at, true), $x);
 			}
 		}
 
@@ -184,6 +151,16 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Get the [method] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getMethod()
+	{
+		return $this->method;
+	}
+
+	/**
 	 * Get the [notes] column value.
 	 * 
 	 * @return     string
@@ -194,40 +171,10 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [details] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getDetails()
-	{
-		return $this->details;
-	}
-
-	/**
-	 * Get the [charge_reference_number] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getChargeReferenceNumber()
-	{
-		return $this->charge_reference_number;
-	}
-
-	/**
-	 * Get the [confirmation_reference_number] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getConfirmationReferenceNumber()
-	{
-		return $this->confirmation_reference_number;
-	}
-
-	/**
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     UserTeam The current object (for fluent API support)
+	 * @return     Consent The current object (for fluent API support)
 	 */
 	public function setId($v)
 	{
@@ -237,7 +184,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = UserTeamPeer::ID;
+			$this->modifiedColumns[] = ConsentPeer::ID;
 		}
 
 		return $this;
@@ -247,7 +194,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	 * Set the value of [user_id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     UserTeam The current object (for fluent API support)
+	 * @return     Consent The current object (for fluent API support)
 	 */
 	public function setUserId($v)
 	{
@@ -257,7 +204,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 
 		if ($this->user_id !== $v) {
 			$this->user_id = $v;
-			$this->modifiedColumns[] = UserTeamPeer::USER_ID;
+			$this->modifiedColumns[] = ConsentPeer::USER_ID;
 		}
 
 		if ($this->asfGuardUser !== null && $this->asfGuardUser->getId() !== $v) {
@@ -268,61 +215,37 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	} // setUserId()
 
 	/**
-	 * Set the value of [team_id] column.
+	 * Set the value of [informativecontent_id] column.
 	 * 
 	 * @param      int $v new value
-	 * @return     UserTeam The current object (for fluent API support)
+	 * @return     Consent The current object (for fluent API support)
 	 */
-	public function setTeamId($v)
+	public function setInformativecontentId($v)
 	{
 		if ($v !== null) {
 			$v = (int) $v;
 		}
 
-		if ($this->team_id !== $v) {
-			$this->team_id = $v;
-			$this->modifiedColumns[] = UserTeamPeer::TEAM_ID;
+		if ($this->informativecontent_id !== $v) {
+			$this->informativecontent_id = $v;
+			$this->modifiedColumns[] = ConsentPeer::INFORMATIVECONTENT_ID;
 		}
 
-		if ($this->aTeam !== null && $this->aTeam->getId() !== $v) {
-			$this->aTeam = null;
-		}
-
-		return $this;
-	} // setTeamId()
-
-	/**
-	 * Set the value of [role_id] column.
-	 * 
-	 * @param      int $v new value
-	 * @return     UserTeam The current object (for fluent API support)
-	 */
-	public function setRoleId($v)
-	{
-		if ($v !== null) {
-			$v = (int) $v;
-		}
-
-		if ($this->role_id !== $v) {
-			$this->role_id = $v;
-			$this->modifiedColumns[] = UserTeamPeer::ROLE_ID;
-		}
-
-		if ($this->aRole !== null && $this->aRole->getId() !== $v) {
-			$this->aRole = null;
+		if ($this->aInformativecontent !== null && $this->aInformativecontent->getId() !== $v) {
+			$this->aInformativecontent = null;
 		}
 
 		return $this;
-	} // setRoleId()
+	} // setInformativecontentId()
 
 	/**
-	 * Sets the value of [expiry] column to a normalized version of the date/time value specified.
+	 * Sets the value of [given_at] column to a normalized version of the date/time value specified.
 	 * 
 	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
 	 *						be treated as NULL for temporal objects.
-	 * @return     UserTeam The current object (for fluent API support)
+	 * @return     Consent The current object (for fluent API support)
 	 */
-	public function setExpiry($v)
+	public function setGivenAt($v)
 	{
 		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
 		// -- which is unexpected, to say the least.
@@ -347,28 +270,48 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			}
 		}
 
-		if ( $this->expiry !== null || $dt !== null ) {
+		if ( $this->given_at !== null || $dt !== null ) {
 			// (nested ifs are a little easier to read in this case)
 
-			$currNorm = ($this->expiry !== null && $tmpDt = new DateTime($this->expiry)) ? $tmpDt->format('Y-m-d') : null;
-			$newNorm = ($dt !== null) ? $dt->format('Y-m-d') : null;
+			$currNorm = ($this->given_at !== null && $tmpDt = new DateTime($this->given_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
 
 			if ( ($currNorm !== $newNorm) // normalized values don't match 
 					)
 			{
-				$this->expiry = ($dt ? $dt->format('Y-m-d') : null);
-				$this->modifiedColumns[] = UserTeamPeer::EXPIRY;
+				$this->given_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = ConsentPeer::GIVEN_AT;
 			}
 		} // if either are not null
 
 		return $this;
-	} // setExpiry()
+	} // setGivenAt()
+
+	/**
+	 * Set the value of [method] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Consent The current object (for fluent API support)
+	 */
+	public function setMethod($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->method !== $v) {
+			$this->method = $v;
+			$this->modifiedColumns[] = ConsentPeer::METHOD;
+		}
+
+		return $this;
+	} // setMethod()
 
 	/**
 	 * Set the value of [notes] column.
 	 * 
 	 * @param      string $v new value
-	 * @return     UserTeam The current object (for fluent API support)
+	 * @return     Consent The current object (for fluent API support)
 	 */
 	public function setNotes($v)
 	{
@@ -378,71 +321,11 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 
 		if ($this->notes !== $v) {
 			$this->notes = $v;
-			$this->modifiedColumns[] = UserTeamPeer::NOTES;
+			$this->modifiedColumns[] = ConsentPeer::NOTES;
 		}
 
 		return $this;
 	} // setNotes()
-
-	/**
-	 * Set the value of [details] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     UserTeam The current object (for fluent API support)
-	 */
-	public function setDetails($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->details !== $v) {
-			$this->details = $v;
-			$this->modifiedColumns[] = UserTeamPeer::DETAILS;
-		}
-
-		return $this;
-	} // setDetails()
-
-	/**
-	 * Set the value of [charge_reference_number] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     UserTeam The current object (for fluent API support)
-	 */
-	public function setChargeReferenceNumber($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->charge_reference_number !== $v) {
-			$this->charge_reference_number = $v;
-			$this->modifiedColumns[] = UserTeamPeer::CHARGE_REFERENCE_NUMBER;
-		}
-
-		return $this;
-	} // setChargeReferenceNumber()
-
-	/**
-	 * Set the value of [confirmation_reference_number] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     UserTeam The current object (for fluent API support)
-	 */
-	public function setConfirmationReferenceNumber($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->confirmation_reference_number !== $v) {
-			$this->confirmation_reference_number = $v;
-			$this->modifiedColumns[] = UserTeamPeer::CONFIRMATION_REFERENCE_NUMBER;
-		}
-
-		return $this;
-	} // setConfirmationReferenceNumber()
 
 	/**
 	 * Indicates whether the columns in this object are only set to default values.
@@ -478,13 +361,10 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->user_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->team_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->role_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
-			$this->expiry = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->informativecontent_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+			$this->given_at = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->method = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
 			$this->notes = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->details = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->charge_reference_number = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->confirmation_reference_number = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -494,10 +374,10 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 9; // 9 = UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 6; // 6 = ConsentPeer::NUM_COLUMNS - ConsentPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating UserTeam object", $e);
+			throw new PropelException("Error populating Consent object", $e);
 		}
 	}
 
@@ -520,11 +400,8 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		if ($this->asfGuardUser !== null && $this->user_id !== $this->asfGuardUser->getId()) {
 			$this->asfGuardUser = null;
 		}
-		if ($this->aTeam !== null && $this->team_id !== $this->aTeam->getId()) {
-			$this->aTeam = null;
-		}
-		if ($this->aRole !== null && $this->role_id !== $this->aRole->getId()) {
-			$this->aRole = null;
+		if ($this->aInformativecontent !== null && $this->informativecontent_id !== $this->aInformativecontent->getId()) {
+			$this->aInformativecontent = null;
 		}
 	} // ensureConsistency
 
@@ -549,13 +426,13 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		// We don't need to alter the object instance pool; we're just modifying this instance
 		// already in the pool.
 
-		$stmt = UserTeamPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+		$stmt = ConsentPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
 		$row = $stmt->fetch(PDO::FETCH_NUM);
 		$stmt->closeCursor();
 		if (!$row) {
@@ -566,8 +443,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		if ($deep) {  // also de-associate any related objects?
 
 			$this->asfGuardUser = null;
-			$this->aTeam = null;
-			$this->aRole = null;
+			$this->aInformativecontent = null;
 		} // if (deep)
 	}
 
@@ -587,14 +463,14 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
 		try {
 			$ret = $this->preDelete($con);
 			if ($ret) {
-				UserTeamPeer::doDelete($this, $con);
+				ConsentPeer::doDelete($this, $con);
 				$this->postDelete($con);
 				$this->setDeleted(true);
 				$con->commit();
@@ -627,7 +503,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		
 		$con->beginTransaction();
@@ -647,7 +523,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 					$this->postUpdate($con);
 				}
 				$this->postSave($con);
-				UserTeamPeer::addInstanceToPool($this);
+				ConsentPeer::addInstanceToPool($this);
 			} else {
 				$affectedRows = 0;
 			}
@@ -688,28 +564,21 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 				$this->setsfGuardUser($this->asfGuardUser);
 			}
 
-			if ($this->aTeam !== null) {
-				if ($this->aTeam->isModified() || $this->aTeam->isNew()) {
-					$affectedRows += $this->aTeam->save($con);
+			if ($this->aInformativecontent !== null) {
+				if ($this->aInformativecontent->isModified() || $this->aInformativecontent->isNew()) {
+					$affectedRows += $this->aInformativecontent->save($con);
 				}
-				$this->setTeam($this->aTeam);
-			}
-
-			if ($this->aRole !== null) {
-				if ($this->aRole->isModified() || $this->aRole->isNew()) {
-					$affectedRows += $this->aRole->save($con);
-				}
-				$this->setRole($this->aRole);
+				$this->setInformativecontent($this->aInformativecontent);
 			}
 
 			if ($this->isNew() ) {
-				$this->modifiedColumns[] = UserTeamPeer::ID;
+				$this->modifiedColumns[] = ConsentPeer::ID;
 			}
 
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = UserTeamPeer::doInsert($this, $con);
+					$pk = ConsentPeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
@@ -718,7 +587,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 
 					$this->setNew(false);
 				} else {
-					$affectedRows += UserTeamPeer::doUpdate($this, $con);
+					$affectedRows += ConsentPeer::doUpdate($this, $con);
 				}
 
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
@@ -801,20 +670,14 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->aTeam !== null) {
-				if (!$this->aTeam->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aTeam->getValidationFailures());
-				}
-			}
-
-			if ($this->aRole !== null) {
-				if (!$this->aRole->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->aRole->getValidationFailures());
+			if ($this->aInformativecontent !== null) {
+				if (!$this->aInformativecontent->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aInformativecontent->getValidationFailures());
 				}
 			}
 
 
-			if (($retval = UserTeamPeer::doValidate($this, $columns)) !== true) {
+			if (($retval = ConsentPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
@@ -837,7 +700,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = UserTeamPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = ConsentPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		$field = $this->getByPosition($pos);
 		return $field;
 	}
@@ -859,25 +722,16 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 				return $this->getUserId();
 				break;
 			case 2:
-				return $this->getTeamId();
+				return $this->getInformativecontentId();
 				break;
 			case 3:
-				return $this->getRoleId();
+				return $this->getGivenAt();
 				break;
 			case 4:
-				return $this->getExpiry();
+				return $this->getMethod();
 				break;
 			case 5:
 				return $this->getNotes();
-				break;
-			case 6:
-				return $this->getDetails();
-				break;
-			case 7:
-				return $this->getChargeReferenceNumber();
-				break;
-			case 8:
-				return $this->getConfirmationReferenceNumber();
 				break;
 			default:
 				return null;
@@ -898,17 +752,14 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
 	{
-		$keys = UserTeamPeer::getFieldNames($keyType);
+		$keys = ConsentPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getUserId(),
-			$keys[2] => $this->getTeamId(),
-			$keys[3] => $this->getRoleId(),
-			$keys[4] => $this->getExpiry(),
+			$keys[2] => $this->getInformativecontentId(),
+			$keys[3] => $this->getGivenAt(),
+			$keys[4] => $this->getMethod(),
 			$keys[5] => $this->getNotes(),
-			$keys[6] => $this->getDetails(),
-			$keys[7] => $this->getChargeReferenceNumber(),
-			$keys[8] => $this->getConfirmationReferenceNumber(),
 		);
 		return $result;
 	}
@@ -925,7 +776,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = UserTeamPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = ConsentPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -947,25 +798,16 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 				$this->setUserId($value);
 				break;
 			case 2:
-				$this->setTeamId($value);
+				$this->setInformativecontentId($value);
 				break;
 			case 3:
-				$this->setRoleId($value);
+				$this->setGivenAt($value);
 				break;
 			case 4:
-				$this->setExpiry($value);
+				$this->setMethod($value);
 				break;
 			case 5:
 				$this->setNotes($value);
-				break;
-			case 6:
-				$this->setDetails($value);
-				break;
-			case 7:
-				$this->setChargeReferenceNumber($value);
-				break;
-			case 8:
-				$this->setConfirmationReferenceNumber($value);
 				break;
 		} // switch()
 	}
@@ -989,17 +831,14 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = UserTeamPeer::getFieldNames($keyType);
+		$keys = ConsentPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setUserId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setTeamId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setRoleId($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setExpiry($arr[$keys[4]]);
+		if (array_key_exists($keys[2], $arr)) $this->setInformativecontentId($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setGivenAt($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setMethod($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setNotes($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setDetails($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setChargeReferenceNumber($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setConfirmationReferenceNumber($arr[$keys[8]]);
 	}
 
 	/**
@@ -1009,17 +848,14 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(UserTeamPeer::DATABASE_NAME);
+		$criteria = new Criteria(ConsentPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(UserTeamPeer::ID)) $criteria->add(UserTeamPeer::ID, $this->id);
-		if ($this->isColumnModified(UserTeamPeer::USER_ID)) $criteria->add(UserTeamPeer::USER_ID, $this->user_id);
-		if ($this->isColumnModified(UserTeamPeer::TEAM_ID)) $criteria->add(UserTeamPeer::TEAM_ID, $this->team_id);
-		if ($this->isColumnModified(UserTeamPeer::ROLE_ID)) $criteria->add(UserTeamPeer::ROLE_ID, $this->role_id);
-		if ($this->isColumnModified(UserTeamPeer::EXPIRY)) $criteria->add(UserTeamPeer::EXPIRY, $this->expiry);
-		if ($this->isColumnModified(UserTeamPeer::NOTES)) $criteria->add(UserTeamPeer::NOTES, $this->notes);
-		if ($this->isColumnModified(UserTeamPeer::DETAILS)) $criteria->add(UserTeamPeer::DETAILS, $this->details);
-		if ($this->isColumnModified(UserTeamPeer::CHARGE_REFERENCE_NUMBER)) $criteria->add(UserTeamPeer::CHARGE_REFERENCE_NUMBER, $this->charge_reference_number);
-		if ($this->isColumnModified(UserTeamPeer::CONFIRMATION_REFERENCE_NUMBER)) $criteria->add(UserTeamPeer::CONFIRMATION_REFERENCE_NUMBER, $this->confirmation_reference_number);
+		if ($this->isColumnModified(ConsentPeer::ID)) $criteria->add(ConsentPeer::ID, $this->id);
+		if ($this->isColumnModified(ConsentPeer::USER_ID)) $criteria->add(ConsentPeer::USER_ID, $this->user_id);
+		if ($this->isColumnModified(ConsentPeer::INFORMATIVECONTENT_ID)) $criteria->add(ConsentPeer::INFORMATIVECONTENT_ID, $this->informativecontent_id);
+		if ($this->isColumnModified(ConsentPeer::GIVEN_AT)) $criteria->add(ConsentPeer::GIVEN_AT, $this->given_at);
+		if ($this->isColumnModified(ConsentPeer::METHOD)) $criteria->add(ConsentPeer::METHOD, $this->method);
+		if ($this->isColumnModified(ConsentPeer::NOTES)) $criteria->add(ConsentPeer::NOTES, $this->notes);
 
 		return $criteria;
 	}
@@ -1034,9 +870,9 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(UserTeamPeer::DATABASE_NAME);
+		$criteria = new Criteria(ConsentPeer::DATABASE_NAME);
 
-		$criteria->add(UserTeamPeer::ID, $this->id);
+		$criteria->add(ConsentPeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -1067,7 +903,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of UserTeam (or compatible) type.
+	 * @param      object $copyObj An object of Consent (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
@@ -1076,19 +912,13 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 
 		$copyObj->setUserId($this->user_id);
 
-		$copyObj->setTeamId($this->team_id);
+		$copyObj->setInformativecontentId($this->informativecontent_id);
 
-		$copyObj->setRoleId($this->role_id);
+		$copyObj->setGivenAt($this->given_at);
 
-		$copyObj->setExpiry($this->expiry);
+		$copyObj->setMethod($this->method);
 
 		$copyObj->setNotes($this->notes);
-
-		$copyObj->setDetails($this->details);
-
-		$copyObj->setChargeReferenceNumber($this->charge_reference_number);
-
-		$copyObj->setConfirmationReferenceNumber($this->confirmation_reference_number);
 
 
 		$copyObj->setNew(true);
@@ -1106,7 +936,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     UserTeam Clone of current object.
+	 * @return     Consent Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -1125,12 +955,12 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     UserTeamPeer
+	 * @return     ConsentPeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new UserTeamPeer();
+			self::$peer = new ConsentPeer();
 		}
 		return self::$peer;
 	}
@@ -1139,7 +969,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 	 * Declares an association between this object and a sfGuardUser object.
 	 *
 	 * @param      sfGuardUser $v
-	 * @return     UserTeam The current object (for fluent API support)
+	 * @return     Consent The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
 	public function setsfGuardUser(sfGuardUser $v = null)
@@ -1155,7 +985,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		// Add binding for other direction of this n:n relationship.
 		// If this object has already been added to the sfGuardUser object, it will not be re-added.
 		if ($v !== null) {
-			$v->addUserTeam($this);
+			$v->addConsent($this);
 		}
 
 		return $this;
@@ -1178,33 +1008,33 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->asfGuardUser->addUserTeams($this);
+			   $this->asfGuardUser->addConsents($this);
 			 */
 		}
 		return $this->asfGuardUser;
 	}
 
 	/**
-	 * Declares an association between this object and a Team object.
+	 * Declares an association between this object and a Informativecontent object.
 	 *
-	 * @param      Team $v
-	 * @return     UserTeam The current object (for fluent API support)
+	 * @param      Informativecontent $v
+	 * @return     Consent The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function setTeam(Team $v = null)
+	public function setInformativecontent(Informativecontent $v = null)
 	{
 		if ($v === null) {
-			$this->setTeamId(NULL);
+			$this->setInformativecontentId(NULL);
 		} else {
-			$this->setTeamId($v->getId());
+			$this->setInformativecontentId($v->getId());
 		}
 
-		$this->aTeam = $v;
+		$this->aInformativecontent = $v;
 
 		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the Team object, it will not be re-added.
+		// If this object has already been added to the Informativecontent object, it will not be re-added.
 		if ($v !== null) {
-			$v->addUserTeam($this);
+			$v->addConsent($this);
 		}
 
 		return $this;
@@ -1212,74 +1042,25 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 
 
 	/**
-	 * Get the associated Team object
+	 * Get the associated Informativecontent object
 	 *
 	 * @param      PropelPDO Optional Connection object.
-	 * @return     Team The associated Team object.
+	 * @return     Informativecontent The associated Informativecontent object.
 	 * @throws     PropelException
 	 */
-	public function getTeam(PropelPDO $con = null)
+	public function getInformativecontent(PropelPDO $con = null)
 	{
-		if ($this->aTeam === null && ($this->team_id !== null)) {
-			$this->aTeam = TeamPeer::retrieveByPk($this->team_id);
+		if ($this->aInformativecontent === null && ($this->informativecontent_id !== null)) {
+			$this->aInformativecontent = InformativecontentPeer::retrieveByPk($this->informativecontent_id);
 			/* The following can be used additionally to
 			   guarantee the related object contains a reference
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->aTeam->addUserTeams($this);
+			   $this->aInformativecontent->addConsents($this);
 			 */
 		}
-		return $this->aTeam;
-	}
-
-	/**
-	 * Declares an association between this object and a Role object.
-	 *
-	 * @param      Role $v
-	 * @return     UserTeam The current object (for fluent API support)
-	 * @throws     PropelException
-	 */
-	public function setRole(Role $v = null)
-	{
-		if ($v === null) {
-			$this->setRoleId(NULL);
-		} else {
-			$this->setRoleId($v->getId());
-		}
-
-		$this->aRole = $v;
-
-		// Add binding for other direction of this n:n relationship.
-		// If this object has already been added to the Role object, it will not be re-added.
-		if ($v !== null) {
-			$v->addUserTeam($this);
-		}
-
-		return $this;
-	}
-
-
-	/**
-	 * Get the associated Role object
-	 *
-	 * @param      PropelPDO Optional Connection object.
-	 * @return     Role The associated Role object.
-	 * @throws     PropelException
-	 */
-	public function getRole(PropelPDO $con = null)
-	{
-		if ($this->aRole === null && ($this->role_id !== null)) {
-			$this->aRole = RolePeer::retrieveByPk($this->role_id);
-			/* The following can be used additionally to
-			   guarantee the related object contains a reference
-			   to this object.  This level of coupling may, however, be
-			   undesirable since it could result in an only partially populated collection
-			   in the referenced object.
-			   $this->aRole->addUserTeams($this);
-			 */
-		}
-		return $this->aRole;
+		return $this->aInformativecontent;
 	}
 
 	/**
@@ -1297,8 +1078,7 @@ abstract class BaseUserTeam extends BaseObject  implements Persistent {
 		} // if ($deep)
 
 			$this->asfGuardUser = null;
-			$this->aTeam = null;
-			$this->aRole = null;
+			$this->aInformativecontent = null;
 	}
 
-} // BaseUserTeam
+} // BaseConsent

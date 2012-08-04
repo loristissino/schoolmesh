@@ -1,3 +1,11 @@
+2012/08/04
+Release: 1.10
+Added field mobile in sf_guard_user_profile table
+Added tables informativecontent and consent
+
+2012/08/03
+Added field details in user_team table
+
 2012/05/31
 Release: 1.09
 Changed field name in role table:

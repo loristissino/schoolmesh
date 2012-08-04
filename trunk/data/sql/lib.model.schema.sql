@@ -154,6 +154,7 @@ CREATE TABLE `sf_guard_user_profile`
 	`email` VARCHAR(50),
 	`email_state` INTEGER default 0,
 	`email_verification_code` VARCHAR(40),
+	`mobile` VARCHAR(15),
 	`website` VARCHAR(255),
 	`office` VARCHAR(255),
 	`ptn_notes` VARCHAR(255),
@@ -489,6 +490,7 @@ CREATE TABLE `user_team`
 	`role_id` INTEGER  NOT NULL,
 	`expiry` DATE,
 	`notes` TEXT,
+	`details` TEXT,
 	`charge_reference_number` VARCHAR(20),
 	`confirmation_reference_number` VARCHAR(20),
 	PRIMARY KEY (`id`),
@@ -1222,6 +1224,49 @@ CREATE TABLE `proj_upshot`
 	CONSTRAINT `proj_upshot_FK_1`
 		FOREIGN KEY (`schoolproject_id`)
 		REFERENCES `schoolproject` (`id`)
+)Engine=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- informativecontent
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `informativecontent`;
+
+
+CREATE TABLE `informativecontent`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`shortcut` VARCHAR(40),
+	`description` VARCHAR(255),
+	PRIMARY KEY (`id`)
+)Engine=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- consent
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `consent`;
+
+
+CREATE TABLE `consent`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`user_id` INTEGER  NOT NULL,
+	`informativecontent_id` INTEGER,
+	`given_at` DATETIME,
+	`method` INTEGER,
+	`notes` TEXT,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `ui` (`user_id`, `informativecontent_id`),
+	CONSTRAINT `consent_FK_1`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `consent_FI_2` (`informativecontent_id`),
+	CONSTRAINT `consent_FK_2`
+		FOREIGN KEY (`informativecontent_id`)
+		REFERENCES `informativecontent` (`id`)
 )Engine=InnoDB;
 
 #-----------------------------------------------------------------------------

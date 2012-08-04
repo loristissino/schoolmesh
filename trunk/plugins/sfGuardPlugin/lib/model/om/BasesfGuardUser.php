@@ -241,6 +241,16 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	private $lastProjActivityRelatedByAcknowledgerUserIdCriteria = null;
 
 	/**
+	 * @var        array Consent[] Collection to store aggregation of Consent objects.
+	 */
+	protected $collConsents;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collConsents.
+	 */
+	private $lastConsentCriteria = null;
+
+	/**
 	 * @var        array Lanlog[] Collection to store aggregation of Lanlog objects.
 	 */
 	protected $collLanlogs;
@@ -909,6 +919,9 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$this->collProjActivitysRelatedByAcknowledgerUserId = null;
 			$this->lastProjActivityRelatedByAcknowledgerUserIdCriteria = null;
 
+			$this->collConsents = null;
+			$this->lastConsentCriteria = null;
+
 			$this->collLanlogs = null;
 			$this->lastLanlogCriteria = null;
 
@@ -1202,6 +1215,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collConsents !== null) {
+				foreach ($this->collConsents as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collLanlogs !== null) {
 				foreach ($this->collLanlogs as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -1457,6 +1478,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 				if ($this->collProjActivitysRelatedByAcknowledgerUserId !== null) {
 					foreach ($this->collProjActivitysRelatedByAcknowledgerUserId as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collConsents !== null) {
+					foreach ($this->collConsents as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1894,6 +1923,12 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			foreach ($this->getProjActivitysRelatedByAcknowledgerUserId() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addProjActivityRelatedByAcknowledgerUserId($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getConsents() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addConsent($relObj->copy($deepCopy));
 				}
 			}
 
@@ -5944,6 +5979,207 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collConsents collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addConsents()
+	 */
+	public function clearConsents()
+	{
+		$this->collConsents = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collConsents collection (array).
+	 *
+	 * By default this just sets the collConsents collection to an empty array (like clearcollConsents());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initConsents()
+	{
+		$this->collConsents = array();
+	}
+
+	/**
+	 * Gets an array of Consent objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related Consents from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array Consent[]
+	 * @throws     PropelException
+	 */
+	public function getConsents($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collConsents === null) {
+			if ($this->isNew()) {
+			   $this->collConsents = array();
+			} else {
+
+				$criteria->add(ConsentPeer::USER_ID, $this->id);
+
+				ConsentPeer::addSelectColumns($criteria);
+				$this->collConsents = ConsentPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(ConsentPeer::USER_ID, $this->id);
+
+				ConsentPeer::addSelectColumns($criteria);
+				if (!isset($this->lastConsentCriteria) || !$this->lastConsentCriteria->equals($criteria)) {
+					$this->collConsents = ConsentPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastConsentCriteria = $criteria;
+		return $this->collConsents;
+	}
+
+	/**
+	 * Returns the number of related Consent objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Consent objects.
+	 * @throws     PropelException
+	 */
+	public function countConsents(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collConsents === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(ConsentPeer::USER_ID, $this->id);
+
+				$count = ConsentPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(ConsentPeer::USER_ID, $this->id);
+
+				if (!isset($this->lastConsentCriteria) || !$this->lastConsentCriteria->equals($criteria)) {
+					$count = ConsentPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collConsents);
+				}
+			} else {
+				$count = count($this->collConsents);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a Consent object to this object
+	 * through the Consent foreign key attribute.
+	 *
+	 * @param      Consent $l Consent
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addConsent(Consent $l)
+	{
+		if ($this->collConsents === null) {
+			$this->initConsents();
+		}
+		if (!in_array($l, $this->collConsents, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collConsents, $l);
+			$l->setsfGuardUser($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related Consents from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getConsentsJoinInformativecontent($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collConsents === null) {
+			if ($this->isNew()) {
+				$this->collConsents = array();
+			} else {
+
+				$criteria->add(ConsentPeer::USER_ID, $this->id);
+
+				$this->collConsents = ConsentPeer::doSelectJoinInformativecontent($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(ConsentPeer::USER_ID, $this->id);
+
+			if (!isset($this->lastConsentCriteria) || !$this->lastConsentCriteria->equals($criteria)) {
+				$this->collConsents = ConsentPeer::doSelectJoinInformativecontent($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastConsentCriteria = $criteria;
+
+		return $this->collConsents;
+	}
+
+	/**
 	 * Clears out the collLanlogs collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
@@ -7351,6 +7587,11 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collConsents) {
+				foreach ((array) $this->collConsents as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->collLanlogs) {
 				foreach ((array) $this->collLanlogs as $o) {
 					$o->clearAllReferences($deep);
@@ -7405,6 +7646,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->collProjResources = null;
 		$this->collProjActivitysRelatedByUserId = null;
 		$this->collProjActivitysRelatedByAcknowledgerUserId = null;
+		$this->collConsents = null;
 		$this->collLanlogs = null;
 		$this->collAttachmentFiles = null;
 		$this->collsfGuardUserPermissions = null;

@@ -1,67 +1,58 @@
 <?php
 
 /**
- * Base static class for performing query and update operations on the 'user_team' table.
+ * Base static class for performing query and update operations on the 'consent' table.
  *
  * 
  *
  * @package    lib.model.om
  */
-abstract class BaseUserTeamPeer {
+abstract class BaseConsentPeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'user_team';
+	const TABLE_NAME = 'consent';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'UserTeam';
+	const OM_CLASS = 'Consent';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.UserTeam';
+	const CLASS_DEFAULT = 'lib.model.Consent';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'UserTeamTableMap';
+	const TM_CLASS = 'ConsentTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 9;
+	const NUM_COLUMNS = 6;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'user_team.ID';
+	const ID = 'consent.ID';
 
 	/** the column name for the USER_ID field */
-	const USER_ID = 'user_team.USER_ID';
+	const USER_ID = 'consent.USER_ID';
 
-	/** the column name for the TEAM_ID field */
-	const TEAM_ID = 'user_team.TEAM_ID';
+	/** the column name for the INFORMATIVECONTENT_ID field */
+	const INFORMATIVECONTENT_ID = 'consent.INFORMATIVECONTENT_ID';
 
-	/** the column name for the ROLE_ID field */
-	const ROLE_ID = 'user_team.ROLE_ID';
+	/** the column name for the GIVEN_AT field */
+	const GIVEN_AT = 'consent.GIVEN_AT';
 
-	/** the column name for the EXPIRY field */
-	const EXPIRY = 'user_team.EXPIRY';
+	/** the column name for the METHOD field */
+	const METHOD = 'consent.METHOD';
 
 	/** the column name for the NOTES field */
-	const NOTES = 'user_team.NOTES';
-
-	/** the column name for the DETAILS field */
-	const DETAILS = 'user_team.DETAILS';
-
-	/** the column name for the CHARGE_REFERENCE_NUMBER field */
-	const CHARGE_REFERENCE_NUMBER = 'user_team.CHARGE_REFERENCE_NUMBER';
-
-	/** the column name for the CONFIRMATION_REFERENCE_NUMBER field */
-	const CONFIRMATION_REFERENCE_NUMBER = 'user_team.CONFIRMATION_REFERENCE_NUMBER';
+	const NOTES = 'consent.NOTES';
 
 	/**
-	 * An identiy map to hold any loaded instances of UserTeam objects.
+	 * An identiy map to hold any loaded instances of Consent objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array UserTeam[]
+	 * @var        array Consent[]
 	 */
 	public static $instances = array();
 
@@ -80,11 +71,11 @@ abstract class BaseUserTeamPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'TeamId', 'RoleId', 'Expiry', 'Notes', 'Details', 'ChargeReferenceNumber', 'ConfirmationReferenceNumber', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'teamId', 'roleId', 'expiry', 'notes', 'details', 'chargeReferenceNumber', 'confirmationReferenceNumber', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::TEAM_ID, self::ROLE_ID, self::EXPIRY, self::NOTES, self::DETAILS, self::CHARGE_REFERENCE_NUMBER, self::CONFIRMATION_REFERENCE_NUMBER, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'team_id', 'role_id', 'expiry', 'notes', 'details', 'charge_reference_number', 'confirmation_reference_number', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'InformativecontentId', 'GivenAt', 'Method', 'Notes', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'informativecontentId', 'givenAt', 'method', 'notes', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::INFORMATIVECONTENT_ID, self::GIVEN_AT, self::METHOD, self::NOTES, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'informativecontent_id', 'given_at', 'method', 'notes', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -94,11 +85,11 @@ abstract class BaseUserTeamPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'TeamId' => 2, 'RoleId' => 3, 'Expiry' => 4, 'Notes' => 5, 'Details' => 6, 'ChargeReferenceNumber' => 7, 'ConfirmationReferenceNumber' => 8, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'teamId' => 2, 'roleId' => 3, 'expiry' => 4, 'notes' => 5, 'details' => 6, 'chargeReferenceNumber' => 7, 'confirmationReferenceNumber' => 8, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::TEAM_ID => 2, self::ROLE_ID => 3, self::EXPIRY => 4, self::NOTES => 5, self::DETAILS => 6, self::CHARGE_REFERENCE_NUMBER => 7, self::CONFIRMATION_REFERENCE_NUMBER => 8, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'team_id' => 2, 'role_id' => 3, 'expiry' => 4, 'notes' => 5, 'details' => 6, 'charge_reference_number' => 7, 'confirmation_reference_number' => 8, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'InformativecontentId' => 2, 'GivenAt' => 3, 'Method' => 4, 'Notes' => 5, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'informativecontentId' => 2, 'givenAt' => 3, 'method' => 4, 'notes' => 5, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::INFORMATIVECONTENT_ID => 2, self::GIVEN_AT => 3, self::METHOD => 4, self::NOTES => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'informativecontent_id' => 2, 'given_at' => 3, 'method' => 4, 'notes' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -147,12 +138,12 @@ abstract class BaseUserTeamPeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. UserTeamPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. ConsentPeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(UserTeamPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(ConsentPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -168,15 +159,12 @@ abstract class BaseUserTeamPeer {
 	 */
 	public static function addSelectColumns(Criteria $criteria)
 	{
-		$criteria->addSelectColumn(UserTeamPeer::ID);
-		$criteria->addSelectColumn(UserTeamPeer::USER_ID);
-		$criteria->addSelectColumn(UserTeamPeer::TEAM_ID);
-		$criteria->addSelectColumn(UserTeamPeer::ROLE_ID);
-		$criteria->addSelectColumn(UserTeamPeer::EXPIRY);
-		$criteria->addSelectColumn(UserTeamPeer::NOTES);
-		$criteria->addSelectColumn(UserTeamPeer::DETAILS);
-		$criteria->addSelectColumn(UserTeamPeer::CHARGE_REFERENCE_NUMBER);
-		$criteria->addSelectColumn(UserTeamPeer::CONFIRMATION_REFERENCE_NUMBER);
+		$criteria->addSelectColumn(ConsentPeer::ID);
+		$criteria->addSelectColumn(ConsentPeer::USER_ID);
+		$criteria->addSelectColumn(ConsentPeer::INFORMATIVECONTENT_ID);
+		$criteria->addSelectColumn(ConsentPeer::GIVEN_AT);
+		$criteria->addSelectColumn(ConsentPeer::METHOD);
+		$criteria->addSelectColumn(ConsentPeer::NOTES);
 	}
 
 	/**
@@ -195,21 +183,21 @@ abstract class BaseUserTeamPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(UserTeamPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ConsentPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			UserTeamPeer::addSelectColumns($criteria);
+			ConsentPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 		$criteria->setDbName(self::DATABASE_NAME); // Set the correct dbName
 
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 		// BasePeer returns a PDOStatement
 		$stmt = BasePeer::doCount($criteria, $con);
@@ -227,7 +215,7 @@ abstract class BaseUserTeamPeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PropelPDO $con
-	 * @return     UserTeam
+	 * @return     Consent
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -235,7 +223,7 @@ abstract class BaseUserTeamPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = UserTeamPeer::doSelect($critcopy, $con);
+		$objects = ConsentPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -252,7 +240,7 @@ abstract class BaseUserTeamPeer {
 	 */
 	public static function doSelect(Criteria $criteria, PropelPDO $con = null)
 	{
-		return UserTeamPeer::populateObjects(UserTeamPeer::doSelectStmt($criteria, $con));
+		return ConsentPeer::populateObjects(ConsentPeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -270,12 +258,12 @@ abstract class BaseUserTeamPeer {
 	public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		if (!$criteria->hasSelectClause()) {
 			$criteria = clone $criteria;
-			UserTeamPeer::addSelectColumns($criteria);
+			ConsentPeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -293,10 +281,10 @@ abstract class BaseUserTeamPeer {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      UserTeam $value A UserTeam object.
+	 * @param      Consent $value A Consent object.
 	 * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
 	 */
-	public static function addInstanceToPool(UserTeam $obj, $key = null)
+	public static function addInstanceToPool(Consent $obj, $key = null)
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
@@ -314,18 +302,18 @@ abstract class BaseUserTeamPeer {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A UserTeam object or a primary key value.
+	 * @param      mixed $value A Consent object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
-			if (is_object($value) && $value instanceof UserTeam) {
+			if (is_object($value) && $value instanceof Consent) {
 				$key = (string) $value->getId();
 			} elseif (is_scalar($value)) {
 				// assume we've been passed a primary key
 				$key = (string) $value;
 			} else {
-				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or UserTeam object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Consent object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
 				throw $e;
 			}
 
@@ -340,7 +328,7 @@ abstract class BaseUserTeamPeer {
 	 * a multi-column primary key, a serialize()d version of the primary key will be returned.
 	 *
 	 * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-	 * @return     UserTeam Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+	 * @return     Consent Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
 	 * @see        getPrimaryKeyHash()
 	 */
 	public static function getInstanceFromPool($key)
@@ -364,7 +352,7 @@ abstract class BaseUserTeamPeer {
 	}
 	
 	/**
-	 * Method to invalidate the instance pool of all tables related to user_team
+	 * Method to invalidate the instance pool of all tables related to consent
 	 * by a foreign key with ON DELETE CASCADE
 	 */
 	public static function clearRelatedInstancePool()
@@ -402,11 +390,11 @@ abstract class BaseUserTeamPeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = UserTeamPeer::getOMClass(false);
+		$cls = ConsentPeer::getOMClass(false);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = UserTeamPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj = UserTeamPeer::getInstanceFromPool($key))) {
+			$key = ConsentPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj = ConsentPeer::getInstanceFromPool($key))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj->hydrate($row, 0, true); // rehydrate
@@ -415,7 +403,7 @@ abstract class BaseUserTeamPeer {
 				$obj = new $cls();
 				$obj->hydrate($row);
 				$results[] = $obj;
-				UserTeamPeer::addInstanceToPool($obj, $key);
+				ConsentPeer::addInstanceToPool($obj, $key);
 			} // if key exists
 		}
 		$stmt->closeCursor();
@@ -439,14 +427,14 @@ abstract class BaseUserTeamPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(UserTeamPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ConsentPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			UserTeamPeer::addSelectColumns($criteria);
+			ConsentPeer::addSelectColumns($criteria);
 		}
 		
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -455,10 +443,10 @@ abstract class BaseUserTeamPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(UserTeamPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
+		$criteria->addJoin(ConsentPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -473,7 +461,7 @@ abstract class BaseUserTeamPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Team table
+	 * Returns the number of rows matching criteria, joining the related Informativecontent table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -481,7 +469,7 @@ abstract class BaseUserTeamPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinTeam(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinInformativecontent(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -489,14 +477,14 @@ abstract class BaseUserTeamPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(UserTeamPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ConsentPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			UserTeamPeer::addSelectColumns($criteria);
+			ConsentPeer::addSelectColumns($criteria);
 		}
 		
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -505,10 +493,10 @@ abstract class BaseUserTeamPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(UserTeamPeer::TEAM_ID, TeamPeer::ID, $join_behavior);
+		$criteria->addJoin(ConsentPeer::INFORMATIVECONTENT_ID, InformativecontentPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -523,61 +511,11 @@ abstract class BaseUserTeamPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Role table
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     int Number of matching rows.
-	 */
-	public static function doCountJoinRole(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		// we're going to modify criteria, so copy it first
-		$criteria = clone $criteria;
-
-		// We need to set the primary table name, since in the case that there are no WHERE columns
-		// it will be impossible for the BasePeer::createSelectSql() method to determine which
-		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(UserTeamPeer::TABLE_NAME);
-
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			UserTeamPeer::addSelectColumns($criteria);
-		}
-		
-		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-		
-		// Set the correct dbName
-		$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-
-		$criteria->addJoin(UserTeamPeer::ROLE_ID, RolePeer::ID, $join_behavior);
-
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; // no rows returned; we infer that means 0 matches.
-		}
-		$stmt->closeCursor();
-		return $count;
-	}
-
-
-	/**
-	 * Selects a collection of UserTeam objects pre-filled with their sfGuardUser objects.
+	 * Selects a collection of Consent objects pre-filled with their sfGuardUser objects.
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of UserTeam objects.
+	 * @return     array Array of Consent objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -590,28 +528,28 @@ abstract class BaseUserTeamPeer {
 			$criteria->setDbName(self::DATABASE_NAME);
 		}
 
-		UserTeamPeer::addSelectColumns($criteria);
-		$startcol = (UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS);
+		ConsentPeer::addSelectColumns($criteria);
+		$startcol = (ConsentPeer::NUM_COLUMNS - ConsentPeer::NUM_LAZY_LOAD_COLUMNS);
 		sfGuardUserPeer::addSelectColumns($criteria);
 
-		$criteria->addJoin(UserTeamPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
+		$criteria->addJoin(ConsentPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = UserTeamPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = UserTeamPeer::getInstanceFromPool($key1))) {
+			$key1 = ConsentPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ConsentPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
 
-				$cls = UserTeamPeer::getOMClass(false);
+				$cls = ConsentPeer::getOMClass(false);
 
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				UserTeamPeer::addInstanceToPool($obj1, $key1);
+				ConsentPeer::addInstanceToPool($obj1, $key1);
 			} // if $obj1 already loaded
 
 			$key2 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol);
@@ -626,8 +564,8 @@ abstract class BaseUserTeamPeer {
 					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
 				
-				// Add the $obj1 (UserTeam) to $obj2 (sfGuardUser)
-				$obj2->addUserTeam($obj1);
+				// Add the $obj1 (Consent) to $obj2 (sfGuardUser)
+				$obj2->addConsent($obj1);
 
 			} // if joined row was not null
 
@@ -639,15 +577,15 @@ abstract class BaseUserTeamPeer {
 
 
 	/**
-	 * Selects a collection of UserTeam objects pre-filled with their Team objects.
+	 * Selects a collection of Consent objects pre-filled with their Informativecontent objects.
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of UserTeam objects.
+	 * @return     array Array of Consent objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinTeam(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinInformativecontent(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -656,110 +594,44 @@ abstract class BaseUserTeamPeer {
 			$criteria->setDbName(self::DATABASE_NAME);
 		}
 
-		UserTeamPeer::addSelectColumns($criteria);
-		$startcol = (UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS);
-		TeamPeer::addSelectColumns($criteria);
+		ConsentPeer::addSelectColumns($criteria);
+		$startcol = (ConsentPeer::NUM_COLUMNS - ConsentPeer::NUM_LAZY_LOAD_COLUMNS);
+		InformativecontentPeer::addSelectColumns($criteria);
 
-		$criteria->addJoin(UserTeamPeer::TEAM_ID, TeamPeer::ID, $join_behavior);
-
-		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = UserTeamPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = UserTeamPeer::getInstanceFromPool($key1))) {
-				// We no longer rehydrate the object, since this can cause data loss.
-				// See http://propel.phpdb.org/trac/ticket/509
-				// $obj1->hydrate($row, 0, true); // rehydrate
-			} else {
-
-				$cls = UserTeamPeer::getOMClass(false);
-
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				UserTeamPeer::addInstanceToPool($obj1, $key1);
-			} // if $obj1 already loaded
-
-			$key2 = TeamPeer::getPrimaryKeyHashFromRow($row, $startcol);
-			if ($key2 !== null) {
-				$obj2 = TeamPeer::getInstanceFromPool($key2);
-				if (!$obj2) {
-
-					$cls = TeamPeer::getOMClass(false);
-
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol);
-					TeamPeer::addInstanceToPool($obj2, $key2);
-				} // if obj2 already loaded
-				
-				// Add the $obj1 (UserTeam) to $obj2 (Team)
-				$obj2->addUserTeam($obj1);
-
-			} // if joined row was not null
-
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
-	}
-
-
-	/**
-	 * Selects a collection of UserTeam objects pre-filled with their Role objects.
-	 * @param      Criteria  $criteria
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of UserTeam objects.
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function doSelectJoinRole(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$criteria = clone $criteria;
-
-		// Set the correct dbName if it has not been overridden
-		if ($criteria->getDbName() == Propel::getDefaultDB()) {
-			$criteria->setDbName(self::DATABASE_NAME);
-		}
-
-		UserTeamPeer::addSelectColumns($criteria);
-		$startcol = (UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS);
-		RolePeer::addSelectColumns($criteria);
-
-		$criteria->addJoin(UserTeamPeer::ROLE_ID, RolePeer::ID, $join_behavior);
+		$criteria->addJoin(ConsentPeer::INFORMATIVECONTENT_ID, InformativecontentPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = UserTeamPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = UserTeamPeer::getInstanceFromPool($key1))) {
+			$key1 = ConsentPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ConsentPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
 
-				$cls = UserTeamPeer::getOMClass(false);
+				$cls = ConsentPeer::getOMClass(false);
 
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				UserTeamPeer::addInstanceToPool($obj1, $key1);
+				ConsentPeer::addInstanceToPool($obj1, $key1);
 			} // if $obj1 already loaded
 
-			$key2 = RolePeer::getPrimaryKeyHashFromRow($row, $startcol);
+			$key2 = InformativecontentPeer::getPrimaryKeyHashFromRow($row, $startcol);
 			if ($key2 !== null) {
-				$obj2 = RolePeer::getInstanceFromPool($key2);
+				$obj2 = InformativecontentPeer::getInstanceFromPool($key2);
 				if (!$obj2) {
 
-					$cls = RolePeer::getOMClass(false);
+					$cls = InformativecontentPeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol);
-					RolePeer::addInstanceToPool($obj2, $key2);
+					InformativecontentPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 already loaded
 				
-				// Add the $obj1 (UserTeam) to $obj2 (Role)
-				$obj2->addUserTeam($obj1);
+				// Add the $obj1 (Consent) to $obj2 (Informativecontent)
+				$obj2->addConsent($obj1);
 
 			} // if joined row was not null
 
@@ -787,14 +659,14 @@ abstract class BaseUserTeamPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(UserTeamPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ConsentPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			UserTeamPeer::addSelectColumns($criteria);
+			ConsentPeer::addSelectColumns($criteria);
 		}
 		
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
@@ -803,14 +675,12 @@ abstract class BaseUserTeamPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria->addJoin(UserTeamPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
+		$criteria->addJoin(ConsentPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
-		$criteria->addJoin(UserTeamPeer::TEAM_ID, TeamPeer::ID, $join_behavior);
-
-		$criteria->addJoin(UserTeamPeer::ROLE_ID, RolePeer::ID, $join_behavior);
+		$criteria->addJoin(ConsentPeer::INFORMATIVECONTENT_ID, InformativecontentPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -824,12 +694,12 @@ abstract class BaseUserTeamPeer {
 	}
 
 	/**
-	 * Selects a collection of UserTeam objects pre-filled with all related objects.
+	 * Selects a collection of Consent objects pre-filled with all related objects.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of UserTeam objects.
+	 * @return     array Array of Consent objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -842,39 +712,34 @@ abstract class BaseUserTeamPeer {
 			$criteria->setDbName(self::DATABASE_NAME);
 		}
 
-		UserTeamPeer::addSelectColumns($criteria);
-		$startcol2 = (UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS);
+		ConsentPeer::addSelectColumns($criteria);
+		$startcol2 = (ConsentPeer::NUM_COLUMNS - ConsentPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		sfGuardUserPeer::addSelectColumns($criteria);
 		$startcol3 = $startcol2 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		TeamPeer::addSelectColumns($criteria);
-		$startcol4 = $startcol3 + (TeamPeer::NUM_COLUMNS - TeamPeer::NUM_LAZY_LOAD_COLUMNS);
+		InformativecontentPeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (InformativecontentPeer::NUM_COLUMNS - InformativecontentPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		RolePeer::addSelectColumns($criteria);
-		$startcol5 = $startcol4 + (RolePeer::NUM_COLUMNS - RolePeer::NUM_LAZY_LOAD_COLUMNS);
+		$criteria->addJoin(ConsentPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
-		$criteria->addJoin(UserTeamPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
-
-		$criteria->addJoin(UserTeamPeer::TEAM_ID, TeamPeer::ID, $join_behavior);
-
-		$criteria->addJoin(UserTeamPeer::ROLE_ID, RolePeer::ID, $join_behavior);
+		$criteria->addJoin(ConsentPeer::INFORMATIVECONTENT_ID, InformativecontentPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = UserTeamPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = UserTeamPeer::getInstanceFromPool($key1))) {
+			$key1 = ConsentPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ConsentPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
-				$cls = UserTeamPeer::getOMClass(false);
+				$cls = ConsentPeer::getOMClass(false);
 
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				UserTeamPeer::addInstanceToPool($obj1, $key1);
+				ConsentPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
 			// Add objects for joined sfGuardUser rows
@@ -891,44 +756,26 @@ abstract class BaseUserTeamPeer {
 					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
 				} // if obj2 loaded
 
-				// Add the $obj1 (UserTeam) to the collection in $obj2 (sfGuardUser)
-				$obj2->addUserTeam($obj1);
+				// Add the $obj1 (Consent) to the collection in $obj2 (sfGuardUser)
+				$obj2->addConsent($obj1);
 			} // if joined row not null
 
-			// Add objects for joined Team rows
+			// Add objects for joined Informativecontent rows
 
-			$key3 = TeamPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+			$key3 = InformativecontentPeer::getPrimaryKeyHashFromRow($row, $startcol3);
 			if ($key3 !== null) {
-				$obj3 = TeamPeer::getInstanceFromPool($key3);
+				$obj3 = InformativecontentPeer::getInstanceFromPool($key3);
 				if (!$obj3) {
 
-					$cls = TeamPeer::getOMClass(false);
+					$cls = InformativecontentPeer::getOMClass(false);
 
 					$obj3 = new $cls();
 					$obj3->hydrate($row, $startcol3);
-					TeamPeer::addInstanceToPool($obj3, $key3);
+					InformativecontentPeer::addInstanceToPool($obj3, $key3);
 				} // if obj3 loaded
 
-				// Add the $obj1 (UserTeam) to the collection in $obj3 (Team)
-				$obj3->addUserTeam($obj1);
-			} // if joined row not null
-
-			// Add objects for joined Role rows
-
-			$key4 = RolePeer::getPrimaryKeyHashFromRow($row, $startcol4);
-			if ($key4 !== null) {
-				$obj4 = RolePeer::getInstanceFromPool($key4);
-				if (!$obj4) {
-
-					$cls = RolePeer::getOMClass(false);
-
-					$obj4 = new $cls();
-					$obj4->hydrate($row, $startcol4);
-					RolePeer::addInstanceToPool($obj4, $key4);
-				} // if obj4 loaded
-
-				// Add the $obj1 (UserTeam) to the collection in $obj4 (Role)
-				$obj4->addUserTeam($obj1);
+				// Add the $obj1 (Consent) to the collection in $obj3 (Informativecontent)
+				$obj3->addConsent($obj1);
 			} // if joined row not null
 
 			$results[] = $obj1;
@@ -955,14 +802,14 @@ abstract class BaseUserTeamPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(UserTeamPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ConsentPeer::TABLE_NAME);
 		
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			UserTeamPeer::addSelectColumns($criteria);
+			ConsentPeer::addSelectColumns($criteria);
 		}
 		
 		$criteria->clearOrderByColumns(); // ORDER BY should not affect count
@@ -971,12 +818,10 @@ abstract class BaseUserTeamPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-		$criteria->addJoin(UserTeamPeer::TEAM_ID, TeamPeer::ID, $join_behavior);
-
-		$criteria->addJoin(UserTeamPeer::ROLE_ID, RolePeer::ID, $join_behavior);
+		$criteria->addJoin(ConsentPeer::INFORMATIVECONTENT_ID, InformativecontentPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -991,7 +836,7 @@ abstract class BaseUserTeamPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Team table
+	 * Returns the number of rows matching criteria, joining the related Informativecontent table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -999,7 +844,7 @@ abstract class BaseUserTeamPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinAllExceptTeam(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinAllExceptInformativecontent(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -1007,14 +852,14 @@ abstract class BaseUserTeamPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(UserTeamPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ConsentPeer::TABLE_NAME);
 		
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			UserTeamPeer::addSelectColumns($criteria);
+			ConsentPeer::addSelectColumns($criteria);
 		}
 		
 		$criteria->clearOrderByColumns(); // ORDER BY should not affect count
@@ -1023,12 +868,10 @@ abstract class BaseUserTeamPeer {
 		$criteria->setDbName(self::DATABASE_NAME);
 
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 	
-		$criteria->addJoin(UserTeamPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
-
-		$criteria->addJoin(UserTeamPeer::ROLE_ID, RolePeer::ID, $join_behavior);
+		$criteria->addJoin(ConsentPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -1043,64 +886,12 @@ abstract class BaseUserTeamPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related Role table
-	 *
-	 * @param      Criteria $criteria
-	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     int Number of matching rows.
-	 */
-	public static function doCountJoinAllExceptRole(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		// we're going to modify criteria, so copy it first
-		$criteria = clone $criteria;
-
-		// We need to set the primary table name, since in the case that there are no WHERE columns
-		// it will be impossible for the BasePeer::createSelectSql() method to determine which
-		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(UserTeamPeer::TABLE_NAME);
-		
-		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->setDistinct();
-		}
-
-		if (!$criteria->hasSelectClause()) {
-			UserTeamPeer::addSelectColumns($criteria);
-		}
-		
-		$criteria->clearOrderByColumns(); // ORDER BY should not affect count
-		
-		// Set the correct dbName
-		$criteria->setDbName(self::DATABASE_NAME);
-
-		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-		}
-	
-		$criteria->addJoin(UserTeamPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
-
-		$criteria->addJoin(UserTeamPeer::TEAM_ID, TeamPeer::ID, $join_behavior);
-
-		$stmt = BasePeer::doCount($criteria, $con);
-
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$count = (int) $row[0];
-		} else {
-			$count = 0; // no rows returned; we infer that means 0 matches.
-		}
-		$stmt->closeCursor();
-		return $count;
-	}
-
-
-	/**
-	 * Selects a collection of UserTeam objects pre-filled with all related objects except sfGuardUser.
+	 * Selects a collection of Consent objects pre-filled with all related objects except sfGuardUser.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of UserTeam objects.
+	 * @return     array Array of Consent objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -1115,72 +906,48 @@ abstract class BaseUserTeamPeer {
 			$criteria->setDbName(self::DATABASE_NAME);
 		}
 
-		UserTeamPeer::addSelectColumns($criteria);
-		$startcol2 = (UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS);
+		ConsentPeer::addSelectColumns($criteria);
+		$startcol2 = (ConsentPeer::NUM_COLUMNS - ConsentPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		TeamPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (TeamPeer::NUM_COLUMNS - TeamPeer::NUM_LAZY_LOAD_COLUMNS);
+		InformativecontentPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (InformativecontentPeer::NUM_COLUMNS - InformativecontentPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		RolePeer::addSelectColumns($criteria);
-		$startcol4 = $startcol3 + (RolePeer::NUM_COLUMNS - RolePeer::NUM_LAZY_LOAD_COLUMNS);
-
-		$criteria->addJoin(UserTeamPeer::TEAM_ID, TeamPeer::ID, $join_behavior);
-
-		$criteria->addJoin(UserTeamPeer::ROLE_ID, RolePeer::ID, $join_behavior);
+		$criteria->addJoin(ConsentPeer::INFORMATIVECONTENT_ID, InformativecontentPeer::ID, $join_behavior);
 
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = UserTeamPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = UserTeamPeer::getInstanceFromPool($key1))) {
+			$key1 = ConsentPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ConsentPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
-				$cls = UserTeamPeer::getOMClass(false);
+				$cls = ConsentPeer::getOMClass(false);
 
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				UserTeamPeer::addInstanceToPool($obj1, $key1);
+				ConsentPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
-				// Add objects for joined Team rows
+				// Add objects for joined Informativecontent rows
 
-				$key2 = TeamPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				$key2 = InformativecontentPeer::getPrimaryKeyHashFromRow($row, $startcol2);
 				if ($key2 !== null) {
-					$obj2 = TeamPeer::getInstanceFromPool($key2);
+					$obj2 = InformativecontentPeer::getInstanceFromPool($key2);
 					if (!$obj2) {
 	
-						$cls = TeamPeer::getOMClass(false);
+						$cls = InformativecontentPeer::getOMClass(false);
 
 					$obj2 = new $cls();
 					$obj2->hydrate($row, $startcol2);
-					TeamPeer::addInstanceToPool($obj2, $key2);
+					InformativecontentPeer::addInstanceToPool($obj2, $key2);
 				} // if $obj2 already loaded
 
-				// Add the $obj1 (UserTeam) to the collection in $obj2 (Team)
-				$obj2->addUserTeam($obj1);
-
-			} // if joined row is not null
-
-				// Add objects for joined Role rows
-
-				$key3 = RolePeer::getPrimaryKeyHashFromRow($row, $startcol3);
-				if ($key3 !== null) {
-					$obj3 = RolePeer::getInstanceFromPool($key3);
-					if (!$obj3) {
-	
-						$cls = RolePeer::getOMClass(false);
-
-					$obj3 = new $cls();
-					$obj3->hydrate($row, $startcol3);
-					RolePeer::addInstanceToPool($obj3, $key3);
-				} // if $obj3 already loaded
-
-				// Add the $obj1 (UserTeam) to the collection in $obj3 (Role)
-				$obj3->addUserTeam($obj1);
+				// Add the $obj1 (Consent) to the collection in $obj2 (Informativecontent)
+				$obj2->addConsent($obj1);
 
 			} // if joined row is not null
 
@@ -1192,16 +959,16 @@ abstract class BaseUserTeamPeer {
 
 
 	/**
-	 * Selects a collection of UserTeam objects pre-filled with all related objects except Team.
+	 * Selects a collection of Consent objects pre-filled with all related objects except Informativecontent.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of UserTeam objects.
+	 * @return     array Array of Consent objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinAllExceptTeam(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinAllExceptInformativecontent(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -1212,35 +979,30 @@ abstract class BaseUserTeamPeer {
 			$criteria->setDbName(self::DATABASE_NAME);
 		}
 
-		UserTeamPeer::addSelectColumns($criteria);
-		$startcol2 = (UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS);
+		ConsentPeer::addSelectColumns($criteria);
+		$startcol2 = (ConsentPeer::NUM_COLUMNS - ConsentPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		sfGuardUserPeer::addSelectColumns($criteria);
 		$startcol3 = $startcol2 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		RolePeer::addSelectColumns($criteria);
-		$startcol4 = $startcol3 + (RolePeer::NUM_COLUMNS - RolePeer::NUM_LAZY_LOAD_COLUMNS);
-
-		$criteria->addJoin(UserTeamPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
-
-		$criteria->addJoin(UserTeamPeer::ROLE_ID, RolePeer::ID, $join_behavior);
+		$criteria->addJoin(ConsentPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 
 		$stmt = BasePeer::doSelect($criteria, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = UserTeamPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = UserTeamPeer::getInstanceFromPool($key1))) {
+			$key1 = ConsentPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ConsentPeer::getInstanceFromPool($key1))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj1->hydrate($row, 0, true); // rehydrate
 			} else {
-				$cls = UserTeamPeer::getOMClass(false);
+				$cls = ConsentPeer::getOMClass(false);
 
 				$obj1 = new $cls();
 				$obj1->hydrate($row);
-				UserTeamPeer::addInstanceToPool($obj1, $key1);
+				ConsentPeer::addInstanceToPool($obj1, $key1);
 			} // if obj1 already loaded
 
 				// Add objects for joined sfGuardUser rows
@@ -1257,124 +1019,8 @@ abstract class BaseUserTeamPeer {
 					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
 				} // if $obj2 already loaded
 
-				// Add the $obj1 (UserTeam) to the collection in $obj2 (sfGuardUser)
-				$obj2->addUserTeam($obj1);
-
-			} // if joined row is not null
-
-				// Add objects for joined Role rows
-
-				$key3 = RolePeer::getPrimaryKeyHashFromRow($row, $startcol3);
-				if ($key3 !== null) {
-					$obj3 = RolePeer::getInstanceFromPool($key3);
-					if (!$obj3) {
-	
-						$cls = RolePeer::getOMClass(false);
-
-					$obj3 = new $cls();
-					$obj3->hydrate($row, $startcol3);
-					RolePeer::addInstanceToPool($obj3, $key3);
-				} // if $obj3 already loaded
-
-				// Add the $obj1 (UserTeam) to the collection in $obj3 (Role)
-				$obj3->addUserTeam($obj1);
-
-			} // if joined row is not null
-
-			$results[] = $obj1;
-		}
-		$stmt->closeCursor();
-		return $results;
-	}
-
-
-	/**
-	 * Selects a collection of UserTeam objects pre-filled with all related objects except Role.
-	 *
-	 * @param      Criteria  $criteria
-	 * @param      PropelPDO $con
-	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
-	 * @return     array Array of UserTeam objects.
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function doSelectJoinAllExceptRole(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
-	{
-		$criteria = clone $criteria;
-
-		// Set the correct dbName if it has not been overridden
-		// $criteria->getDbName() will return the same object if not set to another value
-		// so == check is okay and faster
-		if ($criteria->getDbName() == Propel::getDefaultDB()) {
-			$criteria->setDbName(self::DATABASE_NAME);
-		}
-
-		UserTeamPeer::addSelectColumns($criteria);
-		$startcol2 = (UserTeamPeer::NUM_COLUMNS - UserTeamPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		sfGuardUserPeer::addSelectColumns($criteria);
-		$startcol3 = $startcol2 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		TeamPeer::addSelectColumns($criteria);
-		$startcol4 = $startcol3 + (TeamPeer::NUM_COLUMNS - TeamPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		$criteria->addJoin(UserTeamPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
-
-		$criteria->addJoin(UserTeamPeer::TEAM_ID, TeamPeer::ID, $join_behavior);
-
-
-		$stmt = BasePeer::doSelect($criteria, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = UserTeamPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj1 = UserTeamPeer::getInstanceFromPool($key1))) {
-				// We no longer rehydrate the object, since this can cause data loss.
-				// See http://propel.phpdb.org/trac/ticket/509
-				// $obj1->hydrate($row, 0, true); // rehydrate
-			} else {
-				$cls = UserTeamPeer::getOMClass(false);
-
-				$obj1 = new $cls();
-				$obj1->hydrate($row);
-				UserTeamPeer::addInstanceToPool($obj1, $key1);
-			} // if obj1 already loaded
-
-				// Add objects for joined sfGuardUser rows
-
-				$key2 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-				if ($key2 !== null) {
-					$obj2 = sfGuardUserPeer::getInstanceFromPool($key2);
-					if (!$obj2) {
-	
-						$cls = sfGuardUserPeer::getOMClass(false);
-
-					$obj2 = new $cls();
-					$obj2->hydrate($row, $startcol2);
-					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
-				} // if $obj2 already loaded
-
-				// Add the $obj1 (UserTeam) to the collection in $obj2 (sfGuardUser)
-				$obj2->addUserTeam($obj1);
-
-			} // if joined row is not null
-
-				// Add objects for joined Team rows
-
-				$key3 = TeamPeer::getPrimaryKeyHashFromRow($row, $startcol3);
-				if ($key3 !== null) {
-					$obj3 = TeamPeer::getInstanceFromPool($key3);
-					if (!$obj3) {
-	
-						$cls = TeamPeer::getOMClass(false);
-
-					$obj3 = new $cls();
-					$obj3->hydrate($row, $startcol3);
-					TeamPeer::addInstanceToPool($obj3, $key3);
-				} // if $obj3 already loaded
-
-				// Add the $obj1 (UserTeam) to the collection in $obj3 (Team)
-				$obj3->addUserTeam($obj1);
+				// Add the $obj1 (Consent) to the collection in $obj2 (sfGuardUser)
+				$obj2->addConsent($obj1);
 
 			} // if joined row is not null
 
@@ -1401,10 +1047,10 @@ abstract class BaseUserTeamPeer {
 	 */
 	public static function buildTableMap()
 	{
-	  $dbMap = Propel::getDatabaseMap(BaseUserTeamPeer::DATABASE_NAME);
-	  if (!$dbMap->hasTable(BaseUserTeamPeer::TABLE_NAME))
+	  $dbMap = Propel::getDatabaseMap(BaseConsentPeer::DATABASE_NAME);
+	  if (!$dbMap->hasTable(BaseConsentPeer::TABLE_NAME))
 	  {
-	    $dbMap->addTableObject(new UserTeamTableMap());
+	    $dbMap->addTableObject(new ConsentTableMap());
 	  }
 	}
 
@@ -1421,13 +1067,13 @@ abstract class BaseUserTeamPeer {
 	 */
 	public static function getOMClass($withPrefix = true)
 	{
-		return $withPrefix ? UserTeamPeer::CLASS_DEFAULT : UserTeamPeer::OM_CLASS;
+		return $withPrefix ? ConsentPeer::CLASS_DEFAULT : ConsentPeer::OM_CLASS;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a UserTeam or Criteria object.
+	 * Method perform an INSERT on the database, given a Consent or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or UserTeam object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or Consent object containing data that is used to create the INSERT statement.
 	 * @param      PropelPDO $con the PropelPDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -1436,17 +1082,17 @@ abstract class BaseUserTeamPeer {
 	public static function doInsert($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from UserTeam object
+			$criteria = $values->buildCriteria(); // build Criteria from Consent object
 		}
 
-		if ($criteria->containsKey(UserTeamPeer::ID) && $criteria->keyContainsValue(UserTeamPeer::ID) ) {
-			throw new PropelException('Cannot insert a value for auto-increment primary key ('.UserTeamPeer::ID.')');
+		if ($criteria->containsKey(ConsentPeer::ID) && $criteria->keyContainsValue(ConsentPeer::ID) ) {
+			throw new PropelException('Cannot insert a value for auto-increment primary key ('.ConsentPeer::ID.')');
 		}
 
 
@@ -1468,9 +1114,9 @@ abstract class BaseUserTeamPeer {
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a UserTeam or Criteria object.
+	 * Method perform an UPDATE on the database, given a Consent or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or UserTeam object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or Consent object containing data that is used to create the UPDATE statement.
 	 * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -1479,7 +1125,7 @@ abstract class BaseUserTeamPeer {
 	public static function doUpdate($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		$selectCriteria = new Criteria(self::DATABASE_NAME);
@@ -1487,10 +1133,10 @@ abstract class BaseUserTeamPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(UserTeamPeer::ID);
-			$selectCriteria->add(UserTeamPeer::ID, $criteria->remove(UserTeamPeer::ID), $comparison);
+			$comparison = $criteria->getComparison(ConsentPeer::ID);
+			$selectCriteria->add(ConsentPeer::ID, $criteria->remove(ConsentPeer::ID), $comparison);
 
-		} else { // $values is UserTeam object
+		} else { // $values is Consent object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -1502,26 +1148,26 @@ abstract class BaseUserTeamPeer {
 	}
 
 	/**
-	 * Method to DELETE all rows from the user_team table.
+	 * Method to DELETE all rows from the consent table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
 	public static function doDeleteAll($con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		$affectedRows = 0; // initialize var to track total num of affected rows
 		try {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(UserTeamPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(ConsentPeer::TABLE_NAME, $con);
 			// Because this db requires some delete cascade/set null emulation, we have to
 			// clear the cached instance *after* the emulation has happened (since
 			// instances get re-added by the select statement contained therein).
-			UserTeamPeer::clearInstancePool();
-			UserTeamPeer::clearRelatedInstancePool();
+			ConsentPeer::clearInstancePool();
+			ConsentPeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -1531,9 +1177,9 @@ abstract class BaseUserTeamPeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a UserTeam or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a Consent or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or UserTeam object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or Consent object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PropelPDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -1544,27 +1190,27 @@ abstract class BaseUserTeamPeer {
 	 public static function doDelete($values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			UserTeamPeer::clearInstancePool();
+			ConsentPeer::clearInstancePool();
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof UserTeam) { // it's a model object
+		} elseif ($values instanceof Consent) { // it's a model object
 			// invalidate the cache for this single object
-			UserTeamPeer::removeInstanceFromPool($values);
+			ConsentPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(UserTeamPeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(ConsentPeer::ID, (array) $values, Criteria::IN);
 			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				UserTeamPeer::removeInstanceFromPool($singleval);
+				ConsentPeer::removeInstanceFromPool($singleval);
 			}
 		}
 
@@ -1579,7 +1225,7 @@ abstract class BaseUserTeamPeer {
 			$con->beginTransaction();
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
-			UserTeamPeer::clearRelatedInstancePool();
+			ConsentPeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -1589,24 +1235,24 @@ abstract class BaseUserTeamPeer {
 	}
 
 	/**
-	 * Validates all modified columns of given UserTeam object.
+	 * Validates all modified columns of given Consent object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      UserTeam $obj The object to validate.
+	 * @param      Consent $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(UserTeam $obj, $cols = null)
+	public static function doValidate(Consent $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(UserTeamPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(UserTeamPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(ConsentPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(ConsentPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -1622,7 +1268,7 @@ abstract class BaseUserTeamPeer {
 
 		}
 
-		return BasePeer::doValidate(UserTeamPeer::DATABASE_NAME, UserTeamPeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(ConsentPeer::DATABASE_NAME, ConsentPeer::TABLE_NAME, $columns);
 	}
 
 	/**
@@ -1630,23 +1276,23 @@ abstract class BaseUserTeamPeer {
 	 *
 	 * @param      int $pk the primary key.
 	 * @param      PropelPDO $con the connection to use
-	 * @return     UserTeam
+	 * @return     Consent
 	 */
 	public static function retrieveByPK($pk, PropelPDO $con = null)
 	{
 
-		if (null !== ($obj = UserTeamPeer::getInstanceFromPool((string) $pk))) {
+		if (null !== ($obj = ConsentPeer::getInstanceFromPool((string) $pk))) {
 			return $obj;
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria = new Criteria(UserTeamPeer::DATABASE_NAME);
-		$criteria->add(UserTeamPeer::ID, $pk);
+		$criteria = new Criteria(ConsentPeer::DATABASE_NAME);
+		$criteria->add(ConsentPeer::ID, $pk);
 
-		$v = UserTeamPeer::doSelect($criteria, $con);
+		$v = ConsentPeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -1662,16 +1308,16 @@ abstract class BaseUserTeamPeer {
 	public static function retrieveByPKs($pks, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(UserTeamPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ConsentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		$objs = null;
 		if (empty($pks)) {
 			$objs = array();
 		} else {
-			$criteria = new Criteria(UserTeamPeer::DATABASE_NAME);
-			$criteria->add(UserTeamPeer::ID, $pks, Criteria::IN);
-			$objs = UserTeamPeer::doSelect($criteria, $con);
+			$criteria = new Criteria(ConsentPeer::DATABASE_NAME);
+			$criteria->add(ConsentPeer::ID, $pks, Criteria::IN);
+			$objs = ConsentPeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
@@ -1685,12 +1331,12 @@ abstract class BaseUserTeamPeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array(array('user_id', 'team_id'));
+	  return array(array('user_id', 'informativecontent_id'));
 	}
 
-} // BaseUserTeamPeer
+} // BaseConsentPeer
 
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BaseUserTeamPeer::buildTableMap();
+BaseConsentPeer::buildTableMap();
 

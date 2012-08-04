@@ -70,6 +70,7 @@ class sfGuardUserTableMap extends TableMap {
     $this->addRelation('ProjResource', 'ProjResource', RelationMap::ONE_TO_MANY, array('id' => 'charged_user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('ProjActivityRelatedByUserId', 'ProjActivity', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('ProjActivityRelatedByAcknowledgerUserId', 'ProjActivity', RelationMap::ONE_TO_MANY, array('id' => 'acknowledger_user_id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('Consent', 'Consent', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Lanlog', 'Lanlog', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('AttachmentFile', 'AttachmentFile', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('sfGuardUserPermission', 'sfGuardUserPermission', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'CASCADE', null);

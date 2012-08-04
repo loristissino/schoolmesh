@@ -62,6 +62,7 @@ propel:
     email:        varchar(50)
     email_state:  { type: integer, default: 0 }
     email_verification_code: varchar(40)
+    mobile:       { type: varchar(15), default: null }
     website:      { type: varchar(255), default: null }
     office:       { type: varchar(255), default: null }
     ptn_notes:    { type: varchar(255), default: null }  # parent-teacher-night
@@ -214,6 +215,8 @@ propel:
     role_id:     { type: integer, foreignTable: role, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     expiry:      { type: date }  
     notes:       longvarchar
+    details:     longvarchar
+                 # this field contains a serialized array, which could be useful for storage of different kinds of data
     charge_reference_number: { type: varchar(20), default: null } 
     confirmation_reference_number: { type: varchar(20), default: null } 
     _uniques:
@@ -481,6 +484,26 @@ propel:
     upshot: varchar(255)
     evaluation: integer  # the minimum and the maximum are set in schoolproject table
     scheduled_date: date    
+
+  informativecontent:
+    # this table stores information about the type of informative messages that
+    # can be sent to the users, provided that they gave their consent
+    id: ~
+    shortcut: { type: varchar(40); required: true; unique: true }
+    description: varchar(255)
+    
+  consent:
+    id: ~
+    user_id: { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    informativecontent_id: ~
+    given_at: timestamp
+    method: { type: integer }
+    # 1 = paper form filled and signed
+    # 2 = on line form
+    # 3 = email
+    notes: longvarchar
+    _uniques:
+      ui: [ user_id, informativecontent_id ]
 
   subnet:
     id:
