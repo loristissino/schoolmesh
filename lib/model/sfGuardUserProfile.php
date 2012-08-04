@@ -1260,6 +1260,26 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
             return $this->getGender()=='M' ? 1: 0;
         }
 
+    public function getConsents($options=array())
+    {
+      $c=new Criteria();
+      $c->add(ConsentPeer::USER_ID, $this->getUserId());
+      $c->addJoin(ConsentPeer::INFORMATIVECONTENT_ID, InformativeContentPeer::ID);
+      $result=InformativeContentPeer::doSelect($c);
+      
+      if(isset($options['astext']) and $options['astext'])
+      {
+        $t=array();
+        foreach($result as $item)
+        {
+          $t[]=$item->getShortcut();
+        }
+        return implode(',', $t);
+      }
+      
+      return $result;
+    }
+
 
 		protected function addGoogleappsAccountAlerts()
 		{
@@ -2000,8 +2020,8 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     $doc->addField(Zend_Search_Lucene_Field::UnStored('accounts', $this->getAccounts(array('astext'=>true)), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('permissions', $this->getWebPermissions(array('astext'=>true)), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('teams', $this->getTeams(array('astext'=>true, 'privatetoo'=>false)), 'utf-8'));
-    
     $doc->addField(Zend_Search_Lucene_Field::UnStored('guardgroups', $this->getGuardGroups(array('astext'=>true)), 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('consents', $this->getConsents(array('astext'=>true)), 'utf-8'));
     
     if($posixAccount=$this->getAccountByType('posix'))
     {
