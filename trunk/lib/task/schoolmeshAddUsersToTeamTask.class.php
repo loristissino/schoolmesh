@@ -24,6 +24,7 @@ class schoolmeshAddUsersToTeamTask extends sfBaseTask
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       // add your own options here
       new sfCommandOption('dry-run', null, sfCommandOption::PARAMETER_NONE, 'Whether the command will be executed leaving the db intact'),
+      new sfCOmmandOption('dont-import', null, sfCommandOption::PARAMETER_REQUIRED, 'A comma-separated list of details that should not be imported in details field', ''),
     ));
 
 
@@ -80,6 +81,19 @@ EOF;
     }
         
     $document = sfYaml::load($filename);
+    
+    $dont_import=$options['dont-import'];
+    if($dont_import != '')
+    {
+      if(strpos($dont_import, ','))
+      {
+        $fields_to_remove=explode(',', $dont_import);
+      }
+      else
+      {
+        $fields_to_remove=array($dont_import);
+      }
+    }
         
     foreach($document['users'] as $user)
     {
@@ -91,6 +105,10 @@ EOF;
         $this->logSection($team->getPosixName() . '+', 'user ' . $profile->getFullName() . ' added to team', null, 'NOTICE');
         $userteam = UserTeamPeer::retrieveUserTeam($profile->getSfGuardUser(), $team);
         unset($user[$key]);
+        foreach($fields_to_remove as $field_to_remove)
+        {
+          unset($user[$field_to_remove]);
+        }
         $userteam->setDetails(serialize($user))->save();
       }
       else
