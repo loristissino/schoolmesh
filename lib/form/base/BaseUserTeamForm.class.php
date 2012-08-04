@@ -20,6 +20,7 @@ abstract class BaseUserTeamForm extends BaseFormPropel
       'role_id'                       => new sfWidgetFormPropelChoice(array('model' => 'Role', 'add_empty' => false)),
       'expiry'                        => new sfWidgetFormDate(),
       'notes'                         => new sfWidgetFormTextarea(),
+      'details'                       => new sfWidgetFormTextarea(),
       'charge_reference_number'       => new sfWidgetFormInputText(),
       'confirmation_reference_number' => new sfWidgetFormInputText(),
     ));
@@ -31,6 +32,7 @@ abstract class BaseUserTeamForm extends BaseFormPropel
       'role_id'                       => new sfValidatorPropelChoice(array('model' => 'Role', 'column' => 'id')),
       'expiry'                        => new sfValidatorDate(array('required' => false)),
       'notes'                         => new sfValidatorString(array('required' => false)),
+      'details'                       => new sfValidatorString(array('required' => false)),
       'charge_reference_number'       => new sfValidatorString(array('max_length' => 20, 'required' => false)),
       'confirmation_reference_number' => new sfValidatorString(array('max_length' => 20, 'required' => false)),
     ));

@@ -17,6 +17,7 @@ abstract class BaseUserTeamFormFilter extends BaseFormFilterPropel
       'role_id'                       => new sfWidgetFormPropelChoice(array('model' => 'Role', 'add_empty' => true)),
       'expiry'                        => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'notes'                         => new sfWidgetFormFilterInput(),
+      'details'                       => new sfWidgetFormFilterInput(),
       'charge_reference_number'       => new sfWidgetFormFilterInput(),
       'confirmation_reference_number' => new sfWidgetFormFilterInput(),
     ));
@@ -27,6 +28,7 @@ abstract class BaseUserTeamFormFilter extends BaseFormFilterPropel
       'role_id'                       => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Role', 'column' => 'id')),
       'expiry'                        => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'notes'                         => new sfValidatorPass(array('required' => false)),
+      'details'                       => new sfValidatorPass(array('required' => false)),
       'charge_reference_number'       => new sfValidatorPass(array('required' => false)),
       'confirmation_reference_number' => new sfValidatorPass(array('required' => false)),
     ));
@@ -52,6 +54,7 @@ abstract class BaseUserTeamFormFilter extends BaseFormFilterPropel
       'role_id'                       => 'ForeignKey',
       'expiry'                        => 'Date',
       'notes'                         => 'Text',
+      'details'                       => 'Text',
       'charge_reference_number'       => 'Text',
       'confirmation_reference_number' => 'Text',
     );

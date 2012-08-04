@@ -2,7 +2,7 @@
 
 
 /**
- * This class defines the structure of the 'user_team' table.
+ * This class defines the structure of the 'consent' table.
  *
  *
  *
@@ -13,12 +13,12 @@
  *
  * @package    lib.model.map
  */
-class UserTeamTableMap extends TableMap {
+class ConsentTableMap extends TableMap {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.UserTeamTableMap';
+	const CLASS_NAME = 'lib.model.map.ConsentTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators
@@ -30,21 +30,18 @@ class UserTeamTableMap extends TableMap {
 	public function initialize()
 	{
 	  // attributes
-		$this->setName('user_team');
-		$this->setPhpName('UserTeam');
-		$this->setClassname('UserTeam');
+		$this->setName('consent');
+		$this->setPhpName('Consent');
+		$this->setClassname('Consent');
 		$this->setPackage('lib.model');
 		$this->setUseIdGenerator(true);
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
 		$this->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
-		$this->addForeignKey('TEAM_ID', 'TeamId', 'INTEGER', 'team', 'ID', true, null, null);
-		$this->addForeignKey('ROLE_ID', 'RoleId', 'INTEGER', 'role', 'ID', true, null, null);
-		$this->addColumn('EXPIRY', 'Expiry', 'DATE', false, null, null);
+		$this->addForeignKey('INFORMATIVECONTENT_ID', 'InformativecontentId', 'INTEGER', 'informativecontent', 'ID', false, null, null);
+		$this->addColumn('GIVEN_AT', 'GivenAt', 'TIMESTAMP', false, null, null);
+		$this->addColumn('METHOD', 'Method', 'INTEGER', false, null, null);
 		$this->addColumn('NOTES', 'Notes', 'LONGVARCHAR', false, null, null);
-		$this->addColumn('DETAILS', 'Details', 'LONGVARCHAR', false, null, null);
-		$this->addColumn('CHARGE_REFERENCE_NUMBER', 'ChargeReferenceNumber', 'VARCHAR', false, 20, null);
-		$this->addColumn('CONFIRMATION_REFERENCE_NUMBER', 'ConfirmationReferenceNumber', 'VARCHAR', false, 20, null);
 		// validators
 	} // initialize()
 
@@ -54,8 +51,7 @@ class UserTeamTableMap extends TableMap {
 	public function buildRelations()
 	{
     $this->addRelation('sfGuardUser', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('Team', 'Team', RelationMap::MANY_TO_ONE, array('team_id' => 'id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('Role', 'Role', RelationMap::MANY_TO_ONE, array('role_id' => 'id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('Informativecontent', 'Informativecontent', RelationMap::MANY_TO_ONE, array('informativecontent_id' => 'id', ), null, null);
 	} // buildRelations()
 
 	/**
@@ -71,4 +67,4 @@ class UserTeamTableMap extends TableMap {
 		);
 	} // getBehaviors()
 
-} // UserTeamTableMap
+} // ConsentTableMap

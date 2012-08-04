@@ -40,6 +40,9 @@
 		<th class="sf_admin_text"><?php echo __('Notes') ?></th>
 		<th class="sf_admin_text"><?php echo __('Charge R.N.') ?></th>
 		<th class="sf_admin_text"><?php echo __('Confirmation R.N.') ?></th>
+    <?php if($sf_user->hasCredential('back_admin')): ?>
+      <th class="sf_admin_text"><?php echo __('Details') ?></th>
+    <?php endif ?>
 		<th class="sf_admin_text"><?php echo __('Actions') ?></th>
 	</tr>
 </thead>
@@ -58,6 +61,9 @@
     <td><?php include_partial('content/notes', array('notes'=>$component->getNotes())) ?></td>
     <td><?php echo $component->getChargeReferenceNumber() ?></td>
     <td><?php echo $component->getConfirmationReferenceNumber() ?></td>
+    <?php if($sf_user->hasCredential('back_admin')): ?>
+      <td><?php include_partial('content/array', array('array'=>$component->getUnserializedDetails())) ?></td>
+    <?php endif ?>
     <td>
         <?php include_partial('teams/teams_td_actions', array('user'=>$component->getsfGuardUser()->getProfile(), 'team'=>$Team, 'referer'=>url_for('teams/show?id='.$Team->getId()))) ?>
     </td>
