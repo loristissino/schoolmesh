@@ -5,6 +5,9 @@
 class ProjectBaseMessage extends Swift_Message
 {
 	
+  // to add an attachment use the inherited method attach()
+  // ->attach(Swift_Attachment::fromPath('my-document.pdf'))
+  
   private
     $_template_directory,
     $_tagline
