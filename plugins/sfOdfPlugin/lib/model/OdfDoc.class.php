@@ -66,7 +66,11 @@ class OdfDoc
 	{
 		return $this->_file2serve;
 	}
-		
+  
+  public function getAttributedFilename()
+  {
+    return $this->_filename;
+  }
 	
 	private function _convertTo($filetype)
 	{

@@ -2033,5 +2033,13 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     $index->commit();
 
   }
+  
+  public function getCustomResult($name, $arguments=array(), $options=array(), $context=null)
+  {
+    $customProfile = new CustomSfGuardUserProfile($this);
+    $result = $customProfile->$name($arguments, $options, $context);
+    unset($customProfile);
+    return $result;
+  }
 
 }
