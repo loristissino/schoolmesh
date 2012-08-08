@@ -90,6 +90,16 @@ class SSO
     }
     return false;
   }
+  
+  public function getFederatedApp($application, $federated_app)
+  {
+    $f=$this->getFederatedApps($application);
+    if(array_key_exists($federated_app, $f))
+    {
+      return $f[$federated_app];
+    }
+    return false;
+  }
 
   public function getAuthKey($application)
   {

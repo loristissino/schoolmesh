@@ -299,9 +299,13 @@ class profileActions extends sfActions
 	
 	}  
 
-  public function executeGoogleapps(sfWebRequest $request)
+  public function executeSsologin(sfWebRequest $request)
   {
-	
+    $this->forward404Unless($sso=new SSO(sfConfig::get('app_sso_applications', null)));
+    $this->forward404Unless($federated_app=$sso->getFederatedApp('saml', $request->getParameter('app')));
+    
+    return $this->redirect($federated_app['start_url']);
+    
   }
 
 
