@@ -984,6 +984,7 @@ CREATE TABLE `schoolproject`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`proj_category_id` INTEGER,
+	`code` VARCHAR(10),
 	`year_id` INTEGER  NOT NULL,
 	`user_id` INTEGER  NOT NULL,
 	`team_id` INTEGER,
@@ -1010,6 +1011,8 @@ CREATE TABLE `schoolproject`
 	`no_activity_confirm` TINYINT default 0,
 	`created_at` DATETIME,
 	PRIMARY KEY (`id`),
+	KEY `schoolproject_I_1`(`code`),
+	KEY `schoolproject_I_2`(`title`),
 	INDEX `schoolproject_FI_1` (`proj_category_id`),
 	CONSTRAINT `schoolproject_FK_1`
 		FOREIGN KEY (`proj_category_id`)

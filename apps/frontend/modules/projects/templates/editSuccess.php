@@ -30,13 +30,19 @@
 <h2><?php echo __('Basic information') ?></h2>
 
   <table>
+  <?php if(!isset($form['code'])): ?>
+  <tr>
+    <th><label for="schoolproject_code"><?php echo __('Code') ?></label></th>
+    <td><?php echo $project->getCode() ?></td>
+  </tr>
+  <?php endif ?>
   <?php if(!isset($form['title'])): ?>
   <tr>
     <th><label for="schoolproject_title"><?php echo __('Title') ?></label></th>
     <td><?php echo $project->getTitle() ?></td>
   </tr>
   <?php endif ?>
-  <?php if(!isset($form['reference_number'])): ?>
+  <?php if(!isset($form['reference_number']) && $project->getState() > Workflow::PROJ_DRAFT): ?>
   <tr>
     <th><label for="schoolproject_reference_number"><?php echo __('Reference number') ?></label></th>
     <td><?php echo $project->getReferenceNumber() ?></td>
@@ -270,14 +276,14 @@
       <ul class="sf_admin_td_actions">
         <?php echo li_link_to_if(
             'td_action_edit',
-            $project->getState()>=Workflow::PROJ_DRAFT,
+            $project->getState()>=Workflow::PROJ_DRAFT and $project->isEditableBy($sf_user, array()),
             __('Edit'),
             url_for('projects/editupshot?id='. $upshot->getId())
             )
              ?>
         <?php echo li_link_to_if(
             'td_action_delete',
-            $project->getState()>=Workflow::PROJ_DRAFT,
+            $project->getState()==Workflow::PROJ_DRAFT and $project->isEditableBy($sf_user, array()),
             __('Delete'),
             url_for('projects/deleteupshot?id='. $upshot->getId()),
             array('method'=>'post', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))
@@ -346,14 +352,14 @@
       <ul class="sf_admin_td_actions">
         <?php echo li_link_to_if(
             'td_action_edit',
-            $project->getState()>=Workflow::PROJ_DRAFT,
+            $project->getState()>=Workflow::PROJ_DRAFT and $project->isEditableBy($sf_user, array()),
             __('Edit'),
             url_for('projects/editdeadline?id='. $deadline->getId())
             )
              ?>
         <?php echo li_link_to_if(
             'td_action_delete',
-            $project->getState()>=Workflow::PROJ_DRAFT,
+            $project->getState()==Workflow::PROJ_DRAFT and $project->isEditableBy($sf_user, array()),
             __('Delete'),
             url_for('projects/deletedeadline?id='. $deadline->getId()),
             array('method'=>'post', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))
@@ -422,7 +428,7 @@
       'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()) . ' ' . __('Documents submitted cannot be modified anymore.')
       ) 
     ) ?>
-  <?php endif ?>
+    <?php endif ?>
 </ul>
 <?php endif ?>
 

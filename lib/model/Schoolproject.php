@@ -25,13 +25,14 @@ class Schoolproject extends BaseSchoolproject {
     return $this->getsfGuardUser()->getProfile();
   }
   
-  public function isEditableBy($user)
+  public function isEditableBy($user, $credentials=array('proj_adm_ok'))
   {
+    
     return
       (
       $user->getProfile()->getUserId()===$this->getUserId()
       || 
-      $user->hasCredential('proj_adm_ok')
+      $user->getProfile()->hasOneOfPermissions($credentials)
       ||
       $user->getProfile()->getBelongsToTeamById($this->getTeamId())   
       )
@@ -154,6 +155,13 @@ class Schoolproject extends BaseSchoolproject {
       $result['message']='You are not allowed to remove deadlines from this project.';
       return $result;
     }
+
+    if($this->getState()>Workflow::PROJ_DRAFT)
+    {
+      $result['result']='error';
+      $result['message']='You are not allowed to delete a deadline for a project in this state.';
+      return $result;
+    }
     
     try
     {
@@ -202,6 +210,13 @@ class Schoolproject extends BaseSchoolproject {
     {
       $result['result']='error';
       $result['message']='You are not allowed to remove upshots from this project.';
+      return $result;
+    }
+
+    if($this->getState()>Workflow::PROJ_DRAFT)
+    {
+      $result['result']='error';
+      $result['message']='You are not allowed to delete an upshot for a project in this state.';
       return $result;
     }
     
@@ -340,6 +355,7 @@ class Schoolproject extends BaseSchoolproject {
   public function updateFromForm($params, $user=null, $sf_context=null)
   {
     $changedfields = Generic::updateObjectFromForm($this, array(
+      'code',
       'title',
       'description',
       'proj_financing_id',

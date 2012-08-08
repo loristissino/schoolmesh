@@ -76,6 +76,9 @@ all:
 
     projects_evaluation_min: 1
     projects_evaluation_max: 4
+    projects_notifysubmission_name: Person who receives email
+    projects_notifysubmission_email: person_who_receives_email@example.com
+    projects_sort_order: [ proj_category_id, title ]
     
     help_index: /etc/schoolmesh/help.yml
     timeslotsfile: /etc/schoolmesh/timeslots.yml

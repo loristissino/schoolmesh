@@ -31,6 +31,12 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	protected $proj_category_id;
 
 	/**
+	 * The value for the code field.
+	 * @var        string
+	 */
+	protected $code;
+
+	/**
 	 * The value for the year_id field.
 	 * @var        int
 	 */
@@ -288,6 +294,16 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	public function getProjCategoryId()
 	{
 		return $this->proj_category_id;
+	}
+
+	/**
+	 * Get the [code] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getCode()
+	{
+		return $this->code;
 	}
 
 	/**
@@ -723,6 +739,26 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setProjCategoryId()
+
+	/**
+	 * Set the value of [code] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Schoolproject The current object (for fluent API support)
+	 */
+	public function setCode($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->code !== $v) {
+			$this->code = $v;
+			$this->modifiedColumns[] = SchoolprojectPeer::CODE;
+		}
+
+		return $this;
+	} // setCode()
 
 	/**
 	 * Set the value of [year_id] column.
@@ -1419,31 +1455,32 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->proj_category_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->year_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->user_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
-			$this->team_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
-			$this->title = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->description = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->notes = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->addressees = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-			$this->purposes = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
-			$this->goals = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
-			$this->final_report = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
-			$this->proposals = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
-			$this->hours_approved = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
-			$this->state = ($row[$startcol + 14] !== null) ? (int) $row[$startcol + 14] : null;
-			$this->submission_date = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
-			$this->reference_number = ($row[$startcol + 16] !== null) ? (string) $row[$startcol + 16] : null;
-			$this->approval_date = ($row[$startcol + 17] !== null) ? (string) $row[$startcol + 17] : null;
-			$this->approval_notes = ($row[$startcol + 18] !== null) ? (string) $row[$startcol + 18] : null;
-			$this->financing_date = ($row[$startcol + 19] !== null) ? (string) $row[$startcol + 19] : null;
-			$this->financing_notes = ($row[$startcol + 20] !== null) ? (string) $row[$startcol + 20] : null;
-			$this->confirmation_date = ($row[$startcol + 21] !== null) ? (string) $row[$startcol + 21] : null;
-			$this->confirmation_notes = ($row[$startcol + 22] !== null) ? (string) $row[$startcol + 22] : null;
-			$this->evaluation_min = ($row[$startcol + 23] !== null) ? (int) $row[$startcol + 23] : null;
-			$this->evaluation_max = ($row[$startcol + 24] !== null) ? (int) $row[$startcol + 24] : null;
-			$this->no_activity_confirm = ($row[$startcol + 25] !== null) ? (boolean) $row[$startcol + 25] : null;
-			$this->created_at = ($row[$startcol + 26] !== null) ? (string) $row[$startcol + 26] : null;
+			$this->code = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->year_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->user_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+			$this->team_id = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->title = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+			$this->description = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->notes = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+			$this->addressees = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->purposes = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
+			$this->goals = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->final_report = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
+			$this->proposals = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
+			$this->hours_approved = ($row[$startcol + 14] !== null) ? (int) $row[$startcol + 14] : null;
+			$this->state = ($row[$startcol + 15] !== null) ? (int) $row[$startcol + 15] : null;
+			$this->submission_date = ($row[$startcol + 16] !== null) ? (string) $row[$startcol + 16] : null;
+			$this->reference_number = ($row[$startcol + 17] !== null) ? (string) $row[$startcol + 17] : null;
+			$this->approval_date = ($row[$startcol + 18] !== null) ? (string) $row[$startcol + 18] : null;
+			$this->approval_notes = ($row[$startcol + 19] !== null) ? (string) $row[$startcol + 19] : null;
+			$this->financing_date = ($row[$startcol + 20] !== null) ? (string) $row[$startcol + 20] : null;
+			$this->financing_notes = ($row[$startcol + 21] !== null) ? (string) $row[$startcol + 21] : null;
+			$this->confirmation_date = ($row[$startcol + 22] !== null) ? (string) $row[$startcol + 22] : null;
+			$this->confirmation_notes = ($row[$startcol + 23] !== null) ? (string) $row[$startcol + 23] : null;
+			$this->evaluation_min = ($row[$startcol + 24] !== null) ? (int) $row[$startcol + 24] : null;
+			$this->evaluation_max = ($row[$startcol + 25] !== null) ? (int) $row[$startcol + 25] : null;
+			$this->no_activity_confirm = ($row[$startcol + 26] !== null) ? (boolean) $row[$startcol + 26] : null;
+			$this->created_at = ($row[$startcol + 27] !== null) ? (string) $row[$startcol + 27] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1453,7 +1490,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 27; // 27 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 28; // 28 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Schoolproject object", $e);
@@ -1900,78 +1937,81 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				return $this->getProjCategoryId();
 				break;
 			case 2:
-				return $this->getYearId();
+				return $this->getCode();
 				break;
 			case 3:
-				return $this->getUserId();
+				return $this->getYearId();
 				break;
 			case 4:
-				return $this->getTeamId();
+				return $this->getUserId();
 				break;
 			case 5:
-				return $this->getTitle();
+				return $this->getTeamId();
 				break;
 			case 6:
-				return $this->getDescription();
+				return $this->getTitle();
 				break;
 			case 7:
-				return $this->getNotes();
+				return $this->getDescription();
 				break;
 			case 8:
-				return $this->getAddressees();
+				return $this->getNotes();
 				break;
 			case 9:
-				return $this->getPurposes();
+				return $this->getAddressees();
 				break;
 			case 10:
-				return $this->getGoals();
+				return $this->getPurposes();
 				break;
 			case 11:
-				return $this->getFinalReport();
+				return $this->getGoals();
 				break;
 			case 12:
-				return $this->getProposals();
+				return $this->getFinalReport();
 				break;
 			case 13:
-				return $this->getHoursApproved();
+				return $this->getProposals();
 				break;
 			case 14:
-				return $this->getState();
+				return $this->getHoursApproved();
 				break;
 			case 15:
-				return $this->getSubmissionDate();
+				return $this->getState();
 				break;
 			case 16:
-				return $this->getReferenceNumber();
+				return $this->getSubmissionDate();
 				break;
 			case 17:
-				return $this->getApprovalDate();
+				return $this->getReferenceNumber();
 				break;
 			case 18:
-				return $this->getApprovalNotes();
+				return $this->getApprovalDate();
 				break;
 			case 19:
-				return $this->getFinancingDate();
+				return $this->getApprovalNotes();
 				break;
 			case 20:
-				return $this->getFinancingNotes();
+				return $this->getFinancingDate();
 				break;
 			case 21:
-				return $this->getConfirmationDate();
+				return $this->getFinancingNotes();
 				break;
 			case 22:
-				return $this->getConfirmationNotes();
+				return $this->getConfirmationDate();
 				break;
 			case 23:
-				return $this->getEvaluationMin();
+				return $this->getConfirmationNotes();
 				break;
 			case 24:
-				return $this->getEvaluationMax();
+				return $this->getEvaluationMin();
 				break;
 			case 25:
-				return $this->getNoActivityConfirm();
+				return $this->getEvaluationMax();
 				break;
 			case 26:
+				return $this->getNoActivityConfirm();
+				break;
+			case 27:
 				return $this->getCreatedAt();
 				break;
 			default:
@@ -1997,31 +2037,32 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getProjCategoryId(),
-			$keys[2] => $this->getYearId(),
-			$keys[3] => $this->getUserId(),
-			$keys[4] => $this->getTeamId(),
-			$keys[5] => $this->getTitle(),
-			$keys[6] => $this->getDescription(),
-			$keys[7] => $this->getNotes(),
-			$keys[8] => $this->getAddressees(),
-			$keys[9] => $this->getPurposes(),
-			$keys[10] => $this->getGoals(),
-			$keys[11] => $this->getFinalReport(),
-			$keys[12] => $this->getProposals(),
-			$keys[13] => $this->getHoursApproved(),
-			$keys[14] => $this->getState(),
-			$keys[15] => $this->getSubmissionDate(),
-			$keys[16] => $this->getReferenceNumber(),
-			$keys[17] => $this->getApprovalDate(),
-			$keys[18] => $this->getApprovalNotes(),
-			$keys[19] => $this->getFinancingDate(),
-			$keys[20] => $this->getFinancingNotes(),
-			$keys[21] => $this->getConfirmationDate(),
-			$keys[22] => $this->getConfirmationNotes(),
-			$keys[23] => $this->getEvaluationMin(),
-			$keys[24] => $this->getEvaluationMax(),
-			$keys[25] => $this->getNoActivityConfirm(),
-			$keys[26] => $this->getCreatedAt(),
+			$keys[2] => $this->getCode(),
+			$keys[3] => $this->getYearId(),
+			$keys[4] => $this->getUserId(),
+			$keys[5] => $this->getTeamId(),
+			$keys[6] => $this->getTitle(),
+			$keys[7] => $this->getDescription(),
+			$keys[8] => $this->getNotes(),
+			$keys[9] => $this->getAddressees(),
+			$keys[10] => $this->getPurposes(),
+			$keys[11] => $this->getGoals(),
+			$keys[12] => $this->getFinalReport(),
+			$keys[13] => $this->getProposals(),
+			$keys[14] => $this->getHoursApproved(),
+			$keys[15] => $this->getState(),
+			$keys[16] => $this->getSubmissionDate(),
+			$keys[17] => $this->getReferenceNumber(),
+			$keys[18] => $this->getApprovalDate(),
+			$keys[19] => $this->getApprovalNotes(),
+			$keys[20] => $this->getFinancingDate(),
+			$keys[21] => $this->getFinancingNotes(),
+			$keys[22] => $this->getConfirmationDate(),
+			$keys[23] => $this->getConfirmationNotes(),
+			$keys[24] => $this->getEvaluationMin(),
+			$keys[25] => $this->getEvaluationMax(),
+			$keys[26] => $this->getNoActivityConfirm(),
+			$keys[27] => $this->getCreatedAt(),
 		);
 		return $result;
 	}
@@ -2060,78 +2101,81 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				$this->setProjCategoryId($value);
 				break;
 			case 2:
-				$this->setYearId($value);
+				$this->setCode($value);
 				break;
 			case 3:
-				$this->setUserId($value);
+				$this->setYearId($value);
 				break;
 			case 4:
-				$this->setTeamId($value);
+				$this->setUserId($value);
 				break;
 			case 5:
-				$this->setTitle($value);
+				$this->setTeamId($value);
 				break;
 			case 6:
-				$this->setDescription($value);
+				$this->setTitle($value);
 				break;
 			case 7:
-				$this->setNotes($value);
+				$this->setDescription($value);
 				break;
 			case 8:
-				$this->setAddressees($value);
+				$this->setNotes($value);
 				break;
 			case 9:
-				$this->setPurposes($value);
+				$this->setAddressees($value);
 				break;
 			case 10:
-				$this->setGoals($value);
+				$this->setPurposes($value);
 				break;
 			case 11:
-				$this->setFinalReport($value);
+				$this->setGoals($value);
 				break;
 			case 12:
-				$this->setProposals($value);
+				$this->setFinalReport($value);
 				break;
 			case 13:
-				$this->setHoursApproved($value);
+				$this->setProposals($value);
 				break;
 			case 14:
-				$this->setState($value);
+				$this->setHoursApproved($value);
 				break;
 			case 15:
-				$this->setSubmissionDate($value);
+				$this->setState($value);
 				break;
 			case 16:
-				$this->setReferenceNumber($value);
+				$this->setSubmissionDate($value);
 				break;
 			case 17:
-				$this->setApprovalDate($value);
+				$this->setReferenceNumber($value);
 				break;
 			case 18:
-				$this->setApprovalNotes($value);
+				$this->setApprovalDate($value);
 				break;
 			case 19:
-				$this->setFinancingDate($value);
+				$this->setApprovalNotes($value);
 				break;
 			case 20:
-				$this->setFinancingNotes($value);
+				$this->setFinancingDate($value);
 				break;
 			case 21:
-				$this->setConfirmationDate($value);
+				$this->setFinancingNotes($value);
 				break;
 			case 22:
-				$this->setConfirmationNotes($value);
+				$this->setConfirmationDate($value);
 				break;
 			case 23:
-				$this->setEvaluationMin($value);
+				$this->setConfirmationNotes($value);
 				break;
 			case 24:
-				$this->setEvaluationMax($value);
+				$this->setEvaluationMin($value);
 				break;
 			case 25:
-				$this->setNoActivityConfirm($value);
+				$this->setEvaluationMax($value);
 				break;
 			case 26:
+				$this->setNoActivityConfirm($value);
+				break;
+			case 27:
 				$this->setCreatedAt($value);
 				break;
 		} // switch()
@@ -2160,31 +2204,32 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setProjCategoryId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setYearId($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setUserId($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setTeamId($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setTitle($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setDescription($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setNotes($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setAddressees($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setPurposes($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setGoals($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setFinalReport($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setProposals($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setHoursApproved($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setState($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setSubmissionDate($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setReferenceNumber($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setApprovalDate($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setApprovalNotes($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setFinancingDate($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setFinancingNotes($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setConfirmationDate($arr[$keys[21]]);
-		if (array_key_exists($keys[22], $arr)) $this->setConfirmationNotes($arr[$keys[22]]);
-		if (array_key_exists($keys[23], $arr)) $this->setEvaluationMin($arr[$keys[23]]);
-		if (array_key_exists($keys[24], $arr)) $this->setEvaluationMax($arr[$keys[24]]);
-		if (array_key_exists($keys[25], $arr)) $this->setNoActivityConfirm($arr[$keys[25]]);
-		if (array_key_exists($keys[26], $arr)) $this->setCreatedAt($arr[$keys[26]]);
+		if (array_key_exists($keys[2], $arr)) $this->setCode($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setYearId($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setUserId($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setTeamId($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setTitle($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setDescription($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setNotes($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setAddressees($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setPurposes($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setGoals($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setFinalReport($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setProposals($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setHoursApproved($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setState($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setSubmissionDate($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setReferenceNumber($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setApprovalDate($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setApprovalNotes($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setFinancingDate($arr[$keys[20]]);
+		if (array_key_exists($keys[21], $arr)) $this->setFinancingNotes($arr[$keys[21]]);
+		if (array_key_exists($keys[22], $arr)) $this->setConfirmationDate($arr[$keys[22]]);
+		if (array_key_exists($keys[23], $arr)) $this->setConfirmationNotes($arr[$keys[23]]);
+		if (array_key_exists($keys[24], $arr)) $this->setEvaluationMin($arr[$keys[24]]);
+		if (array_key_exists($keys[25], $arr)) $this->setEvaluationMax($arr[$keys[25]]);
+		if (array_key_exists($keys[26], $arr)) $this->setNoActivityConfirm($arr[$keys[26]]);
+		if (array_key_exists($keys[27], $arr)) $this->setCreatedAt($arr[$keys[27]]);
 	}
 
 	/**
@@ -2198,6 +2243,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(SchoolprojectPeer::ID)) $criteria->add(SchoolprojectPeer::ID, $this->id);
 		if ($this->isColumnModified(SchoolprojectPeer::PROJ_CATEGORY_ID)) $criteria->add(SchoolprojectPeer::PROJ_CATEGORY_ID, $this->proj_category_id);
+		if ($this->isColumnModified(SchoolprojectPeer::CODE)) $criteria->add(SchoolprojectPeer::CODE, $this->code);
 		if ($this->isColumnModified(SchoolprojectPeer::YEAR_ID)) $criteria->add(SchoolprojectPeer::YEAR_ID, $this->year_id);
 		if ($this->isColumnModified(SchoolprojectPeer::USER_ID)) $criteria->add(SchoolprojectPeer::USER_ID, $this->user_id);
 		if ($this->isColumnModified(SchoolprojectPeer::TEAM_ID)) $criteria->add(SchoolprojectPeer::TEAM_ID, $this->team_id);
@@ -2278,6 +2324,8 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setProjCategoryId($this->proj_category_id);
+
+		$copyObj->setCode($this->code);
 
 		$copyObj->setYearId($this->year_id);
 
