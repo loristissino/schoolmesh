@@ -38,6 +38,7 @@ class SchoolprojectTableMap extends TableMap {
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
 		$this->addForeignKey('PROJ_CATEGORY_ID', 'ProjCategoryId', 'INTEGER', 'proj_category', 'ID', false, null, null);
+		$this->addColumn('CODE', 'Code', 'VARCHAR', false, 10, null);
 		$this->addForeignKey('YEAR_ID', 'YearId', 'INTEGER', 'year', 'ID', true, null, null);
 		$this->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
 		$this->addForeignKey('TEAM_ID', 'TeamId', 'INTEGER', 'team', 'ID', false, null, null);

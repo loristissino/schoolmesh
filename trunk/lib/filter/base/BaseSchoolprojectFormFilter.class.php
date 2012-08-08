@@ -13,6 +13,7 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
   {
     $this->setWidgets(array(
       'proj_category_id'    => new sfWidgetFormPropelChoice(array('model' => 'ProjCategory', 'add_empty' => true)),
+      'code'                => new sfWidgetFormFilterInput(),
       'year_id'             => new sfWidgetFormPropelChoice(array('model' => 'Year', 'add_empty' => true)),
       'user_id'             => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
       'team_id'             => new sfWidgetFormPropelChoice(array('model' => 'Team', 'add_empty' => true)),
@@ -42,6 +43,7 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
 
     $this->setValidators(array(
       'proj_category_id'    => new sfValidatorPropelChoice(array('required' => false, 'model' => 'ProjCategory', 'column' => 'id')),
+      'code'                => new sfValidatorPass(array('required' => false)),
       'year_id'             => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Year', 'column' => 'id')),
       'user_id'             => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
       'team_id'             => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Team', 'column' => 'id')),
@@ -86,6 +88,7 @@ abstract class BaseSchoolprojectFormFilter extends BaseFormFilterPropel
     return array(
       'id'                  => 'Number',
       'proj_category_id'    => 'ForeignKey',
+      'code'                => 'Text',
       'year_id'             => 'ForeignKey',
       'user_id'             => 'ForeignKey',
       'team_id'             => 'ForeignKey',

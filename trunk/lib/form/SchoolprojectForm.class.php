@@ -76,7 +76,8 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['final_report'],
           $this['proposals'],
           $this['reference_number'],
-          $this['no_activity_confirm']
+          $this['no_activity_confirm'],
+          $this['team_id']
           );
         break;
       case Workflow::PROJ_SUBMITTED:
@@ -102,7 +103,8 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           {
             // in the office they can change ref numbers
             unset(
-              $this['reference_number']
+              $this['reference_number'],
+              $this['code']
             );
           }
           if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
@@ -135,7 +137,8 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['purposes'],
           $this['goals'],
           $this['reference_number'],
-          $this['no_activity_confirm']
+          $this['no_activity_confirm'],
+          $this['code']
           );
           if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
           {
@@ -166,7 +169,8 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['purposes'],
           $this['goals'],
           $this['reference_number'],
-          $this['no_activity_confirm']
+          $this['no_activity_confirm'],
+          $this['code']
           );
           if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
           {
@@ -195,7 +199,8 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['addressees'],
           $this['purposes'],
           $this['goals'],
-          $this['reference_number']
+          $this['reference_number'],
+          $this['code']
           );
           if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
           {
@@ -241,9 +246,16 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_notes'], 
           $this['financing_notes'],
           $this['confirmation_date'],
+          $this['confirmation_notes'],
           $this['reference_number'],
-          $this['team_id']
-
+          $this['team_id'],
+          $this['code'],
+          $this['addressees'],
+          $this['purposes'],
+          $this['goals'],
+          $this['final_report'],
+          $this['no_activity_confirm'],
+          $this['proposals']
           );
         break;
     }

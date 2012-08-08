@@ -18,8 +18,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 		$c->add(self::YEAR_ID, $year);
     $c->add(self::STATE, Workflow::PROJ_DRAFT, Criteria::GREATER_THAN);
 		$c->addJoin(self::USER_ID, sfGuardUserPeer::ID);
-		$c->addAscendingOrderByColumn(self::PROJ_CATEGORY_ID);
-		$c->addAscendingOrderByColumn(self::TITLE);
+    self::addAscendingOrderToCriteria($c);
 		return self::doSelectJoinAll($c);
 	}
   
@@ -28,8 +27,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 		$c=new Criteria();
 		$c->add(self::ID, $ids, Criteria::IN);
 		$c->addJoin(self::USER_ID, sfGuardUserPeer::ID);
-		$c->addAscendingOrderByColumn(self::PROJ_CATEGORY_ID);
-		$c->addAscendingOrderByColumn(self::TITLE);
+    self::addAscendingOrderToCriteria($c);
 		return self::doSelectJoinAll($c);
 	}
 
@@ -39,7 +37,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 		$c->add(self::YEAR_ID, $year);
     $c->add(self::USER_ID, $user_id);
 		$c->addJoin(self::USER_ID, sfGuardUserPeer::ID);
-		$c->addAscendingOrderByColumn(self::PROJ_CATEGORY_ID);
+    self::addAscendingOrderToCriteria($c);
 		return self::doSelectJoinAll($c);
 	}
 
@@ -60,10 +58,18 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     $c->add($coordinatorCriterion);
 		$c->addJoin(self::USER_ID, sfGuardUserPeer::ID);
 		$c->addDescendingOrderByColumn(self::YEAR_ID);
-		$c->addAscendingOrderByColumn(self::TITLE);
-		$c->addAscendingOrderByColumn(self::PROJ_CATEGORY_ID);
+    self::addAscendingOrderToCriteria($c);
 		return self::doSelectJoinAll($c);
 	}
+
+  private static function addAscendingOrderToCriteria(Criteria $c)
+  {
+    $cols=sfConfig::get('app_config_projects_sort_order', array('title'));
+    foreach($cols as $col)
+    {
+      $c->addAscendingOrderByColumn('schoolproject.' . strtoupper($col));
+    }
+  }
 
 	public static function retrieveByTitleAndYear($title, $yearId)
 	{

@@ -381,10 +381,11 @@ propel:
   schoolproject:
     id: ~
     proj_category_id: ~
-    year_id:          { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
-    user_id:          { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
-    team_id:          { type: integer, foreignTable: team, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }  # people delegated by the coordinator to do some of his/her activities
-    title:        varchar(255)
+    code:         { type: varchar(10), index: true }
+    year_id:      { type: integer, foreignTable: year, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    team_id:      { type: integer, foreignTable: team, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }  # people delegated by the coordinator to do some of his/her activities
+    title:        { type: varchar(255), index: true }
     description:  longvarchar # what has to be done and how
     notes:        longvarchar
     addressees:   longvarchar

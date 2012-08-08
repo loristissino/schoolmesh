@@ -17,7 +17,7 @@
     <tr>
       <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
       <th class="sf_admin_text"><?php echo __('Year') ?></th>
-      <th class="sf_admin_text"><?php echo __('Title') ?></th>
+      <th class="sf_admin_text"><?php echo __('Code') ?> - <?php echo __('Title') ?> - <?php echo __('Category') ?></th>
       <th class="sf_admin_text"><?php echo __('Coordinator') ?></th>
       <th class="sf_admin_text"><?php echo __('State') ?></th>
       <th class="sf_admin_text"><?php echo __('Reference number') ?></th>
@@ -35,6 +35,9 @@
       </td>
       <?php include_partial('content/td_year', array('year'=>$project->getYear())) ?>
       <td>
+        <?php if($project->getCode()): ?>
+          <?php echo $project->getCode() ?><br />
+        <?php endif ?>
         <strong><?php echo $project->getTitle() ?></strong><br />
         <?php include_partial('category', array('category'=>$project->getProjCategory())) ?>
       </td>

@@ -16,6 +16,7 @@ abstract class BaseSchoolprojectForm extends BaseFormPropel
     $this->setWidgets(array(
       'id'                  => new sfWidgetFormInputHidden(),
       'proj_category_id'    => new sfWidgetFormPropelChoice(array('model' => 'ProjCategory', 'add_empty' => true)),
+      'code'                => new sfWidgetFormInputText(),
       'year_id'             => new sfWidgetFormPropelChoice(array('model' => 'Year', 'add_empty' => false)),
       'user_id'             => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => false)),
       'team_id'             => new sfWidgetFormPropelChoice(array('model' => 'Team', 'add_empty' => true)),
@@ -46,6 +47,7 @@ abstract class BaseSchoolprojectForm extends BaseFormPropel
     $this->setValidators(array(
       'id'                  => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
       'proj_category_id'    => new sfValidatorPropelChoice(array('model' => 'ProjCategory', 'column' => 'id', 'required' => false)),
+      'code'                => new sfValidatorString(array('max_length' => 10, 'required' => false)),
       'year_id'             => new sfValidatorPropelChoice(array('model' => 'Year', 'column' => 'id')),
       'user_id'             => new sfValidatorPropelChoice(array('model' => 'sfGuardUser', 'column' => 'id')),
       'team_id'             => new sfValidatorPropelChoice(array('model' => 'Team', 'column' => 'id', 'required' => false)),

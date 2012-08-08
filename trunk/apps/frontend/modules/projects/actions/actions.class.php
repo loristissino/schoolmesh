@@ -760,6 +760,10 @@ class projectsActions extends sfActions
     
     $this->form = new ProjResourceForm($this->resource,  array('culture' => $this->getUser()->getCulture()));
     
+    if(!$this->resource->getScheduledDeadline())
+    {
+      $this->form->setDefault('scheduled_deadline', time());
+    }
     
     if($this->resource->getProjResourceType() and $this->resource->getProjResourceType()->getMeasurementUnit()=='h')
     {

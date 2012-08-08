@@ -4892,6 +4892,10 @@
         <source>Logout from %application%</source>
         <target>Disconnessione da %application%</target>
     </trans-unit>
+    <trans-unit id="1420">
+        <source>At least an upshot is defined</source>
+        <target>Almeno un esito è definito</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
