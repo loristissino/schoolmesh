@@ -27,18 +27,40 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 	
 	public static function retrieveByUsername($username)
 	{
-	$c=new Criteria();
-	$c->add(sfGuardUserPeer::USERNAME, $username);
-	$t = sfGuardUserPeer::doSelectOne($c);
-	return $t;
+    $c=new Criteria();
+    $c->add(sfGuardUserPeer::USERNAME, $username);
+    $t = sfGuardUserPeer::doSelectOne($c);
+    return $t;
 	}
 
 	public static function retrieveByImportCode($importCode)
 	{
-	$c=new Criteria();
-	$c->add(self::IMPORT_CODE, $importCode);
-	$t = self::doSelectOne($c);
-	return $t;
+    $c=new Criteria();
+    $c->add(self::IMPORT_CODE, $importCode);
+    $t = self::doSelectOne($c);
+    return $t;
+	}
+
+	public static function retrieveByNames($first_name, $last_name)
+	{
+    $c=new Criteria();
+    $c->add(self::FIRST_NAME, $first_name);
+    $c->add(self::LAST_NAME, $last_name);
+    $t = self::doSelect($c);
+    if(sizeof($t)==1)
+    {
+      return $t[0];
+    }
+    
+    if(sizeof($t)==0)
+    {
+      return null;
+    }
+
+    if(sizeof($t)>0)
+    {
+      return sizeof($t);
+    }
 	}
 
 	public static function retrieveUsersForGoogleApps()
