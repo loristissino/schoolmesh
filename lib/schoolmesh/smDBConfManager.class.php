@@ -35,7 +35,7 @@ class smDBConfManager
     
     if(!is_array($conf))
     {
-      throw new Exception('Could not read database configuration file');
+      throw new Exception('Could not read database configuration file -- check your app.yml');
     }
     
     $dsn=false;
