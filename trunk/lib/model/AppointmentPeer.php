@@ -31,6 +31,20 @@ class AppointmentPeer extends BaseAppointmentPeer
     $c->add(AppointmentPeer::YEAR_ID, $year->getId());
     return AppointmentPeer::doSelect($c);
   }
+  
+  public static function retrieveByImportCodeSchoolclassIdSubjectShortcut($user_import_code, $schoolclass_id, $subject_shortcut)
+  {
+    $c=new Criteria();
+    $c->addJoin(AppointmentPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
+    $c->add(sfGuardUserProfilePeer::IMPORT_CODE, $user_import_code);
+    $c->addJoin(AppointmentPeer::SUBJECT_ID, SubjectPeer::ID);
+    $c->add(SubjectPeer::SHORTCUT, $subject_shortcut);
+    $c->add(AppointmentPeer::SCHOOLCLASS_ID, $schoolclass_id);
+    $c->add(AppointmentPeer::YEAR_ID, sfConfig::get('app_config_current_year'));
+
+    return self::doSelectOne($c);
+  } 
+  
 
 	public static function getSubmitted($state)
 	{

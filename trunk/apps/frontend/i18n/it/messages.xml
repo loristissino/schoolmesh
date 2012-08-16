@@ -4896,6 +4896,26 @@
         <source>At least an upshot is defined</source>
         <target>Almeno un esito è definito</target>
     </trans-unit>
+    <trans-unit id="1421">
+        <source>New enrolments</source>
+        <target>Nuove iscrizioni</target>
+    </trans-unit>
+    <trans-unit id="1422">
+        <source>Updated enrolments</source>
+        <target>Iscrizioni aggiornate</target>
+    </trans-unit>
+    <trans-unit id="1423">
+        <source>Invalid data</source>
+        <target>Dati non validi</target>
+    </trans-unit>
+    <trans-unit id="1424">
+        <source>New appointments</source>
+        <target>Nuovi incarichi di insegnamento</target>
+    </trans-unit>
+    <trans-unit id="1425">
+        <source>Updated appointments</source>
+        <target>Incarichi di insegnamento aggiornati</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
