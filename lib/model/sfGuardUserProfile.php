@@ -295,8 +295,12 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 		}
 		
 
-		public function addToGuardGroup(sfGuardGroup $group)
+		public function addToGuardGroup(sfGuardGroup $group, PropelPDO $con = null)
 		{
+      if ($con === null) {
+        $con = Propel::getConnection(sfGuardUserProfilePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+      }
+      
 			if ($this->getBelongsToGuardGroup($group))
 			{
 				return $this;
@@ -306,7 +310,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$usergroup
 			->setUserId($this->getUserId())
 			->setGroupId($group->getId())
-			->save();
+			->save($con);
 			
 			return $this;
 		}

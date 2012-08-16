@@ -11,6 +11,328 @@
 
 class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
 {
+  private function _sendConfirmationMessage($permission, $type)
+  {
+    $base=$type . '_imported';
+    
+    if ($type=='users' and isset($this->notices['users']))
+    {
+      $text='';
+      foreach($this->notices['users'] as $profile)
+      {
+        $text.='* ' .$profile->getUsername() . ' => ' . $profile->getFullName() . "\n";
+        $text.='  ' .sfConfig::get('app_school_website').'/users/edit?id=' . $profile->getId() . "\n\n";
+      }
+    }
+
+    if ($type=='enrolments' and isset($this->notices['enrolments']))
+    {
+      $text='';
+      
+      foreach(array('new', 'updated') as $nu)
+      {
+        if(isset($this->notices['enrolments'][$nu]))
+        {
+          $t=$nu=='new'?'New enrolments':'Updated enrolments';
+          
+          $text .= $this->context->getI18N()->__($t) . ":\n";
+          
+          foreach($this->notices['enrolments'][$nu] as $enrolment)
+          {
+            $profile=$enrolment->getsfGuardUser()->getProfile();
+            $text.='* ' .$profile->getFullName() . ' => ' . $enrolment->getSchoolclassId() . "\n";
+            $text.='  ' .sfConfig::get('app_school_website').'/users/edit?id=' . $profile->getId() . "#enrolments\n\n";
+          }
+        }
+        $text.="\n";
+      }
+      
+      if(isset($this->notices['enrolments']['failed']))
+      {
+        $text .= $this->context->getI18N()->__('Invalid data') . ":\n";
+        
+        foreach($this->notices['enrolments']['failed'] as $v)
+        {
+          $text.='* ' .$v['USER_IMPORT_CODE'] . ' ' . $v['SCHOOLCLASS_ID'] . "\n";
+        }
+        $text.="\n";
+      }
+      
+    }
+
+    if ($type=='appointments' and isset($this->notices['appointments']))
+    {
+      $text='';
+      
+      foreach(array('new', 'updated') as $nu)
+      {
+        if(isset($this->notices['appointments'][$nu]))
+        {
+          $t=$nu=='new'?'New appointments':'Updated appointments';
+          
+          $text .= $this->context->getI18N()->__($t) . ":\n";
+          
+          foreach($this->notices['appointments'][$nu] as $appointment)
+          {
+            $profile=$appointment->getsfGuardUser()->getProfile();
+            $text.='* ' .$profile->getFullName() . ' => ' . $appointment . "\n";
+            $text.='  ' .sfConfig::get('app_school_website').'/users/edit?id=' . $profile->getId() . "#appointments\n\n";
+          }
+        }
+        $text.="\n";
+      }
+      
+      if(isset($this->notices['appointments']['failed']))
+      {
+        $text .= $this->context->getI18N()->__('Invalid data') . ":\n";
+        
+        foreach($this->notices['appointments']['failed'] as $v)
+        {
+          $text.='* ' .$v['USER_IMPORT_CODE'] . ' ' . $v['SCHOOLCLASS_ID'] . ' ' . $v['SUBJECT_SHORTCUT']. "\n";
+        }
+        $text.="\n";
+      }
+      
+    }
+
+      
+    $users=sfGuardUserProfilePeer::retrieveByPermission($permission);
+    
+    $addressees='';
+    if (sizeof($users)>1)
+    {
+      foreach($users as $user)
+      {
+        $addressees.=$user->getFullName()."\n";
+      }
+    }
+    
+    foreach($users as $user)
+    {
+      $user->sendWorkflowConfirmationMessage($this->context, $base, array(
+        '%items%'=>$text,
+        '%addressees%'=>($addressees=='' ? '' : $this->context->getI18N()->__('This message has been sent to:') . "\n" . $addressees)
+        ));
+      $this->logSection('mail@', sprintf('%s - %s (%s)', 
+        $user->getUsername(), 
+        sizeof($this->notices[$type]),
+        $base
+        ), null, 'NOTICE');
+    }
+    
+    
+  }
+  
+  
+  protected function updateUsers(smTsvReader $tsv)
+  {
+    
+    $count=0;
+    
+    $culture=sfConfig::get('app_config_culture');
+
+    $teacherRole=RolePeer::retrieveByPosixName(sfConfig::get('app_config_teachers_default_posix_group'));
+    $teacherGuardGroup=sfGuardGroupProfilePeer::retrieveGuardGroupByName($teacherRole->getDefaultGuardGroup());
+		$studentRole=RolePeer::retrieveByPosixName(sfConfig::get('app_config_students_default_posix_group'));
+    $studentGuardGroup=sfGuardGroupProfilePeer::retrieveGuardGroupByName($studentRole->getDefaultGuardGroup());
+    
+    while($v=$tsv->fetchAssoc())
+    {
+      $profile=sfGuardUserProfilePeer::retrieveByImportCode($v['USER_IMPORT_CODE']);
+      if($profile)
+      {
+        //$this->logSection('user=', $profile->getFullName(), null, 'COMMENT');
+      }
+      else
+      {
+        if(!$v['USER_IMPORT_CODE'])
+        {
+          $this->logSection('user/', $v['LAST_NAME'] . ' skipped', null, 'COMMENT');
+          continue;
+        }
+        
+        switch($v['TYPE'])
+        {
+          case 'S':
+            $role=$studentRole;
+            $guardgroup=$studentGuardGroup;
+            break;
+          case 'T':
+            $role=$teacherRole;
+            $guardgroup=$teacherGuardGroup;
+            break;
+          default:
+            $this->logSection('user/', $v['LAST_NAME'] . ' skipped', null, 'COMMENT');
+        }
+        
+        
+        $profile=new sfGuardUserProfile();
+				
+				$profile
+				->setFirstName(Generic::clever_ucwords($culture, $v['FIRST_NAME']))
+				->setMiddleName(Generic::clever_ucwords($culture, $v['MIDDLE_NAME']))
+				->setLastName(Generic::clever_ucwords($culture, $v['LAST_NAME']))
+				->setGender($v['GENDER'])
+				->setBirthplace(Generic::clever_ucwords($culture, $v['BIRTH_PLACE']))
+				->setBirthdate($v['BIRTH_DATE'])
+				->setEmail($v['EMAIL'])
+				->setImportCode($v['USER_IMPORT_CODE']);
+        
+        if($v['TYPE']=='T')
+        {
+          $profile->setLettertitle($profile->getIsMale()? sfConfig::get('app_config_default_male_teachertitle', 'Mr'): sfConfig::get('app_config_default_male_teachertitle', 'Ms'));
+        }
+        
+        $profile->setRole($role);
+
+        $user = new sfGuardUser();
+        $username_found=$profile->findGoodUsername();
+        $user
+				->setUsername($username_found['username'])
+				->save($this->con);
+				$profile
+				->setUserId($user->getId())
+				->save($this->con);
+        
+        $count++;
+
+        $this->notices['users'][]=$profile;
+
+        // we do this now, because we could not before, since the object was not yet saved
+        $profile->addToGuardGroup($guardgroup);
+
+        $this->logSection('user+', $profile->getUsername() . ' => ' . $profile->getFullName(), null, 'NOTICE');
+      }
+    }
+    
+   return $count;
+    
+  }
+
+  protected function updateEnrolments(smTsvReader $tsv)
+  {
+    $count=0;
+        
+    while($v=$tsv->fetchAssoc())
+    {
+      $enrolment=EnrolmentPeer::retrieveByImportCode($v['USER_IMPORT_CODE']);
+      if($enrolment)
+      {
+        if($enrolment->getSchoolclassId()!=$v['SCHOOLCLASS_ID'])
+        {
+          $schoolclass=SchoolclassPeer::retrieveByPK($v['SCHOOLCLASS_ID']);
+          if($schoolclass)
+          {
+            $enrolment
+            ->setSchoolclass($schoolclass)
+            ->save($this->con)
+            ;
+            
+            $this->notices['enrolments']['updated'][]=$enrolment;
+            $this->logSection('enrolment*', sprintf('%s:%s', $v['USER_IMPORT_CODE'], $v['SCHOOLCLASS_ID']), null, 'NOTICE');
+            $count++;
+          }
+          else
+          {
+            $this->notices['enrolments']['failed'][]=$v;
+            $this->logSection('enrolment', sprintf('%s:%s', $v['USER_IMPORT_CODE'], $v['SCHOOLCLASS_ID']), null, 'ERROR');
+            $count++;
+          }
+        }
+      }
+      else
+      {
+        $profile=sfGuardUserProfilePeer::retrieveByImportCode($v['USER_IMPORT_CODE']);
+        $schoolclass=SchoolclassPeer::retrieveByPK($v['SCHOOLCLASS_ID']);
+        if(!$profile or !$schoolclass)
+        {
+          $this->notices['enrolments']['failed'][]=$v;
+          $this->logSection('enrolment', sprintf('%s:%s', $v['USER_IMPORT_CODE'], $v['SCHOOLCLASS_ID']), null, 'ERROR');
+          $count++;
+          continue;
+        }
+        
+        $enrolment = new Enrolment();
+        $enrolment
+        ->setSchoolclass($schoolclass)
+        ->setUserId($profile->getUserId())
+        ->setYearId(sfConfig::get('app_config_current_year'))
+        ->save($this->con)
+        ;
+        
+        $this->notices['enrolments']['new'][]=$enrolment;
+        $this->logSection('enrolment+', sprintf('%s:%s', $v['USER_IMPORT_CODE'], $v['SCHOOLCLASS_ID']), null, 'NOTICE');
+        $count++;
+        
+      }
+    } 
+    
+    return $count;
+
+    
+  }
+
+  protected function updateAppointments(smTsvReader $tsv)
+  {
+    $count=0;
+        
+    while($v=$tsv->fetchAssoc())
+    {
+      $appointment=AppointmentPeer::retrieveByImportCodeSchoolclassIdSubjectShortcut(
+        $v['USER_IMPORT_CODE'],
+        $v['SCHOOLCLASS_ID'],
+        $v['SUBJECT_SHORTCUT']
+        );
+      if($appointment)
+      {
+        $hours=$v['HOURS']*sfConfig::get('app_config_year_weeks', 33);
+        if($appointment->getHours()!=$hours)
+        {
+          $old=$appointment->getHours();
+          
+          $appointment
+          ->setHours($hours)
+          ->save($this->con)
+          ;
+          
+          $this->$this->notices['appointments']['updated'][]=$appointment;
+          $this->logSection('appointment*', sprintf('%s: %d -> %d', $appointment, $old, $appointment->getHours()), null, 'NOTICE');
+          $count++;
+        }
+      }
+      else
+      {
+        $profile=sfGuardUserProfilePeer::retrieveByImportCode($v['USER_IMPORT_CODE']);
+        $schoolclass=SchoolclassPeer::retrieveByPK($v['SCHOOLCLASS_ID']);
+        $subject=SubjectPeer::retrieveByPK($v['SUBJECT_SHORTCUT']);
+        if(!$profile or !$schoolclass or !$subject)
+        {
+          $this->notices['appointments']['failed'][]=$v;
+          $this->logSection('appointment', sprintf('%s:%s:%s', $v['USER_IMPORT_CODE'], $v['SCHOOLCLASS_ID'], $v['SUBJECT_SHORTCUT']), null, 'ERROR');
+          $count++;
+          continue;
+        }
+        
+        $appointment = new Appointment();
+        $appointment
+        ->setUserId($profile->getUserId())
+        ->setSubject($subject)
+        ->setSchoolclass($schoolclass)
+        ->setYearId(sfConfig::get('app_config_current_year'))
+        ->save($this->con)
+        ;
+        $this->notices['appointments']['new'][]=$v;
+        $this->logSection('appointment', $appointment, null, 'ERROR');
+        
+      }
+    } 
+    
+    return $count;
+    
+  }
+
+
+  
   protected function configure()
   {
 
@@ -41,18 +363,11 @@ EOF;
 
     $this->context = sfContext::createInstance($this->configuration);
 
-    $con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
-		$con->beginTransaction();
+    $this->con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
+		$this->con->beginTransaction();
 
     $type=$arguments['type'];
-    
-    $validtypes=array('users', 'enrolments', 'appointments');
 
-    if(!in_array($type, $validtypes))
-    {
-      throw new Exception("Not a valid type specified. Should be one of the following:\n  -" . implode ("\n  -", $validtypes));
-    }
-    
     $tsvfile=$arguments['file'];
     
     if(!is_readable($tsvfile))
@@ -62,23 +377,39 @@ EOF;
     
     $tsv=new smTsvReader($tsvfile);
     $tsv->open();
-    while($v=$tsv->fetchAssoc())
+
+    $validtypes=array('users', 'enrolments', 'appointments');
+    
+    switch ($type)
     {
-      print_r($v);
+      case 'users':
+        $count = $this->updateUsers($tsv);
+        break;
+      case 'enrolments':
+        $count = $this->updateEnrolments($tsv);
+        break;
+      case 'appointments':
+        $count = $this->updateAppointments($tsv);
+        break;
+      default:
+        throw new Exception("Not a valid type specified. Should be one of the following:\n  -" . implode ("\n  -", $validtypes));
+    }
+
+    if($count>0)
+    {
+      $this->_sendConfirmationMessage('backadmin', $type);
     }
     
-    echo "Doing something...\n";
-
     
     if ($options['dry-run'])
     {
       echo "Rolled back!\n";
-      $con->rollback();
+      $this->con->rollback();
     }
     else
     {
       echo "Executed!\n";
-      $con->commit();
+      $this->con->commit();
     }
 
   }
