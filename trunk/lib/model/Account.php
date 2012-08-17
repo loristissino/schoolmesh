@@ -41,13 +41,10 @@ class Account extends BaseAccount
 	{
 		return sprintf('Account «%s»', $this->getAccountType()->getName());
 	}
-	
+
 	public function getUsername()
 	{
-		$c=new Criteria();
-		$c->add(sfGuardUserPeer::ID, $this->getUserId());
-		$t=sfGuardUserPeer::doSelectOne($c);
-		return $t->getUsername();
+    return $this->getSfGuardUser()->getUsername();
 	}
 	
 	public function getProfile()

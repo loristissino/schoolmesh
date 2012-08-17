@@ -1,3 +1,8 @@
+2012/08/17
+Improved 'change password action'
+http://simplythebest.net/scripts/ajax/ajax_password_strength.html
+
+
 2012/08/08
 Added field "code" in schoolproject table
 Modified projects module in order to use the code of the project
