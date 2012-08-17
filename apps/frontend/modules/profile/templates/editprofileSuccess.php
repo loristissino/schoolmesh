@@ -73,3 +73,16 @@
       </td>
     </tr>
   </table>
+  
+  <hr />
+  
+  <h2><?php echo __('Actions') ?></h2>
+  <ul class="sf_admin_actions">
+    <?php echo li_link_to_if(
+    'action_passwordreset',
+    true,
+		__('Change password'),
+		'profile/changepassword',
+		array('title'=>__('Change the password for your SchoolMesh account'))
+		)?>
+  </ul>

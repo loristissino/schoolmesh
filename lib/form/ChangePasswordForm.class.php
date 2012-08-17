@@ -6,7 +6,7 @@
 			
             $this->setWidgets(array(
 			  'current_password' => new sfWidgetFormInputPassword(array(), array('size'=>25)),
-			  'password' => new sfWidgetFormInputPassword(array(), array('size'=>25)),
+			  'password' => new sfWidgetFormInputPassword(array(), array('size'=>25, 'class'=>'password')),
 			  'password_again' => new sfWidgetFormInputPassword(array(), array('size'=>25)),
 			  'type'  => new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true)),
             ));

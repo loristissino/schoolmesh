@@ -17,11 +17,10 @@ FIXME
 This code must be refactored. In particular, it would be nicer to have a sort of PAM-like authentication schema, maybe defining an array of authentication modes.
 */
 
-
 	static function testOnly($username, $password)
 	{
-	$user=sfGuardUserProfilePeer::retrieveByUsername($username);
-	$profile=$user->getProfile();
+    $user=sfGuardUserProfilePeer::retrieveByUsername($username);
+    $profile=$user->getProfile();
 		$profile
 		->setLastLoginAt(time())
 		->save();
@@ -31,47 +30,44 @@ This code must be refactored. In particular, it would be nicer to have a sort of
 	
 	static function checkFirstSambaThenDBPassword($username, $password)
 	{
-		
-	$user=sfGuardUserProfilePeer::retrieveByUsername($username);
-	$profile=$user->getProfile();
+    $user=sfGuardUserProfilePeer::retrieveByUsername($username);
+    $profile=$user->getProfile();
 	
-	if ($profile->hasAccountOfType('samba'))
-	{
-		$authenticationOk=self::checkSambaPassword($username, $password);
-		if ($authenticationOk)
-		{
-			$profile
-			->setLastLoginAt(time())
-			->save();
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	else
-	{
-		$authenticationOk=self::checkDBPassword($username, $password);
-		if ($authenticationOk)
-		{
-			$profile
-			->setLastLoginAt(time())
-			->save();
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+    if ($profile->hasAccountOfType('samba'))
+    {
+      $authenticationOk=self::checkSambaPassword($username, $password);
+      if ($authenticationOk)
+      {
+        $profile
+        ->setLastLoginAt(time())
+        ->save();
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+    else
+    {
+      $authenticationOk=self::checkDBPassword($username, $password);
+      if ($authenticationOk)
+      {
+        $profile
+        ->setLastLoginAt(time())
+        ->save();
+        return true;
+      }
+      else
+      {
+        return false;
+      }
 
-	}
+    }
 	}
 	
 	static function checkDBPassword($username, $password)
 	{
-    
-    
 		$user=sfGuardUserProfilePeer::retrieveByUsername($username);
 		$algorithm = $user->getAlgorithm();
 		if (false !== $pos = strpos($algorithm, '::'))

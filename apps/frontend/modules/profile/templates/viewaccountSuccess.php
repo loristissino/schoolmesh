@@ -50,9 +50,11 @@
 
 <h2><?php echo __('Actions') ?></h2>
 <ul class="sf_admin_actions">
+<?php /*
 <?php if($account->getPasswordIsResettable()): ?>
 	<li class="sf_admin_action_passwordreset"><?php echo link_to(__('Change password'), url_for('profile/changeaccountpassword?type='.$account->getAccountType())) ?></li><br />
 <?php endif ?>
+*/ ?>
 
 <?php if($account->getPasswordIsSynchronizable()): ?>
 	<li class="sf_admin_action_passwordreset"><?php echo link_to(

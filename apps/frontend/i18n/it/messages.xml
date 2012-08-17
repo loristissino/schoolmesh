@@ -4916,6 +4916,14 @@
         <source>Updated appointments</source>
         <target>Incarichi di insegnamento aggiornati</target>
     </trans-unit>
+    <trans-unit id="1426">
+        <source>Password change</source>
+        <target>Modifica della password</target>
+    </trans-unit>
+    <trans-unit id="1427">
+        <source>Password successfully changed.</source>
+        <target>Password modificata con successo.</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

@@ -58,28 +58,38 @@ class profileActions extends sfActions
 
   public function executeViewaccount(sfWebRequest $request)
 	{
-	$availableAccounts=sfConfig::get('app_config_accounts');
-	$type=$request->getParameter('type');
+    $availableAccounts=sfConfig::get('app_config_accounts');
+    $type=$request->getParameter('type');
+    
+    $user=$this->getUser();
+    $profile=$user->getProfile();
+    
+    $this->account=$profile->getAccountByType($type);
+    
+    $this->forward404unless($this->account);
+    
+    if(!$this->getUser()->hasCredential($type))
+    {
+      return sfView::ERROR;
+    }
+    
+    $this->info=$this->account->getBasicInfo();
+    if($this->account->getAccountType()=='posix')
+    {
+      $this->stats=array($user->getProfile()->getUsername()=>$this->account->getQuotaInfo());
+    }
 	
-	$user=$this->getUser();
-	$profile=$user->getProfile();
-	
-	$this->account=$profile->getAccountByType($type);
-	
-	$this->forward404unless($this->account);
+	}
   
-  if(!$this->getUser()->hasCredential($type))
+  public function executeChangepassword(sfWebRequest $request)
   {
-    return sfView::ERROR;
+    $action = sfConfig::get('app_sf_guard_plugin_change_password_action');
+    if(!$action)
+    {
+      throw new Exception('You must specify a change password action in your app.yml file');
+    }
+    return $this->redirect($action);
   }
-	
-	$this->info=$this->account->getBasicInfo();
-  if($this->account->getAccountType()=='posix')
-  {
-    $this->stats=array($user->getProfile()->getUsername()=>$this->account->getQuotaInfo());
-  }
-	
-	}  
 
   public function executeChangeaccountpassword(sfWebRequest $request)
 	{
@@ -91,8 +101,6 @@ class profileActions extends sfActions
 		
 		$this->form=new ChangePasswordForm();
 
-		$this->account=$profile->getAccountByType($type);
-
 		if ($request->isMethod('post'))
 		{
 			$this->form->bind($request->getParameter('userinfo'));
@@ -101,18 +109,27 @@ class profileActions extends sfActions
 				$params = $this->form->getValues();
 				$type=$params['type'];
 				
-				$this->account=$profile->getAccountByType($type);
-				$this->forward404unless($this->account);
-				
-				/*FIXME This should be done with a specific Account-class method */
-				
-				if (Authentication::checkSambaPassword($user->getUsername(), $params['current_password']))
+        $callable = sfConfig::get('app_sf_guard_plugin_check_password_callable');
+        
+				if (call_user_func_array($callable, array($user->getUsername(), $params['current_password'])))
+        /* first, we check if the owner knows his/her password */
+        
 				{
-					$this->account->changePassword($params['password'], true);
-					
-					$this->getUser()->setFlash('notice',
-						$this->getContext()->getI18N()->__('Password successfully changed.')
-						);
+          if($type=='main')
+          {
+            $sfguarduser=sfGuardUserPeer::retrieveByUsername($user->getUsername());
+            $sfguarduser->setPassword($params['password']);
+            $sfguarduser->save();
+          }
+          else
+          {
+            $this->account->changePassword($params['password'], true);
+          }
+            
+          $this->getUser()->setFlash('notice',
+            $this->getContext()->getI18N()->__('Password successfully changed.')
+            );
+          
 				}
 				else
 				{
@@ -120,6 +137,10 @@ class profileActions extends sfActions
 						$this->getContext()->getI18N()->__('Password could not be changed, due to authentication failure.')
 						);
 				}
+        if($type=='main')
+        {
+          $this->redirect('profile/editprofile');
+        }
 				$this->redirect('profile/viewaccount?type=' . $type);
 					
 			}
@@ -132,15 +153,24 @@ class profileActions extends sfActions
 			
 		}
 
-		
-		$this->forward404unless($this->account);
-		
-		$this->form->setDefaults(
-			array(
-				'type'=>$this->account->getAccountType(),
-			)
-		);
-
+    if($type!='main')
+    {
+      $this->forward404Unless($this->account=$profile->getAccountByType($type));
+      $this->forward404Unless($this->account->getPasswordIsResettable());
+      $this->form->setDefaults(
+        array(
+          'type'=>$this->account->getAccountType(),
+        )
+      );
+    }
+    else
+    {
+      $this->form->setDefaults(
+        array(
+          'type'=>'main'
+        )
+      );
+    }
 	
 	}  
 
