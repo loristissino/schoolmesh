@@ -352,6 +352,42 @@ class profileActions extends sfActions
     $url=$sso->getRedirection($request, $this->getUser()->getProfile()->getUsername());
     $this->redirect($sso->getRedirection($request, $this->getUser()->getProfile()->getUsername()));
   }
+
+  public function executeEnable2fa(sfWebRequest $request)
+  {
+    $this->forward404Unless(sfConfig::get('app_authentication_2fa_enabled', false));
+    $this->getUser()->getProfile()->setInitializationKey(Google2FA::generate_secret_key())->save();
+
+    $this->getUser()->setFlash('notice',
+      $this->getContext()->getI18N()->__('Two-factor authentication currently enabled.')
+      );
+
+    $this->redirect($request->getReferer());
+  }
+
+  public function executeDisable2fa(sfWebRequest $request)
+  {
+    $this->forward404Unless(sfConfig::get('app_authentication_2fa_enabled', false));
+    $this->getUser()->getProfile()->setInitializationKey(null)->save();
+    
+    $this->getUser()->setFlash('notice',
+      $this->getContext()->getI18N()->__('Two-factor authentication currently disabled.')
+      );
+
+    $this->redirect($request->getReferer());
+  }
+  
+  public function executeAuthenticator(sfWebRequest $request)
+  {
+    $this->forward404Unless(sfConfig::get('app_authentication_2fa_enabled', false));
+    $this->forward404Unless($this->initialization_key=$this->getUser()->getProfile()->getInitializationKey());
+    
+    $account = urlencode($this->getUser()->getProfile()->getUsername() . '@' . sfConfig::get('app_authentication_2fa_name', 'schoolmesh'));
+    $data = "otpauth://totp/" . $account . "?secret=" . $this->initialization_key;
+    
+    $this->image_url= "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=". $data;
+    
+  }
   
   
 }

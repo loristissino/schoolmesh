@@ -76,7 +76,9 @@ propel:
     preferred_culture: varchar(7)
     last_action_at: timestamp
     last_login_at: timestamp
-
+    last_login_attempt_at: timestamp
+    known_browsers: longvarchar # a serialized arrays of cookie values set on browsers marked as trusted by the user
+    initialization_key: { type: varchar(32), required: false, default: null }  # used for two-factor authentication
 
   account_type:
     id:

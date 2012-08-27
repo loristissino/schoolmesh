@@ -39,6 +39,9 @@ abstract class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'preferred_culture'         => new sfWidgetFormFilterInput(),
       'last_action_at'            => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'last_login_at'             => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'last_login_attempt_at'     => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'known_browsers'            => new sfWidgetFormFilterInput(),
+      'initialization_key'        => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -69,6 +72,9 @@ abstract class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'preferred_culture'         => new sfValidatorPass(array('required' => false)),
       'last_action_at'            => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'last_login_at'             => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'last_login_attempt_at'     => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'known_browsers'            => new sfValidatorPass(array('required' => false)),
+      'initialization_key'        => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('sf_guard_user_profile_filters[%s]');
@@ -114,6 +120,9 @@ abstract class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'preferred_culture'         => 'Text',
       'last_action_at'            => 'Date',
       'last_login_at'             => 'Date',
+      'last_login_attempt_at'     => 'Date',
+      'known_browsers'            => 'Text',
+      'initialization_key'        => 'Text',
     );
   }
 }

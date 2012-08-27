@@ -190,6 +190,24 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $last_login_at;
 
 	/**
+	 * The value for the last_login_attempt_at field.
+	 * @var        string
+	 */
+	protected $last_login_attempt_at;
+
+	/**
+	 * The value for the known_browsers field.
+	 * @var        string
+	 */
+	protected $known_browsers;
+
+	/**
+	 * The value for the initialization_key field.
+	 * @var        string
+	 */
+	protected $initialization_key;
+
+	/**
 	 * @var        sfGuardUser
 	 */
 	protected $asfGuardUser;
@@ -602,6 +620,64 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		} else {
 			return $dt->format($format);
 		}
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [last_login_attempt_at] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getLastLoginAttemptAt($format = 'Y-m-d H:i:s')
+	{
+		if ($this->last_login_attempt_at === null) {
+			return null;
+		}
+
+
+		if ($this->last_login_attempt_at === '0000-00-00 00:00:00') {
+			// while technically this is not a default value of NULL,
+			// this seems to be closest in meaning.
+			return null;
+		} else {
+			try {
+				$dt = new DateTime($this->last_login_attempt_at);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->last_login_attempt_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
+	}
+
+	/**
+	 * Get the [known_browsers] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getKnownBrowsers()
+	{
+		return $this->known_browsers;
+	}
+
+	/**
+	 * Get the [initialization_key] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getInitializationKey()
+	{
+		return $this->initialization_key;
 	}
 
 	/**
@@ -1260,6 +1336,95 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	} // setLastLoginAt()
 
 	/**
+	 * Sets the value of [last_login_attempt_at] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     sfGuardUserProfile The current object (for fluent API support)
+	 */
+	public function setLastLoginAttemptAt($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->last_login_attempt_at !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->last_login_attempt_at !== null && $tmpDt = new DateTime($this->last_login_attempt_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->last_login_attempt_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = sfGuardUserProfilePeer::LAST_LOGIN_ATTEMPT_AT;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setLastLoginAttemptAt()
+
+	/**
+	 * Set the value of [known_browsers] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     sfGuardUserProfile The current object (for fluent API support)
+	 */
+	public function setKnownBrowsers($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->known_browsers !== $v) {
+			$this->known_browsers = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::KNOWN_BROWSERS;
+		}
+
+		return $this;
+	} // setKnownBrowsers()
+
+	/**
+	 * Set the value of [initialization_key] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     sfGuardUserProfile The current object (for fluent API support)
+	 */
+	public function setInitializationKey($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->initialization_key !== $v) {
+			$this->initialization_key = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::INITIALIZATION_KEY;
+		}
+
+		return $this;
+	} // setInitializationKey()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -1331,6 +1496,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->preferred_culture = ($row[$startcol + 25] !== null) ? (string) $row[$startcol + 25] : null;
 			$this->last_action_at = ($row[$startcol + 26] !== null) ? (string) $row[$startcol + 26] : null;
 			$this->last_login_at = ($row[$startcol + 27] !== null) ? (string) $row[$startcol + 27] : null;
+			$this->last_login_attempt_at = ($row[$startcol + 28] !== null) ? (string) $row[$startcol + 28] : null;
+			$this->known_browsers = ($row[$startcol + 29] !== null) ? (string) $row[$startcol + 29] : null;
+			$this->initialization_key = ($row[$startcol + 30] !== null) ? (string) $row[$startcol + 30] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1340,7 +1508,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 28; // 28 = sfGuardUserProfilePeer::NUM_COLUMNS - sfGuardUserProfilePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 31; // 31 = sfGuardUserProfilePeer::NUM_COLUMNS - sfGuardUserProfilePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating sfGuardUserProfile object", $e);
@@ -1760,6 +1928,15 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			case 27:
 				return $this->getLastLoginAt();
 				break;
+			case 28:
+				return $this->getLastLoginAttemptAt();
+				break;
+			case 29:
+				return $this->getKnownBrowsers();
+				break;
+			case 30:
+				return $this->getInitializationKey();
+				break;
 			default:
 				return null;
 				break;
@@ -1809,6 +1986,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$keys[25] => $this->getPreferredCulture(),
 			$keys[26] => $this->getLastActionAt(),
 			$keys[27] => $this->getLastLoginAt(),
+			$keys[28] => $this->getLastLoginAttemptAt(),
+			$keys[29] => $this->getKnownBrowsers(),
+			$keys[30] => $this->getInitializationKey(),
 		);
 		return $result;
 	}
@@ -1924,6 +2104,15 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			case 27:
 				$this->setLastLoginAt($value);
 				break;
+			case 28:
+				$this->setLastLoginAttemptAt($value);
+				break;
+			case 29:
+				$this->setKnownBrowsers($value);
+				break;
+			case 30:
+				$this->setInitializationKey($value);
+				break;
 		} // switch()
 	}
 
@@ -1976,6 +2165,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[25], $arr)) $this->setPreferredCulture($arr[$keys[25]]);
 		if (array_key_exists($keys[26], $arr)) $this->setLastActionAt($arr[$keys[26]]);
 		if (array_key_exists($keys[27], $arr)) $this->setLastLoginAt($arr[$keys[27]]);
+		if (array_key_exists($keys[28], $arr)) $this->setLastLoginAttemptAt($arr[$keys[28]]);
+		if (array_key_exists($keys[29], $arr)) $this->setKnownBrowsers($arr[$keys[29]]);
+		if (array_key_exists($keys[30], $arr)) $this->setInitializationKey($arr[$keys[30]]);
 	}
 
 	/**
@@ -2015,6 +2207,9 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::PREFERRED_CULTURE)) $criteria->add(sfGuardUserProfilePeer::PREFERRED_CULTURE, $this->preferred_culture);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::LAST_ACTION_AT)) $criteria->add(sfGuardUserProfilePeer::LAST_ACTION_AT, $this->last_action_at);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::LAST_LOGIN_AT)) $criteria->add(sfGuardUserProfilePeer::LAST_LOGIN_AT, $this->last_login_at);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::LAST_LOGIN_ATTEMPT_AT)) $criteria->add(sfGuardUserProfilePeer::LAST_LOGIN_ATTEMPT_AT, $this->last_login_attempt_at);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::KNOWN_BROWSERS)) $criteria->add(sfGuardUserProfilePeer::KNOWN_BROWSERS, $this->known_browsers);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::INITIALIZATION_KEY)) $criteria->add(sfGuardUserProfilePeer::INITIALIZATION_KEY, $this->initialization_key);
 
 		return $criteria;
 	}
@@ -2124,6 +2319,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$copyObj->setLastActionAt($this->last_action_at);
 
 		$copyObj->setLastLoginAt($this->last_login_at);
+
+		$copyObj->setLastLoginAttemptAt($this->last_login_attempt_at);
+
+		$copyObj->setKnownBrowsers($this->known_browsers);
+
+		$copyObj->setInitializationKey($this->initialization_key);
 
 
 		$copyObj->setNew(true);

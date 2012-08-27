@@ -1,3 +1,7 @@
+2012/08/27
+Added two-factor authentication.
+
+
 2012/08/17
 Improved 'change password action'
 http://simplythebest.net/scripts/ajax/ajax_password_strength.html
