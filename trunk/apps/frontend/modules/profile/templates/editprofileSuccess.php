@@ -67,6 +67,19 @@
 		</td>
 	</tr>
 	<?php endif ?>
+	<?php if(sfConfig::get('app_authentication_2fa_enabled', false)): ?>
+	<tr>
+		<th><label><?php echo __('2fa') ?></label></th>
+		<td>
+			<?php if($profile->getInitializationKey()): ?>
+        <?php echo __('Two-factor authentication currently enabled.') ?><br />
+        <?php echo link_to(__('Get your smartphone configured'), url_for('profile/authenticator')) ?>
+      <?php else: ?>
+        <?php echo __('Two-factor authentication currently disabled.') ?>
+      <?php endif ?>
+		</td>
+	</tr>
+	<?php endif ?>
 	<tr>
       <td colspan="2">
          <input type="submit" name="save" value="<?php echo __('Save') ?>">
@@ -84,5 +97,22 @@
 		__('Change password'),
 		'profile/changepassword',
 		array('title'=>__('Change the password for your SchoolMesh account'))
+		)?>
+    <?php echo li_link_to_if(
+    'action_enable2fa',
+    sfConfig::get('app_authentication_2fa_enabled', false) && !$sf_user->getProfile()->getInitializationKey(),
+		__('Enable two-factor authentication'),
+		'profile/enable2fa',
+		array('title'=>__('Enable two-factor authentication for your SchoolMesh account'))
+		)?>
+    <?php echo li_link_to_if(
+    'action_disable2fa',
+    sfConfig::get('app_authentication_2fa_enabled', false) && $sf_user->getProfile()->getInitializationKey(),
+		__('Disable two-factor authentication'),
+		'profile/disable2fa',
+		array(
+      'title'=>__('Disable two-factor authentication for your SchoolMesh account'), 
+      'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()) . ' ' . __('You will need to reconfigure all your mobile devices if you disable and then re-enable two-factor authentication.'),
+      )
 		)?>
   </ul>

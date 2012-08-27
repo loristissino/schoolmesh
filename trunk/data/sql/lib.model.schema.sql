@@ -168,6 +168,9 @@ CREATE TABLE `sf_guard_user_profile`
 	`preferred_culture` VARCHAR(7),
 	`last_action_at` DATETIME,
 	`last_login_at` DATETIME,
+	`last_login_attempt_at` DATETIME,
+	`known_browsers` TEXT,
+	`initialization_key` VARCHAR(32),
 	PRIMARY KEY (`user_id`),
 	CONSTRAINT `sf_guard_user_profile_FK_1`
 		FOREIGN KEY (`user_id`)

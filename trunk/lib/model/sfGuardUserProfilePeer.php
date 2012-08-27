@@ -33,6 +33,17 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
     return $t;
 	}
 
+
+	public static function retrieveProfileByUsername($username)
+	{
+    $c=new Criteria();
+    $c->addJoin(sfGuardUserProfilePeer::USER_ID, sfGuardUserPeer::ID);
+    $c->add(sfGuardUserPeer::USERNAME, $username);
+    $t = sfGuardUserProfilePeer::doSelectOne($c);
+    return $t;
+	}
+
+
 	public static function retrieveByImportCode($importCode)
 	{
     $c=new Criteria();
