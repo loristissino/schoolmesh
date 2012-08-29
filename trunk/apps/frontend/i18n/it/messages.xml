@@ -4992,11 +4992,17 @@
         <source>Edit security information</source>
         <target>Modifica informazioni relative alla sicurezza</target>
     </trans-unit>
+    <trans-unit id="1445">
+        <source>Edit security information for your SchoolMesh account</source>
+        <target>Modifica informazioni relative alla sicurezza per il tuo account SchoolMesh</target>
+    </trans-unit>
+    <trans-unit id="1446">
+        <source>you will be asked for your password if you logged in long ago</source>
+        <target>ti verrà chiesta la password se hai fatto il login molto tempo fa</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
-
-
 
 
 

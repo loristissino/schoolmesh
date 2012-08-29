@@ -89,8 +89,8 @@
     'action_security',
     sfConfig::get('app_authentication_2fa_enabled', false),
 		__('Edit security information'),
-		'profile/editsecurity',
-		array('title'=>__('Edit security information for your SchoolMesh account'))
+		url_for('profile/editsecurity?loginas=' . $sf_user->getProfile()->getUsername()),
+		array('title'=>__('Edit security information for your SchoolMesh account') . ' (' . __('you will be asked for your password if you logged in long ago') . ')')
 		)?>
     
   </ul>
