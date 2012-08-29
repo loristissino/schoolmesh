@@ -15,6 +15,11 @@ require 'lib/model/om/BasesfGuardUserSecurity.php';
  * @package    lib.model
  */
 class sfGuardUserSecurity extends BasesfGuardUserSecurity {
+  
+  public function getProfile()
+  {
+    return sfGuardUserProfilePeer::retrieveByPK($this->getUserId());
+  }
 
   public function get2FACheck($code)
   {
@@ -34,10 +39,14 @@ class sfGuardUserSecurity extends BasesfGuardUserSecurity {
     
   }
   
+  private function _getCookieName()
+  {
+    return sfConfig::get('app_authentication_2fa_trusted_browser_cookie_name', 'smtb') . substr(sha1($this->getProfile()->getImportCode()), 0, 6);
+  }
   
   public function getBrowserIsTrusted(sfWebRequest $request)
   {
-    $trusted_browser_cookie = $request->getCookie(sfConfig::get('app_authentication_2fa_trusted_browser_cookie_name', 'smtb'));
+    $trusted_browser_cookie = $request->getCookie($this->_getCookieName());
     
     $trusted_browsers = $this->getTrustedBrowsers();
     
@@ -54,13 +63,15 @@ class sfGuardUserSecurity extends BasesfGuardUserSecurity {
     $expiry = time() + sfConfig::get('app_authentication_2fa_trusted_browser_validity', 2592000);
     
     $response->setCookie(
-      sfConfig::get('app_authentication_2fa_trusted_browser_cookie_name', 'smtb'),
+      $this->_getCookieName(),
       $new_browser_cookie,
       $expiry
       );
     $trusted_browsers[$new_browser_cookie]=$expiry;
     $this->setTrustedBrowsers($trusted_browsers);
     $this->save();
+    
+    return $this;
   }
 
   public function getTrustedBrowsers()
@@ -82,6 +93,8 @@ class sfGuardUserSecurity extends BasesfGuardUserSecurity {
     }
     
     $this->setTrustedBrowsersSerialized(serialize($new));
+    
+    return $this;
   }
 
 } // sfGuardUserSecurity

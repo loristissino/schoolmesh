@@ -371,7 +371,11 @@ class profileActions extends sfActions
       $security=new sfGuardUserSecurity();
       $security->setUserId($this->getUser()->getProfile()->getUserId());
     }
-    $security->setInitializationKey(Google2FA::generate_secret_key())->save();
+    $security
+    ->setInitializationKey(Google2FA::generate_secret_key())
+    ->setTrustedBrowsers(array())
+    ->save()
+    ;
 
     $this->getUser()->setFlash('notice',
       $this->getContext()->getI18N()->__('Two-factor authentication currently enabled.')
@@ -393,7 +397,11 @@ class profileActions extends sfActions
     
     $this->forward404Unless($this->sec=sfGuardUserSecurityPeer::retrieveByUsername($this->getUser()->getProfile()->getUsername()));
   
-    $this->sec->setInitializationKey(null)->save();
+    $this->sec
+    ->setInitializationKey(null)
+    ->setTrustedBrowsers(array())
+    ->save()
+    ;
     
     $this->getUser()->setFlash('notice',
       $this->getContext()->getI18N()->__('Two-factor authentication currently disabled.')
@@ -430,8 +438,9 @@ class profileActions extends sfActions
     
     if(time() - $this->getUser()->getProfile()->getLastLoginAt('U') > sfConfig::get('app_authentication_security_timewindow', 60))
     {
+      $username=$this->getUser()->getProfile()->getUsername();
       $this->getUser()->signOut();
-      return $this->redirect('profile/editsecurity');
+      return $this->redirect('profile/editsecurity?loginas=' .$username);
     }
    
   }
