@@ -18,11 +18,27 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
     if ($type=='users' and isset($this->notices['users']))
     {
       $text='';
-      foreach($this->notices['users'] as $profile)
+      
+      if(isset($this->notices['users']['imported']))
       {
-        $text.='* ' .$profile->getUsername() . ' => ' . $profile->getFullName() . "\n";
-        $text.='  ' .sfConfig::get('app_school_website').'/users/edit?id=' . $profile->getId() . "\n\n";
+        $text .= $this->context->getI18N()->__('New users') . ":\n";
+        foreach($this->notices['users']['imported'] as $profile)
+        {
+          $text.='* ' .$profile->getUsername() . ' => ' . $profile->getFullName() . "\n";
+          $text.='  ' .sfConfig::get('app_school_schoolmesh_url').'/users/edit?id=' . $profile->getId() . "\n\n";
+        }
       }
+
+      if(isset($this->notices['users']['failed']))
+      {
+        $text .= $this->context->getI18N()->__('Not imported users') . ":\n";
+        foreach($this->notices['users']['failed'] as $value)
+        {
+          $text.='* ' .$value . "\n";
+        }
+      }
+      
+      
     }
 
     if ($type=='enrolments' and isset($this->notices['enrolments']))
@@ -138,10 +154,11 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
     
     while($v=$tsv->fetchAssoc())
     {
+      print_r($v);
       $profile=sfGuardUserProfilePeer::retrieveByImportCode($v['USER_IMPORT_CODE']);
       if($profile)
       {
-        //$this->logSection('user=', $profile->getFullName(), null, 'COMMENT');
+        $this->logSection('user=', $profile->getFullName(), null, 'COMMENT');
       }
       else
       {
@@ -186,22 +203,43 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
         $profile->setRole($role);
 
         $user = new sfGuardUser();
-        $username_found=$profile->findGoodUsername();
-        $user
-				->setUsername($username_found['username'])
-				->save($this->con);
-				$profile
-				->setUserId($user->getId())
-				->save($this->con);
+        
+        if(array_key_exists('USERNAME', $v))
+        {
+          $username=$v['USERNAME'];
+        }
+        else
+        {
+          $username_found=$profile->findGoodUsername();
+          $username=$username_found['username'];
+        }
+
+        if(sfGuardUserProfilePeer::retrieveByUsername($username))
+        {
+          // we cannot use a try-catch, because we would cause nested transactions...
+          // so we check the presence before inserting...
+          $this->logSection('user', $username . ' => ' . $v['FIRST_NAME'] . ' ' . $v['LAST_NAME'], null, 'ERROR');
+          $this->notices['users']['failed'][]=$v['FIRST_NAME'] . ' ' . $v['LAST_NAME'];
+        }
+        else
+        {
+          $user
+          ->setUsername($username)
+          ->save($this->con);
+          $profile
+          ->setUserId($user->getId())
+          ->save($this->con);
+          
+          $this->notices['users']['imported'][]=$profile;
+
+          // we do this now, because we could not before, since the object was not yet saved
+          $profile->addToGuardGroup($guardgroup);
+
+          $this->logSection('user+', $profile->getUsername() . ' => ' . $profile->getFullName(), null, 'NOTICE');
+        }
         
         $count++;
 
-        $this->notices['users'][]=$profile;
-
-        // we do this now, because we could not before, since the object was not yet saved
-        $profile->addToGuardGroup($guardgroup);
-
-        $this->logSection('user+', $profile->getUsername() . ' => ' . $profile->getFullName(), null, 'NOTICE');
       }
     }
     

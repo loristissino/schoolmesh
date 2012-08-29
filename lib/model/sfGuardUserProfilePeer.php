@@ -46,6 +46,10 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
 	public static function retrieveByImportCode($importCode)
 	{
+    if(!$importCode)
+    {
+      return null; 
+    }
     $c=new Criteria();
     $c->add(self::IMPORT_CODE, $importCode);
     $t = self::doSelectOne($c);
