@@ -1,67 +1,58 @@
 <?php
 
 /**
- * Base static class for performing query and update operations on the 'sf_guard_user' table.
+ * Base static class for performing query and update operations on the 'sf_guard_user_security' table.
  *
  * 
  *
- * @package    plugins.sfGuardPlugin.lib.model.om
+ * @package    lib.model.om
  */
-abstract class BasesfGuardUserPeer {
+abstract class BasesfGuardUserSecurityPeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'sf_guard_user';
+	const TABLE_NAME = 'sf_guard_user_security';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'sfGuardUser';
+	const OM_CLASS = 'sfGuardUserSecurity';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'plugins.sfGuardPlugin.lib.model.sfGuardUser';
+	const CLASS_DEFAULT = 'lib.model.sfGuardUserSecurity';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'sfGuardUserTableMap';
+	const TM_CLASS = 'sfGuardUserSecurityTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 9;
+	const NUM_COLUMNS = 6;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
-	/** the column name for the ID field */
-	const ID = 'sf_guard_user.ID';
+	/** the column name for the USER_ID field */
+	const USER_ID = 'sf_guard_user_security.USER_ID';
 
-	/** the column name for the USERNAME field */
-	const USERNAME = 'sf_guard_user.USERNAME';
+	/** the column name for the LAST_LOGIN_ATTEMPT_AT field */
+	const LAST_LOGIN_ATTEMPT_AT = 'sf_guard_user_security.LAST_LOGIN_ATTEMPT_AT';
 
-	/** the column name for the ALGORITHM field */
-	const ALGORITHM = 'sf_guard_user.ALGORITHM';
+	/** the column name for the TRUSTED_BROWSERS_SERIALIZED field */
+	const TRUSTED_BROWSERS_SERIALIZED = 'sf_guard_user_security.TRUSTED_BROWSERS_SERIALIZED';
 
-	/** the column name for the SALT field */
-	const SALT = 'sf_guard_user.SALT';
-
-	/** the column name for the PASSWORD field */
-	const PASSWORD = 'sf_guard_user.PASSWORD';
+	/** the column name for the INITIALIZATION_KEY field */
+	const INITIALIZATION_KEY = 'sf_guard_user_security.INITIALIZATION_KEY';
 
 	/** the column name for the CREATED_AT field */
-	const CREATED_AT = 'sf_guard_user.CREATED_AT';
+	const CREATED_AT = 'sf_guard_user_security.CREATED_AT';
 
-	/** the column name for the LAST_LOGIN field */
-	const LAST_LOGIN = 'sf_guard_user.LAST_LOGIN';
-
-	/** the column name for the IS_ACTIVE field */
-	const IS_ACTIVE = 'sf_guard_user.IS_ACTIVE';
-
-	/** the column name for the IS_SUPER_ADMIN field */
-	const IS_SUPER_ADMIN = 'sf_guard_user.IS_SUPER_ADMIN';
+	/** the column name for the UPDATED_AT field */
+	const UPDATED_AT = 'sf_guard_user_security.UPDATED_AT';
 
 	/**
-	 * An identiy map to hold any loaded instances of sfGuardUser objects.
+	 * An identiy map to hold any loaded instances of sfGuardUserSecurity objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array sfGuardUser[]
+	 * @var        array sfGuardUserSecurity[]
 	 */
 	public static $instances = array();
 
@@ -80,11 +71,11 @@ abstract class BasesfGuardUserPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Username', 'Algorithm', 'Salt', 'Password', 'CreatedAt', 'LastLogin', 'IsActive', 'IsSuperAdmin', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'username', 'algorithm', 'salt', 'password', 'createdAt', 'lastLogin', 'isActive', 'isSuperAdmin', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USERNAME, self::ALGORITHM, self::SALT, self::PASSWORD, self::CREATED_AT, self::LAST_LOGIN, self::IS_ACTIVE, self::IS_SUPER_ADMIN, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'username', 'algorithm', 'salt', 'password', 'created_at', 'last_login', 'is_active', 'is_super_admin', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+		BasePeer::TYPE_PHPNAME => array ('UserId', 'LastLoginAttemptAt', 'TrustedBrowsersSerialized', 'InitializationKey', 'CreatedAt', 'UpdatedAt', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('userId', 'lastLoginAttemptAt', 'trustedBrowsersSerialized', 'initializationKey', 'createdAt', 'updatedAt', ),
+		BasePeer::TYPE_COLNAME => array (self::USER_ID, self::LAST_LOGIN_ATTEMPT_AT, self::TRUSTED_BROWSERS_SERIALIZED, self::INITIALIZATION_KEY, self::CREATED_AT, self::UPDATED_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('user_id', 'last_login_attempt_at', 'trusted_browsers_serialized', 'initialization_key', 'created_at', 'updated_at', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -94,11 +85,11 @@ abstract class BasesfGuardUserPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Username' => 1, 'Algorithm' => 2, 'Salt' => 3, 'Password' => 4, 'CreatedAt' => 5, 'LastLogin' => 6, 'IsActive' => 7, 'IsSuperAdmin' => 8, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'username' => 1, 'algorithm' => 2, 'salt' => 3, 'password' => 4, 'createdAt' => 5, 'lastLogin' => 6, 'isActive' => 7, 'isSuperAdmin' => 8, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USERNAME => 1, self::ALGORITHM => 2, self::SALT => 3, self::PASSWORD => 4, self::CREATED_AT => 5, self::LAST_LOGIN => 6, self::IS_ACTIVE => 7, self::IS_SUPER_ADMIN => 8, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'username' => 1, 'algorithm' => 2, 'salt' => 3, 'password' => 4, 'created_at' => 5, 'last_login' => 6, 'is_active' => 7, 'is_super_admin' => 8, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+		BasePeer::TYPE_PHPNAME => array ('UserId' => 0, 'LastLoginAttemptAt' => 1, 'TrustedBrowsersSerialized' => 2, 'InitializationKey' => 3, 'CreatedAt' => 4, 'UpdatedAt' => 5, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('userId' => 0, 'lastLoginAttemptAt' => 1, 'trustedBrowsersSerialized' => 2, 'initializationKey' => 3, 'createdAt' => 4, 'updatedAt' => 5, ),
+		BasePeer::TYPE_COLNAME => array (self::USER_ID => 0, self::LAST_LOGIN_ATTEMPT_AT => 1, self::TRUSTED_BROWSERS_SERIALIZED => 2, self::INITIALIZATION_KEY => 3, self::CREATED_AT => 4, self::UPDATED_AT => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('user_id' => 0, 'last_login_attempt_at' => 1, 'trusted_browsers_serialized' => 2, 'initialization_key' => 3, 'created_at' => 4, 'updated_at' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -147,12 +138,12 @@ abstract class BasesfGuardUserPeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. sfGuardUserPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. sfGuardUserSecurityPeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(sfGuardUserPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(sfGuardUserSecurityPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -168,15 +159,12 @@ abstract class BasesfGuardUserPeer {
 	 */
 	public static function addSelectColumns(Criteria $criteria)
 	{
-		$criteria->addSelectColumn(sfGuardUserPeer::ID);
-		$criteria->addSelectColumn(sfGuardUserPeer::USERNAME);
-		$criteria->addSelectColumn(sfGuardUserPeer::ALGORITHM);
-		$criteria->addSelectColumn(sfGuardUserPeer::SALT);
-		$criteria->addSelectColumn(sfGuardUserPeer::PASSWORD);
-		$criteria->addSelectColumn(sfGuardUserPeer::CREATED_AT);
-		$criteria->addSelectColumn(sfGuardUserPeer::LAST_LOGIN);
-		$criteria->addSelectColumn(sfGuardUserPeer::IS_ACTIVE);
-		$criteria->addSelectColumn(sfGuardUserPeer::IS_SUPER_ADMIN);
+		$criteria->addSelectColumn(sfGuardUserSecurityPeer::USER_ID);
+		$criteria->addSelectColumn(sfGuardUserSecurityPeer::LAST_LOGIN_ATTEMPT_AT);
+		$criteria->addSelectColumn(sfGuardUserSecurityPeer::TRUSTED_BROWSERS_SERIALIZED);
+		$criteria->addSelectColumn(sfGuardUserSecurityPeer::INITIALIZATION_KEY);
+		$criteria->addSelectColumn(sfGuardUserSecurityPeer::CREATED_AT);
+		$criteria->addSelectColumn(sfGuardUserSecurityPeer::UPDATED_AT);
 	}
 
 	/**
@@ -195,21 +183,21 @@ abstract class BasesfGuardUserPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(sfGuardUserPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(sfGuardUserSecurityPeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			sfGuardUserPeer::addSelectColumns($criteria);
+			sfGuardUserSecurityPeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 		$criteria->setDbName(self::DATABASE_NAME); // Set the correct dbName
 
 		if ($con === null) {
-			$con = Propel::getConnection(sfGuardUserPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(sfGuardUserSecurityPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 		// BasePeer returns a PDOStatement
 		$stmt = BasePeer::doCount($criteria, $con);
@@ -227,7 +215,7 @@ abstract class BasesfGuardUserPeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PropelPDO $con
-	 * @return     sfGuardUser
+	 * @return     sfGuardUserSecurity
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -235,7 +223,7 @@ abstract class BasesfGuardUserPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = sfGuardUserPeer::doSelect($critcopy, $con);
+		$objects = sfGuardUserSecurityPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -252,7 +240,7 @@ abstract class BasesfGuardUserPeer {
 	 */
 	public static function doSelect(Criteria $criteria, PropelPDO $con = null)
 	{
-		return sfGuardUserPeer::populateObjects(sfGuardUserPeer::doSelectStmt($criteria, $con));
+		return sfGuardUserSecurityPeer::populateObjects(sfGuardUserSecurityPeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -270,12 +258,12 @@ abstract class BasesfGuardUserPeer {
 	public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(sfGuardUserPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(sfGuardUserSecurityPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		if (!$criteria->hasSelectClause()) {
 			$criteria = clone $criteria;
-			sfGuardUserPeer::addSelectColumns($criteria);
+			sfGuardUserSecurityPeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -293,14 +281,14 @@ abstract class BasesfGuardUserPeer {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      sfGuardUser $value A sfGuardUser object.
+	 * @param      sfGuardUserSecurity $value A sfGuardUserSecurity object.
 	 * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
 	 */
-	public static function addInstanceToPool(sfGuardUser $obj, $key = null)
+	public static function addInstanceToPool(sfGuardUserSecurity $obj, $key = null)
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
-				$key = (string) $obj->getId();
+				$key = (string) $obj->getUserId();
 			} // if key === null
 			self::$instances[$key] = $obj;
 		}
@@ -314,18 +302,18 @@ abstract class BasesfGuardUserPeer {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A sfGuardUser object or a primary key value.
+	 * @param      mixed $value A sfGuardUserSecurity object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
-			if (is_object($value) && $value instanceof sfGuardUser) {
-				$key = (string) $value->getId();
+			if (is_object($value) && $value instanceof sfGuardUserSecurity) {
+				$key = (string) $value->getUserId();
 			} elseif (is_scalar($value)) {
 				// assume we've been passed a primary key
 				$key = (string) $value;
 			} else {
-				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or sfGuardUser object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or sfGuardUserSecurity object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
 				throw $e;
 			}
 
@@ -340,7 +328,7 @@ abstract class BasesfGuardUserPeer {
 	 * a multi-column primary key, a serialize()d version of the primary key will be returned.
 	 *
 	 * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-	 * @return     sfGuardUser Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+	 * @return     sfGuardUserSecurity Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
 	 * @see        getPrimaryKeyHash()
 	 */
 	public static function getInstanceFromPool($key)
@@ -364,35 +352,11 @@ abstract class BasesfGuardUserPeer {
 	}
 	
 	/**
-	 * Method to invalidate the instance pool of all tables related to sf_guard_user
+	 * Method to invalidate the instance pool of all tables related to sf_guard_user_security
 	 * by a foreign key with ON DELETE CASCADE
 	 */
 	public static function clearRelatedInstancePool()
 	{
-		// invalidate objects in RecuperationHintPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		RecuperationHintPeer::clearInstancePool();
-
-		// invalidate objects in sfGuardUserProfilePeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		sfGuardUserProfilePeer::clearInstancePool();
-
-		// invalidate objects in sfGuardUserSecurityPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		sfGuardUserSecurityPeer::clearInstancePool();
-
-		// invalidate objects in AccountPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		AccountPeer::clearInstancePool();
-
-		// invalidate objects in WpmodulePeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		WpmodulePeer::clearInstancePool();
-
-		// invalidate objects in sfGuardUserPermissionPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		sfGuardUserPermissionPeer::clearInstancePool();
-
-		// invalidate objects in sfGuardUserGroupPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		sfGuardUserGroupPeer::clearInstancePool();
-
-		// invalidate objects in sfGuardRememberKeyPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-		sfGuardRememberKeyPeer::clearInstancePool();
-
 	}
 
 	/**
@@ -426,11 +390,11 @@ abstract class BasesfGuardUserPeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = sfGuardUserPeer::getOMClass(false);
+		$cls = sfGuardUserSecurityPeer::getOMClass(false);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj = sfGuardUserPeer::getInstanceFromPool($key))) {
+			$key = sfGuardUserSecurityPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj = sfGuardUserSecurityPeer::getInstanceFromPool($key))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj->hydrate($row, 0, true); // rehydrate
@@ -439,12 +403,247 @@ abstract class BasesfGuardUserPeer {
 				$obj = new $cls();
 				$obj->hydrate($row);
 				$results[] = $obj;
-				sfGuardUserPeer::addInstanceToPool($obj, $key);
+				sfGuardUserSecurityPeer::addInstanceToPool($obj, $key);
 			} // if key exists
 		}
 		$stmt->closeCursor();
 		return $results;
 	}
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related sfGuardUser table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinsfGuardUser(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(sfGuardUserSecurityPeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			sfGuardUserSecurityPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(sfGuardUserSecurityPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(sfGuardUserSecurityPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Selects a collection of sfGuardUserSecurity objects pre-filled with their sfGuardUser objects.
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of sfGuardUserSecurity objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinsfGuardUser(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		sfGuardUserSecurityPeer::addSelectColumns($criteria);
+		$startcol = (sfGuardUserSecurityPeer::NUM_COLUMNS - sfGuardUserSecurityPeer::NUM_LAZY_LOAD_COLUMNS);
+		sfGuardUserPeer::addSelectColumns($criteria);
+
+		$criteria->addJoin(sfGuardUserSecurityPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = sfGuardUserSecurityPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = sfGuardUserSecurityPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+
+				$cls = sfGuardUserSecurityPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				sfGuardUserSecurityPeer::addInstanceToPool($obj1, $key1);
+			} // if $obj1 already loaded
+
+			$key2 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			if ($key2 !== null) {
+				$obj2 = sfGuardUserPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol);
+					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 already loaded
+				
+				// Add the $obj1 (sfGuardUserSecurity) to $obj2 (sfGuardUser)
+				// one to one relationship
+				$obj1->setsfGuardUser($obj2);
+
+			} // if joined row was not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining all related tables
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAll(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(sfGuardUserSecurityPeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			sfGuardUserSecurityPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(sfGuardUserSecurityPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(sfGuardUserSecurityPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+	/**
+	 * Selects a collection of sfGuardUserSecurity objects pre-filled with all related objects.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of sfGuardUserSecurity objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAll(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		sfGuardUserSecurityPeer::addSelectColumns($criteria);
+		$startcol2 = (sfGuardUserSecurityPeer::NUM_COLUMNS - sfGuardUserSecurityPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(sfGuardUserSecurityPeer::USER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = sfGuardUserSecurityPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = sfGuardUserSecurityPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = sfGuardUserSecurityPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				sfGuardUserSecurityPeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+			// Add objects for joined sfGuardUser rows
+
+			$key2 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			if ($key2 !== null) {
+				$obj2 = sfGuardUserPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 loaded
+
+				// Add the $obj1 (sfGuardUserSecurity) to the collection in $obj2 (sfGuardUser)
+				$obj1->setsfGuardUser($obj2);
+			} // if joined row not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
 	/**
 	 * Returns the TableMap related to this peer.
 	 * This method is not needed for general use but a specific application could have a need.
@@ -462,10 +661,10 @@ abstract class BasesfGuardUserPeer {
 	 */
 	public static function buildTableMap()
 	{
-	  $dbMap = Propel::getDatabaseMap(BasesfGuardUserPeer::DATABASE_NAME);
-	  if (!$dbMap->hasTable(BasesfGuardUserPeer::TABLE_NAME))
+	  $dbMap = Propel::getDatabaseMap(BasesfGuardUserSecurityPeer::DATABASE_NAME);
+	  if (!$dbMap->hasTable(BasesfGuardUserSecurityPeer::TABLE_NAME))
 	  {
-	    $dbMap->addTableObject(new sfGuardUserTableMap());
+	    $dbMap->addTableObject(new sfGuardUserSecurityTableMap());
 	  }
 	}
 
@@ -482,13 +681,13 @@ abstract class BasesfGuardUserPeer {
 	 */
 	public static function getOMClass($withPrefix = true)
 	{
-		return $withPrefix ? sfGuardUserPeer::CLASS_DEFAULT : sfGuardUserPeer::OM_CLASS;
+		return $withPrefix ? sfGuardUserSecurityPeer::CLASS_DEFAULT : sfGuardUserSecurityPeer::OM_CLASS;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a sfGuardUser or Criteria object.
+	 * Method perform an INSERT on the database, given a sfGuardUserSecurity or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or sfGuardUser object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or sfGuardUserSecurity object containing data that is used to create the INSERT statement.
 	 * @param      PropelPDO $con the PropelPDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -497,17 +696,13 @@ abstract class BasesfGuardUserPeer {
 	public static function doInsert($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(sfGuardUserPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(sfGuardUserSecurityPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from sfGuardUser object
-		}
-
-		if ($criteria->containsKey(sfGuardUserPeer::ID) && $criteria->keyContainsValue(sfGuardUserPeer::ID) ) {
-			throw new PropelException('Cannot insert a value for auto-increment primary key ('.sfGuardUserPeer::ID.')');
+			$criteria = $values->buildCriteria(); // build Criteria from sfGuardUserSecurity object
 		}
 
 
@@ -529,9 +724,9 @@ abstract class BasesfGuardUserPeer {
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a sfGuardUser or Criteria object.
+	 * Method perform an UPDATE on the database, given a sfGuardUserSecurity or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or sfGuardUser object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or sfGuardUserSecurity object containing data that is used to create the UPDATE statement.
 	 * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -540,7 +735,7 @@ abstract class BasesfGuardUserPeer {
 	public static function doUpdate($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(sfGuardUserPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(sfGuardUserSecurityPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		$selectCriteria = new Criteria(self::DATABASE_NAME);
@@ -548,10 +743,10 @@ abstract class BasesfGuardUserPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(sfGuardUserPeer::ID);
-			$selectCriteria->add(sfGuardUserPeer::ID, $criteria->remove(sfGuardUserPeer::ID), $comparison);
+			$comparison = $criteria->getComparison(sfGuardUserSecurityPeer::USER_ID);
+			$selectCriteria->add(sfGuardUserSecurityPeer::USER_ID, $criteria->remove(sfGuardUserSecurityPeer::USER_ID), $comparison);
 
-		} else { // $values is sfGuardUser object
+		} else { // $values is sfGuardUserSecurity object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -563,26 +758,26 @@ abstract class BasesfGuardUserPeer {
 	}
 
 	/**
-	 * Method to DELETE all rows from the sf_guard_user table.
+	 * Method to DELETE all rows from the sf_guard_user_security table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
 	public static function doDeleteAll($con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(sfGuardUserPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(sfGuardUserSecurityPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		$affectedRows = 0; // initialize var to track total num of affected rows
 		try {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(sfGuardUserPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(sfGuardUserSecurityPeer::TABLE_NAME, $con);
 			// Because this db requires some delete cascade/set null emulation, we have to
 			// clear the cached instance *after* the emulation has happened (since
 			// instances get re-added by the select statement contained therein).
-			sfGuardUserPeer::clearInstancePool();
-			sfGuardUserPeer::clearRelatedInstancePool();
+			sfGuardUserSecurityPeer::clearInstancePool();
+			sfGuardUserSecurityPeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -592,9 +787,9 @@ abstract class BasesfGuardUserPeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a sfGuardUser or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a sfGuardUserSecurity or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or sfGuardUser object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or sfGuardUserSecurity object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PropelPDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -605,27 +800,27 @@ abstract class BasesfGuardUserPeer {
 	 public static function doDelete($values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(sfGuardUserPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(sfGuardUserSecurityPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			sfGuardUserPeer::clearInstancePool();
+			sfGuardUserSecurityPeer::clearInstancePool();
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof sfGuardUser) { // it's a model object
+		} elseif ($values instanceof sfGuardUserSecurity) { // it's a model object
 			// invalidate the cache for this single object
-			sfGuardUserPeer::removeInstanceFromPool($values);
+			sfGuardUserSecurityPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(sfGuardUserPeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(sfGuardUserSecurityPeer::USER_ID, (array) $values, Criteria::IN);
 			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				sfGuardUserPeer::removeInstanceFromPool($singleval);
+				sfGuardUserSecurityPeer::removeInstanceFromPool($singleval);
 			}
 		}
 
@@ -640,7 +835,7 @@ abstract class BasesfGuardUserPeer {
 			$con->beginTransaction();
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
-			sfGuardUserPeer::clearRelatedInstancePool();
+			sfGuardUserSecurityPeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -650,24 +845,24 @@ abstract class BasesfGuardUserPeer {
 	}
 
 	/**
-	 * Validates all modified columns of given sfGuardUser object.
+	 * Validates all modified columns of given sfGuardUserSecurity object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      sfGuardUser $obj The object to validate.
+	 * @param      sfGuardUserSecurity $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(sfGuardUser $obj, $cols = null)
+	public static function doValidate(sfGuardUserSecurity $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(sfGuardUserPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(sfGuardUserPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(sfGuardUserSecurityPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(sfGuardUserSecurityPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -683,7 +878,7 @@ abstract class BasesfGuardUserPeer {
 
 		}
 
-		return BasePeer::doValidate(sfGuardUserPeer::DATABASE_NAME, sfGuardUserPeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(sfGuardUserSecurityPeer::DATABASE_NAME, sfGuardUserSecurityPeer::TABLE_NAME, $columns);
 	}
 
 	/**
@@ -691,23 +886,23 @@ abstract class BasesfGuardUserPeer {
 	 *
 	 * @param      int $pk the primary key.
 	 * @param      PropelPDO $con the connection to use
-	 * @return     sfGuardUser
+	 * @return     sfGuardUserSecurity
 	 */
 	public static function retrieveByPK($pk, PropelPDO $con = null)
 	{
 
-		if (null !== ($obj = sfGuardUserPeer::getInstanceFromPool((string) $pk))) {
+		if (null !== ($obj = sfGuardUserSecurityPeer::getInstanceFromPool((string) $pk))) {
 			return $obj;
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(sfGuardUserPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(sfGuardUserSecurityPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-		$criteria->add(sfGuardUserPeer::ID, $pk);
+		$criteria = new Criteria(sfGuardUserSecurityPeer::DATABASE_NAME);
+		$criteria->add(sfGuardUserSecurityPeer::USER_ID, $pk);
 
-		$v = sfGuardUserPeer::doSelect($criteria, $con);
+		$v = sfGuardUserSecurityPeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -723,16 +918,16 @@ abstract class BasesfGuardUserPeer {
 	public static function retrieveByPKs($pks, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(sfGuardUserPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(sfGuardUserSecurityPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		$objs = null;
 		if (empty($pks)) {
 			$objs = array();
 		} else {
-			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
-			$criteria->add(sfGuardUserPeer::ID, $pks, Criteria::IN);
-			$objs = sfGuardUserPeer::doSelect($criteria, $con);
+			$criteria = new Criteria(sfGuardUserSecurityPeer::DATABASE_NAME);
+			$criteria->add(sfGuardUserSecurityPeer::USER_ID, $pks, Criteria::IN);
+			$objs = sfGuardUserSecurityPeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
@@ -746,12 +941,12 @@ abstract class BasesfGuardUserPeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array(array('username'));
+	  return array();
 	}
 
-} // BasesfGuardUserPeer
+} // BasesfGuardUserSecurityPeer
 
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BasesfGuardUserPeer::buildTableMap();
+BasesfGuardUserSecurityPeer::buildTableMap();
 

@@ -91,6 +91,11 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	protected $singlesfGuardUserProfile;
 
 	/**
+	 * @var        sfGuardUserSecurity one-to-one related sfGuardUserSecurity object
+	 */
+	protected $singlesfGuardUserSecurity;
+
+	/**
 	 * @var        array Account[] Collection to store aggregation of Account objects.
 	 */
 	protected $collAccounts;
@@ -874,6 +879,8 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 			$this->singlesfGuardUserProfile = null;
 
+			$this->singlesfGuardUserSecurity = null;
+
 			$this->collAccounts = null;
 			$this->lastAccountCriteria = null;
 
@@ -1092,6 +1099,12 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			if ($this->singlesfGuardUserProfile !== null) {
 				if (!$this->singlesfGuardUserProfile->isDeleted()) {
 						$affectedRows += $this->singlesfGuardUserProfile->save($con);
+				}
+			}
+
+			if ($this->singlesfGuardUserSecurity !== null) {
+				if (!$this->singlesfGuardUserSecurity->isDeleted()) {
+						$affectedRows += $this->singlesfGuardUserSecurity->save($con);
 				}
 			}
 
@@ -1361,6 +1374,12 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				if ($this->singlesfGuardUserProfile !== null) {
 					if (!$this->singlesfGuardUserProfile->validate($columns)) {
 						$failureMap = array_merge($failureMap, $this->singlesfGuardUserProfile->getValidationFailures());
+					}
+				}
+
+				if ($this->singlesfGuardUserSecurity !== null) {
+					if (!$this->singlesfGuardUserSecurity->validate($columns)) {
+						$failureMap = array_merge($failureMap, $this->singlesfGuardUserSecurity->getValidationFailures());
 					}
 				}
 
@@ -1836,6 +1855,11 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				$copyObj->setsfGuardUserProfile($relObj->copy($deepCopy));
 			}
 
+			$relObj = $this->getsfGuardUserSecurity();
+			if ($relObj) {
+				$copyObj->setsfGuardUserSecurity($relObj->copy($deepCopy));
+			}
+
 			foreach ($this->getAccounts() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addAccount($relObj->copy($deepCopy));
@@ -2204,6 +2228,42 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->singlesfGuardUserProfile = $v;
 
 		// Make sure that that the passed-in sfGuardUserProfile isn't already associated with this object
+		if ($v->getsfGuardUser() === null) {
+			$v->setsfGuardUser($this);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Gets a single sfGuardUserSecurity object, which is related to this object by a one-to-one relationship.
+	 *
+	 * @param      PropelPDO $con
+	 * @return     sfGuardUserSecurity
+	 * @throws     PropelException
+	 */
+	public function getsfGuardUserSecurity(PropelPDO $con = null)
+	{
+
+		if ($this->singlesfGuardUserSecurity === null && !$this->isNew()) {
+			$this->singlesfGuardUserSecurity = sfGuardUserSecurityPeer::retrieveByPK($this->id, $con);
+		}
+
+		return $this->singlesfGuardUserSecurity;
+	}
+
+	/**
+	 * Sets a single sfGuardUserSecurity object as related to this object by a one-to-one relationship.
+	 *
+	 * @param      sfGuardUserSecurity $l sfGuardUserSecurity
+	 * @return     sfGuardUser The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setsfGuardUserSecurity(sfGuardUserSecurity $v)
+	{
+		$this->singlesfGuardUserSecurity = $v;
+
+		// Make sure that that the passed-in sfGuardUserSecurity isn't already associated with this object
 		if ($v->getsfGuardUser() === null) {
 			$v->setsfGuardUser($this);
 		}
@@ -7512,6 +7572,9 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			if ($this->singlesfGuardUserProfile) {
 				$this->singlesfGuardUserProfile->clearAllReferences($deep);
 			}
+			if ($this->singlesfGuardUserSecurity) {
+				$this->singlesfGuardUserSecurity->clearAllReferences($deep);
+			}
 			if ($this->collAccounts) {
 				foreach ((array) $this->collAccounts as $o) {
 					$o->clearAllReferences($deep);
@@ -7631,6 +7694,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 		$this->collRecuperationHints = null;
 		$this->singlesfGuardUserProfile = null;
+		$this->singlesfGuardUserSecurity = null;
 		$this->collAccounts = null;
 		$this->collAppointments = null;
 		$this->collEnrolments = null;
