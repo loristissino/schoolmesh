@@ -1,3 +1,6 @@
+2012/08/29
+Added sf_guard_user_security table
+
 2012/08/27
 Added two-factor authentication.
 

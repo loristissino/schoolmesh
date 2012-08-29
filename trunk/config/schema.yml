@@ -76,9 +76,15 @@ propel:
     preferred_culture: varchar(7)
     last_action_at: timestamp
     last_login_at: timestamp
+
+  sf_guard_user_security:
+    _attributes:  { phpName: sfGuardUserSecurity }
+    user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, required: true, onUpdate: cascade, onDelete: cascade, primaryKey: true }
     last_login_attempt_at: timestamp
-    known_browsers: longvarchar # a serialized arrays of cookie values set on browsers marked as trusted by the user
+    trusted_browsers_serialized: longvarchar # a serialized arrays of cookie values set on browsers marked as trusted by the user
     initialization_key: { type: varchar(32), required: false, default: null }  # used for two-factor authentication
+    created_at:   ~
+    updated_at:   ~
 
   account_type:
     id:

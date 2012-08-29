@@ -4988,6 +4988,10 @@
         <source>Remember browser</source>
         <target>Ricorda browser</target>
     </trans-unit>
+    <trans-unit id="1444">
+        <source>Edit security information</source>
+        <target>Modifica informazioni relative alla sicurezza</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

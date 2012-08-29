@@ -2046,22 +2046,5 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     return $result;
   }
 
-  public function get2FACheck($code)
-  {
-    $TimeStamp	  = Google2FA::get_timestamp();
-    $secretkey 	  = Google2FA::base32_decode($this->getInitializationKey());
-    $otp       	  = Google2FA::oath_hotp($secretkey, $TimeStamp);
-    
-    $result=Google2FA::verify_key($this->getInitializationKey(), $code);
-    if(!$result)
-    {
-      $this->setLastLoginAttemptAt(time())->save();
-      return false;
-    }
-    
-    return (time() - $this->getLastLoginAttemptAt('U') > sfConfig::get('app_authentication_2fa_timewindow', 5));
-    // to avoid brute force attacks, we don't allow trials in a 5 seconds (configurable) frame
-    
-  }
 
 }

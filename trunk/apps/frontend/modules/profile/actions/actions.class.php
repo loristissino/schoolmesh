@@ -355,20 +355,45 @@ class profileActions extends sfActions
 
   public function executeEnable2fa(sfWebRequest $request)
   {
+    $this->forward404Unless($request->isMethod('POST'));
     $this->forward404Unless(sfConfig::get('app_authentication_2fa_enabled', false));
-    $this->getUser()->getProfile()->setInitializationKey(Google2FA::generate_secret_key())->save();
+    
+    if(time() - $this->getUser()->getProfile()->getLastLoginAt('U') > sfConfig::get('app_authentication_security_timewindow', 60))
+    {
+      $this->getUser()->signOut();
+      return $this->redirect('profile/editsecurity');
+    }
+    
+    $security=sfGuardUserSecurityPeer::retrieveByUsername($this->getUser()->getProfile()->getUsername());
+    
+    if(!$security)
+    {
+      $security=new sfGuardUserSecurity();
+      $security->setUserId($this->getUser()->getProfile()->getUserId());
+    }
+    $security->setInitializationKey(Google2FA::generate_secret_key())->save();
 
     $this->getUser()->setFlash('notice',
       $this->getContext()->getI18N()->__('Two-factor authentication currently enabled.')
       );
-
     $this->redirect($request->getReferer());
+    
   }
 
   public function executeDisable2fa(sfWebRequest $request)
   {
+    $this->forward404Unless($request->isMethod('POST'));
     $this->forward404Unless(sfConfig::get('app_authentication_2fa_enabled', false));
-    $this->getUser()->getProfile()->setInitializationKey(null)->save();
+
+    if(time() - $this->getUser()->getProfile()->getLastLoginAt('U') > sfConfig::get('app_authentication_security_timewindow', 60))
+    {
+      $this->getUser()->signOut();
+      return $this->redirect('profile/editsecurity');
+    }
+    
+    $this->forward404Unless($this->sec=sfGuardUserSecurityPeer::retrieveByUsername($this->getUser()->getProfile()->getUsername()));
+  
+    $this->sec->setInitializationKey(null)->save();
     
     $this->getUser()->setFlash('notice',
       $this->getContext()->getI18N()->__('Two-factor authentication currently disabled.')
@@ -380,7 +405,14 @@ class profileActions extends sfActions
   public function executeAuthenticator(sfWebRequest $request)
   {
     $this->forward404Unless(sfConfig::get('app_authentication_2fa_enabled', false));
-    $this->forward404Unless($this->initialization_key=$this->getUser()->getProfile()->getInitializationKey());
+    $this->forward404Unless($this->sec=sfGuardUserSecurityPeer::retrieveByUsername($this->getUser()->getProfile()->getUsername()));
+    $this->forward404Unless($this->initialization_key=$this->sec->getInitializationKey());
+
+    if(time() - $this->getUser()->getProfile()->getLastLoginAt('U') > sfConfig::get('app_authentication_security_timewindow', 60))
+    {
+      $this->getUser()->signOut();
+      return $this->redirect('profile/authenticator');
+    }
     
     $account = urlencode($this->getUser()->getProfile()->getUsername() . '@' . sfConfig::get('app_authentication_2fa_name', 'schoolmesh'));
     $data = "otpauth://totp/" . $account . "?secret=" . $this->initialization_key;
@@ -389,6 +421,21 @@ class profileActions extends sfActions
     
   }
   
+  public function executeEditsecurity(sfWebRequest $request)
+  {
+    $this->forward404Unless(sfConfig::get('app_authentication_2fa_enabled', false));
+    // we cannot use the variable name 'security'
+
+    $this->sec=sfGuardUserSecurityPeer::retrieveByUsername($this->getUser()->getProfile()->getUsername());
+    
+    if(time() - $this->getUser()->getProfile()->getLastLoginAt('U') > sfConfig::get('app_authentication_security_timewindow', 60))
+    {
+      $this->getUser()->signOut();
+      return $this->redirect('profile/editsecurity');
+    }
+   
+  }
+
   
 }
 

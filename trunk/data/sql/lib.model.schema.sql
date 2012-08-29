@@ -168,9 +168,6 @@ CREATE TABLE `sf_guard_user_profile`
 	`preferred_culture` VARCHAR(7),
 	`last_action_at` DATETIME,
 	`last_login_at` DATETIME,
-	`last_login_attempt_at` DATETIME,
-	`known_browsers` TEXT,
-	`initialization_key` VARCHAR(32),
 	PRIMARY KEY (`user_id`),
 	CONSTRAINT `sf_guard_user_profile_FK_1`
 		FOREIGN KEY (`user_id`)
@@ -181,6 +178,29 @@ CREATE TABLE `sf_guard_user_profile`
 	CONSTRAINT `sf_guard_user_profile_FK_2`
 		FOREIGN KEY (`role_id`)
 		REFERENCES `role` (`id`)
+)Engine=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- sf_guard_user_security
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sf_guard_user_security`;
+
+
+CREATE TABLE `sf_guard_user_security`
+(
+	`user_id` INTEGER  NOT NULL,
+	`last_login_attempt_at` DATETIME,
+	`trusted_browsers_serialized` TEXT,
+	`initialization_key` VARCHAR(32),
+	`created_at` DATETIME,
+	`updated_at` DATETIME,
+	PRIMARY KEY (`user_id`),
+	CONSTRAINT `sf_guard_user_security_FK_1`
+		FOREIGN KEY (`user_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE CASCADE
 )Engine=InnoDB;
 
 #-----------------------------------------------------------------------------

@@ -33,14 +33,14 @@ class sfGuardAuthActions extends BasesfGuardAuthActions
       {
         $values = $this->form->getValues();
                 
-        $profile=sfGuardUserProfilePeer::retrieveProfileByUsername($values['user']);
+        $security=sfGuardUserSecurityPeer::retrieveByUsername($values['user']);
         
         // always redirect to a URL set in app.yml
         // or to the referer
         // or to the homepage
         $signinUrl = sfConfig::get('app_sf_guard_plugin_success_signin_url', $user->getReferer('@homepage'));
 
-        if(!$profile->getInitializationKey()) // the user does not want 2fa
+        if(!$security or !$security->getInitializationKey()) // the user does not want 2fa
         {
           $this->getUser()->signin($values['user'], array_key_exists('remember', $values) ? $values['remember'] : false);
           return $this->redirect($signinUrl);
@@ -50,8 +50,6 @@ class sfGuardAuthActions extends BasesfGuardAuthActions
         $this->getUser()->setAttribute('remember', $values['user']);
         $this->getUser()->setAttribute('signin_url', $signinUrl);
         return $this->redirect('@2fa');
-          
-        
 
       }
     }
@@ -94,6 +92,17 @@ class sfGuardAuthActions extends BasesfGuardAuthActions
 
   public function execute2fa($request)
   {
+    $security=sfGuardUserSecurityPeer::retrieveByUsername($this->getUser()->getAttribute('user'));
+    
+    if($security->getBrowserIsTrusted($this->getRequest()))
+    {
+      $this->getUser()->signin(
+        $this->getUser()->getAttribute('user'),
+        $this->getUser()->getAttribute('remember')
+        );
+      return $this->redirect($this->getUser()->getAttribute('signin_url'));
+    }
+    
     $this->form = new TwoFactorAuthenticationForm();
 
     if ($request->isMethod('post'))
@@ -103,14 +112,16 @@ class sfGuardAuthActions extends BasesfGuardAuthActions
       {
         $values = $this->form->getValues();
         
-        $profile=sfGuardUserProfilePeer::retrieveProfileByUsername($this->getUser()->getAttribute('user'));
-        
-        if($profile->get2FACheck($values['code']))
+        if($security->get2FACheck($values['code']))
         {
           $this->getUser()->signin(
             $this->getUser()->getAttribute('user'),
             $this->getUser()->getAttribute('remember')
             );
+          if($values['remember_browser'])
+          {
+            $security->addTrustedBrowser($this->getResponse());
+          }
           return $this->redirect($this->getUser()->getAttribute('signin_url'));
         }
         else
