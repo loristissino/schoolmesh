@@ -80,15 +80,22 @@ class SetupChecker
       }
     }
 
+
     foreach(array(
+      'appointments_imported.yml',
       'document_approval.yml',
       'document_rejection.yml',
       'document_submission.yml',
       'email_change_confirmation.yml',
+      'enrolments_imported.yml',
+      'finalreports_waiting.yml',
+      'generated_doc.yml',
       'informative_message.yml',
       'project_activity.yml',
       'project_alert.yml',
       'projects_submission.yml',
+      'users_imported.yml',
+      'workplans_waiting.yml',
       ) as $file)
     {
       $path=sfConfig::get('app_mail_template_directory'). '/' . $file;
