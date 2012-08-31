@@ -3873,8 +3873,8 @@
         <target>Lingua interfaccia</target>
     </trans-unit>
     <trans-unit id="993">
-        <source>This application is under active development. Please open issues about anomalies either by writing to %address% or by filling the issue web page at www.schoolmesh.mattiussilab.net. Thank you.</source>
-        <target>Questa applicazione è in via di sviluppo. Eventuali anomalie possono essere segnalate scrivendo a %address% oppure aprendo un problema alla pagina web www.schoolmesh.mattiussilab.net. Grazie.</target>
+        <source>This application is under active development. Please open issues about anomalies either by writing to &lt;a href="mailto:%address%"&gt;%address%&lt;/a&gt; or by filling the issue web page at &lt;a href="http://www.schoolmesh.mattiussilab.net"&gt;www.schoolmesh.mattiussilab.net&lt;/a&gt;. Thank you.</source>
+        <target>Questa applicazione è in via di sviluppo. Eventuali anomalie possono essere segnalate scrivendo a &lt;a href="mailto:%address%"&gt;%address%&lt;/a&gt; oppure aprendo un problema alla pagina web &lt;a href="http://www.schoolmesh.mattiussilab.net"&gt;www.schoolmesh.mattiussilab.net&lt;/a&gt;. Grazie.</target>
     </trans-unit>
     <trans-unit id="994">
         <source>Feedback</source>
@@ -4999,6 +4999,22 @@
     <trans-unit id="1446">
         <source>you will be asked for your password if you logged in long ago</source>
         <target>ti verrà chiesta la password se hai fatto il login molto tempo fa</target>
+    </trans-unit>
+    <trans-unit id="1447">
+        <source>The module you requested has been disabled on this SchoolMesh setup.</source>
+        <target>Il modulo che hai richiesto è stato disabilitato su questo installazione di SchoolMesh.</target>
+    </trans-unit>
+    <trans-unit id="1448">
+        <source>It might be available in one of the following sibling servers:</source>
+        <target>Potrebbe essere disponibile in uno di questi server:</target>
+    </trans-unit>
+    <trans-unit id="1449">
+        <source>It might be available in the following server:</source>
+        <target>Potrebbe essere disponibile in questo server:</target>
+    </trans-unit>
+    <trans-unit id="1450">
+        <source>Module unavailable</source>
+        <target>Modulo non disponibile</target>
     </trans-unit>
     </body>
   </file> 

@@ -22,7 +22,7 @@ class contentActions extends sfActions
     $this->forward('show', 'content');
   }
 */
-    public function executeIndex(sfWebRequest $request)
+  public function executeIndex(sfWebRequest $request)
   {
 	
   //return $this->renderText(sfConfig::get('app_config_accept_gpl_license', false));
@@ -304,5 +304,10 @@ class contentActions extends sfActions
       ));
   }
   
+  public function executeDisabled(sfWebRequest $request)
+  {
+    $this->siblings=sfConfig::get('app_config_siblings', array());
+  }
+
 
 }
