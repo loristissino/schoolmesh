@@ -7,6 +7,9 @@
 <?php include_metas() ?>
 
 <?php use_stylesheet('print', 'last', array('media'=>'print')) ?>
+<?php if(sfConfig::get('app_config_custom_css', false)): ?>
+  <?php use_stylesheet(sfConfig::get('app_config_custom_css')) ?>
+<?php endif ?>
 
 <title>SchoolMesh - 
 	<?php if (!include_slot('title')): ?>
@@ -56,7 +59,7 @@
 
 <div class="feedback">
   <h3><?php echo __('Feedback') ?></h3>
-    <p><?php echo __('This application is under active development. Please open issues about anomalies either by writing to %address% or by filling the issue web page at www.schoolmesh.mattiussilab.net. Thank you.', array('%address%'=>sfConfig::get('app_mail_webmaster'))) ?></p>
+    <p><?php echo __('This application is under active development. Please open issues about anomalies either by writing to <a href="mailto:%address%">%address%</a> or by filling the issue web page at <a href="http://www.schoolmesh.mattiussilab.net">www.schoolmesh.mattiussilab.net</a>. Thank you.', array('%address%'=>sfConfig::get('app_mail_webmaster'))) ?></p>
 </div>
 
 
