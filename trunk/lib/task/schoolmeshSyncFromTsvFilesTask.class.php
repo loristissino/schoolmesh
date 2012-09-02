@@ -154,17 +154,32 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
     
     while($v=$tsv->fetchAssoc())
     {
-      print_r($v);
       $profile=sfGuardUserProfilePeer::retrieveByImportCode($v['USER_IMPORT_CODE']);
       if($profile)
       {
-        $this->logSection('user=', $profile->getFullName(), null, 'COMMENT');
+        if(!isset($v['IS_ACTIVE']))
+        {
+          $is_active = 0;
+        }
+        else
+        {
+          $is_active=$v['IS_ACTIVE'];
+        }
+        if($profile->getIsActive()==$is_active)
+        {
+          $this->logSection('user=', $profile->getFullName(), null, 'COMMENT');
+        }
+        else
+        {
+          $profile->getsfGuardUser()->setIsActive($is_active)->save();
+          $this->logSection('user!', $profile->getFullName() . ' (active: ' . ($is_active?'yes':'no') . ')', null, 'NOTICE');
+        }
       }
       else
       {
         if(!$v['USER_IMPORT_CODE'])
         {
-          $this->logSection('user/', $v['LAST_NAME'] . ' skipped', null, 'COMMENT');
+          $this->logSection('user/', $v['FIRST_NAME'] . ' ' . $v['LAST_NAME'] . ' (skipped: no import code)', null, 'ERROR');
           continue;
         }
         
