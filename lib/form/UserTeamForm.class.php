@@ -12,7 +12,10 @@ class UserTeamForm extends BaseUserTeamForm
 {
   public function configure()
   {
-    unset($this['id']);
+    unset(
+      $this['id'],
+      $this['details']
+      );
     $years=Generic::getNumbersBetweenAsOptionsArray(sfConfig::get('app_config_current_year'), sfConfig::get('app_config_current_year')+5);
 
     $this->widgetSchema['user_id'] = new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true));

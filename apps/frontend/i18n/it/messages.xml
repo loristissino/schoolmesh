@@ -5016,6 +5016,10 @@
         <source>Module unavailable</source>
         <target>Modulo non disponibile</target>
     </trans-unit>
+    <trans-unit id="1451">
+        <source>Details</source>
+        <target>Dettagli</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
