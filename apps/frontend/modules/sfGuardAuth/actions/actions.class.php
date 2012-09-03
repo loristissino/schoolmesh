@@ -43,6 +43,11 @@ class sfGuardAuthActions extends BasesfGuardAuthActions
         if(!$security or !$security->getInitializationKey()) // the user does not want 2fa
         {
           $this->getUser()->signin($values['user'], array_key_exists('remember', $values) ? $values['remember'] : false);
+          if($values['password']==$this->getUser()->getProfile()->getPlaintextPassword())
+          {
+            $this->getUser()->setFlash('notice',
+              $this->getContext()->getI18N()->__('Login was successful, but you should remember to change your password.'));
+          }
           return $this->redirect($signinUrl);
         }
           

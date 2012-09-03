@@ -76,6 +76,8 @@ propel:
     preferred_culture: varchar(7)
     last_action_at: timestamp
     last_login_at: timestamp
+    plaintext_password: varchar(32)  # this is the random password that is set for new users - we must store it for letters generation
+    encrypted_password: varchar(255) # the password is kept here for synchronization purposes, only for the needed time
 
   sf_guard_user_security:
     _attributes:  { phpName: sfGuardUserSecurity }

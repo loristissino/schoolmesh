@@ -42,6 +42,8 @@ abstract class BasesfGuardUserProfileForm extends BaseFormPropel
       'preferred_culture'         => new sfWidgetFormInputText(),
       'last_action_at'            => new sfWidgetFormDateTime(),
       'last_login_at'             => new sfWidgetFormDateTime(),
+      'plaintext_password'        => new sfWidgetFormInputText(),
+      'encrypted_password'        => new sfWidgetFormInputText(),
     ));
 
     $this->setValidators(array(
@@ -73,6 +75,8 @@ abstract class BasesfGuardUserProfileForm extends BaseFormPropel
       'preferred_culture'         => new sfValidatorString(array('max_length' => 7, 'required' => false)),
       'last_action_at'            => new sfValidatorDateTime(array('required' => false)),
       'last_login_at'             => new sfValidatorDateTime(array('required' => false)),
+      'plaintext_password'        => new sfValidatorString(array('max_length' => 32, 'required' => false)),
+      'encrypted_password'        => new sfValidatorString(array('max_length' => 255, 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('sf_guard_user_profile[%s]');

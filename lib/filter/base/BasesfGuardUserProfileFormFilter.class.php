@@ -39,6 +39,8 @@ abstract class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'preferred_culture'         => new sfWidgetFormFilterInput(),
       'last_action_at'            => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'last_login_at'             => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'plaintext_password'        => new sfWidgetFormFilterInput(),
+      'encrypted_password'        => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
@@ -69,6 +71,8 @@ abstract class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'preferred_culture'         => new sfValidatorPass(array('required' => false)),
       'last_action_at'            => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'last_login_at'             => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'plaintext_password'        => new sfValidatorPass(array('required' => false)),
+      'encrypted_password'        => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('sf_guard_user_profile_filters[%s]');
@@ -114,6 +118,8 @@ abstract class BasesfGuardUserProfileFormFilter extends BaseFormFilterPropel
       'preferred_culture'         => 'Text',
       'last_action_at'            => 'Date',
       'last_login_at'             => 'Date',
+      'plaintext_password'        => 'Text',
+      'encrypted_password'        => 'Text',
     );
   }
 }

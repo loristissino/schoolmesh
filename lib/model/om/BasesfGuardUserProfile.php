@@ -190,6 +190,18 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	protected $last_login_at;
 
 	/**
+	 * The value for the plaintext_password field.
+	 * @var        string
+	 */
+	protected $plaintext_password;
+
+	/**
+	 * The value for the encrypted_password field.
+	 * @var        string
+	 */
+	protected $encrypted_password;
+
+	/**
 	 * @var        sfGuardUser
 	 */
 	protected $asfGuardUser;
@@ -602,6 +614,26 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		} else {
 			return $dt->format($format);
 		}
+	}
+
+	/**
+	 * Get the [plaintext_password] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getPlaintextPassword()
+	{
+		return $this->plaintext_password;
+	}
+
+	/**
+	 * Get the [encrypted_password] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getEncryptedPassword()
+	{
+		return $this->encrypted_password;
 	}
 
 	/**
@@ -1260,6 +1292,46 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 	} // setLastLoginAt()
 
 	/**
+	 * Set the value of [plaintext_password] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     sfGuardUserProfile The current object (for fluent API support)
+	 */
+	public function setPlaintextPassword($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->plaintext_password !== $v) {
+			$this->plaintext_password = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::PLAINTEXT_PASSWORD;
+		}
+
+		return $this;
+	} // setPlaintextPassword()
+
+	/**
+	 * Set the value of [encrypted_password] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     sfGuardUserProfile The current object (for fluent API support)
+	 */
+	public function setEncryptedPassword($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->encrypted_password !== $v) {
+			$this->encrypted_password = $v;
+			$this->modifiedColumns[] = sfGuardUserProfilePeer::ENCRYPTED_PASSWORD;
+		}
+
+		return $this;
+	} // setEncryptedPassword()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -1331,6 +1403,8 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$this->preferred_culture = ($row[$startcol + 25] !== null) ? (string) $row[$startcol + 25] : null;
 			$this->last_action_at = ($row[$startcol + 26] !== null) ? (string) $row[$startcol + 26] : null;
 			$this->last_login_at = ($row[$startcol + 27] !== null) ? (string) $row[$startcol + 27] : null;
+			$this->plaintext_password = ($row[$startcol + 28] !== null) ? (string) $row[$startcol + 28] : null;
+			$this->encrypted_password = ($row[$startcol + 29] !== null) ? (string) $row[$startcol + 29] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1340,7 +1414,7 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 28; // 28 = sfGuardUserProfilePeer::NUM_COLUMNS - sfGuardUserProfilePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 30; // 30 = sfGuardUserProfilePeer::NUM_COLUMNS - sfGuardUserProfilePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating sfGuardUserProfile object", $e);
@@ -1760,6 +1834,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			case 27:
 				return $this->getLastLoginAt();
 				break;
+			case 28:
+				return $this->getPlaintextPassword();
+				break;
+			case 29:
+				return $this->getEncryptedPassword();
+				break;
 			default:
 				return null;
 				break;
@@ -1809,6 +1889,8 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			$keys[25] => $this->getPreferredCulture(),
 			$keys[26] => $this->getLastActionAt(),
 			$keys[27] => $this->getLastLoginAt(),
+			$keys[28] => $this->getPlaintextPassword(),
+			$keys[29] => $this->getEncryptedPassword(),
 		);
 		return $result;
 	}
@@ -1924,6 +2006,12 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 			case 27:
 				$this->setLastLoginAt($value);
 				break;
+			case 28:
+				$this->setPlaintextPassword($value);
+				break;
+			case 29:
+				$this->setEncryptedPassword($value);
+				break;
 		} // switch()
 	}
 
@@ -1976,6 +2064,8 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if (array_key_exists($keys[25], $arr)) $this->setPreferredCulture($arr[$keys[25]]);
 		if (array_key_exists($keys[26], $arr)) $this->setLastActionAt($arr[$keys[26]]);
 		if (array_key_exists($keys[27], $arr)) $this->setLastLoginAt($arr[$keys[27]]);
+		if (array_key_exists($keys[28], $arr)) $this->setPlaintextPassword($arr[$keys[28]]);
+		if (array_key_exists($keys[29], $arr)) $this->setEncryptedPassword($arr[$keys[29]]);
 	}
 
 	/**
@@ -2015,6 +2105,8 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		if ($this->isColumnModified(sfGuardUserProfilePeer::PREFERRED_CULTURE)) $criteria->add(sfGuardUserProfilePeer::PREFERRED_CULTURE, $this->preferred_culture);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::LAST_ACTION_AT)) $criteria->add(sfGuardUserProfilePeer::LAST_ACTION_AT, $this->last_action_at);
 		if ($this->isColumnModified(sfGuardUserProfilePeer::LAST_LOGIN_AT)) $criteria->add(sfGuardUserProfilePeer::LAST_LOGIN_AT, $this->last_login_at);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::PLAINTEXT_PASSWORD)) $criteria->add(sfGuardUserProfilePeer::PLAINTEXT_PASSWORD, $this->plaintext_password);
+		if ($this->isColumnModified(sfGuardUserProfilePeer::ENCRYPTED_PASSWORD)) $criteria->add(sfGuardUserProfilePeer::ENCRYPTED_PASSWORD, $this->encrypted_password);
 
 		return $criteria;
 	}
@@ -2124,6 +2216,10 @@ abstract class BasesfGuardUserProfile extends BaseObject  implements Persistent 
 		$copyObj->setLastActionAt($this->last_action_at);
 
 		$copyObj->setLastLoginAt($this->last_login_at);
+
+		$copyObj->setPlaintextPassword($this->plaintext_password);
+
+		$copyObj->setEncryptedPassword($this->encrypted_password);
 
 
 		$copyObj->setNew(true);

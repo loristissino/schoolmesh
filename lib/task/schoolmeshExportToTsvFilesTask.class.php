@@ -29,6 +29,8 @@ class schoolmeshExportToTsvFilesTask extends sfBaseTask
       'BIRTH_DATE',
       'BIRTH_PLACE',
       'USER_IMPORT_CODE',
+      'GENDER',
+      'EMAIL',
       'IS_ACTIVE',
       ));
     
@@ -58,6 +60,8 @@ class schoolmeshExportToTsvFilesTask extends sfBaseTask
         $profile->getBirthDate('Y-m-d'),
         $profile->getBirthPlace(),
         $profile->getImportCode(),
+        $profile->getGender(),
+        $profile->getValidatedEmail(),
         $profile->getIsActive() ? '1': '0',
       ));
     }

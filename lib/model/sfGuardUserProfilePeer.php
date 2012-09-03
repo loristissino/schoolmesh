@@ -690,7 +690,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 			$letters->userBirthdate($user->getBirthdate('d/m/Y'));
 			$letters->userImportCode($user->getImportCode());
 			
-			
+			/* we won't use Samba password here anymore
 			$sambaAccount=$user->getAccountByType('samba');
 			if (is_object($sambaAccount))
 			{
@@ -700,7 +700,9 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 			{
 				$letters->userSambaPassword('ERROR');
 			}
-			
+      */
+      
+      $letters->userPassword($user->getPlaintextPassword());
 			
 			$letters->letterDate(date('d/m/Y'));
 			$pagebreak=($count<sizeof($users))?'<pagebreak>':'';

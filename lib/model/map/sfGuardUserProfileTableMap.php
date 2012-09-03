@@ -64,6 +64,8 @@ class sfGuardUserProfileTableMap extends TableMap {
 		$this->addColumn('PREFERRED_CULTURE', 'PreferredCulture', 'VARCHAR', false, 7, null);
 		$this->addColumn('LAST_ACTION_AT', 'LastActionAt', 'TIMESTAMP', false, null, null);
 		$this->addColumn('LAST_LOGIN_AT', 'LastLoginAt', 'TIMESTAMP', false, null, null);
+		$this->addColumn('PLAINTEXT_PASSWORD', 'PlaintextPassword', 'VARCHAR', false, 32, null);
+		$this->addColumn('ENCRYPTED_PASSWORD', 'EncryptedPassword', 'VARCHAR', false, 255, null);
 		// validators
 	} // initialize()
 
