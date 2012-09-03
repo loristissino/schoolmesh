@@ -1,0 +1,33 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+	
+#@ # NAME
+#@
+#@ {} - Repair the basefolder of a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to fix the permissions and the extended attributes for the
+#@ basefolder of a user.
+#@
+#@ # EXAMPLES
+#@
+#@ {-} john
+	
+USERNAME=$1
+HOMEDIR="$POSIX_HOMEDIR_USERS/$USERNAME"
+BASEFOLDER="$HOMEDIR/$POSIX_BASEFOLDER"
+
+checkUsername $USERNAME
+checkDirectory "$BASEFOLDER"
+
+sudo chattr -i "$BASEFOLDER" && sudo chown $POSIX_BASEFOLDER_OWNER "$BASEFOLDER" && sudo chattr +i "$BASEFOLDER" && msg_ok "repaired basefolder: $USERNAME ($BASEFOLDER)"  && exit 0
+
+unexpectedError $@

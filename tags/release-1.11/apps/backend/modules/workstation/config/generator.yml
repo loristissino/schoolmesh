@@ -1,0 +1,22 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           Workstation
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          workstation
+    with_propel_route:     1
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        title: Workstations List
+        display: [Id, Name, IpCidr, Subnet]
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:     ~

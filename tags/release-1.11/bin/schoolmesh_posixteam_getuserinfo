@@ -1,0 +1,36 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+TEAMNAME=$1
+checkGroup "$TEAMNAME"
+
+USERNAME=$2
+checkString $USERNAME
+
+DESCRIPTION=$3
+checkString "$DESCRIPTION"
+
+FOLDER="$POSIX_HOMEDIR_TEAMS/$TEAMNAME"
+#checkDirectory "$FOLDER"
+
+USERFOLDER="$POSIX_HOMEDIR_USERS/$USERNAME/$POSIX_BASEFOLDER"
+
+#checkDirectory "$USERFOLDER"
+
+userBelongsToGroup $USERNAME $TEAMNAME
+
+echo belongs=$BELONGS
+
+INFO=$(stat -c "%N" "$USERFOLDER/$DESCRIPTION")
+
+EXPECTED="\`$USERFOLDER/$DESCRIPTION' -> \`$FOLDER'"
+
+if [[ "$INFO" = "$EXPECTED" ]]
+	then
+		echo link_found=1
+	else
+		echo link_found=0
+fi

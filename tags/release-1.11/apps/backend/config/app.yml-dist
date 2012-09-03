@@ -1,0 +1,18 @@
+# default values
+all:
+
+  sf_guard_plugin:
+    check_password_callable: [Authentication, testOnly]
+
+# Choose one of the following functions:
+# testOnly: all users are authenticated whatever password (but null) they provide
+# checkDBPassoword: users are authenticated against the internal DB
+# checkLdapPassword: users are authenticated against a LDAP server, specified in the lines below
+# checkSambaPassword: users are authenticated against a Samba server (probably working also against a Windows authentication server)
+# checkFirstSambaThenDBPassword: it they have a Samba Account, users are authenticated with that, otherwise against the DB
+
+  authentication:
+    ldap_host: localhost
+    ldap_domain: dc=example,dc=com
+    samba_share: //example_server/homes
+    samba_address: 127.0.0.1

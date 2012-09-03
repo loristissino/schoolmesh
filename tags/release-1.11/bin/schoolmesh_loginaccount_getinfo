@@ -1,0 +1,40 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Get info about the login account of a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username*
+#@
+#@ # DESCRIPTION
+#@
+#@ This script generates a list of pairs *key=value* about a login account.
+#@ If the user is not found, returns *found=0*.
+#@
+#@ # EXAMPLES
+#@
+#@ {-} john
+
+
+USERNAME=$1
+
+checkString $USERNAME
+
+LASTLOGIN=$(/usr/sbin/dump-utmp  /var/log/wtmp | grep "^$USERNAME "| cut -d '|' -f8 | tail -1)
+# we can't use "last command", because (strangely enough) it does not show the year
+# package acct needed
+
+if [ -z "$LASTLOGIN" ]
+	then
+		echo lastlogin_known=0
+	else
+		echo lastlogin_known=1
+		echo -n lastlogin_at=
+		date +%s --date "$LASTLOGIN"
+fi

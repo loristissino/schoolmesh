@@ -1,0 +1,182 @@
+WpmoduleItem:
+  module_item1:
+    wpitem_group_id:      wg_f_contents
+    rank:     1
+    is_editable: true
+    content:      |
+        Il piano cartesiano: ripasso di retta e parabola.
+
+  module_item2:
+    wpitem_group_id:      wg_f_contents
+    rank:     2
+    is_editable: true
+    content:      |
+        Circonferenza, iperbole equila­tera riferita agli asintoti.
+
+  module_item3:
+    wpitem_group_id:      wg_f_contents
+    rank:     3
+    is_editable: true
+    content:      |
+        Posizioni reciproche di due figure nel piano.
+
+  module_item4:
+    wpitem_group_id:      wg_f_contents
+    rank:     4
+    is_editable: true
+    content:      |
+        Traslazione degli assi e traslazione di fi­gure nel piano. 
+
+  module_item5:
+    wpitem_group_id:      wg_f_knowledge
+    rank:     1
+    is_editable: true
+    content:      |
+        elementi necessari per stabilire un sistema di rife­rimento cartesiano
+        nel piano
+
+  module_item6:
+    wpitem_group_id:      wg_f_knowledge
+    rank:     2
+    is_editable: true
+    content:      |
+        le principali figure geometriche
+
+  module_item7:
+    wpitem_group_id:      wg_f_skills
+    rank:     1
+    is_editable: true
+    content:      |
+        ricavare equazioni di rette, parabole e circonfe­renze in base ai dati
+
+  module_item8:
+    wpitem_group_id:      wg_f_skills
+    rank:     2
+    is_editable: true
+    content:      |
+        classificare le figure in base all’equazione e rappresentarle nel
+        piano cartesiano
+
+  module_item9:
+    wpitem_group_id:      wg_f_competencies
+    rank:     1
+    is_editable: true
+    content:      |
+        interpretare rappresentazioni grafiche
+
+  module_item10:
+    wpitem_group_id:      wg_f_competencies
+    rank:     2
+    is_editable: true
+    content:      |
+        applicare metodologie risolutive e di calcolo
+
+  module_item_c1:
+    wpitem_group_id: wg_tt31_contents
+    rank:     1
+    is_editable: true
+    content:  primo contenuto
+  module_item_c2:
+    wpitem_group_id: wg_tt31_contents
+    rank:     2
+    is_editable: true
+    content:  secondo contenuto
+
+  module_item_k1:
+    wpitem_group_id: wg_tt31_knowledge
+    rank:     1
+    is_editable: true
+    content:  prima conoscenza
+  module_item_k2:
+    wpitem_group_id: wg_tt31_knowledge
+    rank:     2
+    is_editable: true
+    content:  seconda conoscenza
+  module_item_k3:
+    wpitem_group_id: wg_tt31_knowledge
+    rank:    3
+    is_editable: true
+    content:  terza conoscenza
+
+  module_item_s1:
+    wpitem_group_id: wg_tt31_skills
+    rank:     1
+    is_editable: true
+    content:  prima abilità (con valori di x<sup>2</sup>)
+  module_item_s2:
+    wpitem_group_id: wg_tt31_skills
+    rank:     2
+    is_editable: true
+    content:  seconda abilità (con valori di x log <sub>10</sub> <em>n</em>)
+  module_item_s3:
+    wpitem_group_id: wg_tt31_skills
+    rank:    3
+    is_editable: true
+    content:  terza abilità (con valori <em>enfatizzati</em>)
+  module_item_s4:
+    wpitem_group_id: wg_tt31_skills
+    rank:    4
+    is_editable: true
+    content:  quarta abilità
+
+  module_item_comp1:
+    wpitem_group_id: wg_tt31_competencies
+    rank:     1
+    content:  prima competenza
+    is_editable: true
+  module_item_comp2:
+    wpitem_group_id: wg_tt31_competencies
+    rank:     2
+    content:  seconda competenza
+    is_editable: true
+
+  module_item_v1:
+    wpitem_group_id: wg_tt33fis_contents
+    rank:     1
+    content:  proprietà elettroniche dei solidi
+    is_editable: false
+  module_item_v2:
+    wpitem_group_id: wg_tt33fis_contents
+    rank:     2
+    content:  proprietà meccaniche dei solidi
+    is_editable: false
+  module_item_v3:
+    wpitem_group_id: wg_tt33fis_contents
+    rank:     3
+    content:  proprietà ottiche dei solidi
+    is_editable: false
+  module_item_v4:
+    wpitem_group_id: wg_tt33fis_contents
+    rank:     4
+    content:  proprietà magnetiche dei solidi
+    is_editable: false
+
+  module_item_v1a:
+    wpitem_group_id: wg_tt33fis_contents_a
+    rank:     1
+    content:  c1
+    is_editable: false
+
+  module_item_v1b:
+    wpitem_group_id: wg_tt33fis_contents_b
+    rank:     1
+    content:  c1
+    is_editable: false
+
+  module_item_v1c:
+    wpitem_group_id: wg_tt33fis_contents_c
+    rank:     1
+    content:  c1
+    is_editable: false
+
+  module_item_v1d:
+    wpitem_group_id: wg_tt33fis_contents_d
+    rank:     1
+    content:  c1
+    is_editable: false
+
+  module_item_ast_old:
+    wpitem_group_id: wg_tt31ast_contents_a1
+    rank:     1
+    content:  content to be imported
+    is_editable: false

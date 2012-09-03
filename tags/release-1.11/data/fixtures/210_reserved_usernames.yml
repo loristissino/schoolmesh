@@ -1,0 +1,16 @@
+ReservedUsername:
+<?php foreach(array(
+'root'=>'',
+'www-data'=>'',
+'admin'=>'',
+'administrator'=>'',
+'amministratore'=>'',
+'webmaster'=>'',
+'info'=>'',
+'loris'=>'loris.tissino',
+
+) as $username=>$aliasesTo): ?>
+  <?php echo $username ?>:
+    username: <?php echo $username . "\n" ?>
+    aliasesTo: <?php echo $aliasTo . "\n" ?>
+<?php endforeach ?>
