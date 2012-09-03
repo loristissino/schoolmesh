@@ -118,5 +118,10 @@ This code must be refactored. In particular, it would be nicer to have a sort of
 		
 		return ($result == 0);
 	}
+  
+  public static function generateRandomPassword()
+  {
+    return strtoupper(str_replace(array('.', '/', '0'), array('+', '?', 'O'), substr(crypt(rand(1000, 9999).time(), '00'), 2, 8)));
+  }
  
 }

@@ -1525,7 +1525,7 @@
         <target>[0]Sei pregata di impostare un indirizzo di posta elettronica nel tuo profilo.|[1]Sei pregato di impostare un indirizzo di posta elettronica nel tuo profilo.</target>
       </trans-unit>
 	  <trans-unit id="408">
-        <source>[0]It will be easier to keep you informed on updates about the use of this application.|[1]]It will be easier to keep you informed on updates about the use of this application.</source>
+        <source>[0]It will be easier to keep you informed on updates about the use of this application.|[1]It will be easier to keep you informed on updates about the use of this application.</source>
         <target>[0]Sarà più facile tenerti aggiornata sull'uso di questa applicazione.|[1]Sarà più facile tenerti aggiornato sull'uso di questa applicazione.</target>
       </trans-unit>
 	  <trans-unit id="409">
@@ -5019,6 +5019,10 @@
     <trans-unit id="1451">
         <source>Details</source>
         <target>Dettagli</target>
+    </trans-unit>
+    <trans-unit id="1452">
+        <source>Login was successful, but you should remember to change your password.</source>
+        <target>Il login ha avuto esito positivo, ma devi ricordarti di cambiare la password.</target>
     </trans-unit>
     </body>
   </file> 

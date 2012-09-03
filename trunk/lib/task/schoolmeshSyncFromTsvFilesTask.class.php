@@ -238,11 +238,19 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
         }
         else
         {
+          
+          $password=Authentication::generateRandomPassword();
+          
           $user
           ->setUsername($username)
-          ->save($this->con);
+          ->setPassword($password)
+          ;
+          $user->save($this->con);
           $profile
           ->setUserId($user->getId())
+          ->setPlaintextPassword($password)
+          ->setPreferredFormat('odt')
+          ->setPreferredCulture(sfConfig::get('app_config_culture'))
           ->save($this->con);
           
           $this->notices['users']['imported'][]=$profile;
