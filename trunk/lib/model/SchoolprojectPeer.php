@@ -400,6 +400,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 			$letters->userFullName($user->getFullName());
       $letters->userEmail($user->getValidatedEmail());
 			$letters->projectTitle($project->getTitle());
+      $letters->projectCode($project->getCode());
       $letters->approvalDate($project->getApprovalDate('d/m/Y'));
       $letters->financingDate($project->getFinancingDate('d/m/Y'));
       $letters->confirmationDate($project->getConfirmationDate('d/m/Y'));
