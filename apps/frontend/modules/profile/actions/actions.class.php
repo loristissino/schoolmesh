@@ -94,8 +94,8 @@ class profileActions extends sfActions
   public function executeChangeaccountpassword(sfWebRequest $request)
 	{
 		$availableAccounts=sfConfig::get('app_config_accounts');
-		$type=$request->getParameter('type');
-		
+		$type=$request->getParameter('type', 'main');
+    
 		$user=$this->getUser();
 		$profile=$user->getProfile();
 		
@@ -107,7 +107,7 @@ class profileActions extends sfActions
 			if ($this->form->isValid())
 			{
 				$params = $this->form->getValues();
-				$type=$params['type'];
+				$type=isset($params['type'])?$params['type']:'main';
 				
         $callable = sfConfig::get('app_sf_guard_plugin_check_password_callable');
         
@@ -120,6 +120,9 @@ class profileActions extends sfActions
             $sfguarduser=sfGuardUserPeer::retrieveByUsername($user->getUsername());
             $sfguarduser->setPassword($params['password']);
             $sfguarduser->save();
+            
+            Generic::logMessage('store', $params['password']);
+            $profile->storeEncryptedPassword($params['password']);
           }
           else
           {

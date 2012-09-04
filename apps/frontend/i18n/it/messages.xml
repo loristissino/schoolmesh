@@ -1216,8 +1216,8 @@
         <target>Password</target>
       </trans-unit>
       <trans-unit id="331">
-        <source>Password again</source>
-        <target>Password (ripeti)</target>
+        <source>New password</source>
+        <target>Nuova password</target>
       </trans-unit>
       <trans-unit id="332">
         <source>Comment</source>
@@ -5024,24 +5024,22 @@
         <source>Login was successful, but you should remember to change your password.</source>
         <target>Il login ha avuto esito positivo, ma devi ricordarti di cambiare la password.</target>
     </trans-unit>
+    <trans-unit id="1453">
+        <source>The password must be of 8 characters (minimum)</source>
+        <target>La password deve essere composto di almeno 8 caratteri</target>
+    </trans-unit>
+    <trans-unit id="1454">
+        <source>Passwords do not match</source>
+        <target>Le password non corrispondono</target>
+    </trans-unit>
+      <trans-unit id="1455">
+        <source>New password&lt;br /&gt;(again)</source>
+        <target>Nuova password&lt;br /&gt;(ripeti)</target>
+      </trans-unit>
+      <trans-unit id="1456">
+        <source>You may proceed here</source>
+        <target>Puoi farlo qui</target>
+      </trans-unit>
     </body>
   </file> 
 </xliff>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

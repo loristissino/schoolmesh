@@ -247,6 +247,15 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
       return parent::doSelect($c);
 	}
 
+  public static function retrieveUsersWithStoredEncryptedPasswords()
+  {
+      $c = new Criteria();
+      $c->add(sfGuardUserProfilePeer::ENCRYPTED_PASSWORD, null, Criteria::ISNOTNULL);
+      $c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);
+      $c->add(sfGuardUserPeer::IS_ACTIVE, true);
+      return parent::doSelect($c);
+  }
+
 
 	public static function resetGoogleAppsAccountInfoForAll()
 	{

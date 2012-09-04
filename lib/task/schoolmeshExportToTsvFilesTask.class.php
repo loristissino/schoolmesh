@@ -68,6 +68,35 @@ class schoolmeshExportToTsvFilesTask extends sfBaseTask
     
     $tsv->close();
   }
+
+  protected function exportPasswords($tsv)
+  {
+    $tsv->open();
+    
+    $tsv->writeLine(array(
+      'USERNAME',
+      'PASSWORD',
+      ));
+    
+    $profiles=sfGuardUserProfilePeer::retrieveUsersWithStoredEncryptedPasswords();
+    foreach($profiles as $profile)
+    {
+      echo $profile->getUsername() . ' - ' . $profile->getFullName() . "\n";
+      
+      $tsv->writeLine(array(
+        $profile->getUsername(),
+        base64_encode($profile->getStoredEncryptedPassword())
+      ));
+      
+      // the encoding is not meant to be secure in any way...
+      // the synchronization happens through ssh
+      // this is just to protect the actual password from human eye
+      
+    }
+    
+    $tsv->close();
+  }
+
   
   protected function configure()
   {
@@ -110,7 +139,7 @@ EOF;
       throw new Exception('File already exists: ' . $tsvfile);
     }
     
-    $validtypes=array('users');
+    $validtypes=array('users', 'passwords');
     
     $tsv = new smTsvWriter($tsvfile);
     
@@ -118,6 +147,10 @@ EOF;
     {
       case 'users':
         $count = $this->exportUsers($tsv);
+        $this->logSection('file+', $tsvfile, null, 'NOTICE');
+        break;
+      case 'passwords':
+        $count = $this->exportPasswords($tsv);
         $this->logSection('file+', $tsvfile, null, 'NOTICE');
         break;
       default:

@@ -451,6 +451,17 @@ font-weight: bold;
 }
 
 
+#sf_admin_container .passwordcheck
+{
+  margin: 4px 0;
+  padding: 4px 4px 4px 30px;
+  background: url(../images/password.png) no-repeat 10px 4px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  background-color: #FFD721;
+  color: #000;
+}
+
 .chosen
 {
 font-weight: bold;	
@@ -633,10 +644,10 @@ ul.simple_list li
 }
 
 .password {
-font-size : 12px;
-border : 1px solid #cc9933;
-width : 200px;
-font-family : arial, sans-serif;
+#font-size : 12px;
+#border : 1px solid #cc9933;
+#width : 200px;
+#font-family : arial, sans-serif;
 }
 
 .pstrength-minchar {
