@@ -186,6 +186,10 @@ sf_guard_password:
   url:   /two-factors-authentication
   param: { module: sfGuardAuth, action: 2fa }
 
+changepassword:
+  url:   /changepassword
+  param: { module: profile, action: changepassword }
+
 # default rules
 
 homepage:

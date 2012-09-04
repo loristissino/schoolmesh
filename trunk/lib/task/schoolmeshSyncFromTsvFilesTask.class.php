@@ -392,6 +392,25 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
     
   }
 
+  protected function updatePwdsync(smTsvReader $tsv)
+  {
+    //this just delete encrypted passwords for users, after synchronization
+    $count=0;
+        
+    while($v=$tsv->fetchAssoc())
+    {
+      $user = sfGuardUserProfilePeer::retrieveByUsername($v['USERNAME']);
+      if($user)
+      {
+        if($user->getProfile()->clearEncryptedPassword())
+        {
+          $this->logSection('password-', $v['USERNAME'], null, 'NOTICE');
+          $count++;
+        }
+      }
+    }
+    return $count;
+  }
 
   
   protected function configure()
@@ -439,7 +458,7 @@ EOF;
     $tsv=new smTsvReader($tsvfile);
     $tsv->open();
 
-    $validtypes=array('users', 'enrolments', 'appointments');
+    $validtypes=array('users', 'enrolments', 'appointments', 'pwdsync');
     
     switch ($type)
     {
@@ -451,6 +470,10 @@ EOF;
         break;
       case 'appointments':
         $count = $this->updateAppointments($tsv);
+        break;
+      case 'pwdsync':
+        $this->updatePwdsync($tsv);
+        $count = 0; // we don't need emails about this...
         break;
       default:
         throw new Exception("Not a valid type specified. Should be one of the following:\n  -" . implode ("\n  -", $validtypes));

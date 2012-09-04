@@ -19,11 +19,12 @@
 <?php endif ?>
 
 <form action="<?php echo url_for('profile/changeaccountpassword') ?>" method="post">
-
+  <?php echo $form['type']->render() ?>
   <table>
     <?php echo $form['current_password']->renderRow() ?>
     <?php echo $form['password']->renderRow() ?>
     <?php echo $form['password_again']->renderRow() ?>
+    
 	<tr>
       <td colspan="2">
          <input type="submit" name="save" value="<?php echo __('Change password') ?>">

@@ -123,5 +123,24 @@ This code must be refactored. In particular, it would be nicer to have a sort of
   {
     return strtoupper(str_replace(array('.', '/', '0'), array('+', '?', 'O'), substr(crypt(rand(1000, 9999).time(), '00'), 2, 8)));
   }
+  
+  public static function encrypt($value, $key)
+  {
+    if(!$value){return false;}
+    $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
+    $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+    $crypttext = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $value, MCRYPT_MODE_ECB, $iv);
+    return trim(base64_encode($crypttext));
+  }
+  
+  public static function decrypt($value, $key)
+  {
+    if(!$value){return false;}
+    $crypttext = base64_decode($value); 
+    $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
+    $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+    $decrypttext = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $crypttext, MCRYPT_MODE_ECB, $iv);
+    return trim($decrypttext);
+  }
  
 }
