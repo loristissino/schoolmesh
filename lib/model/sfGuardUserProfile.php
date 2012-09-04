@@ -2047,4 +2047,10 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
   }
 
 
+  public function storeEncryptedPassword($password)
+  {
+    $this->setEncryptedPassword($password);
+    $this->save();
+  }
+
 }
