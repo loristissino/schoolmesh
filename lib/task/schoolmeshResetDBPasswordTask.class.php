@@ -22,6 +22,8 @@ class schoolmeshResetDBPasswordTask extends sfBaseTask
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+      new sfCommandOption('base64', null, sfCommandOption::PARAMETER_NONE, 'Whether the password is encoded in base64'),
+      new sfCommandOption('generate', null, sfCommandOption::PARAMETER_NONE, 'Whether the password has to be stored in plaintext in the profile'),
       // add your own options here
     ));
     
@@ -32,9 +34,16 @@ class schoolmeshResetDBPasswordTask extends sfBaseTask
     $this->name             = 'reset-db-password';
     $this->briefDescription = 'Resets the DB password of the user for the main Schoolmesh account';
     $this->detailedDescription = <<<EOF
-This task is useful only if you do not set an external authentication method.
-It is not secure, since we pass the password on the command line.
-(But we do not need security here at the moment)
+This task is can be used to set or generate a password for the user 
+specified.
+The password can be given, like when you must synchronize it from 
+another application, or can be generated randomly.
+If it is given, you may chose to have it encoded in base64, to avoid 
+problems with spaces or quotes.
+When it is generated, the password is stored on the database in 
+plaintext (and the one given on command line is ignored). This is 
+useful when you want to retrieve the passwords later, to generate 
+welcome letters or email messages.
 EOF;
   }
 
@@ -46,14 +55,40 @@ EOF;
 
     if (!$user=sfGuardUserPeer::retrieveByUsername($arguments['username']))
     {
-      echo "user not found\n";
+      $this->logSection($arguments['username'], 'User not found', null, 'ERROR');
       return 1;
     }
+
+    if($options['generate'])
+    {
+      $password=Authentication::generateRandomPassword();
+      $message='Password generated and stored: «'. $password . '»';
+    }
+    else
+    {
+      if($options['base64'])
+      {
+        $password=base64_decode($arguments['password']);
+      }
+      else
+      {
+        $password=$arguments['password'];
+      }
+      $message='Password changed: '. $password;
+    }
     
-    $user->setPassword($arguments['password']);
+    $user->setPassword($password);
     $user->save();
-    
-    echo "password changed\n";
+
+    if($options['generate'])
+    {
+      $user->getProfile()
+      ->setPlaintextPassword($password)
+      ->setStoredEncryptedPassword($password)
+      ->save();
+    }
+
+    $this->logSection($arguments['username'], $message, null, 'NOTICE');
   
   } // execute function
 
