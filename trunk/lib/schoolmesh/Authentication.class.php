@@ -121,7 +121,7 @@ This code must be refactored. In particular, it would be nicer to have a sort of
   
   public static function generateRandomPassword()
   {
-    return strtoupper(str_replace(array('.', '/', '0'), array('+', '?', 'O'), substr(crypt(rand(1000, 9999).time(), '00'), 2, 8)));
+    return strtoupper(str_replace(array('.', '/', '0'), array('+', '?', 'O'), substr(crypt(rand(1000, 9999).time(), '00'), 2, 10)));
   }
   
   public static function encrypt($value, $key)

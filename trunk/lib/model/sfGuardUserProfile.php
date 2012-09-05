@@ -2049,11 +2049,18 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
   public function storeEncryptedPassword($password)
   {
+    $this
+    ->setStoredEncryptedPassword()
+    ->save()
+    ;
+  }
+  
+  public function setStoredEncryptedPassword($password)
+  {
     $key=sfConfig::get('app_authentication_encryption_key', false);
     if($key)
     {
       $this->setEncryptedPassword(Authentication::encrypt($password, $key));
-      $this->save();
     }
     return $this;
   }
