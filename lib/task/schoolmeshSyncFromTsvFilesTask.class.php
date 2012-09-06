@@ -249,6 +249,7 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
           $profile
           ->setUserId($user->getId())
           ->setPlaintextPassword($password)
+          ->setStoredEncryptedPassword($password)
           ->setPreferredFormat('odt')
           ->setPreferredCulture(sfConfig::get('app_config_culture'))
           ->save($this->con);
