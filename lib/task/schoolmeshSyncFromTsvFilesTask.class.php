@@ -384,7 +384,7 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
         ->save($this->con)
         ;
         $this->notices['appointments']['new'][]=$v;
-        $this->logSection('appointment', $appointment, null, 'ERROR');
+        $this->logSection('appointment+', $appointment, null, 'NOTICE');
         
       }
     } 
