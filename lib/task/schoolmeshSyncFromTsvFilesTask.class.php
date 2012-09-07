@@ -366,11 +366,23 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
       {
         $profile=sfGuardUserProfilePeer::retrieveByImportCode($v['USER_IMPORT_CODE']);
         $schoolclass=SchoolclassPeer::retrieveByPK($v['SCHOOLCLASS_ID']);
-        $subject=SubjectPeer::retrieveByPK($v['SUBJECT_SHORTCUT']);
+        $subject=SubjectPeer::retrieveByShortcut($v['SUBJECT_SHORTCUT']);
         if(!$profile or !$schoolclass or !$subject)
         {
           $this->notices['appointments']['failed'][]=$v;
           $this->logSection('appointment', sprintf('%s:%s:%s', $v['USER_IMPORT_CODE'], $v['SCHOOLCLASS_ID'], $v['SUBJECT_SHORTCUT']), null, 'ERROR');
+          if(!$profile)
+          {
+            echo "-- profile not found\n";
+          }
+          if(!$schoolclass)
+          {
+            echo "-- class not found\n";
+          }
+          if(!$subject)
+          {
+            echo "-- subject not found\n";
+          }
           $count++;
           continue;
         }
