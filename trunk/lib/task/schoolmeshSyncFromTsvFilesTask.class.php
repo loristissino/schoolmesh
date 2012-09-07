@@ -57,7 +57,7 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
           {
             $profile=$enrolment->getsfGuardUser()->getProfile();
             $text.='* ' .$profile->getFullName() . ' => ' . $enrolment->getSchoolclassId() . "\n";
-            $text.='  ' .sfConfig::get('app_school_website').'/users/edit?id=' . $profile->getId() . "#enrolments\n\n";
+            $text.='  ' .sfConfig::get('app_school_schoolmesh_url').'/users/edit?id=' . $profile->getId() . "#enrolments\n\n";
           }
         }
         $text.="\n";
@@ -90,9 +90,16 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
           
           foreach($this->notices['appointments'][$nu] as $appointment)
           {
-            $profile=$appointment->getsfGuardUser()->getProfile();
-            $text.='* ' .$profile->getFullName() . ' => ' . $appointment . "\n";
-            $text.='  ' .sfConfig::get('app_school_website').'/users/edit?id=' . $profile->getId() . "#appointments\n\n";
+            try
+            {
+              $profile=$appointment->getsfGuardUser()->getProfile();
+              $text.='* ' .$profile->getFullName() . ' => ' . $appointment . "\n";
+              $text.='  ' .sfConfig::get('app_school_schoolmesh_url').'/users/edit?id=' . $profile->getId() . "#appointments\n\n";
+            }
+            catch(Exception $e)
+            {
+              $text.=' (missing information -- this should not happen)' . "\n";
+            }
           }
         }
         $text.="\n";
