@@ -90,13 +90,13 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
           
           foreach($this->notices['appointments'][$nu] as $appointment)
           {
-            try
+            if($appointment)
             {
               $profile=$appointment->getsfGuardUser()->getProfile();
               $text.='* ' .$profile->getFullName() . ' => ' . $appointment . "\n";
               $text.='  ' .sfConfig::get('app_school_schoolmesh_url').'/users/edit?id=' . $profile->getId() . "#appointments\n\n";
             }
-            catch(Exception $e)
+            else
             {
               $text.=' (missing information -- this should not happen)' . "\n";
             }
