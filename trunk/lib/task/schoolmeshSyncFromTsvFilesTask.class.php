@@ -90,7 +90,7 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
           
           foreach($this->notices['appointments'][$nu] as $appointment)
           {
-            if($appointment)
+            if($appointment instanceof Appointment)
             {
               $profile=$appointment->getsfGuardUser()->getProfile();
               $text.='* ' .$profile->getFullName() . ' => ' . $appointment . "\n";
