@@ -25,7 +25,7 @@ class SSO
     
     if(!is_array($this->config))
     {
-      throw new Exception('invalid configfile');
+      throw new Exception('SSO: invalid configfile');
     }
     
   }

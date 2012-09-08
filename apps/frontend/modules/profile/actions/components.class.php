@@ -4,7 +4,11 @@ class profileComponents extends sfComponents
 {
   public function executeInfo()
   {
-    $this->softuser = softUser::getSoftUser();
+
+    if(sfConfig::get('app_authentication_soft_authentication_enabled', false))
+    {
+      $this->softuser = softUser::getSoftUser();
+    }
     
     $this->current_user = $this->getUser()->isAuthenticated() ? $this->getUser()->getGuardUser() : $this->softuser;
     
@@ -15,26 +19,6 @@ class profileComponents extends sfComponents
       ->save();
     }
     
-      /*
-			
-			if ($this->getUser()->isAuthenticated())
-			{
-				if ($this->getUser()->hasCredential('admin'))
-				{
-					if (!OdfDocPeer::getIsUnoconvActive())
-					{
-						// FIXME: I must provide a more generic way, in order to allow several alerts...
-						$this->getUser()->setFlash('schoolmesh_alerts', 'Unoconv not active!');
-					}
-				}
-			}
-
-			*/
-			
-			
-			
-//  $this->softuser = softUser::getSoftUsername();
-//  $this->fullname = softUser::getFullname();
   }
   
   
