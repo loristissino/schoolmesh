@@ -112,7 +112,6 @@ all:
 # checkDBPassword: users are authenticated against the internal DB
 # checkLdapPassword: users are authenticated against a LDAP server, specified in the lines below
 # checkSambaPassword: users are authenticated against a Samba server (probably working also against a Windows authentication server)
-# checkFirstSambaThenDBPassword: it they have a Samba Account, users are authenticated with that, otherwise against the DB
 
   authentication:
     ldap_host: localhost

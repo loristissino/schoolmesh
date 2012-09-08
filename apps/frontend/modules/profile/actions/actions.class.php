@@ -137,7 +137,7 @@ class profileActions extends sfActions
 				else
 				{
 					$this->getUser()->setFlash('error',
-						$this->getContext()->getI18N()->__('Password could not be changed, due to authentication failure.')
+						$this->getContext()->getI18N()->__('The password could not be changed, due to authentication failure.')
 						);
 				}
         if($type=='main')

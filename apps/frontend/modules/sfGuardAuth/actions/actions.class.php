@@ -128,6 +128,7 @@ class sfGuardAuthActions extends BasesfGuardAuthActions
           {
             $security->addTrustedBrowser($this->getResponse());
           }
+          Authentication::storeAuthentication($this->getUser()->getProfile()->getSfGuardUser(), true);
           return $this->redirect($this->getUser()->getAttribute('signin_url'));
         }
         else
