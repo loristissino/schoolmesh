@@ -5044,6 +5044,10 @@
         <source>The password could not be changed, due to authentication failure.</source>
         <target>Non è stato possibile modificare la password, a causa di problemi di autenticazione.</target>
       </trans-unit>
+      <trans-unit id="1458">
+        <source>Authentication: </source>
+        <target>Autenticazione: </target>
+      </trans-unit>
     </body>
   </file> 
 </xliff>

@@ -77,7 +77,7 @@ class sfGuardAuthActions extends BasesfGuardAuthActions
   
   public function executeSignout($request)
   {
-    // this has to be reimplemented in order to delete simplesamlphp's cookie...
+    // this had to be reimplemented in order to delete simplesamlphp's cookie...
     
     $this->getUser()->signOut();
     
