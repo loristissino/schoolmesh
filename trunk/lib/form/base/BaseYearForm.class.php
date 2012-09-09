@@ -27,6 +27,10 @@ abstract class BaseYearForm extends BaseFormPropel
       'end_date'    => new sfValidatorDate(array('required' => false)),
     ));
 
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorPropelUnique(array('model' => 'Year', 'column' => array('description')))
+    );
+
     $this->widgetSchema->setNameFormat('year[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);

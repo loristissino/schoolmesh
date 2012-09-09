@@ -37,6 +37,14 @@ abstract class BaseWorkstationForm extends BaseFormPropel
       'subnet_id'   => new sfValidatorPropelChoice(array('model' => 'Subnet', 'column' => 'id', 'required' => false)),
     ));
 
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorAnd(array(
+        new sfValidatorPropelUnique(array('model' => 'Workstation', 'column' => array('name'))),
+        new sfValidatorPropelUnique(array('model' => 'Workstation', 'column' => array('ip_cidr'))),
+        new sfValidatorPropelUnique(array('model' => 'Workstation', 'column' => array('mac_address'))),
+      ))
+    );
+
     $this->widgetSchema->setNameFormat('workstation[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);

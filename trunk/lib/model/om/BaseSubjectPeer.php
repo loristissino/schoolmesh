@@ -706,7 +706,7 @@ abstract class BaseSubjectPeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return array(array('shortcut'));
 	}
 
 } // BaseSubjectPeer

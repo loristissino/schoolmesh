@@ -1,7 +1,7 @@
 propel:
   track:
     id:           ~
-    shortcut:     { type: varchar(3), index: true, unique: true }
+    shortcut:     { type: varchar(3), index: unique }
     description:  { type: varchar(255), required: true }
 
   schoolclass:
@@ -14,7 +14,7 @@ propel:
 
   year:
     id:           { type: integer, required: true, primaryKey: true, autoIncrement: false }
-    description:  { type: varchar(7), unique: true }
+    description:  { type: varchar(7), index: unique }
     start_date:   { type: date }
     end_date:     { type: date }
 
@@ -27,14 +27,14 @@ propel:
 
   subject:
     id:           ~
-    shortcut:     { type: varchar(3), index: true, required: true, unique: true }
+    shortcut:     { type: varchar(3), index: unique, required: true }
     description:  { type: varchar(255), required: true }
     rank:         integer
     is_active:    { type: boolean, default: true }
 
   suggestion:
     id: ~
-    shortcut:     { type: varchar(20), index: true, required: true, unique: true }
+    shortcut:     { type: varchar(20), index: unique, required: true }
     content:      { type: varchar(255), required: true }
     is_selectable: boolean
     rank:          integer
@@ -45,7 +45,6 @@ propel:
     content:      { type: varchar(255), required: true }
     is_selectable: boolean
     rank:  integer
-    
 
   sf_guard_user_profile:
     _attributes:  { phpName: sfGuardUserProfile }
@@ -449,7 +448,7 @@ propel:
   proj_resource_type:
     id: ~
     description: varchar(255)
-    shortcut: { type: varchar(5), required: true }
+    shortcut: { type: varchar(5), required: true, index: unique }
     role_id: ~
     standard_cost: { type: decimal, size: 10, scale: 2 }
     measurement_unit: varchar(10)
@@ -457,8 +456,6 @@ propel:
     rank: integer
     printed_in_submission_letters: { type: boolean, default: true }
     printed_in_charge_letters: { type: boolean, default: true }
-    _uniques:
-      s: [ shortcut ]
 
   proj_resource:
     id: ~
@@ -501,7 +498,7 @@ propel:
     # this table stores information about the type of informative messages that
     # can be sent to the users, provided that they gave their consent
     id: ~
-    shortcut: { type: varchar(40); required: true; unique: true }
+    shortcut: { type: varchar(40); required: true; index: unique }
     description: varchar(255)
     
   consent:
@@ -519,14 +516,14 @@ propel:
 
   subnet:
     id:
-    name:   { type: varchar(40), index: true, unique: true }
+    name:   { type: varchar(40), index: unique }
     ip_cidr:     { type: varchar(20), required: false }
 
   workstation:
     id:          
-    name:    { type: varchar(40), index: true, unique: true }
-    ip_cidr:   { type: varchar(20), required: true, unique: true }
-    mac_address: { type: varchar(17), required: false, unique: true }
+    name:    { type: varchar(40), index: unique }
+    ip_cidr:   { type: varchar(20), required: true, index: unique }
+    mac_address: { type: varchar(17), required: false, index: unique }
     is_enabled: { type: boolean, default: false }
     is_active:  { type: boolean, default: false }
     location_x: { type: float }

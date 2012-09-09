@@ -698,7 +698,7 @@ abstract class BaseSubnetPeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return array(array('name'));
 	}
 
 } // BaseSubnetPeer

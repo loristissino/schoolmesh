@@ -29,6 +29,10 @@ abstract class BaseSubjectForm extends BaseFormPropel
       'is_active'   => new sfValidatorBoolean(array('required' => false)),
     ));
 
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorPropelUnique(array('model' => 'Subject', 'column' => array('shortcut')))
+    );
+
     $this->widgetSchema->setNameFormat('subject[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);

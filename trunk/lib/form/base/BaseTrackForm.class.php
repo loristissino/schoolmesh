@@ -25,6 +25,10 @@ abstract class BaseTrackForm extends BaseFormPropel
       'description' => new sfValidatorString(array('max_length' => 255)),
     ));
 
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorPropelUnique(array('model' => 'Track', 'column' => array('shortcut')))
+    );
+
     $this->widgetSchema->setNameFormat('track[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);

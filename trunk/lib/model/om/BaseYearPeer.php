@@ -698,7 +698,7 @@ abstract class BaseYearPeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return array(array('description'));
 	}
 
 } // BaseYearPeer
