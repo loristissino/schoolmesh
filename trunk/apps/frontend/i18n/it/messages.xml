@@ -5002,7 +5002,7 @@
     </trans-unit>
     <trans-unit id="1447">
         <source>The module you requested has been disabled on this SchoolMesh setup.</source>
-        <target>Il modulo che hai richiesto è stato disabilitato su questo installazione di SchoolMesh.</target>
+        <target>Il modulo che hai richiesto è stato disabilitato in questa installazione di SchoolMesh.</target>
     </trans-unit>
     <trans-unit id="1448">
         <source>It might be available in one of the following sibling servers:</source>

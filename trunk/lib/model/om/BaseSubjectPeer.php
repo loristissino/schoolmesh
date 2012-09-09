@@ -25,7 +25,7 @@ abstract class BaseSubjectPeer {
 	const TM_CLASS = 'SubjectTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 5;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -41,6 +41,9 @@ abstract class BaseSubjectPeer {
 
 	/** the column name for the RANK field */
 	const RANK = 'subject.RANK';
+
+	/** the column name for the IS_ACTIVE field */
+	const IS_ACTIVE = 'subject.IS_ACTIVE';
 
 	/**
 	 * An identiy map to hold any loaded instances of Subject objects.
@@ -65,11 +68,11 @@ abstract class BaseSubjectPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Shortcut', 'Description', 'Rank', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'shortcut', 'description', 'rank', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::SHORTCUT, self::DESCRIPTION, self::RANK, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'shortcut', 'description', 'rank', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Shortcut', 'Description', 'Rank', 'IsActive', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'shortcut', 'description', 'rank', 'isActive', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::SHORTCUT, self::DESCRIPTION, self::RANK, self::IS_ACTIVE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'shortcut', 'description', 'rank', 'is_active', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -79,11 +82,11 @@ abstract class BaseSubjectPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Shortcut' => 1, 'Description' => 2, 'Rank' => 3, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'shortcut' => 1, 'description' => 2, 'rank' => 3, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SHORTCUT => 1, self::DESCRIPTION => 2, self::RANK => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'shortcut' => 1, 'description' => 2, 'rank' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Shortcut' => 1, 'Description' => 2, 'Rank' => 3, 'IsActive' => 4, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'shortcut' => 1, 'description' => 2, 'rank' => 3, 'isActive' => 4, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SHORTCUT => 1, self::DESCRIPTION => 2, self::RANK => 3, self::IS_ACTIVE => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'shortcut' => 1, 'description' => 2, 'rank' => 3, 'is_active' => 4, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -157,6 +160,7 @@ abstract class BaseSubjectPeer {
 		$criteria->addSelectColumn(SubjectPeer::SHORTCUT);
 		$criteria->addSelectColumn(SubjectPeer::DESCRIPTION);
 		$criteria->addSelectColumn(SubjectPeer::RANK);
+		$criteria->addSelectColumn(SubjectPeer::IS_ACTIVE);
 	}
 
 	/**

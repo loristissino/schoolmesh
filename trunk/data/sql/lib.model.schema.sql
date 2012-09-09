@@ -86,6 +86,7 @@ CREATE TABLE `subject`
 	`shortcut` VARCHAR(3)  NOT NULL,
 	`description` VARCHAR(255)  NOT NULL,
 	`rank` INTEGER,
+	`is_active` TINYINT default 1,
 	PRIMARY KEY (`id`),
 	KEY `subject_I_1`(`shortcut`)
 )Engine=InnoDB;

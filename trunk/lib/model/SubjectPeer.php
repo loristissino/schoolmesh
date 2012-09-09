@@ -26,6 +26,7 @@ class SubjectPeer extends BaseSubjectPeer
 	static public function retrieveAllByRank()
 	{
 	$c=new Criteria();
+  $c->add(self::IS_ACTIVE, true);
 	$c->addAscendingOrderByColumn(SubjectPeer::RANK);
 	$t = parent::doSelect($c);
 	return $t;
