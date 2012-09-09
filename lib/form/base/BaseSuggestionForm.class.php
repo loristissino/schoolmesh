@@ -29,6 +29,10 @@ abstract class BaseSuggestionForm extends BaseFormPropel
       'rank'          => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
     ));
 
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorPropelUnique(array('model' => 'Suggestion', 'column' => array('shortcut')))
+    );
+
     $this->widgetSchema->setNameFormat('suggestion[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);

@@ -956,7 +956,7 @@ abstract class BaseWorkstationPeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return array(array('name'), array('ip_cidr'), array('mac_address'));
 	}
 
 } // BaseWorkstationPeer

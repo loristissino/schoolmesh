@@ -16,7 +16,7 @@ CREATE TABLE `track`
 	`shortcut` VARCHAR(3),
 	`description` VARCHAR(255)  NOT NULL,
 	PRIMARY KEY (`id`),
-	KEY `track_I_1`(`shortcut`)
+	UNIQUE KEY `track_U_1` (`shortcut`)
 )Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -54,7 +54,8 @@ CREATE TABLE `year`
 	`description` VARCHAR(7),
 	`start_date` DATE,
 	`end_date` DATE,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `year_U_1` (`description`)
 )Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -88,7 +89,7 @@ CREATE TABLE `subject`
 	`rank` INTEGER,
 	`is_active` TINYINT default 1,
 	PRIMARY KEY (`id`),
-	KEY `subject_I_1`(`shortcut`)
+	UNIQUE KEY `subject_U_1` (`shortcut`)
 )Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -106,7 +107,7 @@ CREATE TABLE `suggestion`
 	`is_selectable` TINYINT,
 	`rank` INTEGER,
 	PRIMARY KEY (`id`),
-	KEY `suggestion_I_1`(`shortcut`)
+	UNIQUE KEY `suggestion_U_1` (`shortcut`)
 )Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -1147,7 +1148,7 @@ CREATE TABLE `proj_resource_type`
 	`printed_in_submission_letters` TINYINT default 1,
 	`printed_in_charge_letters` TINYINT default 1,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `s` (`shortcut`),
+	UNIQUE KEY `proj_resource_type_U_1` (`shortcut`),
 	INDEX `proj_resource_type_FI_1` (`role_id`),
 	CONSTRAINT `proj_resource_type_FK_1`
 		FOREIGN KEY (`role_id`)
@@ -1311,7 +1312,7 @@ CREATE TABLE `subnet`
 	`name` VARCHAR(40),
 	`ip_cidr` VARCHAR(20),
 	PRIMARY KEY (`id`),
-	KEY `subnet_I_1`(`name`)
+	UNIQUE KEY `subnet_U_1` (`name`)
 )Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
@@ -1333,7 +1334,9 @@ CREATE TABLE `workstation`
 	`location_y` FLOAT,
 	`subnet_id` INTEGER,
 	PRIMARY KEY (`id`),
-	KEY `workstation_I_1`(`name`),
+	UNIQUE KEY `workstation_U_1` (`name`),
+	UNIQUE KEY `workstation_U_2` (`ip_cidr`),
+	UNIQUE KEY `workstation_U_3` (`mac_address`),
 	INDEX `workstation_FI_1` (`subnet_id`),
 	CONSTRAINT `workstation_FK_1`
 		FOREIGN KEY (`subnet_id`)

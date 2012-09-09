@@ -25,6 +25,10 @@ abstract class BaseSubnetForm extends BaseFormPropel
       'ip_cidr' => new sfValidatorString(array('max_length' => 20, 'required' => false)),
     ));
 
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorPropelUnique(array('model' => 'Subnet', 'column' => array('name')))
+    );
+
     $this->widgetSchema->setNameFormat('subnet[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);

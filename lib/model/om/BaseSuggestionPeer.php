@@ -706,7 +706,7 @@ abstract class BaseSuggestionPeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return array(array('shortcut'));
 	}
 
 } // BaseSuggestionPeer
