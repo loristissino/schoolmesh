@@ -347,6 +347,7 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
         
     while($v=$tsv->fetchAssoc())
     {
+      $hours=$v['HOURS']*sfConfig::get('app_config_year_weeks', 33);
       $appointment=AppointmentPeer::retrieveByImportCodeSchoolclassIdSubjectShortcut(
         $v['USER_IMPORT_CODE'],
         $v['SCHOOLCLASS_ID'],
@@ -354,7 +355,6 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
         );
       if($appointment)
       {
-        $hours=$v['HOURS']*sfConfig::get('app_config_year_weeks', 33);
         if($appointment->getHours()!=$hours)
         {
           $old=$appointment->getHours();
@@ -364,7 +364,7 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
           ->save($this->con)
           ;
           
-          $this->$this->notices['appointments']['updated'][]=$appointment;
+          $this->notices['appointments']['updated'][]=$appointment;
           $this->logSection('appointment*', sprintf('%s: %d -> %d', $appointment, $old, $appointment->getHours()), null, 'NOTICE');
           $count++;
         }

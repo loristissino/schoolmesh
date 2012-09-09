@@ -29,7 +29,8 @@ propel:
     id:           ~
     shortcut:     { type: varchar(3), index: true, required: true, unique: true }
     description:  { type: varchar(255), required: true }
-    rank:     integer
+    rank:         integer
+    is_active:    { type: boolean, default: true }
 
   suggestion:
     id: ~

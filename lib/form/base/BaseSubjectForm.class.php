@@ -18,6 +18,7 @@ abstract class BaseSubjectForm extends BaseFormPropel
       'shortcut'    => new sfWidgetFormInputText(),
       'description' => new sfWidgetFormInputText(),
       'rank'        => new sfWidgetFormInputText(),
+      'is_active'   => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -25,6 +26,7 @@ abstract class BaseSubjectForm extends BaseFormPropel
       'shortcut'    => new sfValidatorString(array('max_length' => 3)),
       'description' => new sfValidatorString(array('max_length' => 255)),
       'rank'        => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'is_active'   => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('subject[%s]');

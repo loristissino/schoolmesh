@@ -40,6 +40,7 @@ class SubjectTableMap extends TableMap {
 		$this->addColumn('SHORTCUT', 'Shortcut', 'VARCHAR', true, 3, null);
 		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', true, 255, null);
 		$this->addColumn('RANK', 'Rank', 'INTEGER', false, null, null);
+		$this->addColumn('IS_ACTIVE', 'IsActive', 'BOOLEAN', false, null, true);
 		// validators
 	} // initialize()
 

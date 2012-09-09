@@ -43,6 +43,13 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 	protected $rank;
 
 	/**
+	 * The value for the is_active field.
+	 * Note: this column has a database default value of: true
+	 * @var        boolean
+	 */
+	protected $is_active;
+
+	/**
 	 * @var        array Appointment[] Collection to store aggregation of Appointment objects.
 	 */
 	protected $collAppointments;
@@ -69,6 +76,27 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 	// symfony behavior
 	
 	const PEER = 'SubjectPeer';
+
+	/**
+	 * Applies default values to this object.
+	 * This method should be called from the object's constructor (or
+	 * equivalent initialization method).
+	 * @see        __construct()
+	 */
+	public function applyDefaultValues()
+	{
+		$this->is_active = true;
+	}
+
+	/**
+	 * Initializes internal state of BaseSubject object.
+	 * @see        applyDefaults()
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
 
 	/**
 	 * Get the [id] column value.
@@ -108,6 +136,16 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 	public function getRank()
 	{
 		return $this->rank;
+	}
+
+	/**
+	 * Get the [is_active] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsActive()
+	{
+		return $this->is_active;
 	}
 
 	/**
@@ -191,6 +229,26 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 	} // setRank()
 
 	/**
+	 * Set the value of [is_active] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     Subject The current object (for fluent API support)
+	 */
+	public function setIsActive($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_active !== $v || $this->isNew()) {
+			$this->is_active = $v;
+			$this->modifiedColumns[] = SubjectPeer::IS_ACTIVE;
+		}
+
+		return $this;
+	} // setIsActive()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -200,6 +258,10 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->is_active !== true) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -226,6 +288,7 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 			$this->shortcut = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->description = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->rank = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->is_active = ($row[$startcol + 4] !== null) ? (boolean) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -235,7 +298,7 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 4; // 4 = SubjectPeer::NUM_COLUMNS - SubjectPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 5; // 5 = SubjectPeer::NUM_COLUMNS - SubjectPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Subject object", $e);
@@ -562,6 +625,9 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 			case 3:
 				return $this->getRank();
 				break;
+			case 4:
+				return $this->getIsActive();
+				break;
 			default:
 				return null;
 				break;
@@ -587,6 +653,7 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 			$keys[1] => $this->getShortcut(),
 			$keys[2] => $this->getDescription(),
 			$keys[3] => $this->getRank(),
+			$keys[4] => $this->getIsActive(),
 		);
 		return $result;
 	}
@@ -630,6 +697,9 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 			case 3:
 				$this->setRank($value);
 				break;
+			case 4:
+				$this->setIsActive($value);
+				break;
 		} // switch()
 	}
 
@@ -658,6 +728,7 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setShortcut($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setDescription($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setRank($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setIsActive($arr[$keys[4]]);
 	}
 
 	/**
@@ -673,6 +744,7 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SubjectPeer::SHORTCUT)) $criteria->add(SubjectPeer::SHORTCUT, $this->shortcut);
 		if ($this->isColumnModified(SubjectPeer::DESCRIPTION)) $criteria->add(SubjectPeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(SubjectPeer::RANK)) $criteria->add(SubjectPeer::RANK, $this->rank);
+		if ($this->isColumnModified(SubjectPeer::IS_ACTIVE)) $criteria->add(SubjectPeer::IS_ACTIVE, $this->is_active);
 
 		return $criteria;
 	}
@@ -732,6 +804,8 @@ abstract class BaseSubject extends BaseObject  implements Persistent {
 		$copyObj->setDescription($this->description);
 
 		$copyObj->setRank($this->rank);
+
+		$copyObj->setIsActive($this->is_active);
 
 
 		if ($deepCopy) {
