@@ -151,7 +151,7 @@ propel:
   appointment_type:
     id: ~
     description:      { type: varchar(255) }
-    shortcut:         { type: varchar(10), index: true }
+    shortcut:         { type: varchar(10), index: unique }
     rank:             { type: integer, index: true }
     is_active:        { type: boolean, default: true }
     has_info:         { type: boolean, default: false }

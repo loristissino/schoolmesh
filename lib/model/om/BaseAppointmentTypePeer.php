@@ -722,7 +722,7 @@ abstract class BaseAppointmentTypePeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array();
+	  return array(array('shortcut'));
 	}
 
 } // BaseAppointmentTypePeer

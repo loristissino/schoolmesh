@@ -37,6 +37,10 @@ abstract class BaseAppointmentTypeForm extends BaseFormPropel
       'has_attachments' => new sfValidatorBoolean(array('required' => false)),
     ));
 
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorPropelUnique(array('model' => 'AppointmentType', 'column' => array('shortcut')))
+    );
+
     $this->widgetSchema->setNameFormat('appointment_type[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);

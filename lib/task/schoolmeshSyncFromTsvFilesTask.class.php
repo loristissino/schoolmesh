@@ -1,5 +1,7 @@
 <?php
 
+define('OUTPUT_NULL', '«null»');
+
 /**
  * schoolmeshSyncFromTsvFilesTask class.
  *
@@ -348,6 +350,8 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
     while($v=$tsv->fetchAssoc())
     {
       $hours=$v['HOURS']*sfConfig::get('app_config_year_weeks', 33);
+      $newtype=isset($v['TYPE_SHORTCUT'])?$v['TYPE_SHORTCUT']:sfConfig::get('app_config_default_appointment_type', null);
+      $newsyllabus=isset($v['SYLLABUS_ID'])?$v['SYLLABUS_ID']:sfConfig::get('app_config_default_syllabus', null);
       $appointment=AppointmentPeer::retrieveByImportCodeSchoolclassIdSubjectShortcut(
         $v['USER_IMPORT_CODE'],
         $v['SCHOOLCLASS_ID'],
@@ -355,26 +359,71 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
         );
       if($appointment)
       {
+        
+        $changes=array();
+        
         if($appointment->getHours()!=$hours)
         {
           $old=$appointment->getHours();
-          
-          $appointment
-          ->setHours($hours)
-          ->save($this->con)
-          ;
-          
+          $appointment->setHours($hours);
+          $changes[] = sprintf('hours: %d -> %d', $old, $appointment->getHours());
+        }
+
+        if(!$appointment->getState())
+        {
+          $appointment->setState(Workflow::AP_ASSIGNED);
+          $changes[] = sprintf('state: %s -> %d', OUTPUT_NULL, $appointment->getState());
+        }
+
+        $old=$appointment->getAppointmentTypeId() ? $appointment->getAppointmentType()->getShortCut() : null;
+        if($old!=$newtype)
+        {
+          $type=AppointmentTypePeer::retrieveByShortcut($newtype);
+          if($type)
+          {
+            $appointment->setAppointmentTypeId($type->getId());
+            if(!$old)
+            {
+              $old=OUTPUT_NULL;
+            }
+            $changes[] = sprintf('type: %s -> %s', $old, $type->getShortcut());
+          }
+        }
+        
+        $old=$appointment->getSyllabusId();
+        if($old!=$newsyllabus)
+        {
+          $syllabus=SyllabusPeer::retrieveByPK($newsyllabus);
+          if($syllabus)
+          {
+            $appointment->setSyllabusId($syllabus->getId());
+            if(!$old)
+            {
+              $old=OUTPUT_NULL;
+            }
+            $changes[] = sprintf('syllabus: %s -> %s', $old, $syllabus->getId());
+          }
+        }
+        
+        
+        
+        if(sizeof($changes))
+        {
+          $appointment->save($this->con);
           $this->notices['appointments']['updated'][]=$appointment;
-          $this->logSection('appointment*', sprintf('%s: %d -> %d', $appointment, $old, $appointment->getHours()), null, 'NOTICE');
+          $this->logSection('appointment*', sprintf('%s: (%s)', $appointment, implode('; ', $changes)), null, 'NOTICE');
           $count++;
         }
+        
       }
       else
       {
         $profile=sfGuardUserProfilePeer::retrieveByImportCode($v['USER_IMPORT_CODE']);
         $schoolclass=SchoolclassPeer::retrieveByPK($v['SCHOOLCLASS_ID']);
         $subject=SubjectPeer::retrieveByShortcut($v['SUBJECT_SHORTCUT']);
-        if(!$profile or !$schoolclass or !$subject)
+        $type=AppointmentTypePeer::retrieveByShortcut($newtype);
+        $syllabus=SyllabusPeer::retrieveByPK($newsyllabus);
+        if(!$profile or !$schoolclass or !$subject or !$type)
         {
           $this->notices['appointments']['failed'][]=$v;
           $this->logSection('appointment', sprintf('%s:%s:%s', $v['USER_IMPORT_CODE'], $v['SCHOOLCLASS_ID'], $v['SUBJECT_SHORTCUT']), null, 'ERROR');
@@ -390,6 +439,10 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
           {
             echo "-- subject not found\n";
           }
+          if(!$type)
+          {
+            echo "-- type not found: $newtype\n";
+          }
           $count++;
           continue;
         }
@@ -400,6 +453,8 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
         ->setSubject($subject)
         ->setSchoolclass($schoolclass)
         ->setYearId(sfConfig::get('app_config_current_year'))
+        ->setState(Workflow::AP_ASSIGNED)
+        ->setSyllabus($syllabus)
         ->save($this->con)
         ;
         $this->notices['appointments']['new'][]=$v;
@@ -441,6 +496,7 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       new sfCommandOption('dry-run', null, sfCommandOption::PARAMETER_NONE, 'Whether the command will be executed leaving the db intact'),
+      new sfCommandOption('no-mail', null, sfCommandOption::PARAMETER_NONE, 'Whether email notices should be avoided'),
     ));
     
     $this->addArgument('type', sfCommandArgument::REQUIRED, 'The information type to update');
@@ -499,11 +555,13 @@ EOF;
         throw new Exception("Not a valid type specified. Should be one of the following:\n  -" . implode ("\n  -", $validtypes));
     }
 
-    if($count>0)
+    if(!$options['no-mail'])
     {
-      $this->_sendConfirmationMessage('backadmin', $type);
+      if($count>0)
+      {
+        $this->_sendConfirmationMessage('backadmin', $type);
+      }
     }
-    
     
     if ($options['dry-run'])
     {

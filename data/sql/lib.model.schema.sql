@@ -350,8 +350,8 @@ CREATE TABLE `appointment_type`
 	`has_tools` TINYINT default 0,
 	`has_attachments` TINYINT default 0,
 	PRIMARY KEY (`id`),
-	KEY `appointment_type_I_1`(`shortcut`),
-	KEY `appointment_type_I_2`(`rank`)
+	UNIQUE KEY `appointment_type_U_1` (`shortcut`),
+	KEY `appointment_type_I_1`(`rank`)
 )Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
