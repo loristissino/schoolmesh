@@ -17,6 +17,13 @@ class AppointmentTypePeer extends BaseAppointmentTypePeer {
     return self::retrieveAll($c);
   }
 
+  public static function retrieveByShortcut($v)
+  {
+    $c= new Criteria();
+    $c->add(self::SHORTCUT, $v);
+    return self::doSelectOne($c);
+  }
+
   public static function retrieveAll(Criteria $c=null)
   {
     if(!$c)
