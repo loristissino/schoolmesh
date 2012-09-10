@@ -66,7 +66,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			$mailer->send($message);
 
 			$this
-			->setEmailState(sfGuardUserProfilePeer::EMAIL_WAITINGVALIDATION)
+			->setEmailState(sfGuardUserProfilePeer::EMAIL_UNVERIFIED)
 			->save();
 			
 			return $this;
