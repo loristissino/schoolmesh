@@ -228,7 +228,7 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
         
         if($v['TYPE']=='T')
         {
-          $profile->setLettertitle($profile->getIsMale()? sfConfig::get('app_config_default_male_teachertitle', 'Mr'): sfConfig::get('app_config_default_male_teachertitle', 'Ms'));
+          $profile->setLettertitle($profile->getIsMale()? sfConfig::get('app_config_default_male_teachertitle', 'Mr'): sfConfig::get('app_config_default_female_teachertitle', 'Ms'));
         }
         
         $profile->setRole($role);
