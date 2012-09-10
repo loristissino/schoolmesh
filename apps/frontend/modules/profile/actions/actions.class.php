@@ -121,8 +121,8 @@ class profileActions extends sfActions
             $sfguarduser->setPassword($params['password']);
             $sfguarduser->save();
             
-            Generic::logMessage('store', $params['password']);
-            $profile->storeEncryptedPassword($params['password']);
+            //Generic::logMessage('store', $params['password']);
+            $sfguarduser->getProfile()->storeEncryptedPassword($params['password']);
           }
           else
           {
