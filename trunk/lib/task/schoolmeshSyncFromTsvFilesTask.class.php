@@ -163,25 +163,29 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
     
     while($v=$tsv->fetchAssoc())
     {
+      // some hard-coded defaults:
+      foreach(array(
+        'MIDDLE_NAME'  => '', 
+        'BIRTH_PLACE'  => '', 
+        'BIRTH_DATE'   => '', 
+        'EMAIL'        => '',
+        'IS_ACTIVE'    => 0,
+        ) as $vk=>$vv)
+      {
+        if(!isset($v[$vk])) $v[$vk]=$vv;
+      }
+      
       $profile=sfGuardUserProfilePeer::retrieveByImportCode($v['USER_IMPORT_CODE']);
       if($profile)
       {
-        if(!isset($v['IS_ACTIVE']))
-        {
-          $is_active = 0;
-        }
-        else
-        {
-          $is_active=$v['IS_ACTIVE'];
-        }
-        if($profile->getIsActive()==$is_active)
+        if($profile->getIsActive()==$v['IS_ACTIVE'])
         {
           $this->logSection('user=', $profile->getFullName(), null, 'COMMENT');
         }
         else
         {
-          $profile->getsfGuardUser()->setIsActive($is_active)->save();
-          $this->logSection('user!', $profile->getFullName() . ' (active: ' . ($is_active?'yes':'no') . ')', null, 'NOTICE');
+          $profile->getsfGuardUser()->setIsActive($v['IS_ACTIVE'])->save();
+          $this->logSection('user!', $v['FIRST_NAME'] . ' '. $v['LAST_NAME'] . ' -- ' . $profile->getFullName() . ' (active: ' . ($v['IS_ACTIVE']?'yes':'no') . ')', null, 'INFO');
         }
       }
       else
@@ -202,10 +206,13 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
             $role=$teacherRole;
             $guardgroup=$teacherGuardGroup;
             break;
+          case 'O':
+            $role=null;
+            $guardgroup=null;
+            break;
           default:
             $this->logSection('user/', $v['LAST_NAME'] . ' skipped', null, 'COMMENT');
         }
-        
         
         $profile=new sfGuardUserProfile();
 				
@@ -228,7 +235,7 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
 
         $user = new sfGuardUser();
         
-        if(array_key_exists('USERNAME', $v))
+        if(array_key_exists('USERNAME', $v) and $v['USERNAME'])
         {
           $username=$v['USERNAME'];
         }
@@ -266,7 +273,10 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
           $this->notices['users']['imported'][]=$profile;
 
           // we do this now, because we could not before, since the object was not yet saved
-          $profile->addToGuardGroup($guardgroup);
+          if($guardgroup)
+          {
+            $profile->addToGuardGroup($guardgroup);
+          }
 
           $this->logSection('user+', $profile->getUsername() . ' => ' . $profile->getFullName(), null, 'NOTICE');
         }
