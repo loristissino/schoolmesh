@@ -147,7 +147,16 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
     
     
   }
-  
+
+  private function _applyChanges($object, $type, $changes=array())
+  {
+    if(sizeof($changes))
+    {
+      $object->save($this->con);
+      $this->notices[$type]['updated'][]=$object;
+      $this->logSection(strtolower(get_class($object)) . '*', sprintf('%s: (%s)', $object, implode('; ', $changes)), null, 'NOTICE');
+    }
+  }
   
   protected function updateUsers(smTsvReader $tsv)
   {
@@ -299,27 +308,34 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
       $enrolment=EnrolmentPeer::retrieveByImportCode($v['USER_IMPORT_CODE']);
       if($enrolment)
       {
+        $changes=array();
+        $uchanges=array();
         if($enrolment->getSchoolclassId()!=$v['SCHOOLCLASS_ID'])
         {
           $schoolclass=SchoolclassPeer::retrieveByPK($v['SCHOOLCLASS_ID']);
           if($schoolclass)
           {
-            $enrolment
-            ->setSchoolclass($schoolclass)
-            ->save($this->con)
-            ;
+            $old=$enrolment->getSchoolclassId()?$enrolment->getSchoolclassId():OUTPUT_NULL;
+            $enrolment->setSchoolclass($schoolclass);
             
-            $this->notices['enrolments']['updated'][]=$enrolment;
-            $this->logSection('enrolment*', sprintf('%s:%s', $v['USER_IMPORT_CODE'], $v['SCHOOLCLASS_ID']), null, 'NOTICE');
-            $count++;
+            $changes[] = sprintf('class: %s -> %s', $old, $enrolment->getSchoolclassId());
           }
           else
           {
             $this->notices['enrolments']['failed'][]=$v;
             $this->logSection('enrolment', sprintf('%s:%s', $v['USER_IMPORT_CODE'], $v['SCHOOLCLASS_ID']), null, 'ERROR');
-            $count++;
           }
         }
+        
+        if(!$enrolment->getSfGuardUser()->getIsActive())
+        {
+          $enrolment->getSfGuardUser()->setIsActive(true);
+          $uchanges[]= sprintf('state: inactive -> active');
+        }
+        
+        $this->_applyChanges($enrolment, 'enrolments', $changes);
+        $this->_applyChanges($enrolment->getSfGuardUser(), 'users', $uchanges);
+        
       }
       else
       {
@@ -415,15 +431,8 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
           }
         }
         
-        
-        
-        if(sizeof($changes))
-        {
-          $appointment->save($this->con);
-          $this->notices['appointments']['updated'][]=$appointment;
-          $this->logSection('appointment*', sprintf('%s: (%s)', $appointment, implode('; ', $changes)), null, 'NOTICE');
-          $count++;
-        }
+        $this->_applyChanges($appointment, 'appointments', $changes);
+        $count++;
         
       }
       else
