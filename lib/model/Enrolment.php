@@ -11,7 +11,11 @@
 
 class Enrolment extends BaseEnrolment
 {
-	
+	public function __toString()
+  {
+    return sprintf('%s %s (%s)', $this->getFirstName(), $this->getLastName(), $this->getSchoolclassId());
+  }
+  
 	public function getFirstName()
 	{
 	return $this->getsfGuardUser()->getProfile()->getFirstName();
