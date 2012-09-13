@@ -58,7 +58,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     
 		public function sendEmailVerification(sfContext $sfContext)
 		{
-			$this->setEmailVerificationCode(sha1(rand(10000000,99999999)));
+			$this->setEmailVerificationCode(sha1(time().rand(10000000,99999999)));
 //			$this->addSystemAlert('should send email verification');
 
 			$message=new EmailChangeConfirmationMessage($this, $sfContext);
