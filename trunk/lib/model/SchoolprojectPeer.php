@@ -664,7 +664,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
         if(sizeof($chargedUsers)>0 || $anonymousUsers>0)
         {
           
-          $roles->projects->projectTitle($project->getTitle());
+          $roles->projects->projectTitle($project->getTitleWithCode());
           $roles->projects->projectCoordinator($project->getCoordinatorProfile()->getLastname());
           $roles->projects->projectNumber(sprintf('%s %d', ($anonymousUsers?'* ': ''), sizeof($chargedUsers), $anonymousUsers));
           $roles->projects->projectHours($hours);
