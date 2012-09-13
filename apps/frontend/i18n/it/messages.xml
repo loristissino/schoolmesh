@@ -3178,7 +3178,7 @@
     </trans-unit>
     <trans-unit id="818">
         <source>Send another verification code</source>
-        <target>Manda una nuova email di verifica</target>
+        <target>Invia una nuova email di verifica</target>
     </trans-unit>
     <trans-unit id="819">
         <source>Email sent</source>
