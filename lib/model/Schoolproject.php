@@ -20,6 +20,15 @@ class Schoolproject extends BaseSchoolproject {
     return 'untitled';
 	}
   
+  public function getTitleWithCode()
+  {
+    if(!$this->getCode())
+    {
+      return $this->getTitle();
+    }
+    return sprintf('%s (%s)', $this->getTitle(), $this->getCode());
+  }
+  
   public function getCoordinatorProfile()
   {
     return $this->getsfGuardUser()->getProfile();
