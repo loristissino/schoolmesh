@@ -149,7 +149,7 @@
 <?php
 echo link_to(
 __('New user'),
-url_for('users/new')
+url_for('users/prenew')
 ) ?>
 </li>
 

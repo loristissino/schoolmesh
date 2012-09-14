@@ -1011,15 +1011,26 @@ class usersActions extends sfActions
     if($this->getUser()->hasAttribute('first_name'))
     // this happens when a new user is created with users/prenew action
     {
+      // this is not very clean, because we do save something in a GET action
+      // any idea on how to do it better is appreciated
+      
+      $password=Authentication::generateRandomPassword();
+      
       $this->current_user
       ->setFirstName($this->getUser()->getAttribute('first_name'))
       ->setLastName($this->getUser()->getAttribute('last_name'))
       ->setPreferredFormat('odt')
+      ->setPreferredCulture(sfConfig::get('app_config_culture'))
+      ->setPlaintextPassword($password)
+      ->setStoredEncryptedPassword($password)
       ->save();
-      $this->getUser()->setAttribute('first_name', false);
-      $this->getUser()->setAttribute('last_name', false);
-    }
+      $this->current_user->getSfGuardUser()->setPassword($password);
+      $this->current_user->getSfGuardUser()->save();
       
+      $this->getUser()->getAttributeHolder()->remove('first_name');
+      $this->getUser()->getAttributeHolder()->remove('last_name');
+    }
+    
     $this->accounts = $this->current_user->getAccounts();
     $this->available_accounts=sfConfig::get('app_config_accounts');
 	
