@@ -1922,7 +1922,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
   public function updateFromForm($params, $user=null, $sf_context=null)
   {
-    
+    Generic::logMessage('updating...', $params);
     if(array_key_exists('gender', $params))
     {
       $params['gender']=$this->getGenderValueFromParameter($params['gender']);
