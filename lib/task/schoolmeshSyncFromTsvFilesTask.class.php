@@ -13,8 +13,15 @@ define('OUTPUT_NULL', '«null»');
 
 class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
 {
+  
+  private function _bool2text($bool)
+  {
+    return $bool?'true':'false';
+  }
+  
   private function _sendConfirmationMessage($permission, $type)
   {
+    
     $base=$type . '_imported';
     
     if ($type=='users' and isset($this->notices['users']))
@@ -179,6 +186,7 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
         'BIRTH_DATE'   => '', 
         'EMAIL'        => '',
         'IS_ACTIVE'    => 0,
+        'EXTRASEARCHKEY'  => '',
         ) as $vk=>$vv)
       {
         if(!isset($v[$vk])) $v[$vk]=$vv;
@@ -187,15 +195,25 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
       $profile=sfGuardUserProfilePeer::retrieveByImportCode($v['USER_IMPORT_CODE']);
       if($profile)
       {
-        if($profile->getIsActive()==$v['IS_ACTIVE'])
-        {
-          $this->logSection('user=', $profile->getFullName(), null, 'COMMENT');
-        }
-        else
+        $changes=array();
+        $uchanges=array();
+        
+        if($profile->getIsActive()!=$v['IS_ACTIVE'])
         {
           $profile->getsfGuardUser()->setIsActive($v['IS_ACTIVE'])->save();
-          $this->logSection('user!', $v['FIRST_NAME'] . ' '. $v['LAST_NAME'] . ' -- ' . $profile->getFullName() . ' (active: ' . ($v['IS_ACTIVE']?'yes':'no') . ')', null, 'INFO');
+          $uchanges[] = sprintf('active: %s -> %s', $this->_bool2text(!$v['IS_ACTIVE']), $this->_bool2text($v['IS_ACTIVE']));
         }
+        
+        if($profile->getStoredInfo('extrasearchkey')!=$v['EXTRASEARCHKEY'])
+        {
+          $old=$profile->getStoredInfo('extrasearchkey');
+          $profile->setStoredInfo('extrasearchkey', $v['EXTRASEARCHKEY']);
+          $changes[] = sprintf('extrasearchkey: %s -> %s', $old?$old:OUTPUT_NULL, $profile->getStoredInfo('extrasearchkey'));
+        }
+        
+        $this->_applyChanges($profile->getsfGuardUser(), 'users', $uchanges);
+        $this->_applyChanges($profile, 'users', $changes);
+        
       }
       else
       {
@@ -233,7 +251,9 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
 				->setBirthplace(Generic::clever_ucwords($culture, $v['BIRTH_PLACE']))
 				->setBirthdate($v['BIRTH_DATE'])
 				->setEmail($v['EMAIL'])
-				->setImportCode($v['USER_IMPORT_CODE']);
+				->setImportCode($v['USER_IMPORT_CODE'])
+        ->setStoredInfo('extrasearchkey', $v['EXTRASEARCHKEY'])
+        ;
         
         if($v['TYPE']=='T')
         {

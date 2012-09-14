@@ -2026,6 +2026,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     $doc->addField(Zend_Search_Lucene_Field::UnStored('teams', $this->getTeams(array('astext'=>true, 'privatetoo'=>false)), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('guardgroups', $this->getGuardGroups(array('astext'=>true)), 'utf-8'));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('consents', $this->getConsents(array('astext'=>true)), 'utf-8'));
+    $doc->addField(Zend_Search_Lucene_Field::UnStored('extrasearchkey', $this->getStoredInfo('extrasearchkey'), 'utf-8'));
     
     if($posixAccount=$this->getAccountByType('posix'))
     {
@@ -2089,5 +2090,29 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
     }
     return false;
   }
+  
+  public function getStoredInfo($key, $default=null)
+  {
+    if(!$this->getInfo())
+    {
+      return $default;
+    }
+    $info=unserialize($this->getInfo());
+    if(isset($info[$key]))
+    {
+      return $info[$key];
+    }
+    return $default;
+  }
+  
+  public function setStoredInfo($key, $value)
+  {
+    $i=$this->getInfo();
+    $info=$i?unserialize($i):array();
+    $info[$key]=$value;
+    $this->setInfo(serialize($info));
+    return $this;
+  }
+  
 
 }
