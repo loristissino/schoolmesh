@@ -32,6 +32,7 @@ class schoolmeshExportToTsvFilesTask extends sfBaseTask
       'GENDER',
       'EMAIL',
       'IS_ACTIVE',
+      'EXTRASEARCHKEY',
       ));
     
     $profiles=sfGuardUserProfilePeer::retrieveAllSortedByLastName();
@@ -63,6 +64,7 @@ class schoolmeshExportToTsvFilesTask extends sfBaseTask
         $profile->getGender(),
         $profile->getValidatedEmail(),
         $profile->getIsActive() ? '1': '0',
+        $type=='S'?$profile->getCurrentSchoolclassId():''
       ));
     }
     
