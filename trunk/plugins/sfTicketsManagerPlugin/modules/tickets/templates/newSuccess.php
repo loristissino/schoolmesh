@@ -6,7 +6,8 @@
   ))
 ?>
 
-
 <?php include_partial('content/flashes'); ?>
+
+<p><?php echo __('This module is experimental.') ?></p>
 
 <?php include_partial('form', array('form' => $form, 'referrer'=>$referrer)) ?>

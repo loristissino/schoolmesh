@@ -36,7 +36,7 @@
 			<?php include_partial('plansandreports/state', array('state' => $appointment->getState(), 'steps' => Workflow::getWpfrSteps(), 'size'=>'r')) ?>
 		<td>
 			<ul class="sf_admin_td_actions">
-				<?php  if ($sf_user->hasCredential('admin') or $appointment->getState()==Workflow::AP_ASSIGNED): ?>
+				<?php  if (($sf_user->hasCredential('admin') and $appointment->getState()!=Workflow::FR_ARCHIVED) or $appointment->getState()==Workflow::AP_ASSIGNED): ?>
 				<li class="sf_admin_action_edit">
 				<?php echo link_to(
 					__('Edit'),

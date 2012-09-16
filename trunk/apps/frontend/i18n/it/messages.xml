@@ -3693,8 +3693,8 @@
         <target>Reimpostazione password</target>
     </trans-unit>
     <trans-unit id="949">
-        <source>In this page you can reset the password of the students that might have forgot it.</source>
-        <target>In questa pagina puoi reimpostare la password per gli studenti che l'hanno dimenticata.</target>
+        <source>In this page you can reset the password of the users that have forgot it.</source>
+        <target>In questa pagina puoi reimpostare la password per gli utenti che l'hanno dimenticata.</target>
     </trans-unit>
     <trans-unit id="950">
         <source>Teachers' and staff's passwords can be reset only by an administrator.</source>
@@ -3733,8 +3733,8 @@
         <target>Devi selezionare un utente.</target>
     </trans-unit>
     <trans-unit id="959">
-        <source>You don\'t have the required credential to reset passwords of type %accounttype%.</source>
-        <target>Non disponi della credenziale per reimpostare le password di tipo %accounttype%.</target>
+        <source>You don't have the required credential to reset passwords of this type.</source>
+        <target>Non disponi della credenziale per reimpostare le password di questo tipo.</target>
     </trans-unit>
     <trans-unit id="960">
         <source>Password successfully reset.</source>
@@ -5048,9 +5048,34 @@
         <source>Authentication: </source>
         <target>Autenticazione: </target>
       </trans-unit>
+      <trans-unit id="1459">
+        <source>Password reset confirmation</source>
+        <target>Conferma di reimpostazione password</target>
+      </trans-unit>
+      <trans-unit id="1460">
+        <source>Temporary password</source>
+        <target>Password provvisoria</target>
+      </trans-unit>
+      <trans-unit id="1461">
+        <source>User's settings</source>
+        <target>Impostazioni utente</target>
+      </trans-unit>
+      <trans-unit id="1462">
+        <source>Password reset for account «%type%».</source>
+        <target>Password reimpostata per l'account «%type%».</target>
+      </trans-unit>
+      <trans-unit id="1463">
+        <source>The user does not have an account of this type, or the password is not resettable.</source>
+        <target>L'utente non ha un account di questo tipo, oppure la password non è reimpostabile.</target>
+      </trans-unit>
+      <trans-unit id="1464">
+        <source>This module is experimental.</source>
+        <target>Questo modulo è sperimentale.</target>
+      </trans-unit>
     </body>
   </file> 
 </xliff>
+
 
 
 
