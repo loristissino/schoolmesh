@@ -31,8 +31,14 @@ class schoolmeshGenerateAppointmentDocsIndexTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'generate-appointment-docs-index';
-    $this->briefDescription = 'Generate appointment docs index file from attachments';
-    $this->detailedDescription = "";
+    $this->briefDescription = 'Generates appointment docs index file from attachments';
+    $this->detailedDescription = "Call it like this:
+
+php symfony schoolmesh:generate-appointment-docs-index --application=frontend --env=prod wp data/documents/workplans2011-12.yml workplans2011-12 --year=2011/12
+
+The destination directory must exist; the output file is overwritten, if it already exists.
+
+";
   }
 
   protected function execute($arguments = array(), $options = array())
