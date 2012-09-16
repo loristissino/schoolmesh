@@ -6,8 +6,7 @@
   ))
 ?>
 
-<p><?php echo __('In this page you can reset the password of the students that might have forgot it.') ?></p>
-<p><?php echo __('Teachers\' and staff\'s passwords can be reset only by an administrator.') ?></p>
+<p><?php echo __('In this page you can reset the password of the users that have forgot it.') ?></p>
 
 <?php include_partial('content/flashes'); ?>
 

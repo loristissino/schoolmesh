@@ -13,7 +13,7 @@
 	<tr>
       <th><label><?php echo __('Username') ?></label></th>
 	  <td>
-		<?php echo $username ?>
+		<?php echo link_to($username, url_for('users/edit?id=' . $user_id)) ?>
       </td>
     </tr>
 	<tr>

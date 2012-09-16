@@ -1485,6 +1485,50 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 			
 		}
 
+    public function resetPassword($user, $account_type, $sf_context=null)
+    {
+      
+      if(!$user->hasCredential($account_type . '_resetpwd'))
+      {
+        $result['result']='error';
+        $result['message']='You don\'t have the required credential to reset passwords of this type.';
+        return $result;
+      }
+      
+      if ($account_type=='main')
+      {
+        $password=Authentication::generateRandomPassword();
+        $this->getsfGuardUser()->setPassword($password);
+        $this->getsfGuardUser()->save();
+        $this->setPlaintextPassword($password)->save();
+      }
+      else
+      {
+        try
+        {
+          $this->getAccountByType($account_type)->resetPassword();
+        }
+        catch (Exception $e)
+        {
+          $result['result']='error';
+          $result['message']='The user does not have an account of this type, or the password is not resettable.';
+          return $result;
+        }
+      }
+      
+      $this->addWfevent(
+        $user->getProfile()->getUserId(),
+        'Password reset for account «%type%».',
+        array('%type%'=>$account_type),
+        null,
+        $sf_context)
+      ;
+      
+      $result['result']='notice';
+      $result['message']='Password successfully reset.';
+      return $result;
+   }
+
 		public function checkAccounts($availableAccounts, &$checkList=null)
 		{
 			if (!$checkList instanceof CheckList)

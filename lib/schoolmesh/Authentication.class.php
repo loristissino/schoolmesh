@@ -93,7 +93,7 @@ class Authentication {
   
   public static function generateRandomPassword()
   {
-    return strtoupper(str_replace(array('.', '/', '0'), array('+', '?', 'O'), substr(crypt(rand(1000, 9999).time(), '00'), 2, 10)));
+    return strtoupper(str_replace(array('.', '/', '0', 'O'), array('+', '?', '1', '2'), substr(crypt(rand(1000, 9999).time(), '00'), 2, 10)));
   }
   
   public static function encrypt($value, $key)
