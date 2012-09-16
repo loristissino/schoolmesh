@@ -29,6 +29,7 @@ class AppointmentPeer extends BaseAppointmentPeer
   {
     $c=new Criteria();
     $c->add(AppointmentPeer::YEAR_ID, $year->getId());
+    $c->addAscendingOrderByColumn(AppointmentPeer::SCHOOLCLASS_ID);
     return AppointmentPeer::doSelect($c);
   }
   
