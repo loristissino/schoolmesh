@@ -44,29 +44,29 @@ Different options will control the actual output.
 
 Call it with:
 
-   symfony schoolmesh:add-attachment --application=frontend --env=prod --year year users|appointments|enrolments
+   symfony schoolmesh:extract-info --application=frontend --env=prod --year year users|appointments|enrolments
 
 Examples:
 
-   symfony schoolmesh:add-attachment --application=frontend --env=prod --year 2011/12 users
+   symfony schoolmesh:extract-info --application=frontend --env=prod --year 2011/12 users
    # extract all users
 
-   symfony schoolmesh:add-attachment --application=frontend --env=prod --year 2011/12 --role allievi users
+   symfony schoolmesh:extract-info --application=frontend --env=prod --year 2011/12 --role allievi users
    # extract all users which have a role with posix name "allievi"
 
-   symfony schoolmesh:add-attachment --application=frontend --env=prod --year 2011/12 --role docenti users
+   symfony schoolmesh:extract-info --application=frontend --env=prod --year 2011/12 --role docenti users
    # extract all users which have a role with posix name "docenti"
 
-   symfony schoolmesh:add-attachment --application=frontend --env=prod --year 2011/12 appointments
+   symfony schoolmesh:extract-info --application=frontend --env=prod --year 2011/12 appointments
    # extract all teaching appointments
 
-   symfony schoolmesh:add-attachment --application=frontend --env=prod --year 2011/12 --teacher john.doe appointments
+   symfony schoolmesh:extract-info --application=frontend --env=prod --year 2011/12 --teacher john.doe appointments
    # extract all teaching appointments of teacher john.doe
 
-   symfony schoolmesh:add-attachment --application=frontend --env=prod --year 2011/12 enrolments
+   symfony schoolmesh:extract-info --application=frontend --env=prod --year 2011/12 enrolments
    # extract all enrolments of students
 
-   symfony schoolmesh:add-attachment --application=frontend --env=prod --year 2011/12 --class 1AIG enrolments
+   symfony schoolmesh:extract-info --application=frontend --env=prod --year 2011/12 --class 1AIG enrolments
    # extract all enrolments of class 1AIG
 
 EOF;
@@ -80,7 +80,7 @@ EOF;
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
 
     // add your code here
-	
+  
 	$year=YearPeer::retrieveByDescription($options['year']);
 	if (!$year)
 	{
@@ -163,7 +163,6 @@ EOF;
 					$appointment->getState()
 					)) . "\n";
 			}
-		
 		
 			break;
 			
