@@ -19,7 +19,7 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
     return $bool?'true':'false';
   }
   
-  private function _sendConfirmationMessage($permission, $type)
+  private function _sendConfirmationMessage($permission, $type, $dryrun=false)
   {
     
     $base=$type . '_imported';
@@ -143,7 +143,8 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
     {
       $user->sendWorkflowConfirmationMessage($this->context, $base, array(
         '%items%'=>$text,
-        '%addressees%'=>($addressees=='' ? '' : $this->context->getI18N()->__('This message has been sent to:') . "\n" . $addressees)
+        '%addressees%'=>($addressees=='' ? '' : $this->context->getI18N()->__('This message has been sent to:') . "\n" . $addressees),
+        '%dryrun%'=>($dryrun ? '('.$this->context->getI18N()->__('simulation only') . ')' : ''),
         ));
       $this->logSection('mail@', sprintf('%s - %s (%s)', 
         $user->getUsername(), 
@@ -598,7 +599,7 @@ EOF;
     {
       if($count>0)
       {
-        $this->_sendConfirmationMessage('backadmin', $type);
+        $this->_sendConfirmationMessage('backadmin', $type, $options['dry-run']);
       }
     }
     
