@@ -1027,6 +1027,8 @@ class usersActions extends sfActions
       $this->current_user->getSfGuardUser()->setPassword($password);
       $this->current_user->getSfGuardUser()->save();
       
+      $this->current_user->updateLuceneIndex();
+      
       $this->getUser()->getAttributeHolder()->remove('first_name');
       $this->getUser()->getAttributeHolder()->remove('last_name');
     }
