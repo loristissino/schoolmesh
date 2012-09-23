@@ -117,7 +117,9 @@ EOF;
         {
           $team=$teamscache[$teamname];
         }
-				$profile->addToTeam(null, $team, $role, $appointment->getYear()->getEndDate(), $this->context);
+
+				$profile->addToTeam(null, $team, $role, $appointment->getYear()->getEndDate(), '', '', '', $this->context);
+
         if($appointment->getSubjectId() and array_key_exists($appointment->getSubject()->getShortcut(), $depconfig['departments']['subjects']))
         {
           $departments[$depconfig['departments']['subjects'][$appointment->getSubject()->getShortcut()]]=1;
@@ -157,7 +159,7 @@ EOF;
           {
             $team=$teamscache[$teamname];
           }
-          $profile->addToTeam(null, $team, $role, $appointment->getYear()->getEndDate(), $this->context);
+          $profile->addToTeam(null, $team, $role, $appointment->getYear()->getEndDate(), '', '', '', $this->context);
           
         }
         
