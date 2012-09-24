@@ -552,7 +552,7 @@ class Generic{
       {
         return $h;
       }
-      return -1;
+      return false;
     }
     
     
@@ -560,26 +560,26 @@ class Generic{
     
     if(sizeof($parts)!=2)
     {
-      return -1;
+      return false;
     }
     
     list($hours, $minutes)=$parts;
     
     if(strlen($minutes)!=2)
     {
-      return -1;
+      return false;
     }
     
     $hours=(int)$hours;
     $minutes=(int)$minutes;
     if(!is_int($hours) or !is_int($minutes))
     {
-      return -1;
+      return false;
     }
     
     if(($minutes>59) or ($hours<0) or ($minutes<0))
     {
-      return -1;
+      return false;
     }
     
     return $hours+$minutes/60;
@@ -592,5 +592,12 @@ class Generic{
     return sprintf('%d%s%02d', floor($value), $separator, $m);
   }
 
+
+  public function cloneDate($date, $baseref_date, $newref_date)
+  {
+    $years_offset=floor(($newref_date - $baseref_date)/(365*24*60*60));
+    $d = getdate($date);
+    return mktime(0, 0, 0, $d['mon'], $d['mday'], $d['year']+$years_offset);
+  }
 
 }

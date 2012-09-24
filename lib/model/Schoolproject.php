@@ -1085,6 +1085,80 @@ class Schoolproject extends BaseSchoolproject {
     }
   }
   
+  public function makeClone($user_id)
+  {
+    
+    $con = Propel::getConnection(SchoolprojectPeer::DATABASE_NAME);
+    $con->beginTransaction();
+    
+    $newproject=new Schoolproject();
+    
+    $newproject
+    ->setUserId($user_id)
+    ->setCode($this->getCode())
+    ->setProjCategoryId($this->getProjCategoryId())
+    ->setYearId(sfConfig::get('app_config_current_year'))
+    ->setTitle($this->getTitle())
+    ->setDescription($this->getDescription())
+    ->setAddressees($this->getAddressees())
+    ->setPurposes($this->getPurposes())
+    ->setGoals($this->getGoals())
+    ->setState(Workflow::PROJ_DRAFT)
+    ->setEvaluationMin(sfConfig::get('app_config_projects_evaluation_min'))
+    ->setEvaluationMax(sfConfig::get('app_config_projects_evaluation_max'))
+    ->save($con)
+    ;
+    
+    foreach($this->getProjDeadlines() as $deadline)
+    {
+      $newdeadline= new ProjDeadline();
+      
+      $newdeadline
+      ->setSchoolprojectId($newproject->getId())
+      ->setUserId($deadline->getUserId())
+      ->setOriginalDeadlineDate(Generic::cloneDate($deadline->getCurrentDeadlineDate('U'), $this->getYear()->getEndDate('U'), $newproject->getYear()->getEndDate('U')))
+      ->setDescription($deadline->getDescription())
+      ->setNotes($deadline->getNotes())
+      ->setNeedsAttachment($deadline->getNeedsAttachment())
+      ->save($con)
+      ;
+    }
+
+    foreach($this->getProjResources() as $resource)
+    {
+      $newresource= new ProjResource();
+      
+      $newresource
+      ->setSchoolprojectId($newproject->getId())
+      ->setProjResourceTypeId($resource->getProjResourceTypeId())
+      ->setDescription($resource->getDescription())
+      ->setChargedUserId($resource->getChargedUserId())
+      ->setQuantityEstimated($resource->getQuantityEstimated())
+      ->setScheduledDeadline(Generic::cloneDate($resource->getScheduledDeadline('U'), $this->getYear()->getEndDate('U'), $newproject->getYear()->getEndDate('U')))
+      ->save($con)
+      ;
+    }
+    
+    foreach($this->getProjUpshots() as $upshot)
+    {
+      $newupshot= new ProjUpshot();
+      
+      $newupshot
+      ->setSchoolprojectId($newproject->getId())
+      ->setDescription($upshot->getDescription())
+      ->setIndicator($upshot->getIndicator())
+      ->setScheduledDate(Generic::cloneDate($upshot->getScheduledDate('U'), $this->getYear()->getEndDate('U'), $newproject->getYear()->getEndDate('U')))
+      ->save($con)
+      ;
+    }
+    
+    $con->commit();
+    
+    $result['result']='notice';
+    $result['message']='Project successfully cloned.';
+    return $result;
+  }
+  
   public function getEvaluationScale()
   {
     return sprintf('%d - %d', $this->getEvaluationMin(), $this->getEvaluationMax());
