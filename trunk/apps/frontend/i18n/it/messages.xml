@@ -5076,6 +5076,22 @@
         <source>simulation only</source>
         <target>solo simulazione</target>
       </trans-unit>
+      <trans-unit id="1466">
+        <source>Project successfully cloned.</source>
+        <target>Progetto clonato con successo.</target>
+      </trans-unit>
+      <trans-unit id="1467">
+        <source>Clone</source>
+        <target>Clona</target>
+      </trans-unit>
+      <trans-unit id="1468">
+        <source>Create a new project by duplicating and adapting this one</source>
+        <target>Crea un nuovo progetto duplicando e adattando questo</target>
+      </trans-unit>
+      <trans-unit id="1469">
+        <source>Detailed information</source>
+        <target>Informazioni di dettaglio</target>
+      </trans-unit>
     </body>
   </file> 
 </xliff>

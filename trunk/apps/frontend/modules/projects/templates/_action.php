@@ -23,4 +23,12 @@
 		)?>
 		</li>
   <?php endif ?>
+  <?php if ($project->isViewableBy($sf_user)): ?>
+	<li class="sf_admin_action_clone">
+		<?php echo link_to(__('Clone'),
+			url_for('projects/clone?id=' . $project->getId()),
+			array('title'=>__('Create a new project by duplicating and adapting this one'), 'method'=>'post')
+		)?>
+		</li>
+  <?php endif ?>
 </ul>

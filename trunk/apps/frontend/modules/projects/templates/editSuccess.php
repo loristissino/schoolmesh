@@ -93,10 +93,12 @@
   </table>
 </form>  
 
+<h2><?php echo __('Detailed information') ?></h2>
+
 <?php if($project->mayHaveResources()): ?>
 
 <a name="resources"></a>
-<h2><?php echo __('Tasks, resources, schedule') ?></h2>
+<h3><?php echo __('Tasks, resources, schedule') ?></h3>
 
 <?php if(sizeof($resources)>0): ?>
 
@@ -241,9 +243,9 @@
 
 <a name="upshots"></a>
 <?php if ($project->getState()<=Workflow::PROJ_SUBMITTED): ?>
-<h2><?php echo __('Expected upshots') ?></h2>
+<h3><?php echo __('Expected upshots') ?></h3>
 <?php else: ?>
-<h2><?php echo __('Obtained upshots') ?></h2>
+<h3><?php echo __('Obtained upshots') ?></h3>
 <?php endif ?>
 
 <?php if(sizeof($upshots)>0): ?>
@@ -314,7 +316,7 @@
 <?php endif ?>
 
 <a name="deadlines"></a>
-<h2><?php echo __('Monitoring deadlines') ?></h2>
+<h3><?php echo __('Monitoring deadlines') ?></h3>
 
 <?php if(sizeof($deadlines)>0): ?>
 
@@ -390,6 +392,7 @@
 
 <?php endif ?>
 
+<hr />
 
 <?php if($project->isSubmittable()): ?>
 

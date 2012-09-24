@@ -2,7 +2,7 @@
 
 require_once dirname(__FILE__).'/../bootstrap/unit.php';
  
-$t = new lime_test(104, new lime_output_color());
+$t = new lime_test(110, new lime_output_color());
 
 $t->diag('::datetime()');
 
@@ -246,3 +246,26 @@ foreach(array(
   $t->is(Generic::getHoursAsNumber($value, ':'), $upshot, '::getHoursAsNumber() works for ' . $value);
 }
 
+foreach(array(
+  Generic::timefromdate('20120131') => Generic::timefromdate('20130131'),
+  Generic::timefromdate('20120930') => Generic::timefromdate('20130930'),
+  ) as $value=>$upshot)
+{
+  $t->is(Generic::cloneDate($value, Generic::timefromdate('20120831'), Generic::timefromdate('20130831')), $upshot, '::cloneDate() works for ' . date('d/m/Y', $value));
+}
+
+foreach(array(
+  Generic::timefromdate('20110131') => Generic::timefromdate('20130131'),
+  Generic::timefromdate('20110930') => Generic::timefromdate('20130930'),
+  ) as $value=>$upshot)
+{
+  $t->is(Generic::cloneDate($value, Generic::timefromdate('20110831'), Generic::timefromdate('20130831')), $upshot, '::cloneDate() works for ' . date('d/m/Y', $value));
+}
+
+foreach(array(
+  Generic::timefromdate('20130131') => Generic::timefromdate('20130131'),
+  Generic::timefromdate('20130930') => Generic::timefromdate('20130930'),
+  ) as $value=>$upshot)
+{
+  $t->is(Generic::cloneDate($value, Generic::timefromdate('20130831'), Generic::timefromdate('20130831')), $upshot, '::cloneDate() works for ' . date('d/m/Y', $value));
+}
