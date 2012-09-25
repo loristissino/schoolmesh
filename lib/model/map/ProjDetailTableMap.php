@@ -2,7 +2,7 @@
 
 
 /**
- * This class defines the structure of the 'informativecontent' table.
+ * This class defines the structure of the 'proj_detail' table.
  *
  *
  *
@@ -13,12 +13,12 @@
  *
  * @package    lib.model.map
  */
-class InformativecontentTableMap extends TableMap {
+class ProjDetailTableMap extends TableMap {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'lib.model.map.InformativecontentTableMap';
+	const CLASS_NAME = 'lib.model.map.ProjDetailTableMap';
 
 	/**
 	 * Initialize the table attributes, columns and validators
@@ -30,15 +30,16 @@ class InformativecontentTableMap extends TableMap {
 	public function initialize()
 	{
 	  // attributes
-		$this->setName('informativecontent');
-		$this->setPhpName('Informativecontent');
-		$this->setClassname('Informativecontent');
+		$this->setName('proj_detail');
+		$this->setPhpName('ProjDetail');
+		$this->setClassname('ProjDetail');
 		$this->setPackage('lib.model');
 		$this->setUseIdGenerator(true);
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
-		$this->addColumn('SHORTCUT', 'Shortcut', 'VARCHAR', true, 40, null);
-		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', false, 255, null);
+		$this->addForeignKey('SCHOOLPROJECT_ID', 'SchoolprojectId', 'INTEGER', 'schoolproject', 'ID', false, null, null);
+		$this->addForeignKey('PROJ_DETAIL_TYPE_ID', 'ProjDetailTypeId', 'INTEGER', 'proj_detail_type', 'ID', false, null, null);
+		$this->addColumn('CONTENT', 'Content', 'LONGVARCHAR', false, null, null);
 		// validators
 	} // initialize()
 
@@ -47,7 +48,8 @@ class InformativecontentTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
-    $this->addRelation('Consent', 'Consent', RelationMap::ONE_TO_MANY, array('id' => 'informativecontent_id', ), null, null);
+    $this->addRelation('Schoolproject', 'Schoolproject', RelationMap::MANY_TO_ONE, array('schoolproject_id' => 'id', ), null, null);
+    $this->addRelation('ProjDetailType', 'ProjDetailType', RelationMap::MANY_TO_ONE, array('proj_detail_type_id' => 'id', ), null, null);
 	} // buildRelations()
 
 	/**
@@ -63,4 +65,4 @@ class InformativecontentTableMap extends TableMap {
 		);
 	} // getBehaviors()
 
-} // InformativecontentTableMap
+} // ProjDetailTableMap

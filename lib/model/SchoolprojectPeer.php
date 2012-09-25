@@ -710,6 +710,11 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     // ['mu']['TA']="h"
     // ['mu']['JA']="h"
     
+    if(!isset($quantities['quantities']))
+    {
+      return '';
+    }
+    
     $text='';
     foreach($quantities['quantities'] as $key=>$value)
     {

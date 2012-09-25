@@ -1081,6 +1081,57 @@ CREATE TABLE `proj_category`
 )Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- proj_detail_type
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `proj_detail_type`;
+
+
+CREATE TABLE `proj_detail_type`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`code` VARCHAR(30)  NOT NULL,
+	`description` VARCHAR(255)  NOT NULL,
+	`label` VARCHAR(100)  NOT NULL,
+	`is_required` TINYINT default 1,
+	`is_active` TINYINT default 1,
+	`state_min` INTEGER,
+	`state_max` INTEGER,
+	`example` TEXT,
+	`missing_value_message` VARCHAR(255),
+	`filled_value_message` VARCHAR(255),
+	`cols` INTEGER default 80,
+	`rows` INTEGER default 5,
+	`rank` INTEGER,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `proj_detail_type_U_1` (`code`)
+)Engine=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- proj_detail
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `proj_detail`;
+
+
+CREATE TABLE `proj_detail`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`schoolproject_id` INTEGER,
+	`proj_detail_type_id` INTEGER,
+	`content` TEXT,
+	PRIMARY KEY (`id`),
+	INDEX `proj_detail_FI_1` (`schoolproject_id`),
+	CONSTRAINT `proj_detail_FK_1`
+		FOREIGN KEY (`schoolproject_id`)
+		REFERENCES `schoolproject` (`id`),
+	INDEX `proj_detail_FI_2` (`proj_detail_type_id`),
+	CONSTRAINT `proj_detail_FK_2`
+		FOREIGN KEY (`proj_detail_type_id`)
+		REFERENCES `proj_detail_type` (`id`)
+)Engine=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- proj_deadline
 #-----------------------------------------------------------------------------
 
@@ -1266,9 +1317,10 @@ DROP TABLE IF EXISTS `informativecontent`;
 CREATE TABLE `informativecontent`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`shortcut` VARCHAR(40),
+	`shortcut` VARCHAR(40)  NOT NULL,
 	`description` VARCHAR(255),
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `informativecontent_U_1` (`shortcut`)
 )Engine=InnoDB;
 
 #-----------------------------------------------------------------------------

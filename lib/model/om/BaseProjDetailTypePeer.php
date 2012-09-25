@@ -1,49 +1,82 @@
 <?php
 
 /**
- * Base static class for performing query and update operations on the 'informativecontent' table.
+ * Base static class for performing query and update operations on the 'proj_detail_type' table.
  *
  * 
  *
  * @package    lib.model.om
  */
-abstract class BaseInformativecontentPeer {
+abstract class BaseProjDetailTypePeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'propel';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'informativecontent';
+	const TABLE_NAME = 'proj_detail_type';
 
 	/** the related Propel class for this table */
-	const OM_CLASS = 'Informativecontent';
+	const OM_CLASS = 'ProjDetailType';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'lib.model.Informativecontent';
+	const CLASS_DEFAULT = 'lib.model.ProjDetailType';
 
 	/** the related TableMap class for this table */
-	const TM_CLASS = 'InformativecontentTableMap';
+	const TM_CLASS = 'ProjDetailTypeTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 3;
+	const NUM_COLUMNS = 14;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
-	const ID = 'informativecontent.ID';
+	const ID = 'proj_detail_type.ID';
 
-	/** the column name for the SHORTCUT field */
-	const SHORTCUT = 'informativecontent.SHORTCUT';
+	/** the column name for the CODE field */
+	const CODE = 'proj_detail_type.CODE';
 
 	/** the column name for the DESCRIPTION field */
-	const DESCRIPTION = 'informativecontent.DESCRIPTION';
+	const DESCRIPTION = 'proj_detail_type.DESCRIPTION';
+
+	/** the column name for the LABEL field */
+	const LABEL = 'proj_detail_type.LABEL';
+
+	/** the column name for the IS_REQUIRED field */
+	const IS_REQUIRED = 'proj_detail_type.IS_REQUIRED';
+
+	/** the column name for the IS_ACTIVE field */
+	const IS_ACTIVE = 'proj_detail_type.IS_ACTIVE';
+
+	/** the column name for the STATE_MIN field */
+	const STATE_MIN = 'proj_detail_type.STATE_MIN';
+
+	/** the column name for the STATE_MAX field */
+	const STATE_MAX = 'proj_detail_type.STATE_MAX';
+
+	/** the column name for the EXAMPLE field */
+	const EXAMPLE = 'proj_detail_type.EXAMPLE';
+
+	/** the column name for the MISSING_VALUE_MESSAGE field */
+	const MISSING_VALUE_MESSAGE = 'proj_detail_type.MISSING_VALUE_MESSAGE';
+
+	/** the column name for the FILLED_VALUE_MESSAGE field */
+	const FILLED_VALUE_MESSAGE = 'proj_detail_type.FILLED_VALUE_MESSAGE';
+
+	/** the column name for the COLS field */
+	const COLS = 'proj_detail_type.COLS';
+
+	/** the column name for the ROWS field */
+	const ROWS = 'proj_detail_type.ROWS';
+
+	/** the column name for the RANK field */
+	const RANK = 'proj_detail_type.RANK';
 
 	/**
-	 * An identiy map to hold any loaded instances of Informativecontent objects.
+	 * An identiy map to hold any loaded instances of ProjDetailType objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array Informativecontent[]
+	 * @var        array ProjDetailType[]
 	 */
 	public static $instances = array();
 
@@ -62,11 +95,11 @@ abstract class BaseInformativecontentPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Shortcut', 'Description', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'shortcut', 'description', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::SHORTCUT, self::DESCRIPTION, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'shortcut', 'description', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Code', 'Description', 'Label', 'IsRequired', 'IsActive', 'StateMin', 'StateMax', 'Example', 'MissingValueMessage', 'FilledValueMessage', 'Cols', 'Rows', 'Rank', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'code', 'description', 'label', 'isRequired', 'isActive', 'stateMin', 'stateMax', 'example', 'missingValueMessage', 'filledValueMessage', 'cols', 'rows', 'rank', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::CODE, self::DESCRIPTION, self::LABEL, self::IS_REQUIRED, self::IS_ACTIVE, self::STATE_MIN, self::STATE_MAX, self::EXAMPLE, self::MISSING_VALUE_MESSAGE, self::FILLED_VALUE_MESSAGE, self::COLS, self::ROWS, self::RANK, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'code', 'description', 'label', 'is_required', 'is_active', 'state_min', 'state_max', 'example', 'missing_value_message', 'filled_value_message', 'cols', 'rows', 'rank', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	/**
@@ -76,11 +109,11 @@ abstract class BaseInformativecontentPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Shortcut' => 1, 'Description' => 2, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'shortcut' => 1, 'description' => 2, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::SHORTCUT => 1, self::DESCRIPTION => 2, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'shortcut' => 1, 'description' => 2, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Code' => 1, 'Description' => 2, 'Label' => 3, 'IsRequired' => 4, 'IsActive' => 5, 'StateMin' => 6, 'StateMax' => 7, 'Example' => 8, 'MissingValueMessage' => 9, 'FilledValueMessage' => 10, 'Cols' => 11, 'Rows' => 12, 'Rank' => 13, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'code' => 1, 'description' => 2, 'label' => 3, 'isRequired' => 4, 'isActive' => 5, 'stateMin' => 6, 'stateMax' => 7, 'example' => 8, 'missingValueMessage' => 9, 'filledValueMessage' => 10, 'cols' => 11, 'rows' => 12, 'rank' => 13, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CODE => 1, self::DESCRIPTION => 2, self::LABEL => 3, self::IS_REQUIRED => 4, self::IS_ACTIVE => 5, self::STATE_MIN => 6, self::STATE_MAX => 7, self::EXAMPLE => 8, self::MISSING_VALUE_MESSAGE => 9, self::FILLED_VALUE_MESSAGE => 10, self::COLS => 11, self::ROWS => 12, self::RANK => 13, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'code' => 1, 'description' => 2, 'label' => 3, 'is_required' => 4, 'is_active' => 5, 'state_min' => 6, 'state_max' => 7, 'example' => 8, 'missing_value_message' => 9, 'filled_value_message' => 10, 'cols' => 11, 'rows' => 12, 'rank' => 13, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	/**
@@ -129,12 +162,12 @@ abstract class BaseInformativecontentPeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. InformativecontentPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. ProjDetailTypePeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(InformativecontentPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(ProjDetailTypePeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -150,9 +183,20 @@ abstract class BaseInformativecontentPeer {
 	 */
 	public static function addSelectColumns(Criteria $criteria)
 	{
-		$criteria->addSelectColumn(InformativecontentPeer::ID);
-		$criteria->addSelectColumn(InformativecontentPeer::SHORTCUT);
-		$criteria->addSelectColumn(InformativecontentPeer::DESCRIPTION);
+		$criteria->addSelectColumn(ProjDetailTypePeer::ID);
+		$criteria->addSelectColumn(ProjDetailTypePeer::CODE);
+		$criteria->addSelectColumn(ProjDetailTypePeer::DESCRIPTION);
+		$criteria->addSelectColumn(ProjDetailTypePeer::LABEL);
+		$criteria->addSelectColumn(ProjDetailTypePeer::IS_REQUIRED);
+		$criteria->addSelectColumn(ProjDetailTypePeer::IS_ACTIVE);
+		$criteria->addSelectColumn(ProjDetailTypePeer::STATE_MIN);
+		$criteria->addSelectColumn(ProjDetailTypePeer::STATE_MAX);
+		$criteria->addSelectColumn(ProjDetailTypePeer::EXAMPLE);
+		$criteria->addSelectColumn(ProjDetailTypePeer::MISSING_VALUE_MESSAGE);
+		$criteria->addSelectColumn(ProjDetailTypePeer::FILLED_VALUE_MESSAGE);
+		$criteria->addSelectColumn(ProjDetailTypePeer::COLS);
+		$criteria->addSelectColumn(ProjDetailTypePeer::ROWS);
+		$criteria->addSelectColumn(ProjDetailTypePeer::RANK);
 	}
 
 	/**
@@ -171,21 +215,21 @@ abstract class BaseInformativecontentPeer {
 		// We need to set the primary table name, since in the case that there are no WHERE columns
 		// it will be impossible for the BasePeer::createSelectSql() method to determine which
 		// tables go into the FROM clause.
-		$criteria->setPrimaryTableName(InformativecontentPeer::TABLE_NAME);
+		$criteria->setPrimaryTableName(ProjDetailTypePeer::TABLE_NAME);
 
 		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
 			$criteria->setDistinct();
 		}
 
 		if (!$criteria->hasSelectClause()) {
-			InformativecontentPeer::addSelectColumns($criteria);
+			ProjDetailTypePeer::addSelectColumns($criteria);
 		}
 
 		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 		$criteria->setDbName(self::DATABASE_NAME); // Set the correct dbName
 
 		if ($con === null) {
-			$con = Propel::getConnection(InformativecontentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ProjDetailTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 		// BasePeer returns a PDOStatement
 		$stmt = BasePeer::doCount($criteria, $con);
@@ -203,7 +247,7 @@ abstract class BaseInformativecontentPeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PropelPDO $con
-	 * @return     Informativecontent
+	 * @return     ProjDetailType
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -211,7 +255,7 @@ abstract class BaseInformativecontentPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = InformativecontentPeer::doSelect($critcopy, $con);
+		$objects = ProjDetailTypePeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -228,7 +272,7 @@ abstract class BaseInformativecontentPeer {
 	 */
 	public static function doSelect(Criteria $criteria, PropelPDO $con = null)
 	{
-		return InformativecontentPeer::populateObjects(InformativecontentPeer::doSelectStmt($criteria, $con));
+		return ProjDetailTypePeer::populateObjects(ProjDetailTypePeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -246,12 +290,12 @@ abstract class BaseInformativecontentPeer {
 	public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(InformativecontentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ProjDetailTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		if (!$criteria->hasSelectClause()) {
 			$criteria = clone $criteria;
-			InformativecontentPeer::addSelectColumns($criteria);
+			ProjDetailTypePeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -269,10 +313,10 @@ abstract class BaseInformativecontentPeer {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      Informativecontent $value A Informativecontent object.
+	 * @param      ProjDetailType $value A ProjDetailType object.
 	 * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
 	 */
-	public static function addInstanceToPool(Informativecontent $obj, $key = null)
+	public static function addInstanceToPool(ProjDetailType $obj, $key = null)
 	{
 		if (Propel::isInstancePoolingEnabled()) {
 			if ($key === null) {
@@ -290,18 +334,18 @@ abstract class BaseInformativecontentPeer {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A Informativecontent object or a primary key value.
+	 * @param      mixed $value A ProjDetailType object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
 		if (Propel::isInstancePoolingEnabled() && $value !== null) {
-			if (is_object($value) && $value instanceof Informativecontent) {
+			if (is_object($value) && $value instanceof ProjDetailType) {
 				$key = (string) $value->getId();
 			} elseif (is_scalar($value)) {
 				// assume we've been passed a primary key
 				$key = (string) $value;
 			} else {
-				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Informativecontent object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+				$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or ProjDetailType object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
 				throw $e;
 			}
 
@@ -316,7 +360,7 @@ abstract class BaseInformativecontentPeer {
 	 * a multi-column primary key, a serialize()d version of the primary key will be returned.
 	 *
 	 * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-	 * @return     Informativecontent Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+	 * @return     ProjDetailType Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
 	 * @see        getPrimaryKeyHash()
 	 */
 	public static function getInstanceFromPool($key)
@@ -340,7 +384,7 @@ abstract class BaseInformativecontentPeer {
 	}
 	
 	/**
-	 * Method to invalidate the instance pool of all tables related to informativecontent
+	 * Method to invalidate the instance pool of all tables related to proj_detail_type
 	 * by a foreign key with ON DELETE CASCADE
 	 */
 	public static function clearRelatedInstancePool()
@@ -378,11 +422,11 @@ abstract class BaseInformativecontentPeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = InformativecontentPeer::getOMClass(false);
+		$cls = ProjDetailTypePeer::getOMClass(false);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = InformativecontentPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (null !== ($obj = InformativecontentPeer::getInstanceFromPool($key))) {
+			$key = ProjDetailTypePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj = ProjDetailTypePeer::getInstanceFromPool($key))) {
 				// We no longer rehydrate the object, since this can cause data loss.
 				// See http://propel.phpdb.org/trac/ticket/509
 				// $obj->hydrate($row, 0, true); // rehydrate
@@ -391,7 +435,7 @@ abstract class BaseInformativecontentPeer {
 				$obj = new $cls();
 				$obj->hydrate($row);
 				$results[] = $obj;
-				InformativecontentPeer::addInstanceToPool($obj, $key);
+				ProjDetailTypePeer::addInstanceToPool($obj, $key);
 			} // if key exists
 		}
 		$stmt->closeCursor();
@@ -414,10 +458,10 @@ abstract class BaseInformativecontentPeer {
 	 */
 	public static function buildTableMap()
 	{
-	  $dbMap = Propel::getDatabaseMap(BaseInformativecontentPeer::DATABASE_NAME);
-	  if (!$dbMap->hasTable(BaseInformativecontentPeer::TABLE_NAME))
+	  $dbMap = Propel::getDatabaseMap(BaseProjDetailTypePeer::DATABASE_NAME);
+	  if (!$dbMap->hasTable(BaseProjDetailTypePeer::TABLE_NAME))
 	  {
-	    $dbMap->addTableObject(new InformativecontentTableMap());
+	    $dbMap->addTableObject(new ProjDetailTypeTableMap());
 	  }
 	}
 
@@ -434,13 +478,13 @@ abstract class BaseInformativecontentPeer {
 	 */
 	public static function getOMClass($withPrefix = true)
 	{
-		return $withPrefix ? InformativecontentPeer::CLASS_DEFAULT : InformativecontentPeer::OM_CLASS;
+		return $withPrefix ? ProjDetailTypePeer::CLASS_DEFAULT : ProjDetailTypePeer::OM_CLASS;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a Informativecontent or Criteria object.
+	 * Method perform an INSERT on the database, given a ProjDetailType or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Informativecontent object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or ProjDetailType object containing data that is used to create the INSERT statement.
 	 * @param      PropelPDO $con the PropelPDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -449,17 +493,17 @@ abstract class BaseInformativecontentPeer {
 	public static function doInsert($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(InformativecontentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ProjDetailTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from Informativecontent object
+			$criteria = $values->buildCriteria(); // build Criteria from ProjDetailType object
 		}
 
-		if ($criteria->containsKey(InformativecontentPeer::ID) && $criteria->keyContainsValue(InformativecontentPeer::ID) ) {
-			throw new PropelException('Cannot insert a value for auto-increment primary key ('.InformativecontentPeer::ID.')');
+		if ($criteria->containsKey(ProjDetailTypePeer::ID) && $criteria->keyContainsValue(ProjDetailTypePeer::ID) ) {
+			throw new PropelException('Cannot insert a value for auto-increment primary key ('.ProjDetailTypePeer::ID.')');
 		}
 
 
@@ -481,9 +525,9 @@ abstract class BaseInformativecontentPeer {
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a Informativecontent or Criteria object.
+	 * Method perform an UPDATE on the database, given a ProjDetailType or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Informativecontent object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or ProjDetailType object containing data that is used to create the UPDATE statement.
 	 * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -492,7 +536,7 @@ abstract class BaseInformativecontentPeer {
 	public static function doUpdate($values, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(InformativecontentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ProjDetailTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		$selectCriteria = new Criteria(self::DATABASE_NAME);
@@ -500,10 +544,10 @@ abstract class BaseInformativecontentPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(InformativecontentPeer::ID);
-			$selectCriteria->add(InformativecontentPeer::ID, $criteria->remove(InformativecontentPeer::ID), $comparison);
+			$comparison = $criteria->getComparison(ProjDetailTypePeer::ID);
+			$selectCriteria->add(ProjDetailTypePeer::ID, $criteria->remove(ProjDetailTypePeer::ID), $comparison);
 
-		} else { // $values is Informativecontent object
+		} else { // $values is ProjDetailType object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -515,26 +559,26 @@ abstract class BaseInformativecontentPeer {
 	}
 
 	/**
-	 * Method to DELETE all rows from the informativecontent table.
+	 * Method to DELETE all rows from the proj_detail_type table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
 	public static function doDeleteAll($con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(InformativecontentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ProjDetailTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 		$affectedRows = 0; // initialize var to track total num of affected rows
 		try {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(InformativecontentPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(ProjDetailTypePeer::TABLE_NAME, $con);
 			// Because this db requires some delete cascade/set null emulation, we have to
 			// clear the cached instance *after* the emulation has happened (since
 			// instances get re-added by the select statement contained therein).
-			InformativecontentPeer::clearInstancePool();
-			InformativecontentPeer::clearRelatedInstancePool();
+			ProjDetailTypePeer::clearInstancePool();
+			ProjDetailTypePeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -544,9 +588,9 @@ abstract class BaseInformativecontentPeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a Informativecontent or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a ProjDetailType or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or Informativecontent object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or ProjDetailType object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PropelPDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -557,27 +601,27 @@ abstract class BaseInformativecontentPeer {
 	 public static function doDelete($values, PropelPDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(InformativecontentPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+			$con = Propel::getConnection(ProjDetailTypePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			InformativecontentPeer::clearInstancePool();
+			ProjDetailTypePeer::clearInstancePool();
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof Informativecontent) { // it's a model object
+		} elseif ($values instanceof ProjDetailType) { // it's a model object
 			// invalidate the cache for this single object
-			InformativecontentPeer::removeInstanceFromPool($values);
+			ProjDetailTypePeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else { // it's a primary key, or an array of pks
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(InformativecontentPeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(ProjDetailTypePeer::ID, (array) $values, Criteria::IN);
 			// invalidate the cache for this object(s)
 			foreach ((array) $values as $singleval) {
-				InformativecontentPeer::removeInstanceFromPool($singleval);
+				ProjDetailTypePeer::removeInstanceFromPool($singleval);
 			}
 		}
 
@@ -592,7 +636,7 @@ abstract class BaseInformativecontentPeer {
 			$con->beginTransaction();
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
-			InformativecontentPeer::clearRelatedInstancePool();
+			ProjDetailTypePeer::clearRelatedInstancePool();
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -602,24 +646,24 @@ abstract class BaseInformativecontentPeer {
 	}
 
 	/**
-	 * Validates all modified columns of given Informativecontent object.
+	 * Validates all modified columns of given ProjDetailType object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      Informativecontent $obj The object to validate.
+	 * @param      ProjDetailType $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(Informativecontent $obj, $cols = null)
+	public static function doValidate(ProjDetailType $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(InformativecontentPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(InformativecontentPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(ProjDetailTypePeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(ProjDetailTypePeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -635,7 +679,7 @@ abstract class BaseInformativecontentPeer {
 
 		}
 
-		return BasePeer::doValidate(InformativecontentPeer::DATABASE_NAME, InformativecontentPeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(ProjDetailTypePeer::DATABASE_NAME, ProjDetailTypePeer::TABLE_NAME, $columns);
 	}
 
 	/**
@@ -643,23 +687,23 @@ abstract class BaseInformativecontentPeer {
 	 *
 	 * @param      int $pk the primary key.
 	 * @param      PropelPDO $con the connection to use
-	 * @return     Informativecontent
+	 * @return     ProjDetailType
 	 */
 	public static function retrieveByPK($pk, PropelPDO $con = null)
 	{
 
-		if (null !== ($obj = InformativecontentPeer::getInstanceFromPool((string) $pk))) {
+		if (null !== ($obj = ProjDetailTypePeer::getInstanceFromPool((string) $pk))) {
 			return $obj;
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(InformativecontentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ProjDetailTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
-		$criteria = new Criteria(InformativecontentPeer::DATABASE_NAME);
-		$criteria->add(InformativecontentPeer::ID, $pk);
+		$criteria = new Criteria(ProjDetailTypePeer::DATABASE_NAME);
+		$criteria->add(ProjDetailTypePeer::ID, $pk);
 
-		$v = InformativecontentPeer::doSelect($criteria, $con);
+		$v = ProjDetailTypePeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -675,16 +719,16 @@ abstract class BaseInformativecontentPeer {
 	public static function retrieveByPKs($pks, PropelPDO $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(InformativecontentPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+			$con = Propel::getConnection(ProjDetailTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
 		}
 
 		$objs = null;
 		if (empty($pks)) {
 			$objs = array();
 		} else {
-			$criteria = new Criteria(InformativecontentPeer::DATABASE_NAME);
-			$criteria->add(InformativecontentPeer::ID, $pks, Criteria::IN);
-			$objs = InformativecontentPeer::doSelect($criteria, $con);
+			$criteria = new Criteria(ProjDetailTypePeer::DATABASE_NAME);
+			$criteria->add(ProjDetailTypePeer::ID, $pks, Criteria::IN);
+			$objs = ProjDetailTypePeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
@@ -698,12 +742,12 @@ abstract class BaseInformativecontentPeer {
 	 */
 	static public function getUniqueColumnNames()
 	{
-	  return array(array('shortcut'));
+	  return array(array('code'));
 	}
 
-} // BaseInformativecontentPeer
+} // BaseProjDetailTypePeer
 
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BaseInformativecontentPeer::buildTableMap();
+BaseProjDetailTypePeer::buildTableMap();
 

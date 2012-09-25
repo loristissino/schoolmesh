@@ -76,6 +76,7 @@ class SchoolprojectTableMap extends TableMap {
     $this->addRelation('Year', 'Year', RelationMap::MANY_TO_ONE, array('year_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('sfGuardUser', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Team', 'Team', RelationMap::MANY_TO_ONE, array('team_id' => 'id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('ProjDetail', 'ProjDetail', RelationMap::ONE_TO_MANY, array('id' => 'schoolproject_id', ), null, null);
     $this->addRelation('ProjDeadline', 'ProjDeadline', RelationMap::ONE_TO_MANY, array('id' => 'schoolproject_id', ), null, null);
     $this->addRelation('ProjResource', 'ProjResource', RelationMap::ONE_TO_MANY, array('id' => 'schoolproject_id', ), null, null);
     $this->addRelation('ProjUpshot', 'ProjUpshot', RelationMap::ONE_TO_MANY, array('id' => 'schoolproject_id', ), null, null);

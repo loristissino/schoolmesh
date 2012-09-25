@@ -21,9 +21,13 @@ abstract class BaseInformativecontentForm extends BaseFormPropel
 
     $this->setValidators(array(
       'id'          => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
-      'shortcut'    => new sfValidatorString(array('max_length' => 40, 'required' => false)),
+      'shortcut'    => new sfValidatorString(array('max_length' => 40)),
       'description' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
     ));
+
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorPropelUnique(array('model' => 'Informativecontent', 'column' => array('shortcut')))
+    );
 
     $this->widgetSchema->setNameFormat('informativecontent[%s]');
 

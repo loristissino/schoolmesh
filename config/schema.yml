@@ -280,7 +280,7 @@ propel:
 
   wptool_item:
     id:   ~
-    description: varchar(50);
+    description: varchar(50)
     rank:                { type: integer, index: true }
     code:                { type: varchar(30), index: true }    
     wptool_item_type_id: ~
@@ -425,6 +425,28 @@ propel:
     rank: { type: integer, required: true }
     resources: integer  # 0: cannot have resources; 1: may have resources; 2: must have resources 
 
+  proj_detail_type:
+    id: ~
+    code: { type: varchar(30), index: unique, required: true }  # this is used for the generation of odt documents
+    description: { type: varchar(255), required: true }
+    label:       { type: varchar(100), required: true }
+    is_required: { type: boolean, default: true }
+    is_active:   { type: boolean, default: true }
+    state_min:   integer
+    state_max:   integer
+    example:     longvarchar
+    missing_value_message: varchar(255)
+    filled_value_message:  varchar(255)
+    cols:        { type: integer, default: 80 }
+    rows:        { type: integer, default: 5 }
+    rank: integer
+
+  proj_detail:
+    id: ~
+    schoolproject_id: ~
+    proj_detail_type_id: ~
+    content: longvarchar
+
   proj_deadline:
     id:  ~
     schoolproject_id:  ~
@@ -498,7 +520,7 @@ propel:
     # this table stores information about the type of informative messages that
     # can be sent to the users, provided that they gave their consent
     id: ~
-    shortcut: { type: varchar(40); required: true; index: unique }
+    shortcut: { type: varchar(40), required: true, index: unique }
     description: varchar(255)
     
   consent:
