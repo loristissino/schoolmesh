@@ -12,7 +12,7 @@ abstract class BaseInformativecontentFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
-      'shortcut'    => new sfWidgetFormFilterInput(),
+      'shortcut'    => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'description' => new sfWidgetFormFilterInput(),
     ));
 

@@ -380,6 +380,31 @@ class Schoolproject extends BaseSchoolproject {
       'team_id',
       'no_activity_confirm',
       ), $params);
+      
+      
+    $projDetailTypes = ProjDetailTypePeer::retrieveActiveByState($this->getState());
+    
+    foreach($projDetailTypes as $projDetailType)
+    {
+      $projDetail = $this->getDetail($projDetailType->getId());
+      if(!$projDetail)
+      {
+        $projDetail = new ProjDetail();
+        $projDetail
+        ->setSchoolprojectId($this->getId())
+        ->setProjDetailTypeId($projDetailType->getId())
+        ;
+      }
+      
+      if(isset($params[$projDetailType->getFieldName()]))
+      {
+        $projDetail
+        ->setContent($params[$projDetailType->getFieldName()])
+        ->save()
+        ;
+        $changedfield[]=$projDetailType->getFieldName();
+      }
+    }
     
     if($user && $user->getProfile()->getUserId()!=$this->getsfGuardUser()->getId())
     {
@@ -394,6 +419,24 @@ class Schoolproject extends BaseSchoolproject {
     }
     
     return $this;
+  }
+  
+  public function getDetail($projDetailTypeId)
+  {
+    $c = new Criteria();
+    $c->add(ProjDetailPeer::PROJ_DETAIL_TYPE_ID, $projDetailTypeId);
+    $c->add(ProjDetailPeer::SCHOOLPROJECT_ID, $this->getId());
+    return ProjDetailPeer::doSelectOne($c);
+  }
+  
+  public function getDetailContent($projDetailTypeId)
+  {
+    $detail=$this->getDetail($projDetailTypeId);
+    if(!$detail)
+    {
+      return false;
+    }
+    return $detail->getContent();
   }
   
 	
@@ -703,6 +746,34 @@ class Schoolproject extends BaseSchoolproject {
           'Goals set',
           'Project'
           ));
+      }
+      
+      $projDetailTypes = ProjDetailTypePeer::retrieveActiveByState($this->getState());
+      foreach($projDetailTypes as $projDetailType)
+      {
+        if($projDetailType->getIsRequired())
+        {
+          if(!$this->getDetailContent($projDetailType->getId()))
+          {
+            $checkList->addCheck(new Check(
+              Check::FAILED,
+              $projDetailType->getMissingValueMessage(),
+              'Project',
+              array(
+                'link_to'=>'projects/edit?id=' . $this->getId()
+                )
+              ));
+          }
+          else
+          {
+            $checkList->addCheck(new Check(
+              Check::PASSED,
+              $projDetailType->getFilledValueMessage(),
+              'Project'
+              ));
+          }
+          
+        }
       }
 
       $resources=$this->getProjResources();

@@ -46,6 +46,11 @@
 	<strong><?php echo __('Purposes') ?>:</strong><br /><?php echo nl2br($project->getPurposes()) ?><br />
 	<strong><?php echo __('Goals') ?>:</strong><br /><?php echo nl2br($project->getGoals()) ?><br />
   
+  <?php foreach($project->getProjDetails() as $projDetail): $projDetailType=$projDetail->getProjDetailType() ?>
+    <strong><?php echo $projDetailType->getDescription() ?>:</strong><br />
+    <?php echo nl2br($projDetail->getContent()) ?><br />
+  <?php endforeach ?>
+  
   <?php if($project->getApprovalDate()):?>
   <strong><?php echo __('Approval date') ?>:</strong> <?php echo $project->getApprovalDate('d/m/Y') ?> (<?php echo $project->getApprovalNotes() ?>)<br />
   <?php endif ?>

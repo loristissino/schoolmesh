@@ -208,6 +208,16 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	protected $aTeam;
 
 	/**
+	 * @var        array ProjDetail[] Collection to store aggregation of ProjDetail objects.
+	 */
+	protected $collProjDetails;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collProjDetails.
+	 */
+	private $lastProjDetailCriteria = null;
+
+	/**
 	 * @var        array ProjDeadline[] Collection to store aggregation of ProjDeadline objects.
 	 */
 	protected $collProjDeadlines;
@@ -1568,6 +1578,9 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$this->aYear = null;
 			$this->asfGuardUser = null;
 			$this->aTeam = null;
+			$this->collProjDetails = null;
+			$this->lastProjDetailCriteria = null;
+
 			$this->collProjDeadlines = null;
 			$this->lastProjDeadlineCriteria = null;
 
@@ -1748,6 +1761,14 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
 			}
 
+			if ($this->collProjDetails !== null) {
+				foreach ($this->collProjDetails as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			if ($this->collProjDeadlines !== null) {
 				foreach ($this->collProjDeadlines as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
@@ -1872,6 +1893,14 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collProjDetails !== null) {
+					foreach ($this->collProjDetails as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 				if ($this->collProjDeadlines !== null) {
 					foreach ($this->collProjDeadlines as $referrerFK) {
@@ -2383,6 +2412,12 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			// the getter/setter methods for fkey referrer objects.
 			$copyObj->setNew(false);
 
+			foreach ($this->getProjDetails() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addProjDetail($relObj->copy($deepCopy));
+				}
+			}
+
 			foreach ($this->getProjDeadlines() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addProjDeadline($relObj->copy($deepCopy));
@@ -2642,6 +2677,207 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			 */
 		}
 		return $this->aTeam;
+	}
+
+	/**
+	 * Clears out the collProjDetails collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addProjDetails()
+	 */
+	public function clearProjDetails()
+	{
+		$this->collProjDetails = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collProjDetails collection (array).
+	 *
+	 * By default this just sets the collProjDetails collection to an empty array (like clearcollProjDetails());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initProjDetails()
+	{
+		$this->collProjDetails = array();
+	}
+
+	/**
+	 * Gets an array of ProjDetail objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this Schoolproject has previously been saved, it will retrieve
+	 * related ProjDetails from storage. If this Schoolproject is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array ProjDetail[]
+	 * @throws     PropelException
+	 */
+	public function getProjDetails($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SchoolprojectPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collProjDetails === null) {
+			if ($this->isNew()) {
+			   $this->collProjDetails = array();
+			} else {
+
+				$criteria->add(ProjDetailPeer::SCHOOLPROJECT_ID, $this->id);
+
+				ProjDetailPeer::addSelectColumns($criteria);
+				$this->collProjDetails = ProjDetailPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(ProjDetailPeer::SCHOOLPROJECT_ID, $this->id);
+
+				ProjDetailPeer::addSelectColumns($criteria);
+				if (!isset($this->lastProjDetailCriteria) || !$this->lastProjDetailCriteria->equals($criteria)) {
+					$this->collProjDetails = ProjDetailPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastProjDetailCriteria = $criteria;
+		return $this->collProjDetails;
+	}
+
+	/**
+	 * Returns the number of related ProjDetail objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related ProjDetail objects.
+	 * @throws     PropelException
+	 */
+	public function countProjDetails(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SchoolprojectPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collProjDetails === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(ProjDetailPeer::SCHOOLPROJECT_ID, $this->id);
+
+				$count = ProjDetailPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(ProjDetailPeer::SCHOOLPROJECT_ID, $this->id);
+
+				if (!isset($this->lastProjDetailCriteria) || !$this->lastProjDetailCriteria->equals($criteria)) {
+					$count = ProjDetailPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collProjDetails);
+				}
+			} else {
+				$count = count($this->collProjDetails);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a ProjDetail object to this object
+	 * through the ProjDetail foreign key attribute.
+	 *
+	 * @param      ProjDetail $l ProjDetail
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addProjDetail(ProjDetail $l)
+	{
+		if ($this->collProjDetails === null) {
+			$this->initProjDetails();
+		}
+		if (!in_array($l, $this->collProjDetails, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collProjDetails, $l);
+			$l->setSchoolproject($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Schoolproject is new, it will return
+	 * an empty collection; or if this Schoolproject has previously
+	 * been saved, it will retrieve related ProjDetails from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Schoolproject.
+	 */
+	public function getProjDetailsJoinProjDetailType($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SchoolprojectPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collProjDetails === null) {
+			if ($this->isNew()) {
+				$this->collProjDetails = array();
+			} else {
+
+				$criteria->add(ProjDetailPeer::SCHOOLPROJECT_ID, $this->id);
+
+				$this->collProjDetails = ProjDetailPeer::doSelectJoinProjDetailType($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(ProjDetailPeer::SCHOOLPROJECT_ID, $this->id);
+
+			if (!isset($this->lastProjDetailCriteria) || !$this->lastProjDetailCriteria->equals($criteria)) {
+				$this->collProjDetails = ProjDetailPeer::doSelectJoinProjDetailType($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastProjDetailCriteria = $criteria;
+
+		return $this->collProjDetails;
 	}
 
 	/**
@@ -3259,6 +3495,11 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
+			if ($this->collProjDetails) {
+				foreach ((array) $this->collProjDetails as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 			if ($this->collProjDeadlines) {
 				foreach ((array) $this->collProjDeadlines as $o) {
 					$o->clearAllReferences($deep);
@@ -3276,6 +3517,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			}
 		} // if ($deep)
 
+		$this->collProjDetails = null;
 		$this->collProjDeadlines = null;
 		$this->collProjResources = null;
 		$this->collProjUpshots = null;

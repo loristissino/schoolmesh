@@ -16,6 +16,27 @@ class SchoolprojectForm extends BaseSchoolprojectForm
     $this->schoolproject=$this->getObject();
     
     unset($this['user_id'], $this['year_id'], $this['state']);
+    
+    $projDetailTypes = ProjDetailTypePeer::retrieveActiveByState($this->schoolproject->getState());
+    
+    foreach($projDetailTypes as $projDetailType)
+    {
+      $fieldname=$projDetailType->getFieldName();
+      $this->widgetSchema[$fieldname] = new sfWidgetFormTextarea();
+      $this[$fieldname]->getWidget()->setAttributes(array('cols'=>$projDetailType->getCols(), 'rows'=>$projDetailType->getRows()));
+      $this[$fieldname]->getWidget()->setLabel($projDetailType->getLabel());
+      
+      $required = sfConfig::get('app_config_projects_relaxed_filling', false) ? false: $projDetailType->getIsRequired();
+      
+      $this->validatorSchema[$fieldname] = new sfValidatorString(array('required' => $required));
+      
+      $projDetail=$this->schoolproject->getDetail($projDetailType->getId());
+      if($projDetail)
+      {
+        $this[$fieldname]->getWidget()->setDefault($projDetail->getContent());
+      }
+      
+    }
       
     $this['title']->getWidget()->setAttribute('size', '80');
 

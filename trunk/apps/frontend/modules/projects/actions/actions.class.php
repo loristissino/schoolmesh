@@ -886,6 +886,7 @@ class projectsActions extends sfActions
 	
 	$this->form = new SchoolprojectForm($this->project);
   $this->form->addUserDependentConfiguration($this->getUser());
+  //$this->form->addDetailsDefaults();
   
   if($request->getParameter('back','')=='monitor')
   {
@@ -921,33 +922,33 @@ class projectsActions extends sfActions
 			}
 			
 		}
-	/* this would be useful if we wanted to embed deadline forms,
-  but there are some problems with validation, so we don't use it 	
-	if($this->project)
-	{
-		foreach($this->project->getProjDeadlines() as $index=>$deadline)
-		{
-			$deadlineForm=new ProjDeadlineForm($deadline);
-			$fieldname='deadline[' . $index . ']';
-			$this->form->embedForm($fieldname, $deadlineForm);
-			$this->form->getWidgetSchema()->setLabel($fieldname, 
-				$this->getContext()->getI18N()->__('Deadline #%number%', array('%number%'=>$index+1))
-				);
+    /* this would be useful if we wanted to embed deadline forms,
+    but there are some problems with validation, so we don't use it 	
+    if($this->project)
+    {
+      foreach($this->project->getProjDeadlines() as $index=>$deadline)
+      {
+        $deadlineForm=new ProjDeadlineForm($deadline);
+        $fieldname='deadline[' . $index . ']';
+        $this->form->embedForm($fieldname, $deadlineForm);
+        $this->form->getWidgetSchema()->setLabel($fieldname, 
+          $this->getContext()->getI18N()->__('Deadline #%number%', array('%number%'=>$index+1))
+          );
 
-		}
+      }
 
-	}
-  */
+    }
+    */
   
-  if ($this->project)
-  {
-    $this->deadlines=$this->project->getProjDeadlines();
-    $this->resources=$this->project->getProjResources();
-    $this->upshots  =$this->project->getProjUpshots();
-  }
+    if ($this->project)
+    {
+      $this->deadlines=$this->project->getProjDeadlines();
+      $this->resources=$this->project->getProjResources();
+      $this->upshots  =$this->project->getProjUpshots();
+    }
   
   
-   }  
+  }  
 	
 
   public function executeSubmit(sfWebRequest $request)
