@@ -5100,6 +5100,14 @@
         <source>Projects detail types definitions</source>
         <target>Definizioni dei tipi di dettaglio per i progetti</target>
     </trans-unit>
+    <trans-unit id="1472">
+        <source>Project successfully deleted.</source>
+        <target>Progetto correttamente eliminato.</target>
+    </trans-unit>
+    <trans-unit id="1473">
+        <source>The project could not be deleted.</source>
+        <target>Il progetto non è stato eliminato.</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

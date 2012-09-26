@@ -416,6 +416,10 @@ class Schoolproject extends BaseSchoolproject {
   
   public function getDetail($projDetailTypeId)
   {
+    if(!$this->getId())
+    {
+      return null;
+    }
     $c = new Criteria();
     $c->add(ProjDetailPeer::PROJ_DETAIL_TYPE_ID, $projDetailTypeId);
     $c->add(ProjDetailPeer::SCHOOLPROJECT_ID, $this->getId());
@@ -1049,7 +1053,7 @@ class Schoolproject extends BaseSchoolproject {
     }
   }
   
-  public function makeClone($user_id)
+  public function makeClone($user_id, $sf_context=null)
   {
     
     $con = Propel::getConnection(SchoolprojectPeer::DATABASE_NAME);
@@ -1077,6 +1081,7 @@ class Schoolproject extends BaseSchoolproject {
       {
         $newdetail
         ->setSchoolprojectId($newproject->getId())
+        ->setProjDetailTypeId($detail->getProjDetailTypeId())
         ->setContent($detail->getContent())
         ->save($con)
         ;
@@ -1087,10 +1092,13 @@ class Schoolproject extends BaseSchoolproject {
     {
       $newdeadline= new ProjDeadline();
       
+      $date=Generic::cloneDate($deadline->getCurrentDeadlineDate('U'), $this->getYear()->getEndDate('U'), $newproject->getYear()->getEndDate('U'));
+      
       $newdeadline
       ->setSchoolprojectId($newproject->getId())
       ->setUserId($deadline->getUserId())
-      ->setOriginalDeadlineDate(Generic::cloneDate($deadline->getCurrentDeadlineDate('U'), $this->getYear()->getEndDate('U'), $newproject->getYear()->getEndDate('U')))
+      ->setOriginalDeadlineDate($date)
+      ->setCurrentDeadlineDate($date)
       ->setDescription($deadline->getDescription())
       ->setNotes($deadline->getNotes())
       ->setNeedsAttachment($deadline->getNeedsAttachment())
@@ -1125,6 +1133,8 @@ class Schoolproject extends BaseSchoolproject {
       ->save($con)
       ;
     }
+    
+    $newproject->addWfevent($user_id, 'Project created', array(), 10, $sf_context, $con);
     
     $con->commit();
     
@@ -1163,6 +1173,61 @@ class Schoolproject extends BaseSchoolproject {
   public function getProjDetailTypes()
   {
     return ProjDetailTypePeer::retrieveActiveByStateAndCategory($this->getState(), $this->getProjCategoryId());
+  }
+  
+  public function isDeletableBy($user)
+  {
+    return
+      ($this->getState() == Workflow::PROJ_DRAFT)
+      and
+      (sizeof($this->getWorkflowLogs())<=1)
+      and
+      ($user->getProfile()->getUserId()===$this->getUserId())
+      ;
+  }
+  
+  public function remove()
+  {
+    $con = Propel::getConnection(SchoolprojectPeer::DATABASE_NAME);
+    $con->beginTransaction();
+    
+    //FIXME: This could be done in single queries, it's in the todo list
+    
+    try
+    {
+      foreach($this->getWorkflowLogs() as $workflowlog)
+      {
+        $workflowlog->delete($con);
+      }
+      foreach($this->getProjDetails() as $detail)
+      {
+        $detail->delete($con);
+      }
+      foreach($this->getProjUpshots() as $upshot)
+      {
+        $upshot->delete($con);
+      }
+      foreach($this->getProjResources() as $resource)
+      {
+        $resource->delete($con);
+      }
+      foreach($this->getProjDeadlines() as $deadline)
+      {
+        $deadline->delete($con);
+      }
+      $this->delete($con);
+      $con->commit();
+      return array('result'=>'notice', 'message'=>'Project successfully deleted.');
+
+    }
+    catch (Exception $e)
+    {
+      $con->rollback();
+      return array('result'=>'error', 'message'=>'The project could not be deleted.');
+    }
+    
+    
+    
   }
 
 } // Schoolproject
