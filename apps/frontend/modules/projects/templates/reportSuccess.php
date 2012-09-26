@@ -41,10 +41,6 @@
 	<p>
 	<strong><?php echo __('Coordinator') ?>:</strong> <?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?><br />
 	<strong><?php echo __('Category') ?>:</strong> <?php echo $project->getProjCategory() ?><br />
-	<strong><?php echo __('Description') ?>:</strong>  <?php echo nl2br($project->getDescription()) ?><br />
-	<strong><?php echo __('Addressees') ?>:</strong>  <?php echo nl2br($project->getAddressees()) ?><br />
-	<strong><?php echo __('Purposes') ?>:</strong><br /><?php echo nl2br($project->getPurposes()) ?><br />
-	<strong><?php echo __('Goals') ?>:</strong><br /><?php echo nl2br($project->getGoals()) ?><br />
   
   <?php foreach($project->getProjDetails() as $projDetail): $projDetailType=$projDetail->getProjDetailType() ?>
     <strong><?php echo $projDetailType->getDescription() ?>:</strong><br />

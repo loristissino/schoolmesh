@@ -48,12 +48,6 @@
     <td><?php echo $project->getReferenceNumber() ?></td>
   </tr>
   <?php endif ?>
-  <?php if(!isset($form['description'])): ?>
-  <tr>
-    <th><label for="schoolproject_description"><?php echo __('Description') ?></label></th>
-    <td><?php echo $project->getDescription() ?></td>
-  </tr>
-  <?php endif ?>
   <tr>
     <th><label for="schoolproject_state"><?php echo __('State') ?></label></th>
     <td><?php include_partial('state', array('project'=>$project)) ?></td>
@@ -64,25 +58,6 @@
     <td><?php echo $project->getProjCategory() ?></td>
   </tr>
   <?php endif ?>
-  <?php if(!isset($form['purposes'])): ?>
-  <tr>
-    <th><label for="schoolproject_purposes"><?php echo __('Purposes') ?></label></th>
-    <td><?php echo nl2br($project->getPurposes()) ?></td>
-  </tr>
-  <?php endif ?>
-  <?php if(!isset($form['purposes'])): ?>
-  <tr>
-    <th><label for="schoolproject_goals"><?php echo __('Goals') ?></label></th>
-    <td><?php echo nl2br($project->getGoals()) ?></td>
-  </tr>
-  <?php endif ?>
-  <?php if(!isset($form['addressees'])): ?>
-  <tr>
-    <th><label for="schoolproject_addressees"><?php echo __('Addressees') ?></label></th>
-    <td><?php echo nl2br($project->getAddressees()) ?></td>
-  </tr>
-  <?php endif ?>
-
 
   <?php echo $form ?>
     <tr>

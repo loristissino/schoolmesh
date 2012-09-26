@@ -396,13 +396,6 @@ propel:
     user_id:      { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
     team_id:      { type: integer, foreignTable: team, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }  # people delegated by the coordinator to do some of his/her activities
     title:        { type: varchar(255), index: true }
-    description:  longvarchar # what has to be done and how
-    notes:        longvarchar
-    addressees:   longvarchar
-    purposes:     longvarchar
-    goals:        longvarchar
-    final_report: longvarchar
-    proposals:    longvarchar
     hours_approved: integer
     state:        { type: integer }
     submission_date: date

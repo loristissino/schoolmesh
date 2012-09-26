@@ -61,48 +61,6 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	protected $title;
 
 	/**
-	 * The value for the description field.
-	 * @var        string
-	 */
-	protected $description;
-
-	/**
-	 * The value for the notes field.
-	 * @var        string
-	 */
-	protected $notes;
-
-	/**
-	 * The value for the addressees field.
-	 * @var        string
-	 */
-	protected $addressees;
-
-	/**
-	 * The value for the purposes field.
-	 * @var        string
-	 */
-	protected $purposes;
-
-	/**
-	 * The value for the goals field.
-	 * @var        string
-	 */
-	protected $goals;
-
-	/**
-	 * The value for the final_report field.
-	 * @var        string
-	 */
-	protected $final_report;
-
-	/**
-	 * The value for the proposals field.
-	 * @var        string
-	 */
-	protected $proposals;
-
-	/**
 	 * The value for the hours_approved field.
 	 * @var        int
 	 */
@@ -354,76 +312,6 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 	public function getTitle()
 	{
 		return $this->title;
-	}
-
-	/**
-	 * Get the [description] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getDescription()
-	{
-		return $this->description;
-	}
-
-	/**
-	 * Get the [notes] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getNotes()
-	{
-		return $this->notes;
-	}
-
-	/**
-	 * Get the [addressees] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getAddressees()
-	{
-		return $this->addressees;
-	}
-
-	/**
-	 * Get the [purposes] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getPurposes()
-	{
-		return $this->purposes;
-	}
-
-	/**
-	 * Get the [goals] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getGoals()
-	{
-		return $this->goals;
-	}
-
-	/**
-	 * Get the [final_report] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getFinalReport()
-	{
-		return $this->final_report;
-	}
-
-	/**
-	 * Get the [proposals] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getProposals()
-	{
-		return $this->proposals;
 	}
 
 	/**
@@ -861,146 +749,6 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setTitle()
-
-	/**
-	 * Set the value of [description] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     Schoolproject The current object (for fluent API support)
-	 */
-	public function setDescription($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->description !== $v) {
-			$this->description = $v;
-			$this->modifiedColumns[] = SchoolprojectPeer::DESCRIPTION;
-		}
-
-		return $this;
-	} // setDescription()
-
-	/**
-	 * Set the value of [notes] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     Schoolproject The current object (for fluent API support)
-	 */
-	public function setNotes($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->notes !== $v) {
-			$this->notes = $v;
-			$this->modifiedColumns[] = SchoolprojectPeer::NOTES;
-		}
-
-		return $this;
-	} // setNotes()
-
-	/**
-	 * Set the value of [addressees] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     Schoolproject The current object (for fluent API support)
-	 */
-	public function setAddressees($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->addressees !== $v) {
-			$this->addressees = $v;
-			$this->modifiedColumns[] = SchoolprojectPeer::ADDRESSEES;
-		}
-
-		return $this;
-	} // setAddressees()
-
-	/**
-	 * Set the value of [purposes] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     Schoolproject The current object (for fluent API support)
-	 */
-	public function setPurposes($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->purposes !== $v) {
-			$this->purposes = $v;
-			$this->modifiedColumns[] = SchoolprojectPeer::PURPOSES;
-		}
-
-		return $this;
-	} // setPurposes()
-
-	/**
-	 * Set the value of [goals] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     Schoolproject The current object (for fluent API support)
-	 */
-	public function setGoals($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->goals !== $v) {
-			$this->goals = $v;
-			$this->modifiedColumns[] = SchoolprojectPeer::GOALS;
-		}
-
-		return $this;
-	} // setGoals()
-
-	/**
-	 * Set the value of [final_report] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     Schoolproject The current object (for fluent API support)
-	 */
-	public function setFinalReport($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->final_report !== $v) {
-			$this->final_report = $v;
-			$this->modifiedColumns[] = SchoolprojectPeer::FINAL_REPORT;
-		}
-
-		return $this;
-	} // setFinalReport()
-
-	/**
-	 * Set the value of [proposals] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     Schoolproject The current object (for fluent API support)
-	 */
-	public function setProposals($v)
-	{
-		if ($v !== null) {
-			$v = (string) $v;
-		}
-
-		if ($this->proposals !== $v) {
-			$this->proposals = $v;
-			$this->modifiedColumns[] = SchoolprojectPeer::PROPOSALS;
-		}
-
-		return $this;
-	} // setProposals()
 
 	/**
 	 * Set the value of [hours_approved] column.
@@ -1470,27 +1218,20 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$this->user_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
 			$this->team_id = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
 			$this->title = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->description = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-			$this->notes = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-			$this->addressees = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
-			$this->purposes = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
-			$this->goals = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
-			$this->final_report = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
-			$this->proposals = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
-			$this->hours_approved = ($row[$startcol + 14] !== null) ? (int) $row[$startcol + 14] : null;
-			$this->state = ($row[$startcol + 15] !== null) ? (int) $row[$startcol + 15] : null;
-			$this->submission_date = ($row[$startcol + 16] !== null) ? (string) $row[$startcol + 16] : null;
-			$this->reference_number = ($row[$startcol + 17] !== null) ? (string) $row[$startcol + 17] : null;
-			$this->approval_date = ($row[$startcol + 18] !== null) ? (string) $row[$startcol + 18] : null;
-			$this->approval_notes = ($row[$startcol + 19] !== null) ? (string) $row[$startcol + 19] : null;
-			$this->financing_date = ($row[$startcol + 20] !== null) ? (string) $row[$startcol + 20] : null;
-			$this->financing_notes = ($row[$startcol + 21] !== null) ? (string) $row[$startcol + 21] : null;
-			$this->confirmation_date = ($row[$startcol + 22] !== null) ? (string) $row[$startcol + 22] : null;
-			$this->confirmation_notes = ($row[$startcol + 23] !== null) ? (string) $row[$startcol + 23] : null;
-			$this->evaluation_min = ($row[$startcol + 24] !== null) ? (int) $row[$startcol + 24] : null;
-			$this->evaluation_max = ($row[$startcol + 25] !== null) ? (int) $row[$startcol + 25] : null;
-			$this->no_activity_confirm = ($row[$startcol + 26] !== null) ? (boolean) $row[$startcol + 26] : null;
-			$this->created_at = ($row[$startcol + 27] !== null) ? (string) $row[$startcol + 27] : null;
+			$this->hours_approved = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
+			$this->state = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
+			$this->submission_date = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->reference_number = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
+			$this->approval_date = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->approval_notes = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
+			$this->financing_date = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
+			$this->financing_notes = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
+			$this->confirmation_date = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
+			$this->confirmation_notes = ($row[$startcol + 16] !== null) ? (string) $row[$startcol + 16] : null;
+			$this->evaluation_min = ($row[$startcol + 17] !== null) ? (int) $row[$startcol + 17] : null;
+			$this->evaluation_max = ($row[$startcol + 18] !== null) ? (int) $row[$startcol + 18] : null;
+			$this->no_activity_confirm = ($row[$startcol + 19] !== null) ? (boolean) $row[$startcol + 19] : null;
+			$this->created_at = ($row[$startcol + 20] !== null) ? (string) $row[$startcol + 20] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -1500,7 +1241,7 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 28; // 28 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 21; // 21 = SchoolprojectPeer::NUM_COLUMNS - SchoolprojectPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Schoolproject object", $e);
@@ -1981,66 +1722,45 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				return $this->getTitle();
 				break;
 			case 7:
-				return $this->getDescription();
-				break;
-			case 8:
-				return $this->getNotes();
-				break;
-			case 9:
-				return $this->getAddressees();
-				break;
-			case 10:
-				return $this->getPurposes();
-				break;
-			case 11:
-				return $this->getGoals();
-				break;
-			case 12:
-				return $this->getFinalReport();
-				break;
-			case 13:
-				return $this->getProposals();
-				break;
-			case 14:
 				return $this->getHoursApproved();
 				break;
-			case 15:
+			case 8:
 				return $this->getState();
 				break;
-			case 16:
+			case 9:
 				return $this->getSubmissionDate();
 				break;
-			case 17:
+			case 10:
 				return $this->getReferenceNumber();
 				break;
-			case 18:
+			case 11:
 				return $this->getApprovalDate();
 				break;
-			case 19:
+			case 12:
 				return $this->getApprovalNotes();
 				break;
-			case 20:
+			case 13:
 				return $this->getFinancingDate();
 				break;
-			case 21:
+			case 14:
 				return $this->getFinancingNotes();
 				break;
-			case 22:
+			case 15:
 				return $this->getConfirmationDate();
 				break;
-			case 23:
+			case 16:
 				return $this->getConfirmationNotes();
 				break;
-			case 24:
+			case 17:
 				return $this->getEvaluationMin();
 				break;
-			case 25:
+			case 18:
 				return $this->getEvaluationMax();
 				break;
-			case 26:
+			case 19:
 				return $this->getNoActivityConfirm();
 				break;
-			case 27:
+			case 20:
 				return $this->getCreatedAt();
 				break;
 			default:
@@ -2071,27 +1791,20 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 			$keys[4] => $this->getUserId(),
 			$keys[5] => $this->getTeamId(),
 			$keys[6] => $this->getTitle(),
-			$keys[7] => $this->getDescription(),
-			$keys[8] => $this->getNotes(),
-			$keys[9] => $this->getAddressees(),
-			$keys[10] => $this->getPurposes(),
-			$keys[11] => $this->getGoals(),
-			$keys[12] => $this->getFinalReport(),
-			$keys[13] => $this->getProposals(),
-			$keys[14] => $this->getHoursApproved(),
-			$keys[15] => $this->getState(),
-			$keys[16] => $this->getSubmissionDate(),
-			$keys[17] => $this->getReferenceNumber(),
-			$keys[18] => $this->getApprovalDate(),
-			$keys[19] => $this->getApprovalNotes(),
-			$keys[20] => $this->getFinancingDate(),
-			$keys[21] => $this->getFinancingNotes(),
-			$keys[22] => $this->getConfirmationDate(),
-			$keys[23] => $this->getConfirmationNotes(),
-			$keys[24] => $this->getEvaluationMin(),
-			$keys[25] => $this->getEvaluationMax(),
-			$keys[26] => $this->getNoActivityConfirm(),
-			$keys[27] => $this->getCreatedAt(),
+			$keys[7] => $this->getHoursApproved(),
+			$keys[8] => $this->getState(),
+			$keys[9] => $this->getSubmissionDate(),
+			$keys[10] => $this->getReferenceNumber(),
+			$keys[11] => $this->getApprovalDate(),
+			$keys[12] => $this->getApprovalNotes(),
+			$keys[13] => $this->getFinancingDate(),
+			$keys[14] => $this->getFinancingNotes(),
+			$keys[15] => $this->getConfirmationDate(),
+			$keys[16] => $this->getConfirmationNotes(),
+			$keys[17] => $this->getEvaluationMin(),
+			$keys[18] => $this->getEvaluationMax(),
+			$keys[19] => $this->getNoActivityConfirm(),
+			$keys[20] => $this->getCreatedAt(),
 		);
 		return $result;
 	}
@@ -2145,66 +1858,45 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 				$this->setTitle($value);
 				break;
 			case 7:
-				$this->setDescription($value);
-				break;
-			case 8:
-				$this->setNotes($value);
-				break;
-			case 9:
-				$this->setAddressees($value);
-				break;
-			case 10:
-				$this->setPurposes($value);
-				break;
-			case 11:
-				$this->setGoals($value);
-				break;
-			case 12:
-				$this->setFinalReport($value);
-				break;
-			case 13:
-				$this->setProposals($value);
-				break;
-			case 14:
 				$this->setHoursApproved($value);
 				break;
-			case 15:
+			case 8:
 				$this->setState($value);
 				break;
-			case 16:
+			case 9:
 				$this->setSubmissionDate($value);
 				break;
-			case 17:
+			case 10:
 				$this->setReferenceNumber($value);
 				break;
-			case 18:
+			case 11:
 				$this->setApprovalDate($value);
 				break;
-			case 19:
+			case 12:
 				$this->setApprovalNotes($value);
 				break;
-			case 20:
+			case 13:
 				$this->setFinancingDate($value);
 				break;
-			case 21:
+			case 14:
 				$this->setFinancingNotes($value);
 				break;
-			case 22:
+			case 15:
 				$this->setConfirmationDate($value);
 				break;
-			case 23:
+			case 16:
 				$this->setConfirmationNotes($value);
 				break;
-			case 24:
+			case 17:
 				$this->setEvaluationMin($value);
 				break;
-			case 25:
+			case 18:
 				$this->setEvaluationMax($value);
 				break;
-			case 26:
+			case 19:
 				$this->setNoActivityConfirm($value);
 				break;
-			case 27:
+			case 20:
 				$this->setCreatedAt($value);
 				break;
 		} // switch()
@@ -2238,27 +1930,20 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[4], $arr)) $this->setUserId($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setTeamId($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setTitle($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setDescription($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setNotes($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setAddressees($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setPurposes($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setGoals($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setFinalReport($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setProposals($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setHoursApproved($arr[$keys[14]]);
-		if (array_key_exists($keys[15], $arr)) $this->setState($arr[$keys[15]]);
-		if (array_key_exists($keys[16], $arr)) $this->setSubmissionDate($arr[$keys[16]]);
-		if (array_key_exists($keys[17], $arr)) $this->setReferenceNumber($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setApprovalDate($arr[$keys[18]]);
-		if (array_key_exists($keys[19], $arr)) $this->setApprovalNotes($arr[$keys[19]]);
-		if (array_key_exists($keys[20], $arr)) $this->setFinancingDate($arr[$keys[20]]);
-		if (array_key_exists($keys[21], $arr)) $this->setFinancingNotes($arr[$keys[21]]);
-		if (array_key_exists($keys[22], $arr)) $this->setConfirmationDate($arr[$keys[22]]);
-		if (array_key_exists($keys[23], $arr)) $this->setConfirmationNotes($arr[$keys[23]]);
-		if (array_key_exists($keys[24], $arr)) $this->setEvaluationMin($arr[$keys[24]]);
-		if (array_key_exists($keys[25], $arr)) $this->setEvaluationMax($arr[$keys[25]]);
-		if (array_key_exists($keys[26], $arr)) $this->setNoActivityConfirm($arr[$keys[26]]);
-		if (array_key_exists($keys[27], $arr)) $this->setCreatedAt($arr[$keys[27]]);
+		if (array_key_exists($keys[7], $arr)) $this->setHoursApproved($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setState($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setSubmissionDate($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setReferenceNumber($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setApprovalDate($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setApprovalNotes($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setFinancingDate($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setFinancingNotes($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setConfirmationDate($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setConfirmationNotes($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setEvaluationMin($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setEvaluationMax($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setNoActivityConfirm($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setCreatedAt($arr[$keys[20]]);
 	}
 
 	/**
@@ -2277,13 +1962,6 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(SchoolprojectPeer::USER_ID)) $criteria->add(SchoolprojectPeer::USER_ID, $this->user_id);
 		if ($this->isColumnModified(SchoolprojectPeer::TEAM_ID)) $criteria->add(SchoolprojectPeer::TEAM_ID, $this->team_id);
 		if ($this->isColumnModified(SchoolprojectPeer::TITLE)) $criteria->add(SchoolprojectPeer::TITLE, $this->title);
-		if ($this->isColumnModified(SchoolprojectPeer::DESCRIPTION)) $criteria->add(SchoolprojectPeer::DESCRIPTION, $this->description);
-		if ($this->isColumnModified(SchoolprojectPeer::NOTES)) $criteria->add(SchoolprojectPeer::NOTES, $this->notes);
-		if ($this->isColumnModified(SchoolprojectPeer::ADDRESSEES)) $criteria->add(SchoolprojectPeer::ADDRESSEES, $this->addressees);
-		if ($this->isColumnModified(SchoolprojectPeer::PURPOSES)) $criteria->add(SchoolprojectPeer::PURPOSES, $this->purposes);
-		if ($this->isColumnModified(SchoolprojectPeer::GOALS)) $criteria->add(SchoolprojectPeer::GOALS, $this->goals);
-		if ($this->isColumnModified(SchoolprojectPeer::FINAL_REPORT)) $criteria->add(SchoolprojectPeer::FINAL_REPORT, $this->final_report);
-		if ($this->isColumnModified(SchoolprojectPeer::PROPOSALS)) $criteria->add(SchoolprojectPeer::PROPOSALS, $this->proposals);
 		if ($this->isColumnModified(SchoolprojectPeer::HOURS_APPROVED)) $criteria->add(SchoolprojectPeer::HOURS_APPROVED, $this->hours_approved);
 		if ($this->isColumnModified(SchoolprojectPeer::STATE)) $criteria->add(SchoolprojectPeer::STATE, $this->state);
 		if ($this->isColumnModified(SchoolprojectPeer::SUBMISSION_DATE)) $criteria->add(SchoolprojectPeer::SUBMISSION_DATE, $this->submission_date);
@@ -2363,20 +2041,6 @@ abstract class BaseSchoolproject extends BaseObject  implements Persistent {
 		$copyObj->setTeamId($this->team_id);
 
 		$copyObj->setTitle($this->title);
-
-		$copyObj->setDescription($this->description);
-
-		$copyObj->setNotes($this->notes);
-
-		$copyObj->setAddressees($this->addressees);
-
-		$copyObj->setPurposes($this->purposes);
-
-		$copyObj->setGoals($this->goals);
-
-		$copyObj->setFinalReport($this->final_report);
-
-		$copyObj->setProposals($this->proposals);
 
 		$copyObj->setHoursApproved($this->hours_approved);
 
