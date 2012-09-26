@@ -21,25 +21,28 @@ class SchoolprojectForm extends BaseSchoolprojectForm
       $this['state']
       );
     
-    $projDetailTypes = $this->schoolproject->getProjDetailTypes();
-    
-    foreach($projDetailTypes as $projDetailType)
+    if($this->schoolproject->getId())
     {
-      $fieldname=$projDetailType->getFieldName();
-      $this->widgetSchema[$fieldname] = new sfWidgetFormTextarea();
-      $this[$fieldname]->getWidget()->setAttributes(array('cols'=>$projDetailType->getCols(), 'rows'=>$projDetailType->getRows()));
-      $this[$fieldname]->getWidget()->setLabel($projDetailType->getLabel());
+      $projDetailTypes = $this->schoolproject->getProjDetailTypes();
       
-      $required = sfConfig::get('app_config_projects_relaxed_filling', false) ? false: $projDetailType->getIsRequired();
-      
-      $this->validatorSchema[$fieldname] = new sfValidatorString(array('required' => $required));
-      
-      $projDetail=$this->schoolproject->getDetail($projDetailType->getId());
-      if($projDetail)
+      foreach($projDetailTypes as $projDetailType)
       {
-        $this[$fieldname]->getWidget()->setDefault($projDetail->getContent());
+        $fieldname=$projDetailType->getFieldName();
+        $this->widgetSchema[$fieldname] = new sfWidgetFormTextarea();
+        $this[$fieldname]->getWidget()->setAttributes(array('cols'=>$projDetailType->getCols(), 'rows'=>$projDetailType->getRows()));
+        $this[$fieldname]->getWidget()->setLabel($projDetailType->getLabel());
+        
+        $required = sfConfig::get('app_config_projects_relaxed_filling', false) ? false: $projDetailType->getIsRequired();
+        
+        $this->validatorSchema[$fieldname] = new sfValidatorString(array('required' => $required));
+        
+        $projDetail=$this->schoolproject->getDetail($projDetailType->getId());
+        if($projDetail)
+        {
+          $this[$fieldname]->getWidget()->setDefault($projDetail->getContent());
+        }
+        
       }
-      
     }
       
     $this['title']->getWidget()->setAttribute('size', '80');

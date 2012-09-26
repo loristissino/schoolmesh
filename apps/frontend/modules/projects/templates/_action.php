@@ -31,4 +31,12 @@
 		)?>
 		</li>
   <?php endif ?>
+  <?php if ($project->isDeletableBy($sf_user)): ?>
+	<li class="sf_admin_action_delete">
+		<?php echo link_to(__('Delete'),
+			url_for('projects/delete?id=' . $project->getId()),
+			array('title'=>__('Delete this project'), 'method'=>'post', 'confirm' => format_number_choice(__('[0]Are you sure?|[1]Are you sure?'), null, $sf_user->getProfile()->getIsMale()))
+		)?>
+		</li>
+  <?php endif ?>
 </ul>

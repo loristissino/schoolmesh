@@ -1040,7 +1040,24 @@ class projectsActions extends sfActions
     $this->forward404Unless($schoolproject=SchoolprojectPeer::retrieveByPK($request->getParameter('id')));
     $this->forward404Unless($schoolproject->isViewableBy($this->getUser()));
     
-    $result=$schoolproject->makeClone($this->getUser()->getProfile()->getUserId());
+    $result=$schoolproject->makeClone($this->getUser()->getProfile()->getUserId(), $this->getContext());
+    
+    $this->getUser()->setFlash($result['result'],
+      $this->getContext()->getI18N()->__($result['message'])
+    );
+    
+    $this->redirect('projects/index');
+    
+  }
+  
+  public function executeDelete(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod('POST'));
+    set_time_limit(0);
+    $this->forward404Unless($schoolproject=SchoolprojectPeer::retrieveByPK($request->getParameter('id')));
+    $this->forward404Unless($schoolproject->isDeletableBy($this->getUser()));
+    
+    $result=$schoolproject->remove();
     
     $this->getUser()->setFlash($result['result'],
       $this->getContext()->getI18N()->__($result['message'])
