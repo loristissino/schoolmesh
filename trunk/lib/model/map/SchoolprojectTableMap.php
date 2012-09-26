@@ -43,13 +43,6 @@ class SchoolprojectTableMap extends TableMap {
 		$this->addForeignKey('USER_ID', 'UserId', 'INTEGER', 'sf_guard_user', 'ID', true, null, null);
 		$this->addForeignKey('TEAM_ID', 'TeamId', 'INTEGER', 'team', 'ID', false, null, null);
 		$this->addColumn('TITLE', 'Title', 'VARCHAR', false, 255, null);
-		$this->addColumn('DESCRIPTION', 'Description', 'LONGVARCHAR', false, null, null);
-		$this->addColumn('NOTES', 'Notes', 'LONGVARCHAR', false, null, null);
-		$this->addColumn('ADDRESSEES', 'Addressees', 'LONGVARCHAR', false, null, null);
-		$this->addColumn('PURPOSES', 'Purposes', 'LONGVARCHAR', false, null, null);
-		$this->addColumn('GOALS', 'Goals', 'LONGVARCHAR', false, null, null);
-		$this->addColumn('FINAL_REPORT', 'FinalReport', 'LONGVARCHAR', false, null, null);
-		$this->addColumn('PROPOSALS', 'Proposals', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('HOURS_APPROVED', 'HoursApproved', 'INTEGER', false, null, null);
 		$this->addColumn('STATE', 'State', 'INTEGER', false, null, null);
 		$this->addColumn('SUBMISSION_DATE', 'SubmissionDate', 'DATE', false, null, null);

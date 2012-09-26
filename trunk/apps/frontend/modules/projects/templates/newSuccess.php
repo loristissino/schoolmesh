@@ -25,12 +25,6 @@
     <td><?php echo $project->getTitle() ?></td>
   </tr>
   <?php endif ?>
-  <?php if(!isset($form['description'])): ?>
-  <tr>
-    <th><label for="schoolproject_description"><?php echo __('Description') ?></label></th>
-    <td><?php echo $project->getDescription() ?></td>
-  </tr>
-  <?php endif ?>
 
     <?php echo $form ?>
 	<tr>

@@ -366,16 +366,9 @@ class Schoolproject extends BaseSchoolproject {
     $changedfields = Generic::updateObjectFromForm($this, array(
       'code',
       'title',
-      'description',
       'proj_financing_id',
       'hours_approved',
-      'notes',
       'proj_category_id',
-      'purposes',
-      'addressees',
-      'goals',
-      'final_report',
-      'proposals',
       'reference_number',
       'team_id',
       'no_activity_confirm',
@@ -667,87 +660,6 @@ class Schoolproject extends BaseSchoolproject {
           ));
       }
 
-      if(!$this->getDescription())
-      {
-        $checkList->addCheck(new Check(
-          Check::FAILED,
-          'No description set',
-          'Project',
-          array(
-            'link_to'=>'projects/edit?id=' . $this->getId()
-            )
-          ));
-      }
-      else
-      {
-        $checkList->addCheck(new Check(
-          Check::PASSED,
-          'Description set',
-          'Project'
-          ));
-      }
-
-      if(!$this->getAddressees())
-      {
-        $checkList->addCheck(new Check(
-          Check::FAILED,
-          'No addressees set',
-          'Project',
-          array(
-            'link_to'=>'projects/edit?id=' . $this->getId()
-            )
-          ));
-      }
-      else
-      {
-        $checkList->addCheck(new Check(
-          Check::PASSED,
-          'Addressees set',
-          'Project'
-          ));
-      }
-
-
-      if(!$this->getPurposes())
-      {
-        $checkList->addCheck(new Check(
-          Check::FAILED,
-          'No purposes set',
-          'Project',
-          array(
-            'link_to'=>'projects/edit?id=' . $this->getId()
-            )
-          ));
-      }
-      else
-      {
-        $checkList->addCheck(new Check(
-          Check::PASSED,
-          'Purposes set',
-          'Project'
-          ));
-      }
-
-      if(!$this->getGoals())
-      {
-        $checkList->addCheck(new Check(
-          Check::FAILED,
-          'No goals set',
-          'Project',
-          array(
-            'link_to'=>'projects/edit?id=' . $this->getId()
-            )
-          ));
-      }
-      else
-      {
-        $checkList->addCheck(new Check(
-          Check::PASSED,
-          'Goals set',
-          'Project'
-          ));
-      }
-      
       $projDetailTypes = $this->getProjDetailTypes();//ProjDetailTypePeer::retrieveActiveByState($this->getState());
       foreach($projDetailTypes as $projDetailType)
       {
@@ -925,25 +837,6 @@ class Schoolproject extends BaseSchoolproject {
     
     elseif($this->getState()==Workflow::PROJ_CONFIRMED)
     {
-      if(!$this->getFinalReport())
-      {
-        $checkList->addCheck(new Check(
-          Check::FAILED,
-          'No final report filled',
-          'Project',
-          array(
-            'link_to'=>'projects/edit?id=' . $this->getId()
-            )
-          ));
-      }
-      else
-      {
-        $checkList->addCheck(new Check(
-          Check::PASSED,
-          'Final report filled',
-          'Project'
-          ));
-      }
       
       $be=$this->getBudgetAndExpensesForDeclarableActivities();
       $budget=$be['budget'];
@@ -1170,10 +1063,6 @@ class Schoolproject extends BaseSchoolproject {
     ->setProjCategoryId($this->getProjCategoryId())
     ->setYearId(sfConfig::get('app_config_current_year'))
     ->setTitle($this->getTitle())
-    ->setDescription($this->getDescription())
-    ->setAddressees($this->getAddressees())
-    ->setPurposes($this->getPurposes())
-    ->setGoals($this->getGoals())
     ->setState(Workflow::PROJ_DRAFT)
     ->setEvaluationMin(sfConfig::get('app_config_projects_evaluation_min'))
     ->setEvaluationMax(sfConfig::get('app_config_projects_evaluation_max'))

@@ -49,13 +49,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
       $this['user_id']->getWidget()->setOption('add_empty', 'Choose a user');
     */	
     $this->widgetSchema->setLabel('proj_category_id', 'Category');
-    $this['notes']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
-    $this['addressees']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
-    $this['purposes']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
-    $this['goals']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
-    $this['description']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
-    $this['final_report']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
-    $this['proposals']->getWidget()->setAttributes(array('cols'=>'80', 'rows'=>'10'));
     $this['team_id']->getWidget()
       ->addOption('add_empty', 'Choose a team of co-coordinators')
       ->addOption('peer_method', 'retrieveAll')
@@ -97,9 +90,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_notes'], 
           $this['financing_notes'],
           $this['confirmation_notes'],
-          $this['notes'],
-          $this['final_report'],
-          $this['proposals'],
           $this['reference_number'],
           $this['no_activity_confirm'],
           $this['team_id']
@@ -109,8 +99,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
         unset(
           $this['hours_approved'],
           $this['title'],
-          $this['description'],
-          $this['notes'],
           $this['proj_category_id'],
           $this['submission_date'],
           $this['approval_date'],
@@ -119,9 +107,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_notes'], 
           $this['financing_notes'],
           $this['confirmation_notes'],
-          $this['addressees'],
-          $this['purposes'],
-          $this['goals'],
           $this['no_activity_confirm']
           );
           if(!$user->hasCredential('proj_adm_ok'))
@@ -148,8 +133,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
         unset(
           $this['hours_approved'],
           $this['title'],
-          $this['description'],
-          $this['notes'],
           $this['proj_category_id'],
           $this['submission_date'],
           $this['approval_date'],
@@ -158,9 +141,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_notes'], 
           $this['financing_notes'],
           $this['confirmation_notes'],
-          $this['addressees'],
-          $this['purposes'],
-          $this['goals'],
           $this['reference_number'],
           $this['no_activity_confirm'],
           $this['code']
@@ -180,8 +160,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
         unset(
           $this['hours_approved'],
           $this['title'],
-          $this['description'],
-          $this['notes'],
           $this['proj_category_id'],
           $this['submission_date'],
           $this['approval_date'],
@@ -190,9 +168,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_notes'], 
           $this['financing_notes'],
           $this['confirmation_notes'],
-          $this['addressees'],
-          $this['purposes'],
-          $this['goals'],
           $this['reference_number'],
           $this['no_activity_confirm'],
           $this['code']
@@ -211,8 +186,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
         unset(
           $this['hours_approved'],
           $this['title'],
-          $this['description'],
-          $this['notes'],
           $this['proj_category_id'],
           $this['submission_date'],
           $this['approval_date'],
@@ -221,9 +194,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_notes'], 
           $this['financing_notes'],
           $this['confirmation_notes'],
-          $this['addressees'],
-          $this['purposes'],
-          $this['goals'],
           $this['reference_number'],
           $this['code']
           );
@@ -261,8 +231,6 @@ class SchoolprojectForm extends BaseSchoolprojectForm
         unset(
           $this['hours_approved'],
           $this['title'],
-          $this['description'],
-          $this['notes'],
           $this['proj_category_id'],
           $this['submission_date'],
           $this['approval_date'],
@@ -275,12 +243,7 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['reference_number'],
           $this['team_id'],
           $this['code'],
-          $this['addressees'],
-          $this['purposes'],
-          $this['goals'],
-          $this['final_report'],
-          $this['no_activity_confirm'],
-          $this['proposals']
+          $this['no_activity_confirm']
           );
         break;
     }
