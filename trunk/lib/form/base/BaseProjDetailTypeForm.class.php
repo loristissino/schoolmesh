@@ -15,6 +15,7 @@ abstract class BaseProjDetailTypeForm extends BaseFormPropel
   {
     $this->setWidgets(array(
       'id'                    => new sfWidgetFormInputHidden(),
+      'proj_category_id'      => new sfWidgetFormPropelChoice(array('model' => 'ProjCategory', 'add_empty' => true)),
       'code'                  => new sfWidgetFormInputText(),
       'description'           => new sfWidgetFormInputText(),
       'label'                 => new sfWidgetFormInputText(),
@@ -32,6 +33,7 @@ abstract class BaseProjDetailTypeForm extends BaseFormPropel
 
     $this->setValidators(array(
       'id'                    => new sfValidatorChoice(array('choices' => array($this->getObject()->getId()), 'empty_value' => $this->getObject()->getId(), 'required' => false)),
+      'proj_category_id'      => new sfValidatorPropelChoice(array('model' => 'ProjCategory', 'column' => 'id', 'required' => false)),
       'code'                  => new sfValidatorString(array('max_length' => 30)),
       'description'           => new sfValidatorString(array('max_length' => 255)),
       'label'                 => new sfValidatorString(array('max_length' => 100)),

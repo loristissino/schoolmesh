@@ -25,13 +25,16 @@ abstract class BaseProjDetailTypePeer {
 	const TM_CLASS = 'ProjDetailTypeTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 14;
+	const NUM_COLUMNS = 15;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 	/** the column name for the ID field */
 	const ID = 'proj_detail_type.ID';
+
+	/** the column name for the PROJ_CATEGORY_ID field */
+	const PROJ_CATEGORY_ID = 'proj_detail_type.PROJ_CATEGORY_ID';
 
 	/** the column name for the CODE field */
 	const CODE = 'proj_detail_type.CODE';
@@ -95,11 +98,11 @@ abstract class BaseProjDetailTypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Code', 'Description', 'Label', 'IsRequired', 'IsActive', 'StateMin', 'StateMax', 'Example', 'MissingValueMessage', 'FilledValueMessage', 'Cols', 'Rows', 'Rank', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'code', 'description', 'label', 'isRequired', 'isActive', 'stateMin', 'stateMax', 'example', 'missingValueMessage', 'filledValueMessage', 'cols', 'rows', 'rank', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::CODE, self::DESCRIPTION, self::LABEL, self::IS_REQUIRED, self::IS_ACTIVE, self::STATE_MIN, self::STATE_MAX, self::EXAMPLE, self::MISSING_VALUE_MESSAGE, self::FILLED_VALUE_MESSAGE, self::COLS, self::ROWS, self::RANK, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'code', 'description', 'label', 'is_required', 'is_active', 'state_min', 'state_max', 'example', 'missing_value_message', 'filled_value_message', 'cols', 'rows', 'rank', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'ProjCategoryId', 'Code', 'Description', 'Label', 'IsRequired', 'IsActive', 'StateMin', 'StateMax', 'Example', 'MissingValueMessage', 'FilledValueMessage', 'Cols', 'Rows', 'Rank', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'projCategoryId', 'code', 'description', 'label', 'isRequired', 'isActive', 'stateMin', 'stateMax', 'example', 'missingValueMessage', 'filledValueMessage', 'cols', 'rows', 'rank', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::PROJ_CATEGORY_ID, self::CODE, self::DESCRIPTION, self::LABEL, self::IS_REQUIRED, self::IS_ACTIVE, self::STATE_MIN, self::STATE_MAX, self::EXAMPLE, self::MISSING_VALUE_MESSAGE, self::FILLED_VALUE_MESSAGE, self::COLS, self::ROWS, self::RANK, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'proj_category_id', 'code', 'description', 'label', 'is_required', 'is_active', 'state_min', 'state_max', 'example', 'missing_value_message', 'filled_value_message', 'cols', 'rows', 'rank', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
 	);
 
 	/**
@@ -109,11 +112,11 @@ abstract class BaseProjDetailTypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Code' => 1, 'Description' => 2, 'Label' => 3, 'IsRequired' => 4, 'IsActive' => 5, 'StateMin' => 6, 'StateMax' => 7, 'Example' => 8, 'MissingValueMessage' => 9, 'FilledValueMessage' => 10, 'Cols' => 11, 'Rows' => 12, 'Rank' => 13, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'code' => 1, 'description' => 2, 'label' => 3, 'isRequired' => 4, 'isActive' => 5, 'stateMin' => 6, 'stateMax' => 7, 'example' => 8, 'missingValueMessage' => 9, 'filledValueMessage' => 10, 'cols' => 11, 'rows' => 12, 'rank' => 13, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::CODE => 1, self::DESCRIPTION => 2, self::LABEL => 3, self::IS_REQUIRED => 4, self::IS_ACTIVE => 5, self::STATE_MIN => 6, self::STATE_MAX => 7, self::EXAMPLE => 8, self::MISSING_VALUE_MESSAGE => 9, self::FILLED_VALUE_MESSAGE => 10, self::COLS => 11, self::ROWS => 12, self::RANK => 13, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'code' => 1, 'description' => 2, 'label' => 3, 'is_required' => 4, 'is_active' => 5, 'state_min' => 6, 'state_max' => 7, 'example' => 8, 'missing_value_message' => 9, 'filled_value_message' => 10, 'cols' => 11, 'rows' => 12, 'rank' => 13, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProjCategoryId' => 1, 'Code' => 2, 'Description' => 3, 'Label' => 4, 'IsRequired' => 5, 'IsActive' => 6, 'StateMin' => 7, 'StateMax' => 8, 'Example' => 9, 'MissingValueMessage' => 10, 'FilledValueMessage' => 11, 'Cols' => 12, 'Rows' => 13, 'Rank' => 14, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'projCategoryId' => 1, 'code' => 2, 'description' => 3, 'label' => 4, 'isRequired' => 5, 'isActive' => 6, 'stateMin' => 7, 'stateMax' => 8, 'example' => 9, 'missingValueMessage' => 10, 'filledValueMessage' => 11, 'cols' => 12, 'rows' => 13, 'rank' => 14, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PROJ_CATEGORY_ID => 1, self::CODE => 2, self::DESCRIPTION => 3, self::LABEL => 4, self::IS_REQUIRED => 5, self::IS_ACTIVE => 6, self::STATE_MIN => 7, self::STATE_MAX => 8, self::EXAMPLE => 9, self::MISSING_VALUE_MESSAGE => 10, self::FILLED_VALUE_MESSAGE => 11, self::COLS => 12, self::ROWS => 13, self::RANK => 14, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'proj_category_id' => 1, 'code' => 2, 'description' => 3, 'label' => 4, 'is_required' => 5, 'is_active' => 6, 'state_min' => 7, 'state_max' => 8, 'example' => 9, 'missing_value_message' => 10, 'filled_value_message' => 11, 'cols' => 12, 'rows' => 13, 'rank' => 14, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
 	);
 
 	/**
@@ -184,6 +187,7 @@ abstract class BaseProjDetailTypePeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 		$criteria->addSelectColumn(ProjDetailTypePeer::ID);
+		$criteria->addSelectColumn(ProjDetailTypePeer::PROJ_CATEGORY_ID);
 		$criteria->addSelectColumn(ProjDetailTypePeer::CODE);
 		$criteria->addSelectColumn(ProjDetailTypePeer::DESCRIPTION);
 		$criteria->addSelectColumn(ProjDetailTypePeer::LABEL);
@@ -441,6 +445,240 @@ abstract class BaseProjDetailTypePeer {
 		$stmt->closeCursor();
 		return $results;
 	}
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related ProjCategory table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinProjCategory(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(ProjDetailTypePeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			ProjDetailTypePeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(ProjDetailTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(ProjDetailTypePeer::PROJ_CATEGORY_ID, ProjCategoryPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Selects a collection of ProjDetailType objects pre-filled with their ProjCategory objects.
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of ProjDetailType objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinProjCategory(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		ProjDetailTypePeer::addSelectColumns($criteria);
+		$startcol = (ProjDetailTypePeer::NUM_COLUMNS - ProjDetailTypePeer::NUM_LAZY_LOAD_COLUMNS);
+		ProjCategoryPeer::addSelectColumns($criteria);
+
+		$criteria->addJoin(ProjDetailTypePeer::PROJ_CATEGORY_ID, ProjCategoryPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = ProjDetailTypePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ProjDetailTypePeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+
+				$cls = ProjDetailTypePeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				ProjDetailTypePeer::addInstanceToPool($obj1, $key1);
+			} // if $obj1 already loaded
+
+			$key2 = ProjCategoryPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			if ($key2 !== null) {
+				$obj2 = ProjCategoryPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = ProjCategoryPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol);
+					ProjCategoryPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 already loaded
+				
+				// Add the $obj1 (ProjDetailType) to $obj2 (ProjCategory)
+				$obj2->addProjDetailType($obj1);
+
+			} // if joined row was not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining all related tables
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAll(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(ProjDetailTypePeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			ProjDetailTypePeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(ProjDetailTypePeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(ProjDetailTypePeer::PROJ_CATEGORY_ID, ProjCategoryPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+	/**
+	 * Selects a collection of ProjDetailType objects pre-filled with all related objects.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of ProjDetailType objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAll(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		ProjDetailTypePeer::addSelectColumns($criteria);
+		$startcol2 = (ProjDetailTypePeer::NUM_COLUMNS - ProjDetailTypePeer::NUM_LAZY_LOAD_COLUMNS);
+
+		ProjCategoryPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (ProjCategoryPeer::NUM_COLUMNS - ProjCategoryPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(ProjDetailTypePeer::PROJ_CATEGORY_ID, ProjCategoryPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = ProjDetailTypePeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = ProjDetailTypePeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = ProjDetailTypePeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				ProjDetailTypePeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+			// Add objects for joined ProjCategory rows
+
+			$key2 = ProjCategoryPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			if ($key2 !== null) {
+				$obj2 = ProjCategoryPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = ProjCategoryPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					ProjCategoryPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 loaded
+
+				// Add the $obj1 (ProjDetailType) to the collection in $obj2 (ProjCategory)
+				$obj2->addProjDetailType($obj1);
+			} // if joined row not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
 	/**
 	 * Returns the TableMap related to this peer.
 	 * This method is not needed for general use but a specific application could have a need.

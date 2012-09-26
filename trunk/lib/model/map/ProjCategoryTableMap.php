@@ -49,6 +49,7 @@ class ProjCategoryTableMap extends TableMap {
 	public function buildRelations()
 	{
     $this->addRelation('Schoolproject', 'Schoolproject', RelationMap::ONE_TO_MANY, array('id' => 'proj_category_id', ), null, null);
+    $this->addRelation('ProjDetailType', 'ProjDetailType', RelationMap::ONE_TO_MANY, array('id' => 'proj_category_id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
 	/**

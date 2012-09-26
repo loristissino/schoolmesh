@@ -15,9 +15,13 @@ class SchoolprojectForm extends BaseSchoolprojectForm
     
     $this->schoolproject=$this->getObject();
     
-    unset($this['user_id'], $this['year_id'], $this['state']);
+    unset(
+      $this['user_id'],
+      $this['year_id'],
+      $this['state']
+      );
     
-    $projDetailTypes = ProjDetailTypePeer::retrieveActiveByState($this->schoolproject->getState());
+    $projDetailTypes = $this->schoolproject->getProjDetailTypes();
     
     foreach($projDetailTypes as $projDetailType)
     {

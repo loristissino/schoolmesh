@@ -427,7 +427,8 @@ propel:
 
   proj_detail_type:
     id: ~
-    code: { type: varchar(30), index: unique, required: true }  # this is used for the generation of odt documents
+    proj_category_id: { type: integer, foreignTable: proj_category, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
+    code: { type: varchar(30), index: unique, required: true }  # this is used for the generation of odt documents and for the field names
     description: { type: varchar(255), required: true }
     label:       { type: varchar(100), required: true }
     is_required: { type: boolean, default: true }

@@ -26,6 +26,7 @@
   <?php echo li_link_to_if('action_items', $sf_user->hasCredential('wpfr_monitoring'), __('Appointments management'), 'plansandreports/list') ?>
   <?php echo li_link_to_if('action_items', $sf_user->hasCredential('proj_monitoring'), __('Projects management'), 'projects/monitor') ?>
   <?php echo li_link_to_if('action_items', $sf_user->hasCredential('proj_adm_ok'), __('Projects resource types definitions'), '@proj_resource_type') ?>
+  <?php echo li_link_to_if('action_items', $sf_user->hasCredential('admin'), __('Projects detail types definitions'), '@proj_detail_type') ?>
 	<?php echo li_link_to_if('action_users', $sf_user->hasCredential('users'), __('Users management'), url_for('users')) ?>
 	<?php echo li_link_to_if('action_users', $sf_user->hasCredential('teams'), __('Teams management'), url_for('teams/index')) ?>
   <?php echo li_link_to_if('action_users', $sf_user->hasCredential('admin'), __('Roles'), url_for('roles/index')) ?>
