@@ -1090,6 +1090,7 @@ DROP TABLE IF EXISTS `proj_detail_type`;
 CREATE TABLE `proj_detail_type`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`proj_category_id` INTEGER,
 	`code` VARCHAR(30)  NOT NULL,
 	`description` VARCHAR(255)  NOT NULL,
 	`label` VARCHAR(100)  NOT NULL,
@@ -1104,7 +1105,13 @@ CREATE TABLE `proj_detail_type`
 	`rows` INTEGER default 5,
 	`rank` INTEGER,
 	PRIMARY KEY (`id`),
-	UNIQUE KEY `proj_detail_type_U_1` (`code`)
+	UNIQUE KEY `proj_detail_type_U_1` (`code`),
+	INDEX `proj_detail_type_FI_1` (`proj_category_id`),
+	CONSTRAINT `proj_detail_type_FK_1`
+		FOREIGN KEY (`proj_category_id`)
+		REFERENCES `proj_category` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT
 )Engine=InnoDB;
 
 #-----------------------------------------------------------------------------

@@ -382,7 +382,7 @@ class Schoolproject extends BaseSchoolproject {
       ), $params);
       
       
-    $projDetailTypes = ProjDetailTypePeer::retrieveActiveByState($this->getState());
+    $projDetailTypes = $this->getProjDetailTypes();
     
     foreach($projDetailTypes as $projDetailType)
     {
@@ -748,7 +748,7 @@ class Schoolproject extends BaseSchoolproject {
           ));
       }
       
-      $projDetailTypes = ProjDetailTypePeer::retrieveActiveByState($this->getState());
+      $projDetailTypes = $this->getProjDetailTypes();//ProjDetailTypePeer::retrieveActiveByState($this->getState());
       foreach($projDetailTypes as $projDetailType)
       {
         if($projDetailType->getIsRequired())
@@ -1255,6 +1255,11 @@ class Schoolproject extends BaseSchoolproject {
   public function hasBudget()
   {
     return ($this->mayHaveResources() and $this->getState()<Workflow::PROJ_ARCHIVED);
+  }
+  
+  public function getProjDetailTypes()
+  {
+    return ProjDetailTypePeer::retrieveActiveByStateAndCategory($this->getState(), $this->getProjCategoryId());
   }
 
 } // Schoolproject

@@ -1,3 +1,13 @@
+proj_detail_type:
+  class: sfPropelRouteCollection
+  options:
+    model:                ProjDetailType
+    module:               projectdetailtypes
+    prefix_path:          /projectdetailtypes
+    column:               id
+    with_wildcard_routes: true
+
+
 proj_resource_type:
   class: sfPropelRouteCollection
   options:

@@ -37,6 +37,7 @@ class ProjDetailTypeTableMap extends TableMap {
 		$this->setUseIdGenerator(true);
 		// columns
 		$this->addPrimaryKey('ID', 'Id', 'INTEGER', true, null, null);
+		$this->addForeignKey('PROJ_CATEGORY_ID', 'ProjCategoryId', 'INTEGER', 'proj_category', 'ID', false, null, null);
 		$this->addColumn('CODE', 'Code', 'VARCHAR', true, 30, null);
 		$this->addColumn('DESCRIPTION', 'Description', 'VARCHAR', true, 255, null);
 		$this->addColumn('LABEL', 'Label', 'VARCHAR', true, 100, null);
@@ -58,6 +59,7 @@ class ProjDetailTypeTableMap extends TableMap {
 	 */
 	public function buildRelations()
 	{
+    $this->addRelation('ProjCategory', 'ProjCategory', RelationMap::MANY_TO_ONE, array('proj_category_id' => 'id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('ProjDetail', 'ProjDetail', RelationMap::ONE_TO_MANY, array('id' => 'proj_detail_type_id', ), null, null);
 	} // buildRelations()
 

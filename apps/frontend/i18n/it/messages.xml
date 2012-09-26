@@ -5092,6 +5092,14 @@
         <source>Detailed information</source>
         <target>Informazioni di dettaglio</target>
       </trans-unit>
+      <trans-unit id="1470">
+        <source>Project detail type list</source>
+        <target>Elenco tipi di dettaglio per progetti</target>
+      </trans-unit>
+    <trans-unit id="1471">
+        <source>Projects detail types definitions</source>
+        <target>Definizioni dei tipi di dettaglio per i progetti</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

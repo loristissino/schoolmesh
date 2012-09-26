@@ -12,6 +12,7 @@ abstract class BaseProjDetailTypeFormFilter extends BaseFormFilterPropel
   public function setup()
   {
     $this->setWidgets(array(
+      'proj_category_id'      => new sfWidgetFormPropelChoice(array('model' => 'ProjCategory', 'add_empty' => true)),
       'code'                  => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'description'           => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'label'                 => new sfWidgetFormFilterInput(array('with_empty' => false)),
@@ -28,6 +29,7 @@ abstract class BaseProjDetailTypeFormFilter extends BaseFormFilterPropel
     ));
 
     $this->setValidators(array(
+      'proj_category_id'      => new sfValidatorPropelChoice(array('required' => false, 'model' => 'ProjCategory', 'column' => 'id')),
       'code'                  => new sfValidatorPass(array('required' => false)),
       'description'           => new sfValidatorPass(array('required' => false)),
       'label'                 => new sfValidatorPass(array('required' => false)),
@@ -59,6 +61,7 @@ abstract class BaseProjDetailTypeFormFilter extends BaseFormFilterPropel
   {
     return array(
       'id'                    => 'Number',
+      'proj_category_id'      => 'ForeignKey',
       'code'                  => 'Text',
       'description'           => 'Text',
       'label'                 => 'Text',

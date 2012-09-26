@@ -25,6 +25,12 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 	protected $id;
 
 	/**
+	 * The value for the proj_category_id field.
+	 * @var        int
+	 */
+	protected $proj_category_id;
+
+	/**
 	 * The value for the code field.
 	 * @var        string
 	 */
@@ -107,6 +113,11 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 	protected $rank;
 
 	/**
+	 * @var        ProjCategory
+	 */
+	protected $aProjCategory;
+
+	/**
 	 * @var        array ProjDetail[] Collection to store aggregation of ProjDetail objects.
 	 */
 	protected $collProjDetails;
@@ -166,6 +177,16 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 	public function getId()
 	{
 		return $this->id;
+	}
+
+	/**
+	 * Get the [proj_category_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getProjCategoryId()
+	{
+		return $this->proj_category_id;
 	}
 
 	/**
@@ -317,6 +338,30 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 
 		return $this;
 	} // setId()
+
+	/**
+	 * Set the value of [proj_category_id] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     ProjDetailType The current object (for fluent API support)
+	 */
+	public function setProjCategoryId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->proj_category_id !== $v) {
+			$this->proj_category_id = $v;
+			$this->modifiedColumns[] = ProjDetailTypePeer::PROJ_CATEGORY_ID;
+		}
+
+		if ($this->aProjCategory !== null && $this->aProjCategory->getId() !== $v) {
+			$this->aProjCategory = null;
+		}
+
+		return $this;
+	} // setProjCategoryId()
 
 	/**
 	 * Set the value of [code] column.
@@ -627,19 +672,20 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 		try {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->code = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-			$this->description = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-			$this->label = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->is_required = ($row[$startcol + 4] !== null) ? (boolean) $row[$startcol + 4] : null;
-			$this->is_active = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
-			$this->state_min = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
-			$this->state_max = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
-			$this->example = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-			$this->missing_value_message = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
-			$this->filled_value_message = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
-			$this->cols = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
-			$this->rows = ($row[$startcol + 12] !== null) ? (int) $row[$startcol + 12] : null;
-			$this->rank = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
+			$this->proj_category_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+			$this->code = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->description = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+			$this->label = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->is_required = ($row[$startcol + 5] !== null) ? (boolean) $row[$startcol + 5] : null;
+			$this->is_active = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
+			$this->state_min = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
+			$this->state_max = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
+			$this->example = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->missing_value_message = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
+			$this->filled_value_message = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->cols = ($row[$startcol + 12] !== null) ? (int) $row[$startcol + 12] : null;
+			$this->rows = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
+			$this->rank = ($row[$startcol + 14] !== null) ? (int) $row[$startcol + 14] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -649,7 +695,7 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 14; // 14 = ProjDetailTypePeer::NUM_COLUMNS - ProjDetailTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 15; // 15 = ProjDetailTypePeer::NUM_COLUMNS - ProjDetailTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjDetailType object", $e);
@@ -672,6 +718,9 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 	public function ensureConsistency()
 	{
 
+		if ($this->aProjCategory !== null && $this->proj_category_id !== $this->aProjCategory->getId()) {
+			$this->aProjCategory = null;
+		}
 	} // ensureConsistency
 
 	/**
@@ -711,6 +760,7 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 
 		if ($deep) {  // also de-associate any related objects?
 
+			$this->aProjCategory = null;
 			$this->collProjDetails = null;
 			$this->lastProjDetailCriteria = null;
 
@@ -822,6 +872,18 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 		if (!$this->alreadyInSave) {
 			$this->alreadyInSave = true;
 
+			// We call the save method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aProjCategory !== null) {
+				if ($this->aProjCategory->isModified() || $this->aProjCategory->isNew()) {
+					$affectedRows += $this->aProjCategory->save($con);
+				}
+				$this->setProjCategory($this->aProjCategory);
+			}
+
 			if ($this->isNew() ) {
 				$this->modifiedColumns[] = ProjDetailTypePeer::ID;
 			}
@@ -918,6 +980,18 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 			$failureMap = array();
 
 
+			// We call the validate method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aProjCategory !== null) {
+				if (!$this->aProjCategory->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aProjCategory->getValidationFailures());
+				}
+			}
+
+
 			if (($retval = ProjDetailTypePeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
@@ -968,42 +1042,45 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getCode();
+				return $this->getProjCategoryId();
 				break;
 			case 2:
-				return $this->getDescription();
+				return $this->getCode();
 				break;
 			case 3:
-				return $this->getLabel();
+				return $this->getDescription();
 				break;
 			case 4:
-				return $this->getIsRequired();
+				return $this->getLabel();
 				break;
 			case 5:
-				return $this->getIsActive();
+				return $this->getIsRequired();
 				break;
 			case 6:
-				return $this->getStateMin();
+				return $this->getIsActive();
 				break;
 			case 7:
-				return $this->getStateMax();
+				return $this->getStateMin();
 				break;
 			case 8:
-				return $this->getExample();
+				return $this->getStateMax();
 				break;
 			case 9:
-				return $this->getMissingValueMessage();
+				return $this->getExample();
 				break;
 			case 10:
-				return $this->getFilledValueMessage();
+				return $this->getMissingValueMessage();
 				break;
 			case 11:
-				return $this->getCols();
+				return $this->getFilledValueMessage();
 				break;
 			case 12:
-				return $this->getRows();
+				return $this->getCols();
 				break;
 			case 13:
+				return $this->getRows();
+				break;
+			case 14:
 				return $this->getRank();
 				break;
 			default:
@@ -1028,19 +1105,20 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 		$keys = ProjDetailTypePeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getCode(),
-			$keys[2] => $this->getDescription(),
-			$keys[3] => $this->getLabel(),
-			$keys[4] => $this->getIsRequired(),
-			$keys[5] => $this->getIsActive(),
-			$keys[6] => $this->getStateMin(),
-			$keys[7] => $this->getStateMax(),
-			$keys[8] => $this->getExample(),
-			$keys[9] => $this->getMissingValueMessage(),
-			$keys[10] => $this->getFilledValueMessage(),
-			$keys[11] => $this->getCols(),
-			$keys[12] => $this->getRows(),
-			$keys[13] => $this->getRank(),
+			$keys[1] => $this->getProjCategoryId(),
+			$keys[2] => $this->getCode(),
+			$keys[3] => $this->getDescription(),
+			$keys[4] => $this->getLabel(),
+			$keys[5] => $this->getIsRequired(),
+			$keys[6] => $this->getIsActive(),
+			$keys[7] => $this->getStateMin(),
+			$keys[8] => $this->getStateMax(),
+			$keys[9] => $this->getExample(),
+			$keys[10] => $this->getMissingValueMessage(),
+			$keys[11] => $this->getFilledValueMessage(),
+			$keys[12] => $this->getCols(),
+			$keys[13] => $this->getRows(),
+			$keys[14] => $this->getRank(),
 		);
 		return $result;
 	}
@@ -1076,42 +1154,45 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setCode($value);
+				$this->setProjCategoryId($value);
 				break;
 			case 2:
-				$this->setDescription($value);
+				$this->setCode($value);
 				break;
 			case 3:
-				$this->setLabel($value);
+				$this->setDescription($value);
 				break;
 			case 4:
-				$this->setIsRequired($value);
+				$this->setLabel($value);
 				break;
 			case 5:
-				$this->setIsActive($value);
+				$this->setIsRequired($value);
 				break;
 			case 6:
-				$this->setStateMin($value);
+				$this->setIsActive($value);
 				break;
 			case 7:
-				$this->setStateMax($value);
+				$this->setStateMin($value);
 				break;
 			case 8:
-				$this->setExample($value);
+				$this->setStateMax($value);
 				break;
 			case 9:
-				$this->setMissingValueMessage($value);
+				$this->setExample($value);
 				break;
 			case 10:
-				$this->setFilledValueMessage($value);
+				$this->setMissingValueMessage($value);
 				break;
 			case 11:
-				$this->setCols($value);
+				$this->setFilledValueMessage($value);
 				break;
 			case 12:
-				$this->setRows($value);
+				$this->setCols($value);
 				break;
 			case 13:
+				$this->setRows($value);
+				break;
+			case 14:
 				$this->setRank($value);
 				break;
 		} // switch()
@@ -1139,19 +1220,20 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 		$keys = ProjDetailTypePeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setCode($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setDescription($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setLabel($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setIsRequired($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setIsActive($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setStateMin($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setStateMax($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setExample($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setMissingValueMessage($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setFilledValueMessage($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setCols($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setRows($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setRank($arr[$keys[13]]);
+		if (array_key_exists($keys[1], $arr)) $this->setProjCategoryId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setCode($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setDescription($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setLabel($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setIsRequired($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setIsActive($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setStateMin($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setStateMax($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setExample($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setMissingValueMessage($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setFilledValueMessage($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setCols($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setRows($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setRank($arr[$keys[14]]);
 	}
 
 	/**
@@ -1164,6 +1246,7 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 		$criteria = new Criteria(ProjDetailTypePeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(ProjDetailTypePeer::ID)) $criteria->add(ProjDetailTypePeer::ID, $this->id);
+		if ($this->isColumnModified(ProjDetailTypePeer::PROJ_CATEGORY_ID)) $criteria->add(ProjDetailTypePeer::PROJ_CATEGORY_ID, $this->proj_category_id);
 		if ($this->isColumnModified(ProjDetailTypePeer::CODE)) $criteria->add(ProjDetailTypePeer::CODE, $this->code);
 		if ($this->isColumnModified(ProjDetailTypePeer::DESCRIPTION)) $criteria->add(ProjDetailTypePeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(ProjDetailTypePeer::LABEL)) $criteria->add(ProjDetailTypePeer::LABEL, $this->label);
@@ -1230,6 +1313,8 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 	 */
 	public function copyInto($copyObj, $deepCopy = false)
 	{
+
+		$copyObj->setProjCategoryId($this->proj_category_id);
 
 		$copyObj->setCode($this->code);
 
@@ -1314,6 +1399,55 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 			self::$peer = new ProjDetailTypePeer();
 		}
 		return self::$peer;
+	}
+
+	/**
+	 * Declares an association between this object and a ProjCategory object.
+	 *
+	 * @param      ProjCategory $v
+	 * @return     ProjDetailType The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setProjCategory(ProjCategory $v = null)
+	{
+		if ($v === null) {
+			$this->setProjCategoryId(NULL);
+		} else {
+			$this->setProjCategoryId($v->getId());
+		}
+
+		$this->aProjCategory = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the ProjCategory object, it will not be re-added.
+		if ($v !== null) {
+			$v->addProjDetailType($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated ProjCategory object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     ProjCategory The associated ProjCategory object.
+	 * @throws     PropelException
+	 */
+	public function getProjCategory(PropelPDO $con = null)
+	{
+		if ($this->aProjCategory === null && ($this->proj_category_id !== null)) {
+			$this->aProjCategory = ProjCategoryPeer::retrieveByPk($this->proj_category_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aProjCategory->addProjDetailTypes($this);
+			 */
+		}
+		return $this->aProjCategory;
 	}
 
 	/**
@@ -1537,6 +1671,7 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 		} // if ($deep)
 
 		$this->collProjDetails = null;
+			$this->aProjCategory = null;
 	}
 
 } // BaseProjDetailType
