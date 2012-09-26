@@ -1,0 +1,34 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Create the basefolder for a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to create the basefolder inside a user's directory.
+#@ The basefolder will have the name specified in _schoolmesh.rc_
+#@ and will be the immutable flag.
+#@
+#@ # EXAMPLES
+#@
+#@ {-} john
+
+USERNAME=$1
+HOMEDIR="$POSIX_HOMEDIR_USERS/$USERNAME"
+BASEFOLDER="$HOMEDIR/$POSIX_BASEFOLDER"
+
+checkUsername $USERNAME
+checkDirectory "$HOMEDIR"
+
+sudo mkdir "$BASEFOLDER" && sudo chown $POSIX_BASEFOLDER_OWNER "$BASEFOLDER" && sudo chattr +i "$BASEFOLDER" && msg_ok "created basefolder: $USERNAME ($BASEFOLDER)"  && exit 0
+
+unexpectedError $@

@@ -1,0 +1,11 @@
+TicketType:
+  user:
+    description: Utenti
+  network:
+    description: Rete
+  computer:
+    description: Calcolatore
+  workplan:
+    description: Piani di lavoro e relazioni
+  project:
+    description: Progetti
