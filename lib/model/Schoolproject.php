@@ -1068,6 +1068,20 @@ class Schoolproject extends BaseSchoolproject {
     ->setEvaluationMax(sfConfig::get('app_config_projects_evaluation_max'))
     ->save($con)
     ;
+
+    foreach($this->getProjDetails() as $detail)
+    {
+      $newdetail= new ProjDetail();
+      
+      if($detail->getProjDetailType()->getIsActive())
+      {
+        $newdetail
+        ->setSchoolprojectId($newproject->getId())
+        ->setContent($detail->getContent())
+        ->save($con)
+        ;
+      } 
+    }
     
     foreach($this->getProjDeadlines() as $deadline)
     {

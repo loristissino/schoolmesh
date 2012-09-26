@@ -593,7 +593,7 @@ class Generic{
   }
 
 
-  public function cloneDate($date, $baseref_date, $newref_date)
+  public static function cloneDate($date, $baseref_date, $newref_date)
   {
     $years_offset=floor(($newref_date - $baseref_date)/(365*24*60*60));
     $d = getdate($date);
