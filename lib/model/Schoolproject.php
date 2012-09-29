@@ -39,7 +39,7 @@ class Schoolproject extends BaseSchoolproject {
     
     return
       (
-      $user->getProfile()->getUserId()===$this->getUserId()
+      $this->isOwnedBy($user)
       || 
       $user->getProfile()->hasOneOfPermissions($credentials)
       ||
@@ -48,6 +48,11 @@ class Schoolproject extends BaseSchoolproject {
       &&
       $this->getState()<Workflow::PROJ_ARCHIVED;
       
+  }
+  
+  public function isOwnedBy($user)
+  {
+    return $user->getProfile()->getUserId()===$this->getUserId();
   }
   
   public function isReadyForEmail()
@@ -1181,6 +1186,8 @@ class Schoolproject extends BaseSchoolproject {
       ($this->getState() == Workflow::PROJ_DRAFT)
       and
       (sizeof($this->getWorkflowLogs())<=1)
+      and
+      (!$this->getReferenceNumber())
       and
       ($user->getProfile()->getUserId()===$this->getUserId())
       ;

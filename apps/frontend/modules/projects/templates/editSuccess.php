@@ -154,7 +154,7 @@
       <?php endif ?>
       <td>
       <ul class="sf_admin_td_actions">
-        <?php if($project->getState()==Workflow::PROJ_DRAFT): ?>
+        <?php if($project->getState()==Workflow::PROJ_DRAFT and $project->isOwnedBy($sf_user)): ?>
         <li class="sf_admin_action_edit">
         <?php echo link_to(
             __('Edit'),

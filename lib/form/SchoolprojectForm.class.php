@@ -97,6 +97,16 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['no_activity_confirm'],
           $this['team_id']
           );
+          if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
+          {
+            // users other than the project coordinator cannot write details and cannot change the team
+            unset(
+              $this['team_id'],
+              $this['title'],
+              $this['proj_category_id']
+            );
+            $this->_removeDetailFields();
+          }
         break;
       case Workflow::PROJ_SUBMITTED:
         unset(
