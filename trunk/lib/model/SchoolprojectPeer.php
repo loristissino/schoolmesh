@@ -16,12 +16,18 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 	{
 		$c=new Criteria();
 		$c->add(self::YEAR_ID, $year);
-    $c->add(self::STATE, Workflow::PROJ_DRAFT, Criteria::GREATER_THAN);
+    $stateCriterion = $c->getNewCriterion(self::STATE, Workflow::PROJ_DRAFT, Criteria::GREATER_THAN);
+    $refCriterion = $c->getNewCriterion(self::REFERENCE_NUMBER, null, Criteria::ISNOTNULL);
+    $dateCriterion = $c->getNewCriterion(self::SUBMISSION_DATE, null, Criteria::ISNOTNULL);
+    $stateCriterion->addOr($refCriterion);
+    $stateCriterion->addOr($dateCriterion);
+    $c->add($stateCriterion);
+    //$c->add(self::STATE, Workflow::PROJ_DRAFT, Criteria::GREATER_THAN);
 		$c->addJoin(self::USER_ID, sfGuardUserPeer::ID);
     self::addAscendingOrderToCriteria($c);
 		return self::doSelectJoinAll($c);
 	}
-  
+    
   public static function retrieveByPKsSorted($ids)
 	{
 		$c=new Criteria();
