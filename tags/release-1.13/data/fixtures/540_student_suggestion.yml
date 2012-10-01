@@ -1,0 +1,11 @@
+StudentSuggestion:
+  student_suggestion1:
+    term_id: term1
+    appointment_id:  test_fis_3ap_40
+    user_id:  	vincenzo.decarolis
+    suggestion_id:  individ
+  student_suggestion2:
+    term_id: term1
+    appointment_id:  test_fis_3ap_40
+    user_id:  	helen.abram
+    suggestion_id:  corso

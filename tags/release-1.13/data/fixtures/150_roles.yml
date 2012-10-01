@@ -1,0 +1,75 @@
+Role:
+  ds:
+    male_description:  Dirigente Scolastico
+    female_description:  Dirigente Scolastica
+    quality_code: DS
+    posix_name:   ds
+    may_be_main_role: true
+  dsga:
+    male_description:  Dirett. Servizi Gen. e Amm.vi
+    female_description:  Direttr. Servizi Gen. e Amm.vi
+    quality_code: DSGA
+    posix_name:   dsga
+    may_be_main_role: true
+  doc:
+    male_description:  Docente
+    female_description:  Docente
+    quality_code: DOC
+    posix_name:   docenti
+    may_be_main_role: true
+    default_guardgroup: teacher
+  ccc:
+    male_description:  Coordinatore Consiglio di Classe
+    female_description:  Coordinatrice Consiglio di Classe
+    quality_code: CCC
+    posix_name:   ccc
+    may_be_main_role: false
+  scc:
+    male_description:  Segretario Consiglio di Classe
+    female_description:  Segretaria Consiglio di Classe
+    quality_code: SCC
+    posix_name:   scc
+    may_be_main_role: false
+  at:
+    male_description:  Assistente Tecnico
+    female_description:  Assistente Tecnica
+    quality_code: AT
+    posix_name:   ata
+    may_be_main_role: true
+  cm:
+    male_description:  Coordinatore Dipartimento
+    female_description:  Coordinatrice Dipartimento
+    quality_code: CM
+    posix_name:   cm
+    may_be_main_role: false
+  sm:
+    male_description:  Segretario Dipartimento
+    female_description:  Segretaria Dipartimento
+    quality_code: SM
+    posix_name:   sm
+    may_be_main_role: false
+  risq:
+    male_description:  Responsabile informatico Sistema Qualità
+    female_description:  Responsabile informatica Sistema Qualità
+    quality_code: RISQ
+    posix_name:   risq
+    may_be_main_role: false
+  rsq:
+    male_description:  Responsabile Sistema Qualità
+    female_description:  Responsabile Sistema Qualità
+    quality_code: RSQ
+    posix_name:   risq
+    may_be_main_role: false
+  stu:
+    male_description: Studente
+    female_description: Studentessa
+    quality_code: STU
+    posix_name:   allievi
+    may_be_main_role: true
+    default_guardgroup: student
+  member:
+    male_description: Componente
+    female_description: Componente
+    quality_code: MEMBER
+    posix_name:  member
+    may_be_main_role: false

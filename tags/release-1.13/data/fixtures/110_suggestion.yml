@@ -1,0 +1,17 @@
+Suggestion:
+  individ:
+    shortcut:   individ
+    content:  Studio individuale
+    rank:   1
+  itinere:
+    shortcut:   itinere
+    content:  Recupero in itinere
+    rank:   2
+  sportello:
+    shortcut:   sportello
+    content:  Sportello
+    rank:   3
+  corso:
+    shortcut:  corso
+    content:  Corso di recupero
+    rank:   4

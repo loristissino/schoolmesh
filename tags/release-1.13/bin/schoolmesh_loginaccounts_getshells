@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#@ # NAME
+#@
+#@ {} - Get a list of available shells on the system
+#@
+#@ # SYNOPSIS
+#@
+#@ {} 
+#@
+#@ # DESCRIPTION
+#@
+#@ This script generates a list of pairs *key=value* with the shells available
+#@ on the system.
+#@
+#@ # EXAMPLES
+#@
+#@ {-} 
+
+
+#NUMBER=0
+for SHELL in $(grep -v '^#' /etc/shells)
+	do
+		echo $SHELL=$SHELL
+#		echo $NUMBER=$SHELL
+#		NUMBER=$(($NUMBER + 1))
+	done

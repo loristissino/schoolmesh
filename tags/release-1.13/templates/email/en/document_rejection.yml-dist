@@ -1,0 +1,22 @@
+message:
+  subject: Warning about rejection of a document
+  salutation: true
+  tagline: false
+  body: |
+
+    we are sorry to inform you that the followingo document:
+
+    description: %document_description%
+    current state: %document_state%
+    id: %document_id%
+
+    has been rejected for the following reason:
+    %message%
+
+      Greetings.
+
+        The staff
+
+
+
+
