@@ -414,9 +414,10 @@ propel:
 
   proj_category:
     id: ~
-    title: varchar(255)
-    rank: { type: integer, required: true }
-    resources: integer  # 0: cannot have resources; 1: may have resources; 2: must have resources 
+    title:     varchar(255)
+    rank:      { type: integer, required: true }
+    resources: integer  # 0: cannot have resources; 1: may have resources; 2: must have resources
+    is_active: { type: boolean, default: true }
 
   proj_detail_type:
     id: ~

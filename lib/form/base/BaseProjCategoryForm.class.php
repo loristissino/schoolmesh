@@ -18,6 +18,7 @@ abstract class BaseProjCategoryForm extends BaseFormPropel
       'title'     => new sfWidgetFormInputText(),
       'rank'      => new sfWidgetFormInputText(),
       'resources' => new sfWidgetFormInputText(),
+      'is_active' => new sfWidgetFormInputCheckbox(),
     ));
 
     $this->setValidators(array(
@@ -25,6 +26,7 @@ abstract class BaseProjCategoryForm extends BaseFormPropel
       'title'     => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'rank'      => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647)),
       'resources' => new sfValidatorInteger(array('min' => -2147483648, 'max' => 2147483647, 'required' => false)),
+      'is_active' => new sfValidatorBoolean(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('proj_category[%s]');

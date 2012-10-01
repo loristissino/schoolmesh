@@ -5116,6 +5116,22 @@
         <source>Delete this project</source>
         <target>Rimuovi questo progetto</target>
     </trans-unit>
+    <trans-unit id="1476">
+        <source>Projects categories definition</source>
+        <target>Definizione categorie progetti</target>
+    </trans-unit>
+    <trans-unit id="1477">
+        <source>Project category list</source>
+        <target>Elenco categorie progetti</target>
+    </trans-unit>
+    <trans-unit id="1478">
+        <source>Edit project category</source>
+        <target>Modifica categoria progetti</target>
+    </trans-unit>
+    <trans-unit id="1479">
+        <source>New project category</source>
+        <target>Nuova categoria progetti</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

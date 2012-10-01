@@ -1070,6 +1070,7 @@ CREATE TABLE `proj_category`
 	`title` VARCHAR(255),
 	`rank` INTEGER  NOT NULL,
 	`resources` INTEGER,
+	`is_active` TINYINT default 1,
 	PRIMARY KEY (`id`)
 )Engine=InnoDB;
 
