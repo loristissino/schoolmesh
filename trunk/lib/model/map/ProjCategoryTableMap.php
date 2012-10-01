@@ -40,6 +40,7 @@ class ProjCategoryTableMap extends TableMap {
 		$this->addColumn('TITLE', 'Title', 'VARCHAR', false, 255, null);
 		$this->addColumn('RANK', 'Rank', 'INTEGER', true, null, null);
 		$this->addColumn('RESOURCES', 'Resources', 'INTEGER', false, null, null);
+		$this->addColumn('IS_ACTIVE', 'IsActive', 'BOOLEAN', false, null, true);
 		// validators
 	} // initialize()
 

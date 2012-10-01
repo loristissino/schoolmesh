@@ -43,6 +43,13 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	protected $resources;
 
 	/**
+	 * The value for the is_active field.
+	 * Note: this column has a database default value of: true
+	 * @var        boolean
+	 */
+	protected $is_active;
+
+	/**
 	 * @var        array Schoolproject[] Collection to store aggregation of Schoolproject objects.
 	 */
 	protected $collSchoolprojects;
@@ -79,6 +86,27 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	// symfony behavior
 	
 	const PEER = 'ProjCategoryPeer';
+
+	/**
+	 * Applies default values to this object.
+	 * This method should be called from the object's constructor (or
+	 * equivalent initialization method).
+	 * @see        __construct()
+	 */
+	public function applyDefaultValues()
+	{
+		$this->is_active = true;
+	}
+
+	/**
+	 * Initializes internal state of BaseProjCategory object.
+	 * @see        applyDefaults()
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->applyDefaultValues();
+	}
 
 	/**
 	 * Get the [id] column value.
@@ -118,6 +146,16 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	public function getResources()
 	{
 		return $this->resources;
+	}
+
+	/**
+	 * Get the [is_active] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsActive()
+	{
+		return $this->is_active;
 	}
 
 	/**
@@ -201,6 +239,26 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	} // setResources()
 
 	/**
+	 * Set the value of [is_active] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     ProjCategory The current object (for fluent API support)
+	 */
+	public function setIsActive($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->is_active !== $v || $this->isNew()) {
+			$this->is_active = $v;
+			$this->modifiedColumns[] = ProjCategoryPeer::IS_ACTIVE;
+		}
+
+		return $this;
+	} // setIsActive()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -210,6 +268,10 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 	 */
 	public function hasOnlyDefaultValues()
 	{
+			if ($this->is_active !== true) {
+				return false;
+			}
+
 		// otherwise, everything was equal, so return TRUE
 		return true;
 	} // hasOnlyDefaultValues()
@@ -236,6 +298,7 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 			$this->title = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
 			$this->rank = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->resources = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->is_active = ($row[$startcol + 4] !== null) ? (boolean) $row[$startcol + 4] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -245,7 +308,7 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 4; // 4 = ProjCategoryPeer::NUM_COLUMNS - ProjCategoryPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 5; // 5 = ProjCategoryPeer::NUM_COLUMNS - ProjCategoryPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjCategory object", $e);
@@ -591,6 +654,9 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 			case 3:
 				return $this->getResources();
 				break;
+			case 4:
+				return $this->getIsActive();
+				break;
 			default:
 				return null;
 				break;
@@ -616,6 +682,7 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 			$keys[1] => $this->getTitle(),
 			$keys[2] => $this->getRank(),
 			$keys[3] => $this->getResources(),
+			$keys[4] => $this->getIsActive(),
 		);
 		return $result;
 	}
@@ -659,6 +726,9 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 			case 3:
 				$this->setResources($value);
 				break;
+			case 4:
+				$this->setIsActive($value);
+				break;
 		} // switch()
 	}
 
@@ -687,6 +757,7 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setTitle($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setRank($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setResources($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setIsActive($arr[$keys[4]]);
 	}
 
 	/**
@@ -702,6 +773,7 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProjCategoryPeer::TITLE)) $criteria->add(ProjCategoryPeer::TITLE, $this->title);
 		if ($this->isColumnModified(ProjCategoryPeer::RANK)) $criteria->add(ProjCategoryPeer::RANK, $this->rank);
 		if ($this->isColumnModified(ProjCategoryPeer::RESOURCES)) $criteria->add(ProjCategoryPeer::RESOURCES, $this->resources);
+		if ($this->isColumnModified(ProjCategoryPeer::IS_ACTIVE)) $criteria->add(ProjCategoryPeer::IS_ACTIVE, $this->is_active);
 
 		return $criteria;
 	}
@@ -761,6 +833,8 @@ abstract class BaseProjCategory extends BaseObject  implements Persistent {
 		$copyObj->setRank($this->rank);
 
 		$copyObj->setResources($this->resources);
+
+		$copyObj->setIsActive($this->is_active);
 
 
 		if ($deepCopy) {

@@ -12,5 +12,8 @@ class ProjCategoryForm extends BaseProjCategoryForm
 {
   public function configure()
   {
+    $this['title']->getWidget()->setAttributes(array('size'=>80));
+    $this['rank']->getWidget()->setAttributes(array('size'=>4, 'style'=>'text-align: right'));
+    $this['resources']->getWidget()->setAttributes(array('size'=>4, 'style'=>'text-align: right'));
   }
 }

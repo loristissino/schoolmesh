@@ -1,3 +1,6 @@
+2012/10/01
+Added field is_active in proj_category table
+
 2012/09/26
 Added two tables: proj_detail and proj_detail_type
 Deleted some fields in schoolproject table
