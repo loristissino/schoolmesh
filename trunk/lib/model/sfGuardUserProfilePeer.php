@@ -191,9 +191,12 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		return parent::doSelect($c);
 	}
 
-	public static function retrieveAllSortedByLastName()
+	public static function retrieveAllSortedByLastName($c=null)
 	{
-		$c = new Criteria();
+    if(!$c)
+    {
+      $c = new Criteria();
+    }
 		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
 		$c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
     $c->addJoin(sfGuardUserPeer::ID, sfGuardUserProfilePeer::USER_ID);

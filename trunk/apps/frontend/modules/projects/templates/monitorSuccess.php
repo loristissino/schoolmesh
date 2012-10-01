@@ -9,7 +9,7 @@
 
 <?php if(sizeof($projects)>0): ?>
 
-<p><?php echo __('This list includes projects that have been submitted and reset to draft.') ?></p>
+<p><?php echo __('This list might include projects that have been submitted and reset to draft.') ?></p>
 
 <form action="<?php echo url_for('projects/batch') ?>" method="get">
 
