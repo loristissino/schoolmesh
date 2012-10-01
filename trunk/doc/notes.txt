@@ -1,4 +1,8 @@
 2012/10/01
+Release: 1.13
+# svn copy  https://schoolmesh.googlecode.com/svn/trunk/ https://schoolmesh.googlecode.com/svn/tags/release-1.13
+
+2012/10/01
 Added field is_active in proj_category table
 
 2012/09/26
