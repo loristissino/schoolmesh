@@ -91,7 +91,7 @@ class smDBConfManager
         }
         $this->_backup_command=sprintf("
 echo 'SET foreign_key_checks = 0;' > '_BACKUPFILE_'
-mysqldump --host=%s --no-create-info --default-character-set=utf8 --complete-insert -u %s -p%s %s >> '_BACKUPFILE_'
+mysqldump --host=%s --no-create-info --default-character-set=utf8 --complete-insert --single-transaction -u %s -p%s %s >> '_BACKUPFILE_'
 echo 'SET foreign_key_checks = 1;' >> '_BACKUPFILE_'
 ",
           $pairs['host'], $username, $password, $pairs['dbname']
