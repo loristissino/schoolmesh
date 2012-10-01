@@ -5108,6 +5108,14 @@
         <source>The project could not be deleted.</source>
         <target>Il progetto non è stato eliminato.</target>
     </trans-unit>
+    <trans-unit id="1474">
+        <source>This list might include projects that have been submitted and reset to draft.</source>
+        <target>Questo elenco potrebbe comprendere progetti che sono stati consegnati e poi reimpostati a bozza.</target>
+    </trans-unit>
+    <trans-unit id="1475">
+        <source>Delete this project</source>
+        <target>Rimuovi questo progetto</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

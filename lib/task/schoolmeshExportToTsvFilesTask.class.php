@@ -35,7 +35,10 @@ class schoolmeshExportToTsvFilesTask extends sfBaseTask
       'EXTRASEARCHKEY',
       ));
     
-    $profiles=sfGuardUserProfilePeer::retrieveAllSortedByLastName();
+    $c=new Criteria();
+    $c->add(sfGuardUserPeer::CREATED_AT, $this->since, Criteria::GREATER_EQUAL);
+    
+    $profiles=sfGuardUserProfilePeer::retrieveAllSortedByLastName($c);
     foreach($profiles as $profile)
     {
       echo $profile->getUsername() . ' - ' . $profile->getFullName() . "\n";
@@ -107,6 +110,7 @@ class schoolmeshExportToTsvFilesTask extends sfBaseTask
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
+      new sfCommandOption('since', null, sfCommandOption::PARAMETER_OPTIONAL, 'The date/time limit to use', '0'),
     ));
     
     $this->addArgument('type', sfCommandArgument::REQUIRED, 'The information type to export');
@@ -114,9 +118,12 @@ class schoolmeshExportToTsvFilesTask extends sfBaseTask
 
     $this->namespace        = 'schoolmesh';
     $this->name             = 'export-to-tsv-files';
-    $this->briefDescription = 'Exports basic informatio from DB to a tab-separated-values files.';
+    $this->briefDescription = 'Exports basic information from DB to a tab-separated-values files.';
     $this->detailedDescription = <<<EOF
-This task will export information from the database to a TSV files properly formatted.
+This task will export information from the database to a TSV files
+properly formatted.
+The parameter 'since' can be set to a date or to a value parseable to a
+date with strtotime function ('yesterday', '-1 month', etc.).
 EOF;
   }
 
@@ -126,6 +133,15 @@ EOF;
     // initialize the database connection
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
+    
+    try
+    {
+      $this->since=strtotime($options['since']);
+    }
+    catch (Exception $e)
+    {
+      throw new Exception('Not a valide date: ' . $options['since']);
+    }
 
     $this->context = sfContext::createInstance($this->configuration);
 

@@ -1185,10 +1185,13 @@ class Schoolproject extends BaseSchoolproject {
   {
     return
       ($this->getState() == Workflow::PROJ_DRAFT)
-      and
+/*      and
       (sizeof($this->getWorkflowLogs())<=1)
+*/
       and
       (!$this->getReferenceNumber())
+      and
+      (!$this->getSubmissionDate())
       and
       ($user->getProfile()->getUserId()===$this->getUserId())
       ;
