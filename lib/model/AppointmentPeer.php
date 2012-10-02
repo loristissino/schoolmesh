@@ -12,6 +12,57 @@
 class AppointmentPeer extends BaseAppointmentPeer
 {
 	
+  public static function retrieveTeachersHours($year=null)
+  {
+    $c = new Criteria();
+    $c->add(self::YEAR_ID, $year);
+    $c->addJoin(self::USER_ID, sfGuardUserProfilePeer::USER_ID);
+    $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+    $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::FIRST_NAME);
+    $c->clearSelectColumns();
+    $c->setDistinct();
+    $c->addAsColumn('USER_ID', sfGuardUserProfilePeer::USER_ID);
+    $c->addAsColumn('FIRST_NAME', sfGuardUserProfilePeer::FIRST_NAME);
+    $c->addAsColumn('LAST_NAME', sfGuardUserProfilePeer::LAST_NAME);
+    $c->addAsColumn('TOTAL_HOURS', 'SUM(' . AppointmentPeer::HOURS . ')');
+    $c->addAsColumn('WEEKLY_HOURS', 'FLOOR(SUM(' . AppointmentPeer::HOURS . ')/' . sfConfig::get('app_config_year_weeks').')');
+    $c->addGroupByColumn(sfGuardUserProfilePeer::USER_ID);
+    $c->addGroupByColumn(sfGuardUserProfilePeer::FIRST_NAME);
+    $c->addGroupByColumn(sfGuardUserProfilePeer::LAST_NAME);
+    $stmt=AppointmentPeer::doSelectStmt($c);
+    
+    $result=array();
+    while($row = $stmt->fetch(PDO::FETCH_OBJ))
+    {
+      $result[]=$row;
+    }
+    return $result;
+
+  }
+  
+  public static function retrieveSchoolclassesHours($year=null)
+  {
+    $c = new Criteria();
+    $c->add(self::YEAR_ID, $year);
+    $c->addAscendingOrderByColumn(self::SCHOOLCLASS_ID);
+    $c->clearSelectColumns();
+    $c->setDistinct();
+    $c->addAsColumn('SCHOOLCLASS_ID', self::SCHOOLCLASS_ID);
+    $c->addAsColumn('TOTAL_HOURS', 'SUM(' . AppointmentPeer::HOURS . ')');
+    $c->addAsColumn('WEEKLY_HOURS', 'FLOOR(SUM(' . AppointmentPeer::HOURS . ')/' . sfConfig::get('app_config_year_weeks').')');
+    $c->addGroupByColumn(self::SCHOOLCLASS_ID);
+    $stmt=AppointmentPeer::doSelectStmt($c);
+    
+    $result=array();
+    while($row = $stmt->fetch(PDO::FETCH_OBJ))
+    {
+      $result[]=$row;
+    }
+    return $result;
+
+  }
+  
+  
   public static function retrieveByStateYear($state, $year=null)
   {
     if (!$year)
