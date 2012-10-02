@@ -632,8 +632,13 @@ public function executeRemovewfevent(sfWebRequest $request)
 	$this->redirect('plansandreports/viewwfevents?id='. $this->appointmentId);
 		
 	}
-
-
+  
+  public function executeRecapitulation(sfWebRequest $request)
+  {
+    $this->year=$this->getUser()->getAttribute('year', sfConfig::get('app_config_current_year'));
+    $this->teachershours = AppointmentPeer::retrieveTeachersHours($this->year);
+    $this->schoolclasseshours = AppointmentPeer::retrieveSchoolclassesHours($this->year);
+  }
 
   public function executeSyllabus(sfWebRequest $request)
   {

@@ -130,3 +130,8 @@
 	)
 ?>
 <?php include_partial('content/year', array('year'=>$year, 'years'=>$years, 'back'=>'plansandreports/list')) ?>
+
+<h2><?php echo __('Actions') ?></h2>
+<ul class="sf_admin_actions">
+  <?php echo li_link_to_if('action_items', $sf_user->hasCredential('wpfr_monitoring'), __('Appointments recapitulation'), 'plansandreports/recapitulation') ?>
+</ul>

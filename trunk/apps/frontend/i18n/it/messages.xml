@@ -5132,9 +5132,23 @@
         <source>New project category</source>
         <target>Nuova categoria progetti</target>
     </trans-unit>
+    <trans-unit id="1480">
+        <source>Appointments recapitulation</source>
+        <target>Riepilogo incarichi di docenza</target>
+    </trans-unit>
+    <trans-unit id="1481">
+        <source>Recapitulation for teachers</source>
+        <target>Riepilogo docenti</target>
+    </trans-unit>
+    <trans-unit id="1482">
+        <source>Recapitulation for classes</source>
+        <target>Riepilogo classi</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
+
 
 
 
