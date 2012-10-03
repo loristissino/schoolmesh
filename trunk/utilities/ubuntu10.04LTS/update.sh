@@ -29,8 +29,7 @@ for DIR in account  email  filter  form  helper  model  schoolmesh  task  test
   done
 
 cd "$STARTDIR"
-grep Release doc/notes.txt | head -1 > doc/lastrevision.txt
-echo " - svn revision: " >> doc/lastrevision.txt
+grep Release doc/notes.txt | head -1 | sed 's/Release://' > doc/lastrelease.txt
 
 SOURCE=$(mktemp)
 XSL=$(mktemp)
@@ -52,4 +51,4 @@ EOF
 
 wget -O $SOURCE "$ATOM" 2>/dev/null
 
-xsltproc -o /dev/stdout $XSL $SOURCE | head -1 | sed -e 's|.*\/||' >> doc/lastrevision.txt
+xsltproc -o /dev/stdout $XSL $SOURCE | head -1 | sed -e 's|.*\/||' > doc/lastrevision.txt
