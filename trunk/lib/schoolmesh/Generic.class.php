@@ -338,9 +338,11 @@ class Generic{
     return str_replace(
       array(
         '&#039;',
+        '&quot;',
       ),
       array(
         "'",
+        '"',
       ),
       $s);
   }
