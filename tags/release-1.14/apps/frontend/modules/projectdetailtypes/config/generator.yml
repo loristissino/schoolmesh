@@ -1,0 +1,25 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           ProjDetailType
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ProjDetailType
+    plural:                ProjDetailTypes
+    route_prefix:          proj_detail_type
+    with_propel_route:     1
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:
+        is_required: { label: Required?, help: Whether the filling of this field is mandatory or not }
+      list:
+        display: [ proj_category, =code, =description, is_required, is_active, state_min, state_max, rank ]
+        object_actions: {}
+      filter:  
+        display: [ proj_category_id, code, description, is_required, is_active, state_min, state_max, rank ]
+      form:    ~
+      edit:    ~
+      new:     ~

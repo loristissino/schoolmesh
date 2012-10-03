@@ -1,0 +1,4 @@
+# The sfOdfPlugin
+
+This plugin wraps the code of www.odtphp.com to make it easy to use in Symfony project.
+

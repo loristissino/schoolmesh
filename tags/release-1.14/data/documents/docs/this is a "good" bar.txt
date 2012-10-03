@@ -1,0 +1,4 @@
+example of file
+
+bar.doc
+
