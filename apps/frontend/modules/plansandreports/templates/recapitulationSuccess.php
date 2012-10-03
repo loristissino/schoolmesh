@@ -20,9 +20,9 @@
   </thead>
   <tbody>
 	<?php $i=0 ?>
-    <?php foreach ($teachershours as $row): ?>
+    <?php foreach ($teachershours as $row): $fullname=sfGuardUserProfilePeer::getFullNameWithHTMLClasses($row->FIRST_NAME, $row->LAST_NAME) ?>
     <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
-      <td><?php echo link_to($row->FIRST_NAME, url_for('users/edit?id=' . $row->USER_ID) . '#appointments') ?> <strong><?php echo link_to($row->LAST_NAME, url_for('users/edit?id=' . $row->USER_ID) . '#appointments') ?></strong></td>
+      <td><?php echo link_to($fullname, url_for('users/edit?id=' . $row->USER_ID) . '#appointments') ?></td>
       <td style="text-align: right" <?php if($row->WEEKLY_HOURS<>sfConfig::get('app_config_teachers_hours_per_week', 18)) echo 'class="warning"' ?>><?php echo $row->WEEKLY_HOURS ?></td>
     </tr>
     <?php endforeach; ?>
@@ -55,3 +55,4 @@
 
 <?php endif ?>
 
+<?php include_partial('content/year', array('years'=>$years, 'year'=>$year, 'back'=>'plansandreports/recapitulation')) ?>

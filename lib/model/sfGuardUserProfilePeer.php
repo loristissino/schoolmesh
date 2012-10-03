@@ -1459,5 +1459,10 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
     //FIXME We should select some of these users...
     return self::retrieveAllButStudents();
   }
+  
+  public static function getFullNameWithHTMLClasses($firstname, $lastname)
+  {
+    return sprintf('<span class="firstname">%s</span> <span class="lastname">%s</span>', $firstname, $lastname);
+  }
 
 }
