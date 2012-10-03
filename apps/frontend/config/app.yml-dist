@@ -23,6 +23,11 @@ all:
     # in order to have the application working.
     # By setting this to true, you declare to accept the license.
 
+    release_number:  1.?
+    revision_number: 1999
+    # these numbers must be automatically changed when updating the application
+    # you can use sed -i if needed
+
     enable_checks:  true
     current_year:   2011 # only the first of the two years of a scholastic/academic year
     current_term:   Term1
@@ -136,7 +141,13 @@ all:
     token: sekretToken  
 
   opendocument:
-    template_directory: /var/schoolmesh/templates/oo  
+    template_directory: /var/schoolmesh/templates/oo 
+    
+    write_release: true
+    # if this is set to true, a field called 'smRelease' must be present
+    # in the templates, and it will be replaced with the number of the
+    # release currently installed
+
     changedir: true
     # If this is set to true, the OdfDoc plugin will change current dir
     # to whatever is returned by sys_get_temp_dir()
