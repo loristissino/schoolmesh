@@ -45,6 +45,17 @@ class OdfDoc
 
 			$this->_odf = new Odf($this->_template, $this->_config);
       
+      if(sfConfig::get('app_opendocument_write_release', false))
+      {
+        try
+        {
+          $this->_odf->setVars('smRelease', sprintf('SchoolMesh %s', sfConfig::get('app_config_release_number')));
+        }
+        catch (Exception $e)
+        {
+          
+        }
+      }
 		}
 		
 		
