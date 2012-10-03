@@ -638,6 +638,7 @@ public function executeRemovewfevent(sfWebRequest $request)
     $this->year=$this->getUser()->getAttribute('year', sfConfig::get('app_config_current_year'));
     $this->teachershours = AppointmentPeer::retrieveTeachersHours($this->year);
     $this->schoolclasseshours = AppointmentPeer::retrieveSchoolclassesHours($this->year);
+    $this->years = YearPeer::retrieveAll();
   }
 
   public function executeSyllabus(sfWebRequest $request)

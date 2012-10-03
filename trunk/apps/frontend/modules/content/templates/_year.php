@@ -6,7 +6,7 @@
 		__($y->__toString()),
 		url_for('content/setyear?id='.$y->getId(). '&back='. Generic::b64_serialize($back)),
 		array(
-			'title'=>__('Select this year')
+			'title'=>__('Select the year %year%', array('%year%'=>$y->getDescription()))
 			)
 		)
 	?>

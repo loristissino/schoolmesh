@@ -5144,6 +5144,10 @@
         <source>Recapitulation for classes</source>
         <target>Riepilogo classi</target>
     </trans-unit>
+    <trans-unit id="1483">
+        <source>Select the year %year%</source>
+        <target>Seleziona l'anno %year%</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
