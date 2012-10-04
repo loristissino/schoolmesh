@@ -17,6 +17,13 @@ class tasksActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
+    $smTaskManager=new smTaskManager(sfConfig::get('app_tasks_config_file'));
+    
+    $this->available_tasks = $smTaskManager->getAvailableTasks($this->getUser()->getCredentials());
+    $this->config=$smTaskManager->getConfig();
+    
+//    $this->availableTasks=smTaskManager
+    
     $tasks=$this->getUser()->getAttribute('tasks', array());
     foreach($tasks as $pid=>$task)
     {
@@ -39,42 +46,51 @@ class tasksActions extends sfActions
 
   public function executeExecute(sfWebRequest $request)
   {
-    $this->forward404Unless($request->isMethod('POST'));
+    $smTaskManager=new smTaskManager(sfConfig::get('app_tasks_config_file'));
+    $this->forward404Unless($this->task = $smTaskManager->getTask($request->getParameter('code'), $this->getUser()->getCredentials()));
+    $this->form=new TaskForm(null, array('task'=>$this->task));
     
-#    $task='php symfony schoolmesh:extract-info --application=frontend --env=dev --year=2012/13 appointments';
+    if($request->isMethod('POST'))
+    {
+      $this->form->bind($request->getParameter('task'));
+			if ($this->form->isValid())
+			{
+				$params = $this->form->getValues();
+        $basecommand=$smTaskManager->getCommandLine($this->task, $params);
 
-    $task='php symfony schoolmesh:send-file --application=frontend --env=dev --to=loris.tissino@gmail.com --subject=test /etc/services';
+        $stdout=tempnam(sfConfig::get('app_config_tempdir', '/tmp'), 'task');
+        $stderr=tempnam(sfConfig::get('app_config_tempdir', '/tmp'), 'task');
+        
+        $command = sprintf('cd %s; %s > %s 2> %s & PID=$!; echo $PID',
+          sfConfig::get('app_config_base_dir'), 
+          $basecommand,
+          $stdout,
+          $stderr
+          );
+        
+        exec($command, $result, $return_var);
+        
+        $pid=$result[0];
+        
+        $tasks=$this->getUser()->getAttribute('tasks', array());
+        
+        $tasks[$pid]=array(
+          'command'=>$basecommand,
+          'output_file'=>$stdout,
+          'error_file'=>$stderr,
+          'output'=>false,
+          'error'=>false,
+          'running'=>true,
+          'start'=>time(),
+          );
+        
+        $this->getUser()->setAttribute('tasks', $tasks);
 
-    $stdout=tempnam(sfConfig::get('app_config_tempdir', '/tmp'), 'task');
-    $stderr=tempnam(sfConfig::get('app_config_tempdir', '/tmp'), 'task');
-    
-    $command = sprintf('cd %s; %s > %s 2> %s & PID=$!; echo $PID',
-      sfConfig::get('app_config_base_dir'), 
-      $task,
-      $stdout,
-      $stderr
-      );
-    
-    exec($command, $result, $return_var);
-    
-    $pid=$result[0];
-    
-    $tasks=$this->getUser()->getAttribute('tasks', array());
-    
-    $tasks[$pid]=array(
-      'task'=>$task,
-      'output_file'=>$stdout,
-      'error_file'=>$stderr,
-      'output'=>false,
-      'error'=>false,
-      'running'=>true,
-      );
-    
-    $this->getUser()->setAttribute('tasks', $tasks);
-
-    $tasks=$this->getUser()->getAttribute('tasks', array());
-    
-    $this->redirect('tasks/index');
+        $tasks=$this->getUser()->getAttribute('tasks', array());
+      
+        $this->redirect('tasks/index');
+      }
+    }
     
   }
   
