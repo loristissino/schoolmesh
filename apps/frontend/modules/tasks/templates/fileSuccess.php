@@ -1,8 +1,8 @@
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
-    'tasks/index' =>__('SchoolMesh Tasks')
+    'tasks/index' =>__('SchoolMesh tasks')
     ),
-  'current'=>__('Task execution'),
+  'current'=>__('Task execution') . ': '. $type,
   ))
 ?>
 <pre>

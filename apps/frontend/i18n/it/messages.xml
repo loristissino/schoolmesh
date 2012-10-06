@@ -5148,6 +5148,18 @@
         <source>Select the year %year%</source>
         <target>Seleziona l'anno %year%</target>
     </trans-unit>
+    <trans-unit id="1484">
+        <source>Available tasks</source>
+        <target>Task disponibili</target>
+    </trans-unit>
+    <trans-unit id="1485">
+        <source>SchoolMesh tasks</source>
+        <target>Task di SchoolMesh</target>
+    </trans-unit>
+    <trans-unit id="1486">
+        <source>Task execution</source>
+        <target>Esecuzione di task</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

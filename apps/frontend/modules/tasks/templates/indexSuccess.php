@@ -11,12 +11,14 @@
   <?php if($task['running']): ?>
     <strong style="color: blue" ?><?php echo $pid ?></strong> (<?php echo ('running') ?>):
   <?php else: ?>
-    <strong style="color: green"><?php echo $pid ?></strong> (<?php echo ('completed') ?>):
+    <strong style="color: brown"><?php echo $pid ?></strong> (<?php echo ('completed') ?>):
   <?php endif ?>
   <?php echo $task['command'] ?><br />
-  <?php foreach(array('output', 'error') as $file): ?>
+  <?php foreach(array('output'=>'black', 'error'=>'red') as $file=>$color): ?>
     <?php if($task[$file]): ?>
-      <?php echo link_to($file, url_for('tasks/showfile?pid=' . $pid . '&type='. $file)) ?><br />
+      <span style="color: <?php echo $color ?>"><?php echo $file ?></span>
+      (<?php echo link_to(__('show'), url_for('tasks/file?pid=' . $pid . '&type='. $file . '&request=show')) ?> - 
+      <?php echo link_to(__('download'), url_for('tasks/file?pid=' . $pid . '&type='. $file. '&request=download')) ?>)<br />
     <?php endif ?>
   <?php endforeach ?>
   <?php if($task['running']): ?>
@@ -40,5 +42,5 @@
 
 <h2><?php echo __('Actions') ?></h2>
 <ul class="sf_admin_actions">
-  <?php echo li_link_to_if('action_task', true, __('Clear'), url_for('tasks/clear'), array('method'=>'post')) ?>
+  <?php echo li_link_to_if('action_task', true, __('Clear history'), url_for('tasks/clear'), array('method'=>'post')) ?>
 </ul>
