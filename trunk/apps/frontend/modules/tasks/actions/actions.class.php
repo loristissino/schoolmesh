@@ -101,11 +101,32 @@ class tasksActions extends sfActions
     $this->redirect('tasks/index');
   }
 
-  public function executeShowfile(sfWebRequest $request)
+  public function executeFile(sfWebRequest $request)
   {
     $tasks=$this->getUser()->getAttribute('tasks', array());
-    $this->file=$tasks[$request->getParameter('pid')][$request->getParameter('type'). '_file'];
+    $this->type=$request->getParameter('type');
+    $this->file=$tasks[$request->getParameter('pid')][$this->type. '_file'];
     $this->forward404Unless(is_readable($this->file));
+    
+    $action=$request->getParameter('request');
+    $this->forward404Unless(in_array($action, array('show', 'download')));
+    
+    if($action=='download')
+    {
+      /*
+      $response = $this->getContext()->getResponse();
+      $response->setHttpHeader('Content-Type', 'text/plain');
+      $response->setHttpHeader('Content-Disposition', 'attachment; filename="'. $request->getParameter('type'). '_'. date('Ymd') . '.txt"');
+      */
+      
+      $file = new smFileInfo($this->file);
+      $file->setDeliveryName($request->getParameter('type'). '_'. date('Ymd') . '.txt');
+      
+      $file->prepareDelivery($this->getContext()->getResponse());
+    
+      return sfView::NONE;
+    }
+    
   }
 
 }
