@@ -19,6 +19,12 @@
 				url_for('content/serve?index=' . $index . '&file=' . Generic::b64_serialize($link['file']))
 				)
 			?>
+      <?php if(@$link['deprecated']): ?>
+      - <span style="color: brown"><?php echo $link['deprecated'] ?></span>
+      <?php endif ?>
+      <?php if(@$link['comment']): ?>
+      - <?php echo $link['comment'] ?>
+      <?php endif ?>
 			</li><br />
 		<?php endif ?>
 	<?php endforeach ?>
