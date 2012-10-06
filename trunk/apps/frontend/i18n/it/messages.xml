@@ -5160,6 +5160,10 @@
         <source>Task execution</source>
         <target>Esecuzione di task</target>
     </trans-unit>
+    <trans-unit id="1487">
+        <source>You are going to execute the following task:</source>
+        <target>Stai per avviare l'esecuzione del seguente task:</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

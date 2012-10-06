@@ -92,10 +92,10 @@ EOF;
       {if(!$appointment->getTeamId() or $enrolment->getsfGuardUser()->getProfile()->getBelongsToTeamById($appointment->getTeamId()))
         {
           $studentdirname=sprintf('%02d %s', ++$i, $enrolment->getsfGuardUser()->getProfile());
-          
           echo sprintf('     sudo ln -sfv ~%s %s/"%s/%s" || exit 4', $enrolment->getsfGuardUser()->getUsername(), $teacherfolder, $classdirname, $studentdirname) . "\n";
-          echo sprintf('     sudo setfacl -R -m user:%s:rx %s/"%s/%s" || exit 5', $teacher->getUsername(), $teacherfolder, $classdirname, $studentdirname) . "\n";
-				  
+          echo sprintf('     sudo chattr -i ~%s/%s || exit 5', $enrolment->getsfGuardUser()->getUsername(), $folder) . "\n";
+          echo sprintf('     sudo setfacl -R -m user:%s:rx ~%s || exit 6', $teacher->getUsername(), $enrolment->getsfGuardUser()->getUsername()) . "\n";
+          echo sprintf('     sudo chattr +i ~%s/%s || exit 5', $enrolment->getsfGuardUser()->getUsername(), $folder) . "\n";
         }
       }
     }
