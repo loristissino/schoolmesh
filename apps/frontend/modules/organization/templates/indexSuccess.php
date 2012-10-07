@@ -1,5 +1,5 @@
 <?php include_partial('content/breadcrumps', array(
-  'current'=>__("Organization")
+  'current'=>__('Organization')
   ))
 ?>
 

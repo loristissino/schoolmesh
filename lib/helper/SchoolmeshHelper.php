@@ -144,20 +144,8 @@ function breadcrumps_to_html($crumps=array(), $current='')
 
 function currencyvalue($value)
 {
-  if ($value)
-  {
-    return 
-      sfConfig::get('app_config_currency_symbol', '€') . '&nbsp;' .
-      number_format($value, 
-        sfConfig::get('app_config_currency_decimals', 2), 
-        sfConfig::get('app_config_currency_decpoint', ','),
-        sfConfig::get('app_config_currency_thousandssep', '.')
-        );
-    }
-  else
-  {
-    return '';
-  }
+  return Generic::currencyvalue($value, true);
+  // we moved this away because we need it from the action in chart generation
 }
 
 function quantityvalue($value, $mu='')
