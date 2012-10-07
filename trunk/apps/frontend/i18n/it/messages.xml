@@ -5164,13 +5164,46 @@
         <source>You are going to execute the following task:</source>
         <target>Stai per avviare l'esecuzione del seguente task:</target>
     </trans-unit>
+    <trans-unit id="1488">
+        <source>Noticeboard</source>
+        <target>Bacheca</target>
+    </trans-unit>
+    <trans-unit id="1489">
+        <source>Please note that the some of the projects might have not been approved / confirmed at this time.</source>
+        <target>Si noti che alcuni di questi progetti potrebbero non essere stati ancora approvati / confermati.</target>
+    </trans-unit>
+    <trans-unit id="1490">
+        <source>The following charts depict the budget requested for each project.</source>
+        <target>I seguenti grafici mostrano il budget richiesto per ogni progetto.</target>
+    </trans-unit>
+    <trans-unit id="1491">
+        <source>State of the projects</source>
+        <target>Stato dei progetti</target>
+    </trans-unit>
+    <trans-unit id="1492">
+        <source>Sections</source>
+        <target>Sezioni</target>
+    </trans-unit>
+    <trans-unit id="1493">
+        <source>Projects' budget</source>
+        <target>Budget dei progetti</target>
+    </trans-unit>
+    <trans-unit id="1494">
+        <source>external funding</source>
+        <target>finanziamento esterno</target>
+    </trans-unit>
+    <trans-unit id="1495">
+        <source>internal funding</source>
+        <target>finanziamento interno</target>
+    </trans-unit>
+    <trans-unit id="1496">
+        <source>Projects by state</source>
+        <target>Progetti per stato</target>
+    </trans-unit>
+    <trans-unit id="1497">
+        <source>total amount</source>
+        <target>importo totale</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
-
-
-
-
-
-
-

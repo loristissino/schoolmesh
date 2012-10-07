@@ -58,7 +58,7 @@
     <?php endfor ?>
     <?php if(sizeof($resources)): ?>
       <tr>
-      <th colspan="6"><?php echo __('Total for the project «%title%»', array('%title%'=>$project->getTitle())) ?></th>
+      <th colspan="5"><?php echo __('Total for the project «%title%»', array('%title%'=>$project->getTitle())) ?></th>
       <?php $grandtotal+=$total ?>
       <?php $egrandtotal+=$etotal ?>
       <td style="text-align: right; font-weight: bold" class="amount"><?php echo currencyvalue($total) ?></td>
@@ -69,7 +69,7 @@
     
     <?php endforeach; ?>
     <tr>
-    <th colspan="7"><?php echo format_number_choice(__('[1]Grand total for the project selected|[1,+Inf]Grand total for the %number% projects selected'), array('%number%'=>sizeof($projects)), sizeof($projects)) ?></th>
+    <th colspan="6"><?php echo format_number_choice(__('[1]Grand total for the project selected|[1,+Inf]Grand total for the %number% projects selected'), array('%number%'=>sizeof($projects)), sizeof($projects)) ?></th>
     <td style="text-align: right; font-weight: bold; color:blue" class="amount"><?php echo currencyvalue($grandtotal) ?></td>
     <td style="text-align: right; font-weight: bold; color:blue" class="amount"><?php echo currencyvalue($egrandtotal) ?></td>
     <th></th>

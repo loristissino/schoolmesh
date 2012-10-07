@@ -602,4 +602,22 @@ class Generic{
     return mktime(0, 0, 0, $d['mon'], $d['mday'], $d['year']+$years_offset);
   }
 
+  public static function currencyvalue($value, $add_nbsp=true)
+  {
+    if ($value)
+    {
+      return 
+        sfConfig::get('app_config_currency_symbol', '€') . ($add_nbsp?'&nbsp;':' ') .
+        number_format($value, 
+          sfConfig::get('app_config_currency_decimals', 2), 
+          sfConfig::get('app_config_currency_decpoint', ','),
+          sfConfig::get('app_config_currency_thousandssep', '.')
+          );
+      }
+    else
+    {
+      return '';
+    }
+  }
+
 }
