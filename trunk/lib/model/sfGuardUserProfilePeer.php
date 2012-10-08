@@ -874,6 +874,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
       }
 
       $reference_numbers=array();
+      $havingregardto_notes=array();
       $final_notes=array();
 
       foreach($charges as $charge)
@@ -881,21 +882,33 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
         $letters->charges->chargeDescription($user->getIsMale()?$charge->getRole()->getMaleDescription():$charge->getRole()->getFemaleDescription());
         $letters->charges->chargeContext($charge->getTeam()->getDescription());
         $letters->charges->chargeExpiry($charge->getExpiry('d/m/Y'));
-        $letters->charges->chargeNotes($charge->getNotes());
+        //$letters->charges->chargeNotes($charge->getNotes());
         
         switch($type)
         {
           case 'charge':
             $rn=$charge->getChargeReferenceNumber();
+            $hrtnotes=explode("\n", $charge->getRole()->getChargeHavingregardto());
+            $fnotes=$charge->getRole()->getChargeNotes();
             break;
           case 'confirmation':
             $rn=$charge->getConfirmationReferenceNumber();
-            $notes=$charge->getRole()->getConfirmationNotes();
-            if($notes && !in_array($notes, $final_notes))
-            {
-              $final_notes[]=$notes;
-            }
+            $hrtnotes=explode("\n", $charge->getRole()->getConfirmationHavingregardto());
+            $fnotes=$charge->getRole()->getConfirmationNotes();
             break;
+        }
+        
+        foreach($hrtnotes as $hrtnote)
+        {
+          if($hrtnote && !in_array(chop($hrtnote), $havingregardto_notes))
+          {
+            $havingregardto_notes[]=chop($hrtnote);
+          }
+        }
+        
+        if($fnotes && !in_array($fnotes, $final_notes))
+        {
+          $final_notes[]=$fnotes;
         }
         
         if($rn && !in_array($rn, $reference_numbers))
@@ -914,10 +927,13 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
       natsort($reference_numbers);
       $letters->referenceNumber(sizeof($reference_numbers)?implode(', ', $reference_numbers):'____');
 
-      if($type=='confirmation')
-      {
-        $letters->finalNotes(sizeof($final_notes)?implode('<br />', $final_notes):'');
-      }
+      $letters->havingregardtoNotes(OdfDocPeer::textvalue2odt(
+        sizeof($havingregardto_notes)?implode('<br />', $havingregardto_notes):sfConfig::get('app_charges_default_note', 'Having regard to...')
+      ));
+
+      $letters->finalNotes(OdfDocPeer::textvalue2odt(
+        sizeof($final_notes)?implode('<br /><br />', $final_notes):sfConfig::get('app_charges_default_note', '')
+      ));
       
 			$pagebreak=($count<sizeof($users))?'<pagebreak>':'';
 			$letters->pagebreak($pagebreak);

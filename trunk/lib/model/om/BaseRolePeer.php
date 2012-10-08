@@ -25,7 +25,7 @@ abstract class BaseRolePeer {
 	const TM_CLASS = 'RoleTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 15;
+	const NUM_COLUMNS = 17;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -72,6 +72,12 @@ abstract class BaseRolePeer {
 	/** the column name for the CONFIRMATION_NOTES field */
 	const CONFIRMATION_NOTES = 'role.CONFIRMATION_NOTES';
 
+	/** the column name for the CHARGE_HAVINGREGARDTO field */
+	const CHARGE_HAVINGREGARDTO = 'role.CHARGE_HAVINGREGARDTO';
+
+	/** the column name for the CONFIRMATION_HAVINGREGARDTO field */
+	const CONFIRMATION_HAVINGREGARDTO = 'role.CONFIRMATION_HAVINGREGARDTO';
+
 	/** the column name for the RANK field */
 	const RANK = 'role.RANK';
 
@@ -98,11 +104,11 @@ abstract class BaseRolePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'MaleDescription', 'FemaleDescription', 'QualityCode', 'PosixName', 'MayBeMainRole', 'NeedsChargeLetter', 'IsKey', 'DefaultGuardgroup', 'Min', 'Max', 'ForfaitRetribution', 'ChargeNotes', 'ConfirmationNotes', 'Rank', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'maleDescription', 'femaleDescription', 'qualityCode', 'posixName', 'mayBeMainRole', 'needsChargeLetter', 'isKey', 'defaultGuardgroup', 'min', 'max', 'forfaitRetribution', 'chargeNotes', 'confirmationNotes', 'rank', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::MALE_DESCRIPTION, self::FEMALE_DESCRIPTION, self::QUALITY_CODE, self::POSIX_NAME, self::MAY_BE_MAIN_ROLE, self::NEEDS_CHARGE_LETTER, self::IS_KEY, self::DEFAULT_GUARDGROUP, self::MIN, self::MAX, self::FORFAIT_RETRIBUTION, self::CHARGE_NOTES, self::CONFIRMATION_NOTES, self::RANK, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'male_description', 'female_description', 'quality_code', 'posix_name', 'may_be_main_role', 'needs_charge_letter', 'is_key', 'default_guardgroup', 'min', 'max', 'forfait_retribution', 'charge_notes', 'confirmation_notes', 'rank', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'MaleDescription', 'FemaleDescription', 'QualityCode', 'PosixName', 'MayBeMainRole', 'NeedsChargeLetter', 'IsKey', 'DefaultGuardgroup', 'Min', 'Max', 'ForfaitRetribution', 'ChargeNotes', 'ConfirmationNotes', 'ChargeHavingregardto', 'ConfirmationHavingregardto', 'Rank', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'maleDescription', 'femaleDescription', 'qualityCode', 'posixName', 'mayBeMainRole', 'needsChargeLetter', 'isKey', 'defaultGuardgroup', 'min', 'max', 'forfaitRetribution', 'chargeNotes', 'confirmationNotes', 'chargeHavingregardto', 'confirmationHavingregardto', 'rank', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::MALE_DESCRIPTION, self::FEMALE_DESCRIPTION, self::QUALITY_CODE, self::POSIX_NAME, self::MAY_BE_MAIN_ROLE, self::NEEDS_CHARGE_LETTER, self::IS_KEY, self::DEFAULT_GUARDGROUP, self::MIN, self::MAX, self::FORFAIT_RETRIBUTION, self::CHARGE_NOTES, self::CONFIRMATION_NOTES, self::CHARGE_HAVINGREGARDTO, self::CONFIRMATION_HAVINGREGARDTO, self::RANK, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'male_description', 'female_description', 'quality_code', 'posix_name', 'may_be_main_role', 'needs_charge_letter', 'is_key', 'default_guardgroup', 'min', 'max', 'forfait_retribution', 'charge_notes', 'confirmation_notes', 'charge_havingregardto', 'confirmation_havingregardto', 'rank', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, )
 	);
 
 	/**
@@ -112,11 +118,11 @@ abstract class BaseRolePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'MaleDescription' => 1, 'FemaleDescription' => 2, 'QualityCode' => 3, 'PosixName' => 4, 'MayBeMainRole' => 5, 'NeedsChargeLetter' => 6, 'IsKey' => 7, 'DefaultGuardgroup' => 8, 'Min' => 9, 'Max' => 10, 'ForfaitRetribution' => 11, 'ChargeNotes' => 12, 'ConfirmationNotes' => 13, 'Rank' => 14, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'maleDescription' => 1, 'femaleDescription' => 2, 'qualityCode' => 3, 'posixName' => 4, 'mayBeMainRole' => 5, 'needsChargeLetter' => 6, 'isKey' => 7, 'defaultGuardgroup' => 8, 'min' => 9, 'max' => 10, 'forfaitRetribution' => 11, 'chargeNotes' => 12, 'confirmationNotes' => 13, 'rank' => 14, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::MALE_DESCRIPTION => 1, self::FEMALE_DESCRIPTION => 2, self::QUALITY_CODE => 3, self::POSIX_NAME => 4, self::MAY_BE_MAIN_ROLE => 5, self::NEEDS_CHARGE_LETTER => 6, self::IS_KEY => 7, self::DEFAULT_GUARDGROUP => 8, self::MIN => 9, self::MAX => 10, self::FORFAIT_RETRIBUTION => 11, self::CHARGE_NOTES => 12, self::CONFIRMATION_NOTES => 13, self::RANK => 14, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'male_description' => 1, 'female_description' => 2, 'quality_code' => 3, 'posix_name' => 4, 'may_be_main_role' => 5, 'needs_charge_letter' => 6, 'is_key' => 7, 'default_guardgroup' => 8, 'min' => 9, 'max' => 10, 'forfait_retribution' => 11, 'charge_notes' => 12, 'confirmation_notes' => 13, 'rank' => 14, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'MaleDescription' => 1, 'FemaleDescription' => 2, 'QualityCode' => 3, 'PosixName' => 4, 'MayBeMainRole' => 5, 'NeedsChargeLetter' => 6, 'IsKey' => 7, 'DefaultGuardgroup' => 8, 'Min' => 9, 'Max' => 10, 'ForfaitRetribution' => 11, 'ChargeNotes' => 12, 'ConfirmationNotes' => 13, 'ChargeHavingregardto' => 14, 'ConfirmationHavingregardto' => 15, 'Rank' => 16, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'maleDescription' => 1, 'femaleDescription' => 2, 'qualityCode' => 3, 'posixName' => 4, 'mayBeMainRole' => 5, 'needsChargeLetter' => 6, 'isKey' => 7, 'defaultGuardgroup' => 8, 'min' => 9, 'max' => 10, 'forfaitRetribution' => 11, 'chargeNotes' => 12, 'confirmationNotes' => 13, 'chargeHavingregardto' => 14, 'confirmationHavingregardto' => 15, 'rank' => 16, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::MALE_DESCRIPTION => 1, self::FEMALE_DESCRIPTION => 2, self::QUALITY_CODE => 3, self::POSIX_NAME => 4, self::MAY_BE_MAIN_ROLE => 5, self::NEEDS_CHARGE_LETTER => 6, self::IS_KEY => 7, self::DEFAULT_GUARDGROUP => 8, self::MIN => 9, self::MAX => 10, self::FORFAIT_RETRIBUTION => 11, self::CHARGE_NOTES => 12, self::CONFIRMATION_NOTES => 13, self::CHARGE_HAVINGREGARDTO => 14, self::CONFIRMATION_HAVINGREGARDTO => 15, self::RANK => 16, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'male_description' => 1, 'female_description' => 2, 'quality_code' => 3, 'posix_name' => 4, 'may_be_main_role' => 5, 'needs_charge_letter' => 6, 'is_key' => 7, 'default_guardgroup' => 8, 'min' => 9, 'max' => 10, 'forfait_retribution' => 11, 'charge_notes' => 12, 'confirmation_notes' => 13, 'charge_havingregardto' => 14, 'confirmation_havingregardto' => 15, 'rank' => 16, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, )
 	);
 
 	/**
@@ -200,6 +206,8 @@ abstract class BaseRolePeer {
 		$criteria->addSelectColumn(RolePeer::FORFAIT_RETRIBUTION);
 		$criteria->addSelectColumn(RolePeer::CHARGE_NOTES);
 		$criteria->addSelectColumn(RolePeer::CONFIRMATION_NOTES);
+		$criteria->addSelectColumn(RolePeer::CHARGE_HAVINGREGARDTO);
+		$criteria->addSelectColumn(RolePeer::CONFIRMATION_HAVINGREGARDTO);
 		$criteria->addSelectColumn(RolePeer::RANK);
 	}
 

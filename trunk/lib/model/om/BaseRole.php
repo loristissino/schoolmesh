@@ -106,6 +106,18 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	protected $confirmation_notes;
 
 	/**
+	 * The value for the charge_havingregardto field.
+	 * @var        string
+	 */
+	protected $charge_havingregardto;
+
+	/**
+	 * The value for the confirmation_havingregardto field.
+	 * @var        string
+	 */
+	protected $confirmation_havingregardto;
+
+	/**
 	 * The value for the rank field.
 	 * @var        int
 	 */
@@ -320,6 +332,26 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	public function getConfirmationNotes()
 	{
 		return $this->confirmation_notes;
+	}
+
+	/**
+	 * Get the [charge_havingregardto] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getChargeHavingregardto()
+	{
+		return $this->charge_havingregardto;
+	}
+
+	/**
+	 * Get the [confirmation_havingregardto] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getConfirmationHavingregardto()
+	{
+		return $this->confirmation_havingregardto;
 	}
 
 	/**
@@ -613,6 +645,46 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 	} // setConfirmationNotes()
 
 	/**
+	 * Set the value of [charge_havingregardto] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Role The current object (for fluent API support)
+	 */
+	public function setChargeHavingregardto($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->charge_havingregardto !== $v) {
+			$this->charge_havingregardto = $v;
+			$this->modifiedColumns[] = RolePeer::CHARGE_HAVINGREGARDTO;
+		}
+
+		return $this;
+	} // setChargeHavingregardto()
+
+	/**
+	 * Set the value of [confirmation_havingregardto] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Role The current object (for fluent API support)
+	 */
+	public function setConfirmationHavingregardto($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->confirmation_havingregardto !== $v) {
+			$this->confirmation_havingregardto = $v;
+			$this->modifiedColumns[] = RolePeer::CONFIRMATION_HAVINGREGARDTO;
+		}
+
+		return $this;
+	} // setConfirmationHavingregardto()
+
+	/**
 	 * Set the value of [rank] column.
 	 * 
 	 * @param      int $v new value
@@ -690,7 +762,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			$this->forfait_retribution = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
 			$this->charge_notes = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
 			$this->confirmation_notes = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
-			$this->rank = ($row[$startcol + 14] !== null) ? (int) $row[$startcol + 14] : null;
+			$this->charge_havingregardto = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
+			$this->confirmation_havingregardto = ($row[$startcol + 15] !== null) ? (string) $row[$startcol + 15] : null;
+			$this->rank = ($row[$startcol + 16] !== null) ? (int) $row[$startcol + 16] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -700,7 +774,7 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 15; // 15 = RolePeer::NUM_COLUMNS - RolePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 17; // 17 = RolePeer::NUM_COLUMNS - RolePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Role object", $e);
@@ -1096,6 +1170,12 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 				return $this->getConfirmationNotes();
 				break;
 			case 14:
+				return $this->getChargeHavingregardto();
+				break;
+			case 15:
+				return $this->getConfirmationHavingregardto();
+				break;
+			case 16:
 				return $this->getRank();
 				break;
 			default:
@@ -1133,7 +1213,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 			$keys[11] => $this->getForfaitRetribution(),
 			$keys[12] => $this->getChargeNotes(),
 			$keys[13] => $this->getConfirmationNotes(),
-			$keys[14] => $this->getRank(),
+			$keys[14] => $this->getChargeHavingregardto(),
+			$keys[15] => $this->getConfirmationHavingregardto(),
+			$keys[16] => $this->getRank(),
 		);
 		return $result;
 	}
@@ -1208,6 +1290,12 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 				$this->setConfirmationNotes($value);
 				break;
 			case 14:
+				$this->setChargeHavingregardto($value);
+				break;
+			case 15:
+				$this->setConfirmationHavingregardto($value);
+				break;
+			case 16:
 				$this->setRank($value);
 				break;
 		} // switch()
@@ -1248,7 +1336,9 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[11], $arr)) $this->setForfaitRetribution($arr[$keys[11]]);
 		if (array_key_exists($keys[12], $arr)) $this->setChargeNotes($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setConfirmationNotes($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setRank($arr[$keys[14]]);
+		if (array_key_exists($keys[14], $arr)) $this->setChargeHavingregardto($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setConfirmationHavingregardto($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setRank($arr[$keys[16]]);
 	}
 
 	/**
@@ -1274,6 +1364,8 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RolePeer::FORFAIT_RETRIBUTION)) $criteria->add(RolePeer::FORFAIT_RETRIBUTION, $this->forfait_retribution);
 		if ($this->isColumnModified(RolePeer::CHARGE_NOTES)) $criteria->add(RolePeer::CHARGE_NOTES, $this->charge_notes);
 		if ($this->isColumnModified(RolePeer::CONFIRMATION_NOTES)) $criteria->add(RolePeer::CONFIRMATION_NOTES, $this->confirmation_notes);
+		if ($this->isColumnModified(RolePeer::CHARGE_HAVINGREGARDTO)) $criteria->add(RolePeer::CHARGE_HAVINGREGARDTO, $this->charge_havingregardto);
+		if ($this->isColumnModified(RolePeer::CONFIRMATION_HAVINGREGARDTO)) $criteria->add(RolePeer::CONFIRMATION_HAVINGREGARDTO, $this->confirmation_havingregardto);
 		if ($this->isColumnModified(RolePeer::RANK)) $criteria->add(RolePeer::RANK, $this->rank);
 
 		return $criteria;
@@ -1354,6 +1446,10 @@ abstract class BaseRole extends BaseObject  implements Persistent {
 		$copyObj->setChargeNotes($this->charge_notes);
 
 		$copyObj->setConfirmationNotes($this->confirmation_notes);
+
+		$copyObj->setChargeHavingregardto($this->charge_havingregardto);
+
+		$copyObj->setConfirmationHavingregardto($this->confirmation_havingregardto);
 
 		$copyObj->setRank($this->rank);
 

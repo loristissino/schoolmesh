@@ -216,6 +216,8 @@ propel:
     forfait_retribution: { type: decimal, size: 10, scale: 2 }
     charge_notes: longvarchar
     confirmation_notes: longvarchar
+    charge_havingregardto: longvarchar        # see http://tinyurl.com/94aa9cv
+    confirmation_havingregardto: longvarchar  # see http://tinyurl.com/94aa9cv
     rank: integer
 
   user_team:

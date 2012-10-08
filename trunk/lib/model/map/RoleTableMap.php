@@ -50,6 +50,8 @@ class RoleTableMap extends TableMap {
 		$this->addColumn('FORFAIT_RETRIBUTION', 'ForfaitRetribution', 'DECIMAL', false, 10, null);
 		$this->addColumn('CHARGE_NOTES', 'ChargeNotes', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('CONFIRMATION_NOTES', 'ConfirmationNotes', 'LONGVARCHAR', false, null, null);
+		$this->addColumn('CHARGE_HAVINGREGARDTO', 'ChargeHavingregardto', 'LONGVARCHAR', false, null, null);
+		$this->addColumn('CONFIRMATION_HAVINGREGARDTO', 'ConfirmationHavingregardto', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('RANK', 'Rank', 'INTEGER', false, null, null);
 		// validators
 	} // initialize()
