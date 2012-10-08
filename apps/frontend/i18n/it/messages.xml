@@ -5216,6 +5216,18 @@
         <source>acknowledged activities</source>
         <target>attività riconosciute</target>
     </trans-unit>
+    <trans-unit id="1502">
+        <source>Charge&lt;br /&gt;havingregardto</source>
+        <target>Visti &lt;br /&gt;sull'incarico</target>
+    </trans-unit>
+    <trans-unit id="1503">
+        <source>Confirmation&lt;br /&gt;havingregardto</source>
+        <target>Visti &lt;br /&gt;sulla conferma</target>
+    </trans-unit>
+    <trans-unit id="1504">
+        <source>Roles management</source>
+        <target>Gestione ruoli</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

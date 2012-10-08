@@ -1,3 +1,5 @@
+default:
+  credentials: [[ teams ]]
 new:
   credentials: [[ teams ]]
 

@@ -1,3 +1,8 @@
+2012/10/08
+Release: 1.15
+Added charge_havingregardto and confirmation_havingregardto fields to role table
+Modified template engine for charge letters (responsibility roles)
+
 2012/10/03
 Release: 1.14
 Added smRelease field for OdfDocument templating

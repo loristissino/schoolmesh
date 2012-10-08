@@ -498,6 +498,8 @@ CREATE TABLE `role`
 	`forfait_retribution` DECIMAL(10,2),
 	`charge_notes` TEXT,
 	`confirmation_notes` TEXT,
+	`charge_havingregardto` TEXT,
+	`confirmation_havingregardto` TEXT,
 	`rank` INTEGER,
 	PRIMARY KEY (`id`)
 )Engine=InnoDB;
