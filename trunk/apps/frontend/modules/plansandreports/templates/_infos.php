@@ -33,7 +33,7 @@
 		  <?php if ($wpinfo->getContent()=='' and $wpinfo->getWpinfoType()->getIsRequired()): ?>
 			<?php echo image_tag('notdone', array('title'=>__('This content is required and is currently missing'))) ?>
 	  <?php endif ?>
-	<?php echo  html_entity_decode($wpinfo->getContent()) ?>
+	<?php echo  html_entity_decode(nl2br($wpinfo->getContent())) ?>
   
   </td>
       <td>
