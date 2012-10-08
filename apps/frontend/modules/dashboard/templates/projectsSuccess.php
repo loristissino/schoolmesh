@@ -56,7 +56,7 @@
         <?php echo $project->CODE ?>
       </td>
       <td>
-        <?php echo $project->TITLE ?>
+        <?php echo link_to($project->TITLE, url_for('@project_data?id='.$project->ID)) ?>
       </td>
       <td style="text-align: right" class="amount">
         <?php echo currencyvalue($project->TOTAL_AMOUNT) ?>
