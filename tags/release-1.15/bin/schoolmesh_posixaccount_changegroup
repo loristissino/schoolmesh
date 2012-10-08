@@ -1,0 +1,31 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Change the primary group of a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username* *group*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to change the primary group of a user.
+#@
+#@ # EXAMPLES
+#@
+#@ {-} john students
+
+USERNAME=$1
+GROUP=$2
+
+checkUsername "$USERNAME"
+checkGroup "$GROUP"
+
+sudo usermod -g "$GROUP" "$USERNAME" && msg_ok "changed group: $USERNAME ($GROUP)" && exit 0
+
+unexpectedError $@

@@ -1,0 +1,21 @@
+message:
+  subject: Relazioni finali in attesa di approvazione
+  salutation: true
+  tagline: false
+  body: |
+
+    alcune relazioni (per la precisione, %number%) sono in
+    attesa di approvazione.
+    
+    Possono essere approvate accedendo all'applicazione SchoolMesh
+    all'indirizzo http://...index.php?plansandreports/list
+    
+    %addressees%
+    L'elenco completo delle relazioni in attesa di approvazione
+    è il seguente:
+    
+    %appointments%
+
+      Saluti.
+
+        Lo staff

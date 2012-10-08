@@ -1,0 +1,22 @@
+RecuperationHint:
+  recuperation_hint1:
+    content:  Svolgere i compiti assegnati
+    rank:  1
+  recuperation_hint2:
+    content:  Esercitarsi nelle relazioni scritte
+    rank:  2
+  recuperation_hint3:
+    content:  Esercitarsi nelle relazioni orali
+    rank:  3
+  recuperation_hint_john.test_1:
+    user_id:  john.test
+    content:  Osservare il cielo stellato
+    rank:  100
+  recuperation_hint_john.test_2:
+    user_id:  john.test
+    content:  Osservare la luna
+    rank:  100
+  recuperation_hint_flavia_1:
+    user_id: flavia
+    content: Usare il libro di testo
+    rank:  100

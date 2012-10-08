@@ -1,0 +1,33 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Change the shell for the login account of a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username* *shell*
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to change the shell of a user. The shell must be one of those
+#@ defined in /etc/shells.
+#@
+#@ # EXAMPLES
+#@
+#@ {-} john /bin/bash
+
+USERNAME=$1
+SHELL=$2
+
+checkUsername $USERNAME
+
+checkShell $SHELL
+
+sudo usermod -s "$SHELL" $USERNAME && msg_ok "changed shell: $USERNAME ($SHELL)" && exit 0
+
+unexpectedError $@

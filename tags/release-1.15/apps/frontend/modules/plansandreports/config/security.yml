@@ -1,0 +1,41 @@
+default:
+  credentials: [[ wpfr_submission ]]
+
+list:
+  credentials: [[ wp_adm_ok, wp_adm_no, fr_adm_ok, fr_adm_no, wp_sm_ok, wp_sm_no, fr_sm_ok, fr_sm_no, backadmin ]]
+
+recapitulation:
+  credentials: [[ wp_adm_ok, wp_adm_no, fr_adm_ok, fr_adm_no, wp_sm_ok, wp_sm_no, fr_sm_ok, fr_sm_no, backadmin ]]
+
+setfilterlistpreference:
+  credentials: [[ wp_adm_ok, wp_adm_no, fr_adm_ok, fr_adm_no, wp_sm_ok, wp_sm_no, fr_sm_ok, fr_sm_no, backadmin ]]
+
+approve:
+  credentials: [[ wp_adm_ok, fr_adm_ok, wp_sm_ok, fr_sm_ok, backadmin ]]
+
+reject:
+  credentials: [[ wp_adm_no, fr_adm_no, wp_sm_no, fr_sm_no, backadmin ]]
+
+view:
+  credentials: [[ wpfr_submission, wp_adm_ok, wp_adm_no, fr_adm_ok, fr_adm_no, wp_sm_ok, wp_sm_no, fr_sm_ok, fr_sm_no, backadmin ]]
+
+batch:
+  credentials: [[ wp_adm_ok, wp_adm_no, fr_adm_ok, fr_adm_no, wp_sm_ok, wp_sm_no, fr_sm_ok, fr_sm_no, backadmin ]]
+
+viewwfevents:
+  credentials: [[ backadmin ]]
+
+addwfevent:
+  credentials: [[ backadmin ]]
+
+editwfevent:
+  credentials: [[ backadmin ]]
+
+removewfevent:
+  credentials: [[ backadmin ]]
+
+export:
+  credentials: [[ wpfr_submission, wp_adm_ok, fr_adm_ok, wp_sm_ok, fr_sm_ok, backadmin ]]
+
+servedoc:
+  credentials: [[ wpfr_submission, wp_adm_ok, fr_adm_ok, wp_sm_ok, fr_sm_ok, backadmin ]]

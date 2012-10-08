@@ -1,0 +1,10 @@
+README
+
+These two plugins come, with their own licences, from:
+
+sfJqueryReloadedPlugin http://svn.symfony-project.com/plugins/sfJqueryReloadedPlugin/1.2/trunk
+sfTCPDFPlugin http://svn.symfony-project.com/plugins/sfTCPDFPlugin/branches/1.2
+
+I embedded them here because of the need of light modifications in config files.
+
+

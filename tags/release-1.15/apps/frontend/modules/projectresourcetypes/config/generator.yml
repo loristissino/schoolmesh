@@ -1,0 +1,21 @@
+generator:
+  class: sfPropelGenerator
+  param:
+    model_class:           ProjResourceType
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ProjResourceType
+    plural:                ProjResourceTypes
+    route_prefix:          proj_resource_type
+    with_propel_route:     1
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:    ~
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:     ~
