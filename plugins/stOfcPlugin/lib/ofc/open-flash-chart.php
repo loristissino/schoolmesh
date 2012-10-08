@@ -168,7 +168,8 @@ class graph
 	}
 	
 	// escape commas (,)
-	function esc( $text )
+	// function esc( $text )  Loris' patch -- this is called statically, so we should add the keyword
+	static function esc( $text )
 	{
 		// we replace the comma so it is not URL escaped
 		// if it is, flash just thinks it is a comma
@@ -1432,6 +1433,15 @@ class bar
 		$this->data[] = $data;
 		$this->tips[] = graph::esc( $tip );
 	}
+
+  /* BEGIN Loris' patch */
+	function add_data_link_tip( $data, $link, $tip )
+	{
+		$this->data[] = $data;
+		$this->links[] = graph::esc( $link );
+		$this->tips[] = graph::esc( $tip );
+	}
+  /* END Loris' patch */
 	
 	// return the variables for this
 	// bar chart

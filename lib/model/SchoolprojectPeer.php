@@ -11,31 +11,6 @@
 
 class SchoolprojectPeer extends BaseSchoolprojectPeer {
 
-  public static function getStatsForYear($year, $sf_context)
-	{
-		$c=new Criteria();
-		$c->add(self::YEAR_ID, $year);
-    $c->clearSelectColumns();
-    $c->setDistinct();
-    $c->addAsColumn('STATE', SchoolprojectPeer::STATE);
-    $c->addAsColumn('NUMBER', 'COUNT(' . SchoolprojectPeer::ID . ')');
-    $c->addGroupByColumn(SchoolprojectPeer::STATE);
-    $stmt=SchoolprojectPeer::doSelectStmt($c);
-    
-    $states = Workflow::getProjSteps();
-    
-    $result=array();
-    while($row = $stmt->fetch(PDO::FETCH_OBJ))
-    {
-      if(isset($states[$row->STATE]))
-      {
-        $row->STATEDESCRIPTION=$sf_context->getI18N()->__($states[$row->STATE]['stateDescription']);
-      }
-      $result[]=$row;
-    }
-    return $result;
-	}
-
   public static function retrieveAllForYear($year)
 	{
 		$c=new Criteria();
@@ -52,10 +27,14 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 		return self::doSelectJoinAll($c);
 	}
   
-  public static function retrieveIdsForYear($year)
+  public static function retrieveIdsForYear($year, $also_drafts=true)
 	{
 		$c=new Criteria();
 		$c->add(self::YEAR_ID, $year);
+    if(!$also_drafts)
+    {
+      $c->add(self::STATE, Workflow::PROJ_DRAFT, Criteria::GREATER_THAN);
+    }
     $c->addJoin(self::PROJ_CATEGORY_ID, ProjCategoryPeer::ID);
     $c->add(ProjCategoryPeer::RESOURCES, 0, Criteria::NOT_EQUAL);
     $c->clearSelectColumns();
@@ -783,38 +762,95 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
   
   public static function getSynthesisBudgetData($ids=array())
   {
-		$c=new Criteria();
-    $c->addJoin(self::ID, ProjResourcePeer::SCHOOLPROJECT_ID);
-    $c->add(self::ID, $ids, Criteria::IN);
-    $c->clearSelectColumns();
-    $c->setDistinct();
-    $c->addAsColumn('TITLE', SchoolprojectPeer::TITLE);
-    $c->addAsColumn('TOTAL_AMOUNT', 'SUM(IF(' . ProjResourcePeer::STANDARD_COST . ' IS NULL, ' . ProjResourcePeer::QUANTITY_APPROVED . ', ' . ProjResourcePeer::QUANTITY_APPROVED . ' * ' . ProjResourcePeer::STANDARD_COST . '))');
-    $c->addAsColumn('EXTERNAL_FUNDING', 'SUM(' . ProjResourcePeer::AMOUNT_FUNDED_EXTERNALLY . ')');
-    $c->addGroupByColumn(SchoolprojectPeer::TITLE);
-    self::addAscendingOrderToCriteria($c);
-    $stmt=SchoolprojectPeer::doSelectStmt($c);
+    // we need to run two separate queries and then mix up the values
+    // it could be possible in some other ways with pure SQL, but with
+    // Propel it seems a bit complicated...
+    
+		$c1=new Criteria();
+    $c1->addJoin(self::ID, ProjResourcePeer::SCHOOLPROJECT_ID, Criteria::LEFT_JOIN);
+    //$c->addJoin(ProjResourcePeer::ID, ProjActivityPeer::PROJ_RESOURCE_ID, Criteria::LEFT_JOIN);
+    $c1->add(self::ID, $ids, Criteria::IN);
+    //$c->add(ProjActivityPeer::ACKNOWLEDGED_AT, null, Criteria::ISNOTNULL);
+    $c1->clearSelectColumns();
+    $c1->setDistinct();
+    $c1->addAsColumn('ID', SchoolprojectPeer::ID);
+    $c1->addAsColumn('CODE', SchoolprojectPeer::CODE);
+    $c1->addAsColumn('TITLE', SchoolprojectPeer::TITLE);
+    $c1->addAsColumn('TOTAL_AMOUNT', 'SUM(IF(' . ProjResourcePeer::STANDARD_COST . ' IS NULL, ' . ProjResourcePeer::QUANTITY_APPROVED . ', ' . ProjResourcePeer::QUANTITY_APPROVED . ' * ' . ProjResourcePeer::STANDARD_COST . '))');
+    $c1->addAsColumn('EXTERNAL_FUNDING', 'SUM(' . ProjResourcePeer::AMOUNT_FUNDED_EXTERNALLY . ')');
+    //$c->addAsColumn('DECLARED_ACTIVITIES', 'SUM(IF(' . ProjActivityPeer::ACKNOWLEDGED_AT . ' IS NOT NULL, ' . ProjActivityPeer::QUANTITY . ', 0) * ' . ProjResourcePeer::STANDARD_COST . ')');
+    $c1->addGroupByColumn(SchoolprojectPeer::ID);
+    $c1->addGroupByColumn(SchoolprojectPeer::TITLE);
+    self::addAscendingOrderToCriteria($c1);
+    $stmt=SchoolprojectPeer::doSelectStmt($c1);
     
     $result=array();
     while($row = $stmt->fetch(PDO::FETCH_OBJ))
     {
       $row->INTERNAL_FUNDING = $row->TOTAL_AMOUNT - $row->EXTERNAL_FUNDING;
-      $result[]=$row;
+      $result[$row->ID]=$row;
+      $result[$row->ID]->ACKNOWLEDGED_ACTIVITIES = 0;
     }
+    
+		$c2=new Criteria();
+    $c2->addJoin(self::ID, ProjResourcePeer::SCHOOLPROJECT_ID, Criteria::LEFT_JOIN);
+    $c2->addJoin(ProjResourcePeer::ID, ProjActivityPeer::PROJ_RESOURCE_ID, Criteria::LEFT_JOIN);
+    $c2->add(self::ID, $ids, Criteria::IN);
+    $c2->add(ProjActivityPeer::ACKNOWLEDGED_AT, null, Criteria::ISNOTNULL);
+    $c2->clearSelectColumns();
+    $c2->setDistinct();
+    $c2->addAsColumn('ID', SchoolprojectPeer::ID);
+    $c2->addAsColumn('TITLE', SchoolprojectPeer::TITLE);
+    $c2->addAsColumn('ACKNOWLEDGED_ACTIVITIES', 'SUM(IF(' . ProjActivityPeer::ACKNOWLEDGED_AT . ' IS NOT NULL, ' . ProjActivityPeer::QUANTITY . ', 0) * ' . ProjResourcePeer::STANDARD_COST . ')');
+    $c2->addGroupByColumn(SchoolprojectPeer::ID);
+    $c1->addGroupByColumn(SchoolprojectPeer::TITLE);
+    self::addAscendingOrderToCriteria($c2);
+    $stmt=SchoolprojectPeer::doSelectStmt($c2);
+    
+    while($row = $stmt->fetch(PDO::FETCH_OBJ))
+    {
+      $result[$row->ID]->ACKNOWLEDGED_ACTIVITIES = $row->ACKNOWLEDGED_ACTIVITIES;
+    }
+    
     return $result;    
     
   }
+  
+  public static function getStatsForYear($year, $sf_context)
+	{
+		$c=new Criteria();
+		$c->add(self::YEAR_ID, $year);
+    $c->clearSelectColumns();
+    $c->setDistinct();
+    $c->addAsColumn('STATE', SchoolprojectPeer::STATE);
+    $c->addAsColumn('NUMBER', 'COUNT(' . SchoolprojectPeer::ID . ')');
+    $c->addGroupByColumn(SchoolprojectPeer::STATE);
+    $stmt=SchoolprojectPeer::doSelectStmt($c);
+    
+    $states = Workflow::getProjSteps();
+    
+    $result=array();
+    while($row = $stmt->fetch(PDO::FETCH_OBJ))
+    {
+      if(isset($states[$row->STATE]))
+      {
+        $row->STATEDESCRIPTION=$sf_context->getI18N()->__($states[$row->STATE]['stateDescription']);
+      }
+      $result[]=$row;
+    }
+    return $result;
+	}
+  
 
 } // SchoolprojectPeer
 
-
 /*
- * 
- * SELECT title, SUM( IF( standard_cost IS NULL , quantity_approved, quantity_approved * standard_cost ) ) AS total, SUM( amount_funded_externally ) AS external_founding
-FROM  `schoolproject` 
-INNER JOIN proj_resource ON schoolproject.id = proj_resource.schoolproject_id
-WHERE year_id =2011
-GROUP BY title
-ORDER BY  `schoolproject`.`code` ,  `schoolproject`.`title` ASC 
-* 
- */
+SELECT schoolproject.ID AS ID, schoolproject.TITLE AS TITLE, SUM( IF( proj_resource.STANDARD_COST IS NULL , proj_resource.QUANTITY_APPROVED, proj_resource.QUANTITY_APPROVED * proj_resource.STANDARD_COST ) ) AS TOTAL_AMOUNT, SUM( proj_resource.AMOUNT_FUNDED_EXTERNALLY ) AS EXTERNAL_FUNDING, SUM(quantity*proj_resource.STANDARD_COST) as DECLARED_ACTIVITIES
+FROM  `schoolproject` LEFT JOIN `proj_resource` on schoolproject.ID = proj_resource.SCHOOLPROJECT_ID LEFT JOIN proj_activity on proj_activity.PROJ_RESOURCE_ID = proj_resource.ID
+WHERE schoolproject.ID
+IN (
+'64'
+)
+AND proj_activity.ACKNOWLEDGED_AT is not null
+GROUP BY schoolproject.ID, schoolproject.TITLE
+*/
