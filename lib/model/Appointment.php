@@ -1300,7 +1300,7 @@ public function getWorkflowLogs()
         {
           $infos->infoTitle($wpinfo->getWpinfoType()->getTitle());
           $infos->infoDescription($wpinfo->getWpinfoType()->getDescription());
-          $infos->infoContent($wpinfo->getContent());
+          $infos->infoContent(OdfDocPeer::textvalue2odt($wpinfo->getContent()));
           $infos->merge();
         }
       }
