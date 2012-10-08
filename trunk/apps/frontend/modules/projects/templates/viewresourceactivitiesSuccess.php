@@ -13,7 +13,9 @@
 
 <h2><?php echo __('Activities for the task «%resource%»', array('%resource%'=>$resource->__toString())) ?></h2>
 
+<?php if($resource->getChargedUserProfile()): ?>
 <p><?php echo __('Charged user') ?>: <?php echo $resource->getChargedUserProfile() ?></p>
+<?php endif ?>
 
 <?php if(sizeof($activities)>0): ?>
 
@@ -75,6 +77,7 @@
       <?php echo $activity->getAcknowledgedAt('d/m/Y') ?>
       </td>
       <td>
+      <?php echo $activity->getId() ?>
       <ul class="sf_admin_td_actions">
         <?php if(!$activity->getAcknowledgedAt()): ?>
         <li class="sf_admin_action_approve">

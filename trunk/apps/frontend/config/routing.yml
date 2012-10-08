@@ -1,3 +1,7 @@
+project_data:
+  url:    /projects/data/id/:id
+  param:  { module: projects, action: data }
+
 simplechartdata:
   url:    /dashboard/data/example/:example
   param:  { module: dashboard, action: data }

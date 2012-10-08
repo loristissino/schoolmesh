@@ -170,7 +170,12 @@ class projectsActions extends sfActions
     return $this->redirect('projects/activities');
 	}
 
-
+  public function executeData(sfWebRequest $request)
+  {
+    $this->getRequest()->setParameter('id', $request->getParameter('id'));
+    $this->getRequest()->setParameter('batch_action', 'computebudget');
+    $this->forward('projects', 'batch'); //, array('id'=>$request->getParameter('id'), 'batch_action'=>'computebudget'));
+  }
 
   public function executeBatch(sfWebRequest $request)
   {

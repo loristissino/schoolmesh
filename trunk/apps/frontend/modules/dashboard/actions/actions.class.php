@@ -26,6 +26,15 @@ class dashboardActions extends sfActions
   {
     $this->year=$this->getUser()->getAttribute('year', sfConfig::get('app_config_current_year'));
     $this->years = YearPeer::retrieveAll();
+    $ids=SchoolprojectPeer::retrieveIdsForYear($this->year, false);
+    $this->projects = SchoolprojectPeer::getSynthesisBudgetData($ids);
+  }
+  
+  public function executeProjectsgraph(sfWebRequest $request)
+  {
+    $this->type = $request->getParameter('type');
+    $this->year=$this->getUser()->getAttribute('year', sfConfig::get('app_config_current_year'));
+    $this->years = YearPeer::retrieveAll();
   }
   
   public function executeProjectschart(sfWebRequest $request)
@@ -61,7 +70,7 @@ class dashboardActions extends sfActions
         //Set the colour for each slice. Here we are defining three colours 
         //while we need 7 colours. So, the same colours will be 
         //repeated for the all remaining slices in the same order  
-        $g->pie_slice_colours( array('#d01f3c','#356aa0','#c79810') );
+        $g->pie_slice_colours( array('#d01f3c','#356aa0','#c79810', '#351f3c', '#ff5f3c', '#d06a3c', '#d0983c', '#d01fa0') );
        
         //To display value as tool tip
         $g->set_tool_tip( '#val#' );
@@ -80,10 +89,9 @@ class dashboardActions extends sfActions
       case 'totalbudget':
         $this->renderProjectsBudget('total');
         return sfView::NONE;
-        
-
-        
-        
+      case 'declaredactivities':
+        $this->renderProjectsBudget('activities');
+        return sfView::NONE;
         
       default:
         throw new Exception('invalid type specified');
@@ -110,11 +118,15 @@ class dashboardActions extends sfActions
         $key = 'total amount';
         $property='TOTAL_AMOUNT';
         break;
+      case 'activities':
+        $key = 'acknowledged activities';
+        $property='ACKNOWLEDGED_ACTIVITIES';
+        break;
       default:
         throw new Exception('Not a valid type');
     }
     
-    $ids=SchoolprojectPeer::retrieveIdsForYear($this->year);
+    $ids=SchoolprojectPeer::retrieveIdsForYear($this->year, false);
     
     $Bar = new bar_sketch(55, 4, '#d070ac', '#000000');
     $Bar->key($this->getContext()->getI18N()->__($key), 10);
@@ -139,8 +151,14 @@ class dashboardActions extends sfActions
       {
         $amount=0;
       }
-      $Bar->add_data_tip($amount, $project->TITLE. '<br>' . Generic::currencyvalue($amount, false));
- //     $data[]=$amount;
+      $Bar->add_data_link_tip(
+        $amount, 
+        $this->getContext()->getRouting()->generate('project_data', array('id'=>$project->ID)), 
+        sprintf('%s<br>%s',
+          $project->TITLE,
+          Generic::currencyvalue($amount, false)
+          )
+        );
       if($project->TOTAL_AMOUNT > $max_amount)  // we always use total amount in order to have comparable graphs
       {
         $max_amount=$project->TOTAL_AMOUNT;

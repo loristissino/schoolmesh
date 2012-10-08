@@ -5169,16 +5169,12 @@
         <target>Bacheca</target>
     </trans-unit>
     <trans-unit id="1489">
-        <source>Please note that the some of the projects might have not been approved / confirmed at this time.</source>
+        <source>Please note that some of the projects might have not been approved / confirmed at this time.</source>
         <target>Si noti che alcuni di questi progetti potrebbero non essere stati ancora approvati / confermati.</target>
     </trans-unit>
     <trans-unit id="1490">
-        <source>The following charts depict the budget requested for each project.</source>
-        <target>I seguenti grafici mostrano il budget richiesto per ogni progetto.</target>
-    </trans-unit>
-    <trans-unit id="1491">
-        <source>State of the projects</source>
-        <target>Stato dei progetti</target>
+        <source>The following charts / tables depict the budget requested for each project.</source>
+        <target>I seguenti grafici e tabelle mostrano il budget richiesto per ogni progetto.</target>
     </trans-unit>
     <trans-unit id="1492">
         <source>Sections</source>
@@ -5204,6 +5200,23 @@
         <source>total amount</source>
         <target>importo totale</target>
     </trans-unit>
+    <trans-unit id="1498">
+        <source>Acknowledged activities</source>
+        <target>Attività riconosciute</target>
+    </trans-unit>
+    <trans-unit id="1499">
+        <source>Budget and activities</source>
+        <target>Budget e attività</target>
+    </trans-unit>
+    <trans-unit id="1500">
+        <source>Graph</source>
+        <target>Grafico</target>
+    </trans-unit>
+    <trans-unit id="1501">
+        <source>acknowledged activities</source>
+        <target>attività riconosciute</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
