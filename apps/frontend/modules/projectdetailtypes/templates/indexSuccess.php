@@ -14,11 +14,6 @@
     <?php include_partial('projectdetailtypes/list_header', array('pager' => $pager)) ?>
   </div>
   
-  <div id="sf_admin_bar">
-    <?php include_partial('projectdetailtypes/filters', array('form' => $filters, 'configuration' => $configuration)) ?>
-  </div>
-
-
   <div id="sf_admin_content">
     <form action="<?php echo url_for('proj_detail_type_collection', array('action' => 'batch')) ?>" method="post">
     <?php include_partial('projectdetailtypes/list', array('pager' => $pager, 'sort' => $sort, 'helper' => $helper)) ?>
@@ -31,4 +26,10 @@
 
   <div id="sf_admin_footer">
     <?php include_partial('projectdetailtypes/list_footer', array('pager' => $pager)) ?>
+  </div>
+
+  <hr />
+  
+  <div>
+    <?php include_partial('projectdetailtypes/filters', array('form' => $filters, 'configuration' => $configuration)) ?>
   </div>

@@ -398,6 +398,7 @@ if (isset($content['workplan_report']['tools']))
 				case 'teacher': $c->add(AppointmentPeer::USER_ID, $filter_id);	break;
 				case 'subject': $c->add(AppointmentPeer::SUBJECT_ID, $filter_id); break;
 				case 'state': $c->add(AppointmentPeer::STATE, $filter_id); break;
+        case 'type': $c->add(AppointmentPeer::APPOINTMENT_TYPE_ID, $filter_id); break;
 			}
 		}
 

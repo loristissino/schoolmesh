@@ -444,16 +444,6 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       if($project->getState()>=Workflow::PROJ_FINISHED)
       {
         $letters->projectScale($project->getEvaluationScale());
-        $letters->projectFinalReport(OdfDocPeer::textvalue2odt($project->getFinalReport()));
-        if($project->getProposals())
-        {
-          $proposals=OdfDocPeer::textvalue2odt($project->getProposals());
-        }
-        else
-        {
-          $proposals=$context->getI18N()->__('No proposals made.');
-        }
-        $letters->projectProposals($proposals);
       }
       
       switch($options['date'])
@@ -469,7 +459,29 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
           break;
         default:
           $letters->letterDate('_______');
-          
+      }
+      
+      
+      Generic::logMessage('details', $project->getPrintableProjDetails($options['date']));
+      try
+      {
+        foreach($project->getPrintableProjDetails($options['date']) as $detail)
+        {
+          $letters->details->detailDescription($detail->getProjDetailType()->getDescription());
+          $letters->details->detailContent(OdfDocPeer::textvalue2odt($detail->getContent()));
+          $letters->details->merge();
+        }
+      }
+      catch (Exception $e)
+      {
+        if($e instanceof SegmentException)
+        {
+          // we just pass... the details segment actually can be missing
+        }
+        else
+        {
+          throw $e;
+        }
       }
       
       $usedtypes=array();

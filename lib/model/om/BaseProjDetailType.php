@@ -75,6 +75,20 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 	protected $state_max;
 
 	/**
+	 * The value for the printed_in_submission_documents field.
+	 * Note: this column has a database default value of: true
+	 * @var        boolean
+	 */
+	protected $printed_in_submission_documents;
+
+	/**
+	 * The value for the printed_in_report_documents field.
+	 * Note: this column has a database default value of: true
+	 * @var        boolean
+	 */
+	protected $printed_in_report_documents;
+
+	/**
 	 * The value for the example field.
 	 * @var        string
 	 */
@@ -155,6 +169,8 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 	{
 		$this->is_required = true;
 		$this->is_active = true;
+		$this->printed_in_submission_documents = true;
+		$this->printed_in_report_documents = true;
 		$this->cols = 80;
 		$this->rows = 5;
 	}
@@ -257,6 +273,26 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 	public function getStateMax()
 	{
 		return $this->state_max;
+	}
+
+	/**
+	 * Get the [printed_in_submission_documents] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getPrintedInSubmissionDocuments()
+	{
+		return $this->printed_in_submission_documents;
+	}
+
+	/**
+	 * Get the [printed_in_report_documents] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getPrintedInReportDocuments()
+	{
+		return $this->printed_in_report_documents;
 	}
 
 	/**
@@ -504,6 +540,46 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 	} // setStateMax()
 
 	/**
+	 * Set the value of [printed_in_submission_documents] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     ProjDetailType The current object (for fluent API support)
+	 */
+	public function setPrintedInSubmissionDocuments($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->printed_in_submission_documents !== $v || $this->isNew()) {
+			$this->printed_in_submission_documents = $v;
+			$this->modifiedColumns[] = ProjDetailTypePeer::PRINTED_IN_SUBMISSION_DOCUMENTS;
+		}
+
+		return $this;
+	} // setPrintedInSubmissionDocuments()
+
+	/**
+	 * Set the value of [printed_in_report_documents] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     ProjDetailType The current object (for fluent API support)
+	 */
+	public function setPrintedInReportDocuments($v)
+	{
+		if ($v !== null) {
+			$v = (boolean) $v;
+		}
+
+		if ($this->printed_in_report_documents !== $v || $this->isNew()) {
+			$this->printed_in_report_documents = $v;
+			$this->modifiedColumns[] = ProjDetailTypePeer::PRINTED_IN_REPORT_DOCUMENTS;
+		}
+
+		return $this;
+	} // setPrintedInReportDocuments()
+
+	/**
 	 * Set the value of [example] column.
 	 * 
 	 * @param      string $v new value
@@ -641,6 +717,14 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 				return false;
 			}
 
+			if ($this->printed_in_submission_documents !== true) {
+				return false;
+			}
+
+			if ($this->printed_in_report_documents !== true) {
+				return false;
+			}
+
 			if ($this->cols !== 80) {
 				return false;
 			}
@@ -680,12 +764,14 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 			$this->is_active = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
 			$this->state_min = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
 			$this->state_max = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
-			$this->example = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
-			$this->missing_value_message = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
-			$this->filled_value_message = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
-			$this->cols = ($row[$startcol + 12] !== null) ? (int) $row[$startcol + 12] : null;
-			$this->rows = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
-			$this->rank = ($row[$startcol + 14] !== null) ? (int) $row[$startcol + 14] : null;
+			$this->printed_in_submission_documents = ($row[$startcol + 9] !== null) ? (boolean) $row[$startcol + 9] : null;
+			$this->printed_in_report_documents = ($row[$startcol + 10] !== null) ? (boolean) $row[$startcol + 10] : null;
+			$this->example = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+			$this->missing_value_message = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
+			$this->filled_value_message = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
+			$this->cols = ($row[$startcol + 14] !== null) ? (int) $row[$startcol + 14] : null;
+			$this->rows = ($row[$startcol + 15] !== null) ? (int) $row[$startcol + 15] : null;
+			$this->rank = ($row[$startcol + 16] !== null) ? (int) $row[$startcol + 16] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -695,7 +781,7 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 15; // 15 = ProjDetailTypePeer::NUM_COLUMNS - ProjDetailTypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 17; // 17 = ProjDetailTypePeer::NUM_COLUMNS - ProjDetailTypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ProjDetailType object", $e);
@@ -1066,21 +1152,27 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 				return $this->getStateMax();
 				break;
 			case 9:
-				return $this->getExample();
+				return $this->getPrintedInSubmissionDocuments();
 				break;
 			case 10:
-				return $this->getMissingValueMessage();
+				return $this->getPrintedInReportDocuments();
 				break;
 			case 11:
-				return $this->getFilledValueMessage();
+				return $this->getExample();
 				break;
 			case 12:
-				return $this->getCols();
+				return $this->getMissingValueMessage();
 				break;
 			case 13:
-				return $this->getRows();
+				return $this->getFilledValueMessage();
 				break;
 			case 14:
+				return $this->getCols();
+				break;
+			case 15:
+				return $this->getRows();
+				break;
+			case 16:
 				return $this->getRank();
 				break;
 			default:
@@ -1113,12 +1205,14 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 			$keys[6] => $this->getIsActive(),
 			$keys[7] => $this->getStateMin(),
 			$keys[8] => $this->getStateMax(),
-			$keys[9] => $this->getExample(),
-			$keys[10] => $this->getMissingValueMessage(),
-			$keys[11] => $this->getFilledValueMessage(),
-			$keys[12] => $this->getCols(),
-			$keys[13] => $this->getRows(),
-			$keys[14] => $this->getRank(),
+			$keys[9] => $this->getPrintedInSubmissionDocuments(),
+			$keys[10] => $this->getPrintedInReportDocuments(),
+			$keys[11] => $this->getExample(),
+			$keys[12] => $this->getMissingValueMessage(),
+			$keys[13] => $this->getFilledValueMessage(),
+			$keys[14] => $this->getCols(),
+			$keys[15] => $this->getRows(),
+			$keys[16] => $this->getRank(),
 		);
 		return $result;
 	}
@@ -1178,21 +1272,27 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 				$this->setStateMax($value);
 				break;
 			case 9:
-				$this->setExample($value);
+				$this->setPrintedInSubmissionDocuments($value);
 				break;
 			case 10:
-				$this->setMissingValueMessage($value);
+				$this->setPrintedInReportDocuments($value);
 				break;
 			case 11:
-				$this->setFilledValueMessage($value);
+				$this->setExample($value);
 				break;
 			case 12:
-				$this->setCols($value);
+				$this->setMissingValueMessage($value);
 				break;
 			case 13:
-				$this->setRows($value);
+				$this->setFilledValueMessage($value);
 				break;
 			case 14:
+				$this->setCols($value);
+				break;
+			case 15:
+				$this->setRows($value);
+				break;
+			case 16:
 				$this->setRank($value);
 				break;
 		} // switch()
@@ -1228,12 +1328,14 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[6], $arr)) $this->setIsActive($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setStateMin($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setStateMax($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setExample($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setMissingValueMessage($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setFilledValueMessage($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setCols($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setRows($arr[$keys[13]]);
-		if (array_key_exists($keys[14], $arr)) $this->setRank($arr[$keys[14]]);
+		if (array_key_exists($keys[9], $arr)) $this->setPrintedInSubmissionDocuments($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setPrintedInReportDocuments($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setExample($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setMissingValueMessage($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setFilledValueMessage($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setCols($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setRows($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setRank($arr[$keys[16]]);
 	}
 
 	/**
@@ -1254,6 +1356,8 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProjDetailTypePeer::IS_ACTIVE)) $criteria->add(ProjDetailTypePeer::IS_ACTIVE, $this->is_active);
 		if ($this->isColumnModified(ProjDetailTypePeer::STATE_MIN)) $criteria->add(ProjDetailTypePeer::STATE_MIN, $this->state_min);
 		if ($this->isColumnModified(ProjDetailTypePeer::STATE_MAX)) $criteria->add(ProjDetailTypePeer::STATE_MAX, $this->state_max);
+		if ($this->isColumnModified(ProjDetailTypePeer::PRINTED_IN_SUBMISSION_DOCUMENTS)) $criteria->add(ProjDetailTypePeer::PRINTED_IN_SUBMISSION_DOCUMENTS, $this->printed_in_submission_documents);
+		if ($this->isColumnModified(ProjDetailTypePeer::PRINTED_IN_REPORT_DOCUMENTS)) $criteria->add(ProjDetailTypePeer::PRINTED_IN_REPORT_DOCUMENTS, $this->printed_in_report_documents);
 		if ($this->isColumnModified(ProjDetailTypePeer::EXAMPLE)) $criteria->add(ProjDetailTypePeer::EXAMPLE, $this->example);
 		if ($this->isColumnModified(ProjDetailTypePeer::MISSING_VALUE_MESSAGE)) $criteria->add(ProjDetailTypePeer::MISSING_VALUE_MESSAGE, $this->missing_value_message);
 		if ($this->isColumnModified(ProjDetailTypePeer::FILLED_VALUE_MESSAGE)) $criteria->add(ProjDetailTypePeer::FILLED_VALUE_MESSAGE, $this->filled_value_message);
@@ -1329,6 +1433,10 @@ abstract class BaseProjDetailType extends BaseObject  implements Persistent {
 		$copyObj->setStateMin($this->state_min);
 
 		$copyObj->setStateMax($this->state_max);
+
+		$copyObj->setPrintedInSubmissionDocuments($this->printed_in_submission_documents);
+
+		$copyObj->setPrintedInReportDocuments($this->printed_in_report_documents);
 
 		$copyObj->setExample($this->example);
 

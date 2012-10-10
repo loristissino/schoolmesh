@@ -74,7 +74,7 @@ class ProjActivityForm extends BaseProjActivityForm
   public function hours_validator_callback($validator, $value, $arguments)
   {
     $value=Generic::getHoursAsNumber($value, $arguments['separator']);
-    if($value==-1)
+    if($value===false)
     {
       throw new sfValidatorError($validator, 'invalid');
     }

@@ -158,7 +158,7 @@ public function executeBatch(sfWebRequest $request)
 	public function executeSetfilterlistpreference(sfWebRequest $request)
 	{
 		$filter = $request->getParameter('filter');
-		$this->forward404Unless(in_array($filter, array('', 'class', 'teacher', 'subject', 'state')));
+		$this->forward404Unless(in_array($filter, array('', 'class', 'teacher', 'subject', 'state', 'type')));
 		$this->getUser()->setAttribute('filter', $filter);
 		if ($request->hasParameter('id'))
 		{
@@ -192,6 +192,7 @@ public function executeBatch(sfWebRequest $request)
 		$this->steps = Workflow::getWpfrSteps();
 		$this->schoolclasses = SchoolclassPeer::retrieveCurrentSchoolclasses($this->year);
 		$this->subjects = SubjectPeer::retrieveAllByRank();
+    $this->appointment_types = AppointmentTypePeer::retrieveAll();
 		$this->states = Workflow::getWpfrStates(true);
 		$this->teachers = sfGuardUserProfilePeer::retrieveTeachers(null, $this->year);
     $this->years = YearPeer::retrieveAll();

@@ -1,3 +1,8 @@
+2012/10/10
+Release: 1.16
+Added fields printed_in_submission_documents and printed_in_report_documents (boolean) in proj_detail_type table
+Improved template engine for projects
+
 2012/10/08
 Release: 1.15
 Added charge_havingregardto and confirmation_havingregardto fields to role table

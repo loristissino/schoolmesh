@@ -441,6 +441,26 @@ class Schoolproject extends BaseSchoolproject {
     return $detail->getContent();
   }
   
+  public function getPrintableProjDetails($type)
+  {
+    Generic::logMessage('called', $type);
+    $c = new Criteria();
+    $c->addJoin(ProjDetailPeer::PROJ_DETAIL_TYPE_ID, ProjDetailTypePeer::ID);
+    $c->add(ProjDetailPeer::SCHOOLPROJECT_ID, $this->getId());
+    $c->addAscendingOrderByColumn(ProjDetailTypePeer::RANK);
+    $c->add(ProjDetailPeer::CONTENT, '', Criteria::NOT_EQUAL);
+    switch($type)
+    {
+      case 'submission':
+        $c->add(ProjDetailTypePeer::PRINTED_IN_SUBMISSION_DOCUMENTS, true);
+        break;
+      case 'report':
+        $c->add(ProjDetailTypePeer::PRINTED_IN_REPORT_DOCUMENTS, true);
+        break;
+    }
+    
+    return ProjDetailPeer::doSelectJoinProjDetailType($c);
+  }
 	
 	public function getProjDeadlines($criteria = null, PropelPDO $con = null)
 	{

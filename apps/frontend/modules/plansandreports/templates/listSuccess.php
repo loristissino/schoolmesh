@@ -129,6 +129,17 @@
 		)
 	)
 ?>
+<?php include_partial('content/filter',
+	array(
+		'title'=>'Appointment type',
+		'type'=>'type',
+		'link_selectall'=>'All appointment types',
+		'link_selectall_tooltip'=>'Show documents for all appointment types',
+		'items'=>$appointment_types,
+		'separator'=>' - '
+		)
+	)
+?>
 <?php include_partial('content/year', array('year'=>$year, 'years'=>$years, 'back'=>'plansandreports/list')) ?>
 
 <h2><?php echo __('Actions') ?></h2>
