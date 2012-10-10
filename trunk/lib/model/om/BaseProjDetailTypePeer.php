@@ -25,7 +25,7 @@ abstract class BaseProjDetailTypePeer {
 	const TM_CLASS = 'ProjDetailTypeTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 15;
+	const NUM_COLUMNS = 17;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -56,6 +56,12 @@ abstract class BaseProjDetailTypePeer {
 
 	/** the column name for the STATE_MAX field */
 	const STATE_MAX = 'proj_detail_type.STATE_MAX';
+
+	/** the column name for the PRINTED_IN_SUBMISSION_DOCUMENTS field */
+	const PRINTED_IN_SUBMISSION_DOCUMENTS = 'proj_detail_type.PRINTED_IN_SUBMISSION_DOCUMENTS';
+
+	/** the column name for the PRINTED_IN_REPORT_DOCUMENTS field */
+	const PRINTED_IN_REPORT_DOCUMENTS = 'proj_detail_type.PRINTED_IN_REPORT_DOCUMENTS';
 
 	/** the column name for the EXAMPLE field */
 	const EXAMPLE = 'proj_detail_type.EXAMPLE';
@@ -98,11 +104,11 @@ abstract class BaseProjDetailTypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'ProjCategoryId', 'Code', 'Description', 'Label', 'IsRequired', 'IsActive', 'StateMin', 'StateMax', 'Example', 'MissingValueMessage', 'FilledValueMessage', 'Cols', 'Rows', 'Rank', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'projCategoryId', 'code', 'description', 'label', 'isRequired', 'isActive', 'stateMin', 'stateMax', 'example', 'missingValueMessage', 'filledValueMessage', 'cols', 'rows', 'rank', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::PROJ_CATEGORY_ID, self::CODE, self::DESCRIPTION, self::LABEL, self::IS_REQUIRED, self::IS_ACTIVE, self::STATE_MIN, self::STATE_MAX, self::EXAMPLE, self::MISSING_VALUE_MESSAGE, self::FILLED_VALUE_MESSAGE, self::COLS, self::ROWS, self::RANK, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'proj_category_id', 'code', 'description', 'label', 'is_required', 'is_active', 'state_min', 'state_max', 'example', 'missing_value_message', 'filled_value_message', 'cols', 'rows', 'rank', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'ProjCategoryId', 'Code', 'Description', 'Label', 'IsRequired', 'IsActive', 'StateMin', 'StateMax', 'PrintedInSubmissionDocuments', 'PrintedInReportDocuments', 'Example', 'MissingValueMessage', 'FilledValueMessage', 'Cols', 'Rows', 'Rank', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'projCategoryId', 'code', 'description', 'label', 'isRequired', 'isActive', 'stateMin', 'stateMax', 'printedInSubmissionDocuments', 'printedInReportDocuments', 'example', 'missingValueMessage', 'filledValueMessage', 'cols', 'rows', 'rank', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::PROJ_CATEGORY_ID, self::CODE, self::DESCRIPTION, self::LABEL, self::IS_REQUIRED, self::IS_ACTIVE, self::STATE_MIN, self::STATE_MAX, self::PRINTED_IN_SUBMISSION_DOCUMENTS, self::PRINTED_IN_REPORT_DOCUMENTS, self::EXAMPLE, self::MISSING_VALUE_MESSAGE, self::FILLED_VALUE_MESSAGE, self::COLS, self::ROWS, self::RANK, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'proj_category_id', 'code', 'description', 'label', 'is_required', 'is_active', 'state_min', 'state_max', 'printed_in_submission_documents', 'printed_in_report_documents', 'example', 'missing_value_message', 'filled_value_message', 'cols', 'rows', 'rank', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, )
 	);
 
 	/**
@@ -112,11 +118,11 @@ abstract class BaseProjDetailTypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProjCategoryId' => 1, 'Code' => 2, 'Description' => 3, 'Label' => 4, 'IsRequired' => 5, 'IsActive' => 6, 'StateMin' => 7, 'StateMax' => 8, 'Example' => 9, 'MissingValueMessage' => 10, 'FilledValueMessage' => 11, 'Cols' => 12, 'Rows' => 13, 'Rank' => 14, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'projCategoryId' => 1, 'code' => 2, 'description' => 3, 'label' => 4, 'isRequired' => 5, 'isActive' => 6, 'stateMin' => 7, 'stateMax' => 8, 'example' => 9, 'missingValueMessage' => 10, 'filledValueMessage' => 11, 'cols' => 12, 'rows' => 13, 'rank' => 14, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PROJ_CATEGORY_ID => 1, self::CODE => 2, self::DESCRIPTION => 3, self::LABEL => 4, self::IS_REQUIRED => 5, self::IS_ACTIVE => 6, self::STATE_MIN => 7, self::STATE_MAX => 8, self::EXAMPLE => 9, self::MISSING_VALUE_MESSAGE => 10, self::FILLED_VALUE_MESSAGE => 11, self::COLS => 12, self::ROWS => 13, self::RANK => 14, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'proj_category_id' => 1, 'code' => 2, 'description' => 3, 'label' => 4, 'is_required' => 5, 'is_active' => 6, 'state_min' => 7, 'state_max' => 8, 'example' => 9, 'missing_value_message' => 10, 'filled_value_message' => 11, 'cols' => 12, 'rows' => 13, 'rank' => 14, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProjCategoryId' => 1, 'Code' => 2, 'Description' => 3, 'Label' => 4, 'IsRequired' => 5, 'IsActive' => 6, 'StateMin' => 7, 'StateMax' => 8, 'PrintedInSubmissionDocuments' => 9, 'PrintedInReportDocuments' => 10, 'Example' => 11, 'MissingValueMessage' => 12, 'FilledValueMessage' => 13, 'Cols' => 14, 'Rows' => 15, 'Rank' => 16, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'projCategoryId' => 1, 'code' => 2, 'description' => 3, 'label' => 4, 'isRequired' => 5, 'isActive' => 6, 'stateMin' => 7, 'stateMax' => 8, 'printedInSubmissionDocuments' => 9, 'printedInReportDocuments' => 10, 'example' => 11, 'missingValueMessage' => 12, 'filledValueMessage' => 13, 'cols' => 14, 'rows' => 15, 'rank' => 16, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PROJ_CATEGORY_ID => 1, self::CODE => 2, self::DESCRIPTION => 3, self::LABEL => 4, self::IS_REQUIRED => 5, self::IS_ACTIVE => 6, self::STATE_MIN => 7, self::STATE_MAX => 8, self::PRINTED_IN_SUBMISSION_DOCUMENTS => 9, self::PRINTED_IN_REPORT_DOCUMENTS => 10, self::EXAMPLE => 11, self::MISSING_VALUE_MESSAGE => 12, self::FILLED_VALUE_MESSAGE => 13, self::COLS => 14, self::ROWS => 15, self::RANK => 16, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'proj_category_id' => 1, 'code' => 2, 'description' => 3, 'label' => 4, 'is_required' => 5, 'is_active' => 6, 'state_min' => 7, 'state_max' => 8, 'printed_in_submission_documents' => 9, 'printed_in_report_documents' => 10, 'example' => 11, 'missing_value_message' => 12, 'filled_value_message' => 13, 'cols' => 14, 'rows' => 15, 'rank' => 16, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, )
 	);
 
 	/**
@@ -195,6 +201,8 @@ abstract class BaseProjDetailTypePeer {
 		$criteria->addSelectColumn(ProjDetailTypePeer::IS_ACTIVE);
 		$criteria->addSelectColumn(ProjDetailTypePeer::STATE_MIN);
 		$criteria->addSelectColumn(ProjDetailTypePeer::STATE_MAX);
+		$criteria->addSelectColumn(ProjDetailTypePeer::PRINTED_IN_SUBMISSION_DOCUMENTS);
+		$criteria->addSelectColumn(ProjDetailTypePeer::PRINTED_IN_REPORT_DOCUMENTS);
 		$criteria->addSelectColumn(ProjDetailTypePeer::EXAMPLE);
 		$criteria->addSelectColumn(ProjDetailTypePeer::MISSING_VALUE_MESSAGE);
 		$criteria->addSelectColumn(ProjDetailTypePeer::FILLED_VALUE_MESSAGE);

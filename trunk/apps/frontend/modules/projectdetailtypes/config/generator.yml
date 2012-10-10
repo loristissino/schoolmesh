@@ -15,11 +15,13 @@ generator:
       actions: ~
       fields:
         is_required: { label: Required?, help: Whether the filling of this field is mandatory or not }
+        printed_in_submission_documents: { label: Printed (s)?, help: Whether the content of this field should be printed in generated submission documents }
+        printed_in_report_documents: { label: Printed (r)?, help: Whether the content of this field should be printed in generated report documents }
       list:
-        display: [ proj_category, =code, =description, is_required, is_active, state_min, state_max, rank ]
+        display: [ proj_category, =code, =description, is_required, is_active, state_min, state_max, printed_in_submission_documents, printed_in_report_documents, rank ]
         object_actions: {}
       filter:  
-        display: [ proj_category_id, code, description, is_required, is_active, state_min, state_max, rank ]
+        display: [ proj_category_id, code, description, is_required, is_active, state_min, state_max, printed_in_submission_documents, printed_in_report_documents, rank ]
       form:    ~
       edit:    ~
       new:     ~

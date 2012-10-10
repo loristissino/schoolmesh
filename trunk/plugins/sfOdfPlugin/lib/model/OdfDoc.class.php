@@ -56,6 +56,18 @@ class OdfDoc
           
         }
       }
+      $date_format=sfConfig::get('app_opendocument_date_format', false);
+      if($date_format)
+      {
+        try
+        {
+          $this->_odf->setVars('smDate', date($date_format));
+        }
+        catch (Exception $e)
+        {
+          
+        }
+      }
 		}
 		
 		

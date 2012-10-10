@@ -5228,7 +5228,22 @@
         <source>Roles management</source>
         <target>Gestione ruoli</target>
     </trans-unit>
+    <trans-unit id="1505">
+        <source>"%value%" must be at most %max%.</source>
+        <target>"%value%" deve essere al massimo %max%.</target>
+    </trans-unit>
+    <trans-unit id="1506">
+        <source>"%value%" must be at least %min%.</source>
+        <target>"%value%" deve essere al minimo %min%.</target>
+    </trans-unit>
+    <trans-unit id="1507">
+        <source>"%value%" is not a number.</source>
+        <target>"%value%" non è un numero.</target>
+    </trans-unit>
+    <trans-unit id="1508">
+        <source>All appointment types</source>
+        <target>Tutti i tipi di incarico</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
-

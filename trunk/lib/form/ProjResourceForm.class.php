@@ -10,7 +10,6 @@
 class ProjResourceForm extends BaseProjResourceForm
 {
   
-  
   public function getCurrentCulture()
   {
     return isset($this->options['culture']) ? $this->options['culture'] : 'en';
@@ -100,6 +99,12 @@ class ProjResourceForm extends BaseProjResourceForm
           'required' => true,
           'arguments' => array('separator' => sfConfig::get('app_config_hoursminutessep', ':')),
           ));
+          
+        $this->validatorSchema['quantity_approved'] = new sfValidatorCallback(array(
+          'callback'  => array($this, 'hours_validator_callback'),
+          'required' => true,
+          'arguments' => array('separator' => sfConfig::get('app_config_hoursminutessep', ':')),
+          ));
         
         /*
          * $k=Generic::getHoursAsString($resource->getQuantityEstimated(), sfConfig::get('app_config_hoursminutessep', ':'));
@@ -178,7 +183,7 @@ class ProjResourceForm extends BaseProjResourceForm
   public function hours_validator_callback($validator, $value, $arguments)
   {
     $value=Generic::getHoursAsNumber($value, $arguments['separator']);
-    if($value==-1)
+    if($value===false)
     {
       throw new sfValidatorError($validator, 'invalid');
     }

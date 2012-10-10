@@ -431,6 +431,8 @@ propel:
     is_active:   { type: boolean, default: true }
     state_min:   integer
     state_max:   integer
+    printed_in_submission_documents:  { type: boolean, default: true }
+    printed_in_report_documents:      { type: boolean, default: true }
     example:     longvarchar
     missing_value_message: varchar(255)
     filled_value_message:  varchar(255)

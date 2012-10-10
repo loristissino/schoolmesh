@@ -45,6 +45,8 @@ class ProjDetailTypeTableMap extends TableMap {
 		$this->addColumn('IS_ACTIVE', 'IsActive', 'BOOLEAN', false, null, true);
 		$this->addColumn('STATE_MIN', 'StateMin', 'INTEGER', false, null, null);
 		$this->addColumn('STATE_MAX', 'StateMax', 'INTEGER', false, null, null);
+		$this->addColumn('PRINTED_IN_SUBMISSION_DOCUMENTS', 'PrintedInSubmissionDocuments', 'BOOLEAN', false, null, true);
+		$this->addColumn('PRINTED_IN_REPORT_DOCUMENTS', 'PrintedInReportDocuments', 'BOOLEAN', false, null, true);
 		$this->addColumn('EXAMPLE', 'Example', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('MISSING_VALUE_MESSAGE', 'MissingValueMessage', 'VARCHAR', false, 255, null);
 		$this->addColumn('FILLED_VALUE_MESSAGE', 'FilledValueMessage', 'VARCHAR', false, 255, null);

@@ -1094,6 +1094,8 @@ CREATE TABLE `proj_detail_type`
 	`is_active` TINYINT default 1,
 	`state_min` INTEGER,
 	`state_max` INTEGER,
+	`printed_in_submission_documents` TINYINT default 1,
+	`printed_in_report_documents` TINYINT default 1,
 	`example` TEXT,
 	`missing_value_message` VARCHAR(255),
 	`filled_value_message` VARCHAR(255),
