@@ -1,0 +1,14 @@
+documents:
+  is_secure: true
+
+serve:
+  is_secure: true
+  
+execute:
+  is_secure: true
+  credentials: admin
+  
+all:
+  is_secure: false
+  
+

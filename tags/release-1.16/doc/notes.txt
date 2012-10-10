@@ -1,0 +1,321 @@
+2012/10/10
+Release: 1.16
+Added fields printed_in_submission_documents and printed_in_report_documents (boolean) in proj_detail_type table
+Improved template engine for projects
+
+2012/10/08
+Release: 1.15
+Added charge_havingregardto and confirmation_havingregardto fields to role table
+Modified template engine for charge letters (responsibility roles)
+
+2012/10/03
+Release: 1.14
+Added smRelease field for OdfDocument templating
+Changed app.yml file accordingly
+# svn copy  https://schoolmesh.googlecode.com/svn/trunk/ https://schoolmesh.googlecode.com/svn/tags/release-1.14
+
+2012/10/01
+Release: 1.13
+# svn copy  https://schoolmesh.googlecode.com/svn/trunk/ https://schoolmesh.googlecode.com/svn/tags/release-1.13
+
+2012/10/01
+Added field is_active in proj_category table
+
+2012/09/26
+Added two tables: proj_detail and proj_detail_type
+Deleted some fields in schoolproject table
+Release: 1.12
+# svn copy  https://schoolmesh.googlecode.com/svn/trunk/ https://schoolmesh.googlecode.com/svn/tags/release-1.12
+
+2012/09/09
+Added is_active field in Subject table
+
+2012/09/03
+Release: 1.11
+Added plaintext_password and ecrypted_password fields in users' profiles table
+# svn copy  https://schoolmesh.googlecode.com/svn/trunk/ https://schoolmesh.googlecode.com/svn/tags/release-1.11
+
+2012/08/29
+Added sf_guard_user_security table
+
+2012/08/27
+Added two-factor authentication.
+
+
+2012/08/17
+Improved 'change password action'
+http://simplythebest.net/scripts/ajax/ajax_password_strength.html
+
+
+2012/08/08
+Added field "code" in schoolproject table
+Modified projects module in order to use the code of the project
+
+2012/08/04
+Release: 1.10
+Added field mobile in sf_guard_user_profile table
+Added tables informativecontent and consent
+
+2012/08/03
+Added field details in user_team table
+
+2012/05/31
+Release: 1.09
+Changed field name in role table:
+  forfait_pay -> forfait_retribution 
+
+2012/05/31
+Release: 1.08
+Changed field name in userteam table:
+  reference_number -> charge_reference_number 
+Added field in userteam table:
+  confirmation_reference_number: { type: varchar(20), default: null } 
+Added three fields in role table:
+  forfait_pay: { type: decimal, size: 10, scale: 2 }
+  charge_notes: longvarchar
+  confirmation_notes: longvarchar
+
+2012/05/30
+Release: 1.07
+Added fields min and max in role table
+
+2012/05/11
+Release: 1.06
+Added field shortcut in proj_resource_type table (unique)
+
+2012/05/09
+Release: 1.05
+Added fields created_at and no_activity_confirm in schoolproject table
+
+2012/05/08
+Release: 1.04
+Added field created_at (datetime) in attachment table
+stat -c 'UPDATE `attachment_file` SET `created_at`=FROM_UNIXTIME(%Y) WHERE `uniqid`="%n";' *
+
+2012/05/06
+Release: 1.03
+Added field reference_number in user_team table
+
+2012/05/01
+Release: 1.02
+Added fields in syllabus table
+UPDATE  `syllabus` SET  `name` =  'Assi culturali primo biennio',
+`evaluation_min` =  '1',
+`evaluation_max` =  '4',
+`evaluation_min_description` =  'Nel complesso non acquisita',
+`evaluation_max_description` =  'Nel complesso pienamente acquisita' WHERE  `syllabus`.`id` =4;
+
+2012/04/18
+Added three fields in profile table (website, office and ptn_notes)
+
+2012/04/12
+Release: 1.01
+Prepared charge letters module
+Changed update.sh script in order to take note of the svn revision of this file in doc/lastrevision.txt
+#svn copy  https://schoolmesh.googlecode.com/svn/trunk/ https://schoolmesh.googlecode.com/svn/tags/release-1.01
+
+2012/04/04
+Added code and rank fields in wptool_item table
+
+2012/03/28
+Release: 1.0
+#svn copy  https://schoolmesh.googlecode.com/svn/trunk/ https://schoolmesh.googlecode.com/svn/tags/release-1.0
+
+2012/03/11
+Huge refactoring in appointments management, added state_min and state_max in subtables.
+
+2012/03/09
+Added has_attachments field in appointment_type table
+Added code in wpinfo_type table
+
+2012/03/07
+Added table appointment_type.
+Changed references for wpinfo, wpitem_type, wptools for appointments.
+Added fields grade_min and grade_max in the same tables.
+
+2012/03/4
+Added two boolean fields in proj_resource_type table:
+    printed_in_submission_letters: { type: boolean, default: true }
+    printed_in_charge_letters: { type: boolean, default: true }
+Now these ones are used to determinate whether a resource must be printed or not 
+
+2012/03/03
+Added team_id field in schoolproject table
+
+2012/02/12
+Added field is_key (boolean) on role table
+
+2012/02/11
+Added notes field (longvarchar) on user_team table
+
+2012/02/05
+Added rank field (integer) on role table
+
+2012/01/29
+Added field is_public (boolean) on team table
+
+2012/01/26
+Added 'teams'=>'Teams management' to sf_guard_permission table
+
+2012/01/17
+Added field needs_charge_letter on role table
+
+2012/01/16
+Added field expiry on user_team table
+
+2012/01/12
+Added field paper_log in proj_activity table
+
+2011/12/26
+Added field "preferred culture" in sfGuardUserProfile table
+UPDATE `schoolmesh`.`sf_guard_user_profile` SET `preferred_culture` = 'it';
+
+2011/12/22
+Consider whether to link to http://www.ohloh.net/p/schoolmesh in the documentation
+Test https://launchpad.net/~openoffice-pkgs/+archive/ppa?field.series_filter=lucid to see if it solves problems of conversions
+
+2011/12/16
+Added table student_syllabus_item
+
+2011/12/09
+Added rank in proj_resource_type table
+
+Added preferred_format in sfGuardUserProfile table
+
+UPDATE `schoolmesh`.`sf_guard_user_profile` SET `preferred_format` = 'odt';
+
+
+Added is_monetary field in proj_resource e proj_resource_type tables
+
+UPDATE `schoolmesh`.`proj_resource_type` SET `is_monetary` = '0' WHERE `proj_resource_type`.`id` =7;
+
+
+Added is_public field in appointment table
+
+
+Added title field in sfGuardUserProfile table
+
+MYSQL:	`title` VARCHAR(10),
+
+Added prefers_richtext field in sfGuardUserProfile table
+
+MYSQL:	`prefers_richtext` TINYINT default 1,
+
+Added reference_number field in Schoolproject table
+
+MYSQL:	`reference_number` VARCHAR(20),
+
+
+for the role "Teacher", do something like:
+
+UPDATE `sf_guard_user_profile`
+SET title='Prof.'
+WHERE `role_id` =39
+AND `gender` = 'M'
+
+Remove Resource_type column in ProjResourceType table
+Add Finalities, adddresses and other fields in Project table
+
+
+# Revision 498:
+Changed is_reserved to is_confidential in wpinfo
+Added is_public in attachment_file
+
+
+# Revision 429:
+
+Cmnd_Alias SCHOOLMESH_USERFOLDER = /usr/bin/find -L /home/homeschoolmesh/users/*, /usr/bin/test -e /home/homeschoolmesh/users/*, /usr/bin/stat /home/homeschoolmesh/users/*, /usr/bin/file /home/homeschoolmesh/users/*, /bin/cp /home/homeschoolmesh/users/* /tmp/*schoolmesh, /bin/chmod 766 /tmp/*schoolmesh, /bin/cp /tmp/* /home/homeschoolmesh/users/*, /bin/chmod 644 /home/homeschoolmesh/users/*, /bin/rm /home/homeschoolmesh/users/*, /bin/mkdir /home/homeschoolmesh/users/*, /bin/rmdir /home/homeschoolmesh/users/*
+
+# Revision 425:
+
+Changed in /etc/sudoers:
+
+Cmnd_Alias SCHOOLMESH_USERFOLDER = /usr/bin/find -L /home/homeschoolmesh/users/*, /usr/bin/test -e /home/homeschoolmesh/users/*, /usr/bin/stat /home/homeschoolmesh/users/*, /usr/bin/file /home/homeschoolmesh/users/*, /bin/cp /home/homeschoolmesh/users/* /tmp/*schoolmesh, /bin/chmod 766 /tmp/*schoolmesh, /bin/cp /tmp/* /home/homeschoolmesh/users/*, /bin/chmod 644 /home/homeschoolmesh/users/*
+
+# Revision 423:
+
+Changed this in /etc/sudoers:
+
+----
+# Cmnd alias specification
+Cmnd_Alias SCHOOLMESH_USERFOLDER = /usr/bin/find -L /home/homeschoolmesh/users/*, /usr/bin/test -d /home/homeschoolmesh/users/*, /usr/bin/stat /home/homeschoolmesh/users/*, /usr/bin/file /home/homeschoolmesh/users/*, /bin/cp /home/homeschoolmesh/users/* /tmp/*schoolmesh, /bin/chmod 766 /tmp/*schoolmesh
+
+
+
+
+# Revision 421:
+
+Added this in /etc/sudoers:
+
+----
+Cmnd_Alias SCHOOLMESH_USERFOLDER = /usr/bin/find -L /home/homeschoolmesh/users/*, /usr/bin/test -d /home/homeschoolmesh/users/*, /usr/bin/stat /home/homeschoolmesh/users/*, /usr/bin/file /home/homeschoolmesh/users/*
+
+...
+
+WEBSERVER ALL=(ALL)NOPASSWD: SCHOOLMESH_USERFOLDER
+----
+
+# Revision 405:
+
+Changed size of field EmailVerificationCode for sfGuardUserProfile table
+
+# Revision 395:
+
+Added tables about hints
+
+# Revision 391:
+
+Added tables about projects
+
+# Revision 389:
+
+Added some tables.
+
+INSERT INTO `suggestion` (`shortcut`, `content`, `rank`) VALUES
+('individ', 'Studio individuale', 1),
+('itinere', 'Recupero in itinere', 2),
+('sportello', 'Sportello', 3),
+('corso', 'Corso di recupero', 4);
+
+INSERT INTO `term` (`id`, `description`, `end_day`, `has_formal_evaluation`) VALUES
+('Term1', 'Primo quadrimestre', 120, 1),
+('Term2', 'Secondo quadrimestre', 285, 1),
+('Term2a', 'Secondo quadrimestre, valutazi', 195, 0);
+
+
+# From revision 366 to revision 367:
+
+Added sfOdfPlugin, we should need to change settings.yml
+
+	enabled_modules:
+      - default
+      - sfGuardAuth
+      - sfGuardUser
+      - sfOdfOdt  
+
+# From revision 331 to revision 332:
+
+Add in app.yml:
+
+    appointments_max_per_page: 30
+
+# From revision 321 to revision 322:
+
+Change WpinfoType in the database, 0->10, 30->40 (state)
+Workplans:
+	Recupero -> Recupero programmato
+	Commenti - > Commenti (progettazione)
+	Considerazioni finali -> Situazione finale della classe
+	Tipologia delle verifiche -> Tipologia delle verifiche previste
+	Strumenti -> Strumenti previsti
+	
+
+# From revision 319 to revision 320:
+
+Changed Appointments/Workplans workflow, adding a AP_ASSIGNED initial state. Constants changed meaning. Updated data fixtures.
+
+# From revision 316 to revision 317:
+
+Add in app.yml:
+
+    users_max_per_page: 30

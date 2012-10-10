@@ -1,0 +1,30 @@
+message:
+  subject: Progetto «%project_title%» - richiesta informazioni
+  salutation: true
+  body: |
+  
+    una o più scadenze per il monitoraggio del progetto «%project_title%» sono passate:
+    
+    %deadlines_list%
+    Nel sito intranet dell'Istituto potrai:
+    
+    * inserire le informazioni riguardanti le attività svolte
+    * indicare quali attività sono state completate
+    * posporre le scadenze, indicando i motivi nelle note
+    * allegare file per documentare le attività (resoconti, analisi di questionari, ecc.)
+
+    L'indirizzo della pagina web per farlo è:
+
+    http://www..../index.php/projects/edit/id/%id%
+
+    Cordiali saluti,
+
+        %sender_fullname%
+        %sender_email%
+
+  tagline: |
+    Attenzione:
+    Questo messaggio è stato generato automaticamente. Se vuoi rispondere, non fare
+    clic sul pulsante "Rispondi" del tuo programma di posta, ma usa l'indirizzo riportato
+    qui sopra.
+

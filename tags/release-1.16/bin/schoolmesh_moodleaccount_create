@@ -1,0 +1,59 @@
+#!/bin/bash
+
+CONFIG_READ=0
+source /var/schoolmesh/config/schoolmesh.rc $@
+if [ $CONFIG_READ -ne 1 ]; then echo "Error in reading configuration"; exit 1; fi
+
+#@ # NAME
+#@
+#@ {} - Create a moodle account for a user
+#@
+#@ # SYNOPSIS
+#@
+#@ {} *username* *firstname* *lastname* *password* *institution* *department* *email* 
+#@
+#@ # DESCRIPTION
+#@
+#@ Use this script to create a moodle account.
+#@ Some checks are done before the creation.
+#@
+#@ # EXAMPLES
+#@
+#@ {-} john 'John' 'Doe' ck33LmrdH_45 john.doe@example.com
+#@
+#@ # TO DO
+#@
+#@ Passwords should not be passed on the command line. This must be
+#@ modified,probably by passing a file name containing the password.
+
+USERNAME=$1
+FIRSTNAME=$2
+LASTNAME=$3
+PASSWORD=$4
+INSTITUTION=$5
+DEPARTMENT=$6
+EMAIL=$7
+
+checkUsername $USERNAME
+checkString "$FIRSTNAME"
+checkString "$LASTNAME"
+checkString "$PASSWORD"
+
+checkString "$MOODLE_KEY"
+checkString "$MOODLE_REMOTE"
+
+MD5PWD=$(echo -n "$PASSWORD" | md5sum | cut -d ' ' -f1)
+
+# FIXME Should encrypt passwords here...
+
+QUERY="username=$USERNAME&firstname=$FIRSTNAME&lastname=$LASTNAME&md5pwd=$MD5PWD&email=$EMAIL&institution=$INSTITUTION&department=$DEPARTMENT"
+
+MD5SUM=$(echo -n "$USERNAME$MOODLE_KEY" | md5sum | cut -d ' ' -f1) 
+
+QUERY="$QUERY&md5sum=$MD5SUM"
+
+curl --data "$QUERY" "$MOODLE_REMOTE?action=createuser"
+
+exit
+
+&& msg_ok "added user: $USERNAME" || unexpectedError $@

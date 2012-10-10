@@ -1,0 +1,64 @@
+Address:
+  igea:
+    id:             I
+    description:    Indirizzo giuridico, economico, aziendale
+  mercurio:
+    id:             P
+    description:    Indirizzo Programmatori (sperimentazione Mercurio)
+    
+Schoolclass:
+  3ap:
+    id:             3AP
+    grade:          3
+    section:        A
+    address_id:     mercurio
+    description:    Classe Terza AP
+
+  4ap:
+    id:             4AP
+    grade:          4
+    section:        A
+    address_id:     mercurio
+    description:    Classe Quarta AP
+
+  5ap:
+    id:             5AP
+    grade:          4
+    section:        A
+    address_id:     mercurio
+    description:    Classe Quinta AP
+
+  3bp:
+    id:             3BP
+    grade:          3
+    section:        A
+    address_id:     mercurio
+    description:    Classe Terza BP
+
+  4bp:
+    id:             4BP
+    grade:          4
+    section:        B
+    address_id:     mercurio
+    description:    Classe Quarta BP
+
+  5bp:
+    id:             5BP
+    grade:          5
+    section:        B
+    address_id:     mercurio
+    description:    Classe Quinta BP
+
+  1ai:
+    id:             1AI
+    grade:          1
+    section:        A
+    address_id:     igea
+    description:    Classe Prima AI
+
+  2ai:
+    id:             2AI
+    grade:          2
+    section:        A
+    address_id:     igea
+    description:    Classe Seconda AI

@@ -1,0 +1,14 @@
+default:
+  credentials: [[ teams ]]
+new:
+  credentials: [[ teams ]]
+
+edit:
+  credentials: [[ teams ]]
+  
+delete:
+  credentials: [[ admin ]]  
+  
+viewlogs:
+  credentials: [[ admin ]]  
+
