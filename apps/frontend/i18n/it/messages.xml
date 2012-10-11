@@ -5244,6 +5244,10 @@
         <source>All appointment types</source>
         <target>Tutti i tipi di incarico</target>
     </trans-unit>
+    <trans-unit id="1509">
+        <source>References</source>
+        <target>Riferimenti</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
