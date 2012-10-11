@@ -15,6 +15,11 @@
 </ul>
 <?php endif ?>
 
+<h2><?php echo __('References') ?></h2>
+<ul class="sf_admin_actions">
+  <?php echo li_link_to_if('action_smdoc', true, __('Syllabi'), 'syllabi/index') ?>
+</ul>
+
 
 <?php if (
   $sf_user->hasCredential('admin') or 
