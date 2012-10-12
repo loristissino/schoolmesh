@@ -98,9 +98,11 @@
             ?>
           </span>
           <br />
-          <em>released under the <?php echo link_to('GNU General Public License', url_for('content/license')) ?></em>
+          <em>released under the <?php echo link_to('GNU General Public License', url_for('@content_static?filecode=license')) ?></em>
           
           - <?php echo (__('Release: %release% (svn revision %revision%)', array('%release%'=>sfConfig::get('app_config_release_number'), '%revision%'=>sfConfig::get('app_config_revision_number')))) ?>
+          
+          <?php echo link_to('Legal information', url_for('@content_static?filecode=legal')) ?>
 
         </div>
       </div>
