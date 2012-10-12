@@ -102,7 +102,7 @@
           
           - <?php echo (__('Release: %release% (svn revision %revision%)', array('%release%'=>sfConfig::get('app_config_release_number'), '%revision%'=>sfConfig::get('app_config_revision_number')))) ?>
           
-          <?php echo link_to('Legal information', url_for('@content_static?filecode=legal')) ?>
+          - <?php echo link_to(__('Legal information'), url_for('@content_static?filecode=legal')) ?>
 
         </div>
       </div>

@@ -5248,6 +5248,11 @@
         <source>References</source>
         <target>Riferimenti</target>
     </trans-unit>
+    <trans-unit id="1510">
+        <source>Legal information</source>
+        <target>Informazioni legali</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
