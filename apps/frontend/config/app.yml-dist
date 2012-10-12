@@ -164,3 +164,8 @@ all:
   documents:
     main_directory: /var/schoolmesh/data/documents
     attachments:    /var/schoolmesh/data/attachments
+
+  content:
+    static:
+      license: { title: GNU General Public License, file: legal/gpl.txt, type: text/plain }
+      legal:   { title: Legal information, file: legal/legal.txt, type: text/plain }

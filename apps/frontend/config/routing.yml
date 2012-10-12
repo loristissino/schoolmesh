@@ -1,3 +1,7 @@
+content_static:
+  url:    /content/static/:filecode
+  param:  { module: content, action: static }
+
 project_data:
   url:    /projects/data/id/:id
   param:  { module: projects, action: data }

@@ -260,9 +260,14 @@ class contentActions extends sfActions
     }
   }
 
-  public function executeLicense(sfWebRequest $request)
+  public function executeStatic(sfWebRequest $request)
   {
-    $this->file=file('license/gpl.txt');
+    $availabledocs=sfConfig::get('app_content_static', array());
+    $filecode=$request->getParameter('filecode');
+    $this->forward404Unless(isset($availabledocs[$filecode]));
+    $this->forward404Unless(is_array($this->doc = $availabledocs[$filecode]));
+    
+//    $this->file=file('legal/gpl.txt');
   }
   
   public function executeCommonqueries(sfWebRequest $request)
