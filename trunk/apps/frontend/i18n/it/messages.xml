@@ -5168,10 +5168,6 @@
         <source>Noticeboard</source>
         <target>Bacheca</target>
     </trans-unit>
-    <trans-unit id="1489">
-        <source>Please note that some of the projects might have not been approved / confirmed at this time.</source>
-        <target>Si noti che alcuni di questi progetti potrebbero non essere stati ancora approvati / confermati.</target>
-    </trans-unit>
     <trans-unit id="1490">
         <source>The following charts / tables depict the budget requested for each project.</source>
         <target>I seguenti grafici e tabelle mostrano il budget richiesto per ogni progetto.</target>
@@ -5251,6 +5247,18 @@
     <trans-unit id="1510">
         <source>Legal information</source>
         <target>Informazioni legali</target>
+    </trans-unit>
+    <trans-unit id="1511">
+        <source>Recapitulation for roles</source>
+        <target>Riepilogo ruoli</target>
+    </trans-unit>
+    <trans-unit id="1512">
+        <source>Average per project</source>
+        <target>Media per progetto</target>
+    </trans-unit>
+    <trans-unit id="1513">
+        <source>Staff involved</source>
+        <target>Personale coinvolto</target>
     </trans-unit>
     </body>
   </file> 

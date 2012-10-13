@@ -1,5 +1,9 @@
 <?php
 
+
+class MyObj
+{}
+
 /**
  * SchoolprojectPeer class.
  *
@@ -16,8 +20,8 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 		$c=new Criteria();
 		$c->add(self::YEAR_ID, $year);
     $stateCriterion = $c->getNewCriterion(self::STATE, Workflow::PROJ_DRAFT, Criteria::GREATER_THAN);
-    $refCriterion = $c->getNewCriterion(self::REFERENCE_NUMBER, null, Criteria::ISNOTNULL);
-    $dateCriterion = $c->getNewCriterion(self::SUBMISSION_DATE, null, Criteria::ISNOTNULL);
+    $refCriterion = $c->getNewCriterion(self::REFERENCE_NUMBER, '', Criteria::NOT_EQUAL);
+    $dateCriterion = $c->getNewCriterion(self::SUBMISSION_DATE, 0, Criteria::GREATER_THAN);
     $stateCriterion->addOr($refCriterion);
     $stateCriterion->addOr($dateCriterion);
     $c->add($stateCriterion);
@@ -774,7 +778,9 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
   
   public static function getSynthesisBudgetData($ids=array())
   {
-    // we need to run two separate queries and then mix up the values
+    $states = Workflow::getProjSteps();
+    
+    // we need to run three separate queries and then mix up the values
     // it could be possible in some other ways with pure SQL, but with
     // Propel it seems a bit complicated...
     
@@ -788,6 +794,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     $c1->addAsColumn('ID', SchoolprojectPeer::ID);
     $c1->addAsColumn('CODE', SchoolprojectPeer::CODE);
     $c1->addAsColumn('TITLE', SchoolprojectPeer::TITLE);
+    $c1->addAsColumn('STATE', SchoolprojectPeer::STATE);
     $c1->addAsColumn('TOTAL_AMOUNT', 'SUM(IF(' . ProjResourcePeer::STANDARD_COST . ' IS NULL, ' . ProjResourcePeer::QUANTITY_APPROVED . ', ' . ProjResourcePeer::QUANTITY_APPROVED . ' * ' . ProjResourcePeer::STANDARD_COST . '))');
     $c1->addAsColumn('EXTERNAL_FUNDING', 'SUM(' . ProjResourcePeer::AMOUNT_FUNDED_EXTERNALLY . ')');
     //$c->addAsColumn('DECLARED_ACTIVITIES', 'SUM(IF(' . ProjActivityPeer::ACKNOWLEDGED_AT . ' IS NOT NULL, ' . ProjActivityPeer::QUANTITY . ', 0) * ' . ProjResourcePeer::STANDARD_COST . ')');
@@ -800,6 +807,8 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     while($row = $stmt->fetch(PDO::FETCH_OBJ))
     {
       $row->INTERNAL_FUNDING = $row->TOTAL_AMOUNT - $row->EXTERNAL_FUNDING;
+      $row->STATE=$states[$row->STATE]['stateDescription'];
+      $row->STAFF=array();
       $result[$row->ID]=$row;
       $result[$row->ID]->ACKNOWLEDGED_ACTIVITIES = 0;
     }
@@ -812,10 +821,8 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     $c2->clearSelectColumns();
     $c2->setDistinct();
     $c2->addAsColumn('ID', SchoolprojectPeer::ID);
-    $c2->addAsColumn('TITLE', SchoolprojectPeer::TITLE);
     $c2->addAsColumn('ACKNOWLEDGED_ACTIVITIES', 'SUM(IF(' . ProjActivityPeer::ACKNOWLEDGED_AT . ' IS NOT NULL, ' . ProjActivityPeer::QUANTITY . ', 0) * ' . ProjResourcePeer::STANDARD_COST . ')');
     $c2->addGroupByColumn(SchoolprojectPeer::ID);
-    $c1->addGroupByColumn(SchoolprojectPeer::TITLE);
     self::addAscendingOrderToCriteria($c2);
     $stmt=SchoolprojectPeer::doSelectStmt($c2);
     
@@ -823,12 +830,38 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     {
       $result[$row->ID]->ACKNOWLEDGED_ACTIVITIES = $row->ACKNOWLEDGED_ACTIVITIES;
     }
+
+		$c3=new Criteria();
+    $c3->addJoin(self::ID, ProjResourcePeer::SCHOOLPROJECT_ID, Criteria::LEFT_JOIN);
+    $c3->addJoin(ProjResourcePeer::ID, ProjActivityPeer::PROJ_RESOURCE_ID, Criteria::LEFT_JOIN);
+    $c3->addJoin(ProjActivityPeer::USER_ID, sfGuardUserProfilePeer::USER_ID);
+    $c3->addJoin(sfGuardUserProfilePeer::ROLE_ID, RolePeer::ID);
+    $c3->add(self::ID, $ids, Criteria::IN);
+    $c3->add(ProjActivityPeer::ACKNOWLEDGED_AT, null, Criteria::ISNOTNULL);
+    $c3->clearSelectColumns();
+    $c3->setDistinct();
+    $c3->addAsColumn('ID', SchoolprojectPeer::ID);
+    $c3->addAsColumn('ROLE', RolePeer::MALE_DESCRIPTION);
+    $c3->addAsColumn('NUMBER', 'COUNT( DISTINCT ' . ProjActivityPeer::USER_ID . ')');
+    $c3->addGroupByColumn(SchoolprojectPeer::ID);
+    $c3->addGroupByColumn(RolePeer::MALE_DESCRIPTION);
     
+    self::addAscendingOrderToCriteria($c3);
+    
+    $stmt=SchoolprojectPeer::doSelectStmt($c3);
+    
+    $old_id=null;
+    
+    while($row = $stmt->fetch(PDO::FETCH_OBJ))
+    {
+      $result[$row->ID]->STAFF[$row->ROLE] = $row->NUMBER;
+    }
+
     return $result;    
     
   }
   
-  public static function getStatsForYear($year, $sf_context)
+  public static function getStatsForYear($year)
 	{
 		$c=new Criteria();
 		$c->add(self::YEAR_ID, $year);
@@ -846,15 +879,16 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     {
       if(isset($states[$row->STATE]))
       {
-        $row->STATEDESCRIPTION=$sf_context->getI18N()->__($states[$row->STATE]['stateDescription']);
+        $row->STATEDESCRIPTION=$states[$row->STATE]['stateDescription'];
       }
       $result[]=$row;
     }
     return $result;
 	}
-  
 
 } // SchoolprojectPeer
+
+
 
 /*
 SELECT schoolproject.ID AS ID, schoolproject.TITLE AS TITLE, SUM( IF( proj_resource.STANDARD_COST IS NULL , proj_resource.QUANTITY_APPROVED, proj_resource.QUANTITY_APPROVED * proj_resource.STANDARD_COST ) ) AS TOTAL_AMOUNT, SUM( proj_resource.AMOUNT_FUNDED_EXTERNALLY ) AS EXTERNAL_FUNDING, SUM(quantity*proj_resource.STANDARD_COST) as DECLARED_ACTIVITIES
@@ -865,4 +899,23 @@ IN (
 )
 AND proj_activity.ACKNOWLEDGED_AT is not null
 GROUP BY schoolproject.ID, schoolproject.TITLE
+* 
+* 
+* 
+* SELECT DISTINCT role.MALE_DESCRIPTION AS ROLE, COUNT( DISTINCT proj_activity.USER_ID ) AS NUMBER
+FROM  `schoolproject` 
+CROSS JOIN  `sf_guard_user_profile` 
+CROSS JOIN  `role` 
+LEFT JOIN proj_resource ON ( schoolproject.ID = proj_resource.SCHOOLPROJECT_ID ) 
+LEFT JOIN proj_activity ON ( proj_resource.ID = proj_activity.PROJ_RESOURCE_ID ) 
+WHERE schoolproject.ID
+IN (
+ '63',  '64',  '65',  '68',  '69',  '70',  '71',  '72',  '73',  '74',  '75',  '77',  '78',  '79',  '80',  '81',  '82',  '83',  '84',  '85',  '87',  '88',  '89',  '90',  '91',  '92'
+)
+AND proj_activity.ACKNOWLEDGED_AT IS NOT NULL 
+AND proj_activity.USER_ID = sf_guard_user_profile.USER_ID
+AND sf_guard_user_profile.ROLE_ID = role.ID
+GROUP BY role.MALE_DESCRIPTION
+ORDER BY schoolproject.CODE ASC , schoolproject.PROJ_CATEGORY_ID ASC , schoolproject.TITLE ASC 
+* 
 */
