@@ -52,7 +52,7 @@ class dashboardActions extends sfActions
         
         foreach($data as $d)
         {
-          $labels[]=$d->STATEDESCRIPTION;
+          $labels[]=$this->getContext()->getI18N()->__($d->STATEDESCRIPTION);
           $values[]=$d->NUMBER;
         }
         
