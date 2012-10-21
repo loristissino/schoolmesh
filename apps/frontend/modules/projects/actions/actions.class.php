@@ -496,6 +496,15 @@ class projectsActions extends sfActions
     $this->breadcrumpstype='projects/monitoring/viewasreport';
   }
   
+  public function executeSubmissions(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->type=sfConfig::get('app_config_projects_view_report_type', false));
+    $this->ids=SchoolprojectPeer::retrieveIdsForYear(sfConfig::get('app_config_current_year'), false);
+    $this->projects=SchoolprojectPeer::retrieveByPksSorted($this->ids);
+    $this->setTemplate('report');
+    $this->breadcrumpstype='projects/submissions';
+  }
+  
   public function executeView(sfWebRequest $request)
   {
    $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPK($request->getParameter('id')));

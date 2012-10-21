@@ -103,5 +103,9 @@ submit:
 new:
   credentials: proj_coordination
 
+submissions:
+  credentials: [[ proj_coordination, proj_monitoring ]]
+
+
 default:
   credentials: [[ proj_coordination, proj_activity, proj_view, proj_adm_ok, proj_monitoring ]]

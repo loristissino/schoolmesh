@@ -237,16 +237,13 @@ function minutes_missing_to_restore()
 
 function li_link_to_if($class_suffix, $condition, $name, $internal_uri, $options=array())
 {
+  $td=substr($class_suffix, 0, 3)=='td_';
+  
   if($condition)
   {
-    if(substr($class_suffix, 0, 3)=='td_')
+    if($td)
     {
       $class_suffix=substr($class_suffix, 3);
-      $td=true;
-    }
-    else
-    {
-      $td=false;
     }
     
     return '<li class="sf_admin_' . $class_suffix. '">' . 
@@ -254,7 +251,7 @@ function li_link_to_if($class_suffix, $condition, $name, $internal_uri, $options
   }
   else
   {
-    return '<li></li>'; // this is needed to avoid <ul> element to be empty
+    return '<li style="display: none"></li>'; // this is needed to avoid <ul> element to be empty
   }
   
 }

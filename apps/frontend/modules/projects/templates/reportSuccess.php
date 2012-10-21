@@ -26,6 +26,13 @@
   ))
 ?>
 <?php endif ?>
+<?php if($breadcrumpstype=='projects/submissions'): ?>
+<?php $route='projects/submissions' ?>
+<?php include_partial('content/breadcrumps', array(
+  'current'=>__('Projects waiting for approval', array())
+  ))
+?>
+<?php endif ?>
 
 <?php include_partial('content/flashes'); ?>
 
@@ -33,8 +40,17 @@
 
 <?php if(sizeof($projects)>0): ?>
 
+<?php if(isset($route)): ?>
+<ul class="sf_admin_actions">
 <?php foreach ($projects as $project): ?>
-<h2><?php echo $project->getTitle() ?></h2>
+<?php echo li_link_to_if('action_items', true, $project->getTitle(), url_for($route), array('anchor'=>'project_'. $project->getId())) ?>
+<?php endforeach ?>
+</ul>
+<hr />
+<?php endif ?>
+
+<?php foreach ($projects as $project): ?>
+<h2 id="project_<?php echo $project->getId() ?>"><?php echo $project->getTitle() ?></h2>
 <blockquote>
 <?php //!-- I know, we should use a styleshed div here... ! ?>
 <h3><?php echo __('Basic information') ?></h3>
@@ -42,7 +58,7 @@
 	<strong><?php echo __('Coordinator') ?>:</strong> <?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?><br />
 	<strong><?php echo __('Category') ?>:</strong> <?php echo $project->getProjCategory() ?><br />
   
-  <?php foreach($project->getProjDetails() as $projDetail): $projDetailType=$projDetail->getProjDetailType() ?>
+  <?php foreach($project->getPrintableProjDetails($type) as $projDetail): $projDetailType=$projDetail->getProjDetailType() ?>
     <strong><?php echo $projDetailType->getDescription() ?>:</strong><br />
     <?php echo nl2br($projDetail->getContent()) ?><br />
   <?php endforeach ?>

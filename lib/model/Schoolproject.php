@@ -443,7 +443,6 @@ class Schoolproject extends BaseSchoolproject {
   
   public function getPrintableProjDetails($type)
   {
-    Generic::logMessage('called', $type);
     $c = new Criteria();
     $c->addJoin(ProjDetailPeer::PROJ_DETAIL_TYPE_ID, ProjDetailTypePeer::ID);
     $c->add(ProjDetailPeer::SCHOOLPROJECT_ID, $this->getId());

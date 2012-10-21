@@ -8,7 +8,7 @@
 	<li><?php echo $resource->getDescription() ?>
 	<ul>
 		<li><?php echo __('Resource type') ?>: <strong><?php echo $resource->getProjResourceType() ?></strong></li>
-		<li><?php echo __('Charged user') ?>: <strong><?php echo $resource->getChargedUserProfile() ?></strong></li>
+		<li><?php echo __('Charged user') ?>: <?php if($resource->getChargedUserId()): ?><strong><?php echo $resource->getChargedUserProfile() ?></strong><?php else: ?><em><?php echo __('no specific user charged with for this resource') ?></em><?php endif ?></li>
     <?php if ($resource->getProjResourceTypeId()): ?>
       <li><?php echo __('Estimation') ?>: <strong><?php echo quantityvalue($resource->getQuantityEstimated(), $resource->getProjResourceType()->getMeasurementUnit()) ?></strong></li>
       <?php if($project->getState()>Workflow::PROJ_SUBMITTED): ?>
