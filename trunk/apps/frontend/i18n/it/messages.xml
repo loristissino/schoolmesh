@@ -5241,8 +5241,8 @@
         <target>Tutti i tipi di incarico</target>
     </trans-unit>
     <trans-unit id="1509">
-        <source>References</source>
-        <target>Riferimenti</target>
+        <source>References and documentation</source>
+        <target>Riferimenti e documentazione</target>
     </trans-unit>
     <trans-unit id="1510">
         <source>Legal information</source>
@@ -5259,6 +5259,14 @@
     <trans-unit id="1513">
         <source>Staff involved</source>
         <target>Personale coinvolto</target>
+    </trans-unit>
+    <trans-unit id="1514">
+        <source>no specific user charged with for this resource</source>
+        <target>non è stato indicato un incaricato specifico</target>
+    </trans-unit>
+    <trans-unit id="1515">
+        <source>Projects waiting for approval</source>
+        <target>Progetti in attesa di approvazione</target>
     </trans-unit>
     </body>
   </file> 
