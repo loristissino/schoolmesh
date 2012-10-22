@@ -795,6 +795,8 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     $c1->addAsColumn('CODE', SchoolprojectPeer::CODE);
     $c1->addAsColumn('TITLE', SchoolprojectPeer::TITLE);
     $c1->addAsColumn('STATE', SchoolprojectPeer::STATE);
+    $c1->addAsColumn('EVALUATION_MIN', SchoolprojectPeer::EVALUATION_MIN);
+    $c1->addAsColumn('EVALUATION_MAX', SchoolprojectPeer::EVALUATION_MAX);
     $c1->addAsColumn('TOTAL_AMOUNT', 'SUM(IF(' . ProjResourcePeer::STANDARD_COST . ' IS NULL, ' . ProjResourcePeer::QUANTITY_APPROVED . ', ' . ProjResourcePeer::QUANTITY_APPROVED . ' * ' . ProjResourcePeer::STANDARD_COST . '))');
     $c1->addAsColumn('EXTERNAL_FUNDING', 'SUM(' . ProjResourcePeer::AMOUNT_FUNDED_EXTERNALLY . ')');
     //$c->addAsColumn('DECLARED_ACTIVITIES', 'SUM(IF(' . ProjActivityPeer::ACKNOWLEDGED_AT . ' IS NOT NULL, ' . ProjActivityPeer::QUANTITY . ', 0) * ' . ProjResourcePeer::STANDARD_COST . ')');
@@ -811,6 +813,8 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       $row->STAFF=array();
       $result[$row->ID]=$row;
       $result[$row->ID]->ACKNOWLEDGED_ACTIVITIES = 0;
+      $result[$row->ID]->AVG_EVALUATION = 'N/A';
+      
     }
     
 		$c2=new Criteria();
@@ -856,7 +860,25 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     {
       $result[$row->ID]->STAFF[$row->ROLE] = $row->NUMBER;
     }
-
+    
+		$c4=new Criteria();
+    $c4->addJoin(self::ID, ProjUpshotPeer::SCHOOLPROJECT_ID, Criteria::LEFT_JOIN);
+    $c4->add(self::ID, $ids, Criteria::IN);
+    $c4->add(ProjUpshotPeer::EVALUATION, 0, Criteria::GREATER_THAN);  // it could be NULL or -1 for N/A
+    $c4->clearSelectColumns();
+    $c4->setDistinct();
+    $c4->addAsColumn('ID', SchoolprojectPeer::ID);
+    $c4->addAsColumn('AVG_EVALUATION', 'AVG(' . ProjUpshotPeer::EVALUATION . ')');
+    $c4->addGroupByColumn(SchoolprojectPeer::ID);
+    
+    self::addAscendingOrderToCriteria($c4);
+    
+    $stmt=SchoolprojectPeer::doSelectStmt($c4);
+    
+    while($row = $stmt->fetch(PDO::FETCH_OBJ))
+    {
+      $result[$row->ID]->AVG_EVALUATION = $row->AVG_EVALUATION;
+    }
     return $result;    
     
   }
