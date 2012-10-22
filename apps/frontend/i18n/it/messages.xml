@@ -5268,6 +5268,10 @@
         <source>Projects waiting for approval</source>
         <target>Progetti in attesa di approvazione</target>
     </trans-unit>
+    <trans-unit id="1516">
+        <source>Average evaluation</source>
+        <target>Valutazione media</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

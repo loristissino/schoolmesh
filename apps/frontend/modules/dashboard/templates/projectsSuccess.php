@@ -142,7 +142,38 @@
 <?php endif ?>
 <hr />
 
+<h2><?php echo __('Obtained upshots') ?></h2>
 
+<table cellspacing="0">
+  <thead>
+    <tr>
+      <th class="sf_admin_text"><?php echo __('Code') ?></th>
+      <th class="sf_admin_text"><?php echo __('Title') ?></th>
+      <th class="sf_admin_text" colspan="2"><?php echo __('Average evaluation') ?></th>
+    </tr>
+  </thead>
+  <tbody>
+	<?php $i=0 ?>
+    <?php $roles=array(); $count=0; foreach ($projects as $project): ?>
+    <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
+      <td>
+        <?php echo $project->CODE ?>
+      </td>
+      <td>
+        <?php echo link_to($project->TITLE, url_for('@project_data?id='.$project->ID)) ?>
+      </td>
+      <td style="text-align: right">
+        <?php if(is_numeric($project->AVG_EVALUATION)): ?><?php echo sprintf('%3.1f', $project->AVG_EVALUATION) ?><?php endif ?>
+      </td>
+      <td>
+        <?php include_partial('content/evaluation', array('value'=>$project->AVG_EVALUATION, 'min'=>$project->EVALUATION_MIN, 'max'=>$project->EVALUATION_MAX)) ?>
+      </td>
+	</tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>
+
+<hr />
 
 <?php include_partial('content/year', array('year'=>$year, 'years'=>$years, 'back'=>'dashboard/projects')) ?>
 
