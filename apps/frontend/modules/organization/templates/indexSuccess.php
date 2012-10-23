@@ -47,12 +47,12 @@
   <tr>
     <th class="sf_admin_text"><?php echo __('Role') ?></th>
     <th class="sf_admin_text"><?php echo __('Quality code') ?></th>
-    <th class="sf_admin_text"><?php echo __('Number') ?></th>
+    <th class="sf_admin_text" style="text-align: right"><?php echo __('Number') ?></th>
     <th class="sf_admin_text"><?php echo __('Actions') ?></th>
   </tr>
   <?php foreach($functionalroles as $Role): ?>
     <tr>
-      <?php if(($number=$Role->countUsersPlayingRole()) > 0 or $Role->getMin()==0): ?>
+      <?php $ok=true; if(($number=$Role->countUsersPlayingRole()) > 0 or $Role->getMin()==0): $ok=false?>
         <td><?php echo link_to_if($sf_user->hasCredential('admin'), $Role->getMaleDescription(), url_for('roles/edit?id='.$Role->getId()), array('title'=>__('Edit the role «%description%»', array('%description%'=>$Role->getMaleDescription())))) ?></td>
         <td><?php echo $Role->getQualityCode() ?></td>
         <td style="text-align:right">

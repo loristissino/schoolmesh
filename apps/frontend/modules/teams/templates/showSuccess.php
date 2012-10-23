@@ -83,7 +83,8 @@
     'action_edit',
     $sf_user->hasCredential('teams'),
     __('Edit'),
-    url_for('teams/edit?id='.$Team->getId())
+    url_for('teams/edit?id='.$Team->getId()),
+    array('title'=>__('Edit the settings for this team'))
     ) ?>
   <?php echo li_link_to_if(
     'action_log',
@@ -91,7 +92,8 @@
     __('Logs'),
     url_for('teams/viewlogs?id='.$Team->getId())
     ) ?>
-  <?php echo li_link_to_if('action_users', $sf_user->hasCredential('users') && $Team->getIsPublic(), __('Find these people in users management module'), url_for('users/list?query=teams:'.$Team->getPosixName())) ?> 
+  <?php echo li_link_to_if('action_users', $sf_user->hasCredential('users') && $Team->getIsPublic() && (sizeof($components)>0), __('Find these people'), url_for('users/list?query=teams:'.$Team->getPosixName()), array('title'=>__('Find these people in users management module'))) ?> 
+  <?php echo li_link_to_if('action_users', $sf_user->hasCredential('users'), __('Add people'), url_for('users/list'), array('title'=>__('Add people to this team by selecting them in the users management module'))) ?> 
 </ul>
 <?php endif ?>
 
