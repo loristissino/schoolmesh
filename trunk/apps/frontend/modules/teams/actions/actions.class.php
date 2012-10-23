@@ -27,6 +27,7 @@ class teamsActions extends sfActions
     $this->forward404Unless($this->Team);
     $this->components=$this->Team->getComponents();
     $this->forward404Unless($this->getUser()->hasCredential('teams') or $this->Team->getIsPublic() or $this->getUser()->getProfile()->getBelongsToTeam($this->Team->getPosixName()));
+    $this->getUser()->setAttribute('team_id', $this->Team->getId());
   }
 
   public function executeViewlogs(sfWebRequest $request)
@@ -35,8 +36,6 @@ class teamsActions extends sfActions
     $this->forward404Unless($this->Team);
     $this->wfevents=$this->Team->getWorkflowLogs();
   }
-
-
 
   public function executeNew(sfWebRequest $request)
   {

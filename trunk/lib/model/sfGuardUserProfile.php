@@ -1093,6 +1093,8 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
             $con
             );
           $con->commit();
+          
+          $this->updateLuceneIndex();
 				}
 				catch(Exception $e)
 				{
@@ -1127,6 +1129,9 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
             );
 
           $con->commit();
+          
+          $this->updateLuceneIndex();
+          
         }
         catch (Exception $e)
         {

@@ -827,7 +827,10 @@ class usersActions extends sfActions
     $this->userlist=sfGuardUserProfilePeer::retrieveByPKsSortedByLastnames($this->ids);
 
     $this->form=new ChooseTeamForm();
-  
+    
+    $this->form->setDefault('team_id', $this->getUser()->getAttribute('team_id', null));
+    $this->form->setDefault('role_id', $this->getUser()->getAttribute('role_id', null));
+    $this->form->setDefault('expiry', YearPeer::retrieveByPK(sfConfig::get('app_config_current_year'))->getEndDate('U'));
   }
 
   public function executeConfirmadduserstoteam(sfWebRequest $request)

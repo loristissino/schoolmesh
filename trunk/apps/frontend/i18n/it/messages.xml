@@ -3038,7 +3038,7 @@
     </trans-unit>
     <trans-unit id="782">
         <source>List</source>
-        <target>Lista</target>
+        <target>Elenca</target>
     </trans-unit>
     <trans-unit id="783">
         <source>Syllabi</source>
@@ -5271,6 +5271,18 @@
     <trans-unit id="1516">
         <source>Average evaluation</source>
         <target>Valutazione media</target>
+    </trans-unit>
+    <trans-unit id="1517">
+        <source>Find these people</source>
+        <target>Trova queste persone</target>
+    </trans-unit>
+    <trans-unit id="1518">
+        <source>Add people</source>
+        <target>Aggiungi persone</target>
+    </trans-unit>
+    <trans-unit id="1519">
+        <source>Add people to this team by selecting them in the users management module</source>
+        <target>Aggiungi persone a questo team selezionandole nel modulo di gestione utenti</target>
     </trans-unit>
     </body>
   </file> 

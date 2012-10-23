@@ -34,6 +34,7 @@ class organizationActions extends sfActions     // $userteam=RolePeer::retrieveU
   {
     $this->forward404Unless($this->role=RolePeer::retrieveByPK($request->getParameter('id')));
     $this->userteam=$this->role->getUsersPlayingRole();
+    $this->getUser()->setAttribute('role_id', $this->role->getId());
   }
 
   public function executeChart(sfWebRequest $request)
