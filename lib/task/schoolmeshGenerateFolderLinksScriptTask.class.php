@@ -82,7 +82,10 @@ EOF;
     
     echo sprintf('  if [[ ! -d %s ]]; then', $sambafolder) . "\n";
     
-    echo sprintf('    sudo mkdir %s %s/public',
+    echo sprintf('    sudo mkdir %s',
+      $sambafolder
+      ) . "\n";
+    echo sprintf('    sudo ln -s %s %s/public',
       $sambafolder,
       $teacherfolder
       ) . "\n";
