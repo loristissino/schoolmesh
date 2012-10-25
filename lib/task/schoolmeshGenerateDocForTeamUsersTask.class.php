@@ -26,6 +26,7 @@ class schoolmeshGenerateDocForTeamUsersTask extends sfBaseTask
       new sfCommandOption('dry-run', null, sfCommandOption::PARAMETER_NONE, 'Whether the command will be executed leaving the db intact'),
       new sfCommandOption('format', null, sfCommandOption::PARAMETER_REQUIRED, 'The format to use for output', 'odt'),
       new sfCommandOption('sleep', null, sfCommandOption::PARAMETER_REQUIRED, 'The number of seconds to wait between a profile and the next one', '10'),
+      new sfCommandOption('email-attachment', null, sfCommandOption::PARAMETER_NONE, 'Whether the generated file should be sent to the user'),
     ));
 
     $this->addArgument('team-id', sfCommandArgument::REQUIRED, 'The id of the team to generate the doc for');
@@ -105,24 +106,27 @@ EOF;
            sleep($options['sleep']);
          }
          
-         if($profile->getEmail())
+         if($options['email-attachment'])
          {
-           $message = new GeneratedDocMessage($profile, $this->context);
-           $message->attach(Swift_Attachment::fromPath($odf->getAttributedFilename()));
-         try
-            {
-              $this->context->getMailer()->send($message);
-              $this->logSection('mail@', $profile->getEmail(), null, 'NOTICE');
-            }
-            catch (Exception $e)
-            {
-              $this->logSection('mail@', $profile->getEmail(), null, 'ERROR');
-            }
-         }
-         else
-         {
-            $this->logSection('mail@', 'no email address', null, 'ERROR');
-           
+           if($profile->getEmail())
+           {
+             $message = new GeneratedDocMessage($profile, $this->context);
+             $message->attach(Swift_Attachment::fromPath($odf->getAttributedFilename()));
+           try
+              {
+                $this->context->getMailer()->send($message);
+                $this->logSection('mail@', $profile->getEmail(), null, 'NOTICE');
+              }
+              catch (Exception $e)
+              {
+                $this->logSection('mail@', $profile->getEmail(), null, 'ERROR');
+              }
+           }
+           else
+           {
+              $this->logSection('mail@', 'no email address', null, 'ERROR');
+             
+           }
          }
        }
       else
