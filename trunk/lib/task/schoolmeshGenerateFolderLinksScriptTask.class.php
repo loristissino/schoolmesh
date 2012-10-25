@@ -24,6 +24,7 @@ class schoolmeshGenerateFolderLinksScriptTask extends sfBaseTask
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       // add your own options here
 	    new sfCommandOption('folder', null, sfCommandOption::PARAMETER_REQUIRED, 'Basic folder', 'School'), 
+	    new sfCommandOption('sambadir', null, sfCommandOption::PARAMETER_REQUIRED, 'Samba shared folder', '/var/myschool/teachers'), 
 
     ));
     
@@ -73,6 +74,25 @@ EOF;
     
     $teacherfolder=sprintf('~%s/%s', $teacher->getUsername(), $folder);
     echo sprintf('sudo chattr -V -i %s || exit 1', $teacherfolder) . "\n";
+    
+    $sambafolder=sprintf('%s/%s',
+      $options['sambadir'],
+      $teacher->getUsername()
+      );
+    
+    echo sprintf('  if [[ ! -d %s ]]; then', $sambafolder) . "\n";
+    
+    echo sprintf('    sudo mkdir %s %s/public',
+      $sambafolder,
+      $teacherfolder
+      ) . "\n";
+    echo sprintf('    sudo chown %s %s',
+      $teacher->getUsername(),
+      $sambafolder
+      ) . "\n";
+
+    echo sprintf('  fi', $sambafolder) . "\n";
+
     
     foreach($teacher->getProfile()->getCurrentAppointments() as $appointment)
     {
