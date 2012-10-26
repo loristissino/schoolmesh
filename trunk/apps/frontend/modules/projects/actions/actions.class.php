@@ -509,7 +509,8 @@ class projectsActions extends sfActions
   {
    $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPK($request->getParameter('id')));
    $this->projects=Array($this->project);
-   $this->setTemplate('report');   
+   $this->setTemplate('report');
+   $this->type=$this->project->getState() < Workflow::PROJ_FINISHED ? 'submission': 'report';
    $this->breadcrumpstype='projects/project/view';
   }
   

@@ -34,6 +34,7 @@
 ?>
 <?php endif ?>
 
+
 <?php include_partial('content/flashes'); ?>
 
 <div class="sf_admin_list">

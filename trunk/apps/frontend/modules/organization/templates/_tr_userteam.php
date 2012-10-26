@@ -1,6 +1,6 @@
 <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
   <td>
-    <?php echo link_to_if($sf_user->hasCredential('admin'), $component->getSfGuardUser()->getProfile()->getIsMale()?$role->getMaleDescription():$role->getFemaleDescription(), url_for('roles/edit?id='.$role->getId()), array('title'=>__('Edit the role «%description%»', array('%description%'=>$role->getMaleDescription()))))
+    <?php echo link_to_if($sf_user->hasCredential('admin'), $role->getRoleDescriptionByGender($component->getSfGuardUser()->getProfile()->getIsMale()), url_for('roles/edit?id='.$role->getId()), array('title'=>__('Edit the role «%description%»', array('%description%'=>$role->getMaleDescription()))))
     ?>
     <?php include_partial('roles/minmaxcheck', array('Role'=>$role, 'number'=>$number)) ?>
   </td>

@@ -1098,7 +1098,7 @@ class Schoolproject extends BaseSchoolproject {
     ->save($con)
     ;
 
-    foreach($this->getProjDetails() as $detail)
+    foreach($this->getPrintableProjDetails('submission') as $detail)
     {
       $newdetail= new ProjDetail();
       
