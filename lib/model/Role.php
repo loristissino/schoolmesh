@@ -18,6 +18,10 @@ class Role extends BaseRole
 	
 	public function getRoleDescriptionByGender($isMale=true)
 	{
+    if(!$this->getFemaleDescription())
+    {
+      return $this->getMaleDescription();
+    }
 		return ($isMale? $this->getMaleDescription(): $this->getFemaleDescription());
 	}
   
