@@ -5288,6 +5288,11 @@
         <source>Having regard to...</source>
         <target>Visto...</target>
     </trans-unit>
+    <trans-unit id="1521">
+        <source>No letter could be generated, because the people selected do not play the roles chosen.</source>
+        <target>Non è stato possibile generare alcuna lettera, perché le persone selezionate non rivestono i ruoli scelti.</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
