@@ -5284,7 +5284,10 @@
         <source>Add people to this team by selecting them in the users management module</source>
         <target>Aggiungi persone a questo team selezionandole nel modulo di gestione utenti</target>
     </trans-unit>
+    <trans-unit id="1520">
+        <source>Having regard to...</source>
+        <target>Visto...</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
-
