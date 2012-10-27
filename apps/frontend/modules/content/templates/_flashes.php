@@ -1,6 +1,6 @@
 <?php foreach(array('error', 'notice') as $flashname): ?>
 <?php if ($sf_user->hasFlash($flashname)): ?>
-  <div class="<?php echo $flashname ?>"><?php echo $sf_user->getFlash($flashname)?></div>
+  <div class="<?php echo $flashname ?>"><?php echo __($sf_user->getFlash($flashname))?></div>
 <?php endif; ?>
 <?php endforeach ?>
 <?php if($sf_user->hasFlash('passwordcheck')): ?>

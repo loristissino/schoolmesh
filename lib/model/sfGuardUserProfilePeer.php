@@ -865,8 +865,6 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		$count=0;
 		foreach($users as $user)
 		{
-			$count++;
-      
       $charges=$user->getRolesPlayed(array('ids'=>$role_ids));  // we get an array of UserTeam objects
       if(sizeof($charges)==0)
       {
@@ -938,10 +936,19 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 			$pagebreak=($count<sizeof($users))?'<pagebreak>':'';
 			$letters->pagebreak($pagebreak);
 			$letters->merge();
+      
+      $count++;
 		}
 		
 		$odfdoc->mergeSegment($letters);
 
+    if(!$count)
+    {
+      //throw new Exception('No user plays the selected role.');
+      $result['result']='error';
+      $result['message']='No letter could be generated, because the people selected do not play the roles chosen.';
+      return $result;
+    }
 		$result['content']=$odf;
 		$result['result']='notice';
 		return $result;
