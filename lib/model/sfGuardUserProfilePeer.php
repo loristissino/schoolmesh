@@ -879,7 +879,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 
       foreach($charges as $charge)
       {
-        $letters->charges->chargeDescription($user->getIsMale()?$charge->getRole()->getMaleDescription():$charge->getRole()->getFemaleDescription());
+        $letters->charges->chargeDescription($charge->getRole()->getRoleDescriptionByGender($user->getIsMale()));
         $letters->charges->chargeContext($charge->getTeam()->getDescription());
         $letters->charges->chargeExpiry($charge->getExpiry('d/m/Y'));
         //$letters->charges->chargeNotes($charge->getNotes());
@@ -928,7 +928,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
       $letters->referenceNumber(sizeof($reference_numbers)?implode(', ', $reference_numbers):'____');
 
       $letters->havingregardtoNotes(OdfDocPeer::textvalue2odt(
-        sizeof($havingregardto_notes)?implode('<br />', $havingregardto_notes):sfConfig::get('app_charges_default_note', 'Having regard to...')
+        sizeof($havingregardto_notes)?implode('<br />', $havingregardto_notes):sfConfig::get('app_charges_default_havingregardto', $context->getI18N()->__('Having regard to...'))
       ));
 
       $letters->finalNotes(OdfDocPeer::textvalue2odt(
