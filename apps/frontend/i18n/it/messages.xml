@@ -5312,6 +5312,10 @@
         <source>Revision</source>
         <target>Revisione</target>
     </trans-unit>
+    <trans-unit id="1527">
+        <source>Deprecated</source>
+        <target>Deprecato</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

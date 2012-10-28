@@ -30,8 +30,10 @@
           <?php echo __('Unknown') ?>
         </td>
       <?php endif ?>
-    <td><?php echo $Document->getNotes() ?></td>
-    <td>
+    <td<?php if($Document->getIsDeprecated()) echo ' class="warning"' ?>>
+      <?php echo $Document->getNotes() ?>
+    </td>
+    <td<?php if($Document->getIsDeprecated()) echo ' class="warning"' ?>>
       <ul class="sf_admin_td_actions">
         <?php echo li_link_to_if('td_action_documents', true, __('Details'), url_for('documents/show?id='.$Document->getId()), array('title'=>__('View the details about the document «%document%»', array('%document%'=>$Document->getTitle())))) ?>
         <?php echo li_link_to_if('td_action_show', $Document->hasInlineContent(), __('Show'), url_for('documents/show?id='.$Document->getId(), array('title'=>__('Show the content of the document «%document%»', array('%document%'=>$Document->getTitle()))))) ?>
