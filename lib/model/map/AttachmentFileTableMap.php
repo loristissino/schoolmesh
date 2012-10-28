@@ -56,6 +56,8 @@ class AttachmentFileTableMap extends TableMap {
 	public function buildRelations()
 	{
     $this->addRelation('sfGuardUser', 'sfGuardUser', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('DocrevisionRelatedBySourceAttachmentId', 'Docrevision', RelationMap::ONE_TO_MANY, array('id' => 'source_attachment_id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('DocrevisionRelatedByPublishedAttachmentId', 'Docrevision', RelationMap::ONE_TO_MANY, array('id' => 'published_attachment_id', ), 'RESTRICT', 'CASCADE');
 	} // buildRelations()
 
 	/**

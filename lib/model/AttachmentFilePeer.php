@@ -22,6 +22,8 @@ class AttachmentFilePeer extends BaseAttachmentFilePeer {
         return 2;
       case 'Appointment':
         return 3;
+      case 'Docrevision':
+        return 4;
       default:
         return 0;
     }
@@ -110,6 +112,7 @@ class AttachmentFilePeer extends BaseAttachmentFilePeer {
         {
           $attachment->save($con);
           $con->commit();
+          $result['attachment_id']=$attachment->getId();
       
         }
         catch (Exception $e)

@@ -1,3 +1,9 @@
+2012/10/28
+Release: 1.17
+Added tables document, docrevision, doctype.
+Added documents module.
+Changed layout.
+
 2012/10/10
 Release: 1.16
 Added fields printed_in_submission_documents and printed_in_report_documents (boolean) in proj_detail_type table

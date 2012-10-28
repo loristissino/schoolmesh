@@ -5292,6 +5292,26 @@
         <source>No letter could be generated, because the people selected do not play the roles chosen.</source>
         <target>Non è stato possibile generare alcuna lettera, perché le persone selezionate non rivestono i ruoli scelti.</target>
     </trans-unit>
+    <trans-unit id="1522">
+        <source>Revision #</source>
+        <target>N. Revisione</target>
+    </trans-unit>
+    <trans-unit id="1523">
+        <source>Revision date</source>
+        <target>Data Revisione</target>
+    </trans-unit>
+    <trans-unit id="1524">
+        <source>Revisions</source>
+        <target>Revisioni</target>
+    </trans-unit>
+    <trans-unit id="1525">
+        <source>Grounds</source>
+        <target>Motivazioni</target>
+    </trans-unit>
+    <trans-unit id="1526">
+        <source>Revision</source>
+        <target>Revisione</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

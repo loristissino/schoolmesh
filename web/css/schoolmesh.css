@@ -401,6 +401,10 @@
 {
   background: url(../images/smdoc.png) no-repeat 0 0;
 }
+#sf_admin_container ul li.sf_admin_action_documents a
+{
+  background: url(../images/documents.png) no-repeat 0 0;
+}
 
 
 #sf_admin_container .alert

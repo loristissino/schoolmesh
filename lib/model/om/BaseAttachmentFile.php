@@ -91,6 +91,26 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 	protected $asfGuardUser;
 
 	/**
+	 * @var        array Docrevision[] Collection to store aggregation of Docrevision objects.
+	 */
+	protected $collDocrevisionsRelatedBySourceAttachmentId;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collDocrevisionsRelatedBySourceAttachmentId.
+	 */
+	private $lastDocrevisionRelatedBySourceAttachmentIdCriteria = null;
+
+	/**
+	 * @var        array Docrevision[] Collection to store aggregation of Docrevision objects.
+	 */
+	protected $collDocrevisionsRelatedByPublishedAttachmentId;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collDocrevisionsRelatedByPublishedAttachmentId.
+	 */
+	private $lastDocrevisionRelatedByPublishedAttachmentIdCriteria = null;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -642,6 +662,12 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 		if ($deep) {  // also de-associate any related objects?
 
 			$this->asfGuardUser = null;
+			$this->collDocrevisionsRelatedBySourceAttachmentId = null;
+			$this->lastDocrevisionRelatedBySourceAttachmentIdCriteria = null;
+
+			$this->collDocrevisionsRelatedByPublishedAttachmentId = null;
+			$this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria = null;
+
 		} // if (deep)
 	}
 
@@ -792,6 +818,22 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
 			}
 
+			if ($this->collDocrevisionsRelatedBySourceAttachmentId !== null) {
+				foreach ($this->collDocrevisionsRelatedBySourceAttachmentId as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collDocrevisionsRelatedByPublishedAttachmentId !== null) {
+				foreach ($this->collDocrevisionsRelatedByPublishedAttachmentId as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -874,6 +916,22 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
+
+				if ($this->collDocrevisionsRelatedBySourceAttachmentId !== null) {
+					foreach ($this->collDocrevisionsRelatedBySourceAttachmentId as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collDocrevisionsRelatedByPublishedAttachmentId !== null) {
+					foreach ($this->collDocrevisionsRelatedByPublishedAttachmentId as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
 
 
 			$this->alreadyInValidation = false;
@@ -1169,6 +1227,26 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 		$copyObj->setMd5sum($this->md5sum);
 
 
+		if ($deepCopy) {
+			// important: temporarily setNew(false) because this affects the behavior of
+			// the getter/setter methods for fkey referrer objects.
+			$copyObj->setNew(false);
+
+			foreach ($this->getDocrevisionsRelatedBySourceAttachmentId() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addDocrevisionRelatedBySourceAttachmentId($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getDocrevisionsRelatedByPublishedAttachmentId() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addDocrevisionRelatedByPublishedAttachmentId($relObj->copy($deepCopy));
+				}
+			}
+
+		} // if ($deepCopy)
+
+
 		$copyObj->setNew(true);
 
 		$copyObj->setId(NULL); // this is a auto-increment column, so set to default value
@@ -1263,6 +1341,502 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collDocrevisionsRelatedBySourceAttachmentId collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addDocrevisionsRelatedBySourceAttachmentId()
+	 */
+	public function clearDocrevisionsRelatedBySourceAttachmentId()
+	{
+		$this->collDocrevisionsRelatedBySourceAttachmentId = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collDocrevisionsRelatedBySourceAttachmentId collection (array).
+	 *
+	 * By default this just sets the collDocrevisionsRelatedBySourceAttachmentId collection to an empty array (like clearcollDocrevisionsRelatedBySourceAttachmentId());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initDocrevisionsRelatedBySourceAttachmentId()
+	{
+		$this->collDocrevisionsRelatedBySourceAttachmentId = array();
+	}
+
+	/**
+	 * Gets an array of Docrevision objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this AttachmentFile has previously been saved, it will retrieve
+	 * related DocrevisionsRelatedBySourceAttachmentId from storage. If this AttachmentFile is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array Docrevision[]
+	 * @throws     PropelException
+	 */
+	public function getDocrevisionsRelatedBySourceAttachmentId($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AttachmentFilePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedBySourceAttachmentId === null) {
+			if ($this->isNew()) {
+			   $this->collDocrevisionsRelatedBySourceAttachmentId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::SOURCE_ATTACHMENT_ID, $this->id);
+
+				DocrevisionPeer::addSelectColumns($criteria);
+				$this->collDocrevisionsRelatedBySourceAttachmentId = DocrevisionPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(DocrevisionPeer::SOURCE_ATTACHMENT_ID, $this->id);
+
+				DocrevisionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastDocrevisionRelatedBySourceAttachmentIdCriteria) || !$this->lastDocrevisionRelatedBySourceAttachmentIdCriteria->equals($criteria)) {
+					$this->collDocrevisionsRelatedBySourceAttachmentId = DocrevisionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastDocrevisionRelatedBySourceAttachmentIdCriteria = $criteria;
+		return $this->collDocrevisionsRelatedBySourceAttachmentId;
+	}
+
+	/**
+	 * Returns the number of related Docrevision objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Docrevision objects.
+	 * @throws     PropelException
+	 */
+	public function countDocrevisionsRelatedBySourceAttachmentId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AttachmentFilePeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collDocrevisionsRelatedBySourceAttachmentId === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(DocrevisionPeer::SOURCE_ATTACHMENT_ID, $this->id);
+
+				$count = DocrevisionPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(DocrevisionPeer::SOURCE_ATTACHMENT_ID, $this->id);
+
+				if (!isset($this->lastDocrevisionRelatedBySourceAttachmentIdCriteria) || !$this->lastDocrevisionRelatedBySourceAttachmentIdCriteria->equals($criteria)) {
+					$count = DocrevisionPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collDocrevisionsRelatedBySourceAttachmentId);
+				}
+			} else {
+				$count = count($this->collDocrevisionsRelatedBySourceAttachmentId);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a Docrevision object to this object
+	 * through the Docrevision foreign key attribute.
+	 *
+	 * @param      Docrevision $l Docrevision
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addDocrevisionRelatedBySourceAttachmentId(Docrevision $l)
+	{
+		if ($this->collDocrevisionsRelatedBySourceAttachmentId === null) {
+			$this->initDocrevisionsRelatedBySourceAttachmentId();
+		}
+		if (!in_array($l, $this->collDocrevisionsRelatedBySourceAttachmentId, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collDocrevisionsRelatedBySourceAttachmentId, $l);
+			$l->setAttachmentFileRelatedBySourceAttachmentId($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this AttachmentFile is new, it will return
+	 * an empty collection; or if this AttachmentFile has previously
+	 * been saved, it will retrieve related DocrevisionsRelatedBySourceAttachmentId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in AttachmentFile.
+	 */
+	public function getDocrevisionsRelatedBySourceAttachmentIdJoinDocument($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AttachmentFilePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedBySourceAttachmentId === null) {
+			if ($this->isNew()) {
+				$this->collDocrevisionsRelatedBySourceAttachmentId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::SOURCE_ATTACHMENT_ID, $this->id);
+
+				$this->collDocrevisionsRelatedBySourceAttachmentId = DocrevisionPeer::doSelectJoinDocument($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocrevisionPeer::SOURCE_ATTACHMENT_ID, $this->id);
+
+			if (!isset($this->lastDocrevisionRelatedBySourceAttachmentIdCriteria) || !$this->lastDocrevisionRelatedBySourceAttachmentIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedBySourceAttachmentId = DocrevisionPeer::doSelectJoinDocument($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocrevisionRelatedBySourceAttachmentIdCriteria = $criteria;
+
+		return $this->collDocrevisionsRelatedBySourceAttachmentId;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this AttachmentFile is new, it will return
+	 * an empty collection; or if this AttachmentFile has previously
+	 * been saved, it will retrieve related DocrevisionsRelatedBySourceAttachmentId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in AttachmentFile.
+	 */
+	public function getDocrevisionsRelatedBySourceAttachmentIdJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AttachmentFilePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedBySourceAttachmentId === null) {
+			if ($this->isNew()) {
+				$this->collDocrevisionsRelatedBySourceAttachmentId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::SOURCE_ATTACHMENT_ID, $this->id);
+
+				$this->collDocrevisionsRelatedBySourceAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocrevisionPeer::SOURCE_ATTACHMENT_ID, $this->id);
+
+			if (!isset($this->lastDocrevisionRelatedBySourceAttachmentIdCriteria) || !$this->lastDocrevisionRelatedBySourceAttachmentIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedBySourceAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocrevisionRelatedBySourceAttachmentIdCriteria = $criteria;
+
+		return $this->collDocrevisionsRelatedBySourceAttachmentId;
+	}
+
+	/**
+	 * Clears out the collDocrevisionsRelatedByPublishedAttachmentId collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addDocrevisionsRelatedByPublishedAttachmentId()
+	 */
+	public function clearDocrevisionsRelatedByPublishedAttachmentId()
+	{
+		$this->collDocrevisionsRelatedByPublishedAttachmentId = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collDocrevisionsRelatedByPublishedAttachmentId collection (array).
+	 *
+	 * By default this just sets the collDocrevisionsRelatedByPublishedAttachmentId collection to an empty array (like clearcollDocrevisionsRelatedByPublishedAttachmentId());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initDocrevisionsRelatedByPublishedAttachmentId()
+	{
+		$this->collDocrevisionsRelatedByPublishedAttachmentId = array();
+	}
+
+	/**
+	 * Gets an array of Docrevision objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this AttachmentFile has previously been saved, it will retrieve
+	 * related DocrevisionsRelatedByPublishedAttachmentId from storage. If this AttachmentFile is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array Docrevision[]
+	 * @throws     PropelException
+	 */
+	public function getDocrevisionsRelatedByPublishedAttachmentId($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AttachmentFilePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedByPublishedAttachmentId === null) {
+			if ($this->isNew()) {
+			   $this->collDocrevisionsRelatedByPublishedAttachmentId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, $this->id);
+
+				DocrevisionPeer::addSelectColumns($criteria);
+				$this->collDocrevisionsRelatedByPublishedAttachmentId = DocrevisionPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, $this->id);
+
+				DocrevisionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria) || !$this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria->equals($criteria)) {
+					$this->collDocrevisionsRelatedByPublishedAttachmentId = DocrevisionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria = $criteria;
+		return $this->collDocrevisionsRelatedByPublishedAttachmentId;
+	}
+
+	/**
+	 * Returns the number of related Docrevision objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Docrevision objects.
+	 * @throws     PropelException
+	 */
+	public function countDocrevisionsRelatedByPublishedAttachmentId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AttachmentFilePeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collDocrevisionsRelatedByPublishedAttachmentId === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, $this->id);
+
+				$count = DocrevisionPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, $this->id);
+
+				if (!isset($this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria) || !$this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria->equals($criteria)) {
+					$count = DocrevisionPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collDocrevisionsRelatedByPublishedAttachmentId);
+				}
+			} else {
+				$count = count($this->collDocrevisionsRelatedByPublishedAttachmentId);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a Docrevision object to this object
+	 * through the Docrevision foreign key attribute.
+	 *
+	 * @param      Docrevision $l Docrevision
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addDocrevisionRelatedByPublishedAttachmentId(Docrevision $l)
+	{
+		if ($this->collDocrevisionsRelatedByPublishedAttachmentId === null) {
+			$this->initDocrevisionsRelatedByPublishedAttachmentId();
+		}
+		if (!in_array($l, $this->collDocrevisionsRelatedByPublishedAttachmentId, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collDocrevisionsRelatedByPublishedAttachmentId, $l);
+			$l->setAttachmentFileRelatedByPublishedAttachmentId($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this AttachmentFile is new, it will return
+	 * an empty collection; or if this AttachmentFile has previously
+	 * been saved, it will retrieve related DocrevisionsRelatedByPublishedAttachmentId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in AttachmentFile.
+	 */
+	public function getDocrevisionsRelatedByPublishedAttachmentIdJoinDocument($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AttachmentFilePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedByPublishedAttachmentId === null) {
+			if ($this->isNew()) {
+				$this->collDocrevisionsRelatedByPublishedAttachmentId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, $this->id);
+
+				$this->collDocrevisionsRelatedByPublishedAttachmentId = DocrevisionPeer::doSelectJoinDocument($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, $this->id);
+
+			if (!isset($this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria) || !$this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedByPublishedAttachmentId = DocrevisionPeer::doSelectJoinDocument($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria = $criteria;
+
+		return $this->collDocrevisionsRelatedByPublishedAttachmentId;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this AttachmentFile is new, it will return
+	 * an empty collection; or if this AttachmentFile has previously
+	 * been saved, it will retrieve related DocrevisionsRelatedByPublishedAttachmentId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in AttachmentFile.
+	 */
+	public function getDocrevisionsRelatedByPublishedAttachmentIdJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AttachmentFilePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedByPublishedAttachmentId === null) {
+			if ($this->isNew()) {
+				$this->collDocrevisionsRelatedByPublishedAttachmentId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, $this->id);
+
+				$this->collDocrevisionsRelatedByPublishedAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, $this->id);
+
+			if (!isset($this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria) || !$this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedByPublishedAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria = $criteria;
+
+		return $this->collDocrevisionsRelatedByPublishedAttachmentId;
+	}
+
+	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -1274,8 +1848,20 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 	public function clearAllReferences($deep = false)
 	{
 		if ($deep) {
+			if ($this->collDocrevisionsRelatedBySourceAttachmentId) {
+				foreach ((array) $this->collDocrevisionsRelatedBySourceAttachmentId as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
+			if ($this->collDocrevisionsRelatedByPublishedAttachmentId) {
+				foreach ((array) $this->collDocrevisionsRelatedByPublishedAttachmentId as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} // if ($deep)
 
+		$this->collDocrevisionsRelatedBySourceAttachmentId = null;
+		$this->collDocrevisionsRelatedByPublishedAttachmentId = null;
 			$this->asfGuardUser = null;
 	}
 
