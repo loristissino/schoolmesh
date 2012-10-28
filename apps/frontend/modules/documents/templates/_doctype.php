@@ -37,7 +37,7 @@
       <ul class="sf_admin_td_actions">
         <?php echo li_link_to_if('td_action_documents', true, __('Details'), url_for('documents/show?id='.$Document->getId()), array('title'=>__('View the details about the document «%document%»', array('%document%'=>$Document->getTitle())))) ?>
         <?php echo li_link_to_if('td_action_show', $Document->hasInlineContent(), __('Show'), url_for('documents/show?id='.$Document->getId(), array('title'=>__('Show the content of the document «%document%»', array('%document%'=>$Document->getTitle()))))) ?>
-        <?php echo li_link_to_if('td_action_download', $Document->hasDownloadableAttachment(), __('Download'), url_for('content/attachment?id='.$Document->getDownloadableAttachmentId()), array('title'=>__('Download the current revision of the document «%document%»', array('%document%'=>$Document->getTitle())))) ?>
+        <?php echo li_link_to_if('td_action_download', !$Document->getIsDeprecated() and $Document->hasDownloadableAttachment(), __('Download'), url_for('content/attachment?id='.$Document->getDownloadableAttachmentId()), array('title'=>__('Download the current revision of the document «%document%»', array('%document%'=>$Document->getTitle())))) ?>
       </ul>
     </td>
     </tr>
