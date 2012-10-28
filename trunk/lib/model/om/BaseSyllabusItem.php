@@ -108,6 +108,16 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 	private $lastWpmoduleSyllabusItemCriteria = null;
 
 	/**
+	 * @var        array Document[] Collection to store aggregation of Document objects.
+	 */
+	protected $collDocuments;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collDocuments.
+	 */
+	private $lastDocumentCriteria = null;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -526,6 +536,9 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 			$this->collWpmoduleSyllabusItems = null;
 			$this->lastWpmoduleSyllabusItemCriteria = null;
 
+			$this->collDocuments = null;
+			$this->lastDocumentCriteria = null;
+
 		} // if (deep)
 	}
 
@@ -699,6 +712,14 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 				}
 			}
 
+			if ($this->collDocuments !== null) {
+				foreach ($this->collDocuments as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 
 		}
@@ -806,6 +827,14 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 
 				if ($this->collWpmoduleSyllabusItems !== null) {
 					foreach ($this->collWpmoduleSyllabusItems as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collDocuments !== null) {
+					foreach ($this->collDocuments as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1093,6 +1122,12 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 			foreach ($this->getWpmoduleSyllabusItems() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 					$copyObj->addWpmoduleSyllabusItem($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getDocuments() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addDocument($relObj->copy($deepCopy));
 				}
 			}
 
@@ -1939,6 +1974,254 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Clears out the collDocuments collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addDocuments()
+	 */
+	public function clearDocuments()
+	{
+		$this->collDocuments = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collDocuments collection (array).
+	 *
+	 * By default this just sets the collDocuments collection to an empty array (like clearcollDocuments());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initDocuments()
+	{
+		$this->collDocuments = array();
+	}
+
+	/**
+	 * Gets an array of Document objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this SyllabusItem has previously been saved, it will retrieve
+	 * related Documents from storage. If this SyllabusItem is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array Document[]
+	 * @throws     PropelException
+	 */
+	public function getDocuments($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SyllabusItemPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocuments === null) {
+			if ($this->isNew()) {
+			   $this->collDocuments = array();
+			} else {
+
+				$criteria->add(DocumentPeer::SYLLABUS_ITEM_ID, $this->id);
+
+				DocumentPeer::addSelectColumns($criteria);
+				$this->collDocuments = DocumentPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(DocumentPeer::SYLLABUS_ITEM_ID, $this->id);
+
+				DocumentPeer::addSelectColumns($criteria);
+				if (!isset($this->lastDocumentCriteria) || !$this->lastDocumentCriteria->equals($criteria)) {
+					$this->collDocuments = DocumentPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastDocumentCriteria = $criteria;
+		return $this->collDocuments;
+	}
+
+	/**
+	 * Returns the number of related Document objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Document objects.
+	 * @throws     PropelException
+	 */
+	public function countDocuments(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SyllabusItemPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collDocuments === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(DocumentPeer::SYLLABUS_ITEM_ID, $this->id);
+
+				$count = DocumentPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(DocumentPeer::SYLLABUS_ITEM_ID, $this->id);
+
+				if (!isset($this->lastDocumentCriteria) || !$this->lastDocumentCriteria->equals($criteria)) {
+					$count = DocumentPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collDocuments);
+				}
+			} else {
+				$count = count($this->collDocuments);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a Document object to this object
+	 * through the Document foreign key attribute.
+	 *
+	 * @param      Document $l Document
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addDocument(Document $l)
+	{
+		if ($this->collDocuments === null) {
+			$this->initDocuments();
+		}
+		if (!in_array($l, $this->collDocuments, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collDocuments, $l);
+			$l->setSyllabusItem($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this SyllabusItem is new, it will return
+	 * an empty collection; or if this SyllabusItem has previously
+	 * been saved, it will retrieve related Documents from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in SyllabusItem.
+	 */
+	public function getDocumentsJoinDoctype($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SyllabusItemPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocuments === null) {
+			if ($this->isNew()) {
+				$this->collDocuments = array();
+			} else {
+
+				$criteria->add(DocumentPeer::SYLLABUS_ITEM_ID, $this->id);
+
+				$this->collDocuments = DocumentPeer::doSelectJoinDoctype($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocumentPeer::SYLLABUS_ITEM_ID, $this->id);
+
+			if (!isset($this->lastDocumentCriteria) || !$this->lastDocumentCriteria->equals($criteria)) {
+				$this->collDocuments = DocumentPeer::doSelectJoinDoctype($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocumentCriteria = $criteria;
+
+		return $this->collDocuments;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this SyllabusItem is new, it will return
+	 * an empty collection; or if this SyllabusItem has previously
+	 * been saved, it will retrieve related Documents from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in SyllabusItem.
+	 */
+	public function getDocumentsJoinDocrevision($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(SyllabusItemPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocuments === null) {
+			if ($this->isNew()) {
+				$this->collDocuments = array();
+			} else {
+
+				$criteria->add(DocumentPeer::SYLLABUS_ITEM_ID, $this->id);
+
+				$this->collDocuments = DocumentPeer::doSelectJoinDocrevision($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocumentPeer::SYLLABUS_ITEM_ID, $this->id);
+
+			if (!isset($this->lastDocumentCriteria) || !$this->lastDocumentCriteria->equals($criteria)) {
+				$this->collDocuments = DocumentPeer::doSelectJoinDocrevision($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocumentCriteria = $criteria;
+
+		return $this->collDocuments;
+	}
+
+	/**
 	 * Resets all collections of referencing foreign keys.
 	 *
 	 * This method is a user-space workaround for PHP's inability to garbage collect objects
@@ -1965,11 +2248,17 @@ abstract class BaseSyllabusItem extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
+			if ($this->collDocuments) {
+				foreach ((array) $this->collDocuments as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
 		} // if ($deep)
 
 		$this->collSyllabusItemsRelatedByParentId = null;
 		$this->collStudentSyllabusItems = null;
 		$this->collWpmoduleSyllabusItems = null;
+		$this->collDocuments = null;
 			$this->aSyllabus = null;
 			$this->aSyllabusItemRelatedByParentId = null;
 	}

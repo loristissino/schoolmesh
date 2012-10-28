@@ -26,6 +26,11 @@ class AttachmentFile extends BaseAttachmentFile {
     return $this;
   }
   
+  public function __toString()
+  {
+    return $this->getFilename();
+  }
+  
   public function getFilename()
   {
     if(!$this->_filename)

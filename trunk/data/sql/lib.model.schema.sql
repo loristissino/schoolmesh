@@ -1357,6 +1357,104 @@ CREATE TABLE `consent`
 )Engine=InnoDB;
 
 #-----------------------------------------------------------------------------
+#-- doctype
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `doctype`;
+
+
+CREATE TABLE `doctype`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`title` VARCHAR(255)  NOT NULL,
+	`description` TEXT,
+	`is_active` TINYINT default 1,
+	`rank` INTEGER,
+	PRIMARY KEY (`id`)
+)Engine=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- document
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `document`;
+
+
+CREATE TABLE `document`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`doctype_id` INTEGER,
+	`code` VARCHAR(40)  NOT NULL,
+	`title` VARCHAR(255)  NOT NULL,
+	`is_form` TINYINT default 0,
+	`docrevision_id` INTEGER,
+	`is_active` TINYINT default 1,
+	`is_deprecated` TINYINT default 0,
+	`notes` VARCHAR(255),
+	`syllabus_item_id` INTEGER,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `document_U_1` (`code`),
+	INDEX `document_FI_1` (`doctype_id`),
+	CONSTRAINT `document_FK_1`
+		FOREIGN KEY (`doctype_id`)
+		REFERENCES `doctype` (`id`),
+	INDEX `document_FI_2` (`docrevision_id`),
+	CONSTRAINT `document_FK_2`
+		FOREIGN KEY (`docrevision_id`)
+		REFERENCES `docrevision` (`id`),
+	INDEX `document_FI_3` (`syllabus_item_id`),
+	CONSTRAINT `document_FK_3`
+		FOREIGN KEY (`syllabus_item_id`)
+		REFERENCES `syllabus_item` (`id`)
+)Engine=InnoDB;
+
+#-----------------------------------------------------------------------------
+#-- docrevision
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `docrevision`;
+
+
+CREATE TABLE `docrevision`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`document_id` INTEGER  NOT NULL,
+	`revision_number` INTEGER  NOT NULL,
+	`revisioned_at` DATETIME,
+	`uploader_id` INTEGER  NOT NULL,
+	`revision_grounds` TEXT  NOT NULL,
+	`content` TEXT,
+	`content_type` INTEGER,
+	`source_attachment_id` INTEGER,
+	`published_attachment_id` INTEGER,
+	PRIMARY KEY (`id`),
+	INDEX `docrevision_FI_1` (`document_id`),
+	CONSTRAINT `docrevision_FK_1`
+		FOREIGN KEY (`document_id`)
+		REFERENCES `document` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `docrevision_FI_2` (`uploader_id`),
+	CONSTRAINT `docrevision_FK_2`
+		FOREIGN KEY (`uploader_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `docrevision_FI_3` (`source_attachment_id`),
+	CONSTRAINT `docrevision_FK_3`
+		FOREIGN KEY (`source_attachment_id`)
+		REFERENCES `attachment_file` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `docrevision_FI_4` (`published_attachment_id`),
+	CONSTRAINT `docrevision_FK_4`
+		FOREIGN KEY (`published_attachment_id`)
+		REFERENCES `attachment_file` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT
+)Engine=InnoDB;
+
+#-----------------------------------------------------------------------------
 #-- subnet
 #-----------------------------------------------------------------------------
 
