@@ -5316,6 +5316,14 @@
         <source>Deprecated</source>
         <target>Deprecato</target>
     </trans-unit>
+    <trans-unit id="1528">
+        <source>No one designated</source>
+        <target>Nessuna persona designata</target>
+    </trans-unit>
+    <trans-unit id="1529">
+        <source>Minimun number of designated people (%number%) unreached</source>
+        <target>Numero minimo di persone designate (%number%) non raggiunto</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
