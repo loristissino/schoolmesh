@@ -34,7 +34,13 @@
           <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
             <td class="warning"><?php echo link_to_if($sf_user->hasCredential('admin'), $item['keyrole']->getMaleDescription(), url_for('roles/edit?id='.$item['keyrole']->getId()), array('title'=>__('Edit the role «%description%»', array('%description%'=>$item['keyrole']->getMaleDescription())))) ?></td>
             <td class="warning"><?php echo $item['keyrole']->getQualityCode() ?></td>
-            <td colspan="5" class="highlighted warning"><?php echo __('No one in charge') ?><?php include_partial('content/dubious', array('text'=>__('Minimun number of assignees (%number%) unreached', array('%number%'=>$item['keyrole']->getMin())))) ?></td>
+            <td colspan="5" class="highlighted warning">
+              <?php if($item['keyrole']->getNeedsChargeLetter()): ?>
+                  <?php echo __('No one in charge') ?><?php include_partial('content/dubious', array('text'=>__('Minimun number of assignees (%number%) unreached', array('%number%'=>$item['keyrole']->getMin())))) ?>
+              <?php else: ?>
+                  <?php echo __('No one designated') ?><?php include_partial('content/dubious', array('text'=>__('Minimun number of designated people (%number%) unreached', array('%number%'=>$item['keyrole']->getMin())))) ?>
+              <?php endif ?>
+            </td>
           </tr>
       <?php endif ?>
     <?php endforeach ?>
@@ -67,7 +73,9 @@
       <?php else: ?>
         <td class="warning"><?php echo link_to_if($sf_user->hasCredential('admin'), $Role->getMaleDescription(), url_for('roles/edit?id='.$Role->getId()), array('title'=>__('Edit the role «%description%»', array('%description%'=>$Role->getMaleDescription())))) ?></td>
         <td class="warning"><?php echo $Role->getQualityCode() ?></td>
-        <td colspan="2" class="highlighted warning"><?php echo __('No one in charge') ?><?php include_partial('content/dubious', array('text'=>__('Minimun number of assignees (%number%) unreached', array('%number%'=>$Role->getMin())))) ?></td>
+        <td colspan="2" class="highlighted warning">
+            <?php echo __('No one in charge') ?><?php include_partial('content/dubious', array('text'=>__('Minimun number of assignees (%number%) unreached', array('%number%'=>$Role->getMin())))) ?>
+        </td>
       <?php endif ?>
     </tr>
   <?php endforeach ?>
