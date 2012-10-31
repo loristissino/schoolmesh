@@ -5324,7 +5324,35 @@
         <source>Minimun number of designated people (%number%) unreached</source>
         <target>Numero minimo di persone designate (%number%) non raggiunto</target>
     </trans-unit>
+    <trans-unit id="1530">
+        <source>You updated the Quality code of a key role. You might need to change your Organizational chart template.</source>
+        <target>Hai modificato il Codice qualità di un ruolo chiave. Potresti dover modificare il template per l'Organigramma.</target>
+    </trans-unit>
+    <trans-unit id="1531">
+        <source>View other static documents</source>
+        <target>Visualizza altri documenti statici</target>
+    </trans-unit>
+    <trans-unit id="1532">
+        <source>View the details about the document «%document%»</source>
+        <target>Visualizza i dettagli relativi al documento «%document%»</target>
+    </trans-unit>
+    <trans-unit id="1533">
+        <source>Show the content of the document «%document%»</source>
+        <target>Mostra il contenuto del documento «%document%»</target>
+    </trans-unit>
+    <trans-unit id="1534">
+        <source>Download the current revision of the document «%document%»</source>
+        <target>Scarica la revisione corrente del documento «%document%»</target>
+    </trans-unit>
+    <trans-unit id="1535">
+        <source>Download</source>
+        <target>Scarica</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
+
+
+
 

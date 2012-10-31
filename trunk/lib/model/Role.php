@@ -35,5 +35,6 @@ class Role extends BaseRole
   {
      return RolePeer::countUsersPlayingRole($this);
   }
+  
 
 }
