@@ -40,6 +40,9 @@ class rolesActions extends sfActions
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
     $this->forward404Unless($Role = RolePeer::retrieveByPk($request->getParameter('id')), sprintf('Object Role does not exist (%s).', $request->getParameter('id')));
+    
+    $this->previousQualityCode=$Role->getQualityCode();
+    
     $this->form = new RoleForm($Role);
 
     $this->processForm($request, $this->form);
@@ -63,6 +66,10 @@ class rolesActions extends sfActions
     if ($form->isValid())
     {
       $Role = $form->save();
+      if(isset($this->previousQualityCode) and $Role->getIsKey() and ($this->previousQualityCode!=$Role->getQualityCode()))
+      {
+        $this->getUser()->setFlash('notice', 'You updated the Quality code of a key role. You might need to change your Organizational chart template.');
+      }
 
       $this->redirect('roles/edit?id='.$Role->getId());
     }
