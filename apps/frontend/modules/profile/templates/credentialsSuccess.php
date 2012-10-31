@@ -9,4 +9,4 @@
 
 <?php include_partial('users/credentials', array('current_user'=>$sf_user->getProfile())) ?>
 
-admin? <?php echo $sf_user->hasCredential('admin') ? 'yes': 'no' ?>
+<p><?php echo __('Is superadmin?') ?> <?php echo $sf_user->hasCredential('admin') ? __('yes'): __('no') ?>.</p>
