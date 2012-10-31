@@ -5348,6 +5348,10 @@
         <source>Download</source>
         <target>Scarica</target>
     </trans-unit>
+    <trans-unit id="1536">
+        <source>Is superadmin?</source>
+        <target>È superamministratore?</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
