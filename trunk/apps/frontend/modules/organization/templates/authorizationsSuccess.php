@@ -35,3 +35,32 @@
   <?php endforeach ?>
   </tbody>
 </table>
+
+<h2><?php echo __('SuperAdmins') ?></h2>
+
+<?php if(sizeof($superadmins)>0): ?>
+
+<p><?php echo __('Users qualified as superadmin have all the credentials granted, even if they are not listed in the authorizations table.') ?></p>
+<table cellspacing="0">
+  <thead>
+    <tr>
+      <th class="sf_admin_text"><?php echo __('Name') ?></th>
+    </tr>
+  </thead>
+  <tbody>
+	<?php $i=0 ?>
+  <?php foreach($superadmins as $profile): ?>
+    <tr class="sf_admin_row <?php echo (++$i & 1)? 'odd':'even' ?>">
+      <td><?php echo link_to_if($sf_user->hasCredential('users'), $profile, url_for('users/edit?id='.$profile->getUserId())) ?></td>
+    </tr>
+  <?php endforeach ?>
+  </tbody>
+</table>
+
+<ul class="sf_admin_actions">
+  <?php echo li_link_to_if('td_action_users', $sf_user->hasCredential('users'), __('Find'), url_for('users/list?query=permissions:superadmin and active:true'), array('title'=>__('Find all superadmins in the users module'))) ?>
+</ul>
+
+<?php else: ?>
+<p><?php echo __('Nobody is qualified as superadmin.') ?></p>
+<?php endif ?>

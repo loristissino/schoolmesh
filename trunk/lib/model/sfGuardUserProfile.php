@@ -332,12 +332,16 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
 
 		public function getWebPermissions($options=array())
 		{
-      
+      $permission_names=$this->getsfGuardUser()->getAllPermissionNames();
+      if($this->getsfGuardUser()->getIsSuperAdmin())
+      {
+        $permission_names[]='superadmin';
+      }
       if(array_key_exists('astext', $options) and $options['astext'])
       {
-        return implode(',', $this->getsfGuardUser()->getAllPermissionNames());
+        return implode(',', $permission_names);
       }
-			return $this->getsfGuardUser()->getAllPermissionNames();
+			return $permission_names;
 		}
 		
 		public function hasPermission($value)

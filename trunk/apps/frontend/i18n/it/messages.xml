@@ -5349,12 +5349,30 @@
         <target>Scarica</target>
     </trans-unit>
     <trans-unit id="1536">
-        <source>Is superadmin?</source>
-        <target>È superamministratore?</target>
+        <source>%user% is a superadmin.</source>
+        <target>%user% è un superadmin.</target>
+    </trans-unit>
+    <trans-unit id="1537">
+        <source>SuperAdmins</source>
+        <target>SuperAdmin</target>
+    </trans-unit>
+    <trans-unit id="1538">
+        <source>Users qualified as superadmin have all the credentials granted, even if they are not listed in the authorizations table.</source>
+        <target>Gli utenti qualificati come superadmin godono di tutte le credenziali, anche se non sono elencati nella tabella delle autorizzazioni.</target>
+    </trans-unit>
+    <trans-unit id="1539">
+        <source>Nobody is qualified as superadmin.</source>
+        <target>Nessuno è qualificato come superadmin.</target>
+    </trans-unit>
+    <trans-unit id="1540">
+        <source>Find all superadmins in the users module</source>
+        <target>Trova tutti i superadmin nel modulo degli utenti</target>
     </trans-unit>
     </body>
   </file> 
 </xliff>
+
+
 
 
 

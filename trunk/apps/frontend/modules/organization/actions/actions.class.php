@@ -67,6 +67,7 @@ class organizationActions extends sfActions     // $userteam=RolePeer::retrieveU
   public function executeAuthorizations(sfWebRequest $request)
   {
     $this->credentials=GuardSecurity::retrieveAllPermissionsSorted();
+    $this->superadmins=GuardSecurity::retrieveSuperAdmins();
   }
   
   public function executeCredential(sfWebRequest $request)
