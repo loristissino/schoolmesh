@@ -22,7 +22,7 @@ class schoolmeshRebuildIndexesTask extends sfBaseTask
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
-      // add your own options here
+      new sfCommandOption('sleep', null, sfCommandOption::PARAMETER_REQUIRED, 'The number of seconds to wait between a profile and the next one', '3'),
     ));
 
     $this->namespace        = 'schoolmesh';
@@ -53,6 +53,7 @@ EOF;
       
       $profile->updateLuceneIndex();
       $this->logSection('user', sprintf('%s indexed (%3.2f%%)', $profile->getUsername(), 100*(++$count/$size)), null, 'INFO');
+      sleep($options['sleep']);
     }
 
   }

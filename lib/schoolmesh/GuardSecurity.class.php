@@ -44,5 +44,13 @@ class GuardSecurity {
 
     return $userpermissions;
   }
+  
+  static function retrieveSuperAdmins()
+  {
+    $c = new Criteria();
+    $c->addJoin(sfGuardUserProfilePeer::USER_ID, SfGuardUserPeer::ID);
+    $c->add(SfGuardUserPeer::IS_SUPER_ADMIN, true);
+    return SfGuardUserProfilePeer::doSelectJoinSfGuardUser($c);
+  }
  
 }

@@ -1,5 +1,12 @@
 <div id='credentials'>
 <h2><?php echo __('Credentials') ?></h2>
+
+<?php if($sf_user->getProfile()->getSfGuardUser()->getIsSuperAdmin()): ?>
+<p>
+<span class="warning"><?php echo __('%user% is a superadmin.', array('%user%'=>$sf_user->getProfile())) ?></span>
+</p>
+<?php endif ?>
+
 <table>
 <thead>
 	<tr>
@@ -39,7 +46,6 @@
 <?php endforeach ?>
 </tbody>
 </table>
-
 
 <ul class="sf_admin_actions">
 <?php if ($sf_user->hasCredential('backadmin')): ?>
