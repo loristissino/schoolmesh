@@ -1,9 +1,9 @@
 <?php include_partial('content/breadcrumps', array(
   'breadcrumps'=>array(
     'projects/index' => "Projects",
+    'projects/edit?id=' . $project->getId() => $project->getTitle(),
     ),
-  'current'=>$project,
-  'title'=>__('Document submission'),
+  'current'=>__('Document submission'),
   ))
 ?>
 

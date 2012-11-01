@@ -507,7 +507,7 @@ class Schoolproject extends BaseSchoolproject {
     // we need the user_id because the project could be started by someone
     // and submitted by someone else
     
-    $checkList=$this->getChecks();
+    $checkList=$this->getChecks($sf_context);
 
     if ($checkList->getTotalResults(Check::FAILED)==0)
     {
@@ -608,7 +608,7 @@ class Schoolproject extends BaseSchoolproject {
     return $this->getState()==Workflow::PROJ_DRAFT or $this->getState()==Workflow::PROJ_CONFIRMED;
   }
   
-  public function getChecks()
+  public function getChecks($sf_context=null)
   {
     $checkList=new CheckList();
     
@@ -668,12 +668,27 @@ class Schoolproject extends BaseSchoolproject {
           ));
       }
 
+      if($sf_context)
+      {
+        $prefix=$sf_context->getI18N()->__('Clone of');
+      }
 
       if(!$this->getTitle())
       {
         $checkList->addCheck(new Check(
           Check::FAILED,
           'No title set',
+          'Project',
+          array(
+            'link_to'=>'projects/edit?id=' . $this->getId()
+            )
+          ));
+      }
+      elseif ($sf_context and Generic::beginsWith($this->getTitle(), $prefix))
+      {
+        $checkList->addCheck(new Check(
+          Check::FAILED,
+          'Invalid title',
           'Project',
           array(
             'link_to'=>'projects/edit?id=' . $this->getId()
@@ -1086,12 +1101,18 @@ class Schoolproject extends BaseSchoolproject {
     
     $newproject=new Schoolproject();
     
+    $prefix='Clone of';
+    if($sf_context)
+    {
+      $prefix=$sf_context->getI18N()->__($prefix);
+    }
+    
     $newproject
     ->setUserId($user_id)
     ->setCode($this->getCode())
     ->setProjCategoryId($this->getProjCategoryId())
     ->setYearId(sfConfig::get('app_config_current_year'))
-    ->setTitle($this->getTitle())
+    ->setTitle($prefix . ' ' . $this->getTitle())
     ->setState(Workflow::PROJ_DRAFT)
     ->setEvaluationMin(sfConfig::get('app_config_projects_evaluation_min'))
     ->setEvaluationMax(sfConfig::get('app_config_projects_evaluation_max'))
