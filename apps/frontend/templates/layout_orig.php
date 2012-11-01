@@ -103,10 +103,9 @@
           - <?php echo (__('Release: %release% (svn revision %revision%)', array('%release%'=>sfConfig::get('app_config_release_number'), '%revision%'=>sfConfig::get('app_config_revision_number')))) ?>
           
           - <?php echo link_to(__('Legal information'), url_for('@content_static?filecode=legal')) ?>
-
+          <br />
+          <?php echo sfConfig::get('app_school_tagline', 'Tagline for the school missing!') ?>
         </div>
       </div>
-      
-
 </body>
 </html>
