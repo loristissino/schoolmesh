@@ -5368,12 +5368,17 @@
         <source>Find all superadmins in the users module</source>
         <target>Trova tutti i superadmin nel modulo degli utenti</target>
     </trans-unit>
+    <trans-unit id="1541">
+        <source>Clone of</source>
+        <target>Clone di</target>
+    </trans-unit>
+    <trans-unit id="1542">
+        <source>Invalid title</source>
+        <target>Titolo illecito</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
-
-
-
 
 
 

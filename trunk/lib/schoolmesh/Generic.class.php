@@ -619,5 +619,10 @@ class Generic{
       return '';
     }
   }
+  
+  public static function beginsWith($haystack, $needle)
+  {
+    return substr($haystack, 0, strlen($needle))==$needle;
+  }
 
 }
