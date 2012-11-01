@@ -5376,6 +5376,14 @@
         <source>Invalid title</source>
         <target>Titolo illecito</target>
     </trans-unit>
+    <trans-unit id="1543">
+        <source>No documents available.</source>
+        <target>Nessun documento disponibile.</target>
+    </trans-unit>
+    <trans-unit id="1544">
+        <source>View other documents that are not managed by Schoolmesh's documents module</source>
+        <target>Visualizza altri documenti che non sono gestiti tramite il modulo documenti di SchoolMesh</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
