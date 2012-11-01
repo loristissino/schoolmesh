@@ -9,6 +9,7 @@ all:
     website:        'http://www.example.com'
     schoolmesh_url: 'https://www.schoolmesh.eu/example/index.php'
     principal:      prof.ssa Michela Battelli
+    tagline:        EHS - <a href="http://www.example.com">info</a>
     
   mail:
     webmaster:      web@example.com
