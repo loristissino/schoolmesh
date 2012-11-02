@@ -14,7 +14,7 @@ class documentsActions extends sfActions
     $this->Doctypes = DoctypePeer::retrieveActive();
   }
 
-  public function executeShow(sfWebRequest $request)
+  public function executeDetails(sfWebRequest $request)
   {
     $this->Document = DocumentPeer::retrieveByPk($request->getParameter('id'));
     $this->forward404Unless($this->Document);

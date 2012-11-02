@@ -5384,9 +5384,22 @@
         <source>View other documents that are not managed by Schoolmesh's documents module</source>
         <target>Visualizza altri documenti che non sono gestiti tramite il modulo documenti di SchoolMesh</target>
     </trans-unit>
+    <trans-unit id="1545">
+        <source>Unknown</source>
+        <target>Sconosciuto</target>
+    </trans-unit>
+    <trans-unit id="1546">
+        <source>Download file «%filename%»</source>
+        <target>Scarica file «%filename%»</target>
+    </trans-unit>
+    <trans-unit id="1547">
+        <source>«%filename%» (%bytes% bytes)</source>
+        <target>«%filename%» (%bytes% byte)</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
 
 
 

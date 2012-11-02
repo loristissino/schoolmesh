@@ -14,7 +14,7 @@
   <tbody>
     <?php foreach ($Docrevisions as $Docrevision): ?>
     <tr>
-      <td<?php if($Docrevision->getId()!=$Document->getDocrevisionId()) echo ' class="notcurrent"' ?>><?php echo $Docrevision->getRevisionNumber() ?></td>
+      <td<?php if($Docrevision->getId()!=$Document->getDocrevisionId()) echo ' class="notcurrent"' ?> style="text-align: right"><?php echo $Docrevision->getRevisionNumber() ?></td>
       <td><?php echo $Docrevision->getRevisionedAt('d/m/Y') ?></td>
       <td><?php echo $Docrevision->getRevisionGrounds() ?></td>
       <td>
@@ -39,9 +39,9 @@
              <?php echo li_link_to_if(
                 'td_action_download', 
                 $Document->getIsActive() && ($Document->getDocrevisionId()==$Docrevision->getId()),
-                sprintf('«%s» (%d bytes)', $Docrevision->getPublishedAttachment()->getOriginalFileName(), $Docrevision->getPublishedAttachment()->getFileSize()),
+                __('«%filename%» (%bytes% bytes)', array('%filename%'=>$Docrevision->getPublishedAttachment()->getOriginalFileName(), '%bytes%'=>$Docrevision->getPublishedAttachment()->getFileSize())),
                 url_for('content/attachment?id=' . $Docrevision->getPublishedAttachment()->getId()),
-                array('title'=>__('Download file %filename%', 
+                array('title'=>__('Download file «%filename%»', 
                   array('%filename%'=>$Docrevision->getPublishedAttachment()->getOriginalFileName())
                 ))
               ) ?>
