@@ -1,9 +1,9 @@
 <div id='credentials'>
 <h2><?php echo __('Credentials') ?></h2>
 
-<?php if($sf_user->getProfile()->getSfGuardUser()->getIsSuperAdmin()): ?>
+<?php if($current_user->getSfGuardUser()->getIsSuperAdmin()): ?>
 <p>
-<span class="warning"><?php echo __('%user% is a superadmin.', array('%user%'=>$sf_user->getProfile())) ?></span>
+<span class="warning"><?php echo __('%user% is a superadmin.', array('%user%'=>$current_user)) ?></span>
 </p>
 <?php endif ?>
 
