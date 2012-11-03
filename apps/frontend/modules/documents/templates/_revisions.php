@@ -19,8 +19,9 @@
       <td><?php echo $Docrevision->getRevisionGrounds() ?></td>
       <td>
         <ul class="sf_admin_td_actions">
-          <?php echo li_link_to_if('td_action_activate', $sf_user->hasCredential('backadmin') && ($Document->getDocrevisionId()!=$Docrevision->getId()), __('Activate'), url_for('documents/activaterevision?id='.$Docrevision->getId())) ?>
+          <?php echo li_link_to_if('td_action_activate', $sf_user->hasCredential('backadmin') && ($Document->getDocrevisionId()!=$Docrevision->getId()) && ($Docrevision->getRevisionNumber()>$Document->getRevisionNumber()), __('Activate'), url_for('documents/activaterevision?id='.$Docrevision->getId())) ?>
           <?php echo li_link_to_if('td_action_edit', $sf_user->hasCredential('backadmin'), __('Edit'), url_for('docrevisions/edit?id='.$Docrevision->getId())) ?>
+          <?php echo li_link_to_if('td_action_clone', $sf_user->hasCredential('backadmin') &&  ($Docrevision->getRevisionNumber()>=$Document->getRevisionNumber()), __('Clone'), url_for('docrevisions/new?document='.$Document->getId() . '&fromrevision='.$Docrevision->getId())) ?>
           
           <?php if($Docrevision->getDocument()->getIsForm()): ?>
             <?php if($Docrevision->getSourceAttachmentId()): ?>
@@ -46,6 +47,17 @@
                 ))
               ) ?>
             <?php endif ?>
+            <?php if($Document->hasInlineContent()): ?>
+             <?php echo li_link_to_if(
+                'td_action_view', 
+                $Document->getIsActive() && ($Document->getDocrevisionId()==$Docrevision->getId()),
+                __('Show'),
+                url_for('documents/show?id=' . $Document->getId()),
+                array('title'=>__('Show the content of the document «%document%»', 
+                  array('%document%'=>$Document->getTitle())
+                ))
+              ) ?>
+            <?php endif ?>
           <?php endif ?>
         </ul>
       </td>
@@ -56,3 +68,15 @@
 <?php else: ?>
 <p><?php echo __('There are no revisions of this document.') ?></p>
 <?php endif ?>
+
+<ul class="sf_admin_actions">
+<?php echo li_link_to_if(
+  'action_new', 
+  $sf_user->hasCredential('admin'),
+  __('New revision'),
+  url_for('docrevisions/new?document=' . $Document->getId()),
+  array('title'=>__('Create a new revison for the document «%document%»', 
+    array('%document%'=>$Document->getTitle())
+  ))
+) ?>
+</ul>

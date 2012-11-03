@@ -36,8 +36,6 @@
 <hr />
 
 <?php if($Document->getContentType()==Document::CONTENT_TYPE_MARKDOWN): ?>
-  <?php echo majaxMarkdown::transform(html_entity_decode($Document->getContent())); ?>
-  <hr />
 <?php endif ?>
 
 <?php include_component('documents', 'revisions', array('Document' => $Document)) ?>
