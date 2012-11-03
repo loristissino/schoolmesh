@@ -1513,7 +1513,7 @@ class sfGuardUserProfile extends BasesfGuardUserProfile
         $password=Authentication::generateRandomPassword();
         $this->getsfGuardUser()->setPassword($password);
         $this->getsfGuardUser()->save();
-        $this->setPlaintextPassword($password)->save();
+        $this->setPlaintextPassword($password)->setStoredEncryptedPassword($password)->save();
       }
       else
       {

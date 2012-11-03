@@ -4,6 +4,9 @@
 <?php if ($sf_user->hasFlash('error_info')): ?>
   <div class="error"><?php echo $sf_user->getFlash('error_info')?></div>
 <?php endif; ?>
+
+<?php if(sizeof($wpinfos)>0): ?>
+
 <?php $i=0 ?>
 <div class="sf_admin_list">
 
@@ -54,4 +57,8 @@
    <?php endforeach; ?>
   </tbody>
 </table>
+
 </div>
+<?php else: ?>
+  <p><span class="warning"><?php echo __('For this kind of appointment, the fields have not been defined yet.') ?></span></p>
+<?php endif ?>

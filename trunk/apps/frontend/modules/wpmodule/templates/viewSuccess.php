@@ -33,6 +33,7 @@
 </ul>
 
 
+<?php if(sizeof($item_groups)>0): ?>
 
 <table>
 <tr>
@@ -49,6 +50,11 @@
 		<?php include_partial('group_boxes', array('item_group' => $item_group, 'wpstate' => $wpstate)) ?>
 	<?php endif ?>
 <?php endforeach ?>
+
+
+<?php else: ?>
+  <p><span class="warning"><?php echo __('For this kind of appointment, the fields have not been defined yet.') ?></span></p>
+<?php endif ?>
 
 <?php if($workplan->isWorkplan() && $workplan->getSyllabus() && $workplan->getSyllabus()->getIsActive()): ?>
 <h2><?php echo __('Syllabus links') ?></h2>
