@@ -5396,6 +5396,14 @@
         <source>«%filename%» (%bytes% bytes)</source>
         <target>«%filename%» (%bytes% byte)</target>
     </trans-unit>
+    <trans-unit id="1548">
+        <source>New revision</source>
+        <target>Nuova revisione</target>
+    </trans-unit>
+    <trans-unit id="1549">
+        <source>Revision grounds</source>
+        <target>Motivazioni revisione</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

@@ -34,6 +34,7 @@ class Docrevision extends BaseDocrevision {
     $con = Propel::getConnection(ProjDeadlinePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
     // we need to check which ones are present, because it depends on the state
     Generic::updateObjectFromForm($this, array(
+      'document_id',
       'uploader_id',
       'revision_number',
       'revisioned_at',

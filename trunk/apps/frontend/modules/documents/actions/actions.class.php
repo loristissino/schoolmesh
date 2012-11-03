@@ -20,6 +20,13 @@ class documentsActions extends sfActions
     $this->forward404Unless($this->Document);
   }
 
+  public function executeShow(sfWebRequest $request)
+  {
+    $this->Document = DocumentPeer::retrieveByPk($request->getParameter('id'));
+    $this->forward404Unless($this->Document);
+    $this->forward404Unless($this->Document->hasInlineContent());
+  }
+
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new documentForm();

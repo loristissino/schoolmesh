@@ -1,0 +1,44 @@
+/* - numbering.css */
+body { 
+    counter-reset: mynum-h1; 
+}
+
+h1 {
+    counter-reset: mynum-h2;
+}
+
+h1:before {
+    counter-increment: mynum-h1;
+}
+
+div.numbered h2 {
+    counter-reset: mynum-h3;
+}
+
+div.numbered h2:before {
+    content:  counter(mynum-h2) " ";
+    counter-increment: mynum-h2;
+}
+
+div.numbered h3 {
+    counter-reset: mynum-h4;
+}
+
+div.numbered h3:before {
+    content:  counter(mynum-h2) "." counter(mynum-h3) " ";
+    counter-increment: mynum-h3;
+}
+
+div.numbered h4 {
+    counter-reset: mynum-h5;
+}
+
+div.numbered h4:before {
+    content: counter(mynum-h2) "." counter(mynum-h3) "." counter(mynum-h4) " ";
+    counter-increment: mynum-h4;
+}
+
+div.numbered h5:before {
+    content: counter(mynum-h2) "." counter(mynum-h3) "." counter(mynum-h4) " " counter(mynum-h5) " ";
+    counter-increment: mynum-h5;
+}
