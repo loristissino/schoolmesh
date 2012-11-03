@@ -5404,11 +5404,10 @@
         <source>Revision grounds</source>
         <target>Motivazioni revisione</target>
     </trans-unit>
+    <trans-unit id="1550">
+        <source>For this kind of appointment, the fields have not been defined yet.</source>
+        <target>Per questo tipo di incarico, i campi non sono ancora stati definiti.</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
-
-
-
-
-
