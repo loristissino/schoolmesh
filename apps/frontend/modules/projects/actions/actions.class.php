@@ -957,15 +957,36 @@ class projectsActions extends sfActions
   
     if ($this->project)
     {
+      $cr=new Criteria();
+      $this->getUser()->getAttribute('resources_sortoder', 'deadline');
+      switch($this->getUser()->getAttribute('resources_sortorder', 'deadline'))
+      {
+        case 'deadline':
+          $cr->addAscendingOrderByColumn(ProjResourcePeer::SCHEDULED_DEADLINE);
+          break;
+        case 'type':
+          $cr->addAscendingOrderByColumn(ProjResourceTypePeer::RANK);
+          break;
+      }
+      
       $this->deadlines=$this->project->getProjDeadlines();
-      $this->resources=$this->project->getProjResources();
+      $this->resources=$this->project->getProjResources($cr);
       $this->upshots  =$this->project->getProjUpshots();
     }
-  
-  
   }  
+  
+  public function executeSetsortorder(sfWebRequest $request)
+  {
+    $data=$request->getParameter('data');
+    $this->forward404Unless(in_array($data, array('resources')));
+    $key=$request->getParameter('key');
+    $this->forward404Unless(in_array($key, array('deadline', 'type')));
+    
+    $this->getUser()->setAttribute($data . '_sortorder', $key);
+    
+    $this->redirect($request->getReferer(). '#resources');
+  }
 	
-
   public function executeSubmit(sfWebRequest $request)
   {
     

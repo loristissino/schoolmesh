@@ -5408,6 +5408,16 @@
         <source>For this kind of appointment, the fields have not been defined yet.</source>
         <target>Per questo tipo di incarico, i campi non sono ancora stati definiti.</target>
     </trans-unit>
+    <trans-unit id="1551">
+        <source>Sort this table by type</source>
+        <target>Ordina questa tabella per tipo</target>
+    </trans-unit>
+    <trans-unit id="1552">
+        <source>Sort this table by deadline</source>
+        <target>Ordina questa tabella per scadenza</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
+

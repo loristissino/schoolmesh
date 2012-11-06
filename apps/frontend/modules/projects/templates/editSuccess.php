@@ -80,8 +80,8 @@
 <table cellspacing="0">
   <thead>
     <tr>
-      <th class="sf_admin_text"><?php echo __('Deadline') ?></th>
-      <th class="sf_admin_text"><?php echo __('Type') ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Deadline'), url_for('projects/setsortorder?data=resources&key=deadline'), array('title'=>__('Sort this table by deadline'))) ?></th>
+      <th class="sf_admin_text"><?php echo link_to(__('Type'), url_for('projects/setsortorder?data=resources&key=type'), array('title'=>__('Sort this table by type'))) ?></th>
       <th class="sf_admin_text"><?php echo __('Charged user') ?></th>
       <th class="sf_admin_text"><?php echo __('Description') ?></th>
       <th class="sf_admin_text">

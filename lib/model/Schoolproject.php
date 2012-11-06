@@ -474,9 +474,9 @@ class Schoolproject extends BaseSchoolproject {
     if(!$criteria)
     {
       $criteria=new Criteria();
+      $criteria->addAscendingOrderByColumn(ProjResourcePeer::SCHEDULED_DEADLINE);
     }
     $criteria->addJoin(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID, ProjResourceTypePeer::ID);
-    $criteria->addAscendingOrderByColumn(ProjResourcePeer::SCHEDULED_DEADLINE);
 		return parent::getProjResources($criteria);
 	}
   
