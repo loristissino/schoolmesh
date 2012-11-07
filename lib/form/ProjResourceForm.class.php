@@ -31,6 +31,10 @@ class ProjResourceForm extends BaseProjResourceForm
     $this['financing_notes']->getWidget()
       ->setAttributes(array('size'=>'80'))
       ;
+      
+    $c=new Criteria();
+    $c->addAscendingOrderByColumn(ProjResourceTypePeer::RANK);
+    $this['proj_resource_type_id']->getWidget()->addOption('criteria', $c);
     
     $resource=$this->getObject();
     $project=$resource->getSchoolproject();
