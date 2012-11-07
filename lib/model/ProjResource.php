@@ -48,6 +48,8 @@ class ProjResource extends BaseProjResource {
       'amount_funded_externally',
       'financing_notes',
       ), $params);
+    
+    $this->setIsMonetary($this->getProjResourceType()->getIsMonetary(), $con);
       
     if(!$this->getProjResourceType()->getRoleId())
     {
