@@ -88,39 +88,45 @@ EOF;
       if($options['also-not-submitted'] || $appointment->getState()>Workflow::WP_DRAFT)
       {
         $count=0;
+        
+        $checkList=$appointment->getChecks($con);
+        if($checkList->getTotalResults(Check::FAILED))
+        {
+          print_r($checkList->getAllChecks());
+        }
 
-          foreach($appointment->getWpinfos() as $wpinfo)
+        foreach($appointment->getWpinfos() as $wpinfo)
+        {
+          $date=$wpinfo->getUpdatedAt();
+          if($options['replace-bad-formatted-contents'])
           {
-            $date=$wpinfo->getUpdatedAt();
-            if($options['replace-bad-formatted-contents'])
+            $dirty=false;
+            
+            $old=$wpinfo->getContent();
+            $new=ltrim(rtrim($old));
+            if($old!=$new)
             {
-              $dirty=false;
-              
-              $old=$wpinfo->getContent();
-              $new=ltrim(rtrim($old));
-              if($old!=$new)
-              {
-                $wpinfo->setContent($new);
-                $dirty=true;
-              }
-            
-              if($wpinfo->getContent() && $wpinfo->getWpinfoType()->getStateMin()>$appointment->getState())
-              {
-                $this->logSection('wpinfo-', sprintf('%d, removed content «%s» ', $wpinfo->getId(), $new), null, 'INFO');
-                $wpinfo->setContent('');
-                $dirty=true;
-              }
-            
-              if($dirty)
-              {
-                $wpinfo->save($con);
-                $wpinfo
-                ->setUpdatedAt($date)
-                ->save($con)
-                ;
-              }
-            } // end if replace wrong-contents
-          }
+              $wpinfo->setContent($new);
+              $dirty=true;
+            }
+          
+            if($wpinfo->getContent() && $wpinfo->getWpinfoType()->getStateMin()>$appointment->getState())
+            {
+              $this->logSection('wpinfo-', sprintf('%d, removed content «%s» ', $wpinfo->getId(), $new), null, 'INFO');
+              $wpinfo->setContent('');
+              $dirty=true;
+            }
+          
+            if($dirty)
+            {
+              $wpinfo->save($con);
+              $wpinfo
+              ->setUpdatedAt($date)
+              ->save($con)
+              ;
+            }
+          } // end if replace wrong-contents
+        }
 
 
           foreach($appointment->getWpmodules() as $wpmodule)
