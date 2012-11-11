@@ -72,7 +72,9 @@ class sfGuardUserTableMap extends TableMap {
     $this->addRelation('ProjActivityRelatedByUserId', 'ProjActivity', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('ProjActivityRelatedByAcknowledgerUserId', 'ProjActivity', RelationMap::ONE_TO_MANY, array('id' => 'acknowledger_user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Consent', 'Consent', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
-    $this->addRelation('Docrevision', 'Docrevision', RelationMap::ONE_TO_MANY, array('id' => 'uploader_id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('DocrevisionRelatedByUploaderId', 'Docrevision', RelationMap::ONE_TO_MANY, array('id' => 'uploader_id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('DocrevisionRelatedByRevisionerId', 'Docrevision', RelationMap::ONE_TO_MANY, array('id' => 'revisioner_id', ), 'RESTRICT', 'CASCADE');
+    $this->addRelation('DocrevisionRelatedByApproverId', 'Docrevision', RelationMap::ONE_TO_MANY, array('id' => 'approver_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('Lanlog', 'Lanlog', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('AttachmentFile', 'AttachmentFile', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'RESTRICT', 'CASCADE');
     $this->addRelation('sfGuardUserPermission', 'sfGuardUserPermission', RelationMap::ONE_TO_MANY, array('id' => 'user_id', ), 'CASCADE', null);

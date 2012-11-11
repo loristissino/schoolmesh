@@ -1370,6 +1370,8 @@ CREATE TABLE `doctype`
 	`description` TEXT,
 	`is_active` TINYINT default 1,
 	`rank` INTEGER,
+	`revision_number` INTEGER default 1 NOT NULL,
+	`revisioned_at` DATETIME,
 	PRIMARY KEY (`id`)
 )Engine=InnoDB;
 
@@ -1419,9 +1421,13 @@ CREATE TABLE `docrevision`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`document_id` INTEGER  NOT NULL,
+	`title` VARCHAR(255),
 	`revision_number` INTEGER  NOT NULL,
 	`revisioned_at` DATETIME,
 	`uploader_id` INTEGER  NOT NULL,
+	`revisioner_id` INTEGER,
+	`approved_at` DATETIME,
+	`approver_id` INTEGER,
 	`revision_grounds` TEXT  NOT NULL,
 	`content` TEXT,
 	`content_type` INTEGER,
@@ -1440,14 +1446,26 @@ CREATE TABLE `docrevision`
 		REFERENCES `sf_guard_user` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
-	INDEX `docrevision_FI_3` (`source_attachment_id`),
+	INDEX `docrevision_FI_3` (`revisioner_id`),
 	CONSTRAINT `docrevision_FK_3`
+		FOREIGN KEY (`revisioner_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `docrevision_FI_4` (`approver_id`),
+	CONSTRAINT `docrevision_FK_4`
+		FOREIGN KEY (`approver_id`)
+		REFERENCES `sf_guard_user` (`id`)
+		ON UPDATE CASCADE
+		ON DELETE RESTRICT,
+	INDEX `docrevision_FI_5` (`source_attachment_id`),
+	CONSTRAINT `docrevision_FK_5`
 		FOREIGN KEY (`source_attachment_id`)
 		REFERENCES `attachment_file` (`id`)
 		ON UPDATE CASCADE
 		ON DELETE RESTRICT,
-	INDEX `docrevision_FI_4` (`published_attachment_id`),
-	CONSTRAINT `docrevision_FK_4`
+	INDEX `docrevision_FI_6` (`published_attachment_id`),
+	CONSTRAINT `docrevision_FK_6`
 		FOREIGN KEY (`published_attachment_id`)
 		REFERENCES `attachment_file` (`id`)
 		ON UPDATE CASCADE

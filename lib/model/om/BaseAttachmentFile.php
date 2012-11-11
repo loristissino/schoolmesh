@@ -1553,7 +1553,7 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 	 * api reasonable.  You can provide public methods for those you
 	 * actually need in AttachmentFile.
 	 */
-	public function getDocrevisionsRelatedBySourceAttachmentIdJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getDocrevisionsRelatedBySourceAttachmentIdJoinsfGuardUserRelatedByUploaderId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(AttachmentFilePeer::DATABASE_NAME);
@@ -1570,7 +1570,7 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 
 				$criteria->add(DocrevisionPeer::SOURCE_ATTACHMENT_ID, $this->id);
 
-				$this->collDocrevisionsRelatedBySourceAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+				$this->collDocrevisionsRelatedBySourceAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUserRelatedByUploaderId($criteria, $con, $join_behavior);
 			}
 		} else {
 			// the following code is to determine if a new query is
@@ -1580,7 +1580,101 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 			$criteria->add(DocrevisionPeer::SOURCE_ATTACHMENT_ID, $this->id);
 
 			if (!isset($this->lastDocrevisionRelatedBySourceAttachmentIdCriteria) || !$this->lastDocrevisionRelatedBySourceAttachmentIdCriteria->equals($criteria)) {
-				$this->collDocrevisionsRelatedBySourceAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+				$this->collDocrevisionsRelatedBySourceAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUserRelatedByUploaderId($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocrevisionRelatedBySourceAttachmentIdCriteria = $criteria;
+
+		return $this->collDocrevisionsRelatedBySourceAttachmentId;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this AttachmentFile is new, it will return
+	 * an empty collection; or if this AttachmentFile has previously
+	 * been saved, it will retrieve related DocrevisionsRelatedBySourceAttachmentId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in AttachmentFile.
+	 */
+	public function getDocrevisionsRelatedBySourceAttachmentIdJoinsfGuardUserRelatedByRevisionerId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AttachmentFilePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedBySourceAttachmentId === null) {
+			if ($this->isNew()) {
+				$this->collDocrevisionsRelatedBySourceAttachmentId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::SOURCE_ATTACHMENT_ID, $this->id);
+
+				$this->collDocrevisionsRelatedBySourceAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUserRelatedByRevisionerId($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocrevisionPeer::SOURCE_ATTACHMENT_ID, $this->id);
+
+			if (!isset($this->lastDocrevisionRelatedBySourceAttachmentIdCriteria) || !$this->lastDocrevisionRelatedBySourceAttachmentIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedBySourceAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUserRelatedByRevisionerId($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocrevisionRelatedBySourceAttachmentIdCriteria = $criteria;
+
+		return $this->collDocrevisionsRelatedBySourceAttachmentId;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this AttachmentFile is new, it will return
+	 * an empty collection; or if this AttachmentFile has previously
+	 * been saved, it will retrieve related DocrevisionsRelatedBySourceAttachmentId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in AttachmentFile.
+	 */
+	public function getDocrevisionsRelatedBySourceAttachmentIdJoinsfGuardUserRelatedByApproverId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AttachmentFilePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedBySourceAttachmentId === null) {
+			if ($this->isNew()) {
+				$this->collDocrevisionsRelatedBySourceAttachmentId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::SOURCE_ATTACHMENT_ID, $this->id);
+
+				$this->collDocrevisionsRelatedBySourceAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUserRelatedByApproverId($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocrevisionPeer::SOURCE_ATTACHMENT_ID, $this->id);
+
+			if (!isset($this->lastDocrevisionRelatedBySourceAttachmentIdCriteria) || !$this->lastDocrevisionRelatedBySourceAttachmentIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedBySourceAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUserRelatedByApproverId($criteria, $con, $join_behavior);
 			}
 		}
 		$this->lastDocrevisionRelatedBySourceAttachmentIdCriteria = $criteria;
@@ -1801,7 +1895,7 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 	 * api reasonable.  You can provide public methods for those you
 	 * actually need in AttachmentFile.
 	 */
-	public function getDocrevisionsRelatedByPublishedAttachmentIdJoinsfGuardUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getDocrevisionsRelatedByPublishedAttachmentIdJoinsfGuardUserRelatedByUploaderId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(AttachmentFilePeer::DATABASE_NAME);
@@ -1818,7 +1912,7 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 
 				$criteria->add(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, $this->id);
 
-				$this->collDocrevisionsRelatedByPublishedAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+				$this->collDocrevisionsRelatedByPublishedAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUserRelatedByUploaderId($criteria, $con, $join_behavior);
 			}
 		} else {
 			// the following code is to determine if a new query is
@@ -1828,7 +1922,101 @@ abstract class BaseAttachmentFile extends BaseObject  implements Persistent {
 			$criteria->add(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, $this->id);
 
 			if (!isset($this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria) || !$this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria->equals($criteria)) {
-				$this->collDocrevisionsRelatedByPublishedAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUser($criteria, $con, $join_behavior);
+				$this->collDocrevisionsRelatedByPublishedAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUserRelatedByUploaderId($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria = $criteria;
+
+		return $this->collDocrevisionsRelatedByPublishedAttachmentId;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this AttachmentFile is new, it will return
+	 * an empty collection; or if this AttachmentFile has previously
+	 * been saved, it will retrieve related DocrevisionsRelatedByPublishedAttachmentId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in AttachmentFile.
+	 */
+	public function getDocrevisionsRelatedByPublishedAttachmentIdJoinsfGuardUserRelatedByRevisionerId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AttachmentFilePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedByPublishedAttachmentId === null) {
+			if ($this->isNew()) {
+				$this->collDocrevisionsRelatedByPublishedAttachmentId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, $this->id);
+
+				$this->collDocrevisionsRelatedByPublishedAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUserRelatedByRevisionerId($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, $this->id);
+
+			if (!isset($this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria) || !$this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedByPublishedAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUserRelatedByRevisionerId($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria = $criteria;
+
+		return $this->collDocrevisionsRelatedByPublishedAttachmentId;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this AttachmentFile is new, it will return
+	 * an empty collection; or if this AttachmentFile has previously
+	 * been saved, it will retrieve related DocrevisionsRelatedByPublishedAttachmentId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in AttachmentFile.
+	 */
+	public function getDocrevisionsRelatedByPublishedAttachmentIdJoinsfGuardUserRelatedByApproverId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(AttachmentFilePeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedByPublishedAttachmentId === null) {
+			if ($this->isNew()) {
+				$this->collDocrevisionsRelatedByPublishedAttachmentId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, $this->id);
+
+				$this->collDocrevisionsRelatedByPublishedAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUserRelatedByApproverId($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, $this->id);
+
+			if (!isset($this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria) || !$this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedByPublishedAttachmentId = DocrevisionPeer::doSelectJoinsfGuardUserRelatedByApproverId($criteria, $con, $join_behavior);
 			}
 		}
 		$this->lastDocrevisionRelatedByPublishedAttachmentIdCriteria = $criteria;

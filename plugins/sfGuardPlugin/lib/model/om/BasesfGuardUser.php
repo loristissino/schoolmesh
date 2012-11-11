@@ -258,12 +258,32 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	/**
 	 * @var        array Docrevision[] Collection to store aggregation of Docrevision objects.
 	 */
-	protected $collDocrevisions;
+	protected $collDocrevisionsRelatedByUploaderId;
 
 	/**
-	 * @var        Criteria The criteria used to select the current contents of collDocrevisions.
+	 * @var        Criteria The criteria used to select the current contents of collDocrevisionsRelatedByUploaderId.
 	 */
-	private $lastDocrevisionCriteria = null;
+	private $lastDocrevisionRelatedByUploaderIdCriteria = null;
+
+	/**
+	 * @var        array Docrevision[] Collection to store aggregation of Docrevision objects.
+	 */
+	protected $collDocrevisionsRelatedByRevisionerId;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collDocrevisionsRelatedByRevisionerId.
+	 */
+	private $lastDocrevisionRelatedByRevisionerIdCriteria = null;
+
+	/**
+	 * @var        array Docrevision[] Collection to store aggregation of Docrevision objects.
+	 */
+	protected $collDocrevisionsRelatedByApproverId;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collDocrevisionsRelatedByApproverId.
+	 */
+	private $lastDocrevisionRelatedByApproverIdCriteria = null;
 
 	/**
 	 * @var        array Lanlog[] Collection to store aggregation of Lanlog objects.
@@ -939,8 +959,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$this->collConsents = null;
 			$this->lastConsentCriteria = null;
 
-			$this->collDocrevisions = null;
-			$this->lastDocrevisionCriteria = null;
+			$this->collDocrevisionsRelatedByUploaderId = null;
+			$this->lastDocrevisionRelatedByUploaderIdCriteria = null;
+
+			$this->collDocrevisionsRelatedByRevisionerId = null;
+			$this->lastDocrevisionRelatedByRevisionerIdCriteria = null;
+
+			$this->collDocrevisionsRelatedByApproverId = null;
+			$this->lastDocrevisionRelatedByApproverIdCriteria = null;
 
 			$this->collLanlogs = null;
 			$this->lastLanlogCriteria = null;
@@ -1249,8 +1275,24 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->collDocrevisions !== null) {
-				foreach ($this->collDocrevisions as $referrerFK) {
+			if ($this->collDocrevisionsRelatedByUploaderId !== null) {
+				foreach ($this->collDocrevisionsRelatedByUploaderId as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collDocrevisionsRelatedByRevisionerId !== null) {
+				foreach ($this->collDocrevisionsRelatedByRevisionerId as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
+			if ($this->collDocrevisionsRelatedByApproverId !== null) {
+				foreach ($this->collDocrevisionsRelatedByApproverId as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -1532,8 +1574,24 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					}
 				}
 
-				if ($this->collDocrevisions !== null) {
-					foreach ($this->collDocrevisions as $referrerFK) {
+				if ($this->collDocrevisionsRelatedByUploaderId !== null) {
+					foreach ($this->collDocrevisionsRelatedByUploaderId as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collDocrevisionsRelatedByRevisionerId !== null) {
+					foreach ($this->collDocrevisionsRelatedByRevisionerId as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collDocrevisionsRelatedByApproverId !== null) {
+					foreach ($this->collDocrevisionsRelatedByApproverId as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -1985,9 +2043,21 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				}
 			}
 
-			foreach ($this->getDocrevisions() as $relObj) {
+			foreach ($this->getDocrevisionsRelatedByUploaderId() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-					$copyObj->addDocrevision($relObj->copy($deepCopy));
+					$copyObj->addDocrevisionRelatedByUploaderId($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getDocrevisionsRelatedByRevisionerId() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addDocrevisionRelatedByRevisionerId($relObj->copy($deepCopy));
+				}
+			}
+
+			foreach ($this->getDocrevisionsRelatedByApproverId() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+					$copyObj->addDocrevisionRelatedByApproverId($relObj->copy($deepCopy));
 				}
 			}
 
@@ -6275,31 +6345,31 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Clears out the collDocrevisions collection (array).
+	 * Clears out the collDocrevisionsRelatedByUploaderId collection (array).
 	 *
 	 * This does not modify the database; however, it will remove any associated objects, causing
 	 * them to be refetched by subsequent calls to accessor method.
 	 *
 	 * @return     void
-	 * @see        addDocrevisions()
+	 * @see        addDocrevisionsRelatedByUploaderId()
 	 */
-	public function clearDocrevisions()
+	public function clearDocrevisionsRelatedByUploaderId()
 	{
-		$this->collDocrevisions = null; // important to set this to NULL since that means it is uninitialized
+		$this->collDocrevisionsRelatedByUploaderId = null; // important to set this to NULL since that means it is uninitialized
 	}
 
 	/**
-	 * Initializes the collDocrevisions collection (array).
+	 * Initializes the collDocrevisionsRelatedByUploaderId collection (array).
 	 *
-	 * By default this just sets the collDocrevisions collection to an empty array (like clearcollDocrevisions());
+	 * By default this just sets the collDocrevisionsRelatedByUploaderId collection to an empty array (like clearcollDocrevisionsRelatedByUploaderId());
 	 * however, you may wish to override this method in your stub class to provide setting appropriate
 	 * to your application -- for example, setting the initial array to the values stored in database.
 	 *
 	 * @return     void
 	 */
-	public function initDocrevisions()
+	public function initDocrevisionsRelatedByUploaderId()
 	{
-		$this->collDocrevisions = array();
+		$this->collDocrevisionsRelatedByUploaderId = array();
 	}
 
 	/**
@@ -6307,7 +6377,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	 *
 	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
 	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
-	 * related Docrevisions from storage. If this sfGuardUser is new, it will return
+	 * related DocrevisionsRelatedByUploaderId from storage. If this sfGuardUser is new, it will return
 	 * an empty collection or the current collection, the criteria is ignored on a new object.
 	 *
 	 * @param      PropelPDO $con
@@ -6315,7 +6385,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	 * @return     array Docrevision[]
 	 * @throws     PropelException
 	 */
-	public function getDocrevisions($criteria = null, PropelPDO $con = null)
+	public function getDocrevisionsRelatedByUploaderId($criteria = null, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
@@ -6325,15 +6395,15 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collDocrevisions === null) {
+		if ($this->collDocrevisionsRelatedByUploaderId === null) {
 			if ($this->isNew()) {
-			   $this->collDocrevisions = array();
+			   $this->collDocrevisionsRelatedByUploaderId = array();
 			} else {
 
 				$criteria->add(DocrevisionPeer::UPLOADER_ID, $this->id);
 
 				DocrevisionPeer::addSelectColumns($criteria);
-				$this->collDocrevisions = DocrevisionPeer::doSelect($criteria, $con);
+				$this->collDocrevisionsRelatedByUploaderId = DocrevisionPeer::doSelect($criteria, $con);
 			}
 		} else {
 			// criteria has no effect for a new object
@@ -6346,13 +6416,13 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 				$criteria->add(DocrevisionPeer::UPLOADER_ID, $this->id);
 
 				DocrevisionPeer::addSelectColumns($criteria);
-				if (!isset($this->lastDocrevisionCriteria) || !$this->lastDocrevisionCriteria->equals($criteria)) {
-					$this->collDocrevisions = DocrevisionPeer::doSelect($criteria, $con);
+				if (!isset($this->lastDocrevisionRelatedByUploaderIdCriteria) || !$this->lastDocrevisionRelatedByUploaderIdCriteria->equals($criteria)) {
+					$this->collDocrevisionsRelatedByUploaderId = DocrevisionPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastDocrevisionCriteria = $criteria;
-		return $this->collDocrevisions;
+		$this->lastDocrevisionRelatedByUploaderIdCriteria = $criteria;
+		return $this->collDocrevisionsRelatedByUploaderId;
 	}
 
 	/**
@@ -6364,7 +6434,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	 * @return     int Count of related Docrevision objects.
 	 * @throws     PropelException
 	 */
-	public function countDocrevisions(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	public function countDocrevisionsRelatedByUploaderId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
@@ -6378,7 +6448,7 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 		$count = null;
 
-		if ($this->collDocrevisions === null) {
+		if ($this->collDocrevisionsRelatedByUploaderId === null) {
 			if ($this->isNew()) {
 				$count = 0;
 			} else {
@@ -6397,13 +6467,13 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 				$criteria->add(DocrevisionPeer::UPLOADER_ID, $this->id);
 
-				if (!isset($this->lastDocrevisionCriteria) || !$this->lastDocrevisionCriteria->equals($criteria)) {
+				if (!isset($this->lastDocrevisionRelatedByUploaderIdCriteria) || !$this->lastDocrevisionRelatedByUploaderIdCriteria->equals($criteria)) {
 					$count = DocrevisionPeer::doCount($criteria, false, $con);
 				} else {
-					$count = count($this->collDocrevisions);
+					$count = count($this->collDocrevisionsRelatedByUploaderId);
 				}
 			} else {
-				$count = count($this->collDocrevisions);
+				$count = count($this->collDocrevisionsRelatedByUploaderId);
 			}
 		}
 		return $count;
@@ -6417,14 +6487,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	 * @return     void
 	 * @throws     PropelException
 	 */
-	public function addDocrevision(Docrevision $l)
+	public function addDocrevisionRelatedByUploaderId(Docrevision $l)
 	{
-		if ($this->collDocrevisions === null) {
-			$this->initDocrevisions();
+		if ($this->collDocrevisionsRelatedByUploaderId === null) {
+			$this->initDocrevisionsRelatedByUploaderId();
 		}
-		if (!in_array($l, $this->collDocrevisions, true)) { // only add it if the **same** object is not already associated
-			array_push($this->collDocrevisions, $l);
-			$l->setsfGuardUser($this);
+		if (!in_array($l, $this->collDocrevisionsRelatedByUploaderId, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collDocrevisionsRelatedByUploaderId, $l);
+			$l->setsfGuardUserRelatedByUploaderId($this);
 		}
 	}
 
@@ -6434,13 +6504,13 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	 * an identical criteria, it returns the collection.
 	 * Otherwise if this sfGuardUser is new, it will return
 	 * an empty collection; or if this sfGuardUser has previously
-	 * been saved, it will retrieve related Docrevisions from storage.
+	 * been saved, it will retrieve related DocrevisionsRelatedByUploaderId from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
 	 * actually need in sfGuardUser.
 	 */
-	public function getDocrevisionsJoinDocument($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getDocrevisionsRelatedByUploaderIdJoinDocument($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
@@ -6450,14 +6520,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collDocrevisions === null) {
+		if ($this->collDocrevisionsRelatedByUploaderId === null) {
 			if ($this->isNew()) {
-				$this->collDocrevisions = array();
+				$this->collDocrevisionsRelatedByUploaderId = array();
 			} else {
 
 				$criteria->add(DocrevisionPeer::UPLOADER_ID, $this->id);
 
-				$this->collDocrevisions = DocrevisionPeer::doSelectJoinDocument($criteria, $con, $join_behavior);
+				$this->collDocrevisionsRelatedByUploaderId = DocrevisionPeer::doSelectJoinDocument($criteria, $con, $join_behavior);
 			}
 		} else {
 			// the following code is to determine if a new query is
@@ -6466,13 +6536,13 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 			$criteria->add(DocrevisionPeer::UPLOADER_ID, $this->id);
 
-			if (!isset($this->lastDocrevisionCriteria) || !$this->lastDocrevisionCriteria->equals($criteria)) {
-				$this->collDocrevisions = DocrevisionPeer::doSelectJoinDocument($criteria, $con, $join_behavior);
+			if (!isset($this->lastDocrevisionRelatedByUploaderIdCriteria) || !$this->lastDocrevisionRelatedByUploaderIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedByUploaderId = DocrevisionPeer::doSelectJoinDocument($criteria, $con, $join_behavior);
 			}
 		}
-		$this->lastDocrevisionCriteria = $criteria;
+		$this->lastDocrevisionRelatedByUploaderIdCriteria = $criteria;
 
-		return $this->collDocrevisions;
+		return $this->collDocrevisionsRelatedByUploaderId;
 	}
 
 
@@ -6481,13 +6551,13 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	 * an identical criteria, it returns the collection.
 	 * Otherwise if this sfGuardUser is new, it will return
 	 * an empty collection; or if this sfGuardUser has previously
-	 * been saved, it will retrieve related Docrevisions from storage.
+	 * been saved, it will retrieve related DocrevisionsRelatedByUploaderId from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
 	 * actually need in sfGuardUser.
 	 */
-	public function getDocrevisionsJoinAttachmentFileRelatedBySourceAttachmentId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getDocrevisionsRelatedByUploaderIdJoinAttachmentFileRelatedBySourceAttachmentId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
@@ -6497,14 +6567,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collDocrevisions === null) {
+		if ($this->collDocrevisionsRelatedByUploaderId === null) {
 			if ($this->isNew()) {
-				$this->collDocrevisions = array();
+				$this->collDocrevisionsRelatedByUploaderId = array();
 			} else {
 
 				$criteria->add(DocrevisionPeer::UPLOADER_ID, $this->id);
 
-				$this->collDocrevisions = DocrevisionPeer::doSelectJoinAttachmentFileRelatedBySourceAttachmentId($criteria, $con, $join_behavior);
+				$this->collDocrevisionsRelatedByUploaderId = DocrevisionPeer::doSelectJoinAttachmentFileRelatedBySourceAttachmentId($criteria, $con, $join_behavior);
 			}
 		} else {
 			// the following code is to determine if a new query is
@@ -6513,13 +6583,13 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 			$criteria->add(DocrevisionPeer::UPLOADER_ID, $this->id);
 
-			if (!isset($this->lastDocrevisionCriteria) || !$this->lastDocrevisionCriteria->equals($criteria)) {
-				$this->collDocrevisions = DocrevisionPeer::doSelectJoinAttachmentFileRelatedBySourceAttachmentId($criteria, $con, $join_behavior);
+			if (!isset($this->lastDocrevisionRelatedByUploaderIdCriteria) || !$this->lastDocrevisionRelatedByUploaderIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedByUploaderId = DocrevisionPeer::doSelectJoinAttachmentFileRelatedBySourceAttachmentId($criteria, $con, $join_behavior);
 			}
 		}
-		$this->lastDocrevisionCriteria = $criteria;
+		$this->lastDocrevisionRelatedByUploaderIdCriteria = $criteria;
 
-		return $this->collDocrevisions;
+		return $this->collDocrevisionsRelatedByUploaderId;
 	}
 
 
@@ -6528,13 +6598,13 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 	 * an identical criteria, it returns the collection.
 	 * Otherwise if this sfGuardUser is new, it will return
 	 * an empty collection; or if this sfGuardUser has previously
-	 * been saved, it will retrieve related Docrevisions from storage.
+	 * been saved, it will retrieve related DocrevisionsRelatedByUploaderId from storage.
 	 *
 	 * This method is protected by default in order to keep the public
 	 * api reasonable.  You can provide public methods for those you
 	 * actually need in sfGuardUser.
 	 */
-	public function getDocrevisionsJoinAttachmentFileRelatedByPublishedAttachmentId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public function getDocrevisionsRelatedByUploaderIdJoinAttachmentFileRelatedByPublishedAttachmentId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		if ($criteria === null) {
 			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
@@ -6544,14 +6614,14 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collDocrevisions === null) {
+		if ($this->collDocrevisionsRelatedByUploaderId === null) {
 			if ($this->isNew()) {
-				$this->collDocrevisions = array();
+				$this->collDocrevisionsRelatedByUploaderId = array();
 			} else {
 
 				$criteria->add(DocrevisionPeer::UPLOADER_ID, $this->id);
 
-				$this->collDocrevisions = DocrevisionPeer::doSelectJoinAttachmentFileRelatedByPublishedAttachmentId($criteria, $con, $join_behavior);
+				$this->collDocrevisionsRelatedByUploaderId = DocrevisionPeer::doSelectJoinAttachmentFileRelatedByPublishedAttachmentId($criteria, $con, $join_behavior);
 			}
 		} else {
 			// the following code is to determine if a new query is
@@ -6560,13 +6630,603 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 
 			$criteria->add(DocrevisionPeer::UPLOADER_ID, $this->id);
 
-			if (!isset($this->lastDocrevisionCriteria) || !$this->lastDocrevisionCriteria->equals($criteria)) {
-				$this->collDocrevisions = DocrevisionPeer::doSelectJoinAttachmentFileRelatedByPublishedAttachmentId($criteria, $con, $join_behavior);
+			if (!isset($this->lastDocrevisionRelatedByUploaderIdCriteria) || !$this->lastDocrevisionRelatedByUploaderIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedByUploaderId = DocrevisionPeer::doSelectJoinAttachmentFileRelatedByPublishedAttachmentId($criteria, $con, $join_behavior);
 			}
 		}
-		$this->lastDocrevisionCriteria = $criteria;
+		$this->lastDocrevisionRelatedByUploaderIdCriteria = $criteria;
 
-		return $this->collDocrevisions;
+		return $this->collDocrevisionsRelatedByUploaderId;
+	}
+
+	/**
+	 * Clears out the collDocrevisionsRelatedByRevisionerId collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addDocrevisionsRelatedByRevisionerId()
+	 */
+	public function clearDocrevisionsRelatedByRevisionerId()
+	{
+		$this->collDocrevisionsRelatedByRevisionerId = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collDocrevisionsRelatedByRevisionerId collection (array).
+	 *
+	 * By default this just sets the collDocrevisionsRelatedByRevisionerId collection to an empty array (like clearcollDocrevisionsRelatedByRevisionerId());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initDocrevisionsRelatedByRevisionerId()
+	{
+		$this->collDocrevisionsRelatedByRevisionerId = array();
+	}
+
+	/**
+	 * Gets an array of Docrevision objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related DocrevisionsRelatedByRevisionerId from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array Docrevision[]
+	 * @throws     PropelException
+	 */
+	public function getDocrevisionsRelatedByRevisionerId($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedByRevisionerId === null) {
+			if ($this->isNew()) {
+			   $this->collDocrevisionsRelatedByRevisionerId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::REVISIONER_ID, $this->id);
+
+				DocrevisionPeer::addSelectColumns($criteria);
+				$this->collDocrevisionsRelatedByRevisionerId = DocrevisionPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(DocrevisionPeer::REVISIONER_ID, $this->id);
+
+				DocrevisionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastDocrevisionRelatedByRevisionerIdCriteria) || !$this->lastDocrevisionRelatedByRevisionerIdCriteria->equals($criteria)) {
+					$this->collDocrevisionsRelatedByRevisionerId = DocrevisionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastDocrevisionRelatedByRevisionerIdCriteria = $criteria;
+		return $this->collDocrevisionsRelatedByRevisionerId;
+	}
+
+	/**
+	 * Returns the number of related Docrevision objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Docrevision objects.
+	 * @throws     PropelException
+	 */
+	public function countDocrevisionsRelatedByRevisionerId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collDocrevisionsRelatedByRevisionerId === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(DocrevisionPeer::REVISIONER_ID, $this->id);
+
+				$count = DocrevisionPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(DocrevisionPeer::REVISIONER_ID, $this->id);
+
+				if (!isset($this->lastDocrevisionRelatedByRevisionerIdCriteria) || !$this->lastDocrevisionRelatedByRevisionerIdCriteria->equals($criteria)) {
+					$count = DocrevisionPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collDocrevisionsRelatedByRevisionerId);
+				}
+			} else {
+				$count = count($this->collDocrevisionsRelatedByRevisionerId);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a Docrevision object to this object
+	 * through the Docrevision foreign key attribute.
+	 *
+	 * @param      Docrevision $l Docrevision
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addDocrevisionRelatedByRevisionerId(Docrevision $l)
+	{
+		if ($this->collDocrevisionsRelatedByRevisionerId === null) {
+			$this->initDocrevisionsRelatedByRevisionerId();
+		}
+		if (!in_array($l, $this->collDocrevisionsRelatedByRevisionerId, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collDocrevisionsRelatedByRevisionerId, $l);
+			$l->setsfGuardUserRelatedByRevisionerId($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related DocrevisionsRelatedByRevisionerId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getDocrevisionsRelatedByRevisionerIdJoinDocument($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedByRevisionerId === null) {
+			if ($this->isNew()) {
+				$this->collDocrevisionsRelatedByRevisionerId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::REVISIONER_ID, $this->id);
+
+				$this->collDocrevisionsRelatedByRevisionerId = DocrevisionPeer::doSelectJoinDocument($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocrevisionPeer::REVISIONER_ID, $this->id);
+
+			if (!isset($this->lastDocrevisionRelatedByRevisionerIdCriteria) || !$this->lastDocrevisionRelatedByRevisionerIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedByRevisionerId = DocrevisionPeer::doSelectJoinDocument($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocrevisionRelatedByRevisionerIdCriteria = $criteria;
+
+		return $this->collDocrevisionsRelatedByRevisionerId;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related DocrevisionsRelatedByRevisionerId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getDocrevisionsRelatedByRevisionerIdJoinAttachmentFileRelatedBySourceAttachmentId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedByRevisionerId === null) {
+			if ($this->isNew()) {
+				$this->collDocrevisionsRelatedByRevisionerId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::REVISIONER_ID, $this->id);
+
+				$this->collDocrevisionsRelatedByRevisionerId = DocrevisionPeer::doSelectJoinAttachmentFileRelatedBySourceAttachmentId($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocrevisionPeer::REVISIONER_ID, $this->id);
+
+			if (!isset($this->lastDocrevisionRelatedByRevisionerIdCriteria) || !$this->lastDocrevisionRelatedByRevisionerIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedByRevisionerId = DocrevisionPeer::doSelectJoinAttachmentFileRelatedBySourceAttachmentId($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocrevisionRelatedByRevisionerIdCriteria = $criteria;
+
+		return $this->collDocrevisionsRelatedByRevisionerId;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related DocrevisionsRelatedByRevisionerId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getDocrevisionsRelatedByRevisionerIdJoinAttachmentFileRelatedByPublishedAttachmentId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedByRevisionerId === null) {
+			if ($this->isNew()) {
+				$this->collDocrevisionsRelatedByRevisionerId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::REVISIONER_ID, $this->id);
+
+				$this->collDocrevisionsRelatedByRevisionerId = DocrevisionPeer::doSelectJoinAttachmentFileRelatedByPublishedAttachmentId($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocrevisionPeer::REVISIONER_ID, $this->id);
+
+			if (!isset($this->lastDocrevisionRelatedByRevisionerIdCriteria) || !$this->lastDocrevisionRelatedByRevisionerIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedByRevisionerId = DocrevisionPeer::doSelectJoinAttachmentFileRelatedByPublishedAttachmentId($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocrevisionRelatedByRevisionerIdCriteria = $criteria;
+
+		return $this->collDocrevisionsRelatedByRevisionerId;
+	}
+
+	/**
+	 * Clears out the collDocrevisionsRelatedByApproverId collection (array).
+	 *
+	 * This does not modify the database; however, it will remove any associated objects, causing
+	 * them to be refetched by subsequent calls to accessor method.
+	 *
+	 * @return     void
+	 * @see        addDocrevisionsRelatedByApproverId()
+	 */
+	public function clearDocrevisionsRelatedByApproverId()
+	{
+		$this->collDocrevisionsRelatedByApproverId = null; // important to set this to NULL since that means it is uninitialized
+	}
+
+	/**
+	 * Initializes the collDocrevisionsRelatedByApproverId collection (array).
+	 *
+	 * By default this just sets the collDocrevisionsRelatedByApproverId collection to an empty array (like clearcollDocrevisionsRelatedByApproverId());
+	 * however, you may wish to override this method in your stub class to provide setting appropriate
+	 * to your application -- for example, setting the initial array to the values stored in database.
+	 *
+	 * @return     void
+	 */
+	public function initDocrevisionsRelatedByApproverId()
+	{
+		$this->collDocrevisionsRelatedByApproverId = array();
+	}
+
+	/**
+	 * Gets an array of Docrevision objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser has previously been saved, it will retrieve
+	 * related DocrevisionsRelatedByApproverId from storage. If this sfGuardUser is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PropelPDO $con
+	 * @param      Criteria $criteria
+	 * @return     array Docrevision[]
+	 * @throws     PropelException
+	 */
+	public function getDocrevisionsRelatedByApproverId($criteria = null, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedByApproverId === null) {
+			if ($this->isNew()) {
+			   $this->collDocrevisionsRelatedByApproverId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::APPROVER_ID, $this->id);
+
+				DocrevisionPeer::addSelectColumns($criteria);
+				$this->collDocrevisionsRelatedByApproverId = DocrevisionPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(DocrevisionPeer::APPROVER_ID, $this->id);
+
+				DocrevisionPeer::addSelectColumns($criteria);
+				if (!isset($this->lastDocrevisionRelatedByApproverIdCriteria) || !$this->lastDocrevisionRelatedByApproverIdCriteria->equals($criteria)) {
+					$this->collDocrevisionsRelatedByApproverId = DocrevisionPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastDocrevisionRelatedByApproverIdCriteria = $criteria;
+		return $this->collDocrevisionsRelatedByApproverId;
+	}
+
+	/**
+	 * Returns the number of related Docrevision objects.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PropelPDO $con
+	 * @return     int Count of related Docrevision objects.
+	 * @throws     PropelException
+	 */
+	public function countDocrevisionsRelatedByApproverId(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		} else {
+			$criteria = clone $criteria;
+		}
+
+		if ($distinct) {
+			$criteria->setDistinct();
+		}
+
+		$count = null;
+
+		if ($this->collDocrevisionsRelatedByApproverId === null) {
+			if ($this->isNew()) {
+				$count = 0;
+			} else {
+
+				$criteria->add(DocrevisionPeer::APPROVER_ID, $this->id);
+
+				$count = DocrevisionPeer::doCount($criteria, false, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return count of the collection.
+
+
+				$criteria->add(DocrevisionPeer::APPROVER_ID, $this->id);
+
+				if (!isset($this->lastDocrevisionRelatedByApproverIdCriteria) || !$this->lastDocrevisionRelatedByApproverIdCriteria->equals($criteria)) {
+					$count = DocrevisionPeer::doCount($criteria, false, $con);
+				} else {
+					$count = count($this->collDocrevisionsRelatedByApproverId);
+				}
+			} else {
+				$count = count($this->collDocrevisionsRelatedByApproverId);
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Method called to associate a Docrevision object to this object
+	 * through the Docrevision foreign key attribute.
+	 *
+	 * @param      Docrevision $l Docrevision
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addDocrevisionRelatedByApproverId(Docrevision $l)
+	{
+		if ($this->collDocrevisionsRelatedByApproverId === null) {
+			$this->initDocrevisionsRelatedByApproverId();
+		}
+		if (!in_array($l, $this->collDocrevisionsRelatedByApproverId, true)) { // only add it if the **same** object is not already associated
+			array_push($this->collDocrevisionsRelatedByApproverId, $l);
+			$l->setsfGuardUserRelatedByApproverId($this);
+		}
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related DocrevisionsRelatedByApproverId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getDocrevisionsRelatedByApproverIdJoinDocument($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedByApproverId === null) {
+			if ($this->isNew()) {
+				$this->collDocrevisionsRelatedByApproverId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::APPROVER_ID, $this->id);
+
+				$this->collDocrevisionsRelatedByApproverId = DocrevisionPeer::doSelectJoinDocument($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocrevisionPeer::APPROVER_ID, $this->id);
+
+			if (!isset($this->lastDocrevisionRelatedByApproverIdCriteria) || !$this->lastDocrevisionRelatedByApproverIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedByApproverId = DocrevisionPeer::doSelectJoinDocument($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocrevisionRelatedByApproverIdCriteria = $criteria;
+
+		return $this->collDocrevisionsRelatedByApproverId;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related DocrevisionsRelatedByApproverId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getDocrevisionsRelatedByApproverIdJoinAttachmentFileRelatedBySourceAttachmentId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedByApproverId === null) {
+			if ($this->isNew()) {
+				$this->collDocrevisionsRelatedByApproverId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::APPROVER_ID, $this->id);
+
+				$this->collDocrevisionsRelatedByApproverId = DocrevisionPeer::doSelectJoinAttachmentFileRelatedBySourceAttachmentId($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocrevisionPeer::APPROVER_ID, $this->id);
+
+			if (!isset($this->lastDocrevisionRelatedByApproverIdCriteria) || !$this->lastDocrevisionRelatedByApproverIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedByApproverId = DocrevisionPeer::doSelectJoinAttachmentFileRelatedBySourceAttachmentId($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocrevisionRelatedByApproverIdCriteria = $criteria;
+
+		return $this->collDocrevisionsRelatedByApproverId;
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this sfGuardUser is new, it will return
+	 * an empty collection; or if this sfGuardUser has previously
+	 * been saved, it will retrieve related DocrevisionsRelatedByApproverId from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in sfGuardUser.
+	 */
+	public function getDocrevisionsRelatedByApproverIdJoinAttachmentFileRelatedByPublishedAttachmentId($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		if ($criteria === null) {
+			$criteria = new Criteria(sfGuardUserPeer::DATABASE_NAME);
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collDocrevisionsRelatedByApproverId === null) {
+			if ($this->isNew()) {
+				$this->collDocrevisionsRelatedByApproverId = array();
+			} else {
+
+				$criteria->add(DocrevisionPeer::APPROVER_ID, $this->id);
+
+				$this->collDocrevisionsRelatedByApproverId = DocrevisionPeer::doSelectJoinAttachmentFileRelatedByPublishedAttachmentId($criteria, $con, $join_behavior);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(DocrevisionPeer::APPROVER_ID, $this->id);
+
+			if (!isset($this->lastDocrevisionRelatedByApproverIdCriteria) || !$this->lastDocrevisionRelatedByApproverIdCriteria->equals($criteria)) {
+				$this->collDocrevisionsRelatedByApproverId = DocrevisionPeer::doSelectJoinAttachmentFileRelatedByPublishedAttachmentId($criteria, $con, $join_behavior);
+			}
+		}
+		$this->lastDocrevisionRelatedByApproverIdCriteria = $criteria;
+
+		return $this->collDocrevisionsRelatedByApproverId;
 	}
 
 	/**
@@ -7985,8 +8645,18 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 					$o->clearAllReferences($deep);
 				}
 			}
-			if ($this->collDocrevisions) {
-				foreach ((array) $this->collDocrevisions as $o) {
+			if ($this->collDocrevisionsRelatedByUploaderId) {
+				foreach ((array) $this->collDocrevisionsRelatedByUploaderId as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
+			if ($this->collDocrevisionsRelatedByRevisionerId) {
+				foreach ((array) $this->collDocrevisionsRelatedByRevisionerId as $o) {
+					$o->clearAllReferences($deep);
+				}
+			}
+			if ($this->collDocrevisionsRelatedByApproverId) {
+				foreach ((array) $this->collDocrevisionsRelatedByApproverId as $o) {
 					$o->clearAllReferences($deep);
 				}
 			}
@@ -8046,7 +8716,9 @@ abstract class BasesfGuardUser extends BaseObject  implements Persistent {
 		$this->collProjActivitysRelatedByUserId = null;
 		$this->collProjActivitysRelatedByAcknowledgerUserId = null;
 		$this->collConsents = null;
-		$this->collDocrevisions = null;
+		$this->collDocrevisionsRelatedByUploaderId = null;
+		$this->collDocrevisionsRelatedByRevisionerId = null;
+		$this->collDocrevisionsRelatedByApproverId = null;
 		$this->collLanlogs = null;
 		$this->collAttachmentFiles = null;
 		$this->collsfGuardUserPermissions = null;

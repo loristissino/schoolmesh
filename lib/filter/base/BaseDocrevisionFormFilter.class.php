@@ -13,9 +13,13 @@ abstract class BaseDocrevisionFormFilter extends BaseFormFilterPropel
   {
     $this->setWidgets(array(
       'document_id'             => new sfWidgetFormPropelChoice(array('model' => 'Document', 'add_empty' => true)),
+      'title'                   => new sfWidgetFormFilterInput(),
       'revision_number'         => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'revisioned_at'           => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
       'uploader_id'             => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
+      'revisioner_id'           => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
+      'approved_at'             => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate())),
+      'approver_id'             => new sfWidgetFormPropelChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
       'revision_grounds'        => new sfWidgetFormFilterInput(array('with_empty' => false)),
       'content'                 => new sfWidgetFormFilterInput(),
       'content_type'            => new sfWidgetFormFilterInput(),
@@ -25,9 +29,13 @@ abstract class BaseDocrevisionFormFilter extends BaseFormFilterPropel
 
     $this->setValidators(array(
       'document_id'             => new sfValidatorPropelChoice(array('required' => false, 'model' => 'Document', 'column' => 'id')),
+      'title'                   => new sfValidatorPass(array('required' => false)),
       'revision_number'         => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'revisioned_at'           => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'uploader_id'             => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
+      'revisioner_id'           => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
+      'approved_at'             => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'approver_id'             => new sfValidatorPropelChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
       'revision_grounds'        => new sfValidatorPass(array('required' => false)),
       'content'                 => new sfValidatorPass(array('required' => false)),
       'content_type'            => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
@@ -52,9 +60,13 @@ abstract class BaseDocrevisionFormFilter extends BaseFormFilterPropel
     return array(
       'id'                      => 'Number',
       'document_id'             => 'ForeignKey',
+      'title'                   => 'Text',
       'revision_number'         => 'Number',
       'revisioned_at'           => 'Date',
       'uploader_id'             => 'ForeignKey',
+      'revisioner_id'           => 'ForeignKey',
+      'approved_at'             => 'Date',
+      'approver_id'             => 'ForeignKey',
       'revision_grounds'        => 'Text',
       'content'                 => 'Text',
       'content_type'            => 'Number',

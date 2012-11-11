@@ -7,6 +7,7 @@
     <tr>
       <th><?php echo __('Revision #') ?></th>
       <th><?php echo __('Revision date') ?></th>
+      <th><?php echo __('Title') ?></th>
       <th><?php echo __('Grounds') ?></th>
       <th><?php echo __('Actions') ?></th>
     </tr>
@@ -16,10 +17,11 @@
     <tr>
       <td<?php if($Docrevision->getId()!=$Document->getDocrevisionId()) echo ' class="notcurrent"' ?> style="text-align: right"><?php echo $Docrevision->getRevisionNumber() ?></td>
       <td><?php echo $Docrevision->getRevisionedAt('d/m/Y') ?></td>
+      <td><?php if($Docrevision->getTitle()!=$Document->getTitle()): ?><?php echo $Docrevision->getTitle() ?><?php else: ?><em>(<?php echo __('unmodified') ?>)</em><?php endif ?></td>
       <td><?php echo $Docrevision->getRevisionGrounds() ?></td>
       <td>
         <ul class="sf_admin_td_actions">
-          <?php echo li_link_to_if('td_action_activate', $sf_user->hasCredential('backadmin') && ($Document->getDocrevisionId()!=$Docrevision->getId()) && ($Docrevision->getRevisionNumber()>$Document->getRevisionNumber()), __('Activate'), url_for('documents/activaterevision?id='.$Docrevision->getId())) ?>
+          <?php echo li_link_to_if('td_action_activate', $sf_user->hasCredential('backadmin') && ($Document->getDocrevisionId()!=$Docrevision->getId()) && ($Docrevision->getRevisionNumber()>$Document->getRevisionNumber()), __('Activate'), url_for('documents/activaterevision?id='.$Docrevision->getId()), array('method'=>'POST', 'title'=>__('Set this revision as current'))) ?>
           <?php echo li_link_to_if('td_action_edit', $sf_user->hasCredential('backadmin'), __('Edit'), url_for('docrevisions/edit?id='.$Docrevision->getId())) ?>
           <?php echo li_link_to_if('td_action_clone', $sf_user->hasCredential('backadmin') &&  ($Docrevision->getRevisionNumber()>=$Document->getRevisionNumber()), __('Clone'), url_for('docrevisions/new?document='.$Document->getId() . '&fromrevision='.$Docrevision->getId())) ?>
           

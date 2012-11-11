@@ -16,6 +16,8 @@ class DocrevisionForm extends BaseDocrevisionForm
     
     unset(
       $this['uploader_id'],
+      $this['revisioner_id'],
+      $this['approver_id'],
       $this['source_attachment_id'],
       $this['published_attachment_id']
     );
@@ -23,6 +25,10 @@ class DocrevisionForm extends BaseDocrevisionForm
 
     $this->widgetSchema['revisioned_at'] = new sfWidgetFormI18nDateTime(array('culture'=>'it')) ;
     $this->widgetSchema['document_id'] = new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true));
+    
+    $this->widgetSchema['title']->setAttributes(array('size'=>70));
+    $this->widgetSchema['revision_number']->setAttributes(array('style'=>'text-align: right', 'size'=>4));
+    
     
     $this->widgetSchema['revision_grounds']->setAttributes(array('cols'=>40, 'rows'=>5)); // = new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true));
     $this->widgetSchema['content']->setAttributes(array('cols'=>60, 'rows'=>10)); // = new sfWidgetFormInputText(array('type'=>'hidden', 'is_hidden'=>true));

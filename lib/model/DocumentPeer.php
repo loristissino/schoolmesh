@@ -22,7 +22,8 @@ class DocumentPeer extends BaseDocumentPeer {
     $c->add(self::IS_ACTIVE, true);
     $c->add(self::DOCTYPE_ID, $id);
     $c->addAscendingOrderByColumn(self::CODE);
-    return self::doSelect($c);
+    $c->addJoin(self::DOCREVISION_ID, DocrevisionPeer::ID);
+    return self::doSelectJoinDocrevision($c);
   }
 
 } // DocumentPeer

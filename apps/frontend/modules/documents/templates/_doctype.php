@@ -1,5 +1,7 @@
 <h2><?php echo $Doctype->getTitle() ?></h2>
 
+<p><em><?php echo __('Revision # for this section\'s index') ?>: <strong><?php echo $Doctype->getRevisionNumber() ?></strong> (<?php echo $Doctype->getRevisionedAt('d/m/Y') ?>)</em></p>
+
 <?php if(sizeof($Documents)>0): ?>
 
 <table>

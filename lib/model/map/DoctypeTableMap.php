@@ -41,6 +41,8 @@ class DoctypeTableMap extends TableMap {
 		$this->addColumn('DESCRIPTION', 'Description', 'LONGVARCHAR', false, null, null);
 		$this->addColumn('IS_ACTIVE', 'IsActive', 'BOOLEAN', false, null, true);
 		$this->addColumn('RANK', 'Rank', 'INTEGER', false, null, null);
+		$this->addColumn('REVISION_NUMBER', 'RevisionNumber', 'INTEGER', true, null, 1);
+		$this->addColumn('REVISIONED_AT', 'RevisionedAt', 'TIMESTAMP', false, null, null);
 		// validators
 	} // initialize()
 

@@ -27,6 +27,7 @@ class docrevisionsActions extends sfActions
     $this->Document = DocumentPeer::retrieveByPk($request->getParameter('document'));
     $this->forward404Unless($this->Document);
     $this->form = new docrevisionForm();
+    $this->form->setDefault('title', $this->Document->getTitle());
     $this->form->setDefault('document_id', $this->Document->getId());
     $this->form->setDefault('revision_number', $this->Document->getRevisionNumber()===null ? 0 : $this->Document->getRevisionNumber() +1 );
     $this->form->setDefault('revisioned_at', time());
@@ -104,7 +105,10 @@ class docrevisionsActions extends sfActions
         $this->getContext()->getI18N()->__($result['message'])
         );
       
-      return $this->redirect('docrevisions/edit?id='. $this->docrevision->getId());
+      if($result['result']=='notice')
+      {
+        return $this->redirect('docrevisions/edit?id='. $result['docrevision_id']);
+      }
       
     }
     
