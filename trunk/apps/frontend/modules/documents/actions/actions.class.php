@@ -34,14 +34,16 @@ class documentsActions extends sfActions
   
   public function executeActivaterevision(sfWebRequest $request)
   {
-    $Docrevision=DocrevisionPeer::retrieveByPK($request->getParameter('id'));
-    $Document=$Docrevision->getDocument();
-    $Document
-    ->setDocrevisionId($Docrevision->getId())
-    ->save()
-    ;
+    $this->forward404Unless($Docrevision=DocrevisionPeer::retrieveByPK($request->getParameter('id')));
+    $this->forward404Unless($request->isMethod('POST'));
+    $result = $Docrevision->activate($this->getUser()->getProfile()->getUserId(), $this->getContext());
     
-    return $this->redirect('documents/show?id=' . $Document->getId());
+    $this->getUser()->setFlash($result['result'],
+      $this->getContext()->getI18N()->__($result['message'])
+      );
+    
+
+    return $this->redirect('documents/details?id=' . $Docrevision->getDocumentId());
   }
 
 

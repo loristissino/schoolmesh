@@ -31,6 +31,12 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 	protected $document_id;
 
 	/**
+	 * The value for the title field.
+	 * @var        string
+	 */
+	protected $title;
+
+	/**
 	 * The value for the revision_number field.
 	 * @var        int
 	 */
@@ -47,6 +53,24 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 	 * @var        int
 	 */
 	protected $uploader_id;
+
+	/**
+	 * The value for the revisioner_id field.
+	 * @var        int
+	 */
+	protected $revisioner_id;
+
+	/**
+	 * The value for the approved_at field.
+	 * @var        string
+	 */
+	protected $approved_at;
+
+	/**
+	 * The value for the approver_id field.
+	 * @var        int
+	 */
+	protected $approver_id;
 
 	/**
 	 * The value for the revision_grounds field.
@@ -86,7 +110,17 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 	/**
 	 * @var        sfGuardUser
 	 */
-	protected $asfGuardUser;
+	protected $asfGuardUserRelatedByUploaderId;
+
+	/**
+	 * @var        sfGuardUser
+	 */
+	protected $asfGuardUserRelatedByRevisionerId;
+
+	/**
+	 * @var        sfGuardUser
+	 */
+	protected $asfGuardUserRelatedByApproverId;
 
 	/**
 	 * @var        AttachmentFile
@@ -147,6 +181,16 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 	}
 
 	/**
+	 * Get the [title] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
+
+	/**
 	 * Get the [revision_number] column value.
 	 * 
 	 * @return     int
@@ -202,6 +246,64 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 	public function getUploaderId()
 	{
 		return $this->uploader_id;
+	}
+
+	/**
+	 * Get the [revisioner_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getRevisionerId()
+	{
+		return $this->revisioner_id;
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [approved_at] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getApprovedAt($format = 'Y-m-d H:i:s')
+	{
+		if ($this->approved_at === null) {
+			return null;
+		}
+
+
+		if ($this->approved_at === '0000-00-00 00:00:00') {
+			// while technically this is not a default value of NULL,
+			// this seems to be closest in meaning.
+			return null;
+		} else {
+			try {
+				$dt = new DateTime($this->approved_at);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->approved_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
+	}
+
+	/**
+	 * Get the [approver_id] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getApproverId()
+	{
+		return $this->approver_id;
 	}
 
 	/**
@@ -299,6 +401,26 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 	} // setDocumentId()
 
 	/**
+	 * Set the value of [title] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     Docrevision The current object (for fluent API support)
+	 */
+	public function setTitle($v)
+	{
+		if ($v !== null) {
+			$v = (string) $v;
+		}
+
+		if ($this->title !== $v) {
+			$this->title = $v;
+			$this->modifiedColumns[] = DocrevisionPeer::TITLE;
+		}
+
+		return $this;
+	} // setTitle()
+
+	/**
 	 * Set the value of [revision_number] column.
 	 * 
 	 * @param      int $v new value
@@ -384,12 +506,109 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 			$this->modifiedColumns[] = DocrevisionPeer::UPLOADER_ID;
 		}
 
-		if ($this->asfGuardUser !== null && $this->asfGuardUser->getId() !== $v) {
-			$this->asfGuardUser = null;
+		if ($this->asfGuardUserRelatedByUploaderId !== null && $this->asfGuardUserRelatedByUploaderId->getId() !== $v) {
+			$this->asfGuardUserRelatedByUploaderId = null;
 		}
 
 		return $this;
 	} // setUploaderId()
+
+	/**
+	 * Set the value of [revisioner_id] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Docrevision The current object (for fluent API support)
+	 */
+	public function setRevisionerId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->revisioner_id !== $v) {
+			$this->revisioner_id = $v;
+			$this->modifiedColumns[] = DocrevisionPeer::REVISIONER_ID;
+		}
+
+		if ($this->asfGuardUserRelatedByRevisionerId !== null && $this->asfGuardUserRelatedByRevisionerId->getId() !== $v) {
+			$this->asfGuardUserRelatedByRevisionerId = null;
+		}
+
+		return $this;
+	} // setRevisionerId()
+
+	/**
+	 * Sets the value of [approved_at] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     Docrevision The current object (for fluent API support)
+	 */
+	public function setApprovedAt($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->approved_at !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->approved_at !== null && $tmpDt = new DateTime($this->approved_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->approved_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = DocrevisionPeer::APPROVED_AT;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setApprovedAt()
+
+	/**
+	 * Set the value of [approver_id] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Docrevision The current object (for fluent API support)
+	 */
+	public function setApproverId($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->approver_id !== $v) {
+			$this->approver_id = $v;
+			$this->modifiedColumns[] = DocrevisionPeer::APPROVER_ID;
+		}
+
+		if ($this->asfGuardUserRelatedByApproverId !== null && $this->asfGuardUserRelatedByApproverId->getId() !== $v) {
+			$this->asfGuardUserRelatedByApproverId = null;
+		}
+
+		return $this;
+	} // setApproverId()
 
 	/**
 	 * Set the value of [revision_grounds] column.
@@ -533,14 +752,18 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->document_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->revision_number = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-			$this->revisioned_at = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-			$this->uploader_id = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
-			$this->revision_grounds = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-			$this->content = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-			$this->content_type = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
-			$this->source_attachment_id = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
-			$this->published_attachment_id = ($row[$startcol + 9] !== null) ? (int) $row[$startcol + 9] : null;
+			$this->title = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+			$this->revision_number = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+			$this->revisioned_at = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+			$this->uploader_id = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->revisioner_id = ($row[$startcol + 6] !== null) ? (int) $row[$startcol + 6] : null;
+			$this->approved_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+			$this->approver_id = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
+			$this->revision_grounds = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+			$this->content = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
+			$this->content_type = ($row[$startcol + 11] !== null) ? (int) $row[$startcol + 11] : null;
+			$this->source_attachment_id = ($row[$startcol + 12] !== null) ? (int) $row[$startcol + 12] : null;
+			$this->published_attachment_id = ($row[$startcol + 13] !== null) ? (int) $row[$startcol + 13] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -550,7 +773,7 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 10; // 10 = DocrevisionPeer::NUM_COLUMNS - DocrevisionPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 14; // 14 = DocrevisionPeer::NUM_COLUMNS - DocrevisionPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Docrevision object", $e);
@@ -576,8 +799,14 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 		if ($this->aDocument !== null && $this->document_id !== $this->aDocument->getId()) {
 			$this->aDocument = null;
 		}
-		if ($this->asfGuardUser !== null && $this->uploader_id !== $this->asfGuardUser->getId()) {
-			$this->asfGuardUser = null;
+		if ($this->asfGuardUserRelatedByUploaderId !== null && $this->uploader_id !== $this->asfGuardUserRelatedByUploaderId->getId()) {
+			$this->asfGuardUserRelatedByUploaderId = null;
+		}
+		if ($this->asfGuardUserRelatedByRevisionerId !== null && $this->revisioner_id !== $this->asfGuardUserRelatedByRevisionerId->getId()) {
+			$this->asfGuardUserRelatedByRevisionerId = null;
+		}
+		if ($this->asfGuardUserRelatedByApproverId !== null && $this->approver_id !== $this->asfGuardUserRelatedByApproverId->getId()) {
+			$this->asfGuardUserRelatedByApproverId = null;
 		}
 		if ($this->aAttachmentFileRelatedBySourceAttachmentId !== null && $this->source_attachment_id !== $this->aAttachmentFileRelatedBySourceAttachmentId->getId()) {
 			$this->aAttachmentFileRelatedBySourceAttachmentId = null;
@@ -625,7 +854,9 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 		if ($deep) {  // also de-associate any related objects?
 
 			$this->aDocument = null;
-			$this->asfGuardUser = null;
+			$this->asfGuardUserRelatedByUploaderId = null;
+			$this->asfGuardUserRelatedByRevisionerId = null;
+			$this->asfGuardUserRelatedByApproverId = null;
 			$this->aAttachmentFileRelatedBySourceAttachmentId = null;
 			$this->aAttachmentFileRelatedByPublishedAttachmentId = null;
 			$this->collDocuments = null;
@@ -751,11 +982,25 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 				$this->setDocument($this->aDocument);
 			}
 
-			if ($this->asfGuardUser !== null) {
-				if ($this->asfGuardUser->isModified() || $this->asfGuardUser->isNew()) {
-					$affectedRows += $this->asfGuardUser->save($con);
+			if ($this->asfGuardUserRelatedByUploaderId !== null) {
+				if ($this->asfGuardUserRelatedByUploaderId->isModified() || $this->asfGuardUserRelatedByUploaderId->isNew()) {
+					$affectedRows += $this->asfGuardUserRelatedByUploaderId->save($con);
 				}
-				$this->setsfGuardUser($this->asfGuardUser);
+				$this->setsfGuardUserRelatedByUploaderId($this->asfGuardUserRelatedByUploaderId);
+			}
+
+			if ($this->asfGuardUserRelatedByRevisionerId !== null) {
+				if ($this->asfGuardUserRelatedByRevisionerId->isModified() || $this->asfGuardUserRelatedByRevisionerId->isNew()) {
+					$affectedRows += $this->asfGuardUserRelatedByRevisionerId->save($con);
+				}
+				$this->setsfGuardUserRelatedByRevisionerId($this->asfGuardUserRelatedByRevisionerId);
+			}
+
+			if ($this->asfGuardUserRelatedByApproverId !== null) {
+				if ($this->asfGuardUserRelatedByApproverId->isModified() || $this->asfGuardUserRelatedByApproverId->isNew()) {
+					$affectedRows += $this->asfGuardUserRelatedByApproverId->save($con);
+				}
+				$this->setsfGuardUserRelatedByApproverId($this->asfGuardUserRelatedByApproverId);
 			}
 
 			if ($this->aAttachmentFileRelatedBySourceAttachmentId !== null) {
@@ -879,9 +1124,21 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 				}
 			}
 
-			if ($this->asfGuardUser !== null) {
-				if (!$this->asfGuardUser->validate($columns)) {
-					$failureMap = array_merge($failureMap, $this->asfGuardUser->getValidationFailures());
+			if ($this->asfGuardUserRelatedByUploaderId !== null) {
+				if (!$this->asfGuardUserRelatedByUploaderId->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->asfGuardUserRelatedByUploaderId->getValidationFailures());
+				}
+			}
+
+			if ($this->asfGuardUserRelatedByRevisionerId !== null) {
+				if (!$this->asfGuardUserRelatedByRevisionerId->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->asfGuardUserRelatedByRevisionerId->getValidationFailures());
+				}
+			}
+
+			if ($this->asfGuardUserRelatedByApproverId !== null) {
+				if (!$this->asfGuardUserRelatedByApproverId->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->asfGuardUserRelatedByApproverId->getValidationFailures());
 				}
 			}
 
@@ -951,27 +1208,39 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 				return $this->getDocumentId();
 				break;
 			case 2:
-				return $this->getRevisionNumber();
+				return $this->getTitle();
 				break;
 			case 3:
-				return $this->getRevisionedAt();
+				return $this->getRevisionNumber();
 				break;
 			case 4:
-				return $this->getUploaderId();
+				return $this->getRevisionedAt();
 				break;
 			case 5:
-				return $this->getRevisionGrounds();
+				return $this->getUploaderId();
 				break;
 			case 6:
-				return $this->getContent();
+				return $this->getRevisionerId();
 				break;
 			case 7:
-				return $this->getContentType();
+				return $this->getApprovedAt();
 				break;
 			case 8:
-				return $this->getSourceAttachmentId();
+				return $this->getApproverId();
 				break;
 			case 9:
+				return $this->getRevisionGrounds();
+				break;
+			case 10:
+				return $this->getContent();
+				break;
+			case 11:
+				return $this->getContentType();
+				break;
+			case 12:
+				return $this->getSourceAttachmentId();
+				break;
+			case 13:
 				return $this->getPublishedAttachmentId();
 				break;
 			default:
@@ -997,14 +1266,18 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getDocumentId(),
-			$keys[2] => $this->getRevisionNumber(),
-			$keys[3] => $this->getRevisionedAt(),
-			$keys[4] => $this->getUploaderId(),
-			$keys[5] => $this->getRevisionGrounds(),
-			$keys[6] => $this->getContent(),
-			$keys[7] => $this->getContentType(),
-			$keys[8] => $this->getSourceAttachmentId(),
-			$keys[9] => $this->getPublishedAttachmentId(),
+			$keys[2] => $this->getTitle(),
+			$keys[3] => $this->getRevisionNumber(),
+			$keys[4] => $this->getRevisionedAt(),
+			$keys[5] => $this->getUploaderId(),
+			$keys[6] => $this->getRevisionerId(),
+			$keys[7] => $this->getApprovedAt(),
+			$keys[8] => $this->getApproverId(),
+			$keys[9] => $this->getRevisionGrounds(),
+			$keys[10] => $this->getContent(),
+			$keys[11] => $this->getContentType(),
+			$keys[12] => $this->getSourceAttachmentId(),
+			$keys[13] => $this->getPublishedAttachmentId(),
 		);
 		return $result;
 	}
@@ -1043,27 +1316,39 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 				$this->setDocumentId($value);
 				break;
 			case 2:
-				$this->setRevisionNumber($value);
+				$this->setTitle($value);
 				break;
 			case 3:
-				$this->setRevisionedAt($value);
+				$this->setRevisionNumber($value);
 				break;
 			case 4:
-				$this->setUploaderId($value);
+				$this->setRevisionedAt($value);
 				break;
 			case 5:
-				$this->setRevisionGrounds($value);
+				$this->setUploaderId($value);
 				break;
 			case 6:
-				$this->setContent($value);
+				$this->setRevisionerId($value);
 				break;
 			case 7:
-				$this->setContentType($value);
+				$this->setApprovedAt($value);
 				break;
 			case 8:
-				$this->setSourceAttachmentId($value);
+				$this->setApproverId($value);
 				break;
 			case 9:
+				$this->setRevisionGrounds($value);
+				break;
+			case 10:
+				$this->setContent($value);
+				break;
+			case 11:
+				$this->setContentType($value);
+				break;
+			case 12:
+				$this->setSourceAttachmentId($value);
+				break;
+			case 13:
 				$this->setPublishedAttachmentId($value);
 				break;
 		} // switch()
@@ -1092,14 +1377,18 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setDocumentId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setRevisionNumber($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setRevisionedAt($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setUploaderId($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setRevisionGrounds($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setContent($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setContentType($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setSourceAttachmentId($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setPublishedAttachmentId($arr[$keys[9]]);
+		if (array_key_exists($keys[2], $arr)) $this->setTitle($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setRevisionNumber($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setRevisionedAt($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setUploaderId($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setRevisionerId($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setApprovedAt($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setApproverId($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setRevisionGrounds($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setContent($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setContentType($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setSourceAttachmentId($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setPublishedAttachmentId($arr[$keys[13]]);
 	}
 
 	/**
@@ -1113,9 +1402,13 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(DocrevisionPeer::ID)) $criteria->add(DocrevisionPeer::ID, $this->id);
 		if ($this->isColumnModified(DocrevisionPeer::DOCUMENT_ID)) $criteria->add(DocrevisionPeer::DOCUMENT_ID, $this->document_id);
+		if ($this->isColumnModified(DocrevisionPeer::TITLE)) $criteria->add(DocrevisionPeer::TITLE, $this->title);
 		if ($this->isColumnModified(DocrevisionPeer::REVISION_NUMBER)) $criteria->add(DocrevisionPeer::REVISION_NUMBER, $this->revision_number);
 		if ($this->isColumnModified(DocrevisionPeer::REVISIONED_AT)) $criteria->add(DocrevisionPeer::REVISIONED_AT, $this->revisioned_at);
 		if ($this->isColumnModified(DocrevisionPeer::UPLOADER_ID)) $criteria->add(DocrevisionPeer::UPLOADER_ID, $this->uploader_id);
+		if ($this->isColumnModified(DocrevisionPeer::REVISIONER_ID)) $criteria->add(DocrevisionPeer::REVISIONER_ID, $this->revisioner_id);
+		if ($this->isColumnModified(DocrevisionPeer::APPROVED_AT)) $criteria->add(DocrevisionPeer::APPROVED_AT, $this->approved_at);
+		if ($this->isColumnModified(DocrevisionPeer::APPROVER_ID)) $criteria->add(DocrevisionPeer::APPROVER_ID, $this->approver_id);
 		if ($this->isColumnModified(DocrevisionPeer::REVISION_GROUNDS)) $criteria->add(DocrevisionPeer::REVISION_GROUNDS, $this->revision_grounds);
 		if ($this->isColumnModified(DocrevisionPeer::CONTENT)) $criteria->add(DocrevisionPeer::CONTENT, $this->content);
 		if ($this->isColumnModified(DocrevisionPeer::CONTENT_TYPE)) $criteria->add(DocrevisionPeer::CONTENT_TYPE, $this->content_type);
@@ -1177,11 +1470,19 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 
 		$copyObj->setDocumentId($this->document_id);
 
+		$copyObj->setTitle($this->title);
+
 		$copyObj->setRevisionNumber($this->revision_number);
 
 		$copyObj->setRevisionedAt($this->revisioned_at);
 
 		$copyObj->setUploaderId($this->uploader_id);
+
+		$copyObj->setRevisionerId($this->revisioner_id);
+
+		$copyObj->setApprovedAt($this->approved_at);
+
+		$copyObj->setApproverId($this->approver_id);
 
 		$copyObj->setRevisionGrounds($this->revision_grounds);
 
@@ -1308,7 +1609,7 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 	 * @return     Docrevision The current object (for fluent API support)
 	 * @throws     PropelException
 	 */
-	public function setsfGuardUser(sfGuardUser $v = null)
+	public function setsfGuardUserRelatedByUploaderId(sfGuardUser $v = null)
 	{
 		if ($v === null) {
 			$this->setUploaderId(NULL);
@@ -1316,12 +1617,12 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 			$this->setUploaderId($v->getId());
 		}
 
-		$this->asfGuardUser = $v;
+		$this->asfGuardUserRelatedByUploaderId = $v;
 
 		// Add binding for other direction of this n:n relationship.
 		// If this object has already been added to the sfGuardUser object, it will not be re-added.
 		if ($v !== null) {
-			$v->addDocrevision($this);
+			$v->addDocrevisionRelatedByUploaderId($this);
 		}
 
 		return $this;
@@ -1335,19 +1636,117 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 	 * @return     sfGuardUser The associated sfGuardUser object.
 	 * @throws     PropelException
 	 */
-	public function getsfGuardUser(PropelPDO $con = null)
+	public function getsfGuardUserRelatedByUploaderId(PropelPDO $con = null)
 	{
-		if ($this->asfGuardUser === null && ($this->uploader_id !== null)) {
-			$this->asfGuardUser = sfGuardUserPeer::retrieveByPk($this->uploader_id);
+		if ($this->asfGuardUserRelatedByUploaderId === null && ($this->uploader_id !== null)) {
+			$this->asfGuardUserRelatedByUploaderId = sfGuardUserPeer::retrieveByPk($this->uploader_id);
 			/* The following can be used additionally to
 			   guarantee the related object contains a reference
 			   to this object.  This level of coupling may, however, be
 			   undesirable since it could result in an only partially populated collection
 			   in the referenced object.
-			   $this->asfGuardUser->addDocrevisions($this);
+			   $this->asfGuardUserRelatedByUploaderId->addDocrevisionsRelatedByUploaderId($this);
 			 */
 		}
-		return $this->asfGuardUser;
+		return $this->asfGuardUserRelatedByUploaderId;
+	}
+
+	/**
+	 * Declares an association between this object and a sfGuardUser object.
+	 *
+	 * @param      sfGuardUser $v
+	 * @return     Docrevision The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setsfGuardUserRelatedByRevisionerId(sfGuardUser $v = null)
+	{
+		if ($v === null) {
+			$this->setRevisionerId(NULL);
+		} else {
+			$this->setRevisionerId($v->getId());
+		}
+
+		$this->asfGuardUserRelatedByRevisionerId = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the sfGuardUser object, it will not be re-added.
+		if ($v !== null) {
+			$v->addDocrevisionRelatedByRevisionerId($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated sfGuardUser object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     sfGuardUser The associated sfGuardUser object.
+	 * @throws     PropelException
+	 */
+	public function getsfGuardUserRelatedByRevisionerId(PropelPDO $con = null)
+	{
+		if ($this->asfGuardUserRelatedByRevisionerId === null && ($this->revisioner_id !== null)) {
+			$this->asfGuardUserRelatedByRevisionerId = sfGuardUserPeer::retrieveByPk($this->revisioner_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->asfGuardUserRelatedByRevisionerId->addDocrevisionsRelatedByRevisionerId($this);
+			 */
+		}
+		return $this->asfGuardUserRelatedByRevisionerId;
+	}
+
+	/**
+	 * Declares an association between this object and a sfGuardUser object.
+	 *
+	 * @param      sfGuardUser $v
+	 * @return     Docrevision The current object (for fluent API support)
+	 * @throws     PropelException
+	 */
+	public function setsfGuardUserRelatedByApproverId(sfGuardUser $v = null)
+	{
+		if ($v === null) {
+			$this->setApproverId(NULL);
+		} else {
+			$this->setApproverId($v->getId());
+		}
+
+		$this->asfGuardUserRelatedByApproverId = $v;
+
+		// Add binding for other direction of this n:n relationship.
+		// If this object has already been added to the sfGuardUser object, it will not be re-added.
+		if ($v !== null) {
+			$v->addDocrevisionRelatedByApproverId($this);
+		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Get the associated sfGuardUser object
+	 *
+	 * @param      PropelPDO Optional Connection object.
+	 * @return     sfGuardUser The associated sfGuardUser object.
+	 * @throws     PropelException
+	 */
+	public function getsfGuardUserRelatedByApproverId(PropelPDO $con = null)
+	{
+		if ($this->asfGuardUserRelatedByApproverId === null && ($this->approver_id !== null)) {
+			$this->asfGuardUserRelatedByApproverId = sfGuardUserPeer::retrieveByPk($this->approver_id);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->asfGuardUserRelatedByApproverId->addDocrevisionsRelatedByApproverId($this);
+			 */
+		}
+		return $this->asfGuardUserRelatedByApproverId;
 	}
 
 	/**
@@ -1717,7 +2116,9 @@ abstract class BaseDocrevision extends BaseObject  implements Persistent {
 
 		$this->collDocuments = null;
 			$this->aDocument = null;
-			$this->asfGuardUser = null;
+			$this->asfGuardUserRelatedByUploaderId = null;
+			$this->asfGuardUserRelatedByRevisionerId = null;
+			$this->asfGuardUserRelatedByApproverId = null;
 			$this->aAttachmentFileRelatedBySourceAttachmentId = null;
 			$this->aAttachmentFileRelatedByPublishedAttachmentId = null;
 	}

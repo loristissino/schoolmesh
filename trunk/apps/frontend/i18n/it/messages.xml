@@ -5416,6 +5416,26 @@
         <source>Sort this table by deadline</source>
         <target>Ordina questa tabella per scadenza</target>
     </trans-unit>
+    <trans-unit id="1553">
+        <source>Revision # for this section's index</source>
+        <target>Numero di revisione per l'indice di questa sezione</target>
+    </trans-unit>
+    <trans-unit id="1554">
+        <source>Set this revision as current</source>
+        <target>Imposta questa revisione come corrente</target>
+    </trans-unit>
+    <trans-unit id="1555">
+        <source>Activate</source>
+        <target>Attiva</target>
+    </trans-unit>
+    <trans-unit id="1556">
+        <source>Revision successfully activated.</source>
+        <target>Revisione attivata con successo.</target>
+    </trans-unit>
+    <trans-unit id="1557">
+        <source>unmodified</source>
+        <target>non modificato</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

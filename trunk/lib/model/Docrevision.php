@@ -16,25 +16,56 @@ require 'lib/model/om/BaseDocrevision.php';
  */
 class Docrevision extends BaseDocrevision {
 
+
+  public function activate($approver_id, $sf_context=null)
+  {
+    $Document=$this->getDocument();
+    
+    $con = Propel::getConnection(DocrevisionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+    
+    $now=time();
+    
+    try
+    {
+      $Document
+      ->setDocrevisionId($this->getId())
+      ->save($con)
+      ;
+      $this
+      ->setApproverId($approver_id)
+      ->setApprovedAt($now)
+      ->save($con)
+      ;
+      $Document->getDoctype()
+      ->setRevisionNumber($Document->getDoctype()->getRevisionNumber()+1)
+      ->setRevisionedAt($now)
+      ->save($con)
+      ;
+      
+      $con->commit();
+      
+      $result['result']='notice';
+      $result['message']='Revision successfully activated.';
+      return $result;
+      
+    }
+    catch (Exception $e)
+    {
+      $result['result']='error';
+      $result['message']='The revision could not be activated.';
+      return $result;
+    }
+    
+  }
+  
   public function updateFromForm($params, sfValidatedFile $source_file=null, sfValidatedFile $published_file=null, $sf_context=null)
   {
-    
-/*        document_id: { type: integer, foreignTable: document, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
-    revision_number: { type: integer, required: true }
-    revisioned_at: timestamp
-    uploader_id:  { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
-    revision_grounds: { type: longvarchar, required: true }
-    content: { type: longvarchar, required: false }
-    content_type: integer  # 1=null (use attachment)   2=text/plain   3=text/html    4=text/x-web-markdown
-    # the content can be set even if the document is stored in an attachment, for lucene indexes
-    source_attachment_id: { type: integer, foreignTable: attachment_file, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
-    published_attachment_id: { type: integer, foreignTable: attachment_file, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: false }
-*/
-    
-    $con = Propel::getConnection(ProjDeadlinePeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+        
+    $con = Propel::getConnection(DocrevisionPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
     // we need to check which ones are present, because it depends on the state
     Generic::updateObjectFromForm($this, array(
       'document_id',
+      'title',
       'uploader_id',
       'revision_number',
       'revisioned_at',
@@ -61,6 +92,7 @@ class Docrevision extends BaseDocrevision {
       // FIXME -- we have to add the logging here...
       
       $con->commit();
+      $result['docrevision_id']=$this->getId();
       $result['result']='notice';
       $result['message']='Revision successfully updated.';
     }

@@ -25,7 +25,7 @@ abstract class BaseDoctypePeer {
 	const TM_CLASS = 'DoctypeTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 7;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -44,6 +44,12 @@ abstract class BaseDoctypePeer {
 
 	/** the column name for the RANK field */
 	const RANK = 'doctype.RANK';
+
+	/** the column name for the REVISION_NUMBER field */
+	const REVISION_NUMBER = 'doctype.REVISION_NUMBER';
+
+	/** the column name for the REVISIONED_AT field */
+	const REVISIONED_AT = 'doctype.REVISIONED_AT';
 
 	/**
 	 * An identiy map to hold any loaded instances of Doctype objects.
@@ -68,11 +74,11 @@ abstract class BaseDoctypePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Description', 'IsActive', 'Rank', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'description', 'isActive', 'rank', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::DESCRIPTION, self::IS_ACTIVE, self::RANK, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'description', 'is_active', 'rank', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Title', 'Description', 'IsActive', 'Rank', 'RevisionNumber', 'RevisionedAt', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'title', 'description', 'isActive', 'rank', 'revisionNumber', 'revisionedAt', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::TITLE, self::DESCRIPTION, self::IS_ACTIVE, self::RANK, self::REVISION_NUMBER, self::REVISIONED_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'title', 'description', 'is_active', 'rank', 'revision_number', 'revisioned_at', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -82,11 +88,11 @@ abstract class BaseDoctypePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Description' => 2, 'IsActive' => 3, 'Rank' => 4, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'isActive' => 3, 'rank' => 4, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::DESCRIPTION => 2, self::IS_ACTIVE => 3, self::RANK => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'is_active' => 3, 'rank' => 4, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Title' => 1, 'Description' => 2, 'IsActive' => 3, 'Rank' => 4, 'RevisionNumber' => 5, 'RevisionedAt' => 6, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'isActive' => 3, 'rank' => 4, 'revisionNumber' => 5, 'revisionedAt' => 6, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TITLE => 1, self::DESCRIPTION => 2, self::IS_ACTIVE => 3, self::RANK => 4, self::REVISION_NUMBER => 5, self::REVISIONED_AT => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'title' => 1, 'description' => 2, 'is_active' => 3, 'rank' => 4, 'revision_number' => 5, 'revisioned_at' => 6, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -161,6 +167,8 @@ abstract class BaseDoctypePeer {
 		$criteria->addSelectColumn(DoctypePeer::DESCRIPTION);
 		$criteria->addSelectColumn(DoctypePeer::IS_ACTIVE);
 		$criteria->addSelectColumn(DoctypePeer::RANK);
+		$criteria->addSelectColumn(DoctypePeer::REVISION_NUMBER);
+		$criteria->addSelectColumn(DoctypePeer::REVISIONED_AT);
 	}
 
 	/**

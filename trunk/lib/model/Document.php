@@ -58,6 +58,15 @@ class Document extends BaseDocument {
     }
     return null;
   }
+  
+  public function getTitle()
+  {
+    if($this->getDocrevisionId())
+    {
+      return $this->getDocrevision()->getTitle();
+    }
+    return null;
+  }
 
   public function getContentType()
   {

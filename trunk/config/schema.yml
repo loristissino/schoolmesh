@@ -541,6 +541,8 @@ propel:
     description: longvarchar
     is_active: { type: boolean, default: true }
     rank: integer
+    revision_number: { type: integer, required: true, default: 1 }
+    revisioned_at:  timestamp
 
   document:
     id: ~
@@ -557,9 +559,13 @@ propel:
   docrevision:
     id: ~
     document_id: { type: integer, foreignTable: document, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    title: { type: varchar(255), required: false }
     revision_number: { type: integer, required: true }
     revisioned_at: timestamp
     uploader_id:  { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, required: true }
+    revisioner_id:  { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, default: null }
+    approved_at: timestamp
+    approver_id:  { type: integer, foreignTable: sf_guard_user, foreignReference: id, onDelete: restrict, onUpdate: cascade, default: null }
     revision_grounds: { type: longvarchar, required: true }
     content: { type: longvarchar, required: false }
     content_type: integer  # 1=null (use attachment)   2=text/plain   3=text/html    4=text/x-web-markdown

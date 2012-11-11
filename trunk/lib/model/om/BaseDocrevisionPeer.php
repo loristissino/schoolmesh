@@ -25,7 +25,7 @@ abstract class BaseDocrevisionPeer {
 	const TM_CLASS = 'DocrevisionTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 10;
+	const NUM_COLUMNS = 14;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -36,6 +36,9 @@ abstract class BaseDocrevisionPeer {
 	/** the column name for the DOCUMENT_ID field */
 	const DOCUMENT_ID = 'docrevision.DOCUMENT_ID';
 
+	/** the column name for the TITLE field */
+	const TITLE = 'docrevision.TITLE';
+
 	/** the column name for the REVISION_NUMBER field */
 	const REVISION_NUMBER = 'docrevision.REVISION_NUMBER';
 
@@ -44,6 +47,15 @@ abstract class BaseDocrevisionPeer {
 
 	/** the column name for the UPLOADER_ID field */
 	const UPLOADER_ID = 'docrevision.UPLOADER_ID';
+
+	/** the column name for the REVISIONER_ID field */
+	const REVISIONER_ID = 'docrevision.REVISIONER_ID';
+
+	/** the column name for the APPROVED_AT field */
+	const APPROVED_AT = 'docrevision.APPROVED_AT';
+
+	/** the column name for the APPROVER_ID field */
+	const APPROVER_ID = 'docrevision.APPROVER_ID';
 
 	/** the column name for the REVISION_GROUNDS field */
 	const REVISION_GROUNDS = 'docrevision.REVISION_GROUNDS';
@@ -83,11 +95,11 @@ abstract class BaseDocrevisionPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'DocumentId', 'RevisionNumber', 'RevisionedAt', 'UploaderId', 'RevisionGrounds', 'Content', 'ContentType', 'SourceAttachmentId', 'PublishedAttachmentId', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'documentId', 'revisionNumber', 'revisionedAt', 'uploaderId', 'revisionGrounds', 'content', 'contentType', 'sourceAttachmentId', 'publishedAttachmentId', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::DOCUMENT_ID, self::REVISION_NUMBER, self::REVISIONED_AT, self::UPLOADER_ID, self::REVISION_GROUNDS, self::CONTENT, self::CONTENT_TYPE, self::SOURCE_ATTACHMENT_ID, self::PUBLISHED_ATTACHMENT_ID, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'document_id', 'revision_number', 'revisioned_at', 'uploader_id', 'revision_grounds', 'content', 'content_type', 'source_attachment_id', 'published_attachment_id', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'DocumentId', 'Title', 'RevisionNumber', 'RevisionedAt', 'UploaderId', 'RevisionerId', 'ApprovedAt', 'ApproverId', 'RevisionGrounds', 'Content', 'ContentType', 'SourceAttachmentId', 'PublishedAttachmentId', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'documentId', 'title', 'revisionNumber', 'revisionedAt', 'uploaderId', 'revisionerId', 'approvedAt', 'approverId', 'revisionGrounds', 'content', 'contentType', 'sourceAttachmentId', 'publishedAttachmentId', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::DOCUMENT_ID, self::TITLE, self::REVISION_NUMBER, self::REVISIONED_AT, self::UPLOADER_ID, self::REVISIONER_ID, self::APPROVED_AT, self::APPROVER_ID, self::REVISION_GROUNDS, self::CONTENT, self::CONTENT_TYPE, self::SOURCE_ATTACHMENT_ID, self::PUBLISHED_ATTACHMENT_ID, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'document_id', 'title', 'revision_number', 'revisioned_at', 'uploader_id', 'revisioner_id', 'approved_at', 'approver_id', 'revision_grounds', 'content', 'content_type', 'source_attachment_id', 'published_attachment_id', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	/**
@@ -97,11 +109,11 @@ abstract class BaseDocrevisionPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'DocumentId' => 1, 'RevisionNumber' => 2, 'RevisionedAt' => 3, 'UploaderId' => 4, 'RevisionGrounds' => 5, 'Content' => 6, 'ContentType' => 7, 'SourceAttachmentId' => 8, 'PublishedAttachmentId' => 9, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'documentId' => 1, 'revisionNumber' => 2, 'revisionedAt' => 3, 'uploaderId' => 4, 'revisionGrounds' => 5, 'content' => 6, 'contentType' => 7, 'sourceAttachmentId' => 8, 'publishedAttachmentId' => 9, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DOCUMENT_ID => 1, self::REVISION_NUMBER => 2, self::REVISIONED_AT => 3, self::UPLOADER_ID => 4, self::REVISION_GROUNDS => 5, self::CONTENT => 6, self::CONTENT_TYPE => 7, self::SOURCE_ATTACHMENT_ID => 8, self::PUBLISHED_ATTACHMENT_ID => 9, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'document_id' => 1, 'revision_number' => 2, 'revisioned_at' => 3, 'uploader_id' => 4, 'revision_grounds' => 5, 'content' => 6, 'content_type' => 7, 'source_attachment_id' => 8, 'published_attachment_id' => 9, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'DocumentId' => 1, 'Title' => 2, 'RevisionNumber' => 3, 'RevisionedAt' => 4, 'UploaderId' => 5, 'RevisionerId' => 6, 'ApprovedAt' => 7, 'ApproverId' => 8, 'RevisionGrounds' => 9, 'Content' => 10, 'ContentType' => 11, 'SourceAttachmentId' => 12, 'PublishedAttachmentId' => 13, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'documentId' => 1, 'title' => 2, 'revisionNumber' => 3, 'revisionedAt' => 4, 'uploaderId' => 5, 'revisionerId' => 6, 'approvedAt' => 7, 'approverId' => 8, 'revisionGrounds' => 9, 'content' => 10, 'contentType' => 11, 'sourceAttachmentId' => 12, 'publishedAttachmentId' => 13, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::DOCUMENT_ID => 1, self::TITLE => 2, self::REVISION_NUMBER => 3, self::REVISIONED_AT => 4, self::UPLOADER_ID => 5, self::REVISIONER_ID => 6, self::APPROVED_AT => 7, self::APPROVER_ID => 8, self::REVISION_GROUNDS => 9, self::CONTENT => 10, self::CONTENT_TYPE => 11, self::SOURCE_ATTACHMENT_ID => 12, self::PUBLISHED_ATTACHMENT_ID => 13, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'document_id' => 1, 'title' => 2, 'revision_number' => 3, 'revisioned_at' => 4, 'uploader_id' => 5, 'revisioner_id' => 6, 'approved_at' => 7, 'approver_id' => 8, 'revision_grounds' => 9, 'content' => 10, 'content_type' => 11, 'source_attachment_id' => 12, 'published_attachment_id' => 13, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	/**
@@ -173,9 +185,13 @@ abstract class BaseDocrevisionPeer {
 	{
 		$criteria->addSelectColumn(DocrevisionPeer::ID);
 		$criteria->addSelectColumn(DocrevisionPeer::DOCUMENT_ID);
+		$criteria->addSelectColumn(DocrevisionPeer::TITLE);
 		$criteria->addSelectColumn(DocrevisionPeer::REVISION_NUMBER);
 		$criteria->addSelectColumn(DocrevisionPeer::REVISIONED_AT);
 		$criteria->addSelectColumn(DocrevisionPeer::UPLOADER_ID);
+		$criteria->addSelectColumn(DocrevisionPeer::REVISIONER_ID);
+		$criteria->addSelectColumn(DocrevisionPeer::APPROVED_AT);
+		$criteria->addSelectColumn(DocrevisionPeer::APPROVER_ID);
 		$criteria->addSelectColumn(DocrevisionPeer::REVISION_GROUNDS);
 		$criteria->addSelectColumn(DocrevisionPeer::CONTENT);
 		$criteria->addSelectColumn(DocrevisionPeer::CONTENT_TYPE);
@@ -477,7 +493,7 @@ abstract class BaseDocrevisionPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related sfGuardUser table
+	 * Returns the number of rows matching criteria, joining the related sfGuardUserRelatedByUploaderId table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -485,7 +501,7 @@ abstract class BaseDocrevisionPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinsfGuardUser(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinsfGuardUserRelatedByUploaderId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -513,6 +529,106 @@ abstract class BaseDocrevisionPeer {
 		}
 
 		$criteria->addJoin(DocrevisionPeer::UPLOADER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related sfGuardUserRelatedByRevisionerId table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinsfGuardUserRelatedByRevisionerId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(DocrevisionPeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			DocrevisionPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(DocrevisionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(DocrevisionPeer::REVISIONER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related sfGuardUserRelatedByApproverId table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinsfGuardUserRelatedByApproverId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(DocrevisionPeer::TABLE_NAME);
+
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			DocrevisionPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(DocrevisionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+
+		$criteria->addJoin(DocrevisionPeer::APPROVER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$stmt = BasePeer::doCount($criteria, $con);
 
@@ -701,7 +817,7 @@ abstract class BaseDocrevisionPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinsfGuardUser(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinsfGuardUserRelatedByUploaderId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -747,7 +863,139 @@ abstract class BaseDocrevisionPeer {
 				} // if obj2 already loaded
 				
 				// Add the $obj1 (Docrevision) to $obj2 (sfGuardUser)
-				$obj2->addDocrevision($obj1);
+				$obj2->addDocrevisionRelatedByUploaderId($obj1);
+
+			} // if joined row was not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Selects a collection of Docrevision objects pre-filled with their sfGuardUser objects.
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of Docrevision objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinsfGuardUserRelatedByRevisionerId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		DocrevisionPeer::addSelectColumns($criteria);
+		$startcol = (DocrevisionPeer::NUM_COLUMNS - DocrevisionPeer::NUM_LAZY_LOAD_COLUMNS);
+		sfGuardUserPeer::addSelectColumns($criteria);
+
+		$criteria->addJoin(DocrevisionPeer::REVISIONER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = DocrevisionPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = DocrevisionPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+
+				$cls = DocrevisionPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				DocrevisionPeer::addInstanceToPool($obj1, $key1);
+			} // if $obj1 already loaded
+
+			$key2 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			if ($key2 !== null) {
+				$obj2 = sfGuardUserPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol);
+					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 already loaded
+				
+				// Add the $obj1 (Docrevision) to $obj2 (sfGuardUser)
+				$obj2->addDocrevisionRelatedByRevisionerId($obj1);
+
+			} // if joined row was not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Selects a collection of Docrevision objects pre-filled with their sfGuardUser objects.
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of Docrevision objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinsfGuardUserRelatedByApproverId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		DocrevisionPeer::addSelectColumns($criteria);
+		$startcol = (DocrevisionPeer::NUM_COLUMNS - DocrevisionPeer::NUM_LAZY_LOAD_COLUMNS);
+		sfGuardUserPeer::addSelectColumns($criteria);
+
+		$criteria->addJoin(DocrevisionPeer::APPROVER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = DocrevisionPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = DocrevisionPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+
+				$cls = DocrevisionPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				DocrevisionPeer::addInstanceToPool($obj1, $key1);
+			} // if $obj1 already loaded
+
+			$key2 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			if ($key2 !== null) {
+				$obj2 = sfGuardUserPeer::getInstanceFromPool($key2);
+				if (!$obj2) {
+
+					$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol);
+					sfGuardUserPeer::addInstanceToPool($obj2, $key2);
+				} // if obj2 already loaded
+				
+				// Add the $obj1 (Docrevision) to $obj2 (sfGuardUser)
+				$obj2->addDocrevisionRelatedByApproverId($obj1);
 
 			} // if joined row was not null
 
@@ -930,6 +1178,10 @@ abstract class BaseDocrevisionPeer {
 
 		$criteria->addJoin(DocrevisionPeer::UPLOADER_ID, sfGuardUserPeer::ID, $join_behavior);
 
+		$criteria->addJoin(DocrevisionPeer::REVISIONER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::APPROVER_ID, sfGuardUserPeer::ID, $join_behavior);
+
 		$criteria->addJoin(DocrevisionPeer::SOURCE_ATTACHMENT_ID, AttachmentFilePeer::ID, $join_behavior);
 
 		$criteria->addJoin(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, AttachmentFilePeer::ID, $join_behavior);
@@ -973,15 +1225,25 @@ abstract class BaseDocrevisionPeer {
 		sfGuardUserPeer::addSelectColumns($criteria);
 		$startcol4 = $startcol3 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		AttachmentFilePeer::addSelectColumns($criteria);
-		$startcol5 = $startcol4 + (AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS);
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol5 = $startcol4 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol6 = $startcol5 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		AttachmentFilePeer::addSelectColumns($criteria);
-		$startcol6 = $startcol5 + (AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS);
+		$startcol7 = $startcol6 + (AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS);
+
+		AttachmentFilePeer::addSelectColumns($criteria);
+		$startcol8 = $startcol7 + (AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS);
 
 		$criteria->addJoin(DocrevisionPeer::DOCUMENT_ID, DocumentPeer::ID, $join_behavior);
 
 		$criteria->addJoin(DocrevisionPeer::UPLOADER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::REVISIONER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::APPROVER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$criteria->addJoin(DocrevisionPeer::SOURCE_ATTACHMENT_ID, AttachmentFilePeer::ID, $join_behavior);
 
@@ -1037,43 +1299,79 @@ abstract class BaseDocrevisionPeer {
 				} // if obj3 loaded
 
 				// Add the $obj1 (Docrevision) to the collection in $obj3 (sfGuardUser)
-				$obj3->addDocrevision($obj1);
+				$obj3->addDocrevisionRelatedByUploaderId($obj1);
 			} // if joined row not null
 
-			// Add objects for joined AttachmentFile rows
+			// Add objects for joined sfGuardUser rows
 
-			$key4 = AttachmentFilePeer::getPrimaryKeyHashFromRow($row, $startcol4);
+			$key4 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol4);
 			if ($key4 !== null) {
-				$obj4 = AttachmentFilePeer::getInstanceFromPool($key4);
+				$obj4 = sfGuardUserPeer::getInstanceFromPool($key4);
 				if (!$obj4) {
 
-					$cls = AttachmentFilePeer::getOMClass(false);
+					$cls = sfGuardUserPeer::getOMClass(false);
 
 					$obj4 = new $cls();
 					$obj4->hydrate($row, $startcol4);
-					AttachmentFilePeer::addInstanceToPool($obj4, $key4);
+					sfGuardUserPeer::addInstanceToPool($obj4, $key4);
 				} // if obj4 loaded
 
-				// Add the $obj1 (Docrevision) to the collection in $obj4 (AttachmentFile)
-				$obj4->addDocrevisionRelatedBySourceAttachmentId($obj1);
+				// Add the $obj1 (Docrevision) to the collection in $obj4 (sfGuardUser)
+				$obj4->addDocrevisionRelatedByRevisionerId($obj1);
+			} // if joined row not null
+
+			// Add objects for joined sfGuardUser rows
+
+			$key5 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol5);
+			if ($key5 !== null) {
+				$obj5 = sfGuardUserPeer::getInstanceFromPool($key5);
+				if (!$obj5) {
+
+					$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj5 = new $cls();
+					$obj5->hydrate($row, $startcol5);
+					sfGuardUserPeer::addInstanceToPool($obj5, $key5);
+				} // if obj5 loaded
+
+				// Add the $obj1 (Docrevision) to the collection in $obj5 (sfGuardUser)
+				$obj5->addDocrevisionRelatedByApproverId($obj1);
 			} // if joined row not null
 
 			// Add objects for joined AttachmentFile rows
 
-			$key5 = AttachmentFilePeer::getPrimaryKeyHashFromRow($row, $startcol5);
-			if ($key5 !== null) {
-				$obj5 = AttachmentFilePeer::getInstanceFromPool($key5);
-				if (!$obj5) {
+			$key6 = AttachmentFilePeer::getPrimaryKeyHashFromRow($row, $startcol6);
+			if ($key6 !== null) {
+				$obj6 = AttachmentFilePeer::getInstanceFromPool($key6);
+				if (!$obj6) {
 
 					$cls = AttachmentFilePeer::getOMClass(false);
 
-					$obj5 = new $cls();
-					$obj5->hydrate($row, $startcol5);
-					AttachmentFilePeer::addInstanceToPool($obj5, $key5);
-				} // if obj5 loaded
+					$obj6 = new $cls();
+					$obj6->hydrate($row, $startcol6);
+					AttachmentFilePeer::addInstanceToPool($obj6, $key6);
+				} // if obj6 loaded
 
-				// Add the $obj1 (Docrevision) to the collection in $obj5 (AttachmentFile)
-				$obj5->addDocrevisionRelatedByPublishedAttachmentId($obj1);
+				// Add the $obj1 (Docrevision) to the collection in $obj6 (AttachmentFile)
+				$obj6->addDocrevisionRelatedBySourceAttachmentId($obj1);
+			} // if joined row not null
+
+			// Add objects for joined AttachmentFile rows
+
+			$key7 = AttachmentFilePeer::getPrimaryKeyHashFromRow($row, $startcol7);
+			if ($key7 !== null) {
+				$obj7 = AttachmentFilePeer::getInstanceFromPool($key7);
+				if (!$obj7) {
+
+					$cls = AttachmentFilePeer::getOMClass(false);
+
+					$obj7 = new $cls();
+					$obj7->hydrate($row, $startcol7);
+					AttachmentFilePeer::addInstanceToPool($obj7, $key7);
+				} // if obj7 loaded
+
+				// Add the $obj1 (Docrevision) to the collection in $obj7 (AttachmentFile)
+				$obj7->addDocrevisionRelatedByPublishedAttachmentId($obj1);
 			} // if joined row not null
 
 			$results[] = $obj1;
@@ -1121,6 +1419,10 @@ abstract class BaseDocrevisionPeer {
 	
 		$criteria->addJoin(DocrevisionPeer::UPLOADER_ID, sfGuardUserPeer::ID, $join_behavior);
 
+		$criteria->addJoin(DocrevisionPeer::REVISIONER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::APPROVER_ID, sfGuardUserPeer::ID, $join_behavior);
+
 		$criteria->addJoin(DocrevisionPeer::SOURCE_ATTACHMENT_ID, AttachmentFilePeer::ID, $join_behavior);
 
 		$criteria->addJoin(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, AttachmentFilePeer::ID, $join_behavior);
@@ -1138,7 +1440,7 @@ abstract class BaseDocrevisionPeer {
 
 
 	/**
-	 * Returns the number of rows matching criteria, joining the related sfGuardUser table
+	 * Returns the number of rows matching criteria, joining the related sfGuardUserRelatedByUploaderId table
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -1146,7 +1448,115 @@ abstract class BaseDocrevisionPeer {
 	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
 	 * @return     int Number of matching rows.
 	 */
-	public static function doCountJoinAllExceptsfGuardUser(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doCountJoinAllExceptsfGuardUserRelatedByUploaderId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(DocrevisionPeer::TABLE_NAME);
+		
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			DocrevisionPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY should not affect count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(DocrevisionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+	
+		$criteria->addJoin(DocrevisionPeer::DOCUMENT_ID, DocumentPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::SOURCE_ATTACHMENT_ID, AttachmentFilePeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, AttachmentFilePeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related sfGuardUserRelatedByRevisionerId table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAllExceptsfGuardUserRelatedByRevisionerId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		// we're going to modify criteria, so copy it first
+		$criteria = clone $criteria;
+
+		// We need to set the primary table name, since in the case that there are no WHERE columns
+		// it will be impossible for the BasePeer::createSelectSql() method to determine which
+		// tables go into the FROM clause.
+		$criteria->setPrimaryTableName(DocrevisionPeer::TABLE_NAME);
+		
+		if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+			$criteria->setDistinct();
+		}
+
+		if (!$criteria->hasSelectClause()) {
+			DocrevisionPeer::addSelectColumns($criteria);
+		}
+		
+		$criteria->clearOrderByColumns(); // ORDER BY should not affect count
+		
+		// Set the correct dbName
+		$criteria->setDbName(self::DATABASE_NAME);
+
+		if ($con === null) {
+			$con = Propel::getConnection(DocrevisionPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+		}
+	
+		$criteria->addJoin(DocrevisionPeer::DOCUMENT_ID, DocumentPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::SOURCE_ATTACHMENT_ID, AttachmentFilePeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, AttachmentFilePeer::ID, $join_behavior);
+
+		$stmt = BasePeer::doCount($criteria, $con);
+
+		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$count = (int) $row[0];
+		} else {
+			$count = 0; // no rows returned; we infer that means 0 matches.
+		}
+		$stmt->closeCursor();
+		return $count;
+	}
+
+
+	/**
+	 * Returns the number of rows matching criteria, joining the related sfGuardUserRelatedByApproverId table
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     int Number of matching rows.
+	 */
+	public static function doCountJoinAllExceptsfGuardUserRelatedByApproverId(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		// we're going to modify criteria, so copy it first
 		$criteria = clone $criteria;
@@ -1231,6 +1641,10 @@ abstract class BaseDocrevisionPeer {
 
 		$criteria->addJoin(DocrevisionPeer::UPLOADER_ID, sfGuardUserPeer::ID, $join_behavior);
 
+		$criteria->addJoin(DocrevisionPeer::REVISIONER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::APPROVER_ID, sfGuardUserPeer::ID, $join_behavior);
+
 		$stmt = BasePeer::doCount($criteria, $con);
 
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -1283,6 +1697,10 @@ abstract class BaseDocrevisionPeer {
 
 		$criteria->addJoin(DocrevisionPeer::UPLOADER_ID, sfGuardUserPeer::ID, $join_behavior);
 
+		$criteria->addJoin(DocrevisionPeer::REVISIONER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::APPROVER_ID, sfGuardUserPeer::ID, $join_behavior);
+
 		$stmt = BasePeer::doCount($criteria, $con);
 
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -1322,13 +1740,23 @@ abstract class BaseDocrevisionPeer {
 		sfGuardUserPeer::addSelectColumns($criteria);
 		$startcol3 = $startcol2 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		AttachmentFilePeer::addSelectColumns($criteria);
-		$startcol4 = $startcol3 + (AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS);
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol5 = $startcol4 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
 
 		AttachmentFilePeer::addSelectColumns($criteria);
-		$startcol5 = $startcol4 + (AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS);
+		$startcol6 = $startcol5 + (AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS);
+
+		AttachmentFilePeer::addSelectColumns($criteria);
+		$startcol7 = $startcol6 + (AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS);
 
 		$criteria->addJoin(DocrevisionPeer::UPLOADER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::REVISIONER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::APPROVER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 		$criteria->addJoin(DocrevisionPeer::SOURCE_ATTACHMENT_ID, AttachmentFilePeer::ID, $join_behavior);
 
@@ -1367,6 +1795,165 @@ abstract class BaseDocrevisionPeer {
 				} // if $obj2 already loaded
 
 				// Add the $obj1 (Docrevision) to the collection in $obj2 (sfGuardUser)
+				$obj2->addDocrevisionRelatedByUploaderId($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined sfGuardUser rows
+
+				$key3 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+				if ($key3 !== null) {
+					$obj3 = sfGuardUserPeer::getInstanceFromPool($key3);
+					if (!$obj3) {
+	
+						$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj3 = new $cls();
+					$obj3->hydrate($row, $startcol3);
+					sfGuardUserPeer::addInstanceToPool($obj3, $key3);
+				} // if $obj3 already loaded
+
+				// Add the $obj1 (Docrevision) to the collection in $obj3 (sfGuardUser)
+				$obj3->addDocrevisionRelatedByRevisionerId($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined sfGuardUser rows
+
+				$key4 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol4);
+				if ($key4 !== null) {
+					$obj4 = sfGuardUserPeer::getInstanceFromPool($key4);
+					if (!$obj4) {
+	
+						$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj4 = new $cls();
+					$obj4->hydrate($row, $startcol4);
+					sfGuardUserPeer::addInstanceToPool($obj4, $key4);
+				} // if $obj4 already loaded
+
+				// Add the $obj1 (Docrevision) to the collection in $obj4 (sfGuardUser)
+				$obj4->addDocrevisionRelatedByApproverId($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined AttachmentFile rows
+
+				$key5 = AttachmentFilePeer::getPrimaryKeyHashFromRow($row, $startcol5);
+				if ($key5 !== null) {
+					$obj5 = AttachmentFilePeer::getInstanceFromPool($key5);
+					if (!$obj5) {
+	
+						$cls = AttachmentFilePeer::getOMClass(false);
+
+					$obj5 = new $cls();
+					$obj5->hydrate($row, $startcol5);
+					AttachmentFilePeer::addInstanceToPool($obj5, $key5);
+				} // if $obj5 already loaded
+
+				// Add the $obj1 (Docrevision) to the collection in $obj5 (AttachmentFile)
+				$obj5->addDocrevisionRelatedBySourceAttachmentId($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined AttachmentFile rows
+
+				$key6 = AttachmentFilePeer::getPrimaryKeyHashFromRow($row, $startcol6);
+				if ($key6 !== null) {
+					$obj6 = AttachmentFilePeer::getInstanceFromPool($key6);
+					if (!$obj6) {
+	
+						$cls = AttachmentFilePeer::getOMClass(false);
+
+					$obj6 = new $cls();
+					$obj6->hydrate($row, $startcol6);
+					AttachmentFilePeer::addInstanceToPool($obj6, $key6);
+				} // if $obj6 already loaded
+
+				// Add the $obj1 (Docrevision) to the collection in $obj6 (AttachmentFile)
+				$obj6->addDocrevisionRelatedByPublishedAttachmentId($obj1);
+
+			} // if joined row is not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Selects a collection of Docrevision objects pre-filled with all related objects except sfGuardUserRelatedByUploaderId.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of Docrevision objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAllExceptsfGuardUserRelatedByUploaderId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		// $criteria->getDbName() will return the same object if not set to another value
+		// so == check is okay and faster
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		DocrevisionPeer::addSelectColumns($criteria);
+		$startcol2 = (DocrevisionPeer::NUM_COLUMNS - DocrevisionPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		DocumentPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (DocumentPeer::NUM_COLUMNS - DocumentPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		AttachmentFilePeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS);
+
+		AttachmentFilePeer::addSelectColumns($criteria);
+		$startcol5 = $startcol4 + (AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(DocrevisionPeer::DOCUMENT_ID, DocumentPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::SOURCE_ATTACHMENT_ID, AttachmentFilePeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, AttachmentFilePeer::ID, $join_behavior);
+
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = DocrevisionPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = DocrevisionPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = DocrevisionPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				DocrevisionPeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+				// Add objects for joined Document rows
+
+				$key2 = DocumentPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				if ($key2 !== null) {
+					$obj2 = DocumentPeer::getInstanceFromPool($key2);
+					if (!$obj2) {
+	
+						$cls = DocumentPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					DocumentPeer::addInstanceToPool($obj2, $key2);
+				} // if $obj2 already loaded
+
+				// Add the $obj1 (Docrevision) to the collection in $obj2 (Document)
 				$obj2->addDocrevision($obj1);
 
 			} // if joined row is not null
@@ -1417,7 +2004,7 @@ abstract class BaseDocrevisionPeer {
 
 
 	/**
-	 * Selects a collection of Docrevision objects pre-filled with all related objects except sfGuardUser.
+	 * Selects a collection of Docrevision objects pre-filled with all related objects except sfGuardUserRelatedByRevisionerId.
 	 *
 	 * @param      Criteria  $criteria
 	 * @param      PropelPDO $con
@@ -1426,7 +2013,128 @@ abstract class BaseDocrevisionPeer {
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function doSelectJoinAllExceptsfGuardUser(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	public static function doSelectJoinAllExceptsfGuardUserRelatedByRevisionerId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+	{
+		$criteria = clone $criteria;
+
+		// Set the correct dbName if it has not been overridden
+		// $criteria->getDbName() will return the same object if not set to another value
+		// so == check is okay and faster
+		if ($criteria->getDbName() == Propel::getDefaultDB()) {
+			$criteria->setDbName(self::DATABASE_NAME);
+		}
+
+		DocrevisionPeer::addSelectColumns($criteria);
+		$startcol2 = (DocrevisionPeer::NUM_COLUMNS - DocrevisionPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		DocumentPeer::addSelectColumns($criteria);
+		$startcol3 = $startcol2 + (DocumentPeer::NUM_COLUMNS - DocumentPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		AttachmentFilePeer::addSelectColumns($criteria);
+		$startcol4 = $startcol3 + (AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS);
+
+		AttachmentFilePeer::addSelectColumns($criteria);
+		$startcol5 = $startcol4 + (AttachmentFilePeer::NUM_COLUMNS - AttachmentFilePeer::NUM_LAZY_LOAD_COLUMNS);
+
+		$criteria->addJoin(DocrevisionPeer::DOCUMENT_ID, DocumentPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::SOURCE_ATTACHMENT_ID, AttachmentFilePeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::PUBLISHED_ATTACHMENT_ID, AttachmentFilePeer::ID, $join_behavior);
+
+
+		$stmt = BasePeer::doSelect($criteria, $con);
+		$results = array();
+
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			$key1 = DocrevisionPeer::getPrimaryKeyHashFromRow($row, 0);
+			if (null !== ($obj1 = DocrevisionPeer::getInstanceFromPool($key1))) {
+				// We no longer rehydrate the object, since this can cause data loss.
+				// See http://propel.phpdb.org/trac/ticket/509
+				// $obj1->hydrate($row, 0, true); // rehydrate
+			} else {
+				$cls = DocrevisionPeer::getOMClass(false);
+
+				$obj1 = new $cls();
+				$obj1->hydrate($row);
+				DocrevisionPeer::addInstanceToPool($obj1, $key1);
+			} // if obj1 already loaded
+
+				// Add objects for joined Document rows
+
+				$key2 = DocumentPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				if ($key2 !== null) {
+					$obj2 = DocumentPeer::getInstanceFromPool($key2);
+					if (!$obj2) {
+	
+						$cls = DocumentPeer::getOMClass(false);
+
+					$obj2 = new $cls();
+					$obj2->hydrate($row, $startcol2);
+					DocumentPeer::addInstanceToPool($obj2, $key2);
+				} // if $obj2 already loaded
+
+				// Add the $obj1 (Docrevision) to the collection in $obj2 (Document)
+				$obj2->addDocrevision($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined AttachmentFile rows
+
+				$key3 = AttachmentFilePeer::getPrimaryKeyHashFromRow($row, $startcol3);
+				if ($key3 !== null) {
+					$obj3 = AttachmentFilePeer::getInstanceFromPool($key3);
+					if (!$obj3) {
+	
+						$cls = AttachmentFilePeer::getOMClass(false);
+
+					$obj3 = new $cls();
+					$obj3->hydrate($row, $startcol3);
+					AttachmentFilePeer::addInstanceToPool($obj3, $key3);
+				} // if $obj3 already loaded
+
+				// Add the $obj1 (Docrevision) to the collection in $obj3 (AttachmentFile)
+				$obj3->addDocrevisionRelatedBySourceAttachmentId($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined AttachmentFile rows
+
+				$key4 = AttachmentFilePeer::getPrimaryKeyHashFromRow($row, $startcol4);
+				if ($key4 !== null) {
+					$obj4 = AttachmentFilePeer::getInstanceFromPool($key4);
+					if (!$obj4) {
+	
+						$cls = AttachmentFilePeer::getOMClass(false);
+
+					$obj4 = new $cls();
+					$obj4->hydrate($row, $startcol4);
+					AttachmentFilePeer::addInstanceToPool($obj4, $key4);
+				} // if $obj4 already loaded
+
+				// Add the $obj1 (Docrevision) to the collection in $obj4 (AttachmentFile)
+				$obj4->addDocrevisionRelatedByPublishedAttachmentId($obj1);
+
+			} // if joined row is not null
+
+			$results[] = $obj1;
+		}
+		$stmt->closeCursor();
+		return $results;
+	}
+
+
+	/**
+	 * Selects a collection of Docrevision objects pre-filled with all related objects except sfGuardUserRelatedByApproverId.
+	 *
+	 * @param      Criteria  $criteria
+	 * @param      PropelPDO $con
+	 * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+	 * @return     array Array of Docrevision objects.
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function doSelectJoinAllExceptsfGuardUserRelatedByApproverId(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
 	{
 		$criteria = clone $criteria;
 
@@ -1567,9 +2275,19 @@ abstract class BaseDocrevisionPeer {
 		sfGuardUserPeer::addSelectColumns($criteria);
 		$startcol4 = $startcol3 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
 
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol5 = $startcol4 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol6 = $startcol5 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
 		$criteria->addJoin(DocrevisionPeer::DOCUMENT_ID, DocumentPeer::ID, $join_behavior);
 
 		$criteria->addJoin(DocrevisionPeer::UPLOADER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::REVISIONER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::APPROVER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 
 		$stmt = BasePeer::doSelect($criteria, $con);
@@ -1623,7 +2341,45 @@ abstract class BaseDocrevisionPeer {
 				} // if $obj3 already loaded
 
 				// Add the $obj1 (Docrevision) to the collection in $obj3 (sfGuardUser)
-				$obj3->addDocrevision($obj1);
+				$obj3->addDocrevisionRelatedByUploaderId($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined sfGuardUser rows
+
+				$key4 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol4);
+				if ($key4 !== null) {
+					$obj4 = sfGuardUserPeer::getInstanceFromPool($key4);
+					if (!$obj4) {
+	
+						$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj4 = new $cls();
+					$obj4->hydrate($row, $startcol4);
+					sfGuardUserPeer::addInstanceToPool($obj4, $key4);
+				} // if $obj4 already loaded
+
+				// Add the $obj1 (Docrevision) to the collection in $obj4 (sfGuardUser)
+				$obj4->addDocrevisionRelatedByRevisionerId($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined sfGuardUser rows
+
+				$key5 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol5);
+				if ($key5 !== null) {
+					$obj5 = sfGuardUserPeer::getInstanceFromPool($key5);
+					if (!$obj5) {
+	
+						$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj5 = new $cls();
+					$obj5->hydrate($row, $startcol5);
+					sfGuardUserPeer::addInstanceToPool($obj5, $key5);
+				} // if $obj5 already loaded
+
+				// Add the $obj1 (Docrevision) to the collection in $obj5 (sfGuardUser)
+				$obj5->addDocrevisionRelatedByApproverId($obj1);
 
 			} // if joined row is not null
 
@@ -1664,9 +2420,19 @@ abstract class BaseDocrevisionPeer {
 		sfGuardUserPeer::addSelectColumns($criteria);
 		$startcol4 = $startcol3 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
 
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol5 = $startcol4 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
+		sfGuardUserPeer::addSelectColumns($criteria);
+		$startcol6 = $startcol5 + (sfGuardUserPeer::NUM_COLUMNS - sfGuardUserPeer::NUM_LAZY_LOAD_COLUMNS);
+
 		$criteria->addJoin(DocrevisionPeer::DOCUMENT_ID, DocumentPeer::ID, $join_behavior);
 
 		$criteria->addJoin(DocrevisionPeer::UPLOADER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::REVISIONER_ID, sfGuardUserPeer::ID, $join_behavior);
+
+		$criteria->addJoin(DocrevisionPeer::APPROVER_ID, sfGuardUserPeer::ID, $join_behavior);
 
 
 		$stmt = BasePeer::doSelect($criteria, $con);
@@ -1720,7 +2486,45 @@ abstract class BaseDocrevisionPeer {
 				} // if $obj3 already loaded
 
 				// Add the $obj1 (Docrevision) to the collection in $obj3 (sfGuardUser)
-				$obj3->addDocrevision($obj1);
+				$obj3->addDocrevisionRelatedByUploaderId($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined sfGuardUser rows
+
+				$key4 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol4);
+				if ($key4 !== null) {
+					$obj4 = sfGuardUserPeer::getInstanceFromPool($key4);
+					if (!$obj4) {
+	
+						$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj4 = new $cls();
+					$obj4->hydrate($row, $startcol4);
+					sfGuardUserPeer::addInstanceToPool($obj4, $key4);
+				} // if $obj4 already loaded
+
+				// Add the $obj1 (Docrevision) to the collection in $obj4 (sfGuardUser)
+				$obj4->addDocrevisionRelatedByRevisionerId($obj1);
+
+			} // if joined row is not null
+
+				// Add objects for joined sfGuardUser rows
+
+				$key5 = sfGuardUserPeer::getPrimaryKeyHashFromRow($row, $startcol5);
+				if ($key5 !== null) {
+					$obj5 = sfGuardUserPeer::getInstanceFromPool($key5);
+					if (!$obj5) {
+	
+						$cls = sfGuardUserPeer::getOMClass(false);
+
+					$obj5 = new $cls();
+					$obj5->hydrate($row, $startcol5);
+					sfGuardUserPeer::addInstanceToPool($obj5, $key5);
+				} // if $obj5 already loaded
+
+				// Add the $obj1 (Docrevision) to the collection in $obj5 (sfGuardUser)
+				$obj5->addDocrevisionRelatedByApproverId($obj1);
 
 			} // if joined row is not null
 

@@ -50,6 +50,19 @@ abstract class BaseDoctype extends BaseObject  implements Persistent {
 	protected $rank;
 
 	/**
+	 * The value for the revision_number field.
+	 * Note: this column has a database default value of: 1
+	 * @var        int
+	 */
+	protected $revision_number;
+
+	/**
+	 * The value for the revisioned_at field.
+	 * @var        string
+	 */
+	protected $revisioned_at;
+
+	/**
 	 * @var        array Document[] Collection to store aggregation of Document objects.
 	 */
 	protected $collDocuments;
@@ -86,6 +99,7 @@ abstract class BaseDoctype extends BaseObject  implements Persistent {
 	public function applyDefaultValues()
 	{
 		$this->is_active = true;
+		$this->revision_number = 1;
 	}
 
 	/**
@@ -146,6 +160,54 @@ abstract class BaseDoctype extends BaseObject  implements Persistent {
 	public function getRank()
 	{
 		return $this->rank;
+	}
+
+	/**
+	 * Get the [revision_number] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getRevisionNumber()
+	{
+		return $this->revision_number;
+	}
+
+	/**
+	 * Get the [optionally formatted] temporal [revisioned_at] column value.
+	 * 
+	 *
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the raw DateTime object will be returned.
+	 * @return     mixed Formatted date/time value as string or DateTime object (if format is NULL), NULL if column is NULL, and 0 if column value is 0000-00-00 00:00:00
+	 * @throws     PropelException - if unable to parse/validate the date/time value.
+	 */
+	public function getRevisionedAt($format = 'Y-m-d H:i:s')
+	{
+		if ($this->revisioned_at === null) {
+			return null;
+		}
+
+
+		if ($this->revisioned_at === '0000-00-00 00:00:00') {
+			// while technically this is not a default value of NULL,
+			// this seems to be closest in meaning.
+			return null;
+		} else {
+			try {
+				$dt = new DateTime($this->revisioned_at);
+			} catch (Exception $x) {
+				throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->revisioned_at, true), $x);
+			}
+		}
+
+		if ($format === null) {
+			// Because propel.useDateTimeClass is TRUE, we return a DateTime object.
+			return $dt;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $dt->format('U'));
+		} else {
+			return $dt->format($format);
+		}
 	}
 
 	/**
@@ -249,6 +311,75 @@ abstract class BaseDoctype extends BaseObject  implements Persistent {
 	} // setRank()
 
 	/**
+	 * Set the value of [revision_number] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     Doctype The current object (for fluent API support)
+	 */
+	public function setRevisionNumber($v)
+	{
+		if ($v !== null) {
+			$v = (int) $v;
+		}
+
+		if ($this->revision_number !== $v || $this->isNew()) {
+			$this->revision_number = $v;
+			$this->modifiedColumns[] = DoctypePeer::REVISION_NUMBER;
+		}
+
+		return $this;
+	} // setRevisionNumber()
+
+	/**
+	 * Sets the value of [revisioned_at] column to a normalized version of the date/time value specified.
+	 * 
+	 * @param      mixed $v string, integer (timestamp), or DateTime value.  Empty string will
+	 *						be treated as NULL for temporal objects.
+	 * @return     Doctype The current object (for fluent API support)
+	 */
+	public function setRevisionedAt($v)
+	{
+		// we treat '' as NULL for temporal objects because DateTime('') == DateTime('now')
+		// -- which is unexpected, to say the least.
+		if ($v === null || $v === '') {
+			$dt = null;
+		} elseif ($v instanceof DateTime) {
+			$dt = $v;
+		} else {
+			// some string/numeric value passed; we normalize that so that we can
+			// validate it.
+			try {
+				if (is_numeric($v)) { // if it's a unix timestamp
+					$dt = new DateTime('@'.$v, new DateTimeZone('UTC'));
+					// We have to explicitly specify and then change the time zone because of a
+					// DateTime bug: http://bugs.php.net/bug.php?id=43003
+					$dt->setTimeZone(new DateTimeZone(date_default_timezone_get()));
+				} else {
+					$dt = new DateTime($v);
+				}
+			} catch (Exception $x) {
+				throw new PropelException('Error parsing date/time value: ' . var_export($v, true), $x);
+			}
+		}
+
+		if ( $this->revisioned_at !== null || $dt !== null ) {
+			// (nested ifs are a little easier to read in this case)
+
+			$currNorm = ($this->revisioned_at !== null && $tmpDt = new DateTime($this->revisioned_at)) ? $tmpDt->format('Y-m-d H:i:s') : null;
+			$newNorm = ($dt !== null) ? $dt->format('Y-m-d H:i:s') : null;
+
+			if ( ($currNorm !== $newNorm) // normalized values don't match 
+					)
+			{
+				$this->revisioned_at = ($dt ? $dt->format('Y-m-d H:i:s') : null);
+				$this->modifiedColumns[] = DoctypePeer::REVISIONED_AT;
+			}
+		} // if either are not null
+
+		return $this;
+	} // setRevisionedAt()
+
+	/**
 	 * Indicates whether the columns in this object are only set to default values.
 	 *
 	 * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -259,6 +390,10 @@ abstract class BaseDoctype extends BaseObject  implements Persistent {
 	public function hasOnlyDefaultValues()
 	{
 			if ($this->is_active !== true) {
+				return false;
+			}
+
+			if ($this->revision_number !== 1) {
 				return false;
 			}
 
@@ -289,6 +424,8 @@ abstract class BaseDoctype extends BaseObject  implements Persistent {
 			$this->description = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
 			$this->is_active = ($row[$startcol + 3] !== null) ? (boolean) $row[$startcol + 3] : null;
 			$this->rank = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+			$this->revision_number = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
+			$this->revisioned_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
@@ -298,7 +435,7 @@ abstract class BaseDoctype extends BaseObject  implements Persistent {
 			}
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 5; // 5 = DoctypePeer::NUM_COLUMNS - DoctypePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 7; // 7 = DoctypePeer::NUM_COLUMNS - DoctypePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Doctype object", $e);
@@ -628,6 +765,12 @@ abstract class BaseDoctype extends BaseObject  implements Persistent {
 			case 4:
 				return $this->getRank();
 				break;
+			case 5:
+				return $this->getRevisionNumber();
+				break;
+			case 6:
+				return $this->getRevisionedAt();
+				break;
 			default:
 				return null;
 				break;
@@ -654,6 +797,8 @@ abstract class BaseDoctype extends BaseObject  implements Persistent {
 			$keys[2] => $this->getDescription(),
 			$keys[3] => $this->getIsActive(),
 			$keys[4] => $this->getRank(),
+			$keys[5] => $this->getRevisionNumber(),
+			$keys[6] => $this->getRevisionedAt(),
 		);
 		return $result;
 	}
@@ -700,6 +845,12 @@ abstract class BaseDoctype extends BaseObject  implements Persistent {
 			case 4:
 				$this->setRank($value);
 				break;
+			case 5:
+				$this->setRevisionNumber($value);
+				break;
+			case 6:
+				$this->setRevisionedAt($value);
+				break;
 		} // switch()
 	}
 
@@ -729,6 +880,8 @@ abstract class BaseDoctype extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setDescription($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setIsActive($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setRank($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setRevisionNumber($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setRevisionedAt($arr[$keys[6]]);
 	}
 
 	/**
@@ -745,6 +898,8 @@ abstract class BaseDoctype extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(DoctypePeer::DESCRIPTION)) $criteria->add(DoctypePeer::DESCRIPTION, $this->description);
 		if ($this->isColumnModified(DoctypePeer::IS_ACTIVE)) $criteria->add(DoctypePeer::IS_ACTIVE, $this->is_active);
 		if ($this->isColumnModified(DoctypePeer::RANK)) $criteria->add(DoctypePeer::RANK, $this->rank);
+		if ($this->isColumnModified(DoctypePeer::REVISION_NUMBER)) $criteria->add(DoctypePeer::REVISION_NUMBER, $this->revision_number);
+		if ($this->isColumnModified(DoctypePeer::REVISIONED_AT)) $criteria->add(DoctypePeer::REVISIONED_AT, $this->revisioned_at);
 
 		return $criteria;
 	}
@@ -806,6 +961,10 @@ abstract class BaseDoctype extends BaseObject  implements Persistent {
 		$copyObj->setIsActive($this->is_active);
 
 		$copyObj->setRank($this->rank);
+
+		$copyObj->setRevisionNumber($this->revision_number);
+
+		$copyObj->setRevisionedAt($this->revisioned_at);
 
 
 		if ($deepCopy) {

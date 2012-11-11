@@ -1,3 +1,8 @@
+2012/11/11
+Release: 1.18
+Added some fields in doctype and docrevision tables.
+Started refactoring of some code in documents module.
+
 2012/10/28
 Release: 1.17
 Added tables document, docrevision, doctype.
