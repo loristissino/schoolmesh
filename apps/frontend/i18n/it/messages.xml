@@ -5440,6 +5440,10 @@
         <source>The category of this project has not been set, or for projects of the selected category the resources cannot be defined.</source>
         <target>La categoria di questo progetto non è stata selezionata, oppure per i progetti della categoria selezionata non possono essere definite risorse.</target>
     </trans-unit>
+    <trans-unit id="1559">
+        <source>Caps lock is on</source>
+        <target>Il fissa-maiuscole è attivo</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
