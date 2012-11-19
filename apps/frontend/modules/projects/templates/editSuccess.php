@@ -70,10 +70,10 @@
 
 <h2><?php echo __('Detailed information') ?></h2>
 
-<?php if($project->mayHaveResources()): ?>
-
 <a name="resources"></a>
 <h3><?php echo __('Tasks, resources, schedule') ?></h3>
+
+<?php if($project->mayHaveResources()): ?>
 
 <?php if(sizeof($resources)>0): ?>
 
@@ -213,6 +213,10 @@
 </ul>
 
 <?php endif ?>
+
+<?php else: ?>
+
+<p><em><?php echo __('The category of this project has not been set, or for projects of the selected category the resources cannot be defined.') ?></em></p>
 
 <?php endif // mayhaveresources? ?>
 
