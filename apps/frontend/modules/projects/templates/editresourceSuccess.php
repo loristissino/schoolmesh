@@ -63,7 +63,7 @@
 	<li class="sf_admin_action_new">
 	<?php echo link_to(
 				__('Back to the project'),
-				url_for('projects/edit?id='. $resource->getSchoolprojectId()) . '#resources',
+				url_for('projects/details?id='. $resource->getSchoolprojectId()) . '#resources',
 				array('title'=>__('Get back to the project')) 
 				)?>
 </li>
