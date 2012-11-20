@@ -684,7 +684,7 @@ class projectsActions extends sfActions
 					$this->getContext()->getI18N()->__($result['message'])
 					);
 					
-    return $this->redirect('projects/edit?id='. $id);
+    return $this->redirect('projects/details?id='. $id. '#deadlines');
     
   }
 
@@ -701,7 +701,7 @@ class projectsActions extends sfActions
 					$this->getContext()->getI18N()->__($result['message'])
 					);
 					
-    return $this->redirect('projects/edit?id='. $id);
+    return $this->redirect('projects/details?id='. $id. '#resources');
 
     
   }
@@ -719,7 +719,7 @@ class projectsActions extends sfActions
 					$this->getContext()->getI18N()->__($result['message'])
 					);
 					
-    return $this->redirect('projects/edit?id='. $id);
+    return $this->redirect('projects/details?id='. $id. '#upshots');
   }
 
 
@@ -755,7 +755,7 @@ class projectsActions extends sfActions
 				
         if($result['result']=='notice')
         {
-          return $this->redirect('projects/edit?id='. $this->deadline->getSchoolproject()->getId() . '#deadlines');
+          return $this->redirect('projects/details?id='. $this->deadline->getSchoolproject()->getId() . '#deadlines');
         }
         else
         {
@@ -856,7 +856,7 @@ class projectsActions extends sfActions
         
         if($result['result']=='notice')
         {
-          return $this->redirect('projects/edit?id='. $this->upshot->getSchoolprojectId() . '#upshots');
+          return $this->redirect('projects/details?id='. $this->upshot->getSchoolprojectId() . '#upshots');
         }
         return $this->redirect('projects/editupshot?id='. $this->upshot->getId());
 			}
@@ -892,87 +892,117 @@ class projectsActions extends sfActions
    }  
 
 
+  public function executeDetails(sfWebRequest $request)
+  {
+    $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPk($request->getParameter('id')));
+    $this->forward404Unless($this->project->isEditableBy($this->getUser())); // the project can be edited only by the owner  or by admins...
+    $this->form = new SchoolprojectForm($this->project);
+    $this->form->addUserDependentConfiguration($this->getUser());
+    //$this->form->addDetailsDefaults();
+  
+    if($request->getParameter('back','')=='monitor')
+    {
+      $this->breadcrumpstype='projects/monitoring';
+    }
+    else
+    {
+      $this->breadcrumpstype='projects/index';
+    }
+
+    $cr=new Criteria();
+    $this->getUser()->getAttribute('resources_sortoder', 'deadline');
+    switch($this->getUser()->getAttribute('resources_sortorder', 'deadline'))
+    {
+      case 'deadline':
+        $cr->addAscendingOrderByColumn(ProjResourcePeer::SCHEDULED_DEADLINE);
+        break;
+      case 'type':
+        $cr->addAscendingOrderByColumn(ProjResourceTypePeer::RANK);
+        break;
+    }
+    
+    $this->deadlines=$this->project->getProjDeadlines();
+    $this->resources=$this->project->getProjResources($cr);
+    $this->upshots  =$this->project->getProjUpshots();
+    
+  }  
+
   public function executeEdit(sfWebRequest $request)
   {
+    $this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPk($request->getParameter('id')));
+    $this->forward404Unless($this->project->isEditableBy($this->getUser())); // the project can be edited only by the owner  or by admins...
     
-	$this->forward404Unless($this->project=SchoolprojectPeer::retrieveByPk($request->getParameter('id')));
-  
-  $this->forward404Unless($this->project->isEditableBy($this->getUser())); // the project can be edited only by the owner  or by admins...
-	
-	$this->form = new SchoolprojectForm($this->project);
-  $this->form->addUserDependentConfiguration($this->getUser());
-  //$this->form->addDetailsDefaults();
-  
-  if($request->getParameter('back','')=='monitor')
-  {
-    $this->breadcrumpstype='projects/monitoring';
-  }
-  else
-  {
-    $this->breadcrumpstype='projects/index';
-  }
-
-	if ($request->isMethod('post'))
-		{
-//			$this->form->getValidatorSchema()->setOption('allow_extra_fields', true);
-//			$this->form->getValidatorSchema()->setOption('filter_extra_fields', false);
-			
-			
-			$this->form->bind($request->getParameter('schoolproject'));
-			if ($this->form->isValid())
-			{
-				$params = $this->form->getValues();
-				
-				$this->project = SchoolprojectPeer::retrieveByPK($params['id']);
-				
-				$this->project
-        ->updateFromForm($params, $this->getUser(), $this->getContext())
-        ->save();
-				
-				$this->getUser()->setFlash('notice',
-					$this->getContext()->getI18N()->__('Project information updated.')
-					);
-					
-			return $this->redirect('projects/edit?id='. $this->project->getId());
-			}
-			
-		}
-    /* this would be useful if we wanted to embed deadline forms,
-    but there are some problems with validation, so we don't use it 	
-    if($this->project)
+    $this->form = new SchoolprojectForm($this->project);
+    $this->form->addUserDependentConfiguration($this->getUser());
+    //$this->form->addDetailsDefaults();
+    
+    if($request->getParameter('back','')=='monitor')
     {
-      foreach($this->project->getProjDeadlines() as $index=>$deadline)
+      $this->breadcrumpstype='projects/monitoring';
+    }
+    else
+    {
+      $this->breadcrumpstype='projects/index';
+    }
+
+    if ($request->isMethod('post'))
       {
-        $deadlineForm=new ProjDeadlineForm($deadline);
-        $fieldname='deadline[' . $index . ']';
-        $this->form->embedForm($fieldname, $deadlineForm);
-        $this->form->getWidgetSchema()->setLabel($fieldname, 
-          $this->getContext()->getI18N()->__('Deadline #%number%', array('%number%'=>$index+1))
-          );
+        $this->form->bind($request->getParameter('schoolproject'));
+        if ($this->form->isValid())
+        {
+          $params = $this->form->getValues();
+          
+          $this->project = SchoolprojectPeer::retrieveByPK($params['id']);
+          
+          $this->project
+          ->updateFromForm($params, $this->getUser(), $this->getContext())
+          ->save();
+          
+          $this->getUser()->setFlash('notice',
+            $this->getContext()->getI18N()->__('Project information updated.')
+            );
+            
+        return $this->redirect('projects/edit?id='. $this->project->getId());
+        }
+        
+      }
+      /* this would be useful if we wanted to embed deadline forms,
+      but there are some problems with validation, so we don't use it 	
+      if($this->project)
+      {
+        foreach($this->project->getProjDeadlines() as $index=>$deadline)
+        {
+          $deadlineForm=new ProjDeadlineForm($deadline);
+          $fieldname='deadline[' . $index . ']';
+          $this->form->embedForm($fieldname, $deadlineForm);
+          $this->form->getWidgetSchema()->setLabel($fieldname, 
+            $this->getContext()->getI18N()->__('Deadline #%number%', array('%number%'=>$index+1))
+            );
+
+        }
 
       }
-
-    }
-    */
-  
-    if ($this->project)
-    {
-      $cr=new Criteria();
-      $this->getUser()->getAttribute('resources_sortoder', 'deadline');
-      switch($this->getUser()->getAttribute('resources_sortorder', 'deadline'))
+      */
+/*    
+      if ($this->project)
       {
-        case 'deadline':
-          $cr->addAscendingOrderByColumn(ProjResourcePeer::SCHEDULED_DEADLINE);
-          break;
-        case 'type':
-          $cr->addAscendingOrderByColumn(ProjResourceTypePeer::RANK);
-          break;
+        $cr=new Criteria();
+        $this->getUser()->getAttribute('resources_sortoder', 'deadline');
+        switch($this->getUser()->getAttribute('resources_sortorder', 'deadline'))
+        {
+          case 'deadline':
+            $cr->addAscendingOrderByColumn(ProjResourcePeer::SCHEDULED_DEADLINE);
+            break;
+          case 'type':
+            $cr->addAscendingOrderByColumn(ProjResourceTypePeer::RANK);
+            break;
+        }
+        
+        $this->deadlines=$this->project->getProjDeadlines();
+        $this->resources=$this->project->getProjResources($cr);
+        $this->upshots  =$this->project->getProjUpshots();
       }
-      
-      $this->deadlines=$this->project->getProjDeadlines();
-      $this->resources=$this->project->getProjResources($cr);
-      $this->upshots  =$this->project->getProjUpshots();
-    }
+      */
   }  
   
   public function executeSetsortorder(sfWebRequest $request)

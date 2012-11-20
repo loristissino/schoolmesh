@@ -5444,8 +5444,22 @@
         <source>Caps lock is on</source>
         <target>Il fissa-maiuscole è attivo</target>
     </trans-unit>
+    <trans-unit id="1560">
+        <source>Edit details</source>
+        <target>Modifica dettagli</target>
+    </trans-unit>
+    <trans-unit id="1561">
+        <source>Edit resources, upshots and deadlines concerning this project</source>
+        <target>Modifica risorse, esiti attesi e scadenze di monitoraggio relativi a questo progetto</target>
+    </trans-unit>
+    <trans-unit id="1562">
+        <source>Edit basic information</source>
+        <target>Modifica informazioni di base</target>
+    </trans-unit>
+    <trans-unit id="1563">
+        <source>Edit basic information concerning this project</source>
+        <target>Modifica informazioni di base relative a questo progetto</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
-
-
