@@ -1083,7 +1083,8 @@ class Schoolproject extends BaseSchoolproject {
 
   public function getReferenceNumberOrDefault()
   {
-    if ($this->getState()<Workflow::PROJ_FINISHED or $this->getReferenceNumber())
+//    if ($this->getState()<Workflow::PROJ_FINISHED or $this->getReferenceNumber())
+    if ($this->getReferenceNumber())
     {
       return $this->getReferenceNumber();
     }
@@ -1091,6 +1092,27 @@ class Schoolproject extends BaseSchoolproject {
     {
       return '_______';
     }
+  }
+  
+  public function getResourceChargedUsersIds()
+  {
+    $c = new Criteria();
+    $c->add(ProjResourcePeer::SCHOOLPROJECT_ID, $this->getId());
+    $c->addJoin(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID, ProjResourceTypePeer::ID);
+    $c->add(ProjResourceTypePeer::PRINTED_IN_CHARGE_LETTERS, true);
+    $c->addJoin(ProjResourcePeer::CHARGED_USER_ID, sfGuardUserProfilePeer::USER_ID);
+    $c->addAscendingOrderByColumn(sfGuardUserProfilePeer::LAST_NAME);
+    $c->clearSelectColumns();
+    $c->setDistinct();
+    $c->addAsColumn('CHARGED_USER_ID', ProjResourcePeer::CHARGED_USER_ID);
+    $stmt=SchoolprojectPeer::doSelectStmt($c);
+    $result=array();
+    while($row = $stmt->fetch(PDO::FETCH_OBJ))
+    {
+      $result[] = $row->CHARGED_USER_ID;
+    }
+
+    return $result;
   }
   
   public function makeClone($user_id, $sf_context=null)
