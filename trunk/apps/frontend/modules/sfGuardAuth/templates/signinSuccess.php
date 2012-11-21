@@ -25,11 +25,8 @@
         <span id="capsLockNotice" style="display: none">
           <?php include_partial('content/dubious', array('text'=>__('Caps lock is on'), 'with_text'=>true)) ?>
         </span>
-  </td>
-  </tr>
       </td>
     </tr>
-
   </table>
   <!--<a href="/schoolmesh/frontend_dev.php/request_password">Dimenticata la password?</a>-->
   
