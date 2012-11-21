@@ -21,7 +21,19 @@
 <form action="<?php echo url_for('profile/changeaccountpassword') ?>" method="post">
   <?php echo $form['type']->render() ?>
   <table>
-    <?php echo $form['current_password']->renderRow() ?>
+    <tr>
+      <th>
+        <?php echo $form['current_password']->renderLabel() ?>
+      </th>
+      <td>
+        <?php echo $form['current_password']->renderError() ?>
+        <?php echo $form['current_password']->render(array('class'=>'input capLocksCheck')) ?>
+        <br />
+        <span id="capsLockNotice" style="display: none">
+          <?php include_partial('content/dubious', array('text'=>__('Caps lock is on'), 'with_text'=>true)) ?>
+        </span>
+      </td>
+    </tr>
     <?php echo $form['password']->renderRow() ?>
     <?php echo $form['password_again']->renderRow() ?>
     
@@ -32,7 +44,7 @@
     </tr>
   </table>
 
-
+<?php use_javascript('capslockdetector.js') ?>
 <?php use_javascript('jquery.pstrength-min.1.2-'  . sfConfig::get('sf_default_culture') . '.js') ?>
 <?php use_javascript('password_strength.js') ?>
 

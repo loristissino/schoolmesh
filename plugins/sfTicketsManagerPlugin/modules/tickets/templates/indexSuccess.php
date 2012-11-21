@@ -3,6 +3,8 @@
   ))
 ?>
 
+<?php include_partial('content/cooperate') ?>
+<?php /*
 <table>
   <thead>
     <tr>
@@ -26,3 +28,4 @@
   </tbody>
 </table>
 
+*/ ?>

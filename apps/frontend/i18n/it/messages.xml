@@ -5069,8 +5069,8 @@
         <target>L'utente non ha un account di questo tipo, oppure la password non è reimpostabile.</target>
       </trans-unit>
       <trans-unit id="1464">
-        <source>This module is experimental.</source>
-        <target>Questo modulo è sperimentale.</target>
+        <source>This module has not been developed yet.</source>
+        <target>Questo modulo non è ancora stato sviluppato.</target>
       </trans-unit>
       <trans-unit id="1465">
         <source>simulation only</source>
@@ -5459,6 +5459,10 @@
     <trans-unit id="1563">
         <source>Edit basic information concerning this project</source>
         <target>Modifica informazioni di base relative a questo progetto</target>
+    </trans-unit>
+    <trans-unit id="1564">
+        <source>Do you want to help?</source>
+        <target>Vuoi collaborare?</target>
     </trans-unit>
     </body>
   </file> 
