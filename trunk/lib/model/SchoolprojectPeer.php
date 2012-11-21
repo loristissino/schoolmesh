@@ -384,6 +384,12 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     return self::_getInfoLetters($ids, 'Charge letters', 'projects_charges.odt', $filetype, array('date'=>'current', 'resources_query'=>'charge', 'resources_sort'=>'type'), $context);
 	}
 
+	public static function getTaskChargeLetters($ids, $filetype='odt', $context=null)
+	{
+    return self::_getResourceInfoLetters($ids, 'Charge letters', 'projects_tasks_charges.odt', $filetype, array('date'=>'current', 'resources_query'=>'charge', 'resources_sort'=>'type'), $context);
+    // we cannot call _getInfoLetters, because we need a letter for each charged user, not for each project...
+	}
+
 	public static function getSubmissionLetters($ids, $filetype='odt', $context=null)
 	{
     return self::_getInfoLetters($ids, 'Submission letters', 'projects_submission.odt', $filetype, array('date'=>'submission', 'resources_query'=>'submission', 'resources_sort'=>'date'), $context);
@@ -465,8 +471,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
           $letters->letterDate('_______');
       }
       
-      
-      Generic::logMessage('details', $project->getPrintableProjDetails($options['date']));
+      //Generic::logMessage('details', $project->getPrintableProjDetails($options['date']));
       try
       {
         foreach($project->getPrintableProjDetails($options['date']) as $detail)
@@ -582,33 +587,61 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
           
       }
       
-      foreach($project->getProjUpshots() as $Upshot)
+      try
       {
-        $letters->upshots->upshotDescription($Upshot->getDescription());
-        $letters->upshots->upshotIndicator($Upshot->getIndicator());
-        if($project->getState()>=Workflow::PROJ_FINISHED)
+        foreach($project->getProjUpshots() as $Upshot)
         {
-          $letters->upshots->upshotUpshot($Upshot->getUpshot());
-          $letters->upshots->upshotEvaluation($Upshot->getEvaluation());
+          $letters->upshots->upshotDescription($Upshot->getDescription());
+          $letters->upshots->upshotIndicator($Upshot->getIndicator());
+          if($project->getState()>=Workflow::PROJ_FINISHED)
+          {
+            $letters->upshots->upshotUpshot($Upshot->getUpshot());
+            $letters->upshots->upshotEvaluation($Upshot->getEvaluation());
+          }
+          
+          $letters->upshots->merge();
         }
-        
-        $letters->upshots->merge();
+      }
+      catch (Exception $e)
+      {
+        if($e instanceof SegmentException)
+        {
+          // we just pass... the upshots segment actually can be missing
+        }
+        else
+        {
+          throw $e;
+        }        
       }
 
-      foreach($project->getProjDeadlines() as $Deadline)
+      try
       {
-        $letters->deadlines->deadlineDate($Deadline->getOriginalDeadlineDate('d/m/y'));
-        $letters->deadlines->deadlineDescription($Deadline->getDescription());
-        
-        if($project->getState()>=Workflow::PROJ_FINISHED)
+        foreach($project->getProjDeadlines() as $Deadline)
         {
-          $letters->deadlines->deadlineDate($Deadline->getCurrentDeadlineDate('d/m/y'));
-          $letters->deadlines->deadlineNotes($Deadline->getNotes());
-          $attachments=$Deadline->hasAttachmentFiles()?$context->getI18N()->__('yes'):$context->getI18N()->__('no');
-          $letters->deadlines->deadlineAttachment($attachments);
+          $letters->deadlines->deadlineDate($Deadline->getOriginalDeadlineDate('d/m/y'));
+          $letters->deadlines->deadlineDescription($Deadline->getDescription());
+          
+          if($project->getState()>=Workflow::PROJ_FINISHED)
+          {
+            $letters->deadlines->deadlineDate($Deadline->getCurrentDeadlineDate('d/m/y'));
+            $letters->deadlines->deadlineNotes($Deadline->getNotes());
+            $attachments=$Deadline->hasAttachmentFiles()?$context->getI18N()->__('yes'):$context->getI18N()->__('no');
+            $letters->deadlines->deadlineAttachment($attachments);
+          }
+          
+          $letters->deadlines->merge();
         }
-        
-        $letters->deadlines->merge();
+      }
+      catch (Exception $e)
+      {
+        if($e instanceof SegmentException)
+        {
+          // we just pass... the deadlines segment actually can be missing
+        }
+        else
+        {
+          throw $e;
+        }        
       }
  
       if($project->getState()<=Workflow::PROJ_FINISHED)
@@ -620,11 +653,145 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
           $letters->resourcetypes->merge();
         }
       }
+    
 
-			$pagebreak=($count<sizeof($projects))?'<pagebreak>':'';
-			$letters->pagebreak($pagebreak);
-			$letters->merge();
+      $pagebreak=($count<sizeof($projects))?'<pagebreak>':'';  
+      $letters->pagebreak($pagebreak);
+      $letters->merge();
+    }
+		
+		$odfdoc->mergeSegment($letters);
+
+		$result['content']=$odf;
+		$result['result']='notice';
+		return $result;
+
+	}
+
+	private static function _getResourceInfoLetters($ids, $filename, $templatename, $filetype='odt', $options=array(), $context=null)
+	{
+		$result=Array();
+
+		$usertypes=Array();
+		
+		$projects=self::retrieveByPks($ids);
+		
+		try
+		{
+			$odf=new OdfDoc($templatename, $context?$context->getI18N()->__($filename):$filename, $filetype);
 		}
+		catch (Exception $e)
+		{
+			if ($e InstanceOf OdfDocTemplateException)
+			{
+				$result['result']='error';
+				$result['message']='Template not found or not readable: '. $templatename;
+				return $result;
+			}
+			
+			if ($e InstanceOf OdfException)
+			{
+				$result['result']='error';
+				$result['message']='Template not valid: '. $templatename;
+				return $result;
+			}
+			
+			throw $e;
+		}
+		
+		$odfdoc=$odf->getOdfDocument();
+		$letters=$odfdoc->setSegment('letters');
+		$count=0;
+		foreach($projects as $project)
+		{
+      foreach($project->getResourceChargedUsersIds() as $cu_id)
+      {
+        $count++;
+        
+        $user=sfGuardUserProfilePeer::retrieveByPK($cu_id);
+        $letters->userTitle($user->getLettertitle());
+        $letters->userFullName($user->getFullName());
+        $letters->projectTitle($project->getTitle());
+        $letters->projectCode($project->getCode());
+        $letters->approvalDate($project->getApprovalDate('d/m/Y'));
+        $letters->financingDate($project->getFinancingDate('d/m/Y'));
+        $letters->confirmationDate($project->getConfirmationDate('d/m/Y'));
+        $letters->schoolPrincipal(sfConfig::get('app_school_principal', 'missing Principal name in config file'));
+        
+        $letters->referenceNumber($project->getReferenceNumberOrDefault());
+        
+        if($project->getState()>=Workflow::PROJ_FINISHED)
+        {
+          $letters->projectScale($project->getEvaluationScale());
+        }
+        
+        switch($options['date'])
+        {
+          case 'current':
+            $letters->letterDate(date('d/m/Y'));
+            break;
+          case 'submission':
+            $letters->letterDate($project->getLastEventDate(Workflow::PROJ_SUBMITTED, 'd/m/Y'));
+            break;
+          case 'report':
+            $letters->letterDate($project->getLastEventDate(Workflow::PROJ_FINISHED, 'd/m/Y'));
+            break;
+          default:
+            $letters->letterDate('_______');
+        }
+        
+        $c=new Criteria();
+        
+        switch($options['resources_query'])
+        {
+          case 'submission':
+            $c->add(ProjResourceTypePeer::PRINTED_IN_SUBMISSION_LETTERS, true);
+            break;
+          case 'charge':
+            $c->add(ProjResourceTypePeer::PRINTED_IN_CHARGE_LETTERS, true);
+            break;
+          case 'report':
+            $c->add(ProjResourceTypePeer::PRINTED_IN_CHARGE_LETTERS, true);
+            break;
+        }
+
+        switch($options['resources_sort'])
+        {
+          case 'date':
+            $c->addAscendingOrderByColumn(ProjResourcePeer::SCHEDULED_DEADLINE);
+            break;
+          case 'type':
+            $c->addAscendingOrderByColumn(ProjResourceTypePeer::RANK);
+            break;
+        }
+        
+        $c->add(ProjResourcePeer::CHARGED_USER_ID, $cu_id);
+
+        foreach($project->getProjResources($c) as $Resource)
+        {
+          $ResourceType=$Resource->getProjResourceType();
+          
+          if($project->getState()<Workflow::PROJ_FINISHED)
+          {
+            $letters->resources->resourceDescription($Resource->getDescription());
+            $letters->resources->resourceType($ResourceType->getDescription());
+                    
+            $letters->resources->resourceChargedUser($Resource->getChargedUserProfile());
+            $letters->resources->resourceQuantity(OdfDocPeer::quantityvalue($Resource->getQuantityApproved(), $ResourceType->getMeasurementUnit()));
+            $letters->resources->merge();
+            if($ResourceType->getRoleId())
+            {
+              $usedtypes[$ResourceType->getId()]=$ResourceType;
+            }
+          }
+        }   
+        
+        $pagebreak='<pagebreak>';  
+        $letters->pagebreak($pagebreak);
+        $letters->merge();
+      }
+      
+    }
 		
 		$odfdoc->mergeSegment($letters);
 

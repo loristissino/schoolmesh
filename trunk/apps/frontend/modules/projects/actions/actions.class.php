@@ -405,6 +405,35 @@ class projectsActions extends sfActions
 			$this->redirect('projects/monitor');
 		}
   }
+
+  public function executeGettaskchargeletters(sfWebRequest $request)
+  {
+  	set_time_limit(0);
+    $this->ids=$this->getUser()->hasAttribute('ids')? $this->getUser()->getAttribute('ids') : $this->_getIds($request);
+
+		$result=SchoolprojectPeer::getTaskChargeLetters($this->ids, $this->getUser()->getProfile()->getPreferredFormat(), $this->getContext());
+		
+		if ($result['result']=='error')
+		{
+			$this->getUser()->setFlash('error', $result['message']);
+			$this->redirect('projects/monitor');
+		}
+		
+		$odfdoc=$result['content'];
+		if (is_object($odfdoc))
+		{
+			$odfdoc
+			->saveFile()
+			->setResponse($this->getContext()->getResponse());
+			return sfView::NONE;
+
+		}
+		else
+		{
+			$this->getUser()->setFlash('error', $this->getContext()->getI18N()->__('Operation failed.'). ' ' . $this->getContext()->getI18N()->__('Please ask the administrator to check the template.'));
+			$this->redirect('projects/monitor');
+		}
+  }
   
   public function executeGetstaffsynthesis(sfWebRequest $request)
   {

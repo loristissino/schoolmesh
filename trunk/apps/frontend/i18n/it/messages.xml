@@ -5464,6 +5464,16 @@
         <source>Do you want to help?</source>
         <target>Vuoi collaborare?</target>
     </trans-unit>
+    <trans-unit id="1565">
+        <source>Get charge letters (coordinators)</source>
+        <target>Scarica lettere di incarico (coordinatori)</target>
+    </trans-unit>
+    <trans-unit id="1566">
+        <source>Get charge letters (singular tasks)</source>
+        <target>Scarica lettere di incarico (singole attività)</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
+
