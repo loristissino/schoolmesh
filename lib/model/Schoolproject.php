@@ -480,6 +480,39 @@ class Schoolproject extends BaseSchoolproject {
 		return parent::getProjResources($criteria);
 	}
   
+  public function getProjResourcesSynthesis($criteria = null, PropelPDO $con = null)
+  {
+    // this function is called when we want to group resources with the same description together,
+    // like when we need to print charge letters for singular charged users...
+    if(!$criteria)
+    {
+      $criteria=new Criteria();
+      $criteria->addAscendingOrderByColumn(ProjResourcePeer::SCHEDULED_DEADLINE);
+    }
+    $criteria->add(ProjResourcePeer::SCHOOLPROJECT_ID, $this->getId());
+    $criteria->addJoin(ProjResourcePeer::PROJ_RESOURCE_TYPE_ID, ProjResourceTypePeer::ID);
+    $criteria->clearSelectColumns();
+    $criteria->setDistinct();
+    $criteria->addAsColumn('CHARGED_USER_ID', ProjResourcePeer::CHARGED_USER_ID);
+    $criteria->addAsColumn('DESCRIPTION', ProjResourcePeer::DESCRIPTION);
+    $criteria->addAsColumn('TYPE_DESCRIPTION', ProjResourceTypePeer::DESCRIPTION);
+    $criteria->addAsColumn('TYPE_MEASUREMENT_UNIT', ProjResourceTypePeer::MEASUREMENT_UNIT);
+    $criteria->addAsColumn('QUANTITY_APPROVED', 'SUM(' . ProjResourcePeer::QUANTITY_APPROVED . ')');
+    $criteria->addGroupByColumn(ProjResourcePeer::CHARGED_USER_ID);
+    $criteria->addGroupByColumn(ProjResourcePeer::DESCRIPTION);
+    $criteria->addGroupByColumn(ProjResourceTypePeer::DESCRIPTION);
+    $criteria->addGroupByColumn(ProjResourceTypePeer::MEASUREMENT_UNIT);
+
+    $stmt=ProjResourcePeer::doSelectStmt($criteria);
+    $result=array();
+    while($row = $stmt->fetch(PDO::FETCH_OBJ))
+    {
+      $result[] = $row;
+    }
+
+    return $result;
+  }
+    
   
   public function getActivitiesPerformed()
   {
