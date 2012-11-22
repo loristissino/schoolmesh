@@ -767,22 +767,17 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
         
         $c->add(ProjResourcePeer::CHARGED_USER_ID, $cu_id);
 
-        foreach($project->getProjResources($c) as $Resource)
+        foreach($project->getProjResourcesSynthesis($c) as $Resource)
         {
-          $ResourceType=$Resource->getProjResourceType();
+//          $ResourceType=$Resource->getProjResourceType();
           
           if($project->getState()<Workflow::PROJ_FINISHED)
           {
-            $letters->resources->resourceDescription($Resource->getDescription());
-            $letters->resources->resourceType($ResourceType->getDescription());
+            $letters->resources->resourceDescription($Resource->DESCRIPTION);
+            $letters->resources->resourceType($Resource->TYPE_DESCRIPTION);
                     
-            $letters->resources->resourceChargedUser($Resource->getChargedUserProfile());
-            $letters->resources->resourceQuantity(OdfDocPeer::quantityvalue($Resource->getQuantityApproved(), $ResourceType->getMeasurementUnit()));
+            $letters->resources->resourceQuantity(OdfDocPeer::quantityvalue($Resource->QUANTITY_APPROVED, $Resource->TYPE_MEASUREMENT_UNIT));
             $letters->resources->merge();
-            if($ResourceType->getRoleId())
-            {
-              $usedtypes[$ResourceType->getId()]=$ResourceType;
-            }
           }
         }   
         
