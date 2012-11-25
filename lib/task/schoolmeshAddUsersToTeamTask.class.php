@@ -102,6 +102,17 @@ EOF;
       {
         $this->logSection($user[$key], 'found', null, 'COMMENT');
         $profile->addToTeam(null, $team, $role, null, '', '', '',  $this->context);
+        
+        if(($profile->getEmailStateDescription()=='undefined') and isset($user['email']))
+        {
+          $profile
+          ->setEmail($user['email'])
+          ->setEmailState(sfGuardUserProfilePeer::EMAIL_UNVERIFIED)
+          ->save($con)
+          ;
+          $this->logSection('email+', 'added email address of ' . $profile->getFullName(), null, 'NOTICE');
+        }
+        
         $this->logSection($team->getPosixName() . '+', 'user ' . $profile->getFullName() . ' added to team', null, 'NOTICE');
         $userteam = UserTeamPeer::retrieveUserTeam($profile->getSfGuardUser(), $team);
         unset($user[$key]);
@@ -110,6 +121,7 @@ EOF;
           unset($user[$field_to_remove]);
         }
         $userteam->setDetails(serialize($user))->save();
+        $profile->updateLuceneIndex();
       }
       else
       {
