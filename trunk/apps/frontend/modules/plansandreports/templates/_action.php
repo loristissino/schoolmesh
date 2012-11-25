@@ -11,16 +11,13 @@
 		<?php include_partial('export', array('workplan' => $workplan, 'steps'=>$steps)) ?>
 	<?php endif ?>
 <?php if ($workplan->getState()==Workflow::WP_DRAFT): ?>
-  <?php if($nb_modules==0): ?>
     <li class="sf_admin_action_import">
-      <?php echo link_to_if(
-      $nb_modules==0,
+      <?php echo link_to(
     __('Import'),
     'plansandreports/import?id='.$workplan->getId(),
     array('title'=>__('Import the workplan from a file or from the database'))
     )?>
     </li>
-  <?php endif ?>
 <?php endif ?>
 <?php if ($workplan->getYearId() == sfConfig::get('app_config_current_year') && $workplan->getState()>Workflow::AP_ASSIGNED): ?>
 	<li class="sf_admin_action_users">

@@ -5472,6 +5472,14 @@
         <source>Get charge letters (singular tasks)</source>
         <target>Scarica lettere di incarico (singole attività)</target>
     </trans-unit>
+    <trans-unit id="1567">
+        <source>You cannot import a workplan when you have some modules in the target one.</source>
+        <target>Non puoi importare un piano di lavoro se sono presenti dei moduli nel piano di lavoro di destinazione.</target>
+    </trans-unit>
+    <trans-unit id="1568">
+        <source>Edit target workplan</source>
+        <target>Modifica il piano di lavoro di destinazione</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>

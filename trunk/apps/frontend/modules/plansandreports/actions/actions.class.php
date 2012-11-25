@@ -214,7 +214,10 @@ public function executeBatch(sfWebRequest $request)
     $this->forward404Unless($this->workplan);
     $this->forward404Unless($this->workplan->isOwnedBy($this->user->getProfile()->getSfGuardUser()->getId()));
     $this->forward404Unless($this->workplan->getState()==Workflow::WP_DRAFT);
-    $this->forward404Unless($this->workplan->countWpmodules()==0);
+    if($this->workplan->countWpmodules()>0)
+    {
+      return sfView::ERROR;
+    }
 
 	  $this->steps = Workflow::getWpfrSteps();
 	
