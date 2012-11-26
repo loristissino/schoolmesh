@@ -5480,6 +5480,18 @@
         <source>Edit target workplan</source>
         <target>Modifica il piano di lavoro di destinazione</target>
     </trans-unit>
+    <trans-unit id="1569">
+        <source>For some modules, you might be interested in logging in in one of the following sibling servers:</source>
+        <target>Per alcuni moduli, potresti essere interessato/a ad effettuare il login su uno dei seguenti server collegati:</target>
+    </trans-unit>
+    <trans-unit id="1570">
+        <source>For some modules, you might be interested in logging in in the following sibling server:</source>
+        <target>Per alcuni moduli, potresti essere interessato/a ad effettuare il login sul seguente server collegato:</target>
+    </trans-unit>
+    <trans-unit id="1571">
+        <source>Alternate server</source>
+        <target>Server alternativo</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
