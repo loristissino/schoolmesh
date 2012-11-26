@@ -35,6 +35,17 @@
   <!--<a href="<?php echo url_for('@sf_guard_password') ?>"><?php echo __("Forgot your password?") ?></a>-->
 </form>
 
+<?php if($siblings): ?>
+<hr />
+<?php include_partial('content/siblings', array(
+  'siblings'=>$siblings,
+  'plural'=>'For some modules, you might be interested in logging in in one of the following sibling servers:',
+  'singular'=>'For some modules, you might be interested in logging in in the following sibling server:'
+  ))
+?>
+<?php endif ?>
+
+
 <?php use_javascript('capslockdetector.js') ?>
 <?php if($sf_request->getParameter('loginas', '')!=''): ?>
   <?php use_javascript('signin_passwordfocus.js') ?>

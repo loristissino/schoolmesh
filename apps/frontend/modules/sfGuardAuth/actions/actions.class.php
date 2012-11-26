@@ -73,6 +73,9 @@ class sfGuardAuthActions extends BasesfGuardAuthActions
 
       $this->getResponse()->setStatusCode(401);
     }
+    
+    $this->siblings=(sfConfig::get('app_config_lan_address', '127.0.0.1') == $request->getRemoteAddress()) ? sfConfig::get('app_config_siblings', false) : false;
+
   }
   
   public function executeSignout($request)
