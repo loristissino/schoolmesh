@@ -39,8 +39,8 @@
 <hr />
 <?php include_partial('content/siblings', array(
   'siblings'=>$siblings,
-  'plural'=>'For some modules, you might be interested in logging in in one of the following sibling servers:',
-  'singular'=>'For some modules, you might be interested in logging in in the following sibling server:'
+  'plural'=>'Since you are in the local network, you might be interested in logging in in one of the following sibling servers:',
+  'singular'=>'Since you are in the local network, you might be interested in logging in in the following sibling server:'
   ))
 ?>
 <?php endif ?>
