@@ -11,7 +11,7 @@
 <ul class="sf_admin_actions">
   <?php echo li_link_to_if('action_items', $sf_user->hasCredential('wpfr_submission'), __('My appointments'), '@plansandreports') ?>
   <?php echo li_link_to_if('action_items', $sf_user->hasCredential('proj_coordination'), __('My projects'), 'projects/index') ?>
-  <?php echo li_link_to_if('action_items', $sf_user->hasCredential('proj_activity'), __('My activities'), 'projects/activities') ?>
+  <?php echo li_link_to_if('action_items', $sf_user->hasCredential('proj_activity'), __('My projects-related activities'), 'projects/activities') ?>
 </ul>
 <?php endif ?>
 
