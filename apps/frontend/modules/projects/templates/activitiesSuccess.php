@@ -2,7 +2,7 @@
   'breadcrumps'=>array(
     'projects/index' =>__("Projects")
     ),
-  'current'=>__('Activities'),
+  'current'=>__('My projects-related activities'),
   ))
 ?>
 
@@ -87,7 +87,7 @@
     <?php echo link_to(
 		__('New activity'),
 		'projects/newactivity',
-		array('title'=>__('Declare a new activity'))
+		array('title'=>__('Declare a new projects-related activity'))
 		)?>
 		</li>
 

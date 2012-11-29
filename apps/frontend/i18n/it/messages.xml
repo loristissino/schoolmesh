@@ -2581,8 +2581,8 @@
         <target>Riconosci lo svolgimento di questa attività</target>
     </trans-unit>
     <trans-unit id="668">
-        <source>My activities</source>
-        <target>Attività</target>
+        <source>My projects-related activities</source>
+        <target>Attività legate a progetti</target>
     </trans-unit>
     <trans-unit id="669">
         <source>Use</source>
@@ -5492,8 +5492,13 @@
         <source>Alternate server</source>
         <target>Server alternativo</target>
     </trans-unit>
+    <trans-unit id="1572">
+        <source>Declare a new projects-related activity</source>
+        <target>Dichiara una nuova attività legata a progetti</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
+
 
 
