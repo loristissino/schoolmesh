@@ -651,7 +651,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		try
 		{
 			$templatename='welcomeletter_' . $users[0]->getRole()->getPosixName() .'.odt';
-			$odf=new OdfDoc($templatename, 'Welcome letter', $filetype);
+			$odf=new OdfDoc($templatename, 'Welcome letter' . '.'. $filetype, $filetype);
 		}
 		catch (Exception $e)
 		{
@@ -740,7 +740,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		try
 		{
 			$templatename='teachingappointmentsletter.odt';
-			$odf=new OdfDoc($templatename, 'Teaching appointments letter', $filetype);
+			$odf=new OdfDoc($templatename, 'Teaching appointments letter' . '.'. $filetype, $filetype);
 		}
 		catch (Exception $e)
 		{
@@ -837,7 +837,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		{
 			$templatename=sprintf('responsibilityroles%sletter.odt', $type);
       
-			$odf=new OdfDoc($templatename, $filename, $filetype);
+			$odf=new OdfDoc($templatename, $filename . '.'. $filetype, $filetype);
 		}
 		catch (Exception $e)
 		{
@@ -991,7 +991,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		try
 		{
 			$templatename='googleappsletter_' . $users[0]->getRole()->getPosixName() .'.odt';
-			$odf=new OdfDoc($templatename, 'Google Apps letter', $filetype);
+			$odf=new OdfDoc($templatename, 'Google Apps letter' . '.'. $filetype, $filetype);
 		}
 		catch (Exception $e)
 		{
@@ -1087,7 +1087,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		try
 		{
 			$templatename='teachers_signs.odt';
-			$odf=new OdfDoc($templatename, 'Teachers signs', $filetype);
+			$odf=new OdfDoc($templatename, 'Teachers signs' . '.'. $filetype, $filetype);
 		}
 		catch (Exception $e)
 		{
@@ -1166,7 +1166,7 @@ class sfGuardUserProfilePeer extends BasesfGuardUserProfilePeer
 		try
 		{
 			$templatename=$template;
-			$odf=new OdfDoc($templatename, 'Userlist Document', $filetype);
+			$odf=new OdfDoc($templatename, 'Userlist Document' . '.'. $filetype, $filetype);
 		}
 		catch (Exception $e)
 		{
