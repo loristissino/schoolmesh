@@ -410,7 +410,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 		
 		try
 		{
-			$odf=new OdfDoc($templatename, $context?$context->getI18N()->__($filename):$filename, $filetype);
+			$odf=new OdfDoc($templatename, ($context?$context->getI18N()->__($filename):$filename) . '.'. $filetype, $filetype);
 		}
 		catch (Exception $e)
 		{
@@ -678,7 +678,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
 		
 		try
 		{
-			$odf=new OdfDoc($templatename, $context?$context->getI18N()->__($filename):$filename, $filetype);
+			$odf=new OdfDoc($templatename, ($context?$context->getI18N()->__($filename):$filename) . '.'. $filetype, $filetype);
 		}
 		catch (Exception $e)
 		{
@@ -808,7 +808,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     
 		try
 		{
-			$odf=new OdfDoc($templatename, $context?$context->getI18N()->__($filename):$filename, $filetype);
+			$odf=new OdfDoc($templatename, ($context?$context->getI18N()->__($filename):$filename) . '.' . $filetype, $filetype);
 		}
 		catch (Exception $e)
 		{
