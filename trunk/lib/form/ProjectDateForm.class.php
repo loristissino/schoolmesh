@@ -13,7 +13,7 @@
 			
 			$this->setValidators(array(
 				'date' => new sfValidatorDate(array('required'=>true, 'max'=>time())),
-				'notes' => new sfValidatorString(array('trim' => true, 'min_length'=>4, 'required'=>true)),
+				'notes' => new sfValidatorString(array('trim' => true, 'required'=>false)),
 			));
 			
     }
