@@ -172,12 +172,14 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
       return $result;
     }
 
+    /*
     if($params['notes']=='')
     {
       $result['result']='error';
       $result['message']='The notes field cannot be left blank.';
       return $result;
     }
+    */
 
     $projects = SchoolprojectPeer::retrieveByPKs($ids);
     foreach($projects as $project)
