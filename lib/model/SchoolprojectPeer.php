@@ -184,6 +184,11 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
     $projects = SchoolprojectPeer::retrieveByPKs($ids);
     foreach($projects as $project)
     {
+      if(!$project->isApprovable())
+      {
+        continue;
+      }
+      
       $project
       ->$setDateMethod($params['date'])
       ->$setNotesMethod($params['notes'])
@@ -196,7 +201,7 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
           $sf_context
         );
 
-      if ($project->getState()<$options['comparison_state'])
+      if (($project->getState()<$options['comparison_state']) or ($options['comparison_state']==Workflow::PROJ_REJECTED))
       {
         $project->setState($options['comparison_state']);
         $project->addWfevent(
@@ -246,6 +251,18 @@ class SchoolprojectPeer extends BaseSchoolprojectPeer {
         'methodkey'=>'Confirmation',
         'comparison_state'=>Workflow::PROJ_CONFIRMED,
         'newstate'=>'confirmed',
+        )
+      );
+  }
+
+  public static function setRejectionDate($user, $params, $sf_context=null)
+  {
+    return self::_setGenericDate($user, $params, $sf_context,
+      array(
+        'date'=>'Rejection date',
+        'methodkey'=>'Rejection',
+        'comparison_state'=>Workflow::PROJ_REJECTED,
+        'newstate'=>'rejected',
         )
       );
   }

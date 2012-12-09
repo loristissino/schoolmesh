@@ -43,7 +43,7 @@
         <?php include_partial('category', array('category'=>$project->getProjCategory())) ?>
       </td>
       <td><?php echo $project->getsfGuardUser()->getProfile()->getFullName() ?></td>
-      <td<?php if($project->getState()==Workflow::PROJ_FINISHED) echo ' class="workflow_finished"' ?><?php if($project->getState()==Workflow::PROJ_DRAFT) echo ' class="workflow_draft"' ?>><?php include_partial('state', array('project'=>$project)) ?></td>
+      <td<?php if($project->isFinished()) echo ' class="workflow_finished"' ?><?php if($project->isntCurrent()) echo ' class="workflow_draft"' ?>><?php include_partial('state', array('project'=>$project)) ?></td>
       <td><?php echo $project->getReferenceNumber() ?></td>
       <td><?php include_partial('dates', array('project'=>$project)) ?></td>
       <td>
@@ -68,6 +68,7 @@
   'setapprovaldate' => __('Set approval date'),
   'setfinancingdate' => __('Set financing date'),
   'setconfirmationdate' => __('Set confirmation date'),
+  'markasrejected' => __('Mark as rejected'),
   'viewasreport' => __('View as report'),
   'computebudget' => __('Compute budget'),
   'computesynthesiscomplete' => __('Compute data synthesis (complete)'),

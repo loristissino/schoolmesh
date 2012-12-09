@@ -1028,6 +1028,8 @@ CREATE TABLE `schoolproject`
 	`financing_notes` TEXT,
 	`confirmation_date` DATE,
 	`confirmation_notes` TEXT,
+	`rejection_date` DATE,
+	`rejection_notes` TEXT,
 	`evaluation_min` INTEGER,
 	`evaluation_max` INTEGER,
 	`no_activity_confirm` TINYINT default 0,
