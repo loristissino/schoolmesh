@@ -332,6 +332,7 @@ class Workflow
 	}
 
   const
+    PROJ_REJECTED = -10,
     PROJ_DRAFT = 10,
     PROJ_SUBMITTED = 20,
     PROJ_APPROVED = 30,
@@ -341,6 +342,10 @@ class Workflow
     PROJ_ARCHIVED = 70;
 	
 	static private $projSteps=Array(
+
+	self::PROJ_REJECTED=>Array(
+		'stateDescription'=>"Project rejected",
+		),
 
 	self::PROJ_DRAFT=>Array(
 		'stateDescription'=>"Project draft",

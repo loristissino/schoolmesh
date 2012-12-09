@@ -78,7 +78,26 @@ class Schoolproject extends BaseSchoolproject {
       ;
   }
   
+  public function isApprovable()
+  {
+    return $this->getState() >= Workflow::PROJ_SUBMITTED;
+  }
   
+  public function isFinished()
+  {
+    return $this->getState()==Workflow::PROJ_FINISHED;
+  }
+
+  public function isntCurrent()
+  {
+    return in_array($this->getState(), array(Workflow::PROJ_DRAFT, Workflow::PROJ_REJECTED));
+  }
+  
+  public function isRejected()
+  {
+    return $this->getState()==Workflow::PROJ_REJECTED;
+  }
+    
   public function getProjectAlertMessage(sfGuardUserProfile $sender, sfContext $sfContext=null)
   {
     return new SchoolprojectAlertMessage($this->getsfGuardUser()->getProfile(), $sender, $this, $sfContext);

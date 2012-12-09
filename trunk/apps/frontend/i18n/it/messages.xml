@@ -5496,9 +5496,35 @@
         <source>Declare a new projects-related activity</source>
         <target>Dichiara una nuova attività legata a progetti</target>
     </trans-unit>
+    <trans-unit id="1573">
+        <source>State set to «rejected»</source>
+        <target>Stato impostato a «non approvato»</target>
+    </trans-unit>
+    <trans-unit id="1574">
+        <source>Project rejected</source>
+        <target>Progetto non approvato</target>
+    </trans-unit>
+    <trans-unit id="1575">
+        <source>Rejection date</source>
+        <target>Data non approv.</target>
+    </trans-unit>
+    <trans-unit id="1576">
+        <source>Rejection</source>
+        <target>Mancata approvazione</target>
+    </trans-unit>
+    <trans-unit id="1577">
+        <source>Mark as rejected</source>
+        <target>Contrassegna come non approvato</target>
+    </trans-unit>
+    <trans-unit id="1578">
+        <source>Rejection notes</source>
+        <target>Note sulla&lt;br /&gt;mancata&lt;br /&gt;approvazione</target>
+    </trans-unit>
+    <trans-unit id="1579">
+        <source>Rejection date set to %date% (%comment%)</source>
+        <target>Data di mancata approvazione impostata a %date% (%comment%)</target>
+    </trans-unit>
     </body>
   </file> 
 </xliff>
-
-
 

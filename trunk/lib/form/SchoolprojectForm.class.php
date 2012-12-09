@@ -90,9 +90,11 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_date'], 
           $this['financing_date'],
           $this['confirmation_date'],
+          $this['rejection_date'],
           $this['approval_notes'], 
           $this['financing_notes'],
           $this['confirmation_notes'],
+          $this['rejection_notes'],
           $this['reference_number'],
           $this['no_activity_confirm'],
           $this['team_id']
@@ -116,10 +118,12 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['submission_date'],
           $this['approval_date'],
           $this['financing_date'],
+          $this['rejection_date'],
           $this['confirmation_date'],
           $this['approval_notes'], 
           $this['financing_notes'],
           $this['confirmation_notes'],
+          $this['rejection_notes'],
           $this['no_activity_confirm']
           );
           if(!$user->hasCredential('proj_adm_ok'))
@@ -150,9 +154,11 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_date'],
           $this['confirmation_date'],
           $this['financing_date'],
+          $this['rejection_date'],
           $this['approval_notes'], 
           $this['financing_notes'],
           $this['confirmation_notes'],
+          $this['rejection_notes'],
           $this['reference_number'],
           $this['no_activity_confirm'],
           $this['code']
@@ -175,9 +181,11 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_date'],
           $this['financing_date'],
           $this['confirmation_date'],
+          $this['rejection_date'],
           $this['approval_notes'], 
           $this['financing_notes'],
           $this['confirmation_notes'],
+          $this['rejection_notes'],
           $this['reference_number'],
           $this['no_activity_confirm'],
           $this['code']
@@ -200,9 +208,11 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_date'],
           $this['financing_date'],
           $this['confirmation_date'],
+          $this['rejection_date'],
           $this['approval_notes'], 
           $this['financing_notes'],
           $this['confirmation_notes'],
+          $this['rejection_notes'],
           $this['reference_number'],
           $this['code']
           );
@@ -244,10 +254,12 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['approval_date'],
           $this['financing_date'],
           $this['confirmation_date'],
+          $this['rejection_date'],
           $this['approval_notes'], 
           $this['financing_notes'],
           $this['confirmation_date'],
           $this['confirmation_notes'],
+          $this['rejection_notes'],
           $this['reference_number'],
           $this['team_id'],
           $this['code'],

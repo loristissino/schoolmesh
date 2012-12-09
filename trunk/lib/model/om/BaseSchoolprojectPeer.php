@@ -25,7 +25,7 @@ abstract class BaseSchoolprojectPeer {
 	const TM_CLASS = 'SchoolprojectTableMap';
 	
 	/** The total number of columns. */
-	const NUM_COLUMNS = 21;
+	const NUM_COLUMNS = 23;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -81,6 +81,12 @@ abstract class BaseSchoolprojectPeer {
 	/** the column name for the CONFIRMATION_NOTES field */
 	const CONFIRMATION_NOTES = 'schoolproject.CONFIRMATION_NOTES';
 
+	/** the column name for the REJECTION_DATE field */
+	const REJECTION_DATE = 'schoolproject.REJECTION_DATE';
+
+	/** the column name for the REJECTION_NOTES field */
+	const REJECTION_NOTES = 'schoolproject.REJECTION_NOTES';
+
 	/** the column name for the EVALUATION_MIN field */
 	const EVALUATION_MIN = 'schoolproject.EVALUATION_MIN';
 
@@ -116,11 +122,11 @@ abstract class BaseSchoolprojectPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'ProjCategoryId', 'Code', 'YearId', 'UserId', 'TeamId', 'Title', 'HoursApproved', 'State', 'SubmissionDate', 'ReferenceNumber', 'ApprovalDate', 'ApprovalNotes', 'FinancingDate', 'FinancingNotes', 'ConfirmationDate', 'ConfirmationNotes', 'EvaluationMin', 'EvaluationMax', 'NoActivityConfirm', 'CreatedAt', ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'projCategoryId', 'code', 'yearId', 'userId', 'teamId', 'title', 'hoursApproved', 'state', 'submissionDate', 'referenceNumber', 'approvalDate', 'approvalNotes', 'financingDate', 'financingNotes', 'confirmationDate', 'confirmationNotes', 'evaluationMin', 'evaluationMax', 'noActivityConfirm', 'createdAt', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::PROJ_CATEGORY_ID, self::CODE, self::YEAR_ID, self::USER_ID, self::TEAM_ID, self::TITLE, self::HOURS_APPROVED, self::STATE, self::SUBMISSION_DATE, self::REFERENCE_NUMBER, self::APPROVAL_DATE, self::APPROVAL_NOTES, self::FINANCING_DATE, self::FINANCING_NOTES, self::CONFIRMATION_DATE, self::CONFIRMATION_NOTES, self::EVALUATION_MIN, self::EVALUATION_MAX, self::NO_ACTIVITY_CONFIRM, self::CREATED_AT, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'proj_category_id', 'code', 'year_id', 'user_id', 'team_id', 'title', 'hours_approved', 'state', 'submission_date', 'reference_number', 'approval_date', 'approval_notes', 'financing_date', 'financing_notes', 'confirmation_date', 'confirmation_notes', 'evaluation_min', 'evaluation_max', 'no_activity_confirm', 'created_at', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'ProjCategoryId', 'Code', 'YearId', 'UserId', 'TeamId', 'Title', 'HoursApproved', 'State', 'SubmissionDate', 'ReferenceNumber', 'ApprovalDate', 'ApprovalNotes', 'FinancingDate', 'FinancingNotes', 'ConfirmationDate', 'ConfirmationNotes', 'RejectionDate', 'RejectionNotes', 'EvaluationMin', 'EvaluationMax', 'NoActivityConfirm', 'CreatedAt', ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'projCategoryId', 'code', 'yearId', 'userId', 'teamId', 'title', 'hoursApproved', 'state', 'submissionDate', 'referenceNumber', 'approvalDate', 'approvalNotes', 'financingDate', 'financingNotes', 'confirmationDate', 'confirmationNotes', 'rejectionDate', 'rejectionNotes', 'evaluationMin', 'evaluationMax', 'noActivityConfirm', 'createdAt', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::PROJ_CATEGORY_ID, self::CODE, self::YEAR_ID, self::USER_ID, self::TEAM_ID, self::TITLE, self::HOURS_APPROVED, self::STATE, self::SUBMISSION_DATE, self::REFERENCE_NUMBER, self::APPROVAL_DATE, self::APPROVAL_NOTES, self::FINANCING_DATE, self::FINANCING_NOTES, self::CONFIRMATION_DATE, self::CONFIRMATION_NOTES, self::REJECTION_DATE, self::REJECTION_NOTES, self::EVALUATION_MIN, self::EVALUATION_MAX, self::NO_ACTIVITY_CONFIRM, self::CREATED_AT, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'proj_category_id', 'code', 'year_id', 'user_id', 'team_id', 'title', 'hours_approved', 'state', 'submission_date', 'reference_number', 'approval_date', 'approval_notes', 'financing_date', 'financing_notes', 'confirmation_date', 'confirmation_notes', 'rejection_date', 'rejection_notes', 'evaluation_min', 'evaluation_max', 'no_activity_confirm', 'created_at', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, )
 	);
 
 	/**
@@ -130,11 +136,11 @@ abstract class BaseSchoolprojectPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProjCategoryId' => 1, 'Code' => 2, 'YearId' => 3, 'UserId' => 4, 'TeamId' => 5, 'Title' => 6, 'HoursApproved' => 7, 'State' => 8, 'SubmissionDate' => 9, 'ReferenceNumber' => 10, 'ApprovalDate' => 11, 'ApprovalNotes' => 12, 'FinancingDate' => 13, 'FinancingNotes' => 14, 'ConfirmationDate' => 15, 'ConfirmationNotes' => 16, 'EvaluationMin' => 17, 'EvaluationMax' => 18, 'NoActivityConfirm' => 19, 'CreatedAt' => 20, ),
-		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'projCategoryId' => 1, 'code' => 2, 'yearId' => 3, 'userId' => 4, 'teamId' => 5, 'title' => 6, 'hoursApproved' => 7, 'state' => 8, 'submissionDate' => 9, 'referenceNumber' => 10, 'approvalDate' => 11, 'approvalNotes' => 12, 'financingDate' => 13, 'financingNotes' => 14, 'confirmationDate' => 15, 'confirmationNotes' => 16, 'evaluationMin' => 17, 'evaluationMax' => 18, 'noActivityConfirm' => 19, 'createdAt' => 20, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PROJ_CATEGORY_ID => 1, self::CODE => 2, self::YEAR_ID => 3, self::USER_ID => 4, self::TEAM_ID => 5, self::TITLE => 6, self::HOURS_APPROVED => 7, self::STATE => 8, self::SUBMISSION_DATE => 9, self::REFERENCE_NUMBER => 10, self::APPROVAL_DATE => 11, self::APPROVAL_NOTES => 12, self::FINANCING_DATE => 13, self::FINANCING_NOTES => 14, self::CONFIRMATION_DATE => 15, self::CONFIRMATION_NOTES => 16, self::EVALUATION_MIN => 17, self::EVALUATION_MAX => 18, self::NO_ACTIVITY_CONFIRM => 19, self::CREATED_AT => 20, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'proj_category_id' => 1, 'code' => 2, 'year_id' => 3, 'user_id' => 4, 'team_id' => 5, 'title' => 6, 'hours_approved' => 7, 'state' => 8, 'submission_date' => 9, 'reference_number' => 10, 'approval_date' => 11, 'approval_notes' => 12, 'financing_date' => 13, 'financing_notes' => 14, 'confirmation_date' => 15, 'confirmation_notes' => 16, 'evaluation_min' => 17, 'evaluation_max' => 18, 'no_activity_confirm' => 19, 'created_at' => 20, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProjCategoryId' => 1, 'Code' => 2, 'YearId' => 3, 'UserId' => 4, 'TeamId' => 5, 'Title' => 6, 'HoursApproved' => 7, 'State' => 8, 'SubmissionDate' => 9, 'ReferenceNumber' => 10, 'ApprovalDate' => 11, 'ApprovalNotes' => 12, 'FinancingDate' => 13, 'FinancingNotes' => 14, 'ConfirmationDate' => 15, 'ConfirmationNotes' => 16, 'RejectionDate' => 17, 'RejectionNotes' => 18, 'EvaluationMin' => 19, 'EvaluationMax' => 20, 'NoActivityConfirm' => 21, 'CreatedAt' => 22, ),
+		BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'projCategoryId' => 1, 'code' => 2, 'yearId' => 3, 'userId' => 4, 'teamId' => 5, 'title' => 6, 'hoursApproved' => 7, 'state' => 8, 'submissionDate' => 9, 'referenceNumber' => 10, 'approvalDate' => 11, 'approvalNotes' => 12, 'financingDate' => 13, 'financingNotes' => 14, 'confirmationDate' => 15, 'confirmationNotes' => 16, 'rejectionDate' => 17, 'rejectionNotes' => 18, 'evaluationMin' => 19, 'evaluationMax' => 20, 'noActivityConfirm' => 21, 'createdAt' => 22, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::PROJ_CATEGORY_ID => 1, self::CODE => 2, self::YEAR_ID => 3, self::USER_ID => 4, self::TEAM_ID => 5, self::TITLE => 6, self::HOURS_APPROVED => 7, self::STATE => 8, self::SUBMISSION_DATE => 9, self::REFERENCE_NUMBER => 10, self::APPROVAL_DATE => 11, self::APPROVAL_NOTES => 12, self::FINANCING_DATE => 13, self::FINANCING_NOTES => 14, self::CONFIRMATION_DATE => 15, self::CONFIRMATION_NOTES => 16, self::REJECTION_DATE => 17, self::REJECTION_NOTES => 18, self::EVALUATION_MIN => 19, self::EVALUATION_MAX => 20, self::NO_ACTIVITY_CONFIRM => 21, self::CREATED_AT => 22, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'proj_category_id' => 1, 'code' => 2, 'year_id' => 3, 'user_id' => 4, 'team_id' => 5, 'title' => 6, 'hours_approved' => 7, 'state' => 8, 'submission_date' => 9, 'reference_number' => 10, 'approval_date' => 11, 'approval_notes' => 12, 'financing_date' => 13, 'financing_notes' => 14, 'confirmation_date' => 15, 'confirmation_notes' => 16, 'rejection_date' => 17, 'rejection_notes' => 18, 'evaluation_min' => 19, 'evaluation_max' => 20, 'no_activity_confirm' => 21, 'created_at' => 22, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, )
 	);
 
 	/**
@@ -221,6 +227,8 @@ abstract class BaseSchoolprojectPeer {
 		$criteria->addSelectColumn(SchoolprojectPeer::FINANCING_NOTES);
 		$criteria->addSelectColumn(SchoolprojectPeer::CONFIRMATION_DATE);
 		$criteria->addSelectColumn(SchoolprojectPeer::CONFIRMATION_NOTES);
+		$criteria->addSelectColumn(SchoolprojectPeer::REJECTION_DATE);
+		$criteria->addSelectColumn(SchoolprojectPeer::REJECTION_NOTES);
 		$criteria->addSelectColumn(SchoolprojectPeer::EVALUATION_MIN);
 		$criteria->addSelectColumn(SchoolprojectPeer::EVALUATION_MAX);
 		$criteria->addSelectColumn(SchoolprojectPeer::NO_ACTIVITY_CONFIRM);

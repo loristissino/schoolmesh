@@ -259,8 +259,20 @@ class projectsActions extends sfActions
         'methodkey'=>'Confirmation',
         )
       );
-
   }
+
+  public function executeMarkasrejected(sfWebRequest $request)
+  {
+    return $this->_executeSetgenericdate($request, 
+      array(
+        'date'=>'Rejection date', 
+        'notes'=>'Rejection notes',
+        'action'=>'markasrejected',
+        'methodkey'=>'Rejection',
+        )
+      );
+  }
+
   
   private function _executeSetgenericdate(sfWebRequest $request, $options=array())
   {
