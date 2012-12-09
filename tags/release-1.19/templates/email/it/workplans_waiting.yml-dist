@@ -1,0 +1,21 @@
+message:
+  subject: Piani di lavoro in attesa di approvazione
+  salutation: true
+  tagline: false
+  body: |
+
+    alcuni piani di lavoro (per la precisione, %number%) sono in
+    attesa di approvazione.
+    
+    Possono essere approvati accedendo all'applicazione SchoolMesh
+    all'indirizzo http://.../index.php?plansandreports/list
+    
+    %addressees%    
+    L'elenco completo dei piani di lavoro in attesa di approvazione
+    è il seguente:
+    
+    %appointments%
+
+      Saluti.
+
+        Lo staff

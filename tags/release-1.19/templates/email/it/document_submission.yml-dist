@@ -1,0 +1,19 @@
+message:
+  subject: Conferma consegna documento
+  salutation: true
+  tagline: false
+  body: |
+
+    questo messaggio serve a confermare l'avvenuta consegna del seguente documento:
+
+    descrizione: %document_description%
+    stato corrente: %document_state%
+    id: %document_id%
+
+      Saluti.
+
+        Lo staff
+
+
+
+

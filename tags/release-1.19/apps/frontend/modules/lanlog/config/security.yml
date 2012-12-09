@@ -1,0 +1,24 @@
+default:
+  is_secure: true
+
+registerlogon:
+  is_secure: false
+
+registerlogoff:
+  is_secure: false
+
+viewonline:
+  is_secure: false
+
+listlogons:
+  is_secure: false
+
+list:
+  credentials: [ admin ]
+
+viewbyuser:
+  credentials: [ admin ]
+
+viewbyworkstation:
+  credentials: [ admin ]
+  

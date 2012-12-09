@@ -1,0 +1,53 @@
+<?php 
+
+$mystudents=array();
+
+$students=file("/var/schoolmesh/data/fixtures/studenti.csv");
+
+foreach($students as $student)
+   {   
+		$ms= new Student();
+		list($ms->firstname,$ms->middlename,$ms->lastname,$ms->username,$ms->gender,$ms->pronunciation,$ms->schoolclass)=explode(',',$student);
+		array_push($mystudents, $ms);
+	}
+?>
+
+sfGuardUser:
+<?php foreach($mystudents as $ms): ?>
+  <?php echo $ms->username ?>:
+    username:   <?php echo $ms->username . "\n" ?>
+    password:   <?php echo $ms->username. "p\n" ?>
+    is_superadmin:  false
+<?php endforeach; ?>
+
+sfGuardUserProfile:
+<?php foreach($mystudents as $ms): ?>
+  <?php echo $ms->username ?>:
+    user_id:        <?php echo $ms->username ."\n" ?>
+    first_name:   <?php echo $ms->firstname . "\n" ?>
+    middle_name:   <?php echo $ms->middlename . "\n" ?>
+    last_name:    <?php echo $ms->lastname . "\n" ?>
+    gender:            <?php echo $ms->gender . "\n" ?>
+    pronunciation:            <?php echo $ms->pronunciation . "\n" ?>
+    role_id:       stu
+<?php endforeach; ?>
+
+Enrolment:
+<?php foreach($mystudents as $ms): ?>
+  <?php echo $ms->username ?>:
+    user_id:        <?php echo $ms->username . "\n" ?>
+    schoolclass_id:    <?php echo $ms->schoolclass . "\n" ?>
+    year_id:         200809
+<?php endforeach; ?>
+
+sfGuardUserGroup:
+<?php foreach($mystudents as $ms): ?>
+  <?php echo $ms->username ?>:
+    group_id:      student
+    user_id:        <?php echo $ms->username . "\n" ?>
+<?php endforeach; ?>
+
+sfGuardUserPermission:
+  helen_login:
+    user_id:      helen.abram
+    permission_id:  login
