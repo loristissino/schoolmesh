@@ -24,6 +24,7 @@ class schoolmeshPublishDocumentsTask extends sfBaseTask
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'propel'),
       // add your own options here
       new sfCommandOption('format', null, sfCommandOption::PARAMETER_OPTIONAL, 'The format to use', 'odt'),
+      new sfCommandOption('sleep', null, sfCommandOption::PARAMETER_REQUIRED, 'The number of seconds to wait between a profile and the next one', '10'),
     ));
 
     $this->namespace        = 'schoolmesh';
@@ -36,7 +37,7 @@ This task will publish, for archiviation purposes:
 EOF;
   }
 
-  protected function publishDocumentsConcerningAppointments($appointments, $format='odt')
+  protected function publishDocumentsConcerningAppointments($appointments, $format='odt', $sleep=10)
   {
       foreach($appointments as $appointment)
       {
@@ -58,6 +59,11 @@ EOF;
             $this->logSection('attachment', 'Could not create attachment.' . ' ' . $e->getMessage(), null, 'ERROR');
             $done=false;
           }
+          if($sleep)
+          {
+            printf("Sleeping for %d second(s)...\n", $sleep);
+            sleep($sleep);
+          }
         }
           
         if($done)
@@ -74,6 +80,7 @@ EOF;
           $appointment->save($this->con);
           
           $this->con->commit();
+          printf("Done and committed.\n");
         }
         else
         {
@@ -97,10 +104,10 @@ EOF;
     $this->con = Propel::getConnection(AppointmentPeer::DATABASE_NAME);
 
     $appointments=AppointmentPeer::retrieveByStateYear(Workflow::WP_APPROVED);  // we'll use the current year
-    $this->publishDocumentsConcerningAppointments($appointments, $options['format']);
+    $this->publishDocumentsConcerningAppointments($appointments, $options['format'], $options['sleep']);
 
     $appointments=AppointmentPeer::retrieveByStateYear(Workflow::FR_APPROVED);  // we'll use the current year
-    $this->publishDocumentsConcerningAppointments($appointments, $options['format']);
+    $this->publishDocumentsConcerningAppointments($appointments, $options['format'], $options['sleep']);
 
     
   } // execute function
