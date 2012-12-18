@@ -99,16 +99,7 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['no_activity_confirm'],
           $this['team_id']
           );
-          if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
-          {
-            // users other than the project coordinator cannot write details and cannot change the team
-            unset(
-              $this['team_id'],
-              $this['title'],
-              $this['proj_category_id']
-            );
-            $this->_removeDetailFields();
-          }
+          $this->_removeFieldsByUser($user);
         break;
       case Workflow::PROJ_SUBMITTED:
         unset(
@@ -134,14 +125,7 @@ class SchoolprojectForm extends BaseSchoolprojectForm
               $this['code']
             );
           }
-          if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
-          {
-            // users other than the project coordinator cannot write details and cannot change the team
-            unset(
-              $this['team_id']
-            );
-            $this->_removeDetailFields();
-          }
+          $this->_removeFieldsByUser($user);
           
           
         break;
@@ -163,14 +147,7 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['no_activity_confirm'],
           $this['code']
           );
-          if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
-          {
-            // users other than the project coordinator cannot write details and cannot change the team
-            unset(
-              $this['team_id']
-            );
-            $this->_removeDetailFields();
-          }
+          $this->_removeFieldsByUser($user);
         break;
       case Workflow::PROJ_FINANCED:
         unset(
@@ -190,9 +167,9 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['no_activity_confirm'],
           $this['code']
           );
-          if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
+          if(!$this->schoolproject->isEditableBy($user))
           {
-            // users other than the project coordinator cannot write details and cannot change the team
+            // users other than the project coordinator (or in the coordinators team) cannot write details and cannot change the team
             unset(
               $this['team_id']
             );
@@ -216,14 +193,7 @@ class SchoolprojectForm extends BaseSchoolprojectForm
           $this['reference_number'],
           $this['code']
           );
-          if($user->getProfile()->getUserId()!=$this->schoolproject->getsfGuardUser()->getId())
-          {
-            // users other than the project coordinator cannot write details and cannot change the team
-            unset(
-              $this['team_id']
-            );
-            $this->_removeDetailFields();
-          }
+          $this->_removeFieldsByUser($user);
           
           if(
             $this->schoolproject->getProjCategory()->getResources()!=0
@@ -275,6 +245,22 @@ class SchoolprojectForm extends BaseSchoolprojectForm
     {
       unset($this[$projDetailType->getFieldName()]);
     }
+  }
+  
+  private function _removeFieldsByUser($user)
+  {
+    if(!$this->schoolproject->isEditableBy($user))
+      {
+        // users other than the project coordinator (or in the coordinators team) cannot write details
+        $this->_removeDetailFields();
+      }
+      if(!$this->schoolproject->isOwnedBy($user))
+      {
+        // users other than the project coordinator cannot change the team
+        unset(
+          $this['team_id']
+        );
+      }
   }
 
 }

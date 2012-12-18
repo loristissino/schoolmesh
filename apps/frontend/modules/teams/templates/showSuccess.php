@@ -22,6 +22,10 @@
       <th><?php echo __('Quality code') ?></th>
       <td><?php echo $Team->getQualityCode() ?></td>
     </tr>
+    <tr>
+      <th><?php echo __('Public?') ?></th>
+      <td><?php include_partial('content/text_field_boolean', array('value'=>$Team->getIsPublic())) ?></td>
+    </tr>
   </tbody>
 </table>
 
