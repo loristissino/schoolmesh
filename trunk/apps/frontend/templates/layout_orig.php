@@ -76,7 +76,7 @@
                   'alt'=>'SchooMesh',
                   )
                 ),
-                'http://schoolmesh.mattiussilab.net'
+                'http://www.schoolmesh.eu/project'
               )
             ?>, written by 
             <?php echo link_to(
