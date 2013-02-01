@@ -1594,7 +1594,14 @@ public function getWorkflowLogs()
 		$suggestions=SuggestionPeer::retrieveAllByRank();
 		$hints=RecuperationHintPeer::retrieveAllByRankForTeacher($this->getUserId());
     
-    $syllabusitems=$this->getSyllabus()->getSelectableSyllabusItems();
+    if($this->getSyllabus())
+    {
+      $syllabusitems=$this->getSyllabus()->getSelectableSyllabusItems();
+    }
+    else
+    {
+      $syllabusitems=array();
+    }
 		
 		$letters=$odfdoc->setSegment('letters');
 		
