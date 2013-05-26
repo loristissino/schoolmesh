@@ -15,5 +15,29 @@ class WpmoduleSyllabusItem extends BaseWpmoduleSyllabusItem {
   {
     return (string)$this->getId();
   }
+  
+  
+  public function getSiblings()
+  {
+    //return $this->getId();
+    $appointment_id = $this->getWpmodule()->getAppointmentId();
+    $c=new Criteria();
+		$c->addJoin(WpmodulePeer::ID, WpmoduleSyllabusItemPeer::WPMODULE_ID);
+		$c->add(WpmoduleSyllabusItemPeer::SYLLABUS_ITEM_ID, $this->getSyllabusItemId());
+		$c->add(WpmodulePeer::APPOINTMENT_ID, $appointment_id);
+    $t = WpmoduleSyllabusItemPeer::doSelect($c);
+		return $t;
+    
+    /*
+     * 
+     * SELECT * 
+FROM  `wpmodule_syllabus_item` 
+JOIN wpmodule ON wpmodule_syllabus_item.wpmodule_id = wpmodule.id
+WHERE wpmodule_syllabus_item.syllabus_item_id =268
+AND wpmodule.appointment_id =2917
+* 
+*/
+    
+  }
 
 } // WpmoduleSyllabusItem

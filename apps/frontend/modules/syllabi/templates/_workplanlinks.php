@@ -44,6 +44,8 @@
 <?php else: ?>
   <strong><?php echo $syllabus_item->getContent()?></strong>
 <?php endif ?>
+</div>
+</td>
 <?php if($workplan->getState()==Workflow::IR_DRAFT): ?>
   <td>
     <?php if($syllabus_item->getIsSelectable()): ?>
@@ -57,6 +59,7 @@
         )) ?>
       <?php endif ?>
     <?php endif ?>
+    
   </td>
 <?php endif ?>
 </div>
