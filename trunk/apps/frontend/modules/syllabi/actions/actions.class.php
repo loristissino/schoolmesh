@@ -73,8 +73,13 @@ class syllabiActions extends sfActions
     
     $evaluation=$request->getParameter('evaluation');
     $dbvalue=$evaluation==''? NULL: $evaluation;
-    $this->wpmodulesyllabusitem->setEvaluation($dbvalue);
-    $this->wpmodulesyllabusitem->save();
+    
+    foreach($this->wpmodulesyllabusitem->getSiblings() as $si)
+    {
+      $si->setEvaluation($dbvalue);
+      $si->save();
+    }
+    
     return $this->renderPartial('syllabi/evaluation', array('id'=>$this->wpmodulesyllabusitem->getId(), 'dbvalue'=>$dbvalue, 'textvalue'=>'', 'min'=>$min, 'max'=>$max));
     
   }
