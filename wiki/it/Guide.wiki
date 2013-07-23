@@ -32,7 +32,7 @@ L'applicazione è divisa in tre parti:
 
 _L'applicazione di frontend è disponibile via browser all'URL `http://.../schoolmesh/index.php`_
 
-2. *Backend*: è l'applicazione che serve per la configurazione di alcuni aspetti particolari che richiedono una maggiore delicatezza (es. quali campi devono comparire nei piani di lavoro).
+2. *Backend*: è l'applicazione che serve per la configurazione di alcuni aspetti particolari che richiedono modifiche meno frequenti (ad esempio, le materie insegnate, gli indirizzi attivati, ecc.). L'interfaccia dell'applicazione di backend viene generata con strumenti automatici offerti da symfony e non è stata internazionalizzata, per cui è disponibile solo in inglese.
 
 _L'applicazione di backend è disponibile via browser all'URL `http://.../schoolmesh/backend.php`_
 
@@ -41,6 +41,47 @@ _L'applicazione di backend è disponibile via browser all'URL `http://.../school
   a) script bash, tutti con prefisso `schoolmesh_`, posti nella directory _/usr/local/bin_ (vedi [ManPage pagina man])
 
   b) task di symfony, che possono essere eseguiti dalla directory del progetto (vedi [Tasks pagina relativa])
+  
+È possibile eseguire i task anche con interfaccia web. Visto che l'esecuzione può richiedere molto tempo, in caso di esecuzione via web viene eseguito un processo in background, alla conclusione del quale si può vedere o scaricare l'output.
+
+Quali task è possibile eseguire con interfaccia web, e quali parametri possono essere specificati, va definito in un file yml con una struttura analoga alla seguente:
+
+{{{
+config:
+  application: frontend
+  environment: prod
+  
+tasks:
+  cc:
+    description: Pulizia cache
+    credentials: [ admin ]
+    namespace: false
+    task: cc
+    options: false
+    arguments: false
+
+  indexes:
+    description: Ricostruzione indici (impiega del tempo)
+    credentials: [ admin ]
+    namespace: schoolmesh
+    task: rebuild-indexes
+    options: false
+    arguments: false
+  
+  info:
+    description: Estrazione informazioni
+    credentials: [ admin ]
+    namespace: schoolmesh
+    task: extract-info
+    options: 
+      year: 2012/13
+      role: 
+      class: 
+      state: 
+    arguments:
+      infotype: users
+      
+}}}
   
 == Ambienti di esecuzione ==
 
@@ -189,3 +230,19 @@ La tabella seguente riassume alcuni dei controlli che vengono fatti:
 || _moodle_ || l'utente ha un account Moodle? ||
 
 
+== Gestione degli incarichi di docenza ==
+
+Un incarico di docenza consiste nella definizione della tupla docente / materia / classe / anno. Per ogni incarico può essere specificato il tipo, e da questo possono discendere diverse richieste in sede di compilazione del piano di lavoro del docente e della sua relazione finale.
+
+Gli incarichi possono essere definiti:
+
+  * via web, nella pagina di modifica del profilo utente del docente;
+  * con un task di importazione, a partire da un file CSV opportunamente formattato.
+
+Una volta definiti gli incarichi, bisogna passare alla pagina di gestione degli incarichi stessi, dove li si deve confermare. Questo consente di avere il quadro della situazione completo prima di consentire al docente di compilare il proprio piano di lavoro.
+
+All'incarico di docenza, inoltre, possono essere collegati, se lo si desidera:
+
+  * un team (potrebbe essere un sottogruppo della classe, ad esempio nel caso di classi sdoppiate per l'insegnamento della lingua, o per la parte di allievi che si avvalgono dell'insegnamento della religione cattolica);
+
+  * un particolare syllabus delle competenze.

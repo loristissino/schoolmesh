@@ -6,7 +6,7 @@
 
 I dati di SchoolMesh vengono archiviati in una base di dati relazionale e vengono periodicamente indicizzati tramite Zend Lucene.
 
-Attualmente (febbraio 2011) vengono indicizzati solo i dati relativi agli utenti.
+Attualmente (luglio 2013) vengono indicizzati solo i dati relativi agli utenti.
 
 Il linguaggio per le interrogazioni è sia potente sia semplice da usare. Quella che segue è solo una breve introduzione. Ulteriori informazioni possono essere trovate nella guida in linea nel [http://zendframework.com/manual/en/zend.search.lucene.query-language.html sito web dedicato a Zend Lucene].
 
@@ -147,4 +147,139 @@ posix
 
 Utenti con un account posix.
 
+== Ricerche comuni ==
+
+È possibile definire, in un file yml, una serie di ricerche comuni che possono costituire degli esempi. Il file può essere personalizzato a seconda delle esigenze. Un esempio di file è riportato di seguito. Naturalmente, il codice associato al ruolo principale (_mainrole_) deve essere adattato a quelli impostati nella propria configurazione.
+
+{{{
+url: users/list
+class: users
+groups:
+  Ricerche generiche:
+    1:
+      query: active:true
+      description: Utenti attivi (personale in servizio, allievi iscritti)
+    2:
+      query: firstname:Giorgio
+      description: Utenti il cui nome è Giorgio
+    3:
+      query: lastname:Rossi
+      description: Utenti il cui cognome è Rossi
+    4:
+      query: gender:M
+      description: Utenti di genere maschile
+    5:
+      query: gender:F
+      description: Utenti di genere femminile
+    6:
+      query: active:true and emailstatus:verified
+      description: Utenti con indirizzo di posta elettronica verificato
+      
+  Ruoli principali:
+    1:
+      query: mainrole:allievi and active:true
+      description: Allievi
+    2:
+      query: mainrole:docenti and active:true
+      description: Docenti
+    3:
+      query: mainrole:ata and active:true
+      description: Personale tecnico (ATA)
+    4:
+      query: mainrole:ataa and active:true
+      description: Personale amministrativo (ATA)
+    5:
+      query: mainrole:atacs and active:true
+      description: Collaboratori scolastici (ATA)
+    6:
+      query: mainrole:undefined and active:true
+      description: Ruolo non definito
+
+  Ruoli di responsabilità:
+    1:
+      query: roles:ccc
+      description: Coordinatori Consigli di classe
+    2:
+      query: roles:scc
+      description: Segretari Consigli di classe
+    3:
+      query: roles:aps
+      description: Addetti pronto soccorso
+    4:
+      query: roles:aai
+      description: Addetti anti-incendio
+    5:
+      query: roles:ae
+      description: Addetti emergenza
+    9:
+      query: active:true and not roles:none
+      description: Utenti attivi che rivestono qualche ruolo funzionale
+    10:
+      query: active:true and roles:none
+      description: Utenti attivi che non rivestono alcun ruolo funzionale
+    11:
+      query: active:true and role:docenti and roles:none
+      description: Docenti attivi che non rivestono alcun ruolo chiave
+ 
+  Credenziali:
+    1:
+      query: permissions:posix
+      description: Utenti con credenziale «posix»
+    2:
+      query: permissions:admin
+      description: Utenti con credenziale «admin»
+    3:
+      query: active:true and not permissions:admin
+      description: Utenti senza credenziale «admin»
+    4:
+      query: role:docenti and not permissions:wpfr_submission
+      description: Docenti senza credenziale «wpfr_submission»
+
+  Docenti:
+    1:
+      query: mainrole:docenti
+      description: Tutti i docenti (anche quelli non in servizio)
+    2:
+      query: docenti and active:true
+      description: Tutti i docenti in servizio
+    3:
+      query: docenti and active:true and emailstatus:verified
+      description: Tutti i docenti in servizio con indirizzo di posta elettronica verificato
+    4:
+      query: docenti and active:true and emailstatus:unverified
+      description: Tutti i docenti in servizio con indirizzo di posta elettronica in attesa di verifica
+    5:
+      query: docenti and active:true and emailstatus:faulty
+      description: Tutti i docenti in servizio con indirizzo di posta elettronica errato/problematico
+    6:
+      query: docenti and active:true and emailstatus:undefined
+      description: Tutti i docenti in servizio con indirizzo di posta elettronica non comunicato
+  
+  Allievi:
+    1:
+      query: birthday:1231
+      description: Allievi nati il 31 dicembre (di qualsiasi anno)
+    2:
+      query: birthdate:19971231
+      description: Allievi nati il 31 dicembre 1997
+    3: 
+      query: birthdate:[19950101 TO 19951231]
+      description: Allievi nati tra il 1° gennaio 1995 e il 31 dicembre 1995 (estremi compresi)
+    4: 
+      query: birthdate:{19950201 TO 19950207}
+      description: Allievi nati dopo il 1° febbraio 1995 e prima del 7 febbraio 1995 (estremi, quindi, esclusi)
+    5:
+      query: role:allievi and grade:1
+      description: Allievi di classe prima (tutte le sezioni)
+ 
+  Classi:
+    1:
+      query: 1aafm
+      description: Classe 1aafm
+
+  GuardGroup:
+    1:
+      query: guardgroups:teacher
+      description: Utenti del GuardGroup «teacher»
+}}}
 
