@@ -251,9 +251,11 @@ All'incarico di docenza, inoltre, possono essere collegati, se lo si desidera:
 
 I dati relativi a utenti, iscrizioni alle classi e incarichi di docenza possono essere caricati con un apposito task da riga di comando. Il task consente, se necessario, di automatizzare l'operazione di importazione / sincronizzazione dei dati, a partire da altre basi di dati.
 
-I file di input devono essere di tipo TSV, ossia con campi separati da tabulatori (OpenOffice / LibreOffice gestiscono facilmente questo tipo di file). L'estensione del nome del file non è importante. L'ordine delle colonne non è importante.
+I file di input devono essere di tipo TSV, ossia con campi separati da tabulatori (!OpenOffice / !LibreOffice gestiscono facilmente questo tipo di file). L'estensione del nome del file non è importante. L'ordine delle colonne non è importante. La codifica dei caratteri deve essere UTF-8.
 
 Il task per l'importazione può essere richiamato con l'opzione `dry-run`, in modo da non intaccare materialmente il database, e con l'opzione `no-mail` per non inviare email all'amministratore con l'esito delle operazioni. Per quanto riguarda l'ambiente di esecuzione e la possibilità di esecuzione tramite interfaccia web, si veda la parte della documentazione relativa ai task.
+
+Si può fare riferimento agli esempi di file presenti in questo [https://docs.google.com/file/d/0B9AQUF7-R2AbTkN3RF9HTUhqamc/edit?usp=sharing file zip].
 
 === Importazione degli utenti ===
 
@@ -273,25 +275,19 @@ I campi del file TSV sono i seguenti:
   * `GENDER` (M=Male/Maschio, F=Female/Femmina)
   * `BIRTH_PLACE` Luogo di nascita
   * `BIRTH_DATE` Data di nascita
-  * 'EMAIL` 
+  * `EMAIL` 
   * `USER_IMPORT_CODE` Codice di importazione / sincronizzazione (es. codice fiscale)
   * `EXTRA_SEARCH_KEY` Campo libero per effettuare ricerche
-  * 'IS_ACTIVE` (1=active, 0=not active)
+  * `IS_ACTIVE` (1=active, 0=not active)
 
 Note:
 
   # Per nome, cognome, luogo di nascita, il valore può essere con lettere tutte maiuscole (come spesso capita nei DB scolastici). Viene applicato un algoritmo "intelligente" che cerca di mettere le cose a posto (ad esempio, _MANFE'_ diventa _Manfé_).
-
   # La colonna USERNAME non è obbligatoria. Lo username viene "creato" apponendo con il formato _nome.cognome_, laddove possibile. Se invece il campo è presente ed è valorizzato, viene utilizzato quello fornito.
-
   # Se nel file è presente una riga in cui il codice fiscale è uguale, questa viene ignorata.
-
   # Se è presente un indirizzo e-mail, viene riportato nel database, ma con uno stato indefinito (andrebbe deciso cosa fare al riguardo, non me ne sono mai curato).
-
   # Il campo IS_ACTIVE è facoltativo; in caso di assenza, vale la regola per cui quando gli utenti vengono importati la prima volta vengono contrassegnati come "attivi", mentre se un utente è già presente nel database e viene trovato nel file, viene messo a "non attivo" (quando si caricano le iscrizioni e/o gli incarichi di insegnamento, se la persona è presente, viene rimessa ad "attivo" -- il motivo è che così si possono tranquillamente reimportare file con dati di allievi o insegnanti degli anni precedenti).
-
   # Una volta importati gli utenti bisogna lanciare a parte il task per la reindicizzazione di Lucene (conviene farlo dopo aver importato anche i dati di incarichi e iscrizioni).
-
 
 === Importazione delle iscrizioni degli allievi ===
 
@@ -331,7 +327,7 @@ Il comando da impartire per eportare gli utenti è il seguente
 
 {{{
 symfony schoolmesh:export-to-tsv-files --application=frontend --env=dev users /tmp/users.tsv
-}}}}
+}}}
     
 Il formato del file generato è uguale a quello utilizzato dal comando di importazione.
 
