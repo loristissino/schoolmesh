@@ -41,33 +41,47 @@ class schoolmeshImportSyllabusTask extends sfBaseTask
       return 1;
     }
         
-    $document = sfYaml::load($filename);
-    
-    $con = Propel::getConnection(SyllabusPeer::DATABASE_NAME);
-
     try
     {
-      $con->beginTransaction();
-
-      $syllabus = new Syllabus();
-      $syllabus
-      ->setName($document['syllabus']['name'])
-      ->setVersion($document['syllabus']['version'])
-      ->setAuthor($document['syllabus']['author'])
-      ->setHref($document['syllabus']['href'])
-      ->save($con)
-      ;
-    
-      $syllabus->saveItems($document['syllabus']['items'], $con);
-      $con->commit();
-      $this->logSection('syllabus+', 'Syllabus imported', null, 'NOTICE');
-
+      $document = sfYaml::load($filename);
+      $fileok=true;
     }
-    catch (PropelException $e)
+    catch(Exception $e)
     {
-      $con->rollback();
-      $this->logSection('syllabus', $e->getCause()->getMessage(), null, 'ERROR');
-      $this->logSection('syllabus', 'Syllabus not imported', null, 'ERROR');
+      $this->logSection('syllabus', $e->getMessage(), null, 'ERROR');
+      $fileok=false;
+    }
+    
+    if($fileok)
+    {
+      $con = Propel::getConnection(SyllabusPeer::DATABASE_NAME);
+
+      print_r($document);
+
+      try
+      {
+        $con->beginTransaction();
+
+        $syllabus = new Syllabus();
+        $syllabus
+        ->setName($document['syllabus']['name'])
+        ->setVersion($document['syllabus']['version'])
+        ->setAuthor($document['syllabus']['author'])
+        ->setHref($document['syllabus']['href'])
+        ->save($con)
+        ;
+        
+        $syllabus->saveItems($document['syllabus']['items'], $con);
+        $con->commit();
+        $this->logSection('syllabus+', $syllabus->getName(), null, 'NOTICE');
+
+      }
+      catch (PropelException $e)
+      {
+        $con->rollback();
+        $this->logSection('syllabus', $e->getCause()->getMessage(), null, 'ERROR');
+        $this->logSection('syllabus', 'Syllabus not imported', null, 'ERROR');
+      }
     }
 
   }
