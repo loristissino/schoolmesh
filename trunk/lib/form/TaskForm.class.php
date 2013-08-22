@@ -28,8 +28,17 @@ class TaskForm extends BaseForm
     {
       foreach($task['arguments'] as $key=>$value)
       {
-        $widgets[$key]=new sfWidgetFormInputText(array('default'=>$value), array('size'=>30));
-        $validators[$key]=new sfValidatorRegex(array('required'=>true, 'trim'=>true, 'pattern'=>'/[";\']/', 'must_match'=>false));
+        if(!is_array($task['arguments'][$key]))
+        {
+          $widgets[$key]=new sfWidgetFormInputText(array('default'=>$value), array('size'=>30));
+          $validators[$key]=new sfValidatorRegex(array('required'=>true, 'trim'=>true, 'pattern'=>'/[";\']/', 'must_match'=>false));
+        }
+        else
+        {
+          $choices=array_combine($value, $value);
+          $widgets[$key]=new sfWidgetFormSelect(array('choices'=>$choices));
+          $validators[$key]=new sfValidatorChoice(array('required'=>true, 'choices'=>$choices, 'multiple'=>false));
+        }
       }
     }
     $this->setWidgets($widgets);
