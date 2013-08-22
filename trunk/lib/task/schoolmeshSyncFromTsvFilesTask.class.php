@@ -494,6 +494,7 @@ class schoolmeshSyncFromTsvFilesTask extends sfBaseTask
         ->setSchoolclass($schoolclass)
         ->setYearId(sfConfig::get('app_config_current_year'))
         ->setState(Workflow::AP_ASSIGNED)
+        ->setAppointmentType($type)
         ->setSyllabus($syllabus)
         ->save($this->con)
         ;
